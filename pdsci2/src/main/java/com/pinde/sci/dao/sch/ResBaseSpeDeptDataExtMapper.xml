@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.sch.ResBaseSpeDeptDataExtMapper" >
+
+	<resultMap type="HashMap" id="searchByLastRotationMap">
+		<result column="INFO" property="info" jdbcType="VARCHAR" />
+		<result column="INFO_TWO" property="infoTwo" jdbcType="VARCHAR" />
+		<result column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+		<result column="TABLE_NAME" property="tableName" jdbcType="VARCHAR" />
+		<result column="TABLE_LEADER" property="tableLeader" jdbcType="VARCHAR" />
+		<result column="TYPE" property="type" jdbcType="VARCHAR" />
+		<result column="ORDINAL" property="ordinal" jdbcType="VARCHAR" />
+		<result column="ARR_NUM" property="arrNum" jdbcType="VARCHAR" />
+		<result column="ARR_ONE" property="arrOne" jdbcType="VARCHAR" />
+		<result column="ARR_TWO" property="arrTwo" jdbcType="VARCHAR" />
+		<result column="ARR_THREE" property="arrThree" jdbcType="VARCHAR" />
+		<result column="ARR_FOUR" property="arrFour" jdbcType="VARCHAR" />
+		<result column="ARR_FIVE" property="arrFive" jdbcType="VARCHAR" />
+		<result column="ARR_ONE_CLO" property="arrOneClo" jdbcType="VARCHAR" />
+		<result column="ARR_ONE_ROW" property="arrOneRow" jdbcType="VARCHAR" />
+		<result column="ARR_TWO_CLO" property="arrTwoClo" jdbcType="VARCHAR" />
+		<result column="ARR_TWO_ROW" property="arrTwoRow" jdbcType="VARCHAR" />
+		<result column="ARR_THREE_CLO" property="arrThreeClo" jdbcType="VARCHAR" />
+		<result column="ARR_THREE_ROW" property="arrThreeRow" jdbcType="VARCHAR" />
+		<result column="ARR_FOUR_CLO" property="arrFourClo" jdbcType="VARCHAR" />
+		<result column="ARR_FOUR_ROW" property="arrFourRow" jdbcType="VARCHAR" />
+		<result column="ARR_FIVE_CLO" property="arrFiveClo" jdbcType="VARCHAR" />
+		<result column="ARR_FIVE_ROW" property="arrFiveRow" jdbcType="VARCHAR" />
+		<result column="IS_TH" property="isTh" jdbcType="VARCHAR" />
+		<result column="IS_TD" property="isTd" jdbcType="VARCHAR" />
+		<result column="ARR_NAME" property="arrName" jdbcType="VARCHAR" />
+		<result column="PLA_INFO" property="plaInfo" jdbcType="VARCHAR" />
+		<result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="searchResBaseSpeDeptInfoData" resultMap="searchByLastRotationMap">
+		SELECT D.INFO,D.INFO_TWO,S.RECORD_FLOW, S.SPE_FLOW, S.SPE_NAME, S.STANDARD_DEPT_NAME, S.STANDARD_DEPT_ID, S.TYPE, S.ORDINAL,
+			S.ARR_NUM, S.ARR_ONE, S.ARR_TWO, S.ARR_THREE, S.ARR_FOUR, S.ARR_ONE_CLO, S.ARR_ONE_ROW, S.ARR_TWO_CLO,
+			S.ARR_TWO_ROW, S.ARR_THREE_CLO, S.ARR_THREE_ROW, S.ARR_FOUR_CLO, S.ARR_FOUR_ROW, S.IS_TH, S.IS_TD,
+			S.ARR_NAME, S.PLA_INFO, S.RECORD_STATUS, S.ARR_FIVE, S.ARR_FIVE_CLO, S.ARR_FIVE_ROW
+		FROM (
+			SELECT RECORD_FLOW, SPE_FLOW, SPE_NAME, STANDARD_DEPT_NAME, STANDARD_DEPT_ID, TYPE, ORDINAL,
+				ARR_NUM, ARR_ONE, ARR_TWO, ARR_THREE, ARR_FOUR, ARR_ONE_CLO, ARR_ONE_ROW, ARR_TWO_CLO,
+				ARR_TWO_ROW, ARR_THREE_CLO, ARR_THREE_ROW, ARR_FOUR_CLO, ARR_FOUR_ROW, IS_TH, IS_TD,
+				ARR_NAME, NVL(PLA_INFO, '0') AS PLA_INFO, RECORD_STATUS, ARR_FIVE, ARR_FIVE_CLO, ARR_FIVE_ROW
+			FROM RES_BASE_SPE_DEPT_INFO
+			WHERE  RECORD_STATUS = 'Y'
+			AND TYPE = #{stype}
+			AND STANDARD_DEPT_ID = #{standardDeptId}
+			AND  SPE_FLOW = #{speFlow}
+		) S
+		LEFT JOIN (
+		  	SELECT INFO_FLOW,INFO,INFO_TWO FROM RES_BASE_SPE_DEPT_DATA
+		  	WHERE RECORD_STATUS = 'Y'
+		  	AND SESSION_NUMBER= #{sessionNumber}
+		  	<if test="orgFlow!=null and orgFlow!=''">
+				AND ORG_FLOW= #{orgFlow}
+		  	</if>
+			<if test="speFlow!=null and speFlow!=''">
+				AND SPE_FLOW = #{speFlow}
+			</if>
+			<if test="deptFlow!=null and deptFlow!=''">
+				AND DEPT_FLOW = #{deptFlow}
+			</if>
+			<if test="dtype!=null and dtype!=''">
+				AND TYPE= #{dtype}
+			</if>
+		) D ON S.RECORD_FLOW = D.INFO_FLOW
+		ORDER BY ORDINAL
+	</select>
+
+
+	<resultMap type="HashMap" id="countByOrgAndSpeMap">
+		<result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+		<result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+		<result column="NUM" property="num" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="countByOrgListAndSpe" resultMap="countByOrgAndSpeMap">
+		SELECT SPE_ID,COUNT(RECORD_FLOW) NUM
+		FROM PDSCI.RES_TEACHER_TRAINING
+		WHERE ORG_FLOW in
+		<foreach collection="orgFlowList" item="orgFlow" open="(" close=")" separator=",">
+			#{orgFlow}
+		</foreach>
+		AND ORG_FLOW IS NOT NULL
+		and SPE_ID is not null
+		AND RECORD_STATUS = 'Y'
+		GROUP BY SPE_ID
+	</select>
+
+	<select id="countDoctorNum" resultMap="countByOrgAndSpeMap">
+		SELECT
+		<if test='orgGroup == "Y"'>
+			dr.org_flow ORG_FLOW,
+		</if>
+		DR.SPE_ID SPE_ID,count(DR.DOCTOR_FLOW) NUM
+		FROM RES_DOCTOR_RECRUIT DR
+		LEFT JOIN PDSCI.SYS_USER U ON DR.DOCTOR_FLOW = U.USER_FLOW
+		LEFT JOIN RES_DOCTOR ED ON DR.DOCTOR_FLOW = ED.DOCTOR_FLOW
+		WHERE DR.RECORD_STATUS = 'Y'
+		AND U.RECORD_STATUS = 'Y'
+		AND NOT EXISTS (SELECT 1
+		FROM RES_DOCOTR_DELAY_TETURN T
+		WHERE T.RECORD_STATUS = 'Y'
+			AND T.TYPE_ID = 'ReturnTraining'
+			AND T.AUDIT_STATUS_ID = '1'
+			AND T.RECRUIT_FLOW = DR.RECRUIT_FLOW
+			AND T.SESSION_NUMBER = DR.SESSION_NUMBER
+			AND T.DOCTOR_FLOW = DR.DOCTOR_FLOW)
+		AND DR.AUDIT_STATUS_ID != 'NotSubmit'
+		AND EXISTS (SELECT 1
+		FROM SYS_ORG O
+		WHERE O.RECORD_STATUS = 'Y'
+			AND O.ORG_FLOW = DR.ORG_FLOW)
+		AND (dr.ORG_FLOW in
+		<foreach collection='orgFlowList.split(",")' item="orgFLowOne" open="(" separator="," close=")">
+			#{orgFLowOne}
+		</foreach>
+		OR dr.joint_org_flow in
+		<foreach collection='orgFlowList.split(",")' item="orgFLowOne" open="(" separator="," close=")">
+			#{orgFLowOne}
+		</foreach>
+		)
+		<if test="doctorType!=null and doctorType!='' and doctorType=='zyys'">
+			AND ed.DOCTOR_TYPE_ID IN ('Company', 'CompanyEntrust', 'Social')
+		</if>
+		<if test="doctorType!=null and doctorType!='' and doctorType=='zxzs'">
+			AND ed.DOCTOR_TYPE_ID = 'Graduate'
+		</if>
+		<if test="speIdList != null and speIdList != ''">
+		    and dr.spe_id in
+			<foreach collection='speIdList.split(",")' item="speId" open="(" separator="," close=")">
+				#{speId}
+			</foreach>
+		</if>
+		AND dr.TRAIN_YEAR IN ('OneYear', 'TwoYear', 'ThreeYear')
+		AND dr.SESSION_NUMBER  = #{sessionNumber}
+		AND dr.DOCTOR_STATUS_ID IN ('20')
+		AND dr.AUDIT_STATUS_ID = 'Passed'
+		AND DR.CAT_SPE_ID = 'DoctorTrainingSpe'
+		GROUP BY
+		<if test='orgGroup == "Y"'>
+			dr.org_flow,
+		</if>
+		DR.SPE_ID
+	</select>
+</mapper>

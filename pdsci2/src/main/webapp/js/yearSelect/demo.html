@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0047)http://localhost:8080/pdsci/jsres/manage/global -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>年份多选</title>
+
+
+<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="checkYear.js"></script>
+
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+$(function(){
+
+							$.checkYear("yearContainer","",null);
+							$.checkYear("yearContainer2","2018,2019",null);
+							
+						});
+	  
+</script>
+<body >
+						
+						<div style="min-width: 160px;float: left;border:1px">
+							<input id="yearContainer" type="text"  style="width: 100%;border:1px;" readonly="readonly" placeholder="点击选择子项"/>
+						</div>
+						<div style="min-width: 160px;float: left;border:1px">
+							<input id="yearContainer2" type="text"  style="width: 100%;border:1px;" readonly="readonly" placeholder="点击选择子项"/>
+						</div>
+</body></html>

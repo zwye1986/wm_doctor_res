@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.sys.SysDeptExtMapper" >
+	<select id="getDeptByRec" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+		select sd.*
+		from pdsci.sys_dept sd
+		where sd.record_status = 'Y'
+		and sd.org_flow = #{orgFlow}
+		and exists(
+			select null
+			from pdsci.res_doctor_sch_process rdsp
+			where rdsp.record_status = 'Y'
+			and rdsp.dept_flow = sd.dept_flow
+			and exists(
+				select null
+				from pdsci.res_rec rr
+				where rr.record_status = 'Y'
+				and rdsp.process_flow = rr.process_flow
+				<if test='operStartDate!=null and operStartDate!=""'>
+					and rr.oper_time >= #{operStartDate}
+				</if>
+				<if test='operEndDate!=null and operEndDate!=""'>
+					and rr.oper_time <![CDATA[<=]]> #{operEndDate}
+				</if>
+				<if test='recTypeId!=null and recTypeId!=""'>
+					and rr.rec_type_id = #{recTypeId}
+				</if>
+			)
+		)
+		<if test='deptFlow!=null and deptFlow!=""'>
+			and sd.dept_flow = #{deptFlow}
+		</if>
+		order by sd.ordinal
+	</select>
+
+	<resultMap id="DoctorMap" type="map" extends="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+		<result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
+	</resultMap>
+	<select id="searchDeptByDoctor" resultMap="DoctorMap">
+		select sd.*,so.org_name
+		from pdsci.sys_dept sd
+		LEFT join sys_org so
+		on sd.org_flow=so.org_flow
+		where sd.record_status = 'Y'
+		and ( exists (
+				select null
+				from pdsci.res_doctor_sch_process rdsp
+				where rdsp.record_status = 'Y'
+				and rdsp.dept_flow = sd.dept_flow
+				and rdsp.user_flow=#{userFlow}
+			)
+			<if test='orgFlow!=null and orgFlow!=""'>
+				or	sd.org_flow=#{orgFlow}
+			</if>
+		)
+		order by sd.org_flow,sd.ordinal
+	</select>
+	<select id="getDeptByRecForUni" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+		select sd.*
+		from pdsci.sys_dept sd
+		where sd.record_status = 'Y'
+		and sd.org_flow = #{orgFlow}
+		and exists(
+			select null
+			from pdsci.res_doctor_sch_process rdsp
+			where rdsp.record_status = 'Y'
+			and rdsp.dept_flow = sd.dept_flow
+			and exists(
+					select null from
+						RES_DOCTOR RD
+						JOIN SYS_USER SU
+						ON SU.USER_FLOW = RD.DOCTOR_FLOW
+						WHERE RD.RECORD_STATUS = 'Y'
+						AND SU.RECORD_STATUS = 'Y'
+						AND RD.DOCTOR_TYPE_ID = 'Graduate'
+						AND (
+						<trim prefix="" prefixOverrides="OR">
+							<if test="(org.sendSchoolId != null and org.sendSchoolId != '')">OR rd.work_org_id = #{org.sendSchoolId}</if>
+							<if test="(org.sendSchoolName != null and org.sendSchoolName != '')">OR rd.work_org_name = #{org.sendSchoolName}</if>
+						</trim>
+						)
+						and rd.doctor_flow =rdsp.user_flow
+					AND RD.ORG_FLOW IS NOT NULL
+				)
+			and exists(
+				select null
+				from pdsci.res_rec rr
+				where rr.record_status = 'Y'
+				and rdsp.process_flow = rr.process_flow
+				<if test='operStartDate!=null and operStartDate!=""'>
+					and rr.oper_time >= #{operStartDate}
+				</if>
+				<if test='operEndDate!=null and operEndDate!=""'>
+					and rr.oper_time <![CDATA[<=]]> #{operEndDate}
+				</if>
+				<if test='recTypeId!=null and recTypeId!=""'>
+					and rr.rec_type_id = #{recTypeId}
+				</if>
+			)
+		)
+		<if test='deptFlow!=null and deptFlow!=""'>
+			and sd.dept_flow = #{deptFlow}
+		</if>
+		order by sd.ordinal
+	</select>
+	<select id="searchDeptBySpe" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+		select sd.*
+		from pdsci.sys_dept sd
+		where sd.record_status = 'Y'
+		and sd.org_flow = #{orgFlow}
+		and sd.dept_flow in (
+			select dept_flow from Res_Training_Spe_Dept
+			where record_status='Y'
+			AND ORG_FLOW = #{orgFlow}
+			and training_spe_id =#{resTrainingSpeId}
+		)
+		order by sd.ordinal
+	</select>
+	<resultMap id="UnionMap" type="map">
+		<result column="DEPT_FLOW" jdbcType="VARCHAR" property="deptFlow" />
+		<result column="ORG_FLOW" jdbcType="VARCHAR" property="orgFlow" />
+		<result column="DEPT_CODE" jdbcType="VARCHAR" property="deptCode" />
+		<result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+		<result column="ORDINAL" jdbcType="DECIMAL" property="ordinal" />
+		<result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
+		<result column="STANDARD_DEPT_NAME" jdbcType="VARCHAR" property="standardDeptName" />
+		<result column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
+	</resultMap>
+	<select id="searchDeptByUnion" resultMap="UnionMap">
+		select sd.DEPT_FLOW, sd.ORG_FLOW, sd.DEPT_CODE, sd.DEPT_NAME, sd.ORDINAL, sd.RECORD_STATUS,cfg.record_flow,cfg.STANDARD_DEPT_NAME
+		from pdsci.sys_dept sd
+		left join SCH_and_Standard_Dept_cfg cfg
+		on sd.dept_flow=cfg.sch_dept_flow
+		and cfg.record_status='Y'
+		where sd.org_flow = #{dept.orgFlow}
+		<if test='dept.deptFlow!=null and dept.deptFlow!=""'>
+			and sd.dept_flow = #{dept.deptFlow}
+		</if>
+		<if test='dept.recordStatus!=null and dept.recordStatus!=""'>
+			and sd.record_status = #{dept.recordStatus}
+		</if>
+		<if test='dept.deptName!=null and dept.deptName!=""'>
+			and sd.dept_name like '%${dept.deptName}%'
+		</if>
+		<if test='dept.deptCode!=null and dept.deptCode!=""'>
+			and sd.dept_code like '%${dept.deptCode}%'
+		</if>
+		<if test='isUnion!=null and isUnion!="" and isUnion=="Y".toString()'>
+			and cfg.RECORD_FLOW is not null
+		</if>
+		<if test='isUnion!=null and isUnion!="" and isUnion=="N".toString()'>
+			and cfg.RECORD_FLOW is null
+		</if>
+		order by RECORD_STATUS DESC,ORDINAL
+	</select>
+	<resultMap id="deptMap" type="map">
+		<result column="DEPT_FLOW" jdbcType="VARCHAR" property="deptFlow" />
+		<result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+	</resultMap>
+	<select id="queryDeptListByFlow" resultMap="deptMap">
+		select distinct dept_flow, dept_name
+			from (select dept_flow, dept_name from sys_user where record_status = 'Y' and dept_flow IS NOT NULL and user_flow = #{userFlow}
+					union all select dept_flow, dept_name from sys_user_dept where record_status = 'Y' and user_flow = #{userFlow})
+	</select>
+	<resultMap id="searchDeptByExtMap" type="map">
+		<result column="DEPT_FLOW" jdbcType="VARCHAR" property="deptFlow" />
+		<result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+		<result column="SCH_DEPT_FLOW" jdbcType="VARCHAR" property="schDeptFlow" />
+		<result column="SCH_DEPT_NAME" jdbcType="VARCHAR" property="schDeptName" />
+		<result column="DEPT_NUM" jdbcType="VARCHAR" property="deptNum" />
+		<result column="EXTERNAL" jdbcType="VARCHAR" property="external" />
+		<result column="IS_EXTERNAL" jdbcType="VARCHAR" property="isExternal" />
+		<result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
+		<result column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
+		<result column="STANDARD_DEPT_ID" jdbcType="VARCHAR" property="standardDeptId" />
+		<result column="STANDARD_DEPT_NAME" jdbcType="VARCHAR" property="standardDeptName" />
+	</resultMap>
+	<select id="searchDeptByExt" resultMap="searchDeptByExtMap" parameterType="java.util.Map">
+		SELECT DISTINCT sysd.DEPT_FLOW,
+			sysd.DEPT_NAME,
+			schd.SCH_DEPT_FLOW,
+			schd.SCH_DEPT_NAME,
+			to_char(schd.DEPT_NUM) DEPT_NUM,
+			schd.EXTERNAL,
+			schd.ORDINAL,
+			schd.IS_EXTERNAL,
+			schd.RECORD_STATUS,
+			sasdc.RECORD_FLOW,
+			sasdc.STANDARD_DEPT_ID,
+			sasdc.STANDARD_DEPT_NAME
+		FROM sys_dept sysd
+		right JOIN sch_dept schd
+			on sysd.dept_flow = schd.dept_flow
+		left join Sch_And_Standard_Dept_Cfg sasdc
+			on schd.sch_dept_flow = sasdc.sch_dept_flow
+		where sysd.RECORD_STATUS='Y'
+			<if test="dept.orgFlow!=null and dept.orgFlow!=''">
+				and sysd.org_flow = #{dept.orgFlow}
+			</if>
+			<if test='dept.deptName!=null and dept.deptName!=""'>
+				and sysd.dept_name like '%${dept.deptName}%'
+			</if>
+			<if test='dept.schDeptName!=null and dept.schDeptName!=""'>
+				and schd.sch_dept_name like '%${dept.schDeptName}%'
+			</if>
+			<if test='dept.external!=null and dept.external!="" and dept.external=="Y".toString()'>
+				and schd.external = 'Y'
+			</if>
+			<if test='dept.external!=null and dept.external!="" and dept.external=="N".toString()'>
+				and (schd.external = 'N' or external is null)
+			</if>
+			<if test='isRelCkkh!=null and isRelCkkh!="" and isRelCkkh=="Y".toString()'>
+				and sasdc.standard_dept_id is not null
+			</if>
+			<if test='isRelCkkh!=null and isRelCkkh!="" and isRelCkkh=="N".toString()'>
+				and sasdc.standard_dept_id is null
+			</if>
+		order by schd.RECORD_STATUS DESC, schd.ORDINAL,schd.sch_dept_flow
+	</select>
+
+	<select id="getBaseAndExtDept" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+		select DISTINCT sd.* from pdsci.sys_dept sd
+		left join pdsci.sch_dept_external_rel sder
+		on sd.dept_flow = sder.dept_flow
+		and sder.record_status = 'Y'
+		where sd.record_status = 'Y'
+		and (sd.org_flow = #{orgFlow} or sder.rel_org_flow = #{orgFlow})
+		<if test='deptName!=null and deptName!=""'>
+			and (sd.dept_name like '%${deptName}%' or sder.rel_org_name like '%${deptName}%')
+		</if>
+		order by sd.dept_code
+	</select>
+
+	<select id="selectDeptByParam" resultType="string">
+		SELECT STANDARD_DEPT_NAME FROM SCH_AND_STANDARD_DEPT_CFG
+		WHERE record_status = 'Y'
+		AND sch_dept_Flow  in (SELECT dept_flow FROM sys_dept WHERE ORG_FLOW = #{orgFlow} AND DEPT_NAME = #{deptName})
+	</select>
+
+	<select id="selectDeptByParamList" resultType="string">
+		SELECT STANDARD_DEPT_NAME FROM SCH_AND_STANDARD_DEPT_CFG
+		WHERE record_status = 'Y'
+		AND sch_dept_Flow  in (SELECT dept_flow FROM sys_dept WHERE ORG_FLOW = #{orgFlow} AND DEPT_NAME = #{deptName})
+	</select>
+</mapper>

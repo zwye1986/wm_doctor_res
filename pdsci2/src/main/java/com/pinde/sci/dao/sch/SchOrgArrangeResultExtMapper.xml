@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.sch.SchOrgArrangeResultExtMapper">
+    <update id="delSchInfoByCycle">
+        UPDATE SCH_ORG_ARRANGE_RESULT set record_status='N'
+        where record_status='Y'
+        and exists(
+            select 1 from res_doctor
+            where record_status='Y'
+            and org_flow=#{orgFlow}
+            and session_number=#{sessionNumber}
+            and rotation_flow =#{rotationFlow}
+            and doctor_flow =#{doctorFlow}
+            and SCH_ORG_ARRANGE_RESULT.rotation_flow = #{rotationFlow}
+            and SCH_ORG_ARRANGE_RESULT.doctor_flow=res_doctor.doctor_flow
+            and SCH_ORG_ARRANGE_RESULT.session_number=res_doctor.session_Number
+        )
+        and SELECT_YEAR=#{cycleType}
+    </update>
+    <update id="delCycleResultByYear">
+        UPDATE SCH_ARRANGE_RESULT set record_status='N'
+        where record_status='Y'
+        and exists(
+            select 1 from res_doctor
+            where record_status='Y'
+            and org_flow=#{orgFlow}
+            and session_number=#{sessionNumber}
+            and rotation_flow =#{rotationFlow}
+            and doctor_flow =#{doctorFlow}
+            and SCH_ARRANGE_RESULT.rotation_flow = #{rotationFlow}
+            and SCH_ARRANGE_RESULT.doctor_flow=res_doctor.doctor_flow
+            and SCH_ARRANGE_RESULT.session_number=res_doctor.session_Number
+            and SCH_ARRANGE_RESULT.ORG_FLOW=res_doctor.ORG_FLOW
+        )
+        <if test="cycleYear!=''and cycleYear!=null">
+            and CYCLE_YEAR=#{cycleYear}
+        </if>
+    </update>
+    <update id="delCycleProcessByResult">
+        UPDATE res_doctor_sch_process set record_status='N'
+        where record_status='Y'
+        and exists(
+            select 1 from res_doctor rd
+            left join SCH_ARRANGE_RESULT sar
+            on rd.doctor_flow=sar.doctor_flow
+            where rd.record_status='Y'
+            and sar.record_status='N'
+            and rd.org_flow=#{orgFlow}
+            and rd.session_number=#{sessionNumber}
+            and rd.rotation_flow =#{rotationFlow}
+            and rd.doctor_flow =#{doctorFlow}
+            and sar.rotation_flow = #{rotationFlow}
+            and sar.session_number=rd.session_Number
+            and sar.ORG_FLOW=rd.ORG_FLOW
+            and sch_result_flow=sar.result_flow
+
+            <if test="cycleYear!=''and cycleYear!=null">
+                and CYCLE_YEAR=#{cycleYear}
+            </if>
+        )
+    </update>
+    <update id="updateDoctorIsSch">
+        UPDATE res_doctor  set is_sch_flag='Y'
+        where record_status='Y'
+        and doctor_flow = #{userFlow}
+    </update>
+    <insert id="AddCycleResultByYear">
+        insert into  SCH_ARRANGE_RESULT(
+            RESULT_FLOW,
+            ARRANGE_FLOW,
+            DOCTOR_FLOW,
+            DOCTOR_NAME,
+            SESSION_NUMBER,
+            ROTATION_FLOW,
+            ROTATION_NAME,
+            SCH_YEAR,
+            SCH_DEPT_ORDER,
+            SCH_START_DATE,
+            SCH_END_DATE,
+            DEPT_FLOW,
+            DEPT_NAME,
+            SCH_DEPT_FLOW,
+            SCH_DEPT_NAME,
+            ORG_FLOW,
+            ORG_NAME,
+            SCH_MONTH,
+            IS_REQUIRED,
+            STANDARD_DEPT_ID,
+            STANDARD_DEPT_NAME,
+            GROUP_FLOW,
+            STANDARD_GROUP_FLOW,
+            RECORD_STATUS,
+            CREATE_TIME,
+            CREATE_USER_FLOW,
+            MODIFY_TIME,
+            MODIFY_USER_FLOW,
+            CYCLE_YEAR
+        )
+        select sys_guid(),
+        ARRANGE_FLOW,
+        DOCTOR_FLOW,
+        DOCTOR_NAME,
+        SESSION_NUMBER,
+        ROTATION_FLOW,
+        ROTATION_NAME,
+        SCH_YEAR,
+        SCH_DEPT_ORDER,
+        SCH_START_DATE,
+        SCH_END_DATE,
+        DEPT_FLOW,
+        DEPT_NAME,
+        SCH_DEPT_FLOW,
+        SCH_DEPT_NAME,
+        ORG_FLOW,
+        ORG_NAME,
+        SCH_MONTH,
+        IS_REQUIRED,
+        STANDARD_DEPT_ID,
+        STANDARD_DEPT_NAME,
+        GROUP_FLOW,
+        STANDARD_GROUP_FLOW,
+        RECORD_STATUS,
+        CREATE_TIME,
+        CREATE_USER_FLOW,
+        MODIFY_TIME,
+        MODIFY_USER_FLOW,
+        SELECT_YEAR
+         from SCH_ORG_ARRANGE_RESULT soar
+        where soar.record_status='Y'
+        and org_flow=#{orgFlow}
+        and session_number=#{sessionNumber}
+        and rotation_flow =#{rotationFlow}
+        and doctor_flow =#{doctorFlow}
+        and SELECT_YEAR=#{cycleYear}
+    </insert>
+    <update id="updateDoctorSchFlag">
+        update res_doctor set
+        <if test="cycleYear!=''and cycleYear!=null">
+            <if test="cycleYear=='All'.toString()">
+
+               sch_all_flag ='N',
+               sch_one_flag ='N',
+                sch_two_flag ='N',
+                sch_three_flag = 'N'
+            </if>
+            <if test="cycleYear=='One'.toString()">
+                sch_one_flag ='N'
+            </if>
+            <if test="cycleYear=='Two'.toString()">
+                sch_two_flag ='N'
+            </if>
+            <if test="cycleYear=='Three'.toString()">
+                sch_three_flag = 'N'
+            </if>
+        </if>
+        where doctor_flow=#{doctorFlow}
+    </update>
+    <select id="findDeptMonthUseNum" resultType="java.lang.Integer">
+        select count(1) from  SCH_ORG_ARRANGE_RESULT p
+        where record_status='Y'
+        and SCH_DEPT_FLOW=#{deptFlow}
+         AND  ( ( p.SCH_START_DATE  <![CDATA[ <= ]]> #{startDate} AND p.SCH_END_DATE >= #{endDate})
+          or (p.SCH_START_DATE  <![CDATA[ >= ]]> #{startDate} AND p.SCH_START_DATE <![CDATA[ <= ]]>#{endDate})
+           or (p.SCH_END_DATE  <![CDATA[ >= ]]> #{startDate} AND p.SCH_END_DATE <![CDATA[ <= ]]>#{endDate}))
+    </select>
+    <select id="readOrgArrangeResult" resultMap="com.pinde.sci.dao.base.SchOrgArrangeResultMapper.BaseResultMap">
+        select *
+         from  SCH_ORG_ARRANGE_RESULT p
+        where record_status='Y'
+        <if test="schDeptFlow !='' and schDeptFlow!=null">
+            and SCH_DEPT_FLOW=#{schDeptFlow}
+        </if>
+        and SCH_DEPT_FLOW in (
+            select sch_dept_flow from sch_dept where record_status='Y'
+            and org_flow=#{orgFlow}
+        )
+         AND  ( ( substr(p.SCH_START_DATE,0,7)  <![CDATA[ <= ]]> #{startDate} AND substr(p.SCH_END_DATE,0,7)  >= #{endDate})
+          or (substr(p.SCH_START_DATE,0,7)   <![CDATA[ >= ]]> #{startDate} AND substr(p.SCH_START_DATE,0,7)  <![CDATA[ <= ]]>#{endDate})
+           or (substr(p.SCH_END_DATE,0,7)  <![CDATA[ >= ]]> #{startDate} AND substr(p.SCH_END_DATE,0,7) <![CDATA[ <= ]]>#{endDate}))
+    </select>
+    <select id="readArrangeResultsByMap" resultMap="com.pinde.sci.dao.base.SchOrgArrangeResultMapper.BaseResultMap">
+        select *
+         from  SCH_ORG_ARRANGE_RESULT p
+        where record_status='Y'
+        and org_flow=#{orgFlow}
+        and rotation_flow=#{rotationFlow}
+        and session_number=#{sessionNumber}
+        and doctor_flow=#{doctorFlow}
+        <if test="startDate!='' and startDate!=null and endDate!='' and endDate!=null ">
+         AND  ( ( substr(p.SCH_START_DATE,0,7)  <![CDATA[ <= ]]> #{startDate} AND substr(p.SCH_END_DATE,0,7)  >= #{endDate})
+          or (substr(p.SCH_START_DATE,0,7)   <![CDATA[ >= ]]> #{startDate} AND substr(p.SCH_START_DATE,0,7)  <![CDATA[ <= ]]>#{endDate})
+           or (substr(p.SCH_END_DATE,0,7)  <![CDATA[ >= ]]> #{startDate} AND substr(p.SCH_END_DATE,0,7) <![CDATA[ <= ]]>#{endDate}))
+        </if>
+        order by SCH_START_DATE asc
+    </select>
+    <select id="readArrangeResultsByTimeMap" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+        select *
+         from  sch_arrange_result p
+        where record_status='Y'
+        and doctor_flow=#{doctorFlow}
+        <if test="startDate!='' and startDate!=null and endDate!='' and endDate!=null ">
+         AND  ( ( p.SCH_START_DATE  <![CDATA[ <= ]]> #{startDate} AND p.SCH_END_DATE  >= #{endDate})
+          or (p.SCH_START_DATE   <![CDATA[ >= ]]> #{startDate} AND p.SCH_START_DATE  <![CDATA[ <= ]]>#{endDate})
+           or (p.SCH_END_DATE  <![CDATA[ >= ]]> #{startDate} AND p.SCH_END_DATE <![CDATA[ <= ]]>#{endDate}))
+        </if>
+        order by SCH_START_DATE asc
+    </select>
+    <select id="readRotationDeptBySchDept" resultMap="com.pinde.sci.dao.base.SchRotationDeptMapper.BaseResultMap">
+        select *
+         from  sch_rotation_dept p
+        where record_status='Y'
+        and p.org_flow is NULL
+        <if test='rotationFlow!=null and rotationFlow!="" and (secondRotationFlow==null or secondRotationFlow=="")'>
+            and rotation_flow = #{rotationFlow}
+        </if>
+        <if test='secondRotationFlow!=null and secondRotationFlow!="" and (rotationFlow==null or rotationFlow=="")'>
+            and rotation_flow = #{secondRotationFlow}
+        </if>
+        <if test='secondRotationFlow!=null and secondRotationFlow!="" and (rotationFlow!=null and rotationFlow!="")'>
+            and (rotation_flow = #{secondRotationFlow} or rotation_flow = #{rotationFlow})
+        </if>
+        and STANDARD_DEPT_ID in (
+            SELECT STANDARD_DEPT_ID
+            FROM PDSCI.SCH_DEPT_REL
+            WHERE RECORD_STATUS = 'Y'
+            AND SCH_DEPT_FLOW =#{schDeptFlow}
+        )
+    </select>
+    <resultMap id="minStartDateMap" type="hashmap">
+
+        <result column="SELECT_YEAR" jdbcType="VARCHAR" property="selectYear" />
+        <result column="SCH_START_DATE" jdbcType="VARCHAR" property="schStartDate" />
+        <result column="MONTH_NUM" jdbcType="VARCHAR" property="monthNum" />
+    </resultMap>
+    <select id="readOrgArrangeStartDate" resultMap="minStartDateMap">
+        select p.select_Year,min(p.SCH_START_DATE) SCH_START_DATE,sum(sch_month) MONTH_NUM
+         from  SCH_ORG_ARRANGE_RESULT p
+        where record_status='Y'
+        and org_flow=#{orgFlow}
+        and rotation_flow=#{rotationFlow}
+        and session_number=#{sessionNumber}
+        and doctor_flow=#{doctorFlow}
+        group by select_Year
+    </select>
+    <select id="getCycleResults" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+        select *
+         from  SCH_ARRANGE_RESULT p
+        where record_status in ('Y','D')
+        and org_flow=#{orgFlow}
+        and (rotation_flow=#{rotationFlow} or rotation_flow is null)
+        and session_number=#{sessionNumber}
+        and doctor_flow=#{doctorFlow}
+        order by RECORD_STATUS desc,SCH_START_DATE,SCH_DEPT_ORDER
+    </select>
+    <select id="getRotationCycleMonthNum" resultType="java.lang.Double">
+        select
+        <if test="cycleYear!=''and cycleYear!=null">
+            <if test="cycleYear=='All'.toString()">
+              sum(sch_month)
+            </if>
+            <if test="cycleYear=='One'.toString()">
+                sum(one_sch_month)
+            </if>
+            <if test="cycleYear=='Two'.toString()">
+                sum(two_sch_month)
+            </if>
+            <if test="cycleYear=='Three'.toString()">
+                sum(three_sch_month)
+            </if>
+        </if>
+        from  SCH_ROTATION_ORG_GROUP p
+        where record_status='Y'
+        and org_flow=#{orgFlow}
+        and rotation_flow=#{rotationFlow}
+        and session_number=#{sessionNumber}
+        and select_Year=#{selectYear}
+    </select>
+    <select id="findCycleResultCount" resultType="java.lang.Integer">
+        select   count(1)
+        from  sch_arrange_result p
+        where record_status='Y'
+        and doctor_flow=#{doctorFlow}
+        <if test="cycleYear!=null and cycleYear !=''">
+            and CYCLE_YEAR=#{cycleYear}
+        </if>
+        and exists(
+          select 1 from res_doctor_sch_process
+          where record_status='Y'
+        and (sch_flag='Y'or is_current_flag='Y')
+          and p.result_flow=sch_result_flow
+        )
+        and exists(
+          select 1 from res_doctor rd
+          where rd.doctor_flow=#{doctorFlow}
+          and rd.doctor_flow=p.doctor_flow
+          and rd.session_number=p.session_number
+          and rd.org_flow=p.org_flow
+          and rd.rotation_flow=p.rotation_flow
+        )
+    </select>
+    <select id="findRecCount" resultType="java.lang.Integer">
+        select  count(1)
+        from  res_rec rr
+        where record_status='Y'
+        and exists(
+          select 1 from res_doctor_sch_process p
+          where p.record_status='Y'
+          and p.sch_result_flow=#{resultFlow}
+          and p.process_flow=rr.process_flow
+        )
+    </select>
+    <select id="findSchResultCount" resultType="java.lang.Integer">
+        select   count(1)
+        from  SCH_ORG_ARRANGE_RESULT p
+        where record_status='Y'
+        and doctor_flow=#{doctorFlow}
+        and exists(
+          select 1 from res_doctor rd
+          where rd.doctor_flow=#{doctorFlow}
+          and rd.doctor_flow=p.doctor_flow
+          and rd.session_number=p.session_number
+          and rd.org_flow=p.org_flow
+          and rd.rotation_flow=p.rotation_flow
+        )
+        and SELECT_YEAR=#{cycleYear}
+    </select>
+</mapper>

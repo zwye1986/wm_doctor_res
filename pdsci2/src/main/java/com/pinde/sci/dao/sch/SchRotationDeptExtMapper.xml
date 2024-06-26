@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.sch.SchRotationDeptExtMapper" >
+	<select id="getUnrelCount" resultType="int">
+		SELECT COUNT(*)
+		FROM PDSCI.SCH_ROTATION_DEPT
+		WHERE RECORD_STATUS = 'Y'
+		AND ROTATION_FLOW = #{rotationFlow}
+		AND ORG_FLOW = #{orgFlow}
+		AND (SCH_DEPT_FLOW IS NULL OR SCH_MONTH = '0' OR SCH_MONTH IS NULL)
+		AND GROUP_FLOW NOT IN (
+			SELECT GROUP_FLOW
+			FROM PDSCI.SCH_ROTATION_GROUP
+			WHERE RECORD_STATUS = 'Y'
+			AND ROTATION_FLOW = #{rotationFlow}
+			AND ORG_FLOW = #{orgFlow}
+			AND SEL_TYPE_ID = 'Free'
+		)
+	</select>
+	
+	<select id="isUpdateOrg" resultType="string">
+		SELECT DISTINCT ORG_FLOW
+		FROM PDSCI.SCH_ROTATION_DEPT
+		WHERE RECORD_STATUS = 'Y'
+		AND ROTATION_FLOW = #{rotationFlow}
+		AND ORG_FLOW IS NOT NULL
+	</select>
+	
+	<update id="setRotationDeptRequired">
+		UPDATE SCH_ROTATION_DEPT 
+		SET IS_REQUIRED = #{isRequired}
+		WHERE RECORD_STATUS = 'Y'
+		AND GROUP_FLOW IN (
+			SELECT GROUP_FLOW
+			FROM SCH_ROTATION_GROUP
+			WHERE STANDARD_GROUP_FLOW = #{standardGroupFlow}
+		)
+	</update>
+	
+	<select id="getSchInUsedCount" resultType="int">
+		SELECT COUNT(*)
+		FROM PDSCI.SCH_ROTATION_DEPT
+		WHERE RECORD_STATUS = 'Y'
+		<if test='schDeptFlow!=null and schDeptFlow!=""'>
+			AND SCH_DEPT_FLOW = #{schDeptFlow}
+		</if>
+		<if test='deptFlow!=null and deptFlow!=""'>
+			AND DEPT_FLOW = #{deptFlow}
+		</if>
+	</select>
+	
+	<resultMap type="HashMap" id="monthSumMap">
+		<result property="rotationFlow" column="ROTATION_FLOW" javaType="string"/>
+		<result property="monthSum" column="MONTH_SUM" javaType="java.math.BigDecimal"/>
+	</resultMap>
+	<select id="getRotationMustSum" resultMap="monthSumMap">
+		SELECT ROTATION_FLOW,SUM(SCH_MONTH) MONTH_SUM
+		FROM PDSCI.SCH_ROTATION_DEPT
+		WHERE RECORD_STATUS = 'Y'
+		AND IS_REQUIRED = 'Y'
+		AND ORG_FLOW IS NULL
+<!-- 		AND ORG_FLOW = #{orgFlow} -->
+		GROUP BY ROTATION_FLOW
+	</select>
+	
+	<select id="getRotationGroupSum" resultMap="monthSumMap">
+		SELECT ROTATION_FLOW,SUM(SCH_MONTH) MONTH_SUM
+		FROM PDSCI.SCH_ROTATION_GROUP
+		WHERE RECORD_STATUS = 'Y'
+		AND IS_REQUIRED = 'N'
+		AND ORG_FLOW IS NULL
+<!-- 		AND ORG_FLOW = #{orgFlow} -->
+		GROUP BY ROTATION_FLOW
+	</select>
+	
+	<select id="searchRotationDeptByStanard" resultMap="com.pinde.sci.dao.base.SchRotationDeptMapper.BaseResultMap">
+		SELECT SRD.* 
+		FROM PDSCI.SCH_ROTATION_GROUP SRG,PDSCI.SCH_ROTATION_DEPT SRD,PDSCI.SCH_ROTATION_DEPT SRDS
+		WHERE SRG.RECORD_STATUS = 'Y'
+		AND SRD.RECORD_STATUS = 'Y'
+		AND SRDS.RECORD_STATUS = 'Y'
+		AND SRG.STANDARD_GROUP_FLOW = SRDS.GROUP_FLOW
+		AND SRG.GROUP_FLOW = SRD.GROUP_FLOW
+		AND SRD.STANDARD_DEPT_ID = SRDS.STANDARD_DEPT_ID
+		AND SRD.ORG_FLOW = #{orgFlow}
+		AND SRDS.RECORD_FLOW = #{standardDeptRecFlow}
+	</select>
+	<select id="doctorGetNotSchDept" resultMap="com.pinde.sci.dao.base.SchRotationDeptMapper.BaseResultMap">
+		SELECT SRD.*
+		FROM PDSCI.SCH_ROTATION_GROUP SRG,
+			PDSCI.SCH_ROTATION_DEPT SRD
+		WHERE SRG.RECORD_STATUS = 'Y'
+		AND SRD.RECORD_STATUS = 'Y'
+		AND SRG.GROUP_FLOW = SRD.GROUP_FLOW
+		AND SRG.ROTATION_FLOW = SRD.ROTATION_FLOW
+		AND SRG.ROTATION_FLOW =#{rotationFlow}
+		AND SRD.ORG_FLOW IS NULL
+		AND NOT EXISTS(
+			SELECT 1 FROM SCH_ARRANGE_RESULT R
+			WHERE R.RECORD_STATUS='Y'
+			AND R.DOCTOR_FLOW=#{doctorFlow}
+			AND R.STANDARD_DEPT_ID=SRD.STANDARD_DEPT_ID
+			AND R.STANDARD_GROUP_FLOW=SRD.GROUP_FLOW
+		)
+		AND NOT EXISTS(
+			SELECT 1 FROM sch_arrange_period_rel R
+			WHERE R.RECORD_STATUS='Y'
+			AND R.DOCTOR_FLOW=#{doctorFlow}
+			AND R.STANDARD_DEPT_ID=SRD.STANDARD_DEPT_ID
+		)
+		AND NOT EXISTS(
+			SELECT 1 FROM RES_DOCTOR R
+			WHERE R.RECORD_STATUS='Y'
+			AND R.DOCTOR_FLOW=#{doctorFlow}
+			AND R.STANDARD_DEPT_ID=SRD.STANDARD_DEPT_ID
+		)
+		AND SRD.SCH_MONTH IN (1,2)
+	</select>
+	<resultMap type="HashMap" id="deptByresultFlowsMap">
+		<result property="practicOrTheory" column="PRACTIC_OR_THEORY" javaType="string"/>
+		<result property="resultFlow" column="RESULT_FLOW" javaType="string"/>
+	</resultMap>
+	<select id="readStandardRotationDeptByresultFlows" resultMap="deptByresultFlowsMap">
+		SELECT srd.PRACTIC_OR_THEORY,sar.result_flow FROM Sch_Rotation_Dept srd left join sch_arrange_result sar
+		on srd.rotation_flow = sar.rotation_flow
+		and srd.standard_dept_id = sar.standard_dept_id
+		and srd.group_flow = sar.standard_group_flow
+		and srd.org_flow is null
+		where srd.record_status = 'Y'
+		and sar.record_status = 'Y'
+		and sar.result_flow in
+		<foreach collection="resultFlows" item="resultFlow" open="(" separator="," close=")">
+			#{resultFlow}
+		</foreach>
+	</select>
+
+	<select id="selectByExampleTwo" parameterType="com.pinde.sci.model.mo.SchRotationDeptExample"
+			resultMap="com.pinde.sci.dao.base.SchRotationDeptMapper.BaseResultMap">
+		select
+		RECORD_FLOW
+		from PDSCI.SCH_ROTATION_DEPT
+		<if test="_parameter != null">
+			<where>
+				<foreach collection="oredCriteria" item="criteria" separator="or">
+					<if test="criteria.valid">
+						<trim prefix="(" prefixOverrides="and" suffix=")">
+							<foreach collection="criteria.criteria" item="criterion">
+								<choose>
+									<when test="criterion.noValue">
+										and ${criterion.condition}
+									</when>
+									<when test="criterion.singleValue">
+										and ${criterion.condition} #{criterion.value}
+									</when>
+									<when test="criterion.betweenValue">
+										and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+									</when>
+									<when test="criterion.listValue">
+										and ${criterion.condition}
+										<foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+											#{listItem}
+										</foreach>
+									</when>
+								</choose>
+							</foreach>
+						</trim>
+					</if>
+				</foreach>
+			</where>
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+</mapper>

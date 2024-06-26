@@ -1,0 +1,30 @@
+package com.pinde.sci.dao.base;
+
+import com.pinde.sci.model.mo.ResRecruitHistory;
+import com.pinde.sci.model.mo.ResRecruitHistoryExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface ResRecruitHistoryMapper {
+    int countByExample(ResRecruitHistoryExample example);
+
+    int deleteByExample(ResRecruitHistoryExample example);
+
+    int deleteByPrimaryKey(String historyFlow);
+
+    int insert(ResRecruitHistory record);
+
+    int insertSelective(ResRecruitHistory record);
+
+    List<ResRecruitHistory> selectByExample(ResRecruitHistoryExample example);
+
+    ResRecruitHistory selectByPrimaryKey(String historyFlow);
+
+    int updateByExampleSelective(@Param("record") ResRecruitHistory record, @Param("example") ResRecruitHistoryExample example);
+
+    int updateByExample(@Param("record") ResRecruitHistory record, @Param("example") ResRecruitHistoryExample example);
+
+    int updateByPrimaryKeySelective(ResRecruitHistory record);
+
+    int updateByPrimaryKey(ResRecruitHistory record);
+}

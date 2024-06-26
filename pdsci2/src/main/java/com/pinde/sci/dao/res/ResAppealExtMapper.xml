@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.ResAppealExtMapper" >
+	<resultMap type="com.pinde.sci.form.res.AppealForm" id="appealFormMap">
+		<result column="REC_TYPE_ID" jdbcType="VARCHAR" property="recTypeId"/>
+		<result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName"/>
+		<result column="APPEAL_NUM" jdbcType="DECIMAL" property="appealNum"/>
+	</resultMap>
+	
+	<resultMap type="HashMap" id="appealCountMap">
+		<result  property="appealKey" column="APPEAL_KEY" javaType="string"/>
+		<result property="appealSum" column="APPEAL_SUM" javaType="java.math.BigDecimal"/>
+	</resultMap>
+
+	<!--<select id="searchAppealFormList" resultMap="appealFormMap">-->
+	<!--SELECT REC_TYPE_ID,ITEM_NAME,SUM(APPEAL_NUM) APPEAL_NUM-->
+	<!--FROM PDSCI.RES_APPEAL-->
+	<!--GROUP BY REC_TYPE_ID-->
+	<!--</select>-->
+	
+	<select id="appealCountWithUser" resultMap="appealCountMap">
+		SELECT OPER_USER_FLOW||PROCESS_FLOW||REC_TYPE_ID APPEAL_KEY,SUM(APPEAL_NUM) APPEAL_SUM
+		FROM PDSCI.RES_APPEAL
+		WHERE RECORD_STATUS = 'Y'
+		AND OPER_USER_FLOW IN 
+		<foreach collection="userFlows" item="userFlow" open="(" separator="," close=")">
+			#{userFlow}
+		</foreach>
+		AND PROCESS_FLOW IN
+		<foreach collection="processFlows" item="processFlow" open="(" separator="," close=")">
+			#{processFlow}
+		</foreach>
+		<if test='roleFlag != null and roleFlag !=""'>
+			AND AUDIT_STATUS_ID IS NULL
+		</if>
+		GROUP BY OPER_USER_FLOW,PROCESS_FLOW,SCH_DEPT_FLOW,REC_TYPE_ID
+	</select>
+	
+	<select id="searchAppealForAudit" resultMap="com.pinde.sci.dao.base.ResAppealMapper.BaseResultMap">
+		SELECT *
+		FROM PDSCI.RES_APPEAL
+		WHERE RECORD_STATUS = 'Y'
+		<if test='recTypeId != null and recTypeId != ""'>
+			AND REC_TYPE_ID = #{recTypeId}
+		</if>
+		<if test='processFlow != null and processFlow != ""'>
+			AND PROCESS_FLOW = #{processFlow}
+		</if>
+<!-- 		AND (AUDIT_STATUS_ID <![CDATA[<>]]> 'TeacherAuditN' OR AUDIT_STATUS_ID IS NULL) -->
+		ORDER BY AUDIT_STATUS_ID NULLS FIRST,OPER_TIME
+	</select>
+	
+	<select id="searchAppealCount" resultMap="appealCountMap">
+		SELECT REC_TYPE_ID AS APPEAL_KEY,Count(*) APPEAL_SUM
+		FROM PDSCI.RES_APPEAL
+		WHERE RECORD_STATUS = 'Y'
+		<if test='operUserFlow != null and operUserFlow != ""'>
+			AND OPER_USER_FLOW = #{operUserFlow}
+		</if>
+		<if test='schDeptFlow != null and schDeptFlow != ""'>
+			AND SCH_DEPT_FLOW = #{schDeptFlow}
+		</if>
+		GROUP BY REC_TYPE_ID
+	</select>
+	
+	<select id="searchNotAuditAppealCount" resultMap="appealCountMap">
+		SELECT RDSP.USER_FLOW APPEAL_KEY,COUNT(*) APPEAL_SUM 
+		FROM PDSCI.RES_APPEAL RA,PDSCI.RES_DOCTOR_SCH_PROCESS RDSP
+		WHERE RA.RECORD_STATUS = 'Y'
+		AND RDSP.RECORD_STATUS = 'Y'
+		AND RA.OPER_USER_FLOW = RDSP.USER_FLOW
+		AND RA.SCH_DEPT_FLOW = RDSP.SCH_DEPT_FLOW
+		AND RDSP.IS_CURRENT_FLAG = 'Y'
+		<if test='schDeptFlow!=null and schDeptFlow!=""'>
+			AND RDSP.SCH_DEPT_FLOW = #{schDeptFlow}
+		</if>
+		<if test='teacherUserFlow!=null and teacherUserFlow!=""'>
+			AND RDSP.TEACHER_USER_FLOW = #{teacherUserFlow}
+		</if>
+		<if test='isAudit!=null and isAudit=="Y"'>
+			AND RA.AUDIT_STATUS_ID IS NOT NULL
+		</if>
+		<if test='isAudit!=null and isAudit=="N"'>
+			AND RA.AUDIT_STATUS_ID IS NULL
+		</if>
+		GROUP BY RDSP.USER_FLOW
+	</select>
+
+    <update id="oneKeyAudit" parameterType="map" >
+    update PDSCI.RES_APPEAL
+    <set >
+        <if test="record.appealFlow != null" >
+            APPEAL_FLOW = #{record.appealFlow,jdbcType=VARCHAR},
+        </if>
+        <if test="record.orgFlow != null" >
+            ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+        </if>
+        <if test="record.orgName != null" >
+            ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+        </if>
+        <if test="record.deptFlow != null" >
+            DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
+        </if>
+        <if test="record.deptName != null" >
+            DEPT_NAME = #{record.deptName,jdbcType=VARCHAR},
+        </if>
+        <if test="record.schDeptFlow != null" >
+            SCH_DEPT_FLOW = #{record.schDeptFlow,jdbcType=VARCHAR},
+        </if>
+        <if test="record.schDeptName != null" >
+            SCH_DEPT_NAME = #{record.schDeptName,jdbcType=VARCHAR},
+        </if>
+        <if test="record.recTypeId != null" >
+            REC_TYPE_ID = #{record.recTypeId,jdbcType=VARCHAR},
+        </if>
+        <if test="record.recTypeName != null" >
+            REC_TYPE_NAME = #{record.recTypeName,jdbcType=VARCHAR},
+        </if>
+        <if test="record.itemName != null" >
+            ITEM_NAME = #{record.itemName,jdbcType=VARCHAR},
+        </if>
+        <if test="record.appealNum != null" >
+            APPEAL_NUM = #{record.appealNum,jdbcType=DECIMAL},
+        </if>
+        <if test="record.appealReason != null" >
+            APPEAL_REASON = #{record.appealReason,jdbcType=VARCHAR},
+        </if>
+        <if test="record.operTime != null" >
+            OPER_TIME = #{record.operTime,jdbcType=VARCHAR},
+        </if>
+        <if test="record.operUserFlow != null" >
+            OPER_USER_FLOW = #{record.operUserFlow,jdbcType=VARCHAR},
+        </if>
+        <if test="record.operUserName != null" >
+            OPER_USER_NAME = #{record.operUserName,jdbcType=VARCHAR},
+        </if>
+        <if test="record.statusId != null" >
+            STATUS_ID = #{record.statusId,jdbcType=VARCHAR},
+        </if>
+        <if test="record.statusName != null" >
+            STATUS_NAME = #{record.statusName,jdbcType=VARCHAR},
+        </if>
+        <if test="record.auditTime != null" >
+            AUDIT_TIME = #{record.auditTime,jdbcType=VARCHAR},
+        </if>
+        <if test="record.auditUserFlow != null" >
+            AUDIT_USER_FLOW = #{record.auditUserFlow,jdbcType=VARCHAR},
+        </if>
+        <if test="record.auditUserName != null" >
+            AUDIT_USER_NAME = #{record.auditUserName,jdbcType=VARCHAR},
+        </if>
+        <if test="record.auditStatusId != null" >
+            AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+        </if>
+        <if test="record.auditStatusName != null" >
+            AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+        </if>
+        <if test="record.headAuditTime != null" >
+            HEAD_AUDIT_TIME = #{record.headAuditTime,jdbcType=VARCHAR},
+        </if>
+        <if test="record.headAuditUserFlow != null" >
+            HEAD_AUDIT_USER_FLOW = #{record.headAuditUserFlow,jdbcType=VARCHAR},
+        </if>
+        <if test="record.headAuditUserName != null" >
+            HEAD_AUDIT_USER_NAME = #{record.headAuditUserName,jdbcType=VARCHAR},
+        </if>
+        <if test="record.headAuditStatusId != null" >
+            HEAD_AUDIT_STATUS_ID = #{record.headAuditStatusId,jdbcType=VARCHAR},
+        </if>
+        <if test="record.headAuditStatusName != null" >
+            HEAD_AUDIT_STATUS_NAME = #{record.headAuditStatusName,jdbcType=VARCHAR},
+        </if>
+        <if test="record.recordStatus != null" >
+            RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+        </if>
+        <if test="record.createTime != null" >
+            CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+        </if>
+        <if test="record.createUserFlow != null" >
+            CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+        </if>
+        <if test="record.modifyTime != null" >
+            MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+        </if>
+        <if test="record.modifyUserFlow != null" >
+            MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+        </if>
+        <if test="record.itemId != null" >
+            ITEM_ID = #{record.itemId,jdbcType=VARCHAR},
+        </if>
+        <if test="record.processFlow != null" >
+            PROCESS_FLOW = #{record.processFlow,jdbcType=VARCHAR},
+        </if>
+      </set>
+        WHERE rec_type_id  in
+        <foreach collection="regTypeIds" item="listItem" open="(" close=")" separator="," >
+            #{listItem}
+        </foreach>
+        and record_status='Y' and audit_status_id is null
+        and process_flow in(
+        select process_flow from res_doctor_sch_process
+        where record_status='Y' and teacher_user_flow=#{userFlow,jdbcType=VARCHAR})
+    </update>
+
+
+
+    <update id="oneKeyAuditByOrg" parameterType="string" >
+        UPDATE RES_APPEAL
+           SET AUDIT_TIME        = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
+               AUDIT_USER_FLOW   = (SELECT TEACHER_USER_FLOW
+                                      FROM RES_DOCTOR_SCH_PROCESS
+                                     WHERE PROCESS_FLOW = RES_APPEAL.PROCESS_FLOW),
+               AUDIT_USER_NAME   = (SELECT TEACHER_USER_NAME
+                                      FROM RES_DOCTOR_SCH_PROCESS
+                                     WHERE PROCESS_FLOW = RES_APPEAL.PROCESS_FLOW),
+               AUDIT_STATUS_ID   = 'TeacherAuditY',
+               AUDIT_STATUS_NAME = '带教老师审核通过',
+               MODIFY_TIME       = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
+               MODIFY_USER_FLOW  = #{userFlow,jdbcType=VARCHAR}
+         WHERE RECORD_STATUS = 'Y'
+           AND AUDIT_STATUS_ID IS NULL
+           AND PROCESS_FLOW IS NOT NULL
+           AND OPER_USER_FLOW IN (SELECT DOCTOR_FLOW
+                                    FROM RES_DOCTOR
+                                   WHERE RECORD_STATUS = 'Y'
+                                     AND ORG_FLOW =#{orgFlow,jdbcType=VARCHAR})
+
+    </update>
+</mapper>

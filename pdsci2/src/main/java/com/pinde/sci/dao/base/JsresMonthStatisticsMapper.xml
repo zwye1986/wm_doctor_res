@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.JsresMonthStatisticsMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.JsresMonthStatistics" >
+    <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_NUMBER" property="doctorNumber" jdbcType="VARCHAR" />
+    <result column="DOCTOR_TOTAL_NUMBER" property="doctorTotalNumber" jdbcType="VARCHAR" />
+    <result column="DOCTOR_AUDIT_NUMBER" property="doctorAuditNumber" jdbcType="VARCHAR" />
+    <result column="GRADUATE_NUMBER" property="graduateNumber" jdbcType="VARCHAR" />
+    <result column="GRADUATE_TOTAL_NUMBER" property="graduateTotalNumber" jdbcType="VARCHAR" />
+    <result column="GRADUATE_AUDIT_NUMBER" property="graduateAuditNumber" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="MONTH_DATE" property="monthDate" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RECORD_FLOW, DOCTOR_NUMBER, DOCTOR_TOTAL_NUMBER, DOCTOR_AUDIT_NUMBER, GRADUATE_NUMBER, 
+    GRADUATE_TOTAL_NUMBER, GRADUATE_AUDIT_NUMBER, ORG_FLOW, ORG_NAME, MONTH_DATE, RECORD_STATUS, 
+    CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.JsresMonthStatisticsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.JSRES_MONTH_STATISTICS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.JSRES_MONTH_STATISTICS
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.JSRES_MONTH_STATISTICS
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.JsresMonthStatisticsExample" >
+    delete from PDSCI.JSRES_MONTH_STATISTICS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.JsresMonthStatistics" >
+    insert into PDSCI.JSRES_MONTH_STATISTICS (RECORD_FLOW, DOCTOR_NUMBER, DOCTOR_TOTAL_NUMBER, 
+      DOCTOR_AUDIT_NUMBER, GRADUATE_NUMBER, GRADUATE_TOTAL_NUMBER, 
+      GRADUATE_AUDIT_NUMBER, ORG_FLOW, ORG_NAME, 
+      MONTH_DATE, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+      )
+    values (#{recordFlow,jdbcType=VARCHAR}, #{doctorNumber,jdbcType=VARCHAR}, #{doctorTotalNumber,jdbcType=VARCHAR}, 
+      #{doctorAuditNumber,jdbcType=VARCHAR}, #{graduateNumber,jdbcType=VARCHAR}, #{graduateTotalNumber,jdbcType=VARCHAR}, 
+      #{graduateAuditNumber,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, 
+      #{monthDate,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.JsresMonthStatistics" >
+    insert into PDSCI.JSRES_MONTH_STATISTICS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        RECORD_FLOW,
+      </if>
+      <if test="doctorNumber != null" >
+        DOCTOR_NUMBER,
+      </if>
+      <if test="doctorTotalNumber != null" >
+        DOCTOR_TOTAL_NUMBER,
+      </if>
+      <if test="doctorAuditNumber != null" >
+        DOCTOR_AUDIT_NUMBER,
+      </if>
+      <if test="graduateNumber != null" >
+        GRADUATE_NUMBER,
+      </if>
+      <if test="graduateTotalNumber != null" >
+        GRADUATE_TOTAL_NUMBER,
+      </if>
+      <if test="graduateAuditNumber != null" >
+        GRADUATE_AUDIT_NUMBER,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="monthDate != null" >
+        MONTH_DATE,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorNumber != null" >
+        #{doctorNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTotalNumber != null" >
+        #{doctorTotalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorAuditNumber != null" >
+        #{doctorAuditNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateNumber != null" >
+        #{graduateNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateTotalNumber != null" >
+        #{graduateTotalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateAuditNumber != null" >
+        #{graduateAuditNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="monthDate != null" >
+        #{monthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.JsresMonthStatisticsExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.JSRES_MONTH_STATISTICS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.JSRES_MONTH_STATISTICS
+    <set >
+      <if test="record.recordFlow != null" >
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorNumber != null" >
+        DOCTOR_NUMBER = #{record.doctorNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorTotalNumber != null" >
+        DOCTOR_TOTAL_NUMBER = #{record.doctorTotalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorAuditNumber != null" >
+        DOCTOR_AUDIT_NUMBER = #{record.doctorAuditNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduateNumber != null" >
+        GRADUATE_NUMBER = #{record.graduateNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduateTotalNumber != null" >
+        GRADUATE_TOTAL_NUMBER = #{record.graduateTotalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduateAuditNumber != null" >
+        GRADUATE_AUDIT_NUMBER = #{record.graduateAuditNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.monthDate != null" >
+        MONTH_DATE = #{record.monthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.JSRES_MONTH_STATISTICS
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      DOCTOR_NUMBER = #{record.doctorNumber,jdbcType=VARCHAR},
+      DOCTOR_TOTAL_NUMBER = #{record.doctorTotalNumber,jdbcType=VARCHAR},
+      DOCTOR_AUDIT_NUMBER = #{record.doctorAuditNumber,jdbcType=VARCHAR},
+      GRADUATE_NUMBER = #{record.graduateNumber,jdbcType=VARCHAR},
+      GRADUATE_TOTAL_NUMBER = #{record.graduateTotalNumber,jdbcType=VARCHAR},
+      GRADUATE_AUDIT_NUMBER = #{record.graduateAuditNumber,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      MONTH_DATE = #{record.monthDate,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.JsresMonthStatistics" >
+    update PDSCI.JSRES_MONTH_STATISTICS
+    <set >
+      <if test="doctorNumber != null" >
+        DOCTOR_NUMBER = #{doctorNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTotalNumber != null" >
+        DOCTOR_TOTAL_NUMBER = #{doctorTotalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorAuditNumber != null" >
+        DOCTOR_AUDIT_NUMBER = #{doctorAuditNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateNumber != null" >
+        GRADUATE_NUMBER = #{graduateNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateTotalNumber != null" >
+        GRADUATE_TOTAL_NUMBER = #{graduateTotalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateAuditNumber != null" >
+        GRADUATE_AUDIT_NUMBER = #{graduateAuditNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="monthDate != null" >
+        MONTH_DATE = #{monthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.JsresMonthStatistics" >
+    update PDSCI.JSRES_MONTH_STATISTICS
+    set DOCTOR_NUMBER = #{doctorNumber,jdbcType=VARCHAR},
+      DOCTOR_TOTAL_NUMBER = #{doctorTotalNumber,jdbcType=VARCHAR},
+      DOCTOR_AUDIT_NUMBER = #{doctorAuditNumber,jdbcType=VARCHAR},
+      GRADUATE_NUMBER = #{graduateNumber,jdbcType=VARCHAR},
+      GRADUATE_TOTAL_NUMBER = #{graduateTotalNumber,jdbcType=VARCHAR},
+      GRADUATE_AUDIT_NUMBER = #{graduateAuditNumber,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      MONTH_DATE = #{monthDate,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jsres.SysUserJsresMapper" >
+    <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysUser" >
+        <id column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+        <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+        <result column="USER_PASSWD" property="userPasswd" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="SEX_ID" property="sexId" jdbcType="VARCHAR" />
+        <result column="SEX_NAME" property="sexName" jdbcType="VARCHAR" />
+        <result column="STATUS_ID" property="statusId" jdbcType="VARCHAR" />
+        <result column="STATUS_DESC" property="statusDesc" jdbcType="VARCHAR" />
+        <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR" />
+        <result column="USER_EMAIL" property="userEmail" jdbcType="VARCHAR" />
+        <result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
+        <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+        <result column="USER_BIRTHDAY" property="userBirthday" jdbcType="VARCHAR" />
+        <result column="TITLE_ID" property="titleId" jdbcType="VARCHAR" />
+        <result column="TITLE_NAME" property="titleName" jdbcType="VARCHAR" />
+        <result column="DEGREE_ID" property="degreeId" jdbcType="VARCHAR" />
+        <result column="DEGREE_NAME" property="degreeName" jdbcType="VARCHAR" />
+        <result column="EDUCATION_ID" property="educationId" jdbcType="VARCHAR" />
+        <result column="EDUCATION_NAME" property="educationName" jdbcType="VARCHAR" />
+        <result column="POST_ID" property="postId" jdbcType="VARCHAR" />
+        <result column="POST_NAME" property="postName" jdbcType="VARCHAR" />
+        <result column="SRM_EXPERT_FLAG" property="srmExpertFlag" jdbcType="VARCHAR" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+        <result column="WEI_XIN_ID" property="weiXinId" jdbcType="VARCHAR" />
+        <result column="WEI_XIN_NAME" property="weiXinName" jdbcType="VARCHAR" />
+        <result column="WEI_XIN_STATUS_ID" property="weiXinStatusId" jdbcType="VARCHAR" />
+        <result column="WEI_XIN_STATUS_DESC" property="weiXinStatusDesc" jdbcType="VARCHAR" />
+        <result column="NATION_ID" property="nationId" jdbcType="VARCHAR" />
+        <result column="NATION_NAME" property="nationName" jdbcType="VARCHAR" />
+        <result column="USER_ADDRESS" property="userAddress" jdbcType="VARCHAR" />
+        <result column="USER_EMAIL_STATUS_ID" property="userEmailStatusId" jdbcType="VARCHAR" />
+        <result column="USER_EMAIL_STATUS_DESC" property="userEmailStatusDesc" jdbcType="VARCHAR" />
+        <result column="USER_PHONE_STATUS_ID" property="userPhoneStatusId" jdbcType="VARCHAR" />
+        <result column="USER_PHONE_STATUS_DESC" property="userPhoneStatusDesc" jdbcType="VARCHAR" />
+        <result column="CRET_TYPE_ID" property="cretTypeId" jdbcType="VARCHAR" />
+        <result column="CRET_TYPE_NAME" property="cretTypeName" jdbcType="VARCHAR" />
+        <result column="USER_HEAD_IMG" property="userHeadImg" jdbcType="VARCHAR" />
+        <result column="POLITICS_STATUS_ID" property="politicsStatusId" jdbcType="VARCHAR" />
+        <result column="POLITICS_STATUS_NAME" property="politicsStatusName" jdbcType="VARCHAR" />
+        <result column="NATIVE_PLACE_PROV_ID" property="nativePlaceProvId" jdbcType="VARCHAR" />
+        <result column="NATIVE_PLACE_CITY_ID" property="nativePlaceCityId" jdbcType="VARCHAR" />
+        <result column="DOMICILE_PLACE_ID" property="domicilePlaceId" jdbcType="VARCHAR" />
+        <result column="DOMICILE_PLACE_NAME" property="domicilePlaceName" jdbcType="VARCHAR" />
+        <result column="USER_QQ" property="userQq" jdbcType="VARCHAR" />
+        <result column="MARITAL_ID" property="maritalId" jdbcType="VARCHAR" />
+        <result column="MARITAL_NAME" property="maritalName" jdbcType="VARCHAR" />
+        <result column="DOMICILE_PLACE_ADDRESS" property="domicilePlaceAddress" jdbcType="VARCHAR" />
+        <result column="BEAR_ID" property="bearId" jdbcType="VARCHAR" />
+        <result column="BEAR_NAME" property="bearName" jdbcType="VARCHAR" />
+        <result column="NATIVE_PLACE_AREA_ID" property="nativePlaceAreaId" jdbcType="VARCHAR" />
+        <result column="NATIVE_PLACE_PROV_NAME" property="nativePlaceProvName" jdbcType="VARCHAR" />
+        <result column="NATIVE_PLACE_CITY_NAME" property="nativePlaceCityName" jdbcType="VARCHAR" />
+        <result column="NATIVE_PLACE_AREA_NAME" property="nativePlaceAreaName" jdbcType="VARCHAR" />
+        <result column="LOCK_TIME" property="lockTime" jdbcType="VARCHAR" />
+        <result column="IS_EXAM_TEA" property="isExamTea" jdbcType="VARCHAR" />
+        <result column="IS_OWNER_STU" property="isOwnerStu" jdbcType="VARCHAR" />
+        <result column="LCJN_SPE_ID" property="lcjnSpeId" jdbcType="VARCHAR" />
+        <result column="LCJN_SPE_NAME" property="lcjnSpeName" jdbcType="VARCHAR" />
+        <result column="APP_LOGIN_TIME" property="appLoginTime" jdbcType="VARCHAR" />
+        <result column="WEB_LOGIN_TIME" property="webLoginTime" jdbcType="VARCHAR" />
+        <result column="WORK_ORG_NAME" property="workOrgName" jdbcType="VARCHAR" />
+        <result column="REPORTING_AUTHORITY" property="reportingAuthority" jdbcType="VARCHAR" />
+        <result column="IS_ORG_ADMIN" property="isOrgAdmin" jdbcType="VARCHAR" />
+        <result column="CERTIFICATE_ID" property="certificateId" jdbcType="VARCHAR" />
+        <result column="IS_OSCA" property="isOsca" jdbcType="VARCHAR" />
+        <result column="ACCOUNT_NO" property="accountNo" jdbcType="VARCHAR" />
+        <result column="WORK_CODE" property="workCode" jdbcType="VARCHAR" />
+        <result column="RES_TRAINING_SPE_ID" property="resTrainingSpeId" jdbcType="VARCHAR" />
+        <result column="RES_TRAINING_SPE_NAME" property="resTrainingSpeName" jdbcType="VARCHAR" />
+        <result column="PROMOTE_TIME" property="promoteTime" jdbcType="VARCHAR" />
+        <result column="USER_MAJOR" property="userMajor" jdbcType="VARCHAR" />
+        <result column="PASSPORT_NO" property="passportNo" jdbcType="VARCHAR" />
+        <result column="NATIONALITY_ID" property="nationalityId" jdbcType="VARCHAR" />
+        <result column="NATIONALITY_NAME" property="nationalityName" jdbcType="VARCHAR" />
+        <result column="IS_FOREIGN" property="isForeign" jdbcType="VARCHAR" />
+        <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+        <result column="USER_PINYIN" property="userPinyin" jdbcType="VARCHAR" />
+        <result column="CERTIFICATE_LEVEL_ID" property="certificateLevelId" jdbcType="VARCHAR" />
+        <result column="CERTIFICATE_LEVEL_NAME" property="certificateLevelName" jdbcType="VARCHAR" />
+        <result column="CERTIFICATE_FILE" property="certificateFile" jdbcType="VARCHAR" />
+        <result column="CERTIFICATE_TIME" property="certificateTime" jdbcType="VARCHAR" />
+        <result column="PARTY_BRANCH_ID" property="partyBranchId" jdbcType="VARCHAR" />
+        <result column="PARTY_BRANCH_NAME" property="partyBranchName" jdbcType="VARCHAR" />
+        <result column="TIP_PASSWORD" property="tipPassword" jdbcType="VARCHAR" />
+        <result column="MEDICINE_TYPE_ID" property="medicineTypeId" jdbcType="VARCHAR" />
+        <result column="MEDICINE_TYPE_NAME" property="medicineTypeName" jdbcType="VARCHAR" />
+        <result column="TEACHER_TYPE_ID" property="teacherTypeId" jdbcType="VARCHAR" />
+        <result column="TEACHER_TYPE_NAME" property="teacherTypeName" jdbcType="VARCHAR" />
+        <result column="BASE_FLOW" property="baseFlow" jdbcType="VARCHAR" />
+        <result column="BASE_NAME" property="baseName" jdbcType="VARCHAR" />
+        <result column="IS_VERIFY" property="isVerify" jdbcType="VARCHAR" />
+        <result column="VERIFY_CODE" property="verifyCode" jdbcType="VARCHAR" />
+        <result column="VERIFY_CODE_TIME" property="verifyCodeTime" jdbcType="VARCHAR" />
+        <result column="IS_SEND" property="isSend" jdbcType="VARCHAR" />
+        <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+        <result column="IDCARD_FRONT_IMG" property="idcardFrontImg" jdbcType="VARCHAR" />
+        <result column="IDCARD_OPPOSITE_IMG" property="idcardOppositeImg" jdbcType="VARCHAR" />
+        <result column="NATIONALITY" property="nationality" jdbcType="VARCHAR" />
+        <result column="IS_SUBMIT_ID" property="isSubmitId" jdbcType="VARCHAR" />
+        <result column="IS_SUBMIT_NAME" property="isSubmitName" jdbcType="VARCHAR" />
+        <result column="CHECK_STATUS_ID" property="checkStatusId" jdbcType="VARCHAR" />
+        <result column="CHECK_STATUS_NAME" property="checkStatusName" jdbcType="VARCHAR" />
+        <result column="CHECK_REASON" property="checkReason" jdbcType="VARCHAR" />
+        <result column="LAST_LOGIN_ERROR_TIME" property="lastLoginErrorTime" jdbcType="VARCHAR" />
+        <result column="LOGIN_ERROR_COUNT" property="loginErrorCount" jdbcType="VARCHAR" />
+        <result column="CHANGE_PASSWORD_TIME" property="changePasswordTime" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    USER_FLOW, USER_CODE, USER_PASSWD, USER_NAME, SEX_ID, SEX_NAME, STATUS_ID, STATUS_DESC,
+    USER_PHONE, USER_EMAIL, DEPT_FLOW, DEPT_NAME, ORG_FLOW, ORG_NAME, ID_NO, USER_BIRTHDAY,
+    TITLE_ID, TITLE_NAME, DEGREE_ID, DEGREE_NAME, EDUCATION_ID, EDUCATION_NAME, POST_ID,
+    POST_NAME, SRM_EXPERT_FLAG, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME,
+    MODIFY_USER_FLOW, WEI_XIN_ID, WEI_XIN_NAME, WEI_XIN_STATUS_ID, WEI_XIN_STATUS_DESC,
+    NATION_ID, NATION_NAME, USER_ADDRESS, USER_EMAIL_STATUS_ID, USER_EMAIL_STATUS_DESC,
+    USER_PHONE_STATUS_ID, USER_PHONE_STATUS_DESC, CRET_TYPE_ID, CRET_TYPE_NAME, USER_HEAD_IMG,
+    POLITICS_STATUS_ID, POLITICS_STATUS_NAME, NATIVE_PLACE_PROV_ID, NATIVE_PLACE_CITY_ID,
+    DOMICILE_PLACE_ID, DOMICILE_PLACE_NAME, USER_QQ, MARITAL_ID, MARITAL_NAME, DOMICILE_PLACE_ADDRESS,
+    BEAR_ID, BEAR_NAME, NATIVE_PLACE_AREA_ID, NATIVE_PLACE_PROV_NAME, NATIVE_PLACE_CITY_NAME,
+    NATIVE_PLACE_AREA_NAME, LOCK_TIME, IS_EXAM_TEA, IS_OWNER_STU, LCJN_SPE_ID, LCJN_SPE_NAME,
+    APP_LOGIN_TIME, WEB_LOGIN_TIME, WORK_ORG_NAME, REPORTING_AUTHORITY, IS_ORG_ADMIN,
+    CERTIFICATE_ID, IS_OSCA, ACCOUNT_NO, WORK_CODE, RES_TRAINING_SPE_ID, RES_TRAINING_SPE_NAME,
+    PROMOTE_TIME, USER_MAJOR, PASSPORT_NO, NATIONALITY_ID, NATIONALITY_NAME, IS_FOREIGN,
+    USER_ID, USER_PINYIN, CERTIFICATE_LEVEL_ID, CERTIFICATE_LEVEL_NAME, CERTIFICATE_FILE,
+    CERTIFICATE_TIME, PARTY_BRANCH_ID, PARTY_BRANCH_NAME, TIP_PASSWORD, MEDICINE_TYPE_ID,
+    MEDICINE_TYPE_NAME, TEACHER_TYPE_ID, TEACHER_TYPE_NAME, BASE_FLOW, BASE_NAME, IS_VERIFY,
+    VERIFY_CODE, VERIFY_CODE_TIME, IS_SEND, REMARK, IDCARD_FRONT_IMG, IDCARD_OPPOSITE_IMG,
+    NATIONALITY, IS_SUBMIT_ID, IS_SUBMIT_NAME, CHECK_STATUS_ID, CHECK_STATUS_NAME, CHECK_REASON,
+    LAST_LOGIN_ERROR_TIME, LOGIN_ERROR_COUNT, CHANGE_PASSWORD_TIME
+  </sql>
+    <select id="selectByIdNO" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from PDSCI.SYS_USER
+        where ID_NO = #{IDNO,jdbcType=VARCHAR}
+        and RECORD_STATUS='Y'
+    </select>
+</mapper>

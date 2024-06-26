@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.lcjn.LcjnDoctorTrainExtMapper">
+
+    <select id="queryDoctorSignList" parameterType="java.util.Map" resultType="java.util.Map">
+        select u.USER_FLOW,u.USER_CODE,u.USER_NAME,
+                u.ORG_FLOW,u.ORG_NAME,u.DEPT_FLOW,
+                u.DEPT_NAME,u.LCJN_SPE_ID,u.LCJN_SPE_NAME,temp.ST
+        from lcjn_doctor_course ldc
+        left join sys_user u
+        on u.user_flow=ldc.doctor_flow
+        left join (
+        Select lds.doctor_flow as doctor_flow,wm_concat(lds.sigin_time) as ST
+        from lcjn_doctor_sigin lds
+        where lds.record_status='Y'
+        and lds.course_flow=#{courseFlow}
+        group by lds.doctor_flow
+        ) temp
+        on temp.doctor_flow=u.user_flow
+        where u.record_status='Y'
+        and ldc.record_status='Y'
+        and ldc.course_flow=#{courseFlow}
+        and ldc.audit_status_id='Passed'
+        <if test='userName!=null and userName!=""'>
+            <bind name="name" value="'%'+userName+'%'"/>
+            and u.user_name like #{name}
+        </if>
+        <if test='sign!=null and sign!=""'>
+            and u.USER_FLOW
+            <if test='sign == "SignIn"'>
+                in
+            </if>
+            <if test='sign == "NoSignIn"'>
+                not in
+            </if>
+            (select distinct lds.doctor_flow
+               from lcjn_doctor_sigin lds
+                where lds.record_status='Y'
+                and lds.course_flow=#{courseFlow})
+        </if>
+    </select>
+
+    <select id="queryDoctorOrderInfoList" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT U.USER_FLOW, U.USER_CODE, U.USER_NAME, U.SEX_ID, U.SEX_NAME
+        , U.ID_NO, U.USER_PHONE, U.ORG_FLOW, U.ORG_NAME, U.DEPT_FLOW
+        , U.DEPT_NAME, U.LCJN_SPE_ID, U.LCJN_SPE_NAME, LDC.AUDIT_STATUS_ID, LDC.AUDIT_STATUS_NAME
+        , LDC.RECORD_FLOW
+        FROM LCJN_DOCTOR_COURSE LDC
+        LEFT JOIN SYS_USER U ON LDC.DOCTOR_FLOW = U.USER_FLOW
+        WHERE U.RECORD_STATUS = 'Y'
+        AND LDC.RECORD_STATUS = 'Y'
+        AND LDC.COURSE_FLOW=#{courseFlow}
+        <if test='auditStatusId!=null and auditStatusId!=""'>
+            AND LDC.AUDIT_STATUS_ID =#{auditStatusId}
+        </if>
+        ORDER BY LDC.APPOINT_TIME
+    </select>
+
+    <select id="queryLocalDoctors" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT U.USER_FLOW,U.USER_CODE,U.USER_NAME,U.SEX_ID,
+                U.SEX_NAME,U.ID_NO,U.USER_PHONE,
+                U.ORG_FLOW, U.ORG_NAME, U.DEPT_FLOW
+                , U.DEPT_NAME, U.LCJN_SPE_ID, U.LCJN_SPE_NAME
+        FROM SYS_USER U
+        WHERE U.RECORD_STATUS='Y'
+        AND U.IS_OWNER_STU='Y'
+        AND U.IS_EXAM_TEA IS NULL
+        <if test='orgFlow!=null and orgFlow!=""'>
+            AND U.ORG_FLOW =#{orgFlow}
+        </if>
+    </select>
+
+    <select id="countOrderTime" parameterType="java.util.Map" resultType="java.lang.Integer">
+       SELECT SUM(QYT)
+          FROM (SELECT T.*,
+           (SELECT COUNT(1)
+                  FROM (SELECT CSD.*,CSD.START_DATE || ' ' || CSD.START_TIME AS TRAIN_START_TIME,CSD.START_DATE || ' ' || CSD.END_TIME AS TRAIN_END_TIME
+                          FROM (SELECT DISTINCT T.RECORD_FLOW,T.START_TIME,T.END_TIME,
+                                                TO_CHAR(TO_DATE(T.TRAIN_START_DATE,'YYYY-MM-DD') + LEVEL - 1,'YYYY-MM-DD') AS START_DATE
+                                  FROM LCJN_COURSE_TIME T
+                                 WHERE T.RECORD_STATUS = 'Y'
+                                   AND T.COURSE_FLOW != #{courseFlow}
+                                   AND T.COURSE_FLOW IN
+                                       (SELECT COURSE_FLOW
+                                          FROM LCJN_DOCTOR_COURSE
+                                         WHERE DOCTOR_FLOW =#{doctorFlow} AND AUDIT_STATUS_ID='Passed')
+                                CONNECT BY LEVEL <![CDATA[<=]]>
+                                           TO_DATE(T.TRAIN_END_DATE,'YYYY-MM-DD') -
+                                           TO_DATE(T.TRAIN_START_DATE,'YYYY-MM-DD') + 1) CSD) B
+                 WHERE (B.TRAIN_START_TIME <![CDATA[<=]]> T.TRAIN_START_TIME AND
+                       B.TRAIN_END_TIME >= T.TRAIN_START_TIME OR
+                       B.TRAIN_START_TIME <![CDATA[<=]]> T.TRAIN_END_TIME AND
+                       B.TRAIN_END_TIME >= T.TRAIN_END_TIME OR
+                       B.TRAIN_START_TIME >= T.TRAIN_START_TIME AND
+                       B.TRAIN_END_TIME <![CDATA[<=]]> T.TRAIN_END_TIME)) AS QYT
+          FROM (SELECT CSD.START_DATE || ' ' || CSD.START_TIME AS TRAIN_START_TIME,
+                       CSD.START_DATE || ' ' || CSD.END_TIME AS TRAIN_END_TIME
+                  FROM (SELECT DISTINCT T.RECORD_FLOW,T.START_TIME,T.END_TIME,
+                                TO_CHAR(TO_DATE(T.TRAIN_START_DATE,'YYYY-MM-DD') + LEVEL - 1,'YYYY-MM-DD') AS START_DATE
+                  FROM LCJN_COURSE_TIME T
+                 WHERE T.RECORD_STATUS = 'Y'
+                   AND T.COURSE_FLOW = #{courseFlow}
+                CONNECT BY LEVEL <![CDATA[<=]]>
+                           TO_DATE(T.TRAIN_END_DATE, 'YYYY-MM-DD') -
+                           TO_DATE(T.TRAIN_START_DATE, 'YYYY-MM-DD') + 1) CSD) T) A
+
+    </select>
+
+    <select id="queryOrderTimeAndPassing" parameterType="java.util.Map" resultType="java.lang.String">
+        SELECT DISTINCT B.COURSE_FLOW
+        FROM (
+        SELECT T.COURSE_FLOW COURSE_FLOW,CSD.START_DATE||' '||T.START_TIME TRAIN_START_TIME,CSD.START_DATE||' '||T.END_TIME TRAIN_END_TIME
+        FROM (SELECT T.RECORD_FLOW,
+        TO_CHAR(TO_DATE(T.TRAIN_START_DATE, 'YYYY-MM-DD') + LEVEL - 1,
+        'YYYY-MM-DD') AS START_DATE
+        FROM LCJN_COURSE_TIME T
+        WHERE T.RECORD_STATUS = 'Y'
+        CONNECT BY LEVEL <![CDATA[<=]]> TO_DATE(T.TRAIN_END_DATE, 'YYYY-MM-DD') -
+        TO_DATE(T.TRAIN_START_DATE, 'YYYY-MM-DD') + 1) CSD
+        LEFT JOIN LCJN_COURSE_TIME T
+        ON T.RECORD_FLOW = CSD.RECORD_FLOW
+        WHERE T.RECORD_STATUS = 'Y'
+        ) B
+        WHERE B.COURSE_FLOW IN
+        (SELECT COURSE_FLOW
+        FROM LCJN_DOCTOR_COURSE
+        WHERE DOCTOR_FLOW = #{doctorFlow} AND AUDIT_STATUS_ID='Passing')
+        AND B.COURSE_FLOW != #{courseFlow}
+        AND ((B.TRAIN_START_TIME <![CDATA[<=]]> #{trainStartTime} AND
+            B.TRAIN_END_TIME <![CDATA[>=]]> #{trainStartTime}) OR
+            (B.TRAIN_START_TIME <![CDATA[<=]]> #{trainEndTime} AND
+            B.TRAIN_END_TIME <![CDATA[>=]]> #{trainEndTime}) OR
+            (B.TRAIN_START_TIME <![CDATA[>=]]> #{trainStartTime} AND
+            B.TRAIN_END_TIME <![CDATA[<=]]> #{trainEndTime}))
+    </select>
+
+    <select id="queryOrderTimeAndPassing1" parameterType="java.util.Map" resultType="java.lang.String">
+        SELECT DISTINCT abc.CFS
+        FROM (
+        SELECT (
+        SELECT DISTINCT B.COURSE_FLOW
+        FROM (
+        SELECT CSD.*, CSD.START_DATE || ' ' || CSD.START_TIME AS TRAIN_START_TIME, CSD.START_DATE || ' ' || CSD.END_TIME AS TRAIN_END_TIME
+        FROM (
+        SELECT DISTINCT T.RECORD_FLOW,T.COURSE_FLOW, T.START_TIME, T.END_TIME, TO_CHAR(TO_DATE(T.TRAIN_START_DATE, 'YYYY-MM-DD') + LEVEL - 1, 'YYYY-MM-DD') AS START_DATE
+        FROM LCJN_COURSE_TIME T
+        WHERE T.RECORD_STATUS = 'Y'
+        AND T.COURSE_FLOW != #{courseFlow}
+        AND T.COURSE_FLOW IN (SELECT COURSE_FLOW
+        FROM LCJN_DOCTOR_COURSE
+        WHERE DOCTOR_FLOW = #{doctorFlow}
+        AND AUDIT_STATUS_ID = 'Passing')
+        CONNECT BY LEVEL <![CDATA[<=]]> TO_DATE(T.TRAIN_END_DATE, 'YYYY-MM-DD') - TO_DATE(T.TRAIN_START_DATE, 'YYYY-MM-DD') + 1
+        ) CSD
+        ) B
+        WHERE B.TRAIN_START_TIME <![CDATA[<=]]> T.TRAIN_START_TIME
+        AND B.TRAIN_END_TIME <![CDATA[>=]]> T.TRAIN_START_TIME
+        OR B.TRAIN_START_TIME <![CDATA[<=]]> T.TRAIN_END_TIME
+        AND B.TRAIN_END_TIME <![CDATA[>=]]> T.TRAIN_END_TIME
+        OR B.TRAIN_START_TIME <![CDATA[>=]]> T.TRAIN_START_TIME
+        AND B.TRAIN_END_TIME <![CDATA[<=]]> T.TRAIN_END_TIME
+        ) AS CFS
+        FROM (
+        SELECT  CSD.START_DATE || ' ' || CSD.START_TIME AS TRAIN_START_TIME, CSD.START_DATE || ' ' || CSD.END_TIME AS TRAIN_END_TIME
+        FROM (
+        SELECT DISTINCT T.RECORD_FLOW, T.START_TIME, T.END_TIME, TO_CHAR(TO_DATE(T.TRAIN_START_DATE, 'YYYY-MM-DD') + LEVEL - 1, 'YYYY-MM-DD') AS START_DATE
+        FROM LCJN_COURSE_TIME T
+        WHERE T.RECORD_STATUS = 'Y'
+        AND T.COURSE_FLOW = #{courseFlow}
+        CONNECT BY LEVEL <![CDATA[<=]]> TO_DATE(T.TRAIN_END_DATE, 'YYYY-MM-DD') - TO_DATE(T.TRAIN_START_DATE, 'YYYY-MM-DD') + 1
+        ) CSD
+        ) T
+        ) abc
+    </select>
+
+    <select id="queryDoctorScoreList" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT U.USER_FLOW,U.USER_CODE,U.USER_NAME,U.SEX_ID,
+                U.SEX_NAME,U.ID_NO,U.USER_PHONE,
+                U.ORG_FLOW, U.ORG_NAME, U.DEPT_FLOW
+                , U.DEPT_NAME, U.LCJN_SPE_ID, U.LCJN_SPE_NAME,
+                LDC.AUDIT_STATUS_ID,LDC.AUDIT_STATUS_NAME,LDC.RECORD_FLOW,
+                LDC.ENTERING_STATUS_ID,LDC.ENTERING_STATUS_NAME,
+                LDC.EXAM_SCORE,LDC.COURSE_FLOW
+        FROM LCJN_DOCTOR_COURSE LDC
+        LEFT JOIN SYS_USER U
+        ON U.USER_FLOW=LDC.DOCTOR_FLOW
+        WHERE U.RECORD_STATUS='Y'
+        AND LDC.RECORD_STATUS='Y'
+        AND LDC.COURSE_FLOW=#{courseFlow}
+        AND LDC.AUDIT_STATUS_ID='Passed'
+        <if test='userName!=null and userName!=""'>
+            <bind name="name" value="'%'+userName+'%'"/>
+            AND U.USER_NAME LIKE #{name}
+        </if>
+        <if test='enteringStatusId!=null and enteringStatusId!=""'>
+            AND LDC.ENTERING_STATUS_ID = #{enteringStatusId}
+        </if>
+        <if test='doctorFlow!=null and doctorFlow!=""'>
+            AND U.USER_FLOW = #{doctorFlow}
+        </if>
+    </select>
+</mapper>

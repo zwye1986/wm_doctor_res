@@ -1,0 +1,545 @@
+package com.pinde.sci.biz.jsres.impl;
+
+
+import com.pinde.core.util.DateUtil;
+import com.pinde.core.util.JaxbUtil;
+import com.pinde.core.util.PkUtil;
+import com.pinde.core.util.StringUtil;
+import com.pinde.sci.biz.jsres.IJsResBaseBiz;
+import com.pinde.sci.biz.jsres.IResOrgSpeBiz;
+import com.pinde.sci.biz.pub.IFileBiz;
+import com.pinde.sci.biz.sys.IOrgBiz;
+import com.pinde.sci.common.GeneralMethod;
+import com.pinde.sci.common.GlobalConstant;
+import com.pinde.sci.common.GlobalContext;
+import com.pinde.sci.common.InitConfig;
+import com.pinde.sci.dao.base.*;
+import com.pinde.sci.dao.jsres.ResBaseExtMapper;
+import com.pinde.sci.enums.jsres.JsResDoctorAuditStatusEnum;
+import com.pinde.sci.enums.sys.DictTypeEnum;
+import com.pinde.sci.form.jsres.BaseExtInfoForm;
+import com.pinde.sci.form.jsres.BaseInfoForm;
+import com.pinde.sci.form.jsres.BasicInfoForm;
+import com.pinde.sci.form.jsres.ContactorInfoForm;
+import com.pinde.sci.model.jsres.ResBaseExt;
+import com.pinde.sci.model.mo.*;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.JAXBException;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+import java.util.Map.Entry;
+@Service
+@Transactional(rollbackFor=Exception.class)
+public class JsResBaseBizImpl implements IJsResBaseBiz{
+
+	@Autowired
+	private IOrgBiz orgBiz;
+	@Autowired
+	private ResBaseMapper resBaseMapper;
+	@Autowired
+	private ResOrgSpeMapper resOrgSpeMapper;
+	@Autowired
+	private ResBaseExtMapper resBaseExtMapper;
+	@Autowired
+	private ResPassScoreCfgMapper resPassScoreCfgMapper;
+	@Autowired
+	private IResOrgSpeBiz resOrgSpeBiz;
+	@Autowired
+	private SysRoleMapper sysRoleMapper;
+	@Autowired
+	private SysUserRoleMapper userRoleMapper;
+	@Autowired
+	private IFileBiz pubFileBiz;
+	/**
+	 * 保存基地的基本信息
+	 * @throws IOException 
+	 * @throws JAXBException 
+	 */
+	@Override
+	public int saveBaseInfo(String flag, BaseInfoForm baseInfoForm, String index, String type, String[] fileFlows, HttpServletRequest request) throws Exception {
+		SysOrg sysOrg = baseInfoForm.getSysOrg();
+		if(sysOrg!=null && DateUtil.getYear().equals(baseInfoForm.getResBase().getSessionNumber())){
+			orgBiz.update(sysOrg);
+		}
+		ResBase resBase=readBaseBySessionNumber(sysOrg.getOrgFlow(), baseInfoForm.getResBase().getSessionNumber());
+//		ResBase resBase=readBase(sysOrg.getOrgFlow());
+//		baseInfoForm.getResBase();
+		String xml= null;
+		BaseExtInfoForm baseExtInfo = null ;
+		boolean add = true;
+		if(resBase != null){
+			add = false;
+			xml=resBase.getBaseInfo();
+			baseExtInfo =JaxbUtil.converyToJavaBean(xml, BaseExtInfoForm.class);
+		}else{
+			resBase=baseInfoForm.getResBase();
+			resBase.setOrgName(baseInfoForm.getSysOrg().getOrgName());
+			baseExtInfo=new BaseExtInfoForm();
+		}
+		if(baseInfoForm!=null){
+			if(GlobalConstant.TEACH_CONDITION.equals(flag)){
+				baseExtInfo.setEducationInfo(baseInfoForm.getEducationInfo());
+			}else  if (GlobalConstant.ORG_MANAGE.equals(flag)){
+				baseExtInfo.setOrganizationManage(baseInfoForm.getOrganizationManage());
+			}else if(GlobalConstant.SUPPORT_CONDITION.equals(flag)){
+				baseExtInfo.setSupportCondition(baseInfoForm.getSupportCondition());
+			}else if(GlobalConstant.BASIC_INFO.equals(flag)){
+				baseExtInfo.setBasicInfo(baseInfoForm.getBasicInfo());
+				baseExtInfo.setSysOrg(baseInfoForm.getSysOrg());
+			}else if(GlobalConstant.BASIC_MAIN_ALL.equals(flag)) {
+				baseExtInfo.setBasicInfo(baseInfoForm.getBasicInfo());
+				baseExtInfo.setSysOrg(baseInfoForm.getSysOrg());
+				baseExtInfo.setEducationInfo(baseInfoForm.getEducationInfo());
+			}
+			// 编辑无法保存 0017045
+			ResBase updateResBase = baseInfoForm.getResBase();
+			if(updateResBase != null){
+				String email = updateResBase.getEmail() == null ? "" : updateResBase.getEmail();
+				if(StringUtil.isNotBlank(email)){
+					resBase.setEmail(email);
+				}
+				// 全科医师基地获批文号
+				String gpsApprovalNumberId = updateResBase.getGpsApprovalNumberId();
+				if(StringUtil.isNotBlank(gpsApprovalNumberId)){
+					resBase.setGpsApprovalNumberId(gpsApprovalNumberId);
+					String dictGpsApproval = DictTypeEnum.GeneralBaseApproNum.getDictNameById(gpsApprovalNumberId);
+					resBase.setGpsApprovalNumberName(dictGpsApproval);
+				}
+				// 住院医师基地获批文号 resApprovalNumberName
+				String resApprovalNumberId = updateResBase.getResApprovalNumberId();
+				if(StringUtil.isNotBlank(resApprovalNumberId)){
+					resBase.setResApprovalNumberId(resApprovalNumberId);
+					String dictResApproval = DictTypeEnum.ResidentBaseApproveNum.getDictNameById(resApprovalNumberId);
+					resBase.setResApprovalNumberName(dictResApproval);
+				}
+				String baseGradeId = updateResBase.getBaseGradeId();
+				if(StringUtil.isNotBlank(baseGradeId)){
+					resBase.setBaseGradeId(baseGradeId);
+					resBase.setBaseGradeName(DictTypeEnum.getDictName(DictTypeEnum.BaseLevel, baseGradeId));
+				}
+				String baseTypeId = updateResBase.getBaseTypeId();
+				if(StringUtil.isNotBlank(baseTypeId)){
+					resBase.setBaseTypeId(baseTypeId);
+					resBase.setBaseTypeName(DictTypeEnum.getDictName(DictTypeEnum.BaseType, baseTypeId));
+				}
+				String basePropertyId = updateResBase.getBasePropertyId();
+				if(StringUtil.isNotBlank(basePropertyId)){
+					resBase.setBasePropertyId(basePropertyId);
+					resBase.setBasePropertyName(DictTypeEnum.getDictName(DictTypeEnum.BasProperty, basePropertyId));
+				}
+			}
+		}
+		BasicInfoForm basicInfo = baseExtInfo.getBasicInfo();
+		if(basicInfo != null) {
+			if (StringUtil.isNotBlank(basicInfo.getJdfzrTitleId())) {
+				basicInfo.setJdfzrTitleName(DictTypeEnum.UserTitle.getDictNameById(basicInfo.getJdfzrTitleId()));
+			}
+			if (StringUtil.isNotBlank(basicInfo.getJdfzrPostId())) {
+				basicInfo.setJdfzrPostName(DictTypeEnum.UserPost.getDictNameById(basicInfo.getJdfzrPostId()));
+			}
+			String levelRank = basicInfo.getLevelRank();
+			if(StringUtil.isNotBlank(levelRank)){
+				String levelRankName = DictTypeEnum.OrgLevelRank.getDictNameById(levelRank);
+				basicInfo.setLevelRankName(levelRankName);
+			}
+			if (CollectionUtils.isNotEmpty(basicInfo.getYwfgfzrList())) {
+				for (ContactorInfoForm contactorInfoForm : basicInfo.getYwfgfzrList()) {
+					if (StringUtil.isNotBlank(contactorInfoForm.getTitleId())) {
+						contactorInfoForm.setTitleName(DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
+					}
+					if (StringUtil.isNotBlank(contactorInfoForm.getPostId())) {
+						contactorInfoForm.setPostName(DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
+					}
+				}
+			}
+			if (CollectionUtils.isNotEmpty(basicInfo.getZpywkslxrList())) {
+				for (ContactorInfoForm contactorInfoForm : basicInfo.getZpywkslxrList()) {
+					if (StringUtil.isNotBlank(contactorInfoForm.getTitleId())) {
+						contactorInfoForm.setTitleName(DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
+					}
+					if (StringUtil.isNotBlank(contactorInfoForm.getPostId())) {
+						contactorInfoForm.setPostName(DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
+					}
+				}
+			}
+			if (CollectionUtils.isNotEmpty(basicInfo.getZpglbmfzrList())) {
+				for (ContactorInfoForm contactorInfoForm : basicInfo.getZpglbmfzrList()) {
+					if (StringUtil.isNotBlank(contactorInfoForm.getTitleId())) {
+						contactorInfoForm.setTitleName(DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
+					}
+					if (StringUtil.isNotBlank(contactorInfoForm.getPostId())) {
+						contactorInfoForm.setPostName(DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
+					}
+				}
+			}
+			if (CollectionUtils.isNotEmpty(basicInfo.getContactManList())) {
+				for (ContactorInfoForm contactorInfoForm : basicInfo.getContactManList()) {
+					if (StringUtil.isNotBlank(contactorInfoForm.getTitleId())) {
+						contactorInfoForm.setTitleName(DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
+					}
+					if (StringUtil.isNotBlank(contactorInfoForm.getPostId())) {
+						contactorInfoForm.setPostName(DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
+					}
+				}
+			}
+		}
+		xml=JaxbUtil.convertToXml(baseExtInfo);
+		resBase.setBaseInfo(xml);
+		resBase.setBaseStatusId(JsResDoctorAuditStatusEnum.NotSubmit.getId());
+		resBase.setBaseStatusName(JsResDoctorAuditStatusEnum.NotSubmit.getName());
+		if(resBase.getSessionNumber() == null) {
+			resBase.setSessionNumber(baseInfoForm.getResBase().getSessionNumber());
+		}
+
+		if(StringUtil.isNotBlank(type))
+		{
+			List<String> fileFlowList =null;
+			if(fileFlows!=null) {
+				//上传文件的流水号
+				fileFlowList =Arrays.asList(fileFlows);
+			}
+			//处理不在本次保存中的文件
+			upadteFileInfo(resBase.getOrgFlow() + resBase.getSessionNumber(), fileFlowList,type);
+			//处理上传文件
+			addUploadFile(resBase.getOrgFlow() + resBase.getSessionNumber(), request, type);
+		}
+		//
+		if(add) { // 下面的方法里，会根据orgFlow判断是否更新还是新增，这里给下面的saveResBase用
+			resBase.setOrgFlow(null);
+		}
+		return saveResBase(resBase);
+  	}
+	//处理文件
+	private void upadteFileInfo(String recordFlow, List<String> fileFlows, String type) {
+		//查询出不在本次保存中的文件信息
+		List<PubFile> files=pubFileBiz.searchByProductFlowAndTypeAndNotInFileFlows(recordFlow,fileFlows,type);
+		//删除服务器中相应的文件
+		if(files!=null&&files.size()>0)
+		{
+			String basePath = InitConfig.getSysCfg("upload_base_dir");
+			for (PubFile pubFile : files) {
+//                if (StringUtil.isNotBlank(pubFile.getFilePath())) {
+//                    String filePath = basePath + pubFile.getFilePath();
+//                    FileUtil.deletefile(filePath);
+//                }
+				pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+				pubFileBiz.editFile(pubFile);
+			}
+		}
+	}
+	//保存上传的附件
+	private void addUploadFile(String recordFlow, HttpServletRequest request, String noteTypeId) {
+		//以下为多文件上传********************************************
+		//创建一个通用的多部分解析器
+		List<PubFile> pubFiles=new ArrayList<>();
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+		//判断 request 是否有文件上传,即多部分请求
+		if(multipartResolver.isMultipart(request)){
+			//转换成多部分request
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)request;
+			//取得request中的所有文件名
+			Iterator<String> iter = multiRequest.getFileNames();
+			while(iter.hasNext()){
+				//记录上传过程起始时的时间，用来计算上传时间
+				//int pre = (int) System.currentTimeMillis();
+				//取得上传文件
+				String key=iter.next();
+				List<MultipartFile> files = multiRequest.getFiles(key);
+				if(files != null&&files.size()>0){
+					for(MultipartFile file:files) {
+						//保存附件
+						PubFile pubFile = new PubFile();
+						//取得当前上传文件的文件名称
+						String oldFileName = file.getOriginalFilename();
+						//如果名称不为“”,说明该文件存在，否则说明该文件不存在
+						if (StringUtil.isNotBlank(oldFileName)) {
+							//定义上传路径
+							String dateString = DateUtil.getCurrDate2();
+							String newDir = StringUtil.defaultString(InitConfig.getSysCfg("upload_base_dir")) + File.separator + "resBaseInfo" + File.separator + noteTypeId + File.separator + dateString+ File.separator+recordFlow;
+							File fileDir = new File(newDir);
+							if (!fileDir.exists()) {
+								fileDir.mkdirs();
+							}
+							//重命名上传后的文件名
+							String originalFilename = "";
+							originalFilename = PkUtil.getUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
+							File newFile = new File(fileDir, originalFilename);
+							try {
+								file.transferTo(newFile);
+							} catch (Exception e) {
+								e.printStackTrace();
+								throw new RuntimeException("保存文件失败！");
+							}
+							String filePath = File.separator + "resBaseInfo" +  File.separator + noteTypeId + File.separator + dateString + File.separator+recordFlow+ File.separator + originalFilename;
+							pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+							pubFile.setFilePath(filePath);
+							pubFile.setFileName(oldFileName);
+							pubFile.setFileSuffix(oldFileName.substring(oldFileName.lastIndexOf(".")));
+							if (GlobalConstant.SUPPORT_CONDITION.equals(noteTypeId) || GlobalConstant.ORG_MANAGE.equals(noteTypeId)) {
+								pubFile.setProductType(noteTypeId);
+								pubFile.setFileUpType(key);
+							}else{
+								pubFile.setProductType(noteTypeId);
+							}
+							pubFile.setProductFlow(recordFlow);
+							pubFiles.add(pubFile);
+						}
+					}
+				}
+				//记录上传该文件后的时间
+				//int finaltime = (int) System.currentTimeMillis();
+			}
+		}
+		if(pubFiles.size()>0)
+		{
+			pubFileBiz.saveFiles(pubFiles);
+		}
+	}
+
+
+	@Override
+	public ResBase readBase(String orgFlow) {
+		ResBase resBase = null;
+		if(StringUtil.isNotBlank(orgFlow)){
+			resBase = resBaseMapper.selectByPrimaryKey(orgFlow);
+		}
+		return  resBase ;
+	}
+	
+	@Override
+	public int  saveTrainSpe(List<ResOrgSpe> saveList, String trainCategoryType, String orgFlow, String orgName) {
+		ResOrgSpe exitSpe=new ResOrgSpe();
+		exitSpe.setOrgFlow(orgFlow);
+		List<ResOrgSpe> exitSpeList = resOrgSpeBiz.searchResOrgSpeList(exitSpe, trainCategoryType);
+		Map<String, ResOrgSpe> deleteMap = new HashMap<String, ResOrgSpe>();
+		List<ResOrgSpe> oldStatusYList = new ArrayList<ResOrgSpe>();
+		List<ResOrgSpe> oldStatusNList = new ArrayList<ResOrgSpe>();
+		if(exitSpeList != null && !exitSpeList.isEmpty()){
+				for(ResOrgSpe  s: exitSpeList){
+					if(GlobalConstant.RECORD_STATUS_Y.equals(s.getRecordStatus())){
+						deleteMap.put(s.getOrgSpeFlow(), s );
+						oldStatusYList.add(s);
+					}else{
+						oldStatusNList.add(s);
+					}
+				}
+		}
+		if(saveList != null && !saveList.isEmpty()){
+			for(ResOrgSpe s: saveList){
+				boolean addFlag = true;
+				if(oldStatusYList!= null && !oldStatusYList.isEmpty()){
+					for(ResOrgSpe oldResOrgSpe: oldStatusYList){
+						if(s.getSpeTypeId().equals(oldResOrgSpe.getSpeTypeId()) &&  s.getSpeId().equals(oldResOrgSpe.getSpeId()) && orgFlow.equals(oldResOrgSpe.getOrgFlow()) ){
+							addFlag = false;
+							if(deleteMap.size()>0){
+								deleteMap.remove(oldResOrgSpe.getOrgSpeFlow());
+							}
+							break;
+						}
+					}
+				}
+				if(addFlag){
+					ResOrgSpe addOrgSpe = new ResOrgSpe();
+					addOrgSpe.setSpeId(s.getSpeId());
+					addOrgSpe.setSpeName(s.getSpeName());
+					addOrgSpe.setSpeTypeId(s.getSpeTypeId());
+					addOrgSpe.setSpeTypeName(s.getSpeTypeName());
+					addOrgSpe.setOrgFlow(orgFlow);
+					addOrgSpe.setOrgName(orgName);
+					if(oldStatusNList != null && !oldStatusNList.isEmpty()){
+						for(ResOrgSpe N :oldStatusNList){
+							if(s.getSpeTypeId().equals(N.getSpeTypeId()) &&  s.getSpeId().equals(N.getSpeId()) && orgFlow.equals(N.getOrgFlow()) ){
+								addFlag = false;
+								N.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+								resOrgSpeBiz.saveResOrgSpe(N);
+								break;
+							}
+						}
+						if(addFlag){//新增
+							resOrgSpeBiz.saveResOrgSpe(addOrgSpe);
+						}
+					}else{//新增
+						resOrgSpeBiz.saveResOrgSpe(addOrgSpe);
+					}
+				}
+			}
+		}
+		//删除原先的
+		if(deleteMap.size()>0){
+			for(Entry<String, ResOrgSpe> entry : deleteMap.entrySet()){
+				ResOrgSpe delOrgSpe = entry.getValue();
+				delOrgSpe.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+				resOrgSpeBiz.saveResOrgSpe(delOrgSpe);
+			}
+		}
+		ResBase resBase=readBase(orgFlow);
+		if (resBase!=null) {
+			resBase.setBaseStatusId(JsResDoctorAuditStatusEnum.NotSubmit.getId());
+			resBase.setBaseStatusName(JsResDoctorAuditStatusEnum.NotSubmit.getName());
+			saveResBase(resBase);
+		}
+		return GlobalConstant.ONE_LINE;
+	}
+	@Override
+	public List<ResBaseExt> searchResBaseExtList(Map<String, Object> paramMap) {
+		return resBaseExtMapper.searchResBaseExtList(paramMap);
+	}
+	
+	@Override
+	public int saveResBase(ResBase resBase) {
+		if(StringUtil.isNotBlank(resBase.getOrgFlow())){
+			GeneralMethod.setRecordInfo(resBase, false);
+			return resBaseMapper.updateByPrimaryKeySelective(resBase);
+		}else{
+			SysUser sysUser =GlobalContext.getCurrentUser();
+			resBase.setOrgFlow(sysUser.getOrgFlow());
+			GeneralMethod.setRecordInfo(resBase, true);
+			return resBaseMapper.insert(resBase);
+		}
+	}
+	@Override
+	public int delScoreConf(String cfgYear){
+		int count=0;
+		if(StringUtil.isNotBlank(cfgYear)){
+			count = resPassScoreCfgMapper.deleteByPrimaryKey(cfgYear);
+		}
+		return count;
+	}
+
+	@Override
+	public int savePassScoreCfg(ResPassScoreCfg resPassScoreCfg){
+		ResPassScoreCfg scoreCfg = readResPassScoreCfg(resPassScoreCfg);
+		if(scoreCfg!=null){
+			GeneralMethod.setRecordInfo(resPassScoreCfg, false);
+			return resPassScoreCfgMapper.updateByPrimaryKeySelective(resPassScoreCfg);
+		}else{
+			GeneralMethod.setRecordInfo(resPassScoreCfg, true);
+			return resPassScoreCfgMapper.insert(resPassScoreCfg);
+		}
+	}
+
+	@Override
+	public List<ResPassScoreCfg> readCfgs(ResPassScoreCfg resPassScoreCfg){
+		ResPassScoreCfgExample example = new ResPassScoreCfgExample();
+		if(StringUtil.isNotBlank(resPassScoreCfg.getCfgYear())){
+			example.createCriteria().andCfgYearEqualTo(resPassScoreCfg.getCfgYear());
+		}else{
+			example.createCriteria().andCfgYearLike("%");
+		}
+		example.setOrderByClause("CFG_YEAR desc");
+		return resPassScoreCfgMapper.selectByExample(example);
+	}
+	@Override
+	public ResPassScoreCfg readResPassScoreCfg(ResPassScoreCfg resPassScoreCfg){
+		ResPassScoreCfg passScoreCfg=null;
+		 if(StringUtil.isNotBlank(resPassScoreCfg.getCfgYear())){
+			 passScoreCfg = resPassScoreCfgMapper.selectByPrimaryKey(resPassScoreCfg.getCfgYear());
+		 }
+		return passScoreCfg;
+	}
+
+//	@Override
+//	public List<ResBase> searchResBaseList(ResBase resBase) {
+//		ResBaseExample example=new ResBaseExample();
+//		Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+//		if (StringUtil.isNotBlank(resBase.getOrgFlow())) {
+//			criteria.andOrgFlowEqualTo(resBase.getOrgFlow());
+//		}
+//		if (StringUtil.isNotBlank(resBase.getBaseStatusId())) {
+//			criteria.andBaseStatusIdEqualTo(resBase.getBaseStatusId());
+//		}
+//		if (StringUtil.isNotBlank(resBase.getBaseStatusName())) {
+//			criteria.andBaseStatusNameEqualTo(resBase.getBaseStatusName());
+//		}
+//		return resBaseMapper.selectByExample(example);
+//	}
+
+
+	@Override
+	public void bindDoctorRole(String userFlow) {
+
+			SysRoleExample example = new SysRoleExample();
+			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+					.andWsIdEqualTo("osca").andRoleNameEqualTo("学员");
+			List<SysRole> roleList = sysRoleMapper.selectByExample(example);//查询临床学员角色
+			if(null != roleList && roleList.size() > 0 && StringUtil.isNotBlank(roleList.get(0).getRoleFlow())){
+				SysUserRoleExample userRoleExample = new SysUserRoleExample();
+				userRoleExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+						.andUserFlowEqualTo(userFlow).andWsIdEqualTo("osca").andRoleFlowEqualTo(roleList.get(0).getRoleFlow());
+				int count = userRoleMapper.countByExample(userRoleExample);//查询此学员在临床是否是学员角色
+				if(count > 0){
+					SysUserRoleExample userRoleExampleRes = new SysUserRoleExample();
+					userRoleExampleRes.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+							.andUserFlowEqualTo(userFlow).andWsIdEqualTo("res");
+					int countRes = userRoleMapper.countByExample(userRoleExampleRes);//查询此学员在住培是否已有角色
+					if(countRes == 0) {
+						if(StringUtil.isNotBlank(InitConfig.getSysCfg("res_doctor_role_flow"))) {
+							SysUserRole record = new SysUserRole();
+							record.setRecordFlow(PkUtil.getUUID());
+							record.setUserFlow(userFlow);
+							record.setWsId(GlobalConstant.RES_WS_ID);
+							record.setRoleFlow(InitConfig.getSysCfg("res_doctor_role_flow"));
+							GeneralMethod.setRecordInfo(record, true);
+							count = userRoleMapper.insertSelective(record);
+						}
+					}
+				}
+			}
+
+	}
+
+	@Override
+	public List<ResBase> readBaseList(List<String> orgFlows) {
+		if(orgFlows!=null&&!orgFlows.isEmpty())
+		{
+			ResBaseExample example=new ResBaseExample();
+			ResBaseExample.Criteria criteria=example.createCriteria()
+					.andOrgFlowIn(orgFlows);
+			return resBaseMapper.selectByExampleWithBLOBs(example);
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResBase> readBaseListByYear(List<String> orgFlows, String sessionNumber) {
+		if(orgFlows!=null&&!orgFlows.isEmpty())
+		{
+			ResBaseExample example=new ResBaseExample();
+			ResBaseExample.Criteria criteria=example.createCriteria()
+					.andOrgFlowIn(orgFlows).andSessionNumberEqualTo(sessionNumber);
+			return resBaseMapper.selectByExampleWithBLOBs(example);
+		}
+		return null;
+	}
+
+	@Override
+	public Map<String, ResBase> searchAll() {
+		ResBaseExample example=new ResBaseExample();
+		ResBaseExample.Criteria criteria=example.createCriteria()
+				.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+		List<ResBase> list = resBaseMapper.selectByExampleWithBLOBs(example);
+		HashMap<String, ResBase> baseMap = new HashMap<>();
+		for (ResBase resBase : list) {
+			baseMap.put(resBase.getOrgFlow(),resBase);
+		}
+		return baseMap;
+	}
+
+	@Override
+	public ResBase readBaseBySessionNumber(String orgFlow, String sessionNumber) {
+		ResBase resBase = null;
+		if(StringUtil.isNotBlank(orgFlow)){
+			resBase = resBaseMapper.selectByPrimaryKeyAndSessionNumber(orgFlow, sessionNumber);
+		}
+		return  resBase ;
+	}
+}

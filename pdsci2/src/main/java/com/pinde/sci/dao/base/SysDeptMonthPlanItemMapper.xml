@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.SysDeptMonthPlanItemMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysDeptMonthPlanItem" >
+    <id column="ITEM_FLOW" property="itemFlow" jdbcType="VARCHAR" />
+    <result column="PLAN_FLOW" property="planFlow" jdbcType="VARCHAR" />
+    <result column="PLAN_TIME" property="planTime" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="ITEM_TYPE_ID" property="itemTypeId" jdbcType="VARCHAR" />
+    <result column="ITEM_TYPE_NAME" property="itemTypeName" jdbcType="VARCHAR" />
+    <result column="JOIN_USER_FLOW" property="joinUserFlow" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.SysDeptMonthPlanItem" extends="BaseResultMap" >
+    <result column="EVAL_CFG" property="evalCfg" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ITEM_FLOW, PLAN_FLOW, PLAN_TIME, ADDRESS, CONTENT, TITLE, ITEM_TYPE_ID, ITEM_TYPE_NAME, 
+    JOIN_USER_FLOW, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <sql id="Blob_Column_List" >
+    EVAL_CFG
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanItemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanItemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+    where ITEM_FLOW = #{itemFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+    where ITEM_FLOW = #{itemFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanItemExample" >
+    delete from PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanItem" >
+    insert into PDSCI.SYS_DEPT_MONTH_PLAN_ITEM (ITEM_FLOW, PLAN_FLOW, PLAN_TIME, 
+      ADDRESS, CONTENT, TITLE, 
+      ITEM_TYPE_ID, ITEM_TYPE_NAME, JOIN_USER_FLOW, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW, EVAL_CFG
+      )
+    values (#{itemFlow,jdbcType=VARCHAR}, #{planFlow,jdbcType=VARCHAR}, #{planTime,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{itemTypeId,jdbcType=VARCHAR}, #{itemTypeName,jdbcType=VARCHAR}, #{joinUserFlow,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{evalCfg,jdbcType=CLOB}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanItem" >
+    insert into PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemFlow != null" >
+        ITEM_FLOW,
+      </if>
+      <if test="planFlow != null" >
+        PLAN_FLOW,
+      </if>
+      <if test="planTime != null" >
+        PLAN_TIME,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="itemTypeId != null" >
+        ITEM_TYPE_ID,
+      </if>
+      <if test="itemTypeName != null" >
+        ITEM_TYPE_NAME,
+      </if>
+      <if test="joinUserFlow != null" >
+        JOIN_USER_FLOW,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="evalCfg != null" >
+        EVAL_CFG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemFlow != null" >
+        #{itemFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="planFlow != null" >
+        #{planFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="planTime != null" >
+        #{planTime,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="itemTypeId != null" >
+        #{itemTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemTypeName != null" >
+        #{itemTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="joinUserFlow != null" >
+        #{joinUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="evalCfg != null" >
+        #{evalCfg,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanItemExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+    <set >
+      <if test="record.itemFlow != null" >
+        ITEM_FLOW = #{record.itemFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planFlow != null" >
+        PLAN_FLOW = #{record.planFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planTime != null" >
+        PLAN_TIME = #{record.planTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        ADDRESS = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        CONTENT = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        TITLE = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemTypeId != null" >
+        ITEM_TYPE_ID = #{record.itemTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemTypeName != null" >
+        ITEM_TYPE_NAME = #{record.itemTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.joinUserFlow != null" >
+        JOIN_USER_FLOW = #{record.joinUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evalCfg != null" >
+        EVAL_CFG = #{record.evalCfg,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+    set ITEM_FLOW = #{record.itemFlow,jdbcType=VARCHAR},
+      PLAN_FLOW = #{record.planFlow,jdbcType=VARCHAR},
+      PLAN_TIME = #{record.planTime,jdbcType=VARCHAR},
+      ADDRESS = #{record.address,jdbcType=VARCHAR},
+      CONTENT = #{record.content,jdbcType=VARCHAR},
+      TITLE = #{record.title,jdbcType=VARCHAR},
+      ITEM_TYPE_ID = #{record.itemTypeId,jdbcType=VARCHAR},
+      ITEM_TYPE_NAME = #{record.itemTypeName,jdbcType=VARCHAR},
+      JOIN_USER_FLOW = #{record.joinUserFlow,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      EVAL_CFG = #{record.evalCfg,jdbcType=CLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+    set ITEM_FLOW = #{record.itemFlow,jdbcType=VARCHAR},
+      PLAN_FLOW = #{record.planFlow,jdbcType=VARCHAR},
+      PLAN_TIME = #{record.planTime,jdbcType=VARCHAR},
+      ADDRESS = #{record.address,jdbcType=VARCHAR},
+      CONTENT = #{record.content,jdbcType=VARCHAR},
+      TITLE = #{record.title,jdbcType=VARCHAR},
+      ITEM_TYPE_ID = #{record.itemTypeId,jdbcType=VARCHAR},
+      ITEM_TYPE_NAME = #{record.itemTypeName,jdbcType=VARCHAR},
+      JOIN_USER_FLOW = #{record.joinUserFlow,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanItem" >
+    update PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+    <set >
+      <if test="planFlow != null" >
+        PLAN_FLOW = #{planFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="planTime != null" >
+        PLAN_TIME = #{planTime,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="itemTypeId != null" >
+        ITEM_TYPE_ID = #{itemTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemTypeName != null" >
+        ITEM_TYPE_NAME = #{itemTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="joinUserFlow != null" >
+        JOIN_USER_FLOW = #{joinUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="evalCfg != null" >
+        EVAL_CFG = #{evalCfg,jdbcType=CLOB},
+      </if>
+    </set>
+    where ITEM_FLOW = #{itemFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanItem" >
+    update PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+    set PLAN_FLOW = #{planFlow,jdbcType=VARCHAR},
+      PLAN_TIME = #{planTime,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      ITEM_TYPE_ID = #{itemTypeId,jdbcType=VARCHAR},
+      ITEM_TYPE_NAME = #{itemTypeName,jdbcType=VARCHAR},
+      JOIN_USER_FLOW = #{joinUserFlow,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      EVAL_CFG = #{evalCfg,jdbcType=CLOB}
+    where ITEM_FLOW = #{itemFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanItem" >
+    update PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+    set PLAN_FLOW = #{planFlow,jdbcType=VARCHAR},
+      PLAN_TIME = #{planTime,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      ITEM_TYPE_ID = #{itemTypeId,jdbcType=VARCHAR},
+      ITEM_TYPE_NAME = #{itemTypeName,jdbcType=VARCHAR},
+      JOIN_USER_FLOW = #{joinUserFlow,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where ITEM_FLOW = #{itemFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

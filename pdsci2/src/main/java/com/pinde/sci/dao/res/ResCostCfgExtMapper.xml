@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.ResCostCfgExtMapper">
+    <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResCostCfgMain">
+        <id column="MAIN_FLOW" property="mainFlow" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="TYPE_ID" property="typeId" jdbcType="VARCHAR" />
+        <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+        <result column="START_DATE" property="startDate" jdbcType="VARCHAR" />
+        <result column="END_DATE" property="endDate" jdbcType="VARCHAR" />
+        <result column="TEA_COST" property="teaCost" jdbcType="VARCHAR" />
+        <result column="KM_COST" property="kmCost" jdbcType="VARCHAR" />
+        <result column="HEAD_COST" property="headCost" jdbcType="VARCHAR" />
+        <result column="SPE_COST" property="speCost" jdbcType="VARCHAR" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="checkDate" parameterType="com.pinde.sci.model.mo.ResCostCfgMain" resultMap="BaseResultMap">
+       SELECT * FROM (
+            SELECT * FROM RES_COST_CFG_MAIN WHERE RECORD_STATUS = 'Y'
+            <if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+                and start_date between #{startDate} and #{endDate}
+                or end_date between #{startDate} and #{endDate}
+                or start_date <![CDATA[<=]]> #{startDate} AND end_date >= #{endDate}
+            </if>
+        )
+        WHERE 1 = 1
+        <if test="orgFlow != null and orgFlow != ''">
+            and org_flow = #{orgFlow}
+        </if>
+        <if test="typeId != null and typeId != ''">
+            and type_id = #{typeId}
+        </if>
+        <if test="mainFlow != null and mainFlow != ''">
+            and main_flow <![CDATA[ <> ]]> #{mainFlow}
+        </if>
+    </select>
+
+</mapper>

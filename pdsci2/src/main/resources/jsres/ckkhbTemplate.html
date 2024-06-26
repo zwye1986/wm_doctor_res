@@ -1,0 +1,160 @@
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        body {
+            margin-left: 5px;
+            margin-right: 5px;
+            font-family: Arial Unicode MS;
+        }
+
+        @page {
+            size:595.3pt 841.9pt;
+            margin-left:40px;
+            margin-right:40px;
+            margin-top:10px;
+
+            @top-center {
+                content: element(header);
+            };
+            @bottom-center{
+                content:"第" counter(page) "页/共 " counter(pages) "页";
+                font-family: Arial Unicode MS;
+                font-size: 12px;
+                color:#000;
+            };
+        }
+
+        th,td{border: 1px solid #0a0a0a;}
+    </style>
+</head>
+<body>
+<div>
+    <h1 style="font-size: 25px; text-align: center"><br/><br/>江苏省住院医师规范化培训临床轮转出科表
+        <br/>
+    </h1>
+</div>
+<div style="height: 100%">
+    <table  style="font-size:20px;border:0px;width:100%;height: 20%;border-collapse:collapse;table-layout:fixed; word-break:break-strict;" cellspacing="0">
+        <tr>
+            <td style="border:0px;text-align: center">姓名：${userName!}&#12288;&#12288;届别：${sessionNumber!}&#12288;&#12288;培训专业：${trainingSpeName!}</td>
+        </tr>
+    </table>
+    <table style="width:100%;height: 100%;border-collapse:collapse;table-layout:fixed; word-break:break-strict;" cellspacing="0">
+        <tr>
+            <td colspan="3">轮转科室名称：${standardDeptName!}</td>
+            <td colspan="3">轮转时间：${startDate!}至${endDate!}(${monthCount!}月)</td>
+        </tr>
+        <tr>
+            <td>考勤</td>
+            <td colspan="5">全勤：${attendance!}天；  事假：${leave!}天；  病假：${sickLeave!}天；  产假：${materLeave!}天；  旷工：${absenteeism!}天</td>
+        </tr>
+        <tr>
+            <td rowspan="4">临床实践指标完成情况</td>
+            <td colspan="5">完成病历数：应完成${caseRegistryReqNum!}例，已完成${caseRegistryFinished!}例，完成比例${caseRegistry!}%</td>
+        </tr>
+        <tr>
+            <td colspan="5">管理病种数：应完成${diseaseRegistryReqNum!}例，已完成${diseaseRegistryFinished!}例，完成比例${diseaseRegistry!}%</td>
+        </tr>
+        <tr>
+            <td colspan="5">完成操作数：应完成${skillRegistryReqNum!}例，已完成${skillRegistryFinished!}例，完成比例${skillRegistry!}%</td>
+        </tr>
+        <tr>
+            <td colspan="5">参加手术数：应完成${operationRegistryReqNum!}例，已完成${operationRegistryFinished!}例，完成比例${operationRegistry!}%</td>
+        </tr>
+        <tr>
+            <td colspan="3" style="font-size: 25px;">评价内容</td>
+            <td colspan="3" style="font-size: 25px;">评价结果</td>
+        </tr>
+        <tr>
+            <td rowspan="5">医德医风<br/>人际沟通<br/>团队合作</td>
+            <td colspan="2">遵守国家法律法规、医院规章制度</td>
+            <td colspan="3">${zsgjflfgJXCF!}优&#12288;&#12288;${zsgjflfgYN!}良&#12288;&#12288;${zsgjflfgWZBLTL!}中&#12288;&#12288;${zsgjflfgXSJZ!}差</td>
+        </tr>
+        <tr>
+            <td colspan="2">履行岗位职责</td>
+            <td colspan="3">${lxgwzzJXCF!}优&#12288;&#12288;${lxgwzzYN!}良&#12288;&#12288;${lxgwzzWZBLTL!}中&#12288;&#12288;${lxgwzzXSJZ!}差</td>
+        </tr>
+        <tr>
+            <td colspan="2">以病人为中心，体现人文关怀</td>
+            <td colspan="3">${ybrwzxJXCF!}优&#12288;&#12288;${ybrwzxYN!}良&#12288;&#12288;${ybrwzxWZBLTL!}中&#12288;&#12288;${ybrwzxXSJZ!}差</td>
+        </tr>
+        <tr>
+            <td colspan="2">人际（医患）沟通和表达能力</td>
+            <td colspan="3">${rjgtbdnlJXCF!}强&#12288;&#12288;${rjgtbdnlYN!}较强&#12288;&#12288;${rjgtbdnlWZBLTL!}一般&#12288;&#12288;${rjgtbdnlXSJZ!}差</td>
+        </tr>
+        <tr>
+            <td colspan="2">团结协作精神</td>
+            <td colspan="3">${tjxzjsxmJXCF!}优&#12288;&#12288;${tjxzjsxmYN!}良&#12288;&#12288;${tjxzjsxmWZBLTL!}中&#12288;&#12288;${tjxzjsxmXSJZ!}差</td>
+        </tr>
+        <tr>
+            <td rowspan="5">临床综合能力</td>
+            <td colspan="2">临床基本知识、基本理论掌握程度</td>
+            <td colspan="3">${jbllzwcdJXCF!}强&#12288;&#12288;${jbllzwcdYN!}较强&#12288;&#12288;${jbllzwcdWZBLTL!}一般&#12288;&#12288;${jbllzwcdXSJZ!}差</td>
+        </tr>
+        <tr>
+            <td colspan="2">临床基本技能掌握程度</td>
+            <td colspan="3">${njbjnzwcdJXCF!}强&#12288;&#12288;${njbjnzwcdYN!}较强&#12288;&#12288;${njbjnzwcdWZBLTL!}一般&#12288;&#12288;${njbjnzwcdXSJZ!}差</td>
+        </tr>
+        <tr>
+            <td colspan="2">临床思维能力</td>
+            <td colspan="3">${lcswnlJXCF!}强&#12288;&#12288;${lcswnlYN!}较强&#12288;&#12288;${lcswnlWZBLTL!}一般&#12288;&#12288;${lcswnlXSJZ!}差</td>
+        </tr>
+        <tr>
+            <td colspan="2">临床诊疗能力</td>
+            <td colspan="3">${lczlnlJXCF!}强&#12288;&#12288;${lczlnlYN!}较强&#12288;&#12288;${lczlnlWZBLTL!}一般&#12288;&#12288;${lczlnlXSJZ!}差</td>
+        </tr>
+        <tr>
+            <td colspan="2">危重病人的识别及紧急处理能力</td>
+            <td colspan="3">${jjclnlJXCF!}强&#12288;&#12288;${jjclnlYN!}较强&#12288;&#12288;${jjclnlWZBLTL!}一般&#12288;&#12288;${jjclnlXSJZ!}差</td>
+        </tr>
+        <tr>
+            <td rowspan="7">参加各种<br/>形式活动</td>
+            <td colspan="5">教学查房：${jxcf!}次&#12288;&#12288;临床小讲课：${xjk!}次&#12288;&#12288;入轮转科室教育：${rkjy!}次</td>
+        </tr>
+        <tr>
+            <td colspan="5">教学阅片：${yph!}次&#12288;&#12288;门诊教学：${jxhz!}次&#12288;&#12288;教学病例讨论：${jxbltl!}次</td>
+        </tr>
+        <tr>
+            <td colspan="5">疑难病例讨论：${ynbltl!}次&#12288;&#12288;危重病例讨论：${wzbltl!}次&#12288;&#12288;死亡病例讨论：${swbltl!}次</td>
+        </tr>
+        <tr>
+            <td colspan="5">临床操作技能床旁教学：${lcczjnzd!}次&#12288;&#12288;住院病历书写指导教学：${lcblsxzd!}次&#12288;&#12288;技能培训：${jnpx!}次</td>
+        </tr>
+        <tr>
+            <td colspan="5">手术操作指导教学：${ssczzd!}次&#12288;&#12288;影像诊断报告书写指导教学：${yxzdbgsxzd!}次&#12288;&#12288;上机演示：${sjys!}次</td>
+        </tr>
+        <tr>
+            <td colspan="5">临床文献研读会：${lcwxyd!}次&#12288;&#12288;入院教育：${ryjy!}次&#12288;&#12288;教学上机：${jxsj!}次</td>
+        </tr>
+        <tr>
+            <td colspan="5">入专业基地教育：${rzyjdjy!}次&#12288;&#12288;晨间报告：${cjbg!}次&#12288;&#12288;报告单分析：${bgdfx!}次</td>
+        </tr>
+        <tr>
+            <td rowspan="2">出科考核</td>
+            <td colspan="5">理论成绩：${theoreResult!}分</td>
+        </tr>
+        <tr>
+            <td colspan="5">技能考核名称：${skillName!}&#12288;&#12288;得分：${score!}  分;&#12288;&#12288;考官1：${examiner1!}&#12288;&#12288;考官2：${examiner2!}</td>
+        </tr>
+        <tr>
+            <td>所在科室考核小组总体评价</td>
+            <td colspan="5">${szkskhxzztpjJXCF!} 通过&#12288;&#12288;&#12288;&#12288;${szkskhxzztpjLING!} 不通过</td>
+        </tr>
+        <tr>
+            <td>带教老师签名</td>
+            <td colspan="5" style="text-align: right;">日期：&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;</td>
+        </tr>
+        <tr>
+            <td>科主任签名</td>
+            <td colspan="5" style="text-align: right;">日期：&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;</td>
+        </tr>
+        <tr>
+            <td>教学小组/组长签名</td>
+            <td colspan="5" style="text-align: right;">日期：&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;</td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

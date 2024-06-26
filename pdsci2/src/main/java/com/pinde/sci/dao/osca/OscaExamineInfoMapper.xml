@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.osca.OscaExamineInfoMapper">
+    <select id="queryCheckInfoBySpeId" parameterType="java.util.Map" resultType="java.util.Map">
+        with a as (select osa.spe_id,osa.spe_name,osa.clinical_flow,osa.clinical_name,oda.doctor_flow,oda.doctor_name,
+            oda.sigin_status_id,oda.sigin_status_name,oda.is_pass,oda.is_pass_name
+            from osca_doctor_assessment oda left join osca_skills_assessment osa on oda.clinical_flow=osa.clinical_flow
+            where oda.record_status='Y' and osa.record_status='Y' and osa.is_local='N' and osa.is_released='Y'
+            and oda.audit_status_id='Passed'
+            <if test="clinicalYear!=null and clinicalYear!=''">
+                and osa.clinical_year=#{clinicalYear}
+            </if>
+            <if test="speId!=null and speId!=''">
+                and osa.spe_id=#{speId}
+            </if>
+            <if test='dictList!=null and dictList.size>0'>
+                and osa.spe_id in
+                <foreach collection="dictList" item="item" open="(" close=")" separator="," >
+                    #{item.dictId}
+                </foreach>
+            </if>
+            and oda.doctor_flow
+            in (
+            select rd.doctor_flow from res_doctor rd where rd.record_status='Y'
+            <if test="orgFlow!=null and orgFlow!=''">
+                and rd.org_flow=#{orgFlow}
+            </if>
+            <if test="orgFlow==null or orgFlow==''">
+                <if test="flag=='city'">
+                    and rd.org_flow in (
+                    select so.org_flow from sys_org so
+                    where so.record_status='Y'
+                    and so.org_city_id =
+                    (select org_city_id
+                    from sys_org
+                    where record_status='Y'
+                    and org_flow=#{userOrgFlow}) )
+                </if>
+                <if test="flag=='global'">
+                    and rd.org_flow in (
+                    select so.org_flow from sys_org so
+                    where so.record_status='Y'
+                    and so.org_prov_id =
+                    (select org_prov_id
+                    from sys_org
+                    where record_status='Y'
+                    and org_flow=#{userOrgFlow})
+                    <if test="orgCityId!=null and orgCityId!=''">
+                        and so.org_City_Id=#{orgCityId}
+                    </if>
+                    )
+                </if>
+            </if>
+            ))
+            SELECT a.spe_id, a.spe_name, COUNT(0) AS totleNum, (
+            SELECT COUNT(t.spe_id)
+            FROM a t
+            WHERE t.sigin_status_id = 'SignIn'
+            AND t.spe_id = a.spe_id
+            ) AS signNum, (
+            SELECT COUNT(t.spe_id)
+            FROM a t
+            WHERE t.sigin_status_id = 'NoSignIn'
+            AND t.spe_id = a.spe_id
+            ) AS noSignNum
+            , (
+            SELECT COUNT(t.spe_id)
+            FROM a t
+            WHERE t.sigin_status_id = 'SignIn'
+            AND t.is_pass = 'Passed'
+            AND t.spe_id = a.spe_id
+            ) AS passNum, (
+            SELECT COUNT(t.spe_id)
+            FROM a t
+            WHERE t.sigin_status_id = 'SignIn'
+            AND t.is_pass = 'UnPassed'
+            AND t.spe_id = a.spe_id
+            ) AS unPassNum
+            FROM a
+            GROUP BY a.spe_id, a.spe_name
+    </select>
+
+    <select id="queryCheckInfoByOrgFlow" parameterType="java.util.Map" resultType="java.util.Map">
+        with osaTemp as (
+        select osaView.Clinical_Flow from osca_skills_assessment osaView where
+        osaView.record_status='Y' and osaView.is_local='N' and osaView.is_released='Y'
+        <if test="clinicalYear!=null and clinicalYear!=''">
+            and osaView.clinical_year=#{clinicalYear}
+        </if>
+        <if test="speId!=null and speId!=''">
+            and osaView.spe_id=#{speId}
+        </if>
+        <if test='dictList!=null and dictList.size>0'>
+            and osaView.spe_id in
+            <foreach collection="dictList" item="item" open="(" close=")" separator="," >
+                #{item.dictId}
+            </foreach>
+        </if>
+        )
+        select max(rd.org_name) org_name, rd.org_flow org_flow,
+        (select count(0)
+        from  res_doctor rd2
+        inner join osca_doctor_assessment oda on rd2.doctor_flow = oda.doctor_flow
+        inner join osaTemp on osaTemp.clinical_flow=oda.clinical_flow
+        where rd2.org_flow = rd.org_flow and oda.AUDIT_STATUS_ID='Passed' and rd2.record_status='Y' and oda.record_status='Y'
+        ) totleNum,
+        (select count(0)
+        from  res_doctor rd2
+        inner join osca_doctor_assessment oda on rd2.doctor_flow = oda.doctor_flow
+        inner join osaTemp on osaTemp.clinical_flow=oda.clinical_flow
+        where rd2.org_flow = rd.org_flow and oda.sigin_status_id = 'SignIn'  and oda.AUDIT_STATUS_ID='Passed' and rd2.record_status='Y' and oda.record_status='Y'
+        ) signNum,
+        (select count(0)
+        from  res_doctor rd2
+        inner join osca_doctor_assessment oda on rd2.doctor_flow = oda.doctor_flow
+        inner join osaTemp on osaTemp.clinical_flow=oda.clinical_flow
+        where rd2.org_flow = rd.org_flow and oda.sigin_status_id = 'NoSignIn'  and oda.AUDIT_STATUS_ID='Passed' and rd2.record_status='Y' and oda.record_status='Y'
+        ) noSignNum,
+        (select count(0)
+        from  res_doctor rd2
+        inner join osca_doctor_assessment oda on rd2.doctor_flow = oda.doctor_flow
+        inner join osaTemp on osaTemp.clinical_flow=oda.clinical_flow
+        where rd2.org_flow = rd.org_flow and oda.sigin_status_id = 'SignIn' and oda.is_pass = 'Passed' and oda.AUDIT_STATUS_ID='Passed' and rd2.record_status='Y' and oda.record_status='Y'
+        ) passNum,
+        (select count(0)
+        from  res_doctor rd2
+        inner join osca_doctor_assessment oda on rd2.doctor_flow = oda.doctor_flow
+        inner join osaTemp on osaTemp.clinical_flow=oda.clinical_flow
+        where rd2.org_flow = rd.org_flow and oda.sigin_status_id = 'SignIn' and oda.is_pass = 'UnPassed' and oda.AUDIT_STATUS_ID='Passed' and rd2.record_status='Y' and oda.record_status='Y'
+        ) unPassNum
+        from res_doctor rd inner join osca_doctor_assessment oda on rd.doctor_flow = oda.doctor_flow
+        inner join osaTemp on osaTemp.clinical_flow=oda.clinical_flow
+        where oda.RECORD_STATUS='Y' and rd.RECORD_STATUS='Y'
+        <if test="orgFlow!=null and orgFlow!=''">
+            and rd.org_flow=#{orgFlow}
+        </if>
+        <if test="orgFlow==null or orgFlow==''">
+            <if test="flag=='city'">
+                and rd.org_flow in (
+                select so.org_flow from sys_org so
+                where so.record_status='Y'
+                and so.org_city_id =
+                (select org_city_id
+                from sys_org
+                where record_status='Y'
+                and org_flow=#{userOrgFlow}) )
+            </if>
+            <if test="flag=='global'">
+                and rd.org_flow in (
+                select so.org_flow from sys_org so
+                where so.record_status='Y'
+                and so.org_prov_id =
+                (select org_prov_id
+                from sys_org
+                where record_status='Y'
+                and org_flow=#{userOrgFlow})
+                <if test="orgCityId!=null and orgCityId!=''">
+                    and so.org_City_Id=#{orgCityId}
+                </if>
+                )
+            </if>
+        </if>
+        group by rd.org_flow
+    </select>
+    <select id="queryCityOrg" parameterType="java.lang.String" resultType="java.util.Map">
+        select so.* from sys_org so
+            where so.record_status='Y'
+            and so.org_city_id =
+            (select org_city_id
+            from sys_org
+            where record_status='Y'
+            and org_flow=#{userOrgFlow})
+    </select>
+
+    <select id="queryGlobalOrg" parameterType="java.util.Map" resultType="java.util.Map">
+        select so.* from sys_org so
+        where so.record_status='Y'
+        <if test="orgCityId!=null and orgCityId!=''">
+            and so.org_city_id=#{orgCityId}
+        </if>
+        <if test="orgCityId==null or orgCityId==''">
+        and so.org_prov_id =
+        (select org_prov_id
+        from sys_org
+        where record_status='Y'
+        and org_flow=#{userOrgFlow})
+        </if>
+    </select>
+
+    <select id="queryOrg" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+        select so.* from sys_org so
+        where so.record_status='Y'
+        <if test="orgCityId!=null and orgCityId!=''">
+            and so.org_city_id=#{orgCityId}
+        </if>
+        <if test="orgCityId==null or orgCityId==''">
+        and so.org_prov_id =
+        (select org_prov_id
+        from sys_org
+        where record_status='Y'
+        and org_flow=#{userOrgFlow})
+        </if>
+    </select>
+
+    <select id="queryOrgCheckInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        select max(osa.clinical_year) clinical_year, osa.spe_id, max(osa.spe_name) spe_name,
+            (Select count(0) from osca_doctor_assessment oda
+            left join osca_skills_assessment osa2 on osa2.clinical_flow = oda.clinical_flow
+            where oda.record_status='Y'
+            and osa2.record_status = 'Y'
+            AND osa2.spe_id = osa.spe_id
+            AND oda.audit_status_id = 'Passed'
+            <if test="clinicalYear!=null and clinicalYear!=''">
+                and osa2.clinical_year=#{clinicalYear}
+            </if>
+            <if test="isLocal!=null and isLocal!=''">
+                and osa2.is_local=#{isLocal}
+            </if>
+            <if test="orgFlow!=null and orgFlow!=''">
+                and osa2.org_flow=#{orgFlow}
+            </if>
+            ) as totleNum,
+            (Select count(0) from osca_doctor_assessment oda
+            left join osca_skills_assessment osa2 on osa2.clinical_flow = oda.clinical_flow
+            where oda.record_status='Y'
+            and osa2.record_status = 'Y'
+            AND osa2.spe_id = osa.spe_id
+            <if test="clinicalYear!=null and clinicalYear!=''">
+                and osa2.clinical_year=#{clinicalYear}
+            </if>
+            <if test="isLocal!=null and isLocal!=''">
+                and osa2.is_local=#{isLocal}
+            </if>
+            <if test="orgFlow!=null and orgFlow!=''">
+                and osa2.org_flow=#{orgFlow}
+            </if>
+            and oda.audit_status_id='Passed' and oda.sigin_status_id='SignIn') as signNum,
+            (Select count(0) from osca_doctor_assessment oda
+            left join osca_skills_assessment osa2 on osa2.clinical_flow = oda.clinical_flow
+            where oda.record_status='Y'
+            and osa2.record_status = 'Y'
+            AND osa2.spe_id = osa.spe_id
+            <if test="clinicalYear!=null and clinicalYear!=''">
+                and osa2.clinical_year=#{clinicalYear}
+            </if>
+            <if test="isLocal!=null and isLocal!=''">
+                and osa2.is_local=#{isLocal}
+            </if>
+            <if test="orgFlow!=null and orgFlow!=''">
+                and osa2.org_flow=#{orgFlow}
+            </if>
+            and oda.audit_status_id='Passed' and oda.sigin_status_id='NoSignIn') as noSignNum,
+            (Select count(0) from osca_doctor_assessment oda
+            left join osca_skills_assessment osa2 on osa2.clinical_flow = oda.clinical_flow
+            where oda.record_status='Y'
+            and osa2.record_status = 'Y'
+            AND osa2.spe_id = osa.spe_id
+            <if test="clinicalYear!=null and clinicalYear!=''">
+                and osa2.clinical_year=#{clinicalYear}
+            </if>
+            <if test="isLocal!=null and isLocal!=''">
+                and osa2.is_local=#{isLocal}
+            </if>
+            <if test="orgFlow!=null and orgFlow!=''">
+                and osa2.org_flow=#{orgFlow}
+            </if>
+            and oda.audit_status_id='Passed' and oda.sigin_status_id='SignIn' and oda.is_pass='Passed') as passNum,
+            (Select count(0) from osca_doctor_assessment oda
+            left join osca_skills_assessment osa2 on osa2.clinical_flow = oda.clinical_flow
+            where oda.record_status='Y'
+            and osa2.record_status = 'Y'
+            AND osa2.spe_id = osa.spe_id
+            <if test="clinicalYear!=null and clinicalYear!=''">
+                and osa2.clinical_year=#{clinicalYear}
+            </if>
+            <if test="isLocal!=null and isLocal!=''">
+                and osa2.is_local=#{isLocal}
+            </if>
+            <if test="orgFlow!=null and orgFlow!=''">
+                and osa2.org_flow=#{orgFlow}
+            </if>
+            and oda.audit_status_id='Passed' and oda.sigin_status_id='SignIn' and oda.is_pass='UnPassed') as unPassNum
+        from osca_skills_assessment osa
+        where osa.record_status='Y'
+        <if test="clinicalYear!=null and clinicalYear!=''">
+            and osa.clinical_year=#{clinicalYear}
+        </if>
+        <if test="speId!=null and speId!=''">
+            and osa.spe_id=#{speId}
+        </if>
+        <if test='dictList!=null and dictList.size>0'>
+            and osa.spe_id in
+            <foreach collection="dictList" item="item" open="(" close=")" separator="," >
+                #{item.dictId}
+            </foreach>
+        </if>
+        <if test="isLocal!=null and isLocal!=''">
+            and osa.is_local=#{isLocal}
+        </if>
+        <if test="orgFlow!=null and orgFlow!=''">
+            and osa.org_flow=#{orgFlow}
+        </if>
+        <if test='clinicalName!=null and clinicalName!=""'>
+            <bind name="name" value="'%'+clinicalName+'%'"/>
+            AND osa.clinical_name LIKE #{name}
+        </if>
+        group by osa.spe_id
+        order by osa.spe_id
+    </select>
+
+    <select id="queryOrgInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        select A.*,
+        (Select count(0) from osca_doctor_assessment oda
+            inner join osca_skills_assessment osa on oda.CLINICAL_FLOW = osa.CLINICAL_FLOW
+            left join sys_user su on oda.doctor_flow = su.user_flow
+            where oda.record_status='Y' and osa.record_status='Y'
+            and osa.spe_id=A.spe_id
+            and su.org_flow = A.org_flow
+            <if test="currentOrgFlow!=null and currentOrgFlow!=''">
+                and osa.org_flow=#{currentOrgFlow}
+            </if>
+            and osa.clinical_year = A.clinical_year
+            and osa.is_local = A.is_local
+            and oda.audit_status_id='Passed') as totleNum,
+            (Select count(0) from osca_doctor_assessment oda
+            left join sys_user su on oda.doctor_flow = su.user_flow
+            inner join osca_skills_assessment osa
+            on oda.CLINICAL_FLOW = osa.CLINICAL_FLOW
+            where oda.record_status='Y' and osa.record_status='Y'
+            and su.org_flow = A.org_flow
+            <if test="currentOrgFlow!=null and currentOrgFlow!=''">
+                and osa.org_flow=#{currentOrgFlow}
+            </if>
+            and osa.clinical_year = A.clinical_year
+            and osa.is_local = A.is_local
+            and oda.audit_status_id='Passed') as totleNumAll,
+            (Select count(0) from osca_doctor_assessment oda
+            left join sys_user su on oda.doctor_flow = su.user_flow
+            inner join osca_skills_assessment osa
+            on oda.CLINICAL_FLOW = osa.CLINICAL_FLOW
+            where oda.record_status='Y' and osa.record_status='Y'
+            and osa.spe_id=A.spe_id
+            and su.org_flow = A.org_flow
+            <if test="currentOrgFlow!=null and currentOrgFlow!=''">
+                and osa.org_flow=#{currentOrgFlow}
+            </if>
+            and osa.clinical_year = A.clinical_year
+            and osa.is_local = A.is_local
+            and oda.audit_status_id='Passed' and oda.sigin_status_id='SignIn') as signNum,
+            (Select count(0) from osca_doctor_assessment oda
+            left join sys_user su on oda.doctor_flow = su.user_flow
+            inner join osca_skills_assessment osa
+            on oda.CLINICAL_FLOW = osa.CLINICAL_FLOW
+            where oda.record_status='Y' and osa.record_status='Y'
+            and osa.spe_id=A.spe_id
+            and su.org_flow = A.org_flow
+            <if test="currentOrgFlow!=null and currentOrgFlow!=''">
+                and osa.org_flow=#{currentOrgFlow}
+            </if>
+            and osa.clinical_year = A.clinical_year
+            and osa.is_local = A.is_local
+            and oda.audit_status_id='Passed' and oda.sigin_status_id='NoSignIn') as noSignNum,
+            (Select count(0) from osca_doctor_assessment oda
+            left join sys_user su on oda.doctor_flow = su.user_flow
+            inner join osca_skills_assessment osa
+            on oda.CLINICAL_FLOW = osa.CLINICAL_FLOW
+            where oda.record_status='Y' and osa.record_status='Y'
+            and su.org_flow = A.org_flow
+            <if test="currentOrgFlow!=null and currentOrgFlow!=''">
+                and osa.org_flow=#{currentOrgFlow}
+            </if>
+            and osa.clinical_year = A.clinical_year
+            and osa.is_local = A.is_local
+            and oda.audit_status_id='Passed' and oda.sigin_status_id='NoSignIn') as noSignNumAll,
+            (Select count(0) from osca_doctor_assessment oda
+            left join sys_user su on oda.doctor_flow = su.user_flow
+            inner join osca_skills_assessment osa
+            on oda.CLINICAL_FLOW = osa.CLINICAL_FLOW
+            where oda.record_status='Y' and osa.record_status='Y'
+            and osa.spe_id=A.spe_id
+            and su.org_flow = A.org_flow
+            <if test="currentOrgFlow!=null and currentOrgFlow!=''">
+                and osa.org_flow=#{currentOrgFlow}
+            </if>
+            and osa.clinical_year = A.clinical_year
+            and osa.is_local = A.is_local
+            and oda.audit_status_id='Passed' and oda.sigin_status_id='SignIn' and oda.is_pass='Passed') as passNum,
+            (Select count(0) from osca_doctor_assessment oda
+            left join sys_user su on oda.doctor_flow = su.user_flow
+            inner join osca_skills_assessment osa
+            on oda.CLINICAL_FLOW = osa.CLINICAL_FLOW
+            where oda.record_status='Y' and osa.record_status='Y'
+            and su.org_flow = A.org_flow
+            <if test="currentOrgFlow!=null and currentOrgFlow!=''">
+                and osa.org_flow=#{currentOrgFlow}
+            </if>
+            and osa.clinical_year = A.clinical_year
+            and osa.is_local = A.is_local
+            and oda.audit_status_id='Passed' and oda.sigin_status_id='SignIn' and oda.is_pass='Passed') as passNumAll,
+            (Select count(0) from osca_doctor_assessment oda
+             left join sys_user su on oda.doctor_flow = su.user_flow
+            inner join osca_skills_assessment osa
+            on oda.CLINICAL_FLOW = osa.CLINICAL_FLOW
+            where oda.record_status='Y' and osa.record_status='Y'
+            and osa.spe_id=A.spe_id
+            and su.org_flow = A.org_flow
+            <if test="currentOrgFlow!=null and currentOrgFlow!=''">
+                and osa.org_flow=#{currentOrgFlow}
+            </if>
+            and osa.clinical_year = A.clinical_year
+            and osa.is_local = A.is_local
+            and oda.audit_status_id='Passed' and oda.sigin_status_id='SignIn' and oda.is_pass='UnPassed') as unPassNum
+        from
+        (
+        SELECT DISTINCT su.org_flow, su.org_name, osa.clinical_year, osa.is_local, osa.spe_id
+        , osa.spe_name
+        from sys_user su
+        left join osca_doctor_assessment oda on su.user_flow = oda.DOCTOR_FLOW
+        LEFT JOIN osca_skills_assessment osa ON osa.clinical_flow = oda.clinical_flow
+        <if test="currentOrgFlow!=null and currentOrgFlow!=''">
+            and osa.org_flow=#{currentOrgFlow}
+        </if>
+        where osa.record_status='Y'
+        and oda.record_status='Y'
+        and oda.audit_status_id='Passed'
+        and su.record_status='Y'
+        and su.org_flow is not null
+        <if test="clinicalYear!=null and clinicalYear!=''">
+            and osa.clinical_year=#{clinicalYear}
+        </if>
+        <if test="isLocal!=null and isLocal!=''">
+            and osa.is_local=#{isLocal}
+        </if>
+        <if test="orgFlow!=null and orgFlow!=''">
+            and su.org_Flow=#{orgFlow}
+        </if>
+        <if test="orgName!=null and orgName!=''">
+            and su.org_Name like '%${orgName}%'
+        </if>
+        order by su.org_flow) A
+    </select>
+</mapper>

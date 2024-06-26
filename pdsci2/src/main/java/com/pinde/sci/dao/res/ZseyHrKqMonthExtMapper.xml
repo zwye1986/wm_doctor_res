@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.ZseyHrKqMonthExtMapper" >
+    <select id="searchKq" resultType="java.util.Map" parameterType="java.util.Map">
+        select absence_type_id,to_char(count(absence_type_id)) num
+        from
+        (SELECT a.*,(select
+        case
+        when day_time ='M01' then M01
+        when day_time ='M02' then M02
+        when day_time ='M03' then M03
+        when day_time ='M04' then M04
+        when day_time ='M05' then M05
+        when day_time ='M06' then M06
+        when day_time ='M07' then M07
+        when day_time ='M08' then M08
+        when day_time ='M09' then M09
+        when day_time ='M10' then M10
+        when day_time ='M11' then M11
+        when day_time ='M12' then M12
+        when day_time ='M13' then M13
+        when day_time ='M14' then M14
+        when day_time ='M15' then M15
+        when day_time ='M16' then M16
+        when day_time ='M17' then M17
+        when day_time ='M18' then M18
+        when day_time ='M19' then M19
+        when day_time ='M20' then M20
+        when day_time ='M21' then M21
+        when day_time ='M22' then M22
+        when day_time ='M23' then M23
+        when day_time ='M24' then M24
+        when day_time ='M25' then M25
+        when day_time ='M26' then M26
+        when day_time ='M27' then M27
+        when day_time ='M28' then M28
+        when day_time ='M29' then M29
+        when day_time ='M30' then M30
+        when day_time ='M31' then M31
+        else '' end
+        from
+        ZSEY_HR_KQ_MONTH where record_status='Y' and KQ_DATE=month_time and user_flow=#{userFlow} )absence_type_id
+        FROM (
+        SELECT level AS flow, to_char(to_date(#{startDate}, 'yyyy-mm-dd') + level - 1, 'yyyy-mm-dd') AS date_time,to_char(to_date(#{startDate}, 'yyyy-mm-dd') + level - 1, 'yyyy-mm')month_time
+        ,'M'||to_char(to_date(#{startDate}, 'yyyy-mm-dd') + level - 1, 'dd')day_time
+        FROM dual
+        CONNECT BY level <![CDATA[<=]]> to_date(#{endDate}, 'yyyy-mm-dd') - to_date(#{startDate}, 'yyyy-mm-dd') + 1
+        ) A
+        )B
+        group by absence_type_id
+    </select>
+
+</mapper>

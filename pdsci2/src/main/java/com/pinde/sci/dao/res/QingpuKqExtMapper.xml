@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.QingpuKqExtMapper">
+    <select id="getKqStatistics" parameterType="java.util.Map" resultType="java.util.Map">
+        select su.user_name,su.user_flow,rd.training_spe_name,rd.dept_name,rd.session_number,
+        (select count(0) from qingpu_doctor_kq qdk where qdk.doctor_flow=rd.doctor_flow and qdk.RECORD_STATUS='Y'
+        and qdk.QINGPU_KQ_TYPE_ID='Leave' and MANAGER_AGREE_FLAG='Y'
+        <if test="startDate!='' and startDate!=null">
+              and qdk.end_Date >= #{startDate}
+        </if>
+        <if test="endDate!='' and endDate!=null">
+              and #{endDate} >= qdk.start_Date
+        </if>
+        ) Leave,
+        (select count(0) from qingpu_doctor_kq qdk where qdk.doctor_flow=rd.doctor_flow and qdk.RECORD_STATUS='Y'
+        and qdk.QINGPU_KQ_TYPE_ID='Appeal' and MANAGER_AGREE_FLAG='Y'
+        <if test="startDate!='' and startDate!=null">
+            and qdk.end_Date >= #{startDate}
+        </if>
+        <if test="endDate!='' and endDate!=null">
+            and #{endDate} >= qdk.start_Date
+        </if>
+        ) Appeal,
+        (select count(0) from qingpu_doctor_kq qdk where qdk.doctor_flow=rd.doctor_flow and qdk.RECORD_STATUS='Y'
+        and qdk.QINGPU_KQ_TYPE_ID='Submit' and qdk.QINGPU_KQ_TYPE_DETAIL_ID!='Late' and MANAGER_AGREE_FLAG='Y'
+        <if test="startDate!='' and startDate!=null">
+            and qdk.end_Date >= #{startDate}
+        </if>
+        <if test="endDate!='' and endDate!=null">
+            and #{endDate} >= qdk.start_Date
+        </if>
+        ) Submit,
+        (select count(0) from qingpu_doctor_kq qdk where qdk.doctor_flow=rd.doctor_flow and qdk.RECORD_STATUS='Y'
+        and qdk.QINGPU_KQ_TYPE_DETAIL_ID='Late' and MANAGER_AGREE_FLAG='Y'
+        <if test="startDate!='' and startDate!=null">
+            and qdk.end_Date >= #{startDate}
+        </if>
+        <if test="endDate!='' and endDate!=null">
+            and #{endDate} >= qdk.start_Date
+        </if>
+        ) Late
+        FROM res_doctor rd
+        LEFT join sys_user su on su.user_flow=rd.doctor_flow
+        where rd.RECORD_STATUS='Y' and su.RECORD_STATUS='Y'
+        <if test="deptFlow!='' and deptFlow!=null">
+            and rd.dept_Flow = #{deptFlow}
+        </if>
+        <if test="orgFlow!='' and orgFlow!=null">
+            and rd.org_Flow = #{orgFlow}
+        </if>
+        <if test="sessionNumber!='' and sessionNumber!=null">
+            and rd.session_Number = #{sessionNumber}
+        </if>
+        <if test="trainingSpeId!='' and trainingSpeId!=null">
+            and rd.training_Spe_Id = #{trainingSpeId}
+        </if>
+        <if test="doctorName!='' and doctorName!=null">
+            and rd.doctor_Name like '%${doctorName}%'
+        </if>
+    </select>
+
+    <resultMap type="HashMap" id="signinMap" extends="com.pinde.sci.dao.base.QingpuDoctorSigninMapper.BaseResultMap">
+        <result property="schDeptName" column="SCH_DEPT_NAME" javaType="string"/>
+        <result property="schStartDate" column="SCH_START_DATE" javaType="string"/>
+        <result property="schEndDate" column="SCH_END_DATE" javaType="string"/>
+        <result property="doctorName" column="DOCTOR_NAME" javaType="string"/>
+        <result property="teacherUserName" column="HEAD_USER_NAME" javaType="string"/>
+        <result property="trainingSpeName" column="TRAINING_SPE_NAME" javaType="string"/>
+        <result property="sessionNumber" column="SESSION_NUMBER" javaType="string"/>
+    </resultMap>
+    <select id="getSigninList"  parameterType="java.util.Map" resultMap="signinMap">
+        SELECT qds.*,SAR.SCH_DEPT_NAME,SAR.SCH_START_DATE,SAR.SCH_END_DATE,
+        SU.USER_NAME DOCTOR_NAME,HEAD.USER_NAME HEAD_USER_NAME,
+        ED.training_SPE_NAME,ED.SESSION_NUMBER
+        FROM qingpu_doctor_signin qds
+        LEFT JOIN SCH_ARRANGE_RESULT SAR
+        ON qds.RESULT_FLOW=SAR.RESULT_FLOW
+        LEFT JOIN SYS_USER SU
+        ON qds.DOCTOR_FLOW=SU.USER_FLOW
+        LEFT JOIN SYS_USER HEAD
+        ON qds.TEACHER_USER_FLOW =HEAD.USER_FLOW
+        LEFT JOIN RES_DOCTOR ED
+        ON qds.DOCTOR_FLOW=ED.DOCTOR_FLOW
+        WHERE qds.RECORD_STATUS='Y'
+        AND SAR.RECORD_STATUS='Y'
+        <if test="deptFlows!=null and deptFlows.size()>0">
+            and SAR.DEPT_FLOW IN
+            <foreach collection="deptFlows" close=")" item="deptFlow" open="(" separator=",">
+                #{deptFlow}
+            </foreach>
+        </if>
+        <if test='doctorName!=null and doctorName!=""'>
+            and SU.USER_NAME LIKE  '%${doctorName}%'
+        </if>
+        <if test='doctorFlow!=null and doctorFlow!=""'>
+            and SU.USER_FLOW = #{doctorFlow}
+        </if>
+        <if test='teacherUserFlow!=null and teacherUserFlow!=""'>
+            and qds.TEACHER_USER_FLOW = #{teacherUserFlow}
+        </if>
+        <if test='trainingYears!=null and trainingYears!=""'>
+            and ed.training_Years = #{trainingYears}
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and ed.training_Spe_Id = #{trainingSpeId}
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and ed.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test='signinDate!=null and signinDate!=""'>
+            and qds.SIGNIN_DATE = #{signinDate}
+        </if>
+        ORDER by SIGNIN_DATE DESC,SIGNIN_TIME DESC ,qds.CREATE_TIME DESC
+    </select>
+</mapper>

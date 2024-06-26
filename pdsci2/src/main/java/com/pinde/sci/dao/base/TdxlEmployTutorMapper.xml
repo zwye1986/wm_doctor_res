@@ -1,0 +1,839 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.TdxlEmployTutorMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.TdxlEmployTutor" >
+    <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+    <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="STUDENT_ID" property="studentId" jdbcType="VARCHAR" />
+    <result column="SEX_ID" property="sexId" jdbcType="VARCHAR" />
+    <result column="SEX_NAME" property="sexName" jdbcType="VARCHAR" />
+    <result column="ID_NUMBER" property="idNumber" jdbcType="VARCHAR" />
+    <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+    <result column="WORK_UNIT" property="workUnit" jdbcType="VARCHAR" />
+    <result column="PAPER" property="paper" jdbcType="VARCHAR" />
+    <result column="TUTOR_FLOW" property="tutorFlow" jdbcType="VARCHAR" />
+    <result column="TUTOR_NAME" property="tutorName" jdbcType="VARCHAR" />
+    <result column="TUTOR_SEX_ID" property="tutorSexId" jdbcType="VARCHAR" />
+    <result column="TUTOR_SEX_NAME" property="tutorSexName" jdbcType="VARCHAR" />
+    <result column="TUTOR_AGE" property="tutorAge" jdbcType="VARCHAR" />
+    <result column="TUTOR_TITLE" property="tutorTitle" jdbcType="VARCHAR" />
+    <result column="TUTOR_WORK_UNIT" property="tutorWorkUnit" jdbcType="VARCHAR" />
+    <result column="TUTOR_DIRECTION" property="tutorDirection" jdbcType="VARCHAR" />
+    <result column="TUTOR_OPINION" property="tutorOpinion" jdbcType="VARCHAR" />
+    <result column="TUTOR_AUDIT_ID" property="tutorAuditId" jdbcType="VARCHAR" />
+    <result column="TUTOR_AUDIT_NAME" property="tutorAuditName" jdbcType="VARCHAR" />
+    <result column="TUTOR_AUDIT_TIME" property="tutorAuditTime" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_OPINION" property="orgOpinion" jdbcType="VARCHAR" />
+    <result column="ORG_AUDIT_ID" property="orgAuditId" jdbcType="VARCHAR" />
+    <result column="ORG_AUDIT_NAME" property="orgAuditName" jdbcType="VARCHAR" />
+    <result column="ORG_AUDIT_TIME" property="orgAuditTime" jdbcType="VARCHAR" />
+    <result column="SCHOOL_FLOW" property="schoolFlow" jdbcType="VARCHAR" />
+    <result column="SCHOOL_OPINION" property="schoolOpinion" jdbcType="VARCHAR" />
+    <result column="SCHOOL_AUDIT_ID" property="schoolAuditId" jdbcType="VARCHAR" />
+    <result column="SCHOOL_AUDIT_NAME" property="schoolAuditName" jdbcType="VARCHAR" />
+    <result column="SCHOOL_AUDIT_TIME" property="schoolAuditTime" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.TdxlEmployTutor" extends="BaseResultMap" >
+    <result column="CONTENT" property="content" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RECORD_FLOW, USER_FLOW, USER_NAME, STUDENT_ID, SEX_ID, SEX_NAME, ID_NUMBER, SPE_NAME, 
+    WORK_UNIT, PAPER, TUTOR_FLOW, TUTOR_NAME, TUTOR_SEX_ID, TUTOR_SEX_NAME, TUTOR_AGE, 
+    TUTOR_TITLE, TUTOR_WORK_UNIT, TUTOR_DIRECTION, TUTOR_OPINION, TUTOR_AUDIT_ID, TUTOR_AUDIT_NAME, 
+    TUTOR_AUDIT_TIME, ORG_FLOW, ORG_OPINION, ORG_AUDIT_ID, ORG_AUDIT_NAME, ORG_AUDIT_TIME, 
+    SCHOOL_FLOW, SCHOOL_OPINION, SCHOOL_AUDIT_ID, SCHOOL_AUDIT_NAME, SCHOOL_AUDIT_TIME, 
+    RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.TdxlEmployTutorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.TDXL_EMPLOY_TUTOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.TdxlEmployTutorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.TDXL_EMPLOY_TUTOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.TDXL_EMPLOY_TUTOR
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.TDXL_EMPLOY_TUTOR
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.TdxlEmployTutorExample" >
+    delete from PDSCI.TDXL_EMPLOY_TUTOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.TdxlEmployTutor" >
+    insert into PDSCI.TDXL_EMPLOY_TUTOR (RECORD_FLOW, USER_FLOW, USER_NAME, 
+      STUDENT_ID, SEX_ID, SEX_NAME, 
+      ID_NUMBER, SPE_NAME, WORK_UNIT, 
+      PAPER, TUTOR_FLOW, TUTOR_NAME, 
+      TUTOR_SEX_ID, TUTOR_SEX_NAME, TUTOR_AGE, 
+      TUTOR_TITLE, TUTOR_WORK_UNIT, TUTOR_DIRECTION, 
+      TUTOR_OPINION, TUTOR_AUDIT_ID, TUTOR_AUDIT_NAME, 
+      TUTOR_AUDIT_TIME, ORG_FLOW, ORG_OPINION, 
+      ORG_AUDIT_ID, ORG_AUDIT_NAME, ORG_AUDIT_TIME, 
+      SCHOOL_FLOW, SCHOOL_OPINION, SCHOOL_AUDIT_ID, 
+      SCHOOL_AUDIT_NAME, SCHOOL_AUDIT_TIME, RECORD_STATUS, 
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+      MODIFY_USER_FLOW, CONTENT)
+    values (#{recordFlow,jdbcType=VARCHAR}, #{userFlow,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{studentId,jdbcType=VARCHAR}, #{sexId,jdbcType=VARCHAR}, #{sexName,jdbcType=VARCHAR}, 
+      #{idNumber,jdbcType=VARCHAR}, #{speName,jdbcType=VARCHAR}, #{workUnit,jdbcType=VARCHAR}, 
+      #{paper,jdbcType=VARCHAR}, #{tutorFlow,jdbcType=VARCHAR}, #{tutorName,jdbcType=VARCHAR}, 
+      #{tutorSexId,jdbcType=VARCHAR}, #{tutorSexName,jdbcType=VARCHAR}, #{tutorAge,jdbcType=VARCHAR}, 
+      #{tutorTitle,jdbcType=VARCHAR}, #{tutorWorkUnit,jdbcType=VARCHAR}, #{tutorDirection,jdbcType=VARCHAR}, 
+      #{tutorOpinion,jdbcType=VARCHAR}, #{tutorAuditId,jdbcType=VARCHAR}, #{tutorAuditName,jdbcType=VARCHAR}, 
+      #{tutorAuditTime,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, #{orgOpinion,jdbcType=VARCHAR}, 
+      #{orgAuditId,jdbcType=VARCHAR}, #{orgAuditName,jdbcType=VARCHAR}, #{orgAuditTime,jdbcType=VARCHAR}, 
+      #{schoolFlow,jdbcType=VARCHAR}, #{schoolOpinion,jdbcType=VARCHAR}, #{schoolAuditId,jdbcType=VARCHAR}, 
+      #{schoolAuditName,jdbcType=VARCHAR}, #{schoolAuditTime,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
+      #{modifyUserFlow,jdbcType=VARCHAR}, #{content,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.TdxlEmployTutor" >
+    insert into PDSCI.TDXL_EMPLOY_TUTOR
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        RECORD_FLOW,
+      </if>
+      <if test="userFlow != null" >
+        USER_FLOW,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="studentId != null" >
+        STUDENT_ID,
+      </if>
+      <if test="sexId != null" >
+        SEX_ID,
+      </if>
+      <if test="sexName != null" >
+        SEX_NAME,
+      </if>
+      <if test="idNumber != null" >
+        ID_NUMBER,
+      </if>
+      <if test="speName != null" >
+        SPE_NAME,
+      </if>
+      <if test="workUnit != null" >
+        WORK_UNIT,
+      </if>
+      <if test="paper != null" >
+        PAPER,
+      </if>
+      <if test="tutorFlow != null" >
+        TUTOR_FLOW,
+      </if>
+      <if test="tutorName != null" >
+        TUTOR_NAME,
+      </if>
+      <if test="tutorSexId != null" >
+        TUTOR_SEX_ID,
+      </if>
+      <if test="tutorSexName != null" >
+        TUTOR_SEX_NAME,
+      </if>
+      <if test="tutorAge != null" >
+        TUTOR_AGE,
+      </if>
+      <if test="tutorTitle != null" >
+        TUTOR_TITLE,
+      </if>
+      <if test="tutorWorkUnit != null" >
+        TUTOR_WORK_UNIT,
+      </if>
+      <if test="tutorDirection != null" >
+        TUTOR_DIRECTION,
+      </if>
+      <if test="tutorOpinion != null" >
+        TUTOR_OPINION,
+      </if>
+      <if test="tutorAuditId != null" >
+        TUTOR_AUDIT_ID,
+      </if>
+      <if test="tutorAuditName != null" >
+        TUTOR_AUDIT_NAME,
+      </if>
+      <if test="tutorAuditTime != null" >
+        TUTOR_AUDIT_TIME,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="orgOpinion != null" >
+        ORG_OPINION,
+      </if>
+      <if test="orgAuditId != null" >
+        ORG_AUDIT_ID,
+      </if>
+      <if test="orgAuditName != null" >
+        ORG_AUDIT_NAME,
+      </if>
+      <if test="orgAuditTime != null" >
+        ORG_AUDIT_TIME,
+      </if>
+      <if test="schoolFlow != null" >
+        SCHOOL_FLOW,
+      </if>
+      <if test="schoolOpinion != null" >
+        SCHOOL_OPINION,
+      </if>
+      <if test="schoolAuditId != null" >
+        SCHOOL_AUDIT_ID,
+      </if>
+      <if test="schoolAuditName != null" >
+        SCHOOL_AUDIT_NAME,
+      </if>
+      <if test="schoolAuditTime != null" >
+        SCHOOL_AUDIT_TIME,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userFlow != null" >
+        #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentId != null" >
+        #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="sexId != null" >
+        #{sexId,jdbcType=VARCHAR},
+      </if>
+      <if test="sexName != null" >
+        #{sexName,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null" >
+        #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        #{speName,jdbcType=VARCHAR},
+      </if>
+      <if test="workUnit != null" >
+        #{workUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="paper != null" >
+        #{paper,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorFlow != null" >
+        #{tutorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorName != null" >
+        #{tutorName,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorSexId != null" >
+        #{tutorSexId,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorSexName != null" >
+        #{tutorSexName,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorAge != null" >
+        #{tutorAge,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorTitle != null" >
+        #{tutorTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorWorkUnit != null" >
+        #{tutorWorkUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorDirection != null" >
+        #{tutorDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorOpinion != null" >
+        #{tutorOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorAuditId != null" >
+        #{tutorAuditId,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorAuditName != null" >
+        #{tutorAuditName,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorAuditTime != null" >
+        #{tutorAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgOpinion != null" >
+        #{orgOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAuditId != null" >
+        #{orgAuditId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAuditName != null" >
+        #{orgAuditName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAuditTime != null" >
+        #{orgAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolFlow != null" >
+        #{schoolFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolOpinion != null" >
+        #{schoolOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolAuditId != null" >
+        #{schoolAuditId,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolAuditName != null" >
+        #{schoolAuditName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolAuditTime != null" >
+        #{schoolAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.TdxlEmployTutorExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.TDXL_EMPLOY_TUTOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.TDXL_EMPLOY_TUTOR
+    <set >
+      <if test="record.recordFlow != null" >
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userFlow != null" >
+        USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentId != null" >
+        STUDENT_ID = #{record.studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sexId != null" >
+        SEX_ID = #{record.sexId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sexName != null" >
+        SEX_NAME = #{record.sexName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idNumber != null" >
+        ID_NUMBER = #{record.idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speName != null" >
+        SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workUnit != null" >
+        WORK_UNIT = #{record.workUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paper != null" >
+        PAPER = #{record.paper,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorFlow != null" >
+        TUTOR_FLOW = #{record.tutorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorName != null" >
+        TUTOR_NAME = #{record.tutorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorSexId != null" >
+        TUTOR_SEX_ID = #{record.tutorSexId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorSexName != null" >
+        TUTOR_SEX_NAME = #{record.tutorSexName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorAge != null" >
+        TUTOR_AGE = #{record.tutorAge,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorTitle != null" >
+        TUTOR_TITLE = #{record.tutorTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorWorkUnit != null" >
+        TUTOR_WORK_UNIT = #{record.tutorWorkUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorDirection != null" >
+        TUTOR_DIRECTION = #{record.tutorDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorOpinion != null" >
+        TUTOR_OPINION = #{record.tutorOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorAuditId != null" >
+        TUTOR_AUDIT_ID = #{record.tutorAuditId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorAuditName != null" >
+        TUTOR_AUDIT_NAME = #{record.tutorAuditName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorAuditTime != null" >
+        TUTOR_AUDIT_TIME = #{record.tutorAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgOpinion != null" >
+        ORG_OPINION = #{record.orgOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgAuditId != null" >
+        ORG_AUDIT_ID = #{record.orgAuditId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgAuditName != null" >
+        ORG_AUDIT_NAME = #{record.orgAuditName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgAuditTime != null" >
+        ORG_AUDIT_TIME = #{record.orgAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolFlow != null" >
+        SCHOOL_FLOW = #{record.schoolFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolOpinion != null" >
+        SCHOOL_OPINION = #{record.schoolOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolAuditId != null" >
+        SCHOOL_AUDIT_ID = #{record.schoolAuditId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolAuditName != null" >
+        SCHOOL_AUDIT_NAME = #{record.schoolAuditName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolAuditTime != null" >
+        SCHOOL_AUDIT_TIME = #{record.schoolAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        CONTENT = #{record.content,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update PDSCI.TDXL_EMPLOY_TUTOR
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      STUDENT_ID = #{record.studentId,jdbcType=VARCHAR},
+      SEX_ID = #{record.sexId,jdbcType=VARCHAR},
+      SEX_NAME = #{record.sexName,jdbcType=VARCHAR},
+      ID_NUMBER = #{record.idNumber,jdbcType=VARCHAR},
+      SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      WORK_UNIT = #{record.workUnit,jdbcType=VARCHAR},
+      PAPER = #{record.paper,jdbcType=VARCHAR},
+      TUTOR_FLOW = #{record.tutorFlow,jdbcType=VARCHAR},
+      TUTOR_NAME = #{record.tutorName,jdbcType=VARCHAR},
+      TUTOR_SEX_ID = #{record.tutorSexId,jdbcType=VARCHAR},
+      TUTOR_SEX_NAME = #{record.tutorSexName,jdbcType=VARCHAR},
+      TUTOR_AGE = #{record.tutorAge,jdbcType=VARCHAR},
+      TUTOR_TITLE = #{record.tutorTitle,jdbcType=VARCHAR},
+      TUTOR_WORK_UNIT = #{record.tutorWorkUnit,jdbcType=VARCHAR},
+      TUTOR_DIRECTION = #{record.tutorDirection,jdbcType=VARCHAR},
+      TUTOR_OPINION = #{record.tutorOpinion,jdbcType=VARCHAR},
+      TUTOR_AUDIT_ID = #{record.tutorAuditId,jdbcType=VARCHAR},
+      TUTOR_AUDIT_NAME = #{record.tutorAuditName,jdbcType=VARCHAR},
+      TUTOR_AUDIT_TIME = #{record.tutorAuditTime,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_OPINION = #{record.orgOpinion,jdbcType=VARCHAR},
+      ORG_AUDIT_ID = #{record.orgAuditId,jdbcType=VARCHAR},
+      ORG_AUDIT_NAME = #{record.orgAuditName,jdbcType=VARCHAR},
+      ORG_AUDIT_TIME = #{record.orgAuditTime,jdbcType=VARCHAR},
+      SCHOOL_FLOW = #{record.schoolFlow,jdbcType=VARCHAR},
+      SCHOOL_OPINION = #{record.schoolOpinion,jdbcType=VARCHAR},
+      SCHOOL_AUDIT_ID = #{record.schoolAuditId,jdbcType=VARCHAR},
+      SCHOOL_AUDIT_NAME = #{record.schoolAuditName,jdbcType=VARCHAR},
+      SCHOOL_AUDIT_TIME = #{record.schoolAuditTime,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      CONTENT = #{record.content,jdbcType=CLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.TDXL_EMPLOY_TUTOR
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      STUDENT_ID = #{record.studentId,jdbcType=VARCHAR},
+      SEX_ID = #{record.sexId,jdbcType=VARCHAR},
+      SEX_NAME = #{record.sexName,jdbcType=VARCHAR},
+      ID_NUMBER = #{record.idNumber,jdbcType=VARCHAR},
+      SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      WORK_UNIT = #{record.workUnit,jdbcType=VARCHAR},
+      PAPER = #{record.paper,jdbcType=VARCHAR},
+      TUTOR_FLOW = #{record.tutorFlow,jdbcType=VARCHAR},
+      TUTOR_NAME = #{record.tutorName,jdbcType=VARCHAR},
+      TUTOR_SEX_ID = #{record.tutorSexId,jdbcType=VARCHAR},
+      TUTOR_SEX_NAME = #{record.tutorSexName,jdbcType=VARCHAR},
+      TUTOR_AGE = #{record.tutorAge,jdbcType=VARCHAR},
+      TUTOR_TITLE = #{record.tutorTitle,jdbcType=VARCHAR},
+      TUTOR_WORK_UNIT = #{record.tutorWorkUnit,jdbcType=VARCHAR},
+      TUTOR_DIRECTION = #{record.tutorDirection,jdbcType=VARCHAR},
+      TUTOR_OPINION = #{record.tutorOpinion,jdbcType=VARCHAR},
+      TUTOR_AUDIT_ID = #{record.tutorAuditId,jdbcType=VARCHAR},
+      TUTOR_AUDIT_NAME = #{record.tutorAuditName,jdbcType=VARCHAR},
+      TUTOR_AUDIT_TIME = #{record.tutorAuditTime,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_OPINION = #{record.orgOpinion,jdbcType=VARCHAR},
+      ORG_AUDIT_ID = #{record.orgAuditId,jdbcType=VARCHAR},
+      ORG_AUDIT_NAME = #{record.orgAuditName,jdbcType=VARCHAR},
+      ORG_AUDIT_TIME = #{record.orgAuditTime,jdbcType=VARCHAR},
+      SCHOOL_FLOW = #{record.schoolFlow,jdbcType=VARCHAR},
+      SCHOOL_OPINION = #{record.schoolOpinion,jdbcType=VARCHAR},
+      SCHOOL_AUDIT_ID = #{record.schoolAuditId,jdbcType=VARCHAR},
+      SCHOOL_AUDIT_NAME = #{record.schoolAuditName,jdbcType=VARCHAR},
+      SCHOOL_AUDIT_TIME = #{record.schoolAuditTime,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.TdxlEmployTutor" >
+    update PDSCI.TDXL_EMPLOY_TUTOR
+    <set >
+      <if test="userFlow != null" >
+        USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentId != null" >
+        STUDENT_ID = #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="sexId != null" >
+        SEX_ID = #{sexId,jdbcType=VARCHAR},
+      </if>
+      <if test="sexName != null" >
+        SEX_NAME = #{sexName,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null" >
+        ID_NUMBER = #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        SPE_NAME = #{speName,jdbcType=VARCHAR},
+      </if>
+      <if test="workUnit != null" >
+        WORK_UNIT = #{workUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="paper != null" >
+        PAPER = #{paper,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorFlow != null" >
+        TUTOR_FLOW = #{tutorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorName != null" >
+        TUTOR_NAME = #{tutorName,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorSexId != null" >
+        TUTOR_SEX_ID = #{tutorSexId,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorSexName != null" >
+        TUTOR_SEX_NAME = #{tutorSexName,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorAge != null" >
+        TUTOR_AGE = #{tutorAge,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorTitle != null" >
+        TUTOR_TITLE = #{tutorTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorWorkUnit != null" >
+        TUTOR_WORK_UNIT = #{tutorWorkUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorDirection != null" >
+        TUTOR_DIRECTION = #{tutorDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorOpinion != null" >
+        TUTOR_OPINION = #{tutorOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorAuditId != null" >
+        TUTOR_AUDIT_ID = #{tutorAuditId,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorAuditName != null" >
+        TUTOR_AUDIT_NAME = #{tutorAuditName,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorAuditTime != null" >
+        TUTOR_AUDIT_TIME = #{tutorAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgOpinion != null" >
+        ORG_OPINION = #{orgOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAuditId != null" >
+        ORG_AUDIT_ID = #{orgAuditId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAuditName != null" >
+        ORG_AUDIT_NAME = #{orgAuditName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAuditTime != null" >
+        ORG_AUDIT_TIME = #{orgAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolFlow != null" >
+        SCHOOL_FLOW = #{schoolFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolOpinion != null" >
+        SCHOOL_OPINION = #{schoolOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolAuditId != null" >
+        SCHOOL_AUDIT_ID = #{schoolAuditId,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolAuditName != null" >
+        SCHOOL_AUDIT_NAME = #{schoolAuditName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolAuditTime != null" >
+        SCHOOL_AUDIT_TIME = #{schoolAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=CLOB},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.TdxlEmployTutor" >
+    update PDSCI.TDXL_EMPLOY_TUTOR
+    set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      STUDENT_ID = #{studentId,jdbcType=VARCHAR},
+      SEX_ID = #{sexId,jdbcType=VARCHAR},
+      SEX_NAME = #{sexName,jdbcType=VARCHAR},
+      ID_NUMBER = #{idNumber,jdbcType=VARCHAR},
+      SPE_NAME = #{speName,jdbcType=VARCHAR},
+      WORK_UNIT = #{workUnit,jdbcType=VARCHAR},
+      PAPER = #{paper,jdbcType=VARCHAR},
+      TUTOR_FLOW = #{tutorFlow,jdbcType=VARCHAR},
+      TUTOR_NAME = #{tutorName,jdbcType=VARCHAR},
+      TUTOR_SEX_ID = #{tutorSexId,jdbcType=VARCHAR},
+      TUTOR_SEX_NAME = #{tutorSexName,jdbcType=VARCHAR},
+      TUTOR_AGE = #{tutorAge,jdbcType=VARCHAR},
+      TUTOR_TITLE = #{tutorTitle,jdbcType=VARCHAR},
+      TUTOR_WORK_UNIT = #{tutorWorkUnit,jdbcType=VARCHAR},
+      TUTOR_DIRECTION = #{tutorDirection,jdbcType=VARCHAR},
+      TUTOR_OPINION = #{tutorOpinion,jdbcType=VARCHAR},
+      TUTOR_AUDIT_ID = #{tutorAuditId,jdbcType=VARCHAR},
+      TUTOR_AUDIT_NAME = #{tutorAuditName,jdbcType=VARCHAR},
+      TUTOR_AUDIT_TIME = #{tutorAuditTime,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ORG_OPINION = #{orgOpinion,jdbcType=VARCHAR},
+      ORG_AUDIT_ID = #{orgAuditId,jdbcType=VARCHAR},
+      ORG_AUDIT_NAME = #{orgAuditName,jdbcType=VARCHAR},
+      ORG_AUDIT_TIME = #{orgAuditTime,jdbcType=VARCHAR},
+      SCHOOL_FLOW = #{schoolFlow,jdbcType=VARCHAR},
+      SCHOOL_OPINION = #{schoolOpinion,jdbcType=VARCHAR},
+      SCHOOL_AUDIT_ID = #{schoolAuditId,jdbcType=VARCHAR},
+      SCHOOL_AUDIT_NAME = #{schoolAuditName,jdbcType=VARCHAR},
+      SCHOOL_AUDIT_TIME = #{schoolAuditTime,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=CLOB}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.TdxlEmployTutor" >
+    update PDSCI.TDXL_EMPLOY_TUTOR
+    set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      STUDENT_ID = #{studentId,jdbcType=VARCHAR},
+      SEX_ID = #{sexId,jdbcType=VARCHAR},
+      SEX_NAME = #{sexName,jdbcType=VARCHAR},
+      ID_NUMBER = #{idNumber,jdbcType=VARCHAR},
+      SPE_NAME = #{speName,jdbcType=VARCHAR},
+      WORK_UNIT = #{workUnit,jdbcType=VARCHAR},
+      PAPER = #{paper,jdbcType=VARCHAR},
+      TUTOR_FLOW = #{tutorFlow,jdbcType=VARCHAR},
+      TUTOR_NAME = #{tutorName,jdbcType=VARCHAR},
+      TUTOR_SEX_ID = #{tutorSexId,jdbcType=VARCHAR},
+      TUTOR_SEX_NAME = #{tutorSexName,jdbcType=VARCHAR},
+      TUTOR_AGE = #{tutorAge,jdbcType=VARCHAR},
+      TUTOR_TITLE = #{tutorTitle,jdbcType=VARCHAR},
+      TUTOR_WORK_UNIT = #{tutorWorkUnit,jdbcType=VARCHAR},
+      TUTOR_DIRECTION = #{tutorDirection,jdbcType=VARCHAR},
+      TUTOR_OPINION = #{tutorOpinion,jdbcType=VARCHAR},
+      TUTOR_AUDIT_ID = #{tutorAuditId,jdbcType=VARCHAR},
+      TUTOR_AUDIT_NAME = #{tutorAuditName,jdbcType=VARCHAR},
+      TUTOR_AUDIT_TIME = #{tutorAuditTime,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ORG_OPINION = #{orgOpinion,jdbcType=VARCHAR},
+      ORG_AUDIT_ID = #{orgAuditId,jdbcType=VARCHAR},
+      ORG_AUDIT_NAME = #{orgAuditName,jdbcType=VARCHAR},
+      ORG_AUDIT_TIME = #{orgAuditTime,jdbcType=VARCHAR},
+      SCHOOL_FLOW = #{schoolFlow,jdbcType=VARCHAR},
+      SCHOOL_OPINION = #{schoolOpinion,jdbcType=VARCHAR},
+      SCHOOL_AUDIT_ID = #{schoolAuditId,jdbcType=VARCHAR},
+      SCHOOL_AUDIT_NAME = #{schoolAuditName,jdbcType=VARCHAR},
+      SCHOOL_AUDIT_TIME = #{schoolAuditTime,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

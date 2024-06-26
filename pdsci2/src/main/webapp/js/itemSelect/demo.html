@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0047)http://localhost:8080/pdsci/jsres/manage/global -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>年份多选</title>
+
+
+<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="itemSelect.js"></script>
+<link rel="stylesheet" type="text/css" href="font.css">
+
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+$(function(){
+var datas =[{"id":"2","text":"2"}, 
+{"id":"4","text":"3"},
+{"id":"3","text":"4"},
+{"id":"5","text":"5"},
+{"id":"7","text":"6"},
+{"id":"6","text":"7"},
+{"id":"8","text":"8"},
+{"id":"9","text":"9"},
+{"id":"11","text":"10"},
+{"id":"10","text":"11"},
+{"id":"12","text":"12"},
+{"id":"14","text":"13"},
+{"id":"13","text":"中国交"},
+{"id":"15","text":"公司"},
+{"id":"16","text":"人民"},
+{"id":"18","text":"中国联合网络通信股份有限公司"},
+{"id":"19","text":"中国神华能源股份有限公司"},
+{"id":"20","text":"中国海洋石油有限公司"},
+{"id":"16","text":"中国冶金科工股份有限公司"},
+{"id":"21","text":"联想集团有限公司"}];
+	var c =[{"id":"2","text":"2"},
+		{"id":"4","text":"3"}];
+							//$.itemSelect("yearContainer",datas,"otherName","2",null);//默认不选中
+							$.itemSelect("yearContainer",datas,"","2",c);//默认选中
+						});
+
+						
+</script>
+
+						
+					<div style="min-width: 160px;float: left;border:1px">
+						<input id="yearContainer" type="text"  style="width: 100%;border:1px;" readonly="readonly" placeholder="点击选择子项"/>
+					</div>
+					<div id="otherName" style="float: left;display: none;margin-left: 20px;height: 0px;overflow: visible;margin-top: -9px;">
+						<font color="red">*</font>名称：
+						<input type="text" name="regItem" value="${formDataMap['activeName']}" style="width: 160px;" class="validate[required]"/>
+					</div>
+</body></html>

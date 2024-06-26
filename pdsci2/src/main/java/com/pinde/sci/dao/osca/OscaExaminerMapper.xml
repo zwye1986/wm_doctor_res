@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.osca.OscaExaminerMapper" >
+    <resultMap id="OrgExaminerResultMap" type="com.pinde.sci.model.osca.OscaExaminerExt">
+        <id column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+        <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="SEX_ID" property="sexId" jdbcType="VARCHAR" />
+        <result column="SEX_NAME" property="sexName" jdbcType="VARCHAR" />
+        <result column="TITLE_ID" property="titleId" jdbcType="VARCHAR" />
+        <result column="TITLE_NAME" property="titleName" jdbcType="VARCHAR" />
+        <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR" />
+        <result column="WORK_ORG_NAME" property="workOrgName" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+        <result column="STATUS_ID" property="statusId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="searchAllExam" parameterType="java.util.Map" resultMap="OrgExaminerResultMap">
+        SELECT DISTINCT U.USER_FLOW, U.USER_CODE, U.USER_NAME, U.SEX_ID, U.SEX_NAME
+        , U.TITLE_ID, U.TITLE_NAME, U.USER_PHONE, U.ORG_FLOW, U.ORG_NAME
+        , U.RECORD_STATUS, U.WORK_ORG_NAME,U.STATUS_ID
+        FROM PDSCI.SYS_USER U
+        LEFT JOIN osca_tea_info oti ON oti.user_flow = u.user_flow and oti.record_status = 'Y'
+        WHERE  u.record_status = 'Y'
+        and u.status_id in ('Activated','Locked')
+        and exists(
+					select null from SYS_USER_ROLE sur
+					where sur.RECORD_STATUS='Y'
+					and u.USER_FLOW=sur.USER_FLOW
+					and sur.ROLE_FLOW =#{examTeaRole}
+				)
+        <if test="userCode!=null and userCode!=''">
+            <bind name="code" value="'%'+userCode+'%'"/>
+            AND  U.USER_CODE like #{code,jdbcType=VARCHAR}
+        </if>
+        <if test='titleName!=null and titleName!=""'>
+            <bind name="name" value="'%'+titleName+'%'"/>
+            AND U.TITLE_NAME like #{name,jdbcType=VARCHAR}
+        </if>
+        <if test='userName!=null and userName!=""'>
+            <bind name="name" value="'%'+userName+'%'"/>
+            AND U.USER_NAME like #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="statusId!=null and statusId!=''">
+            AND  U.status_id=#{statusId,jdbcType=VARCHAR}
+        </if>
+        <if test="orgFlowList!=null and orgFlowList.size>0">
+            and U.ORG_FLOW in
+            <foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item,jdbcType=VARCHAR}</foreach>
+        </if>
+        <if test="orgFlow!=null and orgFlow!=''">
+            and U.org_flow = #{orgFlow}
+        </if>
+        <if test="trainingTypeId!=null and trainingTypeId!=''">
+            AND  oti.TRAINING_TYPE_ID=#{trainingTypeId,jdbcType=VARCHAR}
+        </if>
+        <if test="trainingSpeId!=null and trainingSpeId!=''">
+            AND  oti.TRAINING_SPE_ID=#{trainingSpeId,jdbcType=VARCHAR}
+        </if>
+        <if test="workOrgName!=null and workOrgName!=''">
+            AND  U.work_Org_Name like '%${workOrgName}%'
+        </if>
+        order by U.USER_CODE
+    </select>
+</mapper>

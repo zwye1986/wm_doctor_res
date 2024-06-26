@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.osca.OscaDoctorRegistExtMapper" >
+    <select id="search" parameterType="java.util.Map" resultType="java.util.Map">
+        select su.user_name,
+                rd.session_number,
+                su.id_no,
+                odr.record_flow,
+                su.user_email,
+                su.user_phone,
+                rd.work_org_name,
+                odr.status_id,
+                su.user_flow,
+                su.org_name,
+                rd.training_type_name,
+                rd.training_spe_name
+        FROM osca_doctor_regist odr
+        left join sys_user su on odr.doctor_flow=su.user_flow
+        left join res_doctor rd on odr.doctor_flow=rd.doctor_flow
+        where odr.record_status = 'Y' and su.record_status = 'Y' and rd.record_status = 'Y'
+        <if test="userName!=null and userName!=''">
+            and su.user_name like '%${userName}%'
+        </if>
+        <if test="trainingTypeId!=null and trainingTypeId!=''">
+            and rd.training_Type_Id = #{trainingTypeId}
+        </if>
+        <if test="trainingSpeId!=null and trainingSpeId!=''">
+            and rd.training_spe_id = #{trainingSpeId}
+        </if>
+        <if test="sessionNumber!=null and sessionNumber!=''">
+            and rd.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test="idNo!=null and idNo!=''">
+            and su.id_no like '%${idNo}%'
+        </if>
+        <if test="orgFlow!=null and orgFlow!=''">
+            and su.org_Flow = #{orgFlow}
+        </if>
+        <if test="statusId!=null and statusId!=''">
+            and odr.status_Id = #{statusId}
+        </if>
+        order by
+        case when odr.status_id = 'Passing' then 1
+        when odr.status_id = 'Passed' then 2 else 3
+        end,
+        su.user_code
+    </select>
+
+    <select id="searchStudents" parameterType="java.util.Map" resultType="java.util.Map">
+        select su.user_name,
+        rd.session_number,
+        su.id_no,
+        su.user_email,
+        su.user_phone,
+        rd.work_org_name,
+        su.user_flow,
+        su.org_name,
+        su.status_id,
+        rd.training_type_name,
+        rd.training_spe_name,
+        rd.OSCA_STUDENT_SUBMIT
+        FROM sys_user su
+        left join res_doctor rd on su.user_flow=rd.doctor_flow
+        left join sys_user_role sur on sur.user_flow  = rd.doctor_flow
+        where
+        su.record_status = 'Y' and rd.record_status = 'Y' and  sur.record_status='Y'
+        and sur.ws_id='osca'
+        and sur.role_flow =#{flow}
+        <if test="orgFlow!=null and orgFlow!=''">
+            and su.org_Flow = #{orgFlow}
+        </if>
+        and su.status_id in ('Locked','Activated')
+        <if test="userName!=null and userName!=''">
+            and su.user_name like '%${userName}%'
+        </if>
+        <if test="trainingTypeId!=null and trainingTypeId!=''">
+            and rd.training_Type_Id = #{trainingTypeId}
+        </if>
+        <if test="trainingSpeId!=null and trainingSpeId!=''">
+            and rd.training_spe_id = #{trainingSpeId}
+        </if>
+        <if test="sessionNumber!=null and sessionNumber!=''">
+            and rd.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test="idNo!=null and idNo!=''">
+            and su.id_no like '%${idNo}%'
+        </if>
+
+        <if test="statusId!=null and statusId!=''">
+            and su.status_id = #{statusId}
+        </if>
+        order by rd.session_number,su.id_no
+    </select>
+</mapper>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jszy.JszyResJointOrgExtMapper">
+    <resultMap id="JointOrgExtMap" type="com.pinde.sci.model.jszy.JszyResJointOrgExt">
+        <id column="JOINT_FLOW" property="jointFlow" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="JOINT_ORG_FLOW" property="jointOrgFlow" jdbcType="VARCHAR" />
+        <result column="JOINT_ORG_CODE" property="jointOrgCode" jdbcType="VARCHAR" />
+        <result column="JOINT_ORG_NAME" property="jointOrgName" jdbcType="VARCHAR" />
+        <result column="JOINT_ORG_LEVEL_NAME" property="jointOrgLevelName" jdbcType="VARCHAR" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="findJointOrgExtByOrgFlow"  parameterType="string" resultMap="JointOrgExtMap">
+        SELECT SO.ORG_FLOW,
+                JO.JOINT_FLOW,
+                JO. ORG_FLOW,
+                JO.ORG_NAME,
+                JO. JOINT_ORG_FLOW,
+                SO.ORG_CODE  JOINT_ORG_CODE,
+                JO. JOINT_ORG_NAME,
+                SO.ORG_LEVEL_NAME  JOINT_ORG_LEVEL_NAME,
+                JO. RECORD_STATUS,
+                JO. CREATE_TIME,
+                JO. CREATE_USER_FLOW,
+                JO.MODIFY_TIME
+              FROM RES_JOINT_ORG JO, SYS_ORG SO
+             WHERE SO.ORG_FLOW = JO.JOINT_ORG_FLOW(+)
+            <if test="orgFlow !=null and orgFlow!=''">
+                AND JO.ORG_FLOW = #{orgFlow}
+            </if>
+               AND SO.RECORD_STATUS = 'Y'
+               AND JO.RECORD_STATUS = 'Y'
+             ORDER BY JO.ORG_FLOW,SO.ORG_CODE
+    </select>
+
+    <resultMap id="orgMap" type="com.pinde.sci.model.mo.SysOrg" >
+        <id column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="ORG_PROV_ID" property="orgProvId" jdbcType="VARCHAR" />
+        <result column="ORG_PROV_NAME" property="orgProvName" jdbcType="VARCHAR" />
+        <result column="ORG_CITY_ID" property="orgCityId" jdbcType="VARCHAR" />
+        <result column="ORG_CITY_NAME" property="orgCityName" jdbcType="VARCHAR" />
+        <result column="ORG_AREA_ID" property="orgAreaId" jdbcType="VARCHAR" />
+        <result column="ORG_AREA_NAME" property="orgAreaName" jdbcType="VARCHAR" />
+        <result column="ORG_TYPE_ID" property="orgTypeId" jdbcType="VARCHAR" />
+        <result column="ORG_TYPE_NAME" property="orgTypeName" jdbcType="VARCHAR" />
+        <result column="ORG_ADDRESS" property="orgAddress" jdbcType="VARCHAR" />
+        <result column="ORG_ZIP" property="orgZip" jdbcType="VARCHAR" />
+        <result column="ORG_PHONE" property="orgPhone" jdbcType="VARCHAR" />
+        <result column="CHARGE_ORG_FLOW" property="chargeOrgFlow" jdbcType="VARCHAR" />
+        <result column="CHARGE_ORG_NAME" property="chargeOrgName" jdbcType="VARCHAR" />
+        <result column="ORDINAL" property="ordinal" jdbcType="DECIMAL" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+        <result column="ORG_LEVEL_ID" property="orgLevelId" jdbcType="VARCHAR" />
+        <result column="ORG_LEVEL_NAME" property="orgLevelName" jdbcType="VARCHAR" />
+        <result column="IS_EXAM_ORG" property="isExamOrg" jdbcType="VARCHAR" />
+        <result column="SEND_SCHOOL_ID" property="sendSchoolId" jdbcType="VARCHAR" />
+        <result column="SEND_SCHOOL_NAME" property="sendSchoolName" jdbcType="VARCHAR" />
+        <result column="IS_SECOND_FLAG" property="isSecondFlag" jdbcType="VARCHAR" />
+        <result column="IDENTIFY_NO" property="identifyNo" jdbcType="VARCHAR" />
+        <result column="HOSPITAL_PASSWORD" property="hospitalPassword" jdbcType="VARCHAR" />
+        <result column="OSCE_DOCTOR_SHOW" property="osceDoctorShow" jdbcType="VARCHAR" />
+        <result column="OSCE_TEACHER_SHOW" property="osceTeacherShow" jdbcType="VARCHAR" />
+        <result column="IS_TRAIN_ORG" property="isTrainOrg" jdbcType="VARCHAR" />
+        <result column="CREDIT_CODE" property="creditCode" jdbcType="VARCHAR" />
+        <result column="IS_SUBMIT_ID" property="isSubmitId" jdbcType="VARCHAR" />
+        <result column="IS_SUBMIT_NAME" property="isSubmitName" jdbcType="VARCHAR" />
+        <result column="CHECK_STATUS_ID" property="checkStatusId" jdbcType="VARCHAR" />
+        <result column="CHECK_STATUS_NAME" property="checkStatusName" jdbcType="VARCHAR" />
+        <result column="CHECK_REASON" property="checkReason" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="findJointOrgByCityId" resultMap="orgMap" parameterType="java.lang.String" >
+        SELECT * FROM sys_org so
+         WHERE so.org_flow in (SELECT t.joint_org_flow
+                                 FROM res_joint_org t
+                                 left join sys_org so
+                                   on so.org_flow = t.org_flow
+                                  and so.record_status = 'Y'
+                                 left join sys_org jo
+                                   on jo.org_flow = t.joint_org_flow
+                                  and jo.record_status = 'Y'
+                                WHERE t.record_status = 'Y'
+                                  and so.org_prov_id = '320000'
+                                  and so.org_city_id = #{cityId}
+                                  and so.org_type_id = 'Hospital'
+                                  and jo.org_prov_id = '320000'
+                                  and jo.org_city_id != #{cityId}
+                                  and so.org_type_id = 'Hospital'
+                               )
+              ORDER BY ORDINAL, ORG_CODE, RECORD_STATUS DESC, ORG_FLOW DESC
+    </select>
+
+
+</mapper>

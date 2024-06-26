@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>	
+
+	<jsp path="res/form/{3}/{0}/skillAndOperationRegistryNew_{1}"></jsp>
+
+	<gzzyjx ver="1.0">
+		<page  ver="1.0">
+			<item name="MedicalNo" isView="0" remark="病历号" multiple="N"></item>
+			<item name="skillName" isView="1" remark="技术操作及手术名称" multiple="N"></item>
+			<item name="role" isView="2" remark="角色" multiple="N"></item>
+			<item name="teacher" isView="3" remark="带教" multiple="N"></item>
+		</page>
+	</gzzyjx>
+</jspForm>
+

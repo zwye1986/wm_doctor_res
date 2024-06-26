@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.StuUserResumeExtMapper" >
+
+	<update id="updateSpeNameById">
+		UPDATE STU_USER_RESUME SET SPE_NAME=#{dictName}
+		WHERE RECORD_STATUS='Y'
+		AND SPE_ID=#{dictId}
+	</update>
+	<update id="updateUserDeptNameById">
+		UPDATE SYS_USER SET DEPT_NAME=#{dictName}
+		WHERE RECORD_STATUS='Y'
+		AND DEPT_FLOW=#{dictId}
+	</update>
+	<update id="updateRegistDeptNameById">
+		UPDATE STU_FURTHER_STUDY_REGIST SET DEPT_NAME=#{dictName}
+		WHERE RECORD_STATUS='Y'
+		AND DEPT_ID=#{dictId}
+	</update>
+
+	<resultMap id="sysUserStaffExtMap" type="java.util.HashMap">
+		<result column="USER_FLOW" javaType="string" property="userFlow" />
+		<result column="USER_NAME" javaType="string" property="userName" />
+		<result column="USER_CODE" javaType="string" property="userCode" />
+		<result column="USER_PHONE" javaType="string" property="userPhone" />
+	</resultMap>
+	<select id="searchUserForOwner" parameterType="java.util.Map" resultMap="sysUserStaffExtMap">
+		SELECT DISTINCT
+		SU.USER_FLOW,
+		SU.USER_NAME,
+		SU.USER_CODE,
+		SU.USER_PHONE
+		FROM SYS_USER SU
+		LEFT JOIN  STU_DEPT_OF_STAFF dept
+		ON dept.USER_FLOW = SU.USER_FLOW
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND dept.RECORD_STATUS = 'Y'
+		<if test='userCode != null and userCode != ""'>
+			<bind name="code" value="'%'+userCode+'%'"/>
+			AND SU.USER_CODE LIKE #{code}
+		</if>
+		<if test='userName != null and userName != ""'>
+			<bind name="name" value="'%'+userName+'%'"/>
+			AND SU.USER_NAME LIKE #{name}
+		</if>
+		<if test='deptFlow != null and deptFlow != ""'>
+			AND dept.DEPT_FLOW = #{deptFlow}
+		</if>
+		<if test='isOwnerStu != null and isOwnerStu != ""'>
+			AND SU.is_owner_stu = #{isOwnerStu}
+		</if>
+		<if test='isOrgAdmin != null and isOrgAdmin != ""'>
+			AND SU.is_org_admin = #{isOrgAdmin}
+		</if>
+		order by nlssort(user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+</mapper>

@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jsres.JsResDoctorOrgHistoryExtMapper">
+
+	<resultMap id="docOrgHistoryExtMap" type="com.pinde.sci.model.jsres.JsResDoctorOrgHistoryExt" extends="com.pinde.sci.dao.base.ResDoctorOrgHistoryMapper.BaseResultMap" >
+		<association property="resDoctor" javaType="com.pinde.sci.model.mo.ResDoctor">
+			<id column="doctorFlow" jdbcType="VARCHAR" property="doctorFlow"/>
+			<result column="doctorName" jdbcType="VARCHAR" property="doctorName" />
+			<result column="dsessionNumber" jdbcType="VARCHAR" property="sessionNumber" />
+			<result column="dtrainingSpeName" jdbcType="VARCHAR" property="trainingSpeName" />
+			<result column="doctorTypeName" jdbcType="VARCHAR" property="doctorTypeName" />
+		</association>
+	</resultMap>
+
+	<select id="searchDoctorOrgHistoryExtList" parameterType="java.util.Map" resultMap="docOrgHistoryExtMap">
+		SELECT
+		doh.OUT_CHECK_CHANGE_BASE_FILE,
+		doh.IN_CHECK_CHANGE_BASE_FILE,
+		doh.GLOBAL_CHECK_CHANGE_BASE_FILE,
+		doh.LOCAL_CHECK_CHANGE_SPE_FILE,
+		doh.CHANGE_IN_GRADUATION_YEAR,
+		doh.IS_AGREE_OLD_TRAIN,
+		doh.SECOND_SPE_ID,
+		doh.SECOND_SPE_NAME,
+		doh.HISTORY_SECOND_SPE_ID,
+		doh.HISTORY_SECOND_SPE_NAME,
+		doh.IS_ONLY_SECOND,
+		doh.HISTORY_ORG_FLOW,
+		doh.HISTORY_ORG_NAME,
+		doh.OUT_DATE,
+		doh.IN_DATE,
+		doh.CHANGE_STATUS_ID,
+		doh.CHANGE_STATUS_NAME,
+		doh.RECORD_STATUS,
+		doh.CREATE_TIME,
+		doh.CREATE_USER_FLOW,
+		doh.MODIFY_TIME,
+		doh.MODIFY_USER_FLOW,
+		doh.TRAINING_SPE_ID,
+		doh.TRAINING_SPE_NAME,
+		doh.HISTORY_TRAINING_SPE_ID,
+		doh.HISTORY_TRAINING_SPE_NAME,
+		doh.SPE_CHANGE_APPLY_FILE,
+		doh.AUDIT_OPINION,
+		doh.CHANGE_TYPE_ID,
+		doh.CHANGE_TYPE_NAME,
+		doh.TRAINING_TYPE_ID,
+		doh.TRAINING_TYPE_NAME,
+		doh.HISTORY_TRAINING_TYPE_ID,
+		doh.HISTORY_TRAINING_TYPE_NAME,
+		doh.AUDIT_USER_FLOW,
+		doh.AUDIT_USER_NAME,
+		doh.SESSION_NUMBER,
+		doh.HISTORY_SESSION_NUMBER,
+		doh.RECRUIT_FLOW,
+		doh.RECORD_FLOW,
+		doh.DOCTOR_FLOW,
+		doh.DOCTOR_NAME,
+		doh.ORG_FLOW,
+		d.doctor_type_name doctorTypeName,
+		d.DOCTOR_FLOW doctorFlow,
+		d.DOCTOR_NAME doctorName,
+		u.SESSION_NUMBER dsessionNumber,
+		d.TRAINING_SPE_NAME dtrainingSpeName,
+		u.ORG_NAME AS ORG_NAME
+		FROM
+		pdsci.RES_DOCTOR_ORG_HISTORY doh,
+		pdsci.RES_DOCTOR d,
+		pdsci.RES_DOCTOR_RECRUIT u
+		WHERE
+		doh.DOCTOR_FLOW = d.DOCTOR_FLOW
+		AND doh.DOCTOR_FLOW = u.DOCTOR_FLOW
+		and doh.RECORD_STATUS = 'Y' and d.RECORD_STATUS = 'Y' and u.RECORD_STATUS = 'Y' and u.audit_status_id='Passed'
+		<if test="docTypeList!=null and docTypeList.size>0">
+			and d.DOCTOR_TYPE_ID in
+			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="docOrgHistory!=null">
+			<!--<if test="docOrgHistory.orgFlow!=null and docOrgHistory.orgFlow!=''">-->
+				<!--and doh.ORG_FLOW = #{docOrgHistory.orgFlow}-->
+			<!--</if>-->
+			<if test="docOrgHistory.historyOrgFlow!=null and docOrgHistory.historyOrgFlow!=''">
+				and doh.HISTORY_ORG_FLOW = #{docOrgHistory.historyOrgFlow}
+			</if>
+			<if test="docOrgHistory.changeStatusId!=null and docOrgHistory.changeStatusId!=''">
+				and doh.CHANGE_STATUS_ID = #{docOrgHistory.changeStatusId}
+			</if>
+			<if test="docOrgHistory.changeTypeId!=null and docOrgHistory.changeTypeId!=''">
+				and doh.CHANGE_TYPE_ID = #{docOrgHistory.changeTypeId}
+			</if>
+		</if>
+		<if test="jointOrgFlowList!=null">
+			and doh.org_flow in
+			<foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="changeStatusIdList!=null">
+			and doh.CHANGE_STATUS_ID in
+			<foreach collection="changeStatusIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="orgFlowList!=null">
+			and  (doh.ORG_FLOW in
+			<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+			or doh.HISTORY_ORG_FLOW in
+			<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+			)
+		</if>
+		<if test="sessionNumbers!=null and sessionNumbers.size>0">
+			and d.SESSION_NUMBER in
+			<foreach collection="sessionNumbers" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="resDoctor!=null">
+			<if test="resDoctor.doctorName!=null and resDoctor.doctorName!=''">
+				<bind name="doctorName" value="'%'+resDoctor.doctorName+'%'"/>
+				and d.DOCTOR_NAME like #{doctorName}
+			</if>
+			<if test="resDoctor.sessionNumber!=null and resDoctor.sessionNumber!=''">
+				and d.SESSION_NUMBER = #{resDoctor.sessionNumber}
+			</if>
+			<!--<if test="resDoctor.orgFlow!=null and resDoctor.orgFlow!=''">-->
+				<!--and d.ORG_FLOW = #{resDoctor.orgFlow}-->
+			<!--</if>-->
+			<if test="resDoctor.doctorStatusId!=null and resDoctor.doctorStatusId!=''">
+				and d.DOCTOR_STATUS_ID = #{resDoctor.doctorStatusId}
+			</if>
+			<if test="resDoctor.trainingSpeName!=null and resDoctor.trainingSpeName!=''">
+				and d.TRAINING_SPE_NAME like '%${resDoctor.trainingSpeName}%'
+			</if>
+			<if test="resDoctor.trainingTypeId!=null and resDoctor.trainingTypeId!=''">
+				and d.TRAINING_TYPE_ID = #{resDoctor.trainingTypeId}
+			</if>
+		</if>
+		order by dsessionNumber DESC,doh.MODIFY_TIME DESC
+	</select>
+
+	<select id="searchDoctorOrgHistoryExtListNew" parameterType="java.util.Map" resultMap="docOrgHistoryExtMap">
+		SELECT
+		doh.OUT_CHECK_CHANGE_BASE_FILE,
+		doh.IN_CHECK_CHANGE_BASE_FILE,
+		doh.GLOBAL_CHECK_CHANGE_BASE_FILE,
+		doh.LOCAL_CHECK_CHANGE_SPE_FILE,
+		doh.CHANGE_IN_GRADUATION_YEAR,
+		doh.IS_AGREE_OLD_TRAIN,
+		doh.SECOND_SPE_ID,
+		doh.SECOND_SPE_NAME,
+		doh.HISTORY_SECOND_SPE_ID,
+		doh.HISTORY_SECOND_SPE_NAME,
+		doh.IS_ONLY_SECOND,
+		doh.HISTORY_ORG_FLOW,
+		doh.HISTORY_ORG_NAME,
+		doh.OUT_DATE,
+		doh.IN_DATE,
+		doh.CHANGE_STATUS_ID,
+		doh.CHANGE_STATUS_NAME,
+		doh.RECORD_STATUS,
+		doh.CREATE_TIME,
+		doh.CREATE_USER_FLOW,
+		doh.MODIFY_TIME,
+		doh.MODIFY_USER_FLOW,
+		doh.TRAINING_SPE_ID,
+		doh.TRAINING_SPE_NAME,
+		doh.HISTORY_TRAINING_SPE_ID,
+		doh.HISTORY_TRAINING_SPE_NAME,
+		doh.SPE_CHANGE_APPLY_FILE,
+		doh.AUDIT_OPINION,
+		doh.CHANGE_TYPE_ID,
+		doh.CHANGE_TYPE_NAME,
+		doh.TRAINING_TYPE_ID,
+		doh.TRAINING_TYPE_NAME,
+		doh.HISTORY_TRAINING_TYPE_ID,
+		doh.HISTORY_TRAINING_TYPE_NAME,
+		doh.AUDIT_USER_FLOW,
+		doh.AUDIT_USER_NAME,
+		doh.SESSION_NUMBER,
+		doh.HISTORY_SESSION_NUMBER,
+		doh.RECRUIT_FLOW,
+		doh.RECORD_FLOW,
+		doh.DOCTOR_FLOW,
+		doh.DOCTOR_NAME,
+		doh.ORG_FLOW,
+		d.doctor_type_name doctorTypeName,
+		d.DOCTOR_FLOW doctorFlow,
+		d.DOCTOR_NAME doctorName,
+		u.SESSION_NUMBER dsessionNumber,
+		d.TRAINING_SPE_NAME dtrainingSpeName,
+		doh.ORG_NAME AS ORG_NAME
+		FROM
+		pdsci.RES_DOCTOR_ORG_HISTORY doh,
+		pdsci.RES_DOCTOR d,
+		pdsci.RES_DOCTOR_RECRUIT u
+		WHERE
+		doh.DOCTOR_FLOW = d.DOCTOR_FLOW
+		AND doh.DOCTOR_FLOW = u.DOCTOR_FLOW
+		and doh.RECORD_STATUS = 'Y' and d.RECORD_STATUS = 'Y' and u.RECORD_STATUS = 'Y' and u.audit_status_id='Passed'
+		<if test="docTypeList!=null and docTypeList.size>0">
+			and d.DOCTOR_TYPE_ID in
+			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="docOrgHistory!=null">
+			<!--<if test="docOrgHistory.orgFlow!=null and docOrgHistory.orgFlow!=''">-->
+			<!--and doh.ORG_FLOW = #{docOrgHistory.orgFlow}-->
+			<!--</if>-->
+			<if test="docOrgHistory.historyOrgFlow!=null and docOrgHistory.historyOrgFlow!=''">
+				and doh.HISTORY_ORG_FLOW = #{docOrgHistory.historyOrgFlow}
+			</if>
+			<if test="docOrgHistory.changeStatusId!=null and docOrgHistory.changeStatusId!=''">
+				and doh.CHANGE_STATUS_ID = #{docOrgHistory.changeStatusId}
+			</if>
+			<if test="docOrgHistory.changeTypeId!=null and docOrgHistory.changeTypeId!=''">
+				and doh.CHANGE_TYPE_ID = #{docOrgHistory.changeTypeId}
+			</if>
+		</if>
+		<if test="jointOrgFlowList!=null">
+			and doh.org_flow in
+			<foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="changeStatusIdList!=null">
+			and doh.CHANGE_STATUS_ID in
+			<foreach collection="changeStatusIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="orgFlowList!=null">
+			and  (doh.ORG_FLOW in
+			<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+			)
+		</if>
+		<if test="sessionNumbers!=null and sessionNumbers.size>0">
+			and d.SESSION_NUMBER in
+			<foreach collection="sessionNumbers" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="resDoctor!=null">
+			<if test="resDoctor.doctorName!=null and resDoctor.doctorName!=''">
+				<bind name="doctorName" value="'%'+resDoctor.doctorName+'%'"/>
+				and d.DOCTOR_NAME like #{doctorName}
+			</if>
+			<if test="resDoctor.sessionNumber!=null and resDoctor.sessionNumber!=''">
+				and d.SESSION_NUMBER = #{resDoctor.sessionNumber}
+			</if>
+			<if test="resDoctor.trainingTypeId!=null and resDoctor.trainingTypeId!=''">
+				and d.TRAINING_TYPE_ID = #{resDoctor.trainingTypeId}
+			</if>
+			<!--<if test="resDoctor.orgFlow!=null and resDoctor.orgFlow!=''">-->
+			<!--and d.ORG_FLOW = #{resDoctor.orgFlow}-->
+			<!--</if>-->
+			<if test="resDoctor.doctorStatusId!=null and resDoctor.doctorStatusId!=''">
+				and d.DOCTOR_STATUS_ID = #{resDoctor.doctorStatusId}
+			</if>
+			<if test="resDoctor.trainingSpeName!=null and resDoctor.trainingSpeName!=''">
+				and d.TRAINING_SPE_NAME like '%${resDoctor.trainingSpeName}%'
+			</if>
+		</if>
+		order by dsessionNumber DESC,doh.MODIFY_TIME DESC
+	</select>
+
+	<!--/****************************高******校******管******理******员******角******色************************************************/-->
+
+	<select id="searchDoctorOrgHistoryExtListForUni" parameterType="java.util.Map" resultMap="docOrgHistoryExtMap">
+		SELECT doh.*,d.doctor_type_name doctorTypeName,
+		d.DOCTOR_FLOW doctorFlow, d.DOCTOR_NAME doctorName, d.SESSION_NUMBER dsessionNumber,d.TRAINING_SPE_NAME dtrainingSpeName
+		from pdsci.RES_DOCTOR_ORG_HISTORY doh, pdsci.RES_DOCTOR d
+		where doh.DOCTOR_FLOW = d.DOCTOR_FLOW
+		and doh.RECORD_STATUS = 'Y' and d.RECORD_STATUS = 'Y'
+		<if test="docTypeList!=null and docTypeList.size>0">
+			and d.DOCTOR_TYPE_ID in
+			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="docOrgHistory!=null">
+			<if test="docOrgHistory.orgFlow!=null and docOrgHistory.orgFlow!=''">
+				and doh.ORG_FLOW = #{docOrgHistory.orgFlow}
+			</if>
+			<if test="docOrgHistory.historyOrgFlow!=null and docOrgHistory.historyOrgFlow!=''">
+				and doh.HISTORY_ORG_FLOW = #{docOrgHistory.historyOrgFlow}
+			</if>
+			<if test="docOrgHistory.changeStatusId!=null and docOrgHistory.changeStatusId!=''">
+				and doh.CHANGE_STATUS_ID = #{docOrgHistory.changeStatusId}
+			</if>
+			<if test="docOrgHistory.changeTypeId!=null and docOrgHistory.changeTypeId!=''">
+				and doh.CHANGE_TYPE_ID = #{docOrgHistory.changeTypeId}
+			</if>
+		</if>
+		<if test="changeStatusIdList!=null">
+			and doh.CHANGE_STATUS_ID in
+			<foreach collection="changeStatusIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="orgFlowList!=null">
+			and  (doh.ORG_FLOW in
+			<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+			or doh.HISTORY_ORG_FLOW in
+			<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+			)
+		</if>
+		<if test="resDoctor!=null">
+			<if test="resDoctor.doctorName!=null and resDoctor.doctorName!=''">
+				<bind name="doctorName" value="'%'+resDoctor.doctorName+'%'"/>
+				and d.DOCTOR_NAME like #{doctorName}
+			</if>
+			and (
+			<trim prefix="" prefixOverrides="OR">
+				<if test="resDoctor.workOrgId != null and resDoctor.workOrgId != ''">OR d.work_org_id = #{resDoctor.workOrgId}</if>
+				<if test="resDoctor.workOrgName != null and resDoctor.workOrgName != ''">OR d.work_org_name = #{resDoctor.workOrgName}</if>
+			</trim>
+			)
+			<if test="resDoctor.sessionNumber!=null and resDoctor.sessionNumber!=''">
+				and d.SESSION_NUMBER = #{resDoctor.sessionNumber}
+			</if>
+			<if test="resDoctor.orgFlow!=null and resDoctor.orgFlow!=''">
+				and d.ORG_FLOW = #{resDoctor.orgFlow}
+			</if>
+			<if test="resDoctor.trainingSpeId!=null and resDoctor.trainingSpeId!=''">
+				and d.TRAINING_SPE_ID = #{resDoctor.trainingSpeId}
+			</if>
+			<if test="resDoctor.trainingTypeId!=null and resDoctor.trainingTypeId!=''">
+				and d.TRAINING_TYPE_ID = #{resDoctor.trainingTypeId}
+			</if>
+			<if test="resDoctor.doctorTypeId!=null and resDoctor.doctorTypeId!=''">
+				and d.DOCTOR_TYPE_ID = #{resDoctor.doctorTypeId}
+			</if>
+			<if test="resDoctor.school!=null and resDoctor.school!=''">
+				and d.SCHOOL = #{resDoctor.school}
+			</if>
+		</if>
+		order by doh.CREATE_TIME DESC
+	</select>
+
+</mapper>

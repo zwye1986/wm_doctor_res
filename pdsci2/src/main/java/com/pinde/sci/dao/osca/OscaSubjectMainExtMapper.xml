@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.osca.OscaSubjectMainExtMapper" >
+    <resultMap id="partMap" type="hashmap" >
+        <result column="PART_FLOW" property="partFlow" jdbcType="VARCHAR" />
+        <result column="PART_NAME" property="partName" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <select id="getSubjectParts" resultMap="partMap">
+        SELECT DISTINCT PART_FLOW, PART_NAME
+      FROM OSCA_SUBJECT_STATION
+     WHERE RECORD_STATUS = 'Y'
+       AND SUBJECT_FLOW = #{subjectFlow}
+     ORDER BY PART_FLOW
+
+    </select>
+
+    <select id="searchSubjectsForDoctor" parameterType="string" resultMap="com.pinde.sci.dao.base.OscaSubjectStationMapper.BaseResultMap">
+    select oss.* from osca_subject_station oss
+    left join osca_skills_assessment osa on oss.subject_flow = osa.subject_flow
+    where osa.Record_status ='Y' AND oss.Record_status ='Y'
+    <if test='clinicalFlow!=null and clinicalFlow!=""'>
+        and osa.clinical_flow = #{clinicalFlow}
+    </if>
+    ORDER by oss.ORDINAL
+    </select>
+
+    <update id="delSubjectPartScore">
+        UPDATE OSCA_SUBJECT_PART_SCORE
+           SET RECORD_STATUS = 'N'
+         WHERE RECORD_STATUS = 'Y'
+           AND SUBJECT_FLOW =#{subjectFlow}
+    </update>
+    <update id="delSubjectStationScore">
+        UPDATE OSCA_SUBJECT_STATION_SCORE
+           SET RECORD_STATUS = 'N'
+         WHERE RECORD_STATUS = 'Y'
+           AND SUBJECT_FLOW =#{subjectFlow}
+    </update>
+</mapper>

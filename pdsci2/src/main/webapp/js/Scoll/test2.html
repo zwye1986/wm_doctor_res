@@ -1,0 +1,617 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0047)http://localhost:8080/pdsci/jsres/manage/global -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>表头与左边固定</title>
+
+
+<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="Scorll.js"></script>
+<link rel="stylesheet" type="text/css" href="font.css">
+
+
+
+
+
+<style type="text/css">
+.boxHome .item:HOVER{background-color: #eee;}
+.cur{color:red};
+.grid{
+	table-layout:fixed;
+}
+.grid th{
+	word-wrap:break-word;
+ }
+.grid td{
+	word-wrap:break-word;
+ }
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+	//getScoll("dataTable",3,{"margin-top":"20px","width":"1000px","height":"700px"});
+	//scorll.getScollByTwoClass("dataTable","tdFixedBy","fixedBy",{"margin-top":"20px","width":"1000px","height":"700px"});
+	var options ={
+		"colums":0,//根据固定列的数量
+		"clearClass":"tdFixedBy",//根据不固定的class与固定的class
+		"removeClass":"fixedBy"
+	};
+	var style={"margin-top":"20px","width":"1000px","height":"700px"};
+	$("#dataTable").Scorll(options,style);
+
+	//样式设置宽度与高度
+	style={"margin-top":"20px","width":"1000px","height":"500px"};
+	var options ={
+		"colums":5,//根据固定列的数量
+		"clearClass":null,//根据不固定的class与固定的class
+		"removeClass":null
+	};
+	$("#dataTable2").Scorll(options,style,false);
+	//scorll.getScollByTwoClass("dataTable","tdFixedBy","fixedBy",{"margin-top":"20px","width":"1000px","height":"700px"});
+	//Scorll.getScollByColumNums("dataTable2",4,{"margin-top":"20px","width":"1000px","height":"700px"});
+});
+
+</script>
+<table id="dataTable2">
+	<thead>
+	<tr>
+		<th  style="min-width: 130px;max-width: 130px;">1</th>
+		<th  style="min-width: 130px;max-width: 130px;">2</th>
+		<th  style="min-width: 130px;max-width: 130px;">3</th>
+		<th  style="min-width: 130px;max-width: 130px;">4</th>
+		<th  style="min-width: 130px;max-width: 130px;">5</th>
+		<th  style="min-width: 130px;max-width: 130px;">6</th>
+		<th  style="min-width: 130px;max-width: 130px;">7</th>
+		<th  style="min-width: 130px;max-width: 130px;">8</th>
+		<th  style="min-width: 130px;max-width: 130px;">9</th>
+		<th  style="min-width: 130px;max-width: 130px;">10</th>
+		<th  style="min-width: 130px;max-width: 130px;">11</th>
+	</tr>
+	</thead>
+
+	<tbody>
+		<tr>
+			<td  style="min-width: 130px;max-width: 130px;">1</td>
+			<td  style="min-width: 130px;max-width: 130px;">2</td>
+			<td  style="min-width: 130px;max-width: 130px;">3</td>
+			<td  style="min-width: 130px;max-width: 130px;">4</td>
+			<td  style="min-width: 130px;max-width: 130px;">5</td>
+			<td  style="min-width: 130px;max-width: 130px;">6</td>
+			<td  style="min-width: 130px;max-width: 130px;">7</td>
+			<td  style="min-width: 130px;max-width: 130px;">8</td>
+			<td  style="min-width: 130px;max-width: 130px;">9</td>
+			<td  style="min-width: 130px;max-width: 130px;">10</td>
+			<td  style="min-width: 130px;max-width: 130px;">11</td>
+		</tr>
+		<tr>
+			<td  style="min-width: 130px;max-width: 130px;">1</td>
+			<td  style="min-width: 130px;max-width: 130px;">2</td>
+			<td  style="min-width: 130px;max-width: 130px;">3</td>
+			<td  style="min-width: 130px;max-width: 130px;">4</td>
+			<td  style="min-width: 130px;max-width: 130px;">5</td>
+			<td  style="min-width: 130px;max-width: 130px;">6</td>
+			<td  style="min-width: 130px;max-width: 130px;">7</td>
+			<td  style="min-width: 130px;max-width: 130px;">8</td>
+			<td  style="min-width: 130px;max-width: 130px;">9</td>
+			<td  style="min-width: 130px;max-width: 130px;">10</td>
+			<td  style="min-width: 130px;max-width: 130px;">11</td>
+		</tr>
+		<tr>
+			<td  style="min-width: 130px;max-width: 130px;">1</td>
+			<td  style="min-width: 130px;max-width: 130px;">2</td>
+			<td  style="min-width: 130px;max-width: 130px;">3</td>
+			<td  style="min-width: 130px;max-width: 130px;">4</td>
+			<td  style="min-width: 130px;max-width: 130px;">5</td>
+			<td  style="min-width: 130px;max-width: 130px;">6</td>
+			<td  style="min-width: 130px;max-width: 130px;">7</td>
+			<td  style="min-width: 130px;max-width: 130px;">8</td>
+			<td  style="min-width: 130px;max-width: 130px;">9</td>
+			<td  style="min-width: 130px;max-width: 130px;">10</td>
+			<td  style="min-width: 130px;max-width: 130px;">11</td>
+		</tr>
+	</tbody>
+</table>
+使用class来固定
+<table id="dataTable" class="grid" style="width: auto;">
+			<thead><tr>
+				<th style="min-width: 60px; max-width: 60px; " colspan="2">
+					<input type="checkbox">全选/<input type="checkbox">反选
+				</th>
+				<th rowspan="2" style="min-width: 80px; max-width: 80px; " >
+					操作
+				</th>
+				<th rowspan="3" style="min-width: 60px; max-width: 60px; " >
+					姓名
+				</th>
+				<th rowspan="3" style="min-width: 130px;max-width: 130px;" class="fixedBy">
+					身份证号
+				</th>
+				<th rowspan="3" style="min-width: 60px;max-width: 60px;" class="fixedBy">
+					性别
+				</th>
+				<th rowspan="3" style="min-width: 130px;max-width: 130px;" class="fixedBy">
+					培训基地
+				</th>
+				<th rowspan="3" style="min-width: 130px;max-width: 130px;" class="fixedBy">
+					培训专业
+				</th>
+				<th rowspan="3" style="min-width:180px;max-width: 180px;" class="fixedBy">
+					培训起止日期
+				</th>
+				<th rowspan="3" style="min-width: 60px;max-width: 60px;" class="fixedBy">
+					学位
+				</th>
+				<th rowspan="3" style="min-width: 130px;max-width: 130px;" class="fixedBy">
+					毕业证书编号
+				</th>
+				<th rowspan="3" style="min-width: 130px;max-width: 130px;" class="fixedBy">
+					医师执业证书编号
+				</th>
+				<th rowspan="3" style="min-width: 130px;max-width: 130px;" class="fixedBy">
+					执业范围
+				</th>
+				<th colspan="2"  style="min-width: 60px;max-width: 60px;" class="fixedBy">
+					理论成绩
+				</th>
+				<th colspan="2"  style="min-width: 60px;max-width: 60px;" class="fixedBy">
+					技能成绩
+				</th>
+				<th colspan="2"   style="min-width: 60px;max-width: 60px;" class="fixedBy">
+					公共科目考核成绩
+				</th>
+				<th rowspan="3" style="min-width: 130px;max-width: 130px;" class="fixedBy">
+					省厅意见
+				</th>
+			</tr>
+			<tr>
+				<th style="min-width: 60px; max-width: 60px; " >dsf1</th>
+				<th style="min-width: 60px; max-width: 60px; " >dsf2</th>
+				<th style="min-width: 60px;max-width: 60px;" rowspan="2"  class="fixedBy">
+					年份
+				</th>
+				<th style="min-width: 60px;max-width: 60px;" rowspan="2" class="fixedBy">
+					成绩
+				</th>
+				<th style="min-width: 60px;max-width: 60px;" rowspan="2" class="fixedBy">
+					年份
+				</th>
+				<th style="min-width: 60px;max-width: 60px;" rowspan="2" class="fixedBy">
+					成绩
+				</th>
+				<th style="min-width: 60px;max-width: 60px;" rowspan="2" class="fixedBy">
+					非全科专业成绩
+				</th>
+				<th style="min-width: 60px;max-width: 60px;" rowspan="2" class="fixedBy">
+					全科专业成绩
+				</th>
+			</tr>
+			<tr>
+				<th style="min-width: 60px; max-width: 60px; " >dsf1</th>
+				<th style="min-width: 60px; max-width: 60px; " >dsf2</th>
+				<th style="min-width: 60px; max-width: 60px; " >dsfss</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+			<td class="tdFixedBy">
+1
+						</td>
+					<td class="tdFixedBy">
+1
+						</td>
+						<td class="tdFixedBy">
+1
+						</td>
+					<td class="tdFixedBy">2</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">321321199101010505</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">女</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">南京同仁医院</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">骨科</td>
+					<td style="min-width: 180px;max-width: 180px;" class="fixedBy">~　<br>[<a onclick="guiPeiDetail(&#39;afe84396c10d414896a679d2581b24bc&#39;)">详情</a>]</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						学士</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+							123456789123456789　
+					<span  >
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/jsresImages/20160520/ccd4e963177649bca13065f9e3e78263.png" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						123123132123213<span  style="display:none ">
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						执业1.2</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">2016</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">64</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">2016</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						合格
+						　[<a onclick="skillScoreDetail(&#39;afe84396c10d414896a679d2581b24bc&#39;,&#39;4658c8b71efd4a85b0e82796e19292e4&#39;,&#39;skillScore&#39;,&#39;2016&#39;);">详情</a>]&nbsp;
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						　[<a onclick="publicScoreDetail(&#39;&#39;);">详情</a>]&nbsp;</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy"></td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">同意发放合格证书</td>
+				</tr>
+			<tr><td class="tdFixedBy">
+1
+						</td>
+					<td class="tdFixedBy">
+1
+						</td>
+						<td class="tdFixedBy">
+1
+						</td>
+					<td class="tdFixedBy">2</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">321123198910203020</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">男</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">南京同仁医院</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">眼科</td>
+					<td style="min-width: 180px;max-width: 180px;" class="fixedBy">~　<br>[<a onclick="guiPeiDetail(&#39;8064c87b36fd41f78fc5f3efa06f5a19&#39;)">详情</a>]</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						博士</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+							7777777777777777777　
+					<span  >
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/jsresImages/20160529/fdcfbf2305234aa3bc4bdf027970fd7b.png" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						<span  style="display:none ">
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">2016</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">88</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy"></td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						
+						　[<a onclick="skillScoreDetail(&#39;8064c87b36fd41f78fc5f3efa06f5a19&#39;,&#39;&#39;,&#39;skillScore&#39;,&#39;&#39;);">详情</a>]&nbsp;
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						　[<a onclick="publicScoreDetail(&#39;&#39;);">详情</a>]&nbsp;</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy"></td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">同意发放合格证书</td>
+				</tr>
+			<tr>
+					<td class="tdFixedBy">
+1
+						</td><td class="tdFixedBy">
+1
+						</td>
+						<td class="tdFixedBy">
+1
+						</td>
+					<td class="tdFixedBy">2</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">115599199101010505</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">男</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">南京同仁医院</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">眼科</td>
+					<td style="min-width: 180px;max-width: 180px;" class="fixedBy">~　<br>[<a onclick="guiPeiDetail(&#39;0d55c68272974863b57f13a7a1d39b30&#39;)">详情</a>]</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						硕士</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+							1341234　
+					<span  >
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/jsresImages/20160530/6531fe7524bf4d22a864911518a05bda.png" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						<span  style="display:none ">
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">2016</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">99</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">2016</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						合格
+						　[<a onclick="skillScoreDetail(&#39;0d55c68272974863b57f13a7a1d39b30&#39;,&#39;cff7a701848145f7b14a27b676f3584e&#39;,&#39;skillScore&#39;,&#39;2016&#39;);">详情</a>]&nbsp;
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						　[<a onclick="publicScoreDetail(&#39;&#39;);">详情</a>]&nbsp;</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy"></td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">同意发放合格证书</td>
+				</tr>
+			<tr>
+					<td class="tdFixedBy">
+1
+						</td><td class="tdFixedBy">
+1
+						</td>
+						<td class="tdFixedBy">
+1
+						</td>
+					<td class="tdFixedBy">2</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">320104198207250019</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">男</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">江苏省中医院</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">皮肤科</td>
+					<td style="min-width: 180px;max-width: 180px;" class="fixedBy">~　<br>[<a onclick="guiPeiDetail(&#39;295e50707cc04e85b687cfc207e3f44c&#39;)">详情</a>]</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						硕士</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+							4657984165465　
+					<span  >
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/jsresImages/20160621/996e133ae6d34f2482c61afb6de1b26e.jpg" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						<span  style="display:none ">
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">2016</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">85</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy"></td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						
+						　[<a onclick="skillScoreDetail(&#39;295e50707cc04e85b687cfc207e3f44c&#39;,&#39;&#39;,&#39;skillScore&#39;,&#39;&#39;);">详情</a>]&nbsp;
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						　[<a onclick="publicScoreDetail(&#39;&#39;);">详情</a>]&nbsp;</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy"></td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">缺少技能成绩123</td>
+				</tr>
+			<tr>
+					<td class="tdFixedBy">
+1
+						</td><td class="tdFixedBy">
+1
+						</td>
+						<td class="tdFixedBy">
+1
+						</td>
+					<td class="tdFixedBy">2</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">123123199010203060</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">女</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">东南大学附属中大医院</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">外科（神经外科方向）</td>
+					<td style="min-width: 180px;max-width: 180px;" class="fixedBy">~　<br>[<a onclick="guiPeiDetail(&#39;c8cdb286bf3446a4a50138804a28bb03&#39;)">详情</a>]</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						学士</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+							123456　
+					<span  >
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/jsresImages/20160201/20201850592a4d24ba78cedb0602430e.png" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						<span  style="display:none ">
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">2016</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">95</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">2016</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						合格
+						　[<a onclick="skillScoreDetail(&#39;c8cdb286bf3446a4a50138804a28bb03&#39;,&#39;8f662353ca354b15b23649cae075478e&#39;,&#39;skillScore&#39;,&#39;2016&#39;);">详情</a>]&nbsp;
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						　[<a onclick="publicScoreDetail(&#39;&#39;);">详情</a>]&nbsp;</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy"></td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">123456
+2015年技能成绩</td>
+				</tr>
+			<tr>
+					<td class="tdFixedBy">
+1
+						</td><td class="tdFixedBy">
+1
+						</td>
+						<td class="tdFixedBy">
+1
+						</td>
+					<td class="tdFixedBy">2</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">321123199105069874</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">男</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">东南大学附属中大医院</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">外科（神经外科方向）</td>
+					<td style="min-width: 180px;max-width: 180px;" class="fixedBy">~　<br>[<a onclick="guiPeiDetail(&#39;c2c9183521c648cd859c35fbd4b8781d&#39;)">详情</a>]</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						硕士</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+							987654321321456987　
+					<span  >
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/jsresImages/20160519/8556af1d73eb4fb7aa5a7d8fecc8a868.png" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						111112222233333<span  style="display:none ">
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						执业1.2</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">2016</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">92</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">2016</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						合格
+						　[<a onclick="skillScoreDetail(&#39;c2c9183521c648cd859c35fbd4b8781d&#39;,&#39;ae53236d391c41e4a7e1a544fa0214ff&#39;,&#39;skillScore&#39;,&#39;2016&#39;);">详情</a>]&nbsp;
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						　[<a onclick="publicScoreDetail(&#39;&#39;);">详情</a>]&nbsp;</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy"></td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">成绩不及格成绩不及格</td>
+				</tr>
+			<tr>
+					<td class="tdFixedBy">
+1
+						</td><td class="tdFixedBy">
+1
+						</td>
+						<td class="tdFixedBy">
+1
+						</td>
+					<td class="tdFixedBy">2</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">123123199010203099</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">女</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">东南大学附属中大医院</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">外科（神经外科方向）</td>
+					<td style="min-width: 180px;max-width: 180px;" class="fixedBy">~　<br>[<a onclick="guiPeiDetail(&#39;c67bccbe793a4552862b04621ede03f9&#39;)">详情</a>]</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						学士</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+							123456789789456122　
+					<span  >
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/jsresImages/20160520/3380d8ce59ab413cbddb4673facb2ed2.png" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						123123123123123<span  style="display:none ">
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						执业1.2</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">2015</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">62</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">2016</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						合格
+						　[<a onclick="skillScoreDetail(&#39;c67bccbe793a4552862b04621ede03f9&#39;,&#39;df041737f5d14aed8bdeb982e3708c16&#39;,&#39;skillScore&#39;,&#39;2016&#39;);">详情</a>]&nbsp;
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						　[<a onclick="publicScoreDetail(&#39;&#39;);">详情</a>]&nbsp;</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy"></td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">缺少理论成绩123123</td>
+				</tr>
+			<tr>
+					<td class="tdFixedBy">
+1
+						</td><td class="tdFixedBy">
+1
+						</td>
+						<td class="tdFixedBy">
+1
+						</td>
+					<td class="tdFixedBy">2</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">116621199101050203</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">男</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">东南大学附属中大医院</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">眼科</td>
+					<td style="min-width: 180px;max-width: 180px;" class="fixedBy">~　<br>[<a onclick="guiPeiDetail(&#39;d4169fd264974c73beadb7ca521a42e2&#39;)">详情</a>]</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						学士</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+							123414　
+					<span  >
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/jsresImages/20160530/e551573ae31746cca3e7a71dc9299373.png" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						<span  style="display:none ">
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">2016</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">90</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">2016</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						合格
+						　[<a onclick="skillScoreDetail(&#39;d4169fd264974c73beadb7ca521a42e2&#39;,&#39;10dc8d148a0d44dabffdb556a40ae523&#39;,&#39;skillScore&#39;,&#39;2016&#39;);">详情</a>]&nbsp;
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						　[<a onclick="publicScoreDetail(&#39;&#39;);">详情</a>]&nbsp;</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy"></td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">同意发放合格证书</td>
+				</tr>
+			<tr>
+					<td class="tdFixedBy">
+1
+						</td><td class="tdFixedBy">
+1
+						</td>
+						<td class="tdFixedBy">
+1
+						</td>
+					<td class="tdFixedBy">2</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">321123199101020102</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">男</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">东南大学附属中大医院</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">眼科</td>
+					<td style="min-width: 180px;max-width: 180px;" class="fixedBy">~　<br>[<a onclick="guiPeiDetail(&#39;e5baaac792dc4a64a646482dc086fc92&#39;)">详情</a>]</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						学士</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+							3　
+					<span  >
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/jsresImages/20160317/77421fd1674a45bc8a252a3807f47e5c.png" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						<span  style="display:none ">
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy"></td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy"></td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">2016</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						合格
+						　[<a onclick="skillScoreDetail(&#39;e5baaac792dc4a64a646482dc086fc92&#39;,&#39;485b59b148d44fdc9e5a0acd743460b3&#39;,&#39;skillScore&#39;,&#39;2016&#39;);">详情</a>]&nbsp;
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						　[<a onclick="publicScoreDetail(&#39;&#39;);">详情</a>]&nbsp;</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy"></td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">同意发放合格证书</td>
+				</tr>
+			<tr>
+					<td class="tdFixedBy">
+1
+						</td><td class="tdFixedBy">
+1
+						</td>
+						<td class="tdFixedBy">
+1
+						</td>
+					<td class="tdFixedBy">2</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">123123199101010909</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">男</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">东南大学附属中大医院</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">内科</td>
+					<td style="min-width: 180px;max-width: 180px;" class="fixedBy">2015-12-30~2018-12-30　<br>[<a onclick="guiPeiDetail(&#39;d1b2d72147a2412397894ceab7283356&#39;)">详情</a>]</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						博士</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+							2015014204044147　
+					<span  >
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/jsresImages/20160510/2a280ba885eb41689e53e40ca12019ba.png" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						<span  style="display:none ">
+						<br>[<a href="http://192.168.2.17:7070/pdsciupload/" target="_blank">详情</a>]&nbsp;
+					</span>
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						执业1.2</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">2015</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">65</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">2016</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">
+						合格
+						　[<a onclick="skillScoreDetail(&#39;d1b2d72147a2412397894ceab7283356&#39;,&#39;59bc6753750e409f991c8b23518b3b31&#39;,&#39;skillScore&#39;,&#39;2016&#39;);">详情</a>]&nbsp;
+					</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">合格
+						　[<a onclick="publicScoreDetail(&#39;44291b3cab764813807b8c92ce9bd7ce&#39;);">详情</a>]&nbsp;</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">96</td>
+					<td style="min-width: 60px;max-width: 60px;" class="fixedBy">同意发放合格证书</td>
+				</tr>
+			</tbody></table>
+
+</body></html>

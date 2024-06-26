@@ -1,0 +1,1368 @@
+<!-- project 根描述符 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- 指定maven版本，一般为4.0.0 -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 基本配置 -->
+    <!-- 继承功能，可以指定父POM -->
+    <parent>
+        <groupId>com.pinde</groupId>
+        <artifactId>pdsci-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <!-- 一般jar包为: groupId:artifactId:version -->
+    <!-- 团体、组织标书符，项目的命名空间 -->
+    <groupId>com.pinde</groupId>
+    <!-- 项目唯一标识符，不能含有点号(.) -->
+    <artifactId>pdsci</artifactId>
+    <!-- 版本号，可以实用特殊字符串 SNAPSHOT、LATEST、RELEASE -->
+    <!-- SNAPSHOT: 用于开发过程中，表示不稳定版本 -->
+    <!-- LATEST: 表示特定构建的最新发布版本 -->
+    <!-- RELEASE: 最有一个稳定的发布版本 -->
+    <version>1.0-SNAPSHOT</version>
+    <!-- 项目打包类型，默认jar，常见类型：pom, jar, maven-plugin, ejb, war, ear, rar, par -->
+    <!-- 打war和jar包时修改 -->
+    <packaging>war</packaging>
+
+    <!-- 声明变量，如果后面用到可使用${变量名}来替代 -->
+    <properties>
+        <lib.dir>${basedir}\src\main\lib</lib.dir>
+    </properties>
+
+    <!-- 项目依赖 -->
+    <dependencies>
+        <dependency>
+            <groupId>com.pinde</groupId>
+            <artifactId>pdcore</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- sci lib start -->
+        <dependency>
+            <groupId>kie-api-7.7.0.Final</groupId>
+            <artifactId>kie-api-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/kie-api-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>kie-internal-7.7.0.Final</groupId>
+            <artifactId>kie-internal-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/kie-internal-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>kie-soup-commons-7.7.0.Final</groupId>
+            <artifactId>kie-soup-commons-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/kie-soup-commons-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>kie-soup-maven-support-7.7.0.Final</groupId>
+            <artifactId>kie-soup-maven-support-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/kie-soup-maven-support-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>kie-soup-project-datamodel-api-7.7.0.Final</groupId>
+            <artifactId>kie-soup-project-datamodel-api-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/kie-soup-project-datamodel-api-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>kie-soup-project-datamodel-commons-7.7.0.Final</groupId>
+            <artifactId>kie-soup-project-datamodel-commons-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/kie-soup-project-datamodel-commons-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>kie-test-util-7.7.0.Final</groupId>
+            <artifactId>kie-test-util-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/kie-test-util-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>optaplanner-benchmark-7.7.0.Final</groupId>
+            <artifactId>optaplanner-benchmark-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/optaplanner-benchmark-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>optaplanner-core-7.7.0.Final</groupId>
+            <artifactId>optaplanner-core-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/optaplanner-core-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>optaplanner-examples-7.7.0.Final</groupId>
+            <artifactId>optaplanner-examples-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/optaplanner-examples-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>optaplanner-persistence-common-7.7.0.Final</groupId>
+            <artifactId>optaplanner-persistence-common-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/optaplanner-persistence-common-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>optaplanner-persistence-jackson-7.7.0.Final</groupId>
+            <artifactId>optaplanner-persistence-jackson-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/optaplanner-persistence-jackson-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>optaplanner-persistence-jaxb-7.7.0.Final</groupId>
+            <artifactId>optaplanner-persistence-jaxb-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/optaplanner-persistence-jaxb-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>optaplanner-persistence-jpa-7.7.0.Final</groupId>
+            <artifactId>optaplanner-persistence-jpa-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/optaplanner-persistence-jpa-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>optaplanner-persistence-xstream-7.7.0.Final</groupId>
+            <artifactId>optaplanner-persistence-xstream-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/optaplanner-persistence-xstream-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>optaplanner-test-7.7.0.Final</groupId>
+            <artifactId>optaplanner-test-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/optaplanner-test-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>xstream-1.4.10</groupId>
+            <artifactId>xstream-1.4.10</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/xstream-1.4.10.jar</systemPath>
+        </dependency>
+        <!-- sci lib end -->
+
+        <!-- pdlib start -->
+        <dependency>
+            <groupId>ant-1.8.4</groupId>
+            <artifactId>ant-1.8.4</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/ant-1.8.4.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>AnyChart6.2.0</groupId>
+            <artifactId>AnyChart6.2.0</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/AnyChart6.2.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>aopalliance-1.0</groupId>
+            <artifactId>aopalliance-1.0</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/aopalliance-1.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>aspectjweaver-1.6.10</groupId>
+            <artifactId>aspectjweaver-1.6.10</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/aspectjweaver-1.6.10.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>axis</groupId>
+            <artifactId>axis</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/axis.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>bcpg-jdk15-143</groupId>
+            <artifactId>bcpg-jdk15-143</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/bcpg-jdk15-143.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>bcprov-jdk15-143</groupId>
+            <artifactId>bcprov-jdk15-143</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/bcprov-jdk15-143.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>bonecp-0.8.0.RELEASE</groupId>
+            <artifactId>bonecp-0.8.0.RELEASE</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/bonecp-0.8.0.RELEASE.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>bonecp-spring-0.8.0.RELEASE</groupId>
+            <artifactId>bonecp-spring-0.8.0.RELEASE</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/bonecp-spring-0.8.0.RELEASE.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>combinatoricslib-2.1</groupId>
+            <artifactId>combinatoricslib-2.1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/combinatoricslib-2.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-beanutils-1.7.0</groupId>
+            <artifactId>commons-beanutils-1.7.0</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/commons-beanutils-1.7.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-codec-1.10</groupId>
+            <artifactId>commons-codec-1.10</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/commons-codec-1.10.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-collections-3.2.1</groupId>
+            <artifactId>commons-collections-3.2.1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/commons-collections-3.2.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-collections4-4.1</groupId>
+            <artifactId>commons-collections4-4.1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/commons-collections4-4.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-discovery-0.2</groupId>
+            <artifactId>commons-discovery-0.2</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/commons-discovery-0.2.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-fileupload-1.3</groupId>
+            <artifactId>commons-fileupload-1.3</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/commons-fileupload-1.3.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-httpclient-3.1</groupId>
+            <artifactId>commons-httpclient-3.1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/commons-httpclient-3.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io-2.5</groupId>
+            <artifactId>commons-io-2.5</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/commons-io-2.5.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-lang-2.4</groupId>
+            <artifactId>commons-lang-2.4</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/commons-lang-2.4.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-lang3-3.4</groupId>
+            <artifactId>commons-lang3-3.4</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/commons-lang3-3.4.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-logging-1.1.3</groupId>
+            <artifactId>commons-logging-1.1.3</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/commons-logging-1.1.3.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-math3-3.4.1</groupId>
+            <artifactId>commons-math3-3.4.1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/commons-math3-3.4.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-net-2.2</groupId>
+            <artifactId>commons-net-2.2</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/commons-net-2.2.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-pool-1.5.1</groupId>
+            <artifactId>commons-pool-1.5.1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/commons-pool-1.5.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>cos-26Dec2008</groupId>
+            <artifactId>cos-26Dec2008</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/cos-26Dec2008.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>curvesapi-1.04</groupId>
+            <artifactId>curvesapi-1.04</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/curvesapi-1.04.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>docx4j-3.2.0</groupId>
+            <artifactId>docx4j-3.2.0</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/docx4j-3.2.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>docx4j-ImportXHTML-3.2.1</groupId>
+            <artifactId>docx4j-ImportXHTML-3.2.1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/docx4j-ImportXHTML-3.2.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>dom4j-1.6.1</groupId>
+            <artifactId>dom4j-1.6.1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/dom4j-1.6.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>druid-1.0.9</groupId>
+            <artifactId>druid-1.0.9</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/druid-1.0.9.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>easy-captcha-1.6.2</groupId>
+            <artifactId>easy-captcha-1.6.2</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/easy-captcha-1.6.2.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ecj-4.4.2</groupId>
+            <artifactId>ecj-4.4.2</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/ecj-4.4.2.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ehcache-core-2.5.3</groupId>
+            <artifactId>ehcache-core-2.5.3</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/ehcache-core-2.5.3.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>fastjson-1.1.36</groupId>
+            <artifactId>fastjson-1.1.36</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/fastjson-1.1.36.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>flying-saucer-core-9.0.3-RC1</groupId>
+            <artifactId>flying-saucer-core-9.0.3-RC1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/flying-saucer-core-9.0.3-RC1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>flying-saucer-pdf-itext5-9.0.3-RC1</groupId>
+            <artifactId>flying-saucer-pdf-itext5-9.0.3-RC1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/flying-saucer-pdf-itext5-9.0.3-RC1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>freemarker-2.3.19</groupId>
+            <artifactId>freemarker-2.3.19</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/freemarker-2.3.19.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>freemarker-2.3.26.jbossorg-1</groupId>
+            <artifactId>freemarker-2.3.26.jbossorg-1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/freemarker-2.3.26.jbossorg-1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>gson-2.7</groupId>
+            <artifactId>gson-2.7</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/gson-2.7.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>guava-15.0</groupId>
+            <artifactId>guava-15.0</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/guava-15.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>guava-20.0</groupId>
+            <artifactId>guava-20.0</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/guava-20.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>httpclient-4.5.5</groupId>
+            <artifactId>httpclient-4.5.5</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/httpclient-4.5.5.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>httpcore-4.4.9</groupId>
+            <artifactId>httpcore-4.4.9</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/httpcore-4.4.9.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>itext-2.1.7</groupId>
+            <artifactId>itext-2.1.7</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/itext-2.1.7.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>itextpdf-5.4.4</groupId>
+            <artifactId>itextpdf-5.4.4</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/itextpdf-5.4.4.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>jackson-annotations-2.8.9</groupId>
+            <artifactId>jackson-annotations-2.8.9</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/jackson-annotations-2.8.9.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>jackson-core-2.8.9</groupId>
+            <artifactId>jackson-core-2.8.9</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/jackson-core-2.8.9.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>jackson-databind-2.8.9</groupId>
+            <artifactId>jackson-databind-2.8.9</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/jackson-databind-2.8.9.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>jacob</groupId>
+            <artifactId>jacob</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/jacob.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>java_memcached-release_2.6.6</groupId>
+            <artifactId>java_memcached-release_2.6.6</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/java_memcached-release_2.6.6.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>jave-1.0</groupId>
+            <artifactId>jave-1.0</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/jave-1.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>jaxb-xmldsig-core-1.0.0</groupId>
+            <artifactId>jaxb-xmldsig-core-1.0.0</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/jaxb-xmldsig-core-1.0.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>jaxen-1.1.1</groupId>
+            <artifactId>jaxen-1.1.1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/jaxen-1.1.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>jaxrpc</groupId>
+            <artifactId>jaxrpc</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/jaxrpc.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>jcaptcha-1.0-all</groupId>
+            <artifactId>jcaptcha-1.0-all</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/jcaptcha-1.0-all.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>json_simple-1.1</groupId>
+            <artifactId>json_simple-1.1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/json_simple-1.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>jsoup-1.9.2</groupId>
+            <artifactId>jsoup-1.9.2</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/jsoup-1.9.2.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>jstl-1.2</groupId>
+            <artifactId>jstl-1.2</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/jstl-1.2.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>jtds-1.3.1</groupId>
+            <artifactId>jtds-1.3.1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/jtds-1.3.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>jtidy-r938</groupId>
+            <artifactId>jtidy-r938</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/jtidy-r938.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>junit-3.8.1</groupId>
+            <artifactId>junit-3.8.1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/junit-3.8.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>kie-api-7.7.0.Final</groupId>
+            <artifactId>kie-api-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/kie-api-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>kie-internal-7.7.0.Final</groupId>
+            <artifactId>kie-internal-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/kie-internal-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>kie-soup-commons-7.7.0.Final</groupId>
+            <artifactId>kie-soup-commons-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/kie-soup-commons-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>kie-soup-maven-support-7.7.0.Final</groupId>
+            <artifactId>kie-soup-maven-support-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/kie-soup-maven-support-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>kie-soup-project-datamodel-api-7.7.0.Final</groupId>
+            <artifactId>kie-soup-project-datamodel-api-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/kie-soup-project-datamodel-api-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>kie-soup-project-datamodel-commons-7.7.0.Final</groupId>
+            <artifactId>kie-soup-project-datamodel-commons-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/kie-soup-project-datamodel-commons-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>kie-test-util-7.7.0.Final</groupId>
+            <artifactId>kie-test-util-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/kie-test-util-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>license3j-1.0.3</groupId>
+            <artifactId>license3j-1.0.3</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/license3j-1.0.3.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j-1.2.12</groupId>
+            <artifactId>log4j-1.2.12</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/log4j-1.2.12.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>log4jdbc4-1.2</groupId>
+            <artifactId>log4jdbc4-1.2</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/log4jdbc4-1.2.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/mail.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>mybatis-3.2.6</groupId>
+            <artifactId>mybatis-3.2.6</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/mybatis-3.2.6.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>mybatis-spring-1.2.2</groupId>
+            <artifactId>mybatis-spring-1.2.2</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/mybatis-spring-1.2.2.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql-connector-java-5.1.23</groupId>
+            <artifactId>mysql-connector-java-5.1.23</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/mysql-connector-java-5.1.23.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ojdbc6-11.2.0.1.0</groupId>
+            <artifactId>ojdbc6-11.2.0.1.0</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/ojdbc6-11.2.0.1.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>okhttp-2.7.5</groupId>
+            <artifactId>okhttp-2.7.5</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/okhttp-2.7.5.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>okio-1.6.0</groupId>
+            <artifactId>okio-1.6.0</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/okio-1.6.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>opdevelop</groupId>
+            <artifactId>opdevelop</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/opdevelop.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>optaplanner-benchmark-7.7.0.Final</groupId>
+            <artifactId>optaplanner-benchmark-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/optaplanner-benchmark-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>optaplanner-core-7.7.0.Final</groupId>
+            <artifactId>optaplanner-core-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/optaplanner-core-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>optaplanner-examples-7.7.0.Final</groupId>
+            <artifactId>optaplanner-examples-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/optaplanner-examples-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>optaplanner-persistence-common-7.7.0.Final</groupId>
+            <artifactId>optaplanner-persistence-common-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/optaplanner-persistence-common-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>optaplanner-persistence-jackson-7.7.0.Final</groupId>
+            <artifactId>optaplanner-persistence-jackson-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/optaplanner-persistence-jackson-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>optaplanner-persistence-jaxb-7.7.0.Final</groupId>
+            <artifactId>optaplanner-persistence-jaxb-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/optaplanner-persistence-jaxb-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>optaplanner-persistence-jpa-7.7.0.Final</groupId>
+            <artifactId>optaplanner-persistence-jpa-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/optaplanner-persistence-jpa-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>optaplanner-persistence-xstream-7.7.0.Final</groupId>
+            <artifactId>optaplanner-persistence-xstream-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/optaplanner-persistence-xstream-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>optaplanner-test-7.7.0.Final</groupId>
+            <artifactId>optaplanner-test-7.7.0.Final</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/optaplanner-test-7.7.0.Final.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>pdlic</groupId>
+            <artifactId>pdlic</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/pdlic.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>pinyin4j-2.5.0</groupId>
+            <artifactId>pinyin4j-2.5.0</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/pinyin4j-2.5.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>pjl-comp-filter-1.8.1</groupId>
+            <artifactId>pjl-comp-filter-1.8.1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/pjl-comp-filter-1.8.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>poi-3.10-FINAL-20140208</groupId>
+            <artifactId>poi-3.10-FINAL-20140208</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/poi-3.10-FINAL-20140208.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>poi-examples-3.10-FINAL-20140208</groupId>
+            <artifactId>poi-examples-3.10-FINAL-20140208</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/poi-examples-3.10-FINAL-20140208.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>poi-excelant-3.10-FINAL-20140208</groupId>
+            <artifactId>poi-excelant-3.10-FINAL-20140208</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/poi-excelant-3.10-FINAL-20140208.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>poi-ooxml-3.10-FINAL-20140208</groupId>
+            <artifactId>poi-ooxml-3.10-FINAL-20140208</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/poi-ooxml-3.10-FINAL-20140208.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>poi-ooxml-schemas-3.10-FINAL-20140208</groupId>
+            <artifactId>poi-ooxml-schemas-3.10-FINAL-20140208</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/poi-ooxml-schemas-3.10-FINAL-20140208.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>poi-scratchpad-3.10-FINAL-20140208</groupId>
+            <artifactId>poi-scratchpad-3.10-FINAL-20140208</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/poi-scratchpad-3.10-FINAL-20140208.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>quartz-all-1.8.6</groupId>
+            <artifactId>quartz-all-1.8.6</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/quartz-all-1.8.6.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>reflections-0.9.10</groupId>
+            <artifactId>reflections-0.9.10</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/reflections-0.9.10.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>serializer-2.7.1</groupId>
+            <artifactId>serializer-2.7.1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/serializer-2.7.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>shiro-core-1.2.3</groupId>
+            <artifactId>shiro-core-1.2.3</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/shiro-core-1.2.3.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>shiro-ehcache-1.2.3</groupId>
+            <artifactId>shiro-ehcache-1.2.3</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/shiro-ehcache-1.2.3.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>shiro-quartz-1.2.3</groupId>
+            <artifactId>shiro-quartz-1.2.3</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/shiro-quartz-1.2.3.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>shiro-spring-1.2.3</groupId>
+            <artifactId>shiro-spring-1.2.3</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/shiro-spring-1.2.3.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>shiro-web-1.2.3</groupId>
+            <artifactId>shiro-web-1.2.3</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/shiro-web-1.2.3.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>sigar-1.6.4</groupId>
+            <artifactId>sigar-1.6.4</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/sigar-1.6.4.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>simplecaptcha-1.2.1</groupId>
+            <artifactId>simplecaptcha-1.2.1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/simplecaptcha-1.2.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>slf4j-api-1.6.6</groupId>
+            <artifactId>slf4j-api-1.6.6</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/slf4j-api-1.6.6.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>slf4j-log4j12-1.6.6</groupId>
+            <artifactId>slf4j-log4j12-1.6.6</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/slf4j-log4j12-1.6.6.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>spring-aop-4.3.18.RELEASE</groupId>
+            <artifactId>spring-aop-4.3.18.RELEASE</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/spring-aop-4.3.18.RELEASE.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>spring-beans-4.3.18.RELEASE</groupId>
+            <artifactId>spring-beans-4.3.18.RELEASE</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/spring-beans-4.3.18.RELEASE.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>spring-context-4.3.18.RELEASE</groupId>
+            <artifactId>spring-context-4.3.18.RELEASE</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/spring-context-4.3.18.RELEASE.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>spring-context-support-4.3.18.RELEASE</groupId>
+            <artifactId>spring-context-support-4.3.18.RELEASE</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/spring-context-support-4.3.18.RELEASE.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>spring-core-4.3.18.RELEASE</groupId>
+            <artifactId>spring-core-4.3.18.RELEASE</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/spring-core-4.3.18.RELEASE.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>spring-expression-4.3.18.RELEASE</groupId>
+            <artifactId>spring-expression-4.3.18.RELEASE</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/spring-expression-4.3.18.RELEASE.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>spring-jdbc-4.3.18.RELEASE</groupId>
+            <artifactId>spring-jdbc-4.3.18.RELEASE</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/spring-jdbc-4.3.18.RELEASE.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>spring-oxm-4.3.18.RELEASE</groupId>
+            <artifactId>spring-oxm-4.3.18.RELEASE</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/spring-oxm-4.3.18.RELEASE.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>spring-test-4.3.18.RELEASE</groupId>
+            <artifactId>spring-test-4.3.18.RELEASE</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/spring-test-4.3.18.RELEASE.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>spring-tx-4.3.18.RELEASE</groupId>
+            <artifactId>spring-tx-4.3.18.RELEASE</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/spring-tx-4.3.18.RELEASE.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>spring-web-4.3.18.RELEASE</groupId>
+            <artifactId>spring-web-4.3.18.RELEASE</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/spring-web-4.3.18.RELEASE.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>spring-webmvc-4.3.18.RELEASE</groupId>
+            <artifactId>spring-webmvc-4.3.18.RELEASE</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/spring-webmvc-4.3.18.RELEASE.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ssoClient</groupId>
+            <artifactId>ssoClient</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/ssoClient.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>standard-1.1.2</groupId>
+            <artifactId>standard-1.1.2</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/standard-1.1.2.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>velocity-1.7</groupId>
+            <artifactId>velocity-1.7</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/velocity-1.7.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>velocity-tools-2.0</groupId>
+            <artifactId>velocity-tools-2.0</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/velocity-tools-2.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>wsdl4j</groupId>
+            <artifactId>wsdl4j</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/wsdl4j.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>xalan-2.7.1</groupId>
+            <artifactId>xalan-2.7.1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/xalan-2.7.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>xhtmlrenderer-3.0.0</groupId>
+            <artifactId>xhtmlrenderer-3.0.0</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/xhtmlrenderer-3.0.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>xmlbeans-2.6.0</groupId>
+            <artifactId>xmlbeans-2.6.0</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/xmlbeans-2.6.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>xmlgraphics-commons-1.5</groupId>
+            <artifactId>xmlgraphics-commons-1.5</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/xmlgraphics-commons-1.5.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>xmlpull-1.1.3.1</groupId>
+            <artifactId>xmlpull-1.1.3.1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/xmlpull-1.1.3.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>xpp3_min-1.1.4c</groupId>
+            <artifactId>xpp3_min-1.1.4c</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/xpp3_min-1.1.4c.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>xstream-1.4.10</groupId>
+            <artifactId>xstream-1.4.10</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/xstream-1.4.10.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>zxing-core-3.1.0</groupId>
+            <artifactId>zxing-core-3.1.0</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/zxing-core-3.1.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>zxing-javase-3.1.0</groupId>
+            <artifactId>zxing-javase-3.1.0</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/zxing-javase-3.1.0.jar</systemPath>
+        </dependency>
+    </dependencies>
+    <!-- 多项目（子父项目）中方便依赖管理，保证版本一致，父项目中使用，声明依赖，但不引用，子项目中可以不加版本，使用父项目中配置 -->
+    <dependencyManagement>
+
+    </dependencyManagement>
+
+    <build>
+        <!-- 执行目标 -->
+        <defaultGoal>package</defaultGoal>
+        <!-- 构建目标目录 -->
+        <directory>${basedir}/target</directory>
+        <!-- 各种默认路径及默认值 -->
+        <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+        <!--        <scriptSourceDirectory>${basedir}/src/main/scripts</scriptSourceDirectory>-->
+        <outputDirectory>${basedir}/target/classes</outputDirectory>
+        <!--        <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>-->
+        <!--        <testOutputDirectory>${basedir}/target/test-classes</testOutputDirectory>-->
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/java</directory>
+                <includes>
+                    <!--<include>**/*.yml</include>
+                    <include>**/*.properties</include>-->
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+            </resource>
+        </resources>
+
+
+
+        <!-- 项目最终构建名称 -->
+        <finalName>pdsci</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.pinde.sci.PindeSciApplication</mainClass>
+                    <!--
+                        todo 本地时放开，用于本地调试，正式打包时注掉
+                        jar包debug启动方式
+                        java -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=9999 -jar pdifs-SNAPSHOT.jar
+                        参见：https://www.cnblogs.com/learningWithJava/p/12665815.html
+                     -->
+                    <!--<jvmArguments>
+                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=9999
+                    </jvmArguments>-->
+                    <includeSystemScope>false</includeSystemScope>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 必须有这个插件，不然外部jar打不到war包里 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <!-- directory的路径是需要打包的第三方jar包位置-->
+                            <directory>src/main/lib</directory>
+                            <targetPath>WEB-INF/lib/</targetPath>
+                            <filtering>false</filtering>
+                            <includes>
+                                <include>*.jar</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>-classpath</argument>
+                        <classpath>
+                        </classpath>
+                        <argument>com.pinde.sci.PindeSciApplication</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

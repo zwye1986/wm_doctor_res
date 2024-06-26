@@ -1,0 +1,802 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.sch.SchManualExtMapper">
+
+    <resultMap id="userMap" type="map">
+        <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
+        <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="TRAINING_SPE_NAME" property="trainingSpeName" jdbcType="VARCHAR" />
+        <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+        <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+        <result column="TRAINING_YEARS" property="trainingYears" jdbcType="VARCHAR" />
+        <result column="IS_SUBMIT_ID" property="isSubmitId" jdbcType="VARCHAR" />
+        <result column="IS_SUBMIT_NAME" property="isSubmitName" jdbcType="VARCHAR" />
+        <result column="CHECK_STATUS_ID" property="checkStatusId" jdbcType="VARCHAR" />
+        <result column="CHECK_STATUS_NAME" property="checkStatusName" jdbcType="VARCHAR" />
+        <result column="CHECK_TIME" property="checkTime" jdbcType="VARCHAR" />
+        <result column="SUBMIT_TIME" property="submitTime" jdbcType="VARCHAR" />
+        <result column="CHECK_REASON" property="checkReason" jdbcType="VARCHAR" />
+        <result column="WORK_ORG_NAME" property="workOrgName" jdbcType="VARCHAR" />
+        <result column="DOCTOR_TYPE_NAME" property="doctorTypeName" jdbcType="VARCHAR" />
+
+        <result column="APP_LOGIN_FLAG" property="appLoginFlag" jdbcType="VARCHAR" />
+        <result column="APP_MENU_FLAG" property="appMenuFlag" jdbcType="VARCHAR" />
+        <result column="EXAM_FLAG" property="examFlag" jdbcType="VARCHAR" />
+        <result column="GRADUATION_EXAM_FLAG" property="graduationExamFlag" jdbcType="VARCHAR" />
+        <result column="MANUAL_FLAG" property="manualFlag" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="userList" resultMap="userMap">
+        SELECT SU.USER_FLOW, SU.USER_NAME, RD.SESSION_NUMBER, RD.ORG_NAME,
+        RD.TRAINING_SPE_NAME, SU.ID_NO, SU.USER_CODE, RD.TRAINING_YEARS,
+        RD.IS_SUBMIT_ID, RD.IS_SUBMIT_NAME, RD.CHECK_STATUS_ID, RD.CHECK_STATUS_NAME,
+        RD.SUBMIT_TIME, RD.CHECK_TIME,
+        RD.CHECK_REASON, RD.WORK_ORG_NAME,rd.doctor_type_name,
+        (CASE WHEN rpc1.cfg_value = 'Y' THEN '是' ELSE '否' END ) app_login_flag,
+        (CASE WHEN rpc2.cfg_value = 'Y' THEN '是' ELSE '否' END ) app_menu_flag,
+        (CASE WHEN rpc3.cfg_value = 'Y' THEN '是' ELSE '否' END ) exam_flag,
+        (CASE WHEN rpc4.cfg_value = 'Y' THEN '是' ELSE '否' END ) graduation_exam_flag,
+        (CASE WHEN rpc6.cfg_value = 'Y' THEN '是' ELSE '否' END ) manual_Flag
+        FROM SYS_USER SU
+        JOIN RES_DOCTOR RD ON SU.USER_FLOW=RD.DOCTOR_FLOW
+        LEFT JOIN (
+            SELECT a.*, ROW_NUMBER() OVER (PARTITION BY doctor_flow ORDER BY create_time DESC) AS rn
+              FROM RES_DOCTOR_RECRUIT a
+            WHERE AUDIT_STATUS_ID = 'Passed'
+                AND RECORD_STATUS = 'Y'
+        ) re ON re.DOCTOR_FLOW = SU.USER_FLOW
+        AND rn = 1
+        left join jsres_power_cfg rpc1 on 'jsres_doctor_app_login_' || su.user_flow = rpc1.cfg_code and rpc1.record_status='Y'
+        left join jsres_power_cfg rpc2 on 'jsres_doctor_app_menu_' || su.user_flow = rpc2.cfg_code and rpc2.record_status='Y'
+        left join jsres_power_cfg rpc3 on 'jsres_doctor_exam_' || su.user_flow = rpc3.cfg_code and rpc3.record_status='Y'
+        left join jsres_power_cfg rpc4 on 'jsres_doctor_graduation_exam_' || su.user_flow = rpc4.cfg_code and rpc4.record_status='Y'
+        left join jsres_power_cfg rpc6 on 'jsres_doctor_manual_' || su.user_flow = rpc6.cfg_code and rpc6.record_status='Y'
+        <if test="startTime !=null and startTime !='' or (endTime != null and endTime != '')">
+            left join jsres_power_cfg rpc5 on 'jsres_doctor_data_time_' || su.user_flow = rpc5.cfg_code
+        </if>
+        WHERE SU.RECORD_STATUS='Y'
+        AND RD.RECORD_STATUS='Y'
+        AND re.RECORD_STATUS='Y'
+        AND RD.DOCTOR_STATUS_ID != '21'
+        <if test="orgFlow !=null and orgFlow !=''">
+            AND RD.ORG_FLOW =#{orgFlow}
+        </if>
+        <if test="sessionNumber !=null and sessionNumber !=''">
+            AND RD.SESSION_NUMBER =#{sessionNumber}
+        </if>
+        <if test="workOrgId !=null and workOrgId !=''">
+            AND ( RD.WORK_ORG_ID =#{workOrgId}
+            OR RD.WORK_ORG_NAME IN (
+            SELECT DICT_NAME FROM SYS_DICT WHERE RECORD_STATUS='Y'
+            AND DICT_TYPE_ID='SendSchool'
+            AND DICT_ID=#{workOrgId}
+            ))
+        </if>
+        <if test="userName !=null and userName !=''">
+            AND SU.USER_NAME LIKE '%${userName}%'
+        </if>
+        <if test="idNo !=null and idNo !=''">
+            AND SU.ID_NO LIKE '%${idNo}%'
+        </if>
+        <if test="doctorCategoryId !=null and doctorCategoryId != ''">
+            AND RD.DOCTOR_CATEGORY_ID = #{doctorCategoryId}
+        </if>
+        <if test="trainingSpeId !=null and trainingSpeId !='' ">
+            AND RD.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test="trainingTypeId !=null and trainingTypeId !='' ">
+            AND Re.CAT_SPE_ID = #{trainingTypeId}
+        </if>
+        <if test="userCode !=null and userCode !='' ">
+            AND SU.USER_CODE like '%${userCode}%'
+        </if>
+        <if test="trainingYears !=null and trainingYears !='' ">
+            AND RE.TRAIN_YEAR = #{trainingYears}
+        </if>
+        <if test="checkStatusId !=null and checkStatusId !='' and checkStatusId != 'NotSubmit'.toString()">
+            AND RD.CHECK_STATUS_ID = #{checkStatusId}
+        </if>
+        <if test="checkStatusId !=null and checkStatusId !='' and checkStatusId == 'NotSubmit'.toString()">
+            AND RD.IS_SUBMIT_ID = #{checkStatusId}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and rpc5.power_start_time >= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and rpc5.power_end_time <![CDATA[<=]]> #{endTime}
+        </if>
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and RD.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <!--<if test="doctorStatusList!=null and doctorStatusList.size>0">-->
+            <!--AND RD.Doctor_Status_Id IN-->
+            <!--<foreach collection="doctorStatusList" open="(" separator="," close=")" item="item">#{item}</foreach>-->
+        <!--</if>-->
+        AND RD.DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+        AND RD.org_flow is not null
+        AND RD.org_flow != '20160914888888'
+        AND RD.org_flow != '566c9f36cf014f63a569b453efa284d7'
+        AND RD.org_flow != '00000000000000000000000000000000'
+        order by
+            RD.ORG_NAME,
+            RD.SESSION_NUMBER  DESC,
+            RD.TRAINING_SPE_ID,
+            SU.ID_NO
+    </select>
+    <select id="userList2" resultMap="userMap">
+        SELECT SU.USER_FLOW, SU.USER_NAME,RD.SESSION_NUMBER, RD.ORG_NAME,
+        RD.TRAINING_SPE_NAME, SU.ID_NO, SU.USER_CODE, RD.TRAINING_YEARS,
+        RD.IS_SUBMIT_ID, RD.IS_SUBMIT_NAME, RD.CHECK_STATUS_ID, RD.CHECK_STATUS_NAME,
+        RD.SUBMIT_TIME, RD.CHECK_TIME,RD.CHECK_REASON
+        FROM SYS_USER SU
+        JOIN RES_DOCTOR RD ON SU.USER_FLOW=RD.DOCTOR_FLOW
+        LEFT JOIN (
+            SELECT a.*, ROW_NUMBER() OVER (PARTITION BY doctor_flow ORDER BY create_time DESC) AS rn
+            FROM RES_DOCTOR_RECRUIT a
+            WHERE AUDIT_STATUS_ID = 'Passed'
+            AND RECORD_STATUS = 'Y'
+        ) re ON re.DOCTOR_FLOW = SU.USER_FLOW
+        AND rn = 1
+        <if test="startTime !=null and startTime !='' or (endTime != null and endTime != '')">
+            left join jsres_power_cfg rpc5 on 'jsres_doctor_data_time_' || su.user_flow = rpc5.cfg_code
+        </if>
+        WHERE SU.RECORD_STATUS='Y'
+        AND RD.RECORD_STATUS='Y'
+        AND RE.RECORD_STATUS='Y'
+        AND RD.doctor_status_id != '21'
+        <if test="orgFlow !=null and orgFlow !=''">
+            AND RD.ORG_FLOW =#{orgFlow}
+        </if>
+        <if test="sessionNumber !=null and sessionNumber !=''">
+            AND RD.SESSION_NUMBER =#{sessionNumber}
+        </if>
+        <if test="workOrgId !=null and workOrgId !=''">
+            AND ( RD.WORK_ORG_ID =#{workOrgId}
+            OR RD.WORK_ORG_NAME IN (
+            SELECT DICT_NAME FROM SYS_DICT WHERE RECORD_STATUS='Y'
+            AND DICT_TYPE_ID='SendSchool'
+            AND DICT_ID=#{workOrgId}
+            ))
+        </if>
+        <if test="userName !=null and userName !=''">
+            AND SU.USER_NAME LIKE '%${userName}%'
+        </if>
+        <if test="idNo !=null and idNo !=''">
+            AND SU.ID_NO LIKE '%${idNo}%'
+        </if>
+        <if test="doctorCategoryId !=null and doctorCategoryId != ''">
+            AND RD.DOCTOR_CATEGORY_ID = #{doctorCategoryId}
+        </if>
+        <if test="trainingSpeId !=null and trainingSpeId !='' ">
+            AND RD.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test="userCode !=null and userCode !='' ">
+            AND SU.USER_CODE like '%${userCode}%'
+        </if>
+        <if test="trainingYears !=null and trainingYears !='' ">
+            AND RD.TRAINING_YEARS = #{trainingYears}
+        </if>
+        <if test="checkStatusId ==null or checkStatusId =='' ">
+            AND RD.CHECK_STATUS_ID IN ('Passed','UnPassed')
+        </if>
+        <if test="checkStatusId !=null and checkStatusId !='' and checkStatusId != 'NotSubmit'.toString()">
+            AND RD.CHECK_STATUS_ID = #{checkStatusId}
+        </if>
+        <if test="checkStatusId !=null and checkStatusId !='' and checkStatusId == 'NotSubmit'.toString()">
+            AND RD.IS_SUBMIT_ID = #{checkStatusId}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and rpc5.power_start_time >= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and rpc5.power_end_time <![CDATA[<=]]> #{endTime}
+        </if>
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and RD.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <!--<if test="doctorStatusList!=null and doctorStatusList.size>0">-->
+        <!--AND RD.Doctor_Status_Id IN-->
+        <!--<foreach collection="doctorStatusList" open="(" separator="," close=")" item="item">#{item}</foreach>-->
+        <!--</if>-->
+        AND RD.DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+        AND RD.org_flow is not null
+        AND RD.org_flow != '20160914888888'
+        AND RD.org_flow != '566c9f36cf014f63a569b453efa284d7'
+        AND RD.org_flow != '00000000000000000000000000000000'
+        order by
+        RD.ORG_NAME,
+        RD.SESSION_NUMBER  DESC,
+        RD.TRAINING_SPE_ID,
+        SU.ID_NO
+    </select>
+    <select id="userListByPower" resultMap="userMap">
+        SELECT SU.USER_FLOW,
+        SU.USER_NAME,
+        RD.SESSION_NUMBER,
+        RD.ORG_NAME,
+        RD.TRAINING_SPE_NAME,
+        SU.ID_NO,
+        SU.USER_CODE,
+        RD.TRAINING_YEARS
+        FROM SYS_USER SU
+        JOIN RES_DOCTOR RD
+        ON SU.USER_FLOW=RD.DOCTOR_FLOW
+        <if test="web !=null and web =='Y'.toString()">
+            left join res_power_cfg rpc1 on 'res_doctor_web_' || su.user_flow = rpc1.cfg_code
+        </if>
+        <if test="APP !=null and APP =='Y'.toString()">
+            left join res_power_cfg rpc2 on 'res_doctor_app_login_' || su.user_flow = rpc2.cfg_code
+        </if>
+        <if test="ckks !=null and ckks =='Y'.toString()">
+            left join res_power_cfg rpc3 on 'res_doctor_ckks_' || su.user_flow = rpc3.cfg_code
+        </if>
+        <if test="pxsc !=null and pxsc =='Y'.toString()">
+            left join res_power_cfg rpc4 on 'res_doctor_pxsc_' || su.user_flow = rpc4.cfg_code
+        </if>
+        WHERE SU.RECORD_STATUS='Y'
+        AND RD.RECORD_STATUS='Y'
+        <if test="web !=null and web =='Y'.toString() and ifOpen=='Y'.toString()">
+            and rpc1.cfg_value = 'Y'
+        </if>
+        <if test="web !=null and web =='Y'.toString() and ifOpen=='N'.toString()">
+            and (rpc1.cfg_value not in ('Y') or rpc1.cfg_value is null)
+        </if>
+        <if test="APP !=null and APP =='Y'.toString() and ifOpen=='Y'.toString()">
+            and rpc2.cfg_value = 'Y'
+        </if>
+        <if test="APP !=null and APP =='Y'.toString() and ifOpen=='N'.toString()">
+            and (rpc2.cfg_value not in ('Y') or rpc2.cfg_value is null)
+        </if>
+        <if test="ckks !=null and ckks =='Y'.toString() and ifOpen=='Y'.toString()">
+            and rpc3.cfg_value = 'Y'
+        </if>
+        <if test="ckks !=null and ckks =='Y'.toString() and ifOpen=='N'.toString()">
+            and (rpc3.cfg_value not in ('Y') or rpc3.cfg_value is null)
+        </if>
+        <if test="pxsc !=null and pxsc =='Y'.toString() and ifOpen=='Y'.toString()">
+            and rpc4.cfg_value = 'Y'
+        </if>
+        <if test="pxsc !=null and pxsc =='Y'.toString() and ifOpen=='N'.toString()">
+            and (rpc4.cfg_value not in ('Y') or rpc4.cfg_value is null)
+        </if>
+        <if test="orgFlow !=null and orgFlow !=''">
+            AND RD.ORG_FLOW =#{orgFlow}
+        </if>
+        <if test="sessionNumber !=null and sessionNumber !=''">
+            AND RD.SESSION_NUMBER =#{sessionNumber}
+        </if>
+        <if test="workOrgId !=null and workOrgId !=''">
+            AND ( RD.WORK_ORG_ID =#{workOrgId}
+            OR RD.WORK_ORG_NAME IN (
+            SELECT DICT_NAME FROM SYS_DICT WHERE RECORD_STATUS='Y'
+            AND DICT_TYPE_ID='SendSchool'
+            AND DICT_ID=#{workOrgId}
+            ))
+        </if>
+        <if test="userName !=null and userName !=''">
+            AND SU.USER_NAME LIKE '%${userName}%'
+        </if>
+        <if test="idNo !=null and idNo !=''">
+            AND SU.ID_NO LIKE '%${idNo}%'
+        </if>
+        <if test="doctorCategoryId !=null and doctorCategoryId != ''">
+            AND RD.DOCTOR_CATEGORY_ID = #{doctorCategoryId}
+        </if>
+        <if test="trainingSpeId !=null and trainingSpeId !='' ">
+            AND RD.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test="userCode !=null and userCode !='' ">
+            AND SU.USER_CODE like '%${userCode}%'
+        </if>
+        <if test="trainingYears !=null and trainingYears !='' ">
+            AND RD.TRAINING_YEARS = #{trainingYears}
+        </if>
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and RD.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <!--<if test="doctorStatusList!=null and doctorStatusList.size>0">-->
+        <!--AND RD.Doctor_Status_Id IN-->
+        <!--<foreach collection="doctorStatusList" open="(" separator="," close=")" item="item">#{item}</foreach>-->
+        <!--</if>-->
+        AND RD.DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+        AND RD.org_flow is not null
+        AND RD.org_flow != '20160914888888'
+        AND RD.org_flow != '566c9f36cf014f63a569b453efa284d7'
+        AND RD.org_flow != '00000000000000000000000000000000'
+        order by
+        RD.ORG_NAME,
+        RD.SESSION_NUMBER  DESC,
+        RD.TRAINING_SPE_ID,
+        SU.ID_NO
+    </select>
+    <select id="userListByJsResPower" resultMap="userMap">
+        SELECT SU.USER_FLOW,
+        SU.USER_NAME,
+        RD.SESSION_NUMBER,
+        RD.ORG_NAME,
+        RD.TRAINING_SPE_NAME,
+        SU.ID_NO,
+        RD.IS_SUBMIT_ID,
+        RD.IS_SUBMIT_NAME,
+        RD.CHECK_STATUS_ID,
+        RD.CHECK_STATUS_NAME,
+        RD.CHECK_REASON,
+        RD.WORK_ORG_NAME,rd.doctor_type_name,
+        (CASE WHEN rpcc1.cfg_value = 'Y' THEN '是' ELSE '否' END ) app_login_flag,
+        (CASE WHEN rpcc2.cfg_value = 'Y' THEN '是' ELSE '否' END ) app_menu_flag,
+        (CASE WHEN rpcc3.cfg_value = 'Y' THEN '是' ELSE '否' END ) exam_flag,
+        (CASE WHEN rpcc4.cfg_value = 'Y' THEN '是' ELSE '否' END ) graduation_exam_flag,
+        (CASE WHEN rpcc6.cfg_value = 'Y' THEN '是' ELSE '否' END ) manual_Flag
+        FROM SYS_USER SU
+        JOIN RES_DOCTOR RD
+        ON SU.USER_FLOW=RD.DOCTOR_FLOW
+        left join jsres_power_cfg rpcc1 on 'jsres_doctor_app_login_' || su.user_flow = rpcc1.cfg_code and rpcc1.record_status='Y'
+        left join jsres_power_cfg rpcc2 on 'jsres_doctor_app_menu_' || su.user_flow = rpcc2.cfg_code and rpcc2.record_status='Y'
+        left join jsres_power_cfg rpcc3 on 'jsres_doctor_exam_' || su.user_flow = rpcc3.cfg_code and rpcc3.record_status='Y'
+        left join jsres_power_cfg rpcc4 on 'jsres_doctor_graduation_exam_' || su.user_flow = rpcc4.cfg_code and rpcc4.record_status='Y'
+        left join jsres_power_cfg rpcc6 on 'jsres_doctor_manual_' || su.user_flow = rpcc6.cfg_code and rpcc6.record_status='Y'
+        <if test="menu !=null and menu =='Y'.toString()">
+            left join jsres_power_cfg rpc1 on 'jsres_doctor_app_menu_' || su.user_flow = rpc1.cfg_code
+        </if>
+        <if test="APP !=null and APP =='Y'.toString()">
+            left join jsres_power_cfg rpc2 on 'jsres_doctor_app_login_' || su.user_flow = rpc2.cfg_code
+        </if>
+        <if test="ckks !=null and ckks =='Y'.toString()">
+            left join jsres_power_cfg rpc3 on 'jsres_doctor_exam_' || su.user_flow = rpc3.cfg_code
+        </if>
+        <if test="pxsc !=null and pxsc =='Y'.toString()">
+            left join jsres_power_cfg rpc4 on 'jsres_doctor_manual_' || su.user_flow = rpc4.cfg_code
+        </if>
+        <if test="startTime !=null and startTime !='' or (endTime != null and endTime != '')">
+            left join jsres_power_cfg rpc5 on 'jsres_doctor_data_time_' || su.user_flow = rpc5.cfg_code
+        </if>
+        WHERE SU.RECORD_STATUS='Y'
+        AND RD.RECORD_STATUS='Y'
+        AND RD.DOCTOR_STATUS_ID != '21'
+        <if test="menu !=null and menu =='Y'.toString() and ifOpen=='Y'.toString()">
+            and rpc1.cfg_value = 'Y'
+        </if>
+        <if test="menu !=null and menu =='Y'.toString() and ifOpen=='N'.toString()">
+            and (rpc1.cfg_value not in ('Y') or rpc1.cfg_value is null)
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and rpc5.power_start_time >= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and rpc5.power_end_time <![CDATA[<=]]> #{endTime}
+        </if>
+        <if test="APP !=null and APP =='Y'.toString() and ifOpen=='Y'.toString()">
+            and rpc2.cfg_value = 'Y'
+        </if>
+        <if test="APP !=null and APP =='Y'.toString() and ifOpen=='N'.toString()">
+            and (rpc2.cfg_value not in ('Y') or rpc2.cfg_value is null)
+        </if>
+        <if test="ckks !=null and ckks =='Y'.toString() and ifOpen=='Y'.toString()">
+            and rpc3.cfg_value = 'Y'
+        </if>
+        <if test="ckks !=null and ckks =='Y'.toString() and ifOpen=='N'.toString()">
+            and (rpc3.cfg_value not in ('Y') or rpc3.cfg_value is null)
+        </if>
+        <if test="pxsc !=null and pxsc =='Y'.toString() and ifOpen=='Y'.toString()">
+            and rpc4.cfg_value = 'Y'
+        </if>
+        <if test="pxsc !=null and pxsc =='Y'.toString() and ifOpen=='N'.toString()">
+            and (rpc4.cfg_value not in ('Y') or rpc4.cfg_value is null)
+        </if>
+        <if test="orgFlow !=null and orgFlow !=''">
+            AND RD.ORG_FLOW =#{orgFlow}
+        </if>
+        <if test="sessionNumber !=null and sessionNumber !=''">
+            AND RD.SESSION_NUMBER =#{sessionNumber}
+        </if>
+        <if test="workOrgId !=null and workOrgId !=''">
+            AND ( RD.WORK_ORG_ID =#{workOrgId}
+            OR RD.WORK_ORG_NAME IN (
+            SELECT DICT_NAME FROM SYS_DICT WHERE RECORD_STATUS='Y'
+            AND DICT_TYPE_ID='SendSchool'
+            AND DICT_ID=#{workOrgId}
+            ))
+        </if>
+        <if test="userName !=null and userName !=''">
+            AND SU.USER_NAME LIKE '%${userName}%'
+        </if>
+        <if test="idNo !=null and idNo !=''">
+            AND SU.ID_NO LIKE '%${idNo}%'
+        </if>
+        <if test="doctorCategoryId !=null and doctorCategoryId != ''">
+            AND RD.DOCTOR_CATEGORY_ID = #{doctorCategoryId}
+        </if>
+        <if test="trainingSpeId !=null and trainingSpeId !='' ">
+            AND RD.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test="userCode !=null and userCode !='' ">
+            AND SU.USER_CODE like '%${userCode}%'
+        </if>
+        <if test="trainingYears !=null and trainingYears !='' ">
+            AND RD.TRAINING_YEARS = #{trainingYears}
+        </if>
+        <if test="checkStatusId !=null and checkStatusId !='' and checkStatusId != 'NotSubmit'.toString()">
+            AND RD.CHECK_STATUS_ID = #{checkStatusId}
+        </if>
+        <if test="checkStatusId !=null and checkStatusId !='' and checkStatusId == 'NotSubmit'.toString()">
+            AND RD.IS_SUBMIT_ID = #{checkStatusId}
+        </if>
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and RD.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <!--<if test="doctorStatusList!=null and doctorStatusList.size>0">-->
+        <!--AND RD.Doctor_Status_Id IN-->
+        <!--<foreach collection="doctorStatusList" open="(" separator="," close=")" item="item">#{item}</foreach>-->
+        <!--</if>-->
+        AND RD.DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+        AND RD.org_flow is not null
+        AND RD.org_flow != '20160914888888'
+        AND RD.org_flow != '566c9f36cf014f63a569b453efa284d7'
+        AND RD.org_flow != '00000000000000000000000000000000'
+        order by
+        RD.ORG_NAME,
+        RD.SESSION_NUMBER  DESC,
+        RD.TRAINING_SPE_ID,
+        SU.ID_NO
+    </select>
+    <select id="userListByJsResPower2" resultMap="userMap">
+        SELECT SU.USER_FLOW,
+        SU.USER_NAME,
+        RD.SESSION_NUMBER,
+        RD.ORG_NAME,
+        RD.TRAINING_SPE_NAME,
+        SU.ID_NO,
+        RD.IS_SUBMIT_ID,
+        RD.IS_SUBMIT_NAME,
+        RD.CHECK_STATUS_ID,
+        RD.CHECK_STATUS_NAME
+        FROM SYS_USER SU
+        JOIN RES_DOCTOR RD
+        ON SU.USER_FLOW=RD.DOCTOR_FLOW
+        <if test="menu !=null and menu =='Y'.toString()">
+            left join jsres_power_cfg rpc1 on 'jsres_doctor_app_menu_' || su.user_flow = rpc1.cfg_code
+        </if>
+        <if test="APP !=null and APP =='Y'.toString()">
+            left join jsres_power_cfg rpc2 on 'jsres_doctor_app_login_' || su.user_flow = rpc2.cfg_code
+        </if>
+        <if test="ckks !=null and ckks =='Y'.toString()">
+            left join jsres_power_cfg rpc3 on 'jsres_doctor_exam_' || su.user_flow = rpc3.cfg_code
+        </if>
+        <if test="pxsc !=null and pxsc =='Y'.toString()">
+            left join jsres_power_cfg rpc4 on 'jsres_doctor_manual_' || su.user_flow = rpc4.cfg_code
+        </if>
+        <if test="startTime !=null and startTime !='' or (endTime != null and endTime != '')">
+            left join jsres_power_cfg rpc5 on 'jsres_doctor_data_time_' || su.user_flow = rpc5.cfg_code
+        </if>
+        WHERE SU.RECORD_STATUS='Y'
+        AND RD.RECORD_STATUS='Y'
+        AND RD.DOCTOR_STATUS_ID != '21'
+        <if test="menu !=null and menu =='Y'.toString() and ifOpen=='Y'.toString()">
+            and rpc1.cfg_value = 'Y'
+        </if>
+        <if test="menu !=null and menu =='Y'.toString() and ifOpen=='N'.toString()">
+            and (rpc1.cfg_value not in ('Y') or rpc1.cfg_value is null)
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and rpc5.power_start_time >= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and rpc5.power_end_time <![CDATA[<=]]> #{endTime}
+        </if>
+        <if test="APP !=null and APP =='Y'.toString() and ifOpen=='Y'.toString()">
+            and rpc2.cfg_value = 'Y'
+        </if>
+        <if test="APP !=null and APP =='Y'.toString() and ifOpen=='N'.toString()">
+            and (rpc2.cfg_value not in ('Y') or rpc2.cfg_value is null)
+        </if>
+        <if test="ckks !=null and ckks =='Y'.toString() and ifOpen=='Y'.toString()">
+            and rpc3.cfg_value = 'Y'
+        </if>
+        <if test="ckks !=null and ckks =='Y'.toString() and ifOpen=='N'.toString()">
+            and (rpc3.cfg_value not in ('Y') or rpc3.cfg_value is null)
+        </if>
+        <if test="pxsc !=null and pxsc =='Y'.toString() and ifOpen=='Y'.toString()">
+            and rpc4.cfg_value = 'Y'
+        </if>
+        <if test="pxsc !=null and pxsc =='Y'.toString() and ifOpen=='N'.toString()">
+            and (rpc4.cfg_value not in ('Y') or rpc4.cfg_value is null)
+        </if>
+        <if test="orgFlow !=null and orgFlow !=''">
+            AND RD.ORG_FLOW =#{orgFlow}
+        </if>
+        <if test="sessionNumber !=null and sessionNumber !=''">
+            AND RD.SESSION_NUMBER =#{sessionNumber}
+        </if>
+        <if test="workOrgId !=null and workOrgId !=''">
+            AND ( RD.WORK_ORG_ID =#{workOrgId}
+            OR RD.WORK_ORG_NAME IN (
+            SELECT DICT_NAME FROM SYS_DICT WHERE RECORD_STATUS='Y'
+            AND DICT_TYPE_ID='SendSchool'
+            AND DICT_ID=#{workOrgId}
+            ))
+        </if>
+        <if test="userName !=null and userName !=''">
+            AND SU.USER_NAME LIKE '%${userName}%'
+        </if>
+        <if test="idNo !=null and idNo !=''">
+            AND SU.ID_NO LIKE '%${idNo}%'
+        </if>
+        <if test="doctorCategoryId !=null and doctorCategoryId != ''">
+            AND RD.DOCTOR_CATEGORY_ID = #{doctorCategoryId}
+        </if>
+        <if test="trainingSpeId !=null and trainingSpeId !='' ">
+            AND RD.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test="userCode !=null and userCode !='' ">
+            AND SU.USER_CODE like '%${userCode}%'
+        </if>
+        <if test="trainingYears !=null and trainingYears !='' ">
+            AND RD.TRAINING_YEARS = #{trainingYears}
+        </if>
+        <if test="checkStatusId ==null or checkStatusId =='' ">
+            AND RD.CHECK_STATUS_ID IN ('Passing','Passed','UnPassed')
+        </if>
+        <if test="checkStatusId !=null and checkStatusId !='' and checkStatusId != 'NotSubmit'.toString()">
+            AND RD.CHECK_STATUS_ID = #{checkStatusId}
+        </if>
+        <if test="checkStatusId !=null and checkStatusId !='' and checkStatusId == 'NotSubmit'.toString()">
+            AND RD.IS_SUBMIT_ID = #{checkStatusId}
+        </if>
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and RD.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <!--<if test="doctorStatusList!=null and doctorStatusList.size>0">-->
+        <!--AND RD.Doctor_Status_Id IN-->
+        <!--<foreach collection="doctorStatusList" open="(" separator="," close=")" item="item">#{item}</foreach>-->
+        <!--</if>-->
+        AND RD.DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+        AND RD.org_flow is not null
+        AND RD.org_flow != '20160914888888'
+        AND RD.org_flow != '566c9f36cf014f63a569b453efa284d7'
+        AND RD.org_flow != '00000000000000000000000000000000'
+        order by
+        RD.ORG_NAME,
+        RD.SESSION_NUMBER  DESC,
+        RD.TRAINING_SPE_ID,
+        SU.ID_NO
+    </select>
+    <select id="userListNotBack" resultMap="userMap">
+        SELECT SU.USER_FLOW,
+        SU.USER_NAME,
+        RD.SESSION_NUMBER,
+        RD.ORG_NAME,
+        RD.TRAINING_SPE_NAME,
+        SU.ID_NO
+        FROM SYS_USER SU
+        JOIN RES_DOCTOR RD
+        ON SU.USER_FLOW=RD.DOCTOR_FLOW
+        WHERE SU.RECORD_STATUS='Y'
+        AND RD.RECORD_STATUS='Y'
+        <if test="orgFlow !=null and orgFlow !=''">
+            AND RD.ORG_FLOW =#{orgFlow}
+        </if>
+        <if test="sessionNumber !=null and sessionNumber !=''">
+            AND RD.SESSION_NUMBER =#{sessionNumber}
+        </if>
+        <if test="workOrgId !=null and workOrgId !=''">
+            AND ( RD.WORK_ORG_ID =#{workOrgId}
+            OR RD.WORK_ORG_NAME IN (
+            SELECT DICT_NAME FROM SYS_DICT WHERE RECORD_STATUS='Y'
+            AND DICT_TYPE_ID='SendSchool'
+            AND DICT_ID=#{workOrgId}
+            ))
+        </if>
+        <if test="userName !=null and userName !=''">
+            AND SU.USER_NAME LIKE '%${userName}%'
+        </if>
+        <if test="idNo !=null and idNo !=''">
+            AND SU.ID_NO LIKE '%${idNo}%'
+        </if>
+        <if test="doctorCategoryId !=null and doctorCategoryId != ''">
+            AND RD.DOCTOR_CATEGORY_ID = #{doctorCategoryId}
+        </if>
+        <if test="trainingSpeId !=null and trainingSpeId !='' ">
+            AND RD.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and RD.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <!--<if test="doctorStatusList!=null and doctorStatusList.size>0">-->
+        <!--AND RD.Doctor_Status_Id IN-->
+        <!--<foreach collection="doctorStatusList" open="(" separator="," close=")" item="item">#{item}</foreach>-->
+        <!--</if>-->
+        AND RD.DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+        AND RD.org_flow is not null
+        AND RD.org_flow != '20160914888888'
+        AND RD.org_flow != '566c9f36cf014f63a569b453efa284d7'
+        AND RD.org_flow != '00000000000000000000000000000000'
+        AND RD.doctor_flow not in (
+        select doctor_flow
+        from RES_DOCOTR_DELAY_TETURN rddt
+        where rddt.type_id = 'ReturnTraining'
+        AND rddt.AUDIT_STATUS_ID = 'GlobalPassed'
+        )
+        order by
+        RD.ORG_NAME,
+        RD.SESSION_NUMBER DESC,
+        RD.TRAINING_SPE_ID,
+        SU.ID_NO
+    </select>
+    <resultMap id="teaMap" type="map">
+        <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+        <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+        <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+        <result column="IS_SUBMIT_ID" property="isSubmitId" jdbcType="VARCHAR" />
+        <result column="IS_SUBMIT_NAME" property="isSubmitName" jdbcType="VARCHAR" />
+        <result column="CHECK_STATUS_ID" property="checkStatusId" jdbcType="VARCHAR" />
+        <result column="CHECK_STATUS_NAME" property="checkStatusName" jdbcType="VARCHAR" />
+        <result column="CHECK_REASON" property="checkReason" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="teaList" resultMap="teaMap">
+        SELECT SU.USER_FLOW, SU.USER_NAME,  SU.ORG_NAME, SU.DEPT_NAME, SU.USER_CODE, SU.ID_NO,
+        SU.IS_SUBMIT_ID, SU.IS_SUBMIT_NAME, SU.CHECK_STATUS_ID, SU.CHECK_STATUS_NAME, SU.CHECK_REASON
+        FROM SYS_USER SU
+        JOIN sys_user_role role
+        ON SU.USER_FLOW=ROLE.USER_FLOW
+        WHERE SU.RECORD_STATUS='Y'
+        AND ROLE.RECORD_STATUS='Y'
+        <if test="orgFlow !=null and orgFlow !=''">
+            AND SU.ORG_FLOW =#{orgFlow}
+        </if>
+        <if test="deptFlow !=null and deptFlow !=''">
+            AND SU.DEPT_FLOW =#{deptFlow}
+        </if>
+        <if test="roleFlow !=null and roleFlow !=''">
+            AND ROLE.ROLE_FLOW =#{roleFlow}
+        </if>
+        <if test="userName !=null and userName !=''">
+            AND SU.USER_NAME LIKE '%${userName}%'
+        </if>
+        <if test="userCode !=null and userCode !=''">
+            AND SU.USER_CODE LIKE '%${userCode}%'
+        </if>
+        <if test="idNo !=null and idNo !=''">
+            AND SU.ID_NO LIKE '%${idNo}%'
+        </if>
+        <if test="checkStatusId !=null and checkStatusId !='' and checkStatusId !='NotSubmit'.toString()">
+            AND SU.CHECK_STATUS_ID = #{checkStatusId}
+        </if>
+        <if test="checkStatusId !=null and checkStatusId !='' and checkStatusId =='NotSubmit'.toString()">
+            AND SU.IS_SUBMIT_ID = #{checkStatusId}
+        </if>
+        order by
+            su.ORG_NAME,
+            su.USER_CODE  DESC,
+            SU.ID_NO
+    </select>
+
+    <resultMap id="statisicsMap" type="map">
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="GUOCHENG_COUNT" property="guochengCount" jdbcType="VARCHAR" />
+        <result column="CKK_COUNT" property="ckkCount" jdbcType="VARCHAR" />
+        <result column="ZS_COUNT" property="zsCount" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="searchStaticsList" parameterType="map" resultMap="statisicsMap">
+          select so.org_flow,so.org_name,nvl(a.guocheng_count,0) as guocheng_count,
+                  nvl(b.ckk_count,0) as ckk_count , nvl(c.zs_count,0) as zs_count
+          from sys_org so
+          left join (
+             SELECT rd.org_flow,count(rd.org_flow) as guocheng_count
+             FROM SYS_USER SU
+             JOIN RES_DOCTOR RD ON SU.USER_FLOW = RD.DOCTOR_FLOW
+             LEFT JOIN (
+                SELECT a.*, ROW_NUMBER() OVER (PARTITION BY doctor_flow ORDER BY create_time DESC) AS rn
+                FROM RES_DOCTOR_RECRUIT a
+                WHERE AUDIT_STATUS_ID = 'Passed'
+                AND RECORD_STATUS = 'Y'
+             ) re ON re.DOCTOR_FLOW = SU.USER_FLOW
+             AND rn = 1
+             WHERE SU.RECORD_STATUS = 'Y'
+             AND RD.RECORD_STATUS = 'Y'
+             AND re.RECORD_STATUS = 'Y'
+             AND RD.DOCTOR_STATUS_ID != '21'
+             <if test="trainingTypeId !=null and trainingTypeId !='' ">
+                 AND Re.CAT_SPE_ID = #{trainingTypeId}
+             </if>
+            <if test="sessionNumber !=null and sessionNumber !='' ">
+                AND Re.session_number = #{sessionNumber}
+            </if>
+             <if test="docTypeList!=null and docTypeList.size>0">
+                 and RD.DOCTOR_TYPE_ID in
+                 <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+             </if>
+             AND RD.DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+             and EXISTS (select 1 from jsres_power_cfg where (cfg_code = 'jsres_doctor_activity_' || su.user_flow
+                               or cfg_code = 'jsres_doctor_attendance_' || su.user_flow
+                               or cfg_code = 'jsres_doctor_app_menu_' || su.user_flow)
+                               and record_status = 'Y'
+                               and cfg_value = 'Y')
+             group by rd.org_flow
+          ) a on a.org_flow = so.org_flow
+          left join (
+                 SELECT rd.org_flow,count(rd.org_flow) as ckk_count
+                 FROM SYS_USER SU
+                 JOIN RES_DOCTOR RD ON SU.USER_FLOW = RD.DOCTOR_FLOW
+                 LEFT JOIN (
+                    SELECT a.*, ROW_NUMBER() OVER (PARTITION BY doctor_flow ORDER BY create_time DESC) AS rn
+                    FROM RES_DOCTOR_RECRUIT a
+                    WHERE AUDIT_STATUS_ID = 'Passed'
+                    AND RECORD_STATUS = 'Y'
+                 ) re ON re.DOCTOR_FLOW = SU.USER_FLOW
+                AND rn = 1
+                WHERE SU.RECORD_STATUS = 'Y'
+                AND RD.RECORD_STATUS = 'Y'
+                AND re.RECORD_STATUS = 'Y'
+                AND RD.DOCTOR_STATUS_ID != '21'
+                <if test="trainingTypeId !=null and trainingTypeId !='' ">
+                    AND Re.CAT_SPE_ID = #{trainingTypeId}
+                </if>
+                <if test="sessionNumber !=null and sessionNumber !='' ">
+                    AND Re.session_number = #{sessionNumber}
+                </if>
+                <if test="docTypeList!=null and docTypeList.size>0">
+                    and RD.DOCTOR_TYPE_ID in
+                    <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+                </if>
+                AND RD.DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+                AND RD.org_flow IS NOT NULL
+                and EXISTS (select 1 from jsres_power_cfg
+                                    where cfg_code = 'jsres_doctor_exam_' || su.user_flow
+                                   and record_status = 'Y'
+                                   and cfg_value = 'Y')
+                group by rd.org_flow
+          ) b on b.org_flow = so.org_flow
+       LEFT JOIN (
+            SELECT rd.org_flow,count(rd.org_flow) as zs_count
+            FROM SYS_USER SU
+            JOIN RES_DOCTOR RD ON SU.USER_FLOW = RD.DOCTOR_FLOW
+            LEFT JOIN (
+                SELECT a.*, ROW_NUMBER() OVER (PARTITION BY doctor_flow ORDER BY create_time DESC) AS rn
+                FROM RES_DOCTOR_RECRUIT a
+                WHERE AUDIT_STATUS_ID = 'Passed'
+                AND RECORD_STATUS = 'Y'
+            ) re ON re.DOCTOR_FLOW = SU.USER_FLOW
+            AND rn = 1
+            WHERE SU.RECORD_STATUS = 'Y'
+            AND RD.RECORD_STATUS = 'Y'
+            AND re.RECORD_STATUS = 'Y'
+            AND RD.DOCTOR_STATUS_ID != '21'
+            <if test="trainingTypeId !=null and trainingTypeId !='' ">
+                AND Re.CAT_SPE_ID = #{trainingTypeId}
+            </if>
+            <if test="sessionNumber !=null and sessionNumber !='' ">
+                AND Re.session_number = #{sessionNumber}
+            </if>
+            <if test="docTypeList!=null and docTypeList.size>0">
+                and RD.DOCTOR_TYPE_ID in
+                <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+            </if>
+            AND RD.DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+            AND RD.org_flow IS NOT NULL
+            group by rd.org_flow
+        ) c on c.org_flow = so.org_flow
+       where so.record_status = 'Y'
+        <if test="orgFlow != null and orgFlow != ''">
+            and so.org_flow = #{orgFlow}
+        </if>
+       and so.org_prov_id = '320000'
+       and so.org_code is not null
+       and so.org_type_id = 'Hospital'
+       AND so.org_flow != '20160914888888'
+       AND so.org_flow != '566c9f36cf014f63a569b453efa284d7'
+       AND so.org_flow != '00000000000000000000000000000000'
+       order by so.org_flow
+    </select>
+</mapper>

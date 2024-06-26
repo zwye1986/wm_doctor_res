@@ -1,0 +1,3113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jsres.SchdualTaskMapper">
+
+	<insert id="insertLocalApp" parameterType="java.util.List" >
+    insert into LOCAL_APP_USERINFO
+      (
+		RECORD_FLOW,
+		K_ID,
+       PID,
+       MONTH_DATE,
+       IS_CONTAIN,
+       CREATE_TIME,
+       K_LEVEL,
+       SPE_ID,
+       SPE_Name,
+       DOCTOR_RATE_TRAINSUM,
+       DOCTOR_RATE_USESUM,
+       DOCTOR_RATE_RATE,
+       MASTER_RATE_TRAINSUM,
+       MASTER_RATE_USESUM,
+       MASTER_RATE_RATE,
+       AVG_RATE_TRAINSUM,
+       AVG_RATE_USESUM,
+       AVG_RATE_RATE,
+		ORG_FLOW
+       )
+
+	<foreach collection="list" item="item" index="index" separator="union all" >
+		select
+		#{item.recordFlow,jdbcType=VARCHAR},
+		#{item.id,jdbcType=VARCHAR},
+		#{item.pid,jdbcType=VARCHAR},
+		#{item.monthDate,jdbcType=VARCHAR},
+		#{item.isContain,jdbcType=VARCHAR},
+		#{item.createTime,jdbcType=VARCHAR},
+		#{item.level,jdbcType=VARCHAR},
+		#{item.speId,jdbcType=VARCHAR},
+		#{item.speName,jdbcType=VARCHAR},
+		#{item.doctorRateTrainSum,jdbcType=VARCHAR},
+		#{item.doctorRateUseSum,jdbcType=VARCHAR},
+		#{item.doctorRateRate,jdbcType=VARCHAR},
+		#{item.masterRateTrainSum,jdbcType=VARCHAR},
+		#{item.masterRateUseSum,jdbcType=VARCHAR},
+		#{item.masterRateRate,jdbcType=VARCHAR},
+		#{item.avgRateTrainSum,jdbcType=VARCHAR},
+		#{item.avgRateUseSum,jdbcType=VARCHAR},
+		#{item.avgRateRate,jdbcType=VARCHAR},
+		#{item.orgFlow,jdbcType=VARCHAR}
+		from dual
+	</foreach>
+
+  </insert>
+	<delete id="deleteAllPreviousMonthData" >
+		delete from LOCAL_APP_USERINFO where  MONTH_DATE=#{monthDate}
+	</delete>
+    <select id="selectAppUserinfo" resultType="com.pinde.sci.model.jsres.AppUseInfoPojoParam">
+		  select
+		  RECORD_FLOW as recordFlow,
+		K_ID as "id",
+       PID as pid,
+       MONTH_DATE as monthDate,
+       IS_CONTAIN as isContain,
+       CREATE_TIME as createTime,
+       K_LEVEL as "level",
+       SPE_ID as speId,
+       SPE_Name as speName,
+       DOCTOR_RATE_TRAINSUM as  doctorRateTrainSum,
+       DOCTOR_RATE_USESUM as doctorRateUseSum,
+       DOCTOR_RATE_RATE as doctorRateRate,
+       MASTER_RATE_TRAINSUM as masterRateTrainSum,
+       MASTER_RATE_USESUM as masterRateUseSum,
+       MASTER_RATE_RATE as masterRateRate,
+       AVG_RATE_TRAINSUM as avgRateTrainSum,
+       AVG_RATE_USESUM as avgRateUseSum,
+       AVG_RATE_RATE as avgRateRate
+		  from LOCAL_APP_USERINFO
+		  where month_date=#{monthDate}
+		  and is_contain=#{isContain}
+		  and org_flow=#{orgFlow}
+         ORDER BY "level" ,"id"
+	</select>
+	<!--学员轮转数据月报-->
+	<insert id="insertLocalDoctorLunzhuanData" parameterType="java.util.List" >
+		insert into LOCAL_DOCTOR_LUNZHUAN_DATA
+		(
+		RECORD_FLOW,
+		K_ID,
+		PID,
+		MONTH_DATE,
+		IS_CONTAIN,
+		CREATE_TIME,
+		ORG_FLOW,
+		NOT_GRADUATE,
+		GRADUATE,
+		K_LEVEL,
+		SPE_ID,
+		SPE_Name,
+		TRAIN_SUM,
+		WRITE_SUM,
+		DATAAUDIT_SUM,
+		AUDITSCALE,
+		AVEWRITE_SUM,
+		AVEAUDITSCALE
+		)
+
+		<foreach collection="list" item="item" index="index" separator="union all" >
+			select
+			#{item.recordFlow,jdbcType=VARCHAR},
+			#{item.id,jdbcType=VARCHAR},
+			#{item.pid,jdbcType=VARCHAR},
+			#{item.monthDate,jdbcType=VARCHAR},
+			#{item.isContain,jdbcType=VARCHAR},
+			#{item.createTime,jdbcType=VARCHAR},
+			#{item.orgFlow,jdbcType=VARCHAR},
+			#{item.notGraduate,jdbcType=VARCHAR},
+			#{item.graduate,jdbcType=VARCHAR},
+			#{item.level,jdbcType=VARCHAR},
+			#{item.speId,jdbcType=VARCHAR},
+			#{item.speName,jdbcType=VARCHAR},
+
+			#{item.trainSum,jdbcType=VARCHAR},
+			#{item.writeSum,jdbcType=VARCHAR},
+			#{item.dataAuditSum,jdbcType=VARCHAR},
+			#{item.auditScale,jdbcType=VARCHAR},
+			#{item.aveWriteSum,jdbcType=VARCHAR},
+			#{item.aveAuditScale,jdbcType=VARCHAR}
+			from dual
+		</foreach>
+
+	</insert>
+	<delete id="deleteAllPreviousMonthDataByDoctorLunZhuanData" >
+		delete from LOCAL_DOCTOR_LUNZHUAN_DATA where  MONTH_DATE=#{monthDate}
+	</delete>
+
+	<select id="selectDoctorLunZhuanData" resultType="com.pinde.sci.model.jsres.DoctorLunZhuanDataMonthReport">
+	  SELECT
+	   RECORD_FLOW as recordFlow,
+	   K_ID as "id",
+       PID as pid,
+       MONTH_DATE as monthDate,
+       IS_CONTAIN as isContain,
+       CREATE_TIME as createTime,
+       K_LEVEL as "level",
+       SPE_ID as speId,
+       SPE_Name as speName,
+       TRAIN_SUM as  trainSum,
+       WRITE_SUM as writeSum,
+       DATAAUDIT_SUM as dataAuditSum,
+       AUDITSCALE as auditScale,
+       AVEWRITE_SUM as aveWriteSum,
+       AVEAUDITSCALE as aveAuditScale
+
+		  from LOCAL_DOCTOR_LUNZHUAN_DATA
+
+	  where month_date=#{monthDate}
+		  AND is_contain=#{isContain}
+		  AND org_flow=#{orgFlow}
+          AND  NOT_GRADUATE=#{notGraduate}
+          AND GRADUATE=#{graduate}
+         ORDER BY "level" ,"id"
+	</select>
+  <!--省市高校app使用情况统计月报-->
+	<insert id="insertPCUApp" parameterType="java.util.List" >
+		insert into PCU_APP_USERINFO
+		(
+		RECORD_FLOW,
+		"NO",
+		PARENT_ORG_FLOW,
+		MONTH_DATE,
+		IS_CONTAIN,
+		CREATE_TIME,
+		ORG_FLOW,
+		ORG_NAME,
+		TRAIN_DOCTOR_TOTAL,
+		DOCTOR_SUM,
+		MASTER_SUM,
+		DOCTOR_RATE,
+		MASTER_RATE,
+		RATE,
+		ROLE_FLAG,
+		PROVINCE,
+		CITY,
+		UNIVERSITY
+		)
+
+		<foreach collection="list" item="item" index="index" separator="union all" >
+			select
+			#{item.recordFlow,jdbcType=VARCHAR},
+			#{item.no,jdbcType=VARCHAR},
+			#{item.parentOrgFlow,jdbcType=VARCHAR},
+			#{item.monthDate,jdbcType=VARCHAR},
+			#{item.isContain,jdbcType=VARCHAR},
+			#{item.createTime,jdbcType=VARCHAR},
+			#{item.orgFlow,jdbcType=VARCHAR},
+			#{item.orgName,jdbcType=VARCHAR},
+
+			#{item.trainDoctorTotal,jdbcType=VARCHAR},
+			#{item.doctorSum,jdbcType=VARCHAR},
+			#{item.masterSum,jdbcType=VARCHAR},
+			#{item.doctorRate,jdbcType=VARCHAR},
+			#{item.masterRate,jdbcType=VARCHAR},
+			#{item.rate,jdbcType=VARCHAR},
+			#{item.roleFlag,jdbcType=VARCHAR},
+			#{item.province,jdbcType=VARCHAR},
+			#{item.city,jdbcType=VARCHAR},
+			#{item.university,jdbcType=VARCHAR}
+			from dual
+		</foreach>
+	</insert>
+	<delete id="deletePreviousMonthPCUData" >
+		DELETE FROM PCU_APP_USERINFO WHERE MONTH_DATE=#{monthDate}
+	</delete>
+
+	<select id="selectPCUAppInfo" resultType="com.pinde.sci.model.mo.SysOrg" parameterType="java.util.Map">
+	  select
+		RECORD_FLOW as recordFlow,
+		"NO" as no,
+		"NO" as orgCode,
+		PARENT_ORG_FLOW as parentOrgFlow,
+		MONTH_DATE as monthDate,
+		IS_CONTAIN as isContain,
+		CREATE_TIME as createTime,
+		ORG_FLOW as orgFlow,
+		ORG_NAME as orgName,
+		TRAIN_DOCTOR_TOTAL as trainDoctorTotal,
+		DOCTOR_SUM as doctorSum,
+		MASTER_SUM as masterSum,
+		DOCTOR_RATE as doctorRate,
+		MASTER_RATE as masterRate,
+		RATE as rate,
+		ROLE_FLAG as roleFlag,
+		PROVINCE as province,
+		CITY as city,
+		UNIVERSITY as university
+
+	  from PCU_APP_USERINFO
+	  where 1=1
+		<if test="isContain!=null and isContain!=''">
+			AND is_Contain=#{isContain}
+		</if>
+		<if test="monthDate!=null and monthDate!=''">
+			AND month_date=#{monthDate}
+		</if>
+		<if test="province!=null and province!=''">
+			AND province=#{province}
+		</if>
+		<if test="city!=null and city!=''">
+			AND city=#{city}
+		</if>
+		<if test="university!=null and university!=''">
+			AND university=#{university}
+		</if>
+		<if test="roleFlag!=null and roleFlag!=''">
+			AND role_flag=#{roleFlag}
+		</if>
+		order by PARENT_ORG_FLOW,ORG_FLOW, "NO" desc
+	</select>
+
+	<!--省市高校教学活动-->
+	<insert id="insertPCUTeachActive" parameterType="java.util.List" >
+		insert into PCU_TEACH_ACTIVE
+		(
+		RECORD_FLOW,
+		"NO",
+		PARENT_ORG_FLOW,
+		MONTH_DATE,
+		IS_CONTAIN,
+		CREATE_TIME,
+		ORG_FLOW,
+		ORG_NAME,
+
+		TRAINER_SUM,
+		TEACH_ACTIVE_SESSION_SUM,
+		ALL_JOIN_SUM,
+		AVER_JOIN_SUM,
+		AVER_DURE_TIME,
+		AVER_TEACH_ACTIVE_SESSION_SUM,
+
+		ROLE_FLAG,
+		PROVINCE,
+		CITY,
+		UNIVERSITY
+		)
+
+		<foreach collection="list" item="item" index="index" separator="union all" >
+			select
+			#{item.recordFlow,jdbcType=VARCHAR},
+			#{item.no,jdbcType=VARCHAR},
+			#{item.parentOrgFlow,jdbcType=VARCHAR},
+			#{item.monthDate,jdbcType=VARCHAR},
+			#{item.isContain,jdbcType=VARCHAR},
+			#{item.createTime,jdbcType=VARCHAR},
+			#{item.orgFlow,jdbcType=VARCHAR},
+			#{item.orgName,jdbcType=VARCHAR},
+
+			#{item.trainerSum,jdbcType=VARCHAR},
+			#{item.teachActiveSessionSum,jdbcType=VARCHAR},
+			#{item.allJoinSum,jdbcType=VARCHAR},
+			#{item.averJoinSum,jdbcType=VARCHAR},
+			#{item.averDureTime,jdbcType=VARCHAR},
+			#{item.averTeachActiveSessionSum,jdbcType=VARCHAR},
+
+			#{item.roleFlag,jdbcType=VARCHAR},
+			#{item.province,jdbcType=VARCHAR},
+			#{item.city,jdbcType=VARCHAR},
+			#{item.university,jdbcType=VARCHAR}
+			from dual
+		</foreach>
+	</insert>
+	<delete id="deletepreviousMonthDataPCUTeachActive">
+		DELETE FROM PCU_TEACH_ACTIVE WHERE MONTH_DATE=#{monthDate}
+	</delete>
+
+	<select id="selectPCUTeachActive" parameterType="java.util.Map" resultType="com.pinde.sci.model.mo.TeachActiveParamPO">
+		select
+		RECORD_FLOW as recordFlow,
+		"NO" as no,
+		"NO" as orgCode,
+		PARENT_ORG_FLOW as parentOrgFlow,
+		MONTH_DATE as monthDate,
+		IS_CONTAIN as isContain,
+		CREATE_TIME as createTime,
+		ORG_FLOW as orgFlow,
+		ORG_NAME as orgName,
+
+		TRAINER_SUM as trainerSum,
+		TEACH_ACTIVE_SESSION_SUM as teachActiveSessionSum,
+		ALL_JOIN_SUM as allJoinSum,
+		AVER_JOIN_SUM as averJoinSum,
+		AVER_DURE_TIME as averDureTime,
+		AVER_TEACH_ACTIVE_SESSION_SUM as averTeachActiveSessionSum,
+
+		ROLE_FLAG as roleFlag,
+		PROVINCE as province,
+		CITY as city,
+		UNIVERSITY as university
+
+		from PCU_TEACH_ACTIVE
+		where 1=1
+		<if test="isContain!=null and isContain!=''">
+			AND is_Contain=#{isContain}
+		</if>
+		<if test="monthDate!=null and monthDate!=''">
+			AND month_date=#{monthDate}
+		</if>
+		<if test="province!=null and province!=''">
+			AND province=#{province}
+		</if>
+		<if test="city!=null and city!=''">
+			AND city=#{city}
+		</if>
+		<if test="university!=null and university!=''">
+			AND university=#{university}
+		</if>
+		<if test="roleFlag!=null and roleFlag!=''">
+			AND role_flag=#{roleFlag}
+		</if>
+		order by PARENT_ORG_FLOW, "NO" desc
+
+	</select>
+
+	<!--省市高校 学员出科情况-->
+	<insert id="insertPCUDoctorOutOffice" parameterType="java.util.List">
+		insert into PCU_DOCTOR_OUTOFFICE
+		(
+		RECORD_FLOW,
+		"NO",
+		PARENT_ORG_FLOW,
+		MONTH_DATE,
+		IS_CONTAIN,
+		CREATE_TIME,
+		ORG_FLOW,
+		ORG_NAME,
+
+		NOT_GRADUATE,
+		GRADUATE,
+		MONTH_OUTOFFICE_SUM,
+		MONTH_ACTUAL_OUTOFFICE_SUM,
+		MONTH_NOT_OUTOFFICE_SUM,
+		OUTOFFICE_EXCEPTION_RATE,
+		OUTOFFICE_DATA_FINISH_RATE,
+
+		ROLE_FLAG,
+		PROVINCE,
+		CITY,
+		UNIVERSITY
+		)
+
+		<foreach collection="list" item="item" index="index" separator="union all" >
+			select
+			#{item.recordFlow,jdbcType=VARCHAR},
+			#{item.no,jdbcType=VARCHAR},
+			#{item.parentOrgFlow,jdbcType=VARCHAR},
+			#{item.monthDate,jdbcType=VARCHAR},
+			#{item.isContain,jdbcType=VARCHAR},
+			#{item.createTime,jdbcType=VARCHAR},
+			#{item.orgFlow,jdbcType=VARCHAR},
+			#{item.orgName,jdbcType=VARCHAR},
+
+			#{item.notGraduate,jdbcType=VARCHAR},
+			#{item.graduate,jdbcType=VARCHAR},
+
+			#{item.monthOutOfficeSum,jdbcType=VARCHAR},
+			#{item.monthActualOutOfficeSum,jdbcType=VARCHAR},
+			#{item.monthNotOutOfficeSum,jdbcType=VARCHAR},
+			#{item.outOfficeExceptionRate,jdbcType=VARCHAR},
+			#{item.outOfficeDataFinishRate,jdbcType=VARCHAR},
+
+			#{item.roleFlag,jdbcType=VARCHAR},
+			#{item.province,jdbcType=VARCHAR},
+			#{item.city,jdbcType=VARCHAR},
+			#{item.university,jdbcType=VARCHAR}
+			from dual
+		</foreach>
+	</insert>
+	<delete id="deletePreviousCurrMonthDoctorOutOffice" >
+		DELETE FROM PCU_DOCTOR_OUTOFFICE WHERE MONTH_DATE=#{monthDate}
+	</delete>
+	<select id="selectPCUDoctorOutOffice" parameterType="java.util.Map" resultType="com.pinde.sci.model.mo.DoctorOutOfficeParamPO">
+		select
+		RECORD_FLOW as recordFlow,
+		"NO" as no,
+		"NO" as orgCode,
+		PARENT_ORG_FLOW as parentOrgFlow,
+		MONTH_DATE as monthDate,
+		IS_CONTAIN as isContain,
+		CREATE_TIME as createTime,
+		ORG_FLOW as orgFlow,
+		ORG_NAME as orgName,
+
+		NOT_GRADUATE as notGraduate,
+		GRADUATE as graduate,
+		MONTH_OUTOFFICE_SUM as monthOutOfficeSum,
+		MONTH_ACTUAL_OUTOFFICE_SUM as monthActualOutOfficeSum,
+		MONTH_NOT_OUTOFFICE_SUM as monthNotOutOfficeSum,
+		OUTOFFICE_EXCEPTION_RATE as outOfficeExceptionRate,
+		OUTOFFICE_DATA_FINISH_RATE as outOfficeDataFinishRate,
+
+		ROLE_FLAG as roleFlag,
+		PROVINCE as province,
+		CITY as city,
+		UNIVERSITY as university
+
+		from PCU_DOCTOR_OUTOFFICE
+		where 1=1
+		<if test="isContain!=null and isContain!=''">
+			AND is_Contain=#{isContain}
+		</if>
+		<if test="monthDate!=null and monthDate!=''">
+			AND month_date=#{monthDate}
+		</if>
+		<if test="province!=null and province!=''">
+			AND province=#{province}
+		</if>
+		<if test="city!=null and city!=''">
+			AND city=#{city}
+		</if>
+		<if test="university!=null and university!=''">
+			AND university=#{university}
+		</if>
+		<if test="roleFlag!=null and roleFlag!=''">
+			AND role_flag=#{roleFlag}
+		</if>
+		<if test="notGraduate!=null and notGraduate!=''">
+			AND NOT_GRADUATE=#{notGraduate}
+		</if>
+		<if test="graduate!=null and graduate!=''">
+			AND GRADUATE=#{graduate}
+		</if>
+		order by PARENT_ORG_FLOW, "NO" desc
+	</select>
+
+	<!--省市高校 学员轮转查询20200422-->
+	<insert id="insertPCUDoctorLunzhuanFind" parameterType="java.util.List">
+		insert into PCU_DOCTOR_LUNZHUAN_FIND
+		(
+		RECORD_FLOW,
+		"NO",
+		PARENT_ORG_FLOW,
+		MONTH_DATE,
+		IS_CONTAIN,
+		CREATE_TIME,
+		ORG_FLOW,
+		ORG_NAME,
+
+		NOT_GRADUATE,
+		GRADUATE,
+		TRAIN_DOCTOR_TOTAL,
+		FILL_NUM,
+		AUDIT_NUM,
+		AUDIT_RATE,
+		AVG_FILL_NUM,
+
+		ROLE_FLAG,
+		PROVINCE,
+		CITY,
+		UNIVERSITY
+		)
+
+		<foreach collection="list" item="item" index="index" separator="union all" >
+			select
+			#{item.recordFlow,jdbcType=VARCHAR},
+			#{item.orgCode,jdbcType=VARCHAR},
+			#{item.parentOrgFlow,jdbcType=VARCHAR},
+			#{item.monthDate,jdbcType=VARCHAR},
+			#{item.isContain,jdbcType=VARCHAR},
+			#{item.createTime,jdbcType=VARCHAR},
+			#{item.orgFlow,jdbcType=VARCHAR},
+			#{item.orgName,jdbcType=VARCHAR},
+
+			#{item.notGraduate,jdbcType=VARCHAR},
+			#{item.graduate,jdbcType=VARCHAR},
+
+			#{item.trainDoctorTotal,jdbcType=VARCHAR},
+			#{item.fillNum,jdbcType=VARCHAR},
+			#{item.auditNum,jdbcType=VARCHAR},
+			#{item.auditRate,jdbcType=VARCHAR},
+			#{item.avgfillNum,jdbcType=VARCHAR},
+
+			#{item.roleFlag,jdbcType=VARCHAR},
+			#{item.province,jdbcType=VARCHAR},
+			#{item.city,jdbcType=VARCHAR},
+			#{item.university,jdbcType=VARCHAR}
+			from dual
+		</foreach>
+	</insert>
+	<delete id="deletePreviousCurrMonthDoctorLunzhuanFind" >
+		DELETE FROM PCU_DOCTOR_LUNZHUAN_FIND WHERE MONTH_DATE=#{monthDate}
+	</delete>
+
+	<select id="selectPCUDoctorLunzhuanFind" parameterType="java.util.Map" resultType="com.pinde.sci.model.mo.SysOrg">
+		select
+		RECORD_FLOW as  recordFlow,
+		"NO" as orgCode,
+		PARENT_ORG_FLOW as parentOrgFlow,
+		MONTH_DATE as monthDate,
+		IS_CONTAIN as isContain,
+		CREATE_TIME as createTime,
+		ORG_FLOW as orgFlow,
+		ORG_NAME as orgName,
+
+		NOT_GRADUATE as notGraduate,
+		GRADUATE as graduate,
+		TRAIN_DOCTOR_TOTAL as trainDoctorTotal,
+		FILL_NUM as fillNum,
+		AUDIT_NUM as auditNum,
+		AUDIT_RATE as auditRate,
+		AVG_FILL_NUM as avgfillNum,
+
+		ROLE_FLAG as roleFlag,
+		PROVINCE as province,
+		CITY as city,
+		UNIVERSITY as university
+		FROM  PCU_DOCTOR_LUNZHUAN_FIND
+		where 1=1
+		<if test="isContain!=null and isContain!=''">
+			AND is_Contain=#{isContain}
+		</if>
+		<if test="monthDate!=null and monthDate!=''">
+			AND month_date=#{monthDate}
+		</if>
+		<if test="province!=null and province!=''">
+			AND province=#{province}
+		</if>
+		<if test="city!=null and city!=''">
+			AND city=#{city}
+		</if>
+		<if test="university!=null and university!=''">
+			AND university=#{university}
+		</if>
+		<if test="roleFlag!=null and roleFlag!=''">
+			AND role_flag=#{roleFlag}
+		</if>
+		<if test="notGraduate!=null and notGraduate!=''">
+			AND NOT_GRADUATE=#{notGraduate}
+		</if>
+		<if test="graduate!=null and graduate!=''">
+			AND GRADUATE=#{graduate}
+		</if>
+		order by PARENT_ORG_FLOW, "NO" desc
+	</select>
+
+	<delete id="deleteAllData" >
+		delete from jsres_app_info where  MONTH_DATE=#{monthDate}
+	</delete>
+
+	<insert id="insertOrgFlowMonthData" parameterType="map">
+		INSERT INTO jsres_app_info (RECORD_FLOW ,org_code ,PARENT_ORG_FLOW,MONTH_DATE,IS_CONTAIN,CREATE_TIME,ORG_FLOW,
+			ORG_NAME,DOCTOR_TRAIN_TOTAL,DOCTOR_USE_TOTAL ,DOCTOR_RATE,GRADUATE_TRAIN_TOTAL,GRADUATE_USE_TOTAL,graduate_rate,
+			TRAIN_TOTAL,TRAIN_USE,TRAIN_RATE ,PROVINCE_ID,CITY_ID)
+		SELECT lower(rawtohex(sys_guid())),org_code,null,#{monthDate},'N',#{createTime},ORG_FLOW,ORG_NAME,DOCTOR_TRAIN_TOTAL,DOCTOR_USE_TOTAL ,
+		TO_CHAR(CASE WHEN DOCTOR_TRAIN_TOTAL=0 THEN 100 ELSE CASE WHEN ROUND(DOCTOR_USE_TOTAL / DOCTOR_TRAIN_TOTAL, 2) * 100>100 THEN 100 ELSE ROUND(DOCTOR_USE_TOTAL / DOCTOR_TRAIN_TOTAL, 2) * 100 END END),
+		GRADUATE_TRAIN_TOTAL,GRADUATE_USE_TOTAL,
+		TO_CHAR(CASE WHEN GRADUATE_TRAIN_TOTAL=0 THEN 100 ELSE CASE WHEN ROUND(GRADUATE_USE_TOTAL / GRADUATE_TRAIN_TOTAL, 2) * 100>100 THEN 100 ELSE ROUND(GRADUATE_USE_TOTAL / GRADUATE_TRAIN_TOTAL, 2) * 100 END END),
+		DOCTOR_TRAIN_TOTAL+GRADUATE_TRAIN_TOTAL,DOCTOR_USE_TOTAL+GRADUATE_USE_TOTAL,
+		TO_CHAR(CASE WHEN (DOCTOR_TRAIN_TOTAL+GRADUATE_TRAIN_TOTAL)=0 THEN 100 ELSE CASE WHEN ROUND((DOCTOR_USE_TOTAL+GRADUATE_USE_TOTAL) / (DOCTOR_TRAIN_TOTAL+GRADUATE_TRAIN_TOTAL), 2) * 100>100 THEN 100 ELSE ROUND((DOCTOR_USE_TOTAL+GRADUATE_USE_TOTAL) / (DOCTOR_TRAIN_TOTAL+GRADUATE_TRAIN_TOTAL), 2) * 100 END END),
+		org_prov_id,org_city_id
+		FROM (
+			SELECT lower(rawtohex(sys_guid())),(SELECT ORG_CODE FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.ORG_FLOW) as org_code,
+				RDR2.ORG_FLOW,RDR2.ORG_NAME,
+				nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
+				  LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+				  LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+				  WHERE rdr.RECORD_STATUS = 'Y'
+				  and U.RECORD_STATUS = 'Y'
+				  and RDR.DOCTOR_STATUS_ID = '20'
+				  AND rdr.AUDIT_STATUS_ID = 'Passed'
+				  and RDR.DOCTOR_FLOW NOT IN
+					(SELECT DOCTOR_FLOW FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+				  and rdr.org_flow = rdr2.org_flow
+				  and rdr.joint_org_flow is null
+				  and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social')
+				),0) AS DOCTOR_TRAIN_TOTAL,
+				nvl((SELECT COUNT(0) FROM RES_DOCTOR_RECRUIT rd
+				 LEFT JOIN SYS_USER SU ON su.USER_FLOW = RD.DOCTOR_FLOW
+				 LEFT JOIN res_doctor doc ON DOC.DOCTOR_FLOW = RD.DOCTOR_FLOW
+				 LEFT JOIN sys_org org ON org.org_flow = rd.org_flow
+				WHERE doc.record_status = 'Y'
+				AND rd.RECORD_STATUS = 'Y'
+				AND su.RECORD_STATUS = 'Y'
+				AND rd.DOCTOR_STATUS_ID = '20'
+				AND org.record_status = 'Y'
+				AND EXISTS (SELECT 1
+					FROM SYS_APP_USER_INFO
+					WHERE RECORD_STATUS = 'Y'
+					AND USE_MONTH = #{monthDate}
+				)
+				AND RD.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW
+					FROM RES_DOCOTR_DELAY_TETURN
+					WHERE RECORD_STATUS = 'Y'
+					and audit_status_id = '1'
+					AND TYPE_ID = 'ReturnTraining' and rd.SESSION_NUMBER = SESSION_NUMBER)
+				AND rd.AUDIT_STATUS_ID = 'Passed'
+				AND doc.doctor_type_id IN ('Company', 'CompanyEntrust', 'Social')
+				AND RD.ORG_FLOW = RDR2.ORG_FLOW
+				AND RD.JOINT_ORG_FLOW IS NULL
+				GROUP BY RD.ORG_FLOW),0) AS DOCTOR_USE_TOTAL,
+			nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
+				  LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+				  LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+				  WHERE rdr.RECORD_STATUS = 'Y'
+				  and U.RECORD_STATUS = 'Y'
+				  and RDR.DOCTOR_STATUS_ID = '20'
+				  AND rdr.AUDIT_STATUS_ID = 'Passed'
+				  and RDR.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+				  and rdr.org_flow = rdr2.org_flow
+				  and rdr.joint_org_flow is null
+				  and rd.doctor_type_id = 'Graduate'
+				),0) AS GRADUATE_TRAIN_TOTAL,
+				nvl((SELECT COUNT(0) FROM RES_DOCTOR_RECRUIT rd
+				 LEFT JOIN SYS_USER SU ON su.USER_FLOW = RD.DOCTOR_FLOW
+				 LEFT JOIN res_doctor doc ON DOC.DOCTOR_FLOW = RD.DOCTOR_FLOW
+				 LEFT JOIN sys_org org ON org.org_flow = rd.org_flow
+				WHERE doc.record_status = 'Y'
+				AND rd.RECORD_STATUS = 'Y'
+				AND su.RECORD_STATUS = 'Y'
+				AND rd.DOCTOR_STATUS_ID = '20'
+				AND org.record_status = 'Y'
+				AND EXISTS (SELECT 1
+					FROM SYS_APP_USER_INFO
+					WHERE RECORD_STATUS = 'Y'
+					AND USE_MONTH = #{monthDate}
+				)
+				AND RD.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW
+					FROM RES_DOCOTR_DELAY_TETURN
+					WHERE RECORD_STATUS = 'Y'
+					and audit_status_id = '1'
+					AND TYPE_ID = 'ReturnTraining' and rd.SESSION_NUMBER = SESSION_NUMBER)
+				AND rd.AUDIT_STATUS_ID = 'Passed'
+				and doc.doctor_type_id = 'Graduate'
+				AND RD.ORG_FLOW = RDR2.ORG_FLOW
+				AND RD.JOINT_ORG_FLOW IS NULL
+				GROUP BY RD.ORG_FLOW),0) AS GRADUATE_USE_TOTAL,
+				(SELECT org_prov_id FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.ORG_FLOW) as org_prov_id,
+        		(SELECT org_city_id FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.ORG_FLOW) as org_city_id
+			FROM res_doctor_recruit rdr2
+			LEFT JOIN pdsci.SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
+			LEFT JOIN RES_DOCTOR rd ON rdr2.DOCTOR_FLOW = rd.DOCTOR_FLOW
+			WHERE rdr2.RECORD_STATUS = 'Y'
+			and U.RECORD_STATUS = 'Y'
+			AND rd.Record_Status = 'Y'
+			and rd.doctor_status_id = '20'
+			AND rdr2.AUDIT_STATUS_ID = 'Passed'
+			AND RDR2.JOINT_ORG_FLOW IS NULL
+			and RDR2.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW FROM RES_DOCOTR_DELAY_TETURN
+				WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+				and audit_status_id = '1'
+				and rdr2.SESSION_NUMBER = SESSION_NUMBER)
+			group by RDR2.ORG_FLOW,RDR2.ORG_NAME
+		  )
+	</insert>
+
+	<insert id="insertOrgFlowAndJointMonthData" parameterType="map">
+		INSERT INTO jsres_app_info (RECORD_FLOW ,org_code ,PARENT_ORG_FLOW,MONTH_DATE,IS_CONTAIN,CREATE_TIME,ORG_FLOW,
+			ORG_NAME,DOCTOR_TRAIN_TOTAL,DOCTOR_USE_TOTAL ,DOCTOR_RATE,GRADUATE_TRAIN_TOTAL,GRADUATE_USE_TOTAL,graduate_rate,
+			TRAIN_TOTAL,TRAIN_USE,TRAIN_RATE ,PROVINCE_ID,CITY_ID)
+		SELECT lower(rawtohex(sys_guid())),org_code,null,#{monthDate},'Y',#{createTime},ORG_FLOW,ORG_NAME,DOCTOR_TRAIN_TOTAL,DOCTOR_USE_TOTAL ,
+		TO_CHAR(CASE WHEN DOCTOR_TRAIN_TOTAL=0 THEN 100 ELSE CASE WHEN ROUND(DOCTOR_USE_TOTAL / DOCTOR_TRAIN_TOTAL, 2) * 100>100 THEN 100 ELSE ROUND(DOCTOR_USE_TOTAL / DOCTOR_TRAIN_TOTAL, 2) * 100 END END),
+		GRADUATE_TRAIN_TOTAL,GRADUATE_USE_TOTAL,
+		TO_CHAR(CASE WHEN GRADUATE_TRAIN_TOTAL=0 THEN 100 ELSE CASE WHEN ROUND(GRADUATE_USE_TOTAL / GRADUATE_TRAIN_TOTAL, 2) * 100>100 THEN 100 ELSE ROUND(GRADUATE_USE_TOTAL / GRADUATE_TRAIN_TOTAL, 2) * 100 END END),
+		DOCTOR_TRAIN_TOTAL+GRADUATE_TRAIN_TOTAL,DOCTOR_USE_TOTAL+GRADUATE_USE_TOTAL,
+		TO_CHAR(CASE WHEN (DOCTOR_TRAIN_TOTAL+GRADUATE_TRAIN_TOTAL)=0 THEN 100 ELSE CASE WHEN ROUND((DOCTOR_USE_TOTAL+GRADUATE_USE_TOTAL) / (DOCTOR_TRAIN_TOTAL+GRADUATE_TRAIN_TOTAL), 2) * 100>100 THEN 100 ELSE ROUND((DOCTOR_USE_TOTAL+GRADUATE_USE_TOTAL) / (DOCTOR_TRAIN_TOTAL+GRADUATE_TRAIN_TOTAL), 2) * 100 END END),
+		org_prov_id,org_city_id
+		FROM (
+			SELECT lower(rawtohex(sys_guid())),(SELECT ORG_CODE FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.ORG_FLOW) as org_code,
+				RDR2.ORG_FLOW,RDR2.ORG_NAME,
+				nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
+				  LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+				  LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+				  WHERE rdr.RECORD_STATUS = 'Y'
+				  and U.RECORD_STATUS = 'Y'
+				  and RDR.DOCTOR_STATUS_ID = '20'
+				  AND rdr.AUDIT_STATUS_ID = 'Passed'
+				  and RDR.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW FROM RES_DOCOTR_DELAY_TETURN
+				  		WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+				  		and audit_status_id = '1'
+				  		and rdr.SESSION_NUMBER = SESSION_NUMBER)
+				  and rdr.org_flow = rdr2.org_flow
+				  and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social')
+				),0) AS DOCTOR_TRAIN_TOTAL,
+				nvl((SELECT COUNT(0) FROM RES_DOCTOR_RECRUIT rd
+				 LEFT JOIN SYS_USER SU ON su.USER_FLOW = RD.DOCTOR_FLOW
+				 LEFT JOIN res_doctor doc ON DOC.DOCTOR_FLOW = RD.DOCTOR_FLOW
+				 LEFT JOIN sys_org org ON org.org_flow = rd.org_flow
+				WHERE doc.record_status = 'Y'
+				AND rd.RECORD_STATUS = 'Y'
+				AND su.RECORD_STATUS = 'Y'
+				AND rd.DOCTOR_STATUS_ID = '20'
+				AND org.record_status = 'Y'
+				AND EXISTS (SELECT 1
+					FROM SYS_APP_USER_INFO
+					WHERE RECORD_STATUS = 'Y'
+					AND USE_MONTH = #{monthDate}
+				)
+				AND RD.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW
+					FROM RES_DOCOTR_DELAY_TETURN
+					WHERE RECORD_STATUS = 'Y'
+					and audit_status_id = '1'
+					AND TYPE_ID = 'ReturnTraining' and rd.SESSION_NUMBER = SESSION_NUMBER)
+				AND rd.AUDIT_STATUS_ID = 'Passed'
+				AND doc.doctor_type_id IN ('Company', 'CompanyEntrust', 'Social')
+				AND RD.ORG_FLOW = RDR2.ORG_FLOW
+				GROUP BY RD.ORG_FLOW),0) AS DOCTOR_USE_TOTAL,
+			nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
+				  LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+				  LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+				  WHERE rdr.RECORD_STATUS = 'Y'
+				  and U.RECORD_STATUS = 'Y'
+				  and RDR.DOCTOR_STATUS_ID = '20'
+				  AND rdr.AUDIT_STATUS_ID = 'Passed'
+				  and RDR.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW FROM RES_DOCOTR_DELAY_TETURN
+				  		WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+				  		and audit_status_id = '1'
+				  		and rdr.SESSION_NUMBER = SESSION_NUMBER)
+				  and rdr.org_flow = rdr2.org_flow
+				  and rd.doctor_type_id = 'Graduate'
+				),0) AS GRADUATE_TRAIN_TOTAL,
+				nvl((SELECT COUNT(0) FROM RES_DOCTOR_RECRUIT rd
+				 LEFT JOIN SYS_USER SU ON su.USER_FLOW = RD.DOCTOR_FLOW
+				 LEFT JOIN res_doctor doc ON DOC.DOCTOR_FLOW = RD.DOCTOR_FLOW
+				 LEFT JOIN sys_org org ON org.org_flow = rd.org_flow
+				WHERE doc.record_status = 'Y'
+				AND rd.RECORD_STATUS = 'Y'
+				AND su.RECORD_STATUS = 'Y'
+				AND rd.DOCTOR_STATUS_ID = '20'
+				AND org.record_status = 'Y'
+				AND EXISTS (SELECT 1
+					FROM SYS_APP_USER_INFO
+					WHERE RECORD_STATUS = 'Y'
+					AND USE_MONTH = #{monthDate}
+				)
+				AND RD.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW
+					FROM RES_DOCOTR_DELAY_TETURN
+					WHERE RECORD_STATUS = 'Y'
+					and audit_status_id = '1'
+					AND TYPE_ID = 'ReturnTraining' and rd.SESSION_NUMBER = SESSION_NUMBER)
+				AND rd.AUDIT_STATUS_ID = 'Passed'
+				and doc.doctor_type_id = 'Graduate'
+				AND RD.ORG_FLOW = RDR2.ORG_FLOW
+				GROUP BY RD.ORG_FLOW),0) AS GRADUATE_USE_TOTAL,
+				(SELECT org_prov_id FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.ORG_FLOW) as org_prov_id,
+        		(SELECT org_city_id FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.ORG_FLOW) as org_city_id
+			FROM res_doctor_recruit rdr2
+			LEFT JOIN pdsci.SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
+			LEFT JOIN RES_DOCTOR rd ON rdr2.DOCTOR_FLOW = rd.DOCTOR_FLOW
+			WHERE rdr2.RECORD_STATUS = 'Y'
+			and U.RECORD_STATUS = 'Y'
+			AND rd.Record_Status = 'Y'
+			and rd.doctor_status_id = '20'
+			AND rdr2.AUDIT_STATUS_ID = 'Passed'
+			and RDR2.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW FROM RES_DOCOTR_DELAY_TETURN
+				WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+				and audit_status_id = '1'
+				and rdr2.SESSION_NUMBER = SESSION_NUMBER)
+			group by RDR2.ORG_FLOW,RDR2.ORG_NAME
+		  )
+	</insert>
+
+	<insert id="insertJointMonthData" parameterType="map">
+		INSERT INTO jsres_app_info (RECORD_FLOW ,org_code ,PARENT_ORG_FLOW,MONTH_DATE,IS_CONTAIN,CREATE_TIME,ORG_FLOW,
+			ORG_NAME,DOCTOR_TRAIN_TOTAL,DOCTOR_USE_TOTAL ,DOCTOR_RATE,GRADUATE_TRAIN_TOTAL,GRADUATE_USE_TOTAL,graduate_rate,
+			TRAIN_TOTAL,TRAIN_USE,TRAIN_RATE ,PROVINCE_ID,CITY_ID)
+		SELECT lower(rawtohex(sys_guid())),org_code,PARENT_ORG_FLOW,#{monthDate},'N',#{createTime},JOINT_ORG_FLOW,JOINT_ORG_NAME,DOCTOR_TRAIN_TOTAL,DOCTOR_USE_TOTAL ,
+		TO_CHAR(CASE WHEN DOCTOR_TRAIN_TOTAL=0 THEN 100 ELSE CASE WHEN ROUND(DOCTOR_USE_TOTAL / DOCTOR_TRAIN_TOTAL, 2) * 100>100 THEN 100 ELSE ROUND(DOCTOR_USE_TOTAL / DOCTOR_TRAIN_TOTAL, 2) * 100 END END),
+		GRADUATE_TRAIN_TOTAL,GRADUATE_USE_TOTAL,
+		TO_CHAR(CASE WHEN GRADUATE_TRAIN_TOTAL=0 THEN 100 ELSE CASE WHEN ROUND(GRADUATE_USE_TOTAL / GRADUATE_TRAIN_TOTAL, 2) * 100>100 THEN 100 ELSE ROUND(GRADUATE_USE_TOTAL / GRADUATE_TRAIN_TOTAL, 2) * 100 END END),
+		DOCTOR_TRAIN_TOTAL+GRADUATE_TRAIN_TOTAL,DOCTOR_USE_TOTAL+GRADUATE_USE_TOTAL,
+		TO_CHAR(CASE WHEN (DOCTOR_TRAIN_TOTAL+GRADUATE_TRAIN_TOTAL)=0 THEN 100 ELSE CASE WHEN ROUND((DOCTOR_USE_TOTAL+GRADUATE_USE_TOTAL) / (DOCTOR_TRAIN_TOTAL+GRADUATE_TRAIN_TOTAL), 2) * 100>100 THEN 100 ELSE ROUND((DOCTOR_USE_TOTAL+GRADUATE_USE_TOTAL) / (DOCTOR_TRAIN_TOTAL+GRADUATE_TRAIN_TOTAL), 2) * 100 END END),
+		org_prov_id,org_city_id
+		FROM (
+			SELECT lower(rawtohex(sys_guid())),(SELECT ORG_CODE FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.JOINT_ORG_FLOW) as org_code,
+			(SELECT ORG_FLOW FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = RDR2.JOINT_ORG_FLOW) AS PARENT_ORG_FLOW,
+				RDR2.JOINT_ORG_FLOW,RDR2.JOINT_ORG_NAME,
+				nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
+				  LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+				  LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+				  WHERE rdr.RECORD_STATUS = 'Y'
+				  and U.RECORD_STATUS = 'Y'
+				  and RDR.DOCTOR_STATUS_ID = '20'
+				  AND rdr.AUDIT_STATUS_ID = 'Passed'
+				  and RDR.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW FROM RES_DOCOTR_DELAY_TETURN
+				  		WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+				  		and audit_status_id = '1'
+				  		and rdr.SESSION_NUMBER = SESSION_NUMBER)
+				  AND rdr.JOINT_org_flow = rdr2.JOINT_org_flow
+				  and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social')
+				),0) AS DOCTOR_TRAIN_TOTAL,
+				nvl((SELECT COUNT(0) FROM RES_DOCTOR_RECRUIT rd
+				 LEFT JOIN SYS_USER SU ON su.USER_FLOW = RD.DOCTOR_FLOW
+				 LEFT JOIN res_doctor doc ON DOC.DOCTOR_FLOW = RD.DOCTOR_FLOW
+				 LEFT JOIN sys_org org ON org.org_flow = rd.org_flow
+				WHERE doc.record_status = 'Y'
+				AND rd.RECORD_STATUS = 'Y'
+				AND su.RECORD_STATUS = 'Y'
+				AND rd.DOCTOR_STATUS_ID = '20'
+				AND org.record_status = 'Y'
+				AND EXISTS (SELECT 1
+					FROM SYS_APP_USER_INFO
+					WHERE RECORD_STATUS = 'Y'
+					AND USE_MONTH = #{monthDate}
+				)
+				AND RD.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW
+					FROM RES_DOCOTR_DELAY_TETURN
+					WHERE RECORD_STATUS = 'Y'
+					and audit_status_id = '1'
+					AND TYPE_ID = 'ReturnTraining' and rd.SESSION_NUMBER = SESSION_NUMBER)
+				AND rd.AUDIT_STATUS_ID = 'Passed'
+				AND doc.doctor_type_id IN ('Company', 'CompanyEntrust', 'Social')
+				AND RD.JOINT_ORG_FLOW = RDR2.JOINT_ORG_FLOW
+				GROUP BY RD.JOINT_ORG_FLOW),0) AS DOCTOR_USE_TOTAL,
+			nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
+				  LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+				  LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+				  WHERE rdr.RECORD_STATUS = 'Y'
+				  and U.RECORD_STATUS = 'Y'
+				  and RDR.DOCTOR_STATUS_ID = '20'
+				  AND rdr.AUDIT_STATUS_ID = 'Passed'
+				  and RDR.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW FROM RES_DOCOTR_DELAY_TETURN
+				  		WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+				  		and audit_status_id = '1'
+				  		and rdr.SESSION_NUMBER = SESSION_NUMBER)
+				  and rdr.JOINT_org_flow = rdr2.JOINT_org_flow
+				  and rd.doctor_type_id = 'Graduate'
+				),0) AS GRADUATE_TRAIN_TOTAL,
+				nvl((SELECT COUNT(0) FROM RES_DOCTOR_RECRUIT rd
+				 LEFT JOIN SYS_USER SU ON su.USER_FLOW = RD.DOCTOR_FLOW
+				 LEFT JOIN res_doctor doc ON DOC.DOCTOR_FLOW = RD.DOCTOR_FLOW
+				 LEFT JOIN sys_org org ON org.org_flow = rd.org_flow
+				WHERE doc.record_status = 'Y'
+				AND rd.RECORD_STATUS = 'Y'
+				AND su.RECORD_STATUS = 'Y'
+				AND rd.DOCTOR_STATUS_ID = '20'
+				AND org.record_status = 'Y'
+				AND EXISTS (SELECT 1
+					FROM SYS_APP_USER_INFO
+					WHERE RECORD_STATUS = 'Y'
+					AND USE_MONTH = #{monthDate}
+				)
+				AND RD.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW
+					FROM RES_DOCOTR_DELAY_TETURN
+					WHERE RECORD_STATUS = 'Y'
+					and audit_status_id = '1'
+					AND TYPE_ID = 'ReturnTraining' and rd.SESSION_NUMBER = SESSION_NUMBER)
+				AND rd.AUDIT_STATUS_ID = 'Passed'
+				and doc.doctor_type_id = 'Graduate'
+				AND RD.JOINT_ORG_FLOW = RDR2.JOINT_ORG_FLOW
+				GROUP BY RD.JOINT_ORG_FLOW),0) AS GRADUATE_USE_TOTAL,
+				(SELECT org_prov_id FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.JOINT_ORG_FLOW) as org_prov_id,
+        		(SELECT org_city_id FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.JOINT_ORG_FLOW) as org_city_id
+			FROM res_doctor_recruit rdr2
+			LEFT JOIN pdsci.SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
+			LEFT JOIN RES_DOCTOR rd ON rdr2.DOCTOR_FLOW = rd.DOCTOR_FLOW
+			WHERE rdr2.RECORD_STATUS = 'Y'
+			and U.RECORD_STATUS = 'Y'
+			AND rd.Record_Status = 'Y'
+			and rd.doctor_status_id = '20'
+			AND RDR2.AUDIT_STATUS_ID = 'Passed'
+			and RDR2.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW FROM RES_DOCOTR_DELAY_TETURN
+				WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+				and audit_status_id = '1'
+				and rdr2.SESSION_NUMBER = SESSION_NUMBER)
+			group by RDR2.JOINT_ORG_FLOW,RDR2.JOINT_ORG_NAME
+		  )
+	</insert>
+	
+	<select id="searchJointData" parameterType="map" resultMap="com.pinde.sci.dao.base.JsresAppInfoMapper.BaseResultMap">
+		SELECT * FROM JSRES_APP_INFO
+		WHERE MONTH_DATE = #{monthDate}
+		AND ORG_FLOW = #{orgFlow}
+		and is_contain = 'N'
+	</select>
+
+	<select id="searchLocalData" parameterType="map"  resultMap="com.pinde.sci.dao.base.JsresAppInfoMapper.BaseResultMap">
+		SELECT * FROM JSRES_APP_INFO
+		WHERE MONTH_DATE = #{monthDate}
+		<if test="orgFlows!=null and orgFlows.size>0">
+			AND ORG_FLOW IN
+			<foreach collection="orgFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		and is_contain = 'N'
+	</select>
+	
+	<select id="searchAllData" parameterType="map"  resultMap="com.pinde.sci.dao.base.JsresAppInfoMapper.BaseResultMap">
+		SELECT * FROM JSRES_APP_INFO
+		WHERE MONTH_DATE = #{monthDate}
+		and is_contain = 'N'
+		<if test="isOrder==null or isOrder==''">
+			order by org_code
+		</if>
+		<if test="isOrder!=null and isOrder!=''">
+			<if test="isOrder == 'doctorDesc'.toString()">
+				order by doctor_rate desc
+			</if>
+			<if test="isOrder == 'doctorAsc'.toString()">
+				order by doctor_rate asc
+			</if>
+			<if test="isOrder == 'masterDesc'.toString()">
+				order by graduate_rate desc
+			</if>
+			<if test="isOrder == 'masterAsc'.toString()">
+				order by graduate_rate asc
+			</if>
+			<if test="isOrder == 'trainDesc'.toString()">
+				order by train_rate desc
+			</if>
+			<if test="isOrder == 'trainAsc'.toString()">
+				order by train_rate asc
+			</if>
+		</if>
+	</select>
+
+	<delete id="deleteLunzhuanAllData" >
+		delete from jsres_sch_data_statistics where  MONTH_DATE=#{monthDate}
+	</delete>
+
+	<insert id="insertLunzhuanAllData">
+		INSERT INTO jsres_sch_data_statistics (RECORD_FLOW ,org_code ,PARENT_ORG_FLOW,ORG_FLOW,ORG_NAME,
+			MONTH_DATE,DOCTOR_TRAIN_TOTAL,DATA_WRITE_TOTAL ,DATA_AUDIT_TOTAL,AUDIT_SCALE,AVG_WRITE,AVG_AUDIT,
+			DOCTOR_TYPE_ID,CREATE_TIME)
+		SELECT lower(rawtohex(sys_guid())),org_code,null,ORG_FLOW,ORG_NAME,#{monthDate},DOCTOR_TRAIN_TOTAL,nvl(DATA_WRITE_TOTAL,0) ,nvl(DATA_AUDIT_TOTAL,0),
+			TO_CHAR(CASE WHEN DATA_WRITE_TOTAL IS NULL THEN 100 ELSE CASE WHEN ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100>100 THEN 100 ELSE ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100 END END),
+			TO_CHAR(CASE WHEN DOCTOR_TRAIN_TOTAL IS NULL THEN 100 ELSE ROUND(DATA_WRITE_TOTAL / DOCTOR_TRAIN_TOTAL,0) END),
+			TO_CHAR(CASE WHEN DATA_WRITE_TOTAL IS NULL THEN 100 ELSE CASE WHEN ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100>100 THEN 100 ELSE ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100 END END),
+			'All',#{createTime}
+		FROM (
+			SELECT lower(rawtohex(sys_guid())),(SELECT ORG_CODE FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.ORG_FLOW) as org_code,
+				RDR2.ORG_FLOW,RDR2.ORG_NAME,  A.DATA_WRITE_TOTAL, B.DATA_AUDIT_TOTAL,
+				nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
+				LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+				LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+				WHERE rdr.RECORD_STATUS = 'Y'
+				and U.RECORD_STATUS = 'Y'
+				and RDR.DOCTOR_STATUS_ID = '20'
+				AND rdr.AUDIT_STATUS_ID = 'Passed'
+				and RDR.DOCTOR_FLOW NOT IN
+					(SELECT DOCTOR_FLOW
+					FROM RES_DOCOTR_DELAY_TETURN
+					WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+					and audit_status_id = '1'
+					and rdr.SESSION_NUMBER = SESSION_NUMBER)
+				and rdr.org_flow = rdr2.org_flow
+				and rdr.joint_org_flow is null
+				and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+				),0) AS DOCTOR_TRAIN_TOTAL
+			FROM res_doctor_recruit rdr2
+			LEFT JOIN pdsci.SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
+			LEFT JOIN RES_DOCTOR rd ON rdr2.DOCTOR_FLOW = rd.DOCTOR_FLOW
+			LEFT JOIN
+				(SELECT COUNT(0) AS DATA_WRITE_TOTAL,rr.org_flow FROM res_rec rr
+				LEFT JOIN res_doctor RD ON RD.DOCTOR_FLOW = rr.oper_user_flow
+				WHERE RD.record_status = 'Y'
+				AND rr.RECORD_STATUS = 'Y'
+				AND rd.DOCTOR_STATUS_ID = '20'
+				AND rr.oper_time >= #{startDate}
+				AND rr.oper_time <![CDATA[<]]> #{endDate}
+				and rr.rec_type_id in ('CaseRegistry','DiseaseRegistry','SkillRegistry','OperationRegistry','CampaignRegistry')
+				AND NOT EXISTS (SELECT 1
+				FROM RES_DOCOTR_DELAY_TETURN
+				WHERE RECORD_STATUS = 'Y'
+				and audit_status_id = '1'
+				AND TYPE_ID = 'ReturnTraining'
+				AND RD.DOCTOR_FLOW = DOCTOR_FLOW
+				and rd.SESSION_NUMBER = SESSION_NUMBER)
+				AND rd.doctor_type_id IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+				GROUP BY RR.ORG_FLOW
+				) A ON A.ORG_FLOW = RDR2.ORG_FLOW
+			LEFT JOIN
+				(SELECT COUNT(0) AS DATA_AUDIT_TOTAL,RR.ORG_FLOW FROM res_rec rr
+				LEFT JOIN res_doctor RD ON RD.DOCTOR_FLOW = rr.oper_user_flow
+				WHERE RD.record_status = 'Y'
+				AND rr.RECORD_STATUS = 'Y'
+				AND rd.DOCTOR_STATUS_ID = '20'
+				AND rr.oper_time >= #{startDate}
+				AND rr.oper_time <![CDATA[<]]> #{endDate}
+				and rr.rec_type_id in ('CaseRegistry','DiseaseRegistry','SkillRegistry','OperationRegistry','CampaignRegistry')
+				AND RR.AUDIT_STATUS_ID IS NOT NULL
+				AND NOT EXISTS (SELECT 1
+				FROM RES_DOCOTR_DELAY_TETURN
+				WHERE RECORD_STATUS = 'Y'
+				and audit_status_id = '1'
+				AND TYPE_ID = 'ReturnTraining'
+				AND RD.DOCTOR_FLOW = DOCTOR_FLOW
+				and rd.SESSION_NUMBER = SESSION_NUMBER)
+				AND rd.doctor_type_id IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+				GROUP BY RR.ORG_FLOW
+				) B  ON B.ORG_FLOW = RDR2.ORG_FLOW
+			WHERE rdr2.RECORD_STATUS = 'Y'
+			and U.RECORD_STATUS = 'Y'
+			AND rd.Record_Status = 'Y'
+			and rd.doctor_status_id = '20'
+			AND rd.doctor_type_id IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+			AND rdr2.AUDIT_STATUS_ID = 'Passed'
+			AND RDR2.JOINT_ORG_FLOW IS NULL
+			and RDR2.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW FROM RES_DOCOTR_DELAY_TETURN
+			WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+			and audit_status_id = '1'
+			and rdr2.SESSION_NUMBER = SESSION_NUMBER)
+			group by RDR2.ORG_FLOW,RDR2.ORG_NAME,A.DATA_WRITE_TOTAL, B.DATA_AUDIT_TOTAL
+		)
+	</insert>
+
+	<insert id="insertLunzhuanOrgDoctorAllData">
+		INSERT INTO jsres_sch_data_statistics (RECORD_FLOW ,org_code ,PARENT_ORG_FLOW,ORG_FLOW,ORG_NAME,
+			MONTH_DATE,DOCTOR_TRAIN_TOTAL,DATA_WRITE_TOTAL ,DATA_AUDIT_TOTAL,AUDIT_SCALE,AVG_WRITE,AVG_AUDIT,
+			DOCTOR_TYPE_ID,CREATE_TIME)
+		SELECT lower(rawtohex(sys_guid())),org_code,null,ORG_FLOW,ORG_NAME,#{monthDate},DOCTOR_TRAIN_TOTAL,nvl(DATA_WRITE_TOTAL,0) ,nvl(DATA_AUDIT_TOTAL,0),
+			TO_CHAR(CASE WHEN DATA_WRITE_TOTAL IS NULL THEN 100 ELSE CASE WHEN ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100>100 THEN 100 ELSE ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100 END END),
+			TO_CHAR(CASE WHEN DOCTOR_TRAIN_TOTAL IS NULL THEN 100 ELSE ROUND(DATA_WRITE_TOTAL / DOCTOR_TRAIN_TOTAL,0) END),
+			TO_CHAR(CASE WHEN DATA_WRITE_TOTAL IS NULL THEN 100 ELSE CASE WHEN ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100>100 THEN 100 ELSE ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100 END END),
+			'Doctor',#{createTime}
+		FROM (
+			SELECT lower(rawtohex(sys_guid())),(SELECT ORG_CODE FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.ORG_FLOW) as org_code,
+				RDR2.ORG_FLOW,RDR2.ORG_NAME,  A.DATA_WRITE_TOTAL, B.DATA_AUDIT_TOTAL,
+				nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
+				LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+				LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+				WHERE rdr.RECORD_STATUS = 'Y'
+				and U.RECORD_STATUS = 'Y'
+				and RDR.DOCTOR_STATUS_ID = '20'
+				AND rdr.AUDIT_STATUS_ID = 'Passed'
+				and RDR.DOCTOR_FLOW NOT IN
+					(SELECT DOCTOR_FLOW
+					FROM RES_DOCOTR_DELAY_TETURN
+					WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+					and audit_status_id = '1'
+					and rdr.SESSION_NUMBER = SESSION_NUMBER)
+				and rdr.org_flow = rdr2.org_flow
+				and rdr.joint_org_flow is null
+				and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social')
+				),0) AS DOCTOR_TRAIN_TOTAL
+			FROM res_doctor_recruit rdr2
+			LEFT JOIN pdsci.SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
+			LEFT JOIN RES_DOCTOR rd ON rdr2.DOCTOR_FLOW = rd.DOCTOR_FLOW
+			LEFT JOIN
+				(SELECT COUNT(0) AS DATA_WRITE_TOTAL,rr.org_flow FROM res_rec rr
+				LEFT JOIN res_doctor RD ON RD.DOCTOR_FLOW = rr.oper_user_flow
+				WHERE RD.record_status = 'Y'
+				AND rr.RECORD_STATUS = 'Y'
+				AND rd.DOCTOR_STATUS_ID = '20'
+				AND rr.oper_time >= #{startDate}
+				AND rr.oper_time <![CDATA[<]]> #{endDate}
+				and rr.rec_type_id in ('CaseRegistry','DiseaseRegistry','SkillRegistry','OperationRegistry','CampaignRegistry')
+				AND NOT EXISTS (SELECT 1
+				FROM RES_DOCOTR_DELAY_TETURN
+				WHERE RECORD_STATUS = 'Y'
+				and audit_status_id = '1'
+				AND TYPE_ID = 'ReturnTraining'
+				AND RD.DOCTOR_FLOW = DOCTOR_FLOW
+				and rd.SESSION_NUMBER = SESSION_NUMBER)
+				AND rd.doctor_type_id IN ('Company', 'CompanyEntrust', 'Social')
+				GROUP BY RR.ORG_FLOW
+				) A ON A.ORG_FLOW = RDR2.ORG_FLOW
+			LEFT JOIN
+				(SELECT COUNT(0) AS DATA_AUDIT_TOTAL,RR.ORG_FLOW FROM res_rec rr
+				LEFT JOIN res_doctor RD ON RD.DOCTOR_FLOW = rr.oper_user_flow
+				WHERE RD.record_status = 'Y'
+				AND rr.RECORD_STATUS = 'Y'
+				AND rd.DOCTOR_STATUS_ID = '20'
+				AND rr.oper_time >= #{startDate}
+				AND rr.oper_time <![CDATA[<]]> #{endDate}
+				and rr.rec_type_id in ('CaseRegistry','DiseaseRegistry','SkillRegistry','OperationRegistry','CampaignRegistry')
+				AND RR.AUDIT_STATUS_ID IS NOT NULL
+				AND NOT EXISTS (SELECT 1
+				FROM RES_DOCOTR_DELAY_TETURN
+				WHERE RECORD_STATUS = 'Y'
+				and audit_status_id = '1'
+				AND TYPE_ID = 'ReturnTraining'
+				AND RD.DOCTOR_FLOW = DOCTOR_FLOW
+				and rd.SESSION_NUMBER = SESSION_NUMBER)
+				AND rd.doctor_type_id IN ('Company', 'CompanyEntrust', 'Social')
+				GROUP BY RR.ORG_FLOW
+				) B  ON B.ORG_FLOW = RDR2.ORG_FLOW
+			WHERE rdr2.RECORD_STATUS = 'Y'
+			and U.RECORD_STATUS = 'Y'
+			AND rd.Record_Status = 'Y'
+			and rd.doctor_status_id = '20'
+			AND rd.doctor_type_id IN ('Company', 'CompanyEntrust', 'Social')
+			AND rdr2.AUDIT_STATUS_ID = 'Passed'
+			AND RDR2.JOINT_ORG_FLOW IS NULL
+			and RDR2.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW FROM RES_DOCOTR_DELAY_TETURN
+			WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+			and audit_status_id = '1'
+			and rdr2.SESSION_NUMBER = SESSION_NUMBER)
+			group by RDR2.ORG_FLOW,RDR2.ORG_NAME,A.DATA_WRITE_TOTAL, B.DATA_AUDIT_TOTAL
+		)
+	</insert>
+
+	<insert id="insertLunzhuanOrgGraduateAllData">
+		INSERT INTO jsres_sch_data_statistics (RECORD_FLOW ,org_code ,PARENT_ORG_FLOW,ORG_FLOW,ORG_NAME,
+			MONTH_DATE,DOCTOR_TRAIN_TOTAL,DATA_WRITE_TOTAL ,DATA_AUDIT_TOTAL,AUDIT_SCALE,AVG_WRITE,AVG_AUDIT,
+			DOCTOR_TYPE_ID,CREATE_TIME)
+		SELECT lower(rawtohex(sys_guid())),org_code,null,ORG_FLOW,ORG_NAME,#{monthDate},DOCTOR_TRAIN_TOTAL,nvl(DATA_WRITE_TOTAL,0) ,nvl(DATA_AUDIT_TOTAL,0),
+			TO_CHAR(CASE WHEN DATA_WRITE_TOTAL IS NULL THEN 100 ELSE CASE WHEN ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100>100 THEN 100 ELSE ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100 END END),
+			TO_CHAR(CASE WHEN DOCTOR_TRAIN_TOTAL IS NULL THEN 100 ELSE ROUND(DATA_WRITE_TOTAL / DOCTOR_TRAIN_TOTAL,0) END),
+			TO_CHAR(CASE WHEN DATA_WRITE_TOTAL IS NULL THEN 100 ELSE CASE WHEN ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100>100 THEN 100 ELSE ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100 END END),
+			'Graduate',#{createTime}
+		FROM (
+			SELECT lower(rawtohex(sys_guid())),(SELECT ORG_CODE FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.ORG_FLOW) as org_code,
+				RDR2.ORG_FLOW,RDR2.ORG_NAME,  A.DATA_WRITE_TOTAL, B.DATA_AUDIT_TOTAL,
+				nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
+				LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+				LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+				WHERE rdr.RECORD_STATUS = 'Y'
+				and U.RECORD_STATUS = 'Y'
+				and RDR.DOCTOR_STATUS_ID = '20'
+				AND rdr.AUDIT_STATUS_ID = 'Passed'
+				and RDR.DOCTOR_FLOW NOT IN
+					(SELECT DOCTOR_FLOW
+					FROM RES_DOCOTR_DELAY_TETURN
+					WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+					and audit_status_id = '1'
+					and rdr.SESSION_NUMBER = SESSION_NUMBER)
+				and rdr.org_flow = rdr2.org_flow
+				and rdr.joint_org_flow is null
+				and rd.doctor_type_id = 'Graduate'
+				),0) AS DOCTOR_TRAIN_TOTAL
+			FROM res_doctor_recruit rdr2
+			LEFT JOIN pdsci.SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
+			LEFT JOIN RES_DOCTOR rd ON rdr2.DOCTOR_FLOW = rd.DOCTOR_FLOW
+			LEFT JOIN
+				(SELECT COUNT(0) AS DATA_WRITE_TOTAL,rr.org_flow FROM res_rec rr
+				LEFT JOIN res_doctor RD ON RD.DOCTOR_FLOW = rr.oper_user_flow
+				WHERE RD.record_status = 'Y'
+				AND rr.RECORD_STATUS = 'Y'
+				AND rd.DOCTOR_STATUS_ID = '20'
+				AND rr.oper_time >= #{startDate}
+				AND rr.oper_time <![CDATA[<]]> #{endDate}
+				and rr.rec_type_id in ('CaseRegistry','DiseaseRegistry','SkillRegistry','OperationRegistry','CampaignRegistry')
+				AND NOT EXISTS (SELECT 1
+				FROM RES_DOCOTR_DELAY_TETURN
+				WHERE RECORD_STATUS = 'Y'
+				and audit_status_id = '1'
+				AND TYPE_ID = 'ReturnTraining'
+				AND RD.DOCTOR_FLOW = DOCTOR_FLOW
+				and rd.SESSION_NUMBER = SESSION_NUMBER)
+				and rd.doctor_type_id = 'Graduate'
+				GROUP BY RR.ORG_FLOW
+				) A ON A.ORG_FLOW = RDR2.ORG_FLOW
+			LEFT JOIN
+				(SELECT COUNT(0) AS DATA_AUDIT_TOTAL,RR.ORG_FLOW FROM res_rec rr
+				LEFT JOIN res_doctor RD ON RD.DOCTOR_FLOW = rr.oper_user_flow
+				WHERE RD.record_status = 'Y'
+				AND rr.RECORD_STATUS = 'Y'
+				AND rd.DOCTOR_STATUS_ID = '20'
+				AND rr.oper_time >= #{startDate}
+				AND rr.oper_time <![CDATA[<]]> #{endDate}
+				and rr.rec_type_id in ('CaseRegistry','DiseaseRegistry','SkillRegistry','OperationRegistry','CampaignRegistry')
+				AND RR.AUDIT_STATUS_ID IS NOT NULL
+				AND NOT EXISTS (SELECT 1
+				FROM RES_DOCOTR_DELAY_TETURN
+				WHERE RECORD_STATUS = 'Y'
+				and audit_status_id = '1'
+				AND TYPE_ID = 'ReturnTraining'
+				AND RD.DOCTOR_FLOW = DOCTOR_FLOW
+				and rd.SESSION_NUMBER = SESSION_NUMBER)
+				and rd.doctor_type_id = 'Graduate'
+				GROUP BY RR.ORG_FLOW
+				) B  ON B.ORG_FLOW = RDR2.ORG_FLOW
+			WHERE rdr2.RECORD_STATUS = 'Y'
+			and U.RECORD_STATUS = 'Y'
+			AND rd.Record_Status = 'Y'
+			and rd.doctor_status_id = '20'
+			and rd.doctor_type_id = 'Graduate'
+			AND rdr2.AUDIT_STATUS_ID = 'Passed'
+			AND RDR2.JOINT_ORG_FLOW IS NULL
+			and RDR2.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW FROM RES_DOCOTR_DELAY_TETURN
+			WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+			and audit_status_id = '1'
+			and rdr2.SESSION_NUMBER = SESSION_NUMBER)
+			group by RDR2.ORG_FLOW,RDR2.ORG_NAME,A.DATA_WRITE_TOTAL, B.DATA_AUDIT_TOTAL
+		)
+	</insert>
+
+	<insert id="insertLunzhuanJointOrgAllData">
+		INSERT INTO jsres_sch_data_statistics (RECORD_FLOW ,org_code ,PARENT_ORG_FLOW,ORG_FLOW,ORG_NAME,
+			MONTH_DATE,DOCTOR_TRAIN_TOTAL,DATA_WRITE_TOTAL ,DATA_AUDIT_TOTAL,AUDIT_SCALE,AVG_WRITE,AVG_AUDIT,
+			DOCTOR_TYPE_ID,CREATE_TIME)
+		SELECT lower(rawtohex(sys_guid())),org_code,PARENT_ORG_FLOW,JOINT_ORG_FLOW,JOINT_ORG_NAME,#{monthDate},DOCTOR_TRAIN_TOTAL,nvl(DATA_WRITE_TOTAL,0) ,nvl(DATA_AUDIT_TOTAL,0),
+			TO_CHAR(CASE WHEN DATA_WRITE_TOTAL IS NULL THEN 100 ELSE CASE WHEN ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100>100 THEN 100 ELSE ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100 END END),
+			TO_CHAR(CASE WHEN DOCTOR_TRAIN_TOTAL IS NULL THEN 100 ELSE ROUND(DATA_WRITE_TOTAL / DOCTOR_TRAIN_TOTAL,0) END),
+			TO_CHAR(CASE WHEN DATA_WRITE_TOTAL IS NULL THEN 100 ELSE CASE WHEN ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100>100 THEN 100 ELSE ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100 END END),
+			'All',#{createTime}
+		FROM (
+			SELECT lower(rawtohex(sys_guid())),(SELECT ORG_CODE FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.JOINT_ORG_FLOW) as org_code,
+				(SELECT ORG_FLOW FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = RDR2.JOINT_ORG_FLOW) AS PARENT_ORG_FLOW,
+				RDR2.JOINT_ORG_FLOW,RDR2.JOINT_ORG_NAME,  A.DATA_WRITE_TOTAL, B.DATA_AUDIT_TOTAL,
+				nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
+				LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+				LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+				WHERE rdr.RECORD_STATUS = 'Y'
+				and U.RECORD_STATUS = 'Y'
+				and RDR.DOCTOR_STATUS_ID = '20'
+				AND rdr.AUDIT_STATUS_ID = 'Passed'
+				and RDR.DOCTOR_FLOW NOT IN
+					(SELECT DOCTOR_FLOW
+					FROM RES_DOCOTR_DELAY_TETURN
+					WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+					and audit_status_id = '1'
+					and rdr.SESSION_NUMBER = SESSION_NUMBER)
+				and rdr.joint_org_flow = rdr2.joint_org_flow
+				and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+				),0) AS DOCTOR_TRAIN_TOTAL
+			FROM res_doctor_recruit rdr2
+			LEFT JOIN pdsci.SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
+			LEFT JOIN RES_DOCTOR rd ON rdr2.DOCTOR_FLOW = rd.DOCTOR_FLOW
+			LEFT JOIN
+				(SELECT COUNT(0) AS DATA_WRITE_TOTAL,rr.org_flow FROM res_rec rr
+				LEFT JOIN res_doctor RD ON RD.DOCTOR_FLOW = rr.oper_user_flow
+				WHERE RD.record_status = 'Y'
+				AND rr.RECORD_STATUS = 'Y'
+				AND rd.DOCTOR_STATUS_ID = '20'
+				AND rr.oper_time >= #{startDate}
+				AND rr.oper_time <![CDATA[<]]> #{endDate}
+				and rr.rec_type_id in ('CaseRegistry','DiseaseRegistry','SkillRegistry','OperationRegistry','CampaignRegistry')
+				AND NOT EXISTS (SELECT 1
+				FROM RES_DOCOTR_DELAY_TETURN
+				WHERE RECORD_STATUS = 'Y'
+				and audit_status_id = '1'
+				AND TYPE_ID = 'ReturnTraining'
+				AND RD.DOCTOR_FLOW = DOCTOR_FLOW
+				and rd.SESSION_NUMBER = SESSION_NUMBER)
+				AND rd.doctor_type_id IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+				GROUP BY RR.ORG_FLOW
+				) A ON A.ORG_FLOW = RDR2.JOINT_ORG_FLOW
+			LEFT JOIN
+				(SELECT COUNT(0) AS DATA_AUDIT_TOTAL,RR.ORG_FLOW FROM res_rec rr
+				LEFT JOIN res_doctor RD ON RD.DOCTOR_FLOW = rr.oper_user_flow
+				WHERE RD.record_status = 'Y'
+				AND rr.RECORD_STATUS = 'Y'
+				AND rd.DOCTOR_STATUS_ID = '20'
+				AND rr.oper_time >= #{startDate}
+				AND rr.oper_time <![CDATA[<]]> #{endDate}
+				and rr.rec_type_id in ('CaseRegistry','DiseaseRegistry','SkillRegistry','OperationRegistry','CampaignRegistry')
+				AND RR.AUDIT_STATUS_ID IS NOT NULL
+				AND NOT EXISTS (SELECT 1
+				FROM RES_DOCOTR_DELAY_TETURN
+				WHERE RECORD_STATUS = 'Y'
+				and audit_status_id = '1'
+				AND TYPE_ID = 'ReturnTraining'
+				AND RD.DOCTOR_FLOW = DOCTOR_FLOW
+				and rd.SESSION_NUMBER = SESSION_NUMBER)
+				AND rd.doctor_type_id IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+				GROUP BY RR.ORG_FLOW
+				) B  ON B.ORG_FLOW = RDR2.JOINT_ORG_FLOW
+			WHERE rdr2.RECORD_STATUS = 'Y'
+			and U.RECORD_STATUS = 'Y'
+			AND rd.Record_Status = 'Y'
+			and rd.doctor_status_id = '20'
+			AND rd.doctor_type_id IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+			AND rdr2.AUDIT_STATUS_ID = 'Passed'
+			AND RDR2.JOINT_ORG_FLOW IS NOT NULL
+			and RDR2.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW FROM RES_DOCOTR_DELAY_TETURN
+			WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+			and audit_status_id = '1'
+			and rdr2.SESSION_NUMBER = SESSION_NUMBER)
+			group by RDR2.JOINT_ORG_FLOW,RDR2.JOINT_ORG_NAME,A.DATA_WRITE_TOTAL, B.DATA_AUDIT_TOTAL
+		)
+	</insert>
+
+	<insert id="insertLunzhuanJointOrgDoctorAllData">
+		INSERT INTO jsres_sch_data_statistics (RECORD_FLOW ,org_code ,PARENT_ORG_FLOW,ORG_FLOW,ORG_NAME,
+			MONTH_DATE,DOCTOR_TRAIN_TOTAL,DATA_WRITE_TOTAL ,DATA_AUDIT_TOTAL,AUDIT_SCALE,AVG_WRITE,AVG_AUDIT,
+			DOCTOR_TYPE_ID,CREATE_TIME)
+		SELECT lower(rawtohex(sys_guid())),org_code,PARENT_ORG_FLOW,JOINT_ORG_FLOW,JOINT_ORG_NAME,#{monthDate},DOCTOR_TRAIN_TOTAL,nvl(DATA_WRITE_TOTAL,0) ,nvl(DATA_AUDIT_TOTAL,0),
+			TO_CHAR(CASE WHEN DATA_WRITE_TOTAL IS NULL THEN 100 ELSE CASE WHEN ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100>100 THEN 100 ELSE ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100 END END),
+			TO_CHAR(CASE WHEN DOCTOR_TRAIN_TOTAL IS NULL THEN 100 ELSE ROUND(DATA_WRITE_TOTAL / DOCTOR_TRAIN_TOTAL,0) END),
+			TO_CHAR(CASE WHEN DATA_WRITE_TOTAL IS NULL THEN 100 ELSE CASE WHEN ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100>100 THEN 100 ELSE ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100 END END),
+			'Doctor',#{createTime}
+		FROM (
+			SELECT lower(rawtohex(sys_guid())),(SELECT ORG_CODE FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.JOINT_ORG_FLOW) as org_code,
+				(SELECT ORG_FLOW FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = RDR2.JOINT_ORG_FLOW) AS PARENT_ORG_FLOW,
+				RDR2.JOINT_ORG_FLOW,RDR2.JOINT_ORG_NAME,  A.DATA_WRITE_TOTAL, B.DATA_AUDIT_TOTAL,
+				nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
+				LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+				LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+				WHERE rdr.RECORD_STATUS = 'Y'
+				and U.RECORD_STATUS = 'Y'
+				and RDR.DOCTOR_STATUS_ID = '20'
+				AND rdr.AUDIT_STATUS_ID = 'Passed'
+				and RDR.DOCTOR_FLOW NOT IN
+					(SELECT DOCTOR_FLOW
+					FROM RES_DOCOTR_DELAY_TETURN
+					WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+					and audit_status_id = '1'
+					and rdr.SESSION_NUMBER = SESSION_NUMBER)
+				and rdr.joint_org_flow = rdr2.joint_org_flow
+				and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social')
+				),0) AS DOCTOR_TRAIN_TOTAL
+			FROM res_doctor_recruit rdr2
+			LEFT JOIN pdsci.SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
+			LEFT JOIN RES_DOCTOR rd ON rdr2.DOCTOR_FLOW = rd.DOCTOR_FLOW
+			LEFT JOIN
+				(SELECT COUNT(0) AS DATA_WRITE_TOTAL,rr.org_flow FROM res_rec rr
+				LEFT JOIN res_doctor RD ON RD.DOCTOR_FLOW = rr.oper_user_flow
+				WHERE RD.record_status = 'Y'
+				AND rr.RECORD_STATUS = 'Y'
+				AND rd.DOCTOR_STATUS_ID = '20'
+				AND rr.oper_time >= #{startDate}
+				AND rr.oper_time <![CDATA[<]]> #{endDate}
+				and rr.rec_type_id in ('CaseRegistry','DiseaseRegistry','SkillRegistry','OperationRegistry','CampaignRegistry')
+				AND NOT EXISTS (SELECT 1
+				FROM RES_DOCOTR_DELAY_TETURN
+				WHERE RECORD_STATUS = 'Y'
+				and audit_status_id = '1'
+				AND TYPE_ID = 'ReturnTraining'
+				AND RD.DOCTOR_FLOW = DOCTOR_FLOW
+				and rd.SESSION_NUMBER = SESSION_NUMBER)
+				AND rd.doctor_type_id IN ('Company', 'CompanyEntrust', 'Social')
+				GROUP BY RR.ORG_FLOW
+				) A ON A.ORG_FLOW = RDR2.JOINT_ORG_FLOW
+			LEFT JOIN
+				(SELECT COUNT(0) AS DATA_AUDIT_TOTAL,RR.ORG_FLOW FROM res_rec rr
+				LEFT JOIN res_doctor RD ON RD.DOCTOR_FLOW = rr.oper_user_flow
+				WHERE RD.record_status = 'Y'
+				AND rr.RECORD_STATUS = 'Y'
+				AND rd.DOCTOR_STATUS_ID = '20'
+				AND rr.oper_time >= #{startDate}
+				AND rr.oper_time <![CDATA[<]]> #{endDate}
+				and rr.rec_type_id in ('CaseRegistry','DiseaseRegistry','SkillRegistry','OperationRegistry','CampaignRegistry')
+				AND RR.AUDIT_STATUS_ID IS NOT NULL
+				AND NOT EXISTS (SELECT 1
+				FROM RES_DOCOTR_DELAY_TETURN
+				WHERE RECORD_STATUS = 'Y'
+				and audit_status_id = '1'
+				AND TYPE_ID = 'ReturnTraining'
+				AND RD.DOCTOR_FLOW = DOCTOR_FLOW
+				and rd.SESSION_NUMBER = SESSION_NUMBER)
+				AND rd.doctor_type_id IN ('Company', 'CompanyEntrust', 'Social')
+				GROUP BY RR.ORG_FLOW
+				) B  ON B.ORG_FLOW = RDR2.JOINT_ORG_FLOW
+			WHERE rdr2.RECORD_STATUS = 'Y'
+			and U.RECORD_STATUS = 'Y'
+			AND rd.Record_Status = 'Y'
+			and rd.doctor_status_id = '20'
+			AND rd.doctor_type_id IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+			AND rdr2.AUDIT_STATUS_ID = 'Passed'
+			AND RDR2.JOINT_ORG_FLOW IS NOT NULL
+			and RDR2.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW FROM RES_DOCOTR_DELAY_TETURN
+			WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+			and audit_status_id = '1'
+			and rdr2.SESSION_NUMBER = SESSION_NUMBER)
+			group by RDR2.JOINT_ORG_FLOW,RDR2.JOINT_ORG_NAME,A.DATA_WRITE_TOTAL, B.DATA_AUDIT_TOTAL
+		)
+	</insert>
+
+	<insert id="insertLunzhuanJointOrgGraduateAllData" parameterType="map">
+		INSERT INTO jsres_sch_data_statistics (RECORD_FLOW ,org_code ,PARENT_ORG_FLOW,ORG_FLOW,ORG_NAME,
+			MONTH_DATE,DOCTOR_TRAIN_TOTAL,DATA_WRITE_TOTAL ,DATA_AUDIT_TOTAL,AUDIT_SCALE,AVG_WRITE,AVG_AUDIT,
+			DOCTOR_TYPE_ID,CREATE_TIME)
+		SELECT lower(rawtohex(sys_guid())),org_code,PARENT_ORG_FLOW,JOINT_ORG_FLOW,JOINT_ORG_NAME,#{monthDate},DOCTOR_TRAIN_TOTAL,nvl(DATA_WRITE_TOTAL,0) ,nvl(DATA_AUDIT_TOTAL,0),
+			TO_CHAR(CASE WHEN DATA_WRITE_TOTAL IS NULL THEN 100 ELSE CASE WHEN ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100>100 THEN 100 ELSE ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100 END END),
+			TO_CHAR(CASE WHEN DOCTOR_TRAIN_TOTAL IS NULL THEN 100 ELSE ROUND(DATA_WRITE_TOTAL / DOCTOR_TRAIN_TOTAL,0) END),
+			TO_CHAR(CASE WHEN DATA_WRITE_TOTAL IS NULL THEN 100 ELSE CASE WHEN ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100>100 THEN 100 ELSE ROUND(DATA_AUDIT_TOTAL / DATA_WRITE_TOTAL, 2) * 100 END END),
+			'Graduate',#{createTime}
+		FROM (
+			SELECT lower(rawtohex(sys_guid())),(SELECT ORG_CODE FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.JOINT_ORG_FLOW) as org_code,
+				(SELECT ORG_FLOW FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = RDR2.JOINT_ORG_FLOW) AS PARENT_ORG_FLOW,
+				RDR2.JOINT_ORG_FLOW,RDR2.JOINT_ORG_NAME,  A.DATA_WRITE_TOTAL, B.DATA_AUDIT_TOTAL,
+				nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
+				LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+				LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+				WHERE rdr.RECORD_STATUS = 'Y'
+				and U.RECORD_STATUS = 'Y'
+				and RDR.DOCTOR_STATUS_ID = '20'
+				AND rdr.AUDIT_STATUS_ID = 'Passed'
+				and RDR.DOCTOR_FLOW NOT IN
+					(SELECT DOCTOR_FLOW
+					FROM RES_DOCOTR_DELAY_TETURN
+					WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+					and audit_status_id = '1'
+					and rdr.SESSION_NUMBER = SESSION_NUMBER)
+				and rdr.joint_org_flow = rdr2.joint_org_flow
+				and rd.doctor_type_id = 'Graduate'
+				),0) AS DOCTOR_TRAIN_TOTAL
+			FROM res_doctor_recruit rdr2
+			LEFT JOIN pdsci.SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
+			LEFT JOIN RES_DOCTOR rd ON rdr2.DOCTOR_FLOW = rd.DOCTOR_FLOW
+			LEFT JOIN
+				(SELECT COUNT(0) AS DATA_WRITE_TOTAL,rr.org_flow FROM res_rec rr
+				LEFT JOIN res_doctor RD ON RD.DOCTOR_FLOW = rr.oper_user_flow
+				WHERE RD.record_status = 'Y'
+				AND rr.RECORD_STATUS = 'Y'
+				AND rd.DOCTOR_STATUS_ID = '20'
+				AND rr.oper_time >= #{startDate}
+				AND rr.oper_time <![CDATA[<]]> #{endDate}
+				and rr.rec_type_id in ('CaseRegistry','DiseaseRegistry','SkillRegistry','OperationRegistry','CampaignRegistry')
+				AND NOT EXISTS (SELECT 1
+				FROM RES_DOCOTR_DELAY_TETURN
+				WHERE RECORD_STATUS = 'Y'
+				and audit_status_id = '1'
+				AND TYPE_ID = 'ReturnTraining'
+				AND RD.DOCTOR_FLOW = DOCTOR_FLOW
+				and rd.SESSION_NUMBER = SESSION_NUMBER)
+				AND rd.doctor_type_id = 'Graduate'
+				GROUP BY RR.ORG_FLOW
+				) A ON A.ORG_FLOW = RDR2.JOINT_ORG_FLOW
+			LEFT JOIN
+				(SELECT COUNT(0) AS DATA_AUDIT_TOTAL,RR.ORG_FLOW FROM res_rec rr
+				LEFT JOIN res_doctor RD ON RD.DOCTOR_FLOW = rr.oper_user_flow
+				WHERE RD.record_status = 'Y'
+				AND rr.RECORD_STATUS = 'Y'
+				AND rd.DOCTOR_STATUS_ID = '20'
+				AND rr.oper_time >= #{startDate}
+				AND rr.oper_time <![CDATA[<]]> #{endDate}
+				and rr.rec_type_id in ('CaseRegistry','DiseaseRegistry','SkillRegistry','OperationRegistry','CampaignRegistry')
+				AND RR.AUDIT_STATUS_ID IS NOT NULL
+				AND NOT EXISTS (SELECT 1
+				FROM RES_DOCOTR_DELAY_TETURN
+				WHERE RECORD_STATUS = 'Y'
+				and audit_status_id = '1'
+				AND TYPE_ID = 'ReturnTraining'
+				AND RD.DOCTOR_FLOW = DOCTOR_FLOW
+				and rd.SESSION_NUMBER = SESSION_NUMBER)
+				AND rd.doctor_type_id = 'Graduate'
+				GROUP BY RR.ORG_FLOW
+				) B  ON B.ORG_FLOW = RDR2.JOINT_ORG_FLOW
+			WHERE rdr2.RECORD_STATUS = 'Y'
+			and U.RECORD_STATUS = 'Y'
+			AND rd.Record_Status = 'Y'
+			and rd.doctor_status_id = '20'
+			AND rd.doctor_type_id = 'Graduate'
+			AND rdr2.AUDIT_STATUS_ID = 'Passed'
+			AND RDR2.JOINT_ORG_FLOW IS NOT NULL
+			and RDR2.DOCTOR_FLOW NOT IN (SELECT DOCTOR_FLOW FROM RES_DOCOTR_DELAY_TETURN
+			WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+			and audit_status_id = '1'
+			and rdr2.SESSION_NUMBER = SESSION_NUMBER)
+			group by RDR2.JOINT_ORG_FLOW,RDR2.JOINT_ORG_NAME,A.DATA_WRITE_TOTAL, B.DATA_AUDIT_TOTAL
+		)
+	</insert>
+	
+	<select id="selectLunzhuanData" parameterType="map"  resultMap="com.pinde.sci.dao.base.JsresSchDataStatisticsMapper.BaseResultMap">
+		SELECT * FROM JSRES_SCH_DATA_STATISTICS
+		WHERE MONTH_DATE = #{monthDate}
+		AND DOCTOR_TYPE_ID = #{doctorTypeId}
+		<if test="orderBy==null or orderBy==''">
+			order by org_code
+		</if>
+		<if test="orderBy!=null and orderBy!=''">
+			<if test="orderBy == 'AuditDesc'.toString()">
+				order by audit_scale desc
+			</if>
+			<if test="orderBy == 'AuditAsc'.toString()">
+				order by audit_scale asc
+			</if>
+			<if test="orderBy == 'AvgWriteDesc'.toString()">
+				order by avg_write desc
+			</if>
+			<if test="orderBy == 'AvgWriteAsc'.toString()">
+				order by avg_write asc
+			</if>
+		</if>
+	</select>
+
+	<select id="selectOrgLunzhuanData" parameterType="map"  resultMap="com.pinde.sci.dao.base.JsresSchDataStatisticsMapper.BaseResultMap">
+		SELECT * FROM JSRES_SCH_DATA_STATISTICS
+		WHERE MONTH_DATE = #{monthDate}
+		AND DOCTOR_TYPE_ID = #{doctorTypeId}
+		<if test="orgFlow != null and orgFlow != ''">
+			AND ORG_FLOW = #{orgFlow}
+		</if>
+		<if test="orgFlows!=null and orgFlows.size>0">
+			AND ORG_FLOW IN
+			<foreach collection="orgFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="orderBy==null or orderBy==''">
+			order by org_code
+		</if>
+		<if test="orderBy!=null and orderBy!=''">
+			<if test="orderBy == 'AuditDesc'.toString()">
+				order by audit_scale desc
+			</if>
+			<if test="orderBy == 'AuditAsc'.toString()">
+				order by audit_scale asc
+			</if>
+			<if test="orderBy == 'AvgWriteDesc'.toString()">
+				order by avg_write desc
+			</if>
+			<if test="orderBy == 'AvgWriteAsc'.toString()">
+				order by avg_write asc
+			</if>
+		</if>
+	</select>
+
+	<delete id="deleteAllActivityData" >
+		delete from JSRES_ACTIVITY_STATISTICS where  MONTH_DATE=#{monthDate}
+	</delete>
+
+	<insert id="insertOrgActivityData">
+		INSERT INTO jsres_activity_statistics (RECORD_FLOW ,org_code ,PARENT_ORG_FLOW,ORG_FLOW,ORG_NAME,
+			MONTH_DATE,DOCTOR_TRAIN_TOTAL,activity_num ,doctor_joint_num,avg_joint_num,avg_time,DOCTOR_TYPE_ID,
+			CREATE_TIME)
+			SELECT lower(rawtohex(sys_guid())),org_code,null,org_flow,org_name,#{monthDate},nvl(DOCTOR_TRAIN_TOTAL,0),
+			activity_num,nvl(doctor_join_num,0),
+			case when activity_num = 0 then 0 else ROUND(doctor_join_num/activity_num,0) end,
+			case when activity_num = 0 then 0 else ROUND(activity_time_sum/activity_num,0) end,
+			'All',#{createTime}
+			FROM (
+				SELECT H.activity_num,so.org_code,so.org_flow,so.org_name,a.DOCTOR_TRAIN_TOTAL,c.doctor_join_num,
+					ROUND(sum(TO_NUMBER((TO_DATE(b.end_time,'yyyy-mm-dd hh24:mi:ss')- TO_DATE(b.start_time,'yyyy-mm-dd hh24:mi:ss'))*24*60)),0) as activity_time_sum
+				FROM SYS_ORG SO
+				LEFT JOIN  teaching_activity_info tai ON SO.ORG_FLOW = TAI.ORG_FLOW
+					and tai.record_status = 'Y'
+					and tai.start_time >= #{startDate}
+					and tai.start_time <![CDATA[<]]> #{endDate}
+				left join (
+					SELECT COUNT(0) as DOCTOR_TRAIN_TOTAL,rdr.org_flow FROM res_doctor_recruit rdr
+					LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+					LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+					WHERE rdr.RECORD_STATUS = 'Y'
+					and U.RECORD_STATUS = 'Y'
+					and RDR.DOCTOR_STATUS_ID = '20'
+					AND rdr.AUDIT_STATUS_ID = 'Passed'
+					and RDR.DOCTOR_FLOW NOT IN
+						(SELECT DOCTOR_FLOW
+						FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+					and rdr.joint_org_flow is null
+					and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+					group by rdr.org_flow
+				) a on a.org_flow = so.org_flow
+				left join (
+					SELECT min(TAR.scan_time) as start_time,min(TAR.scan_time2) as end_time,TAR.activity_flow
+					FROM   teaching_activity_result TAR
+					LEFT JOIN RES_DOCTOR RD ON TAR.USER_FLOW = RD.DOCTOR_FLOW
+					LEFT JOIN RES_DOCTOR_RECRUIT RDR ON TAR.USER_FLOW = RDR.DOCTOR_FLOW
+					where TAR.record_status = 'Y'
+					AND RD.RECORD_STATUS = 'Y'
+					AND RDR.RECORD_STATUS = 'Y'
+					and RDR.DOCTOR_STATUS_ID = '20'
+					AND rdr.AUDIT_STATUS_ID = 'Passed'
+					and TAR.USER_FLOW NOT IN
+						(SELECT DOCTOR_FLOW
+						FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+					and rdr.joint_org_flow is null
+					and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+					group by tar.activity_flow
+				) b on b.activity_flow = tai.activity_flow
+				left join (
+					SELECT count(1) as doctor_join_num,tai.org_flow
+					FROM   teaching_activity_result   tar
+					LEFT join teaching_activity_info tai on tai.activity_flow = tar.activity_flow
+					LEFT JOIN RES_DOCTOR RD ON TAR.USER_FLOW = RD.DOCTOR_FLOW
+					LEFT JOIN RES_DOCTOR_RECRUIT RDR ON TAR.USER_FLOW = RDR.DOCTOR_FLOW
+					where tar.record_status = 'Y'
+					and tai.record_status = 'Y'
+					AND RD.RECORD_STATUS = 'Y'
+					AND RDR.RECORD_STATUS = 'Y'
+					and RDR.DOCTOR_STATUS_ID = '20'
+					AND rdr.AUDIT_STATUS_ID = 'Passed'
+					and TAR.USER_FLOW NOT IN
+						(SELECT DOCTOR_FLOW
+						FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+					and rdr.joint_org_flow is null
+					and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+					and tai.start_time >= #{startDate}
+					and tai.start_time <![CDATA[<]]> #{endDate}
+					group by tai.org_flow
+				) c on c.org_flow = tai.org_flow
+				LEFT JOIN (
+					SELECT COUNT(ACTIVITY_FLOW) AS activity_num,SO.ORG_FLOW
+					FROM  SYS_ORG SO
+					LEFT JOIN teaching_activity_info INFO ON INFO.ORG_FLOW = SO.ORG_FLOW
+					AND INFO.RECORD_STATUS = 'Y'
+					WHERE SO.RECORD_STATUS = 'Y'
+					GROUP BY SO.ORG_FLOW
+				) H ON H.ORG_FLOW = SO.ORG_FLOW
+				where so.record_status = 'Y'
+				AND so.org_type_id = 'Hospital'
+  				AND SO.ORG_PROV_ID = '320000'
+  				and so.org_code is not null
+				and not exists (
+					select 1 from res_joint_org
+					where record_status = 'Y'
+					and joint_org_flow = so.org_flow
+				)
+				group by so.org_code,so.org_flow,so.org_name,a.DOCTOR_TRAIN_TOTAL,c.doctor_join_num,H.activity_num
+			)
+	</insert>
+
+	<insert id="insertOrgActivityDoctorData">
+		INSERT INTO jsres_activity_statistics (RECORD_FLOW ,org_code ,PARENT_ORG_FLOW,ORG_FLOW,ORG_NAME,
+			MONTH_DATE,DOCTOR_TRAIN_TOTAL,activity_num ,doctor_joint_num,avg_joint_num,avg_time,DOCTOR_TYPE_ID,
+			CREATE_TIME)
+			SELECT lower(rawtohex(sys_guid())),org_code,null,org_flow,org_name,#{monthDate},nvl(DOCTOR_TRAIN_TOTAL,0),
+			activity_num,nvl(doctor_join_num,0),
+			case when activity_num = 0 then 0 else ROUND(doctor_join_num/activity_num,0) end,
+			case when activity_num = 0 then 0 else ROUND(activity_time_sum/activity_num,0) end,
+			'Doctor',#{createTime}
+			FROM (
+				SELECT H.activity_num,so.org_code,so.org_flow,so.org_name,a.DOCTOR_TRAIN_TOTAL,c.doctor_join_num,
+					ROUND(sum(TO_NUMBER((TO_DATE(b.end_time,'yyyy-mm-dd hh24:mi:ss')- TO_DATE(b.start_time,'yyyy-mm-dd hh24:mi:ss'))*24*60)),0) as activity_time_sum
+				FROM SYS_ORG SO
+				LEFT JOIN  teaching_activity_info tai ON SO.ORG_FLOW = TAI.ORG_FLOW
+					and tai.record_status = 'Y'
+					and tai.start_time >= #{startDate}
+					and tai.start_time <![CDATA[<]]> #{endDate}
+				left join (
+					SELECT COUNT(0) as DOCTOR_TRAIN_TOTAL,rdr.org_flow FROM res_doctor_recruit rdr
+					LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+					LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+					WHERE rdr.RECORD_STATUS = 'Y'
+					and U.RECORD_STATUS = 'Y'
+					and RDR.DOCTOR_STATUS_ID = '20'
+					AND rdr.AUDIT_STATUS_ID = 'Passed'
+					and RDR.DOCTOR_FLOW NOT IN
+						(SELECT DOCTOR_FLOW
+						FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+					and rdr.joint_org_flow is null
+					and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social')
+					group by rdr.org_flow
+				) a on a.org_flow = so.org_flow
+				left join (
+					SELECT min(TAR.scan_time) as start_time,min(TAR.scan_time2) as end_time,TAR.activity_flow
+					FROM   teaching_activity_result TAR
+					LEFT JOIN RES_DOCTOR RD ON TAR.USER_FLOW = RD.DOCTOR_FLOW
+					LEFT JOIN RES_DOCTOR_RECRUIT RDR ON TAR.USER_FLOW = RDR.DOCTOR_FLOW
+					where TAR.record_status = 'Y'
+					AND RD.RECORD_STATUS = 'Y'
+					AND RDR.RECORD_STATUS = 'Y'
+					and RDR.DOCTOR_STATUS_ID = '20'
+					AND rdr.AUDIT_STATUS_ID = 'Passed'
+					and TAR.USER_FLOW NOT IN
+						(SELECT DOCTOR_FLOW
+						FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+					and rdr.joint_org_flow is null
+					and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social')
+					group by tar.activity_flow
+				) b on b.activity_flow = tai.activity_flow
+				left join (
+					SELECT count(1) as doctor_join_num,tai.org_flow
+					FROM   teaching_activity_result   tar
+					LEFT join teaching_activity_info tai on tai.activity_flow = tar.activity_flow
+					LEFT JOIN RES_DOCTOR RD ON TAR.USER_FLOW = RD.DOCTOR_FLOW
+					LEFT JOIN RES_DOCTOR_RECRUIT RDR ON TAR.USER_FLOW = RDR.DOCTOR_FLOW
+					where tar.record_status = 'Y'
+					and tai.record_status = 'Y'
+					AND RD.RECORD_STATUS = 'Y'
+					AND RDR.RECORD_STATUS = 'Y'
+					and RDR.DOCTOR_STATUS_ID = '20'
+					AND rdr.AUDIT_STATUS_ID = 'Passed'
+					and TAR.USER_FLOW NOT IN
+						(SELECT DOCTOR_FLOW
+						FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+					and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social')
+					and rdr.joint_org_flow is null
+					and tai.start_time >= #{startDate}
+					and tai.start_time <![CDATA[<]]> #{endDate}
+					group by tai.org_flow
+				) c on c.org_flow = tai.org_flow
+				LEFT JOIN (
+					SELECT COUNT(ACTIVITY_FLOW) AS activity_num,SO.ORG_FLOW
+					FROM  SYS_ORG SO
+					LEFT JOIN teaching_activity_info INFO ON INFO.ORG_FLOW = SO.ORG_FLOW
+					AND INFO.RECORD_STATUS = 'Y'
+					WHERE SO.RECORD_STATUS = 'Y'
+					GROUP BY SO.ORG_FLOW
+				) H ON H.ORG_FLOW = SO.ORG_FLOW
+				where so.record_status = 'Y'
+				AND so.org_type_id = 'Hospital'
+  				AND SO.ORG_PROV_ID = '320000'
+  				and so.org_code is not null
+				and not exists (
+					select 1 from res_joint_org
+					where record_status = 'Y'
+					and joint_org_flow = so.org_flow
+				)
+				group by so.org_code,so.org_flow,so.org_name,a.DOCTOR_TRAIN_TOTAL,c.doctor_join_num,H.activity_num
+			)
+	</insert>
+
+	<insert id="insertOrgActivityGraduateData">
+		INSERT INTO jsres_activity_statistics (RECORD_FLOW ,org_code ,PARENT_ORG_FLOW,ORG_FLOW,ORG_NAME,
+			MONTH_DATE,DOCTOR_TRAIN_TOTAL,activity_num ,doctor_joint_num,avg_joint_num,avg_time,DOCTOR_TYPE_ID,
+			CREATE_TIME)
+			SELECT lower(rawtohex(sys_guid())),org_code,null,org_flow,org_name,#{monthDate},nvl(DOCTOR_TRAIN_TOTAL,0),
+			activity_num,nvl(doctor_join_num,0),
+			case when activity_num = 0 then 0 else ROUND(doctor_join_num/activity_num,0) end,
+			case when activity_num = 0 then 0 else ROUND(activity_time_sum/activity_num,0) end,
+			'Graduate',#{createTime}
+			FROM (
+				SELECT H.activity_num,so.org_code,so.org_flow,so.org_name,a.DOCTOR_TRAIN_TOTAL,c.doctor_join_num,
+					ROUND(sum(TO_NUMBER((TO_DATE(b.end_time,'yyyy-mm-dd hh24:mi:ss')- TO_DATE(b.start_time,'yyyy-mm-dd hh24:mi:ss'))*24*60)),0) as activity_time_sum
+				FROM SYS_ORG SO
+				LEFT JOIN  teaching_activity_info tai ON SO.ORG_FLOW = TAI.ORG_FLOW
+					and tai.record_status = 'Y'
+					and tai.start_time >= #{startDate}
+					and tai.start_time <![CDATA[<]]> #{endDate}
+				left join (
+					SELECT COUNT(0) as DOCTOR_TRAIN_TOTAL,rdr.org_flow FROM res_doctor_recruit rdr
+					LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+					LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+					WHERE rdr.RECORD_STATUS = 'Y'
+					and U.RECORD_STATUS = 'Y'
+					and RDR.DOCTOR_STATUS_ID = '20'
+					AND rdr.AUDIT_STATUS_ID = 'Passed'
+					and RDR.DOCTOR_FLOW NOT IN
+						(SELECT DOCTOR_FLOW
+						FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+					and rdr.joint_org_flow is null
+					and rd.doctor_type_id = 'Graduate'
+					group by rdr.org_flow
+				) a on a.org_flow = so.org_flow
+				left join (
+					SELECT min(TAR.scan_time) as start_time,min(TAR.scan_time2) as end_time,TAR.activity_flow
+					FROM   teaching_activity_result TAR
+					LEFT JOIN RES_DOCTOR RD ON TAR.USER_FLOW = RD.DOCTOR_FLOW
+					LEFT JOIN RES_DOCTOR_RECRUIT RDR ON TAR.USER_FLOW = RDR.DOCTOR_FLOW
+					where TAR.record_status = 'Y'
+					AND RD.RECORD_STATUS = 'Y'
+					AND RDR.RECORD_STATUS = 'Y'
+					and RDR.DOCTOR_STATUS_ID = '20'
+					AND rdr.AUDIT_STATUS_ID = 'Passed'
+					and TAR.USER_FLOW NOT IN
+						(SELECT DOCTOR_FLOW
+						FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+					and rdr.joint_org_flow is null
+					and rd.doctor_type_id = 'Graduate'
+					group by tar.activity_flow
+				) b on b.activity_flow = tai.activity_flow
+				left join (
+					SELECT count(1) as doctor_join_num,tai.org_flow
+					FROM   teaching_activity_result   tar
+					LEFT join teaching_activity_info tai on tai.activity_flow = tar.activity_flow
+					LEFT JOIN RES_DOCTOR RD ON TAR.USER_FLOW = RD.DOCTOR_FLOW
+					LEFT JOIN RES_DOCTOR_RECRUIT RDR ON TAR.USER_FLOW = RDR.DOCTOR_FLOW
+					where tar.record_status = 'Y'
+					and tai.record_status = 'Y'
+					AND RD.RECORD_STATUS = 'Y'
+					AND RDR.RECORD_STATUS = 'Y'
+					and RDR.DOCTOR_STATUS_ID = '20'
+					AND rdr.AUDIT_STATUS_ID = 'Passed'
+					and TAR.USER_FLOW NOT IN
+						(SELECT DOCTOR_FLOW
+						FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+					and rdr.joint_org_flow is null
+					and rd.doctor_type_id = 'Graduate'
+					and tai.start_time >= #{startDate}
+					and tai.start_time <![CDATA[<]]> #{endDate}
+					group by tai.org_flow
+				) c on c.org_flow = tai.org_flow
+				LEFT JOIN (
+					SELECT COUNT(ACTIVITY_FLOW) AS activity_num,SO.ORG_FLOW
+					FROM  SYS_ORG SO
+					LEFT JOIN teaching_activity_info INFO ON INFO.ORG_FLOW = SO.ORG_FLOW
+					AND INFO.RECORD_STATUS = 'Y'
+					WHERE SO.RECORD_STATUS = 'Y'
+					GROUP BY SO.ORG_FLOW
+				) H ON H.ORG_FLOW = SO.ORG_FLOW
+				where so.record_status = 'Y'
+				AND so.org_type_id = 'Hospital'
+  				AND SO.ORG_PROV_ID = '320000'
+  				and so.org_code is not null
+				and not exists (
+					select 1 from res_joint_org
+					where record_status = 'Y'
+					and joint_org_flow = so.org_flow
+				)
+				group by so.org_code,so.org_flow,so.org_name,a.DOCTOR_TRAIN_TOTAL,c.doctor_join_num,H.activity_num
+			)
+	</insert>
+
+	<insert id="insertJointOrgActivityData">
+		INSERT INTO jsres_activity_statistics (RECORD_FLOW ,org_code ,PARENT_ORG_FLOW,ORG_FLOW,ORG_NAME,
+			MONTH_DATE,DOCTOR_TRAIN_TOTAL,activity_num ,doctor_joint_num,avg_joint_num,avg_time,DOCTOR_TYPE_ID,
+			CREATE_TIME)
+			SELECT lower(rawtohex(sys_guid())),org_code,parent_org_flow,
+				org_flow,org_name,#{monthDate},nvl(DOCTOR_TRAIN_TOTAL,0),activity_num,nvl(doctor_join_num,0),
+				case when activity_num = 0 then 0 else ROUND(doctor_join_num/activity_num,0) end,
+				case when activity_num = 0 then 0 else ROUND(activity_time_sum/activity_num,0) end,
+				'All',#{createTime}
+			FROM (
+				SELECT H.activity_num,so.org_code,
+					CASE WHEN (SELECT 1 FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = SO.ORG_FLOW) = 1
+						THEN (SELECT ORG_FLOW FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = SO.ORG_FLOW)
+						ELSE NULL END AS PARENT_ORG_FLOW,
+					so.org_flow,so.org_name,a.DOCTOR_TRAIN_TOTAL,c.doctor_join_num,
+					ROUND(sum(TO_NUMBER((TO_DATE(b.end_time,'yyyy-mm-dd hh24:mi:ss')- TO_DATE(b.start_time,'yyyy-mm-dd hh24:mi:ss'))*24*60)),0) as activity_time_sum
+				FROM SYS_ORG SO
+				LEFT JOIN  teaching_activity_info tai ON SO.ORG_FLOW = TAI.ORG_FLOW
+					and tai.record_status = 'Y'
+					and tai.start_time >= #{startDate}
+					and tai.start_time <![CDATA[<]]> #{endDate}
+				left join (
+					SELECT COUNT(0) as DOCTOR_TRAIN_TOTAL,rdr.joint_org_flow FROM res_doctor_recruit rdr
+					LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+					LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+					WHERE rdr.RECORD_STATUS = 'Y'
+					and U.RECORD_STATUS = 'Y'
+					and RDR.DOCTOR_STATUS_ID = '20'
+					AND rdr.AUDIT_STATUS_ID = 'Passed'
+					and RDR.DOCTOR_FLOW NOT IN
+						(SELECT DOCTOR_FLOW
+						FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+					and rdr.joint_org_flow is not null
+					and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+					group by rdr.joint_org_flow
+				) a on a.joint_org_flow = so.org_flow
+				left join (
+					SELECT min(TAR.scan_time) as start_time,min(TAR.scan_time2) as end_time,TAR.activity_flow
+					FROM   teaching_activity_result TAR
+					LEFT JOIN RES_DOCTOR RD ON TAR.USER_FLOW = RD.DOCTOR_FLOW
+					LEFT JOIN RES_DOCTOR_RECRUIT RDR ON TAR.USER_FLOW = RDR.DOCTOR_FLOW
+					where TAR.record_status = 'Y'
+					AND RD.RECORD_STATUS = 'Y'
+					AND RDR.RECORD_STATUS = 'Y'
+					and RDR.DOCTOR_STATUS_ID = '20'
+					AND rdr.AUDIT_STATUS_ID = 'Passed'
+					and TAR.USER_FLOW NOT IN
+						(SELECT DOCTOR_FLOW
+						FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+					and rdr.joint_org_flow is not null
+					and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+					group by tar.activity_flow
+				) b on b.activity_flow = tai.activity_flow
+				left join (
+					SELECT count(1) as doctor_join_num,tai.org_flow
+					FROM   teaching_activity_result   tar
+					LEFT join teaching_activity_info tai on tai.activity_flow = tar.activity_flow
+					LEFT JOIN RES_DOCTOR RD ON TAR.USER_FLOW = RD.DOCTOR_FLOW
+					LEFT JOIN RES_DOCTOR_RECRUIT RDR ON TAR.USER_FLOW = RDR.DOCTOR_FLOW
+					where tar.record_status = 'Y'
+					and tai.record_status = 'Y'
+					AND RD.RECORD_STATUS = 'Y'
+					AND RDR.RECORD_STATUS = 'Y'
+					and RDR.DOCTOR_STATUS_ID = '20'
+					AND rdr.AUDIT_STATUS_ID = 'Passed'
+					and TAR.USER_FLOW NOT IN
+						(SELECT DOCTOR_FLOW
+						FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+					and rdr.joint_org_flow is not null
+					and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+					and tai.start_time >= #{startDate}
+					and tai.start_time <![CDATA[<]]> #{endDate}
+					group by tai.org_flow
+				) c on c.org_flow = tai.org_flow
+				LEFT JOIN (
+					SELECT COUNT(ACTIVITY_FLOW) AS activity_num,SO.ORG_FLOW
+					FROM  SYS_ORG SO
+					LEFT JOIN teaching_activity_info INFO ON INFO.ORG_FLOW = SO.ORG_FLOW
+					AND INFO.RECORD_STATUS = 'Y'
+					WHERE SO.RECORD_STATUS = 'Y'
+					GROUP BY SO.ORG_FLOW
+				) H ON H.ORG_FLOW = SO.ORG_FLOW
+				where so.record_status = 'Y'
+				AND so.org_type_id = 'Hospital'
+  				AND SO.ORG_PROV_ID = '320000'
+  				and so.org_code is not null
+				and exists (
+					select 1 from res_joint_org
+					where record_status = 'Y'
+					and joint_org_flow = so.org_flow
+				)
+				group by so.org_code,so.org_flow,so.org_name,a.DOCTOR_TRAIN_TOTAL,c.doctor_join_num,H.activity_num
+			)
+	</insert>
+
+	<insert id="insertJointOrgActivityDoctorData">
+		INSERT INTO jsres_activity_statistics (RECORD_FLOW ,org_code ,PARENT_ORG_FLOW,ORG_FLOW,ORG_NAME,
+			MONTH_DATE,DOCTOR_TRAIN_TOTAL,activity_num ,doctor_joint_num,avg_joint_num,avg_time,DOCTOR_TYPE_ID,
+			CREATE_TIME)
+			SELECT lower(rawtohex(sys_guid())),org_code,PARENT_ORG_FLOW,org_flow,org_name,#{monthDate},nvl(DOCTOR_TRAIN_TOTAL,0),
+			activity_num,nvl(doctor_join_num,0),
+			case when activity_num = 0 then 0 else ROUND(doctor_join_num/activity_num,0) end,
+			case when activity_num = 0 then 0 else ROUND(activity_time_sum/activity_num,0) end,
+			'Doctor',#{createTime}
+			FROM (
+				SELECT H.activity_num,so.org_code,
+					CASE WHEN (SELECT 1 FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = SO.ORG_FLOW) = 1
+						THEN (SELECT ORG_FLOW FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = SO.ORG_FLOW)
+						ELSE NULL END AS PARENT_ORG_FLOW,
+					so.org_flow,so.org_name,a.DOCTOR_TRAIN_TOTAL,c.doctor_join_num,
+					ROUND(sum(TO_NUMBER((TO_DATE(b.end_time,'yyyy-mm-dd hh24:mi:ss')- TO_DATE(b.start_time,'yyyy-mm-dd hh24:mi:ss'))*24*60)),0) as activity_time_sum
+				FROM SYS_ORG SO
+				LEFT JOIN  teaching_activity_info tai ON SO.ORG_FLOW = TAI.ORG_FLOW
+					and tai.record_status = 'Y'
+					and tai.start_time >= #{startDate}
+					and tai.start_time <![CDATA[<]]> #{endDate}
+				left join (
+					SELECT COUNT(0) as DOCTOR_TRAIN_TOTAL,rdr.joint_org_flow FROM res_doctor_recruit rdr
+					LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+					LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+					WHERE rdr.RECORD_STATUS = 'Y'
+					and U.RECORD_STATUS = 'Y'
+					and RDR.DOCTOR_STATUS_ID = '20'
+					AND rdr.AUDIT_STATUS_ID = 'Passed'
+					and RDR.DOCTOR_FLOW NOT IN
+						(SELECT DOCTOR_FLOW
+						FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+					and rdr.joint_org_flow is not null
+					and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social')
+					group by rdr.joint_org_flow
+				) a on a.joint_org_flow = so.org_flow
+				left join (
+					SELECT min(TAR.scan_time) as start_time,min(TAR.scan_time2) as end_time,TAR.activity_flow
+					FROM   teaching_activity_result TAR
+					LEFT JOIN RES_DOCTOR RD ON TAR.USER_FLOW = RD.DOCTOR_FLOW
+					LEFT JOIN RES_DOCTOR_RECRUIT RDR ON TAR.USER_FLOW = RDR.DOCTOR_FLOW
+					where TAR.record_status = 'Y'
+					AND RD.RECORD_STATUS = 'Y'
+					AND RDR.RECORD_STATUS = 'Y'
+					and RDR.DOCTOR_STATUS_ID = '20'
+					AND rdr.AUDIT_STATUS_ID = 'Passed'
+					and TAR.USER_FLOW NOT IN
+						(SELECT DOCTOR_FLOW
+						FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+					and rdr.joint_org_flow is not null
+					and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social')
+					group by tar.activity_flow
+				) b on b.activity_flow = tai.activity_flow
+				left join (
+					SELECT count(1) as doctor_join_num,tai.org_flow
+					FROM   teaching_activity_result   tar
+					LEFT join teaching_activity_info tai on tai.activity_flow = tar.activity_flow
+					LEFT JOIN RES_DOCTOR RD ON TAR.USER_FLOW = RD.DOCTOR_FLOW
+					LEFT JOIN RES_DOCTOR_RECRUIT RDR ON TAR.USER_FLOW = RDR.DOCTOR_FLOW
+					where tar.record_status = 'Y'
+					and tai.record_status = 'Y'
+					AND RD.RECORD_STATUS = 'Y'
+					AND RDR.RECORD_STATUS = 'Y'
+					and RDR.DOCTOR_STATUS_ID = '20'
+					AND rdr.AUDIT_STATUS_ID = 'Passed'
+					and TAR.USER_FLOW NOT IN
+						(SELECT DOCTOR_FLOW
+						FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+					and rdr.joint_org_flow is not null
+					and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social')
+					and tai.start_time >= #{startDate}
+					and tai.start_time <![CDATA[<]]> #{endDate}
+					group by tai.org_flow
+				) c on c.org_flow = tai.org_flow
+				LEFT JOIN (
+					SELECT COUNT(ACTIVITY_FLOW) AS activity_num,SO.ORG_FLOW
+					FROM  SYS_ORG SO
+					LEFT JOIN teaching_activity_info INFO ON INFO.ORG_FLOW = SO.ORG_FLOW
+					AND INFO.RECORD_STATUS = 'Y'
+					WHERE SO.RECORD_STATUS = 'Y'
+					GROUP BY SO.ORG_FLOW
+				) H ON H.ORG_FLOW = SO.ORG_FLOW
+				where so.record_status = 'Y'
+				AND so.org_type_id = 'Hospital'
+  				AND SO.ORG_PROV_ID = '320000'
+  				and so.org_code is not null
+				and exists (
+					select 1 from res_joint_org
+					where record_status = 'Y'
+					and joint_org_flow = so.org_flow
+				)
+				group by so.org_code,so.org_flow,so.org_name,a.DOCTOR_TRAIN_TOTAL,c.doctor_join_num,H.activity_num
+			)
+	</insert>
+
+	<insert id="insertJointOrgActivityGraduateData">
+		INSERT INTO jsres_activity_statistics (RECORD_FLOW ,org_code ,PARENT_ORG_FLOW,ORG_FLOW,ORG_NAME,
+			MONTH_DATE,DOCTOR_TRAIN_TOTAL,activity_num ,doctor_joint_num,avg_joint_num,avg_time,DOCTOR_TYPE_ID,
+			CREATE_TIME)
+			SELECT lower(rawtohex(sys_guid())),org_code,PARENT_ORG_FLOW,org_flow,org_name,#{monthDate},nvl(DOCTOR_TRAIN_TOTAL,0),
+			activity_num,nvl(doctor_join_num,0),
+			case when activity_num = 0 then 0 else ROUND(doctor_join_num/activity_num,0) end,
+			case when activity_num = 0 then 0 else ROUND(activity_time_sum/activity_num,0) end,
+			'Graduate',#{createTime}
+			FROM (
+				SELECT H.activity_num,so.org_code,
+					CASE WHEN (SELECT 1 FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = SO.ORG_FLOW) = 1
+						THEN (SELECT ORG_FLOW FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = SO.ORG_FLOW)
+						ELSE NULL END AS PARENT_ORG_FLOW,
+					so.org_flow,so.org_name,a.DOCTOR_TRAIN_TOTAL,c.doctor_join_num,
+					ROUND(sum(TO_NUMBER((TO_DATE(b.end_time,'yyyy-mm-dd hh24:mi:ss')- TO_DATE(b.start_time,'yyyy-mm-dd hh24:mi:ss'))*24*60)),0) as activity_time_sum
+				FROM SYS_ORG SO
+				LEFT JOIN  teaching_activity_info tai ON SO.ORG_FLOW = TAI.ORG_FLOW
+					and tai.record_status = 'Y'
+					and tai.start_time >= #{startDate}
+					and tai.start_time <![CDATA[<]]> #{endDate}
+				left join (
+					SELECT COUNT(0) as DOCTOR_TRAIN_TOTAL,rdr.joint_org_flow FROM res_doctor_recruit rdr
+					LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+					LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+					WHERE rdr.RECORD_STATUS = 'Y'
+					and U.RECORD_STATUS = 'Y'
+					and RDR.DOCTOR_STATUS_ID = '20'
+					AND rdr.AUDIT_STATUS_ID = 'Passed'
+					and RDR.DOCTOR_FLOW NOT IN
+						(SELECT DOCTOR_FLOW
+						FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+					and rdr.joint_org_flow is not null
+					and rd.doctor_type_id = 'Graduate'
+					group by rdr.joint_org_flow
+				) a on a.joint_org_flow = so.org_flow
+				left join (
+					SELECT min(TAR.scan_time) as start_time,min(TAR.scan_time2) as end_time,TAR.activity_flow
+					FROM   teaching_activity_result TAR
+					LEFT JOIN RES_DOCTOR RD ON TAR.USER_FLOW = RD.DOCTOR_FLOW
+					LEFT JOIN RES_DOCTOR_RECRUIT RDR ON TAR.USER_FLOW = RDR.DOCTOR_FLOW
+					where TAR.record_status = 'Y'
+					AND RD.RECORD_STATUS = 'Y'
+					AND RDR.RECORD_STATUS = 'Y'
+					and RDR.DOCTOR_STATUS_ID = '20'
+					AND rdr.AUDIT_STATUS_ID = 'Passed'
+					and TAR.USER_FLOW NOT IN
+						(SELECT DOCTOR_FLOW
+						FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+					and rdr.joint_org_flow is not null
+					and rd.doctor_type_id = 'Graduate'
+					group by tar.activity_flow
+				) b on b.activity_flow = tai.activity_flow
+				left join (
+					SELECT count(1) as doctor_join_num,tai.org_flow
+					FROM   teaching_activity_result   tar
+					LEFT join teaching_activity_info tai on tai.activity_flow = tar.activity_flow
+					LEFT JOIN RES_DOCTOR RD ON TAR.USER_FLOW = RD.DOCTOR_FLOW
+					LEFT JOIN RES_DOCTOR_RECRUIT RDR ON TAR.USER_FLOW = RDR.DOCTOR_FLOW
+					where tar.record_status = 'Y'
+					and tai.record_status = 'Y'
+					AND RD.RECORD_STATUS = 'Y'
+					AND RDR.RECORD_STATUS = 'Y'
+					and RDR.DOCTOR_STATUS_ID = '20'
+					AND rdr.AUDIT_STATUS_ID = 'Passed'
+					and TAR.USER_FLOW NOT IN
+						(SELECT DOCTOR_FLOW
+						FROM RES_DOCOTR_DELAY_TETURN
+						WHERE RECORD_STATUS = 'Y' AND TYPE_ID = 'ReturnTraining'
+						and audit_status_id = '1'
+						and rdr.SESSION_NUMBER = SESSION_NUMBER)
+					and rdr.joint_org_flow is not null
+					and rd.doctor_type_id = 'Graduate'
+					and tai.start_time >= #{startDate}
+					and tai.start_time <![CDATA[<]]> #{endDate}
+					group by tai.org_flow
+				) c on c.org_flow = tai.org_flow
+				LEFT JOIN (
+					SELECT COUNT(ACTIVITY_FLOW) AS activity_num,SO.ORG_FLOW
+					FROM  SYS_ORG SO
+					LEFT JOIN teaching_activity_info INFO ON INFO.ORG_FLOW = SO.ORG_FLOW
+					AND INFO.RECORD_STATUS = 'Y'
+					WHERE SO.RECORD_STATUS = 'Y'
+					GROUP BY SO.ORG_FLOW
+				) H ON H.ORG_FLOW = SO.ORG_FLOW
+				where so.record_status = 'Y'
+				AND so.org_type_id = 'Hospital'
+  				AND SO.ORG_PROV_ID = '320000'
+  				and so.org_code is not null
+				and exists (
+					select 1 from res_joint_org
+					where record_status = 'Y'
+					and joint_org_flow = so.org_flow
+				)
+				group by so.org_code,so.org_flow,so.org_name,a.DOCTOR_TRAIN_TOTAL,c.doctor_join_num,H.activity_num
+			)
+	</insert>
+
+	<select id="selectAllActivityData" parameterType="string"  resultMap="com.pinde.sci.dao.base.JsresActivityStatisticsMapper.BaseResultMap">
+		SELECT * FROM JSRES_ACTIVITY_STATISTICS
+		WHERE MONTH_DATE = #{monthDate}
+		AND DOCTOR_TYPE_ID = 'All'
+		ORDER BY ORG_CODE
+	</select>
+
+	<select id="searchLocalActivityData" parameterType="map"  resultMap="com.pinde.sci.dao.base.JsresActivityStatisticsMapper.BaseResultMap">
+		SELECT * FROM JSRES_ACTIVITY_STATISTICS
+		WHERE MONTH_DATE = #{monthDate}
+		AND DOCTOR_TYPE_ID = #{doctorTypeId}
+		<if test="orgFlow != null and orgFlow != ''">
+			AND ORG_FLOW = #{orgFlow}
+		</if>
+		<if test="orgFlows!=null and orgFlows.size>0">
+			AND ORG_FLOW IN
+			<foreach collection="orgFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="orderBy==null or orderBy==''">
+			order by org_code
+		</if>
+		<if test="orderBy!=null and orderBy!=''">
+			<if test="orderBy == 'activityNumDesc'.toString()">
+				order by activity_num desc
+			</if>
+			<if test="orderBy == 'activityNumAsc'.toString()">
+				order by activity_num asc
+			</if>
+			<if test="orderBy == 'doctorJointNumDesc'.toString()">
+				order by doctor_joint_num desc
+			</if>
+			<if test="orderBy == 'doctorJointNumAsc'.toString()">
+				order by doctor_joint_num asc
+			</if>
+			<if test="orderBy == 'avgTimeDesc'.toString()">
+				order by avg_time desc
+			</if>
+			<if test="orderBy == 'avgTimeAsc'.toString()">
+				order by avg_time asc
+			</if>
+		</if>
+	</select>
+
+	<delete id="deleteAllOutDeptData" >
+		delete from JSRES_OUT_DEPT_STATISTICS where  MONTH_DATE = #{monthDate}
+	</delete>
+
+	<insert id="insertOrgOutDeptData">
+		INSERT INTO jsres_out_dept_statistics (RECORD_FLOW ,org_code ,PARENT_ORG_FLOW,ORG_FLOW,ORG_NAME,
+			MONTH_DATE,OUT_DEPT_NUM,REAL_NUM ,NOT_NUM,NOT_NUM_SCALE,DOCTOR_TYPE_ID,CREATE_TIME)
+			SELECT lower(rawtohex(sys_guid())),so.org_code,
+				CASE WHEN (SELECT 1 FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = SO.ORG_FLOW) = 1
+				THEN (SELECT ORG_FLOW FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = SO.ORG_FLOW)
+				ELSE NULL END AS PARENT_ORG_FLOW,
+				SO.ORG_FLOW,SO.ORG_NAME,#{monthDate},NVL(OUT_DEPT_NUM,0), NVL(REAL_NUM,0), NVL(NOT_NUM,0),
+				CASE WHEN OUT_DEPT_NUM IS NULL OR OUT_DEPT_NUM = 0  THEN 0 ELSE ROUND(NOT_NUM/OUT_DEPT_NUM,2)*100 end AS NOT_NUM_SCALE,
+				'All',#{createTime}
+			FROM   SYS_ORG SO
+			LEFT JOIN (
+				select rdsp.org_flow,count(rdsp.org_flow) as out_dept_num
+				from RES_DOCTOR_SCH_PROCESS rdsp
+				left join res_doctor rd on rdsp.user_flow = rd.doctor_flow
+				where rdsp.record_status = 'Y'
+				and rd.record_status = 'Y'
+				and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+				and rdsp.SCH_END_DATE >= #{startDate}
+				and rdsp.SCH_END_DATE <![CDATA[<]]> #{endDate}
+				group by rdsp.org_flow
+			) A ON A.ORG_FLOW = SO.ORG_FLOW
+			LEFT JOIN (
+				select rdsp.org_flow,count(rdsp.org_flow) as real_num
+				from RES_DOCTOR_SCH_PROCESS rdsp
+				left join res_doctor rd on rdsp.user_flow = rd.doctor_flow
+				where rdsp.record_status = 'Y'
+				and rd.record_status = 'Y'
+				and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+				and rdsp.SCH_END_DATE >= #{startDate}
+				and rdsp.SCH_END_DATE <![CDATA[<]]> #{endDate}
+				AND EXISTS (SELECT 1
+					FROM res_sch_process_express e
+					WHERE e.process_flow = rdsp.process_flow
+					AND e.record_status = 'Y'
+					AND e.rec_type_id = 'AfterEvaluation'
+				)
+				group by rdsp.org_flow
+			) B ON B.ORG_FLOW = SO.ORG_FLOW
+			LEFT JOIN (
+				select rdsp.org_flow,count(rdsp.org_flow) as not_num
+				from RES_DOCTOR_SCH_PROCESS rdsp
+				left join res_doctor rd on rdsp.user_flow = rd.doctor_flow
+				where rdsp.record_status = 'Y'
+				and rd.record_status = 'Y'
+				and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+				and rdsp.SCH_END_DATE >= #{startDate}
+				and rdsp.SCH_END_DATE <![CDATA[<]]> #{endDate}
+				AND NOT EXISTS (SELECT 1
+					FROM res_sch_process_express e
+					WHERE e.process_flow = rdsp.process_flow
+					AND e.record_status = 'Y'
+					AND e.rec_type_id = 'AfterEvaluation'
+				)
+				group by rdsp.org_flow
+			) C ON C.ORG_FLOW = SO.ORG_FLOW
+			where so.record_status = 'Y'
+			AND so.org_type_id = 'Hospital'
+  			AND SO.ORG_PROV_ID = '320000'
+			and so.org_code is not null
+	</insert>
+
+	<insert id="insertOrgOutDeptDoctorData">
+		INSERT INTO jsres_out_dept_statistics (RECORD_FLOW ,org_code ,PARENT_ORG_FLOW,ORG_FLOW,ORG_NAME,
+			MONTH_DATE,OUT_DEPT_NUM,REAL_NUM ,NOT_NUM,NOT_NUM_SCALE,DOCTOR_TYPE_ID,CREATE_TIME)
+			SELECT lower(rawtohex(sys_guid())),so.org_code,
+				CASE WHEN (SELECT 1 FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = SO.ORG_FLOW) = 1
+				THEN (SELECT ORG_FLOW FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = SO.ORG_FLOW)
+				ELSE NULL END AS PARENT_ORG_FLOW,
+				SO.ORG_FLOW,SO.ORG_NAME,#{monthDate},NVL(OUT_DEPT_NUM,0), NVL(REAL_NUM,0), NVL(NOT_NUM,0),
+				CASE WHEN OUT_DEPT_NUM IS NULL OR OUT_DEPT_NUM = 0  THEN 0 ELSE ROUND(NOT_NUM/OUT_DEPT_NUM,2)*100 end AS NOT_NUM_SCALE,
+				'Doctor',#{createTime}
+			FROM   SYS_ORG SO
+			LEFT JOIN (
+				select rdsp.org_flow,count(rdsp.org_flow) as out_dept_num
+				from RES_DOCTOR_SCH_PROCESS rdsp
+				left join res_doctor rd on rdsp.user_flow = rd.doctor_flow
+				where rdsp.record_status = 'Y'
+				and rd.record_status = 'Y'
+				and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social')
+				and rdsp.SCH_END_DATE >= #{startDate}
+				and rdsp.SCH_END_DATE <![CDATA[<]]> #{endDate}
+				group by rdsp.org_flow
+			) A ON A.ORG_FLOW = SO.ORG_FLOW
+			LEFT JOIN (
+				select rdsp.org_flow,count(rdsp.org_flow) as real_num
+				from RES_DOCTOR_SCH_PROCESS rdsp
+				left join res_doctor rd on rdsp.user_flow = rd.doctor_flow
+				where rdsp.record_status = 'Y'
+				and rd.record_status = 'Y'
+				and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social')
+				and rdsp.SCH_END_DATE >= #{startDate}
+				and rdsp.SCH_END_DATE <![CDATA[<]]> #{endDate}
+				AND EXISTS (SELECT 1
+					FROM res_sch_process_express e
+					WHERE e.process_flow = rdsp.process_flow
+					AND e.record_status = 'Y'
+					AND e.rec_type_id = 'AfterEvaluation'
+				)
+				group by rdsp.org_flow
+			) B ON B.ORG_FLOW = SO.ORG_FLOW
+			LEFT JOIN (
+				select rdsp.org_flow,count(rdsp.org_flow) as not_num
+				from RES_DOCTOR_SCH_PROCESS rdsp
+				left join res_doctor rd on rdsp.user_flow = rd.doctor_flow
+				where rdsp.record_status = 'Y'
+				and rd.record_status = 'Y'
+				and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social')
+				and rdsp.SCH_END_DATE >= #{startDate}
+				and rdsp.SCH_END_DATE <![CDATA[<]]> #{endDate}
+				AND NOT EXISTS (SELECT 1
+					FROM res_sch_process_express e
+					WHERE e.process_flow = rdsp.process_flow
+					AND e.record_status = 'Y'
+					AND e.rec_type_id = 'AfterEvaluation'
+				)
+				group by rdsp.org_flow
+			) C ON C.ORG_FLOW = SO.ORG_FLOW
+			where so.record_status = 'Y'
+			AND so.org_type_id = 'Hospital'
+  			AND SO.ORG_PROV_ID = '320000'
+			and so.org_code is not null
+	</insert>
+
+	<insert id="insertOrgOutDeptGraduateData">
+		INSERT INTO jsres_out_dept_statistics (RECORD_FLOW ,org_code ,PARENT_ORG_FLOW,ORG_FLOW,ORG_NAME,
+			MONTH_DATE,OUT_DEPT_NUM,REAL_NUM ,NOT_NUM,NOT_NUM_SCALE,DOCTOR_TYPE_ID,CREATE_TIME)
+			SELECT lower(rawtohex(sys_guid())),so.org_code,
+				CASE WHEN (SELECT 1 FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = SO.ORG_FLOW) = 1
+				THEN (SELECT ORG_FLOW FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = SO.ORG_FLOW)
+				ELSE NULL END AS PARENT_ORG_FLOW,
+				SO.ORG_FLOW,SO.ORG_NAME,#{monthDate},NVL(OUT_DEPT_NUM,0), NVL(REAL_NUM,0), NVL(NOT_NUM,0),
+				CASE WHEN OUT_DEPT_NUM IS NULL OR OUT_DEPT_NUM = 0  THEN 0 ELSE ROUND(NOT_NUM/OUT_DEPT_NUM,2)*100 end AS NOT_NUM_SCALE,
+				'Graduate',#{createTime}
+			FROM   SYS_ORG SO
+			LEFT JOIN (
+				select rdsp.org_flow,count(rdsp.org_flow) as out_dept_num
+				from RES_DOCTOR_SCH_PROCESS rdsp
+				left join res_doctor rd on rdsp.user_flow = rd.doctor_flow
+				where rdsp.record_status = 'Y'
+				and rd.record_status = 'Y'
+				and rd.doctor_type_id = 'Graduate'
+				and rdsp.SCH_END_DATE >= #{startDate}
+				and rdsp.SCH_END_DATE <![CDATA[<]]> #{endDate}
+				group by rdsp.org_flow
+			) A ON A.ORG_FLOW = SO.ORG_FLOW
+			LEFT JOIN (
+				select rdsp.org_flow,count(rdsp.org_flow) as real_num
+				from RES_DOCTOR_SCH_PROCESS rdsp
+				left join res_doctor rd on rdsp.user_flow = rd.doctor_flow
+				where rdsp.record_status = 'Y'
+				and rd.record_status = 'Y'
+				and rd.doctor_type_id = 'Graduate'
+				and rdsp.SCH_END_DATE >= #{startDate}
+				and rdsp.SCH_END_DATE <![CDATA[<]]> #{endDate}
+				AND EXISTS (SELECT 1
+					FROM res_sch_process_express e
+					WHERE e.process_flow = rdsp.process_flow
+					AND e.record_status = 'Y'
+					AND e.rec_type_id = 'AfterEvaluation'
+				)
+				group by rdsp.org_flow
+			) B ON B.ORG_FLOW = SO.ORG_FLOW
+			LEFT JOIN (
+				select rdsp.org_flow,count(rdsp.org_flow) as not_num
+				from RES_DOCTOR_SCH_PROCESS rdsp
+				left join res_doctor rd on rdsp.user_flow = rd.doctor_flow
+				where rdsp.record_status = 'Y'
+				and rd.record_status = 'Y'
+				and rd.doctor_type_id = 'Graduate'
+				and rdsp.SCH_END_DATE >= #{startDate}
+				and rdsp.SCH_END_DATE <![CDATA[<]]> #{endDate}
+				AND NOT EXISTS (SELECT 1
+					FROM res_sch_process_express e
+					WHERE e.process_flow = rdsp.process_flow
+					AND e.record_status = 'Y'
+					AND e.rec_type_id = 'AfterEvaluation'
+				)
+				group by rdsp.org_flow
+			) C ON C.ORG_FLOW = SO.ORG_FLOW
+			where so.record_status = 'Y'
+			AND so.org_type_id = 'Hospital'
+  			AND SO.ORG_PROV_ID = '320000'
+			and so.org_code is not null
+	</insert>
+
+	<select id="searchOutDeptDate" parameterType="map"  resultMap="com.pinde.sci.dao.base.JsresOutDeptStatisticsMapper.BaseResultMap">
+		SELECT * FROM JSRES_OUT_DEPT_STATISTICS
+		WHERE MONTH_DATE = #{monthDate}
+		AND DOCTOR_TYPE_ID = #{doctorTypeId}
+		<if test="orgFlow != null and orgFlow != ''">
+			AND ORG_FLOW = #{orgFlow}
+		</if>
+		<if test="orgFlows!=null and orgFlows.size>0">
+			AND ORG_FLOW IN
+			<foreach collection="orgFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="sortFlag==null or sortFlag==''">
+			order by org_code
+		</if>
+		<if test="sortFlag!=null and sortFlag!=''">
+			<if test="sortFlag == 'notNumDesc'.toString()">
+				order by not_num desc
+			</if>
+			<if test="sortFlag == 'notNumAsc'.toString()">
+				order by not_num asc
+			</if>
+		</if>
+	</select>
+	
+	<select id="selectDoctorOutDeptData" parameterType="map" resultType="map">
+		SELECT SAR.ORG_FLOW,SAR.DOCTOR_FLOW,SAR.SCH_DEPT_FLOW
+		FROM sch_arrange_result SAR
+		LEFT JOIN RES_DOCTOR_SCH_PROCESS RDSP ON SAR.RESULT_FLOW = RDSP.SCH_RESULT_FLOW
+		LEFT JOIN RES_DOCTOR RD ON RDSP.USER_FLOW = RD.DOCTOR_FLOW
+		WHERE SAR.RECORD_STATUS = 'Y'
+		AND RD.RECORD_STATUS = 'Y'
+		<if test="doctorTypeId != null and doctorTypeId != ''">
+			<if test="doctorTypeId == 'All'.toString()">
+				AND RD.DOCTOR_TYPE_ID IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+			</if>
+			<if test="doctorTypeId == 'Doctor'.toString()">
+				AND RD.DOCTOR_TYPE_ID IN ('Company', 'CompanyEntrust', 'Social')
+			</if>
+			<if test="doctorTypeId == 'Graduate'.toString()">
+				AND RD.DOCTOR_TYPE_ID = 'Graduate'
+			</if>
+		</if>
+		AND RDSP.RECORD_STATUS = 'Y'
+		and rdsp.SCH_END_DATE >= #{startDate}
+		and rdsp.SCH_END_DATE <![CDATA[<]]> #{endDate}
+		AND EXISTS (SELECT 1
+			FROM res_sch_process_express e
+			WHERE e.process_flow = rdsp.process_flow
+			AND e.record_status = 'Y'
+			AND e.rec_type_id = 'AfterEvaluation'
+		)
+		and sar.org_flow = #{orgFlow}
+	</select>
+
+	<resultMap type="com.pinde.sci.model.jsres.DoctorExamStatisticsExt" id="docExamMap">
+		<result property="id" column="ID" javaType="string"/>
+		<result property="pid" column="PID" javaType="string"/>
+		<result property="orgFlow" column="ORG_FLOW" javaType="string"/>
+		<result property="orgName" column="ORG_NAME" javaType="string"/>
+		<result property="speId" column="SPE_ID" javaType="string"/>
+		<result property="speName" column="SPE_NAME" javaType="string"/>
+		<result property="orgCityId" column="ORG_CITY_ID" javaType="string"/>
+		<result property="orgCityName" column="ORG_CITY_NAME" javaType="string"/>
+		<result property="examTotal" column="EXAM_TOTAL" javaType="string"/>
+		<result property="realTotal" column="REAL_TOTAL" javaType="string"/>
+		<result property="fristExamTotal" column="FRIST_EXAM_TOTAL" javaType="string"/>
+		<result property="secondExamTotal" column="SECOND_EXAM_TOTAL" javaType="string"/>
+		<result property="missExamTotal" column="MISS_EXAM_TOTAL" javaType="string"/>
+	</resultMap>
+	<select id="searchExamStatisticsList" parameterType="map" resultMap="docExamMap">
+		select SO.ORG_FLOW AS ID,SO.ORG_NAME,NVL(a.EXAM_TOTAL,0) EXAM_TOTAL, NVL(B.REAL_TOTAL,0) REAL_TOTAL,
+		 	NVL(C.FRIST_EXAM_TOTAL,0) FRIST_EXAM_TOTAL, NVL(E.SECOND_EXAM_TOTAL,0) SECOND_EXAM_TOTAL,
+      		(NVL(a.EXAM_TOTAL,0) - NVL(B.REAL_TOTAL,0)) as miss_exam_total
+		from sys_org so
+		left join (
+		  SELECT rdr.org_flow,count(0) as exam_total
+		  FROM res_doctor_recruit rdr
+		  where rdr.record_status = 'Y'
+		  and RDR.GRADUATION_YEAR = #{yearDate}
+		  and rdr.recruit_flow in (
+				select recruit_flow from jsres_graduation_apply
+				where record_status = 'Y'
+				and audit_status_id = 'GlobalPassed'
+				and apply_year = #{yearDate}
+			)
+		  AND rdr.CAT_SPE_ID = #{catSpeId}
+		  and RDR.JOINT_ORG_FLOW is null
+		  group by RDR.ORG_FLOW
+		) a on a.org_flow = so.org_flow
+		left join (
+			 SELECT rdr.org_flow,count(0) as real_total
+			 FROM res_doctor_recruit rdr
+			 where rdr.record_status = 'Y'
+			 and RDR.GRADUATION_YEAR = #{yearDate}
+			 and rdr.recruit_flow in (
+				select recruit_flow from jsres_graduation_apply
+				where record_status = 'Y'
+				and audit_status_id = 'GlobalPassed'
+				and APPLY_YEAR = #{yearDate}
+			)
+			 and exists (
+				SELECT 1 FROM res_score
+				where record_status = 'Y'
+				and  score_phase_id = #{yearDate}
+				and doctor_flow =  rdr.doctor_flow
+				and score_type_id in ('TheoryScore','SkillScore')
+			 )
+			 AND rdr.CAT_SPE_ID = #{catSpeId}
+			 and RDR.JOINT_ORG_FLOW is null
+			 group by rdr.org_flow
+		) b on b.org_flow = so.org_flow
+		left join (
+			 select rdr.org_flow,count(0) as frist_exam_total
+			 from jsres_graduation_apply jga
+			 left join res_doctor_recruit rdr on jga.recruit_flow = rdr.recruit_flow
+			 where jga.record_status = 'Y'
+			 and rdr.record_status = 'Y'
+			 and rdr.graduation_year = #{yearDate}
+			 and jga.apply_year = #{yearDate}
+			 AND rdr.CAT_SPE_ID = #{catSpeId}
+			 and jga.audit_status_id = 'GlobalPassed'
+			 and RDR.JOINT_ORG_FLOW is null
+			 group by rdr.org_flow
+		) c on c.org_flow = so.org_flow
+		left join (
+			 select RDR.ORG_FLOW,COUNT(0) as second_exam_total
+			 from (
+				select DOCTOR_FLOW,SIGNUP_YEAR,COUNT(0)
+				from JSRES_EXAM_SIGNUP
+				where RECORD_STATUS = 'Y'
+				and AUDIT_STATUS_ID = 'GlobalPassed'
+				group by DOCTOR_FLOW,SIGNUP_YEAR
+			   ) jes
+			 left join res_doctor_recruit rdr on jes.doctor_flow = rdr.doctor_flow
+			 where  rdr.record_status = 'Y'
+			 and jes.signup_year = #{yearDate}
+			 and RDR.GRADUATION_YEAR = #{yearDate}
+			 AND rdr.CAT_SPE_ID = #{catSpeId}
+			 and RDR.JOINT_ORG_FLOW is null
+			 group by rdr.org_flow
+		) E on E.ORG_FLOW = SO.ORG_FLOW
+		where SO.RECORD_STATUS = 'Y'
+		AND so.org_type_id = 'Hospital'
+		AND SO.ORG_PROV_ID = '320000'
+		and so.org_code is not null
+		and not exists (
+			select 1 from res_joint_org
+			where record_status = 'Y'
+			and joint_org_flow = so.org_flow
+		)
+		order by so.org_code
+	</select>
+
+	<select id="searchExamStatisticsList2" parameterType="map" resultMap="docExamMap">
+		select SO.ORG_FLOW AS ID,SO.ORG_NAME,NVL(a.EXAM_TOTAL,0) EXAM_TOTAL, NVL(B.REAL_TOTAL,0) REAL_TOTAL,
+		 	NVL(C.FRIST_EXAM_TOTAL,0) FRIST_EXAM_TOTAL, NVL(E.SECOND_EXAM_TOTAL,0) SECOND_EXAM_TOTAL,
+      		(NVL(a.EXAM_TOTAL,0) - NVL(B.REAL_TOTAL,0)) as miss_exam_total,
+      		CASE WHEN (SELECT 1 FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = SO.ORG_FLOW) = 1
+            THEN (SELECT ORG_FLOW FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = SO.ORG_FLOW)
+            ELSE NULL END AS PID
+		from sys_org so
+		left join (
+		  SELECT rdr.joint_org_flow,count(0) as exam_total
+		  FROM res_doctor_recruit rdr
+		  where rdr.record_status = 'Y'
+		  and RDR.GRADUATION_YEAR = #{yearDate}
+		  and rdr.recruit_flow in (
+				select recruit_flow from jsres_graduation_apply
+				where record_status = 'Y'
+				and audit_status_id = 'GlobalPassed'
+				and apply_year = #{yearDate}
+			)
+		  AND rdr.CAT_SPE_ID = #{catSpeId}
+		  and RDR.JOINT_ORG_FLOW is not null
+		  group by RDR.joint_org_flow
+		) a on a.joint_org_flow = so.org_flow
+		left join (
+			 SELECT rdr.joint_org_flow,count(0) as real_total
+			 FROM res_doctor_recruit rdr
+			 where rdr.record_status = 'Y'
+			 and RDR.GRADUATION_YEAR = #{yearDate}
+			 and rdr.recruit_flow in (
+				select recruit_flow from jsres_graduation_apply
+				where record_status = 'Y'
+				and audit_status_id = 'GlobalPassed'
+				and APPLY_YEAR = #{yearDate}
+			)
+			 and exists (
+				SELECT 1 FROM res_score
+				where record_status = 'Y'
+				and  score_phase_id = #{yearDate}
+				and doctor_flow =  rdr.doctor_flow
+				and score_type_id in ('TheoryScore','SkillScore')
+			 )
+			 AND rdr.CAT_SPE_ID = #{catSpeId}
+			 and RDR.JOINT_ORG_FLOW is not null
+			 group by rdr.joint_org_flow
+		) b on b.joint_org_flow = so.org_flow
+		left join (
+			 select rdr.joint_org_flow,count(0) as frist_exam_total
+			 from jsres_graduation_apply jga
+			 left join res_doctor_recruit rdr on jga.recruit_flow = rdr.recruit_flow
+			 where jga.record_status = 'Y'
+			 and rdr.record_status = 'Y'
+			 and rdr.graduation_year = #{yearDate}
+			 and jga.apply_year = #{yearDate}
+			 AND rdr.CAT_SPE_ID = #{catSpeId}
+			 and jga.audit_status_id = 'GlobalPassed'
+			 and RDR.JOINT_ORG_FLOW is not null
+			 group by rdr.joint_org_flow
+		) c on c.joint_org_flow = so.org_flow
+		left join (
+			 select RDR.joint_org_flow,COUNT(0) as second_exam_total
+			 from (
+				select DOCTOR_FLOW,SIGNUP_YEAR,COUNT(0)
+				from JSRES_EXAM_SIGNUP
+				where RECORD_STATUS = 'Y'
+				and AUDIT_STATUS_ID = 'GlobalPassed'
+				group by DOCTOR_FLOW,SIGNUP_YEAR
+			   ) jes
+			 left join res_doctor_recruit rdr on jes.doctor_flow = rdr.doctor_flow
+			 where  rdr.record_status = 'Y'
+			 and jes.signup_year = #{yearDate}
+			 and RDR.GRADUATION_YEAR = #{yearDate}
+			 AND rdr.CAT_SPE_ID = #{catSpeId}
+			 and RDR.JOINT_ORG_FLOW is not null
+			 group by rdr.joint_org_flow
+		) E on E.joint_org_flow = SO.ORG_FLOW
+		where SO.RECORD_STATUS = 'Y'
+		AND so.org_type_id = 'Hospital'
+		AND SO.ORG_PROV_ID = '320000'
+		and so.org_code is not null
+		and exists (
+			select 1 from res_joint_org
+			where record_status = 'Y'
+			and joint_org_flow = so.org_flow
+		)
+		order by so.org_code
+	</select>
+	
+	<select id="searchExamStatisticsListBySpe" parameterType="map" resultMap="docExamMap">
+		SELECT sd.dict_id as ID,sd.dict_name as SPE_NAME, NVL(a.EXAM_TOTAL, 0) AS EXAM_TOTAL, NVL(B.REAL_TOTAL, 0) AS REAL_TOTAL,
+			 NVL(C.FRIST_EXAM_TOTAL, 0) AS FRIST_EXAM_TOTAL, NVL(E.SECOND_EXAM_TOTAL, 0) AS SECOND_EXAM_TOTAL,
+			 NVL(a.EXAM_TOTAL, 0) - NVL(B.REAL_TOTAL, 0) AS miss_exam_total
+		FROM  sys_dict sd
+		LEFT JOIN (
+			SELECT rdr.SPE_ID, COUNT(0) AS exam_total
+			FROM res_doctor_recruit rdr
+			WHERE rdr.record_status = 'Y'
+			AND RDR.GRADUATION_YEAR = #{yearDate}
+			AND rdr.recruit_flow IN (SELECT recruit_flow
+					FROM jsres_graduation_apply
+					WHERE record_status = 'Y'
+					AND audit_status_id = 'GlobalPassed'
+					AND apply_year = #{yearDate})
+			AND rdr.CAT_SPE_ID = #{catSpeId}
+			GROUP BY RDR.SPE_ID
+		) a ON a.SPE_ID = SD.DICT_ID
+		LEFT JOIN (
+			SELECT rdr.SPE_ID, COUNT(0) AS real_total
+			FROM res_doctor_recruit rdr
+			WHERE rdr.record_status = 'Y'
+				AND RDR.GRADUATION_YEAR = #{yearDate}
+				AND rdr.recruit_flow IN (SELECT recruit_flow
+					FROM jsres_graduation_apply
+					WHERE record_status = 'Y'
+						AND audit_status_id = 'GlobalPassed'
+						AND APPLY_YEAR = #{yearDate})
+				AND EXISTS (SELECT 1
+					FROM res_score
+					WHERE record_status = 'Y'
+						AND score_phase_id = #{yearDate}
+						AND doctor_flow = rdr.doctor_flow
+						AND score_type_id IN ('TheoryScore', 'SkillScore'))
+				AND rdr.CAT_SPE_ID = #{catSpeId}
+			GROUP BY rdr.SPE_ID
+		) b ON b.SPE_ID = SD.DICT_ID
+		LEFT JOIN (
+			SELECT rdr.SPE_ID, COUNT(0) AS frist_exam_total
+			FROM jsres_graduation_apply jga
+				LEFT JOIN res_doctor_recruit rdr ON jga.recruit_flow = rdr.recruit_flow
+			WHERE jga.record_status = 'Y'
+				AND rdr.record_status = 'Y'
+				AND rdr.graduation_year = #{yearDate}
+				AND jga.apply_year = #{yearDate}
+				AND rdr.CAT_SPE_ID = #{catSpeId}
+				AND jga.audit_status_id = 'GlobalPassed'
+			GROUP BY rdr.SPE_ID
+		) c ON c.SPE_ID = SD.DICT_ID
+			LEFT JOIN (
+				SELECT RDR.SPE_ID, COUNT(0) AS second_exam_total
+				FROM (
+					SELECT DOCTOR_FLOW, SIGNUP_YEAR, COUNT(0)
+					FROM JSRES_EXAM_SIGNUP
+					WHERE RECORD_STATUS = 'Y'
+					AND signup_year = #{yearDate}
+					AND AUDIT_STATUS_ID = 'GlobalPassed'
+					GROUP BY DOCTOR_FLOW, SIGNUP_YEAR
+				) jes
+					LEFT JOIN res_doctor_recruit rdr ON jes.doctor_flow = rdr.doctor_flow
+				WHERE rdr.record_status = 'Y'
+					AND jes.signup_year = #{yearDate}
+					AND RDR.GRADUATION_YEAR = #{yearDate}
+					AND rdr.CAT_SPE_ID = #{catSpeId}
+				GROUP BY rdr.SPE_ID
+			) E ON E.SPE_ID = SD.DICT_ID
+		WHERE SD.RECORD_STATUS = 'Y'
+		AND SD.dict_type_id = #{catSpeId}
+		ORDER BY SD.DICT_ID
+	</select>
+	
+	<select id="searchExamStatisticsListByCity" parameterType="map" resultMap="docExamMap">
+		SELECT SO.ORG_CITY_ID AS ID, SO.ORG_CITY_NAME, NVL(a.EXAM_TOTAL, 0) AS EXAM_TOTAL, NVL(B.REAL_TOTAL, 0) AS REAL_TOTAL,
+			NVL(C.FRIST_EXAM_TOTAL, 0) AS FRIST_EXAM_TOTAL, NVL(E.SECOND_EXAM_TOTAL, 0) AS SECOND_EXAM_TOTAL,
+			NVL(a.EXAM_TOTAL, 0) - NVL(B.REAL_TOTAL, 0) AS miss_exam_total
+		FROM (
+			 SELECT DISTINCT ORG_CITY_ID,ORG_CITY_NAME
+			 FROM sys_org
+			 WHERE RECORD_STATUS = 'Y'
+			 AND org_type_id = 'Hospital'
+			 AND ORG_PROV_ID = '320000'
+			 AND org_code IS NOT NULL
+			 ORDER BY ORG_CITY_ID
+		 ) so
+		LEFT JOIN (
+			SELECT SO.ORG_CITY_ID, COUNT(0) AS exam_total
+			FROM res_doctor_recruit rdr
+		    LEFT JOIN SYS_ORG SO ON SO.ORG_FLOW = RDR.ORG_FLOW
+			WHERE rdr.record_status = 'Y'
+			AND SO.RECORD_STATUS = 'Y'
+			AND RDR.GRADUATION_YEAR = #{yearDate}
+			AND rdr.recruit_flow IN (SELECT recruit_flow
+				FROM jsres_graduation_apply
+				WHERE record_status = 'Y'
+					AND audit_status_id = 'GlobalPassed'
+					AND apply_year = #{yearDate})
+			AND rdr.CAT_SPE_ID = #{catSpeId}
+			and RDR.JOINT_ORG_FLOW is null
+			and not exists (
+				select 1 from res_joint_org
+				where record_status = 'Y'
+				and joint_org_flow = so.org_flow
+		    )
+			GROUP BY SO.ORG_CITY_ID
+		) a ON a.ORG_CITY_ID = so.ORG_CITY_ID
+		LEFT JOIN (
+			SELECT SO.ORG_CITY_ID, COUNT(0) AS real_total
+			FROM res_doctor_recruit rdr
+		  LEFT JOIN SYS_ORG SO ON SO.ORG_FLOW = RDR.ORG_FLOW
+			WHERE rdr.record_status = 'Y'
+			AND SO.RECORD_STATUS = 'Y'
+				AND RDR.GRADUATION_YEAR = #{yearDate}
+				AND rdr.recruit_flow IN (SELECT recruit_flow
+					FROM jsres_graduation_apply
+					WHERE record_status = 'Y'
+						AND audit_status_id = 'GlobalPassed'
+						AND APPLY_YEAR = #{yearDate})
+				AND EXISTS (SELECT 1
+					FROM res_score
+					WHERE record_status = 'Y'
+						AND score_phase_id = #{yearDate}
+						AND doctor_flow = rdr.doctor_flow
+						AND score_type_id IN ('TheoryScore', 'SkillScore'))
+				AND rdr.CAT_SPE_ID = #{catSpeId}
+				and RDR.JOINT_ORG_FLOW is null
+				and not exists (
+					select 1 from res_joint_org
+					where record_status = 'Y'
+					and joint_org_flow = so.org_flow
+		    	)
+			GROUP BY SO.ORG_CITY_ID
+		) b ON b.ORG_CITY_ID = so.ORG_CITY_ID
+		LEFT JOIN (
+			SELECT SO.ORG_CITY_ID, COUNT(0) AS frist_exam_total
+			FROM jsres_graduation_apply jga
+				LEFT JOIN res_doctor_recruit rdr ON jga.recruit_flow = rdr.recruit_flow
+			LEFT JOIN SYS_ORG SO ON SO.ORG_FLOW = RDR.ORG_FLOW
+			WHERE jga.record_status = 'Y'
+			AND rdr.record_status = 'Y'
+			AND SO.RECORD_STATUS = 'Y'
+			AND rdr.graduation_year = #{yearDate}
+			AND jga.apply_year = #{yearDate}
+			AND rdr.CAT_SPE_ID = #{catSpeId}
+			AND jga.audit_status_id = 'GlobalPassed'
+			and RDR.JOINT_ORG_FLOW is null
+			and not exists (
+				select 1 from res_joint_org
+				where record_status = 'Y'
+				and joint_org_flow = so.org_flow
+		    )
+			GROUP BY SO.ORG_CITY_ID
+		) c ON c.ORG_CITY_ID = so.ORG_CITY_ID
+		LEFT JOIN (
+				SELECT SO.ORG_CITY_ID, COUNT(0) AS second_exam_total
+				FROM (
+					SELECT DOCTOR_FLOW, SIGNUP_YEAR, COUNT(0)
+					FROM JSRES_EXAM_SIGNUP
+					WHERE RECORD_STATUS = 'Y'
+						AND AUDIT_STATUS_ID = 'GlobalPassed'
+					GROUP BY DOCTOR_FLOW, SIGNUP_YEAR
+				) jes
+				LEFT JOIN res_doctor_recruit rdr ON jes.doctor_flow = rdr.doctor_flow
+			    LEFT JOIN SYS_ORG SO ON SO.ORG_FLOW = RDR.ORG_FLOW
+				WHERE rdr.record_status = 'Y'
+			    AND SO.RECORD_STATUS = 'Y'
+				AND jes.signup_year = #{yearDate}
+				AND RDR.GRADUATION_YEAR = #{yearDate}
+				AND rdr.CAT_SPE_ID = #{catSpeId}
+				and RDR.JOINT_ORG_FLOW is null
+				and not exists (
+					select 1 from res_joint_org
+					where record_status = 'Y'
+					and joint_org_flow = so.org_flow
+		    	)
+				GROUP BY SO.ORG_CITY_ID
+			) E ON E.ORG_CITY_ID = SO.ORG_CITY_ID
+		ORDER BY so.ORG_CITY_ID
+	</select>
+
+	<select id="searchExamStatisticsListByCity2" parameterType="map" resultMap="docExamMap">
+		SELECT SO.ORG_CITY_ID AS ID, SO.ORG_CITY_NAME, NVL(a.EXAM_TOTAL, 0) AS EXAM_TOTAL, NVL(B.REAL_TOTAL, 0) AS REAL_TOTAL,
+			NVL(C.FRIST_EXAM_TOTAL, 0) AS FRIST_EXAM_TOTAL, NVL(E.SECOND_EXAM_TOTAL, 0) AS SECOND_EXAM_TOTAL,
+			NVL(a.EXAM_TOTAL, 0) - NVL(B.REAL_TOTAL, 0) AS miss_exam_total
+		FROM (
+			 SELECT DISTINCT ORG_CITY_ID,ORG_CITY_NAME
+			 FROM sys_org
+			 WHERE RECORD_STATUS = 'Y'
+			 AND org_type_id = 'Hospital'
+			 AND ORG_PROV_ID = '320000'
+			 AND org_code IS NOT NULL
+			 ORDER BY ORG_CITY_ID
+		 ) so
+		LEFT JOIN (
+			SELECT SO.ORG_CITY_ID, COUNT(0) AS exam_total
+			FROM res_doctor_recruit rdr
+		    LEFT JOIN SYS_ORG SO ON SO.ORG_FLOW = RDR.JOINT_ORG_FLOW
+			WHERE rdr.record_status = 'Y'
+			AND SO.RECORD_STATUS = 'Y'
+			AND RDR.GRADUATION_YEAR = #{yearDate}
+			AND rdr.recruit_flow IN (SELECT recruit_flow
+				FROM jsres_graduation_apply
+				WHERE record_status = 'Y'
+					AND audit_status_id = 'GlobalPassed'
+					AND apply_year = #{yearDate})
+			AND rdr.CAT_SPE_ID = #{catSpeId}
+			and RDR.JOINT_ORG_FLOW is not null
+			and exists (
+				select 1 from res_joint_org
+				where record_status = 'Y'
+				and joint_org_flow = so.org_flow
+		    )
+			GROUP BY SO.ORG_CITY_ID
+		) a ON a.ORG_CITY_ID = so.ORG_CITY_ID
+		LEFT JOIN (
+			SELECT SO.ORG_CITY_ID, COUNT(0) AS real_total
+			FROM res_doctor_recruit rdr
+		  LEFT JOIN SYS_ORG SO ON SO.ORG_FLOW = RDR.JOINT_ORG_FLOW
+			WHERE rdr.record_status = 'Y'
+			AND SO.RECORD_STATUS = 'Y'
+				AND RDR.GRADUATION_YEAR = #{yearDate}
+				AND rdr.recruit_flow IN (SELECT recruit_flow
+					FROM jsres_graduation_apply
+					WHERE record_status = 'Y'
+						AND audit_status_id = 'GlobalPassed'
+						AND APPLY_YEAR = #{yearDate})
+				AND EXISTS (SELECT 1
+					FROM res_score
+					WHERE record_status = 'Y'
+						AND score_phase_id = #{yearDate}
+						AND doctor_flow = rdr.doctor_flow
+						AND score_type_id IN ('TheoryScore', 'SkillScore'))
+				AND rdr.CAT_SPE_ID = #{catSpeId}
+				and RDR.JOINT_ORG_FLOW is not null
+				and exists (
+					select 1 from res_joint_org
+					where record_status = 'Y'
+					and joint_org_flow = so.org_flow
+		    	)
+			GROUP BY SO.ORG_CITY_ID
+		) b ON b.ORG_CITY_ID = so.ORG_CITY_ID
+		LEFT JOIN (
+			SELECT SO.ORG_CITY_ID, COUNT(0) AS frist_exam_total
+			FROM jsres_graduation_apply jga
+			LEFT JOIN res_doctor_recruit rdr ON jga.recruit_flow = rdr.recruit_flow
+			LEFT JOIN SYS_ORG SO ON SO.ORG_FLOW = RDR.JOINT_ORG_FLOW
+			WHERE jga.record_status = 'Y'
+			AND rdr.record_status = 'Y'
+			AND SO.RECORD_STATUS = 'Y'
+			AND rdr.graduation_year = #{yearDate}
+			AND jga.apply_year = #{yearDate}
+			AND rdr.CAT_SPE_ID = #{catSpeId}
+			and RDR.JOINT_ORG_FLOW is not null
+			AND jga.audit_status_id = 'GlobalPassed'
+			and exists (
+				select 1 from res_joint_org
+				where record_status = 'Y'
+				and joint_org_flow = so.org_flow
+		    )
+			GROUP BY SO.ORG_CITY_ID
+		) c ON c.ORG_CITY_ID = so.ORG_CITY_ID
+		LEFT JOIN (
+				SELECT SO.ORG_CITY_ID, COUNT(0) AS second_exam_total
+				FROM (
+					SELECT DOCTOR_FLOW, SIGNUP_YEAR, COUNT(0)
+					FROM JSRES_EXAM_SIGNUP
+					WHERE RECORD_STATUS = 'Y'
+						AND AUDIT_STATUS_ID = 'GlobalPassed'
+					GROUP BY DOCTOR_FLOW, SIGNUP_YEAR
+				) jes
+				LEFT JOIN res_doctor_recruit rdr ON jes.doctor_flow = rdr.doctor_flow
+			    LEFT JOIN SYS_ORG SO ON SO.ORG_FLOW = RDR.JOINT_ORG_FLOW
+				WHERE rdr.record_status = 'Y'
+			    AND SO.RECORD_STATUS = 'Y'
+				AND jes.signup_year = #{yearDate}
+				AND RDR.GRADUATION_YEAR = #{yearDate}
+				AND rdr.CAT_SPE_ID = #{catSpeId}
+				and RDR.JOINT_ORG_FLOW is not null
+				and exists (
+					select 1 from res_joint_org
+					where record_status = 'Y'
+					and joint_org_flow = so.org_flow
+		    	)
+				GROUP BY SO.ORG_CITY_ID
+			) E ON E.ORG_CITY_ID = SO.ORG_CITY_ID
+		ORDER BY so.ORG_CITY_ID
+	</select>
+
+	<resultMap type="HashMap" id="orgCompleteDoctorList">
+		<result property="doctorFlow" column="DOCTOR_FLOW" javaType="string"/>
+		<result property="doctorName" column="DOCTOR_NAME" javaType="string"/>
+		<result property="doctorTypeId" column="DOCTOR_TYPE_ID" javaType="string"/>
+		<result property="applyFlow" column="APPLY_FLOW" javaType="string"/>
+		<result property="signupFlow" column="SIGNUP_FLOW" javaType="string"/>
+		<result property="signupTypeId" column="SIGNUP_TYPE_ID" javaType="string"/>
+	</resultMap>
+	<select id="searchDoctorRecruit" resultMap="orgCompleteDoctorList">
+		SELECT rd.doctor_flow, rd.doctor_name, rd.doctor_type_id, jga.apply_flow, jes.signup_flow, jes.signup_type_id
+		FROM res_doctor_recruit rdr
+		left join res_doctor rd on rd.doctor_flow = rdr.doctor_flow
+		left join jsres_graduation_apply jga on jga.recruit_flow = rdr.recruit_flow and jga.record_status = 'Y'
+		and jga.audit_status_id = 'GlobalPassed'
+		and jga.apply_year = #{graduationYear}
+		left join jsres_exam_signup jes on jes.doctor_flow = rdr.doctor_flow and jes.record_status = 'Y'
+		and jes.audit_status_id = 'GlobalPassed'
+		and jes.signup_year = #{graduationYear}
+		<if test="scoreType != null and scoreType != ''">
+			and jes.signup_type_id = #{scoreType}
+		</if>
+		where rdr.record_status = 'Y'
+		and rd.record_status = 'Y'
+		and rd.doctor_type_id in <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		<if test="sessionNumbers != null and sessionNumbers.size > 0">
+			AND rdr.session_number IN
+			<foreach collection="sessionNumbers" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="speId != null and speId != ''">
+			AND rdr.spe_id = #{speId}
+		</if>
+		and rdr.org_flow = #{orgFlow}
+		and (rdr.recruit_flow in (
+			select recruit_flow from jsres_graduation_apply
+			where record_status = 'Y'
+			and audit_status_id = 'GlobalPassed'
+			and apply_year = #{graduationYear}
+		) or rdr.doctor_flow in (
+		select doctor_flow from jsres_exam_signup
+		where record_status = 'Y'
+		and audit_status_id = 'GlobalPassed'
+		and signup_year = #{graduationYear}
+		<if test="scoreType != null and scoreType != ''">
+			and signup_type_id = #{scoreType}
+		</if>
+		))
+		AND rdr.CAT_SPE_ID = #{catSpeId}
+		and rdr.JOINT_ORG_FLOW is null
+	</select>
+
+	<select id="searchJointOrgDoctorRecruit" resultMap="orgCompleteDoctorList">
+		SELECT rd.doctor_flow, rd.doctor_name, rd.doctor_type_id, jga.apply_flow, jes.signup_flow, jes.signup_type_id
+		FROM res_doctor_recruit rdr
+		left join res_doctor rd on rd.doctor_flow = rdr.doctor_flow
+		left join jsres_graduation_apply jga on jga.recruit_flow = rdr.recruit_flow and jga.record_status = 'Y'
+		and jga.audit_status_id = 'GlobalPassed'
+		and jga.apply_year = #{graduationYear}
+		left join jsres_exam_signup jes on jes.doctor_flow = rdr.doctor_flow and jes.record_status = 'Y'
+		and jes.audit_status_id = 'GlobalPassed'
+		and jes.signup_year = #{graduationYear}
+		where rdr.record_status = 'Y'
+		and rd.record_status = 'Y'
+		and rd.doctor_type_id in <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		<if test="sessionNumbers != null and sessionNumbers.size > 0">
+			AND rdr.session_number IN
+			<foreach collection="sessionNumbers" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="speId != null and speId != ''">
+			AND rdr.spe_id = #{speId}
+		</if>
+		and rdr.joint_org_flow in (
+		select joint_org_flow from res_joint_org
+		where record_status = 'Y'
+		and org_flow = #{orgFlow}
+		<if test="sessionNumbers != null and sessionNumbers.size > 0">
+			AND session_number IN
+			<foreach collection="sessionNumbers" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		)
+		and (rdr.recruit_flow in (
+		select recruit_flow from jsres_graduation_apply
+		where record_status = 'Y'
+		and audit_status_id = 'GlobalPassed'
+		and apply_year = #{graduationYear}
+		) or rdr.doctor_flow in (
+		select doctor_flow from jsres_exam_signup
+		where record_status = 'Y'
+		and audit_status_id = 'GlobalPassed'
+		and signup_year = #{graduationYear}
+		))
+		AND rdr.CAT_SPE_ID = #{catSpeId}
+		and RDR.JOINT_ORG_FLOW is not null
+	</select>
+
+	<insert id="insertMonthStaticData">
+		INSERT INTO jsres_data_statistics (RECORD_FLOW ,doctor_outdept_data ,graduate_outdept_data,activity_data,attendance_data,
+      MONTH_DATE,org_flow,org_name,record_status,CREATE_TIME)
+      SELECT lower(rawtohex(sys_guid())),NVL(doctor_outdept_data,0) ,NVL(graduate_outdept_data,0), NVL(activity_data,0),
+      		NVL(attendance_data,0),#{monthDate},SO.ORG_FLOW,SO.ORG_NAME,'Y', #{createTime}
+      FROM   SYS_ORG SO
+      LEFT JOIN (
+        select B.ORG_FLOW,count(1) as doctor_outdept_data from EXAM_RESULTS  er
+        left join RES_DOCTOR_SCH_PROCESS B on er.PROCESS_FLOW = B.PROCESS_FLOW
+        where  er.submit_time like '${monthDate}%'
+        and b.user_flow in (select doctor_flow from res_doctor where record_status='Y' and doctor_type_id in('Company','CompanyEntrust','Social')  and doctor_status_id ='20')
+        group by b.ORG_FLOW
+      ) A ON A.ORG_FLOW = SO.ORG_FLOW
+      LEFT JOIN (
+        select rdsp.ORG_FLOW,count(1) as graduate_outdept_data from EXAM_RESULTS  er
+        left join RES_DOCTOR_SCH_PROCESS rdsp on er.PROCESS_FLOW = rdsp.PROCESS_FLOW
+        where  er.submit_time like '${monthDate}%'
+        and rdsp.user_flow in (select doctor_flow from res_doctor where record_status='Y' and doctor_type_id = 'Graduate' and doctor_status_id ='20')
+        group by rdsp.ORG_FLOW
+      ) b ON b.ORG_FLOW = SO.ORG_FLOW
+      LEFT JOIN (
+           select TAR.ORG_FLOW,count(1) AS activity_data from teaching_activity_info TAR
+           left join sys_user SU on TAR.create_user_flow = SU.user_flow
+           where TAR.record_status='Y' and TAR.create_time like '${monthDate}%'
+           and tar.activity_status = 'pass'
+           group by TAR.ORG_FLOW
+      ) C ON C.ORG_FLOW = SO.ORG_FLOW
+      LEFT JOIN (
+        select RD.ORG_FLOW,count(1) AS attendance_data from JSRES_ATTENDANCE_DETAIL JAD
+        left join res_doctor RD on RD.doctor_flow = JAD.doctor_flow
+        where JAD.record_status='Y' and JAD.create_time like  '${monthDate}%'
+        group by RD.ORG_FLOW
+      ) D ON D.ORG_FLOW = SO.ORG_FLOW
+      where so.record_status = 'Y'
+      AND so.org_type_id = 'Hospital'
+        AND SO.ORG_PROV_ID = '320000'
+      and so.org_code is not null
+	</insert>
+
+	<insert id="insertMonthStaticData2">
+		INSERT INTO jsres_month_statistics (RECORD_FLOW ,doctor_number ,doctor_total_number,doctor_audit_number,
+       		graduate_number,graduate_total_number,graduate_audit_number,org_flow,org_name,MONTH_DATE,record_status,CREATE_TIME)
+      SELECT lower(rawtohex(sys_guid())),NVL(doctor_number,0) ,NVL(doctor_total_number,0), NVL(doctor_audit_number,0),  NVL(graduate_number,0),
+              NVL(graduate_total_number,0),NVL(graduate_audit_number,0),SO.ORG_FLOW,SO.ORG_NAME, #{monthDate},'Y', #{createTime}
+      FROM   SYS_ORG SO
+      LEFT JOIN (
+       select org_flow, count(1) as doctor_number from (
+      select org_flow,oper_user_flow,count(1) as doctor_number from res_rec
+        where record_status='Y'
+        and oper_user_flow in (
+            select doctor_flow from res_doctor
+            where record_status='Y'
+            and doctor_type_id in('Company','CompanyEntrust','Social')
+            and doctor_status_id ='20'
+            )
+        and create_time like '${monthDate2}%'
+        group by org_flow,oper_user_flow
+       )
+       group by org_flow
+      ) A ON A.ORG_FLOW = SO.ORG_FLOW
+      LEFT JOIN (
+        select org_flow,count(1) as doctor_total_number from res_rec
+        where record_status='Y'
+        and oper_user_flow in(select doctor_flow from res_doctor where record_status='Y' and doctor_type_id in('Company','CompanyEntrust','Social')  and doctor_status_id ='20')
+        and create_time like '${monthDate2}%'
+        group by org_flow
+      ) b ON b.ORG_FLOW = SO.ORG_FLOW
+      LEFT JOIN (
+           select org_flow,count(1) as doctor_audit_number from res_rec
+           where record_status='Y'
+           and oper_user_flow in(select doctor_flow from res_doctor where record_status='Y' and doctor_type_id in('Company','CompanyEntrust','Social')  and doctor_status_id ='20')
+           and create_time like '${monthDate2}%'
+           and audit_status_id ='TeacherAuditY'
+           group by org_flow
+      ) C ON C.ORG_FLOW = SO.ORG_FLOW
+      LEFT JOIN (
+         select org_flow, count(1) as graduate_number from (
+      select org_flow,oper_user_flow,count(1) as graduate_number from res_rec
+        where record_status='Y'
+        and oper_user_flow in (
+            select doctor_flow from res_doctor
+            where record_status='Y'
+            and doctor_type_id ='Graduate'
+            and doctor_status_id ='20'
+            )
+         and create_time like '${monthDate2}%'
+        group by org_flow,oper_user_flow
+       )
+       group by org_flow
+      ) d ON d.ORG_FLOW = SO.ORG_FLOW
+      LEFT JOIN (
+        select org_flow,count(1) as graduate_total_number from res_rec
+        where record_status='Y'
+        and oper_user_flow in(select doctor_flow from res_doctor where record_status='Y' and doctor_type_id = 'Graduate'  and doctor_status_id ='20')
+        and create_time like '${monthDate2}%'
+        group by org_flow
+      ) e ON e.ORG_FLOW = SO.ORG_FLOW
+      LEFT JOIN (
+           select org_flow,count(1) as graduate_audit_number from res_rec
+           where record_status='Y'
+           and oper_user_flow in(select doctor_flow from res_doctor where record_status='Y' and doctor_type_id = 'Graduate'  and doctor_status_id ='20')
+           and create_time like '${monthDate2}%'
+           and audit_status_id ='TeacherAuditY'
+           group by org_flow
+      ) f ON f.ORG_FLOW = SO.ORG_FLOW
+      where so.record_status = 'Y'
+      AND so.org_type_id = 'Hospital'
+        AND SO.ORG_PROV_ID = '320000'
+      and so.org_code is not null
+	</insert>
+
+</mapper>

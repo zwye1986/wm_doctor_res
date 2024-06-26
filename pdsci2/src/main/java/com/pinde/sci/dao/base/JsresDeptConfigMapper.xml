@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.JsresDeptConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.JsresDeptConfig" >
+    <id column="CFG_FLOW" property="cfgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="TEST_NUM" property="testNum" jdbcType="VARCHAR" />
+    <result column="SCORE_PASS" property="scorePass" jdbcType="VARCHAR" />
+    <result column="IS_TEST_OUT" property="isTestOut" jdbcType="VARCHAR" />
+    <result column="TEST_OUT_TIME" property="testOutTime" jdbcType="VARCHAR" />
+    <result column="TEACHER_WRITE" property="teacherWrite" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="SCORE_TOPLIMIT" property="scoreToplimit" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CFG_FLOW, ORG_FLOW, DEPT_FLOW, DEPT_NAME, TEST_NUM, SCORE_PASS, IS_TEST_OUT, TEST_OUT_TIME, 
+    TEACHER_WRITE, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+    SCORE_TOPLIMIT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.JsresDeptConfigExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.JSRES_DEPT_CONFIG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.JSRES_DEPT_CONFIG
+    where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.JSRES_DEPT_CONFIG
+    where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.JsresDeptConfigExample" >
+    delete from PDSCI.JSRES_DEPT_CONFIG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.JsresDeptConfig" >
+    insert into PDSCI.JSRES_DEPT_CONFIG (CFG_FLOW, ORG_FLOW, DEPT_FLOW, 
+      DEPT_NAME, TEST_NUM, SCORE_PASS, 
+      IS_TEST_OUT, TEST_OUT_TIME, TEACHER_WRITE, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW, SCORE_TOPLIMIT
+      )
+    values (#{cfgFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, #{deptFlow,jdbcType=VARCHAR}, 
+      #{deptName,jdbcType=VARCHAR}, #{testNum,jdbcType=VARCHAR}, #{scorePass,jdbcType=VARCHAR}, 
+      #{isTestOut,jdbcType=VARCHAR}, #{testOutTime,jdbcType=VARCHAR}, #{teacherWrite,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{scoreToplimit,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.JsresDeptConfig" >
+    insert into PDSCI.JSRES_DEPT_CONFIG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cfgFlow != null" >
+        CFG_FLOW,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="deptFlow != null" >
+        DEPT_FLOW,
+      </if>
+      <if test="deptName != null" >
+        DEPT_NAME,
+      </if>
+      <if test="testNum != null" >
+        TEST_NUM,
+      </if>
+      <if test="scorePass != null" >
+        SCORE_PASS,
+      </if>
+      <if test="isTestOut != null" >
+        IS_TEST_OUT,
+      </if>
+      <if test="testOutTime != null" >
+        TEST_OUT_TIME,
+      </if>
+      <if test="teacherWrite != null" >
+        TEACHER_WRITE,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="scoreToplimit != null" >
+        SCORE_TOPLIMIT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cfgFlow != null" >
+        #{cfgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="deptFlow != null" >
+        #{deptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null" >
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="testNum != null" >
+        #{testNum,jdbcType=VARCHAR},
+      </if>
+      <if test="scorePass != null" >
+        #{scorePass,jdbcType=VARCHAR},
+      </if>
+      <if test="isTestOut != null" >
+        #{isTestOut,jdbcType=VARCHAR},
+      </if>
+      <if test="testOutTime != null" >
+        #{testOutTime,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherWrite != null" >
+        #{teacherWrite,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreToplimit != null" >
+        #{scoreToplimit,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.JsresDeptConfigExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.JSRES_DEPT_CONFIG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.JSRES_DEPT_CONFIG
+    <set >
+      <if test="record.cfgFlow != null" >
+        CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptFlow != null" >
+        DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptName != null" >
+        DEPT_NAME = #{record.deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.testNum != null" >
+        TEST_NUM = #{record.testNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scorePass != null" >
+        SCORE_PASS = #{record.scorePass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isTestOut != null" >
+        IS_TEST_OUT = #{record.isTestOut,jdbcType=VARCHAR},
+      </if>
+      <if test="record.testOutTime != null" >
+        TEST_OUT_TIME = #{record.testOutTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherWrite != null" >
+        TEACHER_WRITE = #{record.teacherWrite,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scoreToplimit != null" >
+        SCORE_TOPLIMIT = #{record.scoreToplimit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.JSRES_DEPT_CONFIG
+    set CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
+      DEPT_NAME = #{record.deptName,jdbcType=VARCHAR},
+      TEST_NUM = #{record.testNum,jdbcType=VARCHAR},
+      SCORE_PASS = #{record.scorePass,jdbcType=VARCHAR},
+      IS_TEST_OUT = #{record.isTestOut,jdbcType=VARCHAR},
+      TEST_OUT_TIME = #{record.testOutTime,jdbcType=VARCHAR},
+      TEACHER_WRITE = #{record.teacherWrite,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      SCORE_TOPLIMIT = #{record.scoreToplimit,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.JsresDeptConfig" >
+    update PDSCI.JSRES_DEPT_CONFIG
+    <set >
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="deptFlow != null" >
+        DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null" >
+        DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="testNum != null" >
+        TEST_NUM = #{testNum,jdbcType=VARCHAR},
+      </if>
+      <if test="scorePass != null" >
+        SCORE_PASS = #{scorePass,jdbcType=VARCHAR},
+      </if>
+      <if test="isTestOut != null" >
+        IS_TEST_OUT = #{isTestOut,jdbcType=VARCHAR},
+      </if>
+      <if test="testOutTime != null" >
+        TEST_OUT_TIME = #{testOutTime,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherWrite != null" >
+        TEACHER_WRITE = #{teacherWrite,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreToplimit != null" >
+        SCORE_TOPLIMIT = #{scoreToplimit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.JsresDeptConfig" >
+    update PDSCI.JSRES_DEPT_CONFIG
+    set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
+      DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      TEST_NUM = #{testNum,jdbcType=VARCHAR},
+      SCORE_PASS = #{scorePass,jdbcType=VARCHAR},
+      IS_TEST_OUT = #{isTestOut,jdbcType=VARCHAR},
+      TEST_OUT_TIME = #{testOutTime,jdbcType=VARCHAR},
+      TEACHER_WRITE = #{teacherWrite,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      SCORE_TOPLIMIT = #{scoreToplimit,jdbcType=VARCHAR}
+    where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

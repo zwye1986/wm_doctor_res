@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.erp.ErpCrmContractPayBalanceExtMapper">
+    <resultMap id="erpCrmContractPayBalanceExt" type="com.pinde.sci.model.erp.ErpCrmContractPayBalanceExt" extends="com.pinde.sci.dao.base.ErpCrmContractPayBalanceMapper.BaseResultMap">
+        <result column="createUserName" property="createUserName" jdbcType="VARCHAR" />
+        <result column="modifyUserName" property="modifyUserName" jdbcType="VARCHAR" />
+    </resultMap>
+
+     <select id="getBalanceFund" parameterType="com.pinde.sci.model.mo.ErpCrmContractPayBalance" resultType="java.math.BigDecimal">
+			select NVL(SUM(PAY_FUND),0)
+			from pdsci.ERP_CRM_CONTRACT_PAY_BALANCE
+			where RECORD_STATUS = 'Y' and CONTRACT_FLOW = #{contractFlow} and PLAN_FLOW = #{planFlow}
+            and status_id='AuditPass'
+     </select>
+     <select id="getContractBalanceMoney" parameterType="java.lang.String" resultType="java.math.BigDecimal">
+			select NVL(SUM(PAY_FUND),0)
+			from pdsci.ERP_CRM_CONTRACT_PAY_BALANCE
+			where RECORD_STATUS = 'Y' and CONTRACT_FLOW = #{contractFlow}
+            and status_id='AuditPass'
+     </select>
+     <select id="getContractPlanMoney" parameterType="java.lang.String" resultType="java.math.BigDecimal">
+			select NVL(SUM(PAY_FUND),0)
+			from pdsci.ERP_CRM_CONTRACT_PAY_PLAN
+			where RECORD_STATUS = 'Y' and CONTRACT_FLOW = #{contractFlow}
+     </select>
+     
+     <select id="countBalanceFund" parameterType="java.util.Map" resultType="java.math.BigDecimal">
+			select nvl(sum(balance_fund),0) from pdsci.ERP_CRM_CONTRACT_PAY_PLAN
+			       where RECORD_STATUS = 'Y' 
+			<if test='plan!=null'>
+             <if test='plan.planStatusId!=null and plan.planStatusId!=""'>
+                and plan_status_id = #{plan.planStatusId}
+             </if>
+            </if>
+            <if test='contract!=null'>
+               and contract_flow in (
+               select contract_flow from pdsci.erp_crm_contract
+                 where RECORD_STATUS = 'Y'
+               <if test='contract.signDate!=null and contract.signDate!=""'>
+                 <bind name="signDate" value="'%'+contract.signDate+'%'"/>
+                 and sign_date like #{signDate}
+              </if>
+               )
+              
+            </if>
+     </select>
+
+    <select id="getContractPayBalanceExtByContractFlow"  resultMap="erpCrmContractPayBalanceExt">
+        select pb.record_flow,pb.contract_flow,pb.plan_flow,pb.bill_flow,pb.pay_date,pb.pay_fund,pb.record_status,pb.create_time,pb.modify_time,
+        pb.create_user_flow,(select u.user_name from sys_user u where u.user_flow = pb.create_user_flow) createUserName,
+        pb.modify_user_flow,(select u.user_name from sys_user u where u.user_flow = pb.modify_user_flow) modifyUserName,
+        pb.status_id,pb.status_name, pb.audit_user_flow,pb.audit_user_name,pb.audit_reason, pb.BILL_APPLY_USER_FLOW,pb.BILL_APPLY_USER_NAME
+        from erp_crm_contract_pay_balance pb
+        where RECORD_STATUS = 'Y'
+        and pb.contract_flow = #{contractFlow}
+        <if test="planFlow != null and planFlow != '' ">
+            and pb.plan_flow = #{planFlow}
+        </if>
+        <if test="statusId != null and statusId !=''">
+            and pb.status_id = #{statusId}
+        </if>
+    </select>
+    <select id="sumBalancePayFundByFlow" resultType="java.lang.Integer">
+        	select NVL(SUM(PAY_FUND),0)
+			from pdsci.ERP_CRM_CONTRACT_PAY_BALANCE
+			where RECORD_STATUS = 'Y' and CONTRACT_FLOW = #{contractFlow}
+    </select>
+</mapper>

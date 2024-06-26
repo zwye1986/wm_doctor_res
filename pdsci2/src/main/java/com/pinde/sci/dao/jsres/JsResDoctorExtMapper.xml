@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jsres.JsResDoctorExtMapper">
+
+	<select id="searchReductionDoc" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+		select *
+		from res_doctor
+		where record_status = 'Y'
+		and session_number >= #{sessionNumber2}
+		and org_flow in
+		<foreach collection="orgFlows" close=")" item="orgFlow" open="(" separator=",">
+			#{orgFlow}
+		</foreach>
+		and degree_category_id in
+		<foreach collection="degreeTypes" close=")" item="degreeType" open="(" separator=",">
+			#{degreeType}
+		</foreach>
+		and training_type_id = #{trainType}
+		and training_years in
+		<foreach collection="trainingYears" close=")" item="trainingYear" open="(" separator=",">
+			#{trainingYear}
+		</foreach>
+		<if test='doctorName!=null and doctorName!=""'>
+			and doctor_name like '%${doctorName}%'
+		</if>
+		<if test='sessionNumber!=null and sessionNumber!=""'>
+			and session_number =#{sessionNumber}
+		</if>
+		<if test='status!=null and status!="" and status=="Y".toString()'>
+			and exists(
+				select 1 from sch_doctor_dept where sch_doctor_dept.doctor_flow=res_doctor.doctor_flow
+				and  sch_doctor_dept.rotation_flow=res_doctor.rotation_flow and  sch_doctor_dept.org_flow=res_doctor.org_flow
+			)
+		</if>
+		<if test='status!=null and status!="" and status=="N".toString()'>
+			and not exists(
+			select 1 from sch_doctor_dept where sch_doctor_dept.doctor_flow=res_doctor.doctor_flow
+			and  sch_doctor_dept.rotation_flow=res_doctor.rotation_flow and  sch_doctor_dept.org_flow=res_doctor.org_flow
+			)
+		</if>
+		AND NOT EXISTS (SELECT NULL
+			FROM Res_Docotr_Delay_Teturn
+			WHERE record_status = 'Y'
+			AND Res_Docotr_Delay_Teturn.org_flow  in
+			<foreach collection="orgFlows" close=")" item="orgFlow" open="(" separator=",">
+				#{orgFlow}
+			</foreach>
+			and policy_id='2'
+			AND Res_Docotr_Delay_Teturn.doctor_flow = res_doctor.doctor_flow
+			and audit_status_id ='1'
+			AND type_id = 'ReturnTraining'
+		)
+		order by session_number,training_spe_id,create_time
+	</select>
+
+	<resultMap type="HashMap" id="docCountMap">
+		<result  property="doctorTypeId" column="doctor_type_id" javaType="string"/>
+		<result property="docCount" column="doc_count" javaType="java.lang.Integer"/>
+	</resultMap>
+	<select id="getDocCountBySession" resultMap="docCountMap">
+		select rd.doctor_type_id doctor_type_id,count(rd.doctor_type_id) doc_count
+		from res_doctor_recruit rdr
+		inner join  res_doctor rd
+			on	rd.doctor_flow = rdr.doctor_flow
+			and rd.record_status = 'Y'
+		left join sys_org so
+			on so.org_flow = rdr.org_flow
+		    and so.record_status = 'Y'
+		left join res_joint_org rjo
+			on rjo.record_status = 'Y'
+			and rjo.org_flow = #{orgFlow}
+			and rjo.joint_org_flow = rdr.org_flow
+		where rdr.record_status = 'Y'
+		and rdr.audit_status_id = 'Passed'
+		and (
+		rdr.org_flow = #{orgFlow} or rjo.joint_org_flow = rdr.org_flow
+		)
+		and rdr.session_number = #{sessionNumber}
+		and rd.doctor_status_id = '20'
+		and training_type_id is not null
+		and training_type_id != 'WMSecond'
+		and training_type_id != 'AssiGeneral'
+		and 1 = case when rdr.session_number = '2014' and (so.org_level_id != 'CountryOrg' or so.org_level_id is null) then 0 else 1 end
+		group by rd.doctor_type_id
+	</select>
+	<select id="getDocLogCountBySession" resultMap="docCountMap">
+		select rd.doctor_type_id doctor_type_id,count(rd.doctor_type_id) doc_count
+		from res_doctor_recruit_log rdr
+		inner join  res_doctor_log rd
+		on	rd.doctor_flow = rdr.doctor_flow
+		<if test="archiveFlow == null or archiveFlow == ''">
+			and rd.archive_Flow is null
+		</if>
+		<if test="archiveFlow != null and archiveFlow != ''">
+			and rd.archive_Flow = #{archiveFlow}
+		</if>
+		and rd.record_status = 'Y'
+		left join sys_org so
+		on so.org_flow = rdr.org_flow
+		and so.record_status = 'Y'
+		left join res_joint_org rjo
+		on rjo.record_status = 'Y'
+		and rjo.org_flow = #{orgFlow}
+		and rjo.joint_org_flow = rdr.org_flow
+		where rdr.record_status = 'Y'
+		and rdr.audit_status_id = 'Passed'
+		and (
+		rdr.org_flow = #{orgFlow} or rjo.joint_org_flow = rdr.org_flow
+		)
+		<if test="archiveFlow == null or archiveFlow == ''">
+			and rdr.archive_Flow is null
+		</if>
+		<if test="archiveFlow != null and archiveFlow != ''">
+			and rdr.archive_Flow = #{archiveFlow}
+		</if>
+		and rdr.session_number = #{sessionNumber}
+		and rd.doctor_status_id = '20'
+		and training_type_id is not null
+		and training_type_id != 'WMSecond'
+		and training_type_id != 'AssiGeneral'
+		and 1 = case when rdr.session_number = '2014' and (so.org_level_id != 'CountryOrg' or so.org_level_id is null) then 0 else 1 end
+		group by rd.doctor_type_id
+	</select>
+	<select id="getAssiGeneralDocCountBySession" resultMap="docCountMap">
+		select rd.doctor_type_id doctor_type_id,count(rd.doctor_type_id) doc_count
+		from res_doctor_recruit rdr
+		inner join  res_doctor rd
+			on	rd.doctor_flow = rdr.doctor_flow
+			and rd.record_status = 'Y'
+		left join sys_org so
+			on so.org_flow = rdr.org_flow
+		    and so.record_status = 'Y'
+		left join res_joint_org rjo
+			on rjo.record_status = 'Y'
+			and rjo.org_flow = #{orgFlow}
+			and rjo.joint_org_flow = rdr.org_flow
+		where rdr.record_status = 'Y'
+		and rdr.audit_status_id = 'Passed'
+		and (
+		rdr.org_flow = #{orgFlow} or rjo.joint_org_flow = rdr.org_flow
+		)
+		and rdr.session_number = #{sessionNumber}
+		and rd.doctor_status_id = '20'
+		and training_type_id = 'AssiGeneral'
+		group by rd.doctor_type_id
+	</select>
+	<select id="getAssiGeneralDocLogCountBySession" resultMap="docCountMap">
+		select rd.doctor_type_id doctor_type_id,count(rd.doctor_type_id) doc_count
+		from res_doctor_recruit_log rdr
+		inner join  res_doctor_log rd
+		on	rd.doctor_flow = rdr.doctor_flow
+		and rd.record_status = 'Y'
+		<if test="archiveFlow == null or archiveFlow == ''">
+			and rd.archive_Flow is null
+		</if>
+		<if test="archiveFlow != null and archiveFlow != ''">
+			and rd.archive_Flow = #{archiveFlow}
+		</if>
+		left join sys_org so
+		on so.org_flow = rdr.org_flow
+		and so.record_status = 'Y'
+		left join res_joint_org rjo
+		on rjo.record_status = 'Y'
+		and rjo.org_flow = #{orgFlow}
+		and rjo.joint_org_flow = rdr.org_flow
+		where rdr.record_status = 'Y'
+		and rdr.audit_status_id = 'Passed'
+		and (
+		rdr.org_flow = #{orgFlow} or rjo.joint_org_flow = rdr.org_flow
+		)
+		and rdr.session_number = #{sessionNumber}
+		<if test="archiveFlow == null or archiveFlow == ''">
+			and rdr.archive_Flow is null
+		</if>
+		<if test="archiveFlow != null and archiveFlow != ''">
+			and rdr.archive_Flow = #{archiveFlow}
+		</if>
+		and rd.doctor_status_id = '20'
+		and training_type_id = 'AssiGeneral'
+		group by rd.doctor_type_id
+	</select>
+	<resultMap type="HashMap" id="docMap">
+		<result column="seq" property="seq" javaType="string"/>
+		<result column="doctor_name" property="doctorName" javaType="string"/>
+		<result column="sex_name" property="sexName" javaType="string"/>
+		<result column="id_no" property="idNo" javaType="string"/>
+		<result column="user_phone" property="userPhone" javaType="string"/>
+		<result column="doctor_type_name" property="doctorTypeName" javaType="string"/>
+		<result column="recruit_org_name" property="recruitOrgName" javaType="string"/>
+		<result column="org_name" property="orgName" javaType="string"/>
+		<result column="joint_org_name" property="jointOrgName" javaType="string"/>
+		<result column="spe_name" property="speName" javaType="string"/>
+		<result column="recruit_date" property="recruitDate" javaType="string"/>
+		<result column="session_number" property="sessionNumber" javaType="string"/>
+		<result column="train_year" property="trainYear" javaType="string"/>
+		<result column="GRADUATION_YEAR" property="graduationYear" javaType="string"/>
+		<result column="doctor_status_name" property="doctorStatusName" javaType="string"/>
+	</resultMap>
+	<select id="getDocByOrg" resultMap="docMap">
+		select
+			rownum seq,
+			rd.doctor_name doctor_name,
+			su.sex_name sex_name,
+			substr(su.id_no,0,14)||'****' id_no,
+			substr(su.user_phone,0,3)||'****'||substr(su.user_phone,8,4) user_phone,
+			rd.doctor_type_name doctor_type_name,
+			rdr.org_name recruit_org_name,
+			rjo.org_name org_name,
+			rjo.joint_org_name joint_org_name,
+			rdr.spe_name spe_name,
+			rdr.recruit_date recruit_date,
+			rdr.session_number session_number,
+			case when rdr.train_year = 'OneYear' then '一年'
+			when rdr.train_year = 'TwoYear' then '两年'
+			when rdr.train_year = 'ThreeYear' then '三年'
+			else ''
+			end train_year,
+			rdr.GRADUATION_YEAR GRADUATION_YEAR,
+			rd.doctor_status_name doctor_status_name
+		from res_doctor_recruit rdr
+			inner join  res_doctor rd
+				on	rd.doctor_flow = rdr.doctor_flow
+				and rd.record_status = 'Y'
+			inner join sys_user su
+				on rdr.doctor_flow = su.user_flow
+				and su.record_status = 'Y'
+			left join sys_org so
+				on so.org_flow = rdr.org_flow
+				and so.record_status = 'Y'
+			left join res_joint_org rjo
+				on rjo.record_status = 'Y'
+				and rjo.org_flow = #{orgFlow}
+				and rjo.joint_org_flow = rdr.org_flow
+		where rdr.record_status = 'Y'
+			  and rdr.audit_status_id = 'Passed'
+			  and rd.doctor_status_id = '20'
+			  and training_type_id is not null
+			  and training_type_id != 'WMSecond'
+			  and training_type_id != 'AssiGeneral'
+		and 1 = case when rdr.session_number = '2014' and (so.org_level_id != 'CountryOrg' or so.org_level_id is null) then 0 else 1 end
+			  and (
+				  rdr.org_flow = #{orgFlow} or rjo.joint_org_flow = rdr.org_flow
+			  )
+			  <if test='sessions!=null'>
+				  and rdr.session_number in
+				  <foreach collection="sessions" close=")" item="sess" open="(" separator=",">
+					  #{sess}
+				  </foreach>
+			  </if>
+		order by rdr.session_number desc
+	</select>
+	<select id="getDocLogByOrg" resultMap="docMap">
+		select
+		rownum seq,
+		rd.doctor_name doctor_name,
+		su.sex_name sex_name,
+		substr(su.id_no,0,14)||'****' id_no,
+		substr(su.user_phone,0,3)||'****'||substr(su.user_phone,8,4) user_phone,
+		rd.doctor_type_name doctor_type_name,
+		rdr.org_name recruit_org_name,
+		rjo.org_name org_name,
+		rjo.joint_org_name joint_org_name,
+		rdr.spe_name spe_name,
+		rdr.recruit_date recruit_date,
+		rdr.session_number session_number,
+		case when rdr.train_year = 'OneYear' then '一年'
+		when rdr.train_year = 'TwoYear' then '两年'
+		when rdr.train_year = 'ThreeYear' then '三年'
+		else ''
+		end train_year,
+		rdr.GRADUATION_YEAR GRADUATION_YEAR,
+		rd.doctor_status_name doctor_status_name
+		from res_doctor_recruit_log rdr
+		inner join  res_doctor_log rd
+		on	rd.doctor_flow = rdr.doctor_flow
+		and rd.record_status = 'Y'
+		<if test="archiveFlow == null or archiveFlow == ''">
+			and rd.archive_Flow is null
+		</if>
+		<if test="archiveFlow != null and archiveFlow != ''">
+			and rd.archive_Flow = #{archiveFlow}
+		</if>
+		inner join sys_user_log su
+		on rdr.doctor_flow = su.user_flow
+		and su.record_status = 'Y'
+		<if test="archiveFlow == null or archiveFlow == ''">
+			and su.archive_Flow is null
+		</if>
+		<if test="archiveFlow != null and archiveFlow != ''">
+			and su.archive_Flow = #{archiveFlow}
+		</if>
+		left join sys_org so
+		on so.org_flow = rdr.org_flow
+		and so.record_status = 'Y'
+		left join res_joint_org rjo
+		on rjo.record_status = 'Y'
+		and rjo.org_flow = #{orgFlow}
+		and rjo.joint_org_flow = rdr.org_flow
+		where rdr.record_status = 'Y'
+		and rdr.audit_status_id = 'Passed'
+		and rd.doctor_status_id = '20'
+		<if test="archiveFlow == null or archiveFlow == ''">
+			and rdr.archive_Flow is null
+		</if>
+		<if test="archiveFlow != null and archiveFlow != ''">
+			and rdr.archive_Flow = #{archiveFlow}
+		</if>
+		and training_type_id is not null
+		and training_type_id != 'WMSecond'
+		and training_type_id != 'AssiGeneral'
+		and 1 = case when rdr.session_number = '2014' and (so.org_level_id != 'CountryOrg' or so.org_level_id is null) then 0 else 1 end
+		and (
+		rdr.org_flow = #{orgFlow} or rjo.joint_org_flow = rdr.org_flow
+		)
+		<if test='sessions!=null'>
+			and rdr.session_number in
+			<foreach collection="sessions" close=")" item="sess" open="(" separator=",">
+				#{sess}
+			</foreach>
+		</if>
+		order by rdr.session_number desc
+	</select>
+	<select id="getAssiGeneralDocByOrg" resultMap="docMap">
+		select
+			rownum seq,
+			rd.doctor_name doctor_name,
+			su.sex_name sex_name,
+			substr(su.id_no,0,14)||'****' id_no,
+			substr(su.user_phone,0,3)||'****'||substr(su.user_phone,8,4) user_phone,
+			rd.doctor_type_name doctor_type_name,
+			rdr.org_name recruit_org_name,
+			rjo.org_name org_name,
+			rjo.joint_org_name joint_org_name,
+			rdr.spe_name spe_name,
+			rdr.recruit_date recruit_date,
+			rdr.session_number session_number,
+			case when rdr.train_year = 'OneYear' then '一年'
+			when rdr.train_year = 'TwoYear' then '两年'
+			when rdr.train_year = 'ThreeYear' then '三年'
+			else ''
+			end train_year,
+			rdr.GRADUATION_YEAR GRADUATION_YEAR,
+			rd.doctor_status_name doctor_status_name
+		from res_doctor_recruit rdr
+			inner join  res_doctor rd
+				on	rd.doctor_flow = rdr.doctor_flow
+				and rd.record_status = 'Y'
+			inner join sys_user su
+				on rdr.doctor_flow = su.user_flow
+				and su.record_status = 'Y'
+			left join sys_org so
+				on so.org_flow = rdr.org_flow
+				and so.record_status = 'Y'
+			left join res_joint_org rjo
+				on rjo.record_status = 'Y'
+				and rjo.org_flow = #{orgFlow}
+				and rjo.joint_org_flow = rdr.org_flow
+		where rdr.record_status = 'Y'
+			  and rdr.audit_status_id = 'Passed'
+			  and rd.doctor_status_id = '20'
+			  and training_type_id = 'AssiGeneral'
+			  and (
+				  rdr.org_flow = #{orgFlow} or rjo.joint_org_flow = rdr.org_flow
+			  )
+			  <if test='sessions!=null'>
+				  and rdr.session_number in
+				  <foreach collection="sessions" close=")" item="sess" open="(" separator=",">
+					  #{sess}
+				  </foreach>
+			  </if>
+		order by rdr.session_number desc
+	</select>
+	<select id="getAssiGeneralDocLogByOrg" resultMap="docMap">
+		select
+		rownum seq,
+		rd.doctor_name doctor_name,
+		su.sex_name sex_name,
+		substr(su.id_no,0,14)||'****' id_no,
+		substr(su.user_phone,0,3)||'****'||substr(su.user_phone,8,4) user_phone,
+		rd.doctor_type_name doctor_type_name,
+		rdr.org_name recruit_org_name,
+		rjo.org_name org_name,
+		rjo.joint_org_name joint_org_name,
+		rdr.spe_name spe_name,
+		rdr.recruit_date recruit_date,
+		rdr.session_number session_number,
+		case when rdr.train_year = 'OneYear' then '一年'
+		when rdr.train_year = 'TwoYear' then '两年'
+		when rdr.train_year = 'ThreeYear' then '三年'
+		else ''
+		end train_year,
+		rdr.GRADUATION_YEAR GRADUATION_YEAR,
+		rd.doctor_status_name doctor_status_name
+		from res_doctor_recruit_log rdr
+		inner join  res_doctor_log rd
+		on	rd.doctor_flow = rdr.doctor_flow
+		and rd.record_status = 'Y'
+		<if test="archiveFlow == null or archiveFlow == ''">
+			and rd.archive_Flow is null
+		</if>
+		<if test="archiveFlow != null and archiveFlow != ''">
+			and rd.archive_Flow = #{archiveFlow}
+		</if>
+		inner join sys_user_log su
+		on rdr.doctor_flow = su.user_flow
+		and su.record_status = 'Y'
+		<if test="archiveFlow == null or archiveFlow == ''">
+			and su.archive_Flow is null
+		</if>
+		<if test="archiveFlow != null and archiveFlow != ''">
+			and su.archive_Flow = #{archiveFlow}
+		</if>
+		left join sys_org so
+		on so.org_flow = rdr.org_flow
+		and so.record_status = 'Y'
+		left join res_joint_org rjo
+		on rjo.record_status = 'Y'
+		and rjo.org_flow = #{orgFlow}
+		and rjo.joint_org_flow = rdr.org_flow
+		where rdr.record_status = 'Y'
+		and rdr.audit_status_id = 'Passed'
+		<if test="archiveFlow == null or archiveFlow == ''">
+			and rdr.archive_Flow is null
+		</if>
+		<if test="archiveFlow != null and archiveFlow != ''">
+			and rdr.archive_Flow = #{archiveFlow}
+		</if>
+		and rd.doctor_status_id = '20'
+		and training_type_id = 'AssiGeneral'
+		and (
+		rdr.org_flow = #{orgFlow} or rjo.joint_org_flow = rdr.org_flow
+		)
+		<if test='sessions!=null'>
+			and rdr.session_number in
+			<foreach collection="sessions" close=")" item="sess" open="(" separator=",">
+				#{sess}
+			</foreach>
+		</if>
+		order by rdr.session_number desc
+	</select>
+	<resultMap type="HashMap" id="scoreMap">
+		<result column="STANDARD_DEPT_NAME" property="standardDeptName" javaType="string"/>
+		<result column="STANDARD_DEPT_ID" property="standardDeptId" javaType="string"/>
+		<result column="RECORD_FLOW" property="flow" javaType="string"/>
+		<result column="REC_CONTENT" property="recContent" javaType="string"/>
+	</resultMap>
+	<select id="getALLScoreByMap" resultMap="scoreMap">
+		SELECT D.STANDARD_DEPT_NAME,D.STANDARD_DEPT_ID,D.RECORD_FLOW,REC.REC_CONTENT,REC.OPER_USER_FLOW FROM SCH_ROTATION_GROUP A
+		LEFT JOIN SCH_ROTATION_DEPT D  ON A.ROTATION_FLOW=D.ROTATION_FLOW AND A.GROUP_FLOW=D.GROUP_FLOW
+		LEFT JOIN RES_SCH_PROCESS_EXPRESS REC ON REC.SCH_ROTATION_DEPT_FLOW=D.RECORD_FLOW
+		WHERE A.RECORD_STATUS='Y'
+		AND D.RECORD_STATUS='Y'
+		AND REC.RECORD_STATUS='Y'
+		<if test='recType!=null'>
+			AND REC.REC_TYPE_ID = #{recType}
+		</if>
+		<if test='doctor!=null'>
+			<if test="doctor.rotationFlow!=null and doctor.rotationFlow!='' ">
+				AND A.ROTATION_FLOW =#{doctor.rotationFlow}
+			</if>
+			<if test="doctor.doctorFlow!=null and doctor.doctorFlow!='' ">
+				AND REC.OPER_USER_FLOW =#{doctor.doctorFlow}
+			</if>
+
+		</if>
+		ORDER BY A.ORDINAL DESC,D.ORDINAL DESC
+	</select>
+	<resultMap type="HashMap" id="countMap">
+		<result column="NUM" property="num" javaType="string"/>
+		<result column="ORG_FLOW" property="orgFlow" javaType="string"/>
+		<result column="ORG_CODE" property="orgCode" javaType="string"/>
+	</resultMap>
+	<select id="getOrgCodeAndNum"  resultMap="countMap">
+		<!--SELECT ORG.ORG_CODE,ORG.ORG_FLOW,lpad(-->
+		<!--(SELECT COUNT(1) FROM RES_DOCTOR T WHERE T.ORG_FLOW=ORG.ORG_FLOW AND T.GRADUATION_STATUS_ID='GrantCertf')+1-->
+		<!--, 3, '0') NUM FROM SYS_ORG ORG-->
+		<!--WHERE 1=1-->
+		<!--<if test="orgFlow!=null and orgFlow!=''">-->
+			<!--AND ORG.ORG_FLOW = #{orgFlow}-->
+		<!--</if>-->
+		<!--GROUP BY ORG.ORG_FLOW,ORG.ORG_CODE-->
+		SELECT ORG_CODE,LPAD(SUM(NUM)+1, 3, '0') NUM
+		FROM (
+		SELECT ORG.ORG_FLOW,
+		ORG.ORG_CODE,
+		(SELECT COUNT(1)
+		FROM RES_DOCTOR T
+		WHERE  T.RECORD_STATUS='Y'
+		AND (T.training_type_id='WMFirst'OR T.training_type_id='DoctorTrainingSpe')
+		AND T.ORG_FLOW = ORG.ORG_FLOW
+		<if test="year!=null and year!=''">
+			<bind name="year" value="year+'%'"/>
+			AND T.COMPLETE_NO LIKE #{year}
+		</if>
+
+		) NUM
+		FROM (SELECT ORG.ORG_CODE, JIORG.JOINT_ORG_FLOW ORG_FLOW
+		FROM SYS_ORG ORG
+		LEFT JOIN RES_JOINT_ORG JIORG
+		ON ORG.ORG_FLOW = JIORG.ORG_FLOW
+		WHERE 1= 1
+		<if test="orgFlow!=null and orgFlow!=''">
+		AND ORG.ORG_FLOW = #{orgFlow}
+		</if>
+		UNION ALL
+		SELECT ORG.ORG_CODE, ORG.ORG_FLOW
+		FROM SYS_ORG ORG
+		WHERE
+		1=1
+		<if test="orgFlow!=null and orgFlow!=''">
+			AND ORG.ORG_FLOW = #{orgFlow}
+		</if>
+		) ORG ) TEMP
+		GROUP BY ORG_CODE
+	</select>
+
+	<select id="searchResDoctorByMap"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+		select ed.* from res_doctor ed
+		LEFT JOIN pdsci.SYS_USER u ON ED.DOCTOR_FLOW = u.USER_FLOW
+		where ed.record_status='Y'
+		AND U.RECORD_STATUS='Y'
+		AND ed.org_flow IN (SELECT ORG_FLOW
+		FROM PDSCI.SYS_ORG
+		WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+		<if test="cityId!=null and cityId!=''">
+			AND ORG_CITY_ID = #{cityId}
+		</if>
+		<if test="proId!=null and proId!=''">
+
+		AND ORG_PROV_ID = #{proId}
+		</if>
+		<if test="jointOrgFlowList!=null and jointOrgFlowList.size>0">
+			and ORG_FLOW in
+			<foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		)
+		AND ED.GRADUATION_STATUS_ID='GrantCertf'
+		<if test="userName!=null and userName!=''">
+			<bind name="userName" value="'%'+userName+'%'"/>
+			and u.USER_NAME like #{userName}
+		</if>
+		<if test="idNo!=null and idNo!=''">
+			<bind name="idNo" value="'%'+idNo+'%'"/>
+			and u.ID_NO like #{idNo}
+		</if>
+		<if test="cerNum!=null and cerNum!=''">
+			<bind name="cerNum" value="'%'+cerNum+'%'"/>
+			and ed.COMPLETE_NO like #{cerNum}
+		</if>
+
+	</select>
+
+	<select id="getPowerMap"  resultType="java.util.HashMap">
+		SELECT
+		RD.*,
+		nvl((select CFG_VALUE from sys_cfg cfg where cfg.record_status='Y' and cfg.cfg_code = 'jswjw_'||rd.org_flow||'_P001' ),'N') STU_JD_GC,
+		nvl((select CFG_VALUE from sys_cfg cfg where cfg.record_status='Y' and cfg.cfg_code = 'jswjw_sendSchool_'||rd.Work_Org_Id||'_P007' AND RD.DOCTOR_TYPE_ID='Graduate' ),'Y') STU_SEND_SCHOOL_GC,
+		nvl((select CFG_VALUE from sys_cfg cfg where cfg.record_status='Y' and cfg.cfg_code = 'jswjw_'||rd.org_flow||'_P008' ),'N') STU_JDZS_GC,
+		nvl((select CFG_VALUE from sys_cfg cfg where cfg.record_status='Y' and cfg.cfg_code = 'jswjw_'||rd.org_flow||'_P004' ),'N') STU_JD_CKK,
+		nvl((select CFG_VALUE from sys_cfg cfg where cfg.record_status='Y' and cfg.cfg_code = 'jswjw_'||rd.org_flow||'_P009' ),'N') STU_JDZS_CKK,
+		nvl((select CFG_VALUE from sys_cfg cfg where cfg.record_status='Y' and cfg.cfg_code = 'jswjw_sendSchool_'||rd.Work_Org_Id||'_P010' AND RD.DOCTOR_TYPE_ID='Graduate' ),'N') STU_SEND_SCHOOL_CKK
+		FROM RES_DOCTOR RD
+		WHERE RD.DOCTOR_FLOW=#{docFlow}
+	</select>
+	<resultMap type="HashMap" id="areaMap">
+		<result column="MIN_DATE" property="minDate" javaType="string"/>
+		<result column="MAX_DATE" property="maxDate" javaType="string"/>
+	</resultMap>
+	<select id="getDocProcessArea" resultMap="areaMap">
+		select min(sch_start_date) MIN_DATE,max(sch_end_date) MAX_DATE
+		from pdsci.res_doctor_sch_process
+		where record_status = 'Y'
+		and user_flow = #{userFlow}
+	</select>
+	<select id="searchResDoctorByMapForUni"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+		select ed.* from res_doctor ed
+		LEFT JOIN pdsci.SYS_USER u ON ED.DOCTOR_FLOW = u.USER_FLOW
+		where ed.record_status='Y'
+		AND U.RECORD_STATUS='Y'
+		AND ed.DOCTOR_TYPE_ID = 'Graduate'
+		AND ed.org_flow IN (SELECT ORG_FLOW
+		FROM PDSCI.SYS_ORG
+		WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+		AND ORG_FLOW IN (
+			SELECT DISTINCT RDR.ORG_FLOW
+			FROM
+			RES_DOCTOR_RECRUIT RDR
+			LEFT JOIN
+			RES_DOCTOR RD ON RDR.DOCTOR_FLOW=RD.DOCTOR_FLOW
+			JOIN SYS_USER SU
+			ON SU.USER_FLOW = RD.DOCTOR_FLOW
+			WHERE RD.RECORD_STATUS = 'Y'
+			AND SU.RECORD_STATUS = 'Y'
+			AND RD.DOCTOR_TYPE_ID = 'Graduate'
+			<if test="(org.sendSchoolId != null and org.sendSchoolId != '') or (org.sendSchoolName != null and org.sendSchoolName != '')">
+
+
+			AND (
+					<trim prefix="" prefixOverrides="OR">
+								<if test="(org.sendSchoolId != null and org.sendSchoolId != '')">OR ed.work_org_id = #{org.sendSchoolId
+						}</if>
+								<if test="(org.sendSchoolName != null and org.sendSchoolName != '')">OR ed.work_org_name = #{org.sendSchoolName
+						}</if>
+					</trim>
+					)
+			</if>
+					AND RDR.ORG_FLOW IS NOT NULL
+				)
+		)
+		AND ED.GRADUATION_STATUS_ID='GrantCertf'
+		<if test="userName!=null and userName!=''">
+			<bind name="userName" value="'%'+userName+'%'"/>
+			and u.USER_NAME like #{userName}
+		</if>
+		<if test="idNo!=null and idNo!=''">
+			<bind name="idNo" value="'%'+idNo+'%'"/>
+			and u.ID_NO like #{idNo}
+		</if>
+		<if test="cerNum!=null and cerNum!=''">
+			<bind name="cerNum" value="'%'+cerNum+'%'"/>
+			and ed.COMPLETE_NO like #{cerNum}
+		</if>
+		<if test="school!=null and school!=''">
+			and ed.SCHOOL = #{school}
+		</if>
+	</select>
+	<select id="findWaitPassCountByOrgFlow"  resultType="java.lang.Integer">
+		SELECT COUNT(0)
+		FROM pdsci.res_doctor rd
+		WHERE rd.record_status = 'Y'
+		<if test="list!=null and list.size>0">
+			and ORG_FLOW in
+			<foreach collection="list" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test=" f==1">
+			and rd.graduation_status_id='ManagerPassed'
+		</if>
+		<if test=" f==2">
+			and rd.graduation_status_id='Submit'
+		</if>
+		<if test="trainingTypeId!=null and trainingTypeId!=''">
+			and rd.TRAINING_TYPE_ID = #{trainingTypeId}
+		</if>
+
+
+	</select>
+	<!--助理全科-->
+	<select id="getOrgNumByCityId" resultType="java.util.Map">
+		select LPAD(count(1)+1, 4, '0') NUM from res_doctor rd
+		where rd.record_status='Y'
+		and rd.training_type_id='AssiGeneral'
+		<if test="year!=null and year!=''">
+			<bind name="year" value="year+'%'"/>
+			AND (#{yearbefore}||rd.COMPLETE_NO) LIKE #{year}
+		</if>
+		and exists (
+		select 1 from sys_org org where 1=1
+		<if test="orgCityId!=null and orgCityId!=''">
+			AND org.org_city_id = #{orgCityId}
+		</if>
+		and org.record_status='Y' and org.org_flow=rd.org_flow)
+	</select>
+	<select id="getQuanKe" resultType="java.util.Map">
+		select LPAD(count(1)+1, 4, '0') NUM from res_doctor rd
+		where rd.record_status='Y'
+		AND (
+		(rd.training_type_id='WMFirst' and rd.TRAINING_SPE_ID='51')
+		OR
+		(rd.training_type_id='WMFirst' and rd.TRAINING_SPE_ID='52')
+		or (rd.training_type_id='DoctorTrainingSpe'and rd.TRAINING_SPE_ID='0700'))
+		<if test="year!=null and year!=''">
+			<bind name="year" value="year+'%'"/>
+			AND (#{yearbefore}||rd.COMPLETE_NO) LIKE #{year}
+		</if>
+		and exists (
+		select 1 from sys_org org where 1=1
+		<if test="orgCityId!=null and orgCityId!=''">
+			AND org.org_city_id = #{orgCityId}
+		</if>
+		and org.record_status='Y' and org.org_flow=rd.org_flow)
+
+	</select>
+	<select id="getFeiQuanKe" resultType="java.util.Map">
+		select LPAD(count(1)+1, 4, '0') NUM from res_doctor rd
+		where rd.record_status='Y'
+		AND (
+		(rd.training_type_id='WMFirst' and rd.TRAINING_SPE_ID !='51')
+		OR
+		(rd.training_type_id='WMFirst' and rd.TRAINING_SPE_ID !='52')
+		or (rd.training_type_id='DoctorTrainingSpe'and rd.TRAINING_SPE_ID !='0700'))
+		<if test="year!=null and year!=''">
+			<bind name="year" value="'苏卫'+year+'%'"/>
+			AND rd.COMPLETE_NO LIKE #{year}
+		</if>
+		and exists (
+		select 1 from sys_org org where 1=1
+		<if test="orgCityId!=null and orgCityId!=''">
+			AND org.org_city_id = #{orgCityId}
+		</if>
+		and org.record_status='Y' and org.org_flow=rd.org_flow)
+	</select>
+
+	<select id="selectGraduates" resultType="java.util.Map">
+		SELECT COUNT(distinct(rdr.recruit_flow)) AS GRADUATESCOUNT, d.training_spe_id AS TRAININGSPEID
+			from RES_DOCTOR_RECRUIT rdr
+			left join res_doctor d on rdr.doctor_flow = d.doctor_flow
+		WHERE d.doctor_Type_Id = 'Graduate'
+			AND rdr.record_status = 'Y'
+			AND d.record_status='Y'
+			AND rdr.CAT_SPE_ID in ('DoctorTrainingSpe','AssiGeneral')
+			<if test="cityOrg!=null">
+				and d.org_flow in (
+				select org_flow from sys_org where record_status='Y'
+				<if test="cityOrg.orgProvId!=null and cityOrg.orgProvId!=''">
+					AND sys_org.org_Prov_Id= #{cityOrg.orgProvId}
+				</if>
+				<if test="cityOrg.orgCityId!=null and cityOrg.orgCityId!=''">
+					AND sys_org.org_City_Id= #{cityOrg.orgCityId}
+				</if>
+				<if test="cityOrg.orgTypeId!=null and cityOrg.orgTypeId!=''">
+					AND sys_org.org_Type_Id= #{cityOrg.orgTypeId}
+				</if>
+				)
+			</if>
+			<if test="workOrgName!=null and workOrgName!=''">
+				AND d.WORK_ORG_NAME= #{workOrgName}
+			</if>
+			<if test="sessionNumber!=null and sessionNumber!=''">
+				AND d.SESSION_NUMBER= #{sessionNumber}
+			</if>
+		group by d.training_spe_id
+	</select>
+	<select id="selectGraduatesByOrg" resultType="java.util.Map">
+		SELECT COUNT(distinct(rdr.recruit_flow)) AS GRADUATESCOUNT, d.WORK_ORG_NAME AS SCHOOLNAME
+		from RES_DOCTOR_RECRUIT rdr
+		left join res_doctor d on rdr.doctor_flow = d.doctor_flow
+		WHERE d.doctor_Type_Id = 'Graduate'
+			AND rdr.record_status = 'Y'
+			AND d.record_status='Y'
+			AND rdr.CAT_SPE_ID in ('DoctorTrainingSpe','AssiGeneral')
+			<if test="sessionNumber!=null and sessionNumber!=''">
+				AND d.SESSION_NUMBER= #{sessionNumber}
+			</if>
+			<if test="cityOrg!=null">
+				and d.org_flow in (
+					select org_flow from sys_org where record_status='Y'
+					<if test="cityOrg.orgProvId!=null and cityOrg.orgProvId!=''">
+						AND sys_org.org_Prov_Id= #{cityOrg.orgProvId}
+					</if>
+					<if test="cityOrg.orgCityId!=null and cityOrg.orgCityId!=''">
+						AND sys_org.org_City_Id= #{cityOrg.orgCityId}
+					</if>
+					<if test="cityOrg.orgTypeId!=null and cityOrg.orgTypeId!=''">
+						AND sys_org.org_Type_Id= #{cityOrg.orgTypeId}
+					</if>
+				)
+			</if>
+			<if test="SendSchoolList!=null and SendSchoolList.size>0">
+				AND d.WORK_ORG_NAME in
+				<foreach collection="SendSchoolList" close=")" item="sendSchool" open="(" separator=",">
+					#{sendSchool}
+				</foreach>
+			</if>
+			group by d.WORK_ORG_NAME
+	</select>
+
+</mapper>

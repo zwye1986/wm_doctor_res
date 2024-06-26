@@ -1,0 +1,47 @@
+@charset "utf-8";
+/* CSS Document */
+html {height:100%;max-height:100%;padding:0;margin:0;border:0;overflow: hidden;}
+body{margin:0;}
+a{text-decoration:none;color:#222;font-size:14px;font-family:"微软雅黑";}
+.fl{float:left}
+.fr{float:right;}
+.db{display:block;}
+img{border:none;}
+input{outline:none;margin:0;border:none;}
+/*页眉*/
+.top_box{position:absolute;overflow:hidden;top:20px;left:0;width:100%;z-index:5;display:block;}
+.top{width:1002px;margin:auto;overflow:hidden;}
+.top span{color:#222;font-size:16px;font-family:"微软雅黑";line-height:60px;}
+.top a{margin-top:34px;color:#646464;}
+/*banner+登录*/
+.banner_box{position:absolute;width:100%;overflow:hidden;background:#fff;z-index:3;top:50px;bottom:132px;}
+.banner{position:absolute;top:0;left:50%;width:1920px;margin-left:-960px; margin-top:30px}
+.banner_text{position:absolute;top:10%;left:50%;margin-left:-501px;}
+.weixin_bg{position:absolute;top:16%;left:50%;margin-left:201px;width:300px;height:340px;background:url(images/login_bg.png);}
+.weixin{width:260px;margin:auto;}
+.chname{font-size:28px;color:#377fb6;display:block;text-align:left;margin-top:8px;}
+.enname{font-size:14px;color:#377fb6;display:block;text-align:left;font-family:Arial, Helvetica, sans-serif;}
+.weixin input{height:34px;width:222px;color:#a3a3a3;font-size:14px;border:solid #a9d3f2 1px;border-left:none;}
+.login img,.login input,.mima img,.mima input{float:left;}
+.login,.mima,.yanzm,.denglu{overflow:hidden;}
+.login,.mima,.yanzm{margin-top:16px;}
+.login{margin-top:26px;}
+.yanzm input{width:116px;padding-left:10px;border:solid #a9d3f2 1px;}
+.cw{color:#ed3a31;font-size:14px;display:block;line-height:40px;}
+.denglu a{line-height:38px;width:120px;text-align:center;font-size:16px;color:#FFF;;}
+.denglu .login1{background:#4cd9cd;}
+.denglu .login1:hover{background:#22c3b5;}
+.denglu .login2{background:#57aeee;}
+.denglu .login2:hover{background:#2d8fd8;}
+/*通知公告*/
+.new_box{overflow:hidden;position:absolute;bottom:66px;left:0;width:100%;z-index:4}
+.new{width:1002px;margin:auto;border:solid 1px #ebebeb;overflow:hidden;}
+.new a{line-height:48px;font-size:14px;}
+.new a:hover{color:#459ae9;text-decoration:underline;}
+.gongao{padding-right:25px;background:url(images/new.png) no-repeat right 17px;margin-left:26px;}
+.gongao span{color:#d5d5d5;margin-right:4px;}
+.xitong{margin-left:20px;font-size:14px;font-family:"微软雅黑";color:#222;line-height:48px;}
+.more{padding-right:16px;background:url(images/more.png) no-repeat right center;margin-right:20px;color:#222;}
+/*页脚*/
+.footer_box{background:#fff;position:absolute;bottom:0;left:0;width:100%;z-index:5;display:block;overflow:hidden;}
+.footer{color:#3b3b3b;text-align:center;line-height:110px;font-size:14px;}

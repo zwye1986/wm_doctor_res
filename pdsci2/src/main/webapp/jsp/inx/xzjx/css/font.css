@@ -1,0 +1,153 @@
+@charset "utf-8";
+/* CSS Document */
+body,html,ul,li,table,tr,td,th,a,span,h1,h2,div，caption{
+	padding:0;
+	margin:0;
+    }
+table{
+	border-spacing:16px;
+	}
+a{
+	text-decoration:none;
+	display:block;
+	}
+img{
+	padding:0;
+	margin:0;
+	display:block;
+	}
+/*login*/
+body{
+	/*position:relative;*/
+	width:100%;
+	height:100%;
+	}
+.loginbg{
+	position:absolute;
+	background:url(../images/bg.png) center no-repeat;
+	overflow:hidden;
+	width:100%;
+	height:100%;
+    }
+.loginlogo img{
+	position:absolute;
+	left:50%;
+	top:0;
+	margin-left:-960px;
+	width:1920px;;
+	height:90px;
+    }
+.login{
+	background:url(../images/login-bg.png) no-repeat;
+	overflow:hidden;
+	width:100%;
+	height:100%;
+	position:absolute;
+	top:25%; 
+	left:50%;
+	margin-left:-210px;
+	}
+.login table{
+	margin-left:23px;
+	}
+.login td{
+	border:#c5c5c5 1px solid;
+	border-radius:4px;
+	width:340px;
+	height:48px;
+	background:#FFFFFF;
+	
+	}
+.login td img{
+	float:left;
+	width:19px;
+	height:24px;
+	padding-left:16px;
+	padding-top:7px;
+	}
+.login input{
+	border:none;
+	width:280px;
+	height:40px;
+	float:left;
+	font-size:16px;
+	padding-left:16px;
+	color:#878787;
+	line-height:36px;
+	outline:none;
+	}
+.login th{
+	font-size:24px;
+	line-height:36px;
+	padding-top:30px;
+	color:#242424;
+	font-weight:normal;
+	}
+.login .yanzm{
+	margin-left:20px;
+}
+.yanzm img{
+	padding-left:8px;
+	padding-top:2px;
+	}
+.btn_y .dl {
+	float:left;
+	width:160px;
+	height:48px;
+	background:#0e8af3;
+	border:none;
+	color:#FFFFFF;
+	font-size:18px;
+	border-radius:4px;
+	text-align:center;
+	margin-top:20px;
+	line-height:50px;
+	margin-left:40px;
+	}
+.btn_y .dl:hover{
+	background:#0579dc;
+	cursor:pointer;
+}
+.btn_y .zc {
+	float:left;
+	width:160px;
+	height:48px;
+	background:#f1bf2b;
+	border:none;
+	color:#FFFFFF;
+	font-size:18px;
+	border-radius:4px;
+	text-align:center;
+	margin-top:20px;
+	line-height:50px;
+	margin-left:20px;
+	}
+.btn_y .zc:hover{
+	background:#e7b41b;
+	cursor:pointer;
+}
+
+
+
+.loginbottom a{
+	position:absolute;
+	bottom:0px;
+	width:100%;
+	text-align:center;
+	font-size:13px;
+	color:#FFFFFF;
+	/*padding-top:20px;*/
+	padding-bottom:20px;
+    }
+.loginbottom span{
+	display:block;
+	position:absolute;
+	bottom:0px;
+	width:100%;
+	text-align:center;
+	font-size:13px;
+	color:#FFFFFF;
+	padding-top:20px;
+	padding-bottom:45px;
+    }
+

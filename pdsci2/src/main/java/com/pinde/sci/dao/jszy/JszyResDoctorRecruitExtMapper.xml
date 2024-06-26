@@ -1,0 +1,2317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jszy.JszyResDoctorRecruitExtMapper">
+	
+	<resultMap id="DoctorRecruit" type="com.pinde.sci.model.jszy.JszyResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
+		<association property="sysUser" column="user_flow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" >
+			<id column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
+		    <result column="edOrgFlow" jdbcType="VARCHAR" property="orgFlow"/>
+			<result column="edOrgName" jdbcType="VARCHAR" property="orgName"/>
+		</association>
+	</resultMap>
+	<resultMap id="DoctorScoreRecruit" type="com.pinde.sci.model.jszy.JszyResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
+		<association property="sysUser" column="user_flow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+		<association property="resScore" column="user_flow"  resultMap="com.pinde.sci.dao.base.ResScoreMapper.ResultMapWithBLOBs" />
+		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" >
+			<id column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
+			<result column="edOrgFlow" jdbcType="VARCHAR" property="orgFlow"/>
+			<result column="edOrgName" jdbcType="VARCHAR" property="orgName"/>
+		</association>
+	</resultMap>
+	<resultMap id="doctorInfo" type="com.pinde.sci.model.jszy.JszyDoctorInfoExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
+		<association property="sysUser" column="userFlow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" />
+		<association property="userResume" column="userFlow"  resultMap="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs" />
+	</resultMap>
+	
+	<resultMap id="doctorInfoSun" type="com.pinde.sci.model.jszy.JszyResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
+		<association property="sysUser" column="userFlow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+	</resultMap>
+	 <select id="searchDoctorRecruit"  parameterType="java.util.Map" resultMap="doctorInfoSun">
+	 	  select 	dr.*,		
+					u.USER_FLOW,
+	 				u.USER_NAME,
+					u.USER_CODE ,
+					u.USER_PHONE,
+					u.SEX_ID,
+					u.SEX_NAME,
+					u.ID_NO,
+					u.NATION_ID,
+					u.NATION_NAME,
+					u.USER_BIRTHDAY,
+					u.USER_EMAIL
+		    from pdsci.RES_DOCTOR_RECRUIT dr
+		    inner join pdsci.SYS_USER u on dr.DOCTOR_FLOW = u.USER_FLOW 
+		    where dr.RECORD_STATUS = 'Y' AND u.RECORD_STATUS = 'Y'  AND dr.RECRUIT_FLAG = 'Y'
+		     <if test="doctorRecruit!=null">
+				 <if test="doctorRecruit.speId!=null and doctorRecruit.speId!=''">
+						    and dr.SPE_ID = #{doctorRecruit.speId} 
+				</if>
+				 <if test="doctorRecruit.sessionNumber!=null and doctorRecruit.sessionNumber!=''">
+						    and dr.SESSION_NUMBER = #{doctorRecruit.sessionNumber} 
+				 </if>
+			 </if>
+			  <if test="users!=null">
+				  <if test="users.userName!=null and users.userName!=''">
+				  			<bind name="userName" value="'%'+users.userName+'%'"/>
+		    				and u.USER_NAME like #{userName} 
+				  </if>
+				  <if test="users.idNo!=null and users.idNo!=''">
+		    				and u.ID_NO = #{users.idNo} 
+				 </if>
+			 </if>
+		    AND (exists(
+		      select so.org_flow
+		      from  sys_org so
+		      where so.record_status = 'Y'
+		      and so.org_flow = dr.org_flow
+		      <if test="orgFlow!=null and orgFlow!=''">
+		    	and so.org_flow = #{orgFlow} 
+			  </if>
+			  <if test="doctorRecruit.placeId!=null and doctorRecruit.placeId!=''">
+				 and so.ORG_CITY_ID = #{doctorRecruit.placeId} 
+			 </if>
+			 <if test="orgTypeId!=null and orgTypeId!=''">
+				 and so.ORG_TYPE_ID = #{orgTypeId} 
+			  </if>
+		    )
+		    <if test="check!=null and check!=''">
+		    or 
+		    exists(
+		    select rjo.joint_org_flow
+		      from  res_joint_org rjo
+		      inner join sys_org so
+		      on so.org_flow = rjo.org_flow
+		      where so.record_status = 'Y'
+		      and rjo.record_status = 'Y'
+		      and rjo.joint_org_flow = dr.org_flow
+		       <if test="orgFlow!=null and orgFlow!=''">
+		    	and so.org_flow = #{orgFlow} 
+			  </if>
+			  <if test="doctorRecruit.placeId!=null and doctorRecruit.placeId!=''">
+				 and so.ORG_CITY_ID = #{doctorRecruit.placeId} 
+			  </if>
+			   <if test="orgTypeId!=null and orgTypeId!=''">
+				 and so.ORG_TYPE_ID = #{orgTypeId} 
+			  </if>
+		    )
+		    </if>
+		    )
+	 </select>
+	
+	 <select id="searchDoctorInfoExts"  parameterType="java.util.Map" resultMap="doctorInfo">
+    		select *
+         <if test='zlFlag == "Y"'>
+             from pdsci.Jsres_Recruit_doc_Info dr
+         </if>
+         <if test='zlFlag != "Y"'>
+             from pdsci.RES_DOCTOR_RECRUIT dr
+         </if>
+			 left join  RES_DOCTOR ed
+			 on dr.DOCTOR_FLOW =  ed.DOCTOR_FLOW
+    		left join  pdsci.SYS_USER u
+    		on dr.DOCTOR_FLOW =  u.USER_FLOW
+    		left join pdsci.PUB_USER_RESUME pur
+    		on pur.USER_FLOW=dr.DOCTOR_FLOW
+    		where dr.RECORD_STATUS= 'Y'
+         <if test='zlFlag != "Y"'>
+             and u.RECORD_STATUS= 'Y'
+         </if>
+    		and dr.org_flow in(
+    			SELECT ORG_FLOW
+			FROM PDSCI.SYS_ORG
+			WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+			<if test="sysOrg!=null">
+				<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
+			    	 AND ORG_PROV_ID = #{sysOrg.orgProvId} 
+			    </if>
+				<if test="sysOrg.orgCityId!=null and sysOrg.orgCityId!=''">
+			    	 AND ORG_CITY_ID = #{sysOrg.orgCityId} 
+			    </if>
+				<if test="sysOrg.orgFlow!=null and sysOrg.orgFlow!=''">
+			    	 AND ORG_FLOW = #{sysOrg.orgFlow} 
+			    </if>
+				<if test="sysOrg.orgLevelId!=null and sysOrg.orgLevelId!=''">
+			    	 AND ORG_LEVEL_ID = #{sysOrg.orgLevelId} 
+			    </if>
+				<if test="sysOrg.orgTypeId!=null and sysOrg.orgTypeId!=''">
+			    	 AND ORG_TYPE_ID = #{sysOrg.orgTypeId} 
+			    </if>
+		    </if>
+		    <if test="jointOrgFlowList!=null and jointOrgFlowList.size>0">
+				and dr.ORG_FLOW in 
+    			<foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+    		</if>
+             <if test="trainYears!=null and trainYears!=''">
+                 and dr.train_Year in
+                 <foreach collection="trainYears" open="(" separator="," close=")" item="item">#{item}</foreach>
+             </if>
+		    <if test="docTypeList!=null and docTypeList.size>0">
+				and ed.DOCTOR_TYPE_ID in
+    			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+    		</if>
+    		)
+    		<if test="resDoctorRecruit!=null">
+    			<if test="resDoctorRecruit.sessionNumber!=null and resDoctorRecruit.sessionNumber!=''">
+    				and dr.SESSION_NUMBER = #{resDoctorRecruit.sessionNumber} 
+    			</if>
+    			<if test="resDoctorRecruit.catSpeId!=null and resDoctorRecruit.catSpeId!=''">
+    				and dr.CAT_SPE_ID = #{resDoctorRecruit.catSpeId} 
+    			</if>
+    			<if test="resDoctorRecruit.speId!=null and resDoctorRecruit.speId!=''">
+    				and dr.SPE_ID = #{resDoctorRecruit.speId} 
+    			</if>
+    			<if test='resDoctorRecruit.orgFlow!=null and resDoctorRecruit.orgFlow!=""'>
+    				and dr.ORG_FLOW = #{resDoctorRecruit.orgFlow} 
+    			</if>
+    			 <if test="resDoctorRecruit.auditStatusId!=null and resDoctorRecruit.auditStatusId!=''">
+    				and dr.AUDIT_STATUS_ID=#{resDoctorRecruit.auditStatusId}
+    			</if> 
+    			 <if test="resDoctorRecruit.graduationYear!=null and resDoctorRecruit.graduationYear!=''">
+    				and dr.GRADUATION_YEAR=#{resDoctorRecruit.graduationYear}
+    			</if>
+    		</if>
+    		<if test="derateFlag!=null and resDoctorRecruit.trainYear!=null and resDoctorRecruit.trainYear!='' ">
+    			and dr.TRAIN_YEAR not in (#{resDoctorRecruit.trainYear})
+    		</if>
+    		<if test="user!=null">
+    			<if test="user.userName!=null and user.userName!=''">
+    				<bind name="userName" value="'%'+user.userName+'%'"/>
+    				and u.USER_NAME like #{userName} 
+    			</if>
+    			<if test="user.idNo!=null and user.idNo!=''">
+    				<bind name="idNo" value="'%'+user.idNo+'%'"/>
+    				and u.ID_NO like #{idNo} 
+    			</if>
+    		</if>
+    		<if test="doctor!=null">
+				<if test="trainTypeIdList!=null and trainTypeIdList.size>0">
+					and dr.cat_spe_id in
+					<foreach collection="trainTypeIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+				</if>
+    			<if test="doctor.trainingTypeId!=null and doctor.trainingTypeId!=''">
+    				and dr.CAT_SPE_ID = #{doctor.trainingTypeId} 
+    			</if>
+    			<if test="doctor.trainingSpeId!=null and doctor.trainingSpeId!=''">
+    				and dr.SPE_ID = #{doctor.trainingSpeId} 
+    			</if>
+    			<if test="doctor.sessionNumber!=null and doctor.sessionNumber!=''">
+    				and dr.SESSION_NUMBER = #{doctor.sessionNumber} 
+    			</if>
+    			<if test="doctor.doctorTypeId!=null and doctor.doctorTypeId!=''">
+    				and ed.DOCTOR_TYPE_ID = #{doctor.doctorTypeId} 
+    			</if>
+    			<if test="doctor.isYearGraduate!=null and doctor.isYearGraduate!=''">
+    				and ed.IS_YEAR_GRADUATE = #{doctor.isYearGraduate}
+    			</if>
+				<if test="doctor.doctorStatusId!=null and doctor.doctorStatusId!=''">
+					and ed.doctor_Status_Id = #{doctor.doctorStatusId}
+				</if>
+				<if test="doctor.sendProvId!=null and doctor.sendProvId!=''">
+					and ed.send_prov_id = #{doctor.sendProvId}
+				</if>
+                <if test="doctor.sendCityId!=null and doctor.sendCityId!=''">
+                    and ed.send_city_id = #{doctor.sendCityId}
+                </if>
+				<if test="doctor.workOrgName!=null and doctor.workOrgName!=''">
+					and ed.work_org_name = #{doctor.workOrgName}
+				</if>
+	    	</if>
+    		order by  NLSSORT(u.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M'),dr.org_flow, dr.doctor_flow,dr.CREATE_TIME desc
+    </select> 
+    <select id="searchDoctorInfo"  parameterType="java.util.Map" resultMap="doctorInfo">
+    	SELECT *
+			from pdsci.RES_DOCTOR_RECRUIT dr, pdsci.SYS_USER u,  pdsci.RES_DOCTOR ed,pdsci.PUB_USER_RESUME pur
+			where dr.RECORD_STATUS = 'Y' and u.RECORD_STATUS = 'Y' and ed.RECORD_STATUS = 'Y'  and pur.RECORD_STATUS = 'Y' 
+    		and dr.DOCTOR_FLOW=u.USER_FLOW and u.USER_FLOW=ed.DOCTOR_FLOW and ed.DOCTOR_FLOW=pur.USER_FLOW
+    		and dr.DOCTOR_FLOW=ed.DOCTOR_FLOW and u.USER_FLOW=pur.USER_FLOW 
+    		and dr.DOCTOR_FLOW=pur.USER_FLOW
+    		and exists(
+    				select  RECRUIT_FLOW from res_doctor_recruit r
+						where create_time = 
+ 						 (select max(create_time) from res_doctor_recruit 
+   						  where record_status='Y' 
+   						  and doctor_flow=r.doctor_flow
+   						  <if test="resDoctorRecruit!=null">
+			    				<if test="resDoctorRecruit.sessionNumber!=null and resDoctorRecruit.sessionNumber!=''">
+				    				and SESSION_NUMBER = #{resDoctorRecruit.sessionNumber} 
+				    			</if>
+				    			 <if test="resDoctorRecruit.auditStatusId!=null and resDoctorRecruit.auditStatusId!=''">
+				    				and AUDIT_STATUS_ID = #{resDoctorRecruit.auditStatusId} 
+				    			</if>
+    					   </if>
+    				)  
+    				and dr.RECRUIT_FLOW=r.RECRUIT_FLOW
+    		)
+    		and exists (
+					SELECT ORG_FLOW
+					FROM PDSCI.SYS_ORG
+					WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+					and ed.org_flow =org_flow 
+			<if test="sysOrg!=null">
+				<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
+			    	 AND ORG_PROV_ID = #{sysOrg.orgProvId} 
+			    </if>
+				<if test="sysOrg.orgCityId!=null and sysOrg.orgCityId!=''">
+			    	 AND ORG_CITY_ID = #{sysOrg.orgCityId} 
+			    </if>
+				<if test="sysOrg.orgFlow!=null and sysOrg.orgFlow!=''">
+			    	 AND ORG_FLOW = #{sysOrg.orgFlow} 
+			    </if>
+				<if test="sysOrg.orgLevelId!=null and sysOrg.orgLevelId!=''">
+			    	 AND ORG_LEVEL_ID = #{sysOrg.orgLevelId} 
+			    </if>
+				<if test="sysOrg.orgTypeId!=null and sysOrg.orgTypeId!=''">
+			    	 AND ORG_TYPE_ID = #{sysOrg.orgTypeId} 
+			    </if>
+		    </if>
+		    <if test="jointOrgFlowList!=null and jointOrgFlowList.size>0">
+				and dr.ORG_FLOW in 
+    			<foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+    		</if>
+		    <if test="docTypeList!=null and docTypeList.size>0">
+				and ed.DOCTOR_TYPE_ID in
+    			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+    		</if>
+    		)
+    		<if test="resDoctorRecruit!=null">
+    			<if test="resDoctorRecruit.sessionNumber!=null and resDoctorRecruit.sessionNumber!=''">
+    				and dr.SESSION_NUMBER = #{resDoctorRecruit.sessionNumber} 
+    			</if>
+    			<if test="resDoctorRecruit.catSpeId!=null and resDoctorRecruit.catSpeId!=''">
+    				and dr.CAT_SPE_ID = #{resDoctorRecruit.catSpeId} 
+    			</if>
+    			<if test="resDoctorRecruit.speId!=null and resDoctorRecruit.speId!=''">
+    				and dr.SPE_ID = #{resDoctorRecruit.speId} 
+    			</if>
+    			<if test='resDoctorRecruit.orgFlow!=null and resDoctorRecruit.orgFlow!=""'>
+    				and dr.ORG_FLOW = #{resDoctorRecruit.orgFlow} 
+    			</if>
+    			 <if test="resDoctorRecruit.auditStatusId!=null and resDoctorRecruit.auditStatusId!=''">
+    				and dr.AUDIT_STATUS_ID=#{resDoctorRecruit.auditStatusId}
+    			</if> 
+    		</if>
+    		<if test="derateFlag!=null and resDoctorRecruit.trainYear!=null and resDoctorRecruit.trainYear!='' ">
+    			and dr.TRAIN_YEAR not in (#{resDoctorRecruit.trainYear})
+    		</if>
+    		<if test="user!=null">
+    			<if test="user.userName!=null and user.userName!=''">
+    				<bind name="userName" value="'%'+user.userName+'%'"/>
+    				and u.USER_NAME like #{userName} 
+    			</if>
+    			<if test="user.idNo!=null and user.idNo!=''">
+    				<bind name="idNo" value="'%'+user.idNo+'%'"/>
+    				and u.ID_NO like #{idNo} 
+    			</if>
+    		</if>
+    		<if test="doctor!=null">
+    			<if test="doctor.trainingTypeId!=null and doctor.trainingTypeId!=''">
+    				and dr.CAT_SPE_ID = #{doctor.trainingTypeId} 
+    			</if>
+    			<if test="doctor.trainingSpeId!=null and doctor.trainingSpeId!=''">
+    				and dr.SPE_ID = #{doctor.trainingSpeId} 
+    			</if>
+    			<if test="doctor.sessionNumber!=null and doctor.sessionNumber!=''">
+    				and dr.SESSION_NUMBER = #{doctor.sessionNumber} 
+    			</if>
+    			<if test="doctor.doctorTypeId!=null and doctor.doctorTypeId!=''">
+    				and ed.DOCTOR_TYPE_ID = #{doctor.doctorTypeId} 
+    			</if>
+	    	</if>
+    </select>
+	<select id="searchJsDoctorScoreExtList"  parameterType="java.util.Map" resultMap="DoctorScoreRecruit">
+		select score.score_flow,score.theory_score,score.skill_score,score.ext_score,u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL
+		, u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
+		ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName,dr.*
+		from pdsci.res_score score
+		left join  pdsci.SYS_USER u
+		on score.DOCTOR_FLOW =  u.USER_FLOW
+		left join  RES_DOCTOR ed
+		on score.DOCTOR_FLOW =  ed.DOCTOR_FLOW
+		left join (
+			select a.* from RES_DOCTOR_RECRUIT a,
+			(    select t.doctor_flow,max(t.create_time) as create_time from  RES_DOCTOR_RECRUIT t where t.record_status='Y'
+			<if test="resDoctorRecruit!=null">
+				<if test="resDoctorRecruit.auditStatusId!=null and resDoctorRecruit.auditStatusId!=''">
+					and t.AUDIT_STATUS_ID=#{resDoctorRecruit.auditStatusId}
+				</if>
+			</if> group by t.doctor_flow) b
+			where a.doctor_flow=b.doctor_flow and  a.create_time=b.create_time
+		) dr on score.DOCTOR_FLOW =  dr.DOCTOR_FLOW
+		left join sys_org org on org.org_flow=ed.org_flow
+		where score.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and  dr.RECORD_STATUS= 'Y'
+		and  EXISTS (
+		SELECT null
+		FROM PDSCI.SYS_ORG
+		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+		<if test="sysOrg!=null">
+			<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
+				AND ORG_PROV_ID = #{sysOrg.orgProvId}
+			</if>
+			<if test="sysOrg.orgCityId!=null and sysOrg.orgCityId!=''">
+				AND ORG_CITY_ID = #{sysOrg.orgCityId}
+			</if>
+			<if test="sysOrg.orgFlow!=null and sysOrg.orgFlow!=''">
+				AND ORG_FLOW = #{sysOrg.orgFlow}
+			</if>
+			<if test="sysOrg.orgLevelId!=null and sysOrg.orgLevelId!=''">
+				AND ORG_LEVEL_ID = #{sysOrg.orgLevelId}
+			</if>
+			<if test="sysOrg.orgTypeId!=null and sysOrg.orgTypeId!=''">
+				AND ORG_TYPE_ID = #{sysOrg.orgTypeId}
+			</if>
+		</if>
+		<if test="jointOrgFlowList!=null and jointOrgFlowList.size>0">
+			and ORG_FLOW in
+			<foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		and ed.org_flow=org_flow
+		)
+		<if test="docTypeList!=null and docTypeList.size>0">
+			and ed.DOCTOR_TYPE_ID in
+			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="resDoctorRecruit!=null">
+			<if test="resDoctorRecruit.graduationYear!=null and resDoctorRecruit.graduationYear!=''">
+				and dr.GRADUATION_YEAR=#{resDoctorRecruit.graduationYear}
+			</if>
+		</if>
+		<if test="scoreYear!=null and scoreYear!=''">
+			and score.SCORE_PHASE_ID = #{scoreYear}
+		</if>
+		<if test="typeId!=null and typeId!=''">
+			and score.SCORE_TYPE_ID = #{typeId}
+		</if>
+		<if test="isHege!=null and isHege!=''">
+			<if test="isHege=='Y'.toString()">
+				and score.theory_score >= #{hegeScore}
+			</if>
+			<if test="isHege=='N'.toString()">
+				and not (score.theory_score >= #{hegeScore})
+			</if>
+		</if>
+		<if test="user!=null">
+			<if test="user.userName!=null and user.userName!=''">
+				<bind name="userName" value="'%'+user.userName+'%'"/>
+				and u.USER_NAME like #{userName}
+			</if>
+			<if test="user.idNo!=null and user.idNo!=''">
+				<bind name="idNo" value="'%'+user.idNo+'%'"/>
+				and u.ID_NO like #{idNo}
+			</if>
+		</if>
+		<if test="derateFlag!=null and resDoctorRecruit.trainYear!=null and resDoctorRecruit.trainYear!='' ">
+			and dr.TRAIN_YEAR not in (#{resDoctorRecruit.trainYear})
+		</if>
+		<if test="doctor!=null">
+			<if test="doctor.trainingTypeId!=null and doctor.trainingTypeId!=''">
+				and dr.CAT_SPE_ID = #{doctor.trainingTypeId}
+			</if>
+			<if test="doctor.trainingSpeId!=null and doctor.trainingSpeId!=''">
+				and dr.SPE_ID = #{doctor.trainingSpeId}
+			</if>
+			<if test="doctor.trainingYears!=null and doctor.trainingYears!=''">
+				and dr.TRAIN_YEAR = #{doctor.trainingYears}
+			</if>
+			<if test="doctor.sessionNumber!=null and doctor.sessionNumber!=''">
+				and ed.SESSION_NUMBER = #{doctor.sessionNumber}
+			</if>
+			<if test="doctor.doctorTypeId!=null and doctor.doctorTypeId!=''">
+				and ed.DOCTOR_TYPE_ID = #{doctor.doctorTypeId}
+			</if>
+		</if>
+		order by  org.org_code,score.theory_score desc
+	</select>
+	<select id="searchDoctorSkillAndTheoryScoreExts"  parameterType="java.util.Map" resultMap="DoctorScoreRecruit">
+		select score.SKILL_SCORE_FLOW score_flow,score.theory_score,score.skill_score,score.ext_score,u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL
+		, u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
+		ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName,dr.*
+		from (
+		SELECT  T.DOCTOR_FLOW,T.SCORE_PHASE_ID, A.THEROY_SCORE_FLOW, B.SKILL_SCORE_FLOW,A.THEORY_SCORE,B.SKILL_SCORE,B.EXT_SCORE
+		FROM (SELECT DISTINCT S.DOCTOR_FLOW,S.SCORE_PHASE_ID
+		FROM RES_SCORE S
+		WHERE S.RECORD_STATUS='Y'
+		GROUP BY S.DOCTOR_FLOW,S.SCORE_PHASE_ID) T
+		LEFT JOIN (SELECT T.SCORE_FLOW THEROY_SCORE_FLOW,
+		T.DOCTOR_FLOW,
+		T.THEORY_SCORE,
+		T.SCORE_PHASE_ID
+		FROM RES_SCORE T
+		WHERE T.RECORD_STATUS = 'Y'
+		AND T.SCORE_TYPE_ID IN ('TheoryScore')) A
+		ON T.DOCTOR_FLOW = A.DOCTOR_FLOW
+		AND T.SCORE_PHASE_ID = A.SCORE_PHASE_ID
+		LEFT JOIN (SELECT T.SCORE_FLOW SKILL_SCORE_FLOW,
+		T.DOCTOR_FLOW,
+		T.SKILL_SCORE,
+		T.EXT_SCORE,
+		T.SCORE_PHASE_ID
+		FROM RES_SCORE T
+		WHERE T.RECORD_STATUS = 'Y'
+		AND T.SCORE_TYPE_ID IN ('SkillScore')) B
+		ON T.DOCTOR_FLOW = B.DOCTOR_FLOW
+		AND T.SCORE_PHASE_ID = B.SCORE_PHASE_ID ) score
+		left join  pdsci.SYS_USER u
+		on score.DOCTOR_FLOW =  u.USER_FLOW
+		left join  RES_DOCTOR ed
+		on score.DOCTOR_FLOW =  ed.DOCTOR_FLOW
+		left join (
+		select a.* from RES_DOCTOR_RECRUIT a,
+		(    select t.doctor_flow,max(t.create_time) as create_time from  RES_DOCTOR_RECRUIT t where t.record_status='Y'
+		<if test="resDoctorRecruit!=null">
+			<if test="resDoctorRecruit.auditStatusId!=null and resDoctorRecruit.auditStatusId!=''">
+				and t.AUDIT_STATUS_ID=#{resDoctorRecruit.auditStatusId}
+			</if>
+		</if> group by t.doctor_flow) b
+		where a.doctor_flow=b.doctor_flow and  a.create_time=b.create_time
+		) dr on score.DOCTOR_FLOW =  dr.DOCTOR_FLOW
+		left join sys_org org on org.org_flow=ed.org_flow
+		where  u.RECORD_STATUS= 'Y' and  dr.RECORD_STATUS= 'Y'
+		and  EXISTS (
+		SELECT null
+		FROM PDSCI.SYS_ORG
+		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+		<if test="sysOrg!=null">
+			<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
+				AND ORG_PROV_ID = #{sysOrg.orgProvId}
+			</if>
+			<if test="sysOrg.orgCityId!=null and sysOrg.orgCityId!=''">
+				AND ORG_CITY_ID = #{sysOrg.orgCityId}
+			</if>
+			<if test="sysOrg.orgFlow!=null and sysOrg.orgFlow!=''">
+				AND ORG_FLOW = #{sysOrg.orgFlow}
+			</if>
+			<if test="sysOrg.orgLevelId!=null and sysOrg.orgLevelId!=''">
+				AND ORG_LEVEL_ID = #{sysOrg.orgLevelId}
+			</if>
+			<if test="sysOrg.orgTypeId!=null and sysOrg.orgTypeId!=''">
+				AND ORG_TYPE_ID = #{sysOrg.orgTypeId}
+			</if>
+		</if>
+		<if test="jointOrgFlowList!=null and jointOrgFlowList.size>0">
+			and ORG_FLOW in
+			<foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		and ed.org_flow=org_flow
+		)
+		<if test="docTypeList!=null and docTypeList.size>0">
+			and ed.DOCTOR_TYPE_ID in
+			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="resDoctorRecruit!=null">
+			<if test="resDoctorRecruit.graduationYear!=null and resDoctorRecruit.graduationYear!=''">
+				and dr.GRADUATION_YEAR=#{resDoctorRecruit.graduationYear}
+			</if>
+		</if>
+		<if test="scoreYear!=null and scoreYear!=''">
+			and score.SCORE_PHASE_ID = #{scoreYear}
+		</if>
+		<if test="typeId!=null and typeId!=''">
+			and score.SCORE_TYPE_ID = #{typeId}
+		</if>
+		<if test="isHege!=null and isHege!=''">
+			<if test="isHege=='Y'.toString()">
+				and score.theory_score >= #{hegeScore}
+			</if>
+			<if test="isHege=='N'.toString()">
+				and not (score.theory_score >= #{hegeScore})
+			</if>
+		</if>
+		<if test="skillIsHege!=null and skillIsHege!=''">
+			and score.skill_score = #{skillIsHege}
+		</if>
+		<if test="user!=null">
+			<if test="user.userName!=null and user.userName!=''">
+				<bind name="userName" value="'%'+user.userName+'%'"/>
+				and u.USER_NAME like #{userName}
+			</if>
+			<if test="user.idNo!=null and user.idNo!=''">
+				<bind name="idNo" value="'%'+user.idNo+'%'"/>
+				and u.ID_NO like #{idNo}
+			</if>
+		</if>
+		<if test="derateFlag!=null and resDoctorRecruit.trainYear!=null and resDoctorRecruit.trainYear!='' ">
+			and dr.TRAIN_YEAR not in (#{resDoctorRecruit.trainYear})
+		</if>
+		<if test="doctor!=null">
+			<if test="doctor.trainingTypeId!=null and doctor.trainingTypeId!=''">
+				and dr.CAT_SPE_ID = #{doctor.trainingTypeId}
+			</if>
+			<if test="doctor.trainingSpeId!=null and doctor.trainingSpeId!=''">
+				and dr.SPE_ID = #{doctor.trainingSpeId}
+			</if>
+			<if test="doctor.trainingYears!=null and doctor.trainingYears!=''">
+				and dr.TRAIN_YEAR = #{doctor.trainingYears}
+			</if>
+			<if test="doctor.sessionNumber!=null and doctor.sessionNumber!=''">
+				and ed.SESSION_NUMBER = #{doctor.sessionNumber}
+			</if>
+			<if test="doctor.doctorTypeId!=null and doctor.doctorTypeId!=''">
+				and ed.DOCTOR_TYPE_ID = #{doctor.doctorTypeId}
+			</if>
+		</if>
+		order by  org.org_code desc
+	</select>
+	<select id="searchJsDoctorSkillScoreExtList"  parameterType="java.util.Map" resultMap="DoctorScoreRecruit">
+		select score.score_flow,score.theory_score,score.skill_score,score.ext_score,u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL
+		, u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
+		ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName,dr.*
+		from pdsci.res_score score
+		left join  pdsci.SYS_USER u
+		on score.DOCTOR_FLOW =  u.USER_FLOW
+		left join  RES_DOCTOR ed
+		on score.DOCTOR_FLOW =  ed.DOCTOR_FLOW
+		left join (
+			select a.* from RES_DOCTOR_RECRUIT a,
+			(    select t.doctor_flow,max(t.create_time) as create_time from  RES_DOCTOR_RECRUIT t where t.record_status='Y'
+		<if test="resDoctorRecruit!=null">
+			<if test="resDoctorRecruit.auditStatusId!=null and resDoctorRecruit.auditStatusId!=''">
+				and t.AUDIT_STATUS_ID=#{resDoctorRecruit.auditStatusId}
+			</if>
+		</if> group by t.doctor_flow) b
+			where a.doctor_flow=b.doctor_flow and  a.create_time=b.create_time
+		) dr on score.DOCTOR_FLOW =  dr.DOCTOR_FLOW
+		left join sys_org org on org.org_flow=ed.org_flow
+		where score.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and  dr.RECORD_STATUS= 'Y'
+		and  EXISTS (
+		SELECT null
+		FROM PDSCI.SYS_ORG
+		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+		<if test="sysOrg!=null">
+			<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
+				AND ORG_PROV_ID = #{sysOrg.orgProvId}
+			</if>
+			<if test="sysOrg.orgCityId!=null and sysOrg.orgCityId!=''">
+				AND ORG_CITY_ID = #{sysOrg.orgCityId}
+			</if>
+			<if test="sysOrg.orgFlow!=null and sysOrg.orgFlow!=''">
+				AND ORG_FLOW = #{sysOrg.orgFlow}
+			</if>
+			<if test="sysOrg.orgLevelId!=null and sysOrg.orgLevelId!=''">
+				AND ORG_LEVEL_ID = #{sysOrg.orgLevelId}
+			</if>
+			<if test="sysOrg.orgTypeId!=null and sysOrg.orgTypeId!=''">
+				AND ORG_TYPE_ID = #{sysOrg.orgTypeId}
+			</if>
+		</if>
+		<if test="jointOrgFlowList!=null and jointOrgFlowList.size>0">
+			and ORG_FLOW in
+			<foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		and ed.org_flow=org_flow
+		)
+		<if test="resDoctorRecruit!=null">
+			<if test="resDoctorRecruit.graduationYear!=null and resDoctorRecruit.graduationYear!=''">
+				and dr.GRADUATION_YEAR=#{resDoctorRecruit.graduationYear}
+			</if>
+		</if>
+		<if test="docTypeList!=null and docTypeList.size>0">
+			and ed.DOCTOR_TYPE_ID in
+			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+
+		<if test="scoreYear!=null and scoreYear!=''">
+			and score.SCORE_PHASE_ID = #{scoreYear}
+		</if>
+		<if test="typeId!=null and typeId!=''">
+			and score.SCORE_TYPE_ID = #{typeId}
+		</if>
+		<if test="isHege!=null and isHege!=''">
+			and score.skill_score = #{isHege}
+		</if>
+		<if test="user!=null">
+			<if test="user.userName!=null and user.userName!=''">
+				<bind name="userName" value="'%'+user.userName+'%'"/>
+				and u.USER_NAME like #{userName}
+			</if>
+			<if test="user.idNo!=null and user.idNo!=''">
+				<bind name="idNo" value="'%'+user.idNo+'%'"/>
+				and u.ID_NO like #{idNo}
+			</if>
+		</if>
+		<if test="derateFlag!=null and resDoctorRecruit.trainYear!=null and resDoctorRecruit.trainYear!='' ">
+			and dr.TRAIN_YEAR not in (#{resDoctorRecruit.trainYear})
+		</if>
+		<if test="doctor!=null">
+			<if test="doctor.trainingTypeId!=null and doctor.trainingTypeId!=''">
+				and dr.CAT_SPE_ID = #{doctor.trainingTypeId}
+			</if>
+			<if test="doctor.trainingSpeId!=null and doctor.trainingSpeId!=''">
+				and dr.SPE_ID = #{doctor.trainingSpeId}
+			</if>
+			<if test="doctor.trainingYears!=null and doctor.trainingYears!=''">
+				and dr.TRAIN_YEAR = #{doctor.trainingYears}
+			</if>
+			<if test="doctor.sessionNumber!=null and doctor.sessionNumber!=''">
+				and ed.SESSION_NUMBER = #{doctor.sessionNumber}
+			</if>
+			<if test="doctor.doctorTypeId!=null and doctor.doctorTypeId!=''">
+				and ed.DOCTOR_TYPE_ID = #{doctor.doctorTypeId}
+			</if>
+		</if>
+		order by  org.org_code
+	</select>
+
+	<select id="searchJsDoctorPublicScoreExtList"  parameterType="java.util.Map" resultMap="DoctorScoreRecruit">
+		select score.score_flow,score.theory_score,score.skill_score,score.ext_score,u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL
+		, u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
+		ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName,dr.*
+		from pdsci.res_score score
+		left join  pdsci.SYS_USER u
+		on score.DOCTOR_FLOW =  u.USER_FLOW
+		left join  RES_DOCTOR ed
+		on score.DOCTOR_FLOW =  ed.DOCTOR_FLOW
+		left join (
+			select a.* from RES_DOCTOR_RECRUIT a,
+			(    select t.doctor_flow,max(t.create_time) as create_time from  RES_DOCTOR_RECRUIT t where t.record_status='Y'
+		<if test="resDoctorRecruit!=null">
+			<if test="resDoctorRecruit.auditStatusId!=null and resDoctorRecruit.auditStatusId!=''">
+				and t.AUDIT_STATUS_ID=#{resDoctorRecruit.auditStatusId}
+			</if>
+		</if> group by t.doctor_flow) b
+			where a.doctor_flow=b.doctor_flow and  a.create_time=b.create_time
+		) dr on score.DOCTOR_FLOW =  dr.DOCTOR_FLOW
+		left join sys_org org on org.org_flow=ed.org_flow
+		where score.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and  dr.RECORD_STATUS= 'Y'
+		and  EXISTS (
+		SELECT null
+		FROM PDSCI.SYS_ORG
+		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+		<if test="sysOrg!=null">
+			<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
+				AND ORG_PROV_ID = #{sysOrg.orgProvId}
+			</if>
+			<if test="sysOrg.orgCityId!=null and sysOrg.orgCityId!=''">
+				AND ORG_CITY_ID = #{sysOrg.orgCityId}
+			</if>
+			<if test="sysOrg.orgFlow!=null and sysOrg.orgFlow!=''">
+				AND ORG_FLOW = #{sysOrg.orgFlow}
+			</if>
+			<if test="sysOrg.orgLevelId!=null and sysOrg.orgLevelId!=''">
+				AND ORG_LEVEL_ID = #{sysOrg.orgLevelId}
+			</if>
+			<if test="sysOrg.orgTypeId!=null and sysOrg.orgTypeId!=''">
+				AND ORG_TYPE_ID = #{sysOrg.orgTypeId}
+			</if>
+		</if>
+		<if test="jointOrgFlowList!=null and jointOrgFlowList.size>0">
+			and ORG_FLOW in
+			<foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		and ed.org_flow=org_flow
+		)
+		<if test="docTypeList!=null and docTypeList.size>0">
+			and ed.DOCTOR_TYPE_ID in
+			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="resDoctorRecruit!=null">
+			<if test="resDoctorRecruit.graduationYear!=null and resDoctorRecruit.graduationYear!=''">
+				and dr.GRADUATION_YEAR=#{resDoctorRecruit.graduationYear}
+			</if>
+		</if>
+		<if test="scoreYear!=null and scoreYear!=''">
+			and score.SCORE_PHASE_ID = #{scoreYear}
+		</if>
+		<if test="typeId!=null and typeId!=''">
+			and score.SCORE_TYPE_ID = #{typeId}
+		</if>
+		<if test="notAllQualified!=null and notAllQualified!=''">
+			and score.skill_score = #{notAllQualified}
+		</if>
+		<if test="allQualified!=null and allQualified!=''">
+			<if test="allQualified=='Y'.toString()">
+				and score.theory_score >= 60
+			</if>
+			<if test="allQualified=='N'.toString()">
+				and not (score.theory_score >= 60)
+			</if>
+		</if>
+		<if test="user!=null">
+			<if test="user.userName!=null and user.userName!=''">
+				<bind name="userName" value="'%'+user.userName+'%'"/>
+				and u.USER_NAME like #{userName}
+			</if>
+			<if test="user.idNo!=null and user.idNo!=''">
+				<bind name="idNo" value="'%'+user.idNo+'%'"/>
+				and u.ID_NO like #{idNo}
+			</if>
+		</if>
+		<if test="derateFlag!=null and resDoctorRecruit.trainYear!=null and resDoctorRecruit.trainYear!='' ">
+			and dr.TRAIN_YEAR not in (#{resDoctorRecruit.trainYear})
+		</if>
+		<if test="doctor!=null">
+			<if test="doctor.trainingTypeId!=null and doctor.trainingTypeId!=''">
+				and dr.CAT_SPE_ID = #{doctor.trainingTypeId}
+			</if>
+			<if test="doctor.trainingSpeId!=null and doctor.trainingSpeId!=''">
+				and dr.SPE_ID = #{doctor.trainingSpeId}
+			</if>
+			<if test="doctor.trainingYears!=null and doctor.trainingYears!=''">
+				and dr.TRAIN_YEAR = #{doctor.trainingYears}
+			</if>
+			<if test="doctor.sessionNumber!=null and doctor.sessionNumber!=''">
+				and ed.SESSION_NUMBER = #{doctor.sessionNumber}
+			</if>
+			<if test="doctor.doctorTypeId!=null and doctor.doctorTypeId!=''">
+				and ed.DOCTOR_TYPE_ID = #{doctor.doctorTypeId}
+			</if>
+		</if>
+		order by  org.org_code
+	</select>
+
+	<select id="searchJsDoctorRecruitExtList"  parameterType="java.util.Map" resultMap="DoctorRecruit">
+	select dr.*,u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL
+	, u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
+	ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName
+        <if test='zlFlag == "Y"'>
+            from pdsci.Jsres_Recruit_doc_Info dr
+        </if>
+        <if test='zlFlag != "Y"'>
+            from pdsci.RES_DOCTOR_RECRUIT dr
+        </if>
+	left join  pdsci.SYS_USER u
+	on dr.DOCTOR_FLOW =  u.USER_FLOW
+	left join  RES_DOCTOR ed
+	on dr.DOCTOR_FLOW =  ed.DOCTOR_FLOW
+	where dr.RECORD_STATUS= 'Y'
+    <if test='zlFlag != "Y"'>
+        and u.RECORD_STATUS= 'Y'
+    </if>
+	and dr.org_flow in(
+	SELECT ORG_FLOW
+	FROM PDSCI.SYS_ORG
+	WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+	<if test="sysOrg!=null">
+		<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
+			AND ORG_PROV_ID = #{sysOrg.orgProvId}
+		</if>
+		<if test="sysOrg.orgCityId!=null and sysOrg.orgCityId!=''">
+			AND ORG_CITY_ID = #{sysOrg.orgCityId}
+		</if>
+		<if test="sysOrg.orgFlow!=null and sysOrg.orgFlow!=''">
+			AND ORG_FLOW = #{sysOrg.orgFlow}
+		</if>
+		<if test="sysOrg.orgLevelId!=null and sysOrg.orgLevelId!=''">
+			AND ORG_LEVEL_ID = #{sysOrg.orgLevelId}
+		</if>
+		<if test="sysOrg.orgTypeId!=null and sysOrg.orgTypeId!=''">
+			AND ORG_TYPE_ID = #{sysOrg.orgTypeId}
+		</if>
+	</if>
+	<if test="jointOrgFlowList!=null and jointOrgFlowList.size>0">
+		and dr.ORG_FLOW in
+		<foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+	</if>
+	<if test="docTypeList!=null and docTypeList.size>0">
+		and ed.DOCTOR_TYPE_ID in
+		<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+	</if>
+	)
+	<if test="resDoctorRecruit!=null">
+		<if test="resDoctorRecruit.sessionNumber!=null and resDoctorRecruit.sessionNumber!=''">
+			and dr.SESSION_NUMBER = #{resDoctorRecruit.sessionNumber}
+		</if>
+		<if test="trainTypeIdList!=null and trainTypeIdList.size>0">
+			and dr.cat_spe_id in
+			<foreach collection="trainTypeIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="resDoctorRecruit.catSpeId!=null and resDoctorRecruit.catSpeId!=''">
+			and dr.cat_Spe_Id = #{resDoctorRecruit.catSpeId}
+		</if>
+		<if test="resDoctorRecruit.speId!=null and resDoctorRecruit.speId!=''">
+			and dr.SPE_ID = #{resDoctorRecruit.speId}
+		</if>
+		<if test='resDoctorRecruit.orgFlow!=null and resDoctorRecruit.orgFlow!=""'>
+			and dr.ORG_FLOW = #{resDoctorRecruit.orgFlow}
+		</if>
+		<if test="resDoctorRecruit.graduationYear!=null and resDoctorRecruit.graduationYear!=''">
+			and dr.GRADUATION_YEAR=#{resDoctorRecruit.graduationYear}
+		</if>
+        <if test='zlFlag != "Y"'>
+            <if test="resDoctorRecruit.auditStatusId!=null and resDoctorRecruit.auditStatusId!=''">
+                and dr.AUDIT_STATUS_ID=#{resDoctorRecruit.auditStatusId}
+            </if>
+        </if>
+	</if>
+	<if test="derateFlag!=null and resDoctorRecruit.trainYear!=null and resDoctorRecruit.trainYear!='' ">
+		and dr.TRAIN_YEAR not in (#{resDoctorRecruit.trainYear})
+	</if>
+	<if test="user!=null">
+		<if test="user.userName!=null and user.userName!=''">
+			<bind name="userName" value="'%'+user.userName+'%'"/>
+			and u.USER_NAME like #{userName}
+		</if>
+		<if test="user.idNo!=null and user.idNo!=''">
+			<bind name="idNo" value="'%'+user.idNo+'%'"/>
+			and u.ID_NO like #{idNo}
+		</if>
+	</if>
+	<if test="doctor!=null">
+		<if test="trainTypeIdList!=null and trainTypeIdList.size>0">
+			and dr.cat_spe_id in
+			<foreach collection="trainTypeIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="doctor.trainingSpeId!=null and doctor.trainingSpeId!=''">
+			and dr.SPE_ID = #{doctor.trainingSpeId}
+		</if>
+		<if test="doctor.sessionNumber!=null and doctor.sessionNumber!=''">
+			and dr.SESSION_NUMBER = #{doctor.sessionNumber}
+		</if>
+		<if test="doctor.doctorTypeId!=null and doctor.doctorTypeId!=''">
+			and ed.DOCTOR_TYPE_ID = #{doctor.doctorTypeId}
+		</if>
+		<if test="doctor.workOrgLevelId!=null and doctor.workOrgLevelId!=''">
+			and ed.WORK_ORG_LEVEL_ID = #{doctor.workOrgLevelId}
+		</if>
+		<if test="doctor.isYearGraduate!=null and doctor.isYearGraduate!=''">
+			and ed.IS_YEAR_GRADUATE = #{doctor.isYearGraduate}
+		</if>
+        <if test="doctor.sendProvId!=null and doctor.sendProvId!=''">
+            and ed.send_prov_id = #{doctor.sendProvId}
+        </if>
+        <if test="doctor.sendCityId!=null and doctor.sendCityId!=''">
+            and ed.send_city_id = #{doctor.sendCityId}
+        </if>
+        <if test="trainYears!=null and trainYears!=''">
+            and dr.train_Year in
+            <foreach collection="trainYears" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+
+		<if test="doctor.workOrgName!=null and doctor.workOrgName!=''">
+			and (
+			<trim prefix="" prefixOverrides="OR">
+				<if test="(doctor.workOrgId != null and doctor.workOrgId != '')">OR ed.work_org_id = #{doctor.workOrgId}</if>
+				<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name = #{doctor.workOrgName}</if>
+			</trim>
+			)
+		</if>
+
+		<if test="doctor.doctorStatusId!=null and doctor.doctorStatusId!=''">
+			and ed.doctor_Status_Id = #{doctor.doctorStatusId}
+		</if>
+	</if>
+	order by  NLSSORT(u.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M'),dr.org_flow, dr.doctor_flow,dr.CREATE_TIME desc
+</select>
+	<select id="doctorScoreQuery"  parameterType="java.util.Map" resultType="java.util.HashMap">
+		select u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL
+		, u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
+		ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName,	ED.COMPLETE_START_DATE,ED.COMPLETE_END_DATE,ED.TRAINING_SPE_NAME,ED.ORG_NAME,ED.ORG_FLOW
+		,RESUME.USER_RESUME,TS.SCORE_TYPE_ID,TS.SCORE_FLOW,TS.THEORY_SCORE,TS.THEORY_SCORE_YEAR,SS.SKILL_SCORE_FLOW,SS.SKILL_SCORE,SS.EXT_SCORE,SS.SKILL_SCORE_YEAR
+		,PS.PUBLIC_SCORE_FLOW,PS.PUBLIC_ALL,PS.PUBLIC_NOTALL_PASS, PS.PUBLIC_NOTALL_SCORE,   PS.PUBLIC_SCORE_YEAR,ed.DISAGREE_REASON,dr.DOCTOR_FLOW,ed.GRADUATION_STATUS_ID
+		,ed.CERTIFICATE_NO
+		from pdsci.RES_DOCTOR_RECRUIT dr
+		left join  pdsci.SYS_USER u
+		on dr.DOCTOR_FLOW =  u.USER_FLOW
+		left join  RES_DOCTOR ed
+		on dr.DOCTOR_FLOW =  ed.DOCTOR_FLOW
+		LEFT JOIN PUB_USER_RESUME RESUME ON ED.DOCTOR_FLOW=RESUME.USER_FLOW
+		LEFT JOIN (SELECT T.DOCTOR_FLOW,
+		T.SCORE_TYPE_ID,
+		S.SCORE_FLOW,
+		S.THEORY_SCORE,
+		S.SCORE_PHASE_ID THEORY_SCORE_YEAR
+		FROM (SELECT S.DOCTOR_FLOW,
+		S.SCORE_TYPE_ID,
+		MAX(S.SCORE_PHASE_ID) SCORE_PHASE_ID
+		FROM RES_SCORE S
+		WHERE S.RECORD_STATUS = 'Y'
+		GROUP BY S.DOCTOR_FLOW, S.SCORE_TYPE_ID) T
+		LEFT JOIN RES_SCORE S
+		ON S.DOCTOR_FLOW = T.DOCTOR_FLOW
+		AND S.SCORE_TYPE_ID = T.SCORE_TYPE_ID
+		AND S.SCORE_PHASE_ID = T.SCORE_PHASE_ID
+		WHERE S.RECORD_STATUS = 'Y'
+		AND T.SCORE_TYPE_ID = 'TheoryScore') TS ON TS.DOCTOR_FLOW=ED.DOCTOR_FLOW
+		LEFT JOIN (select T.DOCTOR_FLOW,
+		T.SCORE_TYPE_ID SKILL_SCORE_TYPE_ID,
+		S.SCORE_FLOW SKILL_SCORE_FLOW,
+		S.SKILL_SCORE,
+		S.EXT_SCORE,
+		S.SCORE_PHASE_ID SKILL_SCORE_YEAR
+		from (SELECT S.DOCTOR_FLOW,
+		S.SCORE_TYPE_ID,
+		MAX(S.SCORE_PHASE_ID) SCORE_PHASE_ID
+		FROM RES_SCORE S
+		WHERE S.RECORD_STATUS = 'Y'
+		GROUP BY S.DOCTOR_FLOW, S.SCORE_TYPE_ID) T
+		left JOIN RES_SCORE S
+		ON S.DOCTOR_FLOW = T.DOCTOR_FLOW
+		AND S.SCORE_TYPE_ID = T.SCORE_TYPE_ID
+		AND S.SCORE_PHASE_ID = T.SCORE_PHASE_ID
+		WHERE S.RECORD_STATUS = 'Y'
+		AND T.SCORE_TYPE_ID = 'SkillScore') SS ON SS.DOCTOR_FLOW=ED.DOCTOR_FLOW
+		LEFT JOIN (SELECT T.SCORE_FLOW PUBLIC_SCORE_FLOW,
+		T.DOCTOR_FLOW,
+		T.THEORY_SCORE PUBLIC_ALL,
+		T.SKILL_SCORE PUBLIC_NOTALL_PASS,
+		T.EXT_SCORE PUBLIC_NOTALL_SCORE,
+		T.SCORE_PHASE_ID PUBLIC_SCORE_YEAR,
+		T.SCORE_TYPE_ID
+		FROM RES_SCORE T
+		WHERE T.RECORD_STATUS = 'Y'
+		AND T.SCORE_TYPE_ID IN ('PublicScore'))PS ON PS.DOCTOR_FLOW=ED.DOCTOR_FLOW
+		left join sys_org org on org.org_flow=ed.org_flow
+		where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y'
+		and dr.org_flow in(
+		SELECT ORG_FLOW
+		FROM PDSCI.SYS_ORG
+		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+		<if test="sysOrg!=null">
+			<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
+				AND ORG_PROV_ID = #{sysOrg.orgProvId}
+			</if>
+			<if test="sysOrg.orgCityId!=null and sysOrg.orgCityId!=''">
+				AND ORG_CITY_ID = #{sysOrg.orgCityId}
+			</if>
+			<if test="sysOrg.orgFlow!=null and sysOrg.orgFlow!=''">
+				AND ORG_FLOW = #{sysOrg.orgFlow}
+			</if>
+			<if test="sysOrg.orgLevelId!=null and sysOrg.orgLevelId!=''">
+				AND ORG_LEVEL_ID = #{sysOrg.orgLevelId}
+			</if>
+			<if test="sysOrg.orgTypeId!=null and sysOrg.orgTypeId!=''">
+				AND ORG_TYPE_ID = #{sysOrg.orgTypeId}
+			</if>
+		</if>
+
+		)
+		<if test="jointOrgFlowList!=null and jointOrgFlowList.size>0">
+			and dr.ORG_FLOW in
+			<foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="docTypeList!=null and docTypeList.size>0">
+			and ed.DOCTOR_TYPE_ID in
+			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="cerStatusList!=null and cerStatusList.size>0">
+			and ed.GRADUATION_STATUS_ID in
+			<foreach collection="cerStatusList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="resDoctorRecruit!=null">
+			<if test="resDoctorRecruit.sessionNumber!=null and resDoctorRecruit.sessionNumber!=''">
+				and dr.SESSION_NUMBER = #{resDoctorRecruit.sessionNumber}
+			</if>
+			<if test="resDoctorRecruit.catSpeId!=null and resDoctorRecruit.catSpeId!=''">
+				and dr.CAT_SPE_ID = #{resDoctorRecruit.catSpeId}
+			</if>
+			<if test="resDoctorRecruit.speId!=null and resDoctorRecruit.speId!=''">
+				and dr.SPE_ID = #{resDoctorRecruit.speId}
+			</if>
+			<if test='resDoctorRecruit.orgFlow!=null and resDoctorRecruit.orgFlow!=""'>
+				and dr.ORG_FLOW = #{resDoctorRecruit.orgFlow}
+			</if>
+			<if test="resDoctorRecruit.graduationYear!=null and resDoctorRecruit.graduationYear!=''">
+				and dr.GRADUATION_YEAR=#{resDoctorRecruit.graduationYear}
+			</if>
+			<if test="resDoctorRecruit.auditStatusId!=null and resDoctorRecruit.auditStatusId!=''">
+				and dr.AUDIT_STATUS_ID=#{resDoctorRecruit.auditStatusId}
+			</if>
+		</if>
+		<if test="derateFlag!=null and resDoctorRecruit.trainYear!=null and resDoctorRecruit.trainYear!='' ">
+			and dr.TRAIN_YEAR not in (#{resDoctorRecruit.trainYear})
+		</if>
+		<if test="user!=null">
+			<if test="user.userName!=null and user.userName!=''">
+				<bind name="userName" value="'%'+user.userName+'%'"/>
+				and u.USER_NAME like #{userName}
+			</if>
+			<if test="user.idNo!=null and user.idNo!=''">
+				<bind name="idNo" value="'%'+user.idNo+'%'"/>
+				and u.ID_NO like #{idNo}
+			</if>
+		</if>
+		<if test="doctor!=null">
+			<if test="doctor.trainingTypeId!=null and doctor.trainingTypeId!=''">
+				and dr.CAT_SPE_ID = #{doctor.trainingTypeId}
+			</if>
+			<if test="doctor.trainingSpeId!=null and doctor.trainingSpeId!=''">
+				and dr.SPE_ID = #{doctor.trainingSpeId}
+			</if>
+			<if test="doctor.sessionNumber!=null and doctor.sessionNumber!=''">
+				and dr.SESSION_NUMBER = #{doctor.sessionNumber}
+			</if>
+			<if test="doctor.doctorTypeId!=null and doctor.doctorTypeId!=''">
+				and ed.DOCTOR_TYPE_ID = #{doctor.doctorTypeId}
+			</if>
+			<if test="doctor.workOrgLevelId!=null and doctor.workOrgLevelId!=''">
+				and ed.WORK_ORG_LEVEL_ID = #{doctor.workOrgLevelId}
+			</if>
+			<if test="doctor.isYearGraduate!=null and doctor.isYearGraduate!=''">
+				and ed.IS_YEAR_GRADUATE = #{doctor.isYearGraduate}
+			</if>
+			<if test="doctor.workOrgId!=null and doctor.workOrgId!=''">
+				and ed.WORK_ORG_ID = #{doctor.workOrgId}
+			</if>
+		</if>
+		order by  org.org_code desc
+	</select>
+	<select id="searchBasePassCount"  parameterType="java.util.Map" resultType="java.lang.Integer">
+    		SELECT count(DOCTOR_FLOW)
+			from (select DOCTOR_FLOW, count(DOCTOR_FLOW) dcount
+			from RES_DOCTOR_RECRUIT
+			where RECORD_STATUS = 'Y'
+    		<if test="recruit!=null">
+    			<if test="recruit.orgFlow!=null and recruit.orgFlow!=''">
+    				and RES_DOCTOR_RECRUIT.ORG_FLOW = #{recruit.orgFlow,jdbcType=VARCHAR} 
+    			</if>
+    			<if test="recruit.auditStatusId!=null and recruit.auditStatusId!=''">
+    				and RES_DOCTOR_RECRUIT.AUDIT_STATUS_ID = #{recruit.auditStatusId,jdbcType=VARCHAR} 
+    			</if>
+    		</if>
+    		<if test="orgFlowList!=null and orgFlowList.size>0">
+				and RES_DOCTOR_RECRUIT.ORG_FLOW  in 
+    		<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+    		</if>
+			GROUP by DOCTOR_FLOW) a
+			where dcount > 0
+    </select> 
+    <select id="searchTrainInfoCount"  parameterType="java.util.Map" resultType="java.lang.Integer">
+    		select count(doctor_Flow) 
+    		from RES_DOCTOR_RECRUIT
+			where RECORD_STATUS = 'Y'
+    		<if test="recruit!=null">
+    			<if test="recruit.orgFlow!=null and recruit.orgFlow!=''">
+    				and RES_DOCTOR_RECRUIT.ORG_FLOW = #{recruit.orgFlow,jdbcType=VARCHAR} 
+    			</if>
+    			<if test="recruit.auditStatusId!=null and recruit.auditStatusId!=''">
+    				and RES_DOCTOR_RECRUIT.AUDIT_STATUS_ID = #{recruit.auditStatusId,jdbcType=VARCHAR} 
+    			</if>
+    			<if test="recruit.catSpeId!=null and recruit.catSpeId!=''">
+    				and RES_DOCTOR_RECRUIT.CAT_SPE_ID = #{recruit.catSpeId,jdbcType=VARCHAR} 
+    			</if>
+    		</if>
+    		<if test="ProvFlag!=null">
+    			and RES_DOCTOR_RECRUIT.PROV_REMARK is null
+    		</if>
+    		<if test="UrlFlag!=null">
+    			and RES_DOCTOR_RECRUIT.PROVE_FILE_URL is null
+    			and RES_DOCTOR_RECRUIT.TRAIN_YEAR not in (#{recruit.trainYear})
+    		</if>
+    		<if test="orgFlowList!=null and orgFlowList.size>0">
+				and RES_DOCTOR_RECRUIT.ORG_FLOW  in 
+    		<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+    		</if>
+    </select> 
+    <select id="doctorCount"  parameterType="java.util.Map" resultType="java.lang.Integer">
+    		select count(distinct doctor_Flow) 
+    		from RES_DOCTOR_RECRUIT
+			where RECORD_STATUS = 'Y'
+    		<if test="recruit!=null">
+    			<if test="recruit.auditStatusId!=null and recruit.auditStatusId!=''">
+    				and RES_DOCTOR_RECRUIT.AUDIT_STATUS_ID = #{recruit.auditStatusId,jdbcType=VARCHAR} 
+    			</if>
+    			<if test="recruit.orgFlow!=null and recruit.orgFlow!=''">
+    				and RES_DOCTOR_RECRUIT.org_flow = #{recruit.orgFlow,jdbcType=VARCHAR} 
+    			</if>
+    			<if test="recruit.sessionNumber!=null and recruit.sessionNumber!=''">
+    				and RES_DOCTOR_RECRUIT.SESSION_NUMBER = #{recruit.sessionNumber,jdbcType=VARCHAR} 
+    			</if>
+    		</if>
+    			<if test="cityIdList!=null and cityIdList.size>0">
+					 and RES_DOCTOR_RECRUIT.PLACE_ID in 
+    			<foreach collection="cityIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+    		</if>
+    </select> 
+    <select id="joingorgCount"  parameterType="java.util.Map" resultType="java.lang.Integer">
+		select nvl(count(distinct JOINT_ORG_FLOW),0)
+		from RES_JOINT_ORG rjo
+		join sys_org org on org.org_flow=rjo.JOINT_ORG_FLOW
+		where rjo.RECORD_STATUS = 'Y'
+		and org.record_status='Y'
+		and org.org_prov_id='320000'
+		<if test="org!=null">
+			and rjo.joint_org_flow in(
+			select org_flow from sys_org where sys_org.RECORD_STATUS = 'Y'
+			and org_type_id ='Hospital'
+			<if test="org.orgCityId!=null and org.orgCityId!=''">
+				and sys_org.org_city_id =  #{org.orgCityId,jdbcType=VARCHAR}
+			</if>
+			)
+		</if>
+    </select> 
+	<resultMap type="HashMap" id="docCountMap">
+		<result  property="key" column="KEY" javaType="string"/>
+		<result property="value" column="NUM" javaType="java.lang.Integer"/>
+	</resultMap>
+	 <select id="statisticDocCouByType"  parameterType="java.util.Map" resultMap="docCountMap">
+    		select ORG_FLOW||CAT_SPE_ID||SPE_ID KEY,count(*) NUM
+    		from RES_DOCTOR_RECRUIT
+    		where RECORD_STATUS = 'Y'
+    		<if test="recruit!=null">
+    			<if test="recruit.sessionNumber!=null and recruit.sessionNumber!=''">
+    				and RES_DOCTOR_RECRUIT.session_Number = #{recruit.sessionNumber,jdbcType=VARCHAR} 
+    			</if>
+    			<if test="recruit.catSpeId!=null and recruit.catSpeId!=''">
+    				and RES_DOCTOR_RECRUIT.cat_spe_id = #{recruit.catSpeId,jdbcType=VARCHAR} 
+    			</if>
+    			<if test="recruit.speId!=null and recruit.speId!=''">
+    				and RES_DOCTOR_RECRUIT.SPE_ID = #{recruit.speId,jdbcType=VARCHAR} 
+    			</if>
+    			<if test="recruit.auditStatusId!=null and recruit.auditStatusId!=''">
+    				and RES_DOCTOR_RECRUIT.AUDIT_STATUS_ID = #{recruit.auditStatusId,jdbcType=VARCHAR} 
+    			</if>
+    			<if test="recruit.orgFlow!=null and recruit.orgFlow!=''">
+    				and RES_DOCTOR_RECRUIT.ORG_FLOW = #{recruit.orgFlow,jdbcType=VARCHAR} 
+    			</if>
+    		</if>
+    		<if test="orgFlowList!=null and orgFlowList.size>0">
+				and RES_DOCTOR_RECRUIT.ORG_FLOW  in 
+    		<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+    		</if>
+    		<if test="doctor!=null">
+    			<if test="doctor.doctorTypeId!=null and doctor.doctorTypeId!=''">
+    				and exists(
+    					select doctor_flow from RES_DOCTOR where RES_DOCTOR.DOCTOR_TYPE_ID = #{doctor.doctorTypeId} 
+    					and RES_DOCTOR_RECRUIT.doctor_flow =RES_DOCTOR.doctor_flow
+    				)
+    			</if>
+    		</if>
+    		<if test="docTypeList!=null and docTypeList.size>0">
+    				and exists(
+    					select doctor_flow from RES_DOCTOR where RES_DOCTOR.DOCTOR_TYPE_ID in 
+							<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach> 
+    					and RES_DOCTOR_RECRUIT.doctor_flow =RES_DOCTOR.doctor_flow
+    				)
+    		</if>
+    		group BY ORG_FLOW,SPE_ID,cat_spe_Id
+    		order by cat_spe_Id
+    </select> 
+	
+	 <select id="statisticJointCount"  parameterType="java.util.Map" resultMap="docCountMap">
+    		select
+				 <if test="recruit!=null">
+					 <if test="recruit.catSpeId!=null and recruit.catSpeId=='countByTrainTypeId'.toString()">
+						 CAT_SPE_ID KEY,
+					 </if>
+					 <if test="recruit.catSpeId!=null and recruit.catSpeId!='countByTrainTypeId'.toString()">
+						 CAT_SPE_ID||SPE_ID KEY,
+					 </if>
+				 </if>
+		 		count(*) NUM
+    		from RES_DOCTOR_RECRUIT
+    		where RECORD_STATUS = 'Y'
+    		<if test="recruit!=null">
+    			<if test="recruit.sessionNumber!=null and recruit.sessionNumber!=''">
+    				and RES_DOCTOR_RECRUIT.session_Number = #{recruit.sessionNumber,jdbcType=VARCHAR}
+    			</if>
+    			<if test="recruit.catSpeId!=null and recruit.catSpeId!='' and recruit.catSpeId!='countByTrainTypeId'.toString()">
+    				and RES_DOCTOR_RECRUIT.cat_spe_id = #{recruit.catSpeId,jdbcType=VARCHAR}
+    			</if>
+    			<if test="recruit.speId!=null and recruit.speId!=''">
+    				and RES_DOCTOR_RECRUIT.SPE_ID = #{recruit.speId,jdbcType=VARCHAR}
+    			</if>
+    			<if test="recruit.auditStatusId!=null and recruit.auditStatusId!=''">
+    				and RES_DOCTOR_RECRUIT.AUDIT_STATUS_ID = #{recruit.auditStatusId,jdbcType=VARCHAR}
+    			</if>
+    			<if test="recruit.orgFlow!=null and recruit.orgFlow!=''">
+    				and RES_DOCTOR_RECRUIT.ORG_FLOW = #{recruit.orgFlow,jdbcType=VARCHAR}
+    			</if>
+    		</if>
+    		<if test="orgFlowList!=null and orgFlowList.size>0">
+				and RES_DOCTOR_RECRUIT.ORG_FLOW  in
+    		<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+    		</if>
+    		<if test="docTypeList!=null and docTypeList.size>0">
+    				and exists(
+    					select doctor_flow from RES_DOCTOR d
+						left join sys_user u on d.DOCTOR_FLOW = u.USER_FLOW
+						where
+						d.RECORD_STATUS = 'Y'
+						and u.RECORD_STATUS = 'Y'
+						and d.DOCTOR_TYPE_ID in
+							<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach> 
+    					and RES_DOCTOR_RECRUIT.doctor_flow =d.doctor_flow
+    				)
+    		</if>
+    		group BY CAT_SPE_ID
+			 <if test="recruit!=null">
+				 <if test="recruit.catSpeId!=null and recruit.catSpeId!='countByTrainTypeId'.toString()">
+					 ,SPE_ID
+				 </if>
+			 </if>
+    </select> 
+    <resultMap type="HashMap" id="jointOrgMap">
+		<result  property="key" column="KEY" javaType="string"/>
+		<result property="value" column="NAME" javaType="string"/>
+	</resultMap>
+	 <select id="searchJointOrgList"  parameterType="java.util.Map" resultMap="jointOrgMap">
+    		select JOINT_ORG_FLOW KEY, ORG_NAME NAME
+    		from res_joint_org 
+    		where RECORD_STATUS = 'Y'
+    		GROUP BY ORG_NAME,JOINT_ORG_FLOW
+    </select> 
+	 <select id="statisticDocCountByOrg"  parameterType="java.util.Map" resultMap="docCountMap">
+    		select org_flow KEY,count(distinct doctor_flow) NUM
+    		from RES_DOCTOR_RECRUIT
+    		where RECORD_STATUS = 'Y'
+    		<if test="recruit!=null">
+    			<if test="recruit.orgFlow!=null and recruit.orgFlow!=''">
+    				and RES_DOCTOR_RECRUIT.org_flow = #{recruit.orgFlow,jdbcType=VARCHAR} 
+    			</if>
+    			 <if test="recruit.auditStatusId!=null and recruit.auditStatusId!=''">
+    				and RES_DOCTOR_RECRUIT.AUDIT_STATUS_ID=#{recruit.auditStatusId}
+    			</if> 
+    			 <if test="recruit.sessionNumber!=null and recruit.sessionNumber!=''">
+    				and RES_DOCTOR_RECRUIT.SESSION_NUMBER=#{recruit.sessionNumber}
+    			</if> 
+    			 <if test="recruit.catSpeId!=null and recruit.catSpeId!=''">
+    				and RES_DOCTOR_RECRUIT.CAT_SPE_ID=#{recruit.catSpeId}
+    			</if> 
+    		</if>
+    		<if test="orgFlowList!=null and orgFlowList.size>0">
+				and RES_DOCTOR_RECRUIT.ORG_FLOW  in 
+    		<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+    		</if>
+    		group by org_flow
+    </select> 
+	 <select id="statisticDocCountByOrgForTime"  parameterType="java.util.Map" resultMap="docCountMap">
+    		select org_flow KEY,count(distinct doctor_flow) NUM
+    		from RES_DOCTOR_RECRUIT
+    		where RECORD_STATUS = 'Y'
+    		<if test='jointFlag!=null and jointFlag!=""'>
+   				and RES_DOCTOR_RECRUIT.ORG_FLOW  in (
+   					select joint_org_flow from res_joint_org where RECORD_STATUS = 'Y'
+   					<if test="orgFlowList!=null and orgFlowList.size>0">
+					and res_joint_org.ORG_FLOW  in 
+	    			<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+	    		</if>
+   				)
+    		</if>
+    		<if test="recruit!=null">
+    			 <if test="recruit.auditStatusId!=null and recruit.auditStatusId!=''">
+    				and RES_DOCTOR_RECRUIT.AUDIT_STATUS_ID=#{recruit.auditStatusId}
+    			</if> 
+    			 <if test="recruit.sessionNumber!=null and recruit.sessionNumber!=''">
+    				and RES_DOCTOR_RECRUIT.SESSION_NUMBER=#{recruit.sessionNumber}
+    			</if> 
+    			 <if test="recruit.catSpeId!=null and recruit.catSpeId!=''">
+    				and RES_DOCTOR_RECRUIT.CAT_SPE_ID=#{recruit.catSpeId}
+    			</if> 
+    		</if>
+    		<if test='jointFlag ==null or jointFlag ==""'>
+	    		<if test="orgFlowList!=null and orgFlowList.size>0">
+					and RES_DOCTOR_RECRUIT.ORG_FLOW  in 
+	    		<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+	    		</if>
+    		</if>
+    		group by org_flow
+    </select> 
+    <resultMap type="HashMap" id="docMap">
+		<result  property="key" column="KEY" javaType="string"/>
+		<result property="value" column="NUM" javaType="java.lang.Integer"/>
+	</resultMap>
+	 <select id="statisticAppCountByOrg"  parameterType="java.util.Map" resultMap="docMap">
+    		select substr(rec.CREATE_TIME,0,6) KEY,count( distinct rec.OPER_USER_FLOW) NUM
+    		 from RES_REC rec,res_doctor_recruit re
+    		 where rec.RECORD_STATUS = 'Y' and re.RECORD_STATUS = 'Y'and rec.OPER_USER_FLOW = re.DOCTOR_FLOW
+    		 <if test="recruit!=null">
+    			<if test="recruit.orgFlow!=null and recruit.orgFlow!=''">
+    				and re.org_flow = #{recruit.orgFlow,jdbcType=VARCHAR} 
+    			</if>
+    			 <if test="recruit.auditStatusId!=null and recruit.auditStatusId!=''">
+    				and re.AUDIT_STATUS_ID=#{recruit.auditStatusId}
+    			</if> 
+    			 <if test="recruit.sessionNumber!=null and recruit.sessionNumber!=''">
+    				and re.SESSION_NUMBER=#{recruit.sessionNumber}
+    			</if> 
+    			 <if test="recruit.catSpeId!=null and recruit.catSpeId!=''">
+    				and re.CAT_SPE_ID=#{recruit.catSpeId}
+    			</if> 
+    		</if>
+    		<if test="delTypeList!=null and delTypeList.size>0">
+					and rec.REC_TYPE_ID not in 
+	    		<foreach collection="delTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+	    		</if>
+    		<if test="resRec!=null">
+    			<if test="resRec.orgFlow!=null and resRec.orgFlow!=''">
+    				and rec.org_flow = #{resRec.orgFlow,jdbcType=VARCHAR} 
+    			</if>
+    		</if>
+    		<if test='startTime!=null and startTime!=""'>
+   				and substr(rec.CREATE_TIME,0,8) >= #{startTime} 
+    		</if>
+    		<if test='endTime!=null and endTime!=""'>
+   				and substr(rec.CREATE_TIME,0,8) <![CDATA[ <= ]]> #{endTime} 
+    		</if>
+			group by substr(rec.CREATE_TIME,0,6)
+			ORDER BY substr(rec.CREATE_TIME,0,6)
+    </select> 
+	 <select id="statisticRealAppCount"  parameterType="java.util.Map" resultMap="docCountMap">
+    		select rec.org_flow KEY,count( distinct rec.OPER_USER_FLOW) NUM
+    		 from RES_REC rec ,res_doctor_recruit re
+    		 where rec.RECORD_STATUS = 'Y' and re.RECORD_STATUS = 'Y'and rec.OPER_USER_FLOW = re.DOCTOR_FLOW
+    		<if test='month!=null and month!=""'>
+   				and substr(rec.CREATE_TIME,0,6) = #{month} 
+    		</if>
+    		 <if test="recruit!=null">
+    			<if test="recruit.orgFlow!=null and recruit.orgFlow!=''">
+    				and re.org_flow = #{recruit.orgFlow,jdbcType=VARCHAR} 
+    			</if>
+    			 <if test="recruit.auditStatusId!=null and recruit.auditStatusId!=''">
+    				and re.AUDIT_STATUS_ID=#{recruit.auditStatusId}
+    			</if> 
+    			 <if test="recruit.sessionNumber!=null and recruit.sessionNumber!=''">
+    				and re.SESSION_NUMBER=#{recruit.sessionNumber}
+    			</if> 
+    			 <if test="recruit.catSpeId!=null and recruit.catSpeId!=''">
+    				and re.CAT_SPE_ID=#{recruit.catSpeId}
+    			</if> 
+    		</if>
+    		<if test='jointFlag !=null and jointFlag !=""'>
+    			and rec.ORG_FLOW  in (
+   					select joint_org_flow from res_joint_org where RECORD_STATUS = 'Y'
+   					<if test="orgFlowList!=null and orgFlowList.size>0">
+					and res_joint_org.ORG_FLOW  in 
+	    			<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+	    			</if>
+	    			)
+    		</if>
+    		<if test='jointFlag ==null or jointFlag ==""'>
+	    		<if test="orgFlowList!=null and orgFlowList.size>0">
+					and rec.ORG_FLOW  in 
+	    		<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+	    		</if>
+    		</if>
+    		<if test="delTypeList!=null and delTypeList.size>0">
+				and rec.REC_TYPE_ID  not in 
+    		<foreach collection="delTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+    		</if>
+		group by rec.org_flow
+    </select> 
+    <resultMap id="info" type="com.pinde.sci.model.jszy.JszyDoctorInfoExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
+		<association property="sysUser" column="userFlow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" />
+	</resultMap>
+	<select id="statisticNoAppUser"  parameterType="java.util.Map" resultMap="info">
+	select rd.RECRUIT_FLOW ,rd.doctor_flow,su.user_flow,rd.spe_name ,su.user_name,su.USER_PHONE
+	 from RES_DOCTOR_RECRUIT rd,SYS_USER su where  
+	  rd.RECORD_STATUS='Y' and su.RECORD_STATUS='Y' and rd.DOCTOR_FLOW= su.USER_FLOW and 
+		rd.DOCTOR_FLOW in(
+  		 select DISTINCT rdr.DOCTOR_FLOW from RES_DOCTOR_RECRUIT rdr 
+  	 	 where rdr.RECORD_STATUS='Y'
+  	 	  and  not exists  (
+ 	 	 select DISTINCT rec.OPER_USER_FLOW from RES_REC rec 
+ 	 		 where rec.RECORD_STATUS='Y' and rdr.DOCTOR_FLOW = rec.OPER_USER_FLOW 
+ 		 	<if test='startDate!=null and startDate!=""'>
+   				and substr(rec.CREATE_TIME,0,6) >= #{startDate} 
+    		</if>
+    		<if test='endDate!=null and endDate!=""'>
+   				and substr(rec.CREATE_TIME,0,6) <![CDATA[ <= ]]> #{endDate} 
+    		</if>
+ 	  <if test="delTypeList!=null and delTypeList.size>0">
+				and rec.REC_TYPE_ID  not in 
+    		<foreach collection="delTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+    		</if>
+ 	  )
+	)
+		 <if test="recruit!=null">
+    			<if test="recruit.orgFlow!=null and recruit.orgFlow!=''">
+    				and rd.org_flow = #{recruit.orgFlow,jdbcType=VARCHAR} 
+    			</if>
+    			 <if test="recruit.auditStatusId!=null and recruit.auditStatusId!=''">
+    				and rd.AUDIT_STATUS_ID=#{recruit.auditStatusId}
+    			</if> 
+    			 <if test="recruit.sessionNumber!=null and recruit.sessionNumber!=''">
+    				and rd.SESSION_NUMBER=#{recruit.sessionNumber}
+    			</if> 
+    			 <if test="recruit.catSpeId!=null and recruit.catSpeId!=''">
+    				and rd.CAT_SPE_ID=#{recruit.catSpeId}
+    			</if> 
+    		</if>
+   		order by NLSSORT(su.USER_NAME, 'NLS_SORT = SCHINESE_PINYIN_M')
+	</select>
+	<select id="doctorCounMap"  parameterType="java.util.Map" resultType="java.util.Map">
+		select
+		a.*,b.*,c.*,d.*
+		from
+		(
+		select nvl(count(distinct rdr.doctor_Flow),0) doctorCount
+		from RES_DOCTOR_RECRUIT rdr
+		left join res_doctor d on rdr.doctor_flow = d.doctor_flow
+		left join sys_user u on u.user_flow = rdr.doctor_flow
+		where rdr.RECORD_STATUS = 'Y'
+		AND d.RECORD_STATUS = 'Y'
+		AND d.org_flow is not null
+		and u.RECORD_STATUS = 'Y'
+		AND rdr.AUDIT_STATUS_ID = 'Passed'
+		and rdr.CAT_SPE_ID in ('ChineseMedicine','TCMGeneral')
+		AND d.DOCTOR_TYPE_ID IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+		<if test="sessionNumber!=null and sessionNumber!=''">
+			AND rdr.SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR}
+		</if>
+		<if test="cityIdList!=null and cityIdList.size>0">
+			AND rdr.org_flow in
+            (SELECT org_flow FROM Sys_Org e WHERE e.org_city_id IN
+            <foreach collection="cityIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+            AND e.org_type_id  = 'Hospital')
+		</if>
+		<if test="orgFlow!=null and orgFlow!=''">
+			and rdr.ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+		</if>
+
+		) a,
+		(
+		select
+		nvl(sum(decode(rdr.CAT_SPE_ID,'ChineseMedicine', COUNT(DISTINCT d.doctor_flow),0)),0) "ChineseMedicine",
+		nvl(sum(decode(rdr.CAT_SPE_ID,'TCMGeneral', COUNT(DISTINCT d.doctor_flow),0)),0) "TCMGeneral",
+		nvl(sum(decode(rdr.CAT_SPE_ID,'TCMAssiGeneral', COUNT(DISTINCT d.doctor_flow),0)),0) "TCMAssiGeneral"
+		FROM RES_DOCTOR_RECRUIT rdr
+		left join res_doctor d
+		on rdr.doctor_flow = d.doctor_flow
+		left join sys_user u on u.user_flow = rdr.doctor_flow
+		where rdr.RECORD_STATUS = 'Y'
+		AND d.RECORD_STATUS = 'Y'
+		AND d.org_flow is not null
+		and u.RECORD_STATUS = 'Y'
+		AND rdr.AUDIT_STATUS_ID = 'Passed'
+		and rdr.CAT_SPE_ID in ('ChineseMedicine','TCMGeneral')
+		AND d.DOCTOR_TYPE_ID IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+		<if test="sessionNumber!=null and sessionNumber!=''">
+			and rdr.SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR}
+		</if>
+        <if test="cityIdList!=null and cityIdList.size>0">
+            AND rdr.org_flow in
+            (SELECT org_flow FROM Sys_Org e WHERE e.org_city_id IN
+            <foreach collection="cityIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+            AND e.org_type_id  = 'Hospital')
+        </if>
+		<if test="orgFlow!=null and orgFlow!=''">
+			and rdr.ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+		</if>
+		group by rdr.CAT_SPE_ID
+		) b,
+		(
+		select
+		nvl(sum(decode(d.doctor_type_id,'Company',  COUNT(DISTINCT d.doctor_flow),0)),0) "Company",
+		nvl(sum(decode(d.doctor_type_id,'CompanyEntrust',  COUNT(DISTINCT d.doctor_flow),0)),0) "CompanyEntrust",
+		nvl(sum(decode(d.doctor_type_id,'Graduate', COUNT(DISTINCT d.doctor_flow),0)),0) "Graduate",
+		nvl(sum(decode(d.doctor_type_id,'Social', COUNT(DISTINCT d.doctor_flow),0)),0) "Social"
+		FROM RES_DOCTOR_RECRUIT rdr left join res_doctor d
+		on rdr.doctor_flow = d.doctor_flow
+		left join sys_user u on u.user_flow = rdr.doctor_flow
+		where rdr.RECORD_STATUS = 'Y'
+		AND d.RECORD_STATUS = 'Y'
+		AND d.org_flow is not null
+		and u.RECORD_STATUS = 'Y'
+		AND rdr.AUDIT_STATUS_ID = 'Passed'
+		and rdr.CAT_SPE_ID in ('ChineseMedicine','TCMGeneral')
+		AND d.DOCTOR_TYPE_ID IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+		<if test="sessionNumber!=null and sessionNumber!=''">
+			and rdr.SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR}
+		</if>
+        <if test="cityIdList!=null and cityIdList.size>0">
+            AND rdr.org_flow in
+            (SELECT org_flow FROM Sys_Org e WHERE e.org_city_id IN
+            <foreach collection="cityIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+            AND e.org_type_id  = 'Hospital')
+        </if>
+		<if test="orgFlow!=null and orgFlow!=''">
+			and rdr.ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+		</if>
+		group by d.doctor_type_id
+		) c,
+		(
+		select
+		nvl(sum(decode(o.org_level_id,'CountryOrg', COUNT(DISTINCT d.doctor_flow),0)),0) "CountryOrg",
+		nvl(sum(decode(o.org_level_id,'JointOrg', COUNT(DISTINCT d.doctor_flow),0)),0) "JointOrg",
+		nvl(sum(decode(o.org_level_id,'ProvinceOrg', COUNT(DISTINCT d.doctor_flow),0)),0) "ProvinceOrg"
+		FROM RES_DOCTOR_RECRUIT rdr left join res_doctor d
+		on rdr.doctor_flow = d.doctor_flow
+		left join sys_user u on u.user_flow = rdr.doctor_flow
+		LEFT JOIN
+		(
+		select case when org.org_level_id ='CountryOrg' then org.org_level_id
+		when org.org_level_id ='ProvinceOrg' then org.org_level_id
+		when 1=(
+		select 1 from res_joint_org j where j.record_status='Y' and j.joint_org_flow=org.org_flow and rownum=1
+		) then 'JointOrg'
+		end org_level_id ,org.org_flow,org.record_status
+		from sys_org org
+		where org.RECORD_STATUS = 'Y'
+		) o
+		ON d.org_flow = o.org_flow
+		WHERE rdr.RECORD_STATUS = 'Y'
+		AND d.record_status = 'Y'
+		AND d.org_flow is not null
+		AND o.record_status = 'Y'
+		and u.RECORD_STATUS = 'Y'
+		AND rdr.AUDIT_STATUS_ID = 'Passed'
+		and rdr.CAT_SPE_ID in ('ChineseMedicine','TCMGeneral')
+		AND d.DOCTOR_TYPE_ID IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+		<if test="sessionNumber!=null and sessionNumber!=''">
+			and rdr.SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR}
+		</if>
+        <if test="cityIdList!=null and cityIdList.size>0">
+            AND rdr.org_flow in
+            (SELECT org_flow FROM Sys_Org e WHERE e.org_city_id IN
+            <foreach collection="cityIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+            AND e.org_type_id  = 'Hospital')
+        </if>
+		<if test="orgFlow!=null and orgFlow!=''">
+			and rdr.ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+		</if>
+		group by o.org_level_id
+		) d
+	</select>
+	<select id="getCurrDocDetails"  parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+		nvl(COUNT(DISTINCT d.doctor_flow),0) num,rdr.doctor_status_id statusId ,rdr.SESSION_NUMBER sessionNumber
+		FROM RES_DOCTOR_RECRUIT rdr
+		LEFT JOIN res_doctor d ON rdr.doctor_flow = d.doctor_flow
+		left join sys_user u on rdr.doctor_flow = u.user_flow
+		WHERE rdr.RECORD_STATUS = 'Y'
+		AND d.record_status = 'Y'
+		and u.record_status ='Y'
+		AND rdr.SESSION_NUMBER >= '2015'
+		AND rdr.doctor_status_id in ('20','21','22')
+		AND rdr.AUDIT_STATUS_ID = 'Passed'
+		and rdr.CAT_SPE_ID in ('ChineseMedicine','TCMGeneral')
+		AND d.org_flow IS NOT NULL
+        <if test="cityIdList!=null and cityIdList.size>0">
+            AND rdr.org_flow in
+            (SELECT org_flow FROM Sys_Org e WHERE e.org_city_id IN
+            <foreach collection="cityIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+            AND e.org_type_id  = 'Hospital')
+        </if>
+		<if test="orgFlow!=null and orgFlow!=''">
+			and rdr.ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+		</if>
+		GROUP BY rdr.doctor_status_id,rdr.SESSION_NUMBER
+		order by rdr.SESSION_NUMBER desc
+	</select>
+	<select id="statisticJointCountByOrg"  parameterType="java.util.Map" resultMap="docCountMap">
+		select count(*) COUNT,rdr.org_Flow ORGFLOW,rdr.org_name ORGNAME
+		from RES_DOCTOR_RECRUIT rdr
+		LEFT JOIN RES_DOCTOR d ON rdr.DOCTOR_FLOW = d.DOCTOR_FLOW
+		left JOIN sys_user u on rdr.DOCTOR_FLOW = u.USER_FLOW
+		where d.RECORD_STATUS = 'Y'
+		AND rdr.RECORD_STATUS = 'Y'
+		AND u.RECORD_STATUS = 'Y'
+		<if test="recruit!=null">
+			<if test="recruit.sessionNumber!=null and recruit.sessionNumber!=''">
+				and rdr.session_Number = #{recruit.sessionNumber,jdbcType=VARCHAR}
+			</if>
+			<if test="recruit.catSpeId!=null and recruit.catSpeId!=''">
+				and rdr.cat_spe_id = #{recruit.catSpeId,jdbcType=VARCHAR}
+			</if>
+			<if test="recruit.auditStatusId!=null and recruit.auditStatusId!=''">
+				and rdr.AUDIT_STATUS_ID = #{recruit.auditStatusId,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="orgFlowList!=null and orgFlowList.size>0">
+			and rdr.ORG_FLOW  in
+			<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="docTypeList!=null and docTypeList.size>0">
+			and exists(
+			select doctor_flow from RES_DOCTOR where RES_DOCTOR.DOCTOR_TYPE_ID in
+			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+			and rdr.doctor_flow =RES_DOCTOR.doctor_flow
+			and RES_DOCTOR.RECORD_STATUS = 'Y'
+			)
+		</if>
+		group BY rdr.org_flow,rdr.org_name
+	</select>
+	<resultMap type="HashMap" id="zlxytjMap">
+		<result  property="cityId" column="org_city_id" javaType="string"/>
+		<result property="cityName" column="org_city_name" javaType="string"/>
+		<result property="sessionNumber" column="session_number" javaType="string"/>
+		<result property="typeId" column="doctor_type_id" javaType="string"/>
+		<result property="typeName" column="doctor_type_name" javaType="string"/>
+		<result property="num" column="num" javaType="integer"/>
+	</resultMap>
+	<select id="zlxytj"  resultMap="zlxytjMap">
+		select org_city_id,
+		org_city_name,
+		session_number,
+		doctor_type_id,
+		count(1) num
+		from (SELECT org.org_city_id,
+		org.org_city_name,
+		t.session_number,
+		rd.doctor_type_id,
+		rd.doctor_type_name,
+		rd.doctor_flow
+		FROM jsres_recruit_doc_info T
+		left join sys_org org
+		on t.org_flow = org.org_flow
+		left join res_doctor rd
+		on t.doctor_flow = rd.doctor_flow
+		WHERE T.RECORD_STATUS = 'Y'
+		AND t.org_flow IN
+		(SELECT ORG_FLOW
+		FROM PDSCI.SYS_ORG
+		WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+		AND ORG_PROV_ID = '320000')
+		and rd.doctor_type_id in ('Company', 'Graduate', 'Social','CompanyEntrust')
+		and t.session_number is not null
+		and t.session_number >'2014'
+        <if test="trainYears!=null and trainYears!=''">
+            and t.train_Year in
+            <foreach collection="trainYears" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+		<if test="trainTypeIdList!=null and trainTypeIdList.size>0">
+			and t.cat_spe_id in
+			<foreach collection="trainTypeIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		) t
+        where 1=1
+		<if test="sessionNumber!=null and sessionNumber!=''">
+			and session_number=#{sessionNumber}
+		</if>
+
+        group by org_city_id,
+		org_city_name,
+		session_number,
+		doctor_type_id
+		order by org_city_id, session_number
+	</select>
+	<resultMap type="HashMap" id="zlxytj2Map">
+		<result  property="cityId" column="org_city_id" javaType="string"/>
+		<result property="jointOrgFlow" column="JOINT_ORG_FLOW" javaType="string"/>
+		<result property="orgFlow" column="ORG_FLOW" javaType="string"/>
+		<result property="speId" column="SPE_ID" javaType="string"/>
+		<result property="catSpeId" column="CAT_SPE_ID" javaType="string"/>
+		<result property="sessionNumber" column="SESSION_NUMBER" javaType="string"/>
+		<result property="num" column="num" javaType="integer"/>
+	</resultMap>
+	<select id="zlxytj2"  resultMap="zlxytj2Map">
+		select ORG_FLOW, org_city_id, SPE_ID,SESSION_NUMBER, CAT_SPE_ID,COUNT(1) NUM
+		from (SELECT ORG.ORG_FLOW, org.org_city_id, T.SPE_ID, T.SESSION_NUMBER,T.CAT_SPE_ID, rd.doctor_flow
+		FROM jsres_recruit_doc_info T
+		left join (
+        <if test='joint == "Y"'>
+            SELECT JIORG.JOINT_ORG_FLOW,
+            ORG.ORG_FLOW,
+            ORG.ORG_NAME,
+            ORG.ORG_CITY_ID,
+            ORG.ORG_CITY_NAME
+            FROM SYS_ORG ORG
+            LEFT JOIN RES_JOINT_ORG JIORG
+            ON ORG.ORG_FLOW = JIORG.ORG_FLOW
+            WHERE 1 = 1
+            AND JIORG.RECORD_STATUS = 'Y'
+            and org.org_level_id = 'CountryOrg'
+            UNION
+        </if>
+		SELECT ORG.ORG_FLOW JOINT_ORG_FLOW,
+		ORG.ORG_FLOW,
+		ORG.ORG_NAME,
+		ORG.ORG_CITY_ID,
+		ORG.ORG_CITY_NAME
+		FROM SYS_ORG ORG
+		where org.org_level_id = 'CountryOrg') ORG
+		on t.org_flow = org.JOINT_ORG_FLOW
+		left join res_doctor rd
+		on t.doctor_flow = rd.doctor_flow
+		WHERE T.RECORD_STATUS = 'Y'
+		AND ORG.org_flow IN
+		(SELECT ORG_FLOW
+		FROM PDSCI.SYS_ORG
+		WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+		AND ORG_PROV_ID = '320000')
+		<if test="docTypeList!=null and docTypeList.size>0">
+			and rd.DOCTOR_TYPE_ID in
+			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		and t.session_number is not null
+        <if test="sessionNumbers!=null ">
+            and  t.session_number IN
+            <foreach collection="sessionNumbers" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="trainYears!=null and trainYears!=''">
+            and t.train_Year in
+            <foreach collection="trainYears" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+				) t
+		<if test="orgCityId!=null and orgCityId!=''">
+			where  org_city_id=#{orgCityId}
+		</if>
+		group by ORG_FLOW, org_city_id, SPE_ID,SESSION_NUMBER, CAT_SPE_ID
+		order by org_city_id, SPE_ID
+	</select>
+	<select id="zlxytjJoint"  resultMap="zlxytj2Map">
+		select JOINT_ORG_FLOW,ORG_FLOW, org_city_id, SPE_ID,SESSION_NUMBER, CAT_SPE_ID, COUNT(1) NUM
+		from (SELECT ORG.JOINT_ORG_FLOW,ORG.ORG_FLOW, org.org_city_id, T.SPE_ID, T.SESSION_NUMBER,T.CAT_SPE_ID,rd.doctor_flow
+		FROM jsres_recruit_doc_info T
+		left join (SELECT JIORG.JOINT_ORG_FLOW,
+		ORG.ORG_FLOW,
+		ORG.ORG_NAME,
+		ORG.ORG_CITY_ID,
+		ORG.ORG_CITY_NAME
+		FROM SYS_ORG ORG
+		LEFT JOIN RES_JOINT_ORG JIORG
+		ON ORG.ORG_FLOW = JIORG.ORG_FLOW
+		WHERE 1 = 1
+		AND JIORG.RECORD_STATUS = 'Y'
+		and org.org_level_id = 'CountryOrg'
+		<if test="orgFlow!=null and orgFlow!=''">
+			and  org.org_flow=#{orgFlow}
+		</if>
+		) ORG
+		on t.org_flow = org.JOINT_ORG_FLOW
+		left join res_doctor rd
+		on t.doctor_flow = rd.doctor_flow
+		WHERE T.RECORD_STATUS = 'Y'
+		AND ORG.JOINT_ORG_FLOW IN
+		(SELECT ORG_FLOW
+		FROM PDSCI.SYS_ORG
+		WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+		AND ORG_PROV_ID = '320000')
+		<if test="docTypeList!=null and docTypeList.size>0">
+			and rd.DOCTOR_TYPE_ID in
+			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		and t.session_number is not null
+        <if test="sessionNumbers!=null ">
+            and  t.session_number IN
+            <foreach collection="sessionNumbers" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="trainYears!=null and trainYears!=''">
+            and t.train_Year in
+            <foreach collection="trainYears" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+		) t
+		<if test="orgCityId!=null and orgCityId!=''">
+			where  org_city_id=#{orgCityId}
+		</if>
+		group by JOINT_ORG_FLOW,ORG_FLOW, org_city_id, SPE_ID,SESSION_NUMBER, CAT_SPE_ID
+		order by org_city_id, SPE_ID
+	</select>
+	<resultMap type="HashMap" id="zlxytj3Map">
+		<result  property="cityId" column="org_city_id" javaType="string"/>
+		<result  property="cityName" column="org_city_name" javaType="string"/>
+		<result property="jointOrgFlow" column="JOINT_ORG_FLOW" javaType="string"/>
+		<result property="jointOrgName" column="JOINT_ORG_NAME" javaType="string"/>
+		<result property="orgFlow" column="ORG_FLOW" javaType="string"/>
+		<result property="orgName" column="ORG_NAME" javaType="string"/>
+		<result property="catSpeId" column="CAT_SPE_ID" javaType="string"/>
+		<result property="speId" column="SPE_ID" javaType="string"/>
+		<result property="secondSpeId" column="second_spe_id" javaType="string"/>
+		<result property="num" column="num" javaType="integer"/>
+	</resultMap>
+	<select id="zlxytj3"  resultMap="zlxytj3Map">
+		select  org_city_id,
+		JOINT_ORG_FLOW,JOINT_ORG_NAME,
+		ORG_FLOW, ORG_NAME,
+		cat_spe_id,
+		SPE_ID,
+		second_spe_id,
+		COUNT(1) AS NUM
+		from ( SELECT   ORG.JOINT_ORG_FLOW,ORG.JOINT_ORG_NAME,
+		ORG.ORG_FLOW,ORG.ORG_NAME,
+		org.org_city_id,
+		t.cat_spe_id,
+		T.SPE_ID,
+		CASE  WHEN t.second_spe_id IS NULL THEN 'wu' ELSE t.second_spe_id END second_spe_id,
+		rd.doctor_flow
+		FROM RES_DOCTOR_recruit T
+		left join ( SELECT JIORG.JOINT_ORG_FLOW,JIORG.JOINT_ORG_NAME,
+		ORG.ORG_FLOW,ORG.ORG_NAME,
+		ORG.ORG_CITY_ID,
+		ORG.ORG_CITY_NAME
+		FROM SYS_ORG ORG
+		LEFT JOIN RES_JOINT_ORG JIORG
+		ON ORG.ORG_FLOW = JIORG.ORG_FLOW
+		WHERE 1 = 1
+		AND JIORG.RECORD_STATUS = 'Y'
+		and org.org_level_id = 'CountryOrg'
+		UNION
+		SELECT ORG.ORG_FLOW JOINT_ORG_FLOW,ORG.ORG_NAME JOINT_ORG_NAME,
+		ORG.ORG_FLOW,ORG.ORG_NAME,
+		ORG.ORG_CITY_ID,
+		ORG.ORG_CITY_NAME
+		FROM SYS_ORG ORG
+		where org.org_level_id = 'CountryOrg') ORG
+		on t.org_flow = org.JOINT_ORG_FLOW
+		left join res_doctor rd
+		on t.doctor_flow = rd.doctor_flow
+		LEFT JOIN SYS_USER u
+		ON t.DOCTOR_FLOW = u.USER_FLOW
+		WHERE T.RECORD_STATUS = 'Y'
+		and t.audit_status_id = 'Passed'
+		AND ORG.org_flow IN
+		(SELECT ORG_FLOW
+		FROM PDSCI.SYS_ORG
+		WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+		AND ORG_PROV_ID = '320000'
+		<if test="orgFlow!=null and orgFlow!=''">
+			and org_Flow=#{orgFlow}
+		</if>
+		)
+		AND u.RECORD_STATUS = 'Y'
+		<if test="docTypeList!=null and docTypeList.size>0">
+			and rd.DOCTOR_TYPE_ID in
+			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		and t.session_number is not null
+		<if test="sessionNumber!=null and sessionNumber!=''">
+			and  t.session_number=#{sessionNumber}
+		</if>
+		<if test="trainTypeIdList!=null and trainTypeIdList.size>0">
+			and t.cat_spe_id in
+			<foreach collection="trainTypeIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		union
+		select  ORG.JOINT_ORG_FLOW,ORG.JOINT_ORG_NAME,
+		ORG.ORG_FLOW,ORG.ORG_NAME,
+		org.org_city_id,
+		T.TRAINING_TYPE_ID cat_spe_id,
+		T.TRAINING_SPE_ID SPE_ID,
+		CASE  WHEN t.second_spe_id IS NULL THEN 'wu' ELSE t.second_spe_id END second_spe_id,
+		rd.doctor_flow
+		from res_docotr_delay_teturn t
+		left join (SELECT JIORG.JOINT_ORG_FLOW,JIORG.JOINT_ORG_NAME,
+		ORG.ORG_FLOW,
+		ORG.ORG_NAME,
+		ORG.ORG_CITY_ID,
+		ORG.ORG_CITY_NAME
+		FROM SYS_ORG ORG
+		LEFT JOIN RES_JOINT_ORG JIORG
+		ON ORG.ORG_FLOW = JIORG.ORG_FLOW
+		WHERE 1 = 1
+		AND JIORG.RECORD_STATUS = 'Y'
+		and org.org_level_id = 'CountryOrg'
+		UNION
+		SELECT ORG.ORG_FLOW JOINT_ORG_FLOW,ORG.ORG_NAME JOINT_ORG_NAME,
+		ORG.ORG_FLOW,
+		ORG.ORG_NAME,
+		ORG.ORG_CITY_ID,
+		ORG.ORG_CITY_NAME
+		FROM SYS_ORG ORG
+		where org.org_level_id = 'CountryOrg') ORG
+		on t.org_flow = org.JOINT_ORG_FLOW
+		left join res_doctor rd
+		on t.doctor_flow = rd.doctor_flow
+		LEFT JOIN SYS_USER u
+		ON t.DOCTOR_FLOW = u.USER_FLOW
+		where t.record_status = 'Y'
+		and t.type_id = 'ReturnTraining'
+		AND ORG.org_flow IN
+		(SELECT ORG_FLOW
+		FROM PDSCI.SYS_ORG
+		WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+		AND ORG_PROV_ID = '320000')
+		and not exists(
+		select 1
+		FROM RES_DOCTOR_recruit r
+		where r.record_status='Y'
+		and r.audit_status_id='Passed'
+		and r.doctor_flow=t.doctor_flow
+		and r.session_number=t.session_number
+		)
+		<if test="docTypeList!=null and docTypeList.size>0">
+			and t.DOCTOR_TYPE_ID in
+			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		and t.session_number is not null
+		<if test="sessionNumber!=null and sessionNumber!=''">
+			and  t.session_number=#{sessionNumber}
+		</if>
+		<if test="trainTypeIdList!=null and trainTypeIdList.size>0">
+			and t.TRAINING_TYPE_ID in
+			<foreach collection="trainTypeIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		) t
+		<if test="orgCityId!=null and orgCityId!=''">
+			where  org_city_id=#{orgCityId}
+		</if>
+		group by org_city_id,JOINT_ORG_FLOW,JOINT_ORG_Name,ORG_FLOW,org_name,cat_spe_id,SPE_ID,second_spe_id
+		order by org_city_id,ORG_FLOW,cat_spe_id, SPE_ID,second_spe_id
+	</select>
+	<select id="zlxytj4"  resultMap="zlxytj3Map">
+		select  org_city_id,
+        org_city_name,
+		ORG_FLOW, ORG_NAME,
+		cat_spe_id,
+		COUNT(1) AS NUM
+		from ( SELECT
+		ORG.ORG_FLOW,ORG.ORG_NAME,
+		org.org_city_id,
+        org.org_city_name,
+		t.cat_spe_id,
+		rd.doctor_flow
+		FROM JSRES_RECRUIT_doc_INFO T
+		left join  SYS_ORG ORG
+		on t.org_flow = org.ORG_FLOW
+		left join res_doctor rd
+		on t.doctor_flow = rd.doctor_flow
+		WHERE T.RECORD_STATUS = 'Y'
+		AND ORG.org_flow IN
+		(SELECT ORG_FLOW
+		FROM PDSCI.SYS_ORG
+		WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+		AND ORG_PROV_ID = '320000'
+		<if test="orgFlow!=null and orgFlow!=''">
+			and org_Flow=#{orgFlow}
+		</if>
+		)
+		and t.session_number is not null
+		<if test="docTypeList!=null and docTypeList.size>0">
+			and rd.DOCTOR_TYPE_ID in
+			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="sessionNumber!=null and sessionNumber!=''">
+			and  t.session_number=#{sessionNumber}
+		</if>
+        <if test="trainYears!=null and trainYears!=''">
+            and t.train_Year in
+            <foreach collection="trainYears" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+		<if test="trainTypeIdList!=null and trainTypeIdList.size>0">
+			and t.cat_spe_id in
+			<foreach collection="trainTypeIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		) t
+        WHERE 1=1
+        <if test="cityId!=null and cityId!=''">
+            AND T.ORG_CITY_ID = #{cityId}
+        </if>
+		group by org_city_id,org_city_name,ORG_FLOW,org_name,cat_spe_id
+		order by org_city_id,ORG_FLOW,cat_spe_id
+	</select>
+	<select id="searchDoctorCertificateList"  parameterType="java.util.Map" resultMap="DoctorRecruit">
+		select dr.*,u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL
+		, u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
+		ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName
+		from pdsci.RES_DOCTOR_RECRUIT dr
+		left join  pdsci.SYS_USER u
+		on dr.DOCTOR_FLOW =  u.USER_FLOW
+		left join  RES_DOCTOR ed
+		on dr.DOCTOR_FLOW =  ed.DOCTOR_FLOW
+		where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y'
+		and dr.org_flow in(
+		SELECT ORG_FLOW
+		FROM PDSCI.SYS_ORG
+		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+		<if test="orgProvId!=null and orgProvId!=''">
+			AND ORG_PROV_ID = #{orgProvId}
+		</if>
+		<if test="orgCityId!=null and orgCityId!=''">
+			AND ORG_CITY_ID = #{orgCityId}
+		</if>
+		<if test="orgFlow!=null and orgFlow!=''">
+			AND ORG_FLOW = #{orgFlow}
+		</if>
+		<if test="orgLevel!=null and orgLevel!=''">
+			AND ORG_LEVEL_ID = #{orgLevel}
+		</if>
+		<if test="orgTypeId!=null and orgTypeId!=''">
+			AND ORG_TYPE_ID = #{orgTypeId}
+		</if>
+		)
+		<if test="orgFlowList!=null and orgFlowList.size>0">
+			and dr.ORG_FLOW in
+			<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="docTypeList!=null and docTypeList.size>0">
+			and ed.DOCTOR_TYPE_ID in
+			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="graduationCertificateNo!=null and graduationCertificateNo!=''">
+			and dr.graduation_Certificate_No like '%${graduationCertificateNo}%'
+		</if>
+		and dr.graduation_Certificate_No is not null
+		<if test="catSpeId!=null and catSpeId!=''">
+			and dr.CAT_SPE_ID = #{catSpeId}
+		</if>
+		<if test="speId!=null and speId!=''">
+			and dr.SPE_ID = #{speId}
+		</if>
+		<if test='orgFlow!=null and orgFlow!=""'>
+			and dr.ORG_FLOW = #{orgFlow}
+		</if>
+		<if test="graduationYear!=null and graduationYear!=''">
+			and dr.GRADUATION_YEAR=#{graduationYear}
+		</if>
+		<if test="doctorFlow!=null and doctorFlow!=''">
+			and dr.doctor_flow=#{doctorFlow}
+		</if>
+		and dr.AUDIT_STATUS_ID='Passed'
+		<if test="userName!=null and userName!=''">
+			<bind name="userName" value="'%'+userName+'%'"/>
+			and u.USER_NAME like #{userName}
+		</if>
+		<if test="idNo!=null and idNo!=''">
+			<bind name="idNo" value="'%'+idNo+'%'"/>
+			and u.ID_NO like #{idNo}
+		</if>
+		<if test="notLikeIdNo!=null and notLikeIdNo!=''">
+			and u.ID_NO =#{notLikeIdNo}
+		</if>
+		<if test="notLikeUserName!=null and notLikeUserName!=''">
+			and u.user_name =#{notLikeUserName}
+		</if>
+		<if test="trainTypeIdList!=null and trainTypeIdList.size>0">
+			and dr.CAT_SPE_ID in
+			<foreach collection="trainTypeIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="trainingSpeId!=null and trainingSpeId!=''">
+			and dr.SPE_ID = #{trainingSpeId}
+		</if>
+		<if test="sessionNumber!=null and sessionNumber!=''">
+			and dr.SESSION_NUMBER = #{sessionNumber}
+		</if>
+		<if test="doctorTypeId!=null and doctorTypeId!=''">
+			and ed.DOCTOR_TYPE_ID = #{doctorTypeId}
+		</if>
+		<if test="workOrgLevelId!=null and workOrgLevelId!=''">
+			and ed.WORK_ORG_LEVEL_ID = #{workOrgLevelId}
+		</if>
+		<if test="doctorStatusId!=null and doctorStatusId!=''">
+			and ed.doctor_Status_Id = #{doctorStatusId}
+		</if>
+		<if test="workOrgName!=null and workOrgName!=''">
+			and (
+			<trim prefix="" prefixOverrides="OR">
+				<if test="(workOrgId != null and workOrgId != '')">OR ed.work_org_id = #{workOrgId}</if>
+				<if test="(workOrgName != null and workOrgName != '')">OR ed.work_org_name = #{workOrgName}</if>
+			</trim>
+			)
+		</if>
+		order by  dr.GRADUATION_YEAR desc, dr.org_flow,NLSSORT(u.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M'),dr.CREATE_TIME desc
+	</select>
+
+    <resultMap type="HashMap" id="zpxytjMap">
+        <result  property="cityId" column="ORG_CITY_ID" javaType="string"/>
+        <result property="cityName" column="ORG_CITY_NAME" javaType="string"/>
+        <result property="orgFlow" column="ORG_FLOW" javaType="string"/>
+        <result property="orgName" column="ORG_NAME" javaType="string"/>
+        <result property="catSpeId" column="CAT_SPE_ID" javaType="string"/>
+        <result property="catSpeName" column="CAT_SPE_NAME" javaType="string"/>
+        <result property="num" column="num" javaType="integer"/>
+    </resultMap>
+    <select id="zpxytj"  resultMap="zpxytjMap">
+        SELECT ORG_CITY_ID,
+               ORG_CITY_NAME,
+               ORG_FLOW,
+               ORG_NAME,
+               CAT_SPE_ID,
+               CAT_SPE_NAME,
+               COUNT(1) AS NUM
+          FROM (SELECT ORG.ORG_CITY_ID,
+                       ORG.ORG_CITY_NAME,
+                       ORG.ORG_FLOW,
+                       ORG.ORG_NAME,
+                       T.CAT_SPE_ID,
+                       T.CAT_SPE_NAME,
+                       RD.DOCTOR_FLOW
+                  FROM RES_DOCTOR_RECRUIT T
+                  LEFT JOIN SYS_ORG ORG ON T.ORG_FLOW = ORG.ORG_FLOW
+                  LEFT JOIN RES_DOCTOR RD ON T.DOCTOR_FLOW = RD.DOCTOR_FLOW
+                  LEFT JOIN SYS_USER U ON T.DOCTOR_FLOW = U.USER_FLOW
+                 WHERE T.RECORD_STATUS = 'Y'
+                   AND T.AUDIT_STATUS_ID = 'Passed'
+                   AND T.ORG_FLOW IN (SELECT ORG_FLOW
+                                        FROM PDSCI.SYS_ORG
+                                       WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+                                         AND ORG_PROV_ID = '320000')
+                   AND U.RECORD_STATUS = 'Y'
+                    <if test="docTypeList!=null and docTypeList.size>0">
+                        AND RD.DOCTOR_TYPE_ID IN
+                        <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+                    </if>
+                    <if test="trainYearList!=null and trainYearList.size>0">
+                        AND T.TRAIN_YEAR IN
+                        <foreach collection="trainYearList" open="(" separator="," close=")" item="item">#{item}</foreach>
+                    </if>
+                    <if test="orgCityId!=null and orgCityId!=''">
+                        AND org.ORG_CITY_ID = #{cityId}
+                    </if>
+                    <if test='orgFlow!=null and orgFlow!=""'>
+                        and T.ORG_FLOW = #{orgFlow}
+                    </if>
+                    <if test='sessionNumber!=null and sessionNumber!=""'>
+                        AND T.SESSION_NUMBER = #{sessionNumber}
+                    </if>
+					AND rd.doctor_Status_Id = '20'
+                   AND T.SESSION_NUMBER IS NOT NULL
+                   AND T.SESSION_NUMBER > '2014') T
+         GROUP BY ORG_CITY_ID,
+                  ORG_CITY_NAME,
+                  ORG_FLOW,
+                  ORG_NAME,
+                  CAT_SPE_ID,
+                  CAT_SPE_NAME
+         ORDER BY ORG_CITY_ID
+    </select>
+    <resultMap type="HashMap" id="zpxytjChangesMap">
+        <result property="orgFlow" column="ORG_FLOW" javaType="string"/>
+        <result property="catSpeId" column="CAT_SPE_ID" javaType="string"/>
+        <result property="changeTypeId" column="CHANGE_TYPE_ID" javaType="string"/>
+        <result property="num" column="NUM" javaType="integer"/>
+    </resultMap>
+    <select id="zpxytjChanges"  resultMap="zpxytjChangesMap">
+        WITH change_detail AS
+        (
+        SELECT h.* FROM (
+        SELECT H.DOCTOR_FLOW,dr.session_number, H.ORG_FLOW, H.HISTORY_ORG_FLOW, CASE H.TRAINING_SPE_ID WHEN '3501' THEN 'ChineseMedicine' WHEN '3502' THEN 'ChineseMedicine' WHEN '3601' THEN 'TCMGeneral' WHEN '3602' THEN 'TCMGeneral' WHEN '6000' THEN 'TCMAssiGeneral' ELSE H.TRAINING_SPE_ID END AS CAT_SPE_ID, CASE H.HISTORY_TRAINING_SPE_ID WHEN '3501' THEN 'ChineseMedicine' WHEN '3502' THEN 'ChineseMedicine' WHEN '3601' THEN 'TCMGeneral' WHEN '3602' THEN 'TCMGeneral' WHEN '6000' THEN 'TCMAssiGeneral' ELSE H.HISTORY_TRAINING_SPE_ID END AS HISTORY_CAT_SPE_ID
+        , '专业变更' AS CHANGE_TYPE, H.DOCTOR_NAME, TO_CHAR(TO_DATE(H.CREATE_TIME, 'yyyymmddhh24miss'), 'yyyy-mm-dd hh24:mi') || '  由【' || H.HISTORY_TRAINING_TYPE_NAME || '-' || H.HISTORY_TRAINING_SPE_NAME || NVL2(H.HISTORY_SECOND_SPE_NAME, CONCAT('-', H.HISTORY_SECOND_SPE_NAME), NULL) || '】变更为【' || H.TRAINING_TYPE_NAME || '-' || H.TRAINING_SPE_NAME || NVL2(H.SECOND_SPE_NAME, CONCAT('-', H.SECOND_SPE_NAME), NULL) || '】' AS DESCRIPTION
+        FROM RES_DOCTOR_ORG_HISTORY H
+        LEFT JOIN RES_DOCTOR_RECRUIT DR ON H.DOCTOR_FLOW = DR.DOCTOR_FLOW
+        WHERE H.CHANGE_STATUS_ID IN ('GlobalApplyPass', 'GlobalAuditPass', 'BaseAuditPass')
+        AND H.CHANGE_TYPE_ID = 'SpeChange'
+        AND H.RECORD_STATUS = 'Y'
+        UNION
+        SELECT H.DOCTOR_FLOW,dr.session_number, H.ORG_FLOW, H.HISTORY_ORG_FLOW, CASE H.TRAINING_SPE_ID WHEN '3501' THEN 'ChineseMedicine' WHEN '3502' THEN 'ChineseMedicine' WHEN '3601' THEN 'TCMGeneral' WHEN '3602' THEN 'TCMGeneral' WHEN '6000' THEN 'TCMAssiGeneral' ELSE H.TRAINING_SPE_ID END AS CAT_SPE_ID, CASE H.HISTORY_TRAINING_SPE_ID WHEN '3501' THEN 'ChineseMedicine' WHEN '3502' THEN 'ChineseMedicine' WHEN '3601' THEN 'TCMGeneral' WHEN '3602' THEN 'TCMGeneral' WHEN '6000' THEN 'TCMAssiGeneral' ELSE H.HISTORY_TRAINING_SPE_ID END AS HISTORY_CAT_SPE_ID
+        , '基地变更' AS CHANGE_TYPE, H.DOCTOR_NAME, TO_CHAR(TO_DATE(H.CREATE_TIME, 'yyyymmddhh24miss'), 'yyyy-mm-dd hh24:mi') || '  由【' || H.HISTORY_ORG_NAME || '】转入【' || H.ORG_NAME || '】' AS DESCRIPTION
+        FROM RES_DOCTOR_ORG_HISTORY H
+        LEFT JOIN RES_DOCTOR_RECRUIT DR ON H.DOCTOR_FLOW = DR.DOCTOR_FLOW
+        WHERE H.CHANGE_STATUS_ID IN ('GlobalApplyPass', 'GlobalAuditPass', 'BaseAuditPass')
+        AND H.CHANGE_TYPE_ID = 'BaseChange'
+        AND H.RECORD_STATUS = 'Y'
+        UNION
+        SELECT T.DOCTOR_FLOW, t.session_number,T.ORG_FLOW, T.ORG_FLOW AS HISTORY_ORG_FLOW, DR.CAT_SPE_ID AS HISTORY_CAT_SPE_ID, DR.CAT_SPE_ID AS CAT_SPE_ID
+        , '延期' AS CHANGE_TYPE, T.DOCTOR_NAME, TO_CHAR(TO_DATE(T.CREATE_TIME, 'yyyymmddhh24miss'), 'yyyy-mm-dd hh24:mi') || '【' || T.TYPE_NAME || '】' AS DESCRIPTION
+        FROM RES_DOCOTR_DELAY_TETURN T
+        LEFT JOIN RES_DOCTOR_RECRUIT DR ON T.DOCTOR_FLOW = DR.DOCTOR_FLOW
+        WHERE T.TYPE_ID = 'Delay'
+        AND T.RECORD_STATUS = 'Y'
+        UNION
+        SELECT T.DOCTOR_FLOW, t.session_number,T.ORG_FLOW, T.ORG_FLOW AS HISTORY_ORG_FLOW, DR.CAT_SPE_ID AS HISTORY_CAT_SPE_ID, DR.CAT_SPE_ID AS CAT_SPE_ID
+        , '退培' AS CHANGE_TYPE, T.DOCTOR_NAME, TO_CHAR(TO_DATE(T.CREATE_TIME, 'yyyymmddhh24miss'), 'yyyy-mm-dd hh24:mi') || '  【' || T.POLICY_NAME || '】' AS DESCRIPTION
+        FROM RES_DOCOTR_DELAY_TETURN T
+        LEFT JOIN RES_DOCTOR_RECRUIT DR ON T.DOCTOR_FLOW = DR.DOCTOR_FLOW
+        WHERE T.TYPE_ID = 'ReturnTraining'
+        AND T.RECORD_STATUS = 'Y'
+        AND T.AUDIT_STATUS_ID = 'GlobalPassed'
+        UNION
+        SELECT H.user_flow AS doctor_flow,H.session_number ,H.ORG_FLOW ,H.ORG_FLOW AS HISTORY_ORG_FLOW,
+        CASE H.TRAINING_SPE_ID WHEN '3501' THEN 'ChineseMedicine' WHEN '3502' THEN 'ChineseMedicine' WHEN '3601' THEN 'TCMGeneral' WHEN '3602' THEN 'TCMGeneral' WHEN '6000' THEN 'TCMAssiGeneral' ELSE H.TRAINING_SPE_ID END AS CAT_SPE_ID,
+        CASE H.TRAINING_SPE_ID WHEN '3501' THEN 'ChineseMedicine' WHEN '3502' THEN 'ChineseMedicine' WHEN '3601' THEN 'TCMGeneral' WHEN '3602' THEN 'TCMGeneral' WHEN '6000' THEN 'TCMAssiGeneral' ELSE H.TRAINING_SPE_ID END AS HISTORY_CAT_SPE_ID,
+        '黑名单' AS CHANGE_TYPE,H.user_NAME,TO_CHAR(TO_DATE(H.CREATE_TIME, 'yyyymmddhh24miss'),'yyyy-mm-dd hh24:mi') || '  由省厅直接加入【黑名单】' AS DESCRIPTION
+        FROM JSRES_USER_BALCKLIST H WHERE H.OPER_TYPE_ID = '2'
+        AND H.RECORD_STATUS = 'Y' AND H.USER_FLOW IS NOT NULL
+        ) H
+        LEFT JOIN SYS_ORG ORG ON H.HISTORY_ORG_FLOW = ORG.ORG_FLOW
+        OR H.ORG_FLOW = ORG.ORG_FLOW
+        LEFT JOIN RES_DOCTOR RD ON H.DOCTOR_FLOW = RD.DOCTOR_FLOW
+        LEFT JOIN SYS_USER U ON H.DOCTOR_FLOW = U.USER_FLOW
+        WHERE H.ORG_FLOW IN (SELECT ORG_FLOW
+        FROM PDSCI.SYS_ORG
+        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        AND ORG_PROV_ID = '320000')
+        <if test="docTypeList!=null and docTypeList.size>0">
+            AND RD.DOCTOR_TYPE_ID IN
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="orgCityId!=null and orgCityId!=''">
+            AND org.ORG_CITY_ID = #{cityId}
+        </if>
+        <if test='orgFlow!=null and orgFlow!=""'>
+            AND (H.ORG_FLOW =#{orgFlow}  OR  H.HISTORY_ORG_FLOW = #{orgFlow})
+        </if>
+        <if test='catSpeId!=null and catSpeId!=""'>
+            AND (H.CAT_SPE_ID =  #{catSpeId} OR H.HISTORY_CAT_SPE_ID =  #{catSpeId})
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            AND h.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        AND h.SESSION_NUMBER IS NOT NULL
+        AND h.SESSION_NUMBER > '2014'),
+        count1 AS
+        (
+        SELECT doctor_flow,org_flow,cat_spe_id FROM change_detail
+        ),
+        count2 AS
+        (
+        SELECT doctor_flow,history_org_flow AS org_flow,history_cat_spe_id AS cat_spe_id FROM change_detail
+        ),
+        count3 AS
+        (
+        SELECT * FROM count1
+        UNION
+        SELECT * FROM count2
+        )
+
+        SELECT org_flow,cat_spe_id ,COUNT(1) num FROM count3 GROUP BY org_flow,cat_spe_id
+
+    </select>
+
+<resultMap type="HashMap" id="changesDetailMap">
+    <result property="orgFlow" column="ORG_FLOW" javaType="string"/>
+    <result property="historyOrgFlow" column="HISTORY_ORG_FLOW" javaType="string"/>
+    <result property="catSpeId" column="CAT_SPE_ID" javaType="string"/>
+    <result property="historyCatSpeId" column="HISTORY_CAT_SPE_ID" javaType="string"/>
+    <result property="description" column="DESCRIPTION" javaType="string"/>
+    <result property="changeType" column="CHANGE_TYPE" javaType="string"/>
+    <result property="doctorName" column="DOCTOR_NAME" javaType="string"/>
+</resultMap>
+ <select id="zpxytjChangesDetail"  resultMap="changesDetailMap">
+SELECT DISTINCT H.DOCTOR_FLOW,
+                H.HISTORY_ORG_FLOW,
+                H.DOCTOR_FLOW,
+                H.HISTORY_CAT_SPE_ID,
+                H.CAT_SPE_ID,
+                H.CHANGE_TYPE,
+                H.DOCTOR_NAME,
+                H.DESCRIPTION
+  FROM (
+     SELECT H.DOCTOR_FLOW,dr.session_number, H.ORG_FLOW, H.HISTORY_ORG_FLOW, CASE H.TRAINING_SPE_ID WHEN '3501' THEN 'ChineseMedicine' WHEN '3502' THEN 'ChineseMedicine' WHEN '3601' THEN 'TCMGeneral' WHEN '3602' THEN 'TCMGeneral' WHEN '6000' THEN 'TCMAssiGeneral' ELSE H.TRAINING_SPE_ID END AS CAT_SPE_ID, CASE H.HISTORY_TRAINING_SPE_ID WHEN '3501' THEN 'ChineseMedicine' WHEN '3502' THEN 'ChineseMedicine' WHEN '3601' THEN 'TCMGeneral' WHEN '3602' THEN 'TCMGeneral' WHEN '6000' THEN 'TCMAssiGeneral' ELSE H.HISTORY_TRAINING_SPE_ID END AS HISTORY_CAT_SPE_ID
+     , '专业变更' AS CHANGE_TYPE, H.DOCTOR_NAME, TO_CHAR(TO_DATE(H.CREATE_TIME, 'yyyymmddhh24miss'), 'yyyy-mm-dd hh24:mi') || '  由【' || H.HISTORY_TRAINING_TYPE_NAME || '-' || H.HISTORY_TRAINING_SPE_NAME || NVL2(H.HISTORY_SECOND_SPE_NAME, CONCAT('-', H.HISTORY_SECOND_SPE_NAME), NULL) || '】变更为【' || H.TRAINING_TYPE_NAME || '-' || H.TRAINING_SPE_NAME || NVL2(H.SECOND_SPE_NAME, CONCAT('-', H.SECOND_SPE_NAME), NULL) || '】' AS DESCRIPTION
+     FROM RES_DOCTOR_ORG_HISTORY H
+     LEFT JOIN RES_DOCTOR_RECRUIT DR ON H.DOCTOR_FLOW = DR.DOCTOR_FLOW
+     WHERE H.CHANGE_STATUS_ID IN ('GlobalApplyPass', 'GlobalAuditPass', 'BaseAuditPass')
+     AND H.CHANGE_TYPE_ID = 'SpeChange'
+     AND H.RECORD_STATUS = 'Y'
+     UNION
+     SELECT H.DOCTOR_FLOW,dr.session_number, H.ORG_FLOW, H.HISTORY_ORG_FLOW, CASE H.TRAINING_SPE_ID WHEN '3501' THEN 'ChineseMedicine' WHEN '3502' THEN 'ChineseMedicine' WHEN '3601' THEN 'TCMGeneral' WHEN '3602' THEN 'TCMGeneral' WHEN '6000' THEN 'TCMAssiGeneral' ELSE H.TRAINING_SPE_ID END AS CAT_SPE_ID, CASE H.HISTORY_TRAINING_SPE_ID WHEN '3501' THEN 'ChineseMedicine' WHEN '3502' THEN 'ChineseMedicine' WHEN '3601' THEN 'TCMGeneral' WHEN '3602' THEN 'TCMGeneral' WHEN '6000' THEN 'TCMAssiGeneral' ELSE H.HISTORY_TRAINING_SPE_ID END AS HISTORY_CAT_SPE_ID
+     , '基地变更' AS CHANGE_TYPE, H.DOCTOR_NAME, TO_CHAR(TO_DATE(H.CREATE_TIME, 'yyyymmddhh24miss'), 'yyyy-mm-dd hh24:mi') || '  由【' || H.HISTORY_ORG_NAME || '】转入【' || H.ORG_NAME || '】' AS DESCRIPTION
+     FROM RES_DOCTOR_ORG_HISTORY H
+     LEFT JOIN RES_DOCTOR_RECRUIT DR ON H.DOCTOR_FLOW = DR.DOCTOR_FLOW
+     WHERE H.CHANGE_STATUS_ID IN ('GlobalApplyPass', 'GlobalAuditPass', 'BaseAuditPass')
+     AND H.CHANGE_TYPE_ID = 'BaseChange'
+     AND H.RECORD_STATUS = 'Y'
+     UNION
+     SELECT T.DOCTOR_FLOW, t.session_number,T.ORG_FLOW, T.ORG_FLOW AS HISTORY_ORG_FLOW, DR.CAT_SPE_ID AS HISTORY_CAT_SPE_ID, DR.CAT_SPE_ID AS CAT_SPE_ID
+     , '延期' AS CHANGE_TYPE, T.DOCTOR_NAME, TO_CHAR(TO_DATE(T.CREATE_TIME, 'yyyymmddhh24miss'), 'yyyy-mm-dd hh24:mi') || '【' || T.TYPE_NAME || '】' AS DESCRIPTION
+     FROM RES_DOCOTR_DELAY_TETURN T
+     LEFT JOIN RES_DOCTOR_RECRUIT DR ON T.DOCTOR_FLOW = DR.DOCTOR_FLOW
+     WHERE T.TYPE_ID = 'Delay'
+     AND T.RECORD_STATUS = 'Y'
+     UNION
+     SELECT T.DOCTOR_FLOW, t.session_number,T.ORG_FLOW, T.ORG_FLOW AS HISTORY_ORG_FLOW, DR.CAT_SPE_ID AS HISTORY_CAT_SPE_ID, DR.CAT_SPE_ID AS CAT_SPE_ID
+     , '退培' AS CHANGE_TYPE, T.DOCTOR_NAME, TO_CHAR(TO_DATE(T.CREATE_TIME, 'yyyymmddhh24miss'), 'yyyy-mm-dd hh24:mi') || '  【' || T.POLICY_NAME || '】' AS DESCRIPTION
+     FROM RES_DOCOTR_DELAY_TETURN T
+     LEFT JOIN RES_DOCTOR_RECRUIT DR ON T.DOCTOR_FLOW = DR.DOCTOR_FLOW
+     WHERE T.TYPE_ID = 'ReturnTraining'
+     AND T.RECORD_STATUS = 'Y'
+     AND T.AUDIT_STATUS_ID = 'GlobalPassed'
+     UNION
+     SELECT H.user_flow AS doctor_flow,H.session_number ,H.ORG_FLOW ,H.ORG_FLOW AS HISTORY_ORG_FLOW,
+     CASE H.TRAINING_SPE_ID WHEN '3501' THEN 'ChineseMedicine' WHEN '3502' THEN 'ChineseMedicine' WHEN '3601' THEN 'TCMGeneral' WHEN '3602' THEN 'TCMGeneral' WHEN '6000' THEN 'TCMAssiGeneral' ELSE H.TRAINING_SPE_ID END AS CAT_SPE_ID,
+     CASE H.TRAINING_SPE_ID WHEN '3501' THEN 'ChineseMedicine' WHEN '3502' THEN 'ChineseMedicine' WHEN '3601' THEN 'TCMGeneral' WHEN '3602' THEN 'TCMGeneral' WHEN '6000' THEN 'TCMAssiGeneral' ELSE H.TRAINING_SPE_ID END AS HISTORY_CAT_SPE_ID,
+     '黑名单' AS CHANGE_TYPE,H.user_NAME,TO_CHAR(TO_DATE(H.CREATE_TIME, 'yyyymmddhh24miss'),'yyyy-mm-dd hh24:mi') || '  由省厅直接加入【黑名单】' AS DESCRIPTION
+     FROM JSRES_USER_BALCKLIST H WHERE H.OPER_TYPE_ID = '2'
+     AND H.RECORD_STATUS = 'Y' AND H.USER_FLOW IS NOT NULL
+     ) H
+     LEFT JOIN SYS_ORG ORG ON H.HISTORY_ORG_FLOW = ORG.ORG_FLOW
+     OR H.ORG_FLOW = ORG.ORG_FLOW
+     LEFT JOIN RES_DOCTOR RD ON H.DOCTOR_FLOW = RD.DOCTOR_FLOW
+     LEFT JOIN SYS_USER U ON H.DOCTOR_FLOW = U.USER_FLOW
+     WHERE H.ORG_FLOW IN (SELECT ORG_FLOW
+     FROM PDSCI.SYS_ORG
+     WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+     AND ORG_PROV_ID = '320000')
+     <if test="docTypeList!=null and docTypeList.size>0">
+         AND RD.DOCTOR_TYPE_ID IN
+         <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+     </if>
+     <if test="orgCityId!=null and orgCityId!=''">
+         AND org.ORG_CITY_ID = #{cityId}
+     </if>
+     <if test='orgFlow!=null and orgFlow!=""'>
+         AND (H.ORG_FLOW =#{orgFlow}  OR  H.HISTORY_ORG_FLOW = #{orgFlow})
+     </if>
+     <if test='catSpeId!=null and catSpeId!=""'>
+         AND (H.CAT_SPE_ID =  #{catSpeId} OR H.HISTORY_CAT_SPE_ID =  #{catSpeId})
+     </if>
+     <if test='sessionNumber!=null and sessionNumber!=""'>
+         AND h.SESSION_NUMBER = #{sessionNumber}
+     </if>
+   AND h.SESSION_NUMBER IS NOT NULL
+   AND h.SESSION_NUMBER > '2014'
+ ORDER BY H.CHANGE_TYPE DESC
+    </select>
+</mapper>

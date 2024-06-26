@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.ResHBArchiveExtMapper">
+    <resultMap id="DoctorRecruitLog" type="com.pinde.sci.model.jsres.JsResArchDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitLogMapper.BaseResultMap" >
+        <association property="sysUser" column="user_flow"  resultMap="com.pinde.sci.dao.base.SysUserLogMapper.BaseResultMap" />
+        <association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorLogMapper.BaseResultMap" >
+            <id column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
+            <result column="edOrgFlow" jdbcType="VARCHAR" property="orgFlow"/>
+            <result column="edOrgName" jdbcType="VARCHAR" property="orgName"/>
+        </association>
+    </resultMap>
+    <resultMap id="doctorInfo" type="com.pinde.sci.model.jsres.JsDoctorInfoLogExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitLogMapper.BaseResultMap" >
+        <association property="sysUser" column="userFlow"  resultMap="com.pinde.sci.dao.base.SysUserLogMapper.BaseResultMap" />
+        <association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorLogMapper.BaseResultMap" />
+        <association property="userResume" column="userFlow"  resultMap="com.pinde.sci.dao.base.ResUserResumeLogMapper.BaseResultMap" />
+    </resultMap>
+
+    <update id="createResDoctorLog" parameterType="java.util.Map">
+        create table doctor_${archiveTime}_${sessionNumber} as select * from res_doctor rd
+        where 1=2
+    </update>
+
+    <insert id="saveResDoctorLog" parameterType="java.util.Map">
+        insert into doctor_${archiveTime}_${sessionNumber} (
+        <include refid="com.pinde.sci.dao.base.ResDoctorMapper.Base_Column_List" />
+        )
+        select <include refid="com.pinde.sci.dao.base.ResDoctorMapper.Base_Column_List" />
+        from RES_DOCTOR rd where rd.RECORD_STATUS='Y' and rd.session_number = #{sessionNumber}
+    </insert>
+
+    <update id="createSysUserLog" parameterType="java.util.Map">
+        create table user_${archiveTime}_${sessionNumber} as select * from sys_user su
+        where 1=2
+    </update>
+
+    <insert id="saveSysUserLog" parameterType="java.util.Map">
+        insert into user_${archiveTime}_${sessionNumber} (
+        <include refid="com.pinde.sci.dao.base.SysUserMapper.Base_Column_List" />
+        )
+        select <include refid="com.pinde.sci.dao.base.SysUserMapper.Base_Column_List" />
+        from sys_user su
+        where su.RECORD_STATUS='Y'
+        and su.user_flow in (
+        select rd.doctor_flow from res_doctor rd
+        where rd.RECORD_STATUS='Y'
+        and rd.session_number = #{sessionNumber}
+        )
+    </insert>
+
+    <update id="createResDoctorRecruitLog" parameterType="java.util.Map">
+    create table recruit_${archiveTime}_${sessionNumber} as select * from res_doctor_recruit rdr
+        where 1=2
+    </update>
+
+    <insert id="saveResDoctorRecruitLog" parameterType="java.util.Map">
+        insert into RECRUIT_${archiveTime}_${sessionNumber} (
+        <include refid="com.pinde.sci.dao.base.ResDoctorRecruitMapper.Base_Column_List" />
+        ,
+        <include refid="com.pinde.sci.dao.base.ResDoctorRecruitMapper.Blob_Column_List" />
+        )
+        select
+        <include refid="com.pinde.sci.dao.base.ResDoctorRecruitMapper.Base_Column_List" />
+        ,
+        <include refid="com.pinde.sci.dao.base.ResDoctorRecruitMapper.Blob_Column_List" />
+        from RES_DOCTOR_RECRUIT rdr
+        where rdr.RECORD_STATUS='Y' and rdr.RECRUIT_YEAR = #{sessionNumber}
+    </insert>
+
+    <update id="createResRecruitRegisterLog" parameterType="java.util.Map">
+    create table register_${archiveTime}_${sessionNumber} as select * from RES_RECRUIT_REGISTER rrr
+    where 1=2
+    </update>
+
+    <insert id="saveResRecruitRegisterLog" parameterType="java.util.Map">
+        insert into REGISTER_${archiveTime}_${sessionNumber} (
+        <include refid="com.pinde.sci.dao.base.ResRecruitRegisterMapper.Base_Column_List" />
+        )
+        select
+        <include refid="com.pinde.sci.dao.base.ResRecruitRegisterMapper.Base_Column_List" />
+        from RES_RECRUIT_REGISTER rrr
+        where rrr.RECORD_STATUS='Y' and rrr.RECRUIT_YEAR = #{sessionNumber}
+    </insert>
+
+    <update id="createResumeLog" parameterType="java.util.Map">
+        create table resume_${archiveTime}_${sessionNumber} as select * from pub_user_resume pur
+        where 1=2
+    </update>
+
+    <insert id="saveResumeLog" parameterType="java.util.Map">
+        insert into resume_${archiveTime}_${sessionNumber} (
+        <include refid="com.pinde.sci.dao.base.PubUserResumeMapper.Base_Column_List" />
+        ,
+        <include refid="com.pinde.sci.dao.base.PubUserResumeMapper.Blob_Column_List" />
+        )
+        select
+        <include refid="com.pinde.sci.dao.base.PubUserResumeMapper.Base_Column_List" />
+        ,
+        <include refid="com.pinde.sci.dao.base.PubUserResumeMapper.Blob_Column_List" />
+        from PUB_USER_RESUME pur
+        where pur.RECORD_STATUS='Y'
+        and pur.user_flow in (
+        select rd.doctor_flow from res_doctor rd
+        where rd.RECORD_STATUS='Y'
+        and rd.session_number = #{sessionNumber}
+        )
+    </insert>
+
+    <resultMap id="ResDoctorExt" type="com.pinde.sci.model.res.ResDoctorExt" extends="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+        <association property="sysUser" column="USER_FLOW" javaType="com.pinde.sci.model.mo.SysUser" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+    </resultMap>
+
+    <select id="searchArchiveList" parameterType="java.util.Map" resultMap="ResDoctorExt">
+        select * from doctor_${archiveTime}_${sessionNumber} rd INNER JOIN  user_${archiveTime}_${sessionNumber} su on rd.DOCTOR_FLOW = su.USER_FLOW
+        AND su.RECORD_STATUS = 'Y'
+        <if test='orgProvId!=null and orgProvId!=""'>
+            INNER join sys_org on rd.org_flow = sys_org.org_flow AND sys_org.RECORD_STATUS = 'Y'
+            AND sys_org.ORG_PROV_ID = #{orgProvId}
+        </if>
+        <if test='orgCityId!=null and orgCityId!=""'>
+            AND sys_org.ORG_CITY_ID = #{orgCityId}
+        </if>
+        <if test='orgAreaId!=null and orgAreaId!=""'>
+            AND sys_org.ORG_AREA_ID = #{orgAreaId}
+        </if>
+        <if test='doctor.graduationYear!=null and doctor.graduationYear!=""'>
+            AND rd.GRADUATION_YEAR = #{doctor.graduationYear}
+        </if>
+        <if test='sessionNumber != null and sessionNumber != ""'>
+            AND rd.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test='groupId != null and groupId != ""'>
+            AND rd.GROUP_ID = #{groupId}
+        </if>
+        <if test='doctor.trainingSpeId != null and doctor.trainingSpeId != ""'>
+            AND rd.TRAINING_SPE_ID = #{doctor.trainingSpeId}
+        </if>
+        <if test='doctor.doctorTypeIdList != null and doctor.doctorTypeIdList.size()>0'>
+            and rd.DOCTOR_TYPE_ID in
+            <foreach collection="doctor.doctorTypeIdList" item="doctorTypeId" open="(" separator="," close=")">
+                #{doctorTypeId}
+            </foreach>
+        </if>
+        <if test='doctor.doctorCategoryId != null and doctor.doctorCategoryId != ""'>
+            AND rd.DOCTOR_CATEGORY_ID = #{doctor.doctorCategoryId}
+        </if>
+        <if test='graduatedId != null and graduatedId != ""'>
+            AND rd.GRADUATED_ID = #{graduatedId}
+        </if>
+        <if test='recordStatus != null and recordStatus != ""'>
+            AND rd.RECORD_STATUS = #{recordStatus}
+        </if>
+        <if test="specialized != null and specialized != ''">
+            AND rd.SPECIALIZED LIKE '%${specialized}%'
+        </if>
+        <if test="doctorCode != null and doctorCode != ''">
+            AND rd.doctor_code LIKE '%${doctorCode}%'
+        </if>
+        <if test='doctor.doctorName != null and doctor.doctorName != ""'>
+            AND rd.doctor_name LIKE '%${doctor.doctorName}%'
+        </if>
+        <if test='tutorFlow != null and tutorFlow != ""'>
+            AND rd.tutor_flow = #{tutorFlow}
+        </if>
+        <if test='orgName != null and orgName != ""'>
+            AND rd.org_name like '%${orgName}%'
+        </if>
+        <if test='sysidNo != null and sysidNo != ""'>
+            AND su.id_no like '%${sysidNo}%'
+        </if>
+        <if test='doctor.orgFlow != null and doctor.orgFlow != ""'>
+            AND rd.org_flow = #{doctor.orgFlow}
+        </if>
+        <if test='doctor.doctorStatusId != null and doctor.doctorStatusId != ""'>
+            AND rd.DOCTOR_STATUS_ID = #{doctor.doctorStatusId}
+        </if>
+        AND (rd.DOCTOR_STATUS_ID not in( 'UnPassed','Passed','UnSubmit')
+        or rd.DOCTOR_STATUS_ID is null)
+        AND rd.org_flow is not null
+        AND rd.org_flow != '20160914888888'
+        AND rd.org_flow != '566c9f36cf014f63a569b453efa284d7'
+        AND rd.org_flow != '00000000000000000000000000000000'
+        <if test='medicineTypeId!=null and medicineTypeId!=""'>
+            and instr('${medicineTypeId}',su.medicine_Type_Id)>0
+        </if>
+        <if test='doctorFlows!=null and doctorFlows.size()>0'>
+            and rd.DOCTOR_FLOW IN
+            <foreach collection="doctorFlows" close=")" item="flow" open="(" separator=",">
+                #{flow}
+            </foreach>
+        </if>
+        <if test='sysUser != null'>
+            <if test='sysUser.userName != null and sysUser.userName != ""'>
+                AND su.USER_NAME like '%${sysUser.userName}%'
+            </if>
+            <if test='sysUser.statusId != null and sysUser.statusId  != ""'>
+                AND su.status_Id  = '${sysUser.statusId}'
+            </if>
+            <if test='sysUser.recordStatus != null and sysUser.recordStatus  != ""'>
+                AND su.RECORD_STATUS=#{recordStatus}
+            </if>
+            <if test="sysUser.orgFlow != null and sysUser.orgFlow != ''">
+                AND su.ORG_FLOW = #{sysUser.orgFlow}
+            </if>
+            <if test="sysUser.educationId != null and sysUser.educationId != ''">
+                AND su.EDUCATION_ID = #{sysUser.educationId}
+            </if>
+            <if test='doctor.sysUser.idNo != null and doctor.sysUser.idNo != ""'>
+                AND su.id_No = #{doctor.sysUser.idNo}
+            </if>
+            <if test="sysUser.deptFlow != null and sysUser.deptFlow != ''">
+                AND su.dept_Flow = #{sysUser.deptFlow}
+            </if>
+        </if>
+        ORDER BY nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M'),rd.session_number desc, su.user_code,rd.CREATE_TIME
+    </select>
+
+    <select id="readUserArchive" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+      select * from user_${archiveTime}_${sessionNumber} where user_flow = #{userFlow}
+    </select>
+
+    <select id="readDoctorArchive" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+        select * from doctor_${archiveTime}_${sessionNumber} where doctor_flow = #{userFlow}
+    </select>
+
+    <select id="readUserResume" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs">
+        select * from resume_${archiveTime}_${sessionNumber} where user_flow = #{userFlow}
+    </select>
+</mapper>

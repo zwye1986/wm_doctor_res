@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.SchRotationDeptReqMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SchRotationDeptReq" >
+    <id column="REQ_FLOW" property="reqFlow" jdbcType="VARCHAR" />
+    <result column="ROTATION_FLOW" property="rotationFlow" jdbcType="VARCHAR" />
+    <result column="STANDARD_DEPT_ID" property="standardDeptId" jdbcType="VARCHAR" />
+    <result column="STANDARD_DEPT_NAME" property="standardDeptName" jdbcType="VARCHAR" />
+    <result column="REL_RECORD_FLOW" property="relRecordFlow" jdbcType="VARCHAR" />
+    <result column="REC_TYPE_ID" property="recTypeId" jdbcType="VARCHAR" />
+    <result column="REC_TYPE_NAME" property="recTypeName" jdbcType="VARCHAR" />
+    <result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR" />
+    <result column="REQ_NUM" property="reqNum" jdbcType="DECIMAL" />
+    <result column="REQ_NOTE" property="reqNote" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="ITEM_ID" property="itemId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.SchRotationDeptReq" extends="BaseResultMap" >
+    <result column="REQ_STANDARD" property="reqStandard" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    REQ_FLOW, ROTATION_FLOW, STANDARD_DEPT_ID, STANDARD_DEPT_NAME, REL_RECORD_FLOW, REC_TYPE_ID, 
+    REC_TYPE_NAME, ITEM_NAME, REQ_NUM, REQ_NOTE, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+    MODIFY_TIME, MODIFY_USER_FLOW, ORG_FLOW, ORG_NAME, ITEM_ID
+  </sql>
+  <sql id="Blob_Column_List" >
+    REQ_STANDARD
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.SchRotationDeptReqExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.SCH_ROTATION_DEPT_REQ
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SchRotationDeptReqExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.SCH_ROTATION_DEPT_REQ
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectListByPartitionList" resultType="com.pinde.sci.model.mo.SchRotationDeptReq">
+    select
+    <include refid="Base_Column_List" />
+    from PDSCI.SCH_ROTATION_DEPT_REQ
+    where record_status = 'Y'
+    <foreach collection="relRecordListList" item="relRecordList" open="and (" close=")" separator=" or ">
+      REL_RECORD_FLOW in
+      <foreach collection="relRecordList" item="relRecord" open="(" close=")" separator=",">
+        #{relRecord,jdbcType=VARCHAR}
+      </foreach>
+    </foreach>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.SCH_ROTATION_DEPT_REQ
+    where REQ_FLOW = #{reqFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.SCH_ROTATION_DEPT_REQ
+    where REQ_FLOW = #{reqFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchRotationDeptReqExample" >
+    delete from PDSCI.SCH_ROTATION_DEPT_REQ
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.SchRotationDeptReq" >
+    insert into PDSCI.SCH_ROTATION_DEPT_REQ (REQ_FLOW, ROTATION_FLOW, STANDARD_DEPT_ID, 
+      STANDARD_DEPT_NAME, REL_RECORD_FLOW, REC_TYPE_ID, 
+      REC_TYPE_NAME, ITEM_NAME, REQ_NUM, 
+      REQ_NOTE, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+      ORG_FLOW, ORG_NAME, ITEM_ID, 
+      REQ_STANDARD)
+    values (#{reqFlow,jdbcType=VARCHAR}, #{rotationFlow,jdbcType=VARCHAR}, #{standardDeptId,jdbcType=VARCHAR}, 
+      #{standardDeptName,jdbcType=VARCHAR}, #{relRecordFlow,jdbcType=VARCHAR}, #{recTypeId,jdbcType=VARCHAR}, 
+      #{recTypeName,jdbcType=VARCHAR}, #{itemName,jdbcType=VARCHAR}, #{reqNum,jdbcType=DECIMAL}, 
+      #{reqNote,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{itemId,jdbcType=VARCHAR}, 
+      #{reqStandard,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchRotationDeptReq" >
+    insert into PDSCI.SCH_ROTATION_DEPT_REQ
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="reqFlow != null" >
+        REQ_FLOW,
+      </if>
+      <if test="rotationFlow != null" >
+        ROTATION_FLOW,
+      </if>
+      <if test="standardDeptId != null" >
+        STANDARD_DEPT_ID,
+      </if>
+      <if test="standardDeptName != null" >
+        STANDARD_DEPT_NAME,
+      </if>
+      <if test="relRecordFlow != null" >
+        REL_RECORD_FLOW,
+      </if>
+      <if test="recTypeId != null" >
+        REC_TYPE_ID,
+      </if>
+      <if test="recTypeName != null" >
+        REC_TYPE_NAME,
+      </if>
+      <if test="itemName != null" >
+        ITEM_NAME,
+      </if>
+      <if test="reqNum != null" >
+        REQ_NUM,
+      </if>
+      <if test="reqNote != null" >
+        REQ_NOTE,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="itemId != null" >
+        ITEM_ID,
+      </if>
+      <if test="reqStandard != null" >
+        REQ_STANDARD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="reqFlow != null" >
+        #{reqFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="rotationFlow != null" >
+        #{rotationFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="standardDeptId != null" >
+        #{standardDeptId,jdbcType=VARCHAR},
+      </if>
+      <if test="standardDeptName != null" >
+        #{standardDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="relRecordFlow != null" >
+        #{relRecordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recTypeId != null" >
+        #{recTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="recTypeName != null" >
+        #{recTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null" >
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="reqNum != null" >
+        #{reqNum,jdbcType=DECIMAL},
+      </if>
+      <if test="reqNote != null" >
+        #{reqNote,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null" >
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="reqStandard != null" >
+        #{reqStandard,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchRotationDeptReqExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.SCH_ROTATION_DEPT_REQ
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.SCH_ROTATION_DEPT_REQ
+    <set >
+      <if test="record.reqFlow != null" >
+        REQ_FLOW = #{record.reqFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rotationFlow != null" >
+        ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.standardDeptId != null" >
+        STANDARD_DEPT_ID = #{record.standardDeptId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.standardDeptName != null" >
+        STANDARD_DEPT_NAME = #{record.standardDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relRecordFlow != null" >
+        REL_RECORD_FLOW = #{record.relRecordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recTypeId != null" >
+        REC_TYPE_ID = #{record.recTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recTypeName != null" >
+        REC_TYPE_NAME = #{record.recTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemName != null" >
+        ITEM_NAME = #{record.itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reqNum != null" >
+        REQ_NUM = #{record.reqNum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.reqNote != null" >
+        REQ_NOTE = #{record.reqNote,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemId != null" >
+        ITEM_ID = #{record.itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reqStandard != null" >
+        REQ_STANDARD = #{record.reqStandard,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update PDSCI.SCH_ROTATION_DEPT_REQ
+    set REQ_FLOW = #{record.reqFlow,jdbcType=VARCHAR},
+      ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
+      STANDARD_DEPT_ID = #{record.standardDeptId,jdbcType=VARCHAR},
+      STANDARD_DEPT_NAME = #{record.standardDeptName,jdbcType=VARCHAR},
+      REL_RECORD_FLOW = #{record.relRecordFlow,jdbcType=VARCHAR},
+      REC_TYPE_ID = #{record.recTypeId,jdbcType=VARCHAR},
+      REC_TYPE_NAME = #{record.recTypeName,jdbcType=VARCHAR},
+      ITEM_NAME = #{record.itemName,jdbcType=VARCHAR},
+      REQ_NUM = #{record.reqNum,jdbcType=DECIMAL},
+      REQ_NOTE = #{record.reqNote,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      ITEM_ID = #{record.itemId,jdbcType=VARCHAR},
+      REQ_STANDARD = #{record.reqStandard,jdbcType=CLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.SCH_ROTATION_DEPT_REQ
+    set REQ_FLOW = #{record.reqFlow,jdbcType=VARCHAR},
+      ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
+      STANDARD_DEPT_ID = #{record.standardDeptId,jdbcType=VARCHAR},
+      STANDARD_DEPT_NAME = #{record.standardDeptName,jdbcType=VARCHAR},
+      REL_RECORD_FLOW = #{record.relRecordFlow,jdbcType=VARCHAR},
+      REC_TYPE_ID = #{record.recTypeId,jdbcType=VARCHAR},
+      REC_TYPE_NAME = #{record.recTypeName,jdbcType=VARCHAR},
+      ITEM_NAME = #{record.itemName,jdbcType=VARCHAR},
+      REQ_NUM = #{record.reqNum,jdbcType=DECIMAL},
+      REQ_NOTE = #{record.reqNote,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      ITEM_ID = #{record.itemId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchRotationDeptReq" >
+    update PDSCI.SCH_ROTATION_DEPT_REQ
+    <set >
+      <if test="rotationFlow != null" >
+        ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="standardDeptId != null" >
+        STANDARD_DEPT_ID = #{standardDeptId,jdbcType=VARCHAR},
+      </if>
+      <if test="standardDeptName != null" >
+        STANDARD_DEPT_NAME = #{standardDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="relRecordFlow != null" >
+        REL_RECORD_FLOW = #{relRecordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recTypeId != null" >
+        REC_TYPE_ID = #{recTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="recTypeName != null" >
+        REC_TYPE_NAME = #{recTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null" >
+        ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="reqNum != null" >
+        REQ_NUM = #{reqNum,jdbcType=DECIMAL},
+      </if>
+      <if test="reqNote != null" >
+        REQ_NOTE = #{reqNote,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null" >
+        ITEM_ID = #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="reqStandard != null" >
+        REQ_STANDARD = #{reqStandard,jdbcType=CLOB},
+      </if>
+    </set>
+    where REQ_FLOW = #{reqFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.SchRotationDeptReq" >
+    update PDSCI.SCH_ROTATION_DEPT_REQ
+    set ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
+      STANDARD_DEPT_ID = #{standardDeptId,jdbcType=VARCHAR},
+      STANDARD_DEPT_NAME = #{standardDeptName,jdbcType=VARCHAR},
+      REL_RECORD_FLOW = #{relRecordFlow,jdbcType=VARCHAR},
+      REC_TYPE_ID = #{recTypeId,jdbcType=VARCHAR},
+      REC_TYPE_NAME = #{recTypeName,jdbcType=VARCHAR},
+      ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      REQ_NUM = #{reqNum,jdbcType=DECIMAL},
+      REQ_NOTE = #{reqNote,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      ITEM_ID = #{itemId,jdbcType=VARCHAR},
+      REQ_STANDARD = #{reqStandard,jdbcType=CLOB}
+    where REQ_FLOW = #{reqFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchRotationDeptReq" >
+    update PDSCI.SCH_ROTATION_DEPT_REQ
+    set ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
+      STANDARD_DEPT_ID = #{standardDeptId,jdbcType=VARCHAR},
+      STANDARD_DEPT_NAME = #{standardDeptName,jdbcType=VARCHAR},
+      REL_RECORD_FLOW = #{relRecordFlow,jdbcType=VARCHAR},
+      REC_TYPE_ID = #{recTypeId,jdbcType=VARCHAR},
+      REC_TYPE_NAME = #{recTypeName,jdbcType=VARCHAR},
+      ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      REQ_NUM = #{reqNum,jdbcType=DECIMAL},
+      REQ_NOTE = #{reqNote,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      ITEM_ID = #{itemId,jdbcType=VARCHAR}
+    where REQ_FLOW = #{reqFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

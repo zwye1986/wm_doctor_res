@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.hbzy.HbzyResReductionExtMapper">
+    <resultMap id="ReductionExtMap" type="java.util.Map">
+        <result column="record_flow" jdbcType="VARCHAR" property="recordFlow" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="id_no" jdbcType="VARCHAR" property="idNo" />
+        <result column="session_number" jdbcType="VARCHAR" property="sessionNumber" />
+        <result column="training_type_name" jdbcType="VARCHAR" property="trainingTypeName" />
+        <result column="reduce_year" jdbcType="VARCHAR" property="reduceYear" />
+        <result column="after_reduce_train_year" jdbcType="VARCHAR" property="afterReduceTrainYear" />
+        <result column="audit_status_name" jdbcType="VARCHAR" property="auditStatusName" />
+        <result column="local_audit_opinion" jdbcType="VARCHAR" property="localAuditOpinion" />
+        <result column="local_audit_time" jdbcType="VARCHAR" property="localAuditTime" />
+        <result column="global_audit_opinion" jdbcType="VARCHAR" property="globalAuditOpinion" />
+        <result column="global_audit_time" jdbcType="VARCHAR" property="globalAuditTime" />
+    </resultMap>
+    <select id="findReductionExtByMap"  parameterType="java.util.Map" resultMap="ReductionExtMap">
+        SELECT su.user_name,su.id_no,rd.session_number,rd.training_type_name,rdr.reduce_year,rdr.after_reduce_train_year,
+                rdr.audit_status_name,rdr.local_audit_opinion,rdr.local_audit_time,rdr.global_audit_opinion,rdr.global_audit_time,
+                rdr.record_flow
+        FROM RES_DOCTOR_REDUCTION rdr
+        left join res_doctor rd on rd.doctor_flow = rdr.doctor_flow
+        left join sys_user su on su.user_flow = rdr.doctor_flow
+        where rd.record_status = 'Y'
+        AND rdr.record_status='Y'
+        AND su.record_status='Y'
+        <if test="doctor!=null">
+            <if test="doctor.doctorName!=null and doctor.doctorName!=''">
+                <bind name="doctorName" value="'%'+doctor.doctorName+'%'"/>
+                and rd.DOCTOR_NAME like #{doctorName}
+            </if>
+            <if test="doctor.sessionNumber!=null and doctor.sessionNumber!=''">
+                and rd.SESSION_NUMBER = #{doctor.sessionNumber}
+            </if>
+            <if test="doctor.orgFlow!=null and doctor.orgFlow!=''">
+                and rd.ORG_FLOW = #{doctor.orgFlow}
+            </if>
+            <if test="doctor.trainingTypeId!=null and doctor.trainingTypeId!=''">
+                and rd.TRAINING_TYPE_ID = #{doctor.trainingTypeId}
+            </if>
+        </if>
+        <if test="orgFlowList!=null and orgFlowList.size()>0">
+            and rd.ORG_FLOW in
+            <foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="sysUser!=null">
+            <if test="sysUser.idNo!=null and sysUser.idNo!=''">
+                and su.id_no = #{sysUser.idNo}
+            </if>
+        </if>
+        <if test="reduction!=null">
+            <if test="reduction.afterReduceTrainYear!=null and reduction.afterReduceTrainYear!=''">
+                and rdr.after_reduce_train_year = #{reduction.afterReduceTrainYear}
+            </if>
+        </if>
+        <if test="reductionStatusIdList!=null and reductionStatusIdList.size()>0">
+            and rdr.AUDIT_STATUS_ID in
+            <foreach collection="reductionStatusIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        order by rd.session_number,NLSSORT(su.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
+    </select>
+
+</mapper>

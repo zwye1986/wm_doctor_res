@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+    <!-- 重点人群中医养生保健方案记录表单 -->
+    <!--
+    {0}:表单所属机构(开关控制)
+    {1}:版本号
+ -->
+    <jsp path="res/form/{3}/{0}/importantHealthCare_{1}"/>
+    <jszy ver="1.0">
+        <page ver="1.0">
+            <item name="content" isView="0" remark="内容" multiple="N"/>
+            <item name="accessories" isFile="Y" remark="附件" multiple="Y"/>
+        </page>
+    </jszy>
+    <gzzyyy ver="1.0">
+        <page ver="1.0">
+            <item name="content" isView="0" remark="内容" multiple="N"/>
+            <item name="accessories" isFile="Y" remark="附件" multiple="Y"/>
+        </page>
+    </gzzyyy>
+</jspForm>
+

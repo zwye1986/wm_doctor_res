@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.gyxjgl.GyXjDefenceExtMapper">
+    <resultMap id="baseMap" type="java.util.Map">
+        <result column="sid" jdbcType="VARCHAR" property="sid" />
+        <result column="user_flow" jdbcType="VARCHAR" property="userFlow" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="sex_id" jdbcType="VARCHAR" property="sexId" />
+        <result column="sex_name" jdbcType="VARCHAR" property="sexName" />
+        <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
+        <result column="major_id" jdbcType="VARCHAR" property="majorId" />
+        <result column="major_name" jdbcType="VARCHAR" property="majorName" />
+        <result column="train_type_id" jdbcType="VARCHAR" property="trainTypeId" />
+        <result column="train_type_name" jdbcType="VARCHAR" property="trainTypeName" />
+        <result column="train_category_id" jdbcType="VARCHAR" property="trainCategoryId" />
+        <result column="train_category_name" jdbcType="VARCHAR" property="trainCategoryName" />
+        <result column="first_teacher_flow" jdbcType="VARCHAR" property="firstTeacherFlow" />
+        <result column="first_teacher" jdbcType="VARCHAR" property="firstTeacher" />
+        <result column="first_teacher_phone" jdbcType="VARCHAR" property="firstTeacherPhone" />
+        <result column="second_teacher_flow" jdbcType="VARCHAR" property="secondTeacherFlow" />
+        <result column="second_teacher" jdbcType="VARCHAR" property="secondTeacher" />
+        <result column="second_teacher_phone" jdbcType="VARCHAR" property="secondTeacherPhone" />
+        <result column="org_flow" jdbcType="VARCHAR" property="orgFlow" />
+        <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+        <result column="dept_flow" jdbcType="VARCHAR" property="deptFlow" />
+        <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+        <result column="study_form_id" jdbcType="VARCHAR" property="studyFormId" />
+        <result column="study_form_name" jdbcType="VARCHAR" property="studyFormName" />
+    </resultMap>
+    <select id="queryBaseInfo" resultMap="baseMap">
+        select a.sid,
+        a.user_flow,
+        c.user_name,
+        c.sex_id,
+        c.sex_name,
+        c.user_phone,
+        a.major_id,
+        a.major_name,
+        a.train_type_id,
+        a.train_type_name,
+        a.train_category_id,
+        a.train_category_name,
+        a.first_teacher_flow,
+        a.first_teacher,
+        a.study_form_id,
+        a.study_form_name,
+        (select mobile_phone from nyds_official_doctor d where d.doctor_flow=a.first_teacher_flow) first_teacher_phone,
+        a.second_teacher_flow,
+        a.second_teacher,
+        (select mobile_phone from nyds_official_doctor e where e.doctor_flow=a.second_teacher_flow) second_teacher_phone,
+        b.org_flow,
+        b.org_name,
+        c.dept_flow,
+        c.dept_name
+        from edu_user a, res_doctor b, sys_user c
+        where a.record_status = 'Y'
+        and a.user_flow = b.doctor_flow
+        and a.user_flow = c.user_flow
+        <if test="userFlow!=null and userFlow!=''">
+            and a.user_flow = #{userFlow}
+        </if>
+    </select>
+    <resultMap id="titleMap" type="java.util.Map">
+        <result column="record_flow" jdbcType="VARCHAR" property="recordFlow" />
+        <result column="degree_req_flag" jdbcType="VARCHAR" property="degreeReqFlag" />
+        <result column="defence_flow" jdbcType="VARCHAR" property="defenceFlow" />
+        <result column="stu_no" jdbcType="VARCHAR" property="stuNo" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="major_id" jdbcType="VARCHAR" property="majorId" />
+        <result column="major_name" jdbcType="VARCHAR" property="majorName" />
+        <result column="sex_name" jdbcType="VARCHAR" property="sexName" />
+        <result column="train_gradation_id" jdbcType="VARCHAR" property="trainGradationId" />
+        <result column="train_gradation_name" jdbcType="VARCHAR" property="trainGradationName" />
+        <result column="train_category_id" jdbcType="VARCHAR" property="trainCategoryId" />
+        <result column="train_category_name" jdbcType="VARCHAR" property="trainCategoryName" />
+        <result column="tutor_name" jdbcType="VARCHAR" property="tutorName" />
+        <result column="tutor_phone" jdbcType="VARCHAR" property="tutorPhone" />
+        <result column="two_tutor_name" jdbcType="VARCHAR" property="twoTutorName" />
+        <result column="two_tutor_phone" jdbcType="VARCHAR" property="twoTutorPhone" />
+        <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
+        <result column="fwh_org_flow" jdbcType="VARCHAR" property="fwhOrgFlow" />
+        <result column="fwh_org_name" jdbcType="VARCHAR" property="fwhOrgName" />
+        <result column="pydw_org_flow" jdbcType="VARCHAR" property="pydwOrgFlow" />
+        <result column="pydw_org_name" jdbcType="VARCHAR" property="pydwOrgName" />
+        <result column="defence_time" jdbcType="VARCHAR" property="defenceTime" />
+        <result column="replenish_time" jdbcType="VARCHAR" property="replenishTime" />
+        <result column="paper_chi_title" jdbcType="VARCHAR" property="paperChiTitle" />
+        <result column="paper_eng_title" jdbcType="VARCHAR" property="paperEngTitle" />
+        <result column="research_direction" jdbcType="VARCHAR" property="researchDirection" />
+        <result column="key_word" jdbcType="VARCHAR" property="keyWord" />
+        <result column="paper_title" jdbcType="VARCHAR" property="paperTitle" />
+        <result column="journal_name" jdbcType="VARCHAR" property="journalName" />
+        <result column="publish_year" jdbcType="VARCHAR" property="publishYear" />
+        <result column="volume" jdbcType="VARCHAR" property="volume" />
+        <result column="page_number" jdbcType="VARCHAR" property="pageNumber" />
+        <result column="paper_content" jdbcType="VARCHAR" property="paperContent" />
+        <result column="journal_type" jdbcType="VARCHAR" property="journalType" />
+        <result column="article_status" jdbcType="VARCHAR" property="articleStatus" />
+        <result column="audit_result_flag" jdbcType="VARCHAR" property="auditResultFlag" />
+        <result column="defence_result_flag" jdbcType="VARCHAR" property="defenceResultFlag" />
+    </resultMap>
+    <select id="queryPaperTitleList" parameterType="java.util.Map" resultMap="titleMap">
+        select b.record_flow,
+        b.degree_req_flag,
+        a.record_flow defence_flow,
+        a.stu_no,
+        a.user_name,
+        a.major_id,
+        a.major_name,
+        a.sex_name,
+        a.train_gradation_id,
+        a.train_gradation_name,
+        a.train_category_id,
+        a.train_category_name,
+        a.tutor_name,
+        a.tutor_phone,
+        a.two_tutor_name,
+        a.two_tutor_phone,
+        a.user_phone,
+        a.fwh_org_flow,
+        a.fwh_org_name,
+        a.pydw_org_flow,
+        a.pydw_org_name,
+        a.defence_time,
+        a.replenish_time,
+        a.paper_chi_title,
+        a.paper_eng_title,
+        a.research_direction,
+        a.key_word,
+        b.paper_title,
+        b.journal_name,
+        b.publish_year,
+        b.volume,
+        b.page_number,
+        b.paper_content,
+        b.journal_type,
+        b.article_status,
+        a.audit_result_flag,
+        a.defence_result_flag
+        from nydb_defence_apply a
+        left join nydb_paper_title b
+        on a.record_flow = b.defence_flow
+        where a.record_status = 'Y'
+        and a.pydw_audit_id = 'Passed'
+        <if test="userFlow!=null and userFlow!=''">
+            and a.user_flow = #{userFlow}
+        </if>
+        <if test="recordFlow!=null and recordFlow!=''">
+            and b.record_flow = #{recordFlow}
+        </if>
+        <if test="defenceFlow!=null and defenceFlow!=''">
+            and a.defence_flow = #{defenceFlow}
+        </if>
+        <if test="tutorFlow!=null and tutorFlow!=''">
+            and (a.tutor_flow = #{tutorFlow} or a.two_tutor_flow = #{tutorFlow})
+        </if>
+        <if test="pydwOrgFlow!=null and pydwOrgFlow!=''">
+            and a.pydw_org_flow = #{pydwOrgFlow}
+        </if>
+        <if test="fwhOrgFlow!=null and fwhOrgFlow!=''">
+            and a.fwh_org_flow = #{fwhOrgFlow}
+        </if>
+        <if test="stuNo!=null and stuNo!=''">
+            and a.stu_no like '%${stuNo}%'
+        </if>
+        <if test="userName!=null and userName!=''">
+            and a.user_name like '%${userName}%'
+        </if>
+        <if test="majorId!=null and majorId!=''">
+            and a.major_id = #{majorId}
+        </if>
+        <if test="trainGradationId!=null and trainGradationId!=''">
+            and a.train_gradation_id = #{trainGradationId}
+        </if>
+        <if test="trainCategoryId!=null and trainCategoryId!=''">
+            and a.train_category_id = #{trainCategoryId}
+        </if>
+        <if test="defenceTime!=null and defenceTime!=''">
+            and a.defence_time = #{defenceTime}
+        </if>
+        <if test="replenishTime!=null and replenishTime!=''">
+            and a.replenish_time = #{replenishTime}
+        </if>
+        <if test="researchDirection!=null and researchDirection!=''">
+            and a.research_direction like '%${researchDirection}%'
+        </if>
+        <if test="keyWord!=null and keyWord!=''">
+            and a.key_word like '%${keyWord}%'
+        </if>
+        <if test="tutorName!=null and tutorName!=''">
+            and (a.tutor_name like '%${tutorName}%' or a.two_tutor_name like '%${tutorName}%')
+        </if>
+        <if test="journalName!=null and journalName!=''">
+            and b.journal_name like '%${journalName}%'
+        </if>
+        <if test="publishYear!=null and publishYear!=''">
+            and b.publish_year like '%${publishYear}%'
+        </if>
+        <if test="volume!=null and volume!=''">
+            and b.volume like '%${volume}%'
+        </if>
+        <if test="pageNumber!=null and pageNumber!=''">
+            and b.page_number like '%${pageNumber}%'
+        </if>
+        <if test="studyFormId!=null and studyFormId!=''">
+            and a.study_Form_Id = #{studyFormId}
+        </if>
+        <if test="isReplenish!=null and isReplenish!=''">
+            and a.is_Replenish = #{isReplenish}
+        </if>
+        <if test="exportFlag==null and exportFlag==''">
+            <if test="isReplenish==null or isReplenish==''">
+                and a.is_Replenish is null
+            </if>
+        </if>
+        <if test="exportFlag!=null and exportFlag!=''">
+            and (a.train_gradation_id ='1' or (a.train_gradation_id = '2' and b.degree_req_flag = 'Y'))
+        </if>
+        order by a.create_time desc,b.create_time desc
+    </select>
+    <select id="searchMajorCredit" resultType="java.util.Map">
+      select decode(d.credit,null,0,d.credit) credit,decode(d.scoreSum,null,0,d.scoreSum) scoreSum from(
+        SELECT a.credit,
+           (SELECT distinct SUM(b.course_credit) OVER(PARTITION BY b.user_flow) AS scoreSum
+              FROM edu_student_course b
+             WHERE b.RECORD_STATUS = 'Y'
+               and b.user_flow = #{userFlow}
+               and b.COURSE_GRADE NOT IN ('N', 'UnPass')) scoreSum
+      FROM EDU_MAJOR_CREDIT a
+      WHERE EXISTS (SELECT NULL
+          FROM edu_user c
+         WHERE c.user_flow = #{userFlow}
+           AND c.major_id = a.major_id
+           AND a.train_type_id = c.train_type_id))d
+    </select>
+</mapper>

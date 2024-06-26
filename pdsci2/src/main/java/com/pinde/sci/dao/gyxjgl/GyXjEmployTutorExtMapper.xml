@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.gyxjgl.GyXjEmployTutorExtMapper">
+    <select id="queryEmployTutorList" parameterType="java.util.Map" resultType="map">
+        select tet.USER_FLOW,tet.RECORD_FLOW,tet.SEX_NAME,tet.TUTOR_NAME,eu.PERIOD,eu.SID,eu.MAJOR_NAME,u.user_name
+        from tdxl_employ_Tutor tet
+        left join edu_user eu
+        on eu.user_flow=tet.user_flow
+        left join sys_user u
+        on tet.user_flow= u.user_flow
+        where eu.record_status='Y'
+        and tet.record_status='Y'
+        <if test="tutorFlow!=null and tutorFlow!=''">
+            and eu.first_teacher_flow = #{tutorFlow}
+        </if>
+        <if test="tutorAuditId!=null and tutorAuditId!=''">
+            and tet.tutor_audit_id = #{tutorAuditId}
+        </if>
+        <if test="orgFlow!=null and orgFlow!=''">
+            and tet.org_flow = #{orgFlow}
+        </if>
+        <if test="orgAuditId!=null and orgAuditId!=''">
+            and tet.org_audit_id = #{orgAuditId}
+        </if>
+        <if test="studentId!=null and studentId!=''">
+            and tet.student_id like '%${studentId}%'
+        </if>
+        <if test="userName!=null and userName!=''">
+            and tet.user_name like '%${userName}%'
+        </if>
+        order by tet.create_time
+    </select>
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+    <!-- 妇女保健记录表单 -->
+    <!--
+    {0}:表单所属机构(开关控制)
+    {1}:版本号
+ -->
+    <jsp path="res/form/{3}/{0}/womenHealthCare_{1}"/>
+    <jszy ver="1.0">
+        <page ver="1.0">
+            <item name="careDate" isView="0" remark="日期" multiple="N"/>
+            <item name="careName" isView="0" remark="姓名" multiple="N"/>
+            <item name="age" isView="0" remark="年龄" multiple="N"/>
+            <item name="address" remark="家庭住址" multiple="N"/>
+            <item name="managementRecords" remark="管理记录" multiple="N"/>
+        </page>
+    </jszy>
+    <gzzyyy ver="1.0">
+        <page ver="1.0">
+            <item name="careDate" isView="0" remark="日期" multiple="N"/>
+            <item name="careName" isView="0" remark="姓名" multiple="N"/>
+            <item name="age" isView="0" remark="年龄" multiple="N"/>
+            <item name="address" remark="家庭住址" multiple="N"/>
+            <item name="managementRecords" remark="管理记录" multiple="N"/>
+        </page>
+    </gzzyyy>
+</jspForm>
+

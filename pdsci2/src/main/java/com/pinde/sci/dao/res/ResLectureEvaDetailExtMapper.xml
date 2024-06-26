@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.ResLectureEvaDetailExtMapper">
+
+    <resultMap id="evalDetailMap" type="com.pinde.sci.model.mo.ResLectureEvaDetail" extends="com.pinde.sci.dao.base.ResLectureEvaDetailMapper.BaseResultMap">
+        <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+        <result column="LECTURE_FLOW" property="lectureFlow" jdbcType="VARCHAR" />
+        <result column="OPER_USER_FLOW" property="operUserFlow" jdbcType="VARCHAR" />
+        <result column="OPER_USER_NAME" property="operUserName" jdbcType="VARCHAR" />
+        <result column="EVA_SCORE" property="evaScore" jdbcType="VARCHAR" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+        <result column="SCAN_REGIST_FLOW" property="scanRegistFlow" jdbcType="VARCHAR" />
+        <result column="TARGET_FLOW" property="targetFlow" jdbcType="VARCHAR" />
+        <result column="TARGET_NAME" property="targetName" jdbcType="VARCHAR" />
+        <result column="ORDINAL" property="ordinal" jdbcType="DECIMAL" />
+    </resultMap>
+
+    <!--保存讲座活动评价信息-->
+    <insert id="saveLectureEval" parameterType="map">
+        INSERT ALL
+        <foreach item="tag" index="index" collection="lectureEvaDetailList"  separator="">
+            INTO RES_LECTURE_EVA_DETAIL (
+                RECORD_FLOW,
+                LECTURE_FLOW,
+                OPER_USER_FLOW,
+                OPER_USER_NAME,
+                EVA_SCORE,
+                RECORD_STATUS,
+                CREATE_TIME,
+                CREATE_USER_FLOW,
+                MODIFY_TIME,
+                MODIFY_USER_FLOW,
+                SCAN_REGIST_FLOW,
+                TARGET_FLOW,
+                TARGET_NAME,
+                ORDINAL
+            )
+            values
+            (
+                lower(rawtohex(sys_guid())),
+                #{tag.lectureFlow},
+                #{operUserFlow},
+                #{operUserName},
+                #{tag.evaScore},
+                #{recordStatus},
+                #{createTime},
+                #{operUserFlow},
+                #{createTime},
+                #{operUserFlow},
+                #{tag.scanRegistFlow},
+                #{tag.targetFlow},
+                #{tag.targetName},
+                #{tag.ordinal}
+            )
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <!-- 查询讲座活动用户评价信息 -->
+    <select id="searchUserEvalList" resultType="map" resultMap="evalDetailMap">
+        SELECT
+            RECORD_FLOW,
+            LECTURE_FLOW,
+            OPER_USER_FLOW,
+            OPER_USER_NAME,
+            EVA_SCORE,
+            RECORD_STATUS,
+            CREATE_TIME,
+            CREATE_USER_FLOW,
+            MODIFY_TIME,
+            MODIFY_USER_FLOW,
+            SCAN_REGIST_FLOW,
+            TARGET_FLOW,
+            TARGET_NAME,
+            ORDINAL
+        FROM
+            RES_LECTURE_EVA_DETAIL
+        WHERE
+            RECORD_STATUS = 'Y'
+        AND LECTURE_FLOW = #{lectureFlow}
+        AND OPER_USER_FLOW = #{userFlow}
+    </select>
+
+</mapper>

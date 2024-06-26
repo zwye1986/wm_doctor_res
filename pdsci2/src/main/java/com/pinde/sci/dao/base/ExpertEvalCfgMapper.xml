@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.ExpertEvalCfgMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ExpertEvalCfg" >
+    <id column="CFG_FLOW" property="cfgFlow" jdbcType="VARCHAR" />
+    <result column="EVAL_YEAR" property="evalYear" jdbcType="VARCHAR" />
+    <result column="CFG_NAME" property="cfgName" jdbcType="VARCHAR" />
+    <result column="TYPE_ID" property="typeId" jdbcType="VARCHAR" />
+    <result column="IS_FILE" property="isFile" jdbcType="CHAR" />
+    <result column="IS_PUBLISH" property="isPublish" jdbcType="CHAR" />
+    <result column="FILE_PATH" property="filePath" jdbcType="VARCHAR" />
+    <result column="PARENT_CFG_FLOW" property="parentCfgFlow" jdbcType="VARCHAR" />
+    <result column="LEVEL_ID" property="levelId" jdbcType="DECIMAL" />
+    <result column="ORDINAL" property="ordinal" jdbcType="DECIMAL" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="IS_EXPERT" property="isExpert" jdbcType="CHAR" />
+    <result column="ACTION_TYPE_ID" property="actionTypeId" jdbcType="VARCHAR" />
+    <result column="ACTION_TYPE_NAME" property="actionTypeName" jdbcType="VARCHAR" />
+    <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+    <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CFG_FLOW, EVAL_YEAR, CFG_NAME, TYPE_ID, IS_FILE, IS_PUBLISH, FILE_PATH, PARENT_CFG_FLOW, 
+    LEVEL_ID, ORDINAL, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+    IS_EXPERT, ACTION_TYPE_ID, ACTION_TYPE_NAME, SPE_ID, SPE_NAME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ExpertEvalCfgExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.EXPERT_EVAL_CFG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.EXPERT_EVAL_CFG
+    where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.EXPERT_EVAL_CFG
+    where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ExpertEvalCfgExample" >
+    delete from PDSCI.EXPERT_EVAL_CFG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.ExpertEvalCfg" >
+    insert into PDSCI.EXPERT_EVAL_CFG (CFG_FLOW, EVAL_YEAR, CFG_NAME, 
+      TYPE_ID, IS_FILE, IS_PUBLISH, 
+      FILE_PATH, PARENT_CFG_FLOW, LEVEL_ID, 
+      ORDINAL, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+      IS_EXPERT, ACTION_TYPE_ID, ACTION_TYPE_NAME, 
+      SPE_ID, SPE_NAME)
+    values (#{cfgFlow,jdbcType=VARCHAR}, #{evalYear,jdbcType=VARCHAR}, #{cfgName,jdbcType=VARCHAR}, 
+      #{typeId,jdbcType=VARCHAR}, #{isFile,jdbcType=CHAR}, #{isPublish,jdbcType=CHAR}, 
+      #{filePath,jdbcType=VARCHAR}, #{parentCfgFlow,jdbcType=VARCHAR}, #{levelId,jdbcType=DECIMAL}, 
+      #{ordinal,jdbcType=DECIMAL}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{isExpert,jdbcType=CHAR}, #{actionTypeId,jdbcType=VARCHAR}, #{actionTypeName,jdbcType=VARCHAR}, 
+      #{speId,jdbcType=VARCHAR}, #{speName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ExpertEvalCfg" >
+    insert into PDSCI.EXPERT_EVAL_CFG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cfgFlow != null" >
+        CFG_FLOW,
+      </if>
+      <if test="evalYear != null" >
+        EVAL_YEAR,
+      </if>
+      <if test="cfgName != null" >
+        CFG_NAME,
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID,
+      </if>
+      <if test="isFile != null" >
+        IS_FILE,
+      </if>
+      <if test="isPublish != null" >
+        IS_PUBLISH,
+      </if>
+      <if test="filePath != null" >
+        FILE_PATH,
+      </if>
+      <if test="parentCfgFlow != null" >
+        PARENT_CFG_FLOW,
+      </if>
+      <if test="levelId != null" >
+        LEVEL_ID,
+      </if>
+      <if test="ordinal != null" >
+        ORDINAL,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="isExpert != null" >
+        IS_EXPERT,
+      </if>
+      <if test="actionTypeId != null" >
+        ACTION_TYPE_ID,
+      </if>
+      <if test="actionTypeName != null" >
+        ACTION_TYPE_NAME,
+      </if>
+      <if test="speId != null" >
+        SPE_ID,
+      </if>
+      <if test="speName != null" >
+        SPE_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cfgFlow != null" >
+        #{cfgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="evalYear != null" >
+        #{evalYear,jdbcType=VARCHAR},
+      </if>
+      <if test="cfgName != null" >
+        #{cfgName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="isFile != null" >
+        #{isFile,jdbcType=CHAR},
+      </if>
+      <if test="isPublish != null" >
+        #{isPublish,jdbcType=CHAR},
+      </if>
+      <if test="filePath != null" >
+        #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCfgFlow != null" >
+        #{parentCfgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="levelId != null" >
+        #{levelId,jdbcType=DECIMAL},
+      </if>
+      <if test="ordinal != null" >
+        #{ordinal,jdbcType=DECIMAL},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="isExpert != null" >
+        #{isExpert,jdbcType=CHAR},
+      </if>
+      <if test="actionTypeId != null" >
+        #{actionTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="actionTypeName != null" >
+        #{actionTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="speId != null" >
+        #{speId,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        #{speName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ExpertEvalCfgExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.EXPERT_EVAL_CFG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.EXPERT_EVAL_CFG
+    <set >
+      <if test="record.cfgFlow != null" >
+        CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evalYear != null" >
+        EVAL_YEAR = #{record.evalYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cfgName != null" >
+        CFG_NAME = #{record.cfgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeId != null" >
+        TYPE_ID = #{record.typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isFile != null" >
+        IS_FILE = #{record.isFile,jdbcType=CHAR},
+      </if>
+      <if test="record.isPublish != null" >
+        IS_PUBLISH = #{record.isPublish,jdbcType=CHAR},
+      </if>
+      <if test="record.filePath != null" >
+        FILE_PATH = #{record.filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentCfgFlow != null" >
+        PARENT_CFG_FLOW = #{record.parentCfgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.levelId != null" >
+        LEVEL_ID = #{record.levelId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ordinal != null" >
+        ORDINAL = #{record.ordinal,jdbcType=DECIMAL},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isExpert != null" >
+        IS_EXPERT = #{record.isExpert,jdbcType=CHAR},
+      </if>
+      <if test="record.actionTypeId != null" >
+        ACTION_TYPE_ID = #{record.actionTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actionTypeName != null" >
+        ACTION_TYPE_NAME = #{record.actionTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speId != null" >
+        SPE_ID = #{record.speId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speName != null" >
+        SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.EXPERT_EVAL_CFG
+    set CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
+      EVAL_YEAR = #{record.evalYear,jdbcType=VARCHAR},
+      CFG_NAME = #{record.cfgName,jdbcType=VARCHAR},
+      TYPE_ID = #{record.typeId,jdbcType=VARCHAR},
+      IS_FILE = #{record.isFile,jdbcType=CHAR},
+      IS_PUBLISH = #{record.isPublish,jdbcType=CHAR},
+      FILE_PATH = #{record.filePath,jdbcType=VARCHAR},
+      PARENT_CFG_FLOW = #{record.parentCfgFlow,jdbcType=VARCHAR},
+      LEVEL_ID = #{record.levelId,jdbcType=DECIMAL},
+      ORDINAL = #{record.ordinal,jdbcType=DECIMAL},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      IS_EXPERT = #{record.isExpert,jdbcType=CHAR},
+      ACTION_TYPE_ID = #{record.actionTypeId,jdbcType=VARCHAR},
+      ACTION_TYPE_NAME = #{record.actionTypeName,jdbcType=VARCHAR},
+      SPE_ID = #{record.speId,jdbcType=VARCHAR},
+      SPE_NAME = #{record.speName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ExpertEvalCfg" >
+    update PDSCI.EXPERT_EVAL_CFG
+    <set >
+      <if test="evalYear != null" >
+        EVAL_YEAR = #{evalYear,jdbcType=VARCHAR},
+      </if>
+      <if test="cfgName != null" >
+        CFG_NAME = #{cfgName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID = #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="isFile != null" >
+        IS_FILE = #{isFile,jdbcType=CHAR},
+      </if>
+      <if test="isPublish != null" >
+        IS_PUBLISH = #{isPublish,jdbcType=CHAR},
+      </if>
+      <if test="filePath != null" >
+        FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCfgFlow != null" >
+        PARENT_CFG_FLOW = #{parentCfgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="levelId != null" >
+        LEVEL_ID = #{levelId,jdbcType=DECIMAL},
+      </if>
+      <if test="ordinal != null" >
+        ORDINAL = #{ordinal,jdbcType=DECIMAL},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="isExpert != null" >
+        IS_EXPERT = #{isExpert,jdbcType=CHAR},
+      </if>
+      <if test="actionTypeId != null" >
+        ACTION_TYPE_ID = #{actionTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="actionTypeName != null" >
+        ACTION_TYPE_NAME = #{actionTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="speId != null" >
+        SPE_ID = #{speId,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        SPE_NAME = #{speName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ExpertEvalCfg" >
+    update PDSCI.EXPERT_EVAL_CFG
+    set EVAL_YEAR = #{evalYear,jdbcType=VARCHAR},
+      CFG_NAME = #{cfgName,jdbcType=VARCHAR},
+      TYPE_ID = #{typeId,jdbcType=VARCHAR},
+      IS_FILE = #{isFile,jdbcType=CHAR},
+      IS_PUBLISH = #{isPublish,jdbcType=CHAR},
+      FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      PARENT_CFG_FLOW = #{parentCfgFlow,jdbcType=VARCHAR},
+      LEVEL_ID = #{levelId,jdbcType=DECIMAL},
+      ORDINAL = #{ordinal,jdbcType=DECIMAL},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      IS_EXPERT = #{isExpert,jdbcType=CHAR},
+      ACTION_TYPE_ID = #{actionTypeId,jdbcType=VARCHAR},
+      ACTION_TYPE_NAME = #{actionTypeName,jdbcType=VARCHAR},
+      SPE_ID = #{speId,jdbcType=VARCHAR},
+      SPE_NAME = #{speName,jdbcType=VARCHAR}
+    where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

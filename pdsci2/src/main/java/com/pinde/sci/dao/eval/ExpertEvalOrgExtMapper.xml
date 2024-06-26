@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.eval.ExpertEvalOrgExtMapper">
+
+    <select id="checkCfgHasResult" resultType="java.lang.Integer">
+      SELECT COUNT(1) FROM EXPERT_EVAL_RESULT
+      WHERE RECORD_STATUS='Y'
+      AND EXISTS (
+        SELECT 1 FROM EXPERT_EVAL_ORG_CFG CFG
+        WHERE RECORD_FLOW =#{recordFlow}
+        and cfg.org_flow=EXPERT_EVAL_RESULT.org_flow
+        AND CFG.CFG_FLOW =EXPERT_EVAL_RESULT.CFG_FLOW
+      )
+    </select>
+    <select id="checkSpeCfgHasResult" resultType="java.lang.Integer">
+      SELECT COUNT(1) FROM EXPERT_EVAL_RESULT
+      WHERE RECORD_STATUS='Y'
+      AND EXISTS (
+        SELECT 1 FROM EXPERT_EVAL_ORG_SPE_CFG CFG
+        WHERE RECORD_FLOW =#{recordFlow}
+        and cfg.org_flow=EXPERT_EVAL_RESULT.org_flow
+        AND CFG.CFG_FLOW =EXPERT_EVAL_RESULT.CFG_FLOW
+      )
+    </select>
+    <select id="getOrgExpertByYearAndOrgFlow" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+      SELECT * FROM SYS_USER SU
+      WHERE RECORD_STATUS='Y'
+      AND EXISTS (
+        SELECT 1 FROM EXPERT_EVAL_ORG ORG
+        WHERE RECORD_STATUS='Y'
+        AND EVAL_YEAR=#{evalYear}
+        AND ORG_FLOW=#{orgFlow}
+        AND ORG.EXPERT_USER_FLOW =SU.USER_FLOW
+      )
+    </select>
+</mapper>

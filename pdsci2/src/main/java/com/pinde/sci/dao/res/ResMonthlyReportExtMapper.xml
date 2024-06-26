@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.ResMonthlyReportExtMapper">
+    <select id="getParticipateInNum" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+      select count(DISTINCT d.DOCTOR_FLOW)
+      from SYS_MONTHLY_DOC_CYCLE_INFO d
+      where
+      d.record_status='Y' and d.EXAM_NUM>0
+      <if test='monthDate!=null and monthDate!=""'>
+        and d.DATE_MONTH = #{monthDate}
+      </if>
+        <if test='doctorTypeId=="Graduate"'>
+            and d.DOCTOR_TYPE_ID = 'Graduate'
+        </if>
+        <if test='doctorTypeId!="Graduate"'>
+            and d.DOCTOR_TYPE_ID != 'Graduate'
+        </if>
+        <if test='allOrgFlow!=null and allOrgFlow.size>0'>
+            and d.ORG_FLOW in
+            <foreach collection="allOrgFlow" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='sendSchoolFlag=="Y"'>
+            and EXISTS (select null from SYS_MONTHLY_DOCTOR_INFO smd
+            where smd.doctor_flow = d.doctor_flow and
+            (smd.WORK_ORG_ID = #{sendSchoolId} or smd.WORK_ORG_NAME = #{sendSchoolName})
+            )
+        </if>
+    </select>
+
+    <select id="getTheoryAll" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        select sum(EXAM_NUM) from (
+        SELECT d.EXAM_NUM
+        from SYS_MONTHLY_DOC_CYCLE_INFO d
+        where
+        d.record_status='Y' and d.EXAM_NUM>0
+        <if test='monthDate!=null and monthDate!=""'>
+            and d.DATE_MONTH = #{monthDate}
+        </if>
+        <if test='doctorTypeId=="Graduate"'>
+            and d.DOCTOR_TYPE_ID = 'Graduate'
+        </if>
+        <if test='doctorTypeId!="Graduate"'>
+            and d.DOCTOR_TYPE_ID != 'Graduate'
+        </if>
+        <if test='allOrgFlow!=null and allOrgFlow.size>0'>
+            and d.ORG_FLOW in
+            <foreach collection="allOrgFlow" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='sendSchoolFlag=="Y"'>
+            and EXISTS (select null from SYS_MONTHLY_DOCTOR_INFO smd
+            where smd.doctor_flow = d.doctor_flow and
+            (smd.WORK_ORG_ID = #{sendSchoolId} or smd.WORK_ORG_NAME = #{sendSchoolName})
+            )
+        </if>
+        union all
+        select 0 EXAM_NUM from SYS.DUAL)
+    </select>
+
+    <select id="getPassNum" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        select count(0)
+        from SYS_MONTHLY_DOC_CYCLE_INFO d
+        where
+        d.record_status='Y'
+        and to_number((REGEXP_REPLACE(d.THEORY_SCORE,'-','0')))>=60 and to_number((REGEXP_REPLACE(d.SKILL_SCORE,'-','0')))>=60
+        <if test='monthDate!=null and monthDate!=""'>
+            and d.DATE_MONTH = #{monthDate}
+        </if>
+        <if test='doctorTypeId=="Graduate"'>
+            and d.DOCTOR_TYPE_ID = 'Graduate'
+        </if>
+        <if test='doctorTypeId!="Graduate"'>
+            and d.DOCTOR_TYPE_ID != 'Graduate'
+        </if>
+        <if test='allOrgFlow!=null and allOrgFlow.size>0'>
+            and d.ORG_FLOW in
+            <foreach collection="allOrgFlow" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='sendSchoolFlag=="Y"'>
+            and EXISTS (select null from SYS_MONTHLY_DOCTOR_INFO smd
+            where smd.doctor_flow = d.doctor_flow and
+            (smd.WORK_ORG_ID = #{sendSchoolId} or smd.WORK_ORG_NAME = #{sendSchoolName})
+            )
+        </if>
+    </select>
+
+    <select id="getNotPassNum" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        select count(0)
+        from SYS_MONTHLY_DOC_CYCLE_INFO d
+        where
+        d.record_status='Y'
+        and (60>to_number((REGEXP_REPLACE(d.THEORY_SCORE,'-','0'))) or 60>to_number((REGEXP_REPLACE(d.SKILL_SCORE,'-','0'))))
+        <if test='monthDate!=null and monthDate!=""'>
+            and d.DATE_MONTH = #{monthDate}
+        </if>
+        <if test='doctorTypeId=="Graduate"'>
+            and d.DOCTOR_TYPE_ID = 'Graduate'
+        </if>
+        <if test='doctorTypeId!="Graduate"'>
+            and d.DOCTOR_TYPE_ID != 'Graduate'
+        </if>
+        <if test='allOrgFlow!=null and allOrgFlow.size>0'>
+            and d.ORG_FLOW in
+            <foreach collection="allOrgFlow" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='sendSchoolFlag=="Y"'>
+            and EXISTS (select null from SYS_MONTHLY_DOCTOR_INFO smd
+            where smd.doctor_flow = d.doctor_flow and
+            (smd.WORK_ORG_ID = #{sendSchoolId} or smd.WORK_ORG_NAME = #{sendSchoolName})
+            )
+        </if>
+    </select>
+
+    <select id="getActivitySum" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        select nvl(sum(nvl(s.ACTIVTIY_NUM,0)),0)
+        from SYS_MONTHLY_ACTIVITY_INFO s
+        where
+        s.record_status='Y'
+        <if test='dateMonth!=null and dateMonth!=""'>
+            and s.DATE_MONTH = #{dateMonth}
+        </if>
+        <if test='allOrgFlow!=null and allOrgFlow.size>0'>
+            and s.ORG_FLOW in
+            <foreach collection="allOrgFlow" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+    </select>
+
+    <select id="getActivityMostDept" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+        select s.DEPT_FLOW,s.DEPT_NAME,sum(nvl(s.ACTIVTIY_NUM,0)) activitySum
+        from SYS_MONTHLY_ACTIVITY_INFO s
+        where
+        s.record_status='Y'
+        <if test='dateMonth!=null and dateMonth!=""'>
+            and s.DATE_MONTH = #{dateMonth}
+        </if>
+        <if test='allOrgFlow!=null and allOrgFlow.size>0'>
+            and s.ORG_FLOW in
+            <foreach collection="allOrgFlow" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        group by s.DEPT_FLOW,s.DEPT_NAME
+        ORDER by activitySum desc
+    </select>
+
+    <select id="getActivityLeastDept" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+        select s.DEPT_FLOW,s.DEPT_NAME,sum(nvl(s.ACTIVTIY_NUM,0)) activitySum
+        from SYS_MONTHLY_ACTIVITY_INFO s
+        where
+        s.record_status='Y'
+        <if test='dateMonth!=null and dateMonth!=""'>
+            and s.DATE_MONTH = #{dateMonth}
+        </if>
+        <if test='allOrgFlow!=null and allOrgFlow.size>0'>
+            and s.ORG_FLOW in
+            <foreach collection="allOrgFlow" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        group by s.DEPT_FLOW,s.DEPT_NAME
+        ORDER by activitySum
+    </select>
+
+    <select id="getActivityByType" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+        select a.*
+        from
+        (
+        select s.ACTIVITY_TYPE_ID,s.ACTIVITY_TYPE_NAME,sum(nvl(s.ACTIVTIY_NUM,0)) activitySum
+        from SYS_MONTHLY_ACTIVITY_INFO s
+        where
+        s.record_status='Y'
+        <if test='dateMonth!=null and dateMonth!=""'>
+            and s.DATE_MONTH = #{dateMonth}
+        </if>
+        <if test='allOrgFlow!=null and allOrgFlow.size>0'>
+            and s.ORG_FLOW in
+            <foreach collection="allOrgFlow" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        group by s.ACTIVITY_TYPE_ID,s.ACTIVITY_TYPE_NAME
+        ORDER by activitySum
+        ) a
+        where a.activitySum!=0
+    </select>
+
+    <select id="getSysMonthlyChangeInfo" resultMap="com.pinde.sci.dao.base.SysMonthlyChangeInfoMapper.BaseResultMap"
+            parameterType="map">
+        select s.* from
+        Sys_Monthly_Change_Info s
+        where record_status='Y'
+        <if test='monthDate!=null and monthDate!=""'>
+            and s.date_Month = #{monthDate}
+        </if>
+        <if test='doctorTypeId!=null and doctorTypeId!=""'>
+            <if test='doctorTypeId=="Graduate"'>and s.doctor_Type_Id = 'Graduate'</if>
+            <if test='doctorTypeId!="Graduate"'>and s.doctor_Type_Id != 'Graduate'</if>
+        </if>
+        <if test='sendSchoolFlag=="Y"'>
+        and EXISTS (select null from SYS_MONTHLY_DOCTOR_INFO smd
+        where smd.doctor_flow = s.doctor_flow and
+            (smd.WORK_ORG_ID = #{sendSchoolId} or smd.WORK_ORG_NAME = #{sendSchoolName})
+            )
+        </if>
+    </select>
+
+    <select id="getSysMonthlyReturnDelayInfo" resultMap="com.pinde.sci.dao.base.SysMonthlyReturnDelayInfoMapper.BaseResultMap"
+            parameterType="map">
+        select s.* from
+        Sys_Monthly_Return_Delay_Info s
+        where record_status='Y'
+        <if test='monthDate!=null and monthDate!=""'>
+            and s.date_Month = #{monthDate}
+        </if>
+        <if test='doctorTypeId!=null and doctorTypeId!=""'>
+            <if test='doctorTypeId=="Graduate"'>and s.doctor_Type_Id = 'Graduate'</if>
+            <if test='doctorTypeId!="Graduate"'>and s.doctor_Type_Id != 'Graduate'</if>
+        </if>
+        <if test='trainingTypeId!=null and trainingTypeId!=""'>
+            <if test='trainingTypeId=="Graduate"'>and s.training_Type_Id = 'Graduate'</if>
+            <if test='trainingTypeId!="Graduate"'>and s.training_Type_Id != 'Graduate'</if>
+        </if>
+        <if test='sendSchoolFlag=="Y"'>
+            and EXISTS (select null from SYS_MONTHLY_DOCTOR_INFO smd
+            where smd.doctor_flow = s.doctor_flow and
+            (smd.WORK_ORG_ID = #{sendSchoolId} or smd.WORK_ORG_NAME = #{sendSchoolName})
+            )
+        </if>
+    </select>
+
+    <select id="getSysMonthlyDocCycleInfo" resultMap="com.pinde.sci.dao.base.SysMonthlyDocCycleInfoMapper.BaseResultMap"
+            parameterType="map">
+        select s.* from
+        Sys_Monthly_Doc_Cycle_Info s
+        where record_status='Y'
+        <if test='monthDate!=null and monthDate!=""'>
+            and s.date_Month = #{monthDate}
+        </if>
+        <if test='doctorTypeId!=null and doctorTypeId!=""'>
+            <if test='doctorTypeId=="Graduate"'>and s.doctor_Type_Id = 'Graduate'</if>
+            <if test='doctorTypeId!="Graduate"'>and s.doctor_Type_Id != 'Graduate'</if>
+        </if>
+        <if test='allOrgFlow!=null and allOrgFlow.size>0'>
+            and s.ORG_FLOW in
+            <foreach collection="allOrgFlow" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='sendSchoolFlag=="Y"'>
+            and EXISTS (select null from SYS_MONTHLY_DOCTOR_INFO smd
+            where smd.doctor_flow = s.doctor_flow and
+            (smd.WORK_ORG_ID = #{sendSchoolId} or smd.WORK_ORG_NAME = #{sendSchoolName})
+            )
+        </if>
+    </select>
+
+    <select id="findInNum" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT count(1)
+        FROM SYS_MONTHLY_DOC_CYCLE_INFO s
+        where s.record_status='Y'
+        AND SUBSTR(s.SCH_START_DATE,0,7) = #{dateMonth,jdbcType=VARCHAR}
+        AND s.DOCTOR_TYPE_ID='Graduate'
+        and EXISTS (select null from SYS_MONTHLY_DOCTOR_INFO smd
+            where smd.doctor_flow = s.doctor_flow and
+            (smd.WORK_ORG_ID = #{sendSchoolId,jdbcType=VARCHAR} or smd.WORK_ORG_NAME = #{sendSchoolName,jdbcType=VARCHAR})
+            )
+    </select>
+    <select id="findOutNum" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT count(1)
+        FROM SYS_MONTHLY_DOC_CYCLE_INFO s
+        where s.record_status='Y'
+        AND SUBSTR(s.SCH_END_DATE,0,7) = #{dateMonth,jdbcType=VARCHAR}
+        AND s.SCH_STATUS='isSch'
+        AND s.DOCTOR_TYPE_ID='Graduate'
+        and EXISTS (select null from SYS_MONTHLY_DOCTOR_INFO smd
+            where smd.doctor_flow = s.doctor_flow and
+            (smd.WORK_ORG_ID = #{sendSchoolId,jdbcType=VARCHAR} or smd.WORK_ORG_NAME = #{sendSchoolName,jdbcType=VARCHAR})
+            )
+    </select>
+    <select id="findErrorOutNum" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT count(1)
+        FROM SYS_MONTHLY_DOC_CYCLE_INFO s
+        where s.record_status='Y'
+        AND SUBSTR(s.SCH_END_DATE,0,7) = #{dateMonth,jdbcType=VARCHAR}
+        AND s.SCH_STATUS='isCurrent'
+        AND s.DOCTOR_TYPE_ID='Graduate'
+        and EXISTS (select null from SYS_MONTHLY_DOCTOR_INFO smd
+            where smd.doctor_flow = s.doctor_flow and
+            (smd.WORK_ORG_ID = #{sendSchoolId,jdbcType=VARCHAR} or smd.WORK_ORG_NAME = #{sendSchoolName,jdbcType=VARCHAR})
+            )
+    </select>
+
+    <select id="getNoAppNum" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT s.ORG_FLOW, s.ORG_NAME, count(0) num
+        FROM SYS_MONTHLY_NOT_USEAPP_INFO s
+        where s.record_status='Y'
+        <if test='dateMonthList!=null and dateMonthList.size>0'>
+            and s.DATE_MONTH in
+            <foreach collection="dateMonthList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='doctorTypeId!=null and doctorTypeId!=""'>
+            <if test='doctorTypeId=="Graduate"'>and s.doctor_Type_Id = 'Graduate'</if>
+            <if test='doctorTypeId!="Graduate"'>and s.doctor_Type_Id != 'Graduate'</if>
+        </if>
+        <if test='allOrgFlow!=null and allOrgFlow.size>0'>
+            and s.ORG_FLOW in
+            <foreach collection="allOrgFlow" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='sendSchoolFlag=="Y"'>
+        and EXISTS (select null from SYS_MONTHLY_DOCTOR_INFO smd
+        where smd.doctor_flow = s.doctor_flow and
+        (smd.WORK_ORG_ID = #{sendSchoolId} or smd.WORK_ORG_NAME = #{sendSchoolName})
+        and smd.Doctor_Status_Id = 'Training'
+        and smd.Change_Type_Id = 'DoctorTrainingSpe'
+        )
+        </if>
+        GROUP BY s.ORG_FLOW, s.ORG_NAME
+    </select>
+
+    <select id="getNoAppNum3" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT s.ORG_FLOW, s.ORG_NAME, count(0) num
+        FROM (select a.* from (
+        select * from SYS_MONTHLY_NOT_USEAPP_INFO smn where smn.DATE_MONTH IN #{dateMonth1} ) a
+        left join (
+        select * from SYS_MONTHLY_NOT_USEAPP_INFO smn where smn.DATE_MONTH IN #{dateMonth2} ) b
+        on a.doctor_FLOW=b.doctor_FLOW
+        left join (
+        select * from SYS_MONTHLY_NOT_USEAPP_INFO smn where smn.DATE_MONTH IN #{dateMonth3} ) c
+        on b.doctor_FLOW=c.doctor_FLOW
+        where a.DATE_MONTH = #{dateMonth1}
+        and b.DATE_MONTH = #{dateMonth2}
+        and c.DATE_MONTH = #{dateMonth3}) s
+        where s.record_status='Y'
+        <if test='doctorTypeId!=null and doctorTypeId!=""'>
+            <if test='doctorTypeId=="Graduate"'>and s.doctor_Type_Id = 'Graduate'</if>
+            <if test='doctorTypeId!="Graduate"'>and s.doctor_Type_Id != 'Graduate'</if>
+        </if>
+        <if test='allOrgFlow!=null and allOrgFlow.size>0'>
+            and s.ORG_FLOW in
+            <foreach collection="allOrgFlow" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='sendSchoolFlag=="Y"'>
+            and EXISTS (select null from SYS_MONTHLY_DOCTOR_INFO smd
+            where smd.doctor_flow = s.doctor_flow and
+            (smd.WORK_ORG_ID = #{sendSchoolId} or smd.WORK_ORG_NAME = #{sendSchoolName})
+            and smd.Doctor_Status_Id = '20'
+            and smd.Change_Type_Id = 'DoctorTrainingSpe'
+            )
+        </if>
+        GROUP BY s.ORG_FLOW, s.ORG_NAME
+    </select>
+    
+    <select id="getUserList" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" parameterType="map">
+        SELECT su.* from
+        sys_user su
+        where su.record_status = 'Y'
+        and EXISTS (select null from Sys_Monthly_Doctor_Info smdi
+        where smdi.DOCTOR_FLOW = su.user_flow
+        and smdi.Doctor_Status_Id = 'Training'
+        <if test='monthDate!=null and monthDate!=""'>
+          and smdi.date_month = #{monthDate}
+        </if>
+        <if test='doctorTypeId!=null and doctorTypeId!=""'>
+            <if test='doctorTypeId=="Graduate"'>and smdi.doctor_Type_Id = 'Graduate'</if>
+            <if test='doctorTypeId!="Graduate"'>and smdi.doctor_Type_Id != 'Graduate'</if>
+        </if>
+        )
+    </select>
+
+    <select id="getDoctorList" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" parameterType="map">
+        SELECT rd.* from
+        res_doctor rd
+        where rd.record_status = 'Y'
+        and EXISTS (select null from Sys_Monthly_Doctor_Info smdi
+        where smdi.DOCTOR_FLOW = rd.DOCTOR_FLOW
+        and smdi.Doctor_Status_Id = 'Training'
+        <if test='monthDate!=null and monthDate!=""'>
+            and smdi.date_month = #{monthDate}
+        </if>
+        <if test='doctorTypeId!=null and doctorTypeId!=""'>
+            <if test='doctorTypeId=="Graduate"'>and smdi.doctor_Type_Id = 'Graduate'</if>
+            <if test='doctorTypeId!="Graduate"'>and smdi.doctor_Type_Id != 'Graduate'</if>
+        </if>
+        )
+    </select>
+
+    <select id="getRecruitList" resultMap="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" parameterType="map">
+        SELECT rdr.* from
+        res_doctor_recruit rdr
+        where rdr.record_status = 'Y'
+        and EXISTS (select null from Sys_Monthly_Doctor_Info smdi
+        where smdi.RECRUIT_FLOW = rdr.RECRUIT_FLOW
+        and smdi.Doctor_Status_Id = 'Training'
+        <if test='monthDate!=null and monthDate!=""'>
+            and smdi.date_month = #{monthDate}
+        </if>
+        <if test='doctorTypeId!=null and doctorTypeId!=""'>
+            <if test='doctorTypeId=="Graduate"'>and smdi.doctor_Type_Id = 'Graduate'</if>
+            <if test='doctorTypeId!="Graduate"'>and smdi.doctor_Type_Id != 'Graduate'</if>
+        </if>
+        )
+    </select>
+
+    <select id="getHospitalChart5Detail" resultType="java.util.Map" parameterType="java.util.Map">
+        select sm.ORG_FLOW,sm.org_name,sm.sch_dept_flow,sm.sch_dept_name,
+        (select count(0) from SYS_MONTHLY_DOC_CYCLE_INFO s where s.org_flow=sm.org_flow and s.sch_dept_flow = sm.sch_dept_flow
+        <if test='doctorTypeIdList != null and doctorTypeIdList.size()>0'>
+            and s.doctor_Type_Id in
+            <foreach collection="doctorTypeIdList" item="doctorTypeId" open="(" separator="," close=")">
+                #{doctorTypeId}
+            </foreach>
+        </if>
+        <if test='monthDate!=null and monthDate!=""'>
+            and s.date_month = #{monthDate}
+        </if>
+        <if test='schDeptFlow!=null and schDeptFlow!=""'>
+            and s.sch_Dept_Flow = #{schDeptFlow}
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and s.session_Number = #{sessionNumber}
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and s.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test='trainingTypeId!=null and trainingTypeId!=""'>
+            and s.TRAINING_Type_ID = #{trainingTypeId}
+        </if>
+        ) inNUm,
+        (select count(0) from SYS_MONTHLY_DOC_CYCLE_INFO s where s.org_flow=sm.org_flow and s.sch_dept_flow = sm.sch_dept_flow
+        and s.SCH_STATUS='isSch'
+        <if test='doctorTypeIdList != null and doctorTypeIdList.size()>0'>
+            and s.doctor_Type_Id in
+            <foreach collection="doctorTypeIdList" item="doctorTypeId" open="(" separator="," close=")">
+                #{doctorTypeId}
+            </foreach>
+        </if>
+        <if test='monthDate!=null and monthDate!=""'>
+            and s.date_month = #{monthDate}
+        </if>
+        <if test='schDeptFlow!=null and schDeptFlow!=""'>
+            and s.sch_Dept_Flow = #{schDeptFlow}
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and s.session_Number = #{sessionNumber}
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and s.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test='trainingTypeId!=null and trainingTypeId!=""'>
+            and s.TRAINING_Type_ID = #{trainingTypeId}
+        </if>
+        ) outNUm,
+        (select count(0) from SYS_MONTHLY_DOC_CYCLE_INFO s where s.org_flow=sm.org_flow and s.sch_dept_flow = sm.sch_dept_flow
+        and s.SCH_STATUS='isCurrent'
+        <if test='doctorTypeIdList != null and doctorTypeIdList.size()>0'>
+            and s.doctor_Type_Id in
+            <foreach collection="doctorTypeIdList" item="doctorTypeId" open="(" separator="," close=")">
+                #{doctorTypeId}
+            </foreach>
+        </if>
+        <if test='monthDate!=null and monthDate!=""'>
+            and s.date_month = #{monthDate}
+        </if>
+        <if test='schDeptFlow!=null and schDeptFlow!=""'>
+            and s.sch_Dept_Flow = #{schDeptFlow}
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and s.session_Number = #{sessionNumber}
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and s.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test='trainingTypeId!=null and trainingTypeId!=""'>
+            and s.TRAINING_Type_ID = #{trainingTypeId}
+        </if>
+        ) errorNUm
+        from SYS_MONTHLY_DOC_CYCLE_INFO sm
+        where
+        sm.record_status='Y'
+        <if test='doctorTypeIdList != null and doctorTypeIdList.size()>0'>
+            and sm.doctor_Type_Id in
+            <foreach collection="doctorTypeIdList" item="doctorTypeId" open="(" separator="," close=")">
+                #{doctorTypeId}
+            </foreach>
+        </if>
+        <if test='monthDate!=null and monthDate!=""'>
+            and sm.date_month = #{monthDate}
+        </if>
+        <if test='allOrgFlow!=null and allOrgFlow.size>0'>
+            and sm.ORG_FLOW in
+            <foreach collection="allOrgFlow" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and sm.ORG_FLOW = #{orgFlow}
+        </if>
+        <if test='schDeptFlow!=null and schDeptFlow!=""'>
+            and sm.sch_Dept_Flow = #{schDeptFlow}
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and sm.session_Number = #{sessionNumber}
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and sm.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test='trainingTypeId!=null and trainingTypeId!=""'>
+            and sm.TRAINING_Type_ID = #{trainingTypeId}
+        </if>
+        group by sm.ORG_FLOW,sm.org_name,sm.sch_dept_flow,sm.sch_dept_name
+    </select>
+
+    <select id="getHospitalChart5DoctorDetail" resultType="java.util.Map" parameterType="java.util.Map">
+        select DISTINCT sm.org_name,sm.sch_dept_name,sm.doctor_name,sm.session_number,
+        sm.TRAINING_SPE_NAME,s.user_phone,sm.SCH_START_DATE,sm.SCH_END_DATE,sm.TEACHER_USER_NAME
+        from
+        SYS_MONTHLY_DOC_CYCLE_INFO sm
+        left join SYS_MONTHLY_DOCTOR_INFO s on s.doctor_flow= sm.doctor_flow
+        where sm.record_status='Y' and s.record_status='Y'
+        <if test='doctorTypeIdList != null and doctorTypeIdList.size()>0'>
+            and sm.doctor_Type_Id in
+            <foreach collection="doctorTypeIdList" item="doctorTypeId" open="(" separator="," close=")">
+                #{doctorTypeId}
+            </foreach>
+        </if>
+        <if test='monthDate!=null and monthDate!=""'>
+            and sm.date_month = #{monthDate}
+            and s.date_month = #{monthDate}
+        </if>
+        <if test='allOrgFlow!=null and allOrgFlow.size>0'>
+            and sm.ORG_FLOW in
+            <foreach collection="allOrgFlow" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and sm.ORG_FLOW = #{orgFlow}
+        </if>
+        <if test='schDeptFlow!=null and schDeptFlow!=""'>
+            and sm.sch_Dept_Flow = #{schDeptFlow}
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and sm.session_Number = #{sessionNumber}
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and sm.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test='trainingTypeId!=null and trainingTypeId!=""'>
+            and sm.TRAINING_Type_ID = #{trainingTypeId}
+        </if>
+        <if test='schStatus!=null and schStatus!=""'>
+            and sm.SCH_STATUS = #{schStatus}
+        </if>
+    </select>
+
+    <select id="getHospitalChart6Detail" resultType="java.util.Map" parameterType="java.util.Map">
+        select sm.org_name,sm.doctor_name,sm.session_number,sm.training_spe_name,sm.sch_dept_name,
+        sm.SCH_START_DATE,sm.SCH_END_DATE,sm.TEACHER_USER_NAME,
+        sm.HEAD_USER_NAME,case sm.IS_HAVE_GRADE when 'Y' then '是' else '否' end IS_HAVE_GRADE,sm.THEORY_SCORE,sm.SKILL_SCORE,sm.SKILL_NAME
+        from
+        SYS_MONTHLY_DOC_CYCLE_INFO sm
+        where sm.record_status='Y'
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and sm.ORG_FLOW = #{orgFlow}
+        </if>
+        <if test='allOrgFlow!=null and allOrgFlow.size>0'>
+            and sm.ORG_FLOW in
+            <foreach collection="allOrgFlow" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='schDeptFlow!=null and schDeptFlow!=""'>
+            and sm.sch_Dept_Flow = #{schDeptFlow}
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and sm.session_Number = #{sessionNumber}
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and sm.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test='doctorTypeIdList != null and doctorTypeIdList.size()>0'>
+            and sm.doctor_Type_Id in
+            <foreach collection="doctorTypeIdList" item="doctorTypeId" open="(" separator="," close=")">
+                #{doctorTypeId}
+            </foreach>
+        </if>
+        <if test='monthDate!=null and monthDate!=""'>
+            and sm.date_month = #{monthDate}
+        </if>
+    </select>
+
+    <select id="getHospitalChart6Detail2" resultType="java.util.Map" parameterType="java.util.Map">
+        select sm.org_name,sm.doctor_name,sm.session_number,sm.training_spe_name,sm.sch_dept_name,
+        sm.SCH_START_DATE,sm.SCH_END_DATE,sm.TEACHER_USER_NAME,sm.EXAM_NUM,sm.EXAM_PASS
+        from
+        SYS_MONTHLY_DOC_CYCLE_INFO sm
+        where sm.record_status='Y' and sm.exam_num>0
+        <if test='allOrgFlow!=null and allOrgFlow.size>0'>
+            and sm.ORG_FLOW in
+            <foreach collection="allOrgFlow" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='monthDate!=null and monthDate!=""'>
+            and sm.date_month = #{monthDate}
+        </if>
+        <if test='doctorTypeId!=null and doctorTypeId!=""'>
+            <if test='doctorTypeId=="Graduate"'>and sm.doctor_Type_Id = 'Graduate'</if>
+            <if test='doctorTypeId!="Graduate"'>and sm.doctor_Type_Id != 'Graduate'</if>
+        </if>
+    </select>
+
+    <select id="getHospitalChart7Detail" resultType="java.util.Map" parameterType="java.util.Map">
+        select sm.org_name,sm.doctor_name,sm.session_number,sm.training_spe_name,sm.sch_dept_name,
+        sm.SCH_START_DATE,sm.SCH_END_DATE,sm.TEACHER_USER_NAME,sm.HEAD_USER_NAME,sm.ACTIVITY_NUM,
+        sm.REC_NUM,sm.AUDIT_NUM,sm.SCH_STATUS_NAME
+        from
+        SYS_MONTHLY_DOC_CYCLE_INFO sm
+        where sm.record_status='Y'
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and sm.ORG_FLOW = #{orgFlow}
+        </if>
+        <if test='allOrgFlow!=null and allOrgFlow.size>0'>
+            and sm.ORG_FLOW in
+            <foreach collection="allOrgFlow" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='schDeptFlow!=null and schDeptFlow!=""'>
+            and sm.sch_Dept_Flow = #{schDeptFlow}
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and sm.session_Number = #{sessionNumber}
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and sm.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test='doctorTypeIdList != null and doctorTypeIdList.size()>0'>
+            and sm.doctor_Type_Id in
+            <foreach collection="doctorTypeIdList" item="doctorTypeId" open="(" separator="," close=")">
+                #{doctorTypeId}
+            </foreach>
+        </if>
+        <if test='monthDate!=null and monthDate!=""'>
+            and sm.date_month = #{monthDate}
+        </if>
+    </select>
+
+    <select id="getHospitalChart8Detail" resultType="java.util.Map" parameterType="java.util.Map">
+        select  sm.org_name,sm.sch_dept_name,sm.teacher_user_name,su.user_code,avg(sm.TEACHER_SCORE) TEACHER_SCORE,
+        sum(smt.ACTIVITY_NUM) ACTIVITY_NUM,count(DISTINCT sm.doctor_flow) doctor_num,sum(sm.REC_NUM) REC_NUM,sum(sm.AUDIT_NUM) AUDIT_NUM
+        from
+        SYS_MONTHLY_DOC_CYCLE_INFO sm
+        left join sys_user su on sm.teacher_user_flow = su.user_flow
+        left join SYS_MONTHLY_TEA_WORK_INFO smt on sm.teacher_user_flow = smt.TEACHER_USER_FLOW
+        where sm.record_status='Y' and su.record_status='Y'
+        <if test='monthDate!=null and monthDate!=""'>
+            and sm.date_month = #{monthDate}
+            and smt.date_month = #{monthDate}
+        </if>
+        <if test='allOrgFlow!=null and allOrgFlow.size>0'>
+            and sm.ORG_FLOW in
+            <foreach collection="allOrgFlow" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='schDeptFlow!=null and schDeptFlow!=""'>
+            and sm.sch_Dept_Flow = #{schDeptFlow}
+        </if>
+        <if test='teacherUserName!=null and teacherUserName!=""'>
+            and sm.teacher_user_name like '%${teacherUserName}%'
+        </if>
+        group by sm.org_flow,sm.org_name,sm.sch_dept_flow,sch_dept_name,sm.teacher_user_flow,sm.teacher_user_name,su.user_code
+    </select>
+
+    <select id="getHospitalChart9Detail" resultType="java.util.Map" parameterType="java.util.Map">
+        select sma.org_name,sma.DEPT_NAME ,sum(sma.ACTIVTIY_NUM) ACTIVTIY_NUM,sum(sma.JOIN_NUM) JOIN_NUM,
+        nvl((select sum(nvl(s.ACTIVTIY_NUM,0)) from SYS_MONTHLY_ACTIVITY_INFO s
+        where s.activity_type_id='1' and s.date_month = sma.date_month and s.org_flow = sma.org_flow and s.DEPT_FLOW=sma.DEPT_FLOW),0) jxcf,
+        nvl((select sum(nvl(s.ACTIVTIY_NUM,0)) from SYS_MONTHLY_ACTIVITY_INFO s
+        where s.activity_type_id='2' and s.date_month = sma.date_month and s.org_flow = sma.org_flow and s.DEPT_FLOW=sma.DEPT_FLOW),0) ynbl,
+        nvl((select sum(nvl(s.ACTIVTIY_NUM,0)) from SYS_MONTHLY_ACTIVITY_INFO s
+        where s.activity_type_id='3' and s.date_month = sma.date_month and s.org_flow = sma.org_flow and s.DEPT_FLOW=sma.DEPT_FLOW),0) wzbl,
+        nvl((select sum(nvl(s.ACTIVTIY_NUM,0)) from SYS_MONTHLY_ACTIVITY_INFO s
+        where s.activity_type_id='4' and s.date_month = sma.date_month and s.org_flow = sma.org_flow and s.DEPT_FLOW=sma.DEPT_FLOW),0) xjk,
+        nvl((select sum(nvl(s.ACTIVTIY_NUM,0)) from SYS_MONTHLY_ACTIVITY_INFO s
+        where s.activity_type_id='5' and s.date_month = sma.date_month and s.org_flow = sma.org_flow and s.DEPT_FLOW=sma.DEPT_FLOW),0) swbl
+        from SYS_MONTHLY_ACTIVITY_INFO sma
+        where sma.record_status='Y'
+        <if test='monthDate!=null and monthDate!=""'>
+            and sma.date_month = #{monthDate}
+        </if>
+        <if test='allOrgFlow!=null and allOrgFlow.size>0'>
+            and sma.ORG_FLOW in
+            <foreach collection="allOrgFlow" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='deptFlow!=null and deptFlow!=""'>
+            and sma.dept_Flow = #{deptFlow}
+        </if>
+        group by sma.org_flow,sma.org_name ,sma.DEPT_FLOW,sma.DEPT_NAME,sma.date_month
+        ORDER by ACTIVTIY_NUM desc
+    </select>
+</mapper>

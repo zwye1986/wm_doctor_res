@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>	
+	<!-- 临床操作技能评估-->
+	<!-- 
+	{0}:表单所属机构(开关控制)
+	{1}:版本号
+ -->
+	<jsp path="res/form/{3}/{0}/dops_{1}"></jsp>
+	<product ver="1.0">
+		<page ver="1.0">
+			<item name="studentName" remark="学生姓名" multiple="N"></item>
+			<item name="grade" remark="年级" multiple="N"></item>
+			<item name="professional" remark="专业" multiple="N"></item>
+			<item name="studentType" remark="学生类型" multiple="N"></item>
+			<item name="teacherType" remark="教师类型" multiple="N"></item>
+			<item name="assessmentDate" remark="评估日期" multiple="N"></item>
+			<item name="assessmentPlace" remark="评估地点" multiple="N"></item>
+			<item name="patientName" remark="病人姓名" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+			<item name="sex" remark="性别" multiple="N"></item>
+			<item name="patientSource" remark="病人来源" multiple="N"></item>
+			<item name="patientDiagnosis" remark="病人主要诊断" multiple="N"></item>
+			<item name="operatingSkills" remark="操作技能" multiple="N"></item>
+			<item name="studentSkillNum" remark="评估前学员执行临床技能操作例数" multiple="N"></item>
+			<item name="skillComplexDegree" remark="技能复杂程度" multiple="N"></item>
+			<item name="skillLevel" remark="操作步骤的熟练程度" multiple="N"></item>
+			<item name="consentForm" remark="同意书" multiple="N"></item>
+			<item name="readyToWork" remark="准备工作" multiple="N"></item>
+			<item name="painAndStabilization" remark="止痛和镇定" multiple="N"></item>
+			<item name="SkillAbility" remark="技术能力" multiple="N"></item>
+			<item name="asepticTechnique" remark="无菌技术" multiple="N"></item>
+			<item name="seekAssistance" remark="寻求协助" multiple="N"></item>
+			<item name="relatedDisposal" remark="相关处置" multiple="N"></item>
+			<item name="communicationSkills" remark="沟通技巧" multiple="N"></item>
+			<item name="feelProfessionalDegree" remark="病人感受和专业程度" multiple="N"></item>
+			<item name="overallPerformance" remark="整体表现" multiple="N"></item>
+			<item name="observationTime" remark="观察时间" multiple="N"></item>
+			<item name="feedbackTime" remark="反馈时间" multiple="N"></item>
+			<item name="degreeSatisfaction" remark="满意程度" multiple="N"></item>
+			<item name="teacherComment" remark="教师评语" multiple="N"></item>
+			<item name="studentDegreeSatisfaction" remark="学员满意程度" multiple="N"></item>
+			<item name="teacherSign" remark="教师签字" multiple="N"></item>
+			<item name="studentSign" remark="学员签字" multiple="N"></item> 
+			<item name="ZongHe" remark="总和" multiple="N"></item> 
+		</page>
+	</product>
+	<nfykdxpt ver="1.0">
+		<page ver="1.0">
+			<item name="studentName" remark="学生姓名" multiple="N"></item>
+			<item name="grade" remark="年级" multiple="N"></item>
+			<item name="professional" remark="专业" multiple="N"></item>
+			<item name="studentType" remark="学生类型" multiple="N"></item>
+			<item name="teacherType" remark="教师类型" multiple="N"></item>
+			<item name="assessmentDate" remark="评估日期" multiple="N"></item>
+			<item name="assessmentPlace" remark="评估地点" multiple="N"></item>
+			<item name="patientName" remark="病人姓名" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+			<item name="sex" remark="性别" multiple="N"></item>
+			<item name="patientSource" remark="病人来源" multiple="N"></item>
+			<item name="patientDiagnosis" remark="病人主要诊断" multiple="N"></item>
+			<item name="operatingSkills" remark="操作技能" multiple="N"></item>
+			<item name="studentSkillNum" remark="评估前学员执行临床技能操作例数" multiple="N"></item>
+			<item name="skillComplexDegree" remark="技能复杂程度" multiple="N"></item>
+			<item name="skillLevel" remark="操作步骤的熟练程度" multiple="N"></item>
+			<item name="consentForm" remark="同意书" multiple="N"></item>
+			<item name="readyToWork" remark="准备工作" multiple="N"></item>
+			<item name="painAndStabilization" remark="止痛和镇定" multiple="N"></item>
+			<item name="SkillAbility" remark="技术能力" multiple="N"></item>
+			<item name="asepticTechnique" remark="无菌技术" multiple="N"></item>
+			<item name="seekAssistance" remark="寻求协助" multiple="N"></item>
+			<item name="relatedDisposal" remark="相关处置" multiple="N"></item>
+			<item name="communicationSkills" remark="沟通技巧" multiple="N"></item>
+			<item name="feelProfessionalDegree" remark="病人感受和专业程度" multiple="N"></item>
+			<item name="overallPerformance" remark="整体表现" multiple="N"></item>
+			<item name="observationTime" remark="观察时间" multiple="N"></item>
+			<item name="feedbackTime" remark="反馈时间" multiple="N"></item>
+			<item name="degreeSatisfaction" remark="满意程度" multiple="N"></item>
+			<item name="teacherComment" remark="教师评语" multiple="N"></item>
+			<item name="studentDegreeSatisfaction" remark="学员满意程度" multiple="N"></item>
+			<item name="teacherSign" remark="教师签字" multiple="N"></item>
+			<item name="studentSign" remark="学员签字" multiple="N"></item> 
+			<item name="ZongHe" remark="总和" multiple="N"></item> 
+		</page>
+	</nfykdxpt>
+	<hbszyysgfhpxglpt ver="1.0">
+		<page ver="1.0">
+			<item name="studentName" remark="学生姓名" multiple="N"></item>
+			<item name="grade" remark="年级" multiple="N"></item>
+			<item name="professional" remark="专业" multiple="N"></item>
+			<item name="studentType" remark="学生类型" multiple="N"></item>
+			<item name="teacherType" remark="教师类型" multiple="N"></item>
+			<item name="assessmentDate" remark="评估日期" multiple="N"></item>
+			<item name="assessmentPlace" remark="评估地点" multiple="N"></item>
+			<item name="patientName" remark="病人姓名" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+			<item name="sex" remark="性别" multiple="N"></item>
+			<item name="patientSource" remark="病人来源" multiple="N"></item>
+			<item name="patientSourceType" remark="病人类型" multiple="N"></item>
+			<item name="patientDiagnosis" remark="病人主要诊断" multiple="N"></item>
+			<item name="operatingSkills" remark="操作技能" multiple="N"></item>
+			<item name="studentSkillNum" remark="评估前学员执行临床技能操作例数" multiple="N"></item>
+			<item name="skillComplexDegree" remark="技能复杂程度" multiple="N"></item>
+			<item name="skillLevel" remark="操作步骤的熟练程度" multiple="N"></item>
+			<item name="consentForm" remark="同意书" multiple="N"></item>
+			<item name="readyToWork" remark="准备工作" multiple="N"></item>
+			<item name="painAndStabilization" remark="止痛和镇定" multiple="N"></item>
+			<item name="SkillAbility" remark="技术能力" multiple="N"></item>
+			<item name="asepticTechnique" remark="无菌技术" multiple="N"></item>
+			<item name="seekAssistance" remark="寻求协助" multiple="N"></item>
+			<item name="relatedDisposal" remark="相关处置" multiple="N"></item>
+			<item name="communicationSkills" remark="沟通技巧" multiple="N"></item>
+			<item name="feelProfessionalDegree" remark="病人感受和专业程度" multiple="N"></item>
+			<item name="overallPerformance" remark="整体表现" multiple="N"></item>
+			<item name="observationTime" remark="观察时间" multiple="N"></item>
+			<item name="feedbackTime" remark="反馈时间" multiple="N"></item>
+			<item name="degreeSatisfaction" remark="满意程度" multiple="N"></item>
+			<item name="teacherComment" remark="教师评语" multiple="N"></item>
+			<item name="studentDegreeSatisfaction" remark="学员满意程度" multiple="N"></item>
+			<item name="teacherSign" remark="教师签字" multiple="N"></item>
+			<item name="studentSign" remark="学员签字" multiple="N"></item>
+			<item name="ZongHe" remark="总和" multiple="N"></item>
+		</page>
+	</hbszyysgfhpxglpt>
+	<sczyfy ver="1.0">
+		<page ver="1.0">
+			<item name="studentName" remark="学生姓名" multiple="N"></item>
+			<item name="grade" remark="年级" multiple="N"></item>
+			<item name="professional" remark="专业" multiple="N"></item>
+			<item name="studentType" remark="学生类型" multiple="N"></item>
+			<item name="teacherType" remark="教师类型" multiple="N"></item>
+			<item name="assessmentDate" remark="评估日期" multiple="N"></item>
+			<item name="assessmentPlace" remark="评估地点" multiple="N"></item>
+			<item name="patientName" remark="病人姓名" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+			<item name="sex" remark="性别" multiple="N"></item>
+			<item name="patientSource" remark="病人来源" multiple="N"></item>
+			<item name="patientSourceType" remark="病人类型" multiple="N"></item>
+			<item name="patientDiagnosis" remark="病人主要诊断" multiple="N"></item>
+			<item name="operatingSkills" remark="操作技能" multiple="N"></item>
+			<item name="studentSkillNum" remark="评估前学员执行临床技能操作例数" multiple="N"></item>
+			<item name="skillComplexDegree" remark="技能复杂程度" multiple="N"></item>
+			<item name="skillLevel" remark="操作步骤的熟练程度" multiple="N"></item>
+			<item name="consentForm" remark="同意书" multiple="N"></item>
+			<item name="readyToWork" remark="准备工作" multiple="N"></item>
+			<item name="painAndStabilization" remark="止痛和镇定" multiple="N"></item>
+			<item name="SkillAbility" remark="技术能力" multiple="N"></item>
+			<item name="asepticTechnique" remark="无菌技术" multiple="N"></item>
+			<item name="seekAssistance" remark="寻求协助" multiple="N"></item>
+			<item name="relatedDisposal" remark="相关处置" multiple="N"></item>
+			<item name="communicationSkills" remark="沟通技巧" multiple="N"></item>
+			<item name="feelProfessionalDegree" remark="病人感受和专业程度" multiple="N"></item>
+			<item name="overallPerformance" remark="整体表现" multiple="N"></item>
+			<item name="observationTime" remark="观察时间" multiple="N"></item>
+			<item name="feedbackTime" remark="反馈时间" multiple="N"></item>
+			<item name="degreeSatisfaction" remark="满意程度" multiple="N"></item>
+			<item name="teacherComment" remark="教师评语" multiple="N"></item>
+			<item name="studentDegreeSatisfaction" remark="学员满意程度" multiple="N"></item>
+			<item name="teacherSign" remark="教师签字" multiple="N"></item>
+			<item name="studentSign" remark="学员签字" multiple="N"></item>
+			<item name="ZongHe" remark="总和" multiple="N"></item>
+		</page>
+	</sczyfy>
+	<zsey ver="1.0">
+		<page ver="1.0">
+			<item name="studentName" remark="学生姓名" multiple="N"></item>
+			<item name="grade" remark="年级" multiple="N"></item>
+			<item name="professional" remark="专业" multiple="N"></item>
+			<item name="studentType" remark="学生类型" multiple="N"></item>
+			<item name="teacherType" remark="教师类型" multiple="N"></item>
+			<item name="assessmentDate" remark="评估日期" multiple="N"></item>
+			<item name="assessmentPlace" remark="评估地点" multiple="N"></item>
+			<item name="patientName" remark="病人姓名" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+			<item name="sex" remark="性别" multiple="N"></item>
+			<item name="patientSource" remark="病人来源" multiple="N"></item>
+			<item name="patientSourceType" remark="病人类型" multiple="N"></item>
+			<item name="patientDiagnosis" remark="病人主要诊断" multiple="N"></item>
+			<item name="operatingSkills" remark="操作技能" multiple="N"></item>
+			<item name="studentSkillNum" remark="评估前学员执行临床技能操作例数" multiple="N"></item>
+			<item name="skillComplexDegree" remark="技能复杂程度" multiple="N"></item>
+			<item name="skillLevel" remark="操作步骤的熟练程度" multiple="N"></item>
+			<item name="consentForm" remark="同意书" multiple="N"></item>
+			<item name="readyToWork" remark="准备工作" multiple="N"></item>
+			<item name="painAndStabilization" remark="止痛和镇定" multiple="N"></item>
+			<item name="SkillAbility" remark="技术能力" multiple="N"></item>
+			<item name="asepticTechnique" remark="无菌技术" multiple="N"></item>
+			<item name="seekAssistance" remark="寻求协助" multiple="N"></item>
+			<item name="relatedDisposal" remark="相关处置" multiple="N"></item>
+			<item name="communicationSkills" remark="沟通技巧" multiple="N"></item>
+			<item name="feelProfessionalDegree" remark="病人感受和专业程度" multiple="N"></item>
+			<item name="overallPerformance" remark="整体表现" multiple="N"></item>
+			<item name="observationTime" remark="观察时间" multiple="N"></item>
+			<item name="feedbackTime" remark="反馈时间" multiple="N"></item>
+			<item name="degreeSatisfaction" remark="满意程度" multiple="N"></item>
+			<item name="teacherComment" remark="教师评语" multiple="N"></item>
+			<item name="studentDegreeSatisfaction" remark="学员满意程度" multiple="N"></item>
+			<item name="teacherSign" remark="教师签字" multiple="N"></item>
+			<item name="studentSign" remark="学员签字" multiple="N"></item>
+			<item name="ZongHe" remark="总和" multiple="N"></item>
+		</page>
+	</zsey>
+	<jszy ver="1.0">
+		<page ver="1.0">
+			<item name="studentName" remark="学生姓名" multiple="N"></item>
+			<item name="grade" remark="年级" multiple="N"></item>
+			<item name="professional" remark="专业" multiple="N"></item>
+			<item name="studentType" remark="学生类型" multiple="N"></item>
+			<item name="teacherType" remark="教师类型" multiple="N"></item>
+			<item name="assessmentDate" remark="评估日期" multiple="N"></item>
+			<item name="assessmentPlace" remark="评估地点" multiple="N"></item>
+			<item name="patientName" remark="病人姓名" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+			<item name="sex" remark="性别" multiple="N"></item>
+			<item name="patientSource" remark="病人来源" multiple="N"></item>
+			<item name="patientSourceType" remark="病人来源" multiple="N"></item>
+			<item name="patientDiagnosis" remark="病人主要诊断" multiple="N"></item>
+			<item name="operatingSkills" remark="操作技能" multiple="N"></item>
+			<item name="studentSkillNum" remark="评估前学员执行临床技能操作例数" multiple="N"></item>
+			<item name="skillComplexDegree" remark="技能复杂程度" multiple="N"></item>
+			<item name="skillLevel" remark="操作步骤的熟练程度" multiple="N"></item>
+			<item name="consentForm" remark="同意书" multiple="N"></item>
+			<item name="readyToWork" remark="准备工作" multiple="N"></item>
+			<item name="painAndStabilization" remark="止痛和镇定" multiple="N"></item>
+			<item name="SkillAbility" remark="技术能力" multiple="N"></item>
+			<item name="asepticTechnique" remark="无菌技术" multiple="N"></item>
+			<item name="seekAssistance" remark="寻求协助" multiple="N"></item>
+			<item name="relatedDisposal" remark="相关处置" multiple="N"></item>
+			<item name="communicationSkills" remark="沟通技巧" multiple="N"></item>
+			<item name="feelProfessionalDegree" remark="病人感受和专业程度" multiple="N"></item>
+			<item name="overallPerformance" remark="整体表现" multiple="N"></item>
+			<item name="observationTime" remark="观察时间" multiple="N"></item>
+			<item name="feedbackTime" remark="反馈时间" multiple="N"></item>
+			<item name="degreeSatisfaction" remark="满意程度" multiple="N"></item>
+			<item name="teacherComment" remark="教师评语" multiple="N"></item>
+			<item name="studentDegreeSatisfaction" remark="学员满意程度" multiple="N"></item>
+			<item name="teacherSign" remark="教师签字" multiple="N"></item>
+			<item name="studentSign" remark="学员签字" multiple="N"></item>
+			<item name="ZongHe" remark="总和" multiple="N"></item>
+			<item name="headFlow" remark="科主任" multiple="N"></item>
+			<item name="teaFlow" remark="带教老师" multiple="N"></item>
+		</page>
+	</jszy>
+	<gzzyyy ver="1.0">
+		<page ver="1.0">
+			<item name="studentName" remark="学生姓名" multiple="N"></item>
+			<item name="grade" remark="年级" multiple="N"></item>
+			<item name="professional" remark="专业" multiple="N"></item>
+			<item name="studentType" remark="学生类型" multiple="N"></item>
+			<item name="teacherType" remark="教师类型" multiple="N"></item>
+			<item name="assessmentDate" remark="评估日期" multiple="N"></item>
+			<item name="assessmentPlace" remark="评估地点" multiple="N"></item>
+			<item name="patientName" remark="病人姓名" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+			<item name="sex" remark="性别" multiple="N"></item>
+			<item name="patientSource" remark="病人来源" multiple="N"></item>
+			<item name="patientSourceType" remark="病人来源" multiple="N"></item>
+			<item name="patientDiagnosis" remark="病人主要诊断" multiple="N"></item>
+			<item name="operatingSkills" remark="操作技能" multiple="N"></item>
+			<item name="studentSkillNum" remark="评估前学员执行临床技能操作例数" multiple="N"></item>
+			<item name="skillComplexDegree" remark="技能复杂程度" multiple="N"></item>
+			<item name="skillLevel" remark="操作步骤的熟练程度" multiple="N"></item>
+			<item name="consentForm" remark="同意书" multiple="N"></item>
+			<item name="readyToWork" remark="准备工作" multiple="N"></item>
+			<item name="painAndStabilization" remark="止痛和镇定" multiple="N"></item>
+			<item name="SkillAbility" remark="技术能力" multiple="N"></item>
+			<item name="asepticTechnique" remark="无菌技术" multiple="N"></item>
+			<item name="seekAssistance" remark="寻求协助" multiple="N"></item>
+			<item name="relatedDisposal" remark="相关处置" multiple="N"></item>
+			<item name="communicationSkills" remark="沟通技巧" multiple="N"></item>
+			<item name="feelProfessionalDegree" remark="病人感受和专业程度" multiple="N"></item>
+			<item name="overallPerformance" remark="整体表现" multiple="N"></item>
+			<item name="observationTime" remark="观察时间" multiple="N"></item>
+			<item name="feedbackTime" remark="反馈时间" multiple="N"></item>
+			<item name="degreeSatisfaction" remark="满意程度" multiple="N"></item>
+			<item name="teacherComment" remark="教师评语" multiple="N"></item>
+			<item name="studentDegreeSatisfaction" remark="学员满意程度" multiple="N"></item>
+			<item name="teacherSign" remark="教师签字" multiple="N"></item>
+			<item name="studentSign" remark="学员签字" multiple="N"></item>
+			<item name="ZongHe" remark="总和" multiple="N"></item>
+			<item name="headFlow" remark="科主任" multiple="N"></item>
+			<item name="teaFlow" remark="带教老师" multiple="N"></item>
+		</page>
+	</gzzyyy>
+	<shrjyy ver="1.0">
+		<page ver="1.0">
+			<item name="studentName" remark="学生姓名" multiple="N"></item>
+			<item name="grade" remark="年级" multiple="N"></item>
+			<item name="professional" remark="专业" multiple="N"></item>
+			<item name="studentType" remark="学生类型" multiple="N"></item>
+			<item name="teacherType" remark="教师类型" multiple="N"></item>
+			<item name="assessmentDate" remark="评估日期" multiple="N"></item>
+			<item name="assessmentPlace" remark="评估地点" multiple="N"></item>
+			<item name="patientName" remark="病人姓名" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+			<item name="sex" remark="性别" multiple="N"></item>
+			<item name="patientSource" remark="病人来源" multiple="N"></item>
+			<item name="patientSourceType" remark="病人类型" multiple="N"></item>
+			<item name="patientDiagnosis" remark="病人主要诊断" multiple="N"></item>
+			<item name="operatingSkills" remark="操作技能" multiple="N"></item>
+			<item name="studentSkillNum" remark="评估前学员执行临床技能操作例数" multiple="N"></item>
+			<item name="skillComplexDegree" remark="技能复杂程度" multiple="N"></item>
+			<item name="skillLevel" remark="操作步骤的熟练程度" multiple="N"></item>
+			<item name="consentForm" remark="同意书" multiple="N"></item>
+			<item name="readyToWork" remark="准备工作" multiple="N"></item>
+			<item name="painAndStabilization" remark="止痛和镇定" multiple="N"></item>
+			<item name="SkillAbility" remark="技术能力" multiple="N"></item>
+			<item name="asepticTechnique" remark="无菌技术" multiple="N"></item>
+			<item name="seekAssistance" remark="寻求协助" multiple="N"></item>
+			<item name="relatedDisposal" remark="相关处置" multiple="N"></item>
+			<item name="communicationSkills" remark="沟通技巧" multiple="N"></item>
+			<item name="feelProfessionalDegree" remark="病人感受和专业程度" multiple="N"></item>
+			<item name="overallPerformance" remark="整体表现" multiple="N"></item>
+			<item name="observationTime" remark="观察时间" multiple="N"></item>
+			<item name="feedbackTime" remark="反馈时间" multiple="N"></item>
+			<item name="degreeSatisfaction" remark="满意程度" multiple="N"></item>
+			<item name="teacherComment" remark="教师评语" multiple="N"></item>
+			<item name="studentDegreeSatisfaction" remark="学员满意程度" multiple="N"></item>
+			<item name="teacherSign" remark="教师签字" multiple="N"></item>
+			<item name="studentSign" remark="学员签字" multiple="N"></item>
+			<item name="ZongHe" remark="总和" multiple="N"></item>
+		</page>
+	</shrjyy>
+	<shfx ver="1.0">
+		<page ver="1.0">
+			<item name="studentName" remark="学生姓名" multiple="N"></item>
+			<item name="grade" remark="年级" multiple="N"></item>
+			<item name="professional" remark="专业" multiple="N"></item>
+			<item name="studentType" remark="学生类型" multiple="N"></item>
+			<item name="teacherType" remark="教师类型" multiple="N"></item>
+			<item name="assessmentDate" remark="评估日期" multiple="N"></item>
+			<item name="assessmentPlace" remark="评估地点" multiple="N"></item>
+			<item name="patientName" remark="病人姓名" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+			<item name="sex" remark="性别" multiple="N"></item>
+			<item name="patientSource" remark="病人来源" multiple="N"></item>
+			<item name="patientSourceType" remark="病人类型" multiple="N"></item>
+			<item name="patientDiagnosis" remark="病人主要诊断" multiple="N"></item>
+			<item name="operatingSkills" remark="操作技能" multiple="N"></item>
+			<item name="studentSkillNum" remark="评估前学员执行临床技能操作例数" multiple="N"></item>
+			<item name="skillComplexDegree" remark="技能复杂程度" multiple="N"></item>
+			<item name="skillLevel" remark="操作步骤的熟练程度" multiple="N"></item>
+			<item name="consentForm" remark="同意书" multiple="N"></item>
+			<item name="readyToWork" remark="准备工作" multiple="N"></item>
+			<item name="painAndStabilization" remark="止痛和镇定" multiple="N"></item>
+			<item name="SkillAbility" remark="技术能力" multiple="N"></item>
+			<item name="asepticTechnique" remark="无菌技术" multiple="N"></item>
+			<item name="seekAssistance" remark="寻求协助" multiple="N"></item>
+			<item name="relatedDisposal" remark="相关处置" multiple="N"></item>
+			<item name="communicationSkills" remark="沟通技巧" multiple="N"></item>
+			<item name="feelProfessionalDegree" remark="病人感受和专业程度" multiple="N"></item>
+			<item name="overallPerformance" remark="整体表现" multiple="N"></item>
+			<item name="observationTime" remark="观察时间" multiple="N"></item>
+			<item name="feedbackTime" remark="反馈时间" multiple="N"></item>
+			<item name="degreeSatisfaction" remark="满意程度" multiple="N"></item>
+			<item name="teacherComment" remark="教师评语" multiple="N"></item>
+			<item name="studentDegreeSatisfaction" remark="学员满意程度" multiple="N"></item>
+			<item name="teacherSign" remark="教师签字" multiple="N"></item>
+			<item name="studentSign" remark="学员签字" multiple="N"></item>
+			<item name="ZongHe" remark="总和" multiple="N"></item>
+		</page>
+	</shfx>
+	<dgdhyy ver="1.0">
+		<page ver="1.0">
+			<item name="teacher" remark="教师" multiple="N"></item>
+			<item name="titleName" remark="教师职称" multiple="N"></item>
+			<item name="doctor" remark="姓名" multiple="N"></item>
+			<item name="spe" remark="专业" multiple="N"></item>
+			<item name="year" remark="第几年" multiple="N"></item>
+			<item name="trainType" remark="培养类别" multiple="N"></item>
+			<item name="operateName" remark="临床操作名称" multiple="N"></item>
+			<item name="operateLevel" remark="临床操作难度" multiple="N"></item>
+			<item name="assessTime" remark="评估时间" multiple="N"></item>
+			<item name="assessPlace" remark="评估地点" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+			<item name="sex" remark="性别" multiple="N"></item>
+			<item name="xgzs" remark="相关知识" multiple="N"></item>
+			<item name="xgzsFlag" select="Y" remark="评估标识" multiple="N"></item>
+			<item name="czqdzqty" remark="操作前的知情同意" multiple="N"></item>
+			<item name="czqdzqtyFlag" select="Y" remark="评估标识" multiple="N"></item>
+			<item name="sqzb" remark="术前准备" multiple="N"></item>
+			<item name="sqzbFlag" select="Y" remark="评估标识" multiple="N"></item>
+			<item name="jnsld" remark="技能熟练度" multiple="N"></item>
+			<item name="jnsldFlag" select="Y" remark="评估标识" multiple="N"></item>
+			<item name="wjgn"  remark="无菌观念" multiple="N"></item>
+			<item name="wjgnFlag" select="Y" remark="评估标识" multiple="N"></item>
+			<item name="czhcl" remark="操作后的处理" multiple="N"></item>
+			<item name="czhclFlag" select="Y" remark="评估标识" multiple="N"></item>
+			<item name="gtjq" remark="沟通技巧" multiple="N"></item>
+			<item name="gtjqFlag" select="Y" remark="评估标识" multiple="N"></item>
+			<item name="zysyjrw" remark="专业素养及人文" multiple="N"></item>
+			<item name="zysyjrwFlag" select="Y" remark="评估标识" multiple="N"></item>
+			<item name="ssxqxz" remark="适时寻求协助" multiple="N"></item>
+			<item name="ssxqxzFlag" select="Y" remark="评估标识" multiple="N"></item>
+			<item name="ztbx" remark="整体表现" multiple="N"></item>
+			<item name="ztbxFlag" select="Y" remark="评估标识" multiple="N"></item>
+			<item name="seeTime" remark="观察时间" multiple="N"></item>
+			<item name="backTime" remark="反馈时间" multiple="N"></item>
+			<item name="teacherFeel" remark="教师对测评满意度" multiple="N"></item>
+			<item name="doctorFeel" remark="学员对测评满意度" multiple="N"></item>
+			<item name="bxlhxm" remark="表现良好项目" multiple="N"></item>
+			<item name="jyjqxm" remark="建议加强项目" multiple="N"></item>
+		</page>
+	</dgdhyy>
+</jspForm>
+

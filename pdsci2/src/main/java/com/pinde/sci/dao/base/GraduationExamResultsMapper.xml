@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.GraduationExamResultsMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.GraduationExamResults" >
+    <id column="RESULTS_ID" property="resultsId" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="SOLU_ID" property="soluId" jdbcType="VARCHAR" />
+    <result column="SOLU_SCORE" property="soluScore" jdbcType="VARCHAR" />
+    <result column="EXAM_SCORE" property="examScore" jdbcType="VARCHAR" />
+    <result column="EXAM_PASS_SCORE" property="examPassScore" jdbcType="VARCHAR" />
+    <result column="IS_PASS" property="isPass" jdbcType="VARCHAR" />
+    <result column="EXAM_TIME" property="examTime" jdbcType="VARCHAR" />
+    <result column="WORD_URL" property="wordUrl" jdbcType="VARCHAR" />
+    <result column="SOLU_NAME" property="soluName" jdbcType="VARCHAR" />
+    <result column="ADD_SCORE" property="addScore" jdbcType="VARCHAR" />
+    <result column="EXAM_WN" property="examWn" jdbcType="VARCHAR" />
+    <result column="PROCESS_FLOW" property="processFlow" jdbcType="VARCHAR" />
+    <result column="SUBMIT_TIME" property="submitTime" jdbcType="VARCHAR" />
+    <result column="UNIFY_EXAMTIME_ID" property="unifyExamtimeId" jdbcType="VARCHAR" />
+    <result column="EXAM_TEST_TYPE" property="examTestType" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="IS_MARKED" property="isMarked" jdbcType="VARCHAR" />
+    <result column="SUBJECTIVE_SCORE" property="subjectiveScore" jdbcType="VARCHAR" />
+    <result column="MARK_USER_ID" property="markUserId" jdbcType="VARCHAR" />
+    <result column="MARK_TIME" property="markTime" jdbcType="VARCHAR" />
+    <result column="IS_SYN" property="isSyn" jdbcType="VARCHAR" />
+    <result column="RESULT_SOURCE" property="resultSource" jdbcType="VARCHAR" />
+    <result column="TEST_COUNT" property="testCount" jdbcType="VARCHAR" />
+    <result column="THEORY_SCORE" property="theoryScore" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RESULTS_ID, USER_ID, SOLU_ID, SOLU_SCORE, EXAM_SCORE, EXAM_PASS_SCORE, IS_PASS, EXAM_TIME, 
+    WORD_URL, SOLU_NAME, ADD_SCORE, EXAM_WN, PROCESS_FLOW, SUBMIT_TIME, UNIFY_EXAMTIME_ID, 
+    EXAM_TEST_TYPE, RECORD_STATUS, IS_MARKED, SUBJECTIVE_SCORE, MARK_USER_ID, MARK_TIME, 
+    IS_SYN, RESULT_SOURCE, TEST_COUNT, THEORY_SCORE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.GraduationExamResultsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.GRADUATION_EXAM_RESULTS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.GRADUATION_EXAM_RESULTS
+    where RESULTS_ID = #{resultsId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.GRADUATION_EXAM_RESULTS
+    where RESULTS_ID = #{resultsId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.GraduationExamResultsExample" >
+    delete from PDSCI.GRADUATION_EXAM_RESULTS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.GraduationExamResults" >
+    insert into PDSCI.GRADUATION_EXAM_RESULTS (RESULTS_ID, USER_ID, SOLU_ID, 
+      SOLU_SCORE, EXAM_SCORE, EXAM_PASS_SCORE, 
+      IS_PASS, EXAM_TIME, WORD_URL, 
+      SOLU_NAME, ADD_SCORE, EXAM_WN, 
+      PROCESS_FLOW, SUBMIT_TIME, UNIFY_EXAMTIME_ID, 
+      EXAM_TEST_TYPE, RECORD_STATUS, IS_MARKED, 
+      SUBJECTIVE_SCORE, MARK_USER_ID, MARK_TIME, 
+      IS_SYN, RESULT_SOURCE, TEST_COUNT, 
+      THEORY_SCORE)
+    values (#{resultsId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{soluId,jdbcType=VARCHAR}, 
+      #{soluScore,jdbcType=VARCHAR}, #{examScore,jdbcType=VARCHAR}, #{examPassScore,jdbcType=VARCHAR}, 
+      #{isPass,jdbcType=VARCHAR}, #{examTime,jdbcType=VARCHAR}, #{wordUrl,jdbcType=VARCHAR}, 
+      #{soluName,jdbcType=VARCHAR}, #{addScore,jdbcType=VARCHAR}, #{examWn,jdbcType=VARCHAR}, 
+      #{processFlow,jdbcType=VARCHAR}, #{submitTime,jdbcType=VARCHAR}, #{unifyExamtimeId,jdbcType=VARCHAR}, 
+      #{examTestType,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{isMarked,jdbcType=VARCHAR}, 
+      #{subjectiveScore,jdbcType=VARCHAR}, #{markUserId,jdbcType=VARCHAR}, #{markTime,jdbcType=VARCHAR}, 
+      #{isSyn,jdbcType=VARCHAR}, #{resultSource,jdbcType=VARCHAR}, #{testCount,jdbcType=VARCHAR}, 
+      #{theoryScore,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.GraduationExamResults" >
+    insert into PDSCI.GRADUATION_EXAM_RESULTS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="resultsId != null" >
+        RESULTS_ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="soluId != null" >
+        SOLU_ID,
+      </if>
+      <if test="soluScore != null" >
+        SOLU_SCORE,
+      </if>
+      <if test="examScore != null" >
+        EXAM_SCORE,
+      </if>
+      <if test="examPassScore != null" >
+        EXAM_PASS_SCORE,
+      </if>
+      <if test="isPass != null" >
+        IS_PASS,
+      </if>
+      <if test="examTime != null" >
+        EXAM_TIME,
+      </if>
+      <if test="wordUrl != null" >
+        WORD_URL,
+      </if>
+      <if test="soluName != null" >
+        SOLU_NAME,
+      </if>
+      <if test="addScore != null" >
+        ADD_SCORE,
+      </if>
+      <if test="examWn != null" >
+        EXAM_WN,
+      </if>
+      <if test="processFlow != null" >
+        PROCESS_FLOW,
+      </if>
+      <if test="submitTime != null" >
+        SUBMIT_TIME,
+      </if>
+      <if test="unifyExamtimeId != null" >
+        UNIFY_EXAMTIME_ID,
+      </if>
+      <if test="examTestType != null" >
+        EXAM_TEST_TYPE,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="isMarked != null" >
+        IS_MARKED,
+      </if>
+      <if test="subjectiveScore != null" >
+        SUBJECTIVE_SCORE,
+      </if>
+      <if test="markUserId != null" >
+        MARK_USER_ID,
+      </if>
+      <if test="markTime != null" >
+        MARK_TIME,
+      </if>
+      <if test="isSyn != null" >
+        IS_SYN,
+      </if>
+      <if test="resultSource != null" >
+        RESULT_SOURCE,
+      </if>
+      <if test="testCount != null" >
+        TEST_COUNT,
+      </if>
+      <if test="theoryScore != null" >
+        THEORY_SCORE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="resultsId != null" >
+        #{resultsId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="soluId != null" >
+        #{soluId,jdbcType=VARCHAR},
+      </if>
+      <if test="soluScore != null" >
+        #{soluScore,jdbcType=VARCHAR},
+      </if>
+      <if test="examScore != null" >
+        #{examScore,jdbcType=VARCHAR},
+      </if>
+      <if test="examPassScore != null" >
+        #{examPassScore,jdbcType=VARCHAR},
+      </if>
+      <if test="isPass != null" >
+        #{isPass,jdbcType=VARCHAR},
+      </if>
+      <if test="examTime != null" >
+        #{examTime,jdbcType=VARCHAR},
+      </if>
+      <if test="wordUrl != null" >
+        #{wordUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="soluName != null" >
+        #{soluName,jdbcType=VARCHAR},
+      </if>
+      <if test="addScore != null" >
+        #{addScore,jdbcType=VARCHAR},
+      </if>
+      <if test="examWn != null" >
+        #{examWn,jdbcType=VARCHAR},
+      </if>
+      <if test="processFlow != null" >
+        #{processFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="submitTime != null" >
+        #{submitTime,jdbcType=VARCHAR},
+      </if>
+      <if test="unifyExamtimeId != null" >
+        #{unifyExamtimeId,jdbcType=VARCHAR},
+      </if>
+      <if test="examTestType != null" >
+        #{examTestType,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="isMarked != null" >
+        #{isMarked,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectiveScore != null" >
+        #{subjectiveScore,jdbcType=VARCHAR},
+      </if>
+      <if test="markUserId != null" >
+        #{markUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="markTime != null" >
+        #{markTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isSyn != null" >
+        #{isSyn,jdbcType=VARCHAR},
+      </if>
+      <if test="resultSource != null" >
+        #{resultSource,jdbcType=VARCHAR},
+      </if>
+      <if test="testCount != null" >
+        #{testCount,jdbcType=VARCHAR},
+      </if>
+      <if test="theoryScore != null" >
+        #{theoryScore,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.GraduationExamResultsExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.GRADUATION_EXAM_RESULTS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.GRADUATION_EXAM_RESULTS
+    <set >
+      <if test="record.resultsId != null" >
+        RESULTS_ID = #{record.resultsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.soluId != null" >
+        SOLU_ID = #{record.soluId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.soluScore != null" >
+        SOLU_SCORE = #{record.soluScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examScore != null" >
+        EXAM_SCORE = #{record.examScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examPassScore != null" >
+        EXAM_PASS_SCORE = #{record.examPassScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isPass != null" >
+        IS_PASS = #{record.isPass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examTime != null" >
+        EXAM_TIME = #{record.examTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wordUrl != null" >
+        WORD_URL = #{record.wordUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.soluName != null" >
+        SOLU_NAME = #{record.soluName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addScore != null" >
+        ADD_SCORE = #{record.addScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examWn != null" >
+        EXAM_WN = #{record.examWn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.processFlow != null" >
+        PROCESS_FLOW = #{record.processFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submitTime != null" >
+        SUBMIT_TIME = #{record.submitTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unifyExamtimeId != null" >
+        UNIFY_EXAMTIME_ID = #{record.unifyExamtimeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examTestType != null" >
+        EXAM_TEST_TYPE = #{record.examTestType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isMarked != null" >
+        IS_MARKED = #{record.isMarked,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectiveScore != null" >
+        SUBJECTIVE_SCORE = #{record.subjectiveScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.markUserId != null" >
+        MARK_USER_ID = #{record.markUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.markTime != null" >
+        MARK_TIME = #{record.markTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSyn != null" >
+        IS_SYN = #{record.isSyn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resultSource != null" >
+        RESULT_SOURCE = #{record.resultSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.testCount != null" >
+        TEST_COUNT = #{record.testCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.theoryScore != null" >
+        THEORY_SCORE = #{record.theoryScore,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.GRADUATION_EXAM_RESULTS
+    set RESULTS_ID = #{record.resultsId,jdbcType=VARCHAR},
+      USER_ID = #{record.userId,jdbcType=VARCHAR},
+      SOLU_ID = #{record.soluId,jdbcType=VARCHAR},
+      SOLU_SCORE = #{record.soluScore,jdbcType=VARCHAR},
+      EXAM_SCORE = #{record.examScore,jdbcType=VARCHAR},
+      EXAM_PASS_SCORE = #{record.examPassScore,jdbcType=VARCHAR},
+      IS_PASS = #{record.isPass,jdbcType=VARCHAR},
+      EXAM_TIME = #{record.examTime,jdbcType=VARCHAR},
+      WORD_URL = #{record.wordUrl,jdbcType=VARCHAR},
+      SOLU_NAME = #{record.soluName,jdbcType=VARCHAR},
+      ADD_SCORE = #{record.addScore,jdbcType=VARCHAR},
+      EXAM_WN = #{record.examWn,jdbcType=VARCHAR},
+      PROCESS_FLOW = #{record.processFlow,jdbcType=VARCHAR},
+      SUBMIT_TIME = #{record.submitTime,jdbcType=VARCHAR},
+      UNIFY_EXAMTIME_ID = #{record.unifyExamtimeId,jdbcType=VARCHAR},
+      EXAM_TEST_TYPE = #{record.examTestType,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      IS_MARKED = #{record.isMarked,jdbcType=VARCHAR},
+      SUBJECTIVE_SCORE = #{record.subjectiveScore,jdbcType=VARCHAR},
+      MARK_USER_ID = #{record.markUserId,jdbcType=VARCHAR},
+      MARK_TIME = #{record.markTime,jdbcType=VARCHAR},
+      IS_SYN = #{record.isSyn,jdbcType=VARCHAR},
+      RESULT_SOURCE = #{record.resultSource,jdbcType=VARCHAR},
+      TEST_COUNT = #{record.testCount,jdbcType=VARCHAR},
+      THEORY_SCORE = #{record.theoryScore,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.GraduationExamResults" >
+    update PDSCI.GRADUATION_EXAM_RESULTS
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="soluId != null" >
+        SOLU_ID = #{soluId,jdbcType=VARCHAR},
+      </if>
+      <if test="soluScore != null" >
+        SOLU_SCORE = #{soluScore,jdbcType=VARCHAR},
+      </if>
+      <if test="examScore != null" >
+        EXAM_SCORE = #{examScore,jdbcType=VARCHAR},
+      </if>
+      <if test="examPassScore != null" >
+        EXAM_PASS_SCORE = #{examPassScore,jdbcType=VARCHAR},
+      </if>
+      <if test="isPass != null" >
+        IS_PASS = #{isPass,jdbcType=VARCHAR},
+      </if>
+      <if test="examTime != null" >
+        EXAM_TIME = #{examTime,jdbcType=VARCHAR},
+      </if>
+      <if test="wordUrl != null" >
+        WORD_URL = #{wordUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="soluName != null" >
+        SOLU_NAME = #{soluName,jdbcType=VARCHAR},
+      </if>
+      <if test="addScore != null" >
+        ADD_SCORE = #{addScore,jdbcType=VARCHAR},
+      </if>
+      <if test="examWn != null" >
+        EXAM_WN = #{examWn,jdbcType=VARCHAR},
+      </if>
+      <if test="processFlow != null" >
+        PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="submitTime != null" >
+        SUBMIT_TIME = #{submitTime,jdbcType=VARCHAR},
+      </if>
+      <if test="unifyExamtimeId != null" >
+        UNIFY_EXAMTIME_ID = #{unifyExamtimeId,jdbcType=VARCHAR},
+      </if>
+      <if test="examTestType != null" >
+        EXAM_TEST_TYPE = #{examTestType,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="isMarked != null" >
+        IS_MARKED = #{isMarked,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectiveScore != null" >
+        SUBJECTIVE_SCORE = #{subjectiveScore,jdbcType=VARCHAR},
+      </if>
+      <if test="markUserId != null" >
+        MARK_USER_ID = #{markUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="markTime != null" >
+        MARK_TIME = #{markTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isSyn != null" >
+        IS_SYN = #{isSyn,jdbcType=VARCHAR},
+      </if>
+      <if test="resultSource != null" >
+        RESULT_SOURCE = #{resultSource,jdbcType=VARCHAR},
+      </if>
+      <if test="testCount != null" >
+        TEST_COUNT = #{testCount,jdbcType=VARCHAR},
+      </if>
+      <if test="theoryScore != null" >
+        THEORY_SCORE = #{theoryScore,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where RESULTS_ID = #{resultsId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.GraduationExamResults" >
+    update PDSCI.GRADUATION_EXAM_RESULTS
+    set USER_ID = #{userId,jdbcType=VARCHAR},
+      SOLU_ID = #{soluId,jdbcType=VARCHAR},
+      SOLU_SCORE = #{soluScore,jdbcType=VARCHAR},
+      EXAM_SCORE = #{examScore,jdbcType=VARCHAR},
+      EXAM_PASS_SCORE = #{examPassScore,jdbcType=VARCHAR},
+      IS_PASS = #{isPass,jdbcType=VARCHAR},
+      EXAM_TIME = #{examTime,jdbcType=VARCHAR},
+      WORD_URL = #{wordUrl,jdbcType=VARCHAR},
+      SOLU_NAME = #{soluName,jdbcType=VARCHAR},
+      ADD_SCORE = #{addScore,jdbcType=VARCHAR},
+      EXAM_WN = #{examWn,jdbcType=VARCHAR},
+      PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR},
+      SUBMIT_TIME = #{submitTime,jdbcType=VARCHAR},
+      UNIFY_EXAMTIME_ID = #{unifyExamtimeId,jdbcType=VARCHAR},
+      EXAM_TEST_TYPE = #{examTestType,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      IS_MARKED = #{isMarked,jdbcType=VARCHAR},
+      SUBJECTIVE_SCORE = #{subjectiveScore,jdbcType=VARCHAR},
+      MARK_USER_ID = #{markUserId,jdbcType=VARCHAR},
+      MARK_TIME = #{markTime,jdbcType=VARCHAR},
+      IS_SYN = #{isSyn,jdbcType=VARCHAR},
+      RESULT_SOURCE = #{resultSource,jdbcType=VARCHAR},
+      TEST_COUNT = #{testCount,jdbcType=VARCHAR},
+      THEORY_SCORE = #{theoryScore,jdbcType=DECIMAL}
+    where RESULTS_ID = #{resultsId,jdbcType=VARCHAR}
+  </update>
+</mapper>

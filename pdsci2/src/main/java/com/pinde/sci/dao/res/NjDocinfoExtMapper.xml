@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.NjDocinfoExtMapper" >
+    <resultMap id="NjDocinfoExtMap" type="com.pinde.sci.model.res.NjDocinfoExt" extends="com.pinde.sci.dao.base.TjDocinfoMapper.BaseResultMap">
+    </resultMap>
+    <select id="searchNjDocinfo"  parameterType="com.pinde.sci.model.mo.TjDocinfo"  resultMap="NjDocinfoExtMap">
+        select
+        USER_FLOW, ORG_FLOW, ORG_CODE, ORG_NAME, DOCROLE, USER_ID, USER_NAME, USER_PASSWORD,
+        ID_NO, QUALIFIED_NO, SPE_CODE, SPE_NAME, TICKET_NUM, USER_SEX, DEGREE, BEF_ORG_NAME,
+        USER_PHONE, PHONE_PATH, REMARK, SITE_ONE, SITE_ONE_TIME, SITE_ONE_SCORE, SITE_ONE_STATE,
+        SITE_TWO, SITE_TWO_TIME, SITE_TWO_SCORE, SITE_TWO_STATE, SITE_THREE, SITE_THREE_TIME,
+        SITE_THREE_SCORE, SITE_THREE_STATE, TOTAL_SCORE_STATE, COMPLETE_NO, MEMO, RECORD_STATUS,
+        CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, ORG_CODE2, BEGINDATE,
+        ENDDATE, SESSION_NUMBER, ADDRESS, EXAMTIME, SITEPHONE, TITLE
+        from tj_docinfo
+        where RECORD_STATUS = 'Y'
+        <if test="userId != null and userId != ''">
+        and USER_ID = #{userId}
+        </if>
+        <if test="userFlow != null and userFlow != ''">
+            and USER_FLOW = #{userFlow}
+        </if>
+        <if test="userName != null and userName != ''">
+            and USER_NAME like '%${userName}%'
+        </if>
+        <if test="speName != null and speName != ''">
+            and SPE_NAME = #{speName}
+        </if>
+        <if test="idNo != null and idNo != ''">
+        and ID_NO like '%${idNo}%'
+        </if>
+        <if test="ticketNum != null and ticketNum != ''">
+        and TICKET_NUM = #{ticketNum}
+        </if>
+        <if test="qualifiedNo != null and qualifiedNo != ''">
+        and QUALIFIED_NO = #{qualifiedNo}
+        </if>
+        <if test="docrole != null and docrole != ''">
+        and DOCROLE = #{docrole}
+        </if>
+        <if test="orgCode != null and orgCode != ''">
+        and ORG_CODE like '%${orgCode}%'
+        </if>
+        <if test="orgName != null and orgName != ''">
+        and ORG_NAME like '%${orgName}%'
+        </if>
+        <if test="orgFlow != null and orgFlow != ''">
+            and ORG_FLOW = #{orgFlow}
+        </if>
+        <if test="siteOneState != null and siteOneState != ''">
+        and SITE_ONE_STATE = #{siteOneState}
+        </if>
+        <if test="siteTwoState != null and siteTwoState != ''">
+        and SITE_TWO_STATE = #{siteTwoState}
+        </if>
+        <if test="siteThreeState != null and siteThreeState != ''">
+        and SITE_THREE_STATE = #{siteThreeState}
+        </if>
+        <if test="totalScoreState != null and totalScoreState != ''">
+        and TOTAL_SCORE_STATE = #{totalScoreState}
+        </if>
+        ORDER BY USER_ID DESC
+    </select>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+    USER_FLOW, ORG_FLOW, ORG_CODE, ORG_NAME, DOCROLE, USER_ID, USER_PASSWORD, USER_NAME,
+    ID_NO, QUALIFIED_NO, SPE_CODE, SPE_NAME, TICKET_NUM, USER_SEX, DEGREE, BEF_ORG_NAME,
+    USER_PHONE, PHONE_PATH, REMARK, SITE_ONE, SITE_ONE_TIME, SITE_ONE_SCORE, SITE_ONE_STATE,
+    SITE_TWO, SITE_TWO_TIME, SITE_TWO_SCORE, SITE_TWO_STATE, SITE_THREE, SITE_THREE_TIME,
+    SITE_THREE_SCORE, SITE_THREE_STATE, TOTAL_SCORE_STATE, COMPLETE_NO, MEMO, RECORD_STATUS,
+    CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, ORG_CODE2, BEGINDATE,
+    ENDDATE, SESSION_NUMBER, ADDRESS, EXAMTIME, SITEPHONE, TITLE, CITY_CODE
+  </sql>
+
+    <select id="selectByParam" resultMap="NjDocinfoExtMap" parameterType="com.pinde.sci.model.mo.TjDocinfoExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from PDSCI.TJ_DOCINFO
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectMaxTickNumber" resultType="string">
+    SELECT MAX(SUBSTR(TICKET_NUM, 1, 13))
+    FROM TJ_DOCINFO
+    WHERE CREATE_TIME > '20230101010101'
+    </select>
+
+</mapper>

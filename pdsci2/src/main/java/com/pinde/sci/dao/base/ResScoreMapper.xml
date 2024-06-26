@@ -1,0 +1,797 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.ResScoreMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResScore" >
+    <id column="SCORE_FLOW" property="scoreFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+    <result column="SCORE_TYPE_ID" property="scoreTypeId" jdbcType="VARCHAR" />
+    <result column="SCORE_TYPE_NAME" property="scoreTypeName" jdbcType="VARCHAR" />
+    <result column="RESULT_FLOW" property="resultFlow" jdbcType="VARCHAR" />
+    <result column="PROCESS_FLOW" property="processFlow" jdbcType="VARCHAR" />
+    <result column="SCH_DEPT_FLOW" property="schDeptFlow" jdbcType="VARCHAR" />
+    <result column="SCH_DEPT_NAME" property="schDeptName" jdbcType="VARCHAR" />
+    <result column="SCORE_PHASE_ID" property="scorePhaseId" jdbcType="VARCHAR" />
+    <result column="SCORE_PHASE_NAME" property="scorePhaseName" jdbcType="VARCHAR" />
+    <result column="THEORY_SCORE" property="theoryScore" jdbcType="DECIMAL" />
+    <result column="SKILL_SCORE" property="skillScore" jdbcType="DECIMAL" />
+    <result column="SCH_RESULT_ID" property="schResultId" jdbcType="VARCHAR" />
+    <result column="SCH_RESULT_NAME" property="schResultName" jdbcType="VARCHAR" />
+    <result column="SCORE_RESULT_ID" property="scoreResultId" jdbcType="VARCHAR" />
+    <result column="SCORE_RESULT_NAME" property="scoreResultName" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS_ID" property="auditStatusId" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS_NAME" property="auditStatusName" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="PAPER_FLOW" property="paperFlow" jdbcType="VARCHAR" />
+    <result column="MAR_SCORE" property="marScore" jdbcType="DECIMAL" />
+    <result column="JUN_SCORE" property="junScore" jdbcType="DECIMAL" />
+    <result column="OCT_SCORE" property="octScore" jdbcType="DECIMAL" />
+    <result column="RECRUIT_FLOW" property="recruitFlow" jdbcType="VARCHAR" />
+    <result column="IS_SEND" property="isSend" jdbcType="VARCHAR" />
+    <result column="TEST_ID" property="testId" jdbcType="VARCHAR" />
+    <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
+    <result column="IS_AFFIRM_ID" property="isAffirmId" jdbcType="VARCHAR" />
+    <result column="IS_AFFIRM_NAME" property="isAffirmName" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ResScore" extends="BaseResultMap" >
+    <result column="EXT_SCORE" property="extScore" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SCORE_FLOW, DOCTOR_FLOW, SCORE_TYPE_ID, SCORE_TYPE_NAME, RESULT_FLOW, PROCESS_FLOW, 
+    SCH_DEPT_FLOW, SCH_DEPT_NAME, SCORE_PHASE_ID, SCORE_PHASE_NAME, THEORY_SCORE, SKILL_SCORE, 
+    SCH_RESULT_ID, SCH_RESULT_NAME, SCORE_RESULT_ID, SCORE_RESULT_NAME, AUDIT_STATUS_ID, 
+    AUDIT_STATUS_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+    PAPER_FLOW, MAR_SCORE, JUN_SCORE, OCT_SCORE, RECRUIT_FLOW, IS_SEND, TEST_ID, SESSION_NUMBER, 
+    IS_AFFIRM_ID, IS_AFFIRM_NAME
+  </sql>
+  <sql id="Blob_Column_List" >
+    EXT_SCORE
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.ResScoreExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    TEST_ID,
+    IS_SEND,
+    RECRUIT_FLOW,
+    OCT_SCORE,
+    JUN_SCORE,
+    MAR_SCORE,
+    PAPER_FLOW,
+    EXT_SCORE,
+    MODIFY_USER_FLOW,
+    MODIFY_TIME,
+    CREATE_USER_FLOW,
+    CREATE_TIME,
+    RECORD_STATUS,
+    AUDIT_STATUS_NAME,
+    AUDIT_STATUS_ID,
+    SCORE_RESULT_NAME,
+    SCORE_RESULT_ID,
+    SCH_RESULT_NAME,
+    SCH_RESULT_ID,
+    SKILL_SCORE,
+    THEORY_SCORE,
+    SCORE_PHASE_NAME,
+    SCORE_PHASE_ID,
+    SCH_DEPT_NAME,
+    SCH_DEPT_FLOW,
+    PROCESS_FLOW,
+    RESULT_FLOW,
+    SCORE_TYPE_NAME,
+    SCORE_TYPE_ID,
+    DOCTOR_FLOW,
+    SCORE_FLOW
+    from PDSCI.RES_SCORE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResScoreExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_SCORE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.RES_SCORE
+    where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.RES_SCORE
+    where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResScoreExample" >
+    delete from PDSCI.RES_SCORE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResScore" >
+    insert into PDSCI.RES_SCORE (SCORE_FLOW, DOCTOR_FLOW, SCORE_TYPE_ID, 
+      SCORE_TYPE_NAME, RESULT_FLOW, PROCESS_FLOW, 
+      SCH_DEPT_FLOW, SCH_DEPT_NAME, SCORE_PHASE_ID, 
+      SCORE_PHASE_NAME, THEORY_SCORE, SKILL_SCORE, 
+      SCH_RESULT_ID, SCH_RESULT_NAME, SCORE_RESULT_ID, 
+      SCORE_RESULT_NAME, AUDIT_STATUS_ID, AUDIT_STATUS_NAME, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW, PAPER_FLOW, 
+      MAR_SCORE, JUN_SCORE, OCT_SCORE, 
+      RECRUIT_FLOW, IS_SEND, TEST_ID, 
+      SESSION_NUMBER, IS_AFFIRM_ID, IS_AFFIRM_NAME, 
+      EXT_SCORE)
+    values (#{scoreFlow,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, #{scoreTypeId,jdbcType=VARCHAR}, 
+      #{scoreTypeName,jdbcType=VARCHAR}, #{resultFlow,jdbcType=VARCHAR}, #{processFlow,jdbcType=VARCHAR}, 
+      #{schDeptFlow,jdbcType=VARCHAR}, #{schDeptName,jdbcType=VARCHAR}, #{scorePhaseId,jdbcType=VARCHAR}, 
+      #{scorePhaseName,jdbcType=VARCHAR}, #{theoryScore,jdbcType=DECIMAL}, #{skillScore,jdbcType=DECIMAL}, 
+      #{schResultId,jdbcType=VARCHAR}, #{schResultName,jdbcType=VARCHAR}, #{scoreResultId,jdbcType=VARCHAR}, 
+      #{scoreResultName,jdbcType=VARCHAR}, #{auditStatusId,jdbcType=VARCHAR}, #{auditStatusName,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{paperFlow,jdbcType=VARCHAR}, 
+      #{marScore,jdbcType=DECIMAL}, #{junScore,jdbcType=DECIMAL}, #{octScore,jdbcType=DECIMAL}, 
+      #{recruitFlow,jdbcType=VARCHAR}, #{isSend,jdbcType=VARCHAR}, #{testId,jdbcType=VARCHAR}, 
+      #{sessionNumber,jdbcType=VARCHAR}, #{isAffirmId,jdbcType=VARCHAR}, #{isAffirmName,jdbcType=VARCHAR}, 
+      #{extScore,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResScore" >
+    insert into PDSCI.RES_SCORE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scoreFlow != null" >
+        SCORE_FLOW,
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW,
+      </if>
+      <if test="scoreTypeId != null" >
+        SCORE_TYPE_ID,
+      </if>
+      <if test="scoreTypeName != null" >
+        SCORE_TYPE_NAME,
+      </if>
+      <if test="resultFlow != null" >
+        RESULT_FLOW,
+      </if>
+      <if test="processFlow != null" >
+        PROCESS_FLOW,
+      </if>
+      <if test="schDeptFlow != null" >
+        SCH_DEPT_FLOW,
+      </if>
+      <if test="schDeptName != null" >
+        SCH_DEPT_NAME,
+      </if>
+      <if test="scorePhaseId != null" >
+        SCORE_PHASE_ID,
+      </if>
+      <if test="scorePhaseName != null" >
+        SCORE_PHASE_NAME,
+      </if>
+      <if test="theoryScore != null" >
+        THEORY_SCORE,
+      </if>
+      <if test="skillScore != null" >
+        SKILL_SCORE,
+      </if>
+      <if test="schResultId != null" >
+        SCH_RESULT_ID,
+      </if>
+      <if test="schResultName != null" >
+        SCH_RESULT_NAME,
+      </if>
+      <if test="scoreResultId != null" >
+        SCORE_RESULT_ID,
+      </if>
+      <if test="scoreResultName != null" >
+        SCORE_RESULT_NAME,
+      </if>
+      <if test="auditStatusId != null" >
+        AUDIT_STATUS_ID,
+      </if>
+      <if test="auditStatusName != null" >
+        AUDIT_STATUS_NAME,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="paperFlow != null" >
+        PAPER_FLOW,
+      </if>
+      <if test="marScore != null" >
+        MAR_SCORE,
+      </if>
+      <if test="junScore != null" >
+        JUN_SCORE,
+      </if>
+      <if test="octScore != null" >
+        OCT_SCORE,
+      </if>
+      <if test="recruitFlow != null" >
+        RECRUIT_FLOW,
+      </if>
+      <if test="isSend != null" >
+        IS_SEND,
+      </if>
+      <if test="testId != null" >
+        TEST_ID,
+      </if>
+      <if test="sessionNumber != null" >
+        SESSION_NUMBER,
+      </if>
+      <if test="isAffirmId != null" >
+        IS_AFFIRM_ID,
+      </if>
+      <if test="isAffirmName != null" >
+        IS_AFFIRM_NAME,
+      </if>
+      <if test="extScore != null" >
+        EXT_SCORE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scoreFlow != null" >
+        #{scoreFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreTypeId != null" >
+        #{scoreTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreTypeName != null" >
+        #{scoreTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="resultFlow != null" >
+        #{resultFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="processFlow != null" >
+        #{processFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="schDeptFlow != null" >
+        #{schDeptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="schDeptName != null" >
+        #{schDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="scorePhaseId != null" >
+        #{scorePhaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="scorePhaseName != null" >
+        #{scorePhaseName,jdbcType=VARCHAR},
+      </if>
+      <if test="theoryScore != null" >
+        #{theoryScore,jdbcType=DECIMAL},
+      </if>
+      <if test="skillScore != null" >
+        #{skillScore,jdbcType=DECIMAL},
+      </if>
+      <if test="schResultId != null" >
+        #{schResultId,jdbcType=VARCHAR},
+      </if>
+      <if test="schResultName != null" >
+        #{schResultName,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreResultId != null" >
+        #{scoreResultId,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreResultName != null" >
+        #{scoreResultName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusId != null" >
+        #{auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusName != null" >
+        #{auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="paperFlow != null" >
+        #{paperFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="marScore != null" >
+        #{marScore,jdbcType=DECIMAL},
+      </if>
+      <if test="junScore != null" >
+        #{junScore,jdbcType=DECIMAL},
+      </if>
+      <if test="octScore != null" >
+        #{octScore,jdbcType=DECIMAL},
+      </if>
+      <if test="recruitFlow != null" >
+        #{recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="isSend != null" >
+        #{isSend,jdbcType=VARCHAR},
+      </if>
+      <if test="testId != null" >
+        #{testId,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionNumber != null" >
+        #{sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="isAffirmId != null" >
+        #{isAffirmId,jdbcType=VARCHAR},
+      </if>
+      <if test="isAffirmName != null" >
+        #{isAffirmName,jdbcType=VARCHAR},
+      </if>
+      <if test="extScore != null" >
+        #{extScore,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResScoreExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.RES_SCORE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.RES_SCORE
+    <set >
+      <if test="record.scoreFlow != null" >
+        SCORE_FLOW = #{record.scoreFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorFlow != null" >
+        DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scoreTypeId != null" >
+        SCORE_TYPE_ID = #{record.scoreTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scoreTypeName != null" >
+        SCORE_TYPE_NAME = #{record.scoreTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resultFlow != null" >
+        RESULT_FLOW = #{record.resultFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.processFlow != null" >
+        PROCESS_FLOW = #{record.processFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schDeptFlow != null" >
+        SCH_DEPT_FLOW = #{record.schDeptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schDeptName != null" >
+        SCH_DEPT_NAME = #{record.schDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scorePhaseId != null" >
+        SCORE_PHASE_ID = #{record.scorePhaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scorePhaseName != null" >
+        SCORE_PHASE_NAME = #{record.scorePhaseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.theoryScore != null" >
+        THEORY_SCORE = #{record.theoryScore,jdbcType=DECIMAL},
+      </if>
+      <if test="record.skillScore != null" >
+        SKILL_SCORE = #{record.skillScore,jdbcType=DECIMAL},
+      </if>
+      <if test="record.schResultId != null" >
+        SCH_RESULT_ID = #{record.schResultId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schResultName != null" >
+        SCH_RESULT_NAME = #{record.schResultName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scoreResultId != null" >
+        SCORE_RESULT_ID = #{record.scoreResultId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scoreResultName != null" >
+        SCORE_RESULT_NAME = #{record.scoreResultName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditStatusId != null" >
+        AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditStatusName != null" >
+        AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paperFlow != null" >
+        PAPER_FLOW = #{record.paperFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.marScore != null" >
+        MAR_SCORE = #{record.marScore,jdbcType=DECIMAL},
+      </if>
+      <if test="record.junScore != null" >
+        JUN_SCORE = #{record.junScore,jdbcType=DECIMAL},
+      </if>
+      <if test="record.octScore != null" >
+        OCT_SCORE = #{record.octScore,jdbcType=DECIMAL},
+      </if>
+      <if test="record.recruitFlow != null" >
+        RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSend != null" >
+        IS_SEND = #{record.isSend,jdbcType=VARCHAR},
+      </if>
+      <if test="record.testId != null" >
+        TEST_ID = #{record.testId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionNumber != null" >
+        SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isAffirmId != null" >
+        IS_AFFIRM_ID = #{record.isAffirmId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isAffirmName != null" >
+        IS_AFFIRM_NAME = #{record.isAffirmName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extScore != null" >
+        EXT_SCORE = #{record.extScore,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update PDSCI.RES_SCORE
+    set SCORE_FLOW = #{record.scoreFlow,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      SCORE_TYPE_ID = #{record.scoreTypeId,jdbcType=VARCHAR},
+      SCORE_TYPE_NAME = #{record.scoreTypeName,jdbcType=VARCHAR},
+      RESULT_FLOW = #{record.resultFlow,jdbcType=VARCHAR},
+      PROCESS_FLOW = #{record.processFlow,jdbcType=VARCHAR},
+      SCH_DEPT_FLOW = #{record.schDeptFlow,jdbcType=VARCHAR},
+      SCH_DEPT_NAME = #{record.schDeptName,jdbcType=VARCHAR},
+      SCORE_PHASE_ID = #{record.scorePhaseId,jdbcType=VARCHAR},
+      SCORE_PHASE_NAME = #{record.scorePhaseName,jdbcType=VARCHAR},
+      THEORY_SCORE = #{record.theoryScore,jdbcType=DECIMAL},
+      SKILL_SCORE = #{record.skillScore,jdbcType=DECIMAL},
+      SCH_RESULT_ID = #{record.schResultId,jdbcType=VARCHAR},
+      SCH_RESULT_NAME = #{record.schResultName,jdbcType=VARCHAR},
+      SCORE_RESULT_ID = #{record.scoreResultId,jdbcType=VARCHAR},
+      SCORE_RESULT_NAME = #{record.scoreResultName,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      PAPER_FLOW = #{record.paperFlow,jdbcType=VARCHAR},
+      MAR_SCORE = #{record.marScore,jdbcType=DECIMAL},
+      JUN_SCORE = #{record.junScore,jdbcType=DECIMAL},
+      OCT_SCORE = #{record.octScore,jdbcType=DECIMAL},
+      RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
+      IS_SEND = #{record.isSend,jdbcType=VARCHAR},
+      TEST_ID = #{record.testId,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      IS_AFFIRM_ID = #{record.isAffirmId,jdbcType=VARCHAR},
+      IS_AFFIRM_NAME = #{record.isAffirmName,jdbcType=VARCHAR},
+      EXT_SCORE = #{record.extScore,jdbcType=CLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.RES_SCORE
+    set SCORE_FLOW = #{record.scoreFlow,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      SCORE_TYPE_ID = #{record.scoreTypeId,jdbcType=VARCHAR},
+      SCORE_TYPE_NAME = #{record.scoreTypeName,jdbcType=VARCHAR},
+      RESULT_FLOW = #{record.resultFlow,jdbcType=VARCHAR},
+      PROCESS_FLOW = #{record.processFlow,jdbcType=VARCHAR},
+      SCH_DEPT_FLOW = #{record.schDeptFlow,jdbcType=VARCHAR},
+      SCH_DEPT_NAME = #{record.schDeptName,jdbcType=VARCHAR},
+      SCORE_PHASE_ID = #{record.scorePhaseId,jdbcType=VARCHAR},
+      SCORE_PHASE_NAME = #{record.scorePhaseName,jdbcType=VARCHAR},
+      THEORY_SCORE = #{record.theoryScore,jdbcType=DECIMAL},
+      SKILL_SCORE = #{record.skillScore,jdbcType=DECIMAL},
+      SCH_RESULT_ID = #{record.schResultId,jdbcType=VARCHAR},
+      SCH_RESULT_NAME = #{record.schResultName,jdbcType=VARCHAR},
+      SCORE_RESULT_ID = #{record.scoreResultId,jdbcType=VARCHAR},
+      SCORE_RESULT_NAME = #{record.scoreResultName,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      PAPER_FLOW = #{record.paperFlow,jdbcType=VARCHAR},
+      MAR_SCORE = #{record.marScore,jdbcType=DECIMAL},
+      JUN_SCORE = #{record.junScore,jdbcType=DECIMAL},
+      OCT_SCORE = #{record.octScore,jdbcType=DECIMAL},
+      RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
+      IS_SEND = #{record.isSend,jdbcType=VARCHAR},
+      TEST_ID = #{record.testId,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      IS_AFFIRM_ID = #{record.isAffirmId,jdbcType=VARCHAR},
+      IS_AFFIRM_NAME = #{record.isAffirmName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResScore" >
+    update PDSCI.RES_SCORE
+    <set >
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreTypeId != null" >
+        SCORE_TYPE_ID = #{scoreTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreTypeName != null" >
+        SCORE_TYPE_NAME = #{scoreTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="resultFlow != null" >
+        RESULT_FLOW = #{resultFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="processFlow != null" >
+        PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="schDeptFlow != null" >
+        SCH_DEPT_FLOW = #{schDeptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="schDeptName != null" >
+        SCH_DEPT_NAME = #{schDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="scorePhaseId != null" >
+        SCORE_PHASE_ID = #{scorePhaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="scorePhaseName != null" >
+        SCORE_PHASE_NAME = #{scorePhaseName,jdbcType=VARCHAR},
+      </if>
+      <if test="theoryScore != null" >
+        THEORY_SCORE = #{theoryScore,jdbcType=DECIMAL},
+      </if>
+      <if test="skillScore != null" >
+        SKILL_SCORE = #{skillScore,jdbcType=DECIMAL},
+      </if>
+      <if test="schResultId != null" >
+        SCH_RESULT_ID = #{schResultId,jdbcType=VARCHAR},
+      </if>
+      <if test="schResultName != null" >
+        SCH_RESULT_NAME = #{schResultName,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreResultId != null" >
+        SCORE_RESULT_ID = #{scoreResultId,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreResultName != null" >
+        SCORE_RESULT_NAME = #{scoreResultName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusId != null" >
+        AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusName != null" >
+        AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="paperFlow != null" >
+        PAPER_FLOW = #{paperFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="marScore != null" >
+        MAR_SCORE = #{marScore,jdbcType=DECIMAL},
+      </if>
+      <if test="junScore != null" >
+        JUN_SCORE = #{junScore,jdbcType=DECIMAL},
+      </if>
+      <if test="octScore != null" >
+        OCT_SCORE = #{octScore,jdbcType=DECIMAL},
+      </if>
+      <if test="recruitFlow != null" >
+        RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="isSend != null" >
+        IS_SEND = #{isSend,jdbcType=VARCHAR},
+      </if>
+      <if test="testId != null" >
+        TEST_ID = #{testId,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionNumber != null" >
+        SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="isAffirmId != null" >
+        IS_AFFIRM_ID = #{isAffirmId,jdbcType=VARCHAR},
+      </if>
+      <if test="isAffirmName != null" >
+        IS_AFFIRM_NAME = #{isAffirmName,jdbcType=VARCHAR},
+      </if>
+      <if test="extScore != null" >
+        EXT_SCORE = #{extScore,jdbcType=CLOB},
+      </if>
+    </set>
+    where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResScore" >
+    update PDSCI.RES_SCORE
+    set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      SCORE_TYPE_ID = #{scoreTypeId,jdbcType=VARCHAR},
+      SCORE_TYPE_NAME = #{scoreTypeName,jdbcType=VARCHAR},
+      RESULT_FLOW = #{resultFlow,jdbcType=VARCHAR},
+      PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR},
+      SCH_DEPT_FLOW = #{schDeptFlow,jdbcType=VARCHAR},
+      SCH_DEPT_NAME = #{schDeptName,jdbcType=VARCHAR},
+      SCORE_PHASE_ID = #{scorePhaseId,jdbcType=VARCHAR},
+      SCORE_PHASE_NAME = #{scorePhaseName,jdbcType=VARCHAR},
+      THEORY_SCORE = #{theoryScore,jdbcType=DECIMAL},
+      SKILL_SCORE = #{skillScore,jdbcType=DECIMAL},
+      SCH_RESULT_ID = #{schResultId,jdbcType=VARCHAR},
+      SCH_RESULT_NAME = #{schResultName,jdbcType=VARCHAR},
+      SCORE_RESULT_ID = #{scoreResultId,jdbcType=VARCHAR},
+      SCORE_RESULT_NAME = #{scoreResultName,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      PAPER_FLOW = #{paperFlow,jdbcType=VARCHAR},
+      MAR_SCORE = #{marScore,jdbcType=DECIMAL},
+      JUN_SCORE = #{junScore,jdbcType=DECIMAL},
+      OCT_SCORE = #{octScore,jdbcType=DECIMAL},
+      RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
+      IS_SEND = #{isSend,jdbcType=VARCHAR},
+      TEST_ID = #{testId,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      IS_AFFIRM_ID = #{isAffirmId,jdbcType=VARCHAR},
+      IS_AFFIRM_NAME = #{isAffirmName,jdbcType=VARCHAR},
+      EXT_SCORE = #{extScore,jdbcType=CLOB}
+    where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResScore" >
+    update PDSCI.RES_SCORE
+    set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      SCORE_TYPE_ID = #{scoreTypeId,jdbcType=VARCHAR},
+      SCORE_TYPE_NAME = #{scoreTypeName,jdbcType=VARCHAR},
+      RESULT_FLOW = #{resultFlow,jdbcType=VARCHAR},
+      PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR},
+      SCH_DEPT_FLOW = #{schDeptFlow,jdbcType=VARCHAR},
+      SCH_DEPT_NAME = #{schDeptName,jdbcType=VARCHAR},
+      SCORE_PHASE_ID = #{scorePhaseId,jdbcType=VARCHAR},
+      SCORE_PHASE_NAME = #{scorePhaseName,jdbcType=VARCHAR},
+      THEORY_SCORE = #{theoryScore,jdbcType=DECIMAL},
+      SKILL_SCORE = #{skillScore,jdbcType=DECIMAL},
+      SCH_RESULT_ID = #{schResultId,jdbcType=VARCHAR},
+      SCH_RESULT_NAME = #{schResultName,jdbcType=VARCHAR},
+      SCORE_RESULT_ID = #{scoreResultId,jdbcType=VARCHAR},
+      SCORE_RESULT_NAME = #{scoreResultName,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      PAPER_FLOW = #{paperFlow,jdbcType=VARCHAR},
+      MAR_SCORE = #{marScore,jdbcType=DECIMAL},
+      JUN_SCORE = #{junScore,jdbcType=DECIMAL},
+      OCT_SCORE = #{octScore,jdbcType=DECIMAL},
+      RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
+      IS_SEND = #{isSend,jdbcType=VARCHAR},
+      TEST_ID = #{testId,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      IS_AFFIRM_ID = #{isAffirmId,jdbcType=VARCHAR},
+      IS_AFFIRM_NAME = #{isAffirmName,jdbcType=VARCHAR}
+    where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

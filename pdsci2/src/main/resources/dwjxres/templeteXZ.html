@@ -1,0 +1,85 @@
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.t1{text-align:center;font-size:16px;}
+		.t2{text-align:center;font-size:26px;}
+		.name{text-decoration:underline;margin-left:50px;color:red}
+		.t3{margin-left:70px;}
+		span{text-decoration:underline;color:red}
+		.t4{margin-left:90px;font-size:14px;}
+		.t5{margin-left:500px;text-align:right;margin-right:30px;/*background:url(../../jsp/dwjxres/images/stamp.png) no-repeat ;background-size:150px;background-position:right;*/}
+		.t6{text-align:right;margin-top: 30px;}
+		.div2{margin-left:50px}
+		.t7{text-align:center;font-size:16px;}
+		.t8{text-align:center;font-size:16px;}
+		.t9{text-align:center;font-size:26px;}
+		body {
+			margin-left: 5px;
+			margin-right: 5px;
+			font-family: Arial Unicode MS;
+		}
+
+		@page {
+			size: A3 landscape;
+			margin-left:40px;
+			margin-right:40px;
+			margin-top:10px;
+
+			@top-center {
+				content: element(header);
+			};
+			@bottom-center{
+				content:"第" counter(page) "页/共 " counter(pages) "页";
+				font-family: Arial Unicode MS;
+				font-size: 12px;
+				color:#000;
+			};
+		}
+	</style>
+</head>
+<body>
+<div style="width:100%;max-height: 560px;overflow-y: auto;">
+<table style="width:100%;height: 100%;border-collapse:collapse;table-layout:fixed; word-break:break-strict;" cellspacing="0">
+	<tr>
+		<td>
+			<p class="t1">徐州中心医院</p>
+			<p class="t2">入学通知书</p>
+			<p class="name">${userName}</p>
+			<p class="t3">
+				经审核您被录入我院<span>${speName}</span>进修学习，时间为<span>${stuBatName}</span>至<span>${stuBatEndName}</span>，为期<span>${stuTimeName}</span>。请于<span>${batchRegDate}</span>报到。报到地址：徐州中心医院。
+			</p>
+			<p class="t4">徐州中心医院  联系电话：0516-83956044</p>
+			<div class="t5" style="height: 150px;">
+					<p style="padding-top: 100px;">徐州中心医院</p>
+					<p class="t6" style="width: 567px">录取日期：<span>${recruitTime}</span></p>
+			</div>
+			<p class="t1">进修学员入学报到须知</p>
+			<div class="div2">
+			<p>
+				一、学员报到时须带本人有效证件，以及医（护、药）师资格证、执业证的原件及复印件，有效的进修学习担保书。凡手续和证照不全、不实者，一律不予报到注册。<br/>
+				二、报到时交进修培养费<span>${trainFee}</span>元，服装费、办证费共计200元，学员须一次性交清上述各项费用（一律交现金，概不办理汇单、汇票）才能安排进修学习。护理的进修人员自备工作服，不交服装费。<br/>
+				三、学员逾期不到校，取消入学资格。因故中断学习概不退费，也不换人；进修学员须身心健康（妊娠期妇女不安排进修学习）。<br/>
+				四、报到时须交近期1寸标准免冠半身照片3张，供办证使用，学员在进修学习期间需自备个人生活用品和听诊器。<br/>
+				五、临床进修不放寒暑假，进修原则上服从科室安排。学员在进修学习期间不参加原单位的会议活动，所进修的专业中途不得要求转科，也不延长或缩短进修期限。如需进修延期原则上须提前3个月提出申请。<br/>
+				六、学员在进修学习期间须遵纪守法、遵守医院的各项规章制度。事假须本人申请，单位证明；病假需有医院病情证明。凡病事假累计超过规定期限（即：一年病事假累计超过4周，半年超过2周），停止进修，不发结业证，不假离院按自动退学处理。
+			</p>
+			<p class="t7">徐州中心医院</p>
+			<p class="t9">医药类卫生专业进修学习担保书</p>
+
+			<p>为了便于规范管理，防止医、技、药、护进修生到成都中医药大学附属医院进修学习期间发生医疗事故、差错，根据成都中医药大学附属医院进修教育管理规定，进修生选送单位向进修生接收单位郑重承诺：督促本单位选送到成都中医药大学附属医院进修学习的职工（进修生）在其进修学习期间，严格遵守医院和进修学习单位的各项规章制度，并与进修生本人一道，共同承担因其处理不当、操作失误等原因而发生的医疗事故、差错的责任赔偿，以及因此造成精密、贵重仪器损坏的赔偿。
+				同时，进修生本人也郑重承诺：在院进修学习期间，严格遵守国家法规和院纪院规，保持良好的医德医风，服从科室的安排，努力学习，积极参与社会公益活动。
+				进修生接收单位向完成上述承诺，履行了各项入学报到手续的进修生提供专业进修学习机会，按进修学习计划为进修生选送单位培养实用人才。</p>
+
+			<p>选送单位负责人（签字）&#12288;&#12288;&#12288;&#12288;进修学员（签字）</p><br/>
+			<p>选送单位&#12288;&#12288;&#12288;&#12288;&#12288;（盖章）&#12288;</p>
+			<p class="t6">年&#12288;月&#12288;日</p>
+			<p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br/>
+				注：本担保书经进修生本人及其单位领导签字盖章，报到时交验无误生效，请学员自留复印件。</p>
+			</div>
+		</td>
+	</tr>
+</table>
+</div>
+</body>
+</html>

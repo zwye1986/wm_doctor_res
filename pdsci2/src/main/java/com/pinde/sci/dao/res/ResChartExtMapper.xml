@@ -1,0 +1,1049 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.ResChartExtMapper">
+    <resultMap id="CountryDocCountMap" type="java.util.HashMap" >
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="DOCTOR_TYPE_ID" property="doctorTypeId" jdbcType="VARCHAR" />
+        <result column="DOCTOR_TYPE_NAME" property="doctorTypeName" jdbcType="VARCHAR" />
+        <result column="DOCNUM" property="docNum" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="findCountryDocCount" resultMap="CountryDocCountMap">
+        SELECT ORG.ORG_FLOW, ORG.ORG_NAME,DOCTOR_TYPE_ID,DOCTOR_TYPE_NAME,to_char(count(1)) DOCNUM
+        FROM res_doctor
+        INNER JOIN sys_user ON res_doctor.DOCTOR_FLOW = sys_user.USER_FLOW
+        left join sys_org org on  res_doctor.org_flow=org.org_flow
+        where sys_user.RECORD_STATUS = 'Y'
+        AND res_doctor.DOCTOR_CATEGORY_ID = 'Doctor'
+        AND res_doctor.RECORD_STATUS = 'Y'
+        AND (RES_DOCTOR.DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+        OR RES_DOCTOR.DOCTOR_STATUS_ID IS NULL)
+        AND RES_DOCTOR.org_flow IS NOT NULL
+        AND RES_DOCTOR.org_flow != '20160914888888'
+        AND RES_DOCTOR.org_flow != '566c9f36cf014f63a569b453efa284d7'
+        AND RES_DOCTOR.org_flow != '00000000000000000000000000000000'
+        <if test="sessionNumber != null and sessionNumber!=''" >
+            AND RES_DOCTOR.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        and  org.record_status='Y'
+        and ( org.org_level_id='CountryOrg'
+        or org.org_flow in (  select joint_org_flow from res_joint_org where record_status='Y')
+        )
+        GROUP BY ORG.ORG_FLOW, ORG.ORG_NAME,DOCTOR_TYPE_ID,DOCTOR_TYPE_NAME
+        ORDER BY ORG.ORG_FLOW
+    </select>
+    <select id="findProDocCount" resultMap="CountryDocCountMap">
+        SELECT ORG.ORG_NAME, ORG.ORG_FLOW,ORG.ORG_CODE,DOCTOR_TYPE_ID,DOCTOR_TYPE_NAME,COUNT(DOCTOR.DOCTOR_FLOW) DOCNUM
+        FROM (
+            SELECT ORG.*
+            FROM SYS_ORG ORG
+            WHERE ORG.RECORD_STATUS = 'Y'
+            AND ORG.ORG_PROV_ID = '320000'
+            AND ORG.ORG_TYPE_ID = 'Hospital'
+            AND ORG.ORG_LEVEL_ID = 'ProvinceOrg'
+        ) ORG
+        left join (
+            SELECT RES_DOCTOR_RECRUIT.ORG_FLOW,
+            RES_DOCTOR_RECRUIT.ORG_NAME,
+            RES_DOCTOR_RECRUIT.DOCTOR_FLOW,
+            RES_DOCTOR_RECRUIT.SESSION_NUMBER,
+            CASE WHEN RES_DOCTOR.DOCTOR_TYPE_ID='Company' THEN 'NoGraduate'
+            WHEN RES_DOCTOR.DOCTOR_TYPE_ID='Social' THEN 'NoGraduate'
+            WHEN RES_DOCTOR.DOCTOR_TYPE_ID='Graduate' THEN 'Graduate'
+            ELSE ''
+            END DOCTOR_TYPE_ID
+            ,
+            CASE WHEN RES_DOCTOR.DOCTOR_TYPE_ID='Company' THEN '非在校专硕'
+            WHEN RES_DOCTOR.DOCTOR_TYPE_ID='Social' THEN '非在校专硕'
+            WHEN RES_DOCTOR.DOCTOR_TYPE_ID='Graduate' THEN '在校专硕'
+            ELSE ''
+            END DOCTOR_TYPE_NAME
+            FROM RES_DOCTOR_RECRUIT
+            join RES_DOCTOR
+            on RES_DOCTOR_RECRUIT.doctor_flow = RES_DOCTOR.doctor_flow
+            WHERE RES_DOCTOR.RECORD_STATUS = 'Y'
+            AND RES_DOCTOR_RECRUIT.RECORD_STATUS='Y'
+            AND RES_DOCTOR_RECRUIT.cat_spe_id = 'DoctorTrainingSpe'
+            AND RES_DOCTOR_RECRUIT.AUDIT_STATUS_ID = 'Passed'
+            AND RES_DOCTOR.DOCTOR_TYPE_ID IN ('Company', 'Social', 'Graduate')
+            ) DOCTOR
+        ON DOCTOR.ORG_FLOW=ORG.ORG_FLOW
+        WHERE 1=1
+        <if test="sessionNumber != null and sessionNumber!=''" >
+            AND DOCTOR.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        GROUP BY ORG.ORG_NAME, ORG.ORG_FLOW,ORG.ORG_CODE,DOCTOR_TYPE_ID,DOCTOR_TYPE_NAME
+        ORDER BY ORG.ORG_CODE ASC
+    </select>
+    <resultMap id="CountrySpeDocCountMap" type="java.util.HashMap" >
+        <result column="TRAINING_SPE_ID" property="speId" jdbcType="VARCHAR" />
+        <result column="TRAINING_SPE_NAME" property="speName" jdbcType="VARCHAR" />
+        <result column="DOCTOR_TYPE_ID" property="doctorTypeId" jdbcType="VARCHAR" />
+        <result column="DOCTOR_TYPE_NAME" property="doctorTypeName" jdbcType="VARCHAR" />
+        <result column="DOCNUM" property="docNum" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="findCountrySpeDocCount" resultMap="CountrySpeDocCountMap">
+        SELECT TRAINING_SPE_ID,TRAINING_SPE_NAME,DOCTOR_TYPE_ID, DOCTOR_TYPE_NAME, to_char(COUNT(1)) AS DOCNUM
+        FROM res_doctor
+        INNER JOIN sys_user ON res_doctor.DOCTOR_FLOW = sys_user.USER_FLOW
+        WHERE sys_user.RECORD_STATUS = 'Y'
+            AND res_doctor.DOCTOR_CATEGORY_ID = 'Doctor'
+            AND res_doctor.RECORD_STATUS = 'Y'
+            AND (RES_DOCTOR.DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+                OR RES_DOCTOR.DOCTOR_STATUS_ID IS NULL)
+            AND RES_DOCTOR.org_flow IS NOT NULL
+            AND RES_DOCTOR.org_flow != '20160914888888'
+            AND RES_DOCTOR.org_flow != '566c9f36cf014f63a569b453efa284d7'
+            AND RES_DOCTOR.org_flow != '00000000000000000000000000000000'
+            <if test="sessionNumber != null and sessionNumber!=''" >
+                AND RES_DOCTOR.SESSION_NUMBER = #{sessionNumber}
+            </if>
+        GROUP BY TRAINING_SPE_ID,TRAINING_SPE_NAME,DOCTOR_TYPE_ID, DOCTOR_TYPE_NAME
+        ORDER BY TRAINING_SPE_ID
+    </select>
+    <select id="findProSpeDocCount" resultMap="CountrySpeDocCountMap">
+        SELECT SPE_ID,
+        SPE_NAME,
+        DOCTOR_TYPE_ID,
+        DOCTOR_TYPE_NAME,
+        COUNT(DOCTOR.DOCTOR_FLOW) AS DOCNUM
+        FROM (SELECT ORG.*
+        FROM SYS_ORG ORG
+        WHERE ORG.RECORD_STATUS = 'Y'
+        AND ORG.ORG_PROV_ID = '320000'
+        AND ORG.ORG_TYPE_ID = 'Hospital'
+        AND ORG.ORG_LEVEL_ID = 'ProvinceOrg') ORG
+        JOIN (SELECT RES_DOCTOR_RECRUIT.ORG_FLOW,
+        RES_DOCTOR_RECRUIT.ORG_NAME,
+        RES_DOCTOR_RECRUIT.DOCTOR_FLOW,
+        RES_DOCTOR_RECRUIT.SESSION_NUMBER,
+        RES_DOCTOR_RECRUIT.SPE_ID,
+        RES_DOCTOR_RECRUIT.SPE_NAME,
+        CASE
+        WHEN RES_DOCTOR.DOCTOR_TYPE_ID = 'Company' THEN
+        'NoGraduate'
+        WHEN RES_DOCTOR.DOCTOR_TYPE_ID = 'Social' THEN
+        'NoGraduate'
+        WHEN RES_DOCTOR.DOCTOR_TYPE_ID = 'Graduate' THEN
+        'Graduate'
+        ELSE
+        NULL
+        END AS DOCTOR_TYPE_ID,
+        CASE
+        WHEN RES_DOCTOR.DOCTOR_TYPE_ID = 'Company' THEN
+        '非在校专硕'
+        WHEN RES_DOCTOR.DOCTOR_TYPE_ID = 'Social' THEN
+        '非在校专硕'
+        WHEN RES_DOCTOR.DOCTOR_TYPE_ID = 'Graduate' THEN
+        '在校专硕'
+        ELSE
+        NULL
+        END AS DOCTOR_TYPE_NAME
+        FROM RES_DOCTOR_RECRUIT
+        JOIN RES_DOCTOR
+        ON RES_DOCTOR_RECRUIT.doctor_flow = RES_DOCTOR.doctor_flow
+        WHERE RES_DOCTOR.RECORD_STATUS = 'Y'
+        AND RES_DOCTOR_RECRUIT.RECORD_STATUS = 'Y'
+        AND RES_DOCTOR_RECRUIT.SPE_ID IS NOT NULL
+        AND RES_DOCTOR_RECRUIT.cat_spe_id = 'DoctorTrainingSpe'
+        AND RES_DOCTOR_RECRUIT.AUDIT_STATUS_ID = 'Passed'
+        AND RES_DOCTOR.DOCTOR_TYPE_ID IN
+        ('Company', 'Social', 'Graduate')) DOCTOR
+        ON DOCTOR.ORG_FLOW = ORG.ORG_FLOW
+        WHERE 1 = 1
+        <if test="sessionNumber != null and sessionNumber!=''" >
+            AND DOCTOR.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        GROUP BY SPE_ID,
+        SPE_NAME,
+        DOCTOR_TYPE_ID,
+        DOCTOR_TYPE_NAME
+        ORDER BY SPE_ID
+    </select>
+
+    <resultMap id="DocTypeCountMap" type="java.util.HashMap" >
+        <result column="DOCTOR_TYPE_ID" property="doctorTypeId" jdbcType="VARCHAR" />
+        <result column="DOCTOR_TYPE_NAME" property="doctorTypeName" jdbcType="VARCHAR" />
+        <result column="DOCNUM" property="docNum" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="findDocTypeCount" resultMap="DocTypeCountMap">
+        SELECT
+        DOCTOR_TYPE_ID,
+        DOCTOR_TYPE_NAME,
+        COUNT(DOCTOR.DOCTOR_FLOW) AS DOCNUM
+        FROM (SELECT ORG.*
+        FROM SYS_ORG ORG
+        WHERE ORG.RECORD_STATUS = 'Y'
+        AND ORG.ORG_PROV_ID = '320000'
+        AND ORG.ORG_TYPE_ID = 'Hospital'
+        and (org.org_level_id in ('CountryOrg','ProvinceOrg')
+        or (org.org_flow in (select j.joint_org_flow from res_joint_org j where j.record_status='Y')))
+        ) ORG
+        JOIN (SELECT RES_DOCTOR_RECRUIT.ORG_FLOW,
+        RES_DOCTOR_RECRUIT.ORG_NAME,
+        RES_DOCTOR_RECRUIT.DOCTOR_FLOW,
+        RES_DOCTOR_RECRUIT.SESSION_NUMBER,
+        RES_DOCTOR_RECRUIT.SPE_ID,
+        RES_DOCTOR_RECRUIT.SPE_NAME,
+        RES_DOCTOR.DOCTOR_TYPE_ID,
+        RES_DOCTOR.DOCTOR_TYPE_NAME
+        FROM RES_DOCTOR_RECRUIT
+        JOIN RES_DOCTOR
+        ON RES_DOCTOR_RECRUIT.doctor_flow = RES_DOCTOR.doctor_flow
+        WHERE RES_DOCTOR.RECORD_STATUS = 'Y'
+        AND RES_DOCTOR_RECRUIT.RECORD_STATUS = 'Y'
+        AND RES_DOCTOR_RECRUIT.SPE_ID IS NOT NULL
+        AND RES_DOCTOR_RECRUIT.cat_spe_id = 'DoctorTrainingSpe'
+        AND RES_DOCTOR_RECRUIT.AUDIT_STATUS_ID = 'Passed'
+        AND RES_DOCTOR.DOCTOR_TYPE_ID IN
+        ('Company', 'Social', 'Graduate')) DOCTOR
+        ON DOCTOR.ORG_FLOW = ORG.ORG_FLOW
+        WHERE 1 = 1
+        <if test="sessionNumber != null and sessionNumber!=''" >
+            AND DOCTOR.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        GROUP BY DOCTOR_TYPE_ID,
+        DOCTOR_TYPE_NAME
+    </select>
+    <resultMap id="OrgTypeCountMap" type="java.util.HashMap" >
+        <result column="ORG_LEVEL_ID" property="orgLevelId" jdbcType="VARCHAR" />
+        <result column="DOCNUM" property="docNum" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="findOrgTypeCount" resultMap="OrgTypeCountMap">
+        SELECT ORG_LEVEL_ID, COUNT(DOCTOR.DOCTOR_FLOW) AS DOCNUM
+          FROM (SELECT case
+                         when org.org_level_id = 'CountryOrg' then
+                          org.org_level_id
+                         when org.org_level_id = 'ProvinceOrg' then
+                          org.org_level_id
+                         when 1 = (select 1
+                                     from res_joint_org j
+                                    where j.record_status = 'Y'
+                                      and j.joint_org_flow = org.org_flow
+                                      and rownum = 1) then
+                          'CountryOrg'
+                       end org_level_id,
+                       ORG.ORG_FLOW
+                  FROM SYS_ORG ORG
+                 WHERE ORG.RECORD_STATUS = 'Y'
+                   AND ORG.ORG_PROV_ID = '320000'
+                   AND ORG.ORG_TYPE_ID = 'Hospital'
+                   and (org.org_level_id in ('CountryOrg', 'ProvinceOrg') or
+                       (org.org_flow in
+                       (select j.joint_org_flow
+                            from res_joint_org j
+                           where j.record_status = 'Y')))) ORG
+          JOIN (SELECT RES_DOCTOR_RECRUIT.ORG_FLOW,
+                       RES_DOCTOR_RECRUIT.ORG_NAME,
+                       RES_DOCTOR_RECRUIT.DOCTOR_FLOW,
+                       RES_DOCTOR_RECRUIT.SESSION_NUMBER,
+                       RES_DOCTOR_RECRUIT.SPE_ID,
+                       RES_DOCTOR_RECRUIT.SPE_NAME,
+                       RES_DOCTOR.DOCTOR_TYPE_ID,
+                       RES_DOCTOR.DOCTOR_TYPE_NAME
+                  FROM RES_DOCTOR_RECRUIT
+                  JOIN RES_DOCTOR
+                    ON RES_DOCTOR_RECRUIT.doctor_flow = RES_DOCTOR.doctor_flow
+                 WHERE RES_DOCTOR.RECORD_STATUS = 'Y'
+                   AND RES_DOCTOR_RECRUIT.RECORD_STATUS = 'Y'
+                   AND RES_DOCTOR_RECRUIT.SPE_ID IS NOT NULL
+                   AND RES_DOCTOR_RECRUIT.cat_spe_id = 'DoctorTrainingSpe'
+                   AND RES_DOCTOR_RECRUIT.AUDIT_STATUS_ID = 'Passed'
+                   AND RES_DOCTOR.DOCTOR_TYPE_ID IN
+                       ('Company', 'Social')) DOCTOR
+            ON DOCTOR.ORG_FLOW = ORG.ORG_FLOW
+         WHERE 1 = 1
+        <if test="sessionNumber != null and sessionNumber!=''" >
+            AND DOCTOR.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        GROUP BY ORG_LEVEL_ID
+    </select>
+    <resultMap id="CityDocCountMap" type="java.util.HashMap" >
+        <result column="ORG_CITY_ID" property="orgCityId" jdbcType="VARCHAR" />
+        <result column="ORG_CITY_NAME" property="orgCityName" jdbcType="VARCHAR" />
+        <result column="DOCTOR_TYPE_ID" property="doctorTypeId" jdbcType="VARCHAR" />
+        <result column="DOCTOR_TYPE_NAME" property="doctorTypeName" jdbcType="VARCHAR" />
+        <result column="DOCNUM" property="docNum" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="findCityDocCount" resultMap="CityDocCountMap">
+        SELECT ORG.ORG_CITY_ID, ORG.ORG_CITY_NAME,DOCTOR_TYPE_ID,DOCTOR_TYPE_NAME,to_char(count(1)) DOCNUM
+        FROM res_doctor
+        INNER JOIN sys_user ON res_doctor.DOCTOR_FLOW = sys_user.USER_FLOW
+        left join sys_org org on  res_doctor.org_flow=org.org_flow
+        where sys_user.RECORD_STATUS = 'Y'
+        AND res_doctor.DOCTOR_CATEGORY_ID = 'Doctor'
+        AND res_doctor.RECORD_STATUS = 'Y'
+        AND (RES_DOCTOR.DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+        OR RES_DOCTOR.DOCTOR_STATUS_ID IS NULL)
+        AND RES_DOCTOR.org_flow IS NOT NULL
+        AND RES_DOCTOR.org_flow != '20160914888888'
+        AND RES_DOCTOR.org_flow != '566c9f36cf014f63a569b453efa284d7'
+        AND RES_DOCTOR.org_flow != '00000000000000000000000000000000'
+        <if test="sessionNumber != null and sessionNumber!=''" >
+            AND RES_DOCTOR.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        and  org.record_status='Y'
+        and ( org.org_level_id='CountryOrg'
+        or org.org_flow in (  select joint_org_flow from res_joint_org where record_status='Y')
+        )
+        GROUP BY ORG.ORG_CITY_ID, ORG.ORG_CITY_NAME,DOCTOR_TYPE_ID,DOCTOR_TYPE_NAME
+        ORDER BY ORG.ORG_CITY_ID
+    </select>
+    <resultMap id="OrgAssiCountMap" type="java.util.HashMap" >
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+        <result column="DOCNUM" property="docNum" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="findOrgAssiCount" resultMap="OrgAssiCountMap">
+        SELECT ORG.ORG_FLOW, ORG.ORG_NAME,ORG.ORG_CODE, COUNT(DOCTOR.DOCTOR_FLOW) AS DOCNUM
+        FROM (
+          SELECT ORG.ORG_FLOW,ORG.ORG_CODE,ORG.ORG_NAME
+          FROM SYS_ORG ORG
+          WHERE ORG.RECORD_STATUS = 'Y'
+            AND ORG.ORG_PROV_ID = '320000'
+            AND ORG.ORG_TYPE_ID = 'Hospital'
+            AND (org.org_level_id IN ('CountryOrg', 'ProvinceOrg')
+              OR org.org_flow IN (SELECT j.joint_org_flow
+                FROM res_joint_org j
+                WHERE j.record_status = 'Y'))
+        ) ORG
+          JOIN (
+            SELECT RES_DOCTOR_RECRUIT.ORG_FLOW, RES_DOCTOR_RECRUIT.ORG_NAME,
+                    RES_DOCTOR_RECRUIT.DOCTOR_FLOW,
+                    RES_DOCTOR_RECRUIT.SESSION_NUMBER, RES_DOCTOR_RECRUIT.SPE_ID
+              , RES_DOCTOR_RECRUIT.SPE_NAME, CASE WHEN RES_DOCTOR.DOCTOR_TYPE_ID = 'Company' THEN 'NoGraduate' WHEN RES_DOCTOR.DOCTOR_TYPE_ID = 'Social' THEN 'NoGraduate' WHEN RES_DOCTOR.DOCTOR_TYPE_ID = 'Graduate' THEN 'Graduate' ELSE NULL END AS DOCTOR_TYPE_ID, CASE WHEN RES_DOCTOR.DOCTOR_TYPE_ID = 'Company' THEN '非在校专硕' WHEN RES_DOCTOR.DOCTOR_TYPE_ID = 'Social' THEN '非在校专硕' WHEN RES_DOCTOR.DOCTOR_TYPE_ID = 'Graduate' THEN '在校专硕' ELSE NULL END AS DOCTOR_TYPE_NAME
+            FROM RES_DOCTOR_RECRUIT
+              JOIN RES_DOCTOR ON RES_DOCTOR_RECRUIT.doctor_flow = RES_DOCTOR.doctor_flow
+            WHERE RES_DOCTOR.RECORD_STATUS = 'Y'
+              AND RES_DOCTOR_RECRUIT.RECORD_STATUS = 'Y'
+              AND RES_DOCTOR_RECRUIT.SPE_ID IS NOT NULL
+              AND RES_DOCTOR_RECRUIT.cat_spe_id = 'AssiGeneral'
+              AND RES_DOCTOR_RECRUIT.AUDIT_STATUS_ID = 'Passed'
+              AND RES_DOCTOR.DOCTOR_TYPE_ID IN ('Company', 'Social', 'Graduate')
+          ) DOCTOR ON DOCTOR.ORG_FLOW = ORG.ORG_FLOW
+        WHERE 1 = 1
+        <if test="sessionNumber != null and sessionNumber!=''" >
+            AND DOCTOR.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        GROUP BY  ORG.ORG_FLOW, ORG.ORG_NAME,ORG.ORG_CODE
+        ORDER BY ORG.ORG_CODE
+    </select>
+    <resultMap id="SpeGraduateMap" type="java.util.HashMap" >
+        <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+        <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+        <result column="DOCNUM" property="docNum" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="findSpeGraduateCount" resultMap="SpeGraduateMap">
+        SELECT SPE_ID,
+               SPE_NAME,
+               COUNT(DOCTOR.DOCTOR_FLOW) AS DOCNUM
+          FROM (SELECT ORG.*
+                  FROM SYS_ORG ORG
+                 WHERE ORG.RECORD_STATUS = 'Y'
+                   AND ORG.ORG_PROV_ID = '320000'
+                   AND ORG.ORG_TYPE_ID = 'Hospital'
+        ) ORG
+           JOIN (SELECT RES_DOCTOR_RECRUIT.ORG_FLOW,
+                            RES_DOCTOR_RECRUIT.ORG_NAME,
+                            RES_DOCTOR_RECRUIT.DOCTOR_FLOW,
+                            RES_DOCTOR_RECRUIT.SESSION_NUMBER,
+                            RES_DOCTOR_RECRUIT.SPE_ID,
+                            RES_DOCTOR_RECRUIT.SPE_NAME
+                       FROM RES_DOCTOR_RECRUIT
+                       JOIN RES_DOCTOR
+                         ON RES_DOCTOR_RECRUIT.doctor_flow = RES_DOCTOR.doctor_flow
+                      WHERE RES_DOCTOR.RECORD_STATUS = 'Y'
+                        AND RES_DOCTOR_RECRUIT.RECORD_STATUS = 'Y'
+                        AND RES_DOCTOR_RECRUIT.SPE_ID IS NOT NULL
+                        AND RES_DOCTOR_RECRUIT.cat_spe_id in( 'DoctorTrainingSpe','AssiGeneral')
+                        AND RES_DOCTOR_RECRUIT.AUDIT_STATUS_ID = 'Passed'
+                        AND RES_DOCTOR.DOCTOR_TYPE_ID ='Graduate') DOCTOR
+            ON DOCTOR.ORG_FLOW = ORG.ORG_FLOW
+         WHERE 1 = 1
+        <if test="sessionNumber != null and sessionNumber!=''" >
+            AND DOCTOR.SESSION_NUMBER = #{sessionNumber}
+        </if>
+         GROUP BY SPE_ID,
+                  SPE_NAME
+         ORDER BY SPE_ID
+    </select>
+    <resultMap id="OrgGraduateMap" type="java.util.HashMap" >
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+        <result column="DOCNUM" property="docNum" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="findOrgGraduateCount" resultMap="OrgGraduateMap">
+        SELECT ORG.ORG_FLOW, ORG.ORG_NAME,ORG.ORG_CODE,
+               COUNT(DOCTOR.DOCTOR_FLOW) AS DOCNUM
+          FROM (SELECT ORG.*
+                  FROM SYS_ORG ORG
+                 WHERE ORG.RECORD_STATUS = 'Y'
+                   AND ORG.ORG_PROV_ID = '320000'
+                   AND ORG.ORG_TYPE_ID = 'Hospital'
+          ) ORG
+           JOIN (SELECT RES_DOCTOR_RECRUIT.ORG_FLOW,
+                            RES_DOCTOR_RECRUIT.ORG_NAME,
+                            RES_DOCTOR_RECRUIT.DOCTOR_FLOW,
+                            RES_DOCTOR_RECRUIT.SESSION_NUMBER,
+                            RES_DOCTOR_RECRUIT.SPE_ID,
+                            RES_DOCTOR_RECRUIT.SPE_NAME
+                       FROM RES_DOCTOR_RECRUIT
+                       JOIN RES_DOCTOR
+                         ON RES_DOCTOR_RECRUIT.doctor_flow = RES_DOCTOR.doctor_flow
+                      WHERE RES_DOCTOR.RECORD_STATUS = 'Y'
+                        AND RES_DOCTOR_RECRUIT.RECORD_STATUS = 'Y'
+                        AND RES_DOCTOR_RECRUIT.SPE_ID IS NOT NULL
+                        AND RES_DOCTOR_RECRUIT.cat_spe_id in( 'DoctorTrainingSpe','AssiGeneral')
+                        AND RES_DOCTOR_RECRUIT.AUDIT_STATUS_ID = 'Passed'
+                        AND RES_DOCTOR.DOCTOR_TYPE_ID ='Graduate') DOCTOR
+            ON DOCTOR.ORG_FLOW = ORG.ORG_FLOW
+         WHERE 1 = 1
+        <if test="sessionNumber != null and sessionNumber!=''" >
+            AND DOCTOR.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        GROUP BY  ORG.ORG_FLOW, ORG.ORG_NAME,ORG.ORG_CODE
+        ORDER BY ORG.ORG_CODE
+    </select>
+
+    <resultMap id="doctorNumForUni1Map" type="java.util.HashMap" >
+        <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+        <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+        <result column="DOCNUM" property="docNum" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="doctorNumForUni1" resultMap="doctorNumForUni1Map">
+        SELECT SPE_ID,
+        SPE_NAME,
+        COUNT(DOCTOR.DOCTOR_FLOW) AS DOCNUM
+        FROM (SELECT RES_DOCTOR_RECRUIT.ORG_FLOW,
+                RES_DOCTOR_RECRUIT.ORG_NAME,
+                RES_DOCTOR_RECRUIT.DOCTOR_FLOW,
+                RES_DOCTOR_RECRUIT.SESSION_NUMBER,
+                RES_DOCTOR_RECRUIT.SPE_ID,
+                RES_DOCTOR_RECRUIT.SPE_NAME
+                FROM RES_DOCTOR_RECRUIT
+                JOIN RES_DOCTOR
+                ON RES_DOCTOR_RECRUIT.doctor_flow = RES_DOCTOR.doctor_flow
+                WHERE RES_DOCTOR.RECORD_STATUS = 'Y'
+                AND RES_DOCTOR_RECRUIT.RECORD_STATUS = 'Y'
+                AND RES_DOCTOR_RECRUIT.SPE_ID IS NOT NULL
+                AND RES_DOCTOR_RECRUIT.AUDIT_STATUS_ID = 'Passed'
+                AND RES_DOCTOR.DOCTOR_TYPE_ID ='Graduate'
+                <if test="recruit !=null">
+                    <if test="recruit.sessionNumber != null and recruit.sessionNumber!=''" >
+                        AND RES_DOCTOR_RECRUIT.SESSION_NUMBER = #{recruit.sessionNumber}
+                    </if>
+                    <if test="recruit.orgFlow != null and recruit.orgFlow!=''" >
+                        AND RES_DOCTOR_RECRUIT.ORG_FLOW = #{recruit.orgFlow}
+                    </if>
+                    <if test="recruit.catSpeId != null and recruit.catSpeId!=''" >
+                        AND RES_DOCTOR_RECRUIT.CAT_SPE_ID = #{recruit.catSpeId}
+                    </if>
+                </if>
+                AND (
+                <trim prefix="" prefixOverrides="OR">
+                    <if test="(org.sendSchoolId != null and org.sendSchoolId != '')">OR RES_DOCTOR.work_org_id = #{org.sendSchoolId}</if>
+                    <if test="(org.sendSchoolName != null and org.sendSchoolName != '')">OR RES_DOCTOR.work_org_name = #{org.sendSchoolName}</if>
+                </trim>
+                )
+        ) DOCTOR
+        WHERE 1 = 1
+        GROUP BY SPE_ID,SPE_NAME
+        ORDER BY SPE_ID
+    </select>
+    <resultMap id="doctorNumForUni1DaoChuMap" type="java.util.HashMap" >
+        <result column="CAT_SPE_ID" property="catSpeId" jdbcType="VARCHAR" />
+        <result column="CAT_SPE_NAME" property="catSpeName" jdbcType="VARCHAR" />
+        <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+        <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+        <result column="DOCNUM" property="docNum" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="doctorNumForUni1DaoChu" resultMap="doctorNumForUni1DaoChuMap">
+        SELECT CAT_SPE_ID,
+        CAT_SPE_NAME,SPE_ID,
+        SPE_NAME,
+        COUNT(DOCTOR.DOCTOR_FLOW) AS DOCNUM
+        FROM (SELECT RES_DOCTOR_RECRUIT.ORG_FLOW,
+                RES_DOCTOR_RECRUIT.ORG_NAME,
+                RES_DOCTOR_RECRUIT.DOCTOR_FLOW,
+                RES_DOCTOR_RECRUIT.SESSION_NUMBER,
+                RES_DOCTOR_RECRUIT.CAT_SPE_ID,
+                RES_DOCTOR_RECRUIT.CAT_SPE_NAME,
+                RES_DOCTOR_RECRUIT.SPE_ID,
+                RES_DOCTOR_RECRUIT.SPE_NAME
+                FROM RES_DOCTOR_RECRUIT
+                JOIN RES_DOCTOR
+                ON RES_DOCTOR_RECRUIT.doctor_flow = RES_DOCTOR.doctor_flow
+                WHERE RES_DOCTOR.RECORD_STATUS = 'Y'
+                AND RES_DOCTOR_RECRUIT.RECORD_STATUS = 'Y'
+                AND RES_DOCTOR_RECRUIT.SPE_ID IS NOT NULL
+                AND RES_DOCTOR_RECRUIT.AUDIT_STATUS_ID = 'Passed'
+                AND RES_DOCTOR.DOCTOR_TYPE_ID ='Graduate'
+                <if test="recruit !=null">
+                    <if test="recruit.sessionNumber != null and recruit.sessionNumber!=''" >
+                        AND RES_DOCTOR_RECRUIT.SESSION_NUMBER = #{recruit.sessionNumber}
+                    </if>
+                    <if test="recruit.orgFlow != null and recruit.orgFlow!=''" >
+                        AND RES_DOCTOR_RECRUIT.ORG_FLOW = #{recruit.orgFlow}
+                    </if>
+                    <if test="recruit.catSpeId != null and recruit.catSpeId!=''" >
+                        AND RES_DOCTOR_RECRUIT.CAT_SPE_ID = #{recruit.catSpeId}
+                    </if>
+                </if>
+                AND (
+                <trim prefix="" prefixOverrides="OR">
+                    <if test="(org.sendSchoolId != null and org.sendSchoolId != '')">OR RES_DOCTOR.work_org_id = #{org.sendSchoolId}</if>
+                    <if test="(org.sendSchoolName != null and org.sendSchoolName != '')">OR RES_DOCTOR.work_org_name = #{org.sendSchoolName}</if>
+                </trim>
+                )
+        ) DOCTOR
+        WHERE 1 = 1
+        GROUP BY CAT_SPE_ID,
+                  CAT_SPE_NAME,SPE_ID,SPE_NAME
+        ORDER BY CAT_SPE_ID,SPE_ID
+    </select>
+    <resultMap id="doctorNumForUni2Map" type="java.util.HashMap" >
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="DOCNUM" property="docNum" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="doctorNumForUni2" resultMap="doctorNumForUni2Map">
+        SELECT ORG_FLOW,
+        ORG_NAME,
+        COUNT(DOCTOR.DOCTOR_FLOW) AS DOCNUM
+        FROM (SELECT RES_DOCTOR_RECRUIT.ORG_FLOW,
+                RES_DOCTOR_RECRUIT.ORG_NAME,
+                RES_DOCTOR_RECRUIT.DOCTOR_FLOW,
+                RES_DOCTOR_RECRUIT.SESSION_NUMBER,
+                RES_DOCTOR_RECRUIT.SPE_ID,
+                RES_DOCTOR_RECRUIT.SPE_NAME
+                FROM RES_DOCTOR_RECRUIT
+                JOIN RES_DOCTOR
+                ON RES_DOCTOR_RECRUIT.doctor_flow = RES_DOCTOR.doctor_flow
+                WHERE RES_DOCTOR.RECORD_STATUS = 'Y'
+                AND RES_DOCTOR_RECRUIT.RECORD_STATUS = 'Y'
+                AND RES_DOCTOR_RECRUIT.SPE_ID IS NOT NULL
+                AND RES_DOCTOR_RECRUIT.AUDIT_STATUS_ID = 'Passed'
+                AND RES_DOCTOR.DOCTOR_TYPE_ID ='Graduate'
+                <if test="recruit !=null">
+                    <if test="recruit.sessionNumber != null and recruit.sessionNumber!=''" >
+                        AND RES_DOCTOR_RECRUIT.SESSION_NUMBER = #{recruit.sessionNumber}
+                    </if>
+                    <if test="recruit.catSpeId != null and recruit.catSpeId!=''" >
+                        AND RES_DOCTOR_RECRUIT.CAT_SPE_ID = #{recruit.catSpeId}
+                    </if>
+                </if>
+
+                <if test="orgFlows != null">
+                    AND RES_DOCTOR_RECRUIT.ORG_FLOW IN
+                    <foreach collection="orgFlows" item="orgFlow" open="(" separator="," close=")">
+                        #{orgFlow}
+                    </foreach>
+                </if>
+                AND (
+                <trim prefix="" prefixOverrides="OR">
+                    <if test="(org.sendSchoolId != null and org.sendSchoolId != '')">OR RES_DOCTOR.work_org_id = #{org.sendSchoolId}</if>
+                    <if test="(org.sendSchoolName != null and org.sendSchoolName != '')">OR RES_DOCTOR.work_org_name = #{org.sendSchoolName}</if>
+                </trim>
+                )
+        ) DOCTOR
+        WHERE 1 = 1
+        GROUP BY ORG_FLOW,
+                  ORG_NAME
+        ORDER BY ORG_FLOW
+    </select>
+    <resultMap id="doctorNumForUni2DaoChuMap" type="java.util.HashMap" >
+        <result column="CAT_SPE_ID" property="catSpeId" jdbcType="VARCHAR" />
+        <result column="CAT_SPE_NAME" property="catSpeName" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="DOCNUM" property="docNum" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="doctorNumForUni2DaoChu" resultMap="doctorNumForUni2DaoChuMap">
+        SELECT CAT_SPE_ID,
+        CAT_SPE_NAME,ORG_FLOW,
+        ORG_NAME,
+        COUNT(DOCTOR.DOCTOR_FLOW) AS DOCNUM
+        FROM (SELECT RES_DOCTOR_RECRUIT.ORG_FLOW,
+                RES_DOCTOR_RECRUIT.ORG_NAME,
+                RES_DOCTOR_RECRUIT.DOCTOR_FLOW,
+                RES_DOCTOR_RECRUIT.SESSION_NUMBER,
+                RES_DOCTOR_RECRUIT.CAT_SPE_ID,
+                RES_DOCTOR_RECRUIT.CAT_SPE_NAME,
+                RES_DOCTOR_RECRUIT.SPE_ID,
+                RES_DOCTOR_RECRUIT.SPE_NAME
+                FROM RES_DOCTOR_RECRUIT
+                JOIN RES_DOCTOR
+                ON RES_DOCTOR_RECRUIT.doctor_flow = RES_DOCTOR.doctor_flow
+                WHERE RES_DOCTOR.RECORD_STATUS = 'Y'
+                AND RES_DOCTOR_RECRUIT.RECORD_STATUS = 'Y'
+                AND RES_DOCTOR_RECRUIT.SPE_ID IS NOT NULL
+                AND RES_DOCTOR_RECRUIT.AUDIT_STATUS_ID = 'Passed'
+                AND RES_DOCTOR.DOCTOR_TYPE_ID ='Graduate'
+                <if test="recruit !=null">
+                    <if test="recruit.sessionNumber != null and recruit.sessionNumber!=''" >
+                        AND RES_DOCTOR_RECRUIT.SESSION_NUMBER = #{recruit.sessionNumber}
+                    </if>
+                    <if test="recruit.catSpeId != null and recruit.catSpeId!=''" >
+                        AND RES_DOCTOR_RECRUIT.CAT_SPE_ID = #{recruit.catSpeId}
+                    </if>
+                </if>
+                <if test="orgFlows != null">
+                    AND RES_DOCTOR_RECRUIT.ORG_FLOW IN
+                    <foreach collection="orgFlows" item="orgFlow" open="(" separator="," close=")">
+                        #{orgFlow}
+                    </foreach>
+                </if>
+                AND (
+                <trim prefix="" prefixOverrides="OR">
+                    <if test="(org.sendSchoolId != null and org.sendSchoolId != '')">OR RES_DOCTOR.work_org_id = #{org.sendSchoolId}</if>
+                    <if test="(org.sendSchoolName != null and org.sendSchoolName != '')">OR RES_DOCTOR.work_org_name = #{org.sendSchoolName}</if>
+                </trim>
+                )
+        ) DOCTOR
+        WHERE 1 = 1
+        GROUP BY CAT_SPE_ID,
+        CAT_SPE_NAME,ORG_FLOW,
+                  ORG_NAME
+        ORDER BY ORG_FLOW,CAT_SPE_ID
+    </select>
+
+    <select id="registStatistic" parameterType="java.util.Map" resultType="java.util.Map">
+        select so.org_flow,
+                so.org_name,
+                so.org_code,
+                to_char((
+                  select count(0) from res_doctor rd where rd.DOCTOR_STATUS_ID='Training' and rd.RECORD_STATUS = 'Y'
+                      <if test='recruitYear!=null and recruitYear!=""'>
+                        and rd.session_number = #{recruitYear}
+                      </if>
+                  and rd.org_flow = so.org_flow
+                ))org_all,
+                 to_char((
+                    select count(0) from res_doctor rd where rd.DOCTOR_STATUS_ID='Training' and rd.RECORD_STATUS = 'Y'
+                    <if test='recruitYear!=null and recruitYear!=""'>
+                        and rd.session_number =  #{recruitYear}
+                    </if>
+                  and rd.org_flow = so.org_flow and rd.is_under_line = 'Y'
+                )) under_line,
+                to_char((
+                    select count(0) from res_doctor rd where rd.DOCTOR_STATUS_ID='Training' and rd.RECORD_STATUS = 'Y'
+                    <if test='recruitYear!=null and recruitYear!=""'>
+                        and rd.session_number =  #{recruitYear}
+                    </if>
+                  and rd.org_flow = so.org_flow and (rd.is_under_line = 'N' or rd.is_under_line IS NULL)
+                )) on_line,
+                to_char((
+                    select count(0) from res_doctor rd where rd.DOCTOR_STATUS_ID='Training' and rd.RECORD_STATUS = 'Y'
+                    <if test='recruitYear!=null and recruitYear!=""'>
+                        and rd.session_number =  #{recruitYear}
+                    </if>
+                  and rd.org_flow = so.org_flow and rd.DOCTOR_type_ID = 'Graduate'
+                ))graduate
+                from sys_org so
+                where so.RECORD_STATUS = 'Y'
+                AND so.org_flow is not null
+                AND so.org_flow != '20160914888888'
+                AND so.org_flow != '566c9f36cf014f63a569b453efa284d7'
+                AND so.org_flow != '00000000000000000000000000000000'
+                and so.org_code != ' 12'
+                and so.org_code is not null
+                order by so.org_code
+    </select>
+
+    <select id="registStatisticSpe" parameterType="java.util.Map" resultType="java.util.Map">
+        select sd.dict_name,sd.dict_id,
+        to_char((select count(0) from res_doctor rd where rd.DOCTOR_STATUS_ID='Training' and rd.RECORD_STATUS = 'Y'
+                            <if test='recruitYear!=null and recruitYear!=""'>
+                                and rd.session_number =  #{recruitYear}
+                            </if>
+                            and rd.training_spe_id = sd.dict_id)) spe_all,
+        to_char((select count(0) from res_doctor rd where rd.DOCTOR_STATUS_ID='Training' and rd.RECORD_STATUS = 'Y'
+                            <if test='recruitYear!=null and recruitYear!=""'>
+                                and rd.session_number =  #{recruitYear}
+                            </if>
+                          and rd.training_spe_id = sd.dict_id and rd.is_under_line = 'Y')) under_line,
+        to_char((select count(0) from res_doctor rd where rd.DOCTOR_STATUS_ID='Training' and rd.RECORD_STATUS = 'Y'
+                            <if test='recruitYear!=null and recruitYear!=""'>
+                                and rd.session_number =  #{recruitYear}
+                            </if>
+                          and rd.training_spe_id = sd.dict_id and (rd.is_under_line = 'N' or rd.is_under_line IS NULL))) on_line,
+        to_char((select count(0) from res_doctor rd where rd.DOCTOR_STATUS_ID='Training' and rd.RECORD_STATUS = 'Y'
+                            <if test='recruitYear!=null and recruitYear!=""'>
+                                and rd.session_number =  #{recruitYear}
+                            </if>
+                          and rd.training_spe_id = sd.dict_id and rd.DOCTOR_type_ID = 'Graduate')) Graduate
+        from sys_dict sd
+        where dict_type_id = 'DoctorTrainingSpe' and record_status='Y' and dict_id!='3500' order by dict_id
+    </select>
+
+    <resultMap type="HashMap" id="zlxytjMap">
+        <result property="cityId" column="org_city_id" javaType="string"/>
+        <result property="cityName" column="org_city_name" javaType="string"/>
+        <result property="sessionNumber" column="session_number" javaType="string"/>
+        <result property="typeId" column="doctor_type_id" javaType="string"/>
+        <result property="typeName" column="doctor_type_name" javaType="string"/>
+        <result property="num" column="num" javaType="integer"/>
+    </resultMap>
+    <!--<select id="zlxytj"  resultMap="zlxytjMap">
+        SELECT org_city_id, org_city_name, session_number, doctor_type_id, COUNT(1) AS num
+        FROM (
+        SELECT org.org_city_id, org.org_city_name, rr.reg_year session_number, rd.doctor_type_id, rd.doctor_type_name
+        , rd.doctor_flow
+        FROM res_reg rr
+        left join RES_DOCTOR_recruit T on rr.user_flow = t.doctor_flow
+        LEFT JOIN sys_org org ON t.org_flow = org.org_flow
+        LEFT JOIN res_doctor rd ON t.doctor_flow = rd.doctor_flow
+        LEFT JOIN SYS_USER u ON t.DOCTOR_FLOW = u.USER_FLOW
+        WHERE rr.record_status = 'Y'
+        and rr.status_id = 'Passed'
+        and t.record_status = 'Y' and t.recruit_flag = 'Y' and t.confirm_flag = 'Y'
+        AND t.org_flow IN (SELECT ORG_FLOW
+        FROM PDSCI.SYS_ORG
+        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        AND ORG_PROV_ID = '420000')
+        AND u.RECORD_STATUS = 'Y'
+        AND rd.doctor_type_id IN ('Company', 'Graduate', 'Social', 'CompanyEntrust')
+        and (rd.doctor_status_id='Training' or rd.doctor_status_id='Graduation')
+        and not EXISTS (
+            select 1
+            FROM res_recruit_register rrr
+            where rrr.record_status='Y'
+            and rrr.audit_status_id='Passed'
+            and rrr.doctor_flow=t.doctor_flow
+          )
+        UNION
+        SELECT org.org_city_id, org.org_city_name, t.recruit_year AS session_number, rd.doctor_type_id, rd.doctor_type_name
+        , rd.doctor_flow
+        FROM res_recruit_register t
+        LEFT JOIN sys_org org ON t.org_flow = org.org_flow
+        LEFT JOIN res_doctor rd ON t.doctor_flow = rd.doctor_flow
+        LEFT JOIN SYS_USER u ON t.DOCTOR_FLOW = u.USER_FLOW
+        WHERE T.RECORD_STATUS = 'Y'
+        AND t.audit_status_id = 'Passed'
+        AND t.org_flow IN (SELECT ORG_FLOW
+        FROM PDSCI.SYS_ORG
+        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        AND ORG_PROV_ID = '420000')
+        AND u.RECORD_STATUS = 'Y'
+        AND rd.doctor_type_id IN ('Company', 'Graduate', 'Social', 'CompanyEntrust')
+        UNION
+        SELECT org.org_city_id, org.org_city_name, t.session_number, rd.doctor_type_id, rd.doctor_type_name
+        , rd.doctor_flow
+        FROM res_docotr_delay_teturn t
+        LEFT JOIN sys_org org ON t.org_flow = org.org_flow
+        LEFT JOIN res_doctor rd ON t.doctor_flow = rd.doctor_flow
+        LEFT JOIN SYS_USER u ON t.DOCTOR_FLOW = u.USER_FLOW
+        WHERE t.record_status = 'Y'
+        AND t.type_id = 'ReturnTraining'
+        AND T.AUDIT_STATUS_ID = 'GlobalPassed'
+        AND u.record_status = 'N'
+        AND t.org_flow IN (SELECT ORG_FLOW
+        FROM PDSCI.SYS_ORG
+        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        AND ORG_PROV_ID = '420000')
+        AND rd.doctor_type_id IN ('Company', 'Graduate', 'Social', 'CompanyEntrust')
+        ) t
+        <if test="sessionNumber!=null and sessionNumber!=''">
+            where session_number=#{sessionNumber}
+        </if>
+        group by org_city_id,
+        org_city_name,
+        session_number,
+        doctor_type_id
+        order by org_city_id, session_number
+    </select>-->
+    <resultMap type="HashMap" id="zlxytj2Map">
+        <result  property="cityId" column="org_city_id" javaType="string"/>
+        <result property="jointOrgFlow" column="JOINT_ORG_FLOW" javaType="string"/>
+        <result property="orgFlow" column="ORG_FLOW" javaType="string"/>
+        <result property="speId" column="SPE_ID" javaType="string"/>
+        <result property="num" column="num" javaType="integer"/>
+    </resultMap>
+   <!-- <select id="zlxytj2"  resultMap="zlxytj2Map">
+        select ORG_FLOW, org_city_id, SPE_ID, COUNT(1) NUM
+        from (SELECT ORG.ORG_FLOW, org.org_city_id, T.SPE_ID, rd.doctor_flow
+        FROM res_reg rr
+        left join RES_DOCTOR_recruit T
+        on rr.user_flow = t.doctor_flow
+        left join (SELECT JIORG.JOINT_ORG_FLOW,
+        ORG.ORG_FLOW,
+        ORG.ORG_NAME,
+        ORG.ORG_CITY_ID,
+        ORG.ORG_CITY_NAME
+        FROM SYS_ORG ORG
+        LEFT JOIN RES_JOINT_ORG JIORG
+        ON ORG.ORG_FLOW = JIORG.ORG_FLOW
+        WHERE 1 = 1
+        AND JIORG.RECORD_STATUS = 'Y'
+        and org.org_level_id = 'CountryOrg'
+        UNION
+        SELECT ORG.ORG_FLOW JOINT_ORG_FLOW,
+        ORG.ORG_FLOW,
+        ORG.ORG_NAME,
+        ORG.ORG_CITY_ID,
+        ORG.ORG_CITY_NAME
+        FROM SYS_ORG ORG
+        where org.org_level_id = 'CountryOrg') ORG
+        on t.org_flow = org.JOINT_ORG_FLOW
+        left join res_doctor rd
+        on t.doctor_flow = rd.doctor_flow
+        LEFT JOIN SYS_USER u
+        ON t.DOCTOR_FLOW = u.USER_FLOW
+        WHERE rr.record_status = 'Y'
+        and rr.status_id = 'Passed'
+        and t.record_status = 'Y' and t.recruit_flag = 'Y' and t.confirm_flag = 'Y'
+        AND ORG.org_flow IN
+        (SELECT ORG_FLOW
+        FROM PDSCI.SYS_ORG
+        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        AND ORG_PROV_ID = '420000')
+        AND u.RECORD_STATUS = 'Y'
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and rd.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="sessionNumber!=null and sessionNumber!=''">
+            and  rr.reg_year=#{sessionNumber}
+        </if>
+        and (rd.doctor_status_id='Training' or rd.doctor_status_id='Graduation')
+        and not EXISTS (
+        select 1
+        FROM res_recruit_register rrr
+        where rrr.record_status='Y'
+        and rrr.audit_status_id='Passed'
+        and rrr.doctor_flow=t.doctor_flow
+        )
+        union
+        select ORG.ORG_FLOW,
+        org.org_city_id,
+        T.SPE_ID,
+        rd.doctor_flow
+        from res_recruit_register t
+        left join (SELECT JIORG.JOINT_ORG_FLOW,
+        ORG.ORG_FLOW,
+        ORG.ORG_NAME,
+        ORG.ORG_CITY_ID,
+        ORG.ORG_CITY_NAME
+        FROM SYS_ORG ORG
+        LEFT JOIN RES_JOINT_ORG JIORG
+        ON ORG.ORG_FLOW = JIORG.ORG_FLOW
+        WHERE 1 = 1
+        AND JIORG.RECORD_STATUS = 'Y'
+        and org.org_level_id = 'CountryOrg'
+        UNION
+        SELECT ORG.ORG_FLOW JOINT_ORG_FLOW,
+        ORG.ORG_FLOW,
+        ORG.ORG_NAME,
+        ORG.ORG_CITY_ID,
+        ORG.ORG_CITY_NAME
+        FROM SYS_ORG ORG
+        where org.org_level_id = 'CountryOrg') ORG
+        on t.org_flow = org.JOINT_ORG_FLOW
+        left join res_doctor rd
+        on t.doctor_flow = rd.doctor_flow
+        LEFT JOIN SYS_USER u
+        ON t.DOCTOR_FLOW = u.USER_FLOW
+        where T.RECORD_STATUS = 'Y'
+        AND t.audit_status_id = 'Passed'
+        and u.RECORD_STATUS = 'Y'
+        AND ORG.org_flow IN
+        (SELECT ORG_FLOW
+        FROM PDSCI.SYS_ORG
+        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        AND ORG_PROV_ID = '420000')
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and rd.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="sessionNumber!=null and sessionNumber!=''">
+            and  t.recruit_year=#{sessionNumber}
+        </if>
+
+        union
+        select ORG.ORG_FLOW,
+        org.org_city_id,
+        T.TRAINING_SPE_ID SPE_ID,
+        rd.doctor_flow
+        from res_docotr_delay_teturn t
+        left join (SELECT JIORG.JOINT_ORG_FLOW,
+        ORG.ORG_FLOW,
+        ORG.ORG_NAME,
+        ORG.ORG_CITY_ID,
+        ORG.ORG_CITY_NAME
+        FROM SYS_ORG ORG
+        LEFT JOIN RES_JOINT_ORG JIORG
+        ON ORG.ORG_FLOW = JIORG.ORG_FLOW
+        WHERE 1 = 1
+        AND JIORG.RECORD_STATUS = 'Y'
+        and org.org_level_id = 'CountryOrg'
+        UNION
+        SELECT ORG.ORG_FLOW JOINT_ORG_FLOW,
+        ORG.ORG_FLOW,
+        ORG.ORG_NAME,
+        ORG.ORG_CITY_ID,
+        ORG.ORG_CITY_NAME
+        FROM SYS_ORG ORG
+        where org.org_level_id = 'CountryOrg') ORG
+        on t.org_flow = org.JOINT_ORG_FLOW
+        left join res_doctor rd
+        on t.doctor_flow = rd.doctor_flow
+        LEFT JOIN SYS_USER u
+        ON t.DOCTOR_FLOW = u.USER_FLOW
+        where t.record_status = 'Y'
+        and t.type_id = 'ReturnTraining'
+        AND T.AUDIT_STATUS_ID = 'GlobalPassed'
+        AND u.record_status = 'N'
+        AND ORG.org_flow IN
+        (SELECT ORG_FLOW
+        FROM PDSCI.SYS_ORG
+        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        AND ORG_PROV_ID = '420000')
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and rd.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="sessionNumber!=null and sessionNumber!=''">
+            and  t.session_Number=#{sessionNumber}
+        </if>
+        ) t
+        <if test="orgCityId!=null and orgCityId!=''">
+            where  org_city_id=#{orgCityId}
+        </if>
+        group by ORG_FLOW, org_city_id, SPE_ID
+        order by org_city_id, SPE_ID
+    </select>-->
+    <!--<select id="zlxytjJoint"  resultMap="zlxytj2Map">
+        select JOINT_ORG_FLOW,ORG_FLOW, org_city_id, SPE_ID, COUNT(1) NUM
+        from (SELECT ORG.JOINT_ORG_FLOW,ORG.ORG_FLOW, org.org_city_id, T.SPE_ID, rd.doctor_flow
+        FROM res_reg rr
+        left join RES_DOCTOR_recruit T
+        on rr.user_flow = t.doctor_flow
+        left join (SELECT JIORG.JOINT_ORG_FLOW,
+        ORG.ORG_FLOW,
+        ORG.ORG_NAME,
+        ORG.ORG_CITY_ID,
+        ORG.ORG_CITY_NAME
+        FROM SYS_ORG ORG
+        LEFT JOIN RES_JOINT_ORG JIORG
+        ON ORG.ORG_FLOW = JIORG.ORG_FLOW
+        WHERE 1 = 1
+        AND JIORG.RECORD_STATUS = 'Y'
+        and org.org_level_id = 'CountryOrg'
+        <if test="orgFlow!=null and orgFlow!=''">
+            and  org.org_flow=#{orgFlow}
+        </if>
+        ) ORG
+        on t.org_flow = org.JOINT_ORG_FLOW
+        left join res_doctor rd
+        on t.doctor_flow = rd.doctor_flow
+        LEFT JOIN SYS_USER u
+        ON t.DOCTOR_FLOW = u.USER_FLOW
+        WHERE rr.record_status = 'Y'
+        and rr.status_id = 'Passed'
+        and t.record_status = 'Y' and t.recruit_flag = 'Y' and t.confirm_flag = 'Y'
+        AND ORG.JOINT_ORG_FLOW IN
+        (SELECT ORG_FLOW
+        FROM PDSCI.SYS_ORG
+        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        AND ORG_PROV_ID = '420000')
+        AND u.RECORD_STATUS = 'Y'
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and rd.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="sessionNumber!=null and sessionNumber!=''">
+            and  rr.reg_year=#{sessionNumber}
+        </if>
+        union
+        select ORG.JOINT_ORG_FLOW,ORG.ORG_FLOW,
+        org.org_city_id,
+        T.TRAINING_SPE_ID SPE_ID,
+        rd.doctor_flow
+        from res_docotr_delay_teturn t
+        left join (SELECT JIORG.JOINT_ORG_FLOW,
+        ORG.ORG_FLOW,
+        ORG.ORG_NAME,
+        ORG.ORG_CITY_ID,
+        ORG.ORG_CITY_NAME
+        FROM SYS_ORG ORG
+        LEFT JOIN RES_JOINT_ORG JIORG
+        ON ORG.ORG_FLOW = JIORG.ORG_FLOW
+        WHERE 1 = 1
+        AND JIORG.RECORD_STATUS = 'Y'
+        and org.org_level_id = 'CountryOrg'
+        <if test="orgFlow!=null and orgFlow!=''">
+            and  org.ORG_FLOW=#{orgFlow}
+        </if>) ORG
+        on t.org_flow = org.JOINT_ORG_FLOW
+        left join res_doctor rd
+        on t.doctor_flow = rd.doctor_flow
+        LEFT JOIN SYS_USER u
+        ON t.DOCTOR_FLOW = u.USER_FLOW
+        where t.record_status = 'Y'
+        and t.type_id = 'ReturnTraining'
+        AND T.AUDIT_STATUS_ID = 'GlobalPassed'
+        AND u.record_status = 'N'
+        AND ORG.JOINT_ORG_FLOW IN
+        (SELECT ORG_FLOW
+        FROM PDSCI.SYS_ORG
+        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        AND ORG_PROV_ID = '420000')
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and rd.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="sessionNumber!=null and sessionNumber!=''">
+            and  t.session_number=#{sessionNumber}
+        </if>
+        union
+        select ORG.JOINT_ORG_FLOW,ORG.ORG_FLOW,
+        org.org_city_id,
+        T.SPE_ID,
+        rd.doctor_flow
+        from res_recruit_register t
+        left join (SELECT JIORG.JOINT_ORG_FLOW,
+        ORG.ORG_FLOW,
+        ORG.ORG_NAME,
+        ORG.ORG_CITY_ID,
+        ORG.ORG_CITY_NAME
+        FROM SYS_ORG ORG
+        LEFT JOIN RES_JOINT_ORG JIORG
+        ON ORG.ORG_FLOW = JIORG.ORG_FLOW
+        WHERE 1 = 1
+        AND JIORG.RECORD_STATUS = 'Y'
+        and org.org_level_id = 'CountryOrg'
+        <if test="orgFlow!=null and orgFlow!=''">
+            and  org.ORG_FLOW=#{orgFlow}
+        </if>) ORG
+        on t.org_flow = org.JOINT_ORG_FLOW
+        left join res_doctor rd
+        on t.doctor_flow = rd.doctor_flow
+        LEFT JOIN SYS_USER u
+        ON t.DOCTOR_FLOW = u.USER_FLOW
+        where T.RECORD_STATUS = 'Y'
+        AND t.audit_status_id = 'Passed'
+        and u.RECORD_STATUS = 'Y'
+        AND ORG.JOINT_ORG_FLOW IN
+        (SELECT ORG_FLOW
+        FROM PDSCI.SYS_ORG
+        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        AND ORG_PROV_ID = '420000')
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and rd.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="sessionNumber!=null and sessionNumber!=''">
+            and  t.recruit_year=#{sessionNumber}
+        </if>
+        ) t
+        <if test="orgCityId!=null and orgCityId!=''">
+            where  org_city_id=#{orgCityId}
+        </if>
+        group by JOINT_ORG_FLOW,ORG_FLOW, org_city_id, SPE_ID
+        order by org_city_id, SPE_ID
+    </select>-->
+</mapper>

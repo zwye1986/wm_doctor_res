@@ -1,0 +1,107 @@
+@charset "utf-8";
+/* CSS Document */
+html{height:100%;max-height:100%;padding:0;margin:0;border:0;font-family:"Microsoft YaHei"}
+body{margin:0;}
+html,body{ font:14px/22px "微软雅黑","Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif; color:#333; background:#f1eae2 url(../images/bg.jpg) repeat-x; -webkit-text-size-adjust:none;}
+a.notice_title{text-decoration:none;color:#222;font-size:14px;padding:0;margin:0;border:0;font-family:"Microsoft YaHei"}
+h1,h2,h3,h4,h5,h6{font-size:100%;}
+ul,ol{list-style:none;}
+span{font-family:"Microsoft YaHei"}
+.fl{float:left}
+.fr{float:right;}
+img{border:none;}
+.db{display:block;}
+input{outline:none;margin:0;border:none;}
+a{color:#558abe;text-decoration:none;}
+/*页眉*/
+.top_box{position:absolute;overflow:hidden;top:0;left:0;width:100%;z-index:5;display:block;background:#df8120;box-shadow:0 1px 2px rgba(107,102,98,0.5)}
+.top{width:1024px;margin:auto;overflow:hidden;height:70px;}
+.top .logo{margin-top:14px;}
+.top .top_text{color:#FFF;font-size:14px;margin-top:38px;}
+/*banner+登录*/
+.banner_box{position:absolute;width:100%;overflow:hidden;background:#f6f1ec;z-index:3;top:70px;bottom:136px; border-bottom:3px solid #df8120;}
+.banner{position:absolute;top:0;left:50%;width:100%;margin-left:-50%;}
+.login_people{position:absolute;bottom:-20px;left:50%;margin-left:-510px;}
+.banner_title{position:absolute;left:50%;top:8%;margin-left:-510px;}
+.login_box input{height:34px;width:218px;color:#999999;font-size:14px;line-height:34px;font-family:"Microsoft YaHei";}
+.login_bg{position:absolute;top:6%;left:50%;margin-left:180px;width:353px;height:297px;background:url(../images/login_bg2.png);}
+.login_box{width:262px;margin-left:22px;margin-top:36px;}
+.login_title{display:block;width:95px;height:16px;margin:auto;margin-top:16px}
+.username,.password{width:260px;height:34px;overflow:hidden;border:solid 1px #b47949;background:#FFF;margin-top:16px;border-radius:2px 2px 2px 2px;}
+.login_box img,.login_box input{float:left;}
+.yanzm{margin-top:16px;overflow:hidden;}
+.yanzm .yan{height:34px;overflow:hidden;border:solid 1px #cd8822;padding-left:10px;background:#FFF;border-radius:2px 2px 2px 2px;}
+.yanzm .yan input{width:108px;}
+.yanzm img{float:right;}
+.cw{display:block;color:#FF0000; font-weight:bold;text-align:left;font-size:13px; height:30px; line-height:30px;}
+.denglu input{float:left;height:36px;width:125px;color:#fff;font-size:16px;border-radius:2px 2px 2px 2px;}
+.denglu .login1{background:#dc781d;border-radius:2px 2px 2px 2px;}
+.denglu .login1:hover{background:#c76c1a;cursor:pointer}
+/*.denglu .login2{background:#9a9a9a;float:right}
+.denglu .login2:hover{background:#8a8888;cursor:pointer}*/
+/*通知公告*/
+.new_box{overflow:hidden;position:absolute;bottom:48px;left:0;width:100%;z-index:4; height:88px;background:#fff;}
+.new{width:1024px;margin:auto;border:solid 1px #df8120;overflow:hidden;height:46px;background:#fff; margin-top:21px;}
+.new a{font-size:14px;}
+.new a:hover{color:#1d7fdb;text-decoration:underline;}
+.gongao{margin-left:26px;width:340px;overflow:hidden; line-height: 46px;}
+.gongao span,.gongao a,.gongao img{float:left;}
+.gongao span{color:#d5d5d5;margin-right:4px;line-height:46px;}
+.gongao img{margin-left:10px;}
+.xitong{margin-left:20px;font-size:14px;color:#222;line-height:46px;}
+.more{margin-right:20px;color:#222;line-height:48px;}
+/*页脚*/
+.footer_box{background:#b2aeaa;position:absolute;bottom:0;left:0;width:100%;z-index:5;display:block;overflow:hidden; height:48px;}
+.login_footer{color:#ffffff;text-align:center;line-height:48px;font-size:14px;}
+
+
+/*注册，邮箱验证*/
+.register_top{ height:70px;width:1200px; margin:0 auto; margin:0 auto; color:#7e3026;  line-height:100px;  font-size:36px; overflow:hidden;}
+.register_content{ width:1200px; /*border:1px solid #d9dadc;*/ background:#fff; margin: 24px auto 0px auto; text-align: center;}
+.clearfix:after{ content:".";display:block;height:0;clear:both;visibility:hidden;}
+.clearfix{*zoom:1;}
+/*mail.html*/
+.mail{ margin:0 70px; text-align:center; color:#636363; padding-bottom:260px;}
+.mail h3{ color:#000; text-align:left; height:60px; font-size:24px; font-weight:normal; line-height:60px; border-bottom:1px dashed #ddd; text-indent:60px; background:url(../images/mail.png) no-repeat 20px 14px; margin-bottom:150px;}
+.mail h4{ font-weight:normal; font-size:20px; line-height:26px; margin-top:30px;}
+.mail p{ line-height:28px;}
+.mail b{ color:#c00; font-weight:normal;}
+.mail input{ margin:30px 0;}
+.footer{  height:58px; background:#b8b9b9;color:#eee; text-align:center; line-height:58px;}
+/*notPass.html*/
+.notPass{ text-align:center; min-height:480px; height:100%; padding:60px 0;}
+.notPass_left{ width:55%; display:inline-block;height: 100%;vertical-align: middle;}
+.notPass_left img{vertical-align: middle; margin-top:80px;}
+.notPass_right{ float:right; width:44%; min-height: 580px; display:inline-block; background:url(../images/reg_line.png) repeat-y;}
+.notPass_right img{ vertical-align: middle; display:inline-block;}
+.notPass p{ line-height:40px;  min-height:300px; width:80%;margin: 50px auto 0;text-align: left; }
+.notPass input { margin-top:30px;}
+.wjpsw h3,.zhpsw h3{ height:45px; border-bottom:1px solid #ccc; line-height:45px; font-size:18px; text-align:left; font-weight:normal; color:#666; margin:0 20px 100px;}
+.wjpsw .txt{ width: 298px;border: 1px solid #e7e7eb;  height: 36px; line-height: 30px; outline: none; text-indent:10px; color:#999;margin-top:0px;}
+.wjpsw .button{ cursor:pointer;margin-top:0px;}
+.zhpsw th{ font-size:16px;}
+.zhpsw{ text-align:center;}
+.zhpsw table{ width:420px; margin:100px  auto 0;}
+.zhpsw table th{ text-align:right; padding-right:10px; height:50px; width:70px;}
+.zhpsw .txt{ margin-top: 0px;width: 200px;border: 1px solid #e7e7eb;  height: 30px; line-height: 30px; outline: none; text-indent:10px;}
+.zhpsw .button{ margin-top:30px; cursor:pointer;}
+.button{  outline: none; text-align: center;  padding: .6em 3em .65em; -webkit-border-radius: .5em; -moz-border-radius: .5em; border-radius: .5em;  border:1px solid #d7d6db; background:#e7e6eb; color:#666; margin:0 15px;transition: background 0.5s;-moz-transition: background 0.5s;-webkit-transition: background 0.5s;-o-transition: background 0.5s; }
+.button-blue{ background:#55b2e4; border:1px solid #4fa7d6; color:#fff;transition: background 0.5s;-moz-transition: background 0.5s;-webkit-transition: background 0.5s;-o-transition: background 0.5s;}
+.button-blue:hover{background:#4ca2cf;}
+.yw{ background:url(../images/yw.png) no-repeat center 9px;}
+/*忘记密码样式*/
+.reg_title{
+	margin: 0px 0px 10px 30px; 
+	color:#7e3026; 
+	padding-top: 20px;
+	font-size: 22px; 
+	font-weight: bold;
+}
+.line{
+	padding:0 0 10px 30px;
+	color:#999999;
+	border-bottom:1px dashed #dadada;
+}
+.line_c{
+	color:#f80;
+}

@@ -1,0 +1,290 @@
+<html>
+<head>
+<title></title>
+<style type="text/css">
+body {
+	margin-left: 5px;
+	margin-right: 5px;
+	font-family: Arial Unicode MS;
+}
+
+@page {   
+    size: A3 landscape;
+    margin-left:40px;
+ 	margin-right:40px;
+ 	margin-top:10px;
+    
+    @top-center { 
+    	content: element(header);
+    };  
+    @bottom-center{  
+        content:"第" counter(page) "页/共 " counter(pages) "页";
+        font-family: Arial Unicode MS;   
+        font-size: 12px;  
+        color:#000;  
+    };  
+}  
+
+	th,td{border: 1px solid #0a0a0a;}
+
+</style>
+</head>
+<body>
+	<table style="width:100%;height: 100%;border-collapse:collapse;table-layout:fixed; word-break:break-strict;" cellspacing="0">
+		<tr>
+			<td style="text-align: center;" colspan="14">
+				<label style="font-size: 30px;font-weight: bold;">
+					江苏省住院医师规范化培训在培学员花名册
+				</label>
+				<label style="font-size: 18px;font-weight: normal;">
+					（${orgName!}培训基地）
+				</label>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="9">
+				一、基本信息
+			</td>
+			<td colspan="5">
+				三、信息确认
+			</td>
+		</tr>
+		<tr>
+			<td colspan="9">
+				表格导出联系人姓名：&#12288;&#12288;&#12288;&#12288;；&#12288;
+				联系电话：&#12288;&#12288;&#12288;&#12288;；&#12288;
+				表格导出时间：${currDate!}
+			</td>
+			<td colspan="5" rowspan="8" style="vertical-align: top;padding-top: 10px;">
+				<div>1、培训基地法人<label style="font-weight: bold;">签字</label>：</div>
+				<div style="margin-top: 45px;">（请确认填报的在培学员信息属实，超出规定培训年限的在培学员未统计在内）</div>
+
+				<div style="margin-top: 45px;">2、培训基地<label style="font-weight: bold;">公章</label>：</div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="9">
+				二、汇总信息
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;" rowspan="2" colspan="2">
+				培训时间
+			</td>
+			<td style="text-align: center;" rowspan="2">
+				培训届别
+			</td>
+			<td style="text-align: center;" colspan="4">
+				依据在培学员身份类型统计（人）
+			</td>
+			<td style="text-align: center;" rowspan="2" colspan="2">
+				小计
+			</td>
+		</tr>
+		<#assign sum1=0 sum2=0 sum3=0 sum4=0 sum5=0 sum6=0 sum7=0/>
+		<tr>
+			<td style="text-align: center;">
+				本单位人（人）
+			</td>
+			<td style="text-align: center;">
+				委培单位人（人）
+			</td>
+			<td style="text-align: center;">
+				行业人（人）
+			</td>
+			<td style="text-align: center;">
+				在校专硕（人）
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;" colspan="2">
+				培训第1年
+			</td>
+			<td style="text-align: center;">
+				${oneYear!}
+			</td>
+			<td style="text-align: center;">
+				${CompanyoneYear!0}
+				<#assign sum1=sum1+CompanyoneYear!0/>
+				<#assign sum5=sum5+CompanyoneYear!0/>
+			</td>
+			<td style="text-align: center;">
+				${CompanyEntrustoneYear!0}
+				<#assign sum2=sum2+CompanyEntrustoneYear!0/>
+				<#assign sum5=sum5+CompanyEntrustoneYear!0/>
+			</td>
+			<td style="text-align: center;">
+				${SocialoneYear!0}
+				<#assign sum3=sum3+SocialoneYear!0/>
+				<#assign sum5=sum5+SocialoneYear!0/>
+			</td>
+			<td style="text-align: center;">
+				${GraduateoneYear!0}
+				<#assign sum4=sum4+GraduateoneYear!0/>
+				<#assign sum5=sum5+GraduateoneYear!0/>
+			</td>
+			<td style="text-align: center;" colspan="2">
+				${sum5!0}
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;" colspan="2">
+				培训第2年
+			</td>
+			<td style="text-align: center;">
+				${twoYear!}
+			</td>
+			<td style="text-align: center;">
+				${CompanytwoYear!0}
+				<#assign sum1=sum1+CompanytwoYear!0/>
+				<#assign sum6=sum6+CompanytwoYear!0/>
+			</td>
+			<td style="text-align: center;">
+				${CompanyEntrusttwoYear!0}
+				<#assign sum2=sum2+CompanyEntrusttwoYear!0/>
+				<#assign sum6=sum6+CompanyEntrusttwoYear!0/>
+			</td>
+			<td style="text-align: center;">
+				${SocialtwoYear!0}
+				<#assign sum3=sum3+SocialtwoYear!0/>
+				<#assign sum6=sum6+SocialtwoYear!0/>
+			</td>
+			<td style="text-align: center;">
+				${GraduatetwoYear!0}
+				<#assign sum4=sum4+GraduatetwoYear!0/>
+				<#assign sum6=sum6+GraduatetwoYear!0/>
+			</td>
+			<td style="text-align: center;" colspan="2">
+				${sum6!0}
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;" colspan="2">
+				培训第3年
+			</td>
+			<td style="text-align: center;">
+				${threeYear!}
+			</td>
+			<td style="text-align: center;">
+				${CompanythreeYear!0}
+				<#assign sum1=sum1+CompanythreeYear!0/>
+				<#assign sum7=sum7+CompanythreeYear!0/>
+			</td>
+			<td style="text-align: center;">
+				${CompanyEntrustthreeYear!0}
+				<#assign sum2=sum2+CompanyEntrustthreeYear!0/>
+				<#assign sum7=sum7+CompanyEntrustthreeYear!0/>
+			</td>
+			<td style="text-align: center;">
+				${SocialthreeYear!0}
+				<#assign sum3=sum3+SocialthreeYear!0/>
+				<#assign sum7=sum7+SocialthreeYear!0/>
+			</td>
+			<td style="text-align: center;">
+				${GraduatethreeYear!0}
+				<#assign sum4=sum4+GraduatethreeYear!0/>
+				<#assign sum7=sum7+GraduatethreeYear!0/>
+			</td>
+			<td style="text-align: center;" colspan="2">
+				${sum7!0}
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;" colspan="3">
+				合计
+			</td>
+			<td style="text-align: center;">
+				${sum1!0}
+			</td>
+			<td style="text-align: center;">
+				${sum2!0}
+			</td>
+			<td style="text-align: center;">
+				${sum3!0}
+			</td>
+			<td style="text-align: center;">
+				${sum4!0}
+			</td>
+			<td style="text-align: center;" colspan="2">
+				${sum1+sum2+sum3+sum4}
+			</td>
+		</tr>
+		<tr>
+			<td colspan="14" style="height: 15px;"></td>
+		</tr>
+	</table>
+	<table style="width:100%;height: 100%;border-collapse:collapse;table-layout:fixed; word-break:break-strict;" cellspacing="0">
+		<tr>
+			<td style="text-align: center;" width="3%">
+				编号
+			</td>
+			<td style="text-align: center;" width="6%">
+				姓名
+			</td>
+			<td style="text-align: center;" width="3%">
+				性别
+			</td>
+			<td style="text-align: center;" width="11%">
+				身份证号码
+			</td>
+			<td style="text-align: center;" width="7%">
+				<div>联系方式</div>
+				<div>(手机)</div>
+			</td>
+			<td style="text-align: center;" width="5%">
+				<div>身份类型</div>
+			</td>
+			<td style="text-align: center;" width="18%">
+				<div>培训基地</div>
+				<div>（本培训基地或协同医院）</div>
+			</td>
+			<td style="text-align: center;" width="15%">
+				培训专业
+			</td>
+			<td style="text-align: center;" width="6%">
+				参训时间
+			</td>
+			<td style="text-align: center;" width="4%">
+				届别
+			</td>
+			<td style="text-align: center;" width="5%">
+				计划参训时限
+			</td>
+			<td style="text-align: center;" width="5%">
+				结业考试年份
+			</td>
+			<td style="text-align: center;" width="5%">
+				医师状态
+			</td>
+			<td style="text-align: center;" width="7%">
+				备注
+			</td>
+		</tr>
+		<#list docMapList as doc>
+			<tr>
+				<td style="text-align: center;">${doc_index+1}</td>
+				<td style="text-align: center;">${doc.doctorName!}</td>
+				<td style="text-align: center;">${doc.sexName!}</td>
+				<td style="text-align: center;">${doc.idNo!}</td>
+				<td style="text-align: center;">${doc.userPhone!}</td>
+				<td style="text-align: center;">${doc.doctorTypeName!}</td>
+				<td style="text-align: center;">
+					<#if doc.jointOrgName??>
+						<div>${doc.orgName}</div>
+						<div>(${doc.jointOrgName})</div>
+					<#else>
+						${doc.recruitOrgName}
+					</#if>
+				</td>
+				<td style="text-align: center;">${doc.speName!}</td>
+				<td style="text-align: center;">${doc.recruitDate!}</td>
+				<td style="text-align: center;">${doc.sessionNumber!}</td>
+				<td style="text-align: center;">${doc.trainYear!}</td>
+				<td style="text-align: center;">${doc.graduationYear!}</td>
+				<td style="text-align: center;">${doc.doctorStatusName!}</td>
+				<td style="text-align: center;"></td>
+			</tr>
+		</#list>
+	</table>
+</body>
+</html>

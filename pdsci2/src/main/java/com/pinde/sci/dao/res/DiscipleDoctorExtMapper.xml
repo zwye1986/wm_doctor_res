@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.DiscipleDoctorExtMapper">
+
+    <resultMap id="BaseResultMap" type="com.pinde.sci.model.res.ResDoctorDiscioleExt"
+               extends="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+        <result column="DISCIPLE_START_DATE" property="discipleStartDate" jdbcType="VARCHAR"/>
+        <result column="DISCIPLE_END_DATE" property="discipleEndDate" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="auditDoctorList" parameterType="java.util.Map"
+            resultMap="BaseResultMap">
+        select
+        rd.DOCTOR_FLOW, rd.DOCTOR_NAME, rd.ORG_FLOW,rd.SESSION_NUMBER, rd.DOCTOR_CATEGORY_ID,
+        rd.DOCTOR_CATEGORY_NAME,rd.TRAINING_SPE_ID,TRAINING_SPE_NAME,rd.ORG_NAME,
+        rd.DEPT_FLOW, rd.DEPT_NAME,rd.DISCIPLE_TEACHER_FLOW, rd.DISCIPLE_TEACHER_NAME,
+        rdi.DISCIPLE_START_DATE,rdi.DISCIPLE_END_DATE,rdi.SPE_NAME
+        from res_doctor rd left join res_disciple_info rdi on
+        rdi.doctor_flow = rd.doctor_flow and rdi.record_status = 'Y'
+        where rd.record_status='Y'
+        <if test='doctorName != null  and doctorName!=""'>
+            and rd.DOCTOR_NAME like '%${doctorName}%'
+        </if>
+        <if test='orgFlow != null  and orgFlow!=""'>
+            and rd.org_flow =#{orgFlow}
+        </if>
+        <if test='workOrgId != null  and workOrgId!=""'>
+            and rd.work_Org_Id =#{workOrgId}
+        </if>
+        <choose>
+            <when test="noteTypeId != null and noteTypeId != ''">
+                and exists (select 1 from RES_DISCIPLE_NOTE_INFO WHERE RECORD_STATUS = 'Y'
+                AND NOTE_TYPE_ID = '${noteTypeId}' AND AUDIT_STATUS_ID ='${auditStatusId}'
+                AND DOCTOR_FLOW = RD.DOCTOR_FLOW
+                and RES_DISCIPLE_NOTE_INFO.TEACHER_FLOW = #{teacherFlow})
+            </when >
+            <otherwise>
+                and exists (select 1 from RES_ANNUAL_ASSESSMENT WHERE RECORD_STATUS = 'Y'
+                AND AUDIT_STATUS_ID ='${auditStatusId}'
+                <if test='teacherFlow != null  and teacherFlow!=""'>
+                  and RES_ANNUAL_ASSESSMENT.TEACHER_FLOW = #{teacherFlow}
+                </if>
+                AND DOCTOR_FLOW = RD.DOCTOR_FLOW )
+            </otherwise>
+        </choose>
+        <if test='teacherFlow != null  and teacherFlow!=""'>
+            and exists (select 1 from RES_STUDENT_DISCIPLE_TEACHER rsdt where
+            rsdt.TEACHER_FLOW = #{teacherFlow} AND RD.DOCTOR_FLOW =RSDT.DOCTOR_FLOW)
+        </if>
+        <if test="discipleTeacherName != null and discipleTeacherName != ''">
+          and rd.DISCIPLE_TEACHER_NAME like '%${discipleTeacherName}%'
+        </if>
+        <if test="sessionNumber != null and sessionNumber != ''">
+          and rd.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test="trainingSpeId != null and trainingSpeId != ''">
+          and rd.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test="doctorCategoryId!=null and doctorCategoryId!=''">
+            and rd.DOCTOR_CATEGORY_ID = #{doctorCategoryId}
+        </if>
+        <if test='doctorTypeIds != null and doctorTypeIds.size()>0'>
+            and rd.DOCTOR_TYPE_ID in
+            <foreach collection="doctorTypeIds" item="doctorTypeId" open="(" separator="," close=")">
+                #{doctorTypeId}
+            </foreach>
+        </if>
+    </select>
+    <update id="agreeRecordBatch" parameterType="java.util.Map">
+        UPDATE  RES_DISCIPLE_NOTE_INFO
+        SET AUDIT_STATUS_ID=#{newAuditStatusId},
+        AUDIT_STATUS_NAME=#{newAuditStatusName},
+        AUDIT_CONTENT=#{auditContent},
+        AUDIT_USER_FLOW=#{auditUserFlow},
+        AUDIT_USER_NAME=#{auditUserName},
+        MODIFY_TIME=to_char(sysdate,'YYYYMMDDHH24MISS'),
+        MODIFY_USER_FLOW=#{auditUserFlow}
+        WHERE RECORD_STATUS='Y'
+        <if test="teacherFlow!=null and teacherFlow!=''">
+            and TEACHER_FLOW = #{teacherFlow}
+        </if>
+        <if test="doctorFlow!=null and doctorFlow!=''">
+            AND DOCTOR_FLOW=#{doctorFlow}
+        </if>
+
+        AND NOTE_TYPE_ID=#{noteTypeId}
+        AND AUDIT_STATUS_ID = #{oldAuditStatusId}
+    </update>
+    <update id="agreeTypicalCasesBatch" parameterType="java.util.Map">
+        UPDATE  RES_TYPICAL_CASES
+        SET AUDIT_STATUS_ID=#{newAuditStatusId},
+        AUDIT_STATUS_NAME=#{newAuditStatusName},
+        AUDIT_CONTENT=#{auditContent},
+        AUDIT_TIME=to_char(sysdate,'YYYYMMDDHH24MISS'),
+        AUDIT_USER_FLOW=#{auditUserFlow},
+        AUDIT_USER_NAME=#{auditUserName},
+        MODIFY_TIME=to_char(sysdate,'YYYYMMDDHH24MISS'),
+        MODIFY_USER_FLOW=#{auditUserFlow}
+        WHERE RECORD_STATUS='Y'
+        <if test="teacherFlow!=null and teacherFlow!=''">
+            and TEACHER_FLOW = #{teacherFlow}
+        </if>
+        <if test="doctorFlow!=null and doctorFlow!=''">
+            AND DOCTOR_FLOW=#{doctorFlow}
+        </if>
+        AND AUDIT_STATUS_ID = #{oldAuditStatusId}
+    </update>
+
+
+    <!-- 跟师数据一键审核  (机构)-->
+
+    <update id="oneKeyAuditDiscipleRecordInfoByOrg" parameterType="string">
+    UPDATE RES_DISCIPLE_RECORD_INFO
+         SET AUDIT_STATUS_ID   = 'Qualified',
+             AUDIT_STATUS_NAME = '通过',
+             AUDIT_USER_FLOW   = TEACHER_FLOW,
+             AUDIT_USER_NAME   = TEACHER_NAME,
+             MODIFY_TIME       = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
+             MODIFY_USER_FLOW   = #{userFlow,jdbcType=VARCHAR}
+       WHERE RECORD_STATUS = 'Y'
+         AND AUDIT_STATUS_ID = 'PendingAudit'
+         AND DOCTOR_FLOW IN (SELECT DOCTOR_FLOW
+                               FROM RES_DOCTOR
+                              WHERE RECORD_STATUS = 'Y'
+                                AND ORG_FLOW = #{orgFlow,jdbcType=VARCHAR})
+    </update>
+    <update id="oneKeyAuditDiscipleNoteInfoByOrg" parameterType="string">
+        UPDATE RES_DISCIPLE_NOTE_INFO
+           SET AUDIT_CONTENT     = '该学员对本病有大致的了解，能较好的进行辨病辨证，对相关的经典理论也有一定的涉猎。',
+               AUDIT_STATUS_ID   = 'Qualified',
+               AUDIT_STATUS_NAME = '通过',
+               AUDIT_TIME        = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
+               AUDIT_USER_FLOW   = TEACHER_FLOW,
+               AUDIT_USER_NAME   = TEACHER_NAME,
+               MODIFY_TIME       = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
+               MODIFY_USER_FLOW   = #{userFlow,jdbcType=VARCHAR}
+         WHERE RECORD_STATUS = 'Y'
+           AND AUDIT_STATUS_ID = 'Submit'
+           AND DOCTOR_FLOW IN (SELECT DOCTOR_FLOW
+                                 FROM RES_DOCTOR
+                                WHERE RECORD_STATUS = 'Y'
+                                  AND ORG_FLOW = #{orgFlow,jdbcType=VARCHAR})
+    </update>
+    <update id="oneKeyAuditTypicalClassByOrg" parameterType="string">
+         UPDATE RES_TYPICAL_CASES
+           SET AUDIT_CONTENT     = '该学员对本病有大致的了解，能较好的进行辨病辨证，对相关的经典理论也有一定的涉猎。',
+               AUDIT_STATUS_ID   = 'Qualified',
+               AUDIT_STATUS_NAME = '通过',
+               AUDIT_TIME        = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
+               AUDIT_USER_FLOW   = TEACHER_FLOW,
+               AUDIT_USER_NAME   = TEACHER_NAME,
+               MODIFY_TIME       = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
+               MODIFY_USER_FLOW  = #{userFlow,jdbcType=VARCHAR}
+         WHERE RECORD_STATUS = 'Y'
+           AND AUDIT_STATUS_ID = 'PendingAudit'
+           AND DOCTOR_FLOW IN (SELECT DOCTOR_FLOW
+                                 FROM RES_DOCTOR
+                                WHERE RECORD_STATUS = 'Y'
+                                  AND ORG_FLOW = #{orgFlow,jdbcType=VARCHAR})
+    </update>
+    <update id="oneKeyAuditAnnualAssessmentByOrg" parameterType="string">
+        UPDATE RES_ANNUAL_ASSESSMENT
+           SET AUDIT_CONTENT     = '该学员对本病有大致的了解，能较好的进行辨病辨证，对相关的经典理论也有一定的涉猎。',
+               AUDIT_STATUS_ID   = 'DiscipleAudit',
+               AUDIT_STATUS_NAME = '待管理员审核',
+               AUDIT_TIME        = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
+               AUDIT_USER_FLOW   = TEACHER_FLOW,
+               AUDIT_USER_NAME   = TEACHER_NAME,
+               MODIFY_TIME       = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
+               MODIFY_USER_FLOW  = #{userFlow,jdbcType=VARCHAR}
+         WHERE RECORD_STATUS = 'Y'
+           AND AUDIT_STATUS_ID = 'Submit'
+           AND DOCTOR_FLOW IN (SELECT DOCTOR_FLOW
+                                 FROM RES_DOCTOR
+                                WHERE RECORD_STATUS = 'Y'
+                                  AND ORG_FLOW = #{orgFlow,jdbcType=VARCHAR})
+    </update>
+
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.ResEntryReportExtMapper" >
+    <resultMap type="HashMap" id="reportMap" extends="com.pinde.sci.dao.base.SchEntryReportMapper.BaseResultMap">
+        <result  property="schDeptName" column="SCH_DEPT_NAME" javaType="string"/>
+        <result property="schStartDate" column="SCH_START_DATE" javaType="string"/>
+        <result property="schEndDate" column="SCH_END_DATE" javaType="string"/>
+        <result property="doctorName" column="DOCTOR_NAME" javaType="string"/>
+        <result property="headUserName" column="HEAD_USER_NAME" javaType="string"/>
+        <result property="trainingSpeName" column="TRAINING_SPE_NAME" javaType="string"/>
+        <result property="sessionNumber" column="SESSION_NUMBER" javaType="string"/>
+    </resultMap>
+    <select id="getReportList"  parameterType="java.util.Map" resultMap="reportMap">
+        SELECT SER.*,SAR.SCH_DEPT_NAME,SAR.SCH_START_DATE,SAR.SCH_END_DATE,
+        SU.USER_NAME DOCTOR_NAME,HEAD.USER_NAME HEAD_USER_NAME,
+        ED.training_SPE_NAME,ED.SESSION_NUMBER
+        FROM SCH_ENTRY_REPORT SER
+        LEFT JOIN SCH_ARRANGE_RESULT SAR
+        ON SER.REPORT_FLOW=SAR.RESULT_FLOW
+        LEFT JOIN SYS_USER SU
+        ON SER.DOCTOR_FLOW=SU.USER_FLOW
+        LEFT JOIN SYS_USER HEAD
+        ON SER.HEAD_USER_FLOW =HEAD.USER_FLOW
+        LEFT JOIN RES_DOCTOR ED
+        ON SER.DOCTOR_FLOW=ED.DOCTOR_FLOW
+        WHERE SER.RECORD_STATUS='Y'
+        AND SAR.RECORD_STATUS='Y'
+        <if test="deptFlows!=null and deptFlows.size()>0">
+            and SAR.DEPT_FLOW IN
+            <foreach collection="deptFlows" close=")" item="deptFlow" open="(" separator=",">
+                #{deptFlow}
+            </foreach>
+        </if>
+        <if test='doctorName!=null and doctorName!=""'>
+            and SU.USER_NAME LIKE  '%${doctorName}%'
+        </if>
+        <if test='trainingYears!=null and trainingYears!=""'>
+            and ed.training_Years = #{trainingYears}
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and ed.training_Spe_Id = #{trainingSpeId}
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and ed.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test='reportDate!=null and reportDate!=""'>
+            and SER.REPORT_DATE = #{reportDate}
+        </if>
+        ORDER by REPORT_DATE DESC,REPORT_TIME DESC ,SER.CREATE_TIME DESC
+    </select>
+</mapper>

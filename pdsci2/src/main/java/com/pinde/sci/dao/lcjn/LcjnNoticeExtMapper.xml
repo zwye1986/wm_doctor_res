@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.lcjn.LcjnNoticeExtMapper" >
+
+    <select id="searchInfoByOrgBeforeDate" resultMap="com.pinde.sci.dao.base.InxInfoMapper.ResultMapWithBLOBs">
+    SELECT *
+    FROM PDSCI.INX_INFO
+    WHERE RECORD_STATUS = 'Y'
+    <if test='orgFlow!=null and orgFlow!=""'>
+        AND (ORG_FLOW = #{orgFlow} OR ORG_FLOW IS NULL)
+    </if>
+    <if test='orgFlow==null or orgFlow==""'>
+        AND ORG_FLOW IS NULL
+    </if>
+    <if test='date!=null and date!=""'>
+        AND INFO_TIME >= #{date}
+    </if>
+    ORDER BY INFO_TIME DESC
+    </select>
+
+</mapper>

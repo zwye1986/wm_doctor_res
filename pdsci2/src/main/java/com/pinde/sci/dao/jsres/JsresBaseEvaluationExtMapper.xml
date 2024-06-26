@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jsres.JsresBaseEvaluationExtMapper">
+    <resultMap id="resBaseEvaluationExtMap" type="com.pinde.sci.model.jsres.JsresBaseEvaluationExt" >
+        <id column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+        <result column="SPE_ALL_SCORE" property="speAllScore" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="searchEvaluationExtList"  parameterType="java.util.Map" resultMap="resBaseEvaluationExtMap">
+        select ORG.ORG_FLOW,ORG.ORG_NAME,JS.RECORD_FLOW,JS.SPE_ALL_SCORE
+        from sys_org org
+        LEFT JOIN JSRES_BASE_EVALUATION JS
+        ON ORG.ORG_FLOW = JS.ORG_FLOW
+        and js.record_status = 'Y'
+        where ORG.RECORD_STATUS='Y'
+        AND ORG_PROV_ID = #{orgProvId,jdbcType=VARCHAR}
+        <if test="orgLevelId != null" >
+            AND ORG_LEVEL_ID = #{orgLevelId,jdbcType=VARCHAR}
+        </if>
+        <if test="orgCityId != null" >
+            AND ORG_CITY_ID = #{orgCityId,jdbcType=VARCHAR}
+        </if>
+        <if test="orgFlows!=null and orgFlows.size>0">
+            and ORG.ORG_FLOW in
+            <foreach collection="orgFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        ORDER BY to_number(nvl(JS.SPE_ALL_SCORE,'0')) DESC,ORG.ORG_CODE
+    </select>
+    <select id="searchJointEvaluationExtList"  parameterType="java.util.List" resultMap="resBaseEvaluationExtMap">
+        Select ORG.ORG_FLOW,ORG.ORG_NAME,JS.RECORD_FLOW,JS.SPE_ALL_SCORE
+        from SYS_ORG ORG
+        LEFT JOIN JSRES_BASE_EVALUATION JS
+        ON ORG.ORG_FLOW=JS.ORG_FLOW
+        where ORG.ORG_FLOW in
+            <foreach item="jointOrgFlow" index="index" collection="list"
+                     open="(" separator="," close=")">
+                #{jointOrgFlow}
+            </foreach>
+        ORDER BY to_number(nvl(JS.SPE_ALL_SCORE,'0')) DESC
+    </select>
+
+</mapper>

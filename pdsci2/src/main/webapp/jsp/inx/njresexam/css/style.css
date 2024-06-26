@@ -1,0 +1,34 @@
+.banner_page{
+    background: url(../images/bg_line.png) repeat-x;
+    height: 460px;
+    border-bottom:3px solid #2485b2;
+    border-top:3px solid #2485b2;
+    height:460px;
+    margin-bottom:20px;
+}
+.banner_box1{
+    width: 100%!important;
+    margin: 0 auto!important;
+    background: url(../images/bg_index.jpg) no-repeat center center!important;
+    height: 460px!important;
+    border-bottom:3px solid #2485b2!important;
+    position: relative;
+
+}
+.lclz{ margin:0 auto;position:relative; top:48px;width:1024px;}
+.banner_text{position:absolute;top:6%;left:50%;margin-left:-501px;}
+.top_box{
+    position: relative!important;
+}
+.footer_box{
+    background: #2485b2!important;
+}
+.top{
+    line-height: 70px;
+}
+.top .top_text{
+    margin-top: 0px!important;
+}
+.top .top_text{
+    font-size: 16px;
+}

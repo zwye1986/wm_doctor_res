@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.osca.OscaSkillsAssessmentExtMapper" >
+    <resultMap id="OSAExtList" type="com.pinde.sci.model.osca.OscaSkillsAssessmentExt" extends="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap">
+        <id column="CLINICAL_FLOW" property="clinicalFlow" />
+        <result column="CLINICAL_NAME" property="clinicalName" />
+        <result column="CLINICAL_YEAR" property="clinicalYear" />
+        <result column="SPE_ID" property="speId" />
+        <result column="SPE_NAME" property="speName" />
+        <result column="APPOINT_START_TIME" property="appointStartTime" />
+        <result column="APPOINT_END_TIME" property="appointEndTime" />
+        <result column="APPOINT_NUM" property="appointNum" />
+        <result column="EXAM_START_TIME" property="oscaDoctorAssessment.examStartTime" />
+        <result column="EXAM_END_TIME" property="oscaDoctorAssessment.examEndTime" />
+        <result column="EXAM_ADDRESS" property="examAddress" />
+        <result column="ORG_FLOW" property="orgFlow" />
+        <result column="ORG_NAME" property="orgName" />
+        <result column="IS_LOCAL" property="isLocal" />
+        <result column="RECORD_FLOW" property="oscaDoctorAssessment.recordFlow" />
+        <result column="AUDIT_STATUS_ID" property="oscaDoctorAssessment.auditStatusId" />
+    </resultMap>
+
+    <resultMap id="OscaDoctorInfo" type="com.pinde.sci.model.osca.OscaSkillsAssessmentExt">
+        <id column="CLINICAL_FLOW" property="clinicalFlow" />
+        <result column="CLINICAL_NAME" property="clinicalName" />
+        <result column="CLINICAL_YEAR" property="clinicalYear" />
+        <result column="SPE_ID" property="speId" />
+        <result column="SPE_NAME" property="speName" />
+        <result column="ACTION_TYPE_ID" property="actionTypeId" />
+        <result column="ACTION_TYPE_NAME" property="actionTypeName" />
+        <result column="SUBJECT_FLOW" property="subjectFlow" />
+        <result column="SUBJECT_NAME" property="subjectName" />
+        <result column="APPOINT_START_TIME" property="appointStartTime" />
+        <result column="APPOINT_END_TIME" property="appointEndTime" />
+        <result column="APPOINT_NUM" property="appointNum" />
+        <result column="EXAM_START_TIME" property="oscaDoctorAssessment.examStartTime" />
+        <result column="EXAM_END_TIME" property="oscaDoctorAssessment.examEndTime" />
+        <result column="EXAM_ADDRESS" property="examAddress" />
+        <result column="IS_LOCAL" property="isLocal" />
+        <result column="ORG_FLOW" property="orgFlow" />
+        <result column="ORG_NAME" property="orgName" />
+        <result column="IS_SHOW" property="isShow" />
+        <result column="IS_RELEASED" property="isReleased" />
+        <result column="IS_GRADE_RELEASED" property="isGradeReleased" />
+        <result column="CODE_INFO" property="codeInfo" />
+        <result column="IS_SHOW_FROOM" property="isShowFroom" />
+        <result column="DOCTOR_FLOW" property="oscaDoctorAssessment.doctorFlow" />
+        <result column="DOCTOR_NAME" property="oscaDoctorAssessment.doctorName" />
+        <result column="APPOINT_TIME" property="oscaDoctorAssessment.appointTime" />
+        <result column="AUDIT_STATUS_ID" property="oscaDoctorAssessment.auditStatusId" />
+        <result column="AUDIT_STATUS_NAME" property="oscaDoctorAssessment.auditStatusName" />
+        <result column="REASON" property="oscaDoctorAssessment.reason" />
+        <result column="SIGIN_TIME" property="oscaDoctorAssessment.siginTime" />
+        <result column="SIGIN_STATUS_ID" property="oscaDoctorAssessment.siginStatusId" />
+        <result column="SIGIN_STATUS_NAME" property="oscaDoctorAssessment.siginStatusName" />
+        <result column="TICKET_NUMBER" property="oscaDoctorAssessment.ticketNumber" />
+        <result column="IS_PASS" property="oscaDoctorAssessment.isPass" />
+    </resultMap>
+
+    <resultMap id="TicketInfo" type="com.pinde.sci.model.osca.OscaSkillsAssessmentExt">
+        <id column="CLINICAL_FLOW" property="clinicalFlow" />
+        <result column="CLINICAL_NAME" property="clinicalName" />
+        <result column="CLINICAL_YEAR" property="clinicalYear" />
+        <result column="SPE_ID" property="speId" />
+        <result column="SPE_NAME" property="speName" />
+        <result column="ORG_FLOW" property="orgFlow" />
+        <result column="ORG_NAME" property="orgName" />
+        <result column="EXAM_START_TIME" property="oscaDoctorAssessment.examStartTime" />
+        <result column="EXAM_END_TIME" property="oscaDoctorAssessment.examEndTime" />
+        <result column="EXAM_ADDRESS" property="examAddress" />
+        <result column="DOCTOR_NAME" property="oscaDoctorAssessment.doctorName" />
+        <result column="DOCTOR_FLOW" property="oscaDoctorAssessment.doctorFlow" />
+        <result column="TICKET_NUMBER" property="oscaDoctorAssessment.ticketNumber" />
+        <result column="AUDIT_STATUS_ID" property="oscaDoctorAssessment.auditStatusId" />
+        <result column="AUDIT_STATUS_NAME" property="oscaDoctorAssessment.auditStatusName" />
+        <result column="APPOINT_TIME" property="oscaDoctorAssessment.appointTime" />
+        <result column="CODE_INFO" property="oscaDoctorAssessment.codeInfo" />
+        <result column="REASON" property="oscaDoctorAssessment.reason" />
+        <result column="IS_PASS" property="oscaDoctorAssessment.isPass" />
+        <result column="WORK_ORG_ID" property="resDoctor.workOrgId" />
+        <result column="WORK_ORG_NAME" property="resDoctor.workOrgName" />
+        <result column="DOCTOR_HEAD_IMG" property="resDoctor.doctorHeadImg" />
+        <result column="ID_NO" property="sysUser.idNo" />
+        <result column="USER_HEAD_IMG" property="sysUser.userHeadImg"/>
+    </resultMap>
+
+    <select id="searchTicketInfo" parameterType="java.util.Map" resultMap="TicketInfo">
+        SELECT DISTINCT
+            osa.CLINICAL_FLOW,osa.CLINICAL_NAME,osa.CLINICAL_YEAR,osa.SPE_ID,osa.SPE_NAME,
+            osa.ORG_FLOW,osa.ORG_NAME,osa.EXAM_ADDRESS,oda.EXAM_START_TIME,oda.EXAM_END_TIME,
+            oda.DOCTOR_NAME,oda.DOCTOR_FLOW,oda.TICKET_NUMBER,oda.AUDIT_STATUS_ID,
+            oda.AUDIT_STATUS_NAME,oda.REASON,oda.IS_PASS,oda.DOCTOR_FLOW,oda.DOCTOR_NAME,
+            oda.APPOINT_TIME,
+            rd.WORK_ORG_ID,rd.WORK_ORG_NAME,
+            rd.DOCTOR_HEAD_IMG,u.ID_NO,oda.CODE_INFO,u.USER_HEAD_IMG,
+            osa.remarks
+        FROM OSCA_SKILLS_ASSESSMENT osa
+        INNER JOIN OSCA_DOCTOR_ASSESSMENT oda
+        ON osa.CLINICAL_FLOW=oda.CLINICAL_FLOW
+        INNER JOIN RES_DOCTOR rd
+        ON rd.DOCTOR_FLOW=oda.DOCTOR_FLOW
+        INNER JOIN SYS_USER u
+        ON u.USER_FLOW=rd.DOCTOR_FLOW
+        WHERE osa.RECORD_STATUS = 'Y' AND oda.RECORD_STATUS = 'Y' AND rd.RECORD_STATUS = 'Y' AND u.RECORD_STATUS = 'Y'
+        <if test='doctorFlow!=null and doctorFlow!=""'>
+            and oda.DOCTOR_FLOW = #{doctorFlow}
+        </if>
+        <if test='clinicalFlow!=null and clinicalFlow!=""'>
+            and oda.CLINICAL_FLOW = #{clinicalFlow}
+        </if>
+        order by oda.APPOINT_TIME desc
+    </select>
+
+    <select id="searchAllSkillsAssessments" parameterType="java.util.Map" resultMap="OSAExtList">
+        select distinct
+             osa.CLINICAL_FLOW,osa.CLINICAL_NAME,osa.CLINICAL_YEAR,
+             osa.SPE_ID,osa.SPE_NAME, osa.APPOINT_START_TIME,
+             osa.APPOINT_END_TIME, osa.APPOINT_NUM,
+             osa.EXAM_ADDRESS,osa.ORG_FLOW,osa.ORG_NAME,
+             osa.IS_LOCAL
+        from OSCA_SKILLS_ASSESSMENT osa
+        WHERE osa.RECORD_STATUS = 'Y'
+        AND osa.IS_RELEASED='Y'
+        and osa.APPOINT_START_TIME <![CDATA[<=]]>to_char(sysdate,'yyyy-MM-dd HH24:MI')
+        and osa.APPOINT_END_TIME <![CDATA[>]]>to_char(sysdate,'yyyy-MM-dd HH24:MI')
+        <if test='speId!=null and speId!=""'>
+            and osa.SPE_ID = #{speId}
+        </if>
+        <if test="speIdList!=null and speIdList.size>0">
+            and osa.SPE_ID in
+            <foreach collection="speIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='isLocal!=null and isLocal!=""'>
+            and osa.IS_LOCAL = #{isLocal}
+        </if>
+        <if test='orgName!=null and orgName!=""'>
+            <bind name="name" value="'%'+orgName+'%'"/>
+            and osa.ORG_NAME like #{name}
+        </if>
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and osa.ORG_FLOW = #{orgFlow}
+        </if>
+        <if test='orgList!=null and orgList.size>0'>
+            and osa.ORG_FLOW in
+            <foreach collection="orgList" item="item" open="(" close=")" separator="," >
+                #{item.orgFlow}
+            </foreach>
+        </if>
+        ORDER BY TO_DATE(osa.APPOINT_START_TIME,'YY-MM-DD HH24:MI') DESC
+    </select>
+
+    <select id="searchDoctorAssessment" parameterType="java.util.Map" resultMap="OscaDoctorInfo">
+        SELECT DISTINCT
+            osa.CLINICAL_FLOW CLINICAL_FLOW,
+            osa.CLINICAL_NAME CLINICAL_NAME,
+            osa.SPE_ID SPE_ID,osa.SPE_NAME SPE_NAME,
+            osa.ORG_FLOW ORG_FLOW,osa.ORG_NAME ORG_NAME,
+            oda.EXAM_START_TIME EXAM_START_TIME,
+            oda.EXAM_END_TIME EXAM_END_TIME,
+            osa.IS_SHOW_FROOM IS_SHOW_FROOM,
+            oda.AUDIT_STATUS_ID AUDIT_STATUS_ID,
+            oda.AUDIT_STATUS_NAME AUDIT_STATUS_NAME,
+            oda.REASON REASON,oda.IS_PASS IS_PASS,
+            oda.DOCTOR_FLOW DOCTOR_FLOW,
+            oda.DOCTOR_NAME DOCTOR_NAME,
+            oda.APPOINT_TIME APPOINT_TIME,
+            osa.IS_SHOW,osa.IS_RELEASED,
+            osa.IS_GRADE_RELEASED,
+            osa.SUBJECT_FLOW,osa.SUBJECT_NAME
+        FROM OSCA_SKILLS_ASSESSMENT osa
+        INNER JOIN OSCA_DOCTOR_ASSESSMENT oda
+        ON osa.CLINICAL_FLOW=oda.CLINICAL_FLOW
+        WHERE osa.RECORD_STATUS = 'Y' AND oda.RECORD_STATUS = 'Y'
+        <if test='doctorFlow!=null and doctorFlow!=""'>
+            and oda.DOCTOR_FLOW = #{doctorFlow}
+        </if>
+        <if test='clinicalFlow!=null and clinicalFlow!=""'>
+            and oda.CLINICAL_FLOW = #{clinicalFlow}
+        </if>
+        order by oda.APPOINT_TIME desc
+    </select>
+
+    <select id="searchAssessmentIsNotLocalOneYear" parameterType="java.util.Map" resultMap="OscaDoctorInfo">
+        SELECT oda.TICKET_NUMBER, oda.DOCTOR_FLOW, oda.DOCTOR_NAME,oss.CLINICAL_FLOW,
+              oss.SPE_ID, oss.SPE_NAME, oss.SUBJECT_FLOW, oss.SUBJECT_NAME,oda.IS_PASS,
+              oda.IS_PASS_NAME,oss.is_local
+        FROM OSCA_DOCTOR_ASSESSMENT oda
+        LEFT JOIN OSCA_SKILLS_ASSESSMENT oss
+        ON oda.CLINICAL_FLOW = oss.CLINICAL_FLOW
+		WHERE
+        oda.RECORD_STATUS = 'Y'
+        and oda.audit_status_id !='UnPassed'
+        <if test='clinicalYear!=null and clinicalYear!=""'>
+            and oda.CLINICAL_YEAR = #{clinicalYear}
+        </if>
+        and oss.is_local='N'
+        <if test='doctorFlow!=null and doctorFlow!=""'>
+            and oda.DOCTOR_FLOW = #{doctorFlow}
+        </if>
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and oss.org_flow = #{orgFlow}
+        </if>
+    </select>
+
+    <select id="searchDoctorAssessmentList" parameterType="java.util.Map" resultMap="OscaDoctorInfo">
+        SELECT
+            osa.CLINICAL_FLOW CLINICAL_FLOW,
+            osa.CLINICAL_NAME CLINICAL_NAME,
+            osa.SPE_ID SPE_ID,osa.SPE_NAME SPE_NAME,
+            osa.ORG_FLOW ORG_FLOW,osa.ORG_NAME ORG_NAME,
+            oda.EXAM_START_TIME EXAM_START_TIME,
+            oda.EXAM_END_TIME EXAM_END_TIME,
+            osa.APPOINT_START_TIME APPOINT_START_TIME,
+            osa.APPOINT_END_TIME APPOINT_END_TIME,osa.APPOINT_NUM APPOINT_NUM,
+            oda.AUDIT_STATUS_ID AUDIT_STATUS_ID,
+            oda.AUDIT_STATUS_NAME AUDIT_STATUS_NAME,
+            oda.REASON REASON,oda.IS_PASS IS_PASS,
+            oda.DOCTOR_FLOW DOCTOR_FLOW,
+            oda.DOCTOR_NAME DOCTOR_NAME,
+            oda.APPOINT_TIME APPOINT_TIME,
+            osa.IS_SHOW,osa.IS_RELEASED,
+            osa.IS_GRADE_RELEASED,
+            osa.SUBJECT_FLOW,osa.SUBJECT_NAME,
+            osa.ACTION_TYPE_ID,osa.ACTION_TYPE_NAME,
+            osa.IS_LOCAL,
+            osa.remarks
+        FROM OSCA_DOCTOR_ASSESSMENT oda
+        LEFT JOIN OSCA_SKILLS_ASSESSMENT osa
+        ON oda.CLINICAL_FLOW = osa.CLINICAL_FLOW
+        WHERE
+        oda.RECORD_STATUS = 'Y'
+        and osa.RECORD_STATUS = 'Y'
+        <if test='doctorFlow!=null and doctorFlow!=""'>
+            and oda.DOCTOR_FLOW = #{doctorFlow}
+        </if>
+        <if test='isLocal!=null and isLocal!=""'>
+            and osa.IS_LOCAL = #{isLocal}
+        </if>
+
+        order by oda.APPOINT_TIME desc
+    </select>
+
+    <select id="countOrderedTime" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT COUNT(0)
+        FROM pdsci.osca_doctor_assessment oda
+        left join pdsci.OSCA_SKILLS_ASSESSMENT osa
+        on oda.clinical_flow=osa.clinical_flow
+        and osa.record_status='Y'
+        WHERE oda.record_status = 'Y'
+        <if test='doctorFlow!=null and doctorFlow!=""'>
+            and oda.DOCTOR_FLOW = #{doctorFlow}
+        </if>
+        and oda.audit_status_id in ('Passing','Passed')
+        AND (oda.exam_start_time <![CDATA[<=]]> #{examStartTime}
+        AND oda.exam_end_time <![CDATA[>=]]> #{examStartTime}
+        OR oda.exam_start_time <![CDATA[<=]]> #{examEndTime}
+        AND oda.exam_end_time <![CDATA[>=]]> #{examEndTime}
+        OR oda.exam_start_time <![CDATA[>=]]> #{examStartTime}
+        AND oda.exam_end_time <![CDATA[<=]]> #{examEndTime})
+    </select>
+    <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResDoctorRecruit" >
+        <id column="RECRUIT_FLOW" property="recruitFlow" jdbcType="VARCHAR" />
+        <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+        <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+        <result column="SWAP_FLAG" property="swapFlag" jdbcType="VARCHAR" />
+        <result column="RECRUIT_TYPE_ID" property="recruitTypeId" jdbcType="VARCHAR" />
+        <result column="RECRUIT_TYPE_NAME" property="recruitTypeName" jdbcType="VARCHAR" />
+        <result column="RECRUIT_YEAR" property="recruitYear" jdbcType="VARCHAR" />
+        <result column="RETEST_FLAG" property="retestFlag" jdbcType="VARCHAR" />
+        <result column="EXAM_RESULT" property="examResult" jdbcType="DECIMAL" />
+        <result column="AUDITION_RESULT" property="auditionResult" jdbcType="DECIMAL" />
+        <result column="OPER_RESULT" property="operResult" jdbcType="DECIMAL" />
+        <result column="TOTLE_RESULT" property="totleResult" jdbcType="DECIMAL" />
+        <result column="ADMIT_FLAG" property="admitFlag" jdbcType="VARCHAR" />
+        <result column="RECRUIT_FLAG" property="recruitFlag" jdbcType="VARCHAR" />
+        <result column="CONFIRM_FLAG" property="confirmFlag" jdbcType="VARCHAR" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+        <result column="SWAP_SPE_ID" property="swapSpeId" jdbcType="VARCHAR" />
+        <result column="SWAP_SPE_NAME" property="swapSpeName" jdbcType="VARCHAR" />
+        <result column="RECRUIT_DATE" property="recruitDate" jdbcType="VARCHAR" />
+        <result column="CAT_SPE_ID" property="catSpeId" jdbcType="VARCHAR" />
+        <result column="CAT_SPE_NAME" property="catSpeName" jdbcType="VARCHAR" />
+        <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
+        <result column="YET_TRAIN_YEAR" property="yetTrainYear" jdbcType="VARCHAR" />
+        <result column="DOCTOR_STATUS_ID" property="doctorStatusId" jdbcType="VARCHAR" />
+        <result column="DOCTOR_STATUS_NAME" property="doctorStatusName" jdbcType="VARCHAR" />
+        <result column="DOCTOR_STRIKE_ID" property="doctorStrikeId" jdbcType="VARCHAR" />
+        <result column="DOCTOR_STRIKE_NAME" property="doctorStrikeName" jdbcType="VARCHAR" />
+        <result column="TRAIN_NO" property="trainNo" jdbcType="VARCHAR" />
+        <result column="AUDIT_STATUS_ID" property="auditStatusId" jdbcType="VARCHAR" />
+        <result column="AUDIT_STATUS_NAME" property="auditStatusName" jdbcType="VARCHAR" />
+        <result column="TRAIN_YEAR" property="trainYear" jdbcType="VARCHAR" />
+        <result column="PLACE_ID" property="placeId" jdbcType="VARCHAR" />
+        <result column="PLACE_NAME" property="placeName" jdbcType="VARCHAR" />
+        <result column="PROVE_FILE_URL" property="proveFileUrl" jdbcType="VARCHAR" />
+        <result column="COMPLETE_CERT_NO" property="completeCertNo" jdbcType="VARCHAR" />
+        <result column="COMPLETE_FILE_URL" property="completeFileUrl" jdbcType="VARCHAR" />
+        <result column="CURR_DEGREE_CATEGORY_ID" property="currDegreeCategoryId" jdbcType="VARCHAR" />
+        <result column="CURR_DEGREE_CATEGORY_NAME" property="currDegreeCategoryName" jdbcType="VARCHAR" />
+        <result column="GRADUATION_YEAR" property="graduationYear" jdbcType="VARCHAR" />
+        <result column="ADMIN_SWAP_FLAG" property="adminSwapFlag" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="searchDoctorGraduationYear" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from (
+        select * from res_doctor_recruit rdr
+        where rdr.record_status='Y'
+        and rdr.audit_status_id='Passed'
+        and rdr.doctor_flow= #{doctorFlow}
+        order by rdr.create_time desc ) a where rownum=1
+    </select>
+
+    <select id="searchCitySkillsAssessment" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap">
+        select osa.*
+        from OSCA_SKILLS_ASSESSMENT osa,SYS_ORG so
+        where osa.org_flow = so.org_flow and osa.record_status='Y' and so.record_status='Y'
+        <if test='orgCityId != null and orgCityId !=""'>
+            and so.org_City_Id = #{orgCityId}
+        </if>
+        <if test='speId != null and speId !=""'>
+            and osa.spe_Id = #{speId}
+        </if>
+        <if test='dictList!=null and dictList.size>0'>
+            and osa.spe_id in
+            <foreach collection="dictList" item="item" open="(" close=")" separator="," >
+                #{item.dictId}
+            </foreach>
+        </if>
+        <if test='clinicalYear != null and clinicalYear !=""'>
+            and osa.clinical_Year = #{clinicalYear}
+        </if>
+        <if test='orgFlow != null and orgFlow !=""'>
+            and so.org_Flow = #{orgFlow}
+        </if>
+        <if test='isLocal != null and isLocal !=""'>
+            and osa.is_Local = #{isLocal}
+        </if>
+        <if test='actionTypeId != null and actionTypeId !=""'>
+            and osa.action_Type_Id = #{actionTypeId}
+        </if>
+        <if test='isReleased != null and isReleased !=""'>
+            and osa.IS_RELEASED = #{isReleased}
+        </if>
+        <if test='role =="city"'>
+            and(osa.IS_GRADE_RELEASED = 'S' or osa.IS_GRADE_RELEASED = 'C' or osa.IS_GRADE_RELEASED = 'Y')
+        </if>
+    </select>
+
+    <select id="searchTrainingSpeList" parameterType="java.util.Map" resultType="java.lang.String">
+        select sd.dict_id from sys_dict sd
+        where sd.dict_type_id='DoctorTrainingSpe'
+        and sd.record_status='Y'
+        <if test="speNameList!=null and speNameList.size>0">
+            and sd.dict_name in
+            <foreach collection="speNameList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        order by ordinal
+    </select>
+    <select id="getSkillsAssessmentOrder" resultType="hashmap">
+        select replace(lpad((select (case when (select max(skill_order) from osca_skills_assessment  where clinical_year=#{clinicalYear}) is null then '0'
+        else (select max(skill_order) from osca_skills_assessment  where clinical_year=#{clinicalYear}) end)skill_order from dual)+1,4),' ','0') skill_order from dual
+    </select>
+
+    <select id="getStations" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.OscaSubjectStationMapper.BaseResultMap">
+        select oss.*
+        FROM OSCA_SUBJECT_STATION oss
+        left join OSCA_SUBJECT_MAIN osm on osm.SUBJECT_FLOW = oss.SUBJECT_FLOW
+        left join OSCA_SKILLS_ASSESSMENT osa on osm.SUBJECT_FLOW = osa.SUBJECT_FLOW
+        where oss.record_status='Y' and osm.record_status='Y' and osa.record_status='Y'
+        <if test="clinicalFlow!=null and clinicalFlow!=''">
+            and osa.clinical_Flow = #{clinicalFlow}
+        </if>
+    </select>
+    <select id="findStationHouKaoDocs"  resultMap="com.pinde.sci.dao.base.OscaSkillDocStationMapper.BaseResultMap">
+        select oss.*
+        FROM OSCA_SKILL_DOC_STATION oss
+        where oss.record_status='Y'
+            and oss.clinical_Flow = #{clinicalFlow}
+            and oss.station_flow = #{stationFlow}
+            and exists(
+            select 1 from osca_doctor_assessment oda where oda.record_status='Y' and oda.clinical_flow=oss.clinical_flow
+            and oda.doctor_flow=oss.doctor_flow and Sigin_Status_Id='SignIn'
+            )
+            order by HOUKAO_TIME ASC,WAITING_TIME ASC
+    </select>
+    <select id="getStationAssessDoc"  resultMap="com.pinde.sci.dao.base.OscaSkillDocStationMapper.BaseResultMap">
+        select oss.*
+        FROM OSCA_SKILL_DOC_STATION oss
+        where oss.record_status='Y'
+            and oss.clinical_Flow = #{clinicalFlow}
+            and oss.station_flow = #{stationFlow}
+            and oss.room_flow = #{roomFlow}
+            and oss.exam_status_id='AssessIng'
+            and exists(
+            select 1 from osca_doctor_assessment oda where oda.record_status='Y' and oda.clinical_flow=oss.clinical_flow
+            and oda.doctor_flow=oss.doctor_flow and Sigin_Status_Id='SignIn'
+            )
+            order by HOUKAO_TIME ASC,WAITING_TIME ASC
+    </select>
+    
+    <select id="querySkillsAssessment" parameterType="string" resultMap="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap">
+        select osa.* from osca_skills_assessment osa
+        left join osca_skills_assessment_time osat on osa.clinical_flow = osat.clinical_flow
+        where osa.record_status = 'Y'
+        and osat.record_status = 'Y'
+        and osa.org_flow = #{orgFlow}
+        and osat.exam_start_time <![CDATA[ <= ]]> #{examStartTime}
+        and osat.exam_end_time >= #{examStartTime}
+    </select>
+</mapper>

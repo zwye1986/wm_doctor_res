@@ -1,0 +1,73 @@
+<script>
+function goStaticHtml(type){
+	jboxLoad("centerbox","<s:url value='/jsp/inx/zseyGate/static/'/>"+type+".jsp",false);
+}
+</script>
+		<div>
+			<nav>
+				<ul>
+					<li>
+						<a href="<s:url value='/jsp/inx/zseyjxres/register.jsp'/>" >注册</a>
+					</li>
+					<li>
+						<a>学生信息</a>
+					</li>
+					<li><a>理论大课</a>
+						<ul>
+							<li><a>课程进度表制定</a></li>
+							<li><a>课程进度表查询</a></li>
+						</ul>
+					</li>
+					<li><a>教学计划</a>
+						<ul>
+							<li><a>见习轮转</a></li>
+							<li><a>实习轮转</a></li>
+							<li><a>八年制临床二级学科培养轮转</a></li>
+						</ul>
+					</li>
+					<li><a>考试考核</a>
+						<ul>
+							<li href="javascript:void(0);" onclick="goStaticHtml('examList');"><a>理论考试</a></li>
+							<li><a>技能考核</a></li>
+							<li><a>题库</a></li>
+						</ul>
+					</li>
+					<li><a>教学活动</a>
+						<ul>
+							<li><a href="javascript:void(0);" onclick="goStaticHtml('gateLoginPage');">讲座</a></li>
+							<li><a>实习小课</a></li>
+							<li><a>病例讨论</a></li>
+							<li><a>教学查房</a></li>
+						</ul>
+					</li>
+					<li><a>技能培训</a>
+						<ul>
+							<li><a>预约系统</a></li>
+							<li><a>培训项目</a></li>
+						</ul>
+						<%--<a href="http://61.155.106.48:5050/pdsci//inx/zseylcjn" target="_blank">技能培训</a>--%>
+					</li>
+					<li><a>教学资源</a>
+						<ul>
+							<li><a>教学视频</a></li>
+							<li><a>电子课件</a></li>
+							<li><a>医学图库</a></li>
+						</ul>
+					</li>
+					<li><a>教师管理</a>
+						<ul>
+							<li><a>教学任务</a></li>
+							<li><a>集体备课</a></li>
+							<li><a>教师工作量</a></li>
+						</ul>
+					</li>
+					<li><a>网上评教</a>
+						<ul>
+							<li><a>老师评教</a></li>
+							<li><a>学生意见</a></li>
+							<li><a>评教结果查询</a></li>
+						</ul>
+					</li>
+				</ul>
+			</nav>
+		</div>

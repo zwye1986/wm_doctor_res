@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.AnnualAssessmentExtMapper">
+    <resultMap id="BaseResultMap" type="com.pinde.sci.model.res.AnnualAssessmentExt"
+               extends="com.pinde.sci.dao.base.ResAnnualAssessmentMapper.ResultMapWithBLOBs">
+        <result column="DISCIPLE_START_DATE" property="discipleStartDate" jdbcType="VARCHAR"/>
+        <result column="DISCIPLE_END_DATE" property="discipleEndDate" jdbcType="VARCHAR"/>
+        <result column="DAY_SELECT_COUNT" property="daySelectCount" jdbcType="VARCHAR"/>
+        <result column="NOTE_SELECT_COUNT" property="noteSelectCount" jdbcType="VARCHAR"/>
+        <result column="EXPERIENCE_SELECT_COUNT" property="experienceSelectCount" jdbcType="VARCHAR"/>
+        <result column="BOOK_STUDY_COUNT" property="bookStudyCount" jdbcType="VARCHAR"/>
+        <result column="BOOKEXP_SELECT_COUNT" property="bookexpSelectCount" jdbcType="VARCHAR"/>
+        <result column="CASES_COUNT" property="casesCount" jdbcType="VARCHAR"/>
+        <result column="DISCIPLE_TEACHER_FLOW" property="discipleTeacherFlow" jdbcType="VARCHAR"/>
+        <result column="DISCIPLE_TEACHER_NAME" property="discipleTeacherName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="initAnnualAssessmentExt" parameterType="com.pinde.sci.model.mo.ResAnnualAssessment"
+            resultMap="BaseResultMap">
+        select
+        rd.DOCTOR_FLOW,
+        rd.DOCTOR_NAME,
+        rd.disciple_teacher_flow,
+        rd.disciple_TEACHER_NAME,
+        <if test="recordFlow == null or recordFlow ==''">
+            '${recordYear}' RECORD_YEAR,
+        </if>
+        <if test="recordFlow != null and recordFlow!=''">
+            raa.RECORD_YEAR,
+            raa.RECORD_FLOW,
+            raa.TEACHER_FLOW,
+            raa.TEACHER_NAME,
+            raa.STUDY_START_DATE,
+            raa.STUDY_END_DATE,
+            raa.DAY_COUNT,
+            raa.NOTE_COUNT,
+            raa.EXPERIENCE_COUNT,
+            raa.TCM_COUNT,
+            raa.XXTH_COUNT,
+            raa.TYPICAL_CASES_COUNT,
+            raa.ASSESSMENT_IMG_URL,
+            raa.COMPLELE_CONTENT,
+            raa.COMPLELE_SIGN_TIME,
+            raa.EXPERIENCE_CONTENT,
+            raa.EXPERIENCE_SIGN_TIME,
+            raa.AUDIT_CONTENT,
+            raa.AUDIT_TIME,
+            raa.AUDIT_USER_FLOW,
+            raa.AUDIT_USER_NAME,
+            raa.AUDIT_STATUS_ID,
+            raa.AUDIT_STATUS_NAME,
+            raa.ADMIN_CONTENT,
+            raa.ADMIN_TIME,
+            raa.ADMIN_USER_FLOW,
+            raa.ADMIN_USER_NAME,
+            raa.ADMIN_STATUS_ID,
+            raa.ADMIN_STATUS_NAME,
+            raa.RECORD_STATUS,
+            raa.CREATE_TIME,
+            raa.CREATE_USER_FLOW,
+            raa.MODIFY_TIME,
+            raa.MODIFY_USER_FLOW,
+        </if>
+        <if test="startDate != null and startDate!='' and endDate != null and endDate!=''">
+            '${startDate}' AS DISCIPLE_START_DATE,
+            '${endDate}' AS DISCIPLE_END_DATE,
+            to_date('${endDate}', 'yyyy-MM-dd') -
+            to_date('${startDate}', 'yyyy-MM-dd')+1 day_select_count,
+        </if>
+        <if test="!(startDate != null and startDate!='' and endDate != null and endDate!='')">
+            raa.STUDY_START_DATE DISCIPLE_START_DATE,
+            raa.STUDY_END_DATE DISCIPLE_END_DATE,
+            to_date(raa.STUDY_END_DATE, 'yyyy-mm-dd') -
+            to_date(raa.STUDY_START_DATE, 'yyyy-mm-dd')+1 day_select_count,
+        </if>
+
+        ( select count(1) from RES_DISCIPLE_NOTE_INFO where record_status='Y' and NOTE_TYPE_ID='Note' and
+        AUDIT_STATUS_ID='Qualified'
+        and doctor_flow=rd.doctor_flow
+        <if test="startDate != null and startDate!='' and endDate != null and endDate!=''">
+            and to_char(to_date(STUDY_START_DATE,'yyyy"年"mm"月"dd"日"'),'yyyy-mm-dd') >= #{startDate}
+            and to_char(to_date(STUDY_START_DATE,'yyyy"年"mm"月"dd"日"'),'yyyy-mm-dd') <![CDATA[<=]]> #{endDate}
+        </if>
+        <if test="!(startDate != null and startDate!='' and endDate != null and endDate!='')">
+            and to_char(to_date(STUDY_START_DATE,'yyyy"年"mm"月"dd"日"'),'yyyy-mm-dd') >=  raa.STUDY_START_DATE
+            and to_char(to_date(STUDY_START_DATE,'yyyy"年"mm"月"dd"日"'),'yyyy-mm-dd') <![CDATA[<=]]> raa.STUDY_END_DATE
+        </if>
+        ) note_select_count,
+        (select count(1) from RES_DISCIPLE_NOTE_INFO where record_status='Y' and NOTE_TYPE_ID='Experience' and
+        AUDIT_STATUS_ID='Qualified'
+        and doctor_flow=rd.doctor_flow
+        <if test="startDate != null and startDate!='' and endDate != null and endDate!=''">
+            and to_char(to_date(STUDY_START_DATE,'yyyy"年"mm"月"dd"日"'),'yyyy-mm-dd') >= #{startDate}
+            and to_char(to_date(STUDY_START_DATE,'yyyy"年"mm"月"dd"日"'),'yyyy-mm-dd') <![CDATA[<=]]> #{endDate}
+        </if>
+        <if test="!(startDate != null and startDate!='' and endDate != null and endDate!='')">
+            and to_char(to_date(STUDY_START_DATE,'yyyy"年"mm"月"dd"日"'),'yyyy-mm-dd') >= raa.STUDY_START_DATE
+            and to_char(to_date(STUDY_START_DATE,'yyyy"年"mm"月"dd"日"'),'yyyy-mm-dd') <![CDATA[<=]]> raa.STUDY_END_DATE
+        </if>
+        ) experience_select_count,
+
+        (select count(1) from RES_BOOK_STUDY_RECORD where record_status='Y'
+        and doctor_flow=rd.doctor_flow
+        <if test="startDate != null and startDate!='' and endDate != null and endDate!=''">
+            and STUDY_START_TIME >= #{startDate}
+            and STUDY_START_TIME <![CDATA[<=]]> #{endDate}
+        </if>
+        <if test="!(startDate != null and startDate!='' and endDate != null and endDate!='')">
+            and STUDY_START_TIME >= raa.STUDY_START_DATE
+            and STUDY_START_TIME <![CDATA[<=]]> raa.STUDY_END_DATE
+        </if>
+        ) book_study_count,
+
+        ( select count(1) from RES_DISCIPLE_NOTE_INFO where record_status='Y' and NOTE_TYPE_ID='BookExperience' and
+        AUDIT_STATUS_ID='Qualified'
+        and doctor_flow=rd.doctor_flow
+        <if test="startDate != null and startDate!='' and endDate != null and endDate!=''">
+            and to_char(to_date(STUDY_START_DATE,'yyyy"年"mm"月"dd"日"'),'yyyy-mm-dd') >= #{startDate}
+            and to_char(to_date(STUDY_START_DATE,'yyyy"年"mm"月"dd"日"'),'yyyy-mm-dd') <![CDATA[<=]]> #{endDate}
+        </if>
+        <if test="!(startDate != null and startDate!='' and endDate != null and endDate!='')">
+            and to_char(to_date(STUDY_START_DATE,'yyyy"年"mm"月"dd"日"'),'yyyy-mm-dd') >= raa.STUDY_START_DATE
+            and to_char(to_date(STUDY_START_DATE,'yyyy"年"mm"月"dd"日"'),'yyyy-mm-dd') <![CDATA[<=]]> raa.STUDY_END_DATE
+        </if>
+        )bookExp_select_count,
+
+        (select count(1) from RES_TYPICAL_CASES where record_status='Y' and AUDIT_STATUS_ID='Qualified'
+        and doctor_flow=rd.doctor_flow
+        <if test="startDate != null and startDate!='' and endDate != null and endDate!=''">
+            and VISIT_DATE >= #{startDate}
+            and VISIT_DATE <![CDATA[<=]]> #{endDate}
+        </if>
+        <if test="!(startDate != null and startDate!='' and endDate != null and endDate!='')">
+            and VISIT_DATE >= raa.STUDY_START_DATE
+            and VISIT_DATE <![CDATA[<=]]> raa.STUDY_END_DATE
+        </if>
+        ) cases_count
+        from res_doctor rd
+        left join res_disciple_info rdi on rdi.doctor_flow = rd.doctor_flow and rdi.record_status = 'Y'
+        <if test="recordFlow != null and recordFlow!=''">
+            left join RES_ANNUAL_ASSESSMENT raa on raa.RECORD_FLOW = #{recordFlow}
+        </if>
+        where
+        rd.record_status = 'Y'
+        and rd.doctor_flow=#{doctorFlow}
+    </select>
+
+    <select id="initAssessmentExtByRecordFlow" parameterType="com.pinde.sci.model.mo.ResAnnualAssessment"
+            resultMap="BaseResultMap">
+        SELECT RD.DOCTOR_FLOW,
+            RD.DOCTOR_NAME,
+            RD.DISCIPLE_TEACHER_FLOW,
+            RD.DISCIPLE_TEACHER_NAME,
+            RAA.RECORD_YEAR,
+            RAA.RECORD_FLOW,
+            RAA.TEACHER_FLOW,
+            RAA.TEACHER_NAME,
+            RAA.STUDY_START_DATE,
+            RAA.STUDY_END_DATE,
+            RAA.DAY_COUNT,
+            RAA.NOTE_COUNT,
+            RAA.EXPERIENCE_COUNT,
+            RAA.TCM_COUNT,
+            RAA.XXTH_COUNT,
+            RAA.TYPICAL_CASES_COUNT,
+            RAA.ASSESSMENT_IMG_URL,
+            RAA.COMPLELE_CONTENT,
+            RAA.COMPLELE_SIGN_TIME,
+            RAA.EXPERIENCE_CONTENT,
+            RAA.EXPERIENCE_SIGN_TIME,
+            RAA.AUDIT_CONTENT,
+            RAA.AUDIT_TIME,
+            RAA.AUDIT_USER_FLOW,
+            RAA.AUDIT_USER_NAME,
+            RAA.AUDIT_STATUS_ID,
+            RAA.AUDIT_STATUS_NAME,
+            RAA.ADMIN_CONTENT,
+            RAA.ADMIN_TIME,
+            RAA.ADMIN_USER_FLOW,
+            RAA.ADMIN_USER_NAME,
+            RAA.ADMIN_STATUS_ID,
+            RAA.ADMIN_STATUS_NAME,
+            RAA.RECORD_STATUS,
+            RAA.CREATE_TIME,
+            RAA.CREATE_USER_FLOW,
+            RAA.MODIFY_TIME,
+            RAA.MODIFY_USER_FLOW,
+            RAA.DAY_COUNT AS DAY_SELECT_COUNT,
+            RAA.STUDY_START_DATE,
+            RAA.STUDY_END_DATE,
+            RAA.NOTE_COUNT AS NOTE_SELECT_COUNT,
+            RAA.EXPERIENCE_COUNT AS EXPERIENCE_SELECT_COUNT,
+            RAA.TCM_COUNT AS BOOK_STUDY_COUNT,
+            RAA.XXTH_COUNT AS BOOKEXP_SELECT_COUNT,
+            RAA.TYPICAL_CASES_COUNT AS CASES_COUNT
+            FROM RES_DOCTOR RD
+            LEFT JOIN RES_ANNUAL_ASSESSMENT RAA ON RAA.RECORD_FLOW =#{recordFlow}
+            WHERE RD.RECORD_STATUS = 'Y'
+            AND RD.DOCTOR_FLOW =#{doctorFlow}
+    </select>
+</mapper>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>	
+	<!-- 大病历登记表单 -->
+	<!-- 
+	{0}:表单所属机构(开关控制)
+	{1}:版本号
+ -->
+	<jsp path="res/form/{3}/{0}/disease_{1}"></jsp>
+	<product ver="1.0">
+		<page  ver="1.0">
+			<item name="diseaseName" isView="0" remark="病种名称" multiple="N"></item>
+			<item name="patientName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="caseNo" isView="0" remark="病历号" multiple="N"></item>
+			<item name="treatMeasure" remark="治疗措施" multiple="N"></item>
+			<item name="recType" remark="类型" multiple="N"></item>
+			<item name="inHosDate" remark="入院日期" multiple="N"></item>
+			<item name="recStatus" remark="状态" multiple="Y"></item>
+			<item name="caseType" remark="病历类型" multiple="Y"></item>
+			<item name="diagnosisType" remark="诊断类型" multiple="N"></item>
+			<item name="remark" remark="备注" multiple="N"></item>
+			<item name="record" remark="记录" multiple="N"></item>
+			<item name="file" remark="附件" multiple="N"></item>
+		</page>
+	</product>
+	<jszy ver="1.0">
+		<page  ver="1.0">
+			<item name="diseaseName" isView="0" remark="病种名称" multiple="N"></item>
+			<item name="patientName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="caseNo" isView="0" remark="病历号/检查号" multiple="N"></item>
+			<item name="treatMeasure" remark="治疗措施" multiple="N"></item>
+			<item name="recType" remark="类型" multiple="N"></item>
+			<item name="inHosDate" remark="入院日期" multiple="N"></item>
+			<item name="recStatus" remark="状态" multiple="Y"></item>
+			<item name="caseType" remark="病历类型" multiple="Y"></item>
+			<item name="diagnosisType" remark="诊断类型" multiple="N"></item>
+			<item name="remark" remark="备注" multiple="N"></item>
+			<item name="record" remark="记录" multiple="N"></item>
+			<item name="file" remark="附件" multiple="N"></item>
+		</page>
+	</jszy>
+	<gzzyyy ver="1.0">
+		<page  ver="1.0">
+			<item name="diseaseName" isView="0" remark="病种名称" multiple="N"></item>
+			<item name="patientName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="caseNo" isView="0" remark="病历号/检查号" multiple="N"></item>
+			<item name="treatMeasure" remark="治疗措施" multiple="N"></item>
+			<item name="recType" remark="类型" multiple="N"></item>
+			<item name="inHosDate" remark="入院日期" multiple="N"></item>
+			<item name="recStatus" remark="状态" multiple="Y"></item>
+			<item name="caseType" remark="病历类型" multiple="Y"></item>
+			<item name="diagnosisType" remark="诊断类型" multiple="N"></item>
+			<item name="remark" remark="备注" multiple="N"></item>
+			<item name="record" remark="记录" multiple="N"></item>
+			<item name="file" remark="附件" multiple="N"></item>
+		</page>
+	</gzzyyy>
+	<njykdxsxs ver="1.0">
+		<page  ver="1.0">
+			<item name="diseaseName" isView="0" remark="病种名称" multiple="N"></item>
+			<item name="patientName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="caseNo" isView="0" remark="病历号" multiple="N"></item>
+			<item name="treatMeasure" remark="治疗措施" multiple="N"></item>
+			<item name="recType" remark="类型" multiple="N"></item>
+			<item name="inHosDate" remark="入院日期" multiple="N"></item>
+			<item name="recStatus" remark="状态" multiple="Y"></item>
+			<item name="caseType" remark="病历类型" multiple="Y"></item>
+			<item name="diagnosisType" remark="诊断类型" multiple="N"></item>
+			<item name="remark" remark="备注" multiple="N"></item>
+			<item name="record" remark="记录" multiple="N"></item>
+			<item name="file" remark="附件" multiple="N"></item>
+		</page>
+	</njykdxsxs>
+	<nfykdxpt>
+		<page  ver="1.0">
+			<item name="diseaseName" isView="0" remark="病种名称" multiple="N"></item>
+			<item name="id" isView="0" remark="ID号" multiple="N"></item>
+			<item name="patientName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="hospitaNumber" remark="住院号" multiple="N"></item>
+			<item name="admissionDate" remark="入院日期" multiple="N"></item>
+			<item name="mainDiagnosis" remark="主要诊断" multiple="N"></item>
+		</page>
+	</nfykdxpt>
+	<jsst ver="2.0">
+		<page ver="1.0">
+			<item name="disease_pName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="disease_pDate" isView="0" remark="日期" multiple="N"></item>
+			<item name="disease_mrNo" isView="0" remark="病历号/病理号" multiple="N"></item>
+			<item name="disease_diagName" remark="病种名称" multiple="N"></item>
+			<item name="disease_diagType" remark="诊断类型 " multiple="N"></item>
+			<item name="disease_isCharge" remark="是否主管" multiple="N"></item>
+			<item name="disease_isRescue" remark="是否抢救 " multiple="N"></item>
+			<item name="disease_treatStep" remark="转归情况" multiple="N"></item>
+		</page>
+		<page ver="2.0">
+			<item name="disease_pName" isView="1" remark="病人姓名" multiple="N"></item>
+			<item name="disease_pDate" isView="3" remark="日期" multiple="N"></item>
+			<item name="disease_mrNo" isView="0" remark="病历号/病理号" multiple="N"></item>
+			<item name="disease_diagName" isView="2" remark="病种名称" multiple="N"></item>
+			<item name="disease_diagType" isView="4" select="Y" remark="诊断类型 " multiple="N"></item>
+			<item name="disease_isCharge" isView="5" select="Y" remark="是否主管" multiple="N"></item>
+			<item name="disease_isRescue" isView="6" select="Y" remark="是否抢救 " multiple="N"></item>
+			<item name="disease_treatStep" isView="7" remark="转归情况" multiple="N"></item>
+		</page>
+	</jsst>
+	<sczyfy ver="1.0">
+		<page ver="1.0">
+			<item name="disease_pName" remark="病人姓名" multiple="N"></item>
+			<item name="disease_pDate" remark="日期" multiple="N"></item>
+			<item name="disease_mrNo" remark="病历号/病理号" multiple="N"></item>
+			<item name="disease_diagName" remark="病种名称" multiple="N"></item>
+			<item name="disease_diagType" select="Y" remark="诊断类型 " multiple="N"></item>
+			<item name="disease_isCharge" select="Y" remark="是否主管" multiple="N"></item>
+			<item name="disease_isRescue" select="Y" remark="是否抢救 " multiple="N"></item>
+			<item name="disease_treatStep" remark="转归情况" multiple="N"></item>
+		</page>
+	</sczyfy>
+	<hbszyysgfhpxglpt ver="1.0">
+		<page ver="1.0">
+			<item name="disease_pName" isView="1" remark="病人姓名" multiple="N"></item>
+			<item name="disease_pDate" isView="2" remark="日期" multiple="N"></item>
+			<item name="disease_mrNo" remark="病历号/病理号" multiple="N"></item>
+			<item name="disease_diagName" isView="0" remark="病种名称" multiple="N"></item>
+			<item name="disease_diagType" isView="3" select="Y" remark="诊断类型 " multiple="N"></item>
+			<item name="disease_isCharge" select="Y" remark="是否主管" multiple="N"></item>
+			<item name="disease_isRescue" select="Y" remark="是否抢救 " multiple="N"></item>
+			<item name="disease_treatStep" remark="转归情况" multiple="N"></item>
+		</page>
+	</hbszyysgfhpxglpt>
+	<zsey ver="1.0">
+		<page ver="1.0">
+			<item name="disease_pName" isView="1" remark="病人姓名" multiple="N"></item>
+			<item name="disease_pDate" isView="2" remark="日期" multiple="N"></item>
+			<item name="disease_mrNo" remark="病历号/病理号" multiple="N"></item>
+			<item name="disease_diagName" isView="0" remark="病种名称" multiple="N"></item>
+			<item name="disease_diagType" isView="3" select="Y" remark="诊断类型 " multiple="N"></item>
+			<item name="disease_isCharge" select="Y" remark="是否主管" multiple="N"></item>
+			<item name="disease_isRescue" select="Y" remark="是否抢救 " multiple="N"></item>
+			<item name="disease_treatStep" remark="转归情况" multiple="N"></item>
+		</page>
+	</zsey>
+	<dgdhyy ver="1.0">
+		<page ver="1.0">
+			<item name="disease_pName" isView="1" remark="病人姓名" multiple="N"></item>
+			<item name="disease_pDate" isView="2" remark="日期" multiple="N"></item>
+			<item name="disease_mrNo" remark="病历号/病理号" multiple="N"></item>
+			<item name="disease_diagName" isView="0" remark="病种名称" multiple="N"></item>
+			<item name="disease_diagType" isView="3" select="Y" remark="诊断类型 " multiple="N"></item>
+			<item name="disease_isCharge" select="Y" remark="是否主管" multiple="N"></item>
+			<item name="disease_isRescue" select="Y" remark="是否抢救 " multiple="N"></item>
+			<item name="disease_treatStep" remark="转归情况" multiple="N"></item>
+		</page>
+	</dgdhyy>
+	<shdfyy ver="1.0">
+		<page ver="1.0">
+			<item name="disease_diagName" isView="2" remark="病种名称" multiple="N"></item>
+			<item name="disease_pName" isView="1" remark="病人姓名" multiple="N"></item>
+			<item name="disease_mrNo" isView="0" remark="病历号" multiple="N"></item>
+			<item name="disease_mainDiagnosis" isView="4" remark="主要诊断 " multiple="N"></item>
+			<item name="disease_secondaryDiagnosis" isView="5" remark="次要诊断" multiple="N"></item>
+			<item name="disease_therapeuticMeasure" isView="6" remark="治疗措施 " multiple="N"></item>
+		</page>
+	</shdfyy>
+
+	<shzs_qk_bz_ty ver="1.0">
+		<page  ver="1.0">
+			<item name="disease_diagName" isView="2" remark="病种名称" multiple="N"></item>
+			<item name="disease_patientName" isView="1" remark="病人姓名" multiple="N"/>
+			<item name="disease_anamnesisNumbers" isView="0" remark="病历号" multiple="N"/>
+			<item name="disease_mainDiagnosis"  remark="主要诊断" multiple="N"/>
+			<item name="disease_secondaryDiagnosis"  remark="次要诊断" multiple="N"/>
+			<item name="disease_director" select="Y" remark="主管" multiple="N"/>
+			<item name="disease_remark" remark="备注" multiple="N"/>
+		</page>
+	</shzs_qk_bz_ty>
+	<shzs_qk_bz_jzjj ver="1.0">
+		<page  ver="1.0">
+			<item name="disease_diagName" isView="2" remark="病种名称" multiple="N"></item>
+			<item name="disease_patientName" isView="1" remark="病人姓名" multiple="N"/>
+			<item name="disease_anamnesisNumbers" isView="0" remark="病历号" multiple="N"/>
+			<item name="disease_emergency" remark="突发事件" multiple="N"/>
+			<item name="disease_director" select="Y" remark="主管" multiple="N"/>
+			<item name="disease_superiorPhysicianName" remark="上级医师姓名" multiple="N"/>
+		</page>
+	</shzs_qk_bz_jzjj>
+	<shrjyy ver="1.0">
+		<page ver="1.0">
+			<item name="disease_mrNo" remark="病历号/病理号" multiple="N"></item>
+			<item name="disease_diagName" isView="0" remark="病种名称" multiple="N"></item>
+			<item name="disease_diagType" isView="3" select="Y" remark="诊断类型 " multiple="N"></item>
+			<item name="disease_isCharge" select="Y" remark="是否主管" multiple="N"></item>
+			<item name="disease_isRescue" select="Y" remark="是否抢救 " multiple="N"></item>
+			<item name="disease_treatStep" remark="转归情况" multiple="N"></item>
+		</page>
+	</shrjyy>
+	<shfx ver="1.0">
+		<page ver="1.0">
+			<item name="disease_pName" isView="1" remark="病人姓名" multiple="N"></item>
+			<item name="disease_pDate" isView="2" remark="日期" multiple="N"></item>
+			<item name="disease_mrNo" remark="病历号/病理号" multiple="N"></item>
+			<item name="disease_diagName" isView="0" remark="病种名称" multiple="N"></item>
+			<item name="disease_diagType" isView="3" select="Y" remark="诊断类型 " multiple="N"></item>
+			<item name="disease_isCharge" select="Y" remark="是否主管" multiple="N"></item>
+			<item name="disease_isRescue" select="Y" remark="是否抢救 " multiple="N"></item>
+			<item name="disease_treatStep" remark="转归情况" multiple="N"></item>
+		</page>
+	</shfx>
+</jspForm>
+

@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.sci.dao.base.ErpCrmContractProcessMapper">
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ErpCrmContractProcess">
+    <id column="PROCESS_FLOW" jdbcType="VARCHAR" property="processFlow" />
+    <result column="CONTRACT_FLOW" jdbcType="VARCHAR" property="contractFlow" />
+    <result column="AUDIT_USER_FLOW" jdbcType="VARCHAR" property="auditUserFlow" />
+    <result column="AUDIT_USER_NAME" jdbcType="VARCHAR" property="auditUserName" />
+    <result column="AUDIT_REASON" jdbcType="VARCHAR" property="auditReason" />
+    <result column="AUDIT_TIME" jdbcType="VARCHAR" property="auditTime" />
+    <result column="STATUS_ID" jdbcType="VARCHAR" property="statusId" />
+    <result column="STATUS_NAME" jdbcType="VARCHAR" property="statusName" />
+    <result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_USER_FLOW" jdbcType="VARCHAR" property="createUserFlow" />
+    <result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime" />
+    <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    PROCESS_FLOW, CONTRACT_FLOW, AUDIT_USER_FLOW, AUDIT_USER_NAME, AUDIT_REASON, AUDIT_TIME, 
+    STATUS_ID, STATUS_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+    MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.ErpCrmContractProcessExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.ERP_CRM_CONTRACT_PROCESS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.ERP_CRM_CONTRACT_PROCESS
+    where PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PDSCI.ERP_CRM_CONTRACT_PROCESS
+    where PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ErpCrmContractProcessExample">
+    delete from PDSCI.ERP_CRM_CONTRACT_PROCESS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.ErpCrmContractProcess">
+    insert into PDSCI.ERP_CRM_CONTRACT_PROCESS (PROCESS_FLOW, CONTRACT_FLOW, AUDIT_USER_FLOW, 
+      AUDIT_USER_NAME, AUDIT_REASON, AUDIT_TIME, 
+      STATUS_ID, STATUS_NAME, RECORD_STATUS, 
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+      MODIFY_USER_FLOW)
+    values (#{processFlow,jdbcType=VARCHAR}, #{contractFlow,jdbcType=VARCHAR}, #{auditUserFlow,jdbcType=VARCHAR}, 
+      #{auditUserName,jdbcType=VARCHAR}, #{auditReason,jdbcType=VARCHAR}, #{auditTime,jdbcType=VARCHAR}, 
+      #{statusId,jdbcType=VARCHAR}, #{statusName,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
+      #{modifyUserFlow,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ErpCrmContractProcess">
+    insert into PDSCI.ERP_CRM_CONTRACT_PROCESS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="processFlow != null">
+        PROCESS_FLOW,
+      </if>
+      <if test="contractFlow != null">
+        CONTRACT_FLOW,
+      </if>
+      <if test="auditUserFlow != null">
+        AUDIT_USER_FLOW,
+      </if>
+      <if test="auditUserName != null">
+        AUDIT_USER_NAME,
+      </if>
+      <if test="auditReason != null">
+        AUDIT_REASON,
+      </if>
+      <if test="auditTime != null">
+        AUDIT_TIME,
+      </if>
+      <if test="statusId != null">
+        STATUS_ID,
+      </if>
+      <if test="statusName != null">
+        STATUS_NAME,
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="processFlow != null">
+        #{processFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="contractFlow != null">
+        #{contractFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserFlow != null">
+        #{auditUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserName != null">
+        #{auditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditReason != null">
+        #{auditReason,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null">
+        #{auditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="statusId != null">
+        #{statusId,jdbcType=VARCHAR},
+      </if>
+      <if test="statusName != null">
+        #{statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ErpCrmContractProcessExample" resultType="java.lang.Integer">
+    select count(*) from PDSCI.ERP_CRM_CONTRACT_PROCESS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update PDSCI.ERP_CRM_CONTRACT_PROCESS
+    <set>
+      <if test="record.processFlow != null">
+        PROCESS_FLOW = #{record.processFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contractFlow != null">
+        CONTRACT_FLOW = #{record.contractFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditUserFlow != null">
+        AUDIT_USER_FLOW = #{record.auditUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditUserName != null">
+        AUDIT_USER_NAME = #{record.auditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditReason != null">
+        AUDIT_REASON = #{record.auditReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditTime != null">
+        AUDIT_TIME = #{record.auditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusId != null">
+        STATUS_ID = #{record.statusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusName != null">
+        STATUS_NAME = #{record.statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null">
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null">
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null">
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update PDSCI.ERP_CRM_CONTRACT_PROCESS
+    set PROCESS_FLOW = #{record.processFlow,jdbcType=VARCHAR},
+      CONTRACT_FLOW = #{record.contractFlow,jdbcType=VARCHAR},
+      AUDIT_USER_FLOW = #{record.auditUserFlow,jdbcType=VARCHAR},
+      AUDIT_USER_NAME = #{record.auditUserName,jdbcType=VARCHAR},
+      AUDIT_REASON = #{record.auditReason,jdbcType=VARCHAR},
+      AUDIT_TIME = #{record.auditTime,jdbcType=VARCHAR},
+      STATUS_ID = #{record.statusId,jdbcType=VARCHAR},
+      STATUS_NAME = #{record.statusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ErpCrmContractProcess">
+    update PDSCI.ERP_CRM_CONTRACT_PROCESS
+    <set>
+      <if test="contractFlow != null">
+        CONTRACT_FLOW = #{contractFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserFlow != null">
+        AUDIT_USER_FLOW = #{auditUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserName != null">
+        AUDIT_USER_NAME = #{auditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditReason != null">
+        AUDIT_REASON = #{auditReason,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null">
+        AUDIT_TIME = #{auditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="statusId != null">
+        STATUS_ID = #{statusId,jdbcType=VARCHAR},
+      </if>
+      <if test="statusName != null">
+        STATUS_NAME = #{statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ErpCrmContractProcess">
+    update PDSCI.ERP_CRM_CONTRACT_PROCESS
+    set CONTRACT_FLOW = #{contractFlow,jdbcType=VARCHAR},
+      AUDIT_USER_FLOW = #{auditUserFlow,jdbcType=VARCHAR},
+      AUDIT_USER_NAME = #{auditUserName,jdbcType=VARCHAR},
+      AUDIT_REASON = #{auditReason,jdbcType=VARCHAR},
+      AUDIT_TIME = #{auditTime,jdbcType=VARCHAR},
+      STATUS_ID = #{statusId,jdbcType=VARCHAR},
+      STATUS_NAME = #{statusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

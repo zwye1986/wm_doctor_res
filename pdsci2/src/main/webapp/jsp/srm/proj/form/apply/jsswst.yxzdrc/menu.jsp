@@ -1,0 +1,43 @@
+<div style="overflow:hidden;">
+<ul id="tags">
+    <li id="tag0"
+        <c:if test='${param.pageName=="step1" || empty param.pageName}'>class="selectTag"</c:if>><a
+            onclick="nextOpt('step1')" href="javascript:void(0)">基本信息</a></li>
+    <li id="tag1"
+        <c:if test='${param.pageName=="step2"}'>class="selectTag"</c:if>><a
+            onclick="nextOpt('step2')" href="javascript:void(0)">个人概况</a></li>
+    <li id="tag2"
+        <c:if test='${param.pageName=="step3"}'>class="selectTag"</c:if>><a
+            onclick="nextOpt('step3')" href="javascript:void(0)">人才简历</a></li>
+    <li id="tag3"
+        <c:if test='${param.pageName=="step4"}'>class="selectTag"</c:if>><a
+            onclick="nextOpt('step4')" href="javascript:void(0)">主要业绩</a></li>
+    <li id="tag4"
+        <c:if test='${param.pageName=="step5"}'>class="selectTag"</c:if>><a
+            onclick="nextOpt('step5')" href="javascript:void(0)">导师概况</a></li>
+    <li id="tag5"
+        <c:if test='${param.pageName=="step6"}'>class="selectTag"</c:if>><a
+            onclick="nextOpt('step6')" href="javascript:void(0)">依托课题立题依据</a></li>
+    <li id="tag6"
+        <c:if test='${param.pageName=="step7"}'>class="selectTag"</c:if>><a
+            onclick="nextOpt('step7')" href="javascript:void(0)">研究内容</a></li>
+    <li id="tag7"
+        <c:if test='${param.pageName=="step8"}'>class="selectTag"</c:if>><a
+            onclick="nextOpt('step8')" href="javascript:void(0)">组员名单</a></li>
+    <li id="tag8_0"
+        <c:if test='${param.pageName=="step8_0"}'>class="selectTag"</c:if>><a
+            onclick="nextOpt('step8_0')" href="javascript:void(0)">影响因子统计</a></li>
+    <li id="tag8_1"
+        <c:if test='${param.pageName=="step8_1"}'>class="selectTag"</c:if>><a
+            onclick="nextOpt('step8_1')" href="javascript:void(0)">依托科室条件</a></li>
+    <li id="tag8"
+        <c:if test='${param.pageName=="step9"}'>class="selectTag"</c:if>><a
+            onclick="nextOpt('step9')" href="javascript:void(0)">项目费用</a></li>
+    <li id="tag9"
+        <c:if test='${param.pageName=="step10"}'>class="selectTag"</c:if>><a
+            onclick="nextOpt('step10')" href="javascript:void(0)">审核意见</a></li>
+    <li id="tag10"
+        <c:if test='${param.pageName=="step11"}'>class="selectTag"</c:if>><a
+            onclick="nextOpt('step11')" href="javascript:void(0)">附件</a></li>
+</ul>
+</div>

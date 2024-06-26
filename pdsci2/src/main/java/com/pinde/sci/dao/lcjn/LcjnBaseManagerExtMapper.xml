@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.lcjn.LcjnBaseManagerExtMapper">
+
+	<select id="queryCourseList"  parameterType="java.util.Map" resultType="java.util.Map">
+		select distinct a.course_flow,
+			a.course_name,
+			a.appoint_start_time,
+			a.appoint_end_time,
+			a.course_people_num,
+			a.course_address,
+			a.code_info,
+			a.is_released,
+			a.course_people_num - nvl(d.yycgnum, 0) dyynum,
+			b.train_start_date_list,
+			b.start_time_list,
+			b.train_end_date_list,
+			b.end_time_list,
+			c.teacher_list,
+			c.cost_list,
+			a.create_time
+		from lcjn_course_info a
+		left join (select distinct s1.*,s2.start_time_list,s2.end_time_list from(select course_flow,wm_concat(train_start_date) over(partition by course_flow) train_start_date_list,wm_concat(train_end_date) over(partition by course_flow) train_end_date_list from lcjn_course_time)s1,
+									(select course_flow,wm_concat(start_time) over(partition by course_flow) start_time_list,wm_concat(end_time) over(partition by course_flow) end_time_list from lcjn_course_time)s2
+						where s1.course_flow = s2.course_flow) b
+				on a.course_flow = b.course_flow
+		left join (select course_flow,wm_concat(user_name) over(partition by course_flow) teacher_list,wm_concat(teaching_cost) over(partition by course_flow) cost_list from lcjn_course_tea) c
+				on a.course_flow = c.course_flow
+		left join (select course_flow,count(1) over(partition by course_flow) yycgnum from lcjn_doctor_course
+						where record_status = 'Y'
+							and audit_status_id in ('Passing', 'Passed')) d
+				on a.course_flow = d.course_flow
+		where a.record_status = 'Y' and a.course_flow in (select course_flow from lcjn_course_time where record_status = 'Y'
+			<if test='trainStartDate!=null and trainStartDate!="" and trainEndDate!=null and trainEndDate!=""'>
+				and (train_start_Date &lt;= #{trainStartDate} and train_end_Date &gt;= #{trainStartDate})
+				or (train_start_Date &lt;= #{trainEndDate} and train_end_Date &gt;= #{trainEndDate})
+				or (train_start_Date &gt;= #{trainStartDate} and train_end_Date &lt;= #{trainEndDate})
+			</if>
+			)
+		<if test='courseName!=null and courseName!=""'>
+			<bind name="name" value="'%'+courseName+'%'"/>
+			and a.course_name like #{name}
+		</if>
+		<if test='isReleased!=null and isReleased!=""'>
+			and a.is_released = #{isReleased}
+		</if>
+		order by a.appoint_start_time desc,a.create_time desc
+	</select>
+
+	<select id="querySkillConfigList" resultType="java.util.Map">
+		select distinct a.skill_flow,
+			   a.skill_name,
+			   b.skills_materia_list,
+			   materia_price_list
+		  from lcjn_skill_cfg a
+		  left join (select c.skill_flow,
+							wm_concat(decode(c.type_id,
+											 'SUPPLIES',
+											 d.dict_name,
+											 e.dict_name)) over(partition by c.skill_flow) skills_materia_list,
+							wm_concat(decode(c.type_id,
+											 'SUPPLIES',
+											 d.supplies_price,
+											 e.fixed_price) || '*' || c.use_num) over(partition by c.skill_flow) materia_price_list
+					   from lcjn_skill_cfg_detail c
+					   left join lcjn_supplies d
+						 on c.materia_flow = d.supplies_flow
+					   left join lcjn_fixed_assets e
+						 on c.materia_flow = e.fixed_flow
+					   where c.record_status='Y') b
+			on a.skill_flow = b.skill_flow
+		  where a.record_status='Y'
+		  	and a.org_flow = #{orgFlow}
+	</select>
+
+	<select id="searchCourse"  parameterType="java.util.Map" resultType="java.util.Map">
+		select
+		 course_flow,
+		 course_name,
+		 (select min(train_start_date) from lcjn_course_time
+		  where lcjn_course_info.course_flow = lcjn_course_time.course_flow
+		  and lcjn_course_info.record_status = 'Y' and lcjn_course_time.record_status = 'Y'
+			<if test='isReleased!=null and isReleased!=""'>
+				and lcjn_course_info.is_Released = #{isReleased}
+			</if>
+		  ) min_date,
+		(select max(train_end_date) from lcjn_course_time
+		where lcjn_course_info.course_flow = lcjn_course_time.course_flow
+		and lcjn_course_info.record_status = 'Y' and lcjn_course_time.record_status = 'Y'
+		<if test='isReleased!=null and isReleased!=""'>
+			and lcjn_course_info.is_Released = #{isReleased}
+		</if>
+		) max_date
+		from lcjn_course_info where exists (select null from lcjn_course_time where
+		  lcjn_course_info.course_flow = lcjn_course_time.course_flow AND
+		  lcjn_course_info.record_status = 'Y' and lcjn_course_time.record_status = 'Y'
+		<if test='courseName!=null and courseName!=""'>
+			<bind name="name" value="'%'+courseName+'%'"/>
+			and lcjn_course_info.course_name like #{name}
+		</if>
+		<if test='startTime!=null and startTime!=""'>
+			and lcjn_course_time.train_end_date >= #{startTime}
+		</if>
+		<if test='endTime!=null and endTime!=""'>
+			and #{endTime} >= lcjn_course_time.train_start_date
+		</if>
+		<if test='isReleased!=null and isReleased!=""'>
+			and lcjn_course_info.is_Released = #{isReleased}
+		</if>
+		)
+		order by lcjn_course_info.create_time desc
+	</select>
+
+	<select id="queryConfigDetailByFlow" resultType="java.util.Map">
+		select a.*,decode(a.type_id, 'SUPPLIES', b.dict_name, c.dict_name) material_name
+			from lcjn_skill_cfg_detail a
+			left join lcjn_supplies b on a.materia_flow = b.supplies_flow
+			left join lcjn_fixed_assets c on a.materia_flow = c.fixed_flow
+			where a.record_status = 'Y'
+				and a.skill_flow = #{skillFlow}
+			order by a.create_time
+	</select>
+
+	<select id="getStudents" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" parameterType="java.util.Map">
+		select sys_user.* from sys_user,sys_user_role
+		WHERE sys_user.user_flow = sys_user_role.user_flow and sys_user_role.ws_id = 'lcjn'
+		and sys_user.record_status = 'Y' and sys_user_role.RECORD_STATUS = 'Y'
+		<if test='roleFlow!=null and roleFlow!=""'>
+			and sys_user_role.role_Flow = #{roleFlow}
+		</if>
+		<if test='userCode!=null and userCode!=""'>
+			<bind name="userCode" value="'%'+userCode+'%'"/>
+			and sys_user.user_Code like #{userCode}
+		</if>
+		<if test='userName!=null and userName!=""'>
+			<bind name="userName" value="'%'+userName+'%'"/>
+			and sys_user.user_Name like #{userName}
+		</if>
+		<if test='isOwnerStu!=null and isOwnerStu!=""'>
+			and sys_user.is_Owner_Stu = #{isOwnerStu}
+		</if>
+		<if test='orgFlow!=null and orgFlow!=""'>
+			and sys_user.org_flow = #{orgFlow}
+		</if>
+		order by sys_user.create_time desc,sys_user.user_code
+	</select>
+
+	<select id="queryCourseTimeList"  resultMap="com.pinde.sci.dao.base.LcjnCourseTimeMapper.BaseResultMap">
+		select * from lcjn_course_time
+			where record_status = 'Y'
+				and course_flow in (select course_flow from lcjn_course_info where record_status = 'Y' and is_released = 'Y')
+				and (train_start_date between #{startTime} and #{endTime}
+					or train_end_date between #{startTime} and #{endTime})
+				order by start_time
+	</select>
+	<select id="searchStartDictList"  parameterType="com.pinde.sci.model.mo.SysDict" resultMap="com.pinde.sci.dao.base.SysDictMapper.BaseResultMap">
+		select a.* from sys_dict a
+			where a.record_status='Y'
+				and a.org_flow = #{orgFlow}
+			<if test='dictTypeId!=null and dictTypeId!=""'>
+				and a.dict_type_id = #{dictTypeId}
+				<if test='dictTypeId=="SkillMaterial"'>
+					and exists(select null from lcjn_supplies where record_status='Y' and org_flow=#{orgFlow} and dict_id=a.dict_id)
+				</if>
+				<if test='dictTypeId=="SkileFixedAssets"'>
+					and exists(select null from lcjn_fixed_assets where record_status='Y' and org_flow=#{orgFlow} and dict_id=a.dict_id)
+				</if>
+			</if>
+	</select>
+	<select id="queryTeaTimeCourseList"  resultType="java.util.Map">
+		select a.user_flow, a.user_name, b.course_flow, b.course_name
+				from lcjn_course_tea a
+			left join lcjn_course_info b
+				on a.course_flow = b.course_flow
+			left join lcjn_course_time c
+				on b.course_flow = c.course_flow
+			where a.record_status = 'Y'
+				and b.record_status = 'Y'
+				and c.record_status = 'Y'
+				<if test='courseFlow!=null and courseFlow!=""'>
+					and b.course_flow != #{courseFlow}
+				</if>
+				and ((#{trainStartTime} &gt; (c.train_start_date || ' ' || c.start_time) and
+					#{trainStartTime} &lt; (c.train_end_date || ' ' || c.end_time)) or
+					(#{trainEndTime} &lt; (c.train_end_date || ' ' || c.end_time) and
+					#{trainEndTime} &gt; (c.train_start_date || ' ' || c.start_time)) or
+					(#{trainStartTime} &lt;= (c.train_start_date || ' ' || c.start_time) and
+					#{trainEndTime} &gt;= (c.train_end_date || ' ' || c.end_time)))
+			group by a.user_flow, a.user_name, b.course_flow, b.course_name
+	</select>
+</mapper>

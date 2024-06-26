@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.lcjn.LcjnSuppliesAndAssetsExtMapper">
+    <select id="queryFixedAssetsList" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT LFA.FIXED_FLOW,LFA.DICT_ID,
+                LFA.DICT_NAME,LFA.FIXED_PRICE,
+                LFA.FIXED_CODE,LFA.STATUS_ID,LFA.STATUS_NAME
+        FROM LCJN_FIXED_ASSETS LFA
+        WHERE LFA.RECORD_STATUS='Y'
+        AND LFA.ORG_FLOW=#{orgFlow}
+        <if test='dictName!=null and dictName!=""'>
+            <bind name="name" value="'%'+dictName+'%'"/>
+            AND LFA.DICT_NAME LIKE #{name}
+        </if>
+        <if test='statusId!=null and statusId!=""'>
+            AND LFA.STATUS_ID =#{statusId}
+        </if>
+    </select>
+
+    <select id="querySuppliesList" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT LS.SUPPLIES_FLOW,LS.DICT_NAME,LS.DICT_ID,LS.SUPPLIES_PRICE,TEMP.STOCK_NUM
+        FROM LCJN_SUPPLIES LS
+        LEFT JOIN (
+        SELECT LSB.SUPPLIES_FLOW SUPPLIES_FLOW,SUM(LSB.STOCK_NUM) STOCK_NUM
+        FROM LCJN_SUPPLIES_BATCH LSB
+        WHERE LSB.RECORD_STATUS='Y'
+        GROUP BY LSB.SUPPLIES_FLOW) TEMP
+        ON LS.SUPPLIES_FLOW=TEMP.SUPPLIES_FLOW
+        WHERE LS.RECORD_STATUS='Y'
+        AND LS.ORG_FLOW=#{orgFlow}
+        <if test='dictName!=null and dictName!=""'>
+            <bind name="name" value="'%'+dictName+'%'"/>
+            AND LS.DICT_NAME LIKE #{name}
+        </if>
+        <if test='suppliesFlow!=null and suppliesFlow!=""'>
+            AND LS.SUPPLIES_FLOW = #{suppliesFlow}
+        </if>
+    </select>
+</mapper>

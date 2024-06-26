@@ -1,0 +1,1989 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jsres.TeachingActivityInfoExtMapper">
+    <resultMap id="activityMap" type="hashmap" extends="com.pinde.sci.dao.base.TeachingActivityInfoMapper.ResultMapWithBLOBs">
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+        <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
+        <result column="EVAL_SCORE" property="evalScore" jdbcType="VARCHAR" />
+        <result column="EVAL_SCORE2" property="evalScore2" jdbcType="VARCHAR" />
+        <result column="IS_REGIEST" property="isRegiest" jdbcType="VARCHAR" />
+        <result column="IS_SCAN" property="isScan" jdbcType="VARCHAR" />
+        <result column="IS_SCAN2" property="isScan2" jdbcType="VARCHAR" />
+        <result column="RESULT_FLOW" property="resultFlow" jdbcType="VARCHAR" />
+        <result column="SCAN_NUM" property="scanNum" jdbcType="VARCHAR" />
+        <result column="REGIEST_NUM" property="regiestNum" jdbcType="VARCHAR" />
+        <result column="SIGNING_NUM" property="signingNum" jdbcType="VARCHAR" />
+        <result column="IS_EFFECTIVE2" property="isEffective" jdbcType="VARCHAR" />
+        <result column="ACTIVITY_STATUS" property="activityStatus" jdbcType="VARCHAR" />
+        <result column="SUBMIT_ROLE" property="submitRole" jdbcType="VARCHAR" />
+        <result column="AUDIT_ROLE" property="auditRole" jdbcType="VARCHAR" />
+        <result column="OPINION" property="opinion" jdbcType="VARCHAR" />
+        <result column="FILE_FLOWS" property="fileFlows" jdbcType="VARCHAR" />
+        <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+        <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+
+    </resultMap>
+    <resultMap id="activityResultMap" type="hashmap" extends="com.pinde.sci.dao.base.TeachingActivityResultMapper.BaseResultMap">
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
+        <result column="TRAINING_SPE_NAME" property="speName" jdbcType="VARCHAR" />
+        <result column="DOCTOR_CATEGORY_NAME" property="doctorCategoryName" jdbcType="VARCHAR" />
+        <result column="doctor_type_name" property="doctorTypeName" jdbcType="VARCHAR" />
+        <result column="SIGIN_TIME" property="siginTime" jdbcType="VARCHAR" />
+        <result column="SIGIN_TIME2" property="siginTime2" jdbcType="VARCHAR" />
+        <result column="REGIEST_TIME1" property="regiestTime1" jdbcType="VARCHAR" />
+        <result column="IS_EFFECTIVE" property="isEffective" jdbcType="VARCHAR" />
+        <result column="ACTIVITY_STATUS" property="activityStatus" jdbcType="VARCHAR" />
+        <result column="SUBMIT_ROLE" property="submitRole" jdbcType="VARCHAR" />
+        <result column="AUDIT_ROLE" property="auditRole" jdbcType="VARCHAR" />
+    </resultMap>
+    <resultMap id="activityTargetEvalMap" type="hashmap" extends="com.pinde.sci.dao.base.TeachingActivityInfoTargetMapper.BaseResultMap">
+        <result column="EVAL_SCORE" property="evalScore" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <!--查询教学活动 -->
+    <select id="findActivityList" resultMap="activityMap">
+        SELECT INFO.*, SU.USER_NAME, D.DEPT_NAME, RESULT.EVAL_SCORE,PF.FILE_FLOWS,nvl(RESULT.SCAN_NUM,0) SCAN_NUM,RESULT2.REGIEST_NUM
+        <if test="roleFlag=='doctor'.toString()">
+            ,R.RESULT_FLOW,R.IS_REGIEST,R.IS_SCAN,R.IS_SCAN2,R.EVAL_SCORE EVAL_SCORE2,R.IS_EFFECTIVE IS_EFFECTIVE2
+        </if>
+          FROM TEACHING_ACTIVITY_INFO INFO
+          LEFT JOIN SYS_USER SU
+            ON INFO.SPEAKER_FLOW = SU.USER_FLOW
+          LEFT JOIN SYS_DEPT D
+            ON D.DEPT_FLOW = INFO.DEPT_FLOW
+          LEFT JOIN (SELECT ACTIVITY_FLOW, To_char(ROUND(SUM(EVAL_SCORE) / COUNT(EVAL_SCORE))) EVAL_SCORE,count(1) SCAN_NUM
+                       FROM TEACHING_ACTIVITY_RESULT T
+                      WHERE T.RECORD_STATUS = 'Y'
+                          AND T.IS_SCAN='Y'
+                          AND T.IS_SCAN2='Y'
+                      GROUP BY ACTIVITY_FLOW) RESULT
+            ON RESULT.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+        LEFT JOIN (SELECT ACTIVITY_FLOW, count(1) REGIEST_NUM
+                    FROM TEACHING_ACTIVITY_RESULT T
+                    WHERE T.RECORD_STATUS = 'Y'
+                    AND T.IS_REGIEST='Y'
+                    GROUP BY ACTIVITY_FLOW) RESULT2
+        ON RESULT2.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+        <if test="roleFlag=='doctor'.toString()">
+            LEFT JOIN TEACHING_ACTIVITY_RESULT R
+            ON R.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+            AND R.RECORD_STATUS='Y'
+            AND R.USER_FLOW=#{userFlow}
+        </if>
+        LEFT JOIN (
+            SELECT wm_concat(file_flow) as file_flows,product_flow
+            from PUB_FILE
+            where RECORD_STATUS = 'Y' and product_flow is not null
+            group by product_flow
+        ) pf on pf.product_flow = INFO.ACTIVITY_FLOW
+        <if test='school != null and school !=""'>
+            LEFT JOIN RES_DOCTOR ED ON INFO.SPEAKER_FLOW = ED.DOCTOR_FLOW
+        </if>
+         WHERE INFO.RECORD_STATUS = 'Y'
+           AND SU.RECORD_STATUS = 'Y'
+           AND D.RECORD_STATUS = 'Y'
+        <if test='roleFlag!=null and roleFlag!=""'>
+            <if test="roleFlag=='teach'.toString()">
+                AND INFO.SPEAKER_FLOW = #{userFlow}
+            </if>
+            <if test="roleFlag=='head'.toString() or roleFlag == 'secretary'.toString()">
+                AND INFO.DEPT_FLOW IN (
+                        select SUD.DEPT_fLOW
+                        from SYS_USER_DEPT sud
+                        where sud.RECORD_STATUS='Y'
+                        and sud.USER_FLOW=#{userFlow}
+                       UNION
+                      SELECT DEPT_FLOW
+                      FROM SYS_USER WHERE USER_FLOW=#{userFlow}
+                )
+            </if>
+            <if test="roleFlag=='spe'.toString()">
+                AND INFO.DEPT_FLOW IN (
+                    select dept_flow from Res_Training_Spe_Dept
+                    where record_status='Y'
+                    AND ORG_FLOW = #{orgFlow}
+                    and training_spe_id in(
+                      SELECT res_training_spe_id FROM sys_user
+                      where user_flow =#{userFlow}
+                  )
+                )
+            </if>
+            <if test="roleFlag=='local'.toString()">
+               AND INFO.ORG_FLOW = #{orgFlow}
+               AND INFO.DEPT_FLOW IN (SELECT DEPT_FLOW
+                                        FROM SYS_DEPT
+                                       WHERE ORG_FLOW = #{orgFlow}
+                                         AND RECORD_STATUS = 'Y')
+            </if>
+            <if test="roleFlag=='university'.toString()">
+                AND INFO.ORG_FLOW in(SELECT DISTINCT RDR.ORG_FLOW
+                FROM
+                RES_DOCTOR_RECRUIT RDR
+                LEFT JOIN
+                RES_DOCTOR RD ON RDR.DOCTOR_FLOW=RD.DOCTOR_FLOW
+                JOIN SYS_USER SU
+                ON SU.USER_FLOW = RD.DOCTOR_FLOW
+                WHERE RD.RECORD_STATUS = 'Y'
+                AND SU.RECORD_STATUS = 'Y'
+                AND RDR.RECORD_STATUS='Y'
+                AND RD.ORG_FLOW=RDR.ORG_FLOW
+                AND RD.DOCTOR_TYPE_ID = 'Graduate'
+                <if test="(sendSchoolId != null and sendSchoolId != '')">
+                and rd.work_org_id = #{sendSchoolId}
+                </if>
+                <if test="(sendSchoolName != null and sendSchoolName != '')">
+                and rd.work_org_name = #{sendSchoolName}
+                </if>
+                )
+                AND INFO.DEPT_FLOW IN (SELECT DEPT_FLOW
+                FROM SYS_DEPT
+                WHERE ORG_FLOW in(SELECT DISTINCT RDR.ORG_FLOW
+                FROM
+                RES_DOCTOR_RECRUIT RDR
+                LEFT JOIN
+                RES_DOCTOR RD ON RDR.DOCTOR_FLOW=RD.DOCTOR_FLOW
+                JOIN SYS_USER SU
+                ON SU.USER_FLOW = RD.DOCTOR_FLOW
+                WHERE RD.RECORD_STATUS = 'Y'
+                AND SU.RECORD_STATUS = 'Y'
+                AND RDR.RECORD_STATUS='Y'
+                AND RD.ORG_FLOW=RDR.ORG_FLOW
+                AND RD.DOCTOR_TYPE_ID = 'Graduate'
+                <if test="(sendSchoolId != null and sendSchoolId != '')">
+                    and rd.work_org_id = #{sendSchoolId}
+                </if>
+                <if test="(sendSchoolName != null and sendSchoolName != '')">
+                    and rd.work_org_name = #{sendSchoolName}
+                </if>)
+                AND RECORD_STATUS = 'Y')
+            </if>
+            <if test="roleFlag=='doctor'.toString()">
+                <if test="isNew!=null and isNew!=''">
+                    AND START_TIME  <![CDATA[>=]]> to_char(SYSDATE, 'yyyy-MM-dd HH24:MI')
+                    AND end_TIME >= to_char(SYSDATE, 'yyyy-MM-dd HH24:MI')
+                </if>
+                and info.activity_status = 'pass'
+                <if test="isEval!=null and isEval!=''">
+                    AND (IS_REGIEST ='Y' OR IS_SCAN='Y')
+                    AND EXISTS (
+                      SELECT 1 FROM Teaching_activity_result
+                      WHERE RECORD_STATUS='Y' AND  USER_FLOW=#{userFlow}
+                      AND Teaching_activity_result.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+                    )
+                </if>
+               and info.dept_flow in ( select sd.dept_flow
+                from pdsci.sys_dept sd
+                where sd.record_status = 'Y'
+                and ( exists (
+                        select null
+                        from pdsci.res_doctor_sch_process rdsp
+                        where rdsp.record_status = 'Y'
+                        and rdsp.org_flow = sd.org_flow
+                        and rdsp.user_flow=#{userFlow}
+                        <if test='isCurrent!=null and isCurrent!=""'>
+                            and rdsp.sch_start_date <![CDATA[<=]]>to_char(sysdate,'yyyy-mm-dd')
+                            and rdsp.sch_end_date>=to_char(sysdate,'yyyy-mm-dd')
+                        </if>
+                    )
+                    <if test='isCurrent==null or isCurrent==""'>
+                        <if test='orgFlow!=null and orgFlow!=""'>
+                            or
+                            sd.org_flow=#{orgFlow}
+                        </if>
+                    </if>
+                )
+               )
+            </if>
+        </if>
+        <if test='userName!=null and userName!=""'>
+            AND SU.USER_NAME LIKE '%${userName}%'
+        </if>
+        <if test='activityFlow!=null and activityFlow!=""'>
+            AND INFO.ACTIVITY_FLOW = #{activityFlow}
+        </if>
+        <if test='activityName!=null and activityName!=""'>
+            AND INFO.ACTIVITY_NAME LIKE '%${activityName}%'
+        </if>
+        <if test='deptFlow!=null and deptFlow!=""'>
+            AND INFO.DEPT_FLOW = #{deptFlow}
+        </if>
+        <if test='deptName!=null and deptName!=""'>
+            AND D.DEPT_NAME = #{deptName}
+        </if>
+        <if test='activityTypeId!=null and activityTypeId!=""'>
+            AND INFO.ACTIVITY_TYPE_ID = #{activityTypeId}
+        </if>
+        <if test='startTime!=null and startTime!="" and (endTime==null or endTime=="")'>
+            and START_TIME  >= #{startTime}
+        </if>
+        <if test='activityStatus!=null and activityStatus!="" '>
+            and activity_status = #{activityStatus}
+        </if>
+        <if test='endTime!=null and endTime!="" and (startTime==null or startTime=="")'>
+            and END_TIME <![CDATA[<]]>= #{endTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and startTime!=null and startTime!=""'>
+            and(
+            (START_TIME>=#{startTime} and #{endTime}>=START_TIME)
+            or
+            (END_TIME>=#{startTime} and #{endTime}>=END_TIME)
+            )
+        </if>
+        <if test='isUploadImg!=null and isUploadImg=="Y" '>
+            and IMAGE_URL LIKE '%imageUrl%'
+        </if>
+        <if test='isUploadImg!=null and isUploadImg=="N" '>
+            and (IMAGE_URL is null OR IMAGE_URL NOT LIKE '%imageUrl%')
+        </if>
+        <!--判断活动是否有效 -->
+        <if test='isEffective != null and isEffective !="" and isEffective =="1"'>
+            and RESULT.SCAN_NUM > 0
+            and info.is_effective='Y'
+        </if>
+        <if test='isEffective != null and isEffective !="" and isEffective =="0"'>
+            and ((RESULT.SCAN_NUM  is null or RESULT.SCAN_NUM = '')
+            OR (  RESULT.SCAN_NUM > 0  and info.is_effective='N'
+            ))
+        </if>
+
+        <if test='orderByClo == null or orderByClo ==""'>
+            order by START_TIME desc,END_TIME desc, RESULT.EVAL_SCORE desc
+        </if>
+        <if test='orderByClo != null and orderByClo !="" and orderByClo=="activityName"'>
+            order by NLSSORT(ACTIVITY_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
+        </if>
+        <if test='orderByClo != null and orderByClo !="" and orderByClo=="activityType"'>
+            order by NLSSORT(ACTIVITY_TYPE_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
+        </if>
+        <if test='orderByClo != null and orderByClo !="" and orderByClo=="deptName"'>
+            order by NLSSORT(DEPT_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
+        </if>
+        <if test='orderByClo != null and orderByClo !="" and orderByClo=="userName"'>
+            order by NLSSORT(SU.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
+        </if>
+        <if test='orderByFall != null and orderByFall !="" and orderByFall=="DESC"'>
+            DESC
+        </if>
+    </select>
+
+
+    <select id="supervisioFindActivityList" resultMap="activityMap">
+        SELECT INFO.*, SU.USER_FLOW, SU.USER_NAME,D.DEPT_CODE, D.DEPT_NAME, RESULT.EVAL_SCORE,PF.FILE_FLOWS,nvl(RESULT.SCAN_NUM,0) SCAN_NUM,RESULT2.REGIEST_NUM
+        <if test="roleFlag=='doctor'.toString()">
+            ,R.RESULT_FLOW,R.IS_REGIEST,R.IS_SCAN,R.IS_SCAN2,R.EVAL_SCORE EVAL_SCORE2,R.IS_EFFECTIVE IS_EFFECTIVE2
+        </if>
+        FROM TEACHING_ACTIVITY_INFO INFO
+        LEFT JOIN SYS_USER SU
+        ON INFO.SPEAKER_FLOW = SU.USER_FLOW
+        LEFT JOIN SYS_DEPT D
+        ON D.DEPT_FLOW = INFO.DEPT_FLOW
+        LEFT JOIN (SELECT ACTIVITY_FLOW, To_char(ROUND(SUM(EVAL_SCORE) / COUNT(EVAL_SCORE))) EVAL_SCORE,count(1) SCAN_NUM
+        FROM TEACHING_ACTIVITY_RESULT T
+        WHERE T.RECORD_STATUS = 'Y'
+        AND T.IS_SCAN='Y'
+        AND T.IS_SCAN2='Y'
+        GROUP BY ACTIVITY_FLOW) RESULT
+        ON RESULT.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+        LEFT JOIN (SELECT ACTIVITY_FLOW, count(1) REGIEST_NUM
+        FROM TEACHING_ACTIVITY_RESULT T
+        WHERE T.RECORD_STATUS = 'Y'
+        AND T.IS_REGIEST='Y'
+        GROUP BY ACTIVITY_FLOW) RESULT2
+        ON RESULT2.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+        <if test="roleFlag=='doctor'.toString()">
+            LEFT JOIN TEACHING_ACTIVITY_RESULT R
+            ON R.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+            AND R.RECORD_STATUS='Y'
+            AND R.USER_FLOW=#{userFlow}
+        </if>
+        LEFT JOIN (
+        SELECT wm_concat(file_flow) as file_flows,product_flow
+        from PUB_FILE
+        where RECORD_STATUS = 'Y'
+        group by product_flow
+        ) pf on pf.product_flow = INFO.ACTIVITY_FLOW
+        <if test='school != null and school !=""'>
+            LEFT JOIN RES_DOCTOR ED ON INFO.SPEAKER_FLOW = ED.DOCTOR_FLOW
+        </if>
+        WHERE INFO.RECORD_STATUS = 'Y'
+        AND SU.RECORD_STATUS = 'Y'
+        AND D.RECORD_STATUS = 'Y'
+        <if test='roleFlag!=null and roleFlag!=""'>
+            <if test="roleFlag=='teach'.toString()">
+                AND INFO.SPEAKER_FLOW = #{userFlow}
+            </if>
+            <if test="roleFlag=='head'.toString() or roleFlag == 'secretary'.toString()">
+                AND INFO.DEPT_FLOW IN (
+                select SUD.DEPT_fLOW
+                from SYS_USER_DEPT sud
+                where sud.RECORD_STATUS='Y'
+                and sud.USER_FLOW=#{userFlow}
+                UNION
+                SELECT DEPT_FLOW
+                FROM SYS_USER WHERE USER_FLOW=#{userFlow}
+                )
+            </if>
+            <if test="roleFlag=='spe'.toString()">
+                AND INFO.DEPT_FLOW IN (
+                select dept_flow from Res_Training_Spe_Dept
+                where record_status='Y'
+                AND ORG_FLOW = #{orgFlow}
+                and training_spe_id in(
+                SELECT res_training_spe_id FROM sys_user
+                where user_flow =#{userFlow}
+                )
+                )
+            </if>
+            <if test="roleFlag=='local'.toString()">
+                AND INFO.ORG_FLOW = #{orgFlow}
+                AND INFO.DEPT_FLOW IN (SELECT DEPT_FLOW
+                FROM SYS_DEPT
+                WHERE ORG_FLOW = #{orgFlow}
+                AND RECORD_STATUS = 'Y')
+            </if>
+            <if test="roleFlag=='university'.toString()">
+                AND INFO.ORG_FLOW in(SELECT DISTINCT RDR.ORG_FLOW
+                FROM
+                RES_DOCTOR_RECRUIT RDR
+                LEFT JOIN
+                RES_DOCTOR RD ON RDR.DOCTOR_FLOW=RD.DOCTOR_FLOW
+                JOIN SYS_USER SU
+                ON SU.USER_FLOW = RD.DOCTOR_FLOW
+                WHERE RD.RECORD_STATUS = 'Y'
+                AND SU.RECORD_STATUS = 'Y'
+                AND RDR.RECORD_STATUS='Y'
+                AND RD.ORG_FLOW=RDR.ORG_FLOW
+                AND RD.DOCTOR_TYPE_ID = 'Graduate'
+                <if test="(sendSchoolId != null and sendSchoolId != '')">
+                    and rd.work_org_id = #{sendSchoolId}
+                </if>
+                <if test="(sendSchoolName != null and sendSchoolName != '')">
+                    and rd.work_org_name = #{sendSchoolName}
+                </if>
+                )
+                AND INFO.DEPT_FLOW IN (SELECT DEPT_FLOW
+                FROM SYS_DEPT
+                WHERE ORG_FLOW in(SELECT DISTINCT RDR.ORG_FLOW
+                FROM
+                RES_DOCTOR_RECRUIT RDR
+                LEFT JOIN
+                RES_DOCTOR RD ON RDR.DOCTOR_FLOW=RD.DOCTOR_FLOW
+                JOIN SYS_USER SU
+                ON SU.USER_FLOW = RD.DOCTOR_FLOW
+                WHERE RD.RECORD_STATUS = 'Y'
+                AND SU.RECORD_STATUS = 'Y'
+                AND RDR.RECORD_STATUS='Y'
+                AND RD.ORG_FLOW=RDR.ORG_FLOW
+                AND RD.DOCTOR_TYPE_ID = 'Graduate'
+                <if test="(sendSchoolId != null and sendSchoolId != '')">
+                    and rd.work_org_id = #{sendSchoolId}
+                </if>
+                <if test="(sendSchoolName != null and sendSchoolName != '')">
+                    and rd.work_org_name = #{sendSchoolName}
+                </if>)
+                AND RECORD_STATUS = 'Y')
+            </if>
+            <if test="roleFlag=='doctor'.toString()">
+                <if test="isNew!=null and isNew!=''">
+                    AND START_TIME  <![CDATA[>=]]> to_char(SYSDATE, 'yyyy-MM-dd HH24:MI')
+                    AND end_TIME >= to_char(SYSDATE, 'yyyy-MM-dd HH24:MI')
+                </if>
+                and info.activity_status = 'pass'
+                <if test="isEval!=null and isEval!=''">
+                    AND (IS_REGIEST ='Y' OR IS_SCAN='Y')
+                    AND EXISTS (
+                    SELECT 1 FROM Teaching_activity_result
+                    WHERE RECORD_STATUS='Y' AND  USER_FLOW=#{userFlow}
+                    AND Teaching_activity_result.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+                    )
+                </if>
+                and info.dept_flow in ( select sd.dept_flow
+                from pdsci.sys_dept sd
+                where sd.record_status = 'Y'
+                and ( exists (
+                select null
+                from pdsci.res_doctor_sch_process rdsp
+                where rdsp.record_status = 'Y'
+                and rdsp.dept_flow = sd.dept_flow
+                and rdsp.user_flow=#{userFlow}
+                <if test='isCurrent!=null and isCurrent!=""'>
+                    and rdsp.sch_start_date <![CDATA[<=]]>to_char(sysdate,'yyyy-mm-dd')
+                    and rdsp.sch_end_date>=to_char(sysdate,'yyyy-mm-dd')
+                </if>
+                )
+                <if test='isCurrent==null or isCurrent==""'>
+                    <if test='orgFlow!=null and orgFlow!=""'>
+                        or
+                        sd.org_flow=#{orgFlow}
+                    </if>
+                </if>
+                )
+                )
+            </if>
+        </if>
+        <if test='userName!=null and userName!=""'>
+            AND SU.USER_NAME LIKE '%${userName}%'
+        </if>
+        <if test='activityName!=null and activityName!=""'>
+            AND INFO.ACTIVITY_NAME LIKE '%${activityName}%'
+        </if>
+        <if test='deptFlow!=null and deptFlow!=""'>
+            AND INFO.DEPT_FLOW IN
+            <foreach collection="deptFlow" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test='deptName!=null and deptName!=""'>
+            AND D.DEPT_NAME = #{deptName}
+        </if>
+        <if test='activityTypeId!=null and activityTypeId!=""'>
+            AND INFO.ACTIVITY_TYPE_ID = #{activityTypeId}
+        </if>
+        <if test='startTime!=null and startTime!="" and (endTime==null or endTime=="")'>
+            and START_TIME  >= #{startTime}
+        </if>
+        <if test='activityStatus!=null and activityStatus!="" '>
+            and activity_status = #{activityStatus}
+        </if>
+        <if test='endTime!=null and endTime!="" and (startTime==null or startTime=="")'>
+            and END_TIME <![CDATA[<]]>= #{endTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and startTime!=null and startTime!=""'>
+            and(
+            (START_TIME>=#{startTime} and #{endTime}>=START_TIME)
+            or
+            (END_TIME>=#{startTime} and #{endTime}>=END_TIME)
+            )
+        </if>
+        <!--判断活动是否有效 -->
+        <if test='isEffective != null and isEffective !="" and isEffective =="1"'>
+            and RESULT.SCAN_NUM > 0
+            and info.is_effective='Y'
+        </if>
+        <if test='isEffective != null and isEffective !="" and isEffective =="0"'>
+            and ((RESULT.SCAN_NUM  is null or RESULT.SCAN_NUM = '')
+            OR (  RESULT.SCAN_NUM > 0  and info.is_effective='N'
+            ))
+        </if>
+        <if test='nowdate != null and nowdate !=""'>
+            AND INFO.END_TIME <![CDATA[ > ]]> #{nowdate}
+        </if>
+        order by START_TIME desc,END_TIME desc, RESULT.EVAL_SCORE desc
+    </select>
+
+    <select id="findActivityList2" resultMap="activityMap">
+        SELECT INFO.*, SU.USER_NAME, D.DEPT_NAME, RESULT.EVAL_SCORE,F.FILE_NAME,RESULT.SCAN_NUM,RESULT2.REGIEST_NUM
+        <if test="roleFlag=='doctor'.toString()">
+            ,R.RESULT_FLOW,R.IS_REGIEST,R.IS_SCAN,R.IS_SCAN2,R.EVAL_SCORE EVAL_SCORE2,R.IS_EFFECTIVE IS_EFFECTIVE2
+        </if>
+        FROM TEACHING_ACTIVITY_INFO INFO
+        LEFT JOIN SYS_USER SU
+        ON INFO.SPEAKER_FLOW = SU.USER_FLOW
+        LEFT JOIN SYS_DEPT D
+        ON D.DEPT_FLOW = INFO.DEPT_FLOW
+        LEFT JOIN (SELECT ACTIVITY_FLOW, To_char(ROUND(SUM(EVAL_SCORE) / COUNT(EVAL_SCORE))) EVAL_SCORE,count(1) SCAN_NUM
+        FROM TEACHING_ACTIVITY_RESULT T
+        WHERE T.RECORD_STATUS = 'Y'
+        AND T.IS_SCAN='Y'
+        AND T.IS_SCAN2='Y'
+        GROUP BY ACTIVITY_FLOW) RESULT
+        ON RESULT.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+        LEFT JOIN (SELECT ACTIVITY_FLOW, count(1) REGIEST_NUM
+        FROM TEACHING_ACTIVITY_RESULT T
+        WHERE T.RECORD_STATUS = 'Y'
+        AND T.IS_REGIEST='Y'
+        GROUP BY ACTIVITY_FLOW) RESULT2
+        ON RESULT2.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+        <if test="roleFlag=='doctor'.toString()">
+            LEFT JOIN TEACHING_ACTIVITY_RESULT R
+            ON R.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+            AND R.RECORD_STATUS='Y'
+            AND R.USER_FLOW=#{userFlow}
+        </if>
+        LEFT JOIN PUB_FILE F ON INFO.FILE_FLOW=F.FILE_FLOW AND F.RECORD_STATUS='Y'
+<!--        <if test='school != null and school !=""'>-->
+<!--            LEFT JOIN RES_DOCTOR ED ON INFO.SPEAKER_FLOW = ED.DOCTOR_FLOW-->
+<!--        </if>-->
+        WHERE INFO.RECORD_STATUS = 'Y'
+<!--        <if test='school != null and school !=""'>-->
+<!--            and ED.SCHOOL = #{school}-->
+<!--        </if>-->
+        AND SU.RECORD_STATUS = 'Y'
+        AND D.RECORD_STATUS = 'Y'
+        <if test='roleFlag!=null and roleFlag!=""'>
+            <if test="roleFlag=='teach'.toString()">
+                AND INFO.SPEAKER_FLOW = #{userFlow}
+            </if>
+            <if test="roleFlag=='head'.toString() or roleFlag == 'secretary'.toString()">
+                AND INFO.DEPT_FLOW IN (
+                select SUD.DEPT_fLOW
+                from SYS_USER_DEPT sud
+                where sud.RECORD_STATUS='Y'
+                and sud.USER_FLOW=#{userFlow}
+                UNION
+                SELECT DEPT_FLOW
+                FROM SYS_USER WHERE USER_FLOW=#{userFlow}
+                )
+            </if>
+            <if test="roleFlag=='spe'.toString()">
+                AND INFO.DEPT_FLOW IN (
+                select dept_flow from Res_Training_Spe_Dept
+                where record_status='Y'
+                AND ORG_FLOW = #{orgFlow}
+                and training_spe_id in(
+                SELECT res_training_spe_id FROM sys_user
+                where user_flow =#{userFlow}
+                )
+                )
+            </if>
+            <if test="roleFlag=='local'.toString()">
+                AND INFO.ORG_FLOW = #{orgFlow}
+                AND INFO.DEPT_FLOW IN (SELECT DEPT_FLOW
+                FROM SYS_DEPT
+                WHERE ORG_FLOW = #{orgFlow}
+                AND RECORD_STATUS = 'Y')
+            </if>
+            <if test="roleFlag=='doctor'.toString()">
+                <if test="isNew!=null and isNew!=''">
+                    AND START_TIME  <![CDATA[>=]]> to_char(SYSDATE, 'yyyy-MM-dd HH24:MI')
+                    AND end_TIME >= to_char(SYSDATE, 'yyyy-MM-dd HH24:MI')
+                </if>
+                <if test="isEval!=null and isEval!=''">
+                    AND (IS_REGIEST ='Y' OR IS_SCAN='Y')
+                    AND EXISTS (
+                    SELECT 1 FROM Teaching_activity_result
+                    WHERE RECORD_STATUS='Y' AND  USER_FLOW=#{userFlow}
+                    AND Teaching_activity_result.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+                    )
+                </if>
+
+                and info.dept_flow in ( select sd.dept_flow
+                from pdsci.sys_dept sd
+                where sd.record_status = 'Y'
+                and ( exists (
+                select null
+                from pdsci.res_doctor_sch_process rdsp
+                where rdsp.record_status = 'Y'
+                and rdsp.dept_flow = sd.dept_flow
+                and rdsp.user_flow=#{userFlow}
+                <if test='isCurrent!=null and isCurrent!=""'>
+                    and rdsp.sch_start_date <![CDATA[<=]]>to_char(sysdate,'yyyy-mm-dd')
+                    and rdsp.sch_end_date>=to_char(sysdate,'yyyy-mm-dd')
+                </if>
+                )
+                <if test='isCurrent==null or isCurrent==""'>
+                    <if test='orgFlow!=null and orgFlow!=""'>
+                        or
+                        sd.org_flow=#{orgFlow}
+                    </if>
+                </if>
+                )
+                )
+            </if>
+        </if>
+        <if test='startTime!=null and startTime!=""'>
+            and START_TIME  >= #{startTime}
+        </if>
+        <if test='endTime!=null and endTime!=""'>
+            and START_TIME <![CDATA[<]]>= #{endTime}
+        </if>
+        order by START_TIME,END_TIME desc, RESULT.EVAL_SCORE desc
+    </select>
+    <select id="getActivitys" resultMap="activityMap">
+        SELECT INFO.*, SU.USER_NAME, D.DEPT_NAME
+        FROM TEACHING_ACTIVITY_INFO INFO
+        LEFT JOIN SYS_USER SU
+        ON INFO.SPEAKER_FLOW = SU.USER_FLOW
+        LEFT JOIN SYS_DEPT D
+        ON D.DEPT_FLOW = INFO.DEPT_FLOW
+        WHERE INFO.RECORD_STATUS = 'Y'
+        AND SU.RECORD_STATUS = 'Y'
+        AND D.RECORD_STATUS = 'Y'
+        <if test="afList != null and afList.size()>0">
+            AND INFO.ACTIVITY_FLOW IN
+            <foreach collection="afList" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by INFO.START_TIME desc,INFO.END_TIME desc
+    </select>
+    <resultMap id="DeptActivityMap" type="hashmap" >
+        <result column="TYPE_ID" property="typeId" jdbcType="VARCHAR" />
+        <result column="QTY" property="qty" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getDeptActivityStatisticsMap" resultMap="DeptActivityMap">
+        SELECT DEPT_FLOW||ACTIVITY_TYPE_ID TYPE_ID,
+                ACTIVITY_TYPE_NAME,
+                COUNT(1) QTY
+       FROM TEACHING_ACTIVITY_INFO INFO
+        WHERE RECORD_STATUS = 'Y'
+        and dept_flow=#{deptFlow}
+        and is_effective='Y'
+        <if test='startTime!=null and startTime!="" and (endTime==null or endTime=="")'>
+            and START_TIME  >= #{startTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and (startTime==null or startTime=="")'>
+            and END_TIME <![CDATA[<]]>= #{endTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and startTime!=null and startTime!=""'>
+            and(
+            (START_TIME>=#{startTime} and #{endTime}>=START_TIME)
+            or
+            (END_TIME>=#{startTime} and #{endTime}>=END_TIME)
+            )
+        </if>
+        GROUP BY
+        DEPT_FLOW,
+        ACTIVITY_TYPE_ID,
+        ACTIVITY_TYPE_NAME
+    </select>
+
+    <resultMap id="getDeptCountActivityStatisticsListMap" type="hashmap">
+        <result column="NUM" property="num" jdbcType="VARCHAR" />
+        <result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+        <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+        <result column="ORDINAL" property="ordinal" jdbcType="DECIMAL" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+        <result column="DEPT_PINYIN" property="deptPinyin" jdbcType="VARCHAR" />
+        <result column="DEPT_ID" property="deptId" jdbcType="VARCHAR" />
+        <result column="DEPT_PID" property="deptPid" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getDeptCountActivityStatisticsList" resultMap="getDeptCountActivityStatisticsListMap">
+        SELECT * FROM (
+            SELECT (
+                SELECT COUNT(ACTIVITY_FLOW) FROM TEACHING_ACTIVITY_INFO WHERE DEPT_FLOW=S.DEPT_FLOW AND IS_EFFECTIVE = 'Y'and  RECORD_STATUS = 'Y'
+                    <if test='startTime!=null and startTime!="" and (endTime==null or endTime=="")'>
+                        and START_TIME  >= #{startTime}
+                    </if>
+                    <if test='endTime!=null and endTime!="" and (startTime==null or startTime=="")'>
+                        and END_TIME <![CDATA[<]]>= #{endTime}
+                    </if>
+                    <if test='endTime!=null and endTime!="" and startTime!=null and startTime!=""'>
+                        and(
+                        (START_TIME>=#{startTime} and #{endTime}>=START_TIME)
+                        or
+                        (END_TIME>=#{startTime} and #{endTime}>=END_TIME)
+                        )
+                    </if>
+                ) NUM,
+                DEPT_FLOW, ORG_FLOW, DEPT_CODE, DEPT_NAME, ORDINAL
+                , RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+                , DEPT_PINYIN, DEPT_ID, DEPT_PID
+            FROM PDSCI.SYS_DEPT S
+            WHERE RECORD_STATUS = 'Y'
+            <if test='deptFlow!=null and deptFlow!=""'>
+                AND DEPT_FLOW = #{deptFlow}
+            </if>
+            <if test='orgFlow!=null and orgFlow!=""'>
+                AND ORG_FLOW = #{orgFlow}
+            </if>
+            ORDER BY RECORD_STATUS DESC, ORDINAL
+            )
+        <if test='notNull!=null and notNull!="" and notNull=="Y"'>
+            where NUM > 0
+        </if>
+    </select>
+
+    <select id="getDeptActivityCountMap" resultType="java.util.Map">
+        select row_number() over (order by aa.b desc) rn,aa.* from(
+        select distinct tab.dept_flow,tab.b from(
+        select a.type_id,a.dept_flow,a.qty,sum(a.qty) over(partition  by a.dept_flow) b from
+        (SELECT DEPT_FLOW||ACTIVITY_TYPE_ID TYPE_ID,
+        ACTIVITY_TYPE_NAME,DEPT_FLOW,
+        COUNT(1) QTY
+        FROM TEACHING_ACTIVITY_INFO INFO
+        WHERE RECORD_STATUS = 'Y'
+        <if test="deptFlows !=null and deptFlows.size>0">
+            and dept_flow in
+            <foreach collection="deptFlows" close=")" item="item" open="(" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        and is_effective='Y'
+        <if test='startTime!=null and startTime!="" and (endTime==null or endTime=="")'>
+            and START_TIME  >= #{startTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and (startTime==null or startTime=="")'>
+            and END_TIME <![CDATA[<]]>= #{endTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and startTime!=null and startTime!=""'>
+            and(
+            (START_TIME>=#{startTime} and #{endTime}>=START_TIME)
+            or
+            (END_TIME>=#{startTime} and #{endTime}>=END_TIME)
+            )
+        </if>
+        GROUP BY
+        DEPT_FLOW,
+        ACTIVITY_TYPE_ID,
+        ACTIVITY_TYPE_NAME) a ) tab ) aa
+    </select>
+
+    <select id="getTeacherActivityStatisticsMap" resultMap="DeptActivityMap">
+        SELECT DEPT_FLOW||SPEAKER_FLOW||ACTIVITY_TYPE_ID TYPE_ID,
+                ACTIVITY_TYPE_NAME,
+                COUNT(1) QTY
+       FROM TEACHING_ACTIVITY_INFO INFO
+        WHERE RECORD_STATUS = 'Y'
+        and dept_flow=#{deptFlow}
+        and SPEAKER_FLOW=#{teacherFlow}
+        and is_effective='Y'
+        <if test='startTime!=null and startTime!="" and (endTime==null or endTime=="")'>
+            and START_TIME  >= #{startTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and (startTime==null or startTime=="")'>
+            and END_TIME <![CDATA[<]]>= #{endTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and startTime!=null and startTime!=""'>
+            and(
+            (START_TIME>=#{startTime} and #{endTime}>=START_TIME)
+            or
+            (END_TIME>=#{startTime} and #{endTime}>=END_TIME)
+            )
+        </if>
+        GROUP BY
+        DEPT_FLOW,SPEAKER_FLOW,
+        ACTIVITY_TYPE_ID,
+        ACTIVITY_TYPE_NAME
+    </select>
+
+    <resultMap id="getTeacherActivityStatisticsReportMap" type="hashmap" >
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
+        <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+        <result column="ACTIVITY_FLOW_NUM" property="activityNum" jdbcType="VARCHAR" />
+        <result column="AVG_SCORE" property="avgScore" jdbcType="VARCHAR" />
+        <result column="MAX_SCORE" property="maxScore" jdbcType="VARCHAR" />
+        <result column="MIN_SCORE" property="minScore" jdbcType="VARCHAR" />
+        <result column="EVA_NUM" property="evaNum" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getTeacherActivityStatisticsReport" resultMap="getTeacherActivityStatisticsReportMap">
+        SELECT
+            A.USER_NAME,A.DEPT_FLOW,A.DEPT_NAME,
+            NVL(B.ACTIVITY_FLOW_NUM, '0') AS ACTIVITY_FLOW_NUM,
+            NVL(B.AVG_SCORE, '0') AS AVG_SCORE,NVL(B.MAX_SCORE, '0') AS MAX_SCORE,
+            NVL(B.MIN_SCORE, '0') AS MIN_SCORE,NVL(B.EVA_NUM, '0') AS EVA_NUM
+        FROM (
+            SELECT T.SPEAKER_FLOW,SU.USER_NAME,T.DEPT_FLOW,SD.DEPT_NAME FROM TEACHING_ACTIVITY_INFO T
+            LEFT JOIN SYS_USER SU ON SU.USER_FLOW=T.SPEAKER_FLOW
+            LEFT JOIN SYS_DEPT SD ON SD.DEPT_FLOW=T.DEPT_FLOW
+            WHERE T.IS_EFFECTIVE = 'Y'
+                AND T.RECORD_STATUS = 'Y'
+                AND SU.RECORD_STATUS = 'Y'
+                <if test='orgFlow!=null and orgFlow!=""'>
+                    AND T.ORG_FLOW = #{orgFlow}
+                </if>
+                <if test='startTime!=null and startTime!=""'>
+                    AND T.START_TIME <![CDATA[>=]]> #{startTime}
+                </if>
+                <if test='endTime!=null and endTime!=""'>
+                    AND T.END_TIME <![CDATA[<=]]> #{endTime}
+                </if>
+                <if test='deptFlow!=null and deptFlow!=""'>
+                    AND SD.DEPT_FLOW= #{deptFlow}
+                </if>
+                <if test='userName!=null and userName!=""'>
+                    AND SU.USER_NAME LIKE '%${userName}%'
+                </if>
+            GROUP BY T.SPEAKER_FLOW,SU.USER_NAME, T.DEPT_FLOW, SD.DEPT_NAME
+        )A
+        LEFT JOIN (
+            SELECT
+            DEPT_FLOW,SPEAKER_FLOW,COUNT(ACTIVITY_FLOW) ACTIVITY_FLOW_NUM,
+            CASE WHEN(NVL(COUNT(ACTIVITY_FLOW), 0))!=0 THEN ROUND(SUM(EVAL_SCORE) / COUNT(ACTIVITY_FLOW),0) ELSE 0 END AVG_SCORE,
+            MAX(EVAL_SCORE) MAX_SCORE,MIN(EVAL_SCORE) MIN_SCORE,SUM(EVA_NUM) EVA_NUM
+            FROM (
+                SELECT ta.dept_flow, ta.SPEAKER_FLOW,T.ACTIVITY_FLOW,
+                    To_char(ROUND(SUM(EVAL_SCORE) / COUNT(EVAL_SCORE))) AS EVAL_SCORE,COUNT(EVAL_SCORE) EVA_NUM
+                FROM TEACHING_ACTIVITY_RESULT T
+                LEFT JOIN TEACHING_ACTIVITY_INFO TA ON TA.ACTIVITY_FLOW=T.ACTIVITY_FLOW
+                WHERE T.RECORD_STATUS = 'Y'
+                    AND TA.RECORD_STATUS = 'Y'
+                    AND T.IS_SCAN = 'Y'
+                    AND T.IS_SCAN2 = 'Y'
+                    <if test='orgFlow!=null and orgFlow!=""'>
+                        AND TA.ORG_FLOW = #{orgFlow}
+                    </if>
+                    <if test='startTime!=null and startTime!=""'>
+                        AND TA.START_TIME <![CDATA[>=]]> #{startTime}
+                    </if>
+                    <if test='endTime!=null and endTime!=""'>
+                        AND TA.END_TIME <![CDATA[<=]]> #{endTime}
+                    </if>
+                    <if test='deptFlow!=null and deptFlow!=""'>
+                        AND TA.DEPT_FLOW= #{deptFlow}
+                    </if>
+                GROUP BY ta.dept_flow, ta.SPEAKER_FLOW, T.ACTIVITY_FLOW
+            )
+            GROUP BY DEPT_FLOW, SPEAKER_FLOW
+        )B ON A.DEPT_FLOW=B.DEPT_FLOW AND A.SPEAKER_FLOW=B.SPEAKER_FLOW
+        ORDER BY NLSSORT(A.USER_NAME, 'NLS_SORT = SCHINESE_PINYIN_M'), A.DEPT_FLOW
+    </select>
+
+    <select id="getRealitSpeaker" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT wm_concat(REALITY_SPEAKER)
+        FROM TEACHING_ACTIVITY_INFO
+        WHERE DEPT_FLOW = #{deptFlow}
+        AND SPEAKER_FLOW = #{userFlow}
+        <if test='orgFlow!=null and orgFlow!=""'>
+            AND ORG_FLOW = #{orgFlow}
+        </if>
+        AND RECORD_STATUS = 'Y'
+    </select>
+
+    <select id="getRealitSpeaker2" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT WM_CONCAT(REALITY_SPEAKER || '(' || ACTIVITY_NAME || ')')
+        FROM TEACHING_ACTIVITY_INFO
+        WHERE DEPT_FLOW = #{deptFlow}
+        AND SPEAKER_FLOW = #{userFlow}
+        <if test='orgFlow!=null and orgFlow!=""'>
+            AND ORG_FLOW = #{orgFlow}
+        </if>
+        <if test='startTime!=null and startTime!="" and (endTime==null or endTime=="")'>
+            and START_TIME  >= #{startTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and (startTime==null or startTime=="")'>
+            and END_TIME <![CDATA[<]]>= #{endTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and startTime!=null and startTime!=""'>
+            and(
+            (START_TIME>=#{startTime} and #{endTime}>=START_TIME)
+            or
+            (END_TIME>=#{startTime} and #{endTime}>=END_TIME)
+            )
+        </if>
+        AND RECORD_STATUS = 'Y'
+        AND REALITY_SPEAKER IS NOT NULL
+    </select>
+
+    <select id="getDoctorActivityStatisticsMap" resultMap="DeptActivityMap">
+        SELECT result.user_flow||ACTIVITY_TYPE_ID TYPE_ID,
+                ACTIVITY_TYPE_NAME,
+                COUNT(1) QTY
+       FROM teaching_activity_result result
+        left join  TEACHING_ACTIVITY_INFO INFO
+        on info.activity_flow=result.activity_flow
+        WHERE info.RECORD_STATUS = 'Y'
+        and result.record_status ='Y'
+        and result.user_flow=#{doctorFlow}
+        and info.is_effective='Y'
+        and result.is_effective='Y'
+        <if test='isDept!=null and isDept!="" and isDept=="Y".toString()'>
+            AND (EXISTS (SELECT NULL
+                FROM SYS_USER_DEPT sud
+                WHERE sud.RECORD_STATUS = 'Y'
+                  AND sud.USER_FLOW = #{userFlow}
+                  AND info.DEPT_FLOW = sud.DEPT_FLOW)
+              OR EXISTS (SELECT NULL
+                FROM SYS_USER sud
+                WHERE sud.RECORD_STATUS = 'Y'
+                AND sud.USER_FLOW = #{userFlow}
+                  AND info.DEPT_FLOW = sud.DEPT_FLOW))
+        </if>
+        <if test='startTime!=null and startTime!="" and (endTime==null or endTime=="")'>
+            and START_TIME  >= #{startTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and (startTime==null or startTime=="")'>
+            and END_TIME <![CDATA[<]]>= #{endTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and startTime!=null and startTime!=""'>
+            and(
+            (START_TIME>=#{startTime} and #{endTime}>=START_TIME)
+            or
+            (END_TIME>=#{startTime} and #{endTime}>=END_TIME)
+            )
+        </if>
+        GROUP BY
+        result.user_flow,
+        ACTIVITY_TYPE_ID,
+        ACTIVITY_TYPE_NAME
+    </select>
+    <select id="readActivityRegists" resultMap="activityResultMap">
+        SELECT INFO.*, SU.USER_NAME, D.SESSION_NUMBER,D.TRAINING_SPE_NAME,d.doctor_category_name,D.doctor_type_name,to_char(to_date(info.scan_time,'yyyyMMddHH24miss'),'yyyy-MM-dd hh24:mi:ss') sigin_time
+           ,to_char(to_date(info.REGIEST_time,'yyyyMMddHH24miss'),'yyyy-MM-dd hh24:mi:ss') regiest_Time1
+        ,to_char(to_date(info.scan_time2,'yyyyMMddHH24miss'),'yyyy-MM-dd hh24:mi:ss') sigin_time2
+          FROM TEACHING_ACTIVITY_RESULT INFO
+          LEFT JOIN SYS_USER SU
+            ON INFO.USER_FLOW = SU.USER_FLOW
+          LEFT JOIN RES_DOCTOR D
+            ON D.DOCTOR_FLOW = INFO.USER_FLOW
+         WHERE INFO.RECORD_STATUS = 'Y'
+         AND INFO.ACTIVITY_FLOW=#{activityFlow}
+                      AND ( INFO.IS_REGIEST='Y')
+         ORDER BY EVAL_SCORE DESC
+    </select>
+    <select id="readActivityResults" resultMap="activityResultMap">
+        SELECT INFO.*, SU.USER_NAME, D.SESSION_NUMBER,D.TRAINING_SPE_NAME,D.doctor_category_name,D.doctor_type_name,to_char(to_date(info.scan_time,'yyyyMMddHH24miss'),'yyyy-MM-dd hh24:mi:ss') sigin_time
+        ,to_char(to_date(info.REGIEST_time,'yyyyMMddHH24miss'),'yyyy-MM-dd hh24:mi:ss') REGIEST_time1
+        ,to_char(to_date(info.scan_time2,'yyyyMMddHH24miss'),'yyyy-MM-dd hh24:mi:ss') sigin_time2
+          FROM TEACHING_ACTIVITY_RESULT INFO
+          LEFT JOIN SYS_USER SU
+            ON INFO.USER_FLOW = SU.USER_FLOW
+          LEFT JOIN RES_DOCTOR D
+            ON D.DOCTOR_FLOW = INFO.USER_FLOW
+         WHERE INFO.RECORD_STATUS = 'Y'
+         AND INFO.ACTIVITY_FLOW=#{activityFlow}
+                      AND INFO.IS_SCAN='Y'
+         ORDER BY EVAL_SCORE DESC
+    </select>
+
+    <select id="readActivityResults2" resultMap="activityResultMap">
+        select row_number() over (order by c.num desc) rn,c.* from(
+        select distinct b.dept_flow,b.num from(
+        select a.dept_flow,a.eval_score,sum(a.eval_score) over(partition  by a.dept_flow) num from(
+        SELECT INFO.*, SU.USER_NAME, D.SESSION_NUMBER,D.TRAINING_SPE_NAME,D.doctor_category_name,tai.dept_flow,
+        D.doctor_type_name,to_char(to_date(info.scan_time,'yyyyMMddHH24miss'),'yyyy-MM-dd hh24:mi:ss') sigin_time
+        ,to_char(to_date(info.REGIEST_time,'yyyyMMddHH24miss'),'yyyy-MM-dd hh24:mi:ss') REGIEST_time1
+        ,to_char(to_date(info.scan_time2,'yyyyMMddHH24miss'),'yyyy-MM-dd hh24:mi:ss') sigin_time2
+          FROM TEACHING_ACTIVITY_RESULT INFO
+          LEFT JOIN SYS_USER SU
+            ON INFO.USER_FLOW = SU.USER_FLOW
+          LEFT JOIN RES_DOCTOR D
+            ON D.DOCTOR_FLOW = INFO.USER_FLOW
+          left join teaching_activity_info tai
+            on tai.activity_flow = info.activity_flow
+         WHERE INFO.RECORD_STATUS = 'Y'
+        and tai.dept_flow in
+        <foreach collection="deptFlows" close=")" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+         AND INFO.IS_SCAN='Y'
+        <if test='startTime!=null and startTime!="" and (endTime==null or endTime=="")'>
+            and START_TIME  >= #{startTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and (startTime==null or startTime=="")'>
+            and END_TIME <![CDATA[<]]>= #{endTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and startTime!=null and startTime!=""'>
+            and(
+            (START_TIME>=#{startTime} and #{endTime}>=START_TIME)
+            or
+            (END_TIME>=#{startTime} and #{endTime}>=END_TIME)
+            )
+        </if>
+         ORDER BY EVAL_SCORE DESC) a ) b ) c
+    </select>
+
+    <select id="readActivityTargetEvals" resultMap="activityTargetEvalMap">
+        SELECT T.*,B.EVAL_SCORE
+          FROM TEACHING_ACTIVITY_INFO_TARGET T
+          LEFT JOIN (SELECT T.TARGET_FLOW,
+                            T.ACTIVITY_FLOW,
+                             T.TARGET_NAME,
+                             TO_CHAR(ROUND(SUM(E.EVAL_SCORE) / COUNT(E.EVAL_FLOW))) EVAL_SCORE
+          FROM TEACHING_ACTIVITY_INFO_TARGET T
+          LEFT JOIN TEACHING_ACTIVITY_RESULT R
+            ON T.ACTIVITY_FLOW = R.ACTIVITY_FLOW
+           AND R.RECORD_STATUS = 'Y'
+           AND R.IS_SCAN='Y'
+           AND R.IS_SCAN2='Y'
+          LEFT JOIN TEACHING_ACTIVITY_EVAL E
+            ON E.RESULT_FLOW = R.RESULT_FLOW
+            AND E.USER_FLOW=R.USER_FLOW
+           AND E.TARGET_FLOW = T.TARGET_FLOW
+           AND E.RECORD_STATUS = 'Y'
+         GROUP BY T.TARGET_FLOW,T.ACTIVITY_FLOW, T.TARGET_NAME) B
+         ON T.TARGET_FLOW=B.TARGET_FLOW
+         AND T.ACTIVITY_FLOW=B.ACTIVITY_FLOW
+         WHERE T.RECORD_STATUS='Y'
+         AND T.ACTIVITY_FLOW=#{activityFlow}
+         ORDER BY ORDINAL
+    </select>
+
+    <select id="readTeachingEvals" resultMap="com.pinde.sci.dao.base.TeachingActivityEvalMapper.BaseResultMap">
+        SELECT EVAL_FLOW, RESULT_FLOW, USER_FLOW, TARGET_FLOW, TARGET_NAME
+            , ORDINAL, EVAL_SCORE, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW
+            , MODIFY_TIME, MODIFY_USER_FLOW, IS_TEXT, EVAL_REMARKS
+        FROM PDSCI.TEACHING_ACTIVITY_EVAL
+        WHERE RECORD_STATUS = 'Y'
+            AND RESULT_FLOW  IN(
+            SELECT INFO.RESULT_FLOW
+          FROM TEACHING_ACTIVITY_RESULT INFO
+          LEFT JOIN SYS_USER SU ON INFO.USER_FLOW = SU.USER_FLOW
+            LEFT JOIN RES_DOCTOR D ON D.DOCTOR_FLOW = INFO.USER_FLOW
+          WHERE INFO.RECORD_STATUS = 'Y'
+            AND INFO.ACTIVITY_FLOW = #{activityFlow}
+            AND INFO.IS_SCAN = 'Y'
+          )
+        ORDER BY RESULT_FLOW,ORDINAL
+    </select>
+
+    <select id="readActivity" resultMap="activityMap">
+        SELECT INFO.*, SU.USER_NAME, D.DEPT_NAME, RESULT.EVAL_SCORE,F.FILE_NAME
+          FROM TEACHING_ACTIVITY_INFO INFO
+          LEFT JOIN SYS_USER SU
+            ON INFO.SPEAKER_FLOW = SU.USER_FLOW
+          LEFT JOIN SYS_DEPT D
+            ON D.DEPT_FLOW = INFO.DEPT_FLOW
+          LEFT JOIN (SELECT ACTIVITY_FLOW, To_char(SUM(EVAL_SCORE) / COUNT(1)) EVAL_SCORE
+                       FROM TEACHING_ACTIVITY_RESULT T
+                      WHERE T.RECORD_STATUS = 'Y'
+                      AND T.IS_SCAN='Y'
+                      AND T.IS_SCAN2='Y'
+                      GROUP BY ACTIVITY_FLOW) RESULT
+            ON RESULT.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+          LEFT JOIN PUB_FILE F ON INFO.FILE_FLOW=F.FILE_FLOW AND F.RECORD_STATUS='Y'
+         WHERE INFO.ACTIVITY_FLOW=#{activityFlow}
+    </select>
+    <select id="checkTime" resultType="int">
+        SELECT count(1)
+          FROM TEACHING_ACTIVITY_INFO INFO
+         WHERE INFO.RECORD_STATUS='Y'
+         <if test="activity.activityFlow!=null and activity.activityFlow!=''">
+            AND INFO.ACTIVITY_FLOW!=#{activity.activityFlow}
+         </if>
+            and INFO.activity_status in ('pass','audit')
+        AND   INFO.SPEAKER_FLOW=#{activity.speakerFlow}
+        and (
+            (
+            START_TIME <![CDATA[<=]]> #{activity.startTime}
+            and END_TIME >= #{activity.startTime}
+            )
+            or
+            (
+            START_TIME <![CDATA[<=]]> #{activity.endTime}
+            and END_TIME >= #{activity.endTime}
+            )
+            or
+            (
+            START_TIME <![CDATA[>=]]> #{activity.startTime}
+            and END_TIME <![CDATA[<=]]> #{activity.endTime}
+            )
+        )
+    </select>
+    <select id="checkJoin" resultType="int">
+        SELECT count(1)
+          FROM TEACHING_ACTIVITY_INFO INFO
+         WHERE INFO.RECORD_STATUS='Y'
+         <if test="activityFlow!=null and activityFlow!=''">
+            AND INFO.ACTIVITY_FLOW!=#{activityFlow}
+         </if>
+        AND   INFO.ACTIVITY_FLOW in (
+            select ACTIVITY_FLOW
+            FROM TEACHING_ACTIVITY_RESULT T
+            WHERE T.RECORD_STATUS = 'Y'
+            and t.IS_REGIEST='Y'
+            and t.user_flow=#{userFlow}
+        )
+        and exists (
+            select 1 from TEACHING_ACTIVITY_INFO tai
+           where tai.ACTIVITY_FLOW=#{activityFlow}
+            and (
+            (
+                INFO.START_TIME <![CDATA[<=]]> tai.START_TIME
+                and INFO.END_TIME >= tai.START_TIME
+            )
+            or
+            (
+                INFO.START_TIME <![CDATA[<=]]> tai.END_TIME
+                and INFO.END_TIME >= tai.END_TIME
+            )
+            or
+            (
+                INFO.START_TIME <![CDATA[>=]]> tai.START_TIME
+                and INFO.END_TIME <![CDATA[<=]]> tai.END_TIME
+            )
+          )
+        )
+    </select>
+    <select id="checkJoinList" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.ResultMapWithBLOBs">
+        SELECT *
+          FROM TEACHING_ACTIVITY_INFO INFO
+         WHERE INFO.RECORD_STATUS='Y'
+         <if test="activityFlow!=null and activityFlow!=''">
+            AND INFO.ACTIVITY_FLOW!=#{activityFlow}
+         </if>
+        AND   INFO.ACTIVITY_FLOW in (
+            select ACTIVITY_FLOW
+            FROM TEACHING_ACTIVITY_RESULT T
+            WHERE T.RECORD_STATUS = 'Y'
+            and t.IS_REGIEST='Y'
+            and t.user_flow=#{userFlow}
+        )
+        and exists (
+            select 1 from TEACHING_ACTIVITY_INFO tai
+           where tai.ACTIVITY_FLOW=#{activityFlow}
+            and (
+            (
+                INFO.START_TIME <![CDATA[<=]]> tai.START_TIME
+                and INFO.END_TIME >= tai.START_TIME
+            )
+            or
+            (
+                INFO.START_TIME <![CDATA[<=]]> tai.END_TIME
+                and INFO.END_TIME >= tai.END_TIME
+            )
+            or
+            (
+                INFO.START_TIME <![CDATA[>=]]> tai.START_TIME
+                and INFO.END_TIME <![CDATA[<=]]> tai.END_TIME
+            )
+          )
+        )
+    </select>
+    <resultMap id="TeacherActivityStatistics" type="hashmap" >
+        <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
+        <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getTeacherActivityStatistics" resultMap="TeacherActivityStatistics">
+        select *
+        from ( SELECT SU.USER_FLOW, SU.USER_NAME, DEPT.DEPT_FLOW, DEPT.DEPT_NAME,SU.ORG_FLOW,SU.ORG_NAME
+                FROM PDSCI.SYS_USER su
+                  LEFT JOIN SYS_USER_DEPT SUD
+                    ON SU.USER_FLOW = SUD.USER_FLOW
+                  LEFT JOIN SYS_DEPT DEPT
+                    ON DEPT.DEPT_FLOW = SUD.DEPT_FLOW
+                 WHERE SU.RECORD_STATUS = 'Y'
+                   AND SUD.RECORD_STATUS = 'Y'
+                   AND DEPT.RECORD_STATUS = 'Y'
+                   AND NOT EXISTS (SELECT NULL
+                          FROM res_doctor rd
+                         WHERE su.user_flow = rd.doctor_flow
+                           AND rd.RECORD_STATUS = 'Y')
+                <if test='orgFlow!=null and orgFlow!=""'>
+                    and su.org_flow = #{orgFlow}
+                </if>
+                <if test="orgFlowList !=null and orgFlowList.size>0">
+                    and su.org_flow in
+                    <foreach collection="orgFlowList" close=")" item="item" open="(" separator=",">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test='deptFlow!=null and deptFlow!=""'>
+                    and SUD.DEPT_FLOW = #{deptFlow}
+                </if>
+                <if test='deptName!=null and deptName!=""'>
+                    <bind name="deptName" value="'%'+deptName+'%'"/>
+                    and su.DEPT_NAME like #{deptName}
+                </if>
+                <if test='idNo!=null and idNo!=""'>
+                    <bind name="idNo" value="'%'+idNo+'%'"/>
+                    and su.id_no like #{idNo}
+                </if>
+                <if test='userPhone!=null and userPhone!=""'>
+                    <bind name="userPhone" value="'%'+userPhone+'%'"/>
+                    and su.user_phone like #{userPhone}
+                </if>
+                <if test='userEmail!=null and userEmail!=""'>
+                    <bind name="userEmail" value="'%'+userEmail+'%'"/>
+                    and su.user_email like #{userEmail}
+                </if>
+                <if test='userCode!=null and userCode!=""'>
+                    <bind name="userCode" value="'%'+userCode+'%'"/>
+                    and su.user_code like #{userCode}
+                </if>
+                <if test='userName!=null and userName!=""'>
+                    <bind name="name" value="'%'+userName+'%'"/>
+                    and su.user_name like #{name}
+                </if>
+                <if test='statusId!=null and statusId!=""'>
+                    and su.status_Id = #{statusId}
+                </if>
+                <if test='roleFlag!=null and roleFlag!="" and roleFlag =="head".toString()'>
+                    AND (exists(
+                    select 1 from sys_user where record_status = 'Y' and user_flow = #{userFlow} and dept_flow=DEPT.DEPT_FLOW
+                    )
+                    or exists(
+                    select 1 from sys_user_dept where record_status = 'Y' and user_flow = #{userFlow} and dept_flow=DEPT.DEPT_FLOW
+                    ))
+                </if>
+                <if test="roleList!=null">
+                    and (
+                        exists(
+                        select null from SYS_USER_ROLE sur
+                        where sur.RECORD_STATUS='Y'
+                        and su.USER_FLOW=sur.USER_FLOW
+                        and sur.ROLE_FLOW in
+                        <foreach collection="roleList" item="item" index="index" open="(" separator="," close=")">
+                            #{item}
+                        </foreach>
+                        )
+                    )
+                </if>
+
+                union
+                select SU.USER_FLOW, SU.USER_NAME, DEPT.DEPT_FLOW, DEPT.DEPT_NAME,SU.ORG_FLOW,SU.ORG_NAME
+                from sys_user su
+                LEFT JOIN SYS_DEPT DEPT
+                ON DEPT.DEPT_FLOW = su.DEPT_FLOW
+                WHERE SU.RECORD_STATUS = 'Y'
+                AND DEPT.RECORD_STATUS = 'Y'
+                   AND NOT EXISTS (SELECT NULL
+                          FROM res_doctor rd
+                         WHERE su.user_flow = rd.doctor_flow
+                           AND rd.RECORD_STATUS = 'Y')
+                <if test='orgFlow!=null and orgFlow!=""'>
+                    and su.org_flow = #{orgFlow}
+                </if>
+                <if test="orgFlowList !=null and orgFlowList.size>0">
+                    and su.org_flow in
+                    <foreach collection="orgFlowList" close=")" item="item" open="(" separator=",">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test='deptFlow!=null and deptFlow!=""'>
+                    and DEPT.DEPT_FLOW = #{deptFlow}
+                </if>
+                <if test='deptName!=null and deptName!=""'>
+                    <bind name="deptName" value="'%'+deptName+'%'"/>
+                    and su.DEPT_NAME like #{deptName}
+                </if>
+                <if test='idNo!=null and idNo!=""'>
+                    <bind name="idNo" value="'%'+idNo+'%'"/>
+                    and su.id_no like #{idNo}
+                </if>
+                <if test='userPhone!=null and userPhone!=""'>
+                    <bind name="userPhone" value="'%'+userPhone+'%'"/>
+                    and su.user_phone like #{userPhone}
+                </if>
+                <if test='userEmail!=null and userEmail!=""'>
+                    <bind name="userEmail" value="'%'+userEmail+'%'"/>
+                    and su.user_email like #{userEmail}
+                </if>
+                <if test='userCode!=null and userCode!=""'>
+                    <bind name="userCode" value="'%'+userCode+'%'"/>
+                    and su.user_code like #{userCode}
+                </if>
+                <if test='userName!=null and userName!=""'>
+                    <bind name="name" value="'%'+userName+'%'"/>
+                    and su.user_name like #{name}
+                </if>
+                <if test='statusId!=null and statusId!=""'>
+                    and su.status_Id = #{statusId}
+                </if>
+                <if test="roleList!=null">
+                    and (
+                        exists(
+                        select null from SYS_USER_ROLE sur
+                        where sur.RECORD_STATUS='Y'
+                        and su.USER_FLOW=sur.USER_FLOW
+                        and sur.ROLE_FLOW in
+                        <foreach collection="roleList" item="item" index="index" open="(" separator="," close=")">
+                            #{item}
+                        </foreach>
+                        )
+                    )
+                </if>
+                <if test='roleFlag!=null and roleFlag!="" and roleFlag =="head".toString()'>
+                    AND (exists(
+                    select 1 from sys_user where record_status = 'Y' and user_flow = #{userFlow} and dept_flow=DEPT.DEPT_FLOW
+                    )
+                    or exists(
+                    select 1 from sys_user_dept where record_status = 'Y' and user_flow = #{userFlow} and dept_flow=DEPT.DEPT_FLOW
+                    ))
+                </if>
+        )A
+        order by A.ORG_Flow,A.ORG_NAME,NLSSORT(A.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M'),A.DEPT_FLOW
+    </select>
+
+    <resultMap id="TeacherActivityStatistics2" type="hashmap" >
+        <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
+        <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="NUM" property="num" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getTeacherActivityStatistics2" resultMap="TeacherActivityStatistics2">
+        select A.*, nvl(B.NUM, '0') AS NUM
+        from ( SELECT SU.USER_FLOW, SU.USER_NAME, DEPT.DEPT_FLOW, DEPT.DEPT_NAME,SU.ORG_FLOW,SU.ORG_NAME
+        FROM PDSCI.SYS_USER su
+        LEFT JOIN SYS_USER_DEPT SUD
+        ON SU.USER_FLOW = SUD.USER_FLOW
+        LEFT JOIN SYS_DEPT DEPT
+        ON DEPT.DEPT_FLOW = SUD.DEPT_FLOW
+        WHERE SU.RECORD_STATUS = 'Y'
+        AND SUD.RECORD_STATUS = 'Y'
+        AND DEPT.RECORD_STATUS = 'Y'
+        AND NOT EXISTS (SELECT NULL
+        FROM res_doctor rd
+        WHERE su.user_flow = rd.doctor_flow
+        AND rd.RECORD_STATUS = 'Y')
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and su.org_flow = #{orgFlow}
+        </if>
+        <if test="orgFlowList !=null and orgFlowList.size>0">
+            and su.org_flow in
+            <foreach collection="orgFlowList" close=")" item="item" open="(" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test='deptFlow!=null and deptFlow!=""'>
+            and SUD.DEPT_FLOW = #{deptFlow}
+        </if>
+        <if test='deptName!=null and deptName!=""'>
+            <bind name="deptName" value="'%'+deptName+'%'"/>
+            and su.DEPT_NAME like #{deptName}
+        </if>
+        <if test='idNo!=null and idNo!=""'>
+            <bind name="idNo" value="'%'+idNo+'%'"/>
+            and su.id_no like #{idNo}
+        </if>
+        <if test='userPhone!=null and userPhone!=""'>
+            <bind name="userPhone" value="'%'+userPhone+'%'"/>
+            and su.user_phone like #{userPhone}
+        </if>
+        <if test='userEmail!=null and userEmail!=""'>
+            <bind name="userEmail" value="'%'+userEmail+'%'"/>
+            and su.user_email like #{userEmail}
+        </if>
+        <if test='userCode!=null and userCode!=""'>
+            <bind name="userCode" value="'%'+userCode+'%'"/>
+            and su.user_code like #{userCode}
+        </if>
+        <if test='userName!=null and userName!=""'>
+            <bind name="name" value="'%'+userName+'%'"/>
+            and su.user_name like #{name}
+        </if>
+        <if test='statusId!=null and statusId!=""'>
+            and su.status_Id = #{statusId}
+        </if>
+        <if test='roleFlag!=null and roleFlag!="" and roleFlag =="head".toString()'>
+            AND (exists(
+            select 1 from sys_user where record_status = 'Y' and user_flow = #{userFlow} and dept_flow=DEPT.DEPT_FLOW
+            )
+            or exists(
+            select 1 from sys_user_dept where record_status = 'Y' and user_flow = #{userFlow} and dept_flow=DEPT.DEPT_FLOW
+            ))
+        </if>
+        <if test="roleList!=null">
+            and (
+            exists(
+            select null from SYS_USER_ROLE sur
+            where sur.RECORD_STATUS='Y'
+            and su.USER_FLOW=sur.USER_FLOW
+            and sur.ROLE_FLOW in
+            <foreach collection="roleList" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            )
+            )
+        </if>
+        union
+        select SU.USER_FLOW, SU.USER_NAME, DEPT.DEPT_FLOW, DEPT.DEPT_NAME,SU.ORG_FLOW,SU.ORG_NAME
+        from sys_user su
+        LEFT JOIN SYS_DEPT DEPT
+        ON DEPT.DEPT_FLOW = su.DEPT_FLOW
+        WHERE SU.RECORD_STATUS = 'Y'
+        AND DEPT.RECORD_STATUS = 'Y'
+        AND NOT EXISTS (SELECT NULL
+        FROM res_doctor rd
+        WHERE su.user_flow = rd.doctor_flow
+        AND rd.RECORD_STATUS = 'Y')
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and su.org_flow = #{orgFlow}
+        </if>
+        <if test="orgFlowList !=null and orgFlowList.size>0">
+            and su.org_flow in
+            <foreach collection="orgFlowList" close=")" item="item" open="(" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test='deptFlow!=null and deptFlow!=""'>
+            and DEPT.DEPT_FLOW = #{deptFlow}
+        </if>
+        <if test='deptName!=null and deptName!=""'>
+            <bind name="deptName" value="'%'+deptName+'%'"/>
+            and su.DEPT_NAME like #{deptName}
+        </if>
+        <if test='idNo!=null and idNo!=""'>
+            <bind name="idNo" value="'%'+idNo+'%'"/>
+            and su.id_no like #{idNo}
+        </if>
+        <if test='userPhone!=null and userPhone!=""'>
+            <bind name="userPhone" value="'%'+userPhone+'%'"/>
+            and su.user_phone like #{userPhone}
+        </if>
+        <if test='userEmail!=null and userEmail!=""'>
+            <bind name="userEmail" value="'%'+userEmail+'%'"/>
+            and su.user_email like #{userEmail}
+        </if>
+        <if test='userCode!=null and userCode!=""'>
+            <bind name="userCode" value="'%'+userCode+'%'"/>
+            and su.user_code like #{userCode}
+        </if>
+        <if test='userName!=null and userName!=""'>
+            <bind name="name" value="'%'+userName+'%'"/>
+            and su.user_name like #{name}
+        </if>
+        <if test='statusId!=null and statusId!=""'>
+            and su.status_Id = #{statusId}
+        </if>
+        <if test="roleList!=null">
+            and (
+            exists(
+            select null from SYS_USER_ROLE sur
+            where sur.RECORD_STATUS='Y'
+            and su.USER_FLOW=sur.USER_FLOW
+            and sur.ROLE_FLOW in
+            <foreach collection="roleList" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            )
+            )
+        </if>
+        <if test='roleFlag!=null and roleFlag!="" and roleFlag =="head".toString()'>
+            AND (exists(
+            select 1 from sys_user where record_status = 'Y' and user_flow = #{userFlow} and dept_flow=DEPT.DEPT_FLOW
+            )
+            or exists(
+            select 1 from sys_user_dept where record_status = 'Y' and user_flow = #{userFlow} and dept_flow=DEPT.DEPT_FLOW
+            ))
+        </if>
+        )A
+        LEFT JOIN (
+        select a.TEACHER_USER_FLOW,a.SCH_DEPT_FLOW, COUNT(DISTINCT a.USER_FLOW) NUM from (
+        select  P.TEACHER_USER_FLOW TEACHER_USER_FLOW,p.SCH_DEPT_FLOW,
+        p.PROCESS_FLOW PROCESS_FLOW,
+        su.user_flow user_flow,
+        p.SCH_START_DATE SCH_START_DATE,
+        p.SCH_END_DATE SCH_END_DATE,
+        RD.DOCTOR_TYPE_ID,
+        nvl((select CFG_VALUE from jsres_power_cfg cfg where cfg.record_status='Y' and cfg.cfg_code = 'jsres_doctor_app_menu_'||rd.doctor_flow),'N')APP_MENU_FLAG,
+        nvl(cfg2.power_start_time,'0000-00-00') power_start_time, nvl(cfg2.power_end_time,'9999-99-99') power_end_time
+        from res_doctor_sch_process p
+        left join res_doctor rd
+        on p.user_flow = rd.doctor_flow
+        left join sys_user su
+        on su.user_flow = rd.doctor_flow
+        left join sys_user tu
+        on tu.user_flow = p.teacher_user_flow
+        left join jsres_power_cfg cfg2
+        on cfg2.record_status='Y' and cfg2.cfg_code = 'jsres_doctor_data_time_'||rd.doctor_flow
+        where p.record_status = 'Y'
+        and rd.record_status = 'Y'
+        and su.record_status = 'Y'
+        and tu.record_status = 'Y') A
+        WHERE
+        a.APP_MENU_FLAG='Y'
+        AND	( ( a.SCH_START_DATE  <![CDATA[ <= ]]> A.power_start_time AND a.SCH_END_DATE >= A.power_END_time)
+        or (a.SCH_START_DATE  <![CDATA[ >= ]]> A.power_start_time AND a.SCH_START_DATE <![CDATA[ <= ]]>A.power_END_time)
+        or (a.SCH_END_DATE  <![CDATA[ >= ]]> A.power_start_time AND a.SCH_END_DATE <![CDATA[ <= ]]>A.power_END_time))
+        and a.SCH_START_DATE <![CDATA[<=]]>to_char(sysdate,'yyyy-MM-dd')
+        and a.SCH_END_DATE <![CDATA[>=]]>to_char(sysdate,'yyyy-MM-dd')
+        GROUP BY a.TEACHER_USER_FLOW, a.SCH_DEPT_FLOW
+        ) B ON A.USER_FLOW=B.TEACHER_USER_FLOW AND A.DEPT_FLOW=B.SCH_DEPT_FLOW
+        order by A.ORG_Flow,A.ORG_NAME,NLSSORT(A.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M'),A.DEPT_FLOW
+    </select>
+
+    <resultMap id="doctorActivity" type="hashmap" >
+        <result  property="doctorFlow" column="DOCTOR_FLOW" javaType="string"/>
+        <result  property="doctorName" column="USER_NAME" javaType="string"/>
+        <result  property="orgFlow" column="ORG_FLOW" javaType="string"/>
+        <result  property="orgName" column="ORG_NAME" javaType="string"/>
+        <result  property="trainingTypeId" column="TRAINING_TYPE_ID" javaType="string"/>
+        <result  property="trainingTypeName" column="TRAINING_TYPE_NAME" javaType="string"/>
+        <result  property="doctorCategoryId" column="doctor_Category_Id" javaType="string"/>
+        <result  property="doctorCategoryName" column="doctor_Category_Name" javaType="string"/>
+        <result  property="trainingSpeId" column="TRAINING_SPE_ID" javaType="string"/>
+        <result  property="trainingSpeName" column="TRAINING_SPE_NAME" javaType="string"/>
+        <result  property="sessionNumber" column="SESSION_NUMBER" javaType="string"/>
+    </resultMap>
+    <select id="getDoctorActivityStatistics" resultMap="doctorActivity">
+        SELECT rd.DOCTOR_FLOW,
+            DR.RECRUIT_FLOW,
+            DR.ORG_NAME,
+            DR.ORG_FLOW,
+            SU.USER_NAME,
+            DR.CAT_SPE_ID TRAINING_TYPE_ID,
+            DR.CAT_SPE_NAME TRAINING_TYPE_NAME,
+            DR.SPE_ID TRAINING_SPE_ID,
+            DR.SPE_NAME TRAINING_SPE_NAME,
+            DR.SESSION_NUMBER
+            FROM RES_DOCTOR_RECRUIT dr
+            LEFT JOIN RES_DOCTOR RD
+            ON DR.DOCTOR_FLOW = RD.DOCTOR_FLOW
+            INNER JOIN SYS_USER SU
+            ON RD.DOCTOR_FLOW = SU.USER_FLOW
+            WHERE  RD.RECORD_STATUS = 'Y'
+            AND DR.RECORD_STATUS='Y'
+            AND SU.RECORD_STATUS = 'Y'
+            AND dr.AUDIT_STATUS_ID = 'Passed'
+            AND RD.DOCTOR_STATUS_ID !='23'
+            <if test="docTypeList!=null and docTypeList.size>0">
+                and rd.DOCTOR_TYPE_ID in
+                <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+            </if>
+        <choose >
+            <when test='baseFlag!=null and baseFlag != ""'>
+                and RD.SECOND_ORG_FLOW = #{userOrgFlow}
+            </when>
+            <otherwise>
+                AND DR.ORG_FLOW IN
+                ( SELECT ORG_FLOW FROM SYS_ORG ORG
+                WHERE ORG.RECORD_STATUS = 'Y'
+                AND ORG.ORG_PROV_ID = '320000'
+                AND ORG.ORG_TYPE_ID = 'Hospital'
+                <if test='	jointOrgFlag == null or jointOrgFlag == ""'>
+                    <if test='orgLevel != null and orgLevel != ""'>
+                        AND ORG.ORG_LEVEL_ID = #{orgLevel}
+                    </if>
+                    <if test='orgFlowList != null and orgFlowList.size>0'>
+                        AND	ORG.ORG_FLOW in
+                        <foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+                    </if>
+                </if>
+                )
+            </otherwise>
+
+        </choose>
+
+            <if test='typeId != null and typeId != ""'>
+                AND rd.TRAINING_TYPE_ID = #{typeId}
+            </if>
+            <if test='school != null and school != ""'>
+                AND rd.SCHOOL = #{school}
+            </if>
+            <if test='speId != null and speId != ""'>
+                AND rd.TRAINING_SPE_ID = #{speId}
+            </if>
+            <if test='trainingYear != null and trainingYear != ""'>
+                AND rd.TRAINING_YEARS = #{trainingYear}
+            </if>
+            <if test='studentStatus != null and studentStatus != ""'>
+                AND rd.DOCTOR_STATUS_ID = #{studentStatus}
+            </if>
+            <if test='sessionNumber != null and sessionNumber != ""'>
+                AND DR.SESSION_NUMBER = #{sessionNumber}
+            </if>
+            <if test='sessionNumbers != null and sessionNumbers.size>0'>
+                AND DR.SESSION_NUMBER in
+                <foreach collection="sessionNumbers" open="(" separator="," close=")" item="item">#{item}</foreach>
+            </if>
+            <if test='userName != null and userName != ""'>
+                <bind name="name" value="'%'+userName+'%'"/>
+                AND SU.USER_NAME LIKE #{name}
+            </if>
+            <if test='idNo != null and idNo != ""'>
+                <bind name="idNo" value="'%'+idNo+'%'"/>
+                AND su.ID_NO LIKE #{idNo}
+            </if>
+            <if test='graduationYear != null and graduationYear != ""'>
+                AND DR.GRADUATION_YEAR = #{graduationYear}
+            </if>
+            <if test='roleFlag!=null and roleFlag!="" and roleFlag =="university".toString() and schools != null and schools.size > 0'>
+                AND RD.WORK_ORG_NAME in
+                <foreach collection="schools" separator="," item="s" open="(" close=")">
+                #{s}
+                </foreach>
+            </if>
+            <if test='roleFlag!=null and roleFlag!="" and roleFlag =="head".toString()'>
+                AND EXISTS(
+
+                    SELECT 1
+                      FROM (SELECT p.*,
+                                   nvl((SELECT CFG_VALUE
+                                         FROM jsres_power_cfg cfg
+                                        WHERE cfg.record_status = 'Y'
+                                          AND cfg.cfg_code =
+                                              ('jsres_doctor_app_menu_' || p.user_flow)),
+                                       'N') AS APP_MENU_FLAG,
+                                   nvl(cfg2.power_start_time, '0000-00-00') AS power_start_time,
+                                   nvl(cfg2.power_end_time, '9999-99-99') AS power_end_time
+                              FROM res_doctor_sch_process p
+                              LEFT JOIN jsres_power_cfg cfg2 ON cfg2.record_status = 'Y'
+                                                            AND cfg2.cfg_code = ('jsres_doctor_data_time_' ||
+                                                                p.user_flow)
+                             WHERE p.record_status = 'Y'
+                               AND (EXISTS
+                                    (SELECT NULL
+                                       FROM SYS_USER_DEPT sud
+                                      WHERE sud.RECORD_STATUS = 'Y'
+                                        AND sud.USER_FLOW = #{userFlow}
+                                        AND p.DEPT_FLOW = sud.DEPT_FLOW) OR EXISTS
+                                    (SELECT NULL
+                                       FROM SYS_USER sud
+                                      WHERE sud.RECORD_STATUS = 'Y'
+                                        AND sud.USER_FLOW = #{userFlow}
+                                        AND p.DEPT_FLOW = sud.DEPT_FLOW))) a
+                     WHERE A.APP_MENU_FLAG = 'Y'
+                       AND (a.SCH_START_DATE <![CDATA[<=]]> A.power_start_time AND
+                           a.SCH_END_DATE >= A.power_END_time OR
+                           a.SCH_START_DATE >= A.power_start_time AND
+                           a.SCH_START_DATE <![CDATA[<=]]> A.power_END_time OR
+                           a.SCH_END_DATE >= A.power_start_time AND
+                           a.SCH_END_DATE <![CDATA[<=]]> A.power_END_time)
+                      and a.user_Flow=dr.doctor_flow
+                )
+            </if>
+            order by dr.org_flow,dr.session_number desc,DR.SPE_ID,su.user_name
+    </select>
+    <select id="getResDoctorActivityStatistics" resultMap="doctorActivity">
+        SELECT rd.DOCTOR_FLOW,
+        RD.ORG_NAME,
+        RD.ORG_FLOW,
+        su.USER_NAME,
+        RD.TRAINING_TYPE_ID,
+        RD.TRAINING_TYPE_NAME,
+        RD.doctor_Category_Id,
+        RD.doctor_Category_Name,
+        RD.TRAINING_SPE_ID,
+        RD.TRAINING_SPE_NAME,
+        RD.SESSION_NUMBER
+        FROM  RES_DOCTOR RD
+        INNER JOIN SYS_USER SU
+        ON RD.DOCTOR_FLOW = SU.USER_FLOW
+        WHERE  RD.RECORD_STATUS = 'Y'
+        AND SU.RECORD_STATUS = 'Y'
+        <if test='orgFlow != null and orgFlow != ""'>
+            AND rd.org_Flow = #{orgFlow}
+        </if>
+        <if test='orgFlowList != null and orgFlowList.size>0'>
+            AND	rd.ORG_FLOW in
+            <foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and rd.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='typeId != null and typeId != ""'>
+            AND rd.TRAINING_TYPE_ID = #{typeId}
+        </if>
+        <if test='doctorCategoryId != null and doctorCategoryId != ""'>
+            AND rd.doctor_Category_Id = #{doctorCategoryId}
+        </if>
+        <if test='speId != null and speId != ""'>
+            AND rd.TRAINING_SPE_ID = #{speId}
+        </if>
+        <if test='sessionNumber != null and sessionNumber != ""'>
+            AND rd.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test='userName != null and userName != ""'>
+            <bind name="name" value="'%'+userName+'%'"/>
+            AND SU.USER_NAME LIKE #{name}
+        </if>
+        <if test='idNo != null and idNo != ""'>
+            <bind name="idNo" value="'%'+idNo+'%'"/>
+            AND su.ID_NO LIKE #{idNo}
+        </if>
+        <if test='graduationYear != null and graduationYear != ""'>
+            AND rd.GRADUATION_YEAR = #{graduationYear}
+        </if>
+        AND RD.DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+        AND RD.org_flow is not null
+        AND RD.org_flow != '20160914888888'
+        AND RD.org_flow != '566c9f36cf014f63a569b453efa284d7'
+        AND RD.org_flow != '00000000000000000000000000000000'
+        <if test='workOrgId!=null and workOrgId!=""'>
+            and rd.work_Org_Id = #{workOrgId}
+        </if>
+        order by rd.org_flow,rd.session_number desc,rd.TRAINING_SPE_ID,su.user_name
+    </select>
+
+    <resultMap id="speDeptMap" type="hashmap">
+        <result column="TRAINING_SPE_ID" property="trainingSpeId" jdbcType="VARCHAR" />
+        <result column="TRAINING_SPE_NAME" property="trainingSpeName" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="searchSpeDept" resultMap="speDeptMap">
+        select training_spe_id,training_spe_name from res_training_spe_dept
+        where record_status = 'Y' and org_flow = #{orgFlow}
+        <if test='trainingSpeId != null and trainingSpeId != ""'>
+            and training_spe_id = #{trainingSpeId}
+        </if>
+        group by training_spe_id,training_spe_name
+    </select>
+
+    <resultMap id="BaseActivityMap" type="hashmap" >
+        <result column="TYPE_ID" property="typeId" jdbcType="VARCHAR" />
+        <result column="QTY" property="qty" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getDeptActivityMap" resultMap="BaseActivityMap">
+        SELECT rtsd.training_spe_id || info.activity_type_id as type_id,
+        info.ACTIVITY_TYPE_NAME,
+        COUNT(1) QTY
+        FROM TEACHING_ACTIVITY_INFO INFO
+        left join res_training_spe_dept rtsd on rtsd.dept_flow = info.dept_flow
+        WHERE info.RECORD_STATUS = 'Y' and rtsd.record_status = 'Y'
+        <if test='trainingSpeId !=null and trainingSpeId !=""'>
+            and rtsd.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        and is_effective='Y'
+        <if test='startTime!=null and startTime!="" and (endTime==null or endTime=="")'>
+            and START_TIME  >= #{startTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and (startTime==null or startTime=="")'>
+            and END_TIME <![CDATA[<]]>= #{endTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and startTime!=null and startTime!=""'>
+            and(
+            (START_TIME>=#{startTime} and #{endTime}>=START_TIME)
+            or
+            (END_TIME>=#{startTime} and #{endTime}>=END_TIME)
+            )
+        </if>
+        GROUP BY rtsd.training_spe_id,info.activity_type_id, info.ACTIVITY_TYPE_NAME
+    </select>
+
+    <select id="getActivityCountMap" resultType="java.util.Map">
+        select row_number() over (order by aa.b desc) rn,aa.* from(
+        select distinct tab.training_spe_id,tab.b from(
+        select a.type_id,a.training_spe_id,a.qty,sum(a.qty) over(partition  by a.training_spe_id) b from
+        (SELECT rtsd.training_spe_id || info.activity_type_id as type_id,
+        info.ACTIVITY_TYPE_NAME,rtsd.training_spe_id,
+        COUNT(1) QTY
+        FROM TEACHING_ACTIVITY_INFO INFO
+        left join res_training_spe_dept rtsd on rtsd.dept_flow = info.dept_flow
+        WHERE info.RECORD_STATUS = 'Y' and rtsd.record_status = 'Y'
+        <if test='trainingSpeIds !=null and trainingSpeIds !=""'>
+            and rtsd.TRAINING_SPE_ID in
+            <foreach collection="trainingSpeIds" close=")" item="item" open="(" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        and is_effective='Y'
+        <if test='startTime!=null and startTime!="" and (endTime==null or endTime=="")'>
+            and START_TIME  >= #{startTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and (startTime==null or startTime=="")'>
+            and END_TIME <![CDATA[<]]>= #{endTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and startTime!=null and startTime!=""'>
+            and(
+            (START_TIME>=#{startTime} and #{endTime}>=START_TIME)
+            or
+            (END_TIME>=#{startTime} and #{endTime}>=END_TIME)
+            )
+        </if>
+        GROUP BY rtsd.training_spe_id,info.activity_type_id, info.ACTIVITY_TYPE_NAME) a ) tab ) aa
+    </select>
+
+    <resultMap id="ResultMap2" type="hashmap">
+        <result column="RN" property="rn" jdbcType="VARCHAR" />
+        <result column="TRAINING_SPE_ID" property="trainingSpeId" jdbcType="VARCHAR" />
+        <result column="NUM" property="num" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="readResults" resultMap="ResultMap2">
+        select row_number() over (order by c.num desc) rn,c.* from(
+        select distinct b.training_spe_id,b.num from(
+       SELECT a.training_spe_id, a.eval_score, SUM(a.eval_score) OVER (PARTITION BY a.training_spe_id) AS num
+		FROM (
+			SELECT INFO.*, SU.USER_NAME, D.SESSION_NUMBER, D.TRAINING_SPE_NAME, D.doctor_category_name
+				, rtsd.training_spe_id, D.doctor_type_name, to_char(to_date(info.scan_time, 'yyyyMMddHH24miss'), 'yyyy-MM-dd hh24:mi:ss') AS sigin_time, to_char(to_date(info.REGIEST_time, 'yyyyMMddHH24miss'), 'yyyy-MM-dd hh24:mi:ss') AS REGIEST_time1, to_char(to_date(info.scan_time2, 'yyyyMMddHH24miss'), 'yyyy-MM-dd hh24:mi:ss') AS sigin_time2
+			FROM TEACHING_ACTIVITY_RESULT INFO
+			LEFT JOIN SYS_USER SU ON INFO.USER_FLOW = SU.USER_FLOW
+			LEFT JOIN RES_DOCTOR D ON D.DOCTOR_FLOW = INFO.USER_FLOW
+			LEFT JOIN teaching_activity_info tai ON tai.activity_flow = info.activity_flow
+            LEFT JOIN res_training_spe_dept rtsd on rtsd.dept_flow = tai.dept_flow
+			WHERE INFO.RECORD_STATUS = 'Y'
+				AND tai.dept_flow IN (
+                    select dept_flow from res_training_spe_dept where record_status = 'Y'
+                    <if test='trainingSpeIds !=null and trainingSpeIds !=""'>
+                        and rtsd.TRAINING_SPE_ID in
+                        <foreach collection="trainingSpeIds" close=")" item="item" open="(" separator=",">
+                            #{item}
+                        </foreach>
+                    </if>
+                )
+				AND INFO.IS_SCAN = 'Y'
+            <if test='startTime!=null and startTime!="" and (endTime==null or endTime=="")'>
+                and START_TIME  >= #{startTime}
+            </if>
+            <if test='endTime!=null and endTime!="" and (startTime==null or startTime=="")'>
+                and END_TIME <![CDATA[<]]>= #{endTime}
+            </if>
+            <if test='endTime!=null and endTime!="" and startTime!=null and startTime!=""'>
+                and(
+                (START_TIME>=#{startTime} and #{endTime}>=START_TIME)
+                or
+                (END_TIME>=#{startTime} and #{endTime}>=END_TIME)
+                )
+            </if>
+			ORDER BY info.EVAL_SCORE DESC
+		) a ) b ) c
+    </select>
+    <update id="activityBat">
+        update TEACHING_ACTIVITY_INFO a
+           set a.activity_status='over'
+        where TO_CHAR(SYSDATE,'yyyy-MM-DD HH24:MI')>=a.start_time
+        and a.activity_status='audit'
+    </update>
+
+    <update id="delFileByProductFlow">
+        update pub_file
+        set record_status = 'N'
+        where record_status = 'Y'
+        and product_flow = #{productFlow}
+        and product_type = #{productType}
+        <if test='fileFlows !=null and fileFlows !=""'>
+            and file_flow not in
+            <foreach collection="fileFlows" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </update>
+
+
+    <update id="delFileByProductFlow2">
+        update pub_file
+        set record_status = 'N'
+        where record_status = 'Y'
+        and product_flow = #{productFlow}
+        and product_type = #{productType}
+        <if test='fileUpType !=null and fileUpType !=""'>
+            and FILE_UP_TYPE = #{fileUpType}
+        </if>
+        <if test='fileFlows !=null and fileFlows !=""'>
+            and file_flow not in
+            <foreach collection="fileFlows" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </update>
+
+
+
+    <resultMap id="activityStatisticsMap" type="java.util.HashMap">
+        <result column="ACTIVITY_FLOW" jdbcType="VARCHAR" property="activityFlow"/>
+        <result column="ACTIVITY_NAME" jdbcType="VARCHAR" property="activityName"/>
+        <result column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow"/>
+        <result column="DOCTOR_NAME" jdbcType="VARCHAR" property="doctorName"/>
+        <result column="ORG_FLOW" jdbcType="VARCHAR" property="orgFlow"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+        <result column="SPEAKER_FLOW" jdbcType="VARCHAR" property="speakerFlow"/>
+        <result column="SPEAKER_NAME" jdbcType="VARCHAR" property="speakerName"/>
+        <result column="DEPT_FLOW" jdbcType="VARCHAR" property="deptFlow"/>
+        <result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName"/>
+        <result column="START_TIME" jdbcType="VARCHAR" property="startTime"/>
+        <result column="END_TIME" jdbcType="VARCHAR" property="endTime"/>
+        <result column="REALITY_SPEAKER" jdbcType="VARCHAR" property="realitySpeaker"/>
+        <result column="JOIN_NUM" jdbcType="VARCHAR" property="joinNum"/>
+    </resultMap>
+    <select id="activityStatisticsList" resultMap="activityStatisticsMap">
+        SELECT TAI.ACTIVITY_FLOW,TAI.ACTIVITY_NAME,COUNT(RD.DOCTOR_FLOW) AS JOIN_NUM,SU.USER_FLOW AS SPEAKER_FLOW,
+            SU.USER_NAME AS SPEAKER_NAME,SD.DEPT_NAME,TAI.START_TIME,TAI.END_TIME,
+            NVL(TAI.REALITY_SPEAKER,'无') AS REALITY_SPEAKER,TAI.ORG_FLOW,SO.ORG_NAME
+        FROM TEACHING_ACTIVITY_RESULT TAR
+        INNER JOIN TEACHING_ACTIVITY_INFO TAI ON TAR.ACTIVITY_FLOW=TAI.ACTIVITY_FLOW
+        LEFT JOIN SYS_USER  SU ON SU.USER_FLOW = TAI.SPEAKER_FLOW
+        LEFT JOIN RES_DOCTOR RD ON RD.DOCTOR_FLOW = TAR.USER_FLOW
+        LEFT JOIN SYS_DEPT SD ON SD.DEPT_FLOW = TAI.DEPT_FLOW
+        LEFT JOIN SYS_ORG SO ON SO.ORG_FLOW = TAI.ORG_FLOW
+        WHERE RD.RECORD_STATUS='Y'  AND TAI.RECORD_STATUS ='Y'  AND TAR.RECORD_STATUS ='Y'
+        AND RD.DOCTOR_TYPE_ID ='Graduate'
+        AND RD.WORK_ORG_NAME= #{orgName}
+        <if test='activityName !=null and activityName !=""'>
+            AND TAI.ACTIVITY_NAME = #{activityName}
+        </if>
+        <if test='orgFlow !=null and orgFlow !=""'>
+            AND RD.ORG_FLOW = #{orgFlow}
+        </if>
+        <if test='speakerName !=null and speakerName !=""'>
+            AND SU.USER_NAME = #{speakerName}
+        </if>
+        <if test='deptName !=null and deptName !=""'>
+            AND SD.DEPT_NAME = #{deptName}
+        </if>
+        <if test='(startTime ==null or startTime =="") and (endTime ==null or endTime =="")'>
+            AND SUBSTR(TAI.START_TIME,0,4)= #{year}
+        </if>
+        <if test='startTime !=null and startTime !=""'>
+            AND TAI.START_TIME <![CDATA[>=]]> #{startTime}
+        </if>
+        <if test='endTime !=null and endTime !=""'>
+            AND TAI.END_TIME <![CDATA[<=]]> #{endTime}
+        </if>
+        <if test='realitySpeaker !=null and realitySpeaker !=""'>
+            AND TAI.REALITY_SPEAKER = #{realitySpeaker}
+        </if>
+        GROUP BY TAI.ACTIVITY_FLOW,TAI.ACTIVITY_NAME,SU.USER_FLOW , SU.USER_NAME ,SD.DEPT_NAME,TAI.START_TIME,
+            TAI.END_TIME,TAI.REALITY_SPEAKER,TAI.ORG_FLOW,SO.ORG_NAME
+        ORDER BY TAI.START_TIME DESC
+    </select>
+
+
+    <resultMap id="queryJoinMap" type="java.util.HashMap">
+        <result column="DOCTOR_NAME" jdbcType="VARCHAR" property="doctorName"/>
+        <result column="SESSION_NUMBER" jdbcType="VARCHAR" property="sessionNumber"/>
+        <result column="TRAINING_SPE_NAME" jdbcType="VARCHAR" property="trainingSpeName"/>
+        <result column="DOCTOR_TYPE_NAME" jdbcType="VARCHAR" property="doctorTypeName"/>
+        <result column="SIGIN_TIME" jdbcType="VARCHAR" property="siginTime"/>
+        <result column="SIGIN_TIME2" jdbcType="VARCHAR" property="siginTime2"/>
+    </resultMap>
+    <select id="queryJoin" resultMap="queryJoinMap">
+        SELECT RD.DOCTOR_NAME,
+          RD.SESSION_NUMBER,
+          RD.TRAINING_SPE_NAME,
+          RD.DOCTOR_TYPE_NAME,
+          TO_CHAR(TO_DATE(TAR.SCAN_TIME, 'yyyyMMddHH24miss'), 'yyyy-MM-dd hh24:mi:ss')  AS SIGIN_TIME,
+          TO_CHAR(TO_DATE(TAR.SCAN_TIME2, 'yyyyMMddHH24miss'), 'yyyy-MM-dd hh24:mi:ss') AS SIGIN_TIME2
+        FROM TEACHING_ACTIVITY_RESULT TAR
+        LEFT JOIN RES_DOCTOR RD
+        ON RD.DOCTOR_FLOW = TAR.USER_FLOW
+        WHERE RD.DOCTOR_TYPE_ID = 'Graduate'
+        AND RD.WORK_ORG_NAME= #{orgName}
+        AND TAR.ACTIVITY_FLOW = #{activityFlow}
+        AND RD.RECORD_STATUS = 'Y'
+        AND TAR.RECORD_STATUS = 'Y'
+        ORDER BY TAR.SCAN_TIME
+    </select>
+
+
+    <resultMap id="activityStatisticsExportMap" type="java.util.HashMap">
+        <result column="ACTIVITY_NAME" jdbcType="VARCHAR" property="activityName"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+        <result column="ACTIVITY_TYPE_NAME" jdbcType="VARCHAR" property="activityTpyeName"/>
+        <result column="ACTIVITY_ADDRESS" jdbcType="VARCHAR" property="activityAddress"/>
+        <result column="SPEAKER_NAME" jdbcType="VARCHAR" property="speakerName"/>
+        <result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName"/>
+        <result column="SPEAKER_PHONE" jdbcType="VARCHAR" property="speakerPhone"/>
+        <result column="ID_NO" jdbcType="VARCHAR" property="idNo"/>
+        <result column="START_TIME" jdbcType="VARCHAR" property="startTime"/>
+        <result column="END_TIME" jdbcType="VARCHAR" property="endTime"/>
+        <result column="REALITY_SPEAKER" jdbcType="VARCHAR" property="realitySpeaker"/>
+        <result column="JOIN_NUM" jdbcType="VARCHAR" property="joinNum"/>
+    </resultMap>
+    <select id="activityStatisticsExportList" resultMap="activityStatisticsExportMap">
+        SELECT TAI.ACTIVITY_NAME, SO.ORG_NAME,TAI.ACTIVITY_TYPE_NAME,TAI.ACTIVITY_ADDRESS,  SU.USER_NAME AS SPEAKER_NAME
+        , SD.DEPT_NAME,TAI.SPEAKER_PHONE,SU.ID_NO, TAI.START_TIME, TAI.END_TIME, NVL(TAI.REALITY_SPEAKER, '无') AS REALITY_SPEAKER
+        ,COUNT(RD.DOCTOR_FLOW) AS JOIN_NUM
+        FROM TEACHING_ACTIVITY_RESULT TAR
+        INNER JOIN TEACHING_ACTIVITY_INFO TAI ON TAR.ACTIVITY_FLOW=TAI.ACTIVITY_FLOW
+        LEFT JOIN SYS_USER  SU ON SU.USER_FLOW = TAI.SPEAKER_FLOW
+        LEFT JOIN RES_DOCTOR RD ON RD.DOCTOR_FLOW = TAR.USER_FLOW
+        LEFT JOIN SYS_DEPT SD ON SD.DEPT_FLOW = TAI.DEPT_FLOW
+        LEFT JOIN SYS_ORG SO ON SO.ORG_FLOW = TAI.ORG_FLOW
+        WHERE RD.RECORD_STATUS='Y'  AND TAI.RECORD_STATUS ='Y'  AND TAR.RECORD_STATUS ='Y'
+        AND RD.DOCTOR_TYPE_ID ='Graduate'
+        AND RD.WORK_ORG_NAME= #{orgName}
+        <if test='activityName !=null and activityName !=""'>
+            AND TAI.ACTIVITY_NAME = #{activityName}
+        </if>
+        <if test='orgFlow !=null and orgFlow !=""'>
+            AND RD.ORG_FLOW = #{orgFlow}
+        </if>
+        <if test='speakerName !=null and speakerName !=""'>
+            AND SU.USER_NAME = #{speakerName}
+        </if>
+        <if test='deptName !=null and deptName !=""'>
+            AND SD.DEPT_NAME = #{deptName}
+        </if>
+        <if test='(startTime ==null or startTime =="") and (endTime ==null or endTime =="")'>
+            AND SUBSTR(TAI.START_TIME,0,4)= #{year}
+        </if>
+        <if test='startTime !=null and startTime !=""'>
+            AND TAI.START_TIME <![CDATA[>=]]> #{startTime}
+        </if>
+        <if test='endTime !=null and endTime !=""'>
+            AND TAI.END_TIME <![CDATA[<=]]> #{endTime}
+        </if>
+        <if test='realitySpeaker !=null and realitySpeaker !=""'>
+            AND TAI.REALITY_SPEAKER = #{realitySpeaker}
+        </if>
+        GROUP BY  TAI.ACTIVITY_NAME, SO.ORG_NAME,TAI.ACTIVITY_TYPE_NAME,TAI.ACTIVITY_ADDRESS,  SU.USER_NAME
+        , SD.DEPT_NAME,TAI.SPEAKER_PHONE,SU.ID_NO, TAI.START_TIME, TAI.END_TIME, NVL(TAI.REALITY_SPEAKER, '无')
+        ORDER BY TAI.START_TIME DESC
+    </select>
+</mapper>

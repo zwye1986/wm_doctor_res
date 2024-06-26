@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.ResFollowTeacherRecordExtMapper" >
+
+	<resultMap id="recordMap" type="com.pinde.sci.model.mo.ResStudentDiscipleTeacher">
+		<id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+		<result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+		<result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
+		<result column="TEACHER_FLOW" property="teacherFlow" jdbcType="VARCHAR" />
+		<result column="TEACHER_NAME" property="teacherName" jdbcType="VARCHAR" />
+		<result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+		<result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+		<result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+		<result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResDoctorExt" type="com.pinde.sci.model.res.ResDoctorExt" extends="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+		<association property="sysUser" column="USER_FLOW" javaType="com.pinde.sci.model.mo.SysUser" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+	</resultMap>
+
+	<select id="selectPendingAudit" parameterType="java.util.Map" resultMap="ResDoctorExt">
+		select * from res_doctor rd
+		inner join sys_user su on su.user_flow=rd.doctor_flow
+		where rd.record_status='Y'
+		<if test="docTypeList!=null and docTypeList.size>0">
+			and rd.DOCTOR_TYPE_ID in
+			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="docName!=null and docName!=''">
+			<bind name="docName" value="'%'+docName+'%'"/>
+			and rd.DOCTOR_NAME like #{docName}
+		</if>
+		<if test="speId!=null and speId!=''">
+			and rd.TRAINING_SPE_ID = #{speId}
+		</if>
+		<if test="sessionNumber!=null and sessionNumber!=''">
+			and rd.SESSION_NUMBER = #{sessionNumber}
+		</if>
+		<if test="doctorCategoryId!=null and doctorCategoryId!=''">
+			and rd.DOCTOR_CATEGORY_ID = #{doctorCategoryId}
+		</if>
+		and su.record_status='Y'
+		and exists
+		(
+		select 1 from RES_STUDENT_DISCIPLE_TEACHER
+		t where t.TEACHER_FLOW = #{teacherFlow}
+		and t.doctor_flow=rd.doctor_flow
+		)
+		and exists
+		(
+		select 1 from RES_DISCIPLE_RECORD_INFO info
+		where info.teacher_flow=#{teacherFlow} and info.record_status='Y'
+		and info.doctor_flow=rd.doctor_flow and info.audit_status_id = 'PendingAudit'
+		)
+	</select>
+
+	<select id="selectCasePendingAudit" parameterType="java.util.Map" resultMap="ResDoctorExt">
+		select * from res_doctor rd
+		inner join sys_user su on su.user_flow=rd.doctor_flow
+		where rd.record_status='Y'
+		<if test="docTypeList!=null and docTypeList.size>0">
+			and rd.DOCTOR_TYPE_ID in
+			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="docName!=null and docName!=''">
+			<bind name="docName" value="'%'+docName+'%'"/>
+			and rd.DOCTOR_NAME like #{docName}
+		</if>
+		<if test="speId!=null and speId!=''">
+			and rd.TRAINING_SPE_ID = #{speId}
+		</if>
+		<if test="doctorCategoryId!=null and doctorCategoryId!=''">
+			and rd.DOCTOR_CATEGORY_ID = #{doctorCategoryId}
+		</if>
+		<if test="sessionNumber!=null and sessionNumber!=''">
+			and rd.SESSION_NUMBER = #{sessionNumber}
+		</if>
+		and su.record_status='Y'
+		and exists
+		(
+		select 1 from RES_TYPICAL_CASES info
+		where info.teacher_flow=#{teacherFlow} and info.record_status='Y'
+		and info.doctor_flow=rd.doctor_flow and info.audit_status_id = 'PendingAudit'
+		)
+	</select>
+	<update id="batchAgreeResDiscipleRecordInfo" parameterType="java.util.Map">
+		UPDATE  RES_DISCIPLE_RECORD_INFO
+		SET AUDIT_STATUS_ID=#{newAuditStatusId},
+		AUDIT_STATUS_NAME=#{newAuditStatusName},
+		AUDIT_USER_FLOW=#{auditUserFlow},
+		AUDIT_USER_NAME=#{auditUserName},
+		MODIFY_TIME=to_char(sysdate,'YYYYMMDDHH24MISS'),
+		MODIFY_USER_FLOW=#{auditUserFlow}
+		WHERE RECORD_STATUS='Y'
+		<if test="teacherFlow!=null and teacherFlow!=''">
+			and TEACHER_FLOW = #{teacherFlow}
+		</if>
+        <if test="doctorFlow!=null and doctorFlow!=''">
+            AND DOCTOR_FLOW=#{doctorFlow}
+        </if>
+		AND AUDIT_STATUS_ID = #{oldAuditStatusId}
+	</update>
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.hbres.HbresResOrgSpeAssignExtMapper">
+    <resultMap id="speAssignCountMap" type="HashMap">
+        <result column="K" jdbcType="VARCHAR" property="k"  javaType="string"/>
+        <result column="V" jdbcType="VARCHAR" property="v"  javaType="integer"/>
+    </resultMap>
+    <select id="getSpeAssignCount" resultMap="speAssignCountMap">
+        select ORG_FLOW||SPE_ID k,ASSIGN_PLAN v
+        from RES_ORG_SPE_ASSIGN
+        where record_status = 'Y'
+            and ASSIGN_YEAR = #{assignYear}
+            <if test='orgFlow!=null and orgFlow!=""'>
+              and org_flow = #{orgFlow}
+            </if>
+    </select>
+</mapper>

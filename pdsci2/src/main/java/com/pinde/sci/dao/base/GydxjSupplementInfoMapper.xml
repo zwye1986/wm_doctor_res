@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.GydxjSupplementInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.GydxjSupplementInfo" >
+    <id column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+    <result column="XH" property="xh" jdbcType="VARCHAR" />
+    <result column="XM" property="xm" jdbcType="VARCHAR" />
+    <result column="ZJLX_ID" property="zjlxId" jdbcType="VARCHAR" />
+    <result column="ZJLX" property="zjlx" jdbcType="VARCHAR" />
+    <result column="ZJHM" property="zjhm" jdbcType="VARCHAR" />
+    <result column="SFZZ" property="sfzz" jdbcType="VARCHAR" />
+    <result column="RXRQ" property="rxrq" jdbcType="VARCHAR" />
+    <result column="XJZT_ID" property="xjztId" jdbcType="VARCHAR" />
+    <result column="XJZT" property="xjzt" jdbcType="VARCHAR" />
+    <result column="FMXM1" property="fmxm1" jdbcType="VARCHAR" />
+    <result column="FMZJLX1_ID" property="fmzjlx1Id" jdbcType="VARCHAR" />
+    <result column="FMZJLX1" property="fmzjlx1" jdbcType="VARCHAR" />
+    <result column="FMZJHM1" property="fmzjhm1" jdbcType="VARCHAR" />
+    <result column="FMXM2" property="fmxm2" jdbcType="VARCHAR" />
+    <result column="FMZJLX2_ID" property="fmzjlx2Id" jdbcType="VARCHAR" />
+    <result column="FMZJLX2" property="fmzjlx2" jdbcType="VARCHAR" />
+    <result column="FMZJHM2" property="fmzjhm2" jdbcType="VARCHAR" />
+    <result column="SUBMIT_FLAG" property="submitFlag" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    USER_FLOW, XH, XM, ZJLX_ID, ZJLX, ZJHM, SFZZ, RXRQ, XJZT_ID, XJZT, FMXM1, FMZJLX1_ID, 
+    FMZJLX1, FMZJHM1, FMXM2, FMZJLX2_ID, FMZJLX2, FMZJHM2, SUBMIT_FLAG, RECORD_STATUS, 
+    CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.GydxjSupplementInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.GYDXJ_SUPPLEMENT_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.GYDXJ_SUPPLEMENT_INFO
+    where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.GYDXJ_SUPPLEMENT_INFO
+    where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.GydxjSupplementInfoExample" >
+    delete from PDSCI.GYDXJ_SUPPLEMENT_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.GydxjSupplementInfo" >
+    insert into PDSCI.GYDXJ_SUPPLEMENT_INFO (USER_FLOW, XH, XM, 
+      ZJLX_ID, ZJLX, ZJHM, 
+      SFZZ, RXRQ, XJZT_ID, 
+      XJZT, FMXM1, FMZJLX1_ID, 
+      FMZJLX1, FMZJHM1, FMXM2, 
+      FMZJLX2_ID, FMZJLX2, FMZJHM2, 
+      SUBMIT_FLAG, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+      )
+    values (#{userFlow,jdbcType=VARCHAR}, #{xh,jdbcType=VARCHAR}, #{xm,jdbcType=VARCHAR}, 
+      #{zjlxId,jdbcType=VARCHAR}, #{zjlx,jdbcType=VARCHAR}, #{zjhm,jdbcType=VARCHAR}, 
+      #{sfzz,jdbcType=VARCHAR}, #{rxrq,jdbcType=VARCHAR}, #{xjztId,jdbcType=VARCHAR}, 
+      #{xjzt,jdbcType=VARCHAR}, #{fmxm1,jdbcType=VARCHAR}, #{fmzjlx1Id,jdbcType=VARCHAR}, 
+      #{fmzjlx1,jdbcType=VARCHAR}, #{fmzjhm1,jdbcType=VARCHAR}, #{fmxm2,jdbcType=VARCHAR}, 
+      #{fmzjlx2Id,jdbcType=VARCHAR}, #{fmzjlx2,jdbcType=VARCHAR}, #{fmzjhm2,jdbcType=VARCHAR}, 
+      #{submitFlag,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.GydxjSupplementInfo" >
+    insert into PDSCI.GYDXJ_SUPPLEMENT_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userFlow != null" >
+        USER_FLOW,
+      </if>
+      <if test="xh != null" >
+        XH,
+      </if>
+      <if test="xm != null" >
+        XM,
+      </if>
+      <if test="zjlxId != null" >
+        ZJLX_ID,
+      </if>
+      <if test="zjlx != null" >
+        ZJLX,
+      </if>
+      <if test="zjhm != null" >
+        ZJHM,
+      </if>
+      <if test="sfzz != null" >
+        SFZZ,
+      </if>
+      <if test="rxrq != null" >
+        RXRQ,
+      </if>
+      <if test="xjztId != null" >
+        XJZT_ID,
+      </if>
+      <if test="xjzt != null" >
+        XJZT,
+      </if>
+      <if test="fmxm1 != null" >
+        FMXM1,
+      </if>
+      <if test="fmzjlx1Id != null" >
+        FMZJLX1_ID,
+      </if>
+      <if test="fmzjlx1 != null" >
+        FMZJLX1,
+      </if>
+      <if test="fmzjhm1 != null" >
+        FMZJHM1,
+      </if>
+      <if test="fmxm2 != null" >
+        FMXM2,
+      </if>
+      <if test="fmzjlx2Id != null" >
+        FMZJLX2_ID,
+      </if>
+      <if test="fmzjlx2 != null" >
+        FMZJLX2,
+      </if>
+      <if test="fmzjhm2 != null" >
+        FMZJHM2,
+      </if>
+      <if test="submitFlag != null" >
+        SUBMIT_FLAG,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userFlow != null" >
+        #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="xh != null" >
+        #{xh,jdbcType=VARCHAR},
+      </if>
+      <if test="xm != null" >
+        #{xm,jdbcType=VARCHAR},
+      </if>
+      <if test="zjlxId != null" >
+        #{zjlxId,jdbcType=VARCHAR},
+      </if>
+      <if test="zjlx != null" >
+        #{zjlx,jdbcType=VARCHAR},
+      </if>
+      <if test="zjhm != null" >
+        #{zjhm,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzz != null" >
+        #{sfzz,jdbcType=VARCHAR},
+      </if>
+      <if test="rxrq != null" >
+        #{rxrq,jdbcType=VARCHAR},
+      </if>
+      <if test="xjztId != null" >
+        #{xjztId,jdbcType=VARCHAR},
+      </if>
+      <if test="xjzt != null" >
+        #{xjzt,jdbcType=VARCHAR},
+      </if>
+      <if test="fmxm1 != null" >
+        #{fmxm1,jdbcType=VARCHAR},
+      </if>
+      <if test="fmzjlx1Id != null" >
+        #{fmzjlx1Id,jdbcType=VARCHAR},
+      </if>
+      <if test="fmzjlx1 != null" >
+        #{fmzjlx1,jdbcType=VARCHAR},
+      </if>
+      <if test="fmzjhm1 != null" >
+        #{fmzjhm1,jdbcType=VARCHAR},
+      </if>
+      <if test="fmxm2 != null" >
+        #{fmxm2,jdbcType=VARCHAR},
+      </if>
+      <if test="fmzjlx2Id != null" >
+        #{fmzjlx2Id,jdbcType=VARCHAR},
+      </if>
+      <if test="fmzjlx2 != null" >
+        #{fmzjlx2,jdbcType=VARCHAR},
+      </if>
+      <if test="fmzjhm2 != null" >
+        #{fmzjhm2,jdbcType=VARCHAR},
+      </if>
+      <if test="submitFlag != null" >
+        #{submitFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.GydxjSupplementInfoExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.GYDXJ_SUPPLEMENT_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.GYDXJ_SUPPLEMENT_INFO
+    <set >
+      <if test="record.userFlow != null" >
+        USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xh != null" >
+        XH = #{record.xh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xm != null" >
+        XM = #{record.xm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zjlxId != null" >
+        ZJLX_ID = #{record.zjlxId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zjlx != null" >
+        ZJLX = #{record.zjlx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zjhm != null" >
+        ZJHM = #{record.zjhm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfzz != null" >
+        SFZZ = #{record.sfzz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rxrq != null" >
+        RXRQ = #{record.rxrq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xjztId != null" >
+        XJZT_ID = #{record.xjztId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xjzt != null" >
+        XJZT = #{record.xjzt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fmxm1 != null" >
+        FMXM1 = #{record.fmxm1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fmzjlx1Id != null" >
+        FMZJLX1_ID = #{record.fmzjlx1Id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fmzjlx1 != null" >
+        FMZJLX1 = #{record.fmzjlx1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fmzjhm1 != null" >
+        FMZJHM1 = #{record.fmzjhm1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fmxm2 != null" >
+        FMXM2 = #{record.fmxm2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fmzjlx2Id != null" >
+        FMZJLX2_ID = #{record.fmzjlx2Id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fmzjlx2 != null" >
+        FMZJLX2 = #{record.fmzjlx2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fmzjhm2 != null" >
+        FMZJHM2 = #{record.fmzjhm2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submitFlag != null" >
+        SUBMIT_FLAG = #{record.submitFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.GYDXJ_SUPPLEMENT_INFO
+    set USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      XH = #{record.xh,jdbcType=VARCHAR},
+      XM = #{record.xm,jdbcType=VARCHAR},
+      ZJLX_ID = #{record.zjlxId,jdbcType=VARCHAR},
+      ZJLX = #{record.zjlx,jdbcType=VARCHAR},
+      ZJHM = #{record.zjhm,jdbcType=VARCHAR},
+      SFZZ = #{record.sfzz,jdbcType=VARCHAR},
+      RXRQ = #{record.rxrq,jdbcType=VARCHAR},
+      XJZT_ID = #{record.xjztId,jdbcType=VARCHAR},
+      XJZT = #{record.xjzt,jdbcType=VARCHAR},
+      FMXM1 = #{record.fmxm1,jdbcType=VARCHAR},
+      FMZJLX1_ID = #{record.fmzjlx1Id,jdbcType=VARCHAR},
+      FMZJLX1 = #{record.fmzjlx1,jdbcType=VARCHAR},
+      FMZJHM1 = #{record.fmzjhm1,jdbcType=VARCHAR},
+      FMXM2 = #{record.fmxm2,jdbcType=VARCHAR},
+      FMZJLX2_ID = #{record.fmzjlx2Id,jdbcType=VARCHAR},
+      FMZJLX2 = #{record.fmzjlx2,jdbcType=VARCHAR},
+      FMZJHM2 = #{record.fmzjhm2,jdbcType=VARCHAR},
+      SUBMIT_FLAG = #{record.submitFlag,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.GydxjSupplementInfo" >
+    update PDSCI.GYDXJ_SUPPLEMENT_INFO
+    <set >
+      <if test="xh != null" >
+        XH = #{xh,jdbcType=VARCHAR},
+      </if>
+      <if test="xm != null" >
+        XM = #{xm,jdbcType=VARCHAR},
+      </if>
+      <if test="zjlxId != null" >
+        ZJLX_ID = #{zjlxId,jdbcType=VARCHAR},
+      </if>
+      <if test="zjlx != null" >
+        ZJLX = #{zjlx,jdbcType=VARCHAR},
+      </if>
+      <if test="zjhm != null" >
+        ZJHM = #{zjhm,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzz != null" >
+        SFZZ = #{sfzz,jdbcType=VARCHAR},
+      </if>
+      <if test="rxrq != null" >
+        RXRQ = #{rxrq,jdbcType=VARCHAR},
+      </if>
+      <if test="xjztId != null" >
+        XJZT_ID = #{xjztId,jdbcType=VARCHAR},
+      </if>
+      <if test="xjzt != null" >
+        XJZT = #{xjzt,jdbcType=VARCHAR},
+      </if>
+      <if test="fmxm1 != null" >
+        FMXM1 = #{fmxm1,jdbcType=VARCHAR},
+      </if>
+      <if test="fmzjlx1Id != null" >
+        FMZJLX1_ID = #{fmzjlx1Id,jdbcType=VARCHAR},
+      </if>
+      <if test="fmzjlx1 != null" >
+        FMZJLX1 = #{fmzjlx1,jdbcType=VARCHAR},
+      </if>
+      <if test="fmzjhm1 != null" >
+        FMZJHM1 = #{fmzjhm1,jdbcType=VARCHAR},
+      </if>
+      <if test="fmxm2 != null" >
+        FMXM2 = #{fmxm2,jdbcType=VARCHAR},
+      </if>
+      <if test="fmzjlx2Id != null" >
+        FMZJLX2_ID = #{fmzjlx2Id,jdbcType=VARCHAR},
+      </if>
+      <if test="fmzjlx2 != null" >
+        FMZJLX2 = #{fmzjlx2,jdbcType=VARCHAR},
+      </if>
+      <if test="fmzjhm2 != null" >
+        FMZJHM2 = #{fmzjhm2,jdbcType=VARCHAR},
+      </if>
+      <if test="submitFlag != null" >
+        SUBMIT_FLAG = #{submitFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.GydxjSupplementInfo" >
+    update PDSCI.GYDXJ_SUPPLEMENT_INFO
+    set XH = #{xh,jdbcType=VARCHAR},
+      XM = #{xm,jdbcType=VARCHAR},
+      ZJLX_ID = #{zjlxId,jdbcType=VARCHAR},
+      ZJLX = #{zjlx,jdbcType=VARCHAR},
+      ZJHM = #{zjhm,jdbcType=VARCHAR},
+      SFZZ = #{sfzz,jdbcType=VARCHAR},
+      RXRQ = #{rxrq,jdbcType=VARCHAR},
+      XJZT_ID = #{xjztId,jdbcType=VARCHAR},
+      XJZT = #{xjzt,jdbcType=VARCHAR},
+      FMXM1 = #{fmxm1,jdbcType=VARCHAR},
+      FMZJLX1_ID = #{fmzjlx1Id,jdbcType=VARCHAR},
+      FMZJLX1 = #{fmzjlx1,jdbcType=VARCHAR},
+      FMZJHM1 = #{fmzjhm1,jdbcType=VARCHAR},
+      FMXM2 = #{fmxm2,jdbcType=VARCHAR},
+      FMZJLX2_ID = #{fmzjlx2Id,jdbcType=VARCHAR},
+      FMZJLX2 = #{fmzjlx2,jdbcType=VARCHAR},
+      FMZJHM2 = #{fmzjhm2,jdbcType=VARCHAR},
+      SUBMIT_FLAG = #{submitFlag,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

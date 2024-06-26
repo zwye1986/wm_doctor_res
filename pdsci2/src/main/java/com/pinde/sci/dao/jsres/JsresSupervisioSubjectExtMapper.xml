@@ -1,0 +1,1016 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jsres.JsresSupervisioSubjectExtMapper">
+    <resultMap id="subjectExtMap" type="java.util.HashMap">
+        <result column="SUBJECT_FLOW" jdbcType="VARCHAR" property="subjectFlow"/>
+        <result column="SUBJECT_NAME" jdbcType="VARCHAR" property="subjectName"/>
+        <result column="OPEN_TIME" jdbcType="VARCHAR" property="openTime"/>
+        <result column="DEV_TIME" jdbcType="VARCHAR" property="devTime"/>
+        <result column="DEV_TIME_CLOSE" jdbcType="VARCHAR" property="devTimeClose"/>
+        <result column="CLOSED_TIME" jdbcType="VARCHAR" property="closedTime"/>
+        <result column="ORG_FLOW" jdbcType="VARCHAR" property="orgFlow"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+        <result column="SPE_ID" jdbcType="VARCHAR" property="speId"/>
+        <result column="SPE_NAME" jdbcType="VARCHAR" property="speName"/>
+        <result column="SUPERVISIO_SUMMARY" jdbcType="VARCHAR" property="supervisioSummary"/>
+        <result column="SUBJECT_YEAR" jdbcType="VARCHAR" property="subjectYear"/>
+        <result column="SUBJECT_EDIT" jdbcType="VARCHAR" property="subjectEdit"/>
+        <result column="AVG_SCORE" jdbcType="VARCHAR" property="avgScore"/>
+        <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow"/>
+        <result column="USER_NAME" jdbcType="VARCHAR" property="userName"/>
+        <result column="BASE_CODE" jdbcType="VARCHAR" property="baseCode"/>
+        <result column="MANAGE_USER_FLOW" jdbcType="VARCHAR" property="manageUserFlow"/>
+        <result column="MANAGE_USER_NAME" jdbcType="VARCHAR" property="manageUserName"/>
+        <result column="EXPERT_USER_FLOW" jdbcType="VARCHAR" property="expertUserFlow"/>
+        <result column="EXPERT_USER_NAME" jdbcType="VARCHAR" property="expertUserName"/>
+        <result column="SUBJECT_ACTIVITI_FLOWS" jdbcType="VARCHAR" property="subjectActivitiFlows"/>
+        <result column="SUPERVISIO_RESULTS" jdbcType="VARCHAR" property="supervisioResults"/>
+        <result column="SPE_FEEDBACK" jdbcType="VARCHAR" property="speFeedBack"/>
+        <result column="SUP_FEEDBACK" jdbcType="VARCHAR" property="supFeedBack"/>
+        <result column="MAJOR_FEED_BACK" jdbcType="VARCHAR" property="majorFeedBack"/>
+    </resultMap>
+    <select id="selectSubjectList" parameterType="map" resultMap="subjectExtMap">
+select * from (
+        SELECT rss.subject_flow,rss.subject_name,rss.open_time,rss.dev_time,rss.base_code,rss.dev_time_close,rss.closed_time,rss.create_time,rss.org_flow,rss.org_name,rss.spe_id,
+          rss.spe_name,rss.supervisio_summary,rss.subject_year,rss.avg_score,rss.subject_edit,
+          wm_concat(user_flow) as user_flow,wm_concat(user_name) as user_name
+        FROM  res_supervisio_subject rss
+        left join (
+            SELECT rssu.user_flow,rssu.SUBJECT_FLOW, ssu.user_name AS USER_NAME
+            FROM res_supervisio_subject_user rssu
+            LEFT JOIN sys_supervisio_user ssu ON rssu.user_flow = ssu.user_flow
+            where rssu.RECORD_STATUS = 'Y'
+            and ssu.RECORD_STATUS = 'Y'
+        )  rssu on rss.subject_flow = rssu.subject_flow
+        where rss.record_status = 'Y'
+        and rss.org_flow in(
+            SELECT ORG_FLOW
+            FROM PDSCI.SYS_ORG
+            WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+            <if test="org!=null">
+                <if test="org.orgProvId!=null and org.orgProvId!=''">
+                    AND ORG_PROV_ID = #{org.orgProvId}
+                </if>
+                <if test="org.orgCityId!=null and org.orgCityId!=''">
+                    AND ORG_CITY_ID = #{org.orgCityId}
+                </if>
+                <if test="org.orgLevelId!=null and org.orgLevelId!=''">
+                    AND ORG_LEVEL_ID = #{org.orgLevelId}
+                </if>
+                <if test="org.orgTypeId!=null and org.orgTypeId!=''">
+                    AND ORG_TYPE_ID = #{org.orgTypeId}
+                </if>
+            </if>
+        )
+        <if test="orgFlow!=null and orgFlow!=''">
+            AND rss.org_flow = #{orgFlow}
+        </if>
+        <if test="speId!=null and speId!=''">
+            AND rss.spe_id = #{speId}
+        </if>
+        <if test="baseCode!=null and baseCode!=''">
+            AND rss.base_code = #{baseCode}
+        </if>
+        <if test="subjectYear!=null and subjectYear!=''">
+            AND rss.subject_year = #{subjectYear}
+        </if>
+        <if test="subjectName!=null and subjectName!=''">
+            <bind name="subjectName" value="'%'+subjectName+'%'"/>
+            and rss.subject_name like #{subjectName}
+        </if>
+        <if test="createUserFlow!=null and createUserFlow!=''">
+            AND rss.subject_flow in (
+                SELECT subject_flow FROM RES_SUPERVISIO_SUBJECT_USER
+                WHERE RECORD_STATUS = 'Y'
+                AND USER_FLOW = #{createUserFlow}
+            )
+        </if>
+        group by rss.subject_flow,rss.subject_name,rss.open_time,rss.dev_time,rss.base_code,rss.dev_time_close,rss.closed_time,rss.org_flow,rss.org_name,rss.spe_id,
+        rss.spe_name,rss.supervisio_summary,rss.subject_year,rss.avg_score,rss.subject_edit,rss.create_time)
+        <if test="orderAvgScore == 'DESC'.toString() ">
+            order by to_number(nvl(avg_score,0)) desc
+        </if>
+        <if test="orderAvgScore == 'ASC'.toString() ">
+            order by to_number(nvl(avg_score,0)) asc
+        </if>
+        <if test="orderAvgScore == null or orderAvgScore == ''">
+            ORDER BY create_time DESC
+        </if>
+    </select>
+    <select id="selectLocalSubjectListByParam" parameterType="map" resultMap="subjectExtMap">
+        SELECT rss.subject_flow, rss.subject_name, rss.open_time, rss.dev_time, rss.base_code, rss.dev_time_close,
+        rss.closed_time, rss.create_time, rss.org_flow, rss.org_name, rss.spe_id, rss.spe_name,rss.supervisio_results,
+        rss.supervisio_summary, rss.subject_year, rss.avg_score, rss.subject_edit,s1.user_flow as manage_user_flow,
+        s1.user_name as manage_user_name,s2.user_flow as expert_user_flow,s2.user_name as expert_user_name,rss.subject_activiti_flows
+        ,rss.spe_feedback, rss.sup_feedback,rss.major_feed_back
+        FROM res_supervisio_subject rss
+        LEFT JOIN (
+        SELECT WM_CONCAT(rssu.user_flow) as user_flow, rssu.SUBJECT_FLOW, WM_CONCAT(ssu.user_name) AS USER_NAME
+        FROM res_supervisio_subject_user rssu
+        LEFT JOIN SYS_USER ssu ON rssu.user_flow = ssu.user_flow
+        WHERE rssu.RECORD_STATUS = 'Y'
+        AND ssu.RECORD_STATUS = 'Y'
+        AND SSU.USER_LEVEL_ID = 'management'
+        GROUP BY rssu.SUBJECT_FLOW) S1
+        ON RSS.SUBJECT_FLOW = S1.SUBJECT_FLOW
+        LEFT JOIN (
+        SELECT WM_CONCAT(rssu.user_flow) as user_flow, rssu.SUBJECT_FLOW, WM_CONCAT(ssu.user_name) AS USER_NAME
+        FROM res_supervisio_subject_user rssu
+        LEFT JOIN SYS_USER ssu ON rssu.user_flow = ssu.user_flow
+        WHERE rssu.RECORD_STATUS = 'Y'
+        AND ssu.RECORD_STATUS = 'Y'
+        AND SSU.USER_LEVEL_ID = 'expertLeader'
+        GROUP BY rssu.SUBJECT_FLOW) S2
+        ON RSS.SUBJECT_FLOW = S2.SUBJECT_FLOW
+        WHERE rss.record_status = 'Y'
+        AND rss.org_flow IN (
+        SELECT ORG_FLOW
+        FROM PDSCI.SYS_ORG
+        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        <if test="org!=null">
+            <if test="org.orgProvId!=null and org.orgProvId!=''">
+                AND ORG_PROV_ID = #{org.orgProvId}
+            </if>
+            <if test="org.orgCityId!=null and org.orgCityId!=''">
+                AND ORG_CITY_ID = #{org.orgCityId}
+            </if>
+            <if test="org.orgLevelId!=null and org.orgLevelId!=''">
+                AND ORG_LEVEL_ID = #{org.orgLevelId}
+            </if>
+            <if test="org.orgTypeId!=null and org.orgTypeId!=''">
+                AND ORG_TYPE_ID = #{org.orgTypeId}
+            </if>
+        </if>
+        )
+        AND rss.SUPERVISIO_AUTHORITY is NULL
+        <if test="orgFlow!=null and orgFlow!=''">
+            AND rss.org_flow = #{orgFlow}
+        </if>
+        <if test="speId!=null and speId!=''">
+            AND rss.spe_id = #{speId}
+        </if>
+        <if test="baseCode!=null and baseCode!=''">
+            AND rss.base_code = #{baseCode}
+        </if>
+        <if test="subjectYear!=null and subjectYear!=''">
+            AND rss.subject_year = #{subjectYear}
+        </if>
+        <if test="supervisionResults!=null and supervisionResults!=''">
+            AND rss.supervisio_results = #{supervisionResults}
+        </if>
+        <if test="manageUserFlow!=null and manageUserFlow!=''">
+            <bind name="manageUserFlow" value="'%'+manageUserFlow+'%'"/>
+            AND s1.user_flow like #{manageUserFlow}
+        </if>
+        <if test="expertUserFlow!=null and expertUserFlow!=''">
+            <bind name="expertUserFlow" value="'%'+expertUserFlow+'%'"/>
+            AND s2.user_flow like #{expertUserFlow}
+        </if>
+        <if test="createTime == null or createTime == ''">
+            ORDER BY create_time DESC
+        </if>
+    </select>
+
+    <select id="selectSubjectListInfo" parameterType="map" resultMap="subjectExtMap">
+        SELECT rss.subject_flow, rss.subject_name, rss.open_time, rss.dev_time, rss.base_code, rss.dev_time_close,
+        rss.closed_time, rss.create_time, rss.org_flow, rss.org_name, rss.spe_id, rss.spe_name,rss.supervisio_results,
+        rss.supervisio_summary, rss.subject_year, rss.avg_score, rss.subject_edit,s1.user_flow as manage_user_flow,
+        s1.user_name as manage_user_name,s2.user_flow as expert_user_flow,s2.user_name as expert_user_name,rss.subject_activiti_flows
+        ,rss.spe_feedback, rss.sup_feedback, rss.major_feed_back
+        FROM res_supervisio_subject rss
+        right JOIN (
+        SELECT WM_CONCAT(rssu.user_flow) as user_flow, rssu.SUBJECT_FLOW, WM_CONCAT(ssu.user_name) AS USER_NAME
+        FROM res_supervisio_subject_user rssu
+        LEFT JOIN SYS_USER ssu ON rssu.user_flow = ssu.user_flow
+        WHERE rssu.RECORD_STATUS = 'Y'
+        AND ssu.RECORD_STATUS = 'Y'
+        AND SSU.USER_LEVEL_ID = 'management'
+        GROUP BY rssu.SUBJECT_FLOW) S1
+        ON RSS.SUBJECT_FLOW = S1.SUBJECT_FLOW
+        right JOIN (
+        SELECT WM_CONCAT(rssu.user_flow) as user_flow, rssu.SUBJECT_FLOW, WM_CONCAT(ssu.user_name) AS USER_NAME
+        FROM res_supervisio_subject_user rssu
+        LEFT JOIN SYS_USER ssu ON rssu.user_flow = ssu.user_flow
+        WHERE rssu.RECORD_STATUS = 'Y'
+        AND ssu.RECORD_STATUS = 'Y'
+        AND SSU.USER_LEVEL_ID = 'expertLeader'
+        <if test="euserFlow!=null and euserFlow!=''">
+            AND ssu.USER_FLOW=#{euserFlow}
+        </if>
+        GROUP BY rssu.SUBJECT_FLOW) S2
+        ON RSS.SUBJECT_FLOW = S2.SUBJECT_FLOW
+        WHERE rss.record_status = 'Y'
+        AND rss.org_flow IN (
+        SELECT ORG_FLOW
+        FROM PDSCI.SYS_ORG
+        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        <if test="org!=null">
+            <if test="org.orgProvId!=null and org.orgProvId!=''">
+                AND ORG_PROV_ID = #{org.orgProvId}
+            </if>
+            <if test="org.orgCityId!=null and org.orgCityId!=''">
+                AND ORG_CITY_ID = #{org.orgCityId}
+            </if>
+            <if test="org.orgLevelId!=null and org.orgLevelId!=''">
+                AND ORG_LEVEL_ID = #{org.orgLevelId}
+            </if>
+            <if test="org.orgTypeId!=null and org.orgTypeId!=''">
+                AND ORG_TYPE_ID = #{org.orgTypeId}
+            </if>
+            <if test="org.orgTypeId!=null and org.orgTypeId!=''">
+                AND ORG_TYPE_ID = #{org.orgTypeId}
+            </if>
+        </if>
+        )
+        and SUPERVISIO_AUTHORITY is null
+        <if test="orgFlow!=null and orgFlow!=''">
+            AND rss.org_flow = #{orgFlow}
+        </if>
+        <if test="speId!=null and speId!=''">
+            AND rss.spe_id = #{speId}
+        </if>
+        <if test="baseCode!=null and baseCode!=''">
+            AND rss.base_code = #{baseCode}
+        </if>
+        <if test="subjectYear!=null and subjectYear!=''">
+            AND rss.subject_year = #{subjectYear}
+        </if>
+        <if test="supervisionResults!=null and supervisionResults!=''">
+            AND rss.supervisio_results = #{supervisionResults}
+        </if>
+        <if test="manageUserFlow!=null and manageUserFlow!=''">
+            <bind name="manageUserFlow" value="'%'+manageUserFlow+'%'"/>
+            AND s1.user_flow like #{manageUserFlow}
+        </if>
+        <if test="expertUserFlow!=null and expertUserFlow!=''">
+            <bind name="expertUserFlow" value="'%'+expertUserFlow+'%'"/>
+            AND s2.user_flow like #{expertUserFlow}
+        </if>
+        <if test="createTime == null or createTime ==''">
+            ORDER BY create_time DESC
+        </if>
+    </select>
+
+    <resultMap id="baseExpertSupervisioMap" type="java.util.HashMap">
+        <result column="SUBJECT_FLOW" jdbcType="VARCHAR" property="subjectFlow"/>
+        <result column="BASE_CODE" jdbcType="VARCHAR" property="baseCode"/>
+        <result column="ORG_FLOW" jdbcType="VARCHAR" property="orgFlow"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+        <result column="SPE_ID" jdbcType="VARCHAR" property="speId"/>
+        <result column="SPE_NAME" jdbcType="VARCHAR" property="speName"/>
+        <result column="SUBJECT_YEAR" jdbcType="VARCHAR" property="subjectYear"/>
+        <result column="AVG_SCORE" jdbcType="VARCHAR" property="avgScore"/>
+        <result column="SUPERVISIO_RESULTS" jdbcType="VARCHAR" property="supervisioResults"/>
+        <result column="SPE_SCORE_TOTAL" jdbcType="VARCHAR" property="speScoreTotal"/>
+        <result column="EVALUATION_DATE" jdbcType="VARCHAR" property="evaluationDate"/>
+        <result column="MANAGE_ALL_SUB" property="manageAllSub" jdbcType="VARCHAR" />
+        <result column="EVALUATION_NUM" property="evaluationNum" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="searchBaseExpertSupervisio" parameterType="map" resultMap="baseExpertSupervisioMap">
+        select BASE_CODE,rss.ORG_FLOW,ORG_NAME,SPE_ID,rss.SPE_NAME,SUBJECT_YEAR,rss.SUPERVISIO_RESULTS,rss.AVG_SCORE,
+        rss.SUBJECT_FLOW,rssu.SPE_SCORE_TOTAL,rssu.EVALUATION_DATE,rss.MANAGE_ALL_SUB,rss.EVALUATION_NUM
+        from  RES_SUPERVISIO_SUBJECT rss
+        right join
+        (
+        select * from RES_SUPERVISIO_SUBJECT_USER
+        where USER_FLOW in
+        (
+        select USER_FLOW from SYS_USER
+        where USER_LEVEL_ID='baseExpert' and RECORD_STATUS='Y'
+        )
+        and RECORD_STATUS = 'Y'
+        ) rssu
+        on rssu.SUBJECT_FLOW=rss.SUBJECT_FLOW
+        where rss.RECORD_STATUS='Y'
+        <if test="speId!=null and speId!=''">
+            and SPE_ID in
+            <foreach collection="speId" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="supervisioResults!=null and supervisioResults!=''">
+            and rss.SUPERVISIO_RESULTS=#{supervisioResults}
+        </if>
+        <if test="subjectYear!=null and subjectYear!=''">
+            and SUBJECT_YEAR=#{subjectYear}
+        </if>
+        <if test="manageAllSub=='Y'.toString()">
+            and MANAGE_ALL_SUB=#{manageAllSub}
+        </if>
+        <if test="manageAllSub=='N'.toString()">
+            and MANAGE_ALL_SUB is null and rss.EVALUATION_NUM !='0'
+        </if>
+        <if test="manageAllSub=='W'.toString()">
+            and rss.EVALUATION_NUM ='0'
+        </if>
+        <if test="basePaiXu=='Y'.toString()">
+            and rssu.EVALUATION_DATE is not null
+        </if>
+        <if test="basePaiXu=='N'.toString()">
+            and rssu.EVALUATION_DATE is null
+        </if>
+        <if test="maxManageScore!=null and maxManageScore!=''">
+
+            and  rss.AVG_SCORE 	<![CDATA[<=]]>  #{maxManageScore}
+        </if>
+        <if test="minManageScore!=null and minManageScore!=''">
+
+            and  rss.AVG_SCORE 	<![CDATA[>=]]>  #{minManageScore}
+        </if>
+        <if test="minBaseScore!=null and minBaseScore!=''">
+
+            and rssu.SPE_SCORE_TOTAL 	<![CDATA[>=]]>  #{minBaseScore}
+        </if>
+        <if test="maxbaseScore!=null and maxbaseScore!=''">
+            and rssu.SPE_SCORE_TOTAL 	<![CDATA[<=]]>  #{maxbaseScore}
+        </if>
+        <if test="(maxbaseScore!=null and maxbaseScore!='') || (minBaseScore!=null and minBaseScore!='')">
+            and rssu.SPE_SCORE_TOTAL is not null
+        </if>
+        <if test="userFlow!=null and userFlow!=''">
+            and  ORG_FLOW in
+            <foreach collection="userFlow" open="(" separator="," close=")" item="u">#{u}</foreach>
+        </if>
+        <if test="orgPaiXu!=null and orgPaiXu!=''">
+            order by BASE_CODE  desc
+        </if>
+        <if test="orgPaiXu==null || orgPaiXu==''">
+            order by BASE_CODE
+        </if>
+        <if test="zipx=='desc'.toString()">
+            ,SPE_SCORE_TOTAL desc
+        </if>
+        <if test="zipx=='asc'.toString()">
+            ,SPE_SCORE_TOTAL asc
+        </if>
+    </select>
+
+    <resultMap id="ManegeSupervisioList" type="java.util.HashMap">
+        <result column="ORG_FLOW" jdbcType="VARCHAR" property="orgFlow"/>
+        <result column="BASE_CODE" jdbcType="VARCHAR" property="baseCode"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+        <result column="SUBNUM" jdbcType="VARCHAR" property="subNum"/>
+        <result column="SUBJECT_ACTIVITI_FLOWS" jdbcType="VARCHAR" property="subjectActivitiFlows"/>
+        <result column="base_manage_score" jdbcType="VARCHAR" property="baseManageScore"/>
+        <result column="YJNUM" jdbcType="VARCHAR" property="yjNum"/>
+        <result column="SUBJECT_YEAR" jdbcType="VARCHAR" property="subjectYear"/>
+    </resultMap>
+
+    <select id="searchManegeSupervisioList" parameterType="map" resultMap="ManegeSupervisioList">
+        SELECT distinct * from (
+        SELECT  rss.*,nvl(yjnum,0)  YJNUM FROM (
+        SELECT ORG_FLOW,BASE_CODE,ORG_NAME,count( * ) subNum,SUBJECT_ACTIVITI_FLOWS,base_manage_score
+        FROM RES_SUPERVISIO_SUBJECT
+        WHERE RECORD_STATUS='Y'
+        GROUP BY ORG_FLOW,BASE_CODE,ORG_NAME,SUBJECT_ACTIVITI_FLOWS,base_manage_score
+        ) rss
+        LEFT JOIN (
+        SELECT SUBJECT_ACTIVITI_FLOWS, count(SUBJECT_ACTIVITI_FLOWS) yjnum
+        FROM RES_SUPERVISIO_SUBJECT_USER
+        WHERE EVALUATION_DATE IS NOT NULL
+        GROUP BY SUBJECT_ACTIVITI_FLOWS ) rssu
+        ON rssu.SUBJECT_ACTIVITI_FLOWS = rss.SUBJECT_ACTIVITI_FLOWS
+        ) rss2
+        LEFT JOIN (
+        SELECT SUBJECT_YEAR, SUBJECT_ACTIVITI_FLOWS
+        FROM RES_SUPERVISIO_SUBJECT ) rss1
+        ON rss2.SUBJECT_ACTIVITI_FLOWS = rss1.SUBJECT_ACTIVITI_FLOWS
+        where 1=1
+        <if test="orgFlow!=null and orgFlow!=''">
+            and rss2.ORG_FLOW=#{orgFlow}
+        </if>
+        <if test="subjectYear!=null and subjectYear!=''">
+            and SUBJECT_YEAR=#{subjectYear}
+        </if>
+
+        <if test="manageAllSub=='Y'.toString()">
+            and base_manage_score IS NOT NULL
+        </if>
+        <if test="manageAllSub=='N'.toString()">
+            and base_manage_score IS  NULL
+        </if>
+        <if test="basePaiXu=='Y'.toString()">
+            and YJNUM = subNum and base_manage_score IS NOT NULL
+        </if>
+        <if test="basePaiXu=='N'.toString()">
+            and YJNUM != subNum or base_manage_score IS  NULL
+        </if>
+        <if test="orgPaiXu!=null and orgPaiXu!=''">
+            order by BASE_CODE  desc
+        </if>
+    </select>
+
+    <resultMap id="SysSupervisioUserMap" type="java.util.HashMap">
+        <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow"/>
+        <result column="USER_NAME" jdbcType="VARCHAR" property="userName"/>
+        <result column="USER_PHONE" jdbcType="VARCHAR" property="userPhone"/>
+        <result column="USER_LEVEL_ID" jdbcType="VARCHAR" property="userLevelID"/>
+        <result column="USER_LEVEL_NAME" jdbcType="VARCHAR" property="userLevelName"/>
+        <result column="RES_TRAINING_SPE_NAME" jdbcType="VARCHAR" property="resTrainingSpeName"/>
+    </resultMap>
+    <select id="selectUserBysubjectActivitiFlows" parameterType="String" resultMap="SysSupervisioUserMap">
+        select USER_FLOW,USER_NAME,USER_PHONE,USER_LEVEL_ID,USER_LEVEL_NAME,RES_TRAINING_SPE_NAME
+        from SYS_USER
+        where USER_FLOW
+        in(
+            select distinct USER_FLOW
+            from RES_SUPERVISIO_SUBJECT_USER
+            where SUBJECT_FLOW=#{subjectActivitiFlows}
+        )
+        ORDER BY USER_LEVEL_ID desc
+    </select>
+
+    <select id="selectSubjectActiveListByParam" parameterType="map" resultMap="subjectExtMap">
+        select DISTINCT SUBJECT_ACTIVITI_FLOWS,ORG_FLOW, ORG_NAME ,SUBJECT_YEAR,SUBJECT_NAME,BASE_CODE,DEV_TIME,DEV_TIME_CLOSE
+        FROM  RES_SUPERVISIO_SUBJECT
+        WHERE record_status = 'Y'
+        <if test="orgFlow!=null and orgFlow!=''">
+            AND org_flow = #{orgFlow}
+        </if>
+        <if test="subjectYear!=null and subjectYear!=''">
+            AND subject_year = #{subjectYear}
+        </if>
+        <if test="baseCode!=null and baseCode!=''">
+            AND base_code = #{baseCode}
+        </if>
+    </select>
+
+    <resultMap id="ResSupervisioSubjectUserList" type="com.pinde.sci.model.mo.ResSupervisioSubjectUser" >
+        <result column="SUBJECT_FLOW" jdbcType="VARCHAR" property="subjectFlow"/>
+        <result column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow"/>
+        <result column="SUBJECT_NAME" jdbcType="VARCHAR" property="subjectName"/>
+        <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow"/>
+        <result column="USER_NAME" jdbcType="VARCHAR" property="userName"/>
+        <result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus"/>
+        <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime"/>
+        <result column="CREATE_USER_FLOW" jdbcType="VARCHAR" property="createUserFlow"/>
+        <result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime"/>
+        <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow"/>
+        <result column="SPE_SCORE_TOTAL" jdbcType="VARCHAR" property="speScoreTotal"/>
+        <result column="EVALUATION_DATE" jdbcType="VARCHAR" property="evaluationDate"/>
+        <result column="SPE_CONTENT" jdbcType="VARCHAR" property="speContent"/>
+        <result column="USER_LEVEL_ID" jdbcType="VARCHAR" property="userLevelID"/>
+    </resultMap>
+    <select id="searchSubjectAndUserLevedId" parameterType="String" resultMap="ResSupervisioSubjectUserList">
+        select * from RES_SUPERVISIO_SUBJECT_USER
+        where SUBJECT_FLOW=#{subjectFlow}
+        and USER_FLOW in (
+            select USER_FLOW from SYS_USER
+            where  USER_LEVEL_ID=#{userLevedId}
+            and RECORD_STATUS='Y'
+        )
+        and RECORD_STATUS='Y'
+    </select>
+
+    <select id="selectBaseSubjectList" parameterType="map" resultMap="subjectExtMap">
+        SELECT rss.subject_flow, rss.subject_name, rss.open_time, rss.dev_time, rss.base_code, rss.dev_time_close,
+        rss.closed_time, rss.create_time, rss.org_flow, rss.org_name, rss.spe_id, rss.spe_name,rss.supervisio_results,
+        rss.supervisio_summary, rss.subject_year, rss.avg_score, rss.subject_edit,s1.user_flow as manage_user_flow,
+        s1.user_name as manage_user_name,rss.subject_activiti_flows
+        ,rss.spe_feedback, rss.sup_feedback,rss.major_feed_back
+        FROM res_supervisio_subject rss
+        LEFT JOIN (
+        SELECT WM_CONCAT(rssu.user_flow) as user_flow, rssu.SUBJECT_FLOW, WM_CONCAT(ssu.user_name) AS USER_NAME
+        FROM res_supervisio_subject_user rssu
+        LEFT JOIN SYS_USER ssu ON rssu.user_flow = ssu.user_flow
+        WHERE rssu.RECORD_STATUS = 'Y'
+        AND ssu.RECORD_STATUS = 'Y'
+        AND SSU.USER_LEVEL_ID = 'baseExpert'
+        GROUP BY rssu.SUBJECT_FLOW) S1
+        ON RSS.SUBJECT_FLOW = S1.SUBJECT_FLOW
+        WHERE rss.record_status = 'Y'
+        AND rss.org_flow IN (
+        SELECT ORG_FLOW
+        FROM PDSCI.SYS_ORG
+        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        <if test="org!=null">
+            <if test="org.orgProvId!=null and org.orgProvId!=''">
+                AND ORG_PROV_ID = #{org.orgProvId}
+            </if>
+            <if test="org.orgCityId!=null and org.orgCityId!=''">
+                AND ORG_CITY_ID = #{org.orgCityId}
+            </if>
+            <if test="org.orgLevelId!=null and org.orgLevelId!=''">
+                AND ORG_LEVEL_ID = #{org.orgLevelId}
+            </if>
+            <if test="org.orgTypeId!=null and org.orgTypeId!=''">
+                AND ORG_TYPE_ID = #{org.orgTypeId}
+            </if>
+        </if>
+        )
+        and rss.SUPERVISIO_AUTHORITY='Y'
+        <if test="orgFlow!=null and orgFlow!=''">
+            AND rss.org_flow = #{orgFlow}
+        </if>
+        <if test="speId!=null and speId!=''">
+            AND rss.spe_id = #{speId}
+        </if>
+        <if test="subjectName!=null and subjectName!=''">
+            AND rss.subject_name like '%${subjectName}%'
+        </if>
+        <if test="baseCode!=null and baseCode!=''">
+            AND rss.base_code = #{baseCode}
+        </if>
+        <if test="subjectYear!=null and subjectYear!=''">
+            AND rss.subject_year = #{subjectYear}
+        </if>
+        <if test="supervisionResults!=null and supervisionResults!=''">
+            AND rss.supervisio_results = #{supervisionResults}
+        </if>
+        <if test="manageUserFlow!=null and manageUserFlow!=''">
+            <bind name="manageUserFlow" value="'%'+manageUserFlow+'%'"/>
+            AND s1.user_flow like #{manageUserFlow}
+        </if>
+        <if test="expertUserFlow!=null and expertUserFlow!=''">
+            <bind name="expertUserFlow" value="'%'+expertUserFlow+'%'"/>
+            AND s2.user_flow like #{expertUserFlow}
+        </if>
+        <if test="createTime == null or createTime == ''">
+            ORDER BY create_time DESC
+        </if>
+    </select>
+
+    <select id="selectGrobalSubjectListInfo" parameterType="map" resultMap="subjectExtMap">
+        SELECT rss.subject_flow, rss.subject_name, rss.open_time, rss.dev_time, rss.base_code, rss.dev_time_close,
+        rss.closed_time, rss.create_time, rss.org_flow, rss.org_name, rss.spe_id, rss.spe_name,rss.supervisio_results,
+        rss.supervisio_summary, rss.subject_year, rss.avg_score, rss.subject_edit,s1.user_flow as manage_user_flow,
+        s1.user_name as manage_user_name,s2.user_flow as expert_user_flow,s2.user_name as expert_user_name,rss.subject_activiti_flows
+        ,rss.spe_feedback, rss.sup_feedback, rss.major_feed_back
+        FROM res_supervisio_subject rss
+        left JOIN (
+        SELECT WM_CONCAT(rssu.user_flow) as user_flow, rssu.SUBJECT_FLOW, WM_CONCAT(ssu.user_name) AS USER_NAME
+        FROM res_supervisio_subject_user rssu
+        LEFT JOIN SYS_USER ssu ON rssu.user_flow = ssu.user_flow
+        WHERE rssu.RECORD_STATUS = 'Y'
+        AND ssu.RECORD_STATUS = 'Y'
+        AND SSU.USER_LEVEL_ID = 'management'
+        <if test="muserFlow!=null and muserFlow!=''">
+            and ssu.USER_FLOW=#{muserFlow}
+        </if>
+        GROUP BY rssu.SUBJECT_FLOW) S1
+        ON RSS.SUBJECT_FLOW = S1.SUBJECT_FLOW
+        left JOIN (
+        SELECT WM_CONCAT(rssu.user_flow) as user_flow, rssu.SUBJECT_FLOW, WM_CONCAT(ssu.user_name) AS USER_NAME
+        FROM res_supervisio_subject_user rssu
+        LEFT JOIN SYS_USER ssu ON rssu.user_flow = ssu.user_flow
+        WHERE rssu.RECORD_STATUS = 'Y'
+        AND ssu.RECORD_STATUS = 'Y'
+        AND SSU.USER_LEVEL_ID = 'expertLeader'
+        <if test="euserFlow!=null and euserFlow!=''">
+            AND ssu.USER_FLOW=#{euserFlow}
+        </if>
+        GROUP BY rssu.SUBJECT_FLOW) S2
+        ON RSS.SUBJECT_FLOW = S2.SUBJECT_FLOW
+        WHERE rss.record_status = 'Y'
+        AND rss.org_flow IN (
+        SELECT ORG_FLOW
+        FROM PDSCI.SYS_ORG
+        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        <if test="org!=null">
+            <if test="org.orgProvId!=null and org.orgProvId!=''">
+                AND ORG_PROV_ID = #{org.orgProvId}
+            </if>
+            <if test="org.orgCityId!=null and org.orgCityId!=''">
+                AND ORG_CITY_ID = #{org.orgCityId}
+            </if>
+            <if test="org.orgLevelId!=null and org.orgLevelId!=''">
+                AND ORG_LEVEL_ID = #{org.orgLevelId}
+            </if>
+            <if test="org.orgTypeId!=null and org.orgTypeId!=''">
+                AND ORG_TYPE_ID = #{org.orgTypeId}
+            </if>
+            <if test="org.orgTypeId!=null and org.orgTypeId!=''">
+                AND ORG_TYPE_ID = #{org.orgTypeId}
+            </if>
+        </if>
+        )
+        and SUPERVISIO_AUTHORITY is null
+        <if test="orgFlow!=null and orgFlow!=''">
+            AND rss.org_flow = #{orgFlow}
+        </if>
+        <if test="speId!=null and speId!=''">
+            AND rss.spe_id = #{speId}
+        </if>
+        <if test="baseCode!=null and baseCode!=''">
+            AND rss.base_code = #{baseCode}
+        </if>
+        <if test="subjectYear!=null and subjectYear!=''">
+            AND rss.subject_year = #{subjectYear}
+        </if>
+        <if test="supervisionResults!=null and supervisionResults!=''">
+            AND rss.supervisio_results = #{supervisionResults}
+        </if>
+        <if test="manageUserFlow!=null and manageUserFlow!=''">
+            <bind name="manageUserFlow" value="'%'+manageUserFlow+'%'"/>
+            AND s1.user_flow like #{manageUserFlow}
+        </if>
+        <if test="expertUserFlow!=null and expertUserFlow!=''">
+            <bind name="expertUserFlow" value="'%'+expertUserFlow+'%'"/>
+            AND s2.user_flow like #{expertUserFlow}
+        </if>
+        <if test="createTime == null or createTime == ''">
+            ORDER BY create_time DESC
+        </if>
+    </select>
+
+    <update id="delSubjectUserBySubjectFlow" parameterType="String">
+        update res_supervisio_subject_user
+        set record_status = 'N'
+        where subject_flow = #{subjectFlow}
+        and record_status = 'Y'
+    </update>
+
+    <select id="selectSupervisioUserFlowListByFlow" parameterType="String" resultType="String">
+        SELECT USER_FLOW FROM res_supervisio_subject_user
+        WHERE RECORD_STATUS = 'Y'
+        AND SUBJECT_FLOW = #{subjectFlow}
+    </select>
+
+    <select id="selectSubjectListByParam" parameterType="map" resultMap="subjectExtMap">
+        SELECT
+        rs.*,rssu.supervisio_results
+        FROM
+        (
+        SELECT
+        rss.subject_flow,rss.subject_name,rss.open_time,rss.base_code,
+        rss.dev_time,rss.dev_time_close,rss.closed_time,rss.org_flow,
+        rss.org_name,rss.spe_id,rss.spe_name,rss.supervisio_summary,
+        rss.subject_year,rss.avg_score,rss.subject_edit,
+        rss.subject_Activiti_Flows,rss.SUP_FEEDBACK,SPE_FEEDBACK,rss.major_feed_back
+        FROM res_supervisio_subject rss
+        WHERE
+        rss.record_status = 'Y'
+        AND rss.org_flow IN (
+        SELECT ORG_FLOW
+        FROM PDSCI.SYS_ORG
+        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        <if test="org!=null">
+            <if test="org.orgProvId!=null and org.orgProvId!=''">
+                AND ORG_PROV_ID = #{org.orgProvId}
+            </if>
+            <if test="org.orgCityId!=null and org.orgCityId!=''">
+                AND ORG_CITY_ID = #{org.orgCityId}
+            </if>
+            <if test="org.orgLevelId!=null and org.orgLevelId!=''">
+                AND ORG_LEVEL_ID = #{org.orgLevelId}
+            </if>
+            <if test="org.orgTypeId!=null and org.orgTypeId!=''">
+                AND ORG_TYPE_ID = #{org.orgTypeId}
+            </if>
+        </if>
+        )
+        <if test="orgFlow!=null and orgFlow!=''">
+            AND rss.org_flow = #{orgFlow}
+        </if>
+        <if test="speId!=null and speId!=''">
+            AND rss.spe_id = #{speId}
+        </if>
+        <if test="subjectYear!=null and subjectYear!=''">
+            AND rss.subject_year = #{subjectYear}
+        </if>
+        <if test="baseCode!=null and baseCode!=''">
+            AND rss.base_code = #{baseCode}
+        </if>
+        <if test="subjectFlow!=null and subjectFlow!=''">
+            AND rss.subject_flow = #{subjectFlow}
+        </if>
+        <if test="subjectName!=null and subjectName!=''">
+            <bind name="subjectName" value="'%'+subjectName+'%'"/>
+            and rss.subject_name like #{subjectName}
+        </if>
+        <if test="userFlow!=null and userFlow!=''">
+            AND rss.subject_flow in (
+            select subject_flow from res_supervisio_subject_user
+            where record_status = 'Y'
+            and user_flow = #{userFlow}
+            )
+        </if>
+        <if test="orgFlow2!=null and orgFlow2!=''">
+            AND rss.org_flow = #{orgFlow2}
+        </if>
+        order by create_time desc ,spe_Id
+        ) rs
+        left join (
+        SELECT supervisio_results, subject_flow
+        FROM res_supervisio_subject_user
+        WHERE record_status = 'Y'
+        <if test="userFlow!=null and userFlow!=''">
+            and user_flow = #{userFlow}
+        </if> ) rssu
+        ON rssu.subject_flow = rs.subject_flow
+        where 1=1
+        <if test="supervisionResults!=null and supervisionResults!=''">
+            AND rssu.supervisio_results = #{supervisionResults}
+        </if>
+    </select>
+
+    <resultMap id="assignMap" type="java.util.HashMap">
+        <result column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow"/>
+        <result column="ORG_FLOW" jdbcType="VARCHAR" property="orgFlow"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+        <result column="SPE_ID" jdbcType="VARCHAR" property="speId"/>
+        <result column="SPE_NAME" jdbcType="VARCHAR" property="speName"/>
+        <result column="BASE_CODE" jdbcType="VARCHAR" property="baseCode"/>
+    </resultMap>
+    <select id="searchSpeAssignBySpeIdAndYear" parameterType="String" resultMap="assignMap">
+          SELECT ROSA.RECORD_FLOW,ROSA.ORG_FLOW,SO.ORG_NAME,SO.BASE_CODE,
+                ROSA.SPE_ID,ROSA.SPE_NAME
+          FROM RES_ORG_SPE_ASSIGN ROSA
+          LEFT JOIN SYS_ORG SO ON ROSA.ORG_FLOW = SO.ORG_FLOW
+          WHERE ROSA.RECORD_STATUS = 'Y'
+          AND SO.RECORD_STATUS = 'Y'
+          <if test="speId!=null and speId!=''">
+             AND ROSA.SPE_ID = #{speId}
+          </if>
+          <if test="currYear!=null and currYear!=''">
+             AND ROSA.ASSIGN_YEAR = #{currYear}
+          </if>
+          ORDER BY ROSA.ORG_FLOW
+    </select>
+
+
+    <resultMap id="indicators" type="java.util.HashMap">
+        <result column="SUBJECT_FLOW" jdbcType="VARCHAR" property="subjectFlow"/>
+        <result column="TABLE_PATH_NAME" jdbcType="VARCHAR" property="tablePathName"/>
+        <result column="INDICATORS" jdbcType="VARCHAR" property="indicators"/>
+        <result column="ITEM_ID" jdbcType="VARCHAR" property="itemId"/>
+        <result column="FULL_SCORE" jdbcType="VARCHAR" property="fullScore"/>
+        <result column="AVG" jdbcType="VARCHAR" property="avg"/>
+        <result column="SCORE1" jdbcType="VARCHAR" property="score1"/>
+        <result column="SCORE2" jdbcType="VARCHAR" property="score2"/>
+        <result column="USER_FLOW1" jdbcType="VARCHAR" property="userFlow1"/>
+        <result column="USER_FLOW2" jdbcType="VARCHAR" property="userFlow2"/>
+    </resultMap>
+    <select id="searchEvaluationIndicators" parameterType="java.util.ArrayList" resultMap="indicators">
+        SELECT A.SUBJECT_FLOW,B.TABLE_PATH_NAME,B.INDICATORS,A.ITEM_ID,B.FULL_SCORE,
+            CASE
+                WHEN instr(A.SCORE, ',') > 0
+                THEN TO_CHAR((TO_NUMBER(SUBSTR(A.SCORE,0,1))+TO_NUMBER(SUBSTR(A.SCORE,instr(A.SCORE, ',')+1)))/2)
+                ELSE A.SCORE
+                END AVG,
+                CASE
+                    WHEN instr(A.SCORE, ',') > 0
+                    THEN SUBSTR(A.SCORE,0, INSTR(A.SCORE, ',')-1)
+                    ELSE A.SCORE
+                    END SCORE1,
+                CASE
+                    WHEN instr(A.SCORE, ',') > 0
+                    THEN SUBSTR(A.SCORE,INSTR(A.SCORE, ',')+1)
+                    ELSE ''
+                    END SCORE2,
+            CASE
+                WHEN instr(A.USER_FLOW, ',') > 0
+                THEN SUBSTR(A.USER_FLOW,0,INSTR(A.USER_FLOW, ',')-1)
+                ELSE A.USER_FLOW
+                END USER_FLOW1,
+            CASE
+                WHEN instr(A.USER_FLOW, ',') > 0
+                THEN SUBSTR(A.USER_FLOW,INSTR(A.USER_FLOW, ',')+1)
+                ELSE ''
+                END USER_FLOW2
+        FROM (
+            SELECT
+                ITEM_ID,WM_CONCAT(SCORE) SCORE,WM_CONCAT(USER_FLOW) USER_FLOW,FILE_ROUTE,SUBJECT_FLOW,SCORE_TYPE
+            FROM (
+                SELECT
+                    ITEM_ID,CASE SCORE WHEN '√' THEN '-100' ELSE SCORE END AS SCORE,USER_FLOW,FILE_ROUTE,SUBJECT_FLOW,NVL(SCORE_TYPE,'d') SCORE_TYPE
+                FROM RES_SCHEDULE_SCORE
+                WHERE RECORD_STATUS='Y'
+                AND SUBJECT_FLOW IN
+                    <foreach collection="list" open="(" separator="," close=")" item="item">#{item}</foreach>
+            ORDER BY USER_FLOW
+            )
+        GROUP BY ITEM_ID,FILE_ROUTE,SUBJECT_FLOW,SCORE_TYPE
+        ) A
+        LEFT JOIN (
+            SELECT
+                ITEM_ID,FULL_SCORE,INDICATORS,ORDER_NUM,TABLE_PATH_NAME
+            FROM RES_EVALUATION_INDICATORS
+            WHERE RECORD_STATUS='Y'
+        ) b
+        ON A.ITEM_ID = B.ITEM_ID
+        AND A.FILE_ROUTE = B.TABLE_PATH_NAME
+        WHERE B.FULL_SCORE IS NOT NULL AND A.SCORE_TYPE !='K'
+        ORDER BY A.SUBJECT_FLOW,CAST(B.ORDER_NUM AS INTEGER)
+    </select>
+
+    <resultMap id="ResSupervisioSubjectUserMap" type="java.util.HashMap">
+        <result column="SUBJECT_FLOW" jdbcType="VARCHAR" property="subjectFlow"/>
+        <result column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow"/>
+        <result column="SUBJECT_NAME" jdbcType="VARCHAR" property="subjectName"/>
+        <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow"/>
+        <result column="USER_NAME" jdbcType="VARCHAR" property="userName"/>
+        <result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus"/>
+        <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime"/>
+        <result column="CREATE_USER_FLOW" jdbcType="VARCHAR" property="createUserFlow"/>
+        <result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime"/>
+        <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow"/>
+        <result column="SPE_SCORE_TOTAL" jdbcType="VARCHAR" property="speScoreTotal"/>
+        <result column="EVALUATION_DATE" jdbcType="VARCHAR" property="evaluationDate"/>
+        <result column="SPE_CONTENT" jdbcType="VARCHAR" property="speContent"/>
+        <result column="USER_LEVEL_ID" jdbcType="VARCHAR" property="userLevelID"/>
+    </resultMap>
+    <select id="selectSupervisioUserListByFlowAndUserLevelID" parameterType="String" resultMap="ResSupervisioSubjectUserMap">
+        SELECT rssu.RECORD_FLOW, rssu.SUBJECT_FLOW, rssu.SUBJECT_NAME, rssu.USER_FLOW, ssu.USER_NAME
+        , rssu.RECORD_STATUS, rssu.CREATE_TIME, rssu.CREATE_USER_FLOW, rssu.MODIFY_TIME, rssu.MODIFY_USER_FLOW
+        , rssu.SPE_SCORE_TOTAL, rssu.EVALUATION_DATE, rssu.SPE_CONTENT,ssu.USER_LEVEL_ID
+        FROM RES_SUPERVISIO_SUBJECT_USER rssu
+        left join SYS_USER ssu on ssu.USER_FLOW =rssu.USER_FLOW
+        WHERE rssu.RECORD_STATUS = 'Y'
+        <if test="subjectFlow!=null and subjectFlow!=''">
+            AND rssu.SUBJECT_FLOW = #{subjectFlow}
+        </if>
+    </select>
+    
+    <update id="updateSubjectFeedback" parameterType="map">
+        update res_supervisio_subject
+        <if test="type != null and type != '' and type == 'sup'.toString()">
+            set sup_feedback = #{path}
+            where record_status = 'Y'
+            and subject_activiti_flows = #{subjectActivitiFlows}
+        </if>
+        <if test="type != null and type != '' and type == 'spe'.toString()">
+            set spe_feedback = #{path}
+            where record_status = 'Y'
+            and subject_flow = #{subjectFlow}
+        </if>
+    </update>
+
+    <resultMap id="avgMap" type="java.util.HashMap">
+        <result column="SUBJECT_ACTIVITI_FLOWS" jdbcType="VARCHAR" property="subjectActivitiFlows"/>
+        <result column="AVG_SCORE" jdbcType="VARCHAR" property="avgScore"/>
+    </resultMap>
+    <select id="selectAvgScoreBySubjectActivitiFlows" parameterType="string" resultMap="avgMap">
+        select subject_activiti_flows, sum (subject_avg_score), count(subject_avg_score),
+                to_char(ROUND(SUM(subject_avg_score) / COUNT(subject_avg_score), 2)) as avg_score
+        from (
+            select subject_flow,subject_activiti_flows,sum(spe_total_score),count(spe_total_score),
+                   case when spe_id = '0700' then to_char(ROUND(SUM(round(spe_total_score * 35/45,2)) / COUNT(spe_total_score), 2))
+                        when spe_id = '2000' then to_char(ROUND(SUM(round(spe_total_score * 35/38,2)) / COUNT(spe_total_score), 2))
+                        when spe_id = '2400' then to_char(ROUND(SUM(round(spe_total_score * 35/30,2)) / COUNT(spe_total_score), 2))
+                    else to_char(ROUND(SUM(spe_total_score) / COUNT(spe_total_score), 2))
+                    end as subject_avg_score
+            from (
+                select res.subject_flow,res.spe_user_flow,res.spe_id,
+                      rss.subject_activiti_flows,sum(spe_score) spe_total_score
+                from RES_EVALUATION_SCORE res
+                left join res_supervisio_subject rss on rss.subject_flow = res.subject_flow
+                where res.record_status = 'Y'
+                and rss.record_status = 'Y'
+                and res.subject_flow in (
+                   select subject_flow
+                   from res_supervisio_subject_user
+                   where record_status = 'Y'
+                   and subject_activiti_flows = #{subjectActivitiFlows}
+                   and evaluation_date is not null
+                )
+                and item_id like '2022-4.%'
+                group by res.subject_flow,res.spe_user_flow,rss.subject_activiti_flows,res.spe_id
+            )
+            group by  subject_flow,subject_activiti_flows,spe_id
+        )
+        group by  subject_activiti_flows
+    </select>
+    <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResOrgSpeAssign" >
+        <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+        <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+        <result column="ASSIGN_PLAN" property="assignPlan" jdbcType="DECIMAL" />
+        <result column="ASSIGN_REAL" property="assignReal" jdbcType="DECIMAL" />
+        <result column="ASSIGN_YEAR" property="assignYear" jdbcType="VARCHAR" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+        <result column="ASSIGN_PLAN_ORG" property="assignPlanOrg" jdbcType="DECIMAL" />
+        <result column="IS_SEND" property="isSend" jdbcType="VARCHAR" />
+        <result column="EDUCATION" property="education" jdbcType="VARCHAR" />
+        <result column="GRADUATE_SPE" property="graduateSpe" jdbcType="VARCHAR" />
+        <result column="SPE_DESC" property="speDesc" jdbcType="VARCHAR" />
+        <result column="ASSIGN_START_STOP" property="assignStartStop" jdbcType="VARCHAR" />
+        <result column="ASSIGN_UNDO_RECOVERY" property="assignUndoRecovery" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="searchSpeAll" resultMap="BaseResultMap">
+     select distinct SPE_NAME,SPE_ID from RES_ORG_SPE_ASSIGN where SPE_NAME is not null
+    </select>
+
+
+
+    <select id="searchSubjectNameNum" parameterType="String" resultType="String">
+        select count(SUBJECT_NAME) num
+        from RES_SUPERVISIO_SUBJECT
+        where SUBJECT_NAME= #{subjectName}
+        AND RECORD_STATUS='Y'
+    </select>
+
+    <select id="searchSubExpertNum" parameterType="String" resultType="String">
+        select count(USER_FLOW) SUB_NUM
+        from SYS_USER
+        where USER_FLOW in (
+		    select USER_FLOW from RES_SUPERVISIO_SUBJECT_USER
+		    where SUBJECT_FLOW=#{subjectFlow}
+		    and EVALUATION_DATE is not null)
+		and USER_LEVEL_ID ='expertLeader'
+    </select>
+
+    <resultMap id="ResSupervisioRecordsMap" type="java.util.HashMap">
+        <result column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+        <result column="SUBJECT_FLOW" property="subjectFlow" jdbcType="VARCHAR" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+        <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+        <result column="ROLE_FLAG" property="roleFlag" jdbcType="VARCHAR" />
+        <result column="SUB_NUM" property="subNum" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="selectRecordBySubjectFlowAndRoleFlag" parameterType="String" resultMap="ResSupervisioRecordsMap">
+        select rssr.*,su.USER_NAME from RES_SUPERVISIO_SUBJECT_RECORDS rssr
+        left join SYS_USER su on su.USER_FLOW = rssr.USER_FLOW
+        where SUBJECT_FLOW=#{subjectFlow} and rssr.RECORD_STATUS='Y' and rssr.ROLE_FLAG=#{RoleFlag}
+        order by rssr.USER_FLOW,rssr.CREATE_TIME
+    </select>
+
+
+    <select id="selectHospSuperList" parameterType="String" resultMap="com.pinde.sci.dao.base.ResHospSupervSubjectMapper.BaseResultMap">
+        SELECT
+        *
+        FROM
+        RES_HOSP_SUPERV_SUBJECT
+        WHERE RECORD_STATUS = 'Y'
+        <if test="matching!=null and matching!=''">
+            AND MATCHING IS NOT NULL
+        </if>
+        AND ORG_FLOW = #{orgFlow}
+        <if test="activityName!=null and activityName!=''">
+            AND SUBJECT_NAME LIKE '%${activityName}%'
+        </if>
+        <if test="inspectionType!=null and inspectionType!=''">
+            AND INSPECTION_TYPE = #{inspectionType}
+        </if>
+        <if test="deptFlow!=null and deptFlow!=''">
+            AND DEPT_FLOW = #{deptFlow}
+        </if>
+        <if test="activityStartTime!=null and activityStartTime!=''">
+            AND ACTIVITY_START_TIME <![CDATA[>=]]> #{activityStartTime}
+        </if>
+        <if test="activityEndTime!=null and activityEndTime!=''">
+            AND ACTIVITY_END_TIME <![CDATA[<=]]> #{activityEndTime}
+        </if>
+        <if test="startTime!=null and startTime!=''">
+            AND START_TIME <![CDATA[>=]]> #{startTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            AND END_TIME <![CDATA[<=]]> #{endTime}
+        </if>
+        <if test="teachName!=null and teachName!=''">
+            AND ( TEACH_NAME LIKE '%${teachName}%' OR ACTUAL_SPEAKER LIKE '%${teachName}%' )
+        </if>
+        order by ACTIVITY_START_TIME DESC
+
+    </select>
+
+
+    <select id="hospitalLeaderScoreList" parameterType="String" resultMap="com.pinde.sci.dao.base.ResHospSupervSubjectMapper.BaseResultMap">
+    SELECT  * FROM  RES_HOSP_SUPERV_SUBJECT
+    WHERE
+        ( LEADER_ONE_FLOW = #{userFlow} OR LEADER_TWO_FLOW = #{userFlow} OR LEADER_THREE_FLOW = #{userFlow} OR LEADER_FOUR_FLOW = #{userFlow} )
+        AND RECORD_STATUS = 'Y'
+        <if test="activityName!=null and activityName!=''">
+            AND ACTIVITY_NAME LIKE '%${activityName}%'
+        </if>
+        <if test="deptFlow!=null and deptFlow!=''">
+            AND DEPT_FLOW = #{deptFlow}
+        </if>
+        <if test="inspectionType!=null and inspectionType!=''">
+            AND INSPECTION_TYPE = #{inspectionType}
+        </if>
+        ORDER BY ACTIVITY_START_TIME DESC
+    </select>
+
+    <select id="selectDeptByOrgFlow" parameterType="String" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+	SELECT sd.DEPT_FLOW, sd.ORG_FLOW, sd.DEPT_CODE, sd.DEPT_NAME, sd.ORDINAL
+			, sd.RECORD_STATUS, cfg.record_flow, cfg.STANDARD_DEPT_NAME
+		FROM pdsci.sys_dept sd
+			LEFT JOIN SCH_and_Standard_Dept_cfg cfg ON sd.dept_flow = cfg.sch_dept_flow
+		AND cfg.record_status = 'Y'
+		WHERE SD.ORG_FLOW = #{orgFlow}
+		ORDER BY RECORD_STATUS DESC, ORDINAL
+    </select>
+
+    <select id="chooseTable" parameterType="String" resultMap="com.pinde.sci.dao.base.ResHospScoreTableMapper.BaseResultMap">
+	    SELECT TABLE_FLOW, TABLE_NAME, TABLE_PATH_NAME, TABLE_TYPE_ID, TABLE_TYPE_NAME, SPE_ID, SPE_NAME,
+	        RECORD_STATUS, ORDER_NUM, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+        FROM PDSCI.RES_HOSP_SCORE_TABLE
+        WHERE TABLE_TYPE_ID = #{inspectionType}
+        AND (
+            SPE_ID = '0000'
+            <if test="speId!=null and speId!=''">
+                OR  SPE_ID = #{speId}
+            </if>
+            )
+        ORDER BY ORDER_NUM
+    </select>
+</mapper>

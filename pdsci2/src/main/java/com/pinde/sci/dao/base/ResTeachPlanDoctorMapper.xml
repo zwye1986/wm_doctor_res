@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.ResTeachPlanDoctorMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResTeachPlanDoctor" >
+    <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+    <result column="PLAN_FLOW" property="planFlow" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+    <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+    <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_CODE" property="doctorCode" jdbcType="VARCHAR" />
+    <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
+    <result column="DOCTOR_ROLE_FLOW" property="doctorRoleFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_ROLE_NAME" property="doctorRoleName" jdbcType="VARCHAR" />
+    <result column="APPEAR_FLAG" property="appearFlag" jdbcType="VARCHAR" />
+    <result column="AFFIRM_FLAG" property="affirmFlag" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="PLAN_REMOVE" property="planRemove" jdbcType="VARCHAR" />
+    <result column="GRADE_ID" property="gradeId" jdbcType="VARCHAR" />
+    <result column="GRADE_NAME" property="gradeName" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_START_TIME" property="certificateStartTime" jdbcType="VARCHAR" />
+    <result column="GAIN_CERTIFICATE_ID" property="gainCertificateId" jdbcType="VARCHAR" />
+    <result column="GAIN_CERTIFICATE_NAME" property="gainCertificateName" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_NO" property="certificateNo" jdbcType="VARCHAR" />
+    <result column="SEND_CERTIFICATE_ID" property="sendCertificateId" jdbcType="VARCHAR" />
+    <result column="SEND_CERTIFICATE_NAME" property="sendCertificateName" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="SEND_CERTIFICATE_TIME" property="sendCertificateTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RECORD_FLOW, PLAN_FLOW, ORG_FLOW, ORG_NAME, SPE_ID, SPE_NAME, DOCTOR_FLOW, DOCTOR_CODE, 
+    DOCTOR_NAME, DOCTOR_ROLE_FLOW, DOCTOR_ROLE_NAME, APPEAR_FLAG, AFFIRM_FLAG, RECORD_STATUS, 
+    PLAN_REMOVE, GRADE_ID, GRADE_NAME, CERTIFICATE_START_TIME, GAIN_CERTIFICATE_ID, GAIN_CERTIFICATE_NAME, 
+    CERTIFICATE_NO, SEND_CERTIFICATE_ID, SEND_CERTIFICATE_NAME, CREATE_TIME, CREATE_USER_FLOW, 
+    MODIFY_TIME, MODIFY_USER_FLOW, SEND_CERTIFICATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResTeachPlanDoctorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_TEACH_PLAN_DOCTOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_TEACH_PLAN_DOCTOR
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.RES_TEACH_PLAN_DOCTOR
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResTeachPlanDoctorExample" >
+    delete from PDSCI.RES_TEACH_PLAN_DOCTOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResTeachPlanDoctor" >
+    insert into PDSCI.RES_TEACH_PLAN_DOCTOR (RECORD_FLOW, PLAN_FLOW, ORG_FLOW, 
+      ORG_NAME, SPE_ID, SPE_NAME, 
+      DOCTOR_FLOW, DOCTOR_CODE, DOCTOR_NAME, 
+      DOCTOR_ROLE_FLOW, DOCTOR_ROLE_NAME, APPEAR_FLAG, 
+      AFFIRM_FLAG, RECORD_STATUS, PLAN_REMOVE, 
+      GRADE_ID, GRADE_NAME, CERTIFICATE_START_TIME, 
+      GAIN_CERTIFICATE_ID, GAIN_CERTIFICATE_NAME, 
+      CERTIFICATE_NO, SEND_CERTIFICATE_ID, SEND_CERTIFICATE_NAME, 
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+      MODIFY_USER_FLOW, SEND_CERTIFICATE_TIME)
+    values (#{recordFlow,jdbcType=VARCHAR}, #{planFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, 
+      #{orgName,jdbcType=VARCHAR}, #{speId,jdbcType=VARCHAR}, #{speName,jdbcType=VARCHAR}, 
+      #{doctorFlow,jdbcType=VARCHAR}, #{doctorCode,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, 
+      #{doctorRoleFlow,jdbcType=VARCHAR}, #{doctorRoleName,jdbcType=VARCHAR}, #{appearFlag,jdbcType=VARCHAR}, 
+      #{affirmFlag,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{planRemove,jdbcType=VARCHAR}, 
+      #{gradeId,jdbcType=VARCHAR}, #{gradeName,jdbcType=VARCHAR}, #{certificateStartTime,jdbcType=VARCHAR}, 
+      #{gainCertificateId,jdbcType=VARCHAR}, #{gainCertificateName,jdbcType=VARCHAR}, 
+      #{certificateNo,jdbcType=VARCHAR}, #{sendCertificateId,jdbcType=VARCHAR}, #{sendCertificateName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
+      #{modifyUserFlow,jdbcType=VARCHAR}, #{sendCertificateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResTeachPlanDoctor" >
+    insert into PDSCI.RES_TEACH_PLAN_DOCTOR
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        RECORD_FLOW,
+      </if>
+      <if test="planFlow != null" >
+        PLAN_FLOW,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="speId != null" >
+        SPE_ID,
+      </if>
+      <if test="speName != null" >
+        SPE_NAME,
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW,
+      </if>
+      <if test="doctorCode != null" >
+        DOCTOR_CODE,
+      </if>
+      <if test="doctorName != null" >
+        DOCTOR_NAME,
+      </if>
+      <if test="doctorRoleFlow != null" >
+        DOCTOR_ROLE_FLOW,
+      </if>
+      <if test="doctorRoleName != null" >
+        DOCTOR_ROLE_NAME,
+      </if>
+      <if test="appearFlag != null" >
+        APPEAR_FLAG,
+      </if>
+      <if test="affirmFlag != null" >
+        AFFIRM_FLAG,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="planRemove != null" >
+        PLAN_REMOVE,
+      </if>
+      <if test="gradeId != null" >
+        GRADE_ID,
+      </if>
+      <if test="gradeName != null" >
+        GRADE_NAME,
+      </if>
+      <if test="certificateStartTime != null" >
+        CERTIFICATE_START_TIME,
+      </if>
+      <if test="gainCertificateId != null" >
+        GAIN_CERTIFICATE_ID,
+      </if>
+      <if test="gainCertificateName != null" >
+        GAIN_CERTIFICATE_NAME,
+      </if>
+      <if test="certificateNo != null" >
+        CERTIFICATE_NO,
+      </if>
+      <if test="sendCertificateId != null" >
+        SEND_CERTIFICATE_ID,
+      </if>
+      <if test="sendCertificateName != null" >
+        SEND_CERTIFICATE_NAME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="sendCertificateTime != null" >
+        SEND_CERTIFICATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="planFlow != null" >
+        #{planFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="speId != null" >
+        #{speId,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        #{speName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorCode != null" >
+        #{doctorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null" >
+        #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorRoleFlow != null" >
+        #{doctorRoleFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorRoleName != null" >
+        #{doctorRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="appearFlag != null" >
+        #{appearFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="affirmFlag != null" >
+        #{affirmFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="planRemove != null" >
+        #{planRemove,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeId != null" >
+        #{gradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeName != null" >
+        #{gradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateStartTime != null" >
+        #{certificateStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="gainCertificateId != null" >
+        #{gainCertificateId,jdbcType=VARCHAR},
+      </if>
+      <if test="gainCertificateName != null" >
+        #{gainCertificateName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNo != null" >
+        #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sendCertificateId != null" >
+        #{sendCertificateId,jdbcType=VARCHAR},
+      </if>
+      <if test="sendCertificateName != null" >
+        #{sendCertificateName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="sendCertificateTime != null" >
+        #{sendCertificateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResTeachPlanDoctorExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.RES_TEACH_PLAN_DOCTOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.RES_TEACH_PLAN_DOCTOR
+    <set >
+      <if test="record.recordFlow != null" >
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planFlow != null" >
+        PLAN_FLOW = #{record.planFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speId != null" >
+        SPE_ID = #{record.speId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speName != null" >
+        SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorFlow != null" >
+        DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorCode != null" >
+        DOCTOR_CODE = #{record.doctorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorName != null" >
+        DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorRoleFlow != null" >
+        DOCTOR_ROLE_FLOW = #{record.doctorRoleFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorRoleName != null" >
+        DOCTOR_ROLE_NAME = #{record.doctorRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appearFlag != null" >
+        APPEAR_FLAG = #{record.appearFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.affirmFlag != null" >
+        AFFIRM_FLAG = #{record.affirmFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planRemove != null" >
+        PLAN_REMOVE = #{record.planRemove,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gradeId != null" >
+        GRADE_ID = #{record.gradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gradeName != null" >
+        GRADE_NAME = #{record.gradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateStartTime != null" >
+        CERTIFICATE_START_TIME = #{record.certificateStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gainCertificateId != null" >
+        GAIN_CERTIFICATE_ID = #{record.gainCertificateId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gainCertificateName != null" >
+        GAIN_CERTIFICATE_NAME = #{record.gainCertificateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateNo != null" >
+        CERTIFICATE_NO = #{record.certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendCertificateId != null" >
+        SEND_CERTIFICATE_ID = #{record.sendCertificateId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendCertificateName != null" >
+        SEND_CERTIFICATE_NAME = #{record.sendCertificateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendCertificateTime != null" >
+        SEND_CERTIFICATE_TIME = #{record.sendCertificateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.RES_TEACH_PLAN_DOCTOR
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      PLAN_FLOW = #{record.planFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      SPE_ID = #{record.speId,jdbcType=VARCHAR},
+      SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_CODE = #{record.doctorCode,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
+      DOCTOR_ROLE_FLOW = #{record.doctorRoleFlow,jdbcType=VARCHAR},
+      DOCTOR_ROLE_NAME = #{record.doctorRoleName,jdbcType=VARCHAR},
+      APPEAR_FLAG = #{record.appearFlag,jdbcType=VARCHAR},
+      AFFIRM_FLAG = #{record.affirmFlag,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      PLAN_REMOVE = #{record.planRemove,jdbcType=VARCHAR},
+      GRADE_ID = #{record.gradeId,jdbcType=VARCHAR},
+      GRADE_NAME = #{record.gradeName,jdbcType=VARCHAR},
+      CERTIFICATE_START_TIME = #{record.certificateStartTime,jdbcType=VARCHAR},
+      GAIN_CERTIFICATE_ID = #{record.gainCertificateId,jdbcType=VARCHAR},
+      GAIN_CERTIFICATE_NAME = #{record.gainCertificateName,jdbcType=VARCHAR},
+      CERTIFICATE_NO = #{record.certificateNo,jdbcType=VARCHAR},
+      SEND_CERTIFICATE_ID = #{record.sendCertificateId,jdbcType=VARCHAR},
+      SEND_CERTIFICATE_NAME = #{record.sendCertificateName,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      SEND_CERTIFICATE_TIME = #{record.sendCertificateTime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResTeachPlanDoctor" >
+    update PDSCI.RES_TEACH_PLAN_DOCTOR
+    <set >
+      <if test="planFlow != null" >
+        PLAN_FLOW = #{planFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="speId != null" >
+        SPE_ID = #{speId,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        SPE_NAME = #{speName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorCode != null" >
+        DOCTOR_CODE = #{doctorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null" >
+        DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorRoleFlow != null" >
+        DOCTOR_ROLE_FLOW = #{doctorRoleFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorRoleName != null" >
+        DOCTOR_ROLE_NAME = #{doctorRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="appearFlag != null" >
+        APPEAR_FLAG = #{appearFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="affirmFlag != null" >
+        AFFIRM_FLAG = #{affirmFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="planRemove != null" >
+        PLAN_REMOVE = #{planRemove,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeId != null" >
+        GRADE_ID = #{gradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeName != null" >
+        GRADE_NAME = #{gradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateStartTime != null" >
+        CERTIFICATE_START_TIME = #{certificateStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="gainCertificateId != null" >
+        GAIN_CERTIFICATE_ID = #{gainCertificateId,jdbcType=VARCHAR},
+      </if>
+      <if test="gainCertificateName != null" >
+        GAIN_CERTIFICATE_NAME = #{gainCertificateName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNo != null" >
+        CERTIFICATE_NO = #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sendCertificateId != null" >
+        SEND_CERTIFICATE_ID = #{sendCertificateId,jdbcType=VARCHAR},
+      </if>
+      <if test="sendCertificateName != null" >
+        SEND_CERTIFICATE_NAME = #{sendCertificateName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="sendCertificateTime != null" >
+        SEND_CERTIFICATE_TIME = #{sendCertificateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResTeachPlanDoctor" >
+    update PDSCI.RES_TEACH_PLAN_DOCTOR
+    set PLAN_FLOW = #{planFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      SPE_ID = #{speId,jdbcType=VARCHAR},
+      SPE_NAME = #{speName,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_CODE = #{doctorCode,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      DOCTOR_ROLE_FLOW = #{doctorRoleFlow,jdbcType=VARCHAR},
+      DOCTOR_ROLE_NAME = #{doctorRoleName,jdbcType=VARCHAR},
+      APPEAR_FLAG = #{appearFlag,jdbcType=VARCHAR},
+      AFFIRM_FLAG = #{affirmFlag,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      PLAN_REMOVE = #{planRemove,jdbcType=VARCHAR},
+      GRADE_ID = #{gradeId,jdbcType=VARCHAR},
+      GRADE_NAME = #{gradeName,jdbcType=VARCHAR},
+      CERTIFICATE_START_TIME = #{certificateStartTime,jdbcType=VARCHAR},
+      GAIN_CERTIFICATE_ID = #{gainCertificateId,jdbcType=VARCHAR},
+      GAIN_CERTIFICATE_NAME = #{gainCertificateName,jdbcType=VARCHAR},
+      CERTIFICATE_NO = #{certificateNo,jdbcType=VARCHAR},
+      SEND_CERTIFICATE_ID = #{sendCertificateId,jdbcType=VARCHAR},
+      SEND_CERTIFICATE_NAME = #{sendCertificateName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      SEND_CERTIFICATE_TIME = #{sendCertificateTime,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

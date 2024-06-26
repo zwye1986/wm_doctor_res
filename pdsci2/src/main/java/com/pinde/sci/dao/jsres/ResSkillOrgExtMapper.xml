@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jsres.ResSkillOrgExtMapper">
+    
+    <update id="delSkillOrgBySkillFlow" parameterType="string">
+        update res_skill_org
+        set record_status = 'N'
+        where record_status = 'Y'
+        and skill_flow = #{skillFlow}
+    </update>
+
+    <insert id="insertAllOrg" parameterType="map">
+        INSERT ALL
+        <foreach item="orgFlow" index="index" collection="orgFlowList"  separator="">
+            INTO RES_SKILL_ORG (
+            SKILL_ORG_FLOW,
+            SKILL_FLOW,
+            ORG_FLOW,
+            RECORD_STATUS,
+            CREATE_TIME,
+            CREATE_USER_FLOW,
+            MODIFY_TIME,
+            MODIFY_USER_FLOW
+            )
+            VALUES
+            (
+            lower(rawtohex(sys_guid())),
+            #{skillFlow,jdbcType=VARCHAR},
+            #{orgFlow},
+            #{recordStatus,jdbcType=VARCHAR},
+            #{createTime,jdbcType=VARCHAR},
+            #{createUserFlow,jdbcType=VARCHAR},
+            #{modifyTime,jdbcType=VARCHAR},
+            #{modifyUserFlow,jdbcType=VARCHAR})
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+    
+    <select id="searchSkillConfig" parameterType="string" resultMap="com.pinde.sci.dao.base.ResSkillConfigMapper.BaseResultMap">
+        select * from res_skill_config
+        where record_status = 'Y'
+        <if test="skillFlow!=null and skillFlow!=''">
+          and skill_flow != #{skillFlow}
+        </if>
+        and ((skill_start_time <![CDATA[ <= ]]> #{skillStartTime} and skill_end_time >= #{skillStartTime})
+        or (skill_start_time <![CDATA[ <= ]]> #{skillEndTime} and skill_end_time >= #{skillEndTime})
+        or (skill_start_time >= #{skillStartTime} and skill_end_time <![CDATA[ <= ]]> #{skillEndTime}))
+    </select>
+</mapper>

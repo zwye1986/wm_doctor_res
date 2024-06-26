@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.hbres.HbresTempMapper">
+    <delete id="deleteDeptDetailByApplyYear">
+        delete from hbres_doctor_dept_detail where doctor_flow=#{doctorFlow} and apply_year=#{applyYear}
+    </delete>
+    <insert id="insetDeptDetailByApplyYear">
+
+INSERT INTO HBRES_DOCTOR_DEPT_DETAIL
+  (RECORD_FLOW,
+   RESULT_FLOW,
+   DOCTOR_FLOW,
+   SCH_START_DATE,
+   SCH_END_DATE,
+   SCH_MONTH,
+   ORG_FLOW,
+   ORG_NAME,
+   DEPT_FLOW,
+   DEPT_NAME,
+   SCH_DEPT_FLOW,
+   SCH_DEPT_NAME,
+   ROTATION_FLOW,
+   GROUP_FLOW,
+   STANDARD_GROUP_FLOW,
+   STANDARD_DEPT_ID,
+   STANDARD_DEPT_NAME,
+   REQ_NUM,
+   COMPLETE_NUM,
+   IN_COMPLETE_NUM,
+   OUT_COMPLETE_NUM,
+   AUDIT_NUM,
+   COMPLETE_BI,
+   OUT_COMPLETE_BI,
+   IN_COMPLETE_BI,
+   COMPLETE_BI_PER,
+   OUT_COMPLETE_BI_PER,
+   IN_COMPLETE_BI_PER,
+   AUDIT_BI,
+   APPLY_YEAR,
+   RECORD_STATUS,
+   CREATE_TIME,
+   CREATE_USER_FLOW,
+   MODIFY_TIME,
+   MODIFY_USER_FLOW)
+  SELECT sys_guid() RECORD_FLOW,
+         SAR.RESULT_FLOW,
+         SAR.DOCTOR_FLOW,
+         SAR.SCH_START_DATE,
+         SAR.SCH_END_DATE,
+         SAR.SCH_MONTH,
+         SAR.ORG_FLOW,
+         SAR.ORG_NAME,
+         SAR.DEPT_FLOW,
+         SAR.DEPT_NAME,
+         SAR.SCH_DEPT_FLOW,
+         SAR.SCH_DEPT_NAME,
+         SAR.ROTATION_FLOW,
+         SAR.GROUP_FLOW,
+         SAR.STANDARD_GROUP_FLOW,
+         SAR.STANDARD_DEPT_ID,
+         SAR.STANDARD_DEPT_NAME,
+         SAR.REQ_NUM,
+         SAR.COMPLETE_NUM,
+         SAR.IN_COMPLETE_NUM,
+         SAR.OUT_COMPLETE_NUM,
+         SAR.AUDIT_NUM,
+         CASE
+           WHEN REQ_NUM = 0 THEN
+            '-'
+           ELSE
+            TO_CHAR(CASE
+           WHEN ROUND(COMPLETE_NUM / REQ_NUM, 2) * 100 > 100 THEN
+            100
+           ELSE
+            ROUND(COMPLETE_NUM / REQ_NUM, 2) * 100
+         END) END COMPLETE_BI,
+         CASE
+           WHEN REQ_NUM = 0 THEN
+            '-'
+           ELSE
+            TO_CHAR(CASE
+           WHEN ROUND(OUT_COMPLETE_NUM / REQ_NUM, 2) * 100 > 100 THEN
+            100
+           ELSE
+            ROUND(OUT_COMPLETE_NUM / REQ_NUM, 2) * 100
+         END) END OUT_COMPLETE_BI,
+         CASE
+           WHEN REQ_NUM = 0 THEN
+            '-'
+           ELSE
+
+            TO_CHAR(CASE
+           WHEN ROUND(IN_COMPLETE_NUM / REQ_NUM, 2) * 100 > 100 THEN
+            100
+           ELSE
+            ROUND(IN_COMPLETE_NUM / REQ_NUM, 2) * 100
+         END) END IN_COMPLETE_BI,
+
+         CASE
+           WHEN REQ_NUM = 0 THEN
+            '-'
+           ELSE
+            TO_CHAR(ROUND(case
+           when COMPLETE_NUM / REQ_NUM > 1 then
+            1
+           else
+            COMPLETE_NUM / REQ_NUM
+         end, 2) * 100) END COMPLETE_BI_PER,
+         CASE
+           WHEN REQ_NUM = 0 THEN
+            '-'
+           ELSE
+            TO_CHAR(ROUND(case
+           when OUT_COMPLETE_NUM / REQ_NUM > 1 then
+            1
+           else
+            OUT_COMPLETE_NUM / REQ_NUM
+         end, 2) * 100) END OUT_COMPLETE_BI_PER,
+         CASE
+           WHEN REQ_NUM = 0 THEN
+            '-'
+           ELSE
+            TO_CHAR(ROUND(case
+           when IN_COMPLETE_NUM / REQ_NUM > 1 then
+            1
+           else
+            IN_COMPLETE_NUM / REQ_NUM
+         end, 2) * 100) END IN_COMPLETE_BI_PER,
+         CASE
+           WHEN REQ_NUM = 0 THEN
+            '-'
+           ELSE
+            TO_CHAR(ROUND(CASE
+           WHEN REQ_NUM != 0 AND COMPLETE_NUM = 0 THEN
+            0
+           WHEN COMPLETE_NUM != 0 THEN
+            AUDIT_NUM / COMPLETE_NUM
+           ELSE
+            0
+         END, 2) * 100) END AUDIT_BI,
+         '${applyYear}',
+         'Y',
+         to_char(sysdate, 'YYYYMMDDHH24MISS'),
+         'System',
+         to_char(sysdate, 'YYYYMMDDHH24MISS'),
+         'System'
+    FROM (SELECT SAR.RESULT_FLOW,
+                 SAR.DOCTOR_FLOW,
+                 SAR.SCH_START_DATE,
+                 SAR.SCH_END_DATE,
+                 SAR.SCH_MONTH,
+                 SAR.ORG_FLOW,
+                 SAR.ORG_NAME,
+                 SAR.DEPT_FLOW,
+                 SAR.DEPT_NAME,
+                 SAR.SCH_DEPT_FLOW,
+                 SAR.SCH_DEPT_NAME,
+                 SAR.ROTATION_FLOW,
+                 SAR.GROUP_FLOW,
+                 SAR.STANDARD_GROUP_FLOW,
+                 SAR.STANDARD_DEPT_ID,
+                 SAR.STANDARD_DEPT_NAME,
+                 NVL(SUM(REQ.REQ_NUM), 0) REQ_NUM,
+                 TO_CHAR(NVL(SUM(RR.COMPLETE_NUM), 0)) COMPLETE_NUM,
+                 TO_CHAR(NVL(SUM(RR.IN_COMPLETE_NUM), 0)) IN_COMPLETE_NUM,
+                 SUM(RR.OUT_COMPLETE_NUM) OUT_COMPLETE_NUM,
+                 TO_CHAR(NVL(SUM(RR.AUDIT_NUM), 0)) AUDIT_NUM
+            FROM SCH_ARRANGE_RESULT SAR
+            LEFT JOIN SCH_ROTATION_DEPT SRD ON SAR.ROTATION_FLOW =
+                                               SRD.ROTATION_FLOW
+                                           AND SRD.ORG_FLOW IS NULL
+                                           AND SRD.GROUP_FLOW =
+                                               SAR.STANDARD_GROUP_FLOW
+                                           AND SRD.STANDARD_DEPT_ID =
+                                               SAR.STANDARD_DEPT_ID
+                                           AND SRD.RECORD_STATUS = 'Y'
+            LEFT JOIN (SELECT REQ.REL_RECORD_FLOW,NVL(SUM(REQ.REQ_NUM), 0) REQ_NUM
+            FROM SCH_ROTATION_DEPT_REQ REQ WHERE
+                                                REQ.RECORD_STATUS = 'Y'
+                                               AND REQ.REC_TYPE_ID IN
+                                                   ('CampaignNoItemRegistry',
+                                                    'CaseRegistry',
+                                                    'DiseaseRegistry',
+                                                    'OperationRegistry',
+                                                    'SkillRegistry')
+                                                    GROUP BY REQ.REL_RECORD_FLOW
+                                                    ) REQ ON  REQ.REL_RECORD_FLOW =
+                                                   SRD.RECORD_FLOW
+            LEFT JOIN RES_DOCTOR_SCH_PROCESS PROCESS ON PROCESS.SCH_RESULT_FLOW =
+                                                        SAR.RESULT_FLOW
+                                                    AND PROCESS.RECORD_STATUS = 'Y'
+            LEFT JOIN (SELECT PROCESS_FLOW,TO_CHAR(NVL(COUNT(RR.REC_FLOW), 0)) COMPLETE_NUM,
+                 TO_CHAR(NVL(COUNT(RR.REC_FLOW), 0)) IN_COMPLETE_NUM,
+                 '0' AS OUT_COMPLETE_NUM,
+                 TO_CHAR(NVL(COUNT(RR.AUDIT_STATUS_ID), 0)) AUDIT_NUM  FROM RES_REC RR WHERE
+                                 RR.RECORD_STATUS = 'Y'
+                                AND RR.REC_TYPE_ID IN
+                                    ('CampaignNoItemRegistry', 'CaseRegistry',
+                                     'DiseaseRegistry', 'OperationRegistry',
+                                     'SkillRegistry')
+                                     GROUP BY PROCESS_FLOW
+                                     )RR  ON RR.PROCESS_FLOW = PROCESS.PROCESS_FLOW
+           WHERE SAR.RECORD_STATUS = 'Y'
+             AND SAR.RESULT_FLOW IN
+              <foreach collection="resultFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+           GROUP BY SAR.RESULT_FLOW,
+                    SAR.DOCTOR_FLOW,
+                    SAR.SCH_START_DATE,
+                    SAR.SCH_END_DATE,
+                    SAR.SCH_MONTH,
+                    SAR.ORG_FLOW,
+                    SAR.ORG_NAME,
+                    SAR.DEPT_FLOW,
+                    SAR.DEPT_NAME,
+                    SAR.SCH_DEPT_FLOW,
+                    SAR.SCH_DEPT_NAME,
+                    SAR.ROTATION_FLOW,
+                    SAR.GROUP_FLOW,
+                    SAR.STANDARD_GROUP_FLOW,
+                    SAR.STANDARD_DEPT_ID,
+                    SAR.STANDARD_DEPT_NAME) SAR
+    </insert>
+
+    <update id="updateRecruitAsseInfoByApplyYear2">
+        update jsres_graduation_apply dr set (MATERIAL_ID,PRACTICING_SCOPE_ID,PRACTICING_SCOPE_NAME,CERTIFICATE_URI,CERTIFICATE_NO
+        ,QUALIFICATION_MATERIAL_URI,SPECIAL_CERTIFICATION_URI,QUALIFICATION_MATERIAL_CODE,TYPE_ID,REGISTE_MANUA,
+        GRADUATION_MATERIAL_ID ,
+        GRADUATION_MATERIAL_NAME ,
+        GRADUATION_MATERIAL_TIME ,
+        GRADUATION_MATERIAL_CODE ,
+        GRADUATION_MATERIAL_URI ,
+        GRADUATION_CATEGORY_ID ,
+        GRADUATION_CATEGORY_NAME ,
+        GRADUATION_SCOPE_ID ,
+        GRADUATION_SCOPE_NAME )=
+        (
+        SELECT CASE
+        WHEN USER_RESUME IS NOT NULL THEN
+        xmltype(USER_RESUME).extract('//qualificationMaterialId/text()')
+        .getstringval()
+        ELSE
+        ''
+        END MATERIAL_ID,
+        CASE
+        WHEN USER_RESUME IS NOT NULL THEN
+        xmltype(USER_RESUME).extract('//practicingScopeId/text()')
+        .getstringval()
+        ELSE
+        ''
+        END PRACTICING_SCOPE_ID,
+        CASE
+        WHEN USER_RESUME IS NOT NULL THEN
+        xmltype(USER_RESUME).extract('//practicingScopeName/text()')
+        .getstringval()
+        ELSE
+        ''
+        END PRACTICING_SCOPE_NAME,
+        CASE
+        WHEN USER_RESUME IS NOT NULL THEN
+        xmltype(USER_RESUME).extract('//certificateUri/text()')
+        .getstringval()
+        ELSE
+        ''
+        END CERTIFICATE_URI,
+        CASE
+        WHEN USER_RESUME IS NOT NULL THEN
+        xmltype(USER_RESUME).extract('//certificateCode/text()')
+        .getstringval()
+        ELSE
+        ''
+        END CERTIFICATE_NO,
+        CASE
+        WHEN USER_RESUME IS NOT NULL THEN
+        xmltype(USER_RESUME).extract('//qualificationMaterialUri/text()')
+        .getstringval()
+        ELSE
+        ''
+        END QUALIFICATION_MATERIAL_URI,
+        CASE
+        WHEN USER_RESUME IS NOT NULL THEN
+        xmltype(USER_RESUME).extract('//specialCertificationUri/text()')
+        .getstringval()
+        ELSE
+        ''
+        END SPECIAL_CERTIFICATION_URI,
+        CASE
+        WHEN USER_RESUME IS NOT NULL THEN
+        xmltype(USER_RESUME).extract('//qualificationMaterialCode/text()')
+        .getstringval()
+        ELSE
+        ''
+        END QUALIFICATION_MATERIAL_CODE,
+        CASE
+        WHEN USER_RESUME IS NOT NULL THEN
+        xmltype(USER_RESUME).extract('//practicingCategoryId/text()')
+        .getstringval()
+        ELSE
+        ''
+        END TYPE_ID,
+        CASE
+        WHEN USER_RESUME IS NOT NULL THEN
+        xmltype(USER_RESUME).extract('//registeManua/text()')
+        .getstringval()
+        ELSE
+        ''
+        END REGISTE_MANUA,
+        #{graduationMaterialId,jdbcType=VARCHAR},
+        #{graduationMaterialName,jdbcType=VARCHAR},
+        #{graduationMaterialTime,jdbcType=VARCHAR},
+        #{graduationMaterialCode,jdbcType=VARCHAR},
+        #{graduationMaterialUri,jdbcType=VARCHAR},
+        #{graduationCategoryId,jdbcType=VARCHAR},
+        #{graduationCategoryName,jdbcType=VARCHAR},
+        #{graduationScopeId,jdbcType=VARCHAR},
+        #{graduationScopeName,jdbcType=VARCHAR}
+        FROM PUB_USER_RESUME
+        WHERE RECORD_STATUS = 'Y'
+        and user_flow=#{doctorFlow,jdbcType=VARCHAR}
+        )
+        WHERE DR.RECORD_STATUS='Y' AND APPLY_FLOW=#{applyFlow}
+    </update>
+    <update id="updateRecruitAvgTemp">
+        update JSRES_GRADUATION_APPLY dr set
+        AVG_COMPLETE=( select nvl(AVG_COMPLETE,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= dr.recruit_flow),
+        AVG_OUT_COMPLETE=( select nvl(AVG_OUT_COMPLETE,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= dr.recruit_flow),
+        AVG_IN_COMPLETE=( select nvl(AVG_IN_COMPLETE,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= dr.recruit_flow),
+        AVG_AUDIT=( select nvl(AVG_AUDIT,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= dr.recruit_flow)
+        WHERE DR.RECORD_STATUS='Y' AND DR.APPLY_YEAR=#{applyYear}
+    </update>
+    <delete id="deleteDeptAvgTempByRecruitFlow">
+        delete from JSRES_DOCTOR_DEPT_AVG_TEMP where RECRUIT_FLOW=#{recruitFlow}
+    </delete>
+    <insert id="updateDeptAvgTempByRecruitFlow">
+        insert into JSRES_DOCTOR_DEPT_AVG_TEMP
+        (RECORD_FLOW,
+         RECRUIT_FLOW,AVG_COMPLETE,AVG_OUT_COMPLETE,AVG_IN_COMPLETE,AVG_COMPLETE_BI_PER,AVG_OUT_COMPLETE_BI_PER,AVG_IN_COMPLETE_BI_PER,AVG_AUDIT)
+         SELECT sys_guid(),DOCTOR_FLOW,AVG_COMPLETE,AVG_OUT_COMPLETE,AVG_IN_COMPLETE,
+         AVG_COMPLETE_PER,AVG_OUT_COMPLETE_PER,AVG_IN_COMPLETE_PER,AVG_AUDIT FROM (
+            SELECT T.DOCTOR_FLOW,
+            NVL(ROUND(SUM(COMPLETE_BI) / COUNT(1),1),0) AVG_COMPLETE,
+            NVL(ROUND(SUM(OUT_COMPLETE_BI) / COUNT(1),1),0) AVG_OUT_COMPLETE,
+            NVL(ROUND(SUM(IN_COMPLETE_BI) / COUNT(1),1),0) AVG_IN_COMPLETE,
+            NVL(ROUND(SUM(COMPLETE_BI_PER) / COUNT(1),1),0) AVG_COMPLETE_PER,
+            NVL(ROUND(SUM(OUT_COMPLETE_BI_PER) / COUNT(1),1),0) AVG_OUT_COMPLETE_PER,
+            NVL(ROUND(SUM(IN_COMPLETE_BI_PER) / COUNT(1),1),0) AVG_IN_COMPLETE_PER,
+            NVL(ROUND(SUM(AUDIT_BI) / COUNT(1),1),0) AVG_AUDIT
+            FROM hbres_doctor_dept_detail T
+            WHERE COMPLETE_BI!='-'
+            and T.DOCTOR_FLOW = #{recruitFlow} and t.apply_year=#{applyYear}
+            GROUP BY T.DOCTOR_FLOW) A
+    </insert>
+
+    <update id="updateRecruitAvgTempByRecruitFlow">
+        update JSRES_GRADUATION_APPLY dr set
+        AVG_COMPLETE=( select nvl(AVG_COMPLETE,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow}),
+        AVG_OUT_COMPLETE=( select nvl(AVG_OUT_COMPLETE,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow}),
+        AVG_IN_COMPLETE=( select nvl(AVG_IN_COMPLETE,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow}),
+        AVG_COMPLETE_BI_PER=( select nvl(AVG_COMPLETE_BI_PER,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow}),
+        AVG_OUT_COMPLETE_BI_PER=( select nvl(AVG_OUT_COMPLETE_BI_PER,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow}),
+        AVG_IN_COMPLETE_BI_PER=( select nvl(AVG_IN_COMPLETE_BI_PER,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow}),
+        AVG_AUDIT=( select nvl(AVG_AUDIT,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow})
+        WHERE DR.RECORD_STATUS='Y' AND DR.APPLY_FLOW=#{applyFlow}
+    </update>
+    <update id="saveRegisteManua">
+        update JSRES_GRADUATION_APPLY dr set
+        REGISTE_MANUA=#{registeManua}
+        WHERE DR.RECORD_STATUS='Y' AND recruit_flow= #{recruitFlow} and apply_year=#{applyYear}
+    </update>
+    <update id="updateDeptDetailPerByApplyYear">
+
+update hbres_doctor_dept_detail set
+COMPLETE_BI_PER=(CASE
+              WHEN COMPLETE_BI='-' THEN '-'
+             WHEN nvl(COMPLETE_BI,0)>100 THEN
+              '100'
+             ELSE
+              nvl(COMPLETE_BI,0)
+           END ),
+    OUT_COMPLETE_BI_PER=(       CASE
+              WHEN OUT_COMPLETE_BI='-' THEN '-'
+             WHEN nvl(OUT_COMPLETE_BI,0)>100 THEN
+               '100'
+             ELSE
+              nvl(OUT_COMPLETE_BI,0)
+           END) ,
+      IN_COMPLETE_BI_PER=(   CASE
+              WHEN IN_COMPLETE_BI='-' THEN '-'
+             WHEN nvl(IN_COMPLETE_BI,0) >100 THEN
+               '100'
+             ELSE
+              nvl(IN_COMPLETE_BI,0)
+           END ) where apply_year=#{applyYear}
+                and RECRUIT_FLOW =#{recruitFlow}
+                and DOCTOR_FLOW =#{doctorFlow}
+    </update>
+    <update id="updateDeptAvgPerTempByRecruitFlow">
+         UPDATE JSRES_DOCTOR_DEPT_AVG_TEMP SET
+       AVG_COMPLETE_BI_PER=(SELECT
+         AVG_COMPLETE_PER FROM (
+            SELECT T.RECRUIT_FLOW,
+            NVL(ROUND(SUM(COMPLETE_BI) / COUNT(1),1),0) AVG_COMPLETE,
+            NVL(ROUND(SUM(OUT_COMPLETE_BI) / COUNT(1),1),0) AVG_OUT_COMPLETE,
+            NVL(ROUND(SUM(IN_COMPLETE_BI) / COUNT(1),1),0) AVG_IN_COMPLETE,
+            NVL(ROUND(SUM(COMPLETE_BI_PER) / COUNT(1),1),0) AVG_COMPLETE_PER,
+            NVL(ROUND(SUM(OUT_COMPLETE_BI_PER) / COUNT(1),1),0) AVG_OUT_COMPLETE_PER,
+            NVL(ROUND(SUM(IN_COMPLETE_BI_PER) / COUNT(1),1),0) AVG_IN_COMPLETE_PER,
+            NVL(ROUND(SUM(AUDIT_BI) / COUNT(1),1),0) AVG_AUDIT
+            FROM hbres_doctor_dept_detail T
+            LEFT JOIN JSRES_DOCTOR_DEPT_TEMP S
+            ON T.RECRUIT_FLOW=S.RECRUIT_FLOW
+            WHERE COMPLETE_BI!='-'
+            AND  INSTR(S.HAVE_SHORT,T.IS_SHORT)>0
+            AND T.IS_ADD='Y'
+            and T.RECRUIT_FLOW = #{recruitFlow} and t.apply_year=#{applyYear}
+            GROUP BY T.RECRUIT_FLOW) A),
+       AVG_OUT_COMPLETE_BI_PER=(SELECT
+         AVG_OUT_COMPLETE_PER FROM (
+            SELECT T.RECRUIT_FLOW,
+            NVL(ROUND(SUM(COMPLETE_BI) / COUNT(1),1),0) AVG_COMPLETE,
+            NVL(ROUND(SUM(OUT_COMPLETE_BI) / COUNT(1),1),0) AVG_OUT_COMPLETE,
+            NVL(ROUND(SUM(IN_COMPLETE_BI) / COUNT(1),1),0) AVG_IN_COMPLETE,
+            NVL(ROUND(SUM(COMPLETE_BI_PER) / COUNT(1),1),0) AVG_COMPLETE_PER,
+            NVL(ROUND(SUM(OUT_COMPLETE_BI_PER) / COUNT(1),1),0) AVG_OUT_COMPLETE_PER,
+            NVL(ROUND(SUM(IN_COMPLETE_BI_PER) / COUNT(1),1),0) AVG_IN_COMPLETE_PER,
+            NVL(ROUND(SUM(AUDIT_BI) / COUNT(1),1),0) AVG_AUDIT
+            FROM hbres_doctor_dept_detail T
+            LEFT JOIN JSRES_DOCTOR_DEPT_TEMP S
+            ON T.RECRUIT_FLOW=S.RECRUIT_FLOW
+            WHERE COMPLETE_BI!='-'
+            AND  INSTR(S.HAVE_SHORT,T.IS_SHORT)>0
+            AND T.IS_ADD='Y'
+            and T.RECRUIT_FLOW = #{recruitFlow} and t.apply_year=#{applyYear}
+            GROUP BY T.RECRUIT_FLOW) A),
+       AVG_IN_COMPLETE_BI_PER=(SELECT
+          AVG_IN_COMPLETE_PER FROM (
+            SELECT T.RECRUIT_FLOW,
+            NVL(ROUND(SUM(COMPLETE_BI) / COUNT(1),1),0) AVG_COMPLETE,
+            NVL(ROUND(SUM(OUT_COMPLETE_BI) / COUNT(1),1),0) AVG_OUT_COMPLETE,
+            NVL(ROUND(SUM(IN_COMPLETE_BI) / COUNT(1),1),0) AVG_IN_COMPLETE,
+            NVL(ROUND(SUM(COMPLETE_BI_PER) / COUNT(1),1),0) AVG_COMPLETE_PER,
+            NVL(ROUND(SUM(OUT_COMPLETE_BI_PER) / COUNT(1),1),0) AVG_OUT_COMPLETE_PER,
+            NVL(ROUND(SUM(IN_COMPLETE_BI_PER) / COUNT(1),1),0) AVG_IN_COMPLETE_PER,
+            NVL(ROUND(SUM(AUDIT_BI) / COUNT(1),1),0) AVG_AUDIT
+            FROM hbres_doctor_dept_detail T
+            LEFT JOIN JSRES_DOCTOR_DEPT_TEMP S
+            ON T.RECRUIT_FLOW=S.RECRUIT_FLOW
+            WHERE COMPLETE_BI!='-'
+            AND  INSTR(S.HAVE_SHORT,T.IS_SHORT)>0
+            AND T.IS_ADD='Y'
+            and T.RECRUIT_FLOW = #{recruitFlow} and t.apply_year=#{applyYear}
+            GROUP BY T.RECRUIT_FLOW) A)
+       where  RECRUIT_FLOW =#{recruitFlow}
+    </update>
+    <update id="updateRecruitAvgPerTempByRecruitFlow">
+        update JSRES_GRADUATION_APPLY dr set
+             AVG_COMPLETE_BI_PER=( select nvl(AVG_COMPLETE_BI_PER,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow}),
+        AVG_OUT_COMPLETE_BI_PER=( select nvl(AVG_OUT_COMPLETE_BI_PER,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow}),
+        AVG_IN_COMPLETE_BI_PER=( select nvl(AVG_IN_COMPLETE_BI_PER,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow})
+        WHERE DR.RECORD_STATUS='Y' AND DR.APPLY_FLOW=#{applyFlow}
+    </update>
+</mapper>

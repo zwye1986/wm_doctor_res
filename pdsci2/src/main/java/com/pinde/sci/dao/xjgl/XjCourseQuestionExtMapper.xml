@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.xjgl.XjCourseQuestionExtMapper">
+    <select id="queryQuestionList" parameterType="map" resultType="map">
+        select distinct ec.course_flow,
+                ec.course_type_id,
+                ec.course_type_name,
+                ec.course_code,
+                ec.course_name,
+                ec.course_session,
+                ncq.record_flow question_flow,
+                ncq.question_name,(
+                select count(0) from nywj_student_evaluate nse
+                where nse.record_status='Y'
+                and nse.question_flow=ncq.record_flow
+                and nse.course_flow=ec.course_flow
+                <if test="userFlow!=null and userFlow!=''">
+                    and nse.student_flow = #{userFlow}
+                </if>
+                ) queNum,ec.create_time
+        from edu_student_course esc
+        left join edu_course ec
+        on ec.course_flow=esc.course_flow
+        left join nywj_course_question ncq
+        on ncq.course_type_id=ec.course_type_id
+        where esc.record_status='Y'
+        and ec.record_status='Y'
+        <if test="studentPeriod!=null and studentPeriod!=''">
+            and ec.course_session = #{studentPeriod}
+        </if>
+        <if test="questionName!=null and questionName!=''">
+            and ncq.question_name like '%${questionName}%'
+        </if>
+        <if test="courseName!=null and courseName!=''">
+            and ec.course_name like '%${courseName}%'
+        </if>
+        <if test="courseCode!=null and courseCode!=''">
+            and ec.course_code = #{courseCode}
+        </if>
+        <if test="courseTypeId!=null and courseTypeId!=''">
+            and ec.course_type_id = #{courseTypeId}
+        </if>
+        <if test="userFlow!=null and userFlow!=''">
+            and esc.user_flow = #{userFlow}
+        </if>
+        order by ec.course_session,ec.create_time
+    </select>
+    <select id="searchStudentCourseInfos" parameterType="map" resultType="map">
+         select ec.course_flow course_flow,
+                ec.course_type_id course_type_id,
+                ec.course_type_name course_type_name,
+                ec.course_code course_code,
+                ec.course_name course_name,
+                esc.student_period student_period,
+                esc.user_flow user_flow
+         from edu_student_course esc
+         left join edu_course ec
+         on ec.course_flow=esc.course_flow
+         where esc.record_status='Y'
+         and ec.record_status='Y'
+        <if test="userFlow!=null and userFlow!=''">
+            and esc.user_flow = #{userFlow}
+        </if>
+    </select>
+    <select id="queryEvaluateDetails" parameterType="map" resultType="map">
+        select u.user_flow,eu.sid,u.user_name,eu.train_category_id
+               ,eu.train_category_name,eu.class_id,eu.class_name
+               ,u.user_phone,rd.org_flow,rd.org_name
+               ,nse.question_flow,nse.course_flow
+        from Nywj_Student_Evaluate nse
+        left join edu_user eu
+        on nse.student_flow=eu.user_flow
+        left join sys_user u
+        on u.user_flow=eu.user_flow
+        left join res_doctor rd
+        on u.user_flow=rd.doctor_flow
+        where nse.record_status='Y'
+        and eu.record_status='Y'
+        and u.record_status='Y'
+        and rd.record_status='Y'
+        <if test="userFlow!=null and userFlow!=''">
+            and u.user_flow = #{userFlow}
+        </if>
+        <if test="questionFlow!=null and questionFlow!=''">
+            and nse.question_flow = #{questionFlow}
+        </if>
+        <if test="courseFlow!=null and courseFlow!=''">
+            and nse.course_flow = #{courseFlow}
+        </if>
+        order by nse.create_time
+    </select>
+</mapper>

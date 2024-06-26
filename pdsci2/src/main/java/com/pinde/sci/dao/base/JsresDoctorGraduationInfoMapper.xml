@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.JsresDoctorGraduationInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.JsresDoctorGraduationInfo" >
+    <id column="INFO_FLOW" property="infoFlow" jdbcType="VARCHAR" />
+    <result column="APPLY_FLOW" property="applyFlow" jdbcType="VARCHAR" />
+    <result column="RECRUIT_FLOW" property="recruitFlow" jdbcType="VARCHAR" />
+    <result column="ROTATION_FLOW" property="rotationFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+    <result column="IMAGE_COUNT" property="imageCount" jdbcType="VARCHAR" />
+    <result column="IMAGE_ALL_COUNT" property="imageAllCount" jdbcType="VARCHAR" />
+    <result column="AVG_IMAGE_COUNT" property="avgImageCount" jdbcType="VARCHAR" />
+    <result column="DATA_COUNT" property="dataCount" jdbcType="VARCHAR" />
+    <result column="DATA_ALL_COUNT" property="dataAllCount" jdbcType="VARCHAR" />
+    <result column="AVG_DATA_COUNT" property="avgDataCount" jdbcType="VARCHAR" />
+    <result column="DATA_TIME" property="dataTime" jdbcType="VARCHAR" />
+    <result column="PUB_FILE" property="pubFile" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="MIDIFY_USER_FLOW" property="midifyUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    INFO_FLOW, APPLY_FLOW, RECRUIT_FLOW, ROTATION_FLOW, DOCTOR_FLOW, IMAGE_COUNT, IMAGE_ALL_COUNT, 
+    AVG_IMAGE_COUNT, DATA_COUNT, DATA_ALL_COUNT, AVG_DATA_COUNT, DATA_TIME, PUB_FILE, 
+    RECORD_STATUS, CREATE_USER_FLOW, CREATE_TIME, MIDIFY_USER_FLOW, MODIFY_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.JsresDoctorGraduationInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+    where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+    where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.JsresDoctorGraduationInfoExample" >
+    delete from PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.JsresDoctorGraduationInfo" >
+    insert into PDSCI.JSRES_DOCTOR_GRADUATION_INFO (INFO_FLOW, APPLY_FLOW, RECRUIT_FLOW, 
+      ROTATION_FLOW, DOCTOR_FLOW, IMAGE_COUNT, 
+      IMAGE_ALL_COUNT, AVG_IMAGE_COUNT, DATA_COUNT, 
+      DATA_ALL_COUNT, AVG_DATA_COUNT, DATA_TIME, 
+      PUB_FILE, RECORD_STATUS, CREATE_USER_FLOW, 
+      CREATE_TIME, MIDIFY_USER_FLOW, MODIFY_TIME
+      )
+    values (#{infoFlow,jdbcType=VARCHAR}, #{applyFlow,jdbcType=VARCHAR}, #{recruitFlow,jdbcType=VARCHAR}, 
+      #{rotationFlow,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, #{imageCount,jdbcType=VARCHAR}, 
+      #{imageAllCount,jdbcType=VARCHAR}, #{avgImageCount,jdbcType=VARCHAR}, #{dataCount,jdbcType=VARCHAR}, 
+      #{dataAllCount,jdbcType=VARCHAR}, #{avgDataCount,jdbcType=VARCHAR}, #{dataTime,jdbcType=VARCHAR}, 
+      #{pubFile,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{midifyUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.JsresDoctorGraduationInfo" >
+    insert into PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="infoFlow != null" >
+        INFO_FLOW,
+      </if>
+      <if test="applyFlow != null" >
+        APPLY_FLOW,
+      </if>
+      <if test="recruitFlow != null" >
+        RECRUIT_FLOW,
+      </if>
+      <if test="rotationFlow != null" >
+        ROTATION_FLOW,
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW,
+      </if>
+      <if test="imageCount != null" >
+        IMAGE_COUNT,
+      </if>
+      <if test="imageAllCount != null" >
+        IMAGE_ALL_COUNT,
+      </if>
+      <if test="avgImageCount != null" >
+        AVG_IMAGE_COUNT,
+      </if>
+      <if test="dataCount != null" >
+        DATA_COUNT,
+      </if>
+      <if test="dataAllCount != null" >
+        DATA_ALL_COUNT,
+      </if>
+      <if test="avgDataCount != null" >
+        AVG_DATA_COUNT,
+      </if>
+      <if test="dataTime != null" >
+        DATA_TIME,
+      </if>
+      <if test="pubFile != null" >
+        PUB_FILE,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="midifyUserFlow != null" >
+        MIDIFY_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="infoFlow != null" >
+        #{infoFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="applyFlow != null" >
+        #{applyFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitFlow != null" >
+        #{recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="rotationFlow != null" >
+        #{rotationFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="imageCount != null" >
+        #{imageCount,jdbcType=VARCHAR},
+      </if>
+      <if test="imageAllCount != null" >
+        #{imageAllCount,jdbcType=VARCHAR},
+      </if>
+      <if test="avgImageCount != null" >
+        #{avgImageCount,jdbcType=VARCHAR},
+      </if>
+      <if test="dataCount != null" >
+        #{dataCount,jdbcType=VARCHAR},
+      </if>
+      <if test="dataAllCount != null" >
+        #{dataAllCount,jdbcType=VARCHAR},
+      </if>
+      <if test="avgDataCount != null" >
+        #{avgDataCount,jdbcType=VARCHAR},
+      </if>
+      <if test="dataTime != null" >
+        #{dataTime,jdbcType=VARCHAR},
+      </if>
+      <if test="pubFile != null" >
+        #{pubFile,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="midifyUserFlow != null" >
+        #{midifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.JsresDoctorGraduationInfoExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+    <set >
+      <if test="record.infoFlow != null" >
+        INFO_FLOW = #{record.infoFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyFlow != null" >
+        APPLY_FLOW = #{record.applyFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitFlow != null" >
+        RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rotationFlow != null" >
+        ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorFlow != null" >
+        DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imageCount != null" >
+        IMAGE_COUNT = #{record.imageCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imageAllCount != null" >
+        IMAGE_ALL_COUNT = #{record.imageAllCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgImageCount != null" >
+        AVG_IMAGE_COUNT = #{record.avgImageCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataCount != null" >
+        DATA_COUNT = #{record.dataCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataAllCount != null" >
+        DATA_ALL_COUNT = #{record.dataAllCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgDataCount != null" >
+        AVG_DATA_COUNT = #{record.avgDataCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataTime != null" >
+        DATA_TIME = #{record.dataTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pubFile != null" >
+        PUB_FILE = #{record.pubFile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.midifyUserFlow != null" >
+        MIDIFY_USER_FLOW = #{record.midifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+    set INFO_FLOW = #{record.infoFlow,jdbcType=VARCHAR},
+      APPLY_FLOW = #{record.applyFlow,jdbcType=VARCHAR},
+      RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
+      ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      IMAGE_COUNT = #{record.imageCount,jdbcType=VARCHAR},
+      IMAGE_ALL_COUNT = #{record.imageAllCount,jdbcType=VARCHAR},
+      AVG_IMAGE_COUNT = #{record.avgImageCount,jdbcType=VARCHAR},
+      DATA_COUNT = #{record.dataCount,jdbcType=VARCHAR},
+      DATA_ALL_COUNT = #{record.dataAllCount,jdbcType=VARCHAR},
+      AVG_DATA_COUNT = #{record.avgDataCount,jdbcType=VARCHAR},
+      DATA_TIME = #{record.dataTime,jdbcType=VARCHAR},
+      PUB_FILE = #{record.pubFile,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      MIDIFY_USER_FLOW = #{record.midifyUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.JsresDoctorGraduationInfo" >
+    update PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+    <set >
+      <if test="applyFlow != null" >
+        APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitFlow != null" >
+        RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="rotationFlow != null" >
+        ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="imageCount != null" >
+        IMAGE_COUNT = #{imageCount,jdbcType=VARCHAR},
+      </if>
+      <if test="imageAllCount != null" >
+        IMAGE_ALL_COUNT = #{imageAllCount,jdbcType=VARCHAR},
+      </if>
+      <if test="avgImageCount != null" >
+        AVG_IMAGE_COUNT = #{avgImageCount,jdbcType=VARCHAR},
+      </if>
+      <if test="dataCount != null" >
+        DATA_COUNT = #{dataCount,jdbcType=VARCHAR},
+      </if>
+      <if test="dataAllCount != null" >
+        DATA_ALL_COUNT = #{dataAllCount,jdbcType=VARCHAR},
+      </if>
+      <if test="avgDataCount != null" >
+        AVG_DATA_COUNT = #{avgDataCount,jdbcType=VARCHAR},
+      </if>
+      <if test="dataTime != null" >
+        DATA_TIME = #{dataTime,jdbcType=VARCHAR},
+      </if>
+      <if test="pubFile != null" >
+        PUB_FILE = #{pubFile,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="midifyUserFlow != null" >
+        MIDIFY_USER_FLOW = #{midifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.JsresDoctorGraduationInfo" >
+    update PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+    set APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR},
+      RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
+      ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      IMAGE_COUNT = #{imageCount,jdbcType=VARCHAR},
+      IMAGE_ALL_COUNT = #{imageAllCount,jdbcType=VARCHAR},
+      AVG_IMAGE_COUNT = #{avgImageCount,jdbcType=VARCHAR},
+      DATA_COUNT = #{dataCount,jdbcType=VARCHAR},
+      DATA_ALL_COUNT = #{dataAllCount,jdbcType=VARCHAR},
+      AVG_DATA_COUNT = #{avgDataCount,jdbcType=VARCHAR},
+      DATA_TIME = #{dataTime,jdbcType=VARCHAR},
+      PUB_FILE = #{pubFile,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      MIDIFY_USER_FLOW = #{midifyUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR}
+    where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.ResAllowanceUserExtMapper">
+    <resultMap id="ResAllowanceUserExt" type="com.pinde.sci.model.res.ResAllowanceUserExt" extends="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+        <association property="sysUser" column="USER_FLOW" javaType="com.pinde.sci.model.mo.SysUser" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+        <association property="userRole" column="USER_FLOW" javaType="com.pinde.sci.model.mo.SysUserRole" resultMap="com.pinde.sci.dao.base.SysUserRoleMapper.BaseResultMap"/>
+        <association property="sysRole" column="ROLE_FLOW" javaType="com.pinde.sci.model.mo.SysRole" resultMap="com.pinde.sci.dao.base.SysRoleMapper.BaseResultMap"/>
+    </resultMap>
+    <resultMap id="userMap" type="com.pinde.sci.model.res.ResAllowanceUserExt">
+        <result  property="userFlow" column="USER_FLOW" javaType="string"/>
+        <result property="userName" column="USER_NAME" javaType="string"/>
+        <result  property="roleFlows" column="ROLE_FLOW" javaType="string"/>
+        <result property="roleName" column="ROLE_NAME" javaType="string"/>
+    </resultMap>
+    <select id="searchUser" resultMap="userMap">
+        SELECT su.user_flow,su.user_name,replace (wm_concat(sr.role_name),',','/') role_name,wm_concat(sr.role_flow) role_flow FROM  sys_user su
+        left join sys_user_role sur
+        on su.user_flow = sur.user_flow
+        inner join sys_role sr
+        on sr.role_flow = sur.role_flow
+        where sur.record_status = 'Y' and su.record_status = 'Y' and sr.record_status = 'Y'
+        <if test="roleList!=null and roleList.size>0">
+            and sur.role_flow in
+            <foreach collection="roleList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='orgFlow != null and orgFlow != ""'>
+            and su.org_flow = #{orgFlow}
+        </if>
+        <if test='doctorName != null and doctorName != ""'>
+            and su.user_name like '%${doctorName}%'
+        </if>
+        <if test='roleFlow != null and roleFlow != ""'>
+            and sur.role_flow = #{roleFlow}
+        </if>
+        group by su.user_flow,su.user_name
+        ORDER BY nlssort(su.user_name, 'NLS_SORT=SCHINESE_PINYIN_M')
+    </select>
+
+    <resultMap id="allowanceMap" type="com.pinde.sci.model.res.ResAllowancePayment">
+        <result  property="doctorFlow" column="DOCTOR_FLOW" javaType="string"/>
+        <result property="teacherUserFlow" column="TEACHER_USER_FLOW" javaType="string"/>
+        <result  property="teaCost" column="TEA_COST" javaType="string"/>
+        <result  property="kmCost" column="KM_COST" javaType="string"/>
+        <result  property="headCost" column="HEAD_COST" javaType="string"/>
+        <result property="speCost" column="SPE_COST" javaType="string"/>
+        <result property="schMonth" column="SCH_MONTH" javaType="string"/>
+        <result  property="numberCount" column="NUMBER_COUNT" javaType="string"/>
+        <result property="trainingSpeId" column="TRAINING_SPE_ID" javaType="string"/>
+        <result property="trainingSpeName" column="TRAINING_SPE_NAME" javaType="string"/>
+    </resultMap>
+    <select id="searchAllowancePaymentTea" resultMap="allowanceMap">
+        select  A.doctor_flow,A.tea_cost,A.teacher_user_flow,A.training_spe_id,A.training_spe_name, sum(A.sch_month) sch_month,count(A.doctor_flow) number_count  from
+        (SELECT sar.sch_start_date,sar.sch_end_date,sar.doctor_flow,sar.sch_month,sar.dept_flow,sar.dept_name,rdsp.teacher_user_flow,rdsp.teacher_user_name,
+        rdsp.head_user_flow,rdsp.head_user_name,sd.training_spe_id,sd.training_spe_name,
+        CASE  WHEN rccd.tea_cost IS NOT NULL THEN rccd.tea_cost
+        WHEN rccm.tea_cost IS NOT NULL THEN rccm.tea_cost ELSE '0' END tea_cost
+        FROM sch_arrange_result sar
+        left join res_doctor_sch_process rdsp
+        on sar.result_flow=rdsp.sch_result_flow
+        left join res_training_spe_dept sd
+        on sar.dept_flow=sd.dept_flow
+        and sd.record_status = 'Y'
+        left join RES_COST_CFG_MAIN rccm
+        on rccm.record_status = 'Y'
+        and sar.sch_start_date >= rccm.start_date
+        and sar.sch_start_date <![CDATA[<=]]> rccm.end_date
+        and rccm.type_id='DoctorTrainingSpe'
+        left join RES_COST_CFG_DETAIL rccd
+        on rccd.record_status='Y'
+        and rccm.main_flow=rccd.main_flow
+        and rccd.item_id=sd.training_spe_id
+        where sar.record_status='Y'
+        and rdsp.record_status='Y'
+        <if test='userFlow != null and userFlow != ""'>
+          and rdsp.teacher_user_flow = #{userFlow}
+        </if>
+        <if test='orgFlow != null and orgFlow != ""'>
+            and rdsp.org_flow = #{orgFlow}
+        </if>
+        <if test='startDate != null and startDate != ""'>
+          and sar.sch_start_date >= #{startDate}
+        </if>
+        <if test='endDate != null and endDate != ""'>
+            and sar.sch_end_date <![CDATA[<=]]> #{endDate}
+        </if>
+        ) A
+        group by A.doctor_flow,A.tea_cost,A.teacher_user_flow,A.training_spe_id,A.training_spe_name
+    </select>
+    <select id="searchAllowancePayment" resultMap="allowanceMap">
+        select  A.doctor_flow,A.teacher_user_flow,A.km_cost,A.head_cost,A.training_spe_id,A.training_spe_name, sum(A.sch_month) sch_month,count(A.doctor_flow) number_count  from
+        (  SELECT sar.sch_start_date,sar.sch_end_date,sar.doctor_flow,sar.sch_month,sar.dept_flow,sar.dept_name,rdsp.teacher_user_flow,rdsp.teacher_user_name,
+        rdsp.head_user_flow,rdsp.head_user_name,sd.training_spe_id,sd.training_spe_name,
+        CASE  WHEN rccd.km_cost IS NOT NULL THEN rccd.km_cost
+        WHEN rccm.km_cost IS NOT NULL THEN rccm.km_cost ELSE '0' END km_cost,
+        CASE  WHEN rccd.head_cost IS NOT NULL THEN rccd.head_cost
+        WHEN rccm.head_cost IS NOT NULL THEN rccm.head_cost ELSE '0' END head_cost
+        FROM sch_arrange_result sar
+        left join res_doctor_sch_process rdsp
+        on sar.result_flow=rdsp.sch_result_flow
+        left join res_training_spe_dept sd
+        on sar.dept_flow=sd.dept_flow
+        and sd.record_status='Y'
+        left join RES_COST_CFG_MAIN rccm
+        on rccm.record_status='Y'
+        and sar.sch_start_date>=rccm.start_date
+        and sar.sch_start_date<![CDATA[<=]]>rccm.end_date
+        and rccm.type_id='DoctorTrainingSpe'
+        left join RES_COST_CFG_DETAIL rccd
+        on rccd.record_status='Y'
+        and rccm.main_flow=rccd.main_flow
+        and rccd.item_id=sd.training_spe_id
+        where sar.record_status='Y'
+        and rdsp.record_status='Y'
+        and (rdsp.dept_flow in (
+          select dept_flow from sys_user where user_flow = #{userFlow}
+        ) or rdsp.dept_flow in (
+          select dept_flow from sys_user_dept where user_flow = #{userFlow} and record_status='Y'
+        ))
+        <if test='orgFlow != null and orgFlow != ""'>
+            and rdsp.org_flow = #{orgFlow}
+        </if>
+        <if test='startDate != null and startDate != ""'>
+            and sar.sch_start_date >= #{startDate}
+        </if>
+        <if test='endDate != null and endDate != ""'>
+            and sar.sch_end_date <![CDATA[<=]]> #{endDate}
+        </if>
+        ) A
+        group by A.doctor_flow,A.km_cost,A.head_cost,A.teacher_user_flow,A.training_spe_id,A.training_spe_name
+    </select>
+    <select id="searchAllowancePaymentSpe" resultMap="allowanceMap">
+        select  A.doctor_flow,A.teacher_user_flow,A.spe_cost,A.training_spe_id,A.training_spe_name, sum(A.sch_month) sch_month,count(A.doctor_flow) number_count  from
+        (   SELECT sar.sch_start_date,sar.sch_end_date,sar.doctor_flow,sar.sch_month,sar.dept_flow,sar.dept_name,rdsp.teacher_user_flow,rdsp.teacher_user_name,
+        rdsp.head_user_flow,rdsp.head_user_name,sd.training_spe_id,sd.training_spe_name,
+        CASE  WHEN rccd.spe_cost IS NOT NULL THEN rccd.spe_cost
+        WHEN rccm.spe_cost IS NOT NULL THEN rccm.spe_cost ELSE '0' END spe_cost
+        FROM sch_arrange_result sar
+        left join res_doctor_sch_process rdsp
+        on sar.result_flow=rdsp.sch_result_flow
+        left join res_training_spe_dept sd
+        on sar.dept_flow=sd.dept_flow
+        and sd.record_status='Y'
+        left join RES_COST_CFG_MAIN rccm
+        on rccm.record_status='Y'
+        and sar.sch_start_date>=rccm.start_date
+        and sar.sch_start_date<![CDATA[<=]]>rccm.end_date
+        and rccm.type_id='DoctorTrainingSpe'
+        left join RES_COST_CFG_DETAIL rccd
+        on rccd.record_status='Y'
+        and rccm.main_flow=rccd.main_flow
+        and rccd.item_id=sd.training_spe_id
+        where sar.record_status='Y'
+        and rdsp.record_status='Y'
+        and (sd.training_spe_id in (
+          select res_training_spe_id from sys_user where user_flow = #{userFlow}
+        )  )
+        <if test='orgFlow != null and orgFlow != ""'>
+            and rdsp.org_flow = #{orgFlow}
+        </if>
+        <if test='startDate != null and startDate != ""'>
+            and sar.sch_start_date >= #{startDate}
+        </if>
+        <if test='endDate != null and endDate != ""'>
+            and sar.sch_end_date <![CDATA[<=]]> #{endDate}
+        </if>
+        ) A
+        group by A.doctor_flow,A.spe_cost,A.teacher_user_flow,A.training_spe_id,A.training_spe_name
+    </select>
+
+    <resultMap id="getActivity" type="Map">
+        <result  property="teaCost" column="TEA_COST" javaType="string"/>
+        <result  property="kmCost" column="KM_COST" javaType="string"/>
+        <result  property="headCost" column="HEAD_COST" javaType="string"/>
+        <result property="speCost" column="SPE_COST" javaType="string"/>
+        <result property="countNum" column="COUNT_NUM" javaType="string"/>
+    </resultMap>
+    <select id="searchActivityTea" resultMap="getActivity">
+        SELECT A.SPEAKER_FLOW,A.tea_cost,count(A.SPEAKER_FLOW) as COUNT_NUM
+        from(
+        SELECT TAI.SPEAKER_FLOW,
+        CASE WHEN rccd.tea_cost IS NOT NULL THEN rccd.tea_cost
+        when rccm.tea_cost is not null then rccm.tea_cost
+        ELSE '0' END AS tea_cost
+        FROM   teaching_activity_info tai
+        LEFT JOIN RES_COST_CFG_MAIN rccm ON rccm.record_status = 'Y'
+        AND tai.start_time >= rccm.start_date
+        AND tai.start_time <![CDATA[<=]]> rccm.end_date
+        AND rccm.type_id = 'ActivityType'
+        left join res_training_spe_dept sd
+        on tai.dept_flow = sd.dept_flow
+        and sd.record_status='Y'
+        LEFT JOIN RES_COST_CFG_DETAIL rccd ON rccd.record_status = 'Y'
+        AND rccm.main_flow = rccd.main_flow
+        and rccd.item_id = tai.activity_type_id
+        where  tai.record_status = 'Y'
+        and tai.speaker_flow = #{userFlow}
+        <if test='startDate != null and startDate != ""'>
+            and tai.start_time >= #{startDate}||'-01'
+        </if>
+        <if test='endDate != null and endDate != ""'>
+            and tai.end_time <![CDATA[<=]]> #{endDate}||'-31'
+        </if>
+        ) A GROUP BY A.SPEAKER_FLOW,A.Tea_Cost
+    </select>
+    <select id="searchActivity" resultMap="getActivity">
+        SELECT A.SPEAKER_FLOW,A.km_cost,A.head_cost,count(A.SPEAKER_FLOW) as COUNT_NUM
+        from(
+        SELECT TAI.SPEAKER_FLOW,
+        CASE WHEN rccd.km_cost IS NOT NULL THEN rccd.km_cost
+        when rccm.km_cost is not null then rccm.km_cost
+        ELSE '0' END AS km_cost,
+        CASE WHEN rccd.head_cost IS NOT NULL THEN rccd.head_cost
+        when rccm.head_cost is not null then rccm.head_cost
+        ELSE '0' END AS head_cost
+        FROM   teaching_activity_info tai
+        LEFT JOIN RES_COST_CFG_MAIN rccm ON rccm.record_status = 'Y'
+        AND tai.start_time >= rccm.start_date
+        AND tai.start_time <![CDATA[<=]]> rccm.end_date
+        AND rccm.type_id = 'ActivityType'
+        left join res_training_spe_dept sd
+        on tai.dept_flow = sd.dept_flow
+        and sd.record_status='Y'
+        LEFT JOIN RES_COST_CFG_DETAIL rccd ON rccd.record_status = 'Y'
+        AND rccm.main_flow = rccd.main_flow
+        and rccd.item_id = tai.activity_type_id
+        where  tai.record_status = 'Y'
+        and tai.speaker_flow = #{userFlow}
+        and (tai.dept_flow in (
+          select dept_flow from sys_user where user_flow = #{userFlow}
+        ) or tai.dept_flow in (
+          select dept_flow from sys_user_dept where user_flow = #{userFlow} and record_status='Y'
+        ))
+        <if test='startDate != null and startDate != ""'>
+            and tai.start_time >= #{startDate}||'-01'
+        </if>
+        <if test='endDate != null and endDate != ""'>
+            and tai.end_time <![CDATA[<=]]> #{endDate}||'-31'
+        </if>
+        ) A GROUP BY A.SPEAKER_FLOW,A.km_Cost,A.head_cost
+    </select>
+    <select id="searchActivitySpe" resultMap="getActivity">
+        SELECT A.SPEAKER_FLOW,A.spe_cost,count(A.SPEAKER_FLOW) as COUNT_NUM
+        from(
+        SELECT TAI.SPEAKER_FLOW,
+        CASE WHEN rccd.spe_cost IS NOT NULL THEN rccd.spe_cost
+        when rccm.spe_cost is not null then rccm.spe_cost
+        ELSE '0' END AS spe_cost
+        FROM   teaching_activity_info tai
+        LEFT JOIN RES_COST_CFG_MAIN rccm ON rccm.record_status = 'Y'
+        AND tai.start_time >= rccm.start_date
+        AND tai.start_time <![CDATA[<=]]> rccm.end_date
+        AND rccm.type_id = 'ActivityType'
+        left join res_training_spe_dept sd
+        on tai.dept_flow = sd.dept_flow
+        and sd.record_status='Y'
+        LEFT JOIN RES_COST_CFG_DETAIL rccd ON rccd.record_status = 'Y'
+        AND rccm.main_flow = rccd.main_flow
+        and rccd.item_id = tai.activity_type_id
+        where  tai.record_status = 'Y'
+        and tai.speaker_flow = #{userFlow}
+        and (sd.training_spe_id in (
+          select res_training_spe_id from sys_user where user_flow = #{userFlow}
+        )  )
+        <if test='startDate != null and startDate != ""'>
+            and tai.start_time >= #{startDate}||'-01'
+        </if>
+        <if test='endDate != null and endDate != ""'>
+            and tai.end_time <![CDATA[<=]]> #{endDate}||'-31'
+        </if>
+        ) A GROUP BY A.SPEAKER_FLOW,A.spe_cost
+    </select>
+    <select id="searchLecture" resultMap="getActivity">
+        SELECT A.LECTURE_TEACHER_NAME,A.tea_cost,A.km_cost,A.spe_cost,A.head_cost,count(A.LECTURE_TEACHER_NAME) as COUNT_NUM
+        from(
+        SELECT rli.LECTURE_TEACHER_NAME,
+        CASE WHEN rccd.tea_cost IS NOT NULL THEN rccd.tea_cost
+        when rccm.tea_cost is not null then rccm.tea_cost
+        ELSE '0' END AS tea_cost,
+        CASE WHEN rccd.km_cost IS NOT NULL THEN rccd.km_cost
+        when rccm.km_cost is not null then rccm.km_cost
+        ELSE '0' END AS km_cost,
+        CASE WHEN rccd.spe_cost IS NOT NULL THEN rccd.spe_cost
+        when rccm.spe_cost is not null then rccm.spe_cost
+        ELSE '0' END AS spe_cost,
+        CASE WHEN rccd.head_cost IS NOT NULL THEN rccd.head_cost
+        when rccm.head_cost is not null then rccm.head_cost
+        ELSE '0' END AS head_cost
+        FROM   res_lecture_info rli
+        LEFT JOIN RES_COST_CFG_MAIN rccm ON rccm.record_status = 'Y'
+        AND rli.lecture_train_date >= rccm.start_date
+        AND rli.lecture_train_date <![CDATA[<=]]> rccm.end_date
+        AND rccm.type_id = 'LectureType'
+        LEFT JOIN RES_COST_CFG_DETAIL rccd ON rccd.record_status = 'Y'
+        AND rccm.main_flow = rccd.main_flow
+        and rccd.item_id = rli.lecture_type_id
+        where  rli.record_status = 'Y'
+        and rli.LECTURE_TEACHER_NAME = #{userName}
+        <if test='startDate != null and startDate != ""'>
+            and rli.lecture_train_date >= #{startDate}||'-01'
+        </if>
+        <if test='endDate != null and endDate != ""'>
+            and rli.lecture_train_date <![CDATA[<=]]> #{endDate}||'-31'
+        </if>
+        ) A GROUP BY A.LECTURE_TEACHER_NAME,A.Tea_Cost,A.km_cost,A.spe_cost,A.head_cost
+    </select>
+
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+    <!-- 社区学习情况记录表单 -->
+    <!--
+    {0}:表单所属机构(开关控制)
+    {1}:版本号
+ -->
+    <jsp path="res/form/{3}/{0}/cjkyjl_{1}"/>
+    <shzs_qk_sqsj_cjkyjl ver="1.0">
+        <page  ver="1.0">
+            <item name="social_time" isView="3" remark="时间" multiple="N"/>
+            <item name="social_subject" isView="0" remark="题目" multiple="N"/>
+            <item name="social_projectLeader" isView="1" remark="课题负责人" multiple="N"/>
+            <item name="social_joinRole" isView="2" remark="参与角色" multiple="N"/>
+            <item name="social_finishStatus" remark="完成情况" multiple="N"/>
+            <!--<item name="social_joinScientificResearchRecords" isView="0" remark="参加科研记录" multiple="N"/>-->
+        </page>
+    </shzs_qk_sqsj_cjkyjl>
+</jspForm>
+

@@ -1,0 +1,78 @@
+@charset "utf-8";
+/* CSS Document */
+/*-----------------------------  basic ----------------------------------------*/
+html,body{ 
+	height:100%;
+	overflow:hidden;
+}
+html{		
+	scrollbar-arrow-color: #475e88; /*图6,三角箭头的颜色*/
+	scrollbar-face-color: #e1ebf4; /*图5,立体滚动条的颜色*/
+	scrollbar-3dlight-color: #fff; /*图1,立体滚动条亮边的颜色*/
+	scrollbar-highlight-color: #fff; /*图2,滚动条空白部分的颜色*/
+	scrollbar-shadow-color: #fff; /*图3,立体滚动条阴影的颜色*/
+	scrollbar-darkshadow-color: #e1ebf4; /*图4,立体滚动条强阴影的颜色*/
+	scrollbar-track-color: #fff; /*图7,立体滚动条背景颜色*/
+	scrollbar-base-color:#000; /*滚动条的基本颜色*/
+	/*cursor: pointer; !*自定义个性鼠标*!*/
+}
+/* 设置滚动条的样式 */
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+/* 滚动槽 */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 0px;
+}
+
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(21,149,212,0.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(236,242,250,0.5);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(255,0,0,0.3);
+}
+
+/*table,tbody,thead,tr,th,td{ height:100%;}*/
+html, body, div, iframe, h1, h2, h3, h4, h5, h6, p, a, del, em, b, i, s, img, strong, dd, dl, dt,  ol, ul, li, label, form, table, tbody, thead, tr, th, td, address, span, cite { margin:0; padding:0; border:medium none; }
+body { width:100%; font:13px 'Microsoft Yahei'; color:#000; _word-break:break-all; white-space:normal;}
+h1, h2, h3, h4, h5, h6 {font-size:100%;  text-align:center; font-size:16px; margin-top:30px;}
+table { border-spacing:0 0;border-collapse:collapse;}
+a {text-decoration: none; outline:0;color:#000;}
+a:hover { text-decoration:underline; color:#f60;}
+ul,ol { list-style:none; text-align: left;}
+img, input, select, button, textarea { font:13px 'Microsoft Yahei', sans-serif; vertical-align:middle; padding:0; margin:0; }
+
+.changci{ width:100%; }
+.xllist { border:1px solid #e3e3e3; width:800px;}
+.xllist tr:nth-child(2n) { background-color: #fcfcfc; transition: all .125s ease-in-out;}
+.xllist tr:hover { background:#fbf8e9;}
+.xllist th,.xllist td { border-right:1px solid #e3e3e3; border-bottom:1px solid #e3e3e3;text-align:center;}
+.xllist th {background-color:#fafafa;color:#585858;height:30px;}
+.xllist td { text-align:center; line-height:25px; height:30px; word-break:break-all;}
+.xllist1 td { text-align:left; padding:6px 10px;}
+.xllist .xlming { text-align:center; padding-left:10px;}
+
+.title{background:#ECF2FA; color:#333; height:30px;width: 20%;}
+.dingdan-d{ margin:5px; width:60px; height:25px; cursor:pointer;}
+.fy .check { margin-left:5px;} 
+.title_tab{ border-bottom:1px solid #e7e7eb;  margin-left:20px;}
+.title_tab ul{ display:inline-block; line-height:40px;}
+.title_tab ul li{ float:left;}
+.title_tab ul li a{ padding:0 30px; color:#222;text-decoration:none; cursor:pointer;}
+.tab_select{ border-bottom:3px solid #edbe2a;}
+.tab{border-bottom: 3px solid #fff;}
+.tab:hover{ border-bottom:3px solid #a0a3ab;}
+
+.fenye{right:10px; width:520px; margin-top:20px;margin-bottom: 40px;margin-right: 40px}
+.fy{ line-height:25px; font-size:13px; margin:0px 10px; width:520px;}
+.fy a,.fy input{ margin-left:8px;padding:0 9px; border:1px solid #e1e1e1;color:#484848; cursor:pointer;}
+.fy input{ height:22px; background:none; }
+.fy a.fyon{ color:#fff; background:#0B6BBF; border:1px solid #1152AC;}
+.fy a:hover{ border:1px solid #1152AC;}
+.fr {float: right}
+

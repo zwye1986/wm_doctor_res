@@ -1,0 +1,375 @@
+<!-- project 根描述符 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- 指定maven版本，一般为4.0.0 -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 基本配置 -->
+    <!-- 继承功能，可以指定父POM -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.15.RELEASE</version>
+        <!-- 指定父项目搜索路径，一般远程项目或者仓库无需配置 -->
+        <relativePath /> <!-- lookup parent from repository -->
+    </parent>
+    <!-- 一般jar包为: groupId:artifactId:version -->
+    <!-- 团体、组织标书符，项目的命名空间 -->
+    <groupId>com.pinde</groupId>
+    <!-- 项目唯一标识符，不能含有点号(.) -->
+    <artifactId>pdsci-parent</artifactId>
+    <!-- 版本号，可以实用特殊字符串 SNAPSHOT、LATEST、RELEASE -->
+    <!-- SNAPSHOT: 用于开发过程中，表示不稳定版本 -->
+    <!-- LATEST: 表示特定构建的最新发布版本 -->
+    <!-- RELEASE: 最有一个稳定的发布版本 -->
+    <version>1.0-SNAPSHOT</version>
+    <!-- 项目打包类型，默认jar，常见类型：pom, jar, maven-plugin, ejb, war, ear, rar, par -->
+    <!-- 打war和jar包时修改 -->
+    <packaging>pom</packaging>
+
+    <!-- 声明变量，如果后面用到可使用${变量名}来替代 -->
+    <properties>
+        <!--<sf.version>2.0.0</sf.version>
+        <druid.version>1.1.5</druid.version>
+        <shrio-spring.version>1.4.0</shrio-spring.version>
+        <oracle.version>12.1</oracle.version>
+        <spring.version>4.3.18</spring.version>-->
+
+        <mybatis-spring-boot-starter.version>1.3.2</mybatis-spring-boot-starter.version>
+        <mapper-spring-boot-starter.version>1.1.7</mapper-spring-boot-starter.version>
+    </properties>
+
+    <modules>
+        <module>pdcore</module>
+        <module>pdsci2</module>
+    </modules>
+
+    <!-- 项目依赖 -->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+                <exclusion>
+                    <!--去掉-->
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Tomcat的支持 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <!-- 打war包时放开 -->
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <!-- 打war包时放开 -->
+            <scope>provided</scope>
+        </dependency>
+
+
+        <!-- 添加servlet依赖模块 -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- 添加jstl标签库依赖模块 -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis-spring-boot-starter.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>tomcat-jdbc</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+    </dependencies>
+    <!-- 多项目（子父项目）中方便依赖管理，保证版本一致，父项目中使用，声明依赖，但不引用，子项目中可以不加版本，使用父项目中配置 -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.ant</groupId>
+                <artifactId>ant</artifactId>
+                <version>1.8.4</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <!-- 多模块管理 -->
+    <!--<modules>
+        <module>project-1</module>
+        <module>project-2</module>
+        <module>project-3</module>
+    </modules>
+-->
+
+    <!-- 构建设置 -->
+    <!-- 包括project build、profile build -->
+    <build>
+        <resources>
+            <!-- 打jar包时放开 -->
+            <resource>
+                <directory>${basedir}/pdlib</directory>
+                <targetPath>BOOT-INF/lib</targetPath>
+                <includes>
+                    <include>*.jar</include>
+                </includes>
+            </resource>
+        </resources>
+        <!-- 过滤资源信息 -->
+        <filters>
+            <!--<filter>myproject.properties</filter>-->
+        </filters>
+        <!-- 扩展插件 -->
+        <extensions>
+         <!--   <extension>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.30</version>
+            </extension>-->
+        </extensions>
+        <!-- 使用插件 -->
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+                <!-- 不同的插件的参数配置不一样 -->
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                    <encoding>UTF-8</encoding>
+
+                    <compilerArguments>
+<!--                        <verbose/>-->
+                        <bootclasspath>${java.home}/lib/rt.jar${path.separator}${java.home}/lib/jce.jar${path.separator}${java.home}/lib/jsse.jar</bootclasspath>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>-->
+
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>-->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>3.0.0-M1</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.12.1</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>3.0.0-M1</version>
+                <configuration>
+                    <!-- 配置发布版本的相关信息 -->
+                </configuration>
+            </plugin>
+
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+                    &lt;!&ndash; 配置资源文件的处理规则 &ndash;&gt;
+                    <resources>
+                        <resource>
+                            <directory>src/main/resources</directory>
+                            <filtering>true</filtering>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>-->
+
+
+        </plugins>
+        <!-- 与dependencyManagement类似，为了统一版本 -->
+        <pluginManagement></pluginManagement>
+    </build>
+    <!-- 针对site生成报告插件，与build内插件类似 -->
+    <reporting>
+        <plugins></plugins>
+    </reporting>
+    <!-- 仓库库配置，可以用来设置远程仓库 -->
+    <repositories>
+        <repository>
+            <id>aliyun-center</id>
+            <url>https://maven.aliyun.com/repository/central</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>aliyun-apacheSnapshots</id>
+            <url>https://maven.aliyun.com/repository/apache-snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>aliyun-spring</id>
+            <url>https://maven.aliyun.com/repository/spring</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>aliyun-springPlugin</id>
+            <url>https://maven.aliyun.com/repository/spring-plugin</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>aliyun-public</id>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>aliyun-snapshots</id>
+            <url>https://maven.aliyun.com/repository/snapshots</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>aliyun-public-group</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <!-- 插件仓库 -->
+    <pluginRepositories></pluginRepositories>
+    <!-- 发布管理，管理整个构建 -->
+    <distributionManagement>
+    </distributionManagement>
+    <!-- 配置不同环境，不同包 -->
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>**/*</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+
+        <profile>
+            <id>test</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/test/resources</directory>
+                        <includes>
+                            <include>config/*.properties</include>
+                            <include>log4j.xml</include>
+                        </includes>
+                    </resource>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>**/*.xml</include>
+                        </includes>
+                        <excludes>
+                            <exclude>log4j.xml</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+</project>

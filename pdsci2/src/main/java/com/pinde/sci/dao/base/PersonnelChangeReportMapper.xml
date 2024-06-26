@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.PersonnelChangeReportMapper" >
+    <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PersonnelChangeReport" >
+        <result column="TRAINING_SPE_NAME" property="trainingSpeName" jdbcType="VARCHAR" />
+        <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="lastResidentNum" property="changeTimeNum" jdbcType="INTEGER" />
+        <result column="residentNum" property="speChangeNum" jdbcType="INTEGER" />
+    </resultMap>
+    <select id="selectSectionByChangeTime" resultMap="BaseResultMap">
+        select training_spe_name,
+        sum(case when
+        <if test="dateMonth!=null and dateMonth!=''">
+            policy_time like concat(#{dateMonth},'%')
+        </if>
+        then 1 else 0 end)changeTimeNum
+        FROM PDSCI.RES_DOCOTR_DELAY_TETURN dt
+        WHERE RECORD_STATUS = 'Y'
+        <if test="orgFlow!=null and orgFlow!=''">
+            AND ORG_FLOW = #{orgFlow}
+        </if>
+        AND TYPE_ID = 'Delay'
+        AND DOCTOR_TYPE_ID IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+        and TRAINING_SPE_ID in (SELECT DICT_ID
+        FROM PDSCI.SYS_DICT
+        WHERE DICT_TYPE_ID = 'DoctorTrainingSpe'
+        and record_status = 'Y')
+        group BY training_spe_name
+    </select>
+    <select id="selectSessionByChangeTime" resultMap="BaseResultMap">
+        select session_number,
+        sum(case when
+        <if test="dateMonth!=null and dateMonth!=''">
+            policy_time like concat(#{dateMonth},'%')
+        </if>
+        then 1 else 0 end)changeTimeNum
+        FROM PDSCI.RES_DOCOTR_DELAY_TETURN dt
+          WHERE RECORD_STATUS = 'Y'
+            <if test="orgFlow!=null and orgFlow!=''">
+                AND ORG_FLOW = #{orgFlow}
+            </if>
+            AND TYPE_ID = 'Delay'
+            AND DOCTOR_TYPE_ID IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+            <if test="trainingSpeName!=null and trainingSpeName!=''">
+                and training_spe_name = #{trainingSpeName}
+            </if>
+          group BY session_number
+    </select>
+    <select id="selectOrgNameByChangeTime" resultMap="BaseResultMap">
+          select org_name,
+            sum(case when
+            <if test="dateMonth!=null and dateMonth!=''">
+                policy_time like concat(#{dateMonth},'%')
+            </if>
+            then 1 else 0 end)changeTimeNum
+            FROM PDSCI.RES_DOCOTR_DELAY_TETURN dt
+              WHERE RECORD_STATUS = 'Y'
+                AND ORG_FLOW in (
+                  select joint_org_flow from res_joint_org where org_flow in (
+                  select distinct(org_flow) from PDSCI.SYS_MONTHLY_DOCTOR_INFO  where
+                    <if test="trainingSpeName!=null and trainingSpeName!=''">
+                        training_spe_name = #{trainingSpeName}
+                    </if>
+                    <if test="sessionNumber!=null and sessionNumber!=''">
+                        and session_number = #{sessionNumber}
+                    </if>
+                    <if test="orgFlow!=null and orgFlow!=''">
+                        and org_flow = #{orgFlow}
+                    </if>
+                  ))
+                AND TYPE_ID = 'Delay'
+                AND DOCTOR_TYPE_ID IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+                <if test="trainingSpeName!=null and trainingSpeName!=''">
+                    and training_spe_name = #{trainingSpeName}
+                </if>
+                <if test="sessionNumber!=null and sessionNumber!=''">
+                    and session_number = #{sessionNumber}
+                </if>
+              group BY org_name
+    </select>
+    <select id="selectSectionBySpeChange" resultMap="BaseResultMap">
+        select d.training_spe_name,
+          sum(case when
+            <if test="dateMonth!=null and dateMonth!=''">
+                doh.modify_time like concat(#{dateMonth},'%')
+            </if>
+          then 1 else 0 end)speChangeNum
+          from
+          pdsci.RES_DOCTOR_ORG_HISTORY doh, pdsci.RES_DOCTOR d
+          where doh.DOCTOR_FLOW = d.DOCTOR_FLOW
+              AND doh.RECORD_STATUS = 'Y'
+              AND d.RECORD_STATUS = 'Y'
+              AND d.DOCTOR_TYPE_ID IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+              AND doh.CHANGE_TYPE_ID = 'SpeChange'
+              AND doh.CHANGE_STATUS_ID IN ('GlobalAuditPass')
+              AND (
+              <if test="orgFlow!=null and orgFlow!=''">
+                  doh.ORG_FLOW = #{orgFlow}
+              </if>
+                OR
+              <if test="orgFlow!=null and orgFlow!=''">
+                  doh.HISTORY_ORG_FLOW = #{orgFlow}
+              </if>)
+              group by d.training_spe_name
+    </select>
+    <select id="selectSessionBySpeChange" resultMap="BaseResultMap">
+       select d.session_number,
+          sum(case when
+            <if test="dateMonth!=null and dateMonth!=''">
+                doh.modify_time like concat(#{dateMonth},'%')
+            </if>
+          then 1 else 0 end)speChangeNum
+          from
+          pdsci.RES_DOCTOR_ORG_HISTORY doh, pdsci.RES_DOCTOR d
+          where doh.DOCTOR_FLOW = d.DOCTOR_FLOW
+              AND doh.RECORD_STATUS = 'Y'
+              AND d.RECORD_STATUS = 'Y'
+              AND d.DOCTOR_TYPE_ID IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+              AND doh.CHANGE_TYPE_ID = 'SpeChange'
+              AND doh.CHANGE_STATUS_ID IN ('GlobalAuditPass')
+              AND (
+                <if test="orgFlow!=null and orgFlow!=''">
+                    doh.ORG_FLOW = #{orgFlow}
+                </if>
+              OR
+                <if test="orgFlow!=null and orgFlow!=''">
+                    doh.HISTORY_ORG_FLOW = #{orgFlow}
+                </if>)
+              <if test="trainingSpeName!=null and trainingSpeName!=''">
+                  and d.training_spe_name=#{trainingSpeName}
+              </if>
+              group by d.session_number
+    </select>
+    <select id="selectOrgNameBySpeChange" resultMap="BaseResultMap">
+        select d.org_name,
+            sum(case when
+            <if test="dateMonth!=null and dateMonth!=''">
+                doh.modify_time like concat(#{dateMonth},'%')
+            </if>
+            then 1 else 0 end)speChangeNum
+              from
+              pdsci.RES_DOCTOR_ORG_HISTORY doh, pdsci.RES_DOCTOR d
+              where doh.DOCTOR_FLOW = d.DOCTOR_FLOW
+                  AND doh.RECORD_STATUS = 'Y'
+                  AND d.RECORD_STATUS = 'Y'
+                  AND d.DOCTOR_TYPE_ID IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
+                  AND doh.CHANGE_TYPE_ID = 'SpeChange'
+                  AND doh.CHANGE_STATUS_ID IN ('GlobalAuditPass')
+                  AND (doh.ORG_FLOW IN (
+                      select joint_org_flow from res_joint_org where org_flow in (
+                      select distinct(org_flow) from PDSCI.SYS_MONTHLY_DOCTOR_INFO  where
+                          <if test="trainingSpeName!=null and trainingSpeName!=''">
+                              training_spe_name = #{trainingSpeName}
+                          </if>
+                          <if test="sessionNumber!=null and sessionNumber!=''">
+                              and session_number = #{sessionNumber}
+                          </if>
+                          <if test="orgFlow!=null and orgFlow!=''">
+                              and ORG_FLOW = #{orgFlow}
+                          </if>
+                      ))
+                  OR doh.HISTORY_ORG_FLOW IN (
+                      select joint_org_flow from res_joint_org where org_flow in (
+                      select distinct(org_flow) from PDSCI.SYS_MONTHLY_DOCTOR_INFO  where
+                        <if test="trainingSpeName!=null and trainingSpeName!=''">
+                            training_spe_name = #{trainingSpeName}
+                        </if>
+                        <if test="sessionNumber!=null and sessionNumber!=''">
+                            and session_number = #{sessionNumber}
+                        </if>
+                        <if test="orgFlow!=null and orgFlow!=''">
+                            and ORG_FLOW = #{orgFlow}
+                        </if>
+                      )
+                  ))
+                  <if test="trainingSpeName!=null and trainingSpeName!=''">
+                      and d.training_spe_name=#{trainingSpeName}
+                  </if>
+              group by d.org_name
+    </select>
+</mapper>

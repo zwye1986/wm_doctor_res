@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jsres.JsResUserBalckListExtMapper">
+
+<select id="selectBlackUser" parameterType="java.util.Map"  resultMap="com.pinde.sci.dao.base.JsresUserBalcklistMapper.BaseResultMap" >
+		select
+
+		<include refid="com.pinde.sci.dao.base.JsresUserBalcklistMapper.Base_Column_List" />
+		from PDSCI.JSRES_USER_BALCKLIST
+		where record_status='Y'
+		and AUDIT_STATUS_ID = 'Passed'
+		and (
+			0=1
+			<if test="userFlow!=''and userFlow!=null">
+				or USER_FLOW= #{userFlow}
+			</if>
+			<if test="userCode!=''and userCode!=null">
+				or USER_CODE= #{userCode}
+			</if>
+			<if test="userEmail!=''and userEmail!=null">
+				or USER_EMAIL= #{userEmail}
+			</if>
+			<if test="idNo!=''and idNo!=null">
+				or ID_NO= #{idNo}
+			</if>
+			<if test="userPhone!=''and userPhone!=null">
+				or USER_PHONE= #{userPhone}
+			</if>
+		)
+</select>
+	<select id="selectBlackUserOfAll" parameterType="java.util.Map"  resultMap="com.pinde.sci.dao.base.JsresUserBalcklistMapper.BaseResultMap" >
+		select
+
+		<include refid="com.pinde.sci.dao.base.JsresUserBalcklistMapper.Base_Column_List" />
+		from PDSCI.JSRES_USER_BALCKLIST
+		where
+		0=1
+		<if test="userFlow!=''and userFlow!=null">
+			or USER_FLOW= #{userFlow}
+		</if>
+		<if test="userCode!=''and userCode!=null">
+			or USER_CODE= #{userCode}
+		</if>
+		<if test="userEmail!=''and userEmail!=null">
+			or USER_EMAIL= #{userEmail}
+		</if>
+		<if test="idNo!=''and idNo!=null">
+			or ID_NO= #{idNo}
+		</if>
+		<if test="userPhone!=''and userPhone!=null">
+			or USER_PHONE= #{userPhone}
+		</if>
+	</select>
+<select id="selectBlack" resultMap="com.pinde.sci.dao.base.JsresUserBalcklistMapper.BaseResultMap" >
+	select <include refid="com.pinde.sci.dao.base.JsresUserBalcklistMapper.Base_Column_List" />
+	from PDSCI.JSRES_USER_BALCKLIST
+</select>
+
+	<select id="searchInfo" resultMap="com.pinde.sci.dao.base.JsresUserBalcklistMapper.BaseResultMap" >
+		select
+		B.RECORD_FLOW, B.USER_FLOW, B.USER_CODE, B.USER_NAME, B.USER_PHONE,B.USER_EMAIL, B.ORG_FLOW, B.ORG_NAME,
+		B.ID_NO, B.SESSION_NUMBER, B.TRAINING_SPE_ID, B.TRAINING_SPE_NAME, B.REASON, B.OPER_TYPE_ID,
+		B.OPER_TYPE_NAME, B.REASON_YJ, B.RECORD_STATUS, B.CREATE_TIME,B.CREATE_USER_FLOW, B.MODIFY_TIME,
+		B.MODIFY_USER_FLOW, B.AUDIT_STATUS_ID, B.AUDIT_STATUS_NAME, B.IS_SYSTEM, B.ATTACHMENT_PATH,
+		B.FILE_NAME, B.CRET_TYPE_ID
+		from PDSCI.JSRES_USER_BALCKLIST B
+		LEFT JOIN RES_DOCTOR D ON D.DOCTOR_FLOW=B.USER_FLOW
+		WHERE B.record_status='Y'
+		<if test="jsresUserBalcklist != null">
+			<if test="jsresUserBalcklist.sessionNumber != null and jsresUserBalcklist.sessionNumber!=''">
+				and B.SESSION_NUMBER = #{jsresUserBalcklist.sessionNumber}
+			</if>
+			<if test="jsresUserBalcklist.idNo != null and jsresUserBalcklist.idNo != ''">
+				and B.ID_NO =#{jsresUserBalcklist.idNo}
+			</if>
+			<if test="jsresUserBalcklist.orgFlow != null and jsresUserBalcklist.orgFlow != ''">
+				and B.ORG_FLOW =#{jsresUserBalcklist.orgFlow}
+			</if>
+			<if test="jsresUserBalcklist.userName != null and jsresUserBalcklist.userName != ''">
+				and B.USER_NAME  like '%${jsresUserBalcklist.userName}%'
+			</if>
+			<if test="jsresUserBalcklist.trainingSpeName != null and jsresUserBalcklist.trainingSpeName != ''">
+				and B.TRAINING_SPE_NAME  like '%${jsresUserBalcklist.trainingSpeName}%'
+			</if>
+			<if test="orgFlowList !=null and orgFlowList.size>0">
+				and B.ORG_FLOW IN
+				<foreach close=")" collection="orgFlowList" item="listItem" open="(" separator=",">
+					#{listItem}
+				</foreach>
+			</if>
+			<if test="trainingTypeId != null and trainingTypeId != ''">
+				and D.TRAINING_TYPE_ID  = #{trainingTypeId}
+			</if>
+		</if>
+		order by create_time desc
+	</select>
+
+	<select id="searchInfo2" resultMap="com.pinde.sci.dao.base.JsresUserBalcklistMapper.BaseResultMap" >
+		select
+			B.RECORD_FLOW, B.USER_FLOW, B.USER_CODE, B.USER_NAME, B.USER_PHONE,B.USER_EMAIL, B.ORG_FLOW, B.ORG_NAME,
+		B.ID_NO, B.SESSION_NUMBER, B.TRAINING_SPE_ID, B.TRAINING_SPE_NAME, B.REASON, B.OPER_TYPE_ID,
+		B.OPER_TYPE_NAME, B.REASON_YJ, B.RECORD_STATUS, B.CREATE_TIME,B.CREATE_USER_FLOW, B.MODIFY_TIME,
+		B.MODIFY_USER_FLOW, B.AUDIT_STATUS_ID, B.AUDIT_STATUS_NAME, B.IS_SYSTEM, B.ATTACHMENT_PATH,
+		B.FILE_NAME, B.CRET_TYPE_ID
+		from PDSCI.JSRES_USER_BALCKLIST B
+		LEFT JOIN RES_DOCTOR D ON D.DOCTOR_FLOW=B.USER_FLOW
+		WHERE B.record_status='Y'
+		<if test="jsresUserBalcklist != null">
+			<if test="jsresUserBalcklist.sessionNumber != null and jsresUserBalcklist.sessionNumber!=''">
+				and B.SESSION_NUMBER = #{jsresUserBalcklist.sessionNumber}
+			</if>
+			<if test="jsresUserBalcklist.idNo != null and jsresUserBalcklist.idNo != ''">
+				and B.ID_NO =#{jsresUserBalcklist.idNo}
+			</if>
+			<if test="jsresUserBalcklist.orgFlow != null and jsresUserBalcklist.orgFlow != ''">
+				and B.ORG_FLOW =#{jsresUserBalcklist.orgFlow}
+			</if>
+			<if test="jsresUserBalcklist.userName != null and jsresUserBalcklist.userName != ''">
+				and B.USER_NAME  like '%${jsresUserBalcklist.userName}%'
+			</if>
+			<if test="jsresUserBalcklist.trainingSpeName != null and jsresUserBalcklist.trainingSpeName != ''">
+				and B.TRAINING_SPE_NAME  like '%${jsresUserBalcklist.trainingSpeName}%'
+			</if>
+			<if test="orgFlowList !=null and orgFlowList.size>0">
+				and B.ORG_FLOW IN
+				<foreach close=")" collection="orgFlowList" item="listItem" open="(" separator=",">
+					#{listItem}
+				</foreach>
+			</if>
+			<if test="sessionNumbers !=null and sessionNumbers.size>0">
+				and B.SESSION_NUMBER IN
+				<foreach close=")" collection="sessionNumbers" item="listItem" open="(" separator=",">
+					#{listItem}
+				</foreach>
+			</if>
+			<if test="auditStatusId != null and auditStatusId != ''">
+				<if test="auditStatusId == 'Passed'">
+					and B.AUDIT_STATUS_ID = #{auditStatusId}
+				</if>
+				<if test="auditStatusId != 'Passed'">
+					and B.AUDIT_STATUS_ID != #{auditStatusId}
+				</if>
+			</if>
+			<if test="trainingTypeId != null and trainingTypeId != ''">
+				and D.TRAINING_TYPE_ID  = #{trainingTypeId}
+			</if>
+		</if>
+		order by create_time desc
+	</select>
+
+<select id="selectByIdNo" parameterType="string" resultMap="com.pinde.sci.dao.base.JsresUserBalcklistMapper.BaseResultMap" >
+	select <include refid="com.pinde.sci.dao.base.JsresUserBalcklistMapper.Base_Column_List" />
+	from PDSCI.JSRES_USER_BALCKLIST
+	where ID_NO= #{userIdNo}
+	and record_status = 'Y'
+</select>
+</mapper>

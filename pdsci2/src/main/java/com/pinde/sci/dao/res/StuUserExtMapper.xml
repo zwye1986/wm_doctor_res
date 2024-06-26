@@ -1,0 +1,1702 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.StuUserExtMapper" >
+	<resultMap id="StuUserExtMap" type="com.pinde.sci.model.res.StuUserExt" extends="com.pinde.sci.dao.base.StuUserResumeMapper.ResultMapWithBLOBs">
+		<association property="sysUser" column="USER_FLOW" javaType="com.pinde.sci.model.mo.SysUser" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+		<association property="auditProcess" column="PROCESS_FLOW" javaType="com.pinde.sci.model.mo.StuAuditProcess" resultMap="com.pinde.sci.dao.base.StuAuditProcessMapper.BaseResultMap"/>
+		<association property="stuBatch" column="BATCH_FLOW" javaType="com.pinde.sci.model.mo.StuBatch" resultMap="com.pinde.sci.dao.base.StuBatchMapper.BaseResultMap"/>
+	</resultMap>
+	<select id="searchStuUser"  parameterType="java.util.Map"  resultMap="StuUserExtMap">
+		SELECT SU.IS_Foreign,SU.USER_FLOW,
+		SU.USER_NAME,
+		SU.ID_NO,
+		SUR.RESUME_FLOW,
+		SUR.STU_BAT_ID,
+		SUR.STU_BAT_NAME,
+		SUR.SCHOOL_SPE_NAME,
+		SUR.STU_TIME_NAME,
+		SUR.SPE_ID,
+		SUR.SPE_NAME,
+		SUR.STU_STATUS_ID,
+		SUR.STU_STATUS_NAME,
+		SUR.NURSING_STATUS_ID,
+		SUR.NURSING_STATUS_NAME,
+		SUR.TEACHER_FLOW,
+		SUR.TEACHER_NAME,
+		SUR.IS_GRADUATION,
+		SUR.GRADUATION_DATE,
+		SUR.IS_PUBLISH,
+		SUR.RESUME_INFO,
+		SUR.ISSUE_CERTIFICATE,
+		SUR.IS_BACK,
+		SUR.SEND_COM_NAME,
+		SUR.TITLE_NAME,
+		SUR.MAX_EDU_NAME,
+		SUR.REPORT_DATE,
+		SUR.CERTIFICATE_DATE,
+		SAP.AUDIT_CONTENT,
+		SB.BATCH_REG_DATE
+		FROM STU_USER_RESUME SUR
+		INNER JOIN SYS_USER SU
+		ON SUR.USER_FLOW = SU.USER_FLOW
+		LEFT JOIN STU_AUDIT_PROCESS SAP
+		ON SUR.RESUME_FLOW = SAP.RESUME_FLOW
+		LEFT JOIN STU_BATCH SB
+		ON SUR.STU_BAT_ID = SB.BATCH_FLOW
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND SUR.RECORD_STATUS = 'Y'
+		<if test='batchFlow != null and batchFlow != ""'>
+			AND SUR.STU_BAT_ID = #{batchFlow}
+		</if>
+		<if test='statusId != null and statusId != ""'>
+			AND SUR.STU_STATUS_ID = #{statusId}
+		</if>
+		<if test='isBack != null and isBack != ""'>
+			<if test='isBack == "N"'>
+				AND (SUR.IS_BACK is null OR SUR.IS_BACK = #{isBack})
+			</if>
+			<if test='isBack == "Y"'>
+				AND SUR.IS_BACK = #{isBack}
+			</if>
+		</if>
+		<if test="status!=null and status.size>0">
+			and SUR.STU_STATUS_ID in
+			<foreach collection="status" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test='userName != null and userName != ""'>
+			<bind name="name" value="'%'+userName+'%'"/>
+			AND SU.USER_NAME LIKE #{name}
+		</if>
+		<if test='teacherName != null and teacherName != ""'>
+			<bind name="name" value="'%'+teacherName+'%'"/>
+			AND SUR.TEACHER_NAME LIKE #{name}
+		</if>
+		<if test="deptFlows!=null and deptFlows.size>0">
+			and SUR.SPE_ID in
+			<foreach collection="deptFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="inResumeFlows!=null and inResumeFlows.size>0">
+			and SUR.RESUME_FLOW in
+			<foreach collection="inResumeFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="notInResumeFlows!=null and notInResumeFlows.size>0">
+			and SUR.RESUME_FLOW not in
+			<foreach collection="notInResumeFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test='teacherFlow != null and teacherFlow != ""'>
+			AND SUR.TEACHER_FLOW = #{teacherFlow}
+		</if>
+		<if test='speId != null and speId != ""'>
+			AND SUR.SPE_ID = #{speId}
+		</if>
+		<if test='speName != null and speName != ""'>
+			<bind name="speName" value="'%'+speName+'%'"/>
+			AND SUR.SPE_NAME LIKE #{speName}
+		</if>
+
+		<if test='isPublish != null and isPublish != ""'>
+			AND SUR.IS_PUBLISH = #{isPublish}
+		</if>
+		<if test='speName2 != null and speName2 != ""'>
+			<bind name="speName2" value="'%'+speName2+'%'"/>
+			AND to_char(xmltype(resume_info).extract('//speFormList').getstringval()) LIKE #{speName2}
+		</if>
+		<if test='isForeign != null and isForeign != ""'>
+			AND SU.IS_Foreign = #{isForeign}
+		</if>
+
+		<if test='isGraduation != null and isGraduation != ""'>
+			AND SUR.IS_GRADUATION = #{isGraduation}
+		</if>
+		<if test='haveFile != null and haveFile != ""'>
+			AND exists (
+			select 1 from    PDSCI.PUB_FILE t
+			WHERE RECORD_STATUS = 'Y'
+			AND PRODUCT_TYPE = 'StuFlie'
+			AND T.PRODUCT_FLOW=SUR.RESUME_FLOW
+			)
+		</if>
+		ORDER BY SUR.CREATE_TIME DESC
+	</select>
+	<select id="searchStuUser2"  parameterType="java.util.Map"  resultMap="StuUserExtMap">
+		SELECT SU.IS_Foreign,SU.USER_FLOW,
+		SU.USER_NAME,
+		SU.ID_NO,
+		SUR.RESUME_FLOW,
+		SUR.STU_BAT_ID,
+		SUR.STU_BAT_NAME,
+		SUR.SCHOOL_SPE_NAME,
+		SUR.STU_TIME_NAME,
+		SUR.SPE_ID,
+		SUR.SPE_NAME,
+		SUR.STU_STATUS_ID,
+		SUR.STU_STATUS_NAME,
+		SUR.NURSING_STATUS_ID,
+		SUR.NURSING_STATUS_NAME,
+		SUR.TEACHER_FLOW,
+		SUR.TEACHER_NAME,
+		SUR.IS_GRADUATION,
+		SUR.GRADUATION_DATE,
+		SUR.IS_PUBLISH,
+		SUR.RESUME_INFO,
+		SUR.ISSUE_CERTIFICATE,
+		SUR.IS_BACK,
+		SUR.SEND_COM_NAME,
+		SUR.TITLE_NAME,
+		SUR.MAX_EDU_NAME,
+		SUR.REPORT_DATE,
+		SUR.CERTIFICATE_DATE,
+		SAP.AUDIT_CONTENT,
+		SB.BATCH_REG_DATE
+		FROM STU_USER_RESUME SUR
+		INNER JOIN SYS_USER SU
+		ON SUR.USER_FLOW = SU.USER_FLOW
+		LEFT JOIN STU_AUDIT_PROCESS SAP
+		ON SUR.RESUME_FLOW = SAP.RESUME_FLOW
+		LEFT JOIN STU_BATCH SB
+		ON SUR.STU_BAT_ID = SB.BATCH_FLOW
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND SUR.RECORD_STATUS = 'Y'
+		AND SUR.NURSING_STATUS_ID is null
+		<if test='batchFlow != null and batchFlow != ""'>
+			AND SUR.STU_BAT_ID = #{batchFlow}
+		</if>
+		<if test='statusId != null and statusId != ""'>
+			AND SUR.STU_STATUS_ID = #{statusId}
+		</if>
+		<if test='isBack != null and isBack != ""'>
+			<if test='isBack == "N"'>
+				AND (SUR.IS_BACK is null OR SUR.IS_BACK = #{isBack})
+			</if>
+			<if test='isBack == "Y"'>
+				AND SUR.IS_BACK = #{isBack}
+			</if>
+		</if>
+		<if test="status!=null and status.size>0">
+			and SUR.STU_STATUS_ID in
+			<foreach collection="status" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test='userName != null and userName != ""'>
+			<bind name="name" value="'%'+userName+'%'"/>
+			AND SU.USER_NAME LIKE #{name}
+		</if>
+		<if test='teacherName != null and teacherName != ""'>
+			<bind name="name" value="'%'+teacherName+'%'"/>
+			AND SUR.TEACHER_NAME LIKE #{name}
+		</if>
+		<if test="deptFlows!=null and deptFlows.size>0">
+			and SUR.SPE_ID in
+			<foreach collection="deptFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="inResumeFlows!=null and inResumeFlows.size>0">
+			and SUR.RESUME_FLOW in
+			<foreach collection="inResumeFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="notInResumeFlows!=null and notInResumeFlows.size>0">
+			and SUR.RESUME_FLOW not in
+			<foreach collection="notInResumeFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test='teacherFlow != null and teacherFlow != ""'>
+			AND SUR.TEACHER_FLOW = #{teacherFlow}
+		</if>
+		<if test='speId != null and speId != ""'>
+			AND SUR.SPE_ID = #{speId}
+		</if>
+		<if test='speName != null and speName != ""'>
+			<bind name="speName" value="'%'+speName+'%'"/>
+			AND SUR.SPE_NAME LIKE #{speName}
+		</if>
+
+		<if test='isPublish != null and isPublish != ""'>
+			AND SUR.IS_PUBLISH = #{isPublish}
+		</if>
+		<if test='speName2 != null and speName2 != ""'>
+			<bind name="speName2" value="'%'+speName2+'%'"/>
+			AND to_char(xmltype(resume_info).extract('//speFormList').getstringval()) LIKE #{speName2}
+		</if>
+		<if test='isForeign != null and isForeign != ""'>
+			AND SU.IS_Foreign = #{isForeign}
+		</if>
+
+		<if test='isGraduation != null and isGraduation != ""'>
+			AND SUR.IS_GRADUATION = #{isGraduation}
+		</if>
+		<if test='haveFile != null and haveFile != ""'>
+			AND exists (
+			select 1 from    PDSCI.PUB_FILE t
+			WHERE RECORD_STATUS = 'Y'
+			AND PRODUCT_TYPE = 'StuFlie'
+			AND T.PRODUCT_FLOW=SUR.RESUME_FLOW
+			)
+		</if>
+		ORDER BY SUR.CREATE_TIME DESC
+	</select>
+    <select id="searchStuNurseUser"  parameterType="java.util.Map"  resultMap="StuUserExtMap">
+        select * from(
+        SELECT SU.IS_Foreign,SU.USER_FLOW,
+        SU.USER_NAME,
+        SU.ID_NO,
+        SUR.RESUME_FLOW,
+        SUR.STU_BAT_ID,
+        SUR.STU_BAT_NAME,
+        SUR.SCHOOL_SPE_NAME,
+        SUR.STU_TIME_NAME,
+        SUR.SPE_ID,
+        SUR.SPE_NAME,
+        SUR.STU_STATUS_ID,
+        SUR.STU_STATUS_NAME,
+        SUR.NURSING_STATUS_ID,
+        SUR.NURSING_STATUS_NAME,
+        SUR.TEACHER_FLOW,
+        SUR.TEACHER_NAME,
+        SUR.IS_GRADUATION,
+        SUR.GRADUATION_DATE,
+        SUR.IS_PUBLISH,
+        SUR.RESUME_INFO,
+        SUR.ISSUE_CERTIFICATE,
+        SUR.IS_BACK,
+        SUR.SEND_COM_NAME,
+        SUR.TITLE_NAME,
+        SUR.MAX_EDU_NAME,
+        SUR.REPORT_DATE,
+        SUR.CERTIFICATE_DATE,
+        SAP.AUDIT_CONTENT,
+        SUR.CREATE_TIME,
+        SB.BATCH_REG_DATE,
+        CASE WHEN SUR.RESUME_INFO IS NOT NULL
+        THEN xmltype(SUR.RESUME_INFO).extract('//titleTypeName/text()').getstringval()
+        ELSE '' END title_Type_name
+        FROM STU_USER_RESUME SUR
+        INNER JOIN SYS_USER SU
+        ON SUR.USER_FLOW = SU.USER_FLOW
+        LEFT JOIN STU_AUDIT_PROCESS SAP
+        ON SUR.RESUME_FLOW = SAP.RESUME_FLOW
+        LEFT JOIN STU_BATCH SB
+        ON SUR.STU_BAT_ID = SB.BATCH_FLOW
+        WHERE SU.RECORD_STATUS = 'Y'
+        AND SUR.RECORD_STATUS = 'Y'
+        <if test='batchFlow != null and batchFlow != ""'>
+            AND SUR.STU_BAT_ID = #{batchFlow}
+        </if>
+        <if test='statusId != null and statusId != ""'>
+            AND SUR.STU_STATUS_ID = #{statusId}
+        </if>
+        <if test='nursingStatusId != null and nursingStatusId != ""'>
+            AND SUR.NURSING_STATUS_ID = #{nursingStatusId}
+        </if>
+        <if test='isBack != null and isBack != ""'>
+            <if test='isBack == "N"'>
+                AND (SUR.IS_BACK is null OR SUR.IS_BACK = #{isBack})
+            </if>
+            <if test='isBack == "Y"'>
+                AND SUR.IS_BACK = #{isBack}
+            </if>
+        </if>
+        <if test="status!=null and status.size>0">
+            and SUR.STU_STATUS_ID in
+            <foreach collection="status" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="status2!=null and status2.size>0">
+            and SUR.NURSING_STATUS_ID in
+            <foreach collection="status2" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='userName != null and userName != ""'>
+            <bind name="name" value="'%'+userName+'%'"/>
+            AND SU.USER_NAME LIKE #{name}
+        </if>
+        <if test='teacherName != null and teacherName != ""'>
+            <bind name="name" value="'%'+teacherName+'%'"/>
+            AND SUR.TEACHER_NAME LIKE #{name}
+        </if>
+        <if test="deptFlows!=null and deptFlows.size>0">
+            and SUR.SPE_ID in
+            <foreach collection="deptFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="inResumeFlows!=null and inResumeFlows.size>0">
+            and SUR.RESUME_FLOW in
+            <foreach collection="inResumeFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="notInResumeFlows!=null and notInResumeFlows.size>0">
+            and SUR.RESUME_FLOW not in
+            <foreach collection="notInResumeFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='teacherFlow != null and teacherFlow != ""'>
+            AND SUR.TEACHER_FLOW = #{teacherFlow}
+        </if>
+        <if test='speId != null and speId != ""'>
+            AND SUR.SPE_ID = #{speId}
+        </if>
+        <if test='speName != null and speName != ""'>
+            <bind name="speName" value="'%'+speName+'%'"/>
+            AND SUR.SPE_NAME LIKE #{speName}
+        </if>
+
+        <if test='isPublish != null and isPublish != ""'>
+            AND SUR.IS_PUBLISH = #{isPublish}
+        </if>
+        <if test='speName2 != null and speName2 != ""'>
+            <bind name="speName2" value="'%'+speName2+'%'"/>
+            AND to_char(xmltype(resume_info).extract('//speFormList').getstringval()) LIKE #{speName2}
+        </if>
+        <if test='isForeign != null and isForeign != ""'>
+            AND SU.IS_Foreign = #{isForeign}
+        </if>
+
+        <if test='isGraduation != null and isGraduation != ""'>
+            AND SUR.IS_GRADUATION = #{isGraduation}
+        </if>
+        <if test='haveFile != null and haveFile != ""'>
+            AND exists (
+            select 1 from PDSCI.PUB_FILE t
+            WHERE RECORD_STATUS = 'Y'
+            AND PRODUCT_TYPE = 'StuFlie'
+            AND T.PRODUCT_FLOW=SUR.RESUME_FLOW
+            )
+        </if>
+        ) A WHERE A.title_Type_name = '护士'
+        ORDER BY A.CREATE_TIME DESC
+    </select>
+	<select id="searchUser"  parameterType="java.util.Map"  resultMap="StuUserExtMap">
+		SELECT SU.IS_Foreign,SU.USER_FLOW,
+		SU.USER_NAME,
+		SU.ID_NO,
+		SUR.RESUME_FLOW,
+		SUR.STU_BAT_ID,
+		SUR.STU_BAT_NAME,
+		SUR.SCHOOL_SPE_NAME,
+		SUR.STU_TIME_NAME,
+		SUR.SPE_ID,
+		SUR.SPE_NAME,
+		SUR.STU_STATUS_ID,
+		SUR.STU_STATUS_NAME,
+		SUR.NURSING_STATUS_ID,
+		SUR.NURSING_STATUS_NAME,
+		SUR.TEACHER_FLOW,
+		SUR.TEACHER_NAME,
+		SUR.IS_GRADUATION,
+		SUR.GRADUATION_DATE,
+		SUR.IS_PUBLISH,
+		SUR.RESUME_INFO,
+		SUR.ISSUE_CERTIFICATE,
+		SUR.IS_BACK,
+		SUR.SEND_COM_NAME,
+		SUR.TITLE_NAME,
+		SUR.MAX_EDU_NAME,
+		SUR.REPORT_DATE,
+		SUR.CERTIFICATE_DATE,
+		SAP.AUDIT_CONTENT,
+		SB.BATCH_REG_DATE
+		FROM STU_USER_RESUME SUR
+		INNER JOIN SYS_USER SU
+		ON SUR.USER_FLOW = SU.USER_FLOW
+		LEFT JOIN STU_AUDIT_PROCESS SAP
+		ON SUR.RESUME_FLOW = SAP.RESUME_FLOW
+		LEFT JOIN STU_BATCH SB
+		ON SUR.STU_BAT_ID = SB.BATCH_FLOW
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND SUR.RECORD_STATUS = 'Y'
+		AND (SUR.NURSING_STATUS_ID is null or SUR.NURSING_STATUS_ID = 'Passed')
+		<if test='batchFlow != null and batchFlow != ""'>
+			AND SUR.STU_BAT_ID = #{batchFlow}
+		</if>
+		<if test='statusId != null and statusId != ""'>
+			AND SUR.STU_STATUS_ID = #{statusId}
+		</if>
+		<if test='nursingStatusId != null and nursingStatusId != ""'>
+			AND SUR.nursing_STATUS_ID = #{nursingStatusId}
+		</if>
+		<if test='isBack != null and isBack != ""'>
+			<if test='isBack == "N"'>
+				AND (SUR.IS_BACK is null OR SUR.IS_BACK = #{isBack})
+			</if>
+			<if test='isBack == "Y"'>
+				AND SUR.IS_BACK = #{isBack}
+			</if>
+		</if>
+		<if test="status!=null and status.size>0">
+			and SUR.STU_STATUS_ID in
+			<foreach collection="status" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test='userName != null and userName != ""'>
+			<bind name="name" value="'%'+userName+'%'"/>
+			AND SU.USER_NAME LIKE #{name}
+		</if>
+		<if test='teacherName != null and teacherName != ""'>
+			<bind name="name" value="'%'+teacherName+'%'"/>
+			AND SUR.TEACHER_NAME LIKE #{name}
+		</if>
+		<if test="deptFlows!=null and deptFlows.size>0">
+			and SUR.SPE_ID in
+			<foreach collection="deptFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="inResumeFlows!=null and inResumeFlows.size>0">
+			and SUR.RESUME_FLOW in
+			<foreach collection="inResumeFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="notInResumeFlows!=null and notInResumeFlows.size>0">
+			and SUR.RESUME_FLOW not in
+			<foreach collection="notInResumeFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test='teacherFlow != null and teacherFlow != ""'>
+			AND SUR.TEACHER_FLOW = #{teacherFlow}
+		</if>
+		<if test='speId != null and speId != ""'>
+			AND SUR.SPE_ID = #{speId}
+		</if>
+		<if test='speName != null and speName != ""'>
+			<bind name="speName" value="'%'+speName+'%'"/>
+			AND SUR.SPE_NAME LIKE #{speName}
+		</if>
+
+		<if test='isPublish != null and isPublish != ""'>
+			AND SUR.IS_PUBLISH = #{isPublish}
+		</if>
+		<if test='speName2 != null and speName2 != ""'>
+			<bind name="speName2" value="'%'+speName2+'%'"/>
+			AND to_char(xmltype(resume_info).extract('//speFormList').getstringval()) LIKE #{speName2}
+		</if>
+		<if test='isForeign != null and isForeign != ""'>
+			AND SU.IS_Foreign = #{isForeign}
+		</if>
+
+		<if test='isGraduation != null and isGraduation != ""'>
+			AND SUR.IS_GRADUATION = #{isGraduation}
+		</if>
+		<if test='haveFile != null and haveFile != ""'>
+			AND exists (
+			select 1 from    PDSCI.PUB_FILE t
+			WHERE RECORD_STATUS = 'Y'
+			AND PRODUCT_TYPE = 'StuFlie'
+			AND T.PRODUCT_FLOW=SUR.RESUME_FLOW
+			)
+		</if>
+		ORDER BY SUR.CREATE_TIME DESC
+	</select>
+
+	<select id="searchStuUserByrosteringHand"  parameterType="java.util.Map"  resultMap="StuUserExtMap">
+		SELECT SU.IS_Foreign,SU.USER_FLOW,
+		SU.USER_NAME,
+		SU.ID_NO,
+		SUR.RESUME_FLOW,
+		SUR.STU_BAT_ID,
+		SUR.STU_BAT_NAME,
+		SUR.SCHOOL_SPE_NAME,
+		SUR.STU_TIME_NAME,
+		SUR.SPE_ID,
+		SUR.SPE_NAME,
+		SUR.STU_STATUS_ID,
+		SUR.STU_STATUS_NAME,
+		SUR.TEACHER_FLOW,
+		SUR.TEACHER_NAME,
+		SUR.IS_GRADUATION,
+		SUR.GRADUATION_DATE,
+		SUR.IS_PUBLISH,
+		SUR.RESUME_INFO,
+		SUR.ISSUE_CERTIFICATE,
+		SUR.IS_BACK,
+		SUR.SEND_COM_NAME,
+		SUR.TITLE_NAME,
+		SUR.MAX_EDU_NAME,
+		SAP.AUDIT_CONTENT,
+		SB.BATCH_REG_DATE
+		FROM STU_USER_RESUME SUR
+		INNER JOIN SYS_USER SU
+		ON SUR.USER_FLOW = SU.USER_FLOW
+		inner join res_doctor rd
+		on sur.user_flow =rd.doctor_flow
+		LEFT JOIN STU_AUDIT_PROCESS SAP
+		ON SUR.RESUME_FLOW = SAP.RESUME_FLOW
+		LEFT JOIN STU_BATCH SB
+		ON SUR.STU_BAT_ID = SB.BATCH_FLOW
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND SUR.RECORD_STATUS = 'Y'
+		and rd.doctor_category_id='Scholar'
+		<if test='batchFlow != null and batchFlow != ""'>
+			AND SUR.STU_BAT_ID = #{batchFlow}
+		</if>
+		<if test='statusId != null and statusId != ""'>
+			AND SUR.STU_STATUS_ID = #{statusId}
+		</if>
+		<if test='isBack != null and isBack != ""'>
+			AND (SUR.IS_BACK is null
+			OR SUR.IS_BACK = #{isBack})
+		</if>
+		<if test="status!=null and status.size>0">
+			and SUR.STU_STATUS_ID in
+			<foreach collection="status" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test='userName != null and userName != ""'>
+			<bind name="name" value="'%'+userName+'%'"/>
+			AND SU.USER_NAME LIKE #{name}
+		</if>
+		<if test='teacherName != null and teacherName != ""'>
+			<bind name="name" value="'%'+teacherName+'%'"/>
+			AND SUR.TEACHER_NAME LIKE #{name}
+		</if>
+		<if test="deptFlows!=null and deptFlows.size>0">
+			and SUR.SPE_ID in
+			<foreach collection="deptFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="inResumeFlows!=null and inResumeFlows.size>0">
+			and SUR.RESUME_FLOW in
+			<foreach collection="inResumeFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="notInResumeFlows!=null and notInResumeFlows.size>0">
+			and SUR.RESUME_FLOW not in
+			<foreach collection="notInResumeFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test='teacherFlow != null and teacherFlow != ""'>
+			AND SUR.TEACHER_FLOW = #{teacherFlow}
+		</if>
+		<if test='speId != null and speId != ""'>
+			AND SUR.SPE_ID = #{speId}
+		</if>
+		<if test='speName != null and speName != ""'>
+			<bind name="speName" value="'%'+speName+'%'"/>
+			AND SUR.SPE_NAME LIKE #{speName}
+		</if>
+		<if test='speName2 != null and speName2 != ""'>
+			<bind name="speName2" value="'%'+speName2+'%'"/>
+			AND to_char(xmltype(resume_info).extract('//speFormList').getstringval()) LIKE #{speName2}
+		</if>
+		<if test='isPublish != null and isPublish != ""'>
+			AND SUR.IS_PUBLISH = #{isPublish}
+		</if>
+		<if test='isForeign != null and isForeign != ""'>
+			AND SU.IS_Foreign = #{isForeign}
+		</if>
+
+		<if test='isGraduation != null and isGraduation != ""'>
+			AND SUR.IS_GRADUATION = #{isGraduation}
+		</if>
+		<if test='haveFile != null and haveFile != ""'>
+			AND exists (
+			select 1 from    PDSCI.PUB_FILE t
+			WHERE RECORD_STATUS = 'Y'
+			AND PRODUCT_TYPE = 'StuFlie'
+			AND T.PRODUCT_FLOW=SUR.RESUME_FLOW
+			)
+		</if>
+		ORDER BY SUR.CREATE_TIME DESC
+	</select>
+
+	<select id="searchStuUserAll"  parameterType="java.util.Map"  resultMap="StuUserExtMap">
+		SELECT SU.IS_Foreign,SU.USER_FLOW,
+		SU.USER_NAME,
+		SU.ID_NO,
+		SUR.RESUME_FLOW,
+		SUR.STU_BAT_ID,
+		SUR.STU_BAT_NAME,
+		SUR.SCHOOL_SPE_NAME,
+		SUR.STU_TIME_NAME,
+		SUR.SPE_ID,
+		SUR.SPE_NAME,
+		SUR.STU_STATUS_ID,
+		SUR.STU_STATUS_NAME,
+		SUR.TEACHER_FLOW,
+		SUR.TEACHER_NAME,
+		SUR.IS_GRADUATION,
+		SUR.GRADUATION_DATE,
+		SUR.IS_PUBLISH,
+		SUR.RESUME_INFO,
+		SUR.ISSUE_CERTIFICATE,
+		SUR.IS_BACK,
+		SUR.SEND_COM_NAME,
+		SUR.TITLE_NAME,
+		SUR.MAX_EDU_NAME,
+		SAP.AUDIT_CONTENT,
+		SB.BATCH_REG_DATE
+		FROM STU_USER_RESUME SUR
+		INNER JOIN SYS_USER SU
+		ON SUR.USER_FLOW = SU.USER_FLOW
+		LEFT JOIN STU_AUDIT_PROCESS SAP
+		ON SUR.RESUME_FLOW = SAP.RESUME_FLOW
+		LEFT JOIN STU_BATCH SB
+		ON SUR.STU_BAT_ID = SB.BATCH_FLOW
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND SUR.RECORD_STATUS = 'Y'
+		<if test='batchFlow != null and batchFlow != ""'>
+			AND SUR.STU_BAT_ID = #{batchFlow}
+		</if>
+		<if test='statusId != null and statusId != ""'>
+			AND SUR.STU_STATUS_ID = #{statusId}
+		</if>
+		<if test='isBack != null and isBack != ""'>
+			AND (SUR.IS_BACK is null
+			OR SUR.IS_BACK = #{isBack})
+		</if>
+		<if test="status!=null and status.size>0">
+			and SUR.STU_STATUS_ID in
+			<foreach collection="status" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test='userName != null and userName != ""'>
+			<bind name="name" value="'%'+userName+'%'"/>
+			AND SU.USER_NAME LIKE #{name}
+		</if>
+		<if test='teacherName != null and teacherName != ""'>
+			<bind name="name" value="'%'+teacherName+'%'"/>
+			AND SUR.TEACHER_NAME LIKE #{name}
+		</if>
+		<if test="deptFlows!=null and deptFlows.size>0">
+			and SUR.SPE_ID in
+			<foreach collection="deptFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="inResumeFlows!=null and inResumeFlows.size>0">
+			and SUR.RESUME_FLOW in
+			<foreach collection="inResumeFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="notInResumeFlows!=null and notInResumeFlows.size>0">
+			and SUR.RESUME_FLOW not in
+			<foreach collection="notInResumeFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test='teacherFlow != null and teacherFlow != ""'>
+			AND SUR.TEACHER_FLOW = #{teacherFlow}
+		</if>
+		<if test='speId != null and speId != ""'>
+			AND SUR.SPE_ID = #{speId}
+		</if>
+		<if test='speName != null and speName != ""'>
+			<bind name="speName" value="'%'+speName+'%'"/>
+			AND SUR.SPE_NAME LIKE #{speName}
+		</if>
+		<if test='speName2 != null and speName2 != ""'>
+			<bind name="speName2" value="'%'+speName2+'%'"/>
+			AND to_char(xmltype(resume_info).extract('//speFormList').getstringval()) LIKE #{speName2}
+		</if>
+		<if test='isPublish != null and isPublish != ""'>
+			AND SUR.IS_PUBLISH = #{isPublish}
+		</if>
+
+		<if test='isGraduation != null and isGraduation != ""'>
+			AND SUR.IS_GRADUATION = #{isGraduation}
+		</if>
+		<if test='haveFile != null and haveFile != ""'>
+			AND exists (
+			select 1 from    PDSCI.PUB_FILE t
+			WHERE RECORD_STATUS = 'Y'
+			AND PRODUCT_TYPE = 'StuFlie'
+			AND T.PRODUCT_FLOW=SUR.RESUME_FLOW
+			)
+		</if>
+		ORDER BY SUR.SPE_ID DESC,SUR.CREATE_TIME DESC
+	</select>
+
+	<select id="searchStuUserByForeign"  parameterType="java.util.Map"  resultMap="StuUserExtMap">
+		SELECT
+		SUR.CERTIFICATE_DATE,
+		SU.IS_Foreign,SU.USER_FLOW,
+		SU.USER_NAME,
+		SU.ID_NO,
+		SUR.RESUME_FLOW,
+		SUR.STU_BAT_ID,
+		SUR.STU_BAT_NAME,
+		SUR.SCHOOL_SPE_NAME,
+		SUR.STU_TIME_NAME,
+		SUR.SPE_ID,
+		SUR.SPE_NAME,
+		SUR.STU_STATUS_ID,
+		SUR.STU_STATUS_NAME,
+		SUR.TEACHER_FLOW,
+		SUR.TEACHER_NAME,
+		SUR.IS_GRADUATION,
+		SUR.GRADUATION_DATE,
+		SUR.IS_PUBLISH,
+		SUR.RESUME_INFO,
+		SUR.ISSUE_CERTIFICATE,
+		SUR.IS_BACK,
+		SUR.SEND_COM_NAME,
+		SUR.TITLE_NAME,
+		SUR.MAX_EDU_NAME,
+		SAP.AUDIT_CONTENT,
+		SB.BATCH_REG_DATE
+		FROM STU_USER_RESUME SUR
+		INNER JOIN SYS_USER SU
+		ON SUR.USER_FLOW = SU.USER_FLOW
+		LEFT JOIN STU_AUDIT_PROCESS SAP
+		ON SUR.RESUME_FLOW = SAP.RESUME_FLOW
+		LEFT JOIN STU_BATCH SB
+		ON SUR.STU_BAT_ID = SB.BATCH_FLOW
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND SUR.RECORD_STATUS = 'Y'
+		<if test='batchFlow != null and batchFlow != ""'>
+			AND SUR.STU_BAT_ID = #{batchFlow}
+		</if>
+		<if test='statusId != null and statusId != ""'>
+			AND SUR.STU_STATUS_ID = #{statusId}
+		</if>
+		<if test='isBack != null and isBack != ""'>
+			AND (SUR.IS_BACK is null
+			OR SUR.IS_BACK = #{isBack})
+		</if>
+		<if test="status!=null and status.size>0">
+			and SUR.STU_STATUS_ID in
+			<foreach collection="status" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test='userName != null and userName != ""'>
+			<bind name="name" value="'%'+userName+'%'"/>
+			AND SU.USER_NAME LIKE #{name}
+		</if>
+
+		<if test="deptFlows!=null and deptFlows.size>0">
+			and SUR.SPE_ID in
+			<foreach collection="deptFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+
+		<if test='speId != null and speId != ""'>
+			AND SUR.SPE_ID = #{speId}
+		</if>
+
+		<if test='speName2 != null and speName2 != ""'>
+			<bind name="speName2" value="'%'+speName2+'%'"/>
+			AND to_char(xmltype(resume_info).extract('//speFormList').getstringval()) LIKE #{speName2}
+		</if>
+
+		<if test='isGraduation != null and isGraduation != ""'>
+			AND SUR.IS_GRADUATION = #{isGraduation}
+		</if>
+
+		<if test='isForeign != null and isForeign != "" and isForeign!="all"'>
+			AND SU.IS_Foreign = #{isForeign}
+			<if test='isForeign=="N"'>
+				<if test='haveFile != null and haveFile != ""'>
+					AND exists (
+					select 1 from    PDSCI.PUB_FILE t
+					WHERE RECORD_STATUS = 'Y'
+					AND PRODUCT_TYPE = 'StuFlie'
+					AND T.PRODUCT_FLOW=SUR.RESUME_FLOW
+					)
+				</if>
+			</if>
+		</if>
+
+		<if test='isForeign == null or isForeign == "" or isForeign=="all"'>
+			AND(SU.IS_Foreign='N'
+			<if test='haveFile != null and haveFile != ""'>
+				AND exists (
+				select 1 from    PDSCI.PUB_FILE t
+				WHERE RECORD_STATUS = 'Y'
+				AND PRODUCT_TYPE = 'StuFlie'
+				AND T.PRODUCT_FLOW=SUR.RESUME_FLOW
+				)
+				or SU.IS_Foreign='Y'
+			</if>
+			)
+		</if>
+		ORDER BY SUR.CREATE_TIME DESC
+	</select>
+
+	<select id="getStuHeadAudit"  parameterType="java.util.Map"  resultMap="StuUserExtMap">
+		SELECT SU.USER_FLOW,
+		SU.USER_NAME,
+		SU.ID_NO,
+		SUR.RESUME_FLOW,
+		SUR.STU_BAT_ID,
+		SUR.STU_BAT_NAME,
+		SUR.SCHOOL_SPE_NAME,
+		SUR.STU_TIME_NAME,
+		SUR.SPE_ID,
+		SUR.SPE_NAME,
+		SUR.STU_STATUS_ID,
+		SUR.STU_STATUS_NAME,
+		SUR.TEACHER_FLOW,
+		SUR.TEACHER_NAME,
+		SUR.IS_GRADUATION,
+		SUR.GRADUATION_DATE,
+		SUR.IS_PUBLISH,
+		SUR.RESUME_INFO,
+		SUR.ISSUE_CERTIFICATE,
+		SUR.IS_BACK,
+		SUR.SEND_COM_NAME,
+		SUR.TITLE_NAME,
+		SUR.MAX_EDU_NAME,
+		SAP.AUDIT_CONTENT,
+		SB.BATCH_REG_DATE
+		FROM STU_USER_RESUME SUR
+		INNER JOIN SYS_USER SU
+		ON SUR.USER_FLOW = SU.USER_FLOW
+		LEFT JOIN STU_AUDIT_PROCESS SAP
+		ON SUR.RESUME_FLOW = SAP.RESUME_FLOW
+		LEFT JOIN STU_BATCH SB
+		ON SUR.STU_BAT_ID = SB.BATCH_FLOW
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND SUR.RECORD_STATUS = 'Y'
+		<if test='batchFlow != null and batchFlow != ""'>
+			AND SUR.STU_BAT_ID = #{batchFlow}
+		</if>
+		AND SUR.STU_STATUS_ID = 'HeadPassing'
+		<if test='userName != null and userName != ""'>
+			<bind name="name" value="'%'+userName+'%'"/>
+			AND SU.USER_NAME LIKE #{name}
+		</if>
+
+		<if test='isForeign != null and isForeign != ""'>
+			AND SU.IS_Foreign = #{isForeign}
+		</if>
+
+		<if test='deptFlow != null and deptFlow != "" and statusId != null and statusId != ""'>
+			and exists(select 1 from stu_head_audit_status
+			where STU_STATUS_ID = #{statusId} and dept_flow=#{deptFlow} and
+			SU.USER_FLOW = user_flow )
+		</if>
+
+		ORDER BY SUR.CREATE_TIME DESC
+	</select>
+
+	<select id="searchStuUserByHead"  parameterType="java.util.Map"  resultMap="StuUserExtMap">
+		SELECT SU.USER_FLOW,
+		SU.USER_NAME,
+		SU.ID_NO,
+		SUR.RESUME_FLOW,
+		SUR.STU_BAT_ID,
+		SUR.STU_BAT_NAME,
+		SUR.SCHOOL_SPE_NAME,
+		SUR.STU_TIME_NAME,
+		SUR.SPE_ID,
+		SUR.SPE_NAME,
+		SUR.STU_STATUS_ID,
+		SUR.STU_STATUS_NAME,
+		SUR.TEACHER_FLOW,
+		SUR.TEACHER_NAME,
+		SUR.IS_GRADUATION,
+		SUR.GRADUATION_DATE,
+		SUR.IS_PUBLISH,
+		SUR.RESUME_INFO,
+		SUR.ISSUE_CERTIFICATE,
+		SUR.IS_BACK,
+		SUR.SEND_COM_NAME,
+		SUR.TITLE_NAME,
+		SUR.MAX_EDU_NAME,
+		SAP.AUDIT_CONTENT,
+		SB.BATCH_REG_DATE
+		FROM STU_USER_RESUME SUR
+		INNER JOIN SYS_USER SU
+		ON SUR.USER_FLOW = SU.USER_FLOW
+		LEFT JOIN STU_AUDIT_PROCESS SAP
+		ON SUR.RESUME_FLOW = SAP.RESUME_FLOW
+		LEFT JOIN STU_BATCH SB
+		ON SUR.STU_BAT_ID = SB.BATCH_FLOW
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND SUR.RECORD_STATUS = 'Y'
+
+		<if test='isBack != null and isBack != ""'>
+			AND SUR.is_back = #{isBack}
+		</if>
+
+		<if test='batchFlow != null and batchFlow != ""'>
+			AND SUR.STU_BAT_ID = #{batchFlow}
+		</if>
+		<if test='status2 != null and status2 != ""'>
+			AND SUR.STU_STATUS_ID = #{status2}
+		</if>
+
+		<if test='userName != null and userName != ""'>
+			<bind name="name" value="'%'+userName+'%'"/>
+			AND SU.USER_NAME LIKE #{name}
+		</if>
+		AND SU.IS_Foreign = 'N'
+
+		<if test='deptFlow != null and deptFlow != "" and statusId != null and statusId != ""'>
+			and exists(select 1 from stu_head_audit_status
+			where STU_STATUS_ID = #{statusId} and dept_flow=#{deptFlow} and
+			SU.USER_FLOW = user_flow
+			<if test='isBack != null and isBack != ""'>
+				and is_back = #{isBack}
+			</if>
+			)
+		</if>
+		ORDER BY SUR.CREATE_TIME DESC
+	</select>
+
+	<select id="searchStuUserAndDoc"  parameterType="java.util.Map"  resultMap="StuUserExtMap">
+		SELECT SU.USER_FLOW,
+		SU.USER_NAME,
+		SU.ID_NO,
+		SUR.RESUME_FLOW,
+		SUR.STU_BAT_ID,
+		SUR.STU_BAT_NAME,
+		SUR.SCHOOL_SPE_NAME,
+		SUR.STU_TIME_NAME,
+		SUR.SPE_ID,
+		SUR.SPE_NAME,
+		SUR.STU_STATUS_ID,
+		SUR.STU_STATUS_NAME,
+		SUR.TEACHER_FLOW,
+		SUR.TEACHER_NAME,
+		SUR.IS_GRADUATION,
+		SUR.GRADUATION_DATE,
+		SUR.IS_PUBLISH,
+		SUR.RESUME_INFO,
+		SUR.ISSUE_CERTIFICATE,
+		SUR.IS_BACK,
+		SUR.SEND_COM_NAME,
+		SUR.TITLE_NAME,
+		SUR.MAX_EDU_NAME,
+		SAP.AUDIT_CONTENT,
+		SB.BATCH_REG_DATE
+		FROM STU_USER_RESUME SUR
+		INNER JOIN SYS_USER SU
+		ON SUR.USER_FLOW = SU.USER_FLOW
+		LEFT JOIN RES_DOCTOR RD
+		ON SUR.USER_FLOW = RD.DOCTOR_FLOW AND RD.DOCTOR_CATEGORY_ID = 'Scholar'
+		LEFT JOIN STU_AUDIT_PROCESS SAP
+		ON SUR.RESUME_FLOW = SAP.RESUME_FLOW
+		LEFT JOIN STU_BATCH SB
+		ON SUR.STU_BAT_ID = SB.BATCH_FLOW
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND SUR.RECORD_STATUS = 'Y'
+		AND RD.RECORD_STATUS ='Y'
+		AND SAP.RECORD_STATUS = 'Y'
+		<if test='batchFlow != null and batchFlow != ""'>
+			AND SUR.STU_BAT_ID = #{batchFlow}
+		</if>
+		<if test='statusId != null and statusId != ""'>
+			AND SUR.STU_STATUS_ID = #{statusId}
+		</if>
+		<if test='isBack != null and isBack != ""'>
+			AND (SUR.IS_BACK is null
+			OR SUR.IS_BACK = #{isBack})
+		</if>
+		<if test="status!=null and status.size>0">
+			and SUR.STU_STATUS_ID in
+			<foreach collection="status" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test='userName != null and userName != ""'>
+			<bind name="name" value="'%'+userName+'%'"/>
+			AND SU.USER_NAME LIKE #{name}
+		</if>
+		<if test='teacherName != null and teacherName != ""'>
+			<bind name="name" value="'%'+teacherName+'%'"/>
+			AND SUR.TEACHER_NAME LIKE #{name}
+		</if>
+		<if test="deptFlows!=null and deptFlows.size>0">
+			and SUR.SPE_ID in
+			<foreach collection="deptFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="inResumeFlows!=null and inResumeFlows.size>0">
+			and SUR.RESUME_FLOW in
+			<foreach collection="inResumeFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="notInResumeFlows!=null and notInResumeFlows.size>0">
+			and SUR.RESUME_FLOW not in
+			<foreach collection="notInResumeFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test='teacherFlow != null and teacherFlow != ""'>
+			AND SUR.TEACHER_FLOW = #{teacherFlow}
+		</if>
+		<if test='speId != null and speId != ""'>
+			AND SUR.SPE_ID = #{speId}
+		</if>
+		<if test='speName != null and speName != ""'>
+			<bind name="speName" value="'%'+speName+'%'"/>
+			AND SUR.SPE_NAME LIKE #{speName}
+		</if>
+		<if test='isPublish != null and isPublish != ""'>
+			AND SUR.IS_PUBLISH = #{isPublish}
+		</if>
+		<if test='isGraduation != null and isGraduation != ""'>
+			AND SUR.IS_GRADUATION = #{isGraduation}
+		</if>
+		<if test='haveFile != null and haveFile != ""'>
+			AND exists (
+			select 1 from    PDSCI.PUB_FILE t
+			WHERE RECORD_STATUS = 'Y'
+			AND PRODUCT_TYPE = 'StuFlie'
+			AND T.PRODUCT_FLOW=SUR.RESUME_FLOW
+			)
+		</if>
+		ORDER BY SUR.SPE_ID DESC,SUR.CREATE_TIME DESC
+	</select>
+
+	<select id="teaQueryStuList"  parameterType="java.util.Map"  resultMap="StuUserExtMap">
+		SELECT SU.USER_FLOW,
+		SU.USER_NAME,
+		SU.ID_NO,
+		SUR.RESUME_FLOW,
+		SUR.STU_BAT_ID,
+		SUR.STU_BAT_NAME,
+		SUR.SCHOOL_SPE_NAME,
+		SUR.STU_TIME_NAME,
+		SUR.SPE_NAME,
+		SUR.STU_STATUS_ID,
+		TEA.USER_NAME TEACHER_NAME,
+		TEA.USER_FLOW TEACHER_FLOW,
+		SUR.IS_GRADUATION,
+		SUR.GRADUATION_DATE,
+		SUR.IS_PUBLISH,
+		SUR.RESUME_INFO,
+		SAP.AUDIT_CONTENT,
+		SB.BATCH_REG_DATE
+		FROM STU_USER_RESUME SUR
+		INNER JOIN SYS_USER SU
+		ON SUR.USER_FLOW = SU.USER_FLOW
+		LEFT JOIN STU_AUDIT_PROCESS SAP
+		ON SUR.RESUME_FLOW = SAP.RESUME_FLOW
+		LEFT JOIN STU_BATCH SB
+		ON SUR.STU_BAT_ID = SB.BATCH_FLOW
+		LEFT JOIN SYS_USER TEA
+		ON TEA.RECORD_STATUS='Y'
+		AND TEA.USER_FLOW=SUR.TEACHER_FLOW
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND SUR.RECORD_STATUS = 'Y'
+		<if test='batchFlow != null and batchFlow != ""'>
+			AND SUR.STU_BAT_ID = #{batchFlow}
+		</if>
+		AND SUR.STU_STATUS_ID IN( 'Admited','Graduation','DelayGraduation')
+		<if test='userName != null and userName != ""'>
+			<bind name="name" value="'%'+userName+'%'"/>
+			AND SU.USER_NAME LIKE #{name}
+		</if>
+		<if test='teaName != null and teaName != ""'>
+			<bind name="teaName" value="'%'+teaName+'%'"/>
+			AND TEA.USER_NAME LIKE #{teaName}
+		</if>
+		<if test='deptFlow != null and deptFlow != ""'>
+			AND SUR.SPE_ID = #{deptFlow}
+		</if>
+		<if test='deptFlows!=null and deptFlows.size()>0'>
+			and SUR.SPE_ID in
+			<foreach collection="deptFlows" close=")" item="df" open="(" separator=",">
+				#{df}
+			</foreach>
+		</if>
+		<if test='isSecretart != null and isSecretart != "" and isSecretart=="Y".toString()'>
+			AND TEA.USER_FLOW IS NOT NULL
+		</if>
+		<if test='isSecretart != null and isSecretart != "" and isSecretart=="N".toString()'>
+			AND TEA.USER_FLOW IS NULL
+		</if>
+		ORDER BY SUR.SPE_ID DESC,SUR.CREATE_TIME DESC
+	</select>
+
+	<select id="queryStuList"  parameterType="java.util.Map"  resultMap="StuUserExtMap">
+		SELECT * FROM (
+		SELECT
+		SUR.CERTIFICATE_DATE,
+		SUR.REPORT_DATE,
+		SUR.certified_Type_Name,
+		SUR.school_Name,
+		SUR.hospital_Level_Name,
+		SUR.send_Com_Address,
+		SUR.send_Com_Name,
+		SU.IS_FOREIGN,
+		SU.POST_NAME,
+		SU.USER_FLOW,
+		SU.USER_BIRTHDAY,
+		SU.USER_NAME,
+		SU.user_Phone,
+		SU.SEX_NAME,
+		SU.ID_NO,
+		SU.USER_CODE,
+		SUR.RESUME_FLOW,
+		SUR.STU_BAT_ID,
+		SUR.STU_BAT_NAME,
+		SUR.JOB_YEAR,
+		SU.NATION_NAME,
+		SUR.TITLE_NAME,
+		SUR.USER_AGE,
+		SUR.SCHOOL_SPE_NAME,
+		SUR.STU_TIME_NAME,
+		SUR.SPE_NAME,
+		SUR.STU_STATUS_ID,
+		SUR.TEACHER_NAME,
+		SUR.IS_GRADUATION,
+		SUR.GRADUATION_DATE,
+		SUR.IS_PUBLISH,
+		SUR.RESUME_INFO,
+		SAP.AUDIT_CONTENT,
+		SB.BATCH_REG_DATE,
+		CASE WHEN SUR.RESUME_INFO IS NOT NULL
+		THEN xmltype(SUR.RESUME_INFO).extract('//titleTypeId/text()').getstringval()
+		ELSE '' END title_Type_Id,
+		SUR.CREATE_TIME
+		FROM STU_USER_RESUME SUR
+		INNER JOIN SYS_USER SU
+		ON SUR.USER_FLOW = SU.USER_FLOW
+		LEFT JOIN STU_AUDIT_PROCESS SAP
+		ON SUR.RESUME_FLOW = SAP.RESUME_FLOW
+		LEFT JOIN STU_BATCH SB
+		ON SUR.STU_BAT_ID = SB.BATCH_FLOW
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND SUR.RECORD_STATUS = 'Y'
+		AND SUR.STU_STATUS_ID NOT IN ('UnSubmit','Passing')
+
+		<if test='processFlag != null and processFlag != ""'>
+			AND SUR.STU_STATUS_ID  IN ('Admited','Graduation','DelayGraduation')
+		</if>
+
+		<if test='batchFlow != null and batchFlow != ""'>
+			AND SUR.STU_BAT_ID = #{batchFlow}
+		</if>
+		<if test='isAudit != null and isAudit != "" and isAudit=="N".toString()'>
+			AND SUR.STU_STATUS_ID ='UnPassed'
+			AND (SUR.IS_BACK is null or SUR.IS_BACK = 'N')
+		</if>
+		<if test='isForeign != null and isForeign != "" and isForeign!="all"'>
+			AND SU.IS_Foreign = #{isForeign}
+		</if>
+
+		<if test='beginDate != null and beginDate != "" and (endDate == null or endDate == "")'>
+			AND SUR.REPORT_DATE >= #{beginDate}
+		</if>
+		<if test='endDate != null and endDate != "" and (beginDate == null or beginDate == "")'>
+			AND SUR.CERTIFICATE_DATE  <![CDATA[<=]]>  #{endDate}
+		</if>
+
+		<if test='beginDate != null and beginDate != "" and endDate != null and endDate != "" '>
+		and (
+		  SUR.REPORT_DATE between #{beginDate} and  #{endDate}
+		or SUR.CERTIFICATE_DATE  between  #{beginDate} and  #{endDate}
+		)
+		</if>
+		<if test='isAudit != null and isAudit != "" and isAudit=="Y".toString()'>
+			AND SUR.STU_STATUS_ID IN ('Passed','Recruitted','Admited','UnAdmitd','Graduation','DelayGraduation')
+		</if>
+		<if test='userName != null and userName != ""'>
+			<bind name="name" value="'%'+userName+'%'"/>
+			AND SU.USER_NAME LIKE #{name}
+		</if>
+		<if test='speId != null and speId != ""'>
+			AND SUR.SPE_ID = #{speId}
+		</if>
+		<if test='speName2 != null and speName2 != ""'>
+			<bind name="speName2" value="'%'+speName2+'%'"/>
+			AND to_char(xmltype(resume_info).extract('//speFormList').getstringval()) LIKE #{speName2}
+		</if>
+
+		<if test='startAge != null and startAge != ""'>
+			AND SUR.USER_AGE >= #{startAge}
+		</if>
+		<if test='endAge != null and endAge != ""'>
+			AND SUR.USER_AGE  <![CDATA[<=]]>  #{endAge}
+		</if>
+
+		<if test='sexId != null and sexId != ""'>
+			AND SU.SEX_ID = #{sexId}
+		</if>
+		<if test='stuTimeId != null and stuTimeId != ""'>
+			AND SUR.STU_TIME_ID = #{stuTimeId}
+		</if>
+		<if test='isAudit != null and isAudit != ""'>
+			AND SUR.IS_AUDIT = #{isAudit}
+		</if>
+		<if test='maxEduId != null and maxEduId != ""'>
+			AND SUR.MAX_EDU_ID = #{maxEduId}
+		</if>
+		<if test='certifiedTypeId != null and certifiedTypeId != ""'>
+			AND SUR.CERTIFIED_TYPE_ID = #{certifiedTypeId}
+		</if>
+		<if test='titleId != null and titleId != ""'>
+			AND SUR.TITLE_ID = #{titleId}
+		</if>
+		<if test='hospitalLevelId != null and hospitalLevelId != ""'>
+			AND SUR.HOSPITAL_LEVEL_ID = #{hospitalLevelId}
+		</if>
+		<if test='isAdmited != null and isAdmited != ""'>
+			AND SUR.IS_ADMITED = #{isAdmited}
+		</if>
+		<if test='isRecruit != null and isRecruit != ""'>
+			AND SUR.IS_RECRUIT = #{isRecruit}
+		</if>
+		<if test='titleTypeId != null and titleTypeId != ""'>
+			AND  title_Type_Id = #{titleTypeId}
+		</if>
+		) A
+		WHERE 1=1
+		ORDER BY A.STU_BAT_NAME DESC,A.RESUME_FLOW
+	</select>
+	<select id="queryNurseList"  parameterType="java.util.Map"  resultMap="StuUserExtMap">
+		SELECT * FROM (
+		SELECT
+		SUR.CERTIFICATE_DATE,
+		SUR.REPORT_DATE,
+		SUR.certified_Type_Name,
+		SUR.school_Name,
+		SUR.hospital_Level_Name,
+		SUR.send_Com_Address,
+		SUR.send_Com_Name,
+		SU.IS_FOREIGN,
+		SU.POST_NAME,
+		SU.USER_FLOW,
+		SU.USER_BIRTHDAY,
+		SU.USER_NAME,
+		SU.user_Phone,
+		SU.SEX_NAME,
+		SU.ID_NO,
+		SU.USER_CODE,
+		SUR.RESUME_FLOW,
+		SUR.STU_BAT_ID,
+		SUR.STU_BAT_NAME,
+		SUR.JOB_YEAR,
+		SU.NATION_NAME,
+		SUR.TITLE_NAME,
+		SUR.USER_AGE,
+		SUR.SCHOOL_SPE_NAME,
+		SUR.STU_TIME_NAME,
+		SUR.SPE_NAME,
+		SUR.STU_STATUS_ID,
+		SUR.TEACHER_NAME,
+		SUR.IS_GRADUATION,
+		SUR.GRADUATION_DATE,
+		SUR.IS_PUBLISH,
+		SUR.RESUME_INFO,
+		SAP.AUDIT_CONTENT,
+		SB.BATCH_REG_DATE,
+		CASE WHEN SUR.RESUME_INFO IS NOT NULL
+		THEN xmltype(SUR.RESUME_INFO).extract('//titleTypeName/text()').getstringval()
+		ELSE '' END title_Type_name,
+		SUR.CREATE_TIME
+		FROM STU_USER_RESUME SUR
+		INNER JOIN SYS_USER SU
+		ON SUR.USER_FLOW = SU.USER_FLOW
+		LEFT JOIN STU_AUDIT_PROCESS SAP
+		ON SUR.RESUME_FLOW = SAP.RESUME_FLOW
+		LEFT JOIN STU_BATCH SB
+		ON SUR.STU_BAT_ID = SB.BATCH_FLOW
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND SUR.RECORD_STATUS = 'Y'
+		<if test='batchFlow != null and batchFlow != ""'>
+			AND SUR.STU_BAT_ID = #{batchFlow}
+		</if>
+		<if test='isAudit != null and isAudit != "" and isAudit=="N".toString()'>
+			AND SUR.STU_STATUS_ID ='UnPassed'
+			AND sur.nursing_status_id = 'UnPassed'
+			AND (SUR.IS_BACK is null or SUR.IS_BACK = 'N')
+		</if>
+		<if test='isForeign != null and isForeign != "" and isForeign!="all"'>
+			AND SU.IS_Foreign = #{isForeign}
+		</if>
+        <if test="status!=null and status.size>0">
+            and SUR.STU_STATUS_ID in
+            <foreach collection="status" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="status2!=null and status2.size>0">
+            and SUR.NURSING_STATUS_ID in
+            <foreach collection="status2" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+		<if test='beginDate != null and beginDate != "" and (endDate == null or endDate == "")'>
+			AND SUR.REPORT_DATE >= #{beginDate}
+		</if>
+		<if test='endDate != null and endDate != "" and (beginDate == null or beginDate == "")'>
+			AND SUR.CERTIFICATE_DATE  <![CDATA[<=]]>  #{endDate}
+		</if>
+
+		<if test='beginDate != null and beginDate != "" and endDate != null and endDate != "" '>
+			and (
+			SUR.REPORT_DATE between #{beginDate} and  #{endDate}
+			or SUR.CERTIFICATE_DATE  between  #{beginDate} and  #{endDate}
+			)
+		</if>
+		<if test='isAudit != null and isAudit != "" and isAudit=="Y".toString()'>
+			AND SUR.STU_STATUS_ID IN ('Passed', 'Recruitted', 'UnRecruitted', 'Admited', 'UnAdmitd', 'Graduation', 'DelayGraduation')
+			AND sur.nursing_status_id IN ('Passed', 'Recruitted', 'UnRecruitted', 'Admited', 'UnAdmitd', 'Graduation', 'DelayGraduation')
+		</if>
+		<if test='isAudit != null and isAudit != "" and isAudit=="isBack".toString()'>
+			AND SUR.STU_STATUS_ID = 'UnPassed'
+			AND sur.nursing_status_id = 'UnPassed'
+			AND (SUR.IS_BACK = 'Y')
+		</if>
+		<if test='userName != null and userName != ""'>
+			<bind name="name" value="'%'+userName+'%'"/>
+			AND SU.USER_NAME LIKE #{name}
+		</if>
+		<if test='speId != null and speId != ""'>
+			AND SUR.SPE_ID = #{speId}
+		</if>
+		<if test='speName2 != null and speName2 != ""'>
+			<bind name="speName2" value="'%'+speName2+'%'"/>
+			AND to_char(xmltype(resume_info).extract('//speFormList').getstringval()) LIKE #{speName2}
+		</if>
+
+		<if test='startAge != null and startAge != ""'>
+			AND SUR.USER_AGE >= #{startAge}
+		</if>
+		<if test='endAge != null and endAge != ""'>
+			AND SUR.USER_AGE  <![CDATA[<=]]>  #{endAge}
+		</if>
+
+		<if test='sexId != null and sexId != ""'>
+			AND SU.SEX_ID = #{sexId}
+		</if>
+		<if test='stuTimeId != null and stuTimeId != ""'>
+			AND SUR.STU_TIME_ID = #{stuTimeId}
+		</if>
+		<if test='maxEduId != null and maxEduId != ""'>
+			AND SUR.MAX_EDU_ID = #{maxEduId}
+		</if>
+		<if test='certifiedTypeId != null and certifiedTypeId != ""'>
+			AND SUR.CERTIFIED_TYPE_ID = #{certifiedTypeId}
+		</if>
+		<if test='titleId != null and titleId != ""'>
+			AND SUR.TITLE_ID = #{titleId}
+		</if>
+		<if test='hospitalLevelId != null and hospitalLevelId != ""'>
+			AND SUR.HOSPITAL_LEVEL_ID = #{hospitalLevelId}
+		</if>
+		) A
+		WHERE A.title_Type_name = '护士'
+		ORDER BY A.STU_BAT_NAME DESC,A.RESUME_FLOW
+	</select>
+
+
+	<resultMap id="exportMap" type="map">
+		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+		<result column="USER_BIRTHDAY" property="userBirthday" jdbcType="VARCHAR" />
+		<result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR" />
+		<result column="USER_EMAIL" property="userEmail" jdbcType="VARCHAR" />
+		<result column="SEX_NAME" property="sexName" jdbcType="VARCHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="NATION_NAME" property="nationName" jdbcType="VARCHAR" />
+		<result column="TITLE_TYPE_ID" property="titleTypeId" jdbcType="VARCHAR" />
+		<result column="TITLE_TYPE_NAME" property="titleTypeName" jdbcType="VARCHAR" />
+		<result column="RESUME_FLOW" property="resumeFlow" jdbcType="VARCHAR" />
+		<result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+		<result column="USER_AGE" property="userAge" jdbcType="VARCHAR" />
+		<result column="TITLE_ID" property="titleId" jdbcType="VARCHAR" />
+		<result column="TITLE_NAME" property="titleName" jdbcType="VARCHAR" />
+		<result column="POST_ID" property="postId" jdbcType="VARCHAR" />
+		<result column="POST_NAME" property="postName" jdbcType="VARCHAR" />
+		<result column="DEPT_ID" property="deptId" jdbcType="VARCHAR" />
+		<result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+		<result column="JOB_YEAR" property="jobYear" jdbcType="VARCHAR" />
+		<result column="CERTIFIED_TYPE_ID" property="certifiedTypeId" jdbcType="VARCHAR" />
+		<result column="CERTIFIED_TYPE_NAME" property="certifiedTypeName" jdbcType="VARCHAR" />
+		<result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+		<result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+		<result column="STU_TIME_ID" property="stuTimeId" jdbcType="VARCHAR" />
+		<result column="STU_TIME_NAME" property="stuTimeName" jdbcType="VARCHAR" />
+		<result column="STU_BAT_ID" property="stuBatId" jdbcType="VARCHAR" />
+		<result column="STU_BAT_NAME" property="stuBatName" jdbcType="VARCHAR" />
+		<result column="CLOTHER_SIZE_ID" property="clotherSizeId" jdbcType="VARCHAR" />
+		<result column="CLOTHER_SIZE_NAME" property="clotherSizeName" jdbcType="VARCHAR" />
+		<result column="IS_PUTUP" property="isPutup" jdbcType="VARCHAR" />
+		<result column="MAX_EDU_ID" property="maxEduId" jdbcType="VARCHAR" />
+		<result column="MAX_EDU_NAME" property="maxEduName" jdbcType="VARCHAR" />
+		<result column="SCHOOL_NAME" property="schoolName" jdbcType="VARCHAR" />
+		<result column="SCHOOL_SPE_NAME" property="schoolSpeName" jdbcType="VARCHAR" />
+		<result column="MAX_EDU_BDATE" property="maxEduBdate" jdbcType="VARCHAR" />
+		<result column="MAX_EDU_EDATE" property="maxEduEdate" jdbcType="VARCHAR" />
+		<result column="IS_COMPUTER" property="isComputer" jdbcType="VARCHAR" />
+		<result column="SEND_COM_NAME" property="sendComName" jdbcType="VARCHAR" />
+		<result column="HOSPITAL_LEVEL_ID" property="hospitalLevelId" jdbcType="VARCHAR" />
+		<result column="HOSPITAL_LEVEL_NAME" property="hospitalLevelName" jdbcType="VARCHAR" />
+		<result column="SEND_COM_ADDRESS" property="sendComAddress" jdbcType="VARCHAR" />
+		<result column="STU_STATUS_ID" property="stuStatusId" jdbcType="VARCHAR" />
+		<result column="STU_STATUS_NAME" property="stuStatusName" jdbcType="VARCHAR" />
+		<result column="TEACHER_ID" property="teacherId" jdbcType="VARCHAR" />
+		<result column="TEACHER_NAME" property="teacherName" jdbcType="VARCHAR" />
+		<result column="IS_GRADUATION" property="isGraduation" jdbcType="VARCHAR" />
+		<result column="GRADUATION_DATE" property="graduationDate" jdbcType="VARCHAR" />
+		<result column="IS_PUBLISH" property="isPublish" jdbcType="VARCHAR" />
+		<result column="TEACHER_FLOW" property="teacherFlow" jdbcType="VARCHAR" />
+		<result column="IS_AUDIT" property="isAudit" jdbcType="VARCHAR" />
+		<result column="IS_ADMITED" property="isAdmited" jdbcType="VARCHAR" />
+		<result column="GRADUATED_NO" property="graduatedNo" jdbcType="VARCHAR" />
+		<result column="QUALIFIED_NO" property="qualifiedNo" jdbcType="VARCHAR" />
+		<result column="CERTIFIED_NO" property="certifiedNo" jdbcType="VARCHAR" />
+		<result column="IDENTIFICATION_NUMBER" property="identificationNumber" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="queryStuListForExport"  parameterType="java.util.Map"  resultMap="exportMap">
+		SELECT * FROM (
+		SELECT
+		SU.USER_FLOW,
+		SU.USER_NAME,
+		SU.USER_BIRTHDAY,
+		SU.SEX_NAME,
+		SUR.USER_AGE,
+		SU.ID_NO,
+		SU.NATION_NAME,
+		SUR.TITLE_NAME,
+		SUR.DEPT_NAME,
+		SUR.JOB_YEAR,
+		SUR.POST_NAME,
+		SUR.CERTIFIED_TYPE_NAME,
+		SUR.SPE_NAME,
+		SUR.STU_TIME_NAME,
+		SUR.STU_BAT_ID,
+		SUR.STU_BAT_NAME,
+		SUR.CLOTHER_SIZE_NAME,
+		SUR.IS_PUTUP,
+		SUR.MAX_EDU_NAME,
+		SUR.SCHOOL_NAME,
+		SUR.SCHOOL_SPE_NAME,
+		SUR.MAX_EDU_BDATE,
+		SUR.MAX_EDU_EDATE,
+		case when SUR.is_Computer='Y' then '是'
+		when SUR.is_Computer='N' then '否'
+		else '' end IS_COMPUTER,
+		SU.USER_PHONE,
+		SU.USER_EMAIL,
+		SUR.SEND_COM_NAME,
+		SUR.HOSPITAL_LEVEL_NAME,
+		SUR.SEND_COM_ADDRESS,
+		SUR.RESUME_FLOW,
+		SUR.STU_STATUS_ID,
+		SUR.TEACHER_NAME,
+		SUR.IS_GRADUATION,
+		SUR.GRADUATION_DATE,
+		SUR.IS_PUBLISH,
+		SUR.RESUME_INFO,
+		SAP.AUDIT_CONTENT,
+		SB.BATCH_REG_DATE,
+		SUR.CREATE_TIME,
+		SUR.IDENTIFICATION_NUMBER
+		FROM STU_USER_RESUME SUR
+		INNER JOIN SYS_USER SU
+		ON SUR.USER_FLOW = SU.USER_FLOW
+		LEFT JOIN STU_AUDIT_PROCESS SAP
+		ON SUR.RESUME_FLOW = SAP.RESUME_FLOW
+		LEFT JOIN STU_BATCH SB
+		ON SUR.STU_BAT_ID = SB.BATCH_FLOW
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND SUR.RECORD_STATUS = 'Y'
+		AND SUR.STU_STATUS_ID NOT IN ('UnSubmit','Passing')
+		<if test='processFlag != null and processFlag != ""'>
+			AND SUR.STU_STATUS_ID  IN ('Admited','Graduation','DelayGraduation')
+		</if>
+
+		<if test='batchFlow != null and batchFlow != ""'>
+			AND SUR.STU_BAT_ID = #{batchFlow}
+		</if>
+
+		<if test='userName != null and userName != ""'>
+			<bind name="name" value="'%'+userName+'%'"/>
+			AND SU.USER_NAME LIKE #{name}
+		</if>
+		<if test='beginDate != null and beginDate != "" and (endDate == null or endDate == "")'>
+			AND SUR.REPORT_DATE >= #{beginDate}
+		</if>
+		<if test='endDate != null and endDate != "" and (beginDate == null or beginDate == "")'>
+			AND SUR.CERTIFICATE_DATE  <![CDATA[<=]]>  #{endDate}
+		</if>
+
+		<if test='beginDate != null and beginDate != "" and endDate != null and endDate != "" '>
+			and (
+			SUR.REPORT_DATE between #{beginDate} and  #{endDate}
+			or SUR.CERTIFICATE_DATE  between  #{beginDate} and  #{endDate}
+			)
+		</if>
+		<if test='speName2 != null and speName2 != ""'>
+			<bind name="speName2" value="'%'+speName2+'%'"/>
+			AND to_char(xmltype(resume_info).extract('//speFormList').getstringval()) LIKE #{speName2}
+		</if>
+		<if test='isForeign != null and isForeign != ""'>
+			AND SU.IS_Foreign = #{isForeign}
+		</if>
+
+		<if test='speId != null and speId != ""'>
+			AND SUR.SPE_ID = #{speId}
+		</if>
+		<if test='startAge != null and startAge != ""'>
+			AND SUR.USER_AGE >= #{startAge}
+		</if>
+		<if test='endAge != null and endAge != ""'>
+			AND SUR.USER_AGE  <![CDATA[<=]]>  #{endAge}
+		</if>
+		<if test='sexId != null and sexId != ""'>
+			AND SU.SEX_ID = #{sexId}
+		</if>
+		<if test='stuTimeId != null and stuTimeId != ""'>
+			AND SUR.STU_TIME_ID = #{stuTimeId}
+		</if>
+		<if test='isAudit != null and isAudit != ""'>
+			AND SUR.IS_AUDIT = #{isAudit}
+		</if>
+
+		<if test='isAudit != null and isAudit != "" and isAudit=="Y".toString()'>
+			AND SUR.STU_STATUS_ID IN ('Passed','Recruitted','Admited','UnAdmitd','Graduation','DelayGraduation')
+		</if>
+
+		<if test='maxEduId != null and maxEduId != ""'>
+			AND SUR.MAX_EDU_ID = #{maxEduId}
+		</if>
+		<if test='certifiedTypeId != null and certifiedTypeId != ""'>
+			AND SUR.CERTIFIED_TYPE_ID = #{certifiedTypeId}
+		</if>
+		<if test='titleId != null and titleId != ""'>
+			AND SUR.TITLE_ID = #{titleId}
+		</if>
+		<if test='hospitalLevelId != null and hospitalLevelId != ""'>
+			AND SUR.HOSPITAL_LEVEL_ID = #{hospitalLevelId}
+		</if>
+		<if test='isAdmited != null and isAdmited != ""'>
+			AND SUR.IS_ADMITED = #{isAdmited}
+		</if>
+		<if test='isRecruit != null and isRecruit != ""'>
+			AND SUR.IS_RECRUIT = #{isRecruit}
+		</if>
+		) A
+		WHERE 1=1
+		<if test='titleTypeId != null and titleTypeId != ""'>
+			AND  title_Type_Id = #{titleTypeId}
+		</if>
+		ORDER BY A.CREATE_TIME DESC
+	</select>
+	<select id="queryNurseListForExport"  parameterType="java.util.Map"  resultMap="exportMap">
+		SELECT * FROM (
+		SELECT
+		SU.USER_FLOW,
+		SU.USER_NAME,
+		SU.USER_BIRTHDAY,
+		SU.SEX_NAME,
+		SUR.USER_AGE,
+		SU.ID_NO,
+		SU.NATION_NAME,
+		SUR.TITLE_NAME,
+		SUR.DEPT_NAME,
+		SUR.JOB_YEAR,
+		SUR.POST_NAME,
+		SUR.CERTIFIED_TYPE_NAME,
+		SUR.SPE_NAME,
+		SUR.STU_TIME_NAME,
+		SUR.STU_BAT_ID,
+		SUR.STU_BAT_NAME,
+		SUR.CLOTHER_SIZE_NAME,
+		SUR.IS_PUTUP,
+		SUR.MAX_EDU_NAME,
+		SUR.SCHOOL_NAME,
+		SUR.SCHOOL_SPE_NAME,
+		SUR.MAX_EDU_BDATE,
+		SUR.MAX_EDU_EDATE,
+		case when SUR.is_Computer='Y' then '是'
+		when SUR.is_Computer='N' then '否'
+		else '' end IS_COMPUTER,
+		SU.USER_PHONE,
+		SU.USER_EMAIL,
+		SUR.SEND_COM_NAME,
+		SUR.HOSPITAL_LEVEL_NAME,
+		SUR.SEND_COM_ADDRESS,
+		SUR.RESUME_FLOW,
+		SUR.STU_STATUS_ID,
+		SUR.TEACHER_NAME,
+		SUR.IS_GRADUATION,
+		SUR.GRADUATION_DATE,
+		SUR.IS_PUBLISH,
+		SUR.RESUME_INFO,
+		SAP.AUDIT_CONTENT,
+		SB.BATCH_REG_DATE,
+		SUR.CREATE_TIME,
+		SUR.IDENTIFICATION_NUMBER,
+		CASE WHEN SUR.RESUME_INFO IS NOT NULL
+		THEN xmltype(SUR.RESUME_INFO).extract('//titleTypeName/text()').getstringval()
+		ELSE '' END title_Type_name
+		FROM STU_USER_RESUME SUR
+		INNER JOIN SYS_USER SU
+		ON SUR.USER_FLOW = SU.USER_FLOW
+		LEFT JOIN STU_AUDIT_PROCESS SAP
+		ON SUR.RESUME_FLOW = SAP.RESUME_FLOW
+		LEFT JOIN STU_BATCH SB
+		ON SUR.STU_BAT_ID = SB.BATCH_FLOW
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND SUR.RECORD_STATUS = 'Y'
+		<if test='batchFlow != null and batchFlow != ""'>
+			AND SUR.STU_BAT_ID = #{batchFlow}
+		</if>
+        <if test="status!=null and status.size>0">
+            and SUR.STU_STATUS_ID in
+            <foreach collection="status" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="status2!=null and status2.size>0">
+            and SUR.NURSING_STATUS_ID in
+            <foreach collection="status2" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+		<if test='userName != null and userName != ""'>
+			<bind name="name" value="'%'+userName+'%'"/>
+			AND SU.USER_NAME LIKE #{name}
+		</if>
+		<if test='beginDate != null and beginDate != "" and (endDate == null or endDate == "")'>
+			AND SUR.REPORT_DATE >= #{beginDate}
+		</if>
+		<if test='endDate != null and endDate != "" and (beginDate == null or beginDate == "")'>
+			AND SUR.CERTIFICATE_DATE  <![CDATA[<=]]>  #{endDate}
+		</if>
+
+		<if test='beginDate != null and beginDate != "" and endDate != null and endDate != "" '>
+			and (
+			SUR.REPORT_DATE between #{beginDate} and  #{endDate}
+			or SUR.CERTIFICATE_DATE  between  #{beginDate} and  #{endDate}
+			)
+		</if>
+		<if test='speName2 != null and speName2 != ""'>
+			<bind name="speName2" value="'%'+speName2+'%'"/>
+			AND to_char(xmltype(resume_info).extract('//speFormList').getstringval()) LIKE #{speName2}
+		</if>
+		<if test='isForeign != null and isForeign != ""'>
+			AND SU.IS_Foreign = #{isForeign}
+		</if>
+
+		<if test='speId != null and speId != ""'>
+			AND SUR.SPE_ID = #{speId}
+		</if>
+		<if test='startAge != null and startAge != ""'>
+			AND SUR.USER_AGE >= #{startAge}
+		</if>
+		<if test='endAge != null and endAge != ""'>
+			AND SUR.USER_AGE  <![CDATA[<=]]>  #{endAge}
+		</if>
+		<if test='sexId != null and sexId != ""'>
+			AND SU.SEX_ID = #{sexId}
+		</if>
+		<if test='stuTimeId != null and stuTimeId != ""'>
+			AND SUR.STU_TIME_ID = #{stuTimeId}
+		</if>
+        <if test='isAudit != null and isAudit != "" and isAudit=="Y".toString()'>
+            AND SUR.STU_STATUS_ID IN ('Passed', 'Recruitted', 'UnRecruitted', 'Admited', 'UnAdmitd', 'Graduation', 'DelayGraduation')
+            AND sur.nursing_status_id IN ('Passed', 'Recruitted', 'UnRecruitted', 'Admited', 'UnAdmitd', 'Graduation', 'DelayGraduation')
+        </if>
+		<if test='isAudit != null and isAudit != "" and isAudit=="N".toString()'>
+			AND SUR.STU_STATUS_ID ='UnPassed'
+			AND sur.nursing_status_id = 'UnPassed'
+			AND (SUR.IS_BACK is null or SUR.IS_BACK = 'N')
+		</if>
+		<if test='isAudit != null and isAudit != "" and isAudit=="isBack".toString()'>
+			AND SUR.STU_STATUS_ID ='UnPassed'
+			AND sur.nursing_status_id = 'UnPassed'
+			AND (SUR.IS_BACK = 'Y')
+		</if>
+		<if test='maxEduId != null and maxEduId != ""'>
+			AND SUR.MAX_EDU_ID = #{maxEduId}
+		</if>
+		<if test='certifiedTypeId != null and certifiedTypeId != ""'>
+			AND SUR.CERTIFIED_TYPE_ID = #{certifiedTypeId}
+		</if>
+		<if test='titleId != null and titleId != ""'>
+			AND SUR.TITLE_ID = #{titleId}
+		</if>
+		<if test='hospitalLevelId != null and hospitalLevelId != ""'>
+			AND SUR.HOSPITAL_LEVEL_ID = #{hospitalLevelId}
+		</if>
+		) A
+		WHERE A.title_Type_name = '护士'
+		ORDER BY A.STU_BAT_NAME DESC,A.RESUME_FLOW
+	</select>
+
+	<select id="searchAdmitedInfo" resultMap="StuUserExtMap">
+		SELECT SUR.IS_PUTUP,
+		SU.USER_FLOW,
+		SU.USER_NAME,
+		SU.SEX_ID,
+		SU.NATIONALITY_NAME,
+		SU.NATIONALITY_ID,
+		SU.USER_BIRTHDAY,
+		SUR.SPE_NAME,
+		SUR.STU_BAT_NAME,
+		SUR.STU_TIME_ID,
+		SUR.STU_TIME_NAME,
+		SB.BATCH_REG_DATE,
+		TO_CHAR(TO_DATE(SUR.MODIFY_TIME,'YYYYMMDDHH24MISS'),'YYYY-MM-DD') MODIFY_TIME,
+		SB.MONTH_FEE,
+		SUR.SEND_COM_NAME,
+		SUR.resume_Info
+		FROM STU_USER_RESUME SUR
+		INNER JOIN SYS_USER SU
+		ON SUR.USER_FLOW = SU.USER_FLOW
+		LEFT JOIN STU_BATCH SB
+		ON SUR.STU_BAT_ID = SB.BATCH_FLOW
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND SUR.RECORD_STATUS = 'Y'
+		<if test='resumeFlow != null and resumeFlow != ""'>
+			AND SUR.RESUME_FLOW = #{resumeFlow}
+		</if>
+		ORDER BY SUR.SPE_ID DESC,SUR.CREATE_TIME DESC
+	</select>
+</mapper>

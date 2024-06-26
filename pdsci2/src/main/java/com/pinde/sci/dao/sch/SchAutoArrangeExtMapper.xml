@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.sch.SchAutoArrangeExtMapper">
+    <update id="delResult">
+        update sch_arrange_result set record_status='N',modify_user_flow='autoArrange'
+          where record_status in ('Y','D')
+                and doctor_flow=#{doctorFlow}
+                and rotation_flow=#{rotationFlow}
+                and not exists
+                  (select 1
+                           from res_doctor_sch_process
+                          where  (is_external='Y'or sch_flag='Y')
+                            and user_flow=doctor_flow
+                            and result_flow = sch_result_flow)
+    </update>
+    <update id="delProcess">
+         update res_doctor_sch_process set record_status='N',modify_user_flow='autoArrange' where record_status='Y'
+         and is_external != 'Y' and  sch_flag != 'Y'
+          and exists (
+                select 1 from sch_arrange_result where record_status  in ('Y','D')
+                and doctor_flow=#{doctorFlow}
+                and rotation_flow=#{rotationFlow}
+                    and user_flow=doctor_flow
+                and result_flow=sch_result_flow
+         )
+    </update>
+
+    <select id="checkRotationLocal" resultType="java.lang.Integer">
+    SELECT COUNT(DISTINCT ROTATION_FLOW)
+      FROM (SELECT ROTATION_FLOW,
+                   RECORD_FLOW,
+                   GROUP_FLOW,
+                   STANDARD_DEPT_ID,
+                   STANDARD_DEPT_NAME,
+                   NVL((SELECT COUNT(1)
+                         FROM SCH_ROTATION_DEPT D
+                         LEFT JOIN SCH_ROTATION_GROUP G
+                           ON G.GROUP_FLOW = D.GROUP_FLOW
+                        WHERE D.RECORD_STATUS = 'Y'
+                          AND D.ORG_FLOW = #{orgFlow}
+                          AND D.SESSION_NUMBER = #{sessionNumber}
+                          AND D.ROTATION_FLOW = SCH_ROTATION_DEPT.ROTATION_FLOW
+                          AND G.STANDARD_GROUP_FLOW =
+                              SCH_ROTATION_DEPT.GROUP_FLOW
+                          AND D.STANDARD_DEPT_ID =
+                              SCH_ROTATION_DEPT.STANDARD_DEPT_ID),
+                       0) SCH_COUNT
+              FROM SCH_ROTATION_DEPT
+             WHERE RECORD_STATUS = 'Y'
+               AND ORG_FLOW IS NULL
+               AND SESSION_NUMBER IS NULL
+               AND ROTATION_FLOW IN (SELECT ROTATION_FLOW
+                                          FROM SCH_ROTATION
+                                         WHERE RECORD_STATUS = 'Y'
+                                           AND PUBLISH_FLAG = 'Y'
+                                           AND ((IS_ORG_VIEW = 'Y' AND EXISTS
+                                                (SELECT 1
+                                                    FROM RES_ROTATION_ORG
+                                                   WHERE RECORD_STATUS = 'Y'
+                                                     AND ROTATION_FLOW = SCH_ROTATION.ROTATION_FLOW
+                                                     AND ORG_FLOW = #{orgFlow})) OR
+                                               IS_ORG_VIEW != 'Y')
+                                        )
+                                        ) A
+             WHERE SCH_COUNT <![CDATA[<=]]> 0
+    </select>
+    <select id="getSchRotations" resultMap="com.pinde.sci.dao.base.SchRotationMapper.BaseResultMap">
+         SELECT *
+          FROM SCH_ROTATION
+         WHERE RECORD_STATUS = 'Y'
+           AND PUBLISH_FLAG = 'Y'
+           AND ((IS_ORG_VIEW = 'Y' AND EXISTS
+                (SELECT 1
+                    FROM RES_ROTATION_ORG
+                   WHERE RECORD_STATUS = 'Y'
+                     AND ROTATION_FLOW = SCH_ROTATION.ROTATION_FLOW
+                     AND ORG_FLOW = #{orgFlow})) OR IS_ORG_VIEW != 'Y')
+          order by ROTATION_FLOW
+    </select>
+    <select id="getDoctorList" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+         SELECT *
+          FROM RES_DOCTOR
+         WHERE RECORD_STATUS = 'Y'
+           AND ORG_FLOW = #{orgFlow}
+           AND SESSION_NUMBER = #{sessionNumber}
+            <if test="schFlag!=null and schFlag!=''">
+                and sch_flag !=#{schFlag}
+            </if>
+           AND (ROTATION_FLOW IS NOT NULL or SECOND_ROTATION_FLOW IS NOT NULL)
+            AND (DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+                OR DOCTOR_STATUS_ID IS NULL)
+            AND org_flow IS NOT NULL
+            AND org_flow != '20160914888888'
+            AND org_flow != '566c9f36cf014f63a569b453efa284d7'
+            AND org_flow != '00000000000000000000000000000000'
+           AND EXISTS (SELECT 1
+                  FROM SYS_USER
+                 WHERE RECORD_STATUS = 'Y'
+                   AND USER_FLOW = DOCTOR_FLOW)
+         order by    ROTATION_FLOW,SECOND_ROTATION_FLOW
+    </select>
+    <select id="getUserList" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+         SELECT *
+          FROM RES_DOCTOR RD
+          LEFT JOIN SYS_USER SU
+          ON  USER_FLOW = DOCTOR_FLOW
+         WHERE RD.RECORD_STATUS = 'Y'
+          AND SU.RECORD_STATUS='Y'
+          AND RD.SCH_FLAG='Y'
+           AND RD.ORG_FLOW = #{orgFlow}
+           AND RD.SESSION_NUMBER = #{sessionNumber}
+           AND (RD.ROTATION_FLOW IS NOT NULL or RD.SECOND_ROTATION_FLOW IS NOT NULL)
+            AND (RD.DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+                OR RD.DOCTOR_STATUS_ID IS NULL)
+            AND RD.org_flow IS NOT NULL
+            AND RD.org_flow != '20160914888888'
+            AND RD.org_flow != '566c9f36cf014f63a569b453efa284d7'
+            AND RD.org_flow != '00000000000000000000000000000000'
+         order by RD.TRAINING_TYPE_ID, RD.TRAINING_SPE_ID,RD.DOCTOR_FLOW
+    </select>
+    <select id="checkDoctorCount" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+          FROM RES_DOCTOR
+         WHERE RECORD_STATUS = 'Y'
+           AND ORG_FLOW = #{orgFlow}
+           AND SESSION_NUMBER = #{sessionNumber}
+            <if test="schFlag!=null and schFlag!=''">
+                and sch_flag !=#{schFlag}
+            </if>
+           AND ROTATION_FLOW IS NULL
+            AND (DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+                OR DOCTOR_STATUS_ID IS NULL)
+            AND org_flow IS NOT NULL
+            AND org_flow != '20160914888888'
+            AND org_flow != '566c9f36cf014f63a569b453efa284d7'
+            AND org_flow != '00000000000000000000000000000000'
+           AND EXISTS (SELECT 1
+                  FROM SYS_USER
+                 WHERE RECORD_STATUS = 'Y'
+                   AND USER_FLOW = DOCTOR_FLOW)
+    </select>
+    <select id="checkOrgDoctorCount" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+          FROM RES_DOCTOR
+         WHERE RECORD_STATUS = 'Y'
+           AND ORG_FLOW = #{orgFlow}
+           AND SESSION_NUMBER = #{sessionNumber}
+           <if test="schFlag!=null and schFlag!=''">
+               and sch_flag !=#{schFlag}
+           </if>
+            AND (DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+                OR DOCTOR_STATUS_ID IS NULL)
+            AND org_flow IS NOT NULL
+            AND org_flow != '20160914888888'
+            AND org_flow != '566c9f36cf014f63a569b453efa284d7'
+            AND org_flow != '00000000000000000000000000000000'
+           AND EXISTS (SELECT 1
+                  FROM SYS_USER
+                 WHERE RECORD_STATUS = 'Y'
+                   AND USER_FLOW = DOCTOR_FLOW)
+    </select>
+    <select id="checkDoctorSecondCount" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+          FROM RES_DOCTOR
+         WHERE RECORD_STATUS = 'Y'
+           AND ORG_FLOW = #{orgFlow}
+           AND SESSION_NUMBER = #{sessionNumber}
+            <if test="schFlag!=null and schFlag!=''">
+                and sch_flag !=#{schFlag}
+            </if>
+           AND TRAINING_SPE_ID IN ('3501','3601')
+           AND SECOND_ROTATION_FLOW IS NULL
+            AND (DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+                OR DOCTOR_STATUS_ID IS NULL)
+            AND org_flow IS NOT NULL
+            AND org_flow != '20160914888888'
+            AND org_flow != '566c9f36cf014f63a569b453efa284d7'
+            AND org_flow != '00000000000000000000000000000000'
+           AND EXISTS (SELECT 1
+                  FROM SYS_USER
+                 WHERE RECORD_STATUS = 'Y'
+                   AND USER_FLOW = DOCTOR_FLOW)
+    </select>
+    <select id="getLastDoctorCount" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+          FROM RES_DOCTOR
+         WHERE RECORD_STATUS = 'Y'
+           AND ORG_FLOW = #{orgFlow}
+           AND SESSION_NUMBER = #{sessionNumber}
+           AND SCH_FLAG!='Y'
+            AND org_flow IS NOT NULL
+            AND org_flow != '20160914888888'
+            AND org_flow != '566c9f36cf014f63a569b453efa284d7'
+            AND org_flow != '00000000000000000000000000000000'
+           AND EXISTS (SELECT 1
+                  FROM SYS_USER
+                 WHERE RECORD_STATUS = 'Y'
+                   AND USER_FLOW = DOCTOR_FLOW)
+    </select>
+    <select id="checkArrangeCount" resultType="java.lang.Integer">
+       SELECT COUNT(1)
+          FROM SCH_AUTO_ARRANGE
+         WHERE RECORD_STATUS = 'Y'
+           AND ORG_FLOW = #{orgFlow}
+           AND SESSION_NUMBER = #{sessionNumber}
+    </select>
+    <select id="checkDoctorCycleCount" resultType="java.lang.Integer">
+        select count(DISTINCT  doctor_flow) from sch_arrange_result
+        where record_status='Y'
+        and doctor_flow in (
+          SELECT doctor_flow
+          FROM RES_DOCTOR
+         WHERE RECORD_STATUS = 'Y'
+           AND ORG_FLOW = #{orgFlow}
+           AND SESSION_NUMBER = #{sessionNumber}
+            <if test="schFlag!=null and schFlag!=''">
+                and sch_flag !=#{schFlag}
+            </if>
+            AND (DOCTOR_STATUS_ID NOT IN ('UnPassed', 'Passed', 'UnSubmit')
+                OR DOCTOR_STATUS_ID IS NULL)
+            AND org_flow IS NOT NULL
+            AND org_flow != '20160914888888'
+            AND org_flow != '566c9f36cf014f63a569b453efa284d7'
+            AND org_flow != '00000000000000000000000000000000'
+           AND EXISTS (SELECT 1
+                  FROM SYS_USER
+                 WHERE RECORD_STATUS = 'Y'
+                   AND USER_FLOW = DOCTOR_FLOW)
+        )
+        and not exists(
+          select 1 from res_doctor_sch_process where result_flow=sch_result_flow and record_status='Y'
+          and IS_EXTERNAL='Y'
+        )
+    </select>
+    <select id="getSchRotationDepts" resultMap="com.pinde.sci.dao.base.SchRotationDeptMapper.BaseResultMap">
+        SELECT D.*
+        FROM SCH_ROTATION_DEPT D
+        LEFT JOIN SCH_ROTATION_GROUP G
+         ON G.GROUP_FLOW = D.GROUP_FLOW
+        LEFT JOIN SCH_ROTATION_DEPT DD
+         ON DD.ORG_FLOW IS NULL
+         AND G.STANDARD_GROUP_FLOW=DD.GROUP_FLOW
+         AND D.STANDARD_DEPT_ID=DD.STANDARD_DEPT_ID
+         AND D.ROTATION_FLOW=DD.ROTATION_FLOW
+         AND DD.RECORD_STATUS='Y'
+        WHERE D.RECORD_STATUS = 'Y'
+         AND D.ORG_FLOW = #{orgFlow}
+         AND D.SESSION_NUMBER = #{sessionNumber}
+         ORDER BY D.ROTATION_FLOW,G.ORDINAL,DD.ORDINAL
+    </select>
+
+    <resultMap id="dateMap" type="hashmap">
+        <result column="SCH_START_DATE" jdbcType="VARCHAR" property="startDate" />
+        <result column="SCH_END_DATE" jdbcType="VARCHAR" property="endDate" />
+        <result column="SCH_MONTH" jdbcType="VARCHAR" property="schMonth" />
+    </resultMap>
+    <select id="getResultByBeginStartDate" resultMap="dateMap">
+        select sch_start_date,sch_end_date,sch_month
+        from sch_arrange_result
+        where record_status='Y'
+        and doctor_flow =#{doctorFlow}
+        and sch_end_date>=#{startDate}
+        order by sch_start_date
+    </select>
+</mapper>

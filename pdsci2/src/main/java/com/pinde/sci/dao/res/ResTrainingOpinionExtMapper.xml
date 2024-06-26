@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.ResTrainingOpinionExtMapper" >
+
+	<select id="searchOpinionByUni" resultMap="com.pinde.sci.dao.base.ResTrainingOpinionMapper.BaseResultMap">
+		SELECT
+				*
+		  FROM PDSCI.RES_TRAINING_OPINION
+		 WHERE RECORD_STATUS = 'Y'
+
+		<if test="content!=null and content!=''">
+			AND opinion_User_Content like '%${content}%'
+		</if>
+		  AND OPINION_USER_FLOW IN (
+				SELECT RD.DOCTOR_FLOW
+				FROM RES_DOCTOR RD
+				JOIN SYS_USER SU
+				ON SU.USER_FLOW = RD.DOCTOR_FLOW
+				WHERE RD.RECORD_STATUS = 'Y'
+				AND SU.RECORD_STATUS = 'Y'
+				AND RD.DOCTOR_TYPE_ID = 'Graduate'
+				AND (
+					<if test="(org.sendSchoolName==null or org.sendSchoolName=='') and (org.sendSchoolId!=null and org.sendSchoolId!='')">
+						RD.WORK_ORG_ID =#{org.sendSchoolId}
+					</if>
+					<if test="(org.sendSchoolId==null or org.sendSchoolId=='') and (org.sendSchoolName!=null and org.sendSchoolName!='')">
+						RD.WORK_ORG_NAME = #{org.sendSchoolName}
+					</if>
+					<if test="org.sendSchoolId!=null and org.sendSchoolId!='' and org.sendSchoolName!=null and org.sendSchoolName!=''">
+						RD.WORK_ORG_NAME = #{org.sendSchoolName} OR RD.WORK_ORG_ID =#{org.sendSchoolId}
+					</if>
+				)
+		)
+		   AND ORG_FLOW IN (SELECT DISTINCT RDR.ORG_FLOW
+							  FROM 	RES_DOCTOR_RECRUIT RDR
+								LEFT JOIN
+								RES_DOCTOR RD ON RDR.DOCTOR_FLOW=RD.DOCTOR_FLOW
+							  JOIN SYS_USER SU
+								ON SU.USER_FLOW = RD.DOCTOR_FLOW
+							 WHERE RD.RECORD_STATUS = 'Y'
+							   AND SU.RECORD_STATUS = 'Y'
+							   AND RD.DOCTOR_TYPE_ID = 'Graduate'
+								AND (
+								<trim prefix="" prefixOverrides="OR">
+									<if test="(org.sendSchoolId != null and org.sendSchoolId != '')">OR rd.work_org_id = #{org.sendSchoolId}</if>
+									<if test="(org.sendSchoolName != null and org.sendSchoolName != '')">OR rd.work_org_name = #{org.sendSchoolName}</if>
+								</trim>
+								)
+							   AND RDR.ORG_FLOW IS NOT NULL
+								<if test="orgFlow!=null and orgFlow!=''">
+									AND RDR.ORG_FLOW = #{orgFlow}
+								</if>
+							   )
+		ORDER BY CREATE_TIME DESC
+	</select>
+
+	<select id="searchOpinionByUni4hb" parameterType="java.util.HashMap" resultMap="com.pinde.sci.dao.base.ResTrainingOpinionMapper.BaseResultMap">
+		SELECT
+		*
+		FROM RES_TRAINING_OPINION rto
+		WHERE rto.RECORD_STATUS = 'Y'
+		<if test="opinionUserContent!=null and opinionUserContent!=''">
+			AND rto.opinion_User_Content like '%${opinionUserContent}%'
+		</if>
+		<if test='replayStatus=="Y"'>
+			AND rto.REPLY_TIME is null
+		</if>
+		<if test="orgFlow!=null and orgFlow!=''">
+			and rto.org_Flow = #{orgFlow}
+		</if>
+		<if test="workOrgId!=null and workOrgId!=''">
+			and exists (
+				select null from res_doctor rd where
+				rd.RECORD_STATUS='Y' and rd.work_org_id = #{workOrgId}
+				and rd.doctor_flow = rto.OPINION_USER_FLOW
+			)
+		</if>
+		ORDER BY rto.EVA_TIME DESC
+	</select>
+	<select id="searchByOpinionUserContentAndReplayStatusNew"  resultMap="com.pinde.sci.dao.base.ResTrainingOpinionMapper.BaseResultMap">
+		SELECT RTO.*
+		FROM PDSCI.RES_TRAINING_OPINION RTO
+		LEFT join RES_DOCTOR RD ON RD.DOCTOR_FLOW = RTO.OPINION_USER_FLOW
+		WHERE RTO.RECORD_STATUS = 'Y'
+		and RD.RECORD_STATUS = 'Y'
+		<if test="orgFlow!=null and orgFlow!=''">
+			AND RTO.ORG_FLOW = #{orgFlow}
+		</if>
+		<if test="resTrainingSpeId!=null and resTrainingSpeId!=''">
+			and rd.TRAINING_SPE_ID = #{resTrainingSpeId}
+		</if>
+		<if test="opinionUserContent!=null and opinionUserContent!=''">
+			AND rto.opinion_User_Content like '%${opinionUserContent}%'
+		</if>
+		<if test="replayStatus =='Y'">
+			AND RTO.REPLY_TIME IS NULL
+		</if>
+		ORDER BY RTO.EVA_TIME DESC
+	</select>
+</mapper>

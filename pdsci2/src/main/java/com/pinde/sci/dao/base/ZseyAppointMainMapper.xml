@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.ZseyAppointMainMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ZseyAppointMain" >
+    <id column="APPOINT_FLOW" property="appointFlow" jdbcType="VARCHAR" />
+    <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR" />
+    <result column="TRAIN_DATE" property="trainDate" jdbcType="VARCHAR" />
+    <result column="BEGIN_TIME" property="beginTime" jdbcType="VARCHAR" />
+    <result column="END_TIME" property="endTime" jdbcType="VARCHAR" />
+    <result column="TRAINEES_NAME" property="traineesName" jdbcType="VARCHAR" />
+    <result column="TRAINEES_SPE_NAME" property="traineesSpeName" jdbcType="VARCHAR" />
+    <result column="TRAINEES_NUMBER" property="traineesNumber" jdbcType="VARCHAR" />
+    <result column="TEACHER_FLOW" property="teacherFlow" jdbcType="VARCHAR" />
+    <result column="TEACHER_NAME" property="teacherName" jdbcType="VARCHAR" />
+    <result column="TEACHER_PHONE" property="teacherPhone" jdbcType="VARCHAR" />
+    <result column="APPLICANT_FLOW" property="applicantFlow" jdbcType="VARCHAR" />
+    <result column="APPLICANT_NAME" property="applicantName" jdbcType="VARCHAR" />
+    <result column="APPLICANT_PHONE" property="applicantPhone" jdbcType="VARCHAR" />
+    <result column="TRAIN_ROOM_ID" property="trainRoomId" jdbcType="VARCHAR" />
+    <result column="TRAIN_ROOM_NAME" property="trainRoomName" jdbcType="VARCHAR" />
+    <result column="AUDIT_USER_FLOW" property="auditUserFlow" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS_ID" property="auditStatusId" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS_NAME" property="auditStatusName" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="PROJECT_FLOW" property="projectFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    APPOINT_FLOW, PROJECT_NAME, TRAIN_DATE, BEGIN_TIME, END_TIME, TRAINEES_NAME, TRAINEES_SPE_NAME, 
+    TRAINEES_NUMBER, TEACHER_FLOW, TEACHER_NAME, TEACHER_PHONE, APPLICANT_FLOW, APPLICANT_NAME, 
+    APPLICANT_PHONE, TRAIN_ROOM_ID, TRAIN_ROOM_NAME, AUDIT_USER_FLOW, AUDIT_STATUS_ID, 
+    AUDIT_STATUS_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+    PROJECT_FLOW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ZseyAppointMainExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.ZSEY_APPOINT_MAIN
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.ZSEY_APPOINT_MAIN
+    where APPOINT_FLOW = #{appointFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.ZSEY_APPOINT_MAIN
+    where APPOINT_FLOW = #{appointFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ZseyAppointMainExample" >
+    delete from PDSCI.ZSEY_APPOINT_MAIN
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.ZseyAppointMain" >
+    insert into PDSCI.ZSEY_APPOINT_MAIN (APPOINT_FLOW, PROJECT_NAME, TRAIN_DATE, 
+      BEGIN_TIME, END_TIME, TRAINEES_NAME, 
+      TRAINEES_SPE_NAME, TRAINEES_NUMBER, TEACHER_FLOW, 
+      TEACHER_NAME, TEACHER_PHONE, APPLICANT_FLOW, 
+      APPLICANT_NAME, APPLICANT_PHONE, TRAIN_ROOM_ID, 
+      TRAIN_ROOM_NAME, AUDIT_USER_FLOW, AUDIT_STATUS_ID, 
+      AUDIT_STATUS_NAME, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+      PROJECT_FLOW)
+    values (#{appointFlow,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, #{trainDate,jdbcType=VARCHAR}, 
+      #{beginTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, #{traineesName,jdbcType=VARCHAR}, 
+      #{traineesSpeName,jdbcType=VARCHAR}, #{traineesNumber,jdbcType=VARCHAR}, #{teacherFlow,jdbcType=VARCHAR}, 
+      #{teacherName,jdbcType=VARCHAR}, #{teacherPhone,jdbcType=VARCHAR}, #{applicantFlow,jdbcType=VARCHAR}, 
+      #{applicantName,jdbcType=VARCHAR}, #{applicantPhone,jdbcType=VARCHAR}, #{trainRoomId,jdbcType=VARCHAR}, 
+      #{trainRoomName,jdbcType=VARCHAR}, #{auditUserFlow,jdbcType=VARCHAR}, #{auditStatusId,jdbcType=VARCHAR}, 
+      #{auditStatusName,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{projectFlow,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ZseyAppointMain" >
+    insert into PDSCI.ZSEY_APPOINT_MAIN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="appointFlow != null" >
+        APPOINT_FLOW,
+      </if>
+      <if test="projectName != null" >
+        PROJECT_NAME,
+      </if>
+      <if test="trainDate != null" >
+        TRAIN_DATE,
+      </if>
+      <if test="beginTime != null" >
+        BEGIN_TIME,
+      </if>
+      <if test="endTime != null" >
+        END_TIME,
+      </if>
+      <if test="traineesName != null" >
+        TRAINEES_NAME,
+      </if>
+      <if test="traineesSpeName != null" >
+        TRAINEES_SPE_NAME,
+      </if>
+      <if test="traineesNumber != null" >
+        TRAINEES_NUMBER,
+      </if>
+      <if test="teacherFlow != null" >
+        TEACHER_FLOW,
+      </if>
+      <if test="teacherName != null" >
+        TEACHER_NAME,
+      </if>
+      <if test="teacherPhone != null" >
+        TEACHER_PHONE,
+      </if>
+      <if test="applicantFlow != null" >
+        APPLICANT_FLOW,
+      </if>
+      <if test="applicantName != null" >
+        APPLICANT_NAME,
+      </if>
+      <if test="applicantPhone != null" >
+        APPLICANT_PHONE,
+      </if>
+      <if test="trainRoomId != null" >
+        TRAIN_ROOM_ID,
+      </if>
+      <if test="trainRoomName != null" >
+        TRAIN_ROOM_NAME,
+      </if>
+      <if test="auditUserFlow != null" >
+        AUDIT_USER_FLOW,
+      </if>
+      <if test="auditStatusId != null" >
+        AUDIT_STATUS_ID,
+      </if>
+      <if test="auditStatusName != null" >
+        AUDIT_STATUS_NAME,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="projectFlow != null" >
+        PROJECT_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="appointFlow != null" >
+        #{appointFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainDate != null" >
+        #{trainDate,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="traineesName != null" >
+        #{traineesName,jdbcType=VARCHAR},
+      </if>
+      <if test="traineesSpeName != null" >
+        #{traineesSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="traineesNumber != null" >
+        #{traineesNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherFlow != null" >
+        #{teacherFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null" >
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherPhone != null" >
+        #{teacherPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantFlow != null" >
+        #{applicantFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantName != null" >
+        #{applicantName,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantPhone != null" >
+        #{applicantPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="trainRoomId != null" >
+        #{trainRoomId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainRoomName != null" >
+        #{trainRoomName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserFlow != null" >
+        #{auditUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusId != null" >
+        #{auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusName != null" >
+        #{auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="projectFlow != null" >
+        #{projectFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ZseyAppointMainExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.ZSEY_APPOINT_MAIN
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.ZSEY_APPOINT_MAIN
+    <set >
+      <if test="record.appointFlow != null" >
+        APPOINT_FLOW = #{record.appointFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectName != null" >
+        PROJECT_NAME = #{record.projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainDate != null" >
+        TRAIN_DATE = #{record.trainDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.beginTime != null" >
+        BEGIN_TIME = #{record.beginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endTime != null" >
+        END_TIME = #{record.endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.traineesName != null" >
+        TRAINEES_NAME = #{record.traineesName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.traineesSpeName != null" >
+        TRAINEES_SPE_NAME = #{record.traineesSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.traineesNumber != null" >
+        TRAINEES_NUMBER = #{record.traineesNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherFlow != null" >
+        TEACHER_FLOW = #{record.teacherFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherName != null" >
+        TEACHER_NAME = #{record.teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherPhone != null" >
+        TEACHER_PHONE = #{record.teacherPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicantFlow != null" >
+        APPLICANT_FLOW = #{record.applicantFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicantName != null" >
+        APPLICANT_NAME = #{record.applicantName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicantPhone != null" >
+        APPLICANT_PHONE = #{record.applicantPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainRoomId != null" >
+        TRAIN_ROOM_ID = #{record.trainRoomId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainRoomName != null" >
+        TRAIN_ROOM_NAME = #{record.trainRoomName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditUserFlow != null" >
+        AUDIT_USER_FLOW = #{record.auditUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditStatusId != null" >
+        AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditStatusName != null" >
+        AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectFlow != null" >
+        PROJECT_FLOW = #{record.projectFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.ZSEY_APPOINT_MAIN
+    set APPOINT_FLOW = #{record.appointFlow,jdbcType=VARCHAR},
+      PROJECT_NAME = #{record.projectName,jdbcType=VARCHAR},
+      TRAIN_DATE = #{record.trainDate,jdbcType=VARCHAR},
+      BEGIN_TIME = #{record.beginTime,jdbcType=VARCHAR},
+      END_TIME = #{record.endTime,jdbcType=VARCHAR},
+      TRAINEES_NAME = #{record.traineesName,jdbcType=VARCHAR},
+      TRAINEES_SPE_NAME = #{record.traineesSpeName,jdbcType=VARCHAR},
+      TRAINEES_NUMBER = #{record.traineesNumber,jdbcType=VARCHAR},
+      TEACHER_FLOW = #{record.teacherFlow,jdbcType=VARCHAR},
+      TEACHER_NAME = #{record.teacherName,jdbcType=VARCHAR},
+      TEACHER_PHONE = #{record.teacherPhone,jdbcType=VARCHAR},
+      APPLICANT_FLOW = #{record.applicantFlow,jdbcType=VARCHAR},
+      APPLICANT_NAME = #{record.applicantName,jdbcType=VARCHAR},
+      APPLICANT_PHONE = #{record.applicantPhone,jdbcType=VARCHAR},
+      TRAIN_ROOM_ID = #{record.trainRoomId,jdbcType=VARCHAR},
+      TRAIN_ROOM_NAME = #{record.trainRoomName,jdbcType=VARCHAR},
+      AUDIT_USER_FLOW = #{record.auditUserFlow,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      PROJECT_FLOW = #{record.projectFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ZseyAppointMain" >
+    update PDSCI.ZSEY_APPOINT_MAIN
+    <set >
+      <if test="projectName != null" >
+        PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainDate != null" >
+        TRAIN_DATE = #{trainDate,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null" >
+        BEGIN_TIME = #{beginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        END_TIME = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="traineesName != null" >
+        TRAINEES_NAME = #{traineesName,jdbcType=VARCHAR},
+      </if>
+      <if test="traineesSpeName != null" >
+        TRAINEES_SPE_NAME = #{traineesSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="traineesNumber != null" >
+        TRAINEES_NUMBER = #{traineesNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherFlow != null" >
+        TEACHER_FLOW = #{teacherFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null" >
+        TEACHER_NAME = #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherPhone != null" >
+        TEACHER_PHONE = #{teacherPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantFlow != null" >
+        APPLICANT_FLOW = #{applicantFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantName != null" >
+        APPLICANT_NAME = #{applicantName,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantPhone != null" >
+        APPLICANT_PHONE = #{applicantPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="trainRoomId != null" >
+        TRAIN_ROOM_ID = #{trainRoomId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainRoomName != null" >
+        TRAIN_ROOM_NAME = #{trainRoomName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserFlow != null" >
+        AUDIT_USER_FLOW = #{auditUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusId != null" >
+        AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusName != null" >
+        AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="projectFlow != null" >
+        PROJECT_FLOW = #{projectFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where APPOINT_FLOW = #{appointFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ZseyAppointMain" >
+    update PDSCI.ZSEY_APPOINT_MAIN
+    set PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+      TRAIN_DATE = #{trainDate,jdbcType=VARCHAR},
+      BEGIN_TIME = #{beginTime,jdbcType=VARCHAR},
+      END_TIME = #{endTime,jdbcType=VARCHAR},
+      TRAINEES_NAME = #{traineesName,jdbcType=VARCHAR},
+      TRAINEES_SPE_NAME = #{traineesSpeName,jdbcType=VARCHAR},
+      TRAINEES_NUMBER = #{traineesNumber,jdbcType=VARCHAR},
+      TEACHER_FLOW = #{teacherFlow,jdbcType=VARCHAR},
+      TEACHER_NAME = #{teacherName,jdbcType=VARCHAR},
+      TEACHER_PHONE = #{teacherPhone,jdbcType=VARCHAR},
+      APPLICANT_FLOW = #{applicantFlow,jdbcType=VARCHAR},
+      APPLICANT_NAME = #{applicantName,jdbcType=VARCHAR},
+      APPLICANT_PHONE = #{applicantPhone,jdbcType=VARCHAR},
+      TRAIN_ROOM_ID = #{trainRoomId,jdbcType=VARCHAR},
+      TRAIN_ROOM_NAME = #{trainRoomName,jdbcType=VARCHAR},
+      AUDIT_USER_FLOW = #{auditUserFlow,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      PROJECT_FLOW = #{projectFlow,jdbcType=VARCHAR}
+    where APPOINT_FLOW = #{appointFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

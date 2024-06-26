@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.sys.SysOrgExtMapper" >
+	<select id="selectChildrenOrgListByOrgFlow" parameterType="java.lang.String" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+  		select <include refid="com.pinde.sci.dao.base.SysOrgMapper.Base_Column_List" /> from PDSCI.sys_org start WITH org_flow=#{orgFlow} connect by prior org_flow=charge_org_flow and record_status='Y'
+	</select>
+	
+	<select id="selectChildrenOrgListByOrgFlowNotIncludeSelf" parameterType="java.lang.String" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+  		select <include refid="com.pinde.sci.dao.base.SysOrgMapper.Base_Column_List" /> from PDSCI.sys_org where level='2' start WITH org_flow=#{orgFlow} connect by prior org_flow=charge_org_flow and record_status='Y'
+	</select>
+	
+	<select id="selectOrgNoRegByRoleFlow" parameterType="java.lang.String" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+		select * from 
+		PDSCI.sys_org so 
+		where so.record_status='Y' and  
+		so.org_flow not in (select su.org_flow from PDSCI.sys_user su , PDSCI.sys_user_role sur where su.user_flow=sur.user_flow and sur.role_flow=#{roleFlow} and su.record_status='Y' and sur.record_status='Y' and su.org_flow is not null)
+	</select>
+	
+	<select id="selectChargeOrgList" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	    select * from PDSCI.sys_org where org_flow in (select distinct charge_org_flow from PDSCI.sys_org where charge_org_flow is not null) and record_status='Y' order by ordinal
+	</select>
+	<select id="searchOrgs" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	    select *
+	    from PDSCI.SYS_ORG
+	    where RECORD_STATUS='Y'
+		<if test="sysOrg!=null">
+		 	  <if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
+		 		 and  ORG_PROV_ID=#{sysOrg.orgProvId}
+		 	  </if>
+		 	  <if test="sysOrg.orgCityId!=null and sysOrg.orgCityId!=''">
+		 		and ORG_CITY_ID=#{sysOrg.orgCityId}
+		 	  </if>
+			<if test="sysOrg.checkStatusId!=null and sysOrg.checkStatusId!='' and sysOrg.checkStatusId!='NotSubmit'.toString()">
+				and check_status_id=#{sysOrg.checkStatusId}
+			</if>
+			<if test="sysOrg.checkStatusId!=null and sysOrg.checkStatusId!='' and sysOrg.checkStatusId=='NotSubmit'.toString()">
+				and is_submit_id=#{sysOrg.checkStatusId}
+			</if>
+		 	  <if test="flag!=null and flag!=''">
+		 	    <if test="sysOrg.orgTypeId!=null and sysOrg.orgTypeId!=''">
+		 	 		and (ORG_TYPE_ID != #{sysOrg.orgTypeId} or ORG_TYPE_ID is null )
+	 	 		</if>
+		 	  </if>
+	 	  	 <if test="flag==null or flag==''">
+			 	  <if test="sysOrg.orgTypeId!=null and sysOrg.orgTypeId!=''">
+			 		and ORG_TYPE_ID=#{sysOrg.orgTypeId}
+			 	  </if>
+		 	  </if>
+		 	  <if test="sysOrg.orgName!=null and sysOrg.orgName!=''">
+	 	  		<bind name="orgName" value="'%'+sysOrg.orgName+'%'"/>
+					and ORG_NAME like #{orgName}
+		 	  </if>
+	 	  </if> 
+		ORDER BY ORDINAL, RECORD_STATUS DESC, ORG_FLOW
+	</select>
+	<select id="searchJointOrgsByOrg" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	     select *
+	    from PDSCI.SYS_ORG
+	    where RECORD_STATUS='Y'
+	    and ORG_FLOW in (
+		select rjo.JOINT_ORG_FLOW
+		from  PDSCI.RES_JOINT_ORG rjo
+		where rjo.RECORD_STATUS='Y'
+		<if test="_parameter != null and _parameter != ''">
+            and rjo.ORG_FLOW = #{orgFlow}
+        </if>
+
+		)
+		ORDER BY ORDINAL, RECORD_STATUS DESC, ORG_FLOW
+	</select>
+	<select id="searchJointOrgsSession" resultMap="com.pinde.sci.dao.base.SysOrgMapper.ResultMapWithSession">
+		select a.*,b.session_number
+		from PDSCI.SYS_ORG a,(select distinct c.org_flow,c.session_number from SYS_MONTHLY_DOCTOR_INFO c where c.record_status='Y' and c.DATE_MONTH='2019-10') b
+		where a.ORG_FLOW=b.ORG_FLOW
+		and a.RECORD_STATUS='Y'
+		and a.ORG_FLOW in (
+		select rjo.JOINT_ORG_FLOW
+		from  PDSCI.RES_JOINT_ORG rjo
+		where rjo.RECORD_STATUS='Y'
+		<if test="_parameter != null and _parameter != ''">
+			and rjo.ORG_FLOW = #{orgFlow}
+		</if>
+		)
+		ORDER BY b.session_number DESC
+	</select>
+	<select id="searchOrgNotSelfAndNotCountryAndNotProvince" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	     select *
+	    from PDSCI.SYS_ORG
+	    where RECORD_STATUS='Y'
+	    and org_level_id !='CountryOrg'
+	    and org_level_id !='ProvinceOrg'
+	    and ORG_FLOW not in (
+			select rjo.JOINT_ORG_FLOW
+			from  PDSCI.RES_JOINT_ORG rjo
+			where rjo.RECORD_STATUS='Y'
+			and rjo.ORG_FLOW != #{orgFlow}
+		)
+		and org_flow != #{orgFlow}
+		ORDER BY ORDINAL, RECORD_STATUS DESC, ORG_FLOW
+	</select>
+	<select id="getUniOrgs" parameterType="map" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	     select *
+	    from PDSCI.SYS_ORG
+	    where RECORD_STATUS='Y'
+	   AND ORG_FLOW IN (
+	    	SELECT DISTINCT RDR.ORG_FLOW
+                      FROM
+                      	RES_DOCTOR_RECRUIT RDR
+                      LEFT JOIN
+                      RES_DOCTOR RD ON RDR.DOCTOR_FLOW=RD.DOCTOR_FLOW
+                      JOIN SYS_USER SU
+                        ON SU.USER_FLOW = RD.DOCTOR_FLOW
+                     WHERE RD.RECORD_STATUS = 'Y'
+                       AND SU.RECORD_STATUS = 'Y'
+						AND RDR.RECORD_STATUS='Y'
+					  AND RD.ORG_FLOW=RDR.ORG_FLOW
+                       AND RD.DOCTOR_TYPE_ID = 'Graduate'
+                       AND (
+						<trim prefix="" prefixOverrides="OR">
+							<if test="(sendSchoolId != null and sendSchoolId != '')">OR rd.work_org_id = #{sendSchoolId}</if>
+							<if test="(sendSchoolName != null and sendSchoolName != '')">OR rd.work_org_name = #{sendSchoolName}</if>
+						</trim>
+                        )
+                       AND RDR.ORG_FLOW IS NOT NULL
+        )
+		ORDER BY ORDINAL, RECORD_STATUS DESC, ORG_FLOW
+	</select>
+	<select id="getUniBackTrainOrgs" parameterType="map" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	     select *
+	    from PDSCI.SYS_ORG
+	    where RECORD_STATUS='Y'
+	   AND ORG_FLOW IN (
+	    	SELECT DISTINCT RDR.ORG_FLOW
+                      FROM
+                      	RES_DOCTOR_RECRUIT RDR
+                      LEFT JOIN
+                      RES_DOCTOR RD ON RDR.DOCTOR_FLOW=RD.DOCTOR_FLOW
+                      JOIN SYS_USER SU
+                        ON SU.USER_FLOW = RD.DOCTOR_FLOW
+                     WHERE RD.RECORD_STATUS = 'Y'
+                       AND SU.RECORD_STATUS = 'Y'
+					  AND RDR.RECORD_STATUS='Y'
+                       AND RD.DOCTOR_TYPE_ID = 'Graduate'
+                       AND (
+						<trim prefix="" prefixOverrides="OR">
+							<if test="(sendSchoolId != null and sendSchoolId != '')">OR rd.work_org_id = #{sendSchoolId}</if>
+							<if test="(sendSchoolName != null and sendSchoolName != '')">OR rd.work_org_name = #{sendSchoolName}</if>
+						</trim>
+                        )
+                       AND RDR.ORG_FLOW IS NOT NULL
+        )
+		ORDER BY ORDINAL, RECORD_STATUS DESC, ORG_FLOW
+	</select>
+	
+	<select id="searchJsResOrgWithJointOrg" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	    select ORG_FLOW, ORG_NAME 
+	    from PDSCI.SYS_ORG
+	    where RECORD_STATUS='Y'
+		and ORG_TYPE_ID = #{sysOrg.orgTypeId}
+		and ORG_CITY_ID = #{sysOrg.orgCityId}
+		and	(
+			ORG_LEVEL_ID in 
+			<foreach collection="orgLevelList" open="(" separator="," close=")" item="item">#{item}</foreach>
+   			or ORG_FLOW in (
+		    	select rjo.JOINT_ORG_FLOW
+		    	from PDSCI.SYS_ORG so, PDSCI.RES_JOINT_ORG rjo
+		    	where so.ORG_FLOW = rjo.ORG_FLOW
+		    	and so.RECORD_STATUS='Y' and rjo.RECORD_STATUS='Y'
+		       	and so.ORG_LEVEL_ID = 'CountryOrg'
+	    	) 
+    	)
+	</select>
+	
+	<select id="searOrgTeacherRoleCheckUser" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	  	 select * from sys_org so
+			where so.record_status = 'Y'
+					<if test="org!=null">
+					 	  <if test="org.orgProvId!=null and org.orgProvId!=''">
+					 		and so.ORG_PROV_ID=#{org.orgProvId}
+					 	  </if>
+					 	  <if test="org.orgCityId!=null and org.orgCityId!=''">
+					 		and so.ORG_CITY_ID=#{org.orgCityId}
+					 	  </if>
+				 	  </if> 
+			          AND so.ORG_TYPE_ID = 'Hospital'
+			or exists (
+			        select null from RES_JOINT_ORG rjo
+			        where rjo.record_status = 'Y'
+			        and so.org_flow = rjo.JOINT_ORG_FLOW
+			        and exists(
+			          select null from sys_org sso
+			          where sso.record_status = 'Y'
+			          and rjo.JOINT_ORG_FLOW = sso.org_flow
+			          <if test="org!=null">
+					 	  <if test="org.orgProvId!=null and org.orgProvId!=''">
+					 		and sso.ORG_PROV_ID=#{org.orgProvId}
+					 	  </if>
+					 	  <if test="org.orgCityId!=null and org.orgCityId!=''">
+					 		and sso.ORG_CITY_ID=#{org.orgCityId}
+					 	  </if>
+				 	  </if> 
+			          AND sso.ORG_TYPE_ID = 'Hospital'
+			        )
+			      )
+	</select>
+	<select id="confirmRole" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+		select a.* from sys_user a
+		  left join sys_user_role b on a.user_flow = b.user_flow
+		  left join sys_org c on a.org_flow = c.org_flow
+		 where a.record_status = 'Y'
+		   and b.record_status = 'Y'
+		   and b.role_flow in <foreach collection="roleList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		   and a.org_flow = #{orgFlow}
+		   and c.hospital_password = #{hospitalPassword}
+		   and a.user_flow=#{userFlow}
+	</select>
+	<select id="searchOrgs4hbUniversity" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+		select *
+		from PDSCI.SYS_ORG so
+		where so.RECORD_STATUS='Y'
+		and exists (
+			select null from res_doctor rd where
+			rd.RECORD_STATUS='Y' and rd.work_org_id = #{workOrgId}
+			and rd.org_flow = so.org_flow
+		)
+		ORDER BY so.ORDINAL, so.ORG_FLOW
+	</select>
+
+	<update id="updateOrgSubmit" parameterType="map">
+		update sys_org
+		set check_status_id = '',check_status_name = '',check_reason = ''
+		<if test="isSubmitId != null and isSubmitId == 'Y'.toString()">
+			, is_submit_id = 'NotSubmit',is_submit_name = '未提交'
+		</if>
+		<if test="isSubmitId != null and isSubmitId == 'N'.toString()">
+			, is_submit_id = '',is_submit_name = ''
+		</if>
+		where org_flow = #{orgFlow}
+	</update>
+
+	<update id="saveOrgSubmit" parameterType="list">
+		update sys_org
+		set is_submit_id = 'Submit',is_submit_name = '已提交'
+		, check_status_id = 'Passing',check_status_name = '待审核'
+		where org_flow in
+		<foreach collection="list"  item="orgFlow" open="(" separator="," close=")">
+			#{orgFlow}
+		</foreach>
+	</update>
+
+	<update id="updateCheckAll" parameterType="map">
+		update sys_org
+		<if test="flag != null and flag == 'Y'.toString()">
+			set check_status_id = 'Passed',check_status_name = '审核通过'
+		</if>
+		<if test="flag != null and flag == 'N'.toString()">
+			set check_status_id = 'UnPassed',check_status_name = '审核不通过'
+		</if>
+		<if test="checkReason != null and checkReason != ''">
+			,check_reason = #{checkReason}
+		</if>
+		where org_flow in
+		<foreach collection="list"  item="orgFlow" open="(" separator="," close=")">
+			#{orgFlow}
+		</foreach>
+	</update>
+
+	<update id="updateHospitalNotSubmit" parameterType="list">
+		update sys_org
+		set is_submit_id = 'NotSubmit',is_submit_name = '未提交'
+		, check_status_id = '',check_status_name = '',check_reason = ''
+		where org_flow in
+		<foreach collection="list"  item="orgFlow" open="(" separator="," close=")">
+			#{orgFlow}
+		</foreach>
+	</update>
+
+	<!-- 基地map -->
+	<resultMap id="orgMap" type="com.pinde.sci.model.sys.SysOrgExt" extends="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+		<result column="ORG_BASE_GRADE_NAME" property="orgBaseGradeName" jdbcType="VARCHAR" />
+		<result column="JOINT_ORG_FLOW" property="jointOrgFlow" jdbcType="VARCHAR" />
+		<result column="JOINT_ORG_NAME" property="jointOrgName" jdbcType="VARCHAR" />
+		<result column="JOINT_BASE_GRADE_NAME" property="jointBaseGradeName" jdbcType="VARCHAR" />
+		<result column="BASE_CODE" property="baseCode" jdbcType="VARCHAR" />
+
+	</resultMap>
+
+	<!-- 查询基地列表信息 -->
+	<select id="searchOrgListByParam" parameterType="com.pinde.sci.model.sys.SysOrgExt" resultMap="orgMap">
+		SELECT
+			T1.ORG_CITY_NAME,
+			T1.ORG_CODE as orgCode,
+			T1.ORG_FLOW,
+			T1.ORG_NAME,
+			B1.BASE_GRADE_NAME AS ORG_BASE_GRADE_NAME,
+			T1.JOINT_ORG_FLOW,
+			T1.JOINT_ORG_NAME,
+			B2.BASE_GRADE_NAME AS JOINT_BASE_GRADE_NAME
+		FROM
+			(
+				SELECT
+					O.ORG_CITY_NAME,
+					O.ORG_CODE,
+					O.ORG_FLOW,O.ordinal,
+					O.ORG_NAME,
+					J.JOINT_ORG_FLOW,
+					J.JOINT_ORG_NAME
+				FROM
+					SYS_ORG O
+				LEFT JOIN RES_JOINT_ORG J ON J.ORG_FLOW = O.ORG_FLOW
+				AND J.RECORD_STATUS = 'Y'
+				WHERE
+					O.RECORD_STATUS = 'Y'
+				AND O.ORG_PROV_ID = #{orgProvId,jdbcType=VARCHAR}
+				AND O.ORG_TYPE_ID = #{orgTypeId,jdbcType=VARCHAR}
+				AND O.ORG_LEVEL_ID = #{orgLevelId,jdbcType=VARCHAR}
+				<if test="orgCityId != null and orgCityId != ''">
+					AND O.ORG_CITY_ID = #{orgCityId}
+				</if>
+				<if test="orgName != null and orgName != ''">
+					AND O.ORG_NAME LIKE CONCAT(CONCAT('%', #{orgName,jdbcType=VARCHAR}),'%')
+				</if>
+				<if test="jointOrgName != null and jointOrgName != ''">
+					AND J.JOINT_ORG_NAME LIKE CONCAT(CONCAT('%', #{jointOrgName,jdbcType=VARCHAR}),'%')
+				</if>
+			) T1
+		LEFT JOIN RES_BASE B1 ON T1.ORG_FLOW = B1.ORG_FLOW
+		AND B1.RECORD_STATUS = 'Y'
+		LEFT JOIN RES_BASE B2 ON T1.JOINT_ORG_FLOW = B2.ORG_FLOW
+		AND B2.RECORD_STATUS = 'Y'
+		ORDER BY
+			orgCode ASC,
+			T1.ordinal,
+			T1.JOINT_ORG_FLOW
+	</select>
+
+	<!-- 查询基地下协同基地的数量 -->
+	<select id="getJointOrgCountByParam" parameterType="com.pinde.sci.model.sys.SysOrgExt" resultType="map">
+		SELECT
+			O.ORG_FLOW,
+			COUNT(J.JOINT_ORG_FLOW) AS JOINT_COUNT
+		FROM
+			SYS_ORG O
+		LEFT JOIN RES_JOINT_ORG J ON J.ORG_FLOW = O.ORG_FLOW
+		AND J.RECORD_STATUS = 'Y'
+		WHERE
+			O.RECORD_STATUS = 'Y'
+		AND O.ORG_PROV_ID = #{orgProvId,jdbcType=VARCHAR}
+		AND O.ORG_TYPE_ID = #{orgTypeId,jdbcType=VARCHAR}
+		AND O.ORG_LEVEL_ID = #{orgLevelId,jdbcType=VARCHAR}
+		<if test="orgCityId != null and orgCityId != ''">
+			AND O.ORG_CITY_ID = #{orgCityId}
+		</if>
+		<if test="orgName != null and orgName != ''">
+			AND O.ORG_NAME LIKE CONCAT(CONCAT('%', #{orgName,jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="jointOrgName != null and jointOrgName != ''">
+			AND J.JOINT_ORG_NAME LIKE CONCAT(CONCAT('%', #{jointOrgName,jdbcType=VARCHAR}),'%')
+		</if>
+		GROUP BY
+			O.ORG_FLOW,O.ORG_CODE,O.ordinal
+		ORDER BY
+			O.ORG_CODE ASC,
+			O.ordinal
+	</select>
+
+	<!-- 查询高校下的培训基地信息 -->
+	<select id="searchUniversityOrgList" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+		SELECT
+			ORG_FLOW,
+			ORG_CODE,
+			ORG_NAME,
+			ORG_PROV_ID,
+			ORG_PROV_NAME,
+			ORG_CITY_ID,
+			ORG_CITY_NAME,
+			ORG_AREA_ID,
+			ORG_AREA_NAME,
+			ORG_TYPE_ID,
+			ORG_TYPE_NAME,
+			ORG_ADDRESS,
+			ORG_PHONE,
+			CHARGE_ORG_FLOW,
+			CHARGE_ORG_NAME,
+			ORG_INFO,
+			RECORD_STATUS,
+			CREATE_TIME,
+			CREATE_USER_FLOW,
+			MODIFY_TIME,
+			MODIFY_USER_FLOW,
+			ORG_ZIP,
+			ORDINAL,
+			ORG_LEVEL_ID,
+			ORG_LEVEL_NAME,
+			IS_EXAM_ORG,
+			IS_EXAM_TEA,
+			SEND_SCHOOL_ID,
+			SEND_SCHOOL_NAME,
+			IS_SECOND_FLAG,
+			IDENTIFY_NO,
+			HOSPITAL_PASSWORD,
+			OSCE_DOCTOR_SHOW,
+			OSCE_TEACHER_SHOW,
+			IS_TRAIN_ORG,
+			CREDIT_CODE,
+			IS_SUBMIT_ID,
+			IS_SUBMIT_NAME,
+			CHECK_STATUS_ID,
+			CHECK_STATUS_NAME,
+			CHECK_REASON
+		FROM
+			SYS_ORG SO
+		WHERE
+			SO.RECORD_STATUS = 'Y'
+		AND EXISTS (
+			SELECT
+				1
+			FROM
+				RES_DOCTOR RD
+			WHERE
+				RD.RECORD_STATUS = 'Y'
+			AND RD.WORK_ORG_ID = #{workOrgId}
+			AND RD.ORG_FLOW = SO.ORG_FLOW
+		)
+		ORDER BY
+			SO.ORDINAL,
+			SO.ORG_FLOW
+	</select>
+
+	<!-- 市局查询基地和协同基地信息 -->
+	<select id="searchOrgAndJointOrgList" parameterType="com.pinde.sci.model.mo.SysOrg" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+		SELECT
+			ORG_FLOW,
+			ORG_CODE,
+			ORG_NAME,
+			ORG_PROV_ID,
+			ORG_PROV_NAME,
+			ORG_CITY_ID,
+			ORG_CITY_NAME,
+			ORG_AREA_ID,
+			ORG_AREA_NAME,
+			ORG_TYPE_ID,
+			ORG_TYPE_NAME,
+			ORG_ADDRESS,
+			ORG_ZIP,
+			ORG_PHONE,
+			CHARGE_ORG_FLOW,
+			CHARGE_ORG_NAME,
+			ORDINAL,
+			RECORD_STATUS,
+			CREATE_TIME,
+			CREATE_USER_FLOW,
+			MODIFY_TIME,
+			MODIFY_USER_FLOW,
+			ORG_LEVEL_ID,
+			ORG_LEVEL_NAME,
+			IS_EXAM_ORG,
+			SEND_SCHOOL_ID,
+			SEND_SCHOOL_NAME,
+			IS_SECOND_FLAG,
+			IDENTIFY_NO,
+			HOSPITAL_PASSWORD,
+			OSCE_DOCTOR_SHOW,
+			OSCE_TEACHER_SHOW,
+			IS_TRAIN_ORG,
+			CREDIT_CODE,
+			IS_SUBMIT_ID,
+			IS_SUBMIT_NAME,
+			CHECK_STATUS_ID,
+			CHECK_STATUS_NAME,
+			CHECK_REASON
+		FROM
+			SYS_ORG O
+		WHERE
+			RECORD_STATUS = 'Y'
+		<if test="orgFlow != null and orgFlow != ''">
+			AND O.ORG_FLOW = #{orgFlow}
+		</if>
+		<if test="orgCode != null and orgCode != ''">
+			AND O.ORG_CODE = #{orgCode}
+		</if>
+		<if test="orgName != null and orgName != ''">
+			AND O.ORG_NAME LIKE CONCAT(CONCAT('%',#{orgName}),'%')
+		</if>
+		<if test="orgProvId != null and orgProvId != ''">
+			AND O.ORG_PROV_ID = #{orgProvId}
+		</if>
+		<if test="chargeOrgFlow != null and chargeOrgFlow != ''">
+			AND O.CHARGE_ORG_FLOW = #{chargeOrgFlow}
+		</if>
+		<if test="orgAreaId != null and orgAreaId != ''">
+			AND O.ORG_AREA_ID = #{orgAreaId}
+		</if>
+		<if test="orgTypeId != null and orgTypeId != ''">
+			AND O.ORG_TYPE_ID = #{orgTypeId}
+		</if>
+		<if test="orgLevelId != null and orgLevelId != ''">
+			AND O.ORG_LEVEL_ID = #{orgLevelId}
+		</if>
+		<if test="isSecondFlag != null and isSecondFlag != ''">
+			AND O.is_second_flag = #{isSecondFlag}
+		</if>
+		<if test="isExamOrg != null and isExamOrg != ''">
+			AND O.IS_EXAM_ORG = #{isExamOrg}
+		</if>
+		<if test="orgCityId != null and orgCityId != ''">
+			AND (
+				O.ORG_CITY_ID = #{orgCityId}
+				OR EXISTS (
+					SELECT
+						1
+					FROM
+						RES_JOINT_ORG J,
+						SYS_ORG G
+					WHERE
+						J.ORG_FLOW = G .ORG_FLOW
+					AND G.RECORD_STATUS = 'Y'
+					AND J.RECORD_STATUS = 'Y'
+					AND G.ORG_CITY_ID = #{orgCityId}
+					AND J.JOINT_ORG_FLOW = O.ORG_FLOW
+				)
+			)
+		</if>
+		ORDER BY O.ORDINAL,O.ORG_CODE,O.ORG_FLOW DESC
+	</select>
+	
+	<select id="searchOrgListNew" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+		SELECT ORG_FLOW, ORG_PROV_ID, ORG_CITY_ID, ORG_AREA_ID, ORG_LEVEL_ID
+  			,CASE WHEN OLD_ORG_NAME IS NULL THEN ORG_NAME ELSE wm_concat(ORG_NAME||'('||OLD_ORG_NAME||')') END ORG_NAME
+		FROM PDSCI.SYS_ORG
+		WHERE RECORD_STATUS = 'Y'
+		<if test="sysorg != null">
+			<if test="sysorg.orgProvId!=null and sysorg.orgProvId!=''">
+				and ORG_PROV_ID=#{sysorg.orgProvId}
+			</if>
+			<if test="sysorg.orgCityId!=null and sysorg.orgCityId!=''">
+				and ORG_CITY_ID=#{sysorg.orgCityId}
+			</if>
+			<if test="sysorg.orgTypeId!=null and sysorg.orgTypeId!=''">
+				and ORG_TYPE_ID=#{sysorg.orgTypeId}
+			</if>
+			<if test="sysorg.orgLevelId!=null and sysorg.orgLevelId!=''">
+				and ORG_LEVEL_ID=#{sysorg.orgLevelId}
+			</if>
+		</if>
+  		GROUP BY ORG_FLOW, ORG_NAME,ORG_PROV_ID,ORG_CITY_ID,ORG_AREA_ID,ORG_LEVEL_ID,OLD_ORG_NAME
+		ORDER BY ORG_FLOW DESC
+	</select>
+
+	<select id="searchOrgNotJointOrg" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+		select o.ORG_FLOW, o.ORG_NAME
+		from PDSCI.SYS_ORG o
+		where o.RECORD_STATUS='Y'
+		and o.ORG_TYPE_ID = #{sysOrg.orgTypeId}
+		and o.ORG_CITY_ID = #{sysOrg.orgCityId}
+		and (
+			o.ORG_LEVEL_ID in
+			<foreach collection="orgLevelList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		)
+		AND NOT EXISTS (SELECT 1
+			FROM RES_JOINT_ORG J
+			WHERE J.RECORD_STATUS = 'Y'
+			AND J.JOINT_ORG_FLOW = O.ORG_FLOW)
+	</select>
+
+	<select id="orgGxList" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	select org_name,org_flow from sys_org
+    	where org_name in (select org_name from res_doctor
+   		where doctor_type_id='Graduate' and work_org_name='南京医科大学' group by org_name)
+	</select>
+
+	<select id="searchBase"  parameterType="java.lang.String"  resultMap="orgMap">
+		select * from sys_org where
+		<if test="baseCode!=null and baseCode!=''">
+			 BASE_CODE = #{baseCode}
+		</if>
+		<if test="baseCode==null or baseCode==''">
+			 BASE_CODE IS NOT NULL
+		</if>
+		AND RECORD_STATUS = 'Y' AND ORG_LEVEL_ID='CountryOrg'
+	</select>
+
+	<select id="searchOrgFlow" parameterType="java.lang.String"  resultMap="orgMap">
+		select * from sys_org where ORG_FLOW = #{orgFlow}
+	</select>
+
+	<select id="searchOrgList"   resultMap="orgMap">
+		SELECT * FROM PDSCI.SYS_ORG
+		WHERE ORG_PROV_ID = '320000'
+	    	AND ORG_TYPE_ID = 'Hospital'
+	    	AND RECORD_STATUS = 'Y'
+	    	AND ORG_LEVEL_ID='CountryOrg'
+			ORDER BY ORDINAL, ORG_CODE, ORG_FLOW DESC
+	</select>
+
+	<select id="searchOrgByJoin"  parameterType="com.pinde.sci.model.sys.SysOrgExt"   resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+		SELECT O.*
+		FROM SYS_ORG O
+		WHERE O.RECORD_STATUS = 'Y'
+			AND O.ORG_PROV_ID = '320000'
+			AND O.ORG_TYPE_ID = 'Hospital'
+			AND O.ORG_LEVEL_ID = 'CountryOrg'
+		<if test="orgName != null and orgName != ''">
+      		AND O.ORG_NAME LIKE CONCAT(CONCAT('%', #{orgName,jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="jointOrgName != null and jointOrgName != ''">
+      		AND O.ORG_FLOW IN (
+      			SELECT ORG_FLOW
+      			FROM RES_JOINT_ORG
+      			WHERE JOINT_ORG_NAME LIKE CONCAT(CONCAT('%', #{jointOrgName,jdbcType=VARCHAR}),'%')
+      			AND RECORD_STATUS = 'Y')
+		</if>
+		ORDER BY O.ORG_CODE
+	</select>
+
+
+	<select id="searchByCountOrg"  resultMap="com.pinde.sci.dao.base.ResOrgSpeMapper.BaseResultMap">
+		SELECT R.ORG_FLOW, R.ORG_NAME, R.SPE_ID, R.SPE_NAME
+		FROM PDSCI.RES_ORG_SPE R
+		LEFT JOIN SYS_ORG S
+		ON R.ORG_FLOW=S.ORG_FLOW
+		WHERE R.RECORD_STATUS = 'Y'
+		  AND S.RECORD_STATUS = 'Y'
+		  AND S.ORG_PROV_ID = '320000'
+		  AND S.ORG_TYPE_ID = 'Hospital'
+		  AND S.ORG_LEVEL_ID = 'CountryOrg'
+		  AND R.SPE_TYPE_ID='DoctorTrainingSpe'
+		  <if test="orgName != null and orgName != ''">
+		  	AND S.ORG_NAME LIKE CONCAT(CONCAT('%', #{orgName,jdbcType=VARCHAR}),'%')
+		  </if>
+		  GROUP BY R.ORG_FLOW, R.ORG_NAME, R.SPE_ID, R.SPE_NAME
+		ORDER BY SPE_ID
+	</select>
+	<select id="searchOrgListByParamNew" parameterType="com.pinde.sci.model.sys.SysOrgExt" resultMap="orgMap">
+		SELECT
+		T1.ORG_CITY_NAME,
+		T1.ORG_CODE as orgCode,
+		T1.ORG_FLOW,
+		T1.ORG_NAME,
+		B1.BASE_GRADE_NAME AS ORG_BASE_GRADE_NAME,
+		T1.JOINT_ORG_FLOW,
+		T1.JOINT_ORG_NAME,
+		B2.BASE_GRADE_NAME AS JOINT_BASE_GRADE_NAME
+		FROM
+		(
+		SELECT
+		O.ORG_CITY_NAME,
+		O.ORG_CODE,
+		O.ORG_FLOW,O.ordinal,
+		O.ORG_NAME,
+		J.JOINT_ORG_FLOW,
+		J.JOINT_ORG_NAME
+		FROM
+		SYS_ORG O
+		LEFT JOIN RES_JOINT_ORG J ON J.ORG_FLOW = O.ORG_FLOW
+		AND J.RECORD_STATUS = 'Y'
+		AND J.SESSION_NUMBER = #{sessionYear,jdbcType=VARCHAR}
+		WHERE
+		O.RECORD_STATUS = 'Y'
+		AND O.ORG_PROV_ID = #{orgProvId,jdbcType=VARCHAR}
+		AND O.ORG_TYPE_ID = #{orgTypeId,jdbcType=VARCHAR}
+		AND O.ORG_LEVEL_ID = #{orgLevelId,jdbcType=VARCHAR}
+		<if test="orgCityId != null and orgCityId != ''">
+			AND O.ORG_CITY_ID = #{orgCityId}
+		</if>
+		<if test="orgName != null and orgName != ''">
+			AND O.ORG_NAME LIKE CONCAT(CONCAT('%', #{orgName,jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="jointOrgName != null and jointOrgName != ''">
+			AND J.JOINT_ORG_NAME LIKE CONCAT(CONCAT('%', #{jointOrgName,jdbcType=VARCHAR}),'%')
+		</if>
+		) T1
+		LEFT JOIN RES_BASE B1 ON T1.ORG_FLOW = B1.ORG_FLOW
+		AND B1.RECORD_STATUS = 'Y'
+		AND B1.SESSION_NUMBER is null
+		LEFT JOIN RES_BASE B2 ON T1.JOINT_ORG_FLOW = B2.ORG_FLOW
+		AND B2.RECORD_STATUS = 'Y'
+		AND B2.SESSION_NUMBER is null
+		ORDER BY
+		orgCode ASC,
+		T1.ordinal,
+		T1.JOINT_ORG_FLOW
+	</select>
+	<select id="getJointOrgCountByParamNew" parameterType="com.pinde.sci.model.sys.SysOrgExt" resultType="map">
+		SELECT
+		O.ORG_FLOW,
+		COUNT(J.JOINT_ORG_FLOW) AS JOINT_COUNT
+		FROM
+		SYS_ORG O
+		LEFT JOIN RES_JOINT_ORG J ON J.ORG_FLOW = O.ORG_FLOW
+		AND J.RECORD_STATUS = 'Y'
+		AND J.SESSION_NUMBER = #{sessionYear,jdbcType=VARCHAR}
+		WHERE
+		O.RECORD_STATUS = 'Y'
+		AND O.ORG_PROV_ID = #{orgProvId,jdbcType=VARCHAR}
+		AND O.ORG_TYPE_ID = #{orgTypeId,jdbcType=VARCHAR}
+		AND O.ORG_LEVEL_ID = #{orgLevelId,jdbcType=VARCHAR}
+		<if test="orgCityId != null and orgCityId != ''">
+			AND O.ORG_CITY_ID = #{orgCityId}
+		</if>
+		<if test="orgName != null and orgName != ''">
+			AND O.ORG_NAME LIKE CONCAT(CONCAT('%', #{orgName,jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="jointOrgName != null and jointOrgName != ''">
+			AND J.JOINT_ORG_NAME LIKE CONCAT(CONCAT('%', #{jointOrgName,jdbcType=VARCHAR}),'%')
+		</if>
+		GROUP BY
+		O.ORG_FLOW,O.ORG_CODE,O.ordinal
+		ORDER BY
+		O.ORG_CODE ASC,
+		O.ordinal
+	</select>
+</mapper>

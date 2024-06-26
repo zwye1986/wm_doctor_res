@@ -1,0 +1,492 @@
+body{
+  font-family: "Microsoft YaHei";
+}
+body a:hover,body a:focus{
+  text-decoration: none;
+}
+body ul{
+  list-style: none;
+}
+/* 导航条样式开始 */
+.navbar{
+  border: none;
+  margin-bottom: 0;
+  background-color: white;
+}
+.navbar .navbar_content{
+  max-width: 1000px;
+  margin: 0 auto;
+  height: 107px;
+  display: flex;
+  align-items: center;
+}
+.navbar_content .navbar-header{
+  margin-right: 94px;
+}
+.navbar_content ul{
+  display: flex;
+  flex-wrap: nowrap;
+}
+.navbar_content ul li{
+  white-space: nowrap;
+  font-size: 18px;
+}
+.navbar-default .navbar-nav > li > a{
+  font-size: 18px;
+  color: black;
+  padding: 7px 0;
+  margin: 0 15px;
+}
+.choose{
+  border-top: 3px solid #5380e6;
+  font-weight: bold;
+  padding: 4px 0!important;
+}
+
+/* 导航条样式结束 */
+/* banner图开始 */
+.bg .row .col-xs-12{
+  padding: 0;
+  position: relative;
+}
+.bg .row .col-xs-12 .img_banner{
+  max-width: 1920px;
+  min-width: 1000px;
+  width: 100%;
+  height: 420px;
+}
+.banner_box{
+  width: 1000px;
+  position: absolute;
+  top:20px;
+  left: 0;
+  right: 0;
+  margin:0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.banner-box_right{
+  width: 370px;
+  height: 380px;
+  background: rgba(255,255,255,0.78);
+  padding: 33px 43px 40px 43px;
+  border-radius: 8px;
+
+}
+.banner-box_right .form-login{
+  position: relative;
+}
+.banner-box_right .form-header{
+  text-align: right;
+  position: relative;
+  height: 54px;
+  padding-right: 10px;
+}
+.banner-box_right .form-header img{
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+.banner-box_right .form-header a{
+  line-height: 27px;
+  color: rgb(153,153,153);
+}
+.banner-box_right .form-group{
+  position: relative;
+}
+.banner-box_right .pwd-box{
+  margin-bottom: 27px;
+}
+.banner-box_right .form-group input{
+  height: 39px;
+  border: 2px solid #ccc;
+  border-radius: 2px;
+  box-shadow: none;
+  background: transparent;
+  padding-left: 44px;
+  color: #999999;
+}
+.banner-box_right .form-group input:focus {
+  border-left:2px solid rgb(95,150,251);
+}
+.banner-box_right .form-group i{
+  font-size: 22px;
+  color: #999999;
+  position: absolute;
+  width: 20px;
+  height: 22px;
+  bottom: 13px;
+  left: 11px;
+}
+.banner-box_right .form-login button{
+  border-radius: 2px;
+  background-color: rgb( 95, 150, 251 );
+  box-shadow: 1px 1px 8px 0px rgb( 62, 99, 183 );
+  height: 39px;
+  font-size: 18px;
+  color: white;
+  margin-bottom: 28px;
+}
+.banner-box_right .form-login .old-link{
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  text-align: center;
+  color: rgb( 95, 150, 251 );
+  font-size: 16px;
+}
+/* banner图结束 */
+/* 公示公告开始 */
+/* 左边样式 */
+.notice_container{
+  margin-top: 48px;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 53px;
+}
+.container .row{
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+}
+.notice_container .row .notice_left a,.notice_container .row .notice_left .notice_info{
+  color: rgb(153,153,153);
+}
+.notice_container .row .notice_left a:hover{
+  color: rgb( 95, 150, 251 );
+}
+.container .row .notice_left .notice_header{
+  display: flex;
+  justify-content: space-between;
+}
+.container .row .notice_left .notice_header .notice_title{
+  font-size: 24px;
+}
+.container .row .notice_left .notice_header .notice_title p:first-child{
+  margin: 0;
+  height: 24px;
+  line-height: 27px;
+  border-left: 8px solid #f8a160;
+  padding-left: 8px;
+  font-family: 'FZHZGBJW';
+  
+}
+
+.container .row .notice_left .notice_header .notice_title p:last-child{
+  width: 150px;
+  height: 1px;
+  background: #88a4d8;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+.container .row .notice_left .notice_header a{
+  width: 440px;
+  text-align: right;
+  border-bottom: 1px solid #dcdcdc;
+  line-height: 34px;
+}
+.notice_left .notice_img{
+  margin-top: 18px;
+}
+.notice_left .notice_img img{
+  width: 590px;
+}
+.notice_left .notice_info ul{
+  padding: 0
+}
+.notice_left .notice_info ul li{
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0;
+}
+/* 右边样式 */
+.notice_container .row .notice_right{
+  margin-left: 129px;
+}
+.notice_container .row .notice_right a,.notice_container .row .notice_right .notice_info{
+  color: rgb(153,153,153);
+}
+.notice_container .row .notice_right a:hover{
+  color: rgb( 95, 150, 251 );
+}
+.container .row .notice_right .notice_header{
+  display: flex;
+  justify-content: space-between;
+}
+.container .row .notice_right .notice_header .notice_title{
+  font-size: 16px;
+  height: 35px;
+  line-height: 35px;
+}
+.container .row .notice_right .notice_header .notice_title p:first-child{
+  margin: 0;
+  height: 24px;
+  padding-left: 8px;
+  font-family: 'FZHZGBJW';
+}
+.container .row .notice_right .notice_header .notice_title p:last-child{
+  width: 116px;
+  height: 1px;
+  background: #88a4d8;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+.container .row .notice_right .notice_header a{
+  width: 165px;
+  text-align: right;
+  border-bottom: 1px solid #dcdcdc;
+  line-height: 32px;
+}
+.notice_right .notice_info ul{
+  padding: 0;
+  font-size: 12px;
+}
+.notice_right .notice_info ul li{
+  display: flex;
+  justify-content: space-between;
+  padding: 7.5px 0;
+}
+.notice_right .notice_info ul li:first-child{
+  padding-top: 14px;
+}
+/* 公示公告结束 */
+/* 招生信息开始 */
+.stu_container{
+  padding: 0;
+  background-color: #d8deed;
+  padding-top: 38px;
+  min-width: 1000px;
+}
+.stu_container .row{
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.stuinfo_title{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 34px;
+}
+.stut_left{
+  height: 24px;
+  line-height: 27px;
+  border-left: 8px solid #f8a160;
+  padding-left: 8px;
+  font-size: 24px;
+  white-space: nowrap;
+  margin-right: 212px;
+  font-family: 'FZHZGBJW';
+}
+.stut_right{
+  width: 580px;
+  position: relative;
+  color: rgb(153,153,153);
+}
+.stut_right input{
+  width: 580px;
+  height: 38px;
+  padding-left: 69px;
+  font-size: 12px;
+  padding-right: 40px;
+  color: rgb(153,153,153);  
+  box-shadow: none!important;
+  border: 1px solid rgb(153,153,153);
+}
+.stut_right input:focus{
+  border-color: rgb( 72, 126, 227 );
+}
+.stut_right input:focus+i{
+  color: rgb( 72, 126, 227 );
+}
+.stut_right span{
+  position: absolute;
+  border-right: 1px solid;
+  padding-right: 9px;
+  font-size: 12px;
+  top: 11px;
+  left: 14px;
+}
+.stut_right i{
+  position: absolute;
+  top: 6px;
+  cursor: pointer;
+  right: 14px;
+  font-size: 20px;
+}
+/* 医院表格 */
+.hospital{
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.hospital .hospital_title{
+  display: flex;
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(87,153,226);
+}
+.hospital-t_left,.hospital-c_left{
+  width: 384px;
+}
+.hospital-t_middle,.hospital-c_middle{
+  width: 240px;
+  text-align: center;
+  margin-right: 180px;
+}
+.hospital-t_right{
+  width: 195px;
+  text-align: right;
+}
+.hospital-c_row{
+  display: flex;
+  padding: 15px 0;
+}
+.hospital-c_row:first-child{
+  padding-top: 35px;
+}
+.hospital-c_right{
+  width: 195px;
+  text-align: center;
+}
+.hospital_footer{
+  display: flex;
+  align-items: center;
+  max-width: 1000px;
+  padding-left: 25.5%;
+}
+.hospital-f_left{
+  display: flex;
+  font-size: 12px;
+}
+.hospital-f_left p{
+  margin: 0;
+}
+.hospital-f_left p:first-child{
+  margin-right: 12px;
+}
+.hospital-f_middle{
+  margin-left: 15px;
+  display: flex;
+  align-items: center;
+}
+.hospital-f_middle .pagination li a{
+  background-color: transparent;
+  border: 1px solid #999999;
+  border-radius: 0;
+  margin-right: 8px;
+  height: 30px;
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 30px;
+  color: #999999;
+}
+.hospital-f_middle .pagination .page a{
+  width: 23px;
+  background-color: #5f96fb;
+  color: white;
+  text-align: center;
+  padding-left: 0;
+  padding-right: 0;
+  border: none;
+}
+.hospital-f_right{
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+.hospital-f_right .btn{
+  border: 1px solid #999999;
+  background-color: transparent;
+  border-radius: 0;
+  margin-left: 6px;
+  padding-left: 10px;
+  padding-right: 6px;
+}
+.hospital-f_right .btn span{
+  margin-left: 23px;
+}
+.hospital-f_right .btn,.hospital-f_right ul{
+  font-size: 12px;
+}
+/* 招生信息结束 */
+/* 友情链接开始 */
+.link_container{
+  padding: 0;
+  background-color: #f0f0f0;
+  padding-top: 27px;
+  min-width: 1000px;
+}
+.link_container .row{
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.link_title{
+  display: flex;
+  align-items: center;
+  margin-bottom: 26px;
+}
+.link_top,.link_bottom{
+  display: flex;
+  max-width: 1000px;
+  margin: 0 auto 20px;
+}
+.link_top div,.link_bottom div{
+  width: 240px;
+  height: 105px;
+  margin-right: 16px;
+}
+.link_top div img,.link_bottom div img{
+  width: 100%;
+  height: 100%;
+}
+.link_top div:last-child,.link_bottom div:last-child{
+  margin-right: 0;
+}
+/* 友情链接结束 */
+/* 底栏开始 */
+.footer_container{
+  padding: 0;
+  background-color: #41527a;
+  padding-top: 27px;
+  color: white;
+}
+.footer_container .row{
+  text-align: center;
+  min-width: 1000px;
+  margin: 0 auto;
+}
+.footer_title{
+  font-size: 16px;
+}
+.footer_text{
+  max-width: 1000px;
+  margin: 25px auto 45px;
+
+
+}
+.footer-text_box{
+  display: flex;
+  margin-left: 275px;
+}
+.footer_text p{
+  margin: 0;
+}
+.footer-t_left{
+  border-right: 1px solid white;
+  padding-right: 28px;
+}
+.footer-t_right{
+  text-align: left;
+  margin-left: 30px;
+}
+.footer-t_left p:first-child,.footer-t_right p:first-child{
+  margin-bottom: 6px;
+}
+/* 底栏结束 */
+/* 字体引用 */
+@font-face {
+  font-family: 'FZHZGBJW';
+  src: url('../font/FZHZGBJW.ttf');
+}

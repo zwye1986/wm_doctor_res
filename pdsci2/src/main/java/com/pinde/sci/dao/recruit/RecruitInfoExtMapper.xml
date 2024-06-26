@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.recruit.RecruitInfoExtMapper">
+    <resultMap id="RecruitInfoExt" type="com.pinde.sci.model.recruit.RecruitInfoExt" extends="com.pinde.sci.dao.base.RecruitInfoMapper.BaseResultMap" >
+        <association property="sysUser" javaType="com.pinde.sci.model.mo.SysUser">
+            <result column="USER_NAME" property="userName"/>
+            <result column="SEX_NAME" property="sexName"/>
+            <result column="ID_NO" property="idNo"/>
+        </association>
+        <association property="recruitExamInfo" javaType="com.pinde.sci.model.mo.RecruitExamInfo">
+            <result column="EXAM_START_TIME" property="examStartTime"/>
+            <result column="INTERVIEW_TIME" property="interviewTime"/>
+            <result column="INTERVIEW_ADDRESS" property="interviewAddress"/>
+            <result column="INTERVIEW_DEMO" property="interviewDemo"/>
+        </association>
+    </resultMap>
+    <resultMap id="RecruitInfo" type="com.pinde.sci.model.mo.RecruitInfo" >
+        <id column="RECRUIT_FLOW" property="recruitFlow" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+        <result column="EXAM_IS_PASS" property="examIsPass" jdbcType="VARCHAR" />
+        <result column="INTERVIEW_FLAG" property="interviewFlag" jdbcType="VARCHAR" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="searchAdmitInfoByFlow" resultMap="RecruitInfoExt">
+      select
+            s.USER_NAME USER_NAME,
+            s.ID_NO ID_NO,
+            r.RECRUIT_FLOW RECRUIT_FLOW,
+            r.ORG_FLOW ORG_FLOW,
+            r.DOCTOR_FLOW DOCTOR_FLOW,
+            r.RECRUIT_YEAR RECRUIT_YEAR,
+            r.INTERVIEW_IS_PASS INTERVIEW_IS_PASS,
+            r.ADMIT_FLAG ADMIT_FLAG,
+            r.RECORD_STATUS RECORD_STATUS
+      from RECRUIT_INFO r LEFT JOIN SYS_USER s ON r.DOCTOR_FLOW = s.USER_FLOW
+        WHERE
+        r.RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
+        AND s.RECORD_STATUS = 'Y'
+        AND r.RECORD_STATUS = 'Y'
+        AND r.EXAM_IS_PASS = 'Y'
+        AND r.INTERVIEW_FLAG = 'Y'
+        AND r.INTERVIEW_IS_PASS = 'Y'
+        AND r.ADMIT_FLAG = 'N'
+    </select>
+    <select id="selectRecruitInfoByIdNo" resultMap="RecruitInfo">
+        select
+            r.RECRUIT_FLOW RECRUIT_FLOW,
+            r.ORG_FLOW ORG_FLOW,
+            r.DOCTOR_FLOW DOCTOR_FLOW,
+            r.EXAM_IS_PASS EXAM_IS_PASS,
+            r.INTERVIEW_FLAG INTERVIEW_FLAG,
+            r.INTERVIEW_IS_PASS INTERVIEW_IS_PASS,
+            r.ADMIT_FLAG ADMIT_FLAG,
+            r.RECORD_STATUS RECORD_STATUS
+        from
+          RECRUIT_INFO r LEFT JOIN SYS_USER s ON s.ID_NO = #{idNo}
+        WHERE
+          r.DOCTOR_FLOW = s.USER_FLOW
+          AND s.RECORD_STATUS = 'Y'
+          AND r.RECORD_STATUS = 'Y'
+    </select>
+    <select id="selectRecruitInfoAboutAudit" parameterType="map" resultMap="RecruitInfoExt">
+        select
+            s.USER_NAME USER_NAME,
+            s.SEX_NAME SEX_NAME,
+            s.ID_NO ID_NO,
+            r.RECRUIT_FLOW RECRUIT_FLOW,
+            r.RECRUIT_YEAR RECRUIT_YEAR,
+            r.TICKET_NUMBER TICKET_NUMBER,
+            r.SUBMIT_TIME SUBMIT_TIME,
+            r.AUDIT_STATUS_ID AUDIT_STATUS_ID,
+            r.AUDIT_STATUS_NAME AUDIT_STATUS_NAME
+        from
+          RECRUIT_INFO r LEFT JOIN SYS_USER s ON r.DOCTOR_FLOW = s.USER_FLOW
+          WHERE s.RECORD_STATUS = 'Y'
+          AND r.RECORD_STATUS = 'Y'
+          AND r.AUDIT_STATUS_ID in ('Passing','Passed','NoPassed')
+        <if test="userName !=null and userName !=''">
+            AND s.USER_NAME like '%'||#{userName}||'%'
+        </if>
+        <if test="beginDate !=null and beginDate !=''">
+            AND TO_DATE(r.SUBMIT_TIME, 'yyyy-MM-dd HH24:mi:ss') &gt;= TO_DATE(#{beginDate}, 'YYYY-MM-DD')
+        </if>
+        <if test="endDate !=null and endDate !=''">
+            AND TO_DATE(SUBSTR(r.SUBMIT_TIME,1,10), 'yyyy-MM-dd') &lt;= TO_DATE(#{endDate}, 'YYYY-MM-DD')
+        </if>
+        <if test="recruitYear != null and recruitYear != ''">
+            AND r.RECRUIT_YEAR = #{recruitYear}
+        </if>
+        <if test="auditStatusId != null and auditStatusId != ''">
+            AND r.AUDIT_STATUS_ID = #{auditStatusId}
+        </if>
+        <if test="orgFlow != null and orgFlow != ''">
+            AND r.ORG_FLOW = #{orgFlow}
+        </if>
+        ORDER BY r.RECRUIT_YEAR DESC,r.RECRUIT_FLOW
+    </select>
+    <select id="searchTicket" resultType="java.lang.String">
+      select
+        RECRUIT_FLOW
+      from
+        RECRUIT_INFO r
+      where
+        r.RECORD_STATUS = 'Y'
+        AND r.AUDIT_STATUS_ID = 'Passed'
+        <if test="recruitYear != null and recruitYear != ''">
+            AND r.RECRUIT_YEAR = #{recruitYear}
+        </if>
+        <if test="trainingSpeId != null and trainingSpeId != ''">
+            AND r.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+      ORDER BY r.AUDIT_TIME,r.CREATE_TIME
+    </select>
+    <select id="selectRecruitByUserFlow" resultMap="RecruitInfoExt">
+        select
+        s.USER_NAME USER_NAME,
+        s.SEX_NAME SEX_NAME,
+        s.ID_NO ID_NO,
+        r.*
+        from
+        RECRUIT_INFO r LEFT JOIN SYS_USER s ON r.DOCTOR_FLOW = s.USER_FLOW
+        WHERE s.RECORD_STATUS = 'Y'
+        AND r.RECORD_STATUS = 'Y'
+        AND r.AUDIT_STATUS_ID in ('Save','Passing','Passed','NoPassed')
+        <if test="userFlow != null and userFlow != ''">
+            AND r.DOCTOR_FLOW = #{userFlow}
+        </if>
+        <if test="orgFlow != null and orgFlow != ''">
+            AND r.ORG_FLOW = #{orgFlow}
+        </if>
+    </select>
+
+    <resultMap id="CanExamRecruitInfo" type="com.pinde.sci.model.recruit.RecruitInfoExt" extends="com.pinde.sci.dao.base.RecruitInfoMapper.BaseResultMap" >
+        <association property="sysUser" javaType="com.pinde.sci.model.mo.SysUser">
+            <result column="USER_NAME" property="userName"/>
+            <result column="SEX_NAME" property="sexName"/>
+            <result column="USER_HEAD_IMG" property="userHeadImg"/>
+            <result column="ID_NO" property="idNo"/>
+            <result column="CRET_TYPE_ID" property="cretTypeId" jdbcType="VARCHAR" />
+            <result column="CRET_TYPE_NAME" property="cretTypeName" jdbcType="VARCHAR" />
+        </association>
+        <association property="recruitExamInfo" javaType="com.pinde.sci.model.mo.RecruitExamInfo">
+            <result column="EXAM_FLOW" property="examFlow" jdbcType="VARCHAR" />
+            <result column="MAIN_FLOW" property="mainFlow" jdbcType="VARCHAR" />
+            <result column="EXAM_YEAR" property="examYear" jdbcType="VARCHAR" />
+            <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+            <result column="EXAM_START_TIME" property="examStartTime" jdbcType="VARCHAR" />
+            <result column="EXAM_END_TIME" property="examEndTime" jdbcType="VARCHAR" />
+            <result column="INTERVIEW_START_TIME" property="interviewStartTime" jdbcType="VARCHAR" />
+            <result column="INTERVIEW_END_TIME" property="interviewEndTime" jdbcType="VARCHAR" />
+            <result column="INTERVIEW_ADDRESS" property="interviewAddress" jdbcType="VARCHAR" />
+            <result column="INTERVIEW_DEMO" property="interviewDemo" jdbcType="VARCHAR" />
+        </association>
+        <association property="recruitExamRoomInfo" javaType="com.pinde.sci.model.mo.RecruitExamRoomInfo">
+            <result column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+            <result column="EXAM_FLOW" property="examFlow" jdbcType="VARCHAR" />
+            <result column="MAIN_FLOW" property="mainFlow" jdbcType="VARCHAR" />
+            <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+            <result column="ROOM_FLOW" property="roomFlow" jdbcType="VARCHAR" />
+            <result column="EXAM_ADDRESS" property="examAddress" jdbcType="VARCHAR" />
+            <result column="EXAM_NUM" property="examNum" jdbcType="VARCHAR" />
+        </association>
+    </resultMap>
+    <select id="searchCanExamRecruitInfo"   resultMap="CanExamRecruitInfo">
+        select
+            r.*,
+            USER_NAME,
+            SEX_NAME,
+        USER_HEAD_IMG,
+            ID_NO,
+            CRET_TYPE_ID,
+            CRET_TYPE_NAME,
+            E.EXAM_YEAR,
+            E.EXAM_START_TIME,
+            E.EXAM_END_TIME,
+            E.INTERVIEW_START_TIME,
+            E.INTERVIEW_END_TIME,
+            E.INTERVIEW_ADDRESS,
+            E.INTERVIEW_DEMO,
+            room.RECORD_FLOW,
+            room.ROOM_FLOW,
+            room.EXAM_ADDRESS,
+            room.EXAM_NUM
+        from RECRUIT_INFO r
+        left join sys_User s
+        on r.doctor_flow=s.user_flow
+        left join RECRUIT_EXAM_INFO e
+        on r.exam_flow=e.exam_flow
+        left join recruit_exam_room_info room
+        on r.EXAM_ROOM_FLOW = room.record_flow
+        where
+        r.RECORD_STATUS = 'Y'
+        AND r.AUDIT_STATUS_ID = 'Passed'
+        <if test="userName !=null and userName !=''">
+            AND s.USER_NAME like '%${userName}%'
+        </if>
+        <if test="idNo !=null and idNo !=''">
+            AND s.ID_NO like '%${idNo}%'
+        </if>
+        <if test="startDate !=null and startDate !=''">
+            AND e.EXAM_START_TIME >= '${startDate} 00:00'
+        </if>
+        <if test="endDate !=null and endDate !=''">
+            AND e.EXAM_START_TIME <![CDATA[<=]]> '${endDate} 23:59'
+        </if>
+        <if test="recruitYear != null and recruitYear != ''">
+            AND r.RECRUIT_YEAR = #{recruitYear}
+        </if>
+        <if test="orgFlow != null and orgFlow != ''">
+            AND r.ORG_FLOW = #{orgFlow}
+        </if>
+        <if test="examIsPass != null and examIsPass != ''">
+            AND r.EXAM_IS_PASS = #{examIsPass}
+        </if>
+        <if test="writeExamFlag != null and writeExamFlag != ''">
+            AND r.WRITE_EXAM_FLAG = #{writeExamFlag}
+        </if>
+        <if test="interviewIsPass != null and interviewIsPass != ''">
+            AND r.INTERVIEW_IS_PASS = #{interviewIsPass}
+        </if>
+        order by r.RECRUIT_YEAR desc,r.TICKET_NUMBER,r.AUDIT_TIME
+    </select>
+    <select id="searchRecruitInfoByFlow"   resultMap="CanExamRecruitInfo">
+        select
+            r.*,
+            USER_NAME,
+            SEX_NAME,
+            USER_HEAD_IMG,
+            ID_NO,
+            CRET_TYPE_ID,
+            CRET_TYPE_NAME,
+            E.EXAM_YEAR,
+            E.EXAM_START_TIME,
+            E.EXAM_END_TIME,
+            E.INTERVIEW_START_TIME,
+            E.INTERVIEW_END_TIME,
+            E.INTERVIEW_ADDRESS,
+            E.INTERVIEW_DEMO,
+            room.RECORD_FLOW,
+            room.ROOM_FLOW,
+            room.EXAM_ADDRESS,
+            room.EXAM_NUM
+        from RECRUIT_INFO r
+        left join sys_User s
+        on r.doctor_flow=s.user_flow
+        left join RECRUIT_EXAM_INFO e
+        on r.exam_flow=e.exam_flow
+        left join recruit_exam_room_info room
+        on r.EXAM_ROOM_FLOW = room.record_flow
+        where
+        r.RECORD_STATUS = 'Y'
+        AND r.RECRUIT_FLOW=#{recruitFlow}
+        order by r.RECRUIT_YEAR desc,r.TICKET_NUMBER,r.AUDIT_TIME
+    </select>
+</mapper>

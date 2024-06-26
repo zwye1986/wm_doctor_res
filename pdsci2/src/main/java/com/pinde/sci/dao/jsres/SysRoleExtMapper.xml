@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jsres.SysRoleExtMapper" >
+	<resultMap type="com.pinde.sci.model.mo.SysUserRole" id="BaseResultMap" extends="com.pinde.sci.dao.base.SysUserRoleMapper.BaseResultMap">
+	</resultMap>
+
+	<select id="getByUserFlow" resultMap="BaseResultMap" >
+		select
+		sr.RECORD_FLOW,
+		sr.USER_FLOW,
+		sr.ORG_FLOW,
+		sr.WS_ID,
+		sr.ROLE_FLOW,
+		sr.AUTH_TIME,
+		sr.AUTH_USER_FLOW,
+		sr.RECORD_STATUS,
+		sr.CREATE_TIME,
+		sr.CREATE_USER_FLOW,
+		sr.MODIFY_TIME,
+		sr.MODIFY_USER_FLOW
+		from PDSCI.SYS_USER_ROLE sr
+		<if test="userFlows != null" >
+			inner join (select * from (
+			<foreach collection="userFlows" item="userFlow" separator="union">
+				SELECT #{userFlow,jdbcType=VARCHAR} USER_FLOW FROM DUAL
+			</foreach>))T1 on sr.USER_FLOW = T1.USER_FLOW
+		</if>
+		where sr.RECORD_STATUS = 'Y'
+		<if test="wsid != null" >
+			and sr.WS_ID = #{wsid}
+		</if>
+
+
+	</select>
+
+</mapper>

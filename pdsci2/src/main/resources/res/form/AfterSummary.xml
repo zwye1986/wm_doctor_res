@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>	
+	<!-- 大病历登记表单 -->
+	<!-- 
+	{0}:表单所属机构(开关控制)
+	{1}:版本号
+ -->
+	<jsp path="res/form/{3}/{0}/after_{1}{2}"></jsp>
+	<product ver="1.0">
+		<page  ver="1.0">
+			<item name="personalSummary" remark="个人小结" multiple="N"></item>
+			<item name="deptAppraise" remark="科室评价" multiple="N"></item>
+			<item name="deptHeadAutograth" remark="科主任签名" multiple="N"></item>
+			<item name="isAgree" remark="同意出科" multiple="N"></item>
+			<item name="head" remark="主任" multiple="N"></item>
+			<item name="date" remark="日期" multiple="N"></item>
+		</page>
+		<page  ver="2.0">
+			<item name="personalSummary" remark="个人小结" multiple="N"></item>
+			<item name="internshipEvaluation" remark="实习表现评价" multiple="N"></item>
+			<item name="theoryTest" remark="理论考试" multiple="N"></item>
+			<item name="skillTest" remark="技能考试" multiple="N"></item>
+			<item name="totalScore" remark="总分" multiple="N"></item>
+			<item name="isAgree" remark="同意出科" multiple="N"></item>
+			<item name="head" remark="主任" multiple="N"></item>
+			<item name="date" remark="日期" multiple="N"></item>
+		</page>
+	</product>
+	<sczyfy ver="1.0">
+		<page  ver="1.0">
+			<item name="personalSummary" remark="个人小结" multiple="N"></item>
+			<item name="deptAppraise" remark="科室评价" multiple="N"></item>
+			<item name="deptHeadAutograth" remark="科主任签名" multiple="N"></item>
+			<item name="isAgree" remark="同意出科" multiple="N"></item>
+			<item name="head" remark="主任" multiple="N"></item>
+			<item name="date" remark="日期" multiple="N"></item>
+		</page>
+	</sczyfy>
+	<njykdxsxs ver="2.0">
+		<page  ver="1.0">
+			<item name="personalSummary" remark="个人小结" multiple="N"></item>
+			<item name="internshipEvaluation" select="Y" remark="实习表现评价" multiple="N"></item>
+			<item name="theoryTest" remark="理论考试" multiple="N"></item>
+			<item name="skillTest" remark="技能考试" multiple="N"></item>
+			<item name="totalScore" remark="总分" multiple="N"></item>
+			<item name="isAgree" select="Y" remark="同意出科" multiple="N"></item>
+			<item name="head" remark="主任" multiple="N"></item>
+			<item name="date" remark="日期" multiple="N"></item>
+			<item name="name" remark="姓名" multiple="N"></item>
+		</page>
+		<page  ver="2.0">
+			<item name="personalSummary" remark="个人小结" multiple="N"></item>
+			<item name="internshipEvaluation" select="Y" remark="实习表现评价" multiple="N"></item>
+			<item name="theoryTest" remark="理论考试" multiple="N"></item>
+			<item name="skillTest" remark="技能考试" multiple="N"></item>
+			<item name="totalScore" remark="总分" multiple="N"></item>
+			<item name="isAgree" select="Y" remark="同意出科" multiple="N"></item>
+			<item name="head" remark="主任" multiple="N"></item>
+			<item name="date" remark="日期" multiple="N"></item>
+			<item name="name" remark="姓名" multiple="N"></item>
+		</page>
+	</njykdxsxs>
+	<njzyykdxzs ver="1.0">
+		<page  ver="1.0">
+			<item name="basicCheckBranch" remark="基本原则考核分" multiple="N"></item>
+			<item name="basicSelfratingBranch" isView="Y" remark="基本原则自评分" multiple="N"></item>
+			
+			<item name="disciplineCheckBranch" remark="纪律考核分" multiple="N"></item>
+			<item name="disciplineSelfratingBranch" isView="Y" remark="纪律自评分" multiple="N"></item>
+			
+			<item name="uniteCheckBranch" remark="团结考核分" multiple="N"></item>
+			<item name="uniteSelfratingBranch" isView="Y" remark="团结自评分" multiple="N"></item>
+			
+			<item name="activityCheckBranch" remark="活动考核分" multiple="N"></item>
+			<item name="activitySelfratingBranch" isView="Y" remark="活动自评分" multiple="N"></item>
+			
+			<item name="attendanceCheckBranch" remark="出勤考核分" multiple="N"></item>
+			<item name="attendanceSelfratingBranch" isView="Y" remark="出勤自评分" multiple="N"></item>
+			
+			<item name="attitudeCheckBranch" remark="态度考核分" multiple="N"></item>
+			<item name="attitudeSelfratingBranch" isView="Y" remark="态度自评分" multiple="N"></item>
+			
+			<item name="technologyCheckBranch" remark="技术考核分" multiple="N"></item>
+			<item name="technologySelfratingBranch" isView="Y" remark="技术自评分" multiple="N"></item>
+			
+			<item name="studyCheckBranch" remark="学习考核分" multiple="N"></item>
+			<item name="studySelfratingBranch" isView="Y" remark="学习自评分" multiple="N"></item>
+			
+			<item name="checkBranchThetotalscore" isView="Y" remark="考核总分" multiple="N"></item>
+			<item name="selfratingBranchThetotalscore" isView="Y" remark="自评总分" multiple="N"></item>
+			<item name="accident" isView="Y" remark="医疗事故" multiple="N"></item>
+			<item name="error" isView="Y" remark="医疗差错" multiple="N"></item>
+			<item name="wrong" isView="Y" remark="工作错误" multiple="N"></item>
+			<item name="isAgree" isView="Y" remark="同意出科" multiple="N"></item>
+		</page>
+	</njzyykdxzs>
+	<jszy ver="1.0">
+		<page  ver="1.0">
+			<item name="basicCheckBranch" remark="基本原则考核分" multiple="N"></item>
+			<item name="basicSelfratingBranch" isView="Y" remark="基本原则自评分" multiple="N"></item>
+
+			<item name="disciplineCheckBranch" remark="纪律考核分" multiple="N"></item>
+			<item name="disciplineSelfratingBranch" isView="Y" remark="纪律自评分" multiple="N"></item>
+
+			<item name="uniteCheckBranch" remark="团结考核分" multiple="N"></item>
+			<item name="uniteSelfratingBranch" isView="Y" remark="团结自评分" multiple="N"></item>
+
+			<item name="activityCheckBranch" remark="活动考核分" multiple="N"></item>
+			<item name="activitySelfratingBranch" isView="Y" remark="活动自评分" multiple="N"></item>
+
+			<item name="attendanceCheckBranch" remark="出勤考核分" multiple="N"></item>
+			<item name="attendanceSelfratingBranch" isView="Y" remark="出勤自评分" multiple="N"></item>
+
+			<item name="attitudeCheckBranch" remark="态度考核分" multiple="N"></item>
+			<item name="attitudeSelfratingBranch" isView="Y" remark="态度自评分" multiple="N"></item>
+
+			<item name="technologyCheckBranch" remark="技术考核分" multiple="N"></item>
+			<item name="technologySelfratingBranch" isView="Y" remark="技术自评分" multiple="N"></item>
+
+			<item name="studyCheckBranch" remark="学习考核分" multiple="N"></item>
+			<item name="studySelfratingBranch" isView="Y" remark="学习自评分" multiple="N"></item>
+
+			<item name="checkBranchThetotalscore" isView="Y" remark="考核总分" multiple="N"></item>
+			<item name="selfratingBranchThetotalscore" isView="Y" remark="自评总分" multiple="N"></item>
+			<item name="accident" isView="Y" remark="医疗事故" multiple="N"></item>
+			<item name="error" isView="Y" remark="医疗差错" multiple="N"></item>
+			<item name="wrong" isView="Y" remark="工作错误" multiple="N"></item>
+			<item name="isAgree" isView="Y" remark="同意出科" multiple="N"></item>
+		</page>
+		<page  ver="1.0B">
+			<item name="summary" isView="Y" remark="内容" multiple="N"/>
+			<item name="teacherAppraise" remark="带教评价" multiple="N"></item>
+			<item name="deptAppraise" remark="科室评价" multiple="N"></item>
+			<item name="isAgree" remark="同意出科" select="Y" multiple="N"></item>
+		</page>
+	</jszy>
+	<gzzyyy ver="1.0">
+		<page  ver="1.0">
+			<item name="basicCheckBranch" remark="基本原则考核分" multiple="N"></item>
+			<item name="basicSelfratingBranch" isView="Y" remark="基本原则自评分" multiple="N"></item>
+
+			<item name="disciplineCheckBranch" remark="纪律考核分" multiple="N"></item>
+			<item name="disciplineSelfratingBranch" isView="Y" remark="纪律自评分" multiple="N"></item>
+
+			<item name="uniteCheckBranch" remark="团结考核分" multiple="N"></item>
+			<item name="uniteSelfratingBranch" isView="Y" remark="团结自评分" multiple="N"></item>
+
+			<item name="activityCheckBranch" remark="活动考核分" multiple="N"></item>
+			<item name="activitySelfratingBranch" isView="Y" remark="活动自评分" multiple="N"></item>
+
+			<item name="attendanceCheckBranch" remark="出勤考核分" multiple="N"></item>
+			<item name="attendanceSelfratingBranch" isView="Y" remark="出勤自评分" multiple="N"></item>
+
+			<item name="attitudeCheckBranch" remark="态度考核分" multiple="N"></item>
+			<item name="attitudeSelfratingBranch" isView="Y" remark="态度自评分" multiple="N"></item>
+
+			<item name="technologyCheckBranch" remark="技术考核分" multiple="N"></item>
+			<item name="technologySelfratingBranch" isView="Y" remark="技术自评分" multiple="N"></item>
+
+			<item name="studyCheckBranch" remark="学习考核分" multiple="N"></item>
+			<item name="studySelfratingBranch" isView="Y" remark="学习自评分" multiple="N"></item>
+
+			<item name="checkBranchThetotalscore" isView="Y" remark="考核总分" multiple="N"></item>
+			<item name="selfratingBranchThetotalscore" isView="Y" remark="自评总分" multiple="N"></item>
+			<item name="accident" isView="Y" remark="医疗事故" multiple="N"></item>
+			<item name="error" isView="Y" remark="医疗差错" multiple="N"></item>
+			<item name="wrong" isView="Y" remark="工作错误" multiple="N"></item>
+			<item name="isAgree" isView="Y" remark="同意出科" multiple="N"></item>
+		</page>
+		<page  ver="1.0B">
+			<item name="summary" isView="Y" remark="内容" multiple="N"/>
+			<item name="teacherAppraise" remark="带教评价" multiple="N"></item>
+			<item name="deptAppraise" remark="科室评价" multiple="N"></item>
+			<item name="isAgree" remark="同意出科" select="Y" multiple="N"></item>
+		</page>
+	</gzzyyy>
+	<nfykdxpt ver="1.0">
+		<page  ver="1.0">
+			<item name="department" remark="轮转科室" multiple="N"></item>
+			<item name="dateTime" remark="日期" multiple="N"></item>
+			<item name="name" remark="姓名" multiple="N"></item>
+			<item name="hospital" remark="所在医院" multiple="N"></item>
+			<item name="trainDirection" remark="培训方向" multiple="N"></item>
+			<item name="grade" remark="年级" multiple="N"></item>
+			<item name="cycleTimeStart" remark="轮转开始时间" multiple="N"></item>
+			<item name="cycleTimeEnd" remark="轮转结束时间" multiple="N"></item>
+			<item name="leaveDays" remark="请假天数" multiple="N"></item>
+			<item name="offDutyDays" remark="脱岗天数" multiple="N"></item>
+			<item name="requireDay" remark="轮转时间要求" multiple="N"></item>
+			<item name="situation" remark="报告学习及撰写情况" multiple="N"></item>
+			<item name="epitome" remark="本次轮转的收获与不足" multiple="N"></item>
+			<item name="doctorName" remark="本人签名" multiple="N"></item>
+			<item name="isAgree" remark="同意出科" multiple="N"></item>
+		</page>
+	</nfykdxpt>
+	<hbszyysgfhpxglpt ver="1.0">
+		<page  ver="1.0">
+			<item name="summaryDocName" remark="医师姓名" multiple="N"></item>
+			<item name="personalSummary" remark="个人小结" multiple="N"></item>
+			<item name="deptAppraise" remark="科室评价" multiple="N"></item>
+			<item name="deptHeadAutograth" remark="科主任签名" multiple="N"></item>
+			<item name="isAgree" remark="同意出科" select="Y" multiple="N"></item>
+			<item name="head" remark="主任" multiple="N"></item>
+			<item name="date" remark="日期" multiple="N"></item>
+		</page>
+	</hbszyysgfhpxglpt>
+	<zsey ver="1.0">
+		<page  ver="1.0">
+			<item name="doctorName" remark="医师姓名" multiple="N"></item>
+			<item name="inHosDate" remark="入培时间" multiple="N"></item>
+			<item name="schDeptName" remark="轮转科室" multiple="N"></item>
+			<item name="trainingSpeName" remark="培训专业" multiple="N"></item>
+			<item name="orgName" remark="医院" multiple="N"></item>
+			<item name="schStartDate" remark="开始时间" multiple="N"></item>
+			<item name="schEndDate" remark="结束时间" multiple="N"></item>
+			<item name="schMonth" remark="轮转时长" multiple="N"></item>
+			<item name="manqin" remark="满勤" multiple="N"></item>
+			<item name="queqin" remark="缺勤" multiple="N"></item>
+			<item name="personalSummary" remark="个人小结" multiple="N"></item>
+			<item name="doctorSiginName" remark="医师签名" multiple="N"></item>
+			<item name="doctorSiginDate" remark="签名日期" multiple="N"></item>
+
+			<item name="deptAppraise" remark="带教意见" multiple="N"></item>
+			<item name="teacherSiginName" remark="带教老师签名" multiple="N"></item>
+			<item name="teacherSiginDate" remark="带教老师签名日期" multiple="N"></item>
+
+			<item name="deptHeadAutograth" remark="教学主任意见" multiple="N"></item>
+			<item name="isAgree" remark="同意出科" select="Y" multiple="N"></item>
+			<item name="headSiginName" remark="教学主任签名" multiple="N"></item>
+			<item name="headSiginDate" remark="教学主任签名日期" multiple="N"></item>
+		</page>
+	</zsey>
+	<dgdhyy ver="1.0">
+		<page  ver="1.0">
+			<item name="doctorName" remark="医师姓名" multiple="N"></item>
+			<item name="inHosDate" remark="入培时间" multiple="N"></item>
+			<item name="schDeptName" remark="轮转科室" multiple="N"></item>
+			<item name="trainingSpeName" remark="培训专业" multiple="N"></item>
+			<item name="orgName" remark="医院" multiple="N"></item>
+			<item name="schStartDate" remark="开始时间" multiple="N"></item>
+			<item name="schEndDate" remark="结束时间" multiple="N"></item>
+			<item name="schMonth" remark="轮转时长" multiple="N"></item>
+			<item name="manqin" remark="满勤" multiple="N"></item>
+			<item name="queqin" remark="缺勤" multiple="N"></item>
+			<item name="personalSummary" remark="个人小结" multiple="N"></item>
+			<item name="doctorSiginName" remark="医师签名" multiple="N"></item>
+			<item name="doctorSiginDate" remark="签名日期" multiple="N"></item>
+
+			<item name="deptAppraise" remark="带教意见" multiple="N"></item>
+			<item name="teacherSiginName" remark="带教老师签名" multiple="N"></item>
+			<item name="teacherSiginDate" remark="带教老师签名日期" multiple="N"></item>
+
+			<item name="deptHeadAutograth" remark="教学主任意见" multiple="N"></item>
+			<item name="isAgree" remark="同意出科" select="Y" multiple="N"></item>
+			<item name="headSiginName" remark="教学主任签名" multiple="N"></item>
+			<item name="headSiginDate" remark="教学主任签名日期" multiple="N"></item>
+		</page>
+	</dgdhyy>
+	<shrjyy ver="1.0">
+		<page  ver="1.0">
+			<item name="summaryDocName" remark="医师姓名" multiple="N"></item>
+			<item name="personalSummary" remark="个人小结" multiple="N"></item>
+			<item name="deptAppraise" remark="科室评价" multiple="N"></item>
+			<item name="deptHeadAutograth" remark="科主任签名" multiple="N"></item>
+			<item name="isAgree" remark="同意出科" select="Y" multiple="N"></item>
+			<item name="head" remark="主任" multiple="N"></item>
+			<item name="date" remark="日期" multiple="N"></item>
+		</page>
+	</shrjyy>
+	<shfx ver="1.0">
+		<page  ver="1.0">
+			<item name="summaryDocName" remark="医师姓名" multiple="N"></item>
+			<item name="personalSummary" remark="个人小结" multiple="N"></item>
+			<item name="deptAppraise" remark="科室评价" multiple="N"></item>
+			<item name="deptHeadAutograth" remark="科主任签名" multiple="N"></item>
+			<item name="baseAutograth" remark="基地秘书评价" multiple="N"></item>
+			<item name="isAgree" remark="同意出科" select="Y" multiple="N"></item>
+			<item name="head" remark="主任" multiple="N"></item>
+			<item name="date" remark="日期" multiple="N"></item>
+			<item name="base" remark="基地秘书" multiple="N"></item>
+			<item name="baseDate" remark="日期" multiple="N"></item>
+		</page>
+	</shfx>
+</jspForm>
+

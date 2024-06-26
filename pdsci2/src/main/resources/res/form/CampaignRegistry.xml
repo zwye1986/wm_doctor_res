@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>	
+	<!-- 大病历登记表单 -->
+	<!-- 
+	{0}:表单所属机构(开关控制)
+	{1}:版本号
+ -->
+	<jsp path="res/form/{3}/{0}/campaign_{1}"></jsp>
+	<product ver="1.0">
+		<page  ver="1.0">
+			<item name="activeDate" remark="活动日期" multiple="N"></item>
+			<item name="activeType" isView="0" remark="活动形式" multiple="N"></item>
+			<item name="classHour" isView="0" remark="学时(小时)" multiple="N"></item>
+			<item name="lecturer" isView="0" remark="主讲人" multiple="N"></item>
+			<item name="remark" remark="备注" multiple="N"></item>
+			<item name="activeDetail" remark="活动内容" multiple="N"></item>
+			<item name="file" remark="附件" multiple="N"></item>
+		</page>
+	</product>
+	<njykdxsxs ver="1.0">
+		<page  ver="1.0">
+			<item name="activeName" isView="0" remark="活动名称" multiple="N"></item>
+			<item name="activeDate" isView="1" remark="活动日期" multiple="N"></item>
+			<item name="activeTitle" isView="2" remark="讲座题目" multiple="N"></item>
+		</page>
+	</njykdxsxs>
+
+	<shetyy ver="1.0">
+		<page  ver="1.0">
+			<item name="title" remark="题目" multiple="N"></item>
+			<item name="articleTitle" isView="0" remark="文章题目" multiple="N"></item>
+			<item name="teaching" remark="教学" multiple="N"></item>
+			<item name="lectureTitle" remark="讲座题目" multiple="N"></item>
+			<item name="assessment" remark="考核者" multiple="N"></item>
+		</page>
+	</shetyy>
+	<njzyykdxzs ver="1.0">
+		<page  ver="1.0">
+			<item name="title" remark="题目" multiple="N"></item>
+			<item name="articleTitle" isView="0" remark="文章题目" multiple="N"></item>
+			<item name="teaching" remark="教学" multiple="N"></item>
+			<item name="lectureTitle" remark="讲座题目" multiple="N"></item>
+			<item name="assessment" remark="考核者" multiple="N"></item>
+		</page>
+	</njzyykdxzs>
+	<jszy ver="1.0">
+		<page  ver="1.0">
+			<item name="title" remark="题目" multiple="N"></item>
+			<item name="articleTitle" isView="0" remark="文章题目" multiple="N"></item>
+			<item name="teaching" remark="教学" multiple="N"></item>
+			<item name="lectureTitle" remark="讲座题目" multiple="N"></item>
+			<item name="assessment" remark="考核者" multiple="N"></item>
+		</page>
+	</jszy>
+	<gzzyyy ver="1.0">
+		<page  ver="1.0">
+			<item name="title" remark="题目" multiple="N"></item>
+			<item name="articleTitle" isView="0" remark="文章题目" multiple="N"></item>
+			<item name="teaching" remark="教学" multiple="N"></item>
+			<item name="lectureTitle" remark="讲座题目" multiple="N"></item>
+			<item name="assessment" remark="考核者" multiple="N"></item>
+		</page>
+	</gzzyyy>
+	<jsst ver="2.0">
+		<page ver="1.0">
+			<item name="activity_way" isView="0" remark="活动形式" multiple="N"></item>
+			<item name="activity_date" isView="0" remark="日期" multiple="N"></item>
+			<item name="activity_period" isView="0" remark="学时" multiple="N"></item>
+			<item name="activity_speaker" remark="主讲人" multiple="N"></item>
+			<item name="activity_content" remark="内容" multiple="N"></item>
+		</page>
+		<page ver="2.0">
+			<item name="activity_way" select="Y" isView="4" remark="活动形式" multiple="N"></item>
+			<item name="activity_date" isView="3" remark="日期" multiple="N"></item>
+			<item name="activity_period" select="Y" isView="0" remark="学时" multiple="N"></item>
+			<item name="activity_speaker"  isView="2" remark="主讲人" multiple="N"></item>
+			<item name="activity_address"    remark="活动地点" multiple="N"></item>
+			<item name="activity_content"  isView="1" remark="内容" multiple="N"></item>
+		</page>
+	</jsst>
+	<sczyfy ver="1.0">
+		<page ver="1.0">
+			<item name="activity_way"  isView="0" remark="活动形式" multiple="N"></item>
+			<item name="activity_date" isView="0" remark="日期" multiple="N"></item>
+			<item name="activity_period" select="Y" isView="0" remark="学时" multiple="N"></item>
+			<item name="activity_speaker" remark="主讲人" multiple="N"></item>
+			<item name="activity_content" remark="内容" multiple="N"></item>
+			<item name="fileUrl" select="Y"  remark="文件地址" multiple="N"></item>
+		</page>
+	</sczyfy>
+	<hbszyysgfhpxglpt ver="1.0">
+		<page ver="1.0">
+			<item name="activity_way" select="Y" isView="2" remark="活动形式" multiple="N"></item>
+			<item name="activity_date" isView="1" remark="日期" multiple="N"></item>
+			<item name="activity_period" select="Y" remark="学时" multiple="N"></item>
+			<item name="activity_speaker"  isView="0" remark="主讲人" multiple="N"></item>
+			<item name="activity_content"  remark="内容" multiple="N"></item>
+		</page>
+	</hbszyysgfhpxglpt>
+
+	<gzzyjx ver="1.0">
+		<page  ver="1.0">
+			<item name="activity_date" remark="日期" multiple="N"></item>
+			<item name="activity_title" remark="题目" multiple="N"></item>
+			<item name="activity_speaker" remark="主讲人" multiple="N"></item>
+		</page>
+	</gzzyjx>
+
+
+	<zsey ver="1.0">
+		<page ver="1.0">
+			<item name="activity_way" select="Y" isView="2" remark="活动形式" multiple="N"></item>
+			<item name="activity_date" isView="1" remark="日期" multiple="N"></item>
+			<item name="activity_period" select="Y" remark="学时" multiple="N"></item>
+			<item name="activity_speaker"  isView="0" remark="主讲人" multiple="N"></item>
+			<item name="activity_content"  remark="内容" multiple="N"></item>
+		</page>
+	</zsey>
+	<dgdhyy ver="1.0">
+		<page ver="1.0">
+			<item name="activity_way" select="Y" isView="2" remark="活动形式" multiple="N"></item>
+			<item name="activity_date" isView="1" remark="日期" multiple="N"></item>
+			<item name="activity_period" select="Y" remark="学时" multiple="N"></item>
+			<item name="activity_speaker"  isView="0" remark="主讲人" multiple="N"></item>
+			<item name="activity_content"  remark="内容" multiple="N"></item>
+		</page>
+	</dgdhyy>
+	<shrjyy ver="1.0">
+		<page ver="1.0">
+			<item name="activity_way" select="Y" isView="2" remark="活动形式" multiple="N"></item>
+			<item name="activity_period" select="Y" remark="学时" multiple="N"></item>
+			<item name="activity_speaker"  isView="0" remark="主讲人" multiple="N"></item>
+			<item name="activity_content"  remark="内容" multiple="N"></item>
+		</page>
+	</shrjyy>
+	<shfx ver="1.0">
+		<page ver="1.0">
+			<item name="activity_way" select="Y" isView="2" remark="活动形式" multiple="N"></item>
+			<item name="activity_date" isView="1" remark="日期" multiple="N"></item>
+			<item name="activity_period" select="Y" remark="学时" multiple="N"></item>
+			<item name="activity_speaker"  isView="0" remark="主讲人" multiple="N"></item>
+			<item name="activity_content"  remark="内容" multiple="N"></item>
+		</page>
+	</shfx>
+</jspForm>
+

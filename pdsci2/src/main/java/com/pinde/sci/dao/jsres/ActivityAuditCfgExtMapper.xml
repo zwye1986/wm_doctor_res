@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jsres.ActivityAuditCfgExtMapper">
+
+    <resultMap id="activityAuditMap" type="com.pinde.sci.model.mo.ActivityAuditCfg" extends="com.pinde.sci.dao.base.ActivityAuditCfgMapper.BaseResultMap">
+        <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+        <result column="ADD_ROLE_FLOW" property="addRoleFlow" jdbcType="VARCHAR" />
+        <result column="ADD_ROLE_NAME" property="addRoleName" jdbcType="VARCHAR" />
+        <result column="AUDIT_ROLE_FLOW" property="auditRoleFlow" jdbcType="VARCHAR" />
+        <result column="AUDIT_ROLE_NAME" property="auditRoleName" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <!-- 查询教学活动审批流程配置信息 -->
+    <select id="searchActivityAuditCfgList" resultMap="activityAuditMap">
+        SELECT
+            WM_CONCAT (AUDIT_ROLE_FLOW) AS AUDIT_ROLE_FLOW,
+            WM_CONCAT (AUDIT_ROLE_NAME) AS AUDIT_ROLE_NAME,
+            ADD_ROLE_FLOW,
+            ADD_ROLE_NAME
+        FROM
+            ACTIVITY_AUDIT_CFG
+        WHERE
+            RECORD_STATUS = 'Y'
+        GROUP BY
+            ADD_ROLE_FLOW,ADD_ROLE_NAME
+        <!--SELECT
+            C.RECORD_FLOW,
+            C.ADD_ROLE_FLOW,
+            C.ADD_ROLE_NAME,
+            T.AUDIT_ROLE_FLOW,
+            T.AUDIT_ROLE_NAME
+        FROM
+            ACTIVITY_AUDIT_CFG C,
+            (
+                SELECT
+                    WM_CONCAT (AUDIT_ROLE_FLOW) AS AUDIT_ROLE_FLOW,
+                    WM_CONCAT (AUDIT_ROLE_NAME) AS AUDIT_ROLE_NAME,
+                    ADD_ROLE_FLOW
+                FROM
+                    ACTIVITY_AUDIT_CFG
+                WHERE
+                    RECORD_STATUS = 'Y'
+                GROUP BY
+                    ADD_ROLE_FLOW
+            ) T
+        WHERE
+            C.ADD_ROLE_FLOW = T.ADD_ROLE_FLOW
+        AND C.RECORD_STATUS = 'Y'-->
+    </select>
+
+    <!-- 查询教学活动发起人角色列表 -->
+    <select id="searchAddRoleList" parameterType="String" resultType="map">
+        SELECT
+            CFG_VALUE AS ROLE_FLOW,
+            CFG_DESC AS ROLE_NAME,
+            CFG_CODE AS ROLE_TYPE
+        FROM
+            SYS_CFG C
+        WHERE
+            C.RECORD_STATUS = 'Y'
+        AND C.CFG_CODE IN (
+            'res_head_role_flow',
+            'res_secretary_role_flow',
+            'res_teacher_role_flow'
+        )
+        AND NOT EXISTS (
+            SELECT
+                1
+            FROM
+                ACTIVITY_AUDIT_CFG F
+            WHERE
+                RECORD_STATUS = 'Y'
+            AND F.ADD_ROLE_FLOW = C.CFG_VALUE
+            <if test="addRoleFlow != null and addRoleFlow != ''">
+                AND F.ADD_ROLE_FLOW != #{addRoleFlow}
+            </if>
+        )
+    </select>
+
+    <!-- 查询教学活动审批人角色列表 -->
+    <select id="searchAuditRoleList" resultType="map">
+        SELECT
+            CFG_VALUE AS ROLE_FLOW,
+            CFG_DESC AS ROLE_NAME,
+            CFG_CODE AS ROLE_TYPE
+        FROM
+            SYS_CFG
+        WHERE
+            RECORD_STATUS = 'Y'
+        AND CFG_CODE IN (
+            'res_head_role_flow',
+            'res_secretary_role_flow',
+            'res_teacher_role_flow'
+        )
+    </select>
+
+    <!-- 查询教学活动审批人角色列表 -->
+    <select id="searchAuditByAddRoleFlow" resultType="java.lang.String">
+     SELECT
+      AUDIT_ROLE_FLOW,
+        FROM
+            ACTIVITY_AUDIT_CFG
+        WHERE  RECORD_STATUS = 'Y'
+            and add_role_flow=#{addRoleFlow}
+    </select>
+
+    <!--保存教学活动审批流程信息-->
+    <insert id="saveActivityCfg" parameterType="map">
+        INSERT ALL
+        <foreach item="role" index="index" collection="roleList"  separator="">
+            INTO ACTIVITY_AUDIT_CFG (
+                RECORD_FLOW,
+                ADD_ROLE_FLOW,
+                ADD_ROLE_NAME,
+                AUDIT_ROLE_FLOW,
+                AUDIT_ROLE_NAME,
+                ORG_FLOW,
+                ORG_NAME,
+                RECORD_STATUS,
+                CREATE_TIME,
+                CREATE_USER_FLOW,
+                MODIFY_TIME,
+                MODIFY_USER_FLOW
+            )
+            values
+            (
+                lower(rawtohex(sys_guid())),
+                #{role.addRoleFlow},
+                #{role.addRoleName},
+                #{role.auditRoleFlow},
+                #{role.auditRoleName},
+                #{orgFlow, jdbcType=VARCHAR},
+                #{orgName, jdbcType=VARCHAR},
+                #{recordStatus},
+                #{createTime},
+                #{createUserFlow},
+                #{createTime},
+                #{createUserFlow}
+            )
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+    <update id="saveUpdateActivityCfg" >
+    update ACTIVITY_AUDIT_CFG set record_status='Y'
+    where RECORD_FLOW = #{recordFlow}
+    </update>
+
+    <update id="deleteActivityCfgRole" >
+
+        update ACTIVITY_AUDIT_CFG  set RECORD_STATUS='N'
+        where  add_Role_Flow = #{addRoleFlow} and record_status='Y'
+        <if test="roleList !=null and roleList.size()>0">
+            and   AUDIT_ROLE_FLOW not in
+            <foreach collection="roleList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+    </update>
+
+    <!-- 查询教学活动审批流程信息 -->
+    <select id="getActivityCfgInfo" parameterType="String" resultMap="activityAuditMap">
+        SELECT
+            WM_CONCAT(AUDIT_ROLE_FLOW) AS AUDIT_ROLE_FLOW,
+            WM_CONCAT(AUDIT_ROLE_NAME) AS AUDIT_ROLE_NAME,
+            ADD_ROLE_FLOW,
+            ADD_ROLE_NAME
+        FROM
+          ACTIVITY_AUDIT_CFG
+        WHERE
+          RECORD_STATUS = 'Y'
+        AND ADD_ROLE_FLOW = #{addRoleFlow}
+        GROUP BY
+        ADD_ROLE_FLOW,ADD_ROLE_NAME
+    </select>
+
+    <update id="delActivityCfgInfo">
+    update ACTIVITY_AUDIT_CFG set  RECORD_STATUS = 'N'
+        WHERE RECORD_STATUS = 'Y'
+        AND ADD_ROLE_FLOW = #{addRoleFlow}
+    </update>
+
+</mapper>

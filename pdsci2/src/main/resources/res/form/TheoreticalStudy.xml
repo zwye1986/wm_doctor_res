@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+    <!-- 理论学习记录表单 -->
+    <!--
+    {0}:表单所属机构(开关控制)
+    {1}:版本号
+ -->
+    <jsp path="res/form/{3}/{0}/theoreticalStudy_{1}"/>
+    <jszy ver="1.0">
+        <page ver="1.0">
+            <item name="lawGrade" remark="法律、法规及规定成绩" multiple="N"/>
+            <item name="lawRemark" select="Y" remark="法律、法规及规定备注" multiple="N"/>
+            <item name="communicateGrade" remark="医患沟通与伦理学成绩" multiple="N"/>
+            <item name="communicateRemark" select="Y" remark="医患沟通与伦理学备注" multiple="N"/>
+            <item name="designGrade" remark="临床科研设计与方法成绩" multiple="N"/>
+            <item name="designRemark" select="Y" remark="临床科研设计与方法备注" multiple="N"/>
+            <item name="generalPracticeGrade" remark="全科医学概论*成绩" multiple="N"/>
+            <item name="generalPracticeRemark" select="Y" remark="全科医学概论*备注" multiple="N"/>
+            <item name="communityGrade" remark="社区卫生服务管理成绩" multiple="N"/>
+            <item name="communityRemark" select="Y" remark="社区卫生服务管理备注" multiple="N"/>
+            <item name="publicGrade" remark="公共卫生*成绩" multiple="N"/>
+            <item name="publicRemark" select="Y" remark="公共卫生*备注" multiple="N"/>
+            <item name="medicalEthicsGrade" remark="医德医风成绩" multiple="N"/>
+            <item name="medicalEthicsRemark" select="Y" remark="医德医风备注" multiple="N"/>
+            <item name="thinkGrade" remark="临床思维成绩" multiple="N"/>
+            <item name="thinkRemark" select="Y" remark="临床思维备注" multiple="N"/>
+            <item name="recoveryGrade" remark="康复医学*成绩" multiple="N"/>
+            <item name="recoveryRemark" select="Y" remark="康复医学*备注" multiple="N"/>
+            <item name="psychologyGrade" remark="临床心理学与精神卫生成绩" multiple="N"/>
+            <item name="psychologyRemark" select="Y" remark="临床心理学与精神卫生备注" multiple="N"/>
+            <item name="regimenGrade" remark="中医养生学成绩" multiple="N"/>
+            <item name="regimenRemark" select="Y" remark="中医养生学备注" multiple="N"/>
+            <item name="communityTecGrade" remark="中医社区适宜技术成绩" multiple="N"/>
+            <item name="communityTecRemark" select="Y" remark="中医社区适宜技术备注" multiple="N"/>
+            <item name="introductionGrade" remark="中医经典导读成绩" multiple="N"/>
+            <item name="introductionRemark" select="Y" remark="中医经典导读备注" multiple="N"/>
+            <item name="specialGrade" remark="专题讲座、讨论成绩" multiple="N"/>
+            <item name="specialRemark" select="Y" remark="专题讲座、讨论备注" multiple="N"/>
+            <item name="totalGrade" remark="合计" multiple="N"/>
+        </page>
+    </jszy>
+    <gzzyyy ver="1.0">
+        <page ver="1.0">
+            <item name="lawGrade" remark="法律、法规及规定成绩" multiple="N"/>
+            <item name="lawRemark" select="Y" remark="法律、法规及规定备注" multiple="N"/>
+            <item name="communicateGrade" remark="医患沟通与伦理学成绩" multiple="N"/>
+            <item name="communicateRemark" select="Y" remark="医患沟通与伦理学备注" multiple="N"/>
+            <item name="designGrade" remark="临床科研设计与方法成绩" multiple="N"/>
+            <item name="designRemark" select="Y" remark="临床科研设计与方法备注" multiple="N"/>
+            <item name="generalPracticeGrade" remark="全科医学概论*成绩" multiple="N"/>
+            <item name="generalPracticeRemark" select="Y" remark="全科医学概论*备注" multiple="N"/>
+            <item name="communityGrade" remark="社区卫生服务管理成绩" multiple="N"/>
+            <item name="communityRemark" select="Y" remark="社区卫生服务管理备注" multiple="N"/>
+            <item name="publicGrade" remark="公共卫生*成绩" multiple="N"/>
+            <item name="publicRemark" select="Y" remark="公共卫生*备注" multiple="N"/>
+            <item name="medicalEthicsGrade" remark="医德医风成绩" multiple="N"/>
+            <item name="medicalEthicsRemark" select="Y" remark="医德医风备注" multiple="N"/>
+            <item name="thinkGrade" remark="临床思维成绩" multiple="N"/>
+            <item name="thinkRemark" select="Y" remark="临床思维备注" multiple="N"/>
+            <item name="recoveryGrade" remark="康复医学*成绩" multiple="N"/>
+            <item name="recoveryRemark" select="Y" remark="康复医学*备注" multiple="N"/>
+            <item name="psychologyGrade" remark="临床心理学与精神卫生成绩" multiple="N"/>
+            <item name="psychologyRemark" select="Y" remark="临床心理学与精神卫生备注" multiple="N"/>
+            <item name="regimenGrade" remark="中医养生学成绩" multiple="N"/>
+            <item name="regimenRemark" select="Y" remark="中医养生学备注" multiple="N"/>
+            <item name="communityTecGrade" remark="中医社区适宜技术成绩" multiple="N"/>
+            <item name="communityTecRemark" select="Y" remark="中医社区适宜技术备注" multiple="N"/>
+            <item name="introductionGrade" remark="中医经典导读成绩" multiple="N"/>
+            <item name="introductionRemark" select="Y" remark="中医经典导读备注" multiple="N"/>
+            <item name="specialGrade" remark="专题讲座、讨论成绩" multiple="N"/>
+            <item name="specialRemark" select="Y" remark="专题讲座、讨论备注" multiple="N"/>
+            <item name="totalGrade" remark="合计" multiple="N"/>
+        </page>
+    </gzzyyy>
+</jspForm>
+

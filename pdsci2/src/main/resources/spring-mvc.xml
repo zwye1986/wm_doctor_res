@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+
+
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+   	
+   	<aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <!--<bean id="edcAppAspectJLogger" class="com.pinde.sci.aop.EdcAppAspectJLogger" />-->
+    <bean id="sysCtrlLogger" class="com.pinde.sci.aop.SysCtrlLogger" />
+    
+    <!-- 扫描controller（controller层注入） -->
+   	<context:component-scan base-package="com.pinde.*.ctrl">
+   		<!-- <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" /> -->
+   		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+   	</context:component-scan>
+
+   	<!-- 将无法mapping到Controller的path交给default servlet handler处理 -->
+    <mvc:default-servlet-handler />
+
+    <mvc:resources mapping="/js/**" location="/js/" cache-period="31556926"/>
+    <mvc:resources mapping="/css/**" location="/css/" cache-period="31556926"/>
+    <mvc:resources mapping="/img/**" location="/img/" cache-period="31556926"/>
+    <mvc:resources mapping="/**/**.js" location="/" cache-period="31556926"/>
+    <mvc:resources mapping="/**/**.css" location="/" cache-period="31556926"/>
+    <mvc:resources mapping="/**/**.png" location="/" cache-period="31556926"/>
+    <mvc:resources mapping="/**/**.jpg" location="/" cache-period="31556926"/>
+    <mvc:resources mapping="/**/**.gif" location="/" cache-period="31556926"/>
+    <mvc:resources mapping="/**/**.bmp" location="/" cache-period="31556926"/>
+
+    <!-- 拦截器 -->
+   	<mvc:interceptors>
+    	<bean class="com.pinde.core.interceptor.WebDefaultInterceptor" />
+        <mvc:interceptor>
+            <mvc:mapping path="/inx/**/"/>
+            <mvc:mapping path="/**login"/>
+            <bean class="com.pinde.sci.common.TockenInterceptor"></bean>
+        </mvc:interceptor>
+    	<mvc:interceptor>  
+            <mvc:mapping path="/**/**"/>
+            <bean class="com.pinde.sci.common.PathInterceptor"></bean>
+        </mvc:interceptor>
+    	<mvc:interceptor>
+            <mvc:mapping path="/**/**"/>
+            <mvc:exclude-mapping path="/js/**" />
+            <mvc:exclude-mapping path="/css/**" />
+            <mvc:exclude-mapping path="/license**/**"/>
+            <mvc:exclude-mapping path="/lic**/**"/>
+            <bean class="com.pinde.sci.common.LicenseInterceptor"></bean>
+        </mvc:interceptor>
+    	<mvc:interceptor>  
+            <mvc:mapping path="/**/**"/>
+            <mvc:exclude-mapping path="/**.ico" />
+            <mvc:exclude-mapping path="/js/**" />
+            <mvc:exclude-mapping path="/css/**" />
+            <mvc:exclude-mapping path="/license**/**"/>
+            <mvc:exclude-mapping path="/lic**/**"/>
+            <mvc:exclude-mapping path="/login**/**"/>
+            <mvc:exclude-mapping path="/path"/>
+            <mvc:exclude-mapping path="/logout**/**"/>
+            <mvc:exclude-mapping path="/notice**/**"/> 
+            <mvc:exclude-mapping path="/timeout**/**"/>
+            <mvc:exclude-mapping path="/jsp/inx/**"/> 
+            <mvc:exclude-mapping path="/index**/**"/> 
+            <mvc:exclude-mapping path="/inx**/**"/> 
+            <mvc:exclude-mapping path="/reg**/**"/>
+            <mvc:exclude-mapping path="/captchaMath"/>
+            <mvc:exclude-mapping path="/captcha"/>
+            <mvc:exclude-mapping path="/supervisioCaptcha"/>
+            <mvc:exclude-mapping path="/jcaptcha" /> 
+            <mvc:exclude-mapping path="/ueditor/**" />
+            <mvc:exclude-mapping path="/edc/app/**" />
+            <mvc:exclude-mapping path="/jsp/app/crs/images/**" />
+            <mvc:exclude-mapping path="/jsp/app/crs/font.css" />
+            <mvc:exclude-mapping path="/jsp/njmuedu/css/**" />
+            <mvc:exclude-mapping path="/jsp/njmuedu/js/**" />
+            <mvc:exclude-mapping path="/jsp/hbres/css/**" />
+            <mvc:exclude-mapping path="/jsp/hbres/images/**" />
+            <mvc:exclude-mapping path="/jsp/hbres/js/**" />
+            <mvc:exclude-mapping path="/weixin/**" />
+            <mvc:exclude-mapping path="/app/**" />
+            <mvc:exclude-mapping path="/druid/**" />
+            <mvc:exclude-mapping path="/pddruid/**" />
+            <mvc:exclude-mapping path="/sys/dict/doRefresh" />
+            <mvc:exclude-mapping path="/sys/dict/doRemoteRefresh" />
+            <mvc:exclude-mapping path="/sys/cfg/getErrorMsg" />
+            <mvc:exclude-mapping path="/sys/user/forget/*"/>
+            <mvc:exclude-mapping path="/sys/user/edit/checkEmailAndUserCode"/>
+            <mvc:exclude-mapping path="/sys/user/edit/checkEmailAndUserCodeAndIdNo"/>
+            <mvc:exclude-mapping path="/captchaComplex"/>
+            <mvc:exclude-mapping path="/jsp/jsres/css/**" />
+            <mvc:exclude-mapping path="/jsp/jsres/images/**" />
+            <mvc:exclude-mapping path="/jsp/jsres/js/**" />
+            <mvc:exclude-mapping path="/jsp/sczyres/css/**" />
+            <mvc:exclude-mapping path="/jsp/sczyres/images/**" />
+            <mvc:exclude-mapping path="/jsp/sczyres/js/**" />
+            <mvc:exclude-mapping path="/jsp/dwjxres/css/**" />
+            <mvc:exclude-mapping path="/jsp/dwjxres/images/**" />
+            <mvc:exclude-mapping path="/jsp/dwjxres/js/**" />
+            <mvc:exclude-mapping path="/jsp/gzzyjxres/css/**" />
+            <mvc:exclude-mapping path="/jsp/gzzyjxres/images/**" />
+            <mvc:exclude-mapping path="/jsp/gzzyjxres/js/**" />
+            <mvc:exclude-mapping path="/jsp/czyyjxres/css/**" />
+            <mvc:exclude-mapping path="/jsp/czyyjxres/images/**" />
+            <mvc:exclude-mapping path="/jsp/czyyjxres/js/**" />
+            <mvc:exclude-mapping path="/jsp/zseyjxres/css/**" />
+            <mvc:exclude-mapping path="/jsp/zseyjxres/images/**" />
+            <mvc:exclude-mapping path="/jsp/zseyjxres/js/**" />
+            <mvc:exclude-mapping path="/jsp/jszy/css/**" />
+            <mvc:exclude-mapping path="/jsp/jszy/images/**" />
+            <mvc:exclude-mapping path="/jsp/recruit/css/**" />
+            <mvc:exclude-mapping path="/jsp/recruit/img/**" />
+            <mvc:exclude-mapping path="/jsp/jszy/js/**" />
+            <mvc:exclude-mapping path="/jsp/nfykdx/css/**" />
+            <mvc:exclude-mapping path="/jsp/nfykdx/images/**" />
+            <mvc:exclude-mapping path="/jsp/nfykdx/js/**" />
+            <mvc:exclude-mapping path="/xjgl/student/resultSun" />
+            <mvc:exclude-mapping path="/gyxjgl/student/resultSun" />
+            <mvc:exclude-mapping path="/jsp/xjgl/css/**" />
+            <mvc:exclude-mapping path="/jsp/xjgl/images/**" />
+            <mvc:exclude-mapping path="/jsp/gyxjgl/css/**" />
+            <mvc:exclude-mapping path="/jsp/gyxjgl/images/**" />
+            <mvc:exclude-mapping path="/jsp/osca/css/**" />
+            <mvc:exclude-mapping path="/jsp/osca/images/**" />
+            <mvc:exclude-mapping path="/jsp/osca/js/**" />
+            <mvc:exclude-mapping path="/jsp/test.jsp" />
+            <mvc:exclude-mapping path="/inx**/**/**" />
+            <mvc:exclude-mapping path="/gzykdx/teaAndDoc/checkTeacherRegist" />
+            <mvc:exclude-mapping path="/gzykdx/teaAndDoc/registTeacher" />
+            <mvc:exclude-mapping path="/jsres/doctorTheoryScore/searchTheoryPassed" />
+            <mvc:exclude-mapping path="/jsp/sys/images/**" />
+            <mvc:exclude-mapping path="/xjgl/tutor/searchDoctorList" />
+            <mvc:exclude-mapping path="/xjgl/tutor/doctorInfo**" />
+            <mvc:exclude-mapping path="/jsres/doctor/trainRegister" />
+            <mvc:exclude-mapping path="/portal/manage/info/addSuggest" />
+            <mvc:exclude-mapping path="/res/test/saveKKScore" />
+            <mvc:exclude-mapping path="/jsres/consult/**" />
+            <mvc:exclude-mapping path="/inx/jsres" />
+            <mvc:exclude-mapping path="/upload/**" />
+            <mvc:exclude-mapping path="/pdsciupload/supersivioSign/**/**" />
+            <mvc:exclude-mapping path="/pdsciupload/jsresSeal/**/**" />
+            <mvc:exclude-mapping path="/pdsciupload/jsresSeal/**/**/**" />
+            <mvc:exclude-mapping path="/pdsciupload/phyAssUser/**/**" />
+            <mvc:exclude-mapping path="/pdsciupload/**" />
+            <bean class="com.pinde.sci.common.UserInterceptor"></bean>
+        </mvc:interceptor>       	
+	</mvc:interceptors>
+    
+    <mvc:annotation-driven>
+    	<mvc:message-converters>
+		    <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+		        <property name ="supportedMediaTypes">
+		              <list>   
+		                  <value>text/plain;charset=UTF-8</value> 
+		                   <value>text/html;charset=UTF-8</value>   
+		              </list>   
+		        </property> 
+		    </bean>	
+		    <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		        <property name="supportedMediaTypes"> 
+		            <list> 
+		                <value>application/json</value> 
+						<value>text/html;charset=UTF-8</value>
+		            </list> 
+		        </property> 
+		
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	  
+	<!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:defaultEncoding="UTF-8"  
+        p:maxUploadSize="5400000"  
+        p:uploadTempDir="fileUpload/temp">
+		
+	</bean> -->
+	
+	
+   <!-- 对模型视图添加前后缀 -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    	<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+       <property name="prefix">
+           <value>/jsp/</value>
+       </property>
+       <property name="suffix">
+           <value>.jsp</value>
+       </property>
+    </bean>
+     <!-- Configure the multipart resolver for uploading -->
+   <!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />-->
+    
+    <!-- <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
+		<property name="defaultErrorView" value="/exception" />  
+		<property name="exceptionMappings">  
+		    <props>  
+				<prop key="java.lang.Exception">/exception</prop>  
+		    </props>  
+		</property>  
+	</bean>   -->
+	
+    <!-- <aop:config proxy-target-class="true"></aop:config>
+	
+
+    Shiro生命周期处理器
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean> -->
+</beans>

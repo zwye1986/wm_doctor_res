@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.LectureInfoTargetExtMapper">
+    <resultMap id="lectureTargetMap" type="hashmap" extends="com.pinde.sci.dao.base.LectureInfoTargetMapper.BaseResultMap">
+        <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+        <result column="LECTURE_FLOW" property="lectureFlow" jdbcType="VARCHAR" />
+        <result column="TARGET_FLOW" property="targetFlow" jdbcType="VARCHAR" />
+        <result column="TARGET_NAME" property="targetName" jdbcType="VARCHAR" />
+        <result column="ORDINAL" property="ordinal" jdbcType="DECIMAL" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+        <result column="EVAL_SCORE" property="evalScore" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <!--保存讲座活动评价指标信息-->
+    <insert id="saveLectureInfoTarget" parameterType="com.pinde.sci.model.mo.ResLectureInfo">
+        INSERT INTO LECTURE_INFO_TARGET (
+            RECORD_FLOW,
+            LECTURE_FLOW,
+            TARGET_FLOW,
+            TARGET_NAME,
+            ORDINAL,
+            RECORD_STATUS,
+            CREATE_TIME,
+            CREATE_USER_FLOW,
+            MODIFY_TIME,
+            MODIFY_USER_FLOW
+        )
+        SELECT
+			lower(rawtohex(sys_guid())),
+			#{lectureFlow},
+			TARGET_FLOW,
+			TARGET_NAME,
+			ORDINAL,
+			#{recordStatus},
+			#{createTime},
+			#{createUserFlow},
+			#{modifyTime},
+			#{modifyUserFlow}
+		FROM
+			TEACHING_ACTIVITY_TARGET
+		WHERE
+			RECORD_STATUS = 'Y'
+		AND TARGET_TYPE = 'JZ'
+    </insert>
+
+    <!--删除讲座活动评价指标信息-->
+    <update id="delLectureInfoTarget" parameterType="com.pinde.sci.model.mo.ResLectureInfo">
+        UPDATE LECTURE_INFO_TARGET
+        SET
+            RECORD_STATUS = #{recordStatus},
+            MODIFY_TIME = #{modifyTime},
+            MODIFY_USER_FLOW = #{modifyUserFlow}
+		WHERE
+			LECTURE_FLOW = #{lectureFlow}
+    </update>
+
+    <!--查询讲座活动评价指标信息-->
+    <select id="searchLectureTargetEvalList" resultMap="lectureTargetMap">
+        SELECT T.*,B.EVAL_SCORE
+          FROM LECTURE_INFO_TARGET T
+          LEFT JOIN (SELECT T.TARGET_FLOW,
+                            T.LECTURE_FLOW,
+                             T.TARGET_NAME,
+                             TO_CHAR(ROUND(SUM(E.EVA_SCORE) / COUNT(E.RECORD_FLOW))) EVAL_SCORE
+          FROM LECTURE_INFO_TARGET T
+          LEFT JOIN RES_LECTURE_SCAN_REGIST R
+            ON T.LECTURE_FLOW = R.LECTURE_FLOW
+           AND R.RECORD_STATUS = 'Y'
+           AND R.IS_SCAN = 'Y'
+           AND R.IS_SCAN2 = 'Y'
+            <if test="roles != null and roles.size() > 0">
+                AND EXISTS (
+                SELECT 1 FROM SYS_USER_ROLE WHERE RECORD_STATUS = 'Y'
+                AND USER_FLOW = R.OPER_USER_FLOW
+                AND ROLE_FLOW IN
+                <foreach collection="roles" open="(" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+                )
+            </if>
+          LEFT JOIN RES_LECTURE_EVA_DETAIL E
+            ON E.SCAN_REGIST_FLOW = R.RECORD_FLOW
+            AND E.OPER_USER_FLOW = R.OPER_USER_FLOW
+           AND E.TARGET_FLOW = T.TARGET_FLOW
+           AND E.RECORD_STATUS = 'Y'
+         GROUP BY T.TARGET_FLOW,T.LECTURE_FLOW, T.TARGET_NAME) B
+         ON T.TARGET_FLOW = B.TARGET_FLOW
+         AND T.LECTURE_FLOW = B.LECTURE_FLOW
+         WHERE T.RECORD_STATUS='Y'
+         AND T.LECTURE_FLOW = #{lectureFlow}
+         ORDER BY ORDINAL
+    </select>
+</mapper>

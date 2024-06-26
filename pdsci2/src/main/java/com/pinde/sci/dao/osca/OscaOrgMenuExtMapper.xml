@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.osca.OscaOrgMenuExtMapper" >
+    <resultMap id="OrgSpeAll" type="com.pinde.sci.model.osca.OscaOrgMenuExt">
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="searchAllOrgSpes" resultMap="OrgSpeAll">
+        select distinct oos.org_flow,oos.org_name,so.ORDINAL
+        from SYS_ORG SO
+        LEFT JOIN OSCA_ORG_SPE oos
+        ON oos.org_flow=so.org_flow
+        and oos.record_status='Y'
+        where so.record_status='Y'
+        <if test="orgProvId!=null and orgProvId!=''">
+            and  so.ORG_PROV_ID=#{orgProvId}
+        </if>
+        <if test='orgName!=null and orgName!=""'>
+            <bind name="name" value="'%'+orgName+'%'"/>
+            and  oos.ORG_NAME like #{name}
+        </if>
+        ORDER BY so.ORDINAL
+    </select>
+
+    <select id="searchSpeOrgs" resultMap="OrgSpeAll">
+        select distinct so.org_flow,so.org_name
+        from SYS_ORG SO
+        where so.record_status='Y'
+        and so.IS_EXAM_ORG='Y'
+        <if test="orgProvId!=null and orgProvId!=''">
+            and  so.ORG_PROV_ID=#{orgProvId}
+        </if>
+        <if test='orgName!=null and orgName!=""'>
+            <bind name="name" value="'%'+orgName+'%'"/>
+            and so.ORG_NAME like #{name}
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,333 @@
+<jsp:include page="/jsp/jsres/htmlhead-jsres.jsp">
+    <jsp:param name="basic" value="true"/>
+    <jsp:param name="font" value="true"/>
+    <jsp:param name="jquery_form" value="true"/>
+    <jsp:param name="jquery_datePicker" value="true"/>
+</jsp:include>
+<script type="text/javascript" src="<s:url value='/js/jquery-select/js/jquery.select.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
+<script src="<s:url value='/js/yearSelect/checkYear.js'/>" type="text/javascript"></script>
+<style type="text/css">
+    .boxHome .item:HOVER {
+        background-color: #eee;
+    }
+
+    .cur {
+        color: red
+    }
+    .indexNum + div{
+        z-index: 99;
+        position: relative!important;
+        top:0!important;
+        left:0!important;
+    }
+    .itemDiv {
+        line-height: 20px;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.checkYear("sessionNumber","",null);
+        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+        <c:forEach items="${datas}" var="data">
+        if("${data}"=="${type.id}"){
+            $("#"+"${data}").attr("checked","checked");
+        }
+        </c:forEach>
+        <c:if test="${empty datas}">
+        $("#"+"${type.id}").attr("checked","checked");
+        </c:if>
+        </c:forEach>
+
+        getCityArea();
+        initOrg();
+        toPage(1);
+    });
+
+    function getCityArea(){
+        var url = '<s:url value="/js/provCityAreaJson.min.json"/>';
+        var provIds = "320000";
+        jboxGet(url,null, function(json) {
+            // 提示：如果服务器不支持 .json 类型文件，请将文件改为 .js 文件
+            var newJsonData=new Array();
+            var j=0;
+            var html ="<option value=''></option>";
+            for(var i=0;i<json.length;i++){
+                if(provIds==json[i].v){
+                    var citys=json[i].s;
+                    for(var k=0;k<citys.length;k++){
+                        var city=citys[k];
+                        html+="<option value='"+city.v+"'>"+city.n+"</option>";
+                    }
+                }
+            }
+            $("#cityId2").html(html);
+        },null,false);
+    }
+
+    var allOrgs=[];
+    function initOrg() {
+        var datas=[];
+        <c:forEach items="${orgs}" var="org">
+        <c:if test="${sessionScope.currUser.orgFlow!=org.orgFlow }">
+        var d={};
+        d.id="${org.orgFlow}";
+        d.text="${org.orgName}";
+        d.cityId="${org.orgCityId}";
+        datas.push(d);
+        allOrgs.push(d);
+        </c:if>
+        </c:forEach>
+        var itemSelectFuntion = function(){
+            $("#orgFlow").val(this.id);
+        };
+        $.selectSuggest('trainOrg',datas,itemSelectFuntion,"orgFlow",true);
+
+    }
+
+    function changeOrg(obj) {
+        var cityId=$(obj).val();
+        var datas=[];
+        for(var i=0;i<allOrgs.length;i++)
+        {
+            var org=allOrgs[i];
+            if(org.cityId==cityId||cityId=="")
+            {
+                datas.push(org);
+            }
+        }
+        $("#orgFlow").val("");
+        var itemSelectFuntion = function(){
+            $("#orgFlow").val(this.id);
+        };
+        $.selectSuggest('trainOrg',datas,itemSelectFuntion,"orgFlow",true);
+    }
+
+    function checkAll(obj){
+        var f=false;
+        if($(obj).attr("checked")=="checked")
+        {
+            f=true;
+        }
+        $(".docType").each(function(){
+            if(f)
+            {
+                $(this).attr("checked","checked");
+            }else {
+                $(this).removeAttr("checked");
+            }
+        });
+    }
+    function changeAllBox(){
+        if($(".docType:checked").length==$(".docType").length)
+        {
+            $("#all").attr("checked","checked");
+        }else{
+            $("#all").removeAttr("checked");
+        }
+    }
+    function getChangeOrgDetail(doctorFlow, recordFlow) {
+        var url = "<s:url value='/jsres/manage/getChangeOrgDetail'/>?change=Y&openType=open&doctorFlow=" + doctorFlow + "&recordFlow=" + recordFlow;
+        jboxOpen(url, "详情", 1050, 550);
+    }
+    function search() {
+        <%--var url = "<s:url value='/jsres/manage/changeBase'/>";--%>
+        var url = "<s:url value='/jsres/manage/changeBaseListAcc'/>";
+        jboxPostLoad("div_table2", url, $("#inForm").serialize(), true);
+
+    }
+    function toPage(page) {
+        if (page != undefined) {
+            $("#currentPage").val(page);
+        }
+
+        var data="";
+        $("input[class='docType']:checked").each(function(){
+            data+="&datas="+$(this).val();
+        });
+        if(data==""){
+            jboxTip("请选择人员类型！");
+            return false;
+        }
+        search();
+    }
+    function audit(recordFlow, doctorFlow) {
+        var url = "<s:url value='/jsres/manage/audit'/>?doctorFlow=" + doctorFlow + "&recordFlow=" + recordFlow + "";
+        jboxOpen(url, "基地变更记录审核", 650, 450);
+    }
+    function check(obj) {
+        var url = "<s:url value='/jsres/manage/changeBase'/>";
+
+        <c:if test="${GlobalConstant.USER_LIST_GLOBAL eq sessionScope.userListScope}">
+            jboxPostLoad("doctorContent", url, $("#inForm").serialize(), false);
+        </c:if>
+        <c:if test="${GlobalConstant.USER_LIST_GLOBAL != sessionScope.userListScope}">
+            jboxPostLoad("content", url, $("#inForm").serialize(), false);
+        </c:if>
+    }
+    function changeStatus() {
+        if ($("#trainOrg").val().replace(/(^\s*)|(\s*$)/g, "") == "") {
+            $("#historyOrgFlow").val("");
+        }
+    }
+    (function ($) {
+        $.fn.likeSearchInit = function (option) {
+            option.clickActive = option.clickActive || null;
+
+            var searchInput = this;
+            var spaceId = this[0].id;
+            searchInput.on("keyup focus", function () {
+                var boxHome = $("#" + spaceId + "Sel");
+                boxHome.show();
+                var pDiv = $(boxHome).parent();
+                // $(pDiv).css("left", $("#train").outerWidth());
+                var w = $(this).css("marginTop").replace("px", "");
+                w = w - 0 + $(this).outerHeight() + 6 + "px";
+                // $(pDiv).css("top", w);
+                if ($.trim(this.value)) {
+                    $("p." + spaceId + ".item", boxHome).hide();
+                    var items = boxHome.find("p." + spaceId + ".item[value*='" + this.value + "']").show();
+                    if (!items) {
+                        boxHome.hide();
+                    }
+                    changeOrgFlow(this);
+                } else {
+                    $("p." + spaceId + ".item", boxHome).show();
+                }
+            });
+            searchInput.on("blur", function () {
+                var boxHome = $("#" + spaceId + "Sel");
+                if (!$("." + spaceId + ".boxHome.on").length) {
+                    boxHome.hide();
+                }
+            });
+            $("." + spaceId + ".boxHome").on("mouseenter mouseleave", function () {
+                $(this).toggleClass("on");
+            });
+
+            $("." + spaceId + ".boxHome .item").click(function () {
+                var boxHome = $("." + spaceId + ".boxHome");
+                boxHome.hide();
+                var value = $(this).attr("value");
+                var input = $("#" + spaceId);
+                input.val(value);
+                if (option.clickActive) {
+                    option.clickActive($(this).attr("flow"));
+                    $("#historyOrgFlow").val($(this).attr("flow"));
+                }
+            });
+        };
+    })(jQuery);
+    function changeOrgFlow(obj) {
+        var items = $("#pDiv").find("p." + $(obj).attr("id") + ".item[value='" + $(obj).val() + "']");
+        var flow = $(items).attr("flow") || '';
+        $("#historyOrgFlow").val(flow);
+    }
+    $(function () {
+        if ($("#trainOrg").length) {
+            $("#trainOrg").likeSearchInit({
+                clickActive: function (flow) {
+                    $("." + flow).show();
+                }
+            });
+        }
+    });
+    function exportList(){
+        <%--var url = "<s:url value='/jsres/manage/exportBaseList'/>";--%>
+        var url = "<s:url value='/jsres/manage/exportBaseListNewAcc'/>";
+        jboxTip("导出中…………");
+        jboxSubmit($("#inForm"), url, null, null, false);
+        jboxEndLoading();
+    }
+</script>
+<div class="main_hd">
+    <c:if test="${GlobalConstant.USER_LIST_GLOBAL != sessionScope.userListScope}">
+        <h2 class="underline">基地变更查询</h2>
+    </c:if>
+</div>
+<div class="main_bd">
+    <div class="div_search">
+        <form id="inForm">
+            <input type="hidden" name="currentPage" id="currentPage" value="${param.currentPage}"/>
+            <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 0px;">
+                <tr>
+                    <td class="td_left">地&#12288;&#12288;市：</td>
+                    <td>
+                        <select id="cityId2" name="cityId" class="select" onchange="changeOrg(this)" style="width: 130px"></select>
+                    </td>
+                    <td class="td_left">原培训基地：</td>
+                    <td>
+                        <input id="trainOrg"  class="toggleView input" type="text"  autocomplete="off" style="margin-left: 0px;width: 134px"  />
+                        <input type="hidden" name="orgFlow" id="orgFlow" value="${param.orgFlow}">
+                    </td>
+                    <td class="td_left">姓&#12288;&#12288;名：</td>
+                    <td>
+                        <input type="text" name="doctorName" value="${param.doctorName}"
+                                                     class="input" style="width: 130px;"/>
+                    </td>
+                    <td class="td_left">届&#12288;&#12288;别：</td>
+                    <td>
+                        <input type="text" id="sessionNumber" name="sessionNumber"
+                                                     value="${param.sessionNumber}" class="input indexNum" readonly="readonly"
+                                                     style="width: 130px;margin-left: 0px"/>
+                    </td>
+                    <%--<td class="td_left">&#12288;原培训基地：</td>--%>
+                    <%--<td style="position: relative">--%>
+                        <%--<input id="trainOrg" oncontextmenu="return false" name="orgName" value="${param.orgName}"--%>
+                               <%--class="toggleView input" type="text" autocomplete="off"--%>
+                               <%--onkeydown="changeStatus();" onkeyup="changeStatus();" style="width: 130px;"/>--%>
+                        <%--<div id="pDiv" style="width: 0px;height: 0px;overflow: visible;float: left; position:absolute;left: 5px; top:30px">--%>
+                            <%--<div class="boxHome trainOrg" id="trainOrgSel"--%>
+                                 <%--style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">--%>
+                                <%--<c:forEach items="${orgs}" var="org">--%>
+                                    <%--<p class="item trainOrg allOrg orgs" flow="${org.orgFlow}" value="${org.orgName}"--%>
+                                       <%--style="line-height: 20px; padding:10px 0;cursor: default;width: 200px ;height: 10px"--%>
+                                       <%--<c:if test="${sessionScope.currUser.orgFlow==org.orgFlow }">style="display: none;"</c:if>--%>
+                                    <%-->${org.orgName}</p>--%>
+                                <%--</c:forEach>--%>
+                            <%--</div>--%>
+                            <%--<input type="text" name="historyOrgFlow" id="historyOrgFlow" value="${param.historyOrgFlow}" style="display: none;"/>--%>
+                        <%--</div>--%>
+                    <%--</td>--%>
+
+                </tr>
+                <tr>
+                    <td class="td_left">学员状态：</td>
+                    <td>
+                        <select name="doctorStatusId" class="select" style="width: 130px">
+                            <option value="">全部</option>
+                            <option value="20" ${param.doctorStatusId eq '20'?'selected':''}>在培</option>
+                            <option value="22" ${param.doctorStatusId eq '22'?'selected':''}>已考核待结业</option>
+                            <option value="21" ${param.doctorStatusId eq '21'?'selected':''}>结业</option>
+                        </select>
+                    </td>
+                    <td class="td_left">人员类型：</td>
+                    <td colspan="3">
+                        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                            <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
+                        </c:forEach>
+                    </td>
+                    <td colspan="2">
+                        <label style="cursor: pointer;"><input type="checkbox" name="statusFlag"
+                                                               value="${GlobalConstant.FLAG_Y}"
+                                                               <c:if test="${param.statusFlag eq GlobalConstant.FLAG_Y}">checked="checked"</c:if>
+                        >&nbsp;未通过记录&#12288;</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td id='jointOrg' colspan="2">
+                        <label style="cursor: pointer;"><input type="checkbox" id="jointOrgFlag"
+                                                               <c:if test="${param.jointOrgFlag eq GlobalConstant.FLAG_Y}">checked="checked"</c:if>
+                                                               name="jointOrgFlag" value="${GlobalConstant.FLAG_Y}"/>&nbsp;显示协同基地</label>
+                    </td>
+                    <td colspan="6">
+                        &#12288;<input class="btn_green" type="button" onclick="toPage(1)" value="查&#12288;询"/>&#12288;
+                        <input class="btn_green" type="button" onclick="exportList()" value="导&#12288;出"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="search_table" id="div_table2">
+
+    </div>
+</div>

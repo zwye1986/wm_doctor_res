@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.ResFundsExtMapper" >
+
+
+    <select id="resBaseFundList"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResBaseFundDetailMapper.BaseResultMap">
+      SELECT *
+        FROM res_base_fund_detail rbfd
+        WHERE  rbfd.RECORD_STATUS = 'Y'
+        AND EXISTS (
+            SELECT
+                1  FROM res_base_fund rbf  WHERE
+                    rbf.RECORD_FLOW = rbfd.MAIN_FLOW
+                <if test="orgName != NULL and orgName != ''">
+                    AND  rbf.org_Name = #{orgName}
+                </if>
+                <if test=" startDate!= NULL and startDate != ''">
+                    AND  rbf.Report_date >= #{startDate}
+                </if>
+                <if test="endDate != NULL and endDate != ''">
+                    AND  #{endDate} >= rbf.Report_date
+                </if>
+                <if test="auditStatusId != NULL and auditStatusId != ''">
+                    AND  rbf.audit_Status_Id = #{auditStatusId}
+                </if>
+                <if test="recordFlow != NULL and recordFlow != ''">
+                    AND  rbf.record_Flow = #{recordFlow}
+                </if>
+        )
+    </select>
+
+    <select id="resResSyntheticalFundDetailList"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResSyntheticalFundDetailMapper.BaseResultMap">
+      SELECT *
+        FROM res_synthetical_fund_detail rbfd
+        WHERE  rbfd.RECORD_STATUS = 'Y'
+        AND EXISTS (
+            SELECT
+                1  FROM res_synthetical_fund rbf  WHERE
+                    rbf.RECORD_FLOW = rbfd.MAIN_FLOW
+                <if test="orgName != NULL and orgName != ''">
+                    AND  rbf.org_Name = #{orgName}
+                </if>
+                <if test=" startDate!= NULL and startDate != ''">
+                    AND  rbf.Report_date >= #{startDate}
+                </if>
+                <if test="endDate != NULL and endDate != ''">
+                    AND  #{endDate} >= rbf.Report_date
+                </if>
+                <if test="auditStatusId != NULL and auditStatusId != ''">
+                    AND  rbf.audit_Status_Id = #{auditStatusId}
+                </if>
+                <if test="recordFlow != NULL and recordFlow != ''">
+                    AND  rbf.record_Flow = #{recordFlow}
+                </if>
+        )
+    </select>
+
+    <select id="searchOrgs" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+        select *
+        from PDSCI.SYS_ORG
+        where RECORD_STATUS='Y'
+        ORDER BY ORDINAL, RECORD_STATUS DESC, ORG_FLOW
+    </select>
+
+    <select id="queryFundDetaiList" resultMap="com.pinde.sci.dao.base.ResProvinceFundDetailMapper.BaseResultMap" >
+        select MAIN_FLOW from RES_PROVINCE_FUND_DETAIL where RECORD_STATUS = 'Y'  GROUP BY MAIN_FLOW
+    </select>
+
+    <select id="searchResProvinceFundDetailMoney"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResProvinceFundDetailMapper.BaseResultMap" >
+        select *
+        from PDSCI.RES_PROVINCE_FUND_DETAIL
+        where RECORD_STATUS = 'Y'
+        and MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR}
+        <if test="source != null and source != ''" >
+            AND PROJECT_OF_FUNDS_ID IS NULL
+            AND PROJECT_OF_FUNDS_NAME IS NULL
+        </if>
+
+    </select>
+</mapper>

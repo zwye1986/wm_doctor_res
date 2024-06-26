@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.recruit.RecruitExamMainExtMapper">
+    <update id="delExamInfo">
+        update RECRUIT_EXAM_INFO set record_status='N'
+        where record_status='Y' and main_flow=#{mainFlow}
+    </update>
+    <update id="delExamRoomInfo">
+        update RECRUIT_EXAM_ROOM_INFO set record_status='N'
+        where record_status='Y' and main_flow=#{mainFlow}
+    </update>
+
+    <select id="getExamNum" resultType="java.lang.Integer">
+        select nvl(sum(exam_num),0) from RECRUIT_EXAM_ROOM_INFO where record_status='Y'
+        and main_flow=#{mainFlow}
+    </select>
+    <select id="checkExamTime" resultType="java.lang.Integer">
+        select count(1) from RECRUIT_EXAM_INFO where record_status='Y'
+        and main_flow=#{mainFlow}
+        <if test="examFlow!=null and examFlow!=''">
+            AND exam_Flow!=#{examFlow}
+        </if>
+        and (
+        (
+        EXAM_START_TIME <![CDATA[<=]]> #{examStartTime}
+        and EXAM_END_TIME >= #{examStartTime}
+        )
+        or
+        (
+        EXAM_START_TIME <![CDATA[<=]]> #{examEndTime}
+        and EXAM_END_TIME >= #{examEndTime}
+        )
+        or
+        (
+        EXAM_START_TIME <![CDATA[>=]]> #{examStartTime}
+        and EXAM_END_TIME <![CDATA[<=]]> #{examEndTime}
+        )
+        )
+    </select>
+    <select id="checkInterviewTime" resultType="java.lang.Integer">
+        select count(1) from RECRUIT_EXAM_INFO where record_status='Y'
+        and main_flow=#{mainFlow}
+        <if test="examFlow!=null and examFlow!=''">
+            AND exam_Flow!=#{examFlow}
+        </if>
+        and (
+        (
+        INTERVIEW_START_TIME <![CDATA[<=]]> #{interviewStartTime}
+        and INTERVIEW_END_TIME >= #{interviewStartTime}
+        )
+        or
+        (
+        INTERVIEW_START_TIME <![CDATA[<=]]> #{interviewEndTime}
+        and INTERVIEW_END_TIME >= #{interviewEndTime}
+        )
+        or
+        (
+        INTERVIEW_START_TIME <![CDATA[>=]]> #{interviewStartTime}
+        and INTERVIEW_END_TIME <![CDATA[<=]]> #{interviewEndTime}
+        )
+        )
+    </select>
+    <select id="readPassedRecruitInfos" resultMap="com.pinde.sci.dao.base.RecruitInfoMapper.BaseResultMap">
+        select * from Recruit_Info where record_status='Y' and org_flow=#{orgFlow} and RECRUIT_YEAR =#{recruitYear}
+        and audit_status_id='Passed'
+        order by audit_time
+    </select>
+    <resultMap id="FlowFormMap" type="com.pinde.sci.form.recruit.ExamInfoFlowForm">
+        <result column="MAIN_FLOW" property="mainFlow" jdbcType="VARCHAR" />
+        <result column="EXAM_FLOW" property="examFlow" jdbcType="VARCHAR" />
+        <result column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+        <result column="EXAM_NUM" property="examNum" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="readExamInfoFlowFormsByFlow" resultMap="FlowFormMap">
+        SELECT REM.MAIN_FLOW, REI.EXAM_FLOW, RERI.RECORD_FLOW, RERI.EXAM_NUM
+          FROM RECRUIT_EXAM_MAIN REM
+          LEFT JOIN RECRUIT_EXAM_INFO REI ON REM.MAIN_FLOW = REI.MAIN_FLOW
+          LEFT JOIN RECRUIT_EXAM_ROOM_INFO RERI ON REM.MAIN_FLOW = RERI.MAIN_FLOW
+                                               AND REI.EXAM_FLOW = RERI.EXAM_FLOW
+         WHERE REM.RECORD_STATUS = 'Y'
+           AND REI.RECORD_STATUS = 'Y'
+           AND RERI.RECORD_STATUS = 'Y'
+           AND REM.MAIN_FLOW = #{mainFlow}
+         ORDER BY REI.EXAM_START_TIME, RERI.EXAM_FLOW
+    </select>
+</mapper>

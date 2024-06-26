@@ -1,0 +1,27 @@
+/*!*报考信息table*!*/
+
+
+/*.basc_jb tbody>tr>th{*/
+/*    width: calc((100% - 130px) / 4);*/
+/*}*/
+/*.basc_jb tbody>tr>td:nth-child(2){*/
+/*    width: calc((100% - 130px) / 4);*/
+/*}*/
+/*.basc_jb tbody>tr>td:nth-child(4){*/
+/*    width: calc((100% - 130px) / 4);*/
+/*}*/
+.basc_jb tbody>tr>td:nth-child(5){
+   width: 130px;
+}
+.flex{display: -webkit-box;display: -moz-box;display: -webkit-flex;display: -moz-flex;display: -ms-flexbox;display: flex;}
+.text_hidden{
+ overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+}
+/*.basc_bk tbody>tr th{*/
+/*    width: 190px !important;*/
+/*}*/
+/*.basc_bk tbody>tr>td:first-child{*/
+/*    width: 190px !important;*/
+/*}*/

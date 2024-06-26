@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.gyxjgl.GyXjEduNoticeExtMapper">
+
+    <select id="searchByRoles" parameterType="java.lang.String" resultMap="com.pinde.sci.dao.base.EduTeachingnoticeMapper.BaseResultMap">
+        select et.*
+        from edu_teachingnotice et
+        where   et.record_status = 'Y'
+        <if test='infoTypeId!=null and infoTypeId!=""'>
+            and et.info_type_id = #{infoTypeId}
+        </if>
+        <if test='userFlow!=null and userFlow!=""'>
+            and (et.INFO_TARGET_FLOW  is null
+              or exists(
+                select null from sys_user_role sur
+                where sur.record_status = 'Y'
+                and sur.ROLE_FLOW   = et.INFO_TARGET_FLOW
+                and sur.record_status = 'Y'
+                and sur.user_flow= #{userFlow} )
+            )
+        </if>
+        order by et.CREATE_TIME DESC
+    </select>
+    <select id="searchAgencyThing"  resultType="java.util.Map">
+      select (select count(1) from edu_user_change_apply a, edu_user b, sys_user c, res_doctor d
+             where a.record_status = 'Y'
+               and b.record_status = 'Y'
+               and c.record_status = 'Y'
+               and d.record_status = 'Y'
+               and a.user_flow = b.user_flow
+               and b.user_flow = c.user_flow
+               and c.user_flow = d.doctor_flow
+               and a.status_id = 'Submit'
+               and a.apply_type_id in ('Makeup', 'ChangeTrainType', 'ChangeTeacher', 'ChangeMajor','DelayExam', 'DelayStudy','LeaveSchool',
+                                       'OutStudy',  'StopStudy', 'DelayGraduate',  'BackStudy', 'TransferStudy', 'AddStudy')) change_num,
+        (select count(1) from edu_student_course a, sys_user b, edu_user c, res_doctor d
+             where a.record_status = 'Y'
+               and b.record_status = 'Y'
+               and c.record_status = 'Y'
+               and d.record_status = 'Y'
+               and a.user_flow = b.user_flow
+               and b.user_flow = c.user_flow
+               and c.user_flow = d.doctor_flow
+               and a.role_flag = 'secondaryOrg'
+               and a.audit_status_id is null) grade_num,
+        (select count(1) from nyds_official_doctor
+             where record_status = 'Y'
+               and apply_flag = 'Y'
+               and xwk_audit_status_id = 'Passing') doctor_num
+      from dual
+    </select>
+</mapper>

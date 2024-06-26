@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.sci.dao.base.LcjnFixedAssetsMapper">
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.LcjnFixedAssets">
+    <id column="FIXED_FLOW" jdbcType="VARCHAR" property="fixedFlow" />
+    <result column="DICT_ID" jdbcType="VARCHAR" property="dictId" />
+    <result column="DICT_NAME" jdbcType="VARCHAR" property="dictName" />
+    <result column="FIXED_PRICE" jdbcType="VARCHAR" property="fixedPrice" />
+    <result column="FIXED_CODE" jdbcType="VARCHAR" property="fixedCode" />
+    <result column="STATUS_ID" jdbcType="VARCHAR" property="statusId" />
+    <result column="STATUS_NAME" jdbcType="VARCHAR" property="statusName" />
+    <result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_USER_FLOW" jdbcType="VARCHAR" property="createUserFlow" />
+    <result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime" />
+    <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
+    <result column="ORG_FLOW" jdbcType="VARCHAR" property="orgFlow" />
+    <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    FIXED_FLOW, DICT_ID, DICT_NAME, FIXED_PRICE, FIXED_CODE, STATUS_ID, STATUS_NAME, 
+    RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, ORG_FLOW, 
+    ORG_NAME
+  </sql>
+  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.LcjnFixedAssetsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.LCJN_FIXED_ASSETS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.LCJN_FIXED_ASSETS
+    where FIXED_FLOW = #{fixedFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PDSCI.LCJN_FIXED_ASSETS
+    where FIXED_FLOW = #{fixedFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.LcjnFixedAssetsExample">
+    delete from PDSCI.LCJN_FIXED_ASSETS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.LcjnFixedAssets">
+    insert into PDSCI.LCJN_FIXED_ASSETS (FIXED_FLOW, DICT_ID, DICT_NAME, 
+      FIXED_PRICE, FIXED_CODE, STATUS_ID, 
+      STATUS_NAME, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+      ORG_FLOW, ORG_NAME)
+    values (#{fixedFlow,jdbcType=VARCHAR}, #{dictId,jdbcType=VARCHAR}, #{dictName,jdbcType=VARCHAR}, 
+      #{fixedPrice,jdbcType=VARCHAR}, #{fixedCode,jdbcType=VARCHAR}, #{statusId,jdbcType=VARCHAR}, 
+      #{statusName,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.LcjnFixedAssets">
+    insert into PDSCI.LCJN_FIXED_ASSETS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fixedFlow != null">
+        FIXED_FLOW,
+      </if>
+      <if test="dictId != null">
+        DICT_ID,
+      </if>
+      <if test="dictName != null">
+        DICT_NAME,
+      </if>
+      <if test="fixedPrice != null">
+        FIXED_PRICE,
+      </if>
+      <if test="fixedCode != null">
+        FIXED_CODE,
+      </if>
+      <if test="statusId != null">
+        STATUS_ID,
+      </if>
+      <if test="statusName != null">
+        STATUS_NAME,
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="orgFlow != null">
+        ORG_FLOW,
+      </if>
+      <if test="orgName != null">
+        ORG_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fixedFlow != null">
+        #{fixedFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="dictId != null">
+        #{dictId,jdbcType=VARCHAR},
+      </if>
+      <if test="dictName != null">
+        #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedPrice != null">
+        #{fixedPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedCode != null">
+        #{fixedCode,jdbcType=VARCHAR},
+      </if>
+      <if test="statusId != null">
+        #{statusId,jdbcType=VARCHAR},
+      </if>
+      <if test="statusName != null">
+        #{statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null">
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.LcjnFixedAssetsExample" resultType="java.lang.Integer">
+    select count(*) from PDSCI.LCJN_FIXED_ASSETS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update PDSCI.LCJN_FIXED_ASSETS
+    <set>
+      <if test="record.fixedFlow != null">
+        FIXED_FLOW = #{record.fixedFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictId != null">
+        DICT_ID = #{record.dictId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictName != null">
+        DICT_NAME = #{record.dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fixedPrice != null">
+        FIXED_PRICE = #{record.fixedPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fixedCode != null">
+        FIXED_CODE = #{record.fixedCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusId != null">
+        STATUS_ID = #{record.statusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusName != null">
+        STATUS_NAME = #{record.statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null">
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null">
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null">
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null">
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null">
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update PDSCI.LCJN_FIXED_ASSETS
+    set FIXED_FLOW = #{record.fixedFlow,jdbcType=VARCHAR},
+      DICT_ID = #{record.dictId,jdbcType=VARCHAR},
+      DICT_NAME = #{record.dictName,jdbcType=VARCHAR},
+      FIXED_PRICE = #{record.fixedPrice,jdbcType=VARCHAR},
+      FIXED_CODE = #{record.fixedCode,jdbcType=VARCHAR},
+      STATUS_ID = #{record.statusId,jdbcType=VARCHAR},
+      STATUS_NAME = #{record.statusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.LcjnFixedAssets">
+    update PDSCI.LCJN_FIXED_ASSETS
+    <set>
+      <if test="dictId != null">
+        DICT_ID = #{dictId,jdbcType=VARCHAR},
+      </if>
+      <if test="dictName != null">
+        DICT_NAME = #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedPrice != null">
+        FIXED_PRICE = #{fixedPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedCode != null">
+        FIXED_CODE = #{fixedCode,jdbcType=VARCHAR},
+      </if>
+      <if test="statusId != null">
+        STATUS_ID = #{statusId,jdbcType=VARCHAR},
+      </if>
+      <if test="statusName != null">
+        STATUS_NAME = #{statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null">
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FIXED_FLOW = #{fixedFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.LcjnFixedAssets">
+    update PDSCI.LCJN_FIXED_ASSETS
+    set DICT_ID = #{dictId,jdbcType=VARCHAR},
+      DICT_NAME = #{dictName,jdbcType=VARCHAR},
+      FIXED_PRICE = #{fixedPrice,jdbcType=VARCHAR},
+      FIXED_CODE = #{fixedCode,jdbcType=VARCHAR},
+      STATUS_ID = #{statusId,jdbcType=VARCHAR},
+      STATUS_NAME = #{statusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR}
+    where FIXED_FLOW = #{fixedFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

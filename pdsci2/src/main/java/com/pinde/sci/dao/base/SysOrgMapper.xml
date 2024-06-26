@@ -1,0 +1,1012 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.SysOrgMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysOrg" >
+    <id column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="ORG_PROV_ID" property="orgProvId" jdbcType="VARCHAR" />
+    <result column="ORG_PROV_NAME" property="orgProvName" jdbcType="VARCHAR" />
+    <result column="ORG_CITY_ID" property="orgCityId" jdbcType="VARCHAR" />
+    <result column="ORG_CITY_NAME" property="orgCityName" jdbcType="VARCHAR" />
+    <result column="ORG_AREA_ID" property="orgAreaId" jdbcType="VARCHAR" />
+    <result column="ORG_AREA_NAME" property="orgAreaName" jdbcType="VARCHAR" />
+    <result column="ORG_TYPE_ID" property="orgTypeId" jdbcType="VARCHAR" />
+    <result column="ORG_TYPE_NAME" property="orgTypeName" jdbcType="VARCHAR" />
+    <result column="ORG_ADDRESS" property="orgAddress" jdbcType="VARCHAR" />
+    <result column="ORG_PHONE" property="orgPhone" jdbcType="VARCHAR" />
+    <result column="CHARGE_ORG_FLOW" property="chargeOrgFlow" jdbcType="VARCHAR" />
+    <result column="CHARGE_ORG_NAME" property="chargeOrgName" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="ORG_ZIP" property="orgZip" jdbcType="VARCHAR" />
+    <result column="ORDINAL" property="ordinal" jdbcType="DECIMAL" />
+    <result column="ORG_LEVEL_ID" property="orgLevelId" jdbcType="VARCHAR" />
+    <result column="ORG_LEVEL_NAME" property="orgLevelName" jdbcType="VARCHAR" />
+    <result column="IS_EXAM_ORG" property="isExamOrg" jdbcType="VARCHAR" />
+    <result column="IS_EXAM_TEA" property="isExamTea" jdbcType="VARCHAR" />
+    <result column="SEND_SCHOOL_ID" property="sendSchoolId" jdbcType="VARCHAR" />
+    <result column="SEND_SCHOOL_NAME" property="sendSchoolName" jdbcType="VARCHAR" />
+    <result column="IS_SECOND_FLAG" property="isSecondFlag" jdbcType="VARCHAR" />
+    <result column="IDENTIFY_NO" property="identifyNo" jdbcType="VARCHAR" />
+    <result column="HOSPITAL_PASSWORD" property="hospitalPassword" jdbcType="VARCHAR" />
+    <result column="OSCE_DOCTOR_SHOW" property="osceDoctorShow" jdbcType="VARCHAR" />
+    <result column="OSCE_TEACHER_SHOW" property="osceTeacherShow" jdbcType="VARCHAR" />
+    <result column="IS_TRAIN_ORG" property="isTrainOrg" jdbcType="VARCHAR" />
+    <result column="CREDIT_CODE" property="creditCode" jdbcType="VARCHAR" />
+    <result column="IS_SUBMIT_ID" property="isSubmitId" jdbcType="VARCHAR" />
+    <result column="IS_SUBMIT_NAME" property="isSubmitName" jdbcType="VARCHAR" />
+    <result column="CHECK_STATUS_ID" property="checkStatusId" jdbcType="VARCHAR" />
+    <result column="CHECK_STATUS_NAME" property="checkStatusName" jdbcType="VARCHAR" />
+    <result column="CHECK_REASON" property="checkReason" jdbcType="VARCHAR" />
+    <result column="OLD_ORG_NAME" property="oldOrgName" jdbcType="VARCHAR" />
+    <result column="BASE_CODE" property="baseCode" jdbcType="VARCHAR" />
+    <result column="ORG_PERSON_IN_CHARGE" property="orgPersonInCharge" jdbcType="VARCHAR" />
+    <result column="IS_ACC" property="isAcc" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.SysOrg" extends="BaseResultMap" >
+    <result column="ORG_INFO" property="orgInfo" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ORG_FLOW, ORG_CODE, ORG_NAME, ORG_PROV_ID, ORG_PROV_NAME, ORG_CITY_ID, ORG_CITY_NAME, 
+    ORG_AREA_ID, ORG_AREA_NAME, ORG_TYPE_ID, ORG_TYPE_NAME, ORG_ADDRESS, ORG_PHONE, CHARGE_ORG_FLOW, 
+    CHARGE_ORG_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+    ORG_ZIP, ORDINAL, ORG_LEVEL_ID, ORG_LEVEL_NAME, IS_EXAM_ORG, IS_EXAM_TEA, SEND_SCHOOL_ID, 
+    SEND_SCHOOL_NAME, IS_SECOND_FLAG, IDENTIFY_NO, HOSPITAL_PASSWORD, OSCE_DOCTOR_SHOW, 
+    OSCE_TEACHER_SHOW, IS_TRAIN_ORG, CREDIT_CODE, IS_SUBMIT_ID, IS_SUBMIT_NAME, CHECK_STATUS_ID, 
+    CHECK_STATUS_NAME, CHECK_REASON, OLD_ORG_NAME, BASE_CODE, ORG_PERSON_IN_CHARGE, IS_ACC
+  </sql>
+  <sql id="Blob_Column_List" >
+    ORG_INFO
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.SysOrgExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.SYS_ORG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysOrgExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.SYS_ORG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectJointOrgAllList" resultType="com.pinde.sci.model.mo.SysOrg">
+    select
+    <include refid="Base_Column_List" />
+    from PDSCI.SYS_ORG
+    where
+    (ORG_LEVEL_ID not in (
+         <foreach collection="orgLevelIdNotIn" item="orgLevelId" separator=",">
+           #{orgLevelId,jdbcType=VARCHAR}
+         </foreach>
+    ) or ORG_LEVEL_ID is null)
+      and org_type_id = #{orgTypeId, jdbcType=VARCHAR}
+    and record_status = 'Y'
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.SYS_ORG
+    where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.SYS_ORG
+    where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysOrgExample" >
+    delete from PDSCI.SYS_ORG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysOrg" >
+    insert into PDSCI.SYS_ORG (ORG_FLOW, ORG_CODE, ORG_NAME, 
+      ORG_PROV_ID, ORG_PROV_NAME, ORG_CITY_ID, 
+      ORG_CITY_NAME, ORG_AREA_ID, ORG_AREA_NAME, 
+      ORG_TYPE_ID, ORG_TYPE_NAME, ORG_ADDRESS, 
+      ORG_PHONE, CHARGE_ORG_FLOW, CHARGE_ORG_NAME, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW, ORG_ZIP, 
+      ORDINAL, ORG_LEVEL_ID, ORG_LEVEL_NAME, 
+      IS_EXAM_ORG, IS_EXAM_TEA, SEND_SCHOOL_ID, 
+      SEND_SCHOOL_NAME, IS_SECOND_FLAG, IDENTIFY_NO, 
+      HOSPITAL_PASSWORD, OSCE_DOCTOR_SHOW, OSCE_TEACHER_SHOW, 
+      IS_TRAIN_ORG, CREDIT_CODE, IS_SUBMIT_ID, 
+      IS_SUBMIT_NAME, CHECK_STATUS_ID, CHECK_STATUS_NAME, 
+      CHECK_REASON, OLD_ORG_NAME, BASE_CODE, 
+      ORG_PERSON_IN_CHARGE, IS_ACC, ORG_INFO
+      )
+    values (#{orgFlow,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, 
+      #{orgProvId,jdbcType=VARCHAR}, #{orgProvName,jdbcType=VARCHAR}, #{orgCityId,jdbcType=VARCHAR}, 
+      #{orgCityName,jdbcType=VARCHAR}, #{orgAreaId,jdbcType=VARCHAR}, #{orgAreaName,jdbcType=VARCHAR}, 
+      #{orgTypeId,jdbcType=VARCHAR}, #{orgTypeName,jdbcType=VARCHAR}, #{orgAddress,jdbcType=VARCHAR}, 
+      #{orgPhone,jdbcType=VARCHAR}, #{chargeOrgFlow,jdbcType=VARCHAR}, #{chargeOrgName,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{orgZip,jdbcType=VARCHAR}, 
+      #{ordinal,jdbcType=DECIMAL}, #{orgLevelId,jdbcType=VARCHAR}, #{orgLevelName,jdbcType=VARCHAR}, 
+      #{isExamOrg,jdbcType=VARCHAR}, #{isExamTea,jdbcType=VARCHAR}, #{sendSchoolId,jdbcType=VARCHAR}, 
+      #{sendSchoolName,jdbcType=VARCHAR}, #{isSecondFlag,jdbcType=VARCHAR}, #{identifyNo,jdbcType=VARCHAR}, 
+      #{hospitalPassword,jdbcType=VARCHAR}, #{osceDoctorShow,jdbcType=VARCHAR}, #{osceTeacherShow,jdbcType=VARCHAR}, 
+      #{isTrainOrg,jdbcType=VARCHAR}, #{creditCode,jdbcType=VARCHAR}, #{isSubmitId,jdbcType=VARCHAR}, 
+      #{isSubmitName,jdbcType=VARCHAR}, #{checkStatusId,jdbcType=VARCHAR}, #{checkStatusName,jdbcType=VARCHAR}, 
+      #{checkReason,jdbcType=VARCHAR}, #{oldOrgName,jdbcType=VARCHAR}, #{baseCode,jdbcType=VARCHAR}, 
+      #{orgPersonInCharge,jdbcType=VARCHAR}, #{isAcc,jdbcType=VARCHAR}, #{orgInfo,jdbcType=CLOB}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysOrg" >
+    insert into PDSCI.SYS_ORG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="orgCode != null" >
+        ORG_CODE,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="orgProvId != null" >
+        ORG_PROV_ID,
+      </if>
+      <if test="orgProvName != null" >
+        ORG_PROV_NAME,
+      </if>
+      <if test="orgCityId != null" >
+        ORG_CITY_ID,
+      </if>
+      <if test="orgCityName != null" >
+        ORG_CITY_NAME,
+      </if>
+      <if test="orgAreaId != null" >
+        ORG_AREA_ID,
+      </if>
+      <if test="orgAreaName != null" >
+        ORG_AREA_NAME,
+      </if>
+      <if test="orgTypeId != null" >
+        ORG_TYPE_ID,
+      </if>
+      <if test="orgTypeName != null" >
+        ORG_TYPE_NAME,
+      </if>
+      <if test="orgAddress != null" >
+        ORG_ADDRESS,
+      </if>
+      <if test="orgPhone != null" >
+        ORG_PHONE,
+      </if>
+      <if test="chargeOrgFlow != null" >
+        CHARGE_ORG_FLOW,
+      </if>
+      <if test="chargeOrgName != null" >
+        CHARGE_ORG_NAME,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="orgZip != null" >
+        ORG_ZIP,
+      </if>
+      <if test="ordinal != null" >
+        ORDINAL,
+      </if>
+      <if test="orgLevelId != null" >
+        ORG_LEVEL_ID,
+      </if>
+      <if test="orgLevelName != null" >
+        ORG_LEVEL_NAME,
+      </if>
+      <if test="isExamOrg != null" >
+        IS_EXAM_ORG,
+      </if>
+      <if test="isExamTea != null" >
+        IS_EXAM_TEA,
+      </if>
+      <if test="sendSchoolId != null" >
+        SEND_SCHOOL_ID,
+      </if>
+      <if test="sendSchoolName != null" >
+        SEND_SCHOOL_NAME,
+      </if>
+      <if test="isSecondFlag != null" >
+        IS_SECOND_FLAG,
+      </if>
+      <if test="identifyNo != null" >
+        IDENTIFY_NO,
+      </if>
+      <if test="hospitalPassword != null" >
+        HOSPITAL_PASSWORD,
+      </if>
+      <if test="osceDoctorShow != null" >
+        OSCE_DOCTOR_SHOW,
+      </if>
+      <if test="osceTeacherShow != null" >
+        OSCE_TEACHER_SHOW,
+      </if>
+      <if test="isTrainOrg != null" >
+        IS_TRAIN_ORG,
+      </if>
+      <if test="creditCode != null" >
+        CREDIT_CODE,
+      </if>
+      <if test="isSubmitId != null" >
+        IS_SUBMIT_ID,
+      </if>
+      <if test="isSubmitName != null" >
+        IS_SUBMIT_NAME,
+      </if>
+      <if test="checkStatusId != null" >
+        CHECK_STATUS_ID,
+      </if>
+      <if test="checkStatusName != null" >
+        CHECK_STATUS_NAME,
+      </if>
+      <if test="checkReason != null" >
+        CHECK_REASON,
+      </if>
+      <if test="oldOrgName != null" >
+        OLD_ORG_NAME,
+      </if>
+      <if test="baseCode != null" >
+        BASE_CODE,
+      </if>
+      <if test="orgPersonInCharge != null" >
+        ORG_PERSON_IN_CHARGE,
+      </if>
+      <if test="isAcc != null" >
+        IS_ACC,
+      </if>
+      <if test="orgInfo != null" >
+        ORG_INFO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgProvId != null" >
+        #{orgProvId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgProvName != null" >
+        #{orgProvName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCityId != null" >
+        #{orgCityId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCityName != null" >
+        #{orgCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAreaId != null" >
+        #{orgAreaId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAreaName != null" >
+        #{orgAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgTypeId != null" >
+        #{orgTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgTypeName != null" >
+        #{orgTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddress != null" >
+        #{orgAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="orgPhone != null" >
+        #{orgPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeOrgFlow != null" >
+        #{chargeOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeOrgName != null" >
+        #{chargeOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgZip != null" >
+        #{orgZip,jdbcType=VARCHAR},
+      </if>
+      <if test="ordinal != null" >
+        #{ordinal,jdbcType=DECIMAL},
+      </if>
+      <if test="orgLevelId != null" >
+        #{orgLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLevelName != null" >
+        #{orgLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="isExamOrg != null" >
+        #{isExamOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="isExamTea != null" >
+        #{isExamTea,jdbcType=VARCHAR},
+      </if>
+      <if test="sendSchoolId != null" >
+        #{sendSchoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="sendSchoolName != null" >
+        #{sendSchoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="isSecondFlag != null" >
+        #{isSecondFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="identifyNo != null" >
+        #{identifyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalPassword != null" >
+        #{hospitalPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="osceDoctorShow != null" >
+        #{osceDoctorShow,jdbcType=VARCHAR},
+      </if>
+      <if test="osceTeacherShow != null" >
+        #{osceTeacherShow,jdbcType=VARCHAR},
+      </if>
+      <if test="isTrainOrg != null" >
+        #{isTrainOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="creditCode != null" >
+        #{creditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isSubmitId != null" >
+        #{isSubmitId,jdbcType=VARCHAR},
+      </if>
+      <if test="isSubmitName != null" >
+        #{isSubmitName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatusId != null" >
+        #{checkStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatusName != null" >
+        #{checkStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkReason != null" >
+        #{checkReason,jdbcType=VARCHAR},
+      </if>
+      <if test="oldOrgName != null" >
+        #{oldOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="baseCode != null" >
+        #{baseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgPersonInCharge != null" >
+        #{orgPersonInCharge,jdbcType=VARCHAR},
+      </if>
+      <if test="isAcc != null" >
+        #{isAcc,jdbcType=VARCHAR},
+      </if>
+      <if test="orgInfo != null" >
+        #{orgInfo,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysOrgExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.SYS_ORG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.SYS_ORG
+    <set >
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgCode != null" >
+        ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgProvId != null" >
+        ORG_PROV_ID = #{record.orgProvId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgProvName != null" >
+        ORG_PROV_NAME = #{record.orgProvName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgCityId != null" >
+        ORG_CITY_ID = #{record.orgCityId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgCityName != null" >
+        ORG_CITY_NAME = #{record.orgCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgAreaId != null" >
+        ORG_AREA_ID = #{record.orgAreaId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgAreaName != null" >
+        ORG_AREA_NAME = #{record.orgAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgTypeId != null" >
+        ORG_TYPE_ID = #{record.orgTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgTypeName != null" >
+        ORG_TYPE_NAME = #{record.orgTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgAddress != null" >
+        ORG_ADDRESS = #{record.orgAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgPhone != null" >
+        ORG_PHONE = #{record.orgPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chargeOrgFlow != null" >
+        CHARGE_ORG_FLOW = #{record.chargeOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chargeOrgName != null" >
+        CHARGE_ORG_NAME = #{record.chargeOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgZip != null" >
+        ORG_ZIP = #{record.orgZip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ordinal != null" >
+        ORDINAL = #{record.ordinal,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orgLevelId != null" >
+        ORG_LEVEL_ID = #{record.orgLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgLevelName != null" >
+        ORG_LEVEL_NAME = #{record.orgLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isExamOrg != null" >
+        IS_EXAM_ORG = #{record.isExamOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isExamTea != null" >
+        IS_EXAM_TEA = #{record.isExamTea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendSchoolId != null" >
+        SEND_SCHOOL_ID = #{record.sendSchoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendSchoolName != null" >
+        SEND_SCHOOL_NAME = #{record.sendSchoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSecondFlag != null" >
+        IS_SECOND_FLAG = #{record.isSecondFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.identifyNo != null" >
+        IDENTIFY_NO = #{record.identifyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalPassword != null" >
+        HOSPITAL_PASSWORD = #{record.hospitalPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.osceDoctorShow != null" >
+        OSCE_DOCTOR_SHOW = #{record.osceDoctorShow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.osceTeacherShow != null" >
+        OSCE_TEACHER_SHOW = #{record.osceTeacherShow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isTrainOrg != null" >
+        IS_TRAIN_ORG = #{record.isTrainOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creditCode != null" >
+        CREDIT_CODE = #{record.creditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSubmitId != null" >
+        IS_SUBMIT_ID = #{record.isSubmitId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSubmitName != null" >
+        IS_SUBMIT_NAME = #{record.isSubmitName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkStatusId != null" >
+        CHECK_STATUS_ID = #{record.checkStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkStatusName != null" >
+        CHECK_STATUS_NAME = #{record.checkStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkReason != null" >
+        CHECK_REASON = #{record.checkReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oldOrgName != null" >
+        OLD_ORG_NAME = #{record.oldOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseCode != null" >
+        BASE_CODE = #{record.baseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgPersonInCharge != null" >
+        ORG_PERSON_IN_CHARGE = #{record.orgPersonInCharge,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isAcc != null" >
+        IS_ACC = #{record.isAcc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgInfo != null" >
+        ORG_INFO = #{record.orgInfo,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update PDSCI.SYS_ORG
+    set ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      ORG_PROV_ID = #{record.orgProvId,jdbcType=VARCHAR},
+      ORG_PROV_NAME = #{record.orgProvName,jdbcType=VARCHAR},
+      ORG_CITY_ID = #{record.orgCityId,jdbcType=VARCHAR},
+      ORG_CITY_NAME = #{record.orgCityName,jdbcType=VARCHAR},
+      ORG_AREA_ID = #{record.orgAreaId,jdbcType=VARCHAR},
+      ORG_AREA_NAME = #{record.orgAreaName,jdbcType=VARCHAR},
+      ORG_TYPE_ID = #{record.orgTypeId,jdbcType=VARCHAR},
+      ORG_TYPE_NAME = #{record.orgTypeName,jdbcType=VARCHAR},
+      ORG_ADDRESS = #{record.orgAddress,jdbcType=VARCHAR},
+      ORG_PHONE = #{record.orgPhone,jdbcType=VARCHAR},
+      CHARGE_ORG_FLOW = #{record.chargeOrgFlow,jdbcType=VARCHAR},
+      CHARGE_ORG_NAME = #{record.chargeOrgName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      ORG_ZIP = #{record.orgZip,jdbcType=VARCHAR},
+      ORDINAL = #{record.ordinal,jdbcType=DECIMAL},
+      ORG_LEVEL_ID = #{record.orgLevelId,jdbcType=VARCHAR},
+      ORG_LEVEL_NAME = #{record.orgLevelName,jdbcType=VARCHAR},
+      IS_EXAM_ORG = #{record.isExamOrg,jdbcType=VARCHAR},
+      IS_EXAM_TEA = #{record.isExamTea,jdbcType=VARCHAR},
+      SEND_SCHOOL_ID = #{record.sendSchoolId,jdbcType=VARCHAR},
+      SEND_SCHOOL_NAME = #{record.sendSchoolName,jdbcType=VARCHAR},
+      IS_SECOND_FLAG = #{record.isSecondFlag,jdbcType=VARCHAR},
+      IDENTIFY_NO = #{record.identifyNo,jdbcType=VARCHAR},
+      HOSPITAL_PASSWORD = #{record.hospitalPassword,jdbcType=VARCHAR},
+      OSCE_DOCTOR_SHOW = #{record.osceDoctorShow,jdbcType=VARCHAR},
+      OSCE_TEACHER_SHOW = #{record.osceTeacherShow,jdbcType=VARCHAR},
+      IS_TRAIN_ORG = #{record.isTrainOrg,jdbcType=VARCHAR},
+      CREDIT_CODE = #{record.creditCode,jdbcType=VARCHAR},
+      IS_SUBMIT_ID = #{record.isSubmitId,jdbcType=VARCHAR},
+      IS_SUBMIT_NAME = #{record.isSubmitName,jdbcType=VARCHAR},
+      CHECK_STATUS_ID = #{record.checkStatusId,jdbcType=VARCHAR},
+      CHECK_STATUS_NAME = #{record.checkStatusName,jdbcType=VARCHAR},
+      CHECK_REASON = #{record.checkReason,jdbcType=VARCHAR},
+      OLD_ORG_NAME = #{record.oldOrgName,jdbcType=VARCHAR},
+      BASE_CODE = #{record.baseCode,jdbcType=VARCHAR},
+      ORG_PERSON_IN_CHARGE = #{record.orgPersonInCharge,jdbcType=VARCHAR},
+      IS_ACC = #{record.isAcc,jdbcType=VARCHAR},
+      ORG_INFO = #{record.orgInfo,jdbcType=CLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.SYS_ORG
+    set ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      ORG_PROV_ID = #{record.orgProvId,jdbcType=VARCHAR},
+      ORG_PROV_NAME = #{record.orgProvName,jdbcType=VARCHAR},
+      ORG_CITY_ID = #{record.orgCityId,jdbcType=VARCHAR},
+      ORG_CITY_NAME = #{record.orgCityName,jdbcType=VARCHAR},
+      ORG_AREA_ID = #{record.orgAreaId,jdbcType=VARCHAR},
+      ORG_AREA_NAME = #{record.orgAreaName,jdbcType=VARCHAR},
+      ORG_TYPE_ID = #{record.orgTypeId,jdbcType=VARCHAR},
+      ORG_TYPE_NAME = #{record.orgTypeName,jdbcType=VARCHAR},
+      ORG_ADDRESS = #{record.orgAddress,jdbcType=VARCHAR},
+      ORG_PHONE = #{record.orgPhone,jdbcType=VARCHAR},
+      CHARGE_ORG_FLOW = #{record.chargeOrgFlow,jdbcType=VARCHAR},
+      CHARGE_ORG_NAME = #{record.chargeOrgName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      ORG_ZIP = #{record.orgZip,jdbcType=VARCHAR},
+      ORDINAL = #{record.ordinal,jdbcType=DECIMAL},
+      ORG_LEVEL_ID = #{record.orgLevelId,jdbcType=VARCHAR},
+      ORG_LEVEL_NAME = #{record.orgLevelName,jdbcType=VARCHAR},
+      IS_EXAM_ORG = #{record.isExamOrg,jdbcType=VARCHAR},
+      IS_EXAM_TEA = #{record.isExamTea,jdbcType=VARCHAR},
+      SEND_SCHOOL_ID = #{record.sendSchoolId,jdbcType=VARCHAR},
+      SEND_SCHOOL_NAME = #{record.sendSchoolName,jdbcType=VARCHAR},
+      IS_SECOND_FLAG = #{record.isSecondFlag,jdbcType=VARCHAR},
+      IDENTIFY_NO = #{record.identifyNo,jdbcType=VARCHAR},
+      HOSPITAL_PASSWORD = #{record.hospitalPassword,jdbcType=VARCHAR},
+      OSCE_DOCTOR_SHOW = #{record.osceDoctorShow,jdbcType=VARCHAR},
+      OSCE_TEACHER_SHOW = #{record.osceTeacherShow,jdbcType=VARCHAR},
+      IS_TRAIN_ORG = #{record.isTrainOrg,jdbcType=VARCHAR},
+      CREDIT_CODE = #{record.creditCode,jdbcType=VARCHAR},
+      IS_SUBMIT_ID = #{record.isSubmitId,jdbcType=VARCHAR},
+      IS_SUBMIT_NAME = #{record.isSubmitName,jdbcType=VARCHAR},
+      CHECK_STATUS_ID = #{record.checkStatusId,jdbcType=VARCHAR},
+      CHECK_STATUS_NAME = #{record.checkStatusName,jdbcType=VARCHAR},
+      CHECK_REASON = #{record.checkReason,jdbcType=VARCHAR},
+      OLD_ORG_NAME = #{record.oldOrgName,jdbcType=VARCHAR},
+      BASE_CODE = #{record.baseCode,jdbcType=VARCHAR},
+      ORG_PERSON_IN_CHARGE = #{record.orgPersonInCharge,jdbcType=VARCHAR},
+      IS_ACC = #{record.isAcc,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysOrg" >
+    update PDSCI.SYS_ORG
+    <set >
+      <if test="orgCode != null" >
+        ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgProvId != null" >
+        ORG_PROV_ID = #{orgProvId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgProvName != null" >
+        ORG_PROV_NAME = #{orgProvName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCityId != null" >
+        ORG_CITY_ID = #{orgCityId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCityName != null" >
+        ORG_CITY_NAME = #{orgCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAreaId != null" >
+        ORG_AREA_ID = #{orgAreaId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAreaName != null" >
+        ORG_AREA_NAME = #{orgAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgTypeId != null" >
+        ORG_TYPE_ID = #{orgTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgTypeName != null" >
+        ORG_TYPE_NAME = #{orgTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddress != null" >
+        ORG_ADDRESS = #{orgAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="orgPhone != null" >
+        ORG_PHONE = #{orgPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeOrgFlow != null" >
+        CHARGE_ORG_FLOW = #{chargeOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeOrgName != null" >
+        CHARGE_ORG_NAME = #{chargeOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgZip != null" >
+        ORG_ZIP = #{orgZip,jdbcType=VARCHAR},
+      </if>
+      <if test="ordinal != null" >
+        ORDINAL = #{ordinal,jdbcType=DECIMAL},
+      </if>
+      <if test="orgLevelId != null" >
+        ORG_LEVEL_ID = #{orgLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLevelName != null" >
+        ORG_LEVEL_NAME = #{orgLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="isExamOrg != null" >
+        IS_EXAM_ORG = #{isExamOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="isExamTea != null" >
+        IS_EXAM_TEA = #{isExamTea,jdbcType=VARCHAR},
+      </if>
+      <if test="sendSchoolId != null" >
+        SEND_SCHOOL_ID = #{sendSchoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="sendSchoolName != null" >
+        SEND_SCHOOL_NAME = #{sendSchoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="isSecondFlag != null" >
+        IS_SECOND_FLAG = #{isSecondFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="identifyNo != null" >
+        IDENTIFY_NO = #{identifyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalPassword != null" >
+        HOSPITAL_PASSWORD = #{hospitalPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="osceDoctorShow != null" >
+        OSCE_DOCTOR_SHOW = #{osceDoctorShow,jdbcType=VARCHAR},
+      </if>
+      <if test="osceTeacherShow != null" >
+        OSCE_TEACHER_SHOW = #{osceTeacherShow,jdbcType=VARCHAR},
+      </if>
+      <if test="isTrainOrg != null" >
+        IS_TRAIN_ORG = #{isTrainOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="creditCode != null" >
+        CREDIT_CODE = #{creditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isSubmitId != null" >
+        IS_SUBMIT_ID = #{isSubmitId,jdbcType=VARCHAR},
+      </if>
+      <if test="isSubmitName != null" >
+        IS_SUBMIT_NAME = #{isSubmitName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatusId != null" >
+        CHECK_STATUS_ID = #{checkStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatusName != null" >
+        CHECK_STATUS_NAME = #{checkStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkReason != null" >
+        CHECK_REASON = #{checkReason,jdbcType=VARCHAR},
+      </if>
+      <if test="oldOrgName != null" >
+        OLD_ORG_NAME = #{oldOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="baseCode != null" >
+        BASE_CODE = #{baseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgPersonInCharge != null" >
+        ORG_PERSON_IN_CHARGE = #{orgPersonInCharge,jdbcType=VARCHAR},
+      </if>
+      <if test="isAcc != null" >
+        IS_ACC = #{isAcc,jdbcType=VARCHAR},
+      </if>
+      <if test="orgInfo != null" >
+        ORG_INFO = #{orgInfo,jdbcType=CLOB},
+      </if>
+    </set>
+    where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.SysOrg" >
+    update PDSCI.SYS_ORG
+    set ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      ORG_PROV_ID = #{orgProvId,jdbcType=VARCHAR},
+      ORG_PROV_NAME = #{orgProvName,jdbcType=VARCHAR},
+      ORG_CITY_ID = #{orgCityId,jdbcType=VARCHAR},
+      ORG_CITY_NAME = #{orgCityName,jdbcType=VARCHAR},
+      ORG_AREA_ID = #{orgAreaId,jdbcType=VARCHAR},
+      ORG_AREA_NAME = #{orgAreaName,jdbcType=VARCHAR},
+      ORG_TYPE_ID = #{orgTypeId,jdbcType=VARCHAR},
+      ORG_TYPE_NAME = #{orgTypeName,jdbcType=VARCHAR},
+      ORG_ADDRESS = #{orgAddress,jdbcType=VARCHAR},
+      ORG_PHONE = #{orgPhone,jdbcType=VARCHAR},
+      CHARGE_ORG_FLOW = #{chargeOrgFlow,jdbcType=VARCHAR},
+      CHARGE_ORG_NAME = #{chargeOrgName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      ORG_ZIP = #{orgZip,jdbcType=VARCHAR},
+      ORDINAL = #{ordinal,jdbcType=DECIMAL},
+      ORG_LEVEL_ID = #{orgLevelId,jdbcType=VARCHAR},
+      ORG_LEVEL_NAME = #{orgLevelName,jdbcType=VARCHAR},
+      IS_EXAM_ORG = #{isExamOrg,jdbcType=VARCHAR},
+      IS_EXAM_TEA = #{isExamTea,jdbcType=VARCHAR},
+      SEND_SCHOOL_ID = #{sendSchoolId,jdbcType=VARCHAR},
+      SEND_SCHOOL_NAME = #{sendSchoolName,jdbcType=VARCHAR},
+      IS_SECOND_FLAG = #{isSecondFlag,jdbcType=VARCHAR},
+      IDENTIFY_NO = #{identifyNo,jdbcType=VARCHAR},
+      HOSPITAL_PASSWORD = #{hospitalPassword,jdbcType=VARCHAR},
+      OSCE_DOCTOR_SHOW = #{osceDoctorShow,jdbcType=VARCHAR},
+      OSCE_TEACHER_SHOW = #{osceTeacherShow,jdbcType=VARCHAR},
+      IS_TRAIN_ORG = #{isTrainOrg,jdbcType=VARCHAR},
+      CREDIT_CODE = #{creditCode,jdbcType=VARCHAR},
+      IS_SUBMIT_ID = #{isSubmitId,jdbcType=VARCHAR},
+      IS_SUBMIT_NAME = #{isSubmitName,jdbcType=VARCHAR},
+      CHECK_STATUS_ID = #{checkStatusId,jdbcType=VARCHAR},
+      CHECK_STATUS_NAME = #{checkStatusName,jdbcType=VARCHAR},
+      CHECK_REASON = #{checkReason,jdbcType=VARCHAR},
+      OLD_ORG_NAME = #{oldOrgName,jdbcType=VARCHAR},
+      BASE_CODE = #{baseCode,jdbcType=VARCHAR},
+      ORG_PERSON_IN_CHARGE = #{orgPersonInCharge,jdbcType=VARCHAR},
+      IS_ACC = #{isAcc,jdbcType=VARCHAR},
+      ORG_INFO = #{orgInfo,jdbcType=CLOB}
+    where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysOrg" >
+    update PDSCI.SYS_ORG
+    set ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      ORG_PROV_ID = #{orgProvId,jdbcType=VARCHAR},
+      ORG_PROV_NAME = #{orgProvName,jdbcType=VARCHAR},
+      ORG_CITY_ID = #{orgCityId,jdbcType=VARCHAR},
+      ORG_CITY_NAME = #{orgCityName,jdbcType=VARCHAR},
+      ORG_AREA_ID = #{orgAreaId,jdbcType=VARCHAR},
+      ORG_AREA_NAME = #{orgAreaName,jdbcType=VARCHAR},
+      ORG_TYPE_ID = #{orgTypeId,jdbcType=VARCHAR},
+      ORG_TYPE_NAME = #{orgTypeName,jdbcType=VARCHAR},
+      ORG_ADDRESS = #{orgAddress,jdbcType=VARCHAR},
+      ORG_PHONE = #{orgPhone,jdbcType=VARCHAR},
+      CHARGE_ORG_FLOW = #{chargeOrgFlow,jdbcType=VARCHAR},
+      CHARGE_ORG_NAME = #{chargeOrgName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      ORG_ZIP = #{orgZip,jdbcType=VARCHAR},
+      ORDINAL = #{ordinal,jdbcType=DECIMAL},
+      ORG_LEVEL_ID = #{orgLevelId,jdbcType=VARCHAR},
+      ORG_LEVEL_NAME = #{orgLevelName,jdbcType=VARCHAR},
+      IS_EXAM_ORG = #{isExamOrg,jdbcType=VARCHAR},
+      IS_EXAM_TEA = #{isExamTea,jdbcType=VARCHAR},
+      SEND_SCHOOL_ID = #{sendSchoolId,jdbcType=VARCHAR},
+      SEND_SCHOOL_NAME = #{sendSchoolName,jdbcType=VARCHAR},
+      IS_SECOND_FLAG = #{isSecondFlag,jdbcType=VARCHAR},
+      IDENTIFY_NO = #{identifyNo,jdbcType=VARCHAR},
+      HOSPITAL_PASSWORD = #{hospitalPassword,jdbcType=VARCHAR},
+      OSCE_DOCTOR_SHOW = #{osceDoctorShow,jdbcType=VARCHAR},
+      OSCE_TEACHER_SHOW = #{osceTeacherShow,jdbcType=VARCHAR},
+      IS_TRAIN_ORG = #{isTrainOrg,jdbcType=VARCHAR},
+      CREDIT_CODE = #{creditCode,jdbcType=VARCHAR},
+      IS_SUBMIT_ID = #{isSubmitId,jdbcType=VARCHAR},
+      IS_SUBMIT_NAME = #{isSubmitName,jdbcType=VARCHAR},
+      CHECK_STATUS_ID = #{checkStatusId,jdbcType=VARCHAR},
+      CHECK_STATUS_NAME = #{checkStatusName,jdbcType=VARCHAR},
+      CHECK_REASON = #{checkReason,jdbcType=VARCHAR},
+      OLD_ORG_NAME = #{oldOrgName,jdbcType=VARCHAR},
+      BASE_CODE = #{baseCode,jdbcType=VARCHAR},
+      ORG_PERSON_IN_CHARGE = #{orgPersonInCharge,jdbcType=VARCHAR},
+      IS_ACC = #{isAcc,jdbcType=VARCHAR}
+    where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+  </update>
+
+
+  <resultMap id="ResultMapWithSession" type="com.pinde.sci.model.mo.PersonStaticExample" extends="BaseResultMap" >
+    <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectByExampleSession" resultMap="ResultMapWithSession" >
+    select a.*,b.session_number
+    from PDSCI.SYS_ORG a,(select distinct c.org_flow,c.session_number from SYS_MONTHLY_DOCTOR_INFO c where c.record_status='Y') b
+    where a.org_flow=b.org_flow
+    <if test="OrgProvId!=null and OrgProvId!=''">
+      and a.org_prov_id=#{OrgProvId}
+    </if>
+    <if test="OrgCityId!=null and OrgCityId!=''">
+      and a.org_city_id=#{OrgCityId}
+    </if>
+    <if test="OrgTypeId!=null and OrgTypeId!=''">
+      and a.org_type_id=#{OrgTypeId}
+    </if>
+    <if test="OrgLevelId!=null and OrgLevelId!=''">
+      and a.org_level_id=#{OrgLevelId}
+    </if>
+    <if test="RecordStatus!=null and RecordStatus!=''">
+      and a.record_status=#{RecordStatus}
+    </if>
+    order by b.session_number
+  </select>
+
+  <update id="updateByOrgFlow" parameterType="java.lang.String">
+    update RES_JOINT_ORG set JOINT_ORG_NAME=#{orgName} where JOINT_ORG_FLOW = #{orgFlow}
+  </update>
+
+</mapper>

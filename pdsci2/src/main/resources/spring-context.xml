@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.2.xsd    
+    http://www.springframework.org/schema/security 
+    http://www.springframework.org/schema/security/spring-security-3.2.xsd
+    http://www.springframework.org/schema/util 
+    http://www.springframework.org/schema/util/spring-util-3.2.xsd
+    http://www.springframework.org/schema/task
+    http://www.springframework.org/schema/task/spring-task-3.2.xsd">
+   
+    <!-- 加载属性文件 -->
+	<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+				<value>classpath:pdsci.properties</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="properties" ref="configProperties" />
+    </bean>    
+    
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+	<!-- 引入mybatis配置文件 -->
+	<import resource="classpath:/spring-mybatis.xml" />	
+    <!-- 扫描文件（自动将biz层注入） -->
+    <context:component-scan base-package="com.pinde.*.biz"/>
+    <context:component-scan base-package="com.pinde.*.job"/>
+    <context:component-scan base-package="com.pinde.*.webservice"/>
+    <context:component-scan base-package="com.pinde.*.ctrl"/>
+
+    <!-- spring context -->
+    <bean id="springUtil" class="com.pinde.core.util.ApplicationContextRegister" />
+    <!-- 使用国际化消息 -->  
+   <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">   
+     	<property name="basename" value="messages"/>  
+   </bean>   
+	<!-- 获取本地区的语言消息 -->  
+   <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"/> 
+   <bean id="multipartResolver" class="com.pinde.sci.common.MultipartResolver">
+		<property name="maxUploadSize" value="10737418240" />
+   </bean>
+   
+   <!-- 调度注解支持 -->
+   <task:executor id="executor" keep-alive="3600" pool-size="100-200" queue-capacity="500" rejection-policy="CALLER_RUNS" />
+   <task:scheduler id="scheduler" pool-size="1000" />  
+   <task:annotation-driven executor="executor" scheduler="scheduler" proxy-target-class="true"/>
+      
+</beans>

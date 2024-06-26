@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.osca.OscaFromExtMapper" >
+
+    <select id="selectSubjectStationFromByFlow" resultMap="com.pinde.sci.dao.base.OscaSubjectStationFromMapper.BaseResultMap">
+        SELECT RECORD_FLOW,
+            STATION_FLOW,
+            STATION_NAME,
+            FROM_FLOW,
+            FROM_NAME ,
+            RECORD_STATUS,
+            CREATE_TIME,
+            CREATE_USER_FLOW,
+            MODIFY_TIME,
+            MODIFY_USER_FLOW ,
+            ORG_NAME,
+            ORG_FLOW,
+            IS_REQUIRED
+        FROM PDSCI.OSCA_SUBJECT_STATION_FROM
+        WHERE RECORD_STATUS = 'Y'
+        AND ORG_FLOW = 'sign'
+        AND STATION_FLOW   IN   (
+            SELECT STATION_FLOW
+            FROM PDSCI.OSCA_SUBJECT_STATION
+            WHERE RECORD_STATUS = 'Y'
+            AND SUBJECT_FLOW = #{flow}
+        )
+    </select>
+
+</mapper>

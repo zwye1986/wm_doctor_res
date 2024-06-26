@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>	
+	<product desc="产品表单"/>
+	<njykdxsxs desc="南京医科大学实习生">
+		<dept pageFlag="nk">
+			内科评分标准
+		</dept>
+		<dept pageFlag="wk">
+			外科评分标准
+		</dept>
+		<dept pageFlag="fk">
+			妇科评分标准
+		</dept>
+		<dept pageFlag="ek">
+			儿科评分标准
+		</dept>
+	</njykdxsxs>
+	<shetyy desc="上海儿童医院"/>
+	<njzyykdxzs desc="南京中医药大学专硕"/>
+	<nfykdxpt desc="南方医科大学平台"/>
+	<jsst desc="江苏省厅"/>
+	<sczyfy desc="四川中医附院"/>
+	<hbszyysgfhpxglpt desc="湖北省住院医师规范化培训管理平台"/>
+	<shdfyy desc="上海东方医院">
+		<dept pageFlag="nk">
+			内、外、全、妇产、口腔、急诊、耳鼻喉、神内
+		</dept>
+		<dept pageFlag="kfk">
+			康复科
+		</dept>
+		<dept pageFlag="mzk">
+			麻醉科、儿科
+		</dept>
+		<dept pageFlag="cs">
+			超声、心电图
+		</dept>
+		<dept pageFlag="yxyx1">
+			医学影像(本专业)
+		</dept>
+		<dept pageFlag="yxyx2">
+			医学影像(非本专业)
+		</dept>
+		<dept pageFlag="blk">
+			病理科
+		</dept>
+		<dept pageFlag="jyk">
+			检验科
+		</dept>
+		<dept pageFlag="pfk">
+			皮肤科
+		</dept>
+	</shdfyy>
+	<jszy desc="江苏省中医药局"/>
+	<gzzyyy desc="广州中医医院"/>
+
+	<gzzyjx desc="广州中医进修"></gzzyjx>
+
+	<zsey desc="中山二院继教科过程管理系统"/>
+
+	<shzs_qk_bz_ty desc="上海中山-全科-病种-通用"/>
+	<shzs_qk_bz_jzjj desc="上海中山-全科-病种-急诊急救"/>
+	<shzs_qk_dbl_ty desc="上海中山-全科-大病历-通用"/>
+
+	<shzs_qk_jncz_ty desc="上海中山-全科-技能操作-通用"/>
+	<shzs_qk_jncz_wk desc="上海中山-全科-技能操作-外科"/>
+	<shzs_qk_jncz_jzjj desc="上海中山-全科-技能操作-急诊急救"/>
+
+	<shzs_qk_jncz_jzjj2 desc="上海中山-全科-技能操作-急诊急救2"/>
+	<shzs_qk_jncz_yk desc="上海中山-全科-技能操作-眼科"/>
+	<shzs_qk_jncz_ebhk desc="上海中山-全科-技能操作-耳鼻喉科"/>
+
+	<shzs_qk_cjqjbrqkjl_ty desc="上海中山-全科-参加抢救病人情况记录-通用"/>
+	<shzs_qk_cjqjbrqkjl_crk desc="上海中山-全科-参加抢救病人情况记录-传染科"/>
+	<shzs_qk_jxhd_ty desc="上海中山-全科-教学活动-通用"/>
+
+	<shzs_qk_xrszfy_ty desc="上海中山-全科-小儿生长发育-通用"/>
+	<shzs_qk_cjbdj_ty desc="上海中山-全科-常见病登记-通用"/>
+	<shzs_qk_ykqtczbldj_ty desc="上海中山-全科-眼科其他操作病例登记-通用"/>
+
+	<shzs_qk_sqsj_glmzbrhsjbzdj desc="上海中山-全科-社区实践-管理门诊病人和所见病种登记"/>
+	<shzs_qk_sqsj_cjjnczdj desc="上海中山-全科-社区实践-参加技能操作登记"/>
+	<shzs_qk_sqsj_cjjfsqdcjkjy desc="上海中山-全科-社区实践-参加家访，社区调查，健康教育"/>
+
+	<shzs_qk_sqsj_qtdj desc="上海中山-全科-社区实践-其他登记"/>
+	<shzs_qk_sqsj_cjkyjl desc="上海中山-全科-社区实践-参加科研记录"/>
+	<shzs_qk_sqsj_fblwzsgabdzw desc="上海中山-全科-社区实践-发表/撰写论文，综述，个案报道，泽文"/>
+	<shzs_qk_sqsj_hjqk desc="上海中山-全科-社区实践-获奖情况"/>
+	<shrjyy desc="上海瑞金医院表单"/>
+	<shfx desc="上海市奉贤区中心医院表单"/>
+	<dgdhyy desc="东莞东华医院表单"/>
+</jspForm>
+

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.ResEduStudentCourseExtMapper">
+	<resultMap id="eduStudentCourseExtMap" type="com.pinde.sci.model.res.EduStudentCourseExt"
+			   extends="com.pinde.sci.dao.base.EduStudentCourseMapper.BaseResultMap">
+		<association property="course" column="course_flow"
+					 resultMap="com.pinde.sci.dao.base.EduCourseMapper.BaseResultMap">
+			<result column="ec_dept_name" jdbcType="VARCHAR" property="deptName"/>
+			<result column="ec_course_name" jdbcType="VARCHAR" property="deptName"/>
+		</association>
+	</resultMap>
+	<resultMap id="studentCourse" type="com.pinde.sci.form.res.StudentCourseNumForm">
+		<result column="course_Flow" jdbcType="VARCHAR" property="courseFlow"/>
+		<result column="num" jdbcType="VARCHAR" property="num"/>
+	</resultMap>
+
+	<resultMap id="userExtMap" type="com.pinde.sci.model.res.EduStudentCourseExt"
+			   extends="com.pinde.sci.dao.base.EduStudentCourseMapper.BaseResultMap">
+		<association property="eduUser" javaType="com.pinde.sci.model.mo.EduUser" column="eduUserFlow">
+			<id column="eduUserFlow" jdbcType="VARCHAR" property="userFlow"/>
+			<result column="SID" jdbcType="VARCHAR" property="sid"/>
+			<result column="CLASS_NAME" jdbcType="VARCHAR" property="className"/>
+		</association>
+		<association property="sysUser" javaType="com.pinde.sci.model.mo.SysUser" column="sysUserFlow">
+			<id column="sysUserFlow" jdbcType="VARCHAR" property="userFlow"/>
+			<result column="USER_NAME" jdbcType="VARCHAR" property="userName"/>
+			<result column="USER_PHONE" jdbcType="VARCHAR" property="userPhone"/>
+		</association>
+		<association property="resDoctor" javaType="com.pinde.sci.model.mo.ResDoctor" column="resDoctorFlow">
+			<id column="resDoctorFlow" jdbcType="VARCHAR" property="doctorFlow"/>
+			<result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+		</association>
+	</resultMap>
+
+	<select id="searchEduStudentCourseExt" parameterType="java.util.Map" resultMap="eduStudentCourseExtMap">
+		select esc.*,ec.course_name ec_course_name,ec.course_category_id,ec.course_category_name,ec.dept_name
+		ec_dept_name
+		from pdsci.edu_student_course esc,pdsci.edu_course ec
+		where esc.record_status='Y' and ec.record_status='Y'
+		and esc.course_flow=ec.course_flow
+		<if test='eduCourse!=null'>
+			<if test='eduCourse.courseName!=null and eduCourse.courseName!=""'>
+				<bind name="courseName" value="'%'+eduCourse.courseName+'%'"/>
+				and ec.course_name like #{courseName}
+			</if>
+			<if test='eduCourse.courseCategoryId!=null and eduCourse.courseCategoryId!=""'>
+				and ec.course_category_id=#{eduCourse.courseCategoryId}
+			</if>
+			<if test='eduCourse.deptFlow!=null and eduCourse.deptFlow!=""'>
+				and ec.dept_flow=#{eduCourse.deptFlow}
+			</if>
+		</if>
+		<if test='sysUser!=null'>
+            <if test='sysUser.userFlow!=null and sysUser.userFlow!=""'>
+				and esc.user_flow= #{sysUser.userFlow}
+            </if>
+		</if>
+		<if test="courseTypeIdList!=null">
+            and esc.course_type_id in
+			<foreach collection="courseTypeIdList" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="studyStatusIdList!=null">
+            and esc.study_Status_id in
+			<foreach collection="studyStatusIdList" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		order by esc.modify_time desc,esc.choose_time desc
+    </select>
+
+	<resultMap id="courseCreditMap" type="com.pinde.sci.form.res.OneCourseCreditForm">
+		<result column="user_flow" jdbcType="VARCHAR" property="userFlow"/>
+		<result column="course_credit" jdbcType="VARCHAR" property="courseCredit"/>
+	</resultMap>
+    <select id="searchCourseCreditForm" parameterType="java.util.Map" resultMap="courseCreditMap">
+       select esc.user_flow,ec.course_credit
+        from pdsci.edu_student_course esc,pdsci.edu_course ec
+        where esc.course_flow=ec.course_flow
+         and esc.record_status='Y' and ec.record_status='Y'
+         and esc.achieve_credit='Y'
+    </select>
+
+	<select id="searchStudentCourse" parameterType="java.util.Map" resultMap="userExtMap">
+		select
+		esc.RECORD_FLOW,esc.STUDENT_PERIOD, esc.GRADE_TERM_NAME,esc.USER_FLOW, esc.COURSE_TYPE_ID, esc.COURSE_TYPE_NAME,
+		esc.COURSE_PERIOD, esc.COURSE_CREDIT, esc.REPLENISH_FLAG,
+		esc.COURSE_FLOW, esc.COURSE_CODE, esc.COURSE_NAME,su.user_name,eu.sid,esc.COURSE_GRADE,esc.STUDY_WAY_ID,
+		esc.STUDY_WAY_NAME,esc.ASSESS_TYPE_NAME,esc.ASSESS_TYPE_ID
+		from EDU_STUDENT_COURSE esc ,SYS_USER su,EDU_USER eu,RES_DOCTOR doc
+		where esc.RECORD_STATUS = 'Y' and esc.user_flow=su.user_flow and su.user_flow=eu.user_flow and
+		eu.user_flow=doc.doctor_flow
+		<if test="userName!=null and userName!=''">
+			and su.USER_NAME = #{userName}
+		</if>
+		<if test="sid!=null and sid!=''">
+			and eu.sid = #{sid}
+		</if>
+		<if test="trainOrgId!=null and trainOrgId!=''">
+			and eu.TRAIN_ORG_ID = #{trainOrgId}
+		</if>
+		<if test="idNo!=null and idNo!=''">
+			and su.id_No = #{idNo}
+		</if>
+		<if test="impFlow!=null and impFlow!=''">
+			and esc.IMP_FLOW = #{impFlow}
+		</if>
+		<if test="studentPeriod!=null and studentPeriod!=''">
+			and esc.STUDENT_PERIOD = #{studentPeriod}
+		</if>
+		<if test="gradeTermId!=null and gradeTermId!=''">
+			and esc.GRADE_TERM_ID = #{gradeTermId}
+		</if>
+		<if test="courseName!=null and courseName!=''">
+			and esc.COURSE_NAME = #{courseName}
+		</if>
+		<if test='resDoctor!=null and resDoctor!=""'>
+			<if test='resDoctor.orgFlow!=null and resDoctor.orgFlow!=""'>
+				and doc.org_flow= #{resDoctor.orgFlow}
+			</if>
+		</if>
+
+		order by eu.sid desc,esc.COURSE_TYPE_ID, esc.COURSE_CODE
+    </select>
+
+</mapper>

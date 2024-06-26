@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.ResSupervisioSubjectMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResSupervisioSubject" >
+    <id column="SUBJECT_FLOW" property="subjectFlow" jdbcType="VARCHAR" />
+    <result column="SUBJECT_NAME" property="subjectName" jdbcType="VARCHAR" />
+    <result column="OPEN_TIME" property="openTime" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+    <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+    <result column="SUPERVISIO_SUMMARY" property="supervisioSummary" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="SUBJECT_YEAR" property="subjectYear" jdbcType="VARCHAR" />
+    <result column="EVALUATION_NUM" property="evaluationNum" jdbcType="VARCHAR" />
+    <result column="AVG_SCORE" property="avgScore" jdbcType="VARCHAR" />
+    <result column="DEV_TIME" property="devTime" jdbcType="VARCHAR" />
+    <result column="CLOSED_TIME" property="closedTime" jdbcType="VARCHAR" />
+    <result column="SUBJECT_EDIT" property="subjectEdit" jdbcType="VARCHAR" />
+    <result column="DEV_TIME_CLOSE" property="devTimeClose" jdbcType="VARCHAR" />
+    <result column="BASE_CODE" property="baseCode" jdbcType="VARCHAR" />
+    <result column="SUBJECT_ACTIVITI_FLOWS" property="subjectActivitiFlows" jdbcType="VARCHAR" />
+    <result column="SUPERVISIO_RESULTS" property="supervisioResults" jdbcType="VARCHAR" />
+    <result column="MANAGEMENT_USER_FLOW" property="managementUserFlow" jdbcType="VARCHAR" />
+    <result column="MANAGEMENT_USER_NAME" property="managementUserName" jdbcType="VARCHAR" />
+    <result column="REQEDIT" property="reqedit" jdbcType="VARCHAR" />
+    <result column="SUP_FEEDBACK" property="supFeedback" jdbcType="VARCHAR" />
+    <result column="SPE_FEEDBACK" property="speFeedback" jdbcType="VARCHAR" />
+    <result column="SUPERVISIO_AUTHORITY" property="supervisioAuthority" jdbcType="VARCHAR" />
+    <result column="MAJOR_FEED_BACK" property="majorFeedBack" jdbcType="VARCHAR" />
+    <result column="MANAGE_ALL_SUB" property="manageAllSub" jdbcType="VARCHAR" />
+    <result column="EXPERT_REPORT_SUB" property="expertReportSub" jdbcType="VARCHAR" />
+    <result column="MAJOR_REPORT_SUB" property="majorReportSub" jdbcType="VARCHAR" />
+    <result column="SUPERVISIO_REPORT_SUB" property="supervisioReportSub" jdbcType="VARCHAR" />
+    <result column="BASE_MANAGE_SCORE" property="baseManageScore" jdbcType="VARCHAR" />
+    <result column="BASE_MANAGE_SUBMIT" property="baseManageSubmit" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SUBJECT_FLOW, SUBJECT_NAME, OPEN_TIME, ORG_FLOW, ORG_NAME, SPE_ID, SPE_NAME, SUPERVISIO_SUMMARY, 
+    RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, SUBJECT_YEAR, 
+    EVALUATION_NUM, AVG_SCORE, DEV_TIME, CLOSED_TIME, SUBJECT_EDIT, DEV_TIME_CLOSE, BASE_CODE, 
+    SUBJECT_ACTIVITI_FLOWS, SUPERVISIO_RESULTS, MANAGEMENT_USER_FLOW, MANAGEMENT_USER_NAME, 
+    REQEDIT, SUP_FEEDBACK, SPE_FEEDBACK, SUPERVISIO_AUTHORITY, MAJOR_FEED_BACK, MANAGE_ALL_SUB, 
+    EXPERT_REPORT_SUB, MAJOR_REPORT_SUB, SUPERVISIO_REPORT_SUB, BASE_MANAGE_SCORE, BASE_MANAGE_SUBMIT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResSupervisioSubjectExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_SUPERVISIO_SUBJECT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_SUPERVISIO_SUBJECT
+    where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.RES_SUPERVISIO_SUBJECT
+    where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResSupervisioSubjectExample" >
+    delete from PDSCI.RES_SUPERVISIO_SUBJECT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResSupervisioSubject" >
+    insert into PDSCI.RES_SUPERVISIO_SUBJECT (SUBJECT_FLOW, SUBJECT_NAME, OPEN_TIME, 
+      ORG_FLOW, ORG_NAME, SPE_ID, 
+      SPE_NAME, SUPERVISIO_SUMMARY, RECORD_STATUS, 
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+      MODIFY_USER_FLOW, SUBJECT_YEAR, EVALUATION_NUM, 
+      AVG_SCORE, DEV_TIME, CLOSED_TIME, 
+      SUBJECT_EDIT, DEV_TIME_CLOSE, BASE_CODE, 
+      SUBJECT_ACTIVITI_FLOWS, SUPERVISIO_RESULTS, 
+      MANAGEMENT_USER_FLOW, MANAGEMENT_USER_NAME, 
+      REQEDIT, SUP_FEEDBACK, SPE_FEEDBACK, 
+      SUPERVISIO_AUTHORITY, MAJOR_FEED_BACK, MANAGE_ALL_SUB, 
+      EXPERT_REPORT_SUB, MAJOR_REPORT_SUB, SUPERVISIO_REPORT_SUB, 
+      BASE_MANAGE_SCORE, BASE_MANAGE_SUBMIT)
+    values (#{subjectFlow,jdbcType=VARCHAR}, #{subjectName,jdbcType=VARCHAR}, #{openTime,jdbcType=VARCHAR}, 
+      #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{speId,jdbcType=VARCHAR}, 
+      #{speName,jdbcType=VARCHAR}, #{supervisioSummary,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
+      #{modifyUserFlow,jdbcType=VARCHAR}, #{subjectYear,jdbcType=VARCHAR}, #{evaluationNum,jdbcType=VARCHAR}, 
+      #{avgScore,jdbcType=VARCHAR}, #{devTime,jdbcType=VARCHAR}, #{closedTime,jdbcType=VARCHAR}, 
+      #{subjectEdit,jdbcType=VARCHAR}, #{devTimeClose,jdbcType=VARCHAR}, #{baseCode,jdbcType=VARCHAR}, 
+      #{subjectActivitiFlows,jdbcType=VARCHAR}, #{supervisioResults,jdbcType=VARCHAR}, 
+      #{managementUserFlow,jdbcType=VARCHAR}, #{managementUserName,jdbcType=VARCHAR}, 
+      #{reqedit,jdbcType=VARCHAR}, #{supFeedback,jdbcType=VARCHAR}, #{speFeedback,jdbcType=VARCHAR}, 
+      #{supervisioAuthority,jdbcType=VARCHAR}, #{majorFeedBack,jdbcType=VARCHAR}, #{manageAllSub,jdbcType=VARCHAR}, 
+      #{expertReportSub,jdbcType=VARCHAR}, #{majorReportSub,jdbcType=VARCHAR}, #{supervisioReportSub,jdbcType=VARCHAR}, 
+      #{baseManageScore,jdbcType=VARCHAR}, #{baseManageSubmit,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResSupervisioSubject" >
+    insert into PDSCI.RES_SUPERVISIO_SUBJECT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="subjectFlow != null" >
+        SUBJECT_FLOW,
+      </if>
+      <if test="subjectName != null" >
+        SUBJECT_NAME,
+      </if>
+      <if test="openTime != null" >
+        OPEN_TIME,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="speId != null" >
+        SPE_ID,
+      </if>
+      <if test="speName != null" >
+        SPE_NAME,
+      </if>
+      <if test="supervisioSummary != null" >
+        SUPERVISIO_SUMMARY,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="subjectYear != null" >
+        SUBJECT_YEAR,
+      </if>
+      <if test="evaluationNum != null" >
+        EVALUATION_NUM,
+      </if>
+      <if test="avgScore != null" >
+        AVG_SCORE,
+      </if>
+      <if test="devTime != null" >
+        DEV_TIME,
+      </if>
+      <if test="closedTime != null" >
+        CLOSED_TIME,
+      </if>
+      <if test="subjectEdit != null" >
+        SUBJECT_EDIT,
+      </if>
+      <if test="devTimeClose != null" >
+        DEV_TIME_CLOSE,
+      </if>
+      <if test="baseCode != null" >
+        BASE_CODE,
+      </if>
+      <if test="subjectActivitiFlows != null" >
+        SUBJECT_ACTIVITI_FLOWS,
+      </if>
+      <if test="supervisioResults != null" >
+        SUPERVISIO_RESULTS,
+      </if>
+      <if test="managementUserFlow != null" >
+        MANAGEMENT_USER_FLOW,
+      </if>
+      <if test="managementUserName != null" >
+        MANAGEMENT_USER_NAME,
+      </if>
+      <if test="reqedit != null" >
+        REQEDIT,
+      </if>
+      <if test="supFeedback != null" >
+        SUP_FEEDBACK,
+      </if>
+      <if test="speFeedback != null" >
+        SPE_FEEDBACK,
+      </if>
+      <if test="supervisioAuthority != null" >
+        SUPERVISIO_AUTHORITY,
+      </if>
+      <if test="majorFeedBack != null" >
+        MAJOR_FEED_BACK,
+      </if>
+      <if test="manageAllSub != null" >
+        MANAGE_ALL_SUB,
+      </if>
+      <if test="expertReportSub != null" >
+        EXPERT_REPORT_SUB,
+      </if>
+      <if test="majorReportSub != null" >
+        MAJOR_REPORT_SUB,
+      </if>
+      <if test="supervisioReportSub != null" >
+        SUPERVISIO_REPORT_SUB,
+      </if>
+      <if test="baseManageScore != null" >
+        BASE_MANAGE_SCORE,
+      </if>
+      <if test="baseManageSubmit != null" >
+        BASE_MANAGE_SUBMIT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="subjectFlow != null" >
+        #{subjectFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null" >
+        #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="openTime != null" >
+        #{openTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="speId != null" >
+        #{speId,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        #{speName,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisioSummary != null" >
+        #{supervisioSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectYear != null" >
+        #{subjectYear,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationNum != null" >
+        #{evaluationNum,jdbcType=VARCHAR},
+      </if>
+      <if test="avgScore != null" >
+        #{avgScore,jdbcType=VARCHAR},
+      </if>
+      <if test="devTime != null" >
+        #{devTime,jdbcType=VARCHAR},
+      </if>
+      <if test="closedTime != null" >
+        #{closedTime,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectEdit != null" >
+        #{subjectEdit,jdbcType=VARCHAR},
+      </if>
+      <if test="devTimeClose != null" >
+        #{devTimeClose,jdbcType=VARCHAR},
+      </if>
+      <if test="baseCode != null" >
+        #{baseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectActivitiFlows != null" >
+        #{subjectActivitiFlows,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisioResults != null" >
+        #{supervisioResults,jdbcType=VARCHAR},
+      </if>
+      <if test="managementUserFlow != null" >
+        #{managementUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="managementUserName != null" >
+        #{managementUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="reqedit != null" >
+        #{reqedit,jdbcType=VARCHAR},
+      </if>
+      <if test="supFeedback != null" >
+        #{supFeedback,jdbcType=VARCHAR},
+      </if>
+      <if test="speFeedback != null" >
+        #{speFeedback,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisioAuthority != null" >
+        #{supervisioAuthority,jdbcType=VARCHAR},
+      </if>
+      <if test="majorFeedBack != null" >
+        #{majorFeedBack,jdbcType=VARCHAR},
+      </if>
+      <if test="manageAllSub != null" >
+        #{manageAllSub,jdbcType=VARCHAR},
+      </if>
+      <if test="expertReportSub != null" >
+        #{expertReportSub,jdbcType=VARCHAR},
+      </if>
+      <if test="majorReportSub != null" >
+        #{majorReportSub,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisioReportSub != null" >
+        #{supervisioReportSub,jdbcType=VARCHAR},
+      </if>
+      <if test="baseManageScore != null" >
+        #{baseManageScore,jdbcType=VARCHAR},
+      </if>
+      <if test="baseManageSubmit != null" >
+        #{baseManageSubmit,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResSupervisioSubjectExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.RES_SUPERVISIO_SUBJECT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.RES_SUPERVISIO_SUBJECT
+    <set >
+      <if test="record.subjectFlow != null" >
+        SUBJECT_FLOW = #{record.subjectFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectName != null" >
+        SUBJECT_NAME = #{record.subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openTime != null" >
+        OPEN_TIME = #{record.openTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speId != null" >
+        SPE_ID = #{record.speId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speName != null" >
+        SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supervisioSummary != null" >
+        SUPERVISIO_SUMMARY = #{record.supervisioSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectYear != null" >
+        SUBJECT_YEAR = #{record.subjectYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evaluationNum != null" >
+        EVALUATION_NUM = #{record.evaluationNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgScore != null" >
+        AVG_SCORE = #{record.avgScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.devTime != null" >
+        DEV_TIME = #{record.devTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.closedTime != null" >
+        CLOSED_TIME = #{record.closedTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectEdit != null" >
+        SUBJECT_EDIT = #{record.subjectEdit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.devTimeClose != null" >
+        DEV_TIME_CLOSE = #{record.devTimeClose,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseCode != null" >
+        BASE_CODE = #{record.baseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectActivitiFlows != null" >
+        SUBJECT_ACTIVITI_FLOWS = #{record.subjectActivitiFlows,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supervisioResults != null" >
+        SUPERVISIO_RESULTS = #{record.supervisioResults,jdbcType=VARCHAR},
+      </if>
+      <if test="record.managementUserFlow != null" >
+        MANAGEMENT_USER_FLOW = #{record.managementUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.managementUserName != null" >
+        MANAGEMENT_USER_NAME = #{record.managementUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reqedit != null" >
+        REQEDIT = #{record.reqedit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supFeedback != null" >
+        SUP_FEEDBACK = #{record.supFeedback,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speFeedback != null" >
+        SPE_FEEDBACK = #{record.speFeedback,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supervisioAuthority != null" >
+        SUPERVISIO_AUTHORITY = #{record.supervisioAuthority,jdbcType=VARCHAR},
+      </if>
+      <if test="record.majorFeedBack != null" >
+        MAJOR_FEED_BACK = #{record.majorFeedBack,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manageAllSub != null" >
+        MANAGE_ALL_SUB = #{record.manageAllSub,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expertReportSub != null" >
+        EXPERT_REPORT_SUB = #{record.expertReportSub,jdbcType=VARCHAR},
+      </if>
+      <if test="record.majorReportSub != null" >
+        MAJOR_REPORT_SUB = #{record.majorReportSub,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supervisioReportSub != null" >
+        SUPERVISIO_REPORT_SUB = #{record.supervisioReportSub,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseManageScore != null" >
+        BASE_MANAGE_SCORE = #{record.baseManageScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseManageSubmit != null" >
+        BASE_MANAGE_SUBMIT = #{record.baseManageSubmit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.RES_SUPERVISIO_SUBJECT
+    set SUBJECT_FLOW = #{record.subjectFlow,jdbcType=VARCHAR},
+      SUBJECT_NAME = #{record.subjectName,jdbcType=VARCHAR},
+      OPEN_TIME = #{record.openTime,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      SPE_ID = #{record.speId,jdbcType=VARCHAR},
+      SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      SUPERVISIO_SUMMARY = #{record.supervisioSummary,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      SUBJECT_YEAR = #{record.subjectYear,jdbcType=VARCHAR},
+      EVALUATION_NUM = #{record.evaluationNum,jdbcType=VARCHAR},
+      AVG_SCORE = #{record.avgScore,jdbcType=VARCHAR},
+      DEV_TIME = #{record.devTime,jdbcType=VARCHAR},
+      CLOSED_TIME = #{record.closedTime,jdbcType=VARCHAR},
+      SUBJECT_EDIT = #{record.subjectEdit,jdbcType=VARCHAR},
+      DEV_TIME_CLOSE = #{record.devTimeClose,jdbcType=VARCHAR},
+      BASE_CODE = #{record.baseCode,jdbcType=VARCHAR},
+      SUBJECT_ACTIVITI_FLOWS = #{record.subjectActivitiFlows,jdbcType=VARCHAR},
+      SUPERVISIO_RESULTS = #{record.supervisioResults,jdbcType=VARCHAR},
+      MANAGEMENT_USER_FLOW = #{record.managementUserFlow,jdbcType=VARCHAR},
+      MANAGEMENT_USER_NAME = #{record.managementUserName,jdbcType=VARCHAR},
+      REQEDIT = #{record.reqedit,jdbcType=VARCHAR},
+      SUP_FEEDBACK = #{record.supFeedback,jdbcType=VARCHAR},
+      SPE_FEEDBACK = #{record.speFeedback,jdbcType=VARCHAR},
+      SUPERVISIO_AUTHORITY = #{record.supervisioAuthority,jdbcType=VARCHAR},
+      MAJOR_FEED_BACK = #{record.majorFeedBack,jdbcType=VARCHAR},
+      MANAGE_ALL_SUB = #{record.manageAllSub,jdbcType=VARCHAR},
+      EXPERT_REPORT_SUB = #{record.expertReportSub,jdbcType=VARCHAR},
+      MAJOR_REPORT_SUB = #{record.majorReportSub,jdbcType=VARCHAR},
+      SUPERVISIO_REPORT_SUB = #{record.supervisioReportSub,jdbcType=VARCHAR},
+      BASE_MANAGE_SCORE = #{record.baseManageScore,jdbcType=VARCHAR},
+      BASE_MANAGE_SUBMIT = #{record.baseManageSubmit,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResSupervisioSubject" >
+    update PDSCI.RES_SUPERVISIO_SUBJECT
+    <set >
+      <if test="subjectName != null" >
+        SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="openTime != null" >
+        OPEN_TIME = #{openTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="speId != null" >
+        SPE_ID = #{speId,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        SPE_NAME = #{speName,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisioSummary != null" >
+        SUPERVISIO_SUMMARY = #{supervisioSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectYear != null" >
+        SUBJECT_YEAR = #{subjectYear,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationNum != null" >
+        EVALUATION_NUM = #{evaluationNum,jdbcType=VARCHAR},
+      </if>
+      <if test="avgScore != null" >
+        AVG_SCORE = #{avgScore,jdbcType=VARCHAR},
+      </if>
+      <if test="devTime != null" >
+        DEV_TIME = #{devTime,jdbcType=VARCHAR},
+      </if>
+      <if test="closedTime != null" >
+        CLOSED_TIME = #{closedTime,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectEdit != null" >
+        SUBJECT_EDIT = #{subjectEdit,jdbcType=VARCHAR},
+      </if>
+      <if test="devTimeClose != null" >
+        DEV_TIME_CLOSE = #{devTimeClose,jdbcType=VARCHAR},
+      </if>
+      <if test="baseCode != null" >
+        BASE_CODE = #{baseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectActivitiFlows != null" >
+        SUBJECT_ACTIVITI_FLOWS = #{subjectActivitiFlows,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisioResults != null" >
+        SUPERVISIO_RESULTS = #{supervisioResults,jdbcType=VARCHAR},
+      </if>
+      <if test="managementUserFlow != null" >
+        MANAGEMENT_USER_FLOW = #{managementUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="managementUserName != null" >
+        MANAGEMENT_USER_NAME = #{managementUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="reqedit != null" >
+        REQEDIT = #{reqedit,jdbcType=VARCHAR},
+      </if>
+      <if test="supFeedback != null" >
+        SUP_FEEDBACK = #{supFeedback,jdbcType=VARCHAR},
+      </if>
+      <if test="speFeedback != null" >
+        SPE_FEEDBACK = #{speFeedback,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisioAuthority != null" >
+        SUPERVISIO_AUTHORITY = #{supervisioAuthority,jdbcType=VARCHAR},
+      </if>
+      <if test="majorFeedBack != null" >
+        MAJOR_FEED_BACK = #{majorFeedBack,jdbcType=VARCHAR},
+      </if>
+      <if test="manageAllSub != null" >
+        MANAGE_ALL_SUB = #{manageAllSub,jdbcType=VARCHAR},
+      </if>
+      <if test="expertReportSub != null" >
+        EXPERT_REPORT_SUB = #{expertReportSub,jdbcType=VARCHAR},
+      </if>
+      <if test="majorReportSub != null" >
+        MAJOR_REPORT_SUB = #{majorReportSub,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisioReportSub != null" >
+        SUPERVISIO_REPORT_SUB = #{supervisioReportSub,jdbcType=VARCHAR},
+      </if>
+      <if test="baseManageScore != null" >
+        BASE_MANAGE_SCORE = #{baseManageScore,jdbcType=VARCHAR},
+      </if>
+      <if test="baseManageSubmit != null" >
+        BASE_MANAGE_SUBMIT = #{baseManageSubmit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResSupervisioSubject" >
+    update PDSCI.RES_SUPERVISIO_SUBJECT
+    set SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      OPEN_TIME = #{openTime,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      SPE_ID = #{speId,jdbcType=VARCHAR},
+      SPE_NAME = #{speName,jdbcType=VARCHAR},
+      SUPERVISIO_SUMMARY = #{supervisioSummary,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      SUBJECT_YEAR = #{subjectYear,jdbcType=VARCHAR},
+      EVALUATION_NUM = #{evaluationNum,jdbcType=VARCHAR},
+      AVG_SCORE = #{avgScore,jdbcType=VARCHAR},
+      DEV_TIME = #{devTime,jdbcType=VARCHAR},
+      CLOSED_TIME = #{closedTime,jdbcType=VARCHAR},
+      SUBJECT_EDIT = #{subjectEdit,jdbcType=VARCHAR},
+      DEV_TIME_CLOSE = #{devTimeClose,jdbcType=VARCHAR},
+      BASE_CODE = #{baseCode,jdbcType=VARCHAR},
+      SUBJECT_ACTIVITI_FLOWS = #{subjectActivitiFlows,jdbcType=VARCHAR},
+      SUPERVISIO_RESULTS = #{supervisioResults,jdbcType=VARCHAR},
+      MANAGEMENT_USER_FLOW = #{managementUserFlow,jdbcType=VARCHAR},
+      MANAGEMENT_USER_NAME = #{managementUserName,jdbcType=VARCHAR},
+      REQEDIT = #{reqedit,jdbcType=VARCHAR},
+      SUP_FEEDBACK = #{supFeedback,jdbcType=VARCHAR},
+      SPE_FEEDBACK = #{speFeedback,jdbcType=VARCHAR},
+      SUPERVISIO_AUTHORITY = #{supervisioAuthority,jdbcType=VARCHAR},
+      MAJOR_FEED_BACK = #{majorFeedBack,jdbcType=VARCHAR},
+      MANAGE_ALL_SUB = #{manageAllSub,jdbcType=VARCHAR},
+      EXPERT_REPORT_SUB = #{expertReportSub,jdbcType=VARCHAR},
+      MAJOR_REPORT_SUB = #{majorReportSub,jdbcType=VARCHAR},
+      SUPERVISIO_REPORT_SUB = #{supervisioReportSub,jdbcType=VARCHAR},
+      BASE_MANAGE_SCORE = #{baseManageScore,jdbcType=VARCHAR},
+      BASE_MANAGE_SUBMIT = #{baseManageSubmit,jdbcType=VARCHAR}
+    where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

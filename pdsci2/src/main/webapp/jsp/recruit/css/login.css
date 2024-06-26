@@ -1,0 +1,202 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.bg {
+	width: 100%;
+	height: 100vh;
+	background-image: url(../img/bg.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+	position: relative;
+}
+
+.login {
+	position: absolute;
+	width: 464px;
+	height: 408px;
+	background: rgba(0, 0, 0, 0.04);
+	left: 58%;
+	top: 31%;
+	padding: 0px 40px;
+	box-sizing: border-box;
+	border-radius: 8px;
+}
+
+.lg-title {
+	font-size: 24px;
+	color: #FFF;
+	margin-top: 32px;
+}
+
+.lg-inp {
+	width: 384px;
+	height: 40px;
+	background: rgba(255, 255, 255, 1);
+	border-radius: 4px;
+	margin-top: 24px;
+	padding: 0px 12px;
+	box-sizing: border-box;
+	position: relative;
+	font-size: 0;
+	overflow: hidden;
+}
+
+.validation {
+	width: 100%;
+	height: 40px;
+	margin-top: 24px;
+	font-size: 0;
+}
+
+.validation>.lg-inp {
+	width: 225px;
+	margin-top: 0;
+}
+
+.lg-vali {
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 15px;
+}
+
+.val {
+	display: inline-block;
+	background: red;
+	width: 93px;
+	height: 40px;
+	border-radius: 4px;
+}
+
+.val-img {
+	width: 93px;
+	height: 40px;
+	border-radius: 4px;
+	background: #FFF;
+	display: inline-block;
+	margin-right: 9px;
+	overflow: hidden;
+}
+
+.val-a {
+	display: inline-block;
+	font-size: 14px;
+	font-family: PingFangSC-Regular;
+	font-weight: 400;
+	color: rgba(255, 174, 75, 1);
+	line-height: 14px;
+	cursor: pointer;
+	overflow: hidden;
+	user-select: none;
+	transition: 0.3s;
+}
+.val-a:hover {
+	color: #ffc573;
+}
+
+.lg-inp>i {
+	width: 12px;
+	height: 14px;
+	opacity: 0.45;
+	line-height: 40px;
+	user-select:none;
+}
+
+.user-icon {
+	background: url(../img/user.png)no-repeat center/100%;
+}
+
+.text-inp {
+	font-size: 14px;
+	font-family: PingFangSC-Regular;
+	font-weight: 400;
+	color: rgba(0, 0, 0, 1);
+	width: 90%;
+	outline: none;
+	border: none;
+	height: 100%;
+	text-indent: 7px;
+}
+
+.remember {
+	font-size: 0;
+	margin-top: 24px;
+}
+
+.button {
+	margin-top: 32px;
+	font-size: 0;
+	background: rgba(255,255,255,0.01);
+	outline: none;
+	
+}
+
+.rem-box {
+	width: 16px;
+	height: 16px;
+	background: #FFAE4B;
+	border-radius: 2px;
+	margin-right: 9px;
+	position: relative;
+	display: inline-block;
+	overflow: hidden;
+}
+
+.rem-text {
+	font-size: 14px;
+	font-family: PingFangSC-Regular;
+	font-weight: 400;
+	color: rgba(255, 255, 255, 1);
+	user-select: none;
+	display: inline-block;
+	overflow: hidden;
+}
+
+#check {
+	display: none;
+	color: #FFF;
+}
+
+.sel {
+	font-size: 0;
+}
+
+.sel>.button:first-child {
+	margin-right: 8px;
+}
+
+.button {
+	width: 188px;
+	height: 40px;
+	border-radius: 4px;
+	font-size: 14px;
+	font-family: PingFangSC-Regular;
+	font-weight: 400;
+	text-align: center;
+	line-height: 40px;
+	box-sizing: border-box;
+	overflow: hidden;
+	display: inline-block;
+	border: 1px solid #FFAE4B;
+	color: #FFAE4B;
+	user-select: none;
+	cursor: pointer;
+}
+
+.select {
+	background: #FFAE4B;
+	color: #FFF;
+	transition: 0.3s;
+}
+.select:hover {
+	background-color: #ffc573;
+}
+.button-box {
+	transition: 0.3s;
+}
+.button-box:hover {
+	border-color: #fff;
+	color: #fff;
+}

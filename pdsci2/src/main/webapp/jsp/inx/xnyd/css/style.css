@@ -1,0 +1,65 @@
+﻿@charset "utf-8";
+/* CSS Document */
+html{height:100%;max-height:100%;padding:0;margin:0;border:0;overflow: hidden;font-family:"Microsoft YaHei"}
+body{margin:0;}
+a{text-decoration:none;color:#222;font-size:14px;padding:0;margin:0;border:0;font-family:"Microsoft YaHei"}
+span{font-family:"Microsoft YaHei"}
+.fl{float:left}
+.fr{float:right;}
+img{border:none;}
+.db{display:block;}
+input{outline:none;margin:0;border:none;}
+/*页眉*/
+.top_box{position:absolute;top:0;left:0;width:100%;z-index:5;display:block;background:#fff;box-shadow:0 1px 2px rgba(107,102,98,0.5)}
+.top{width:1000px;margin:auto;overflow:hidden;height:124px;float:left;margin-left:150px;}
+.top .logo{margin-top:0px;}
+.top .top_text{color:#FFF;font-size:14px;margin-top:38px;}
+/*banner+登录*/
+.banner_box{position:absolute;width:100%;overflow:hidden;background:#71bac6;z-index:3;top:70px;bottom:48px;}
+.banner{position:absolute;top:0;left:50%;width:100%;margin-left:-50%;}
+.people{position:absolute;bottom:-20px;left:42%;margin-left:-510px;}
+.banner_title{position:absolute;left:50%;top:8%;width:505px;margin-left:-510px;}
+.login_box input{height:34px;width:218px;color:#999999;font-size:14px;line-height:38px;font-family:"Microsoft YaHei";}
+.login_bg{position:absolute;top:30%;left:50%;margin-left:180px;width:330px;height:340px;background:  url(../images/login_bg2.png);}
+.login_box{width:258px;margin-left:30px;margin-top:25px;}
+.login_title{display:block;width:95px;height:16px; margin-bottom:24px;margin-top:16px}
+.username,.password{width:260px;height:38px;overflow:hidden;border:solid 1px #ccc;background:#FFF;margin-top:20px;border-radius:2px 2px 2px 2px;}
+.login_box img,login_box input{float:left;}
+.yanzm{margin-top:20px;overflow:hidden;}
+.yanzm .yan{height:38px;overflow:hidden;border:solid 1px #ccc;padding-left:10px;background:#FFF;border-radius:2px 2px 2px 2px;}
+.yanzm .yan input{width:108px;}
+.yanzm a{ font-size:12px; color:#C5E0E8; line-height:38px;overflow:hidden;}
+.cw{display:block;color:#f93a47;text-align:left;margin:8px 0;font-size:13px;}
+.denglu input{float:left;height:38px;width:260px;color:#fff;font-size:18px;border-radius:2px 2px 2px 2px; margin-top:5px;}
+.denglu .login1{background:#247784;border-radius:2px 2px 2px 2px;}
+.denglu .login1:hover{background:#055461;cursor:pointer}
+.fl{float:left}
+.fr{float:right;}
+img{border:none;}
+.code{ width:200px; margin-top:40px; position:absolute; right:80px;}
+.code .android{ width:162px; height:40px; margin-left:15px; background: url(../images/app.png)  no-repeat; display:inline-block;}
+.code .iphone{ width:162px; height:40px; margin-left:15px; background: url(../images/WeChat_hover.png) no-repeat; float:right; display:inline-block; margin-top: 10px;}
+.code .android:hover{ width:162px; height:40px; margin-left:15px; background: url(../images/app_hover.png) no-repeat; display:inline-block;  cursor:pointer;}
+.code .iphone:hover{ width:162px; height:40px; margin-left:15px; background: url(../images/app_hover.png) no-repeat; float:right; display:inline-block; margin-top: 10px; cursor:pointer;}
+.code .QR_android,.code .QR_iphone{width:162px; height:166px;background: url(../images/Q_kuang.png) no-repeat; }
+.code .QR_android{position: absolute;  margin-left: 16px; display:none;}
+.code .QR_iphone{position: absolute;  margin-left: 16px;}
+.code .QR_code{ padding-top: 21px; padding-left: 13px;}
+
+/*.denglu .login2{background:#9a9a9a;float:right}
+.denglu .login2:hover{background:#8a8888;cursor:pointer}*/
+/*通知公告*/
+.new_box{overflow:hidden;position:absolute;bottom:66px;left:0;width:100%;z-index:4}
+.new{width:1024px;margin:auto;border:solid 1px #e7c797;overflow:hidden;height:46px;}
+.new a{font-size:14px;}
+.new a:hover{color:#1d7fdb;text-decoration:underline;}
+.gongao{margin-left:26px;width:340px;overflow:hidden;margin-top:14px;}
+.gongao span,.gongao a,.gongao img{float:left;}
+.gongao span{color:#d5d5d5;margin-right:4px;line-height:18px;}
+.gongao img{margin-left:10px;}
+.xitong{margin-left:20px;font-size:14px;color:#222;line-height:46px;}
+.more{margin-right:20px;color:#222;line-height:48px;}
+/*页脚*/
+.footer_box{background:#fff;position:absolute;bottom:0;left:0;width:100%;z-index:5;display:block;overflow:hidden;}
+.footer{color:#00505c;text-align:center;line-height:48px;font-size:14px;}
+

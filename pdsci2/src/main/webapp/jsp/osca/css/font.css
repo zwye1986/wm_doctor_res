@@ -1,0 +1,24 @@
+.title_tab{ border-bottom:1px solid #e7e7eb; margin-top:-14px;}
+.title_tab ul{ display:inline-block; line-height:40px;}
+.title_tab ul li{ float:left;}
+.title_tab ul li a{ padding:0 30px; color:#222;}
+.tab_select{ border-bottom:3px solid #44b549;}
+.tab{border-bottom: 3px solid #fff;}
+.main_hd{line-height:40px;}
+.main_hd h2{font-size: 16px;padding: 0 30px;line-height: 75px;font-weight: 400;font-style: normal;display:block;}
+.main_bd{padding-bottom:0;}
+
+
+
+/*btn*/
+.btn,.btn_red,.btn_blue,.btn_grey,.btn_green{display: inline-block;overflow: visible;height: 30px;width:60px;line-height: 28px;vertical-align: middle;text-align: center;text-decoration: none;-moz-border-radius: 3px;-webkit-border-radius: 3px;font-size: 14px;cursor: pointer;font-family: "Microsoft YaHei";}
+.btn{background-color: #fff;border: 1px solid #e6e7ec;color: #222;}
+.btn:hover{background-color: #e6e7ec;}
+.btn_red{background-color: #f24d4d;color: #fff; border:none;}
+.btn_red:hover{background-color: #d43d3d;}
+.btn_green{background-color: #44b549;color: #fff;border:none;}
+.btn_green:hover{background-color: #2f9833;}
+.btn_blue{background-color: #017bce;color: #fff;border:none;}
+.btn_blue:hover{background-color: #0097fe;}
+.btn_grey{background:#eee;border: 1px solid #ddd;color: #222;}
+.btn_grey:hover{background:#ddd;}

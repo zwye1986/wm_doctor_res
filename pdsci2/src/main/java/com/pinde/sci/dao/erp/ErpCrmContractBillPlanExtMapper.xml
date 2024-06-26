@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.erp.ErpCrmContractBillPlanExtMapper">
+
+    <select id="sumBillPayFundByFlow" resultType="java.lang.Integer">
+        select nvl(sum(BILL_PAY_FUND),0)
+        from ERP_CRM_CONTRACT_BILL_PLAN
+        where record_status='Y'
+        and contract_flow=#{contractFlow}
+    </select>
+</mapper>

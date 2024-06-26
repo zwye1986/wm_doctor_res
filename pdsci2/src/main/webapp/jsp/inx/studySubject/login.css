@@ -1,0 +1,180 @@
+*,p{
+  padding: 0;
+  margin: 0;
+}
+ul,li{
+  list-style: none;
+}
+ul,ol{
+  margin-bottom: 0;
+}
+html,body{
+  font-family: Microsoft YaHei;
+  height: 100%;
+  background: #F7F7F7;
+}
+.clearfix:after{
+  display:block;
+  clear:both;
+  content:"";
+  visibility:hidden;
+  height:0;
+}
+.clearfix{
+  zoom: 1;
+}
+.login-bg{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: url(./images/bg.png) no-repeat center;
+  min-width: 1024px;
+  min-height: 640px;
+}
+.login-title{
+  font-size: 56px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  text-shadow: 4px 4px #0080C0;
+  padding-top: 7vh;
+}
+.login-box{
+  width: 480px;
+  height: 477px;
+  border-radius: 16px;
+  box-shadow:0px 5px 11px 2px rgba(32,65,78,0.21);
+  background: #ffffff;
+  margin: 0 auto;
+  margin-top: 5vh;
+}
+.box-top{
+  height: 141px;
+  width: 100%;
+  background: url(./images/bg1.png);
+  text-align: center;
+  padding-top: 49px;
+  box-sizing: border-box;
+}
+.box-top span{
+  font-size: 35px;
+  color: #ffffff;
+  text-shadow: 2px 2px #006FA3;
+  font-weight: bold;
+}
+.box-body{
+  padding: 0 90px;
+  margin-top: 30px;
+}
+.input-box{
+  position: relative;
+  width: 100%;
+  height: 48px;
+  border: 1px solid #D7D7D7;
+  margin-bottom: 23px;
+}
+.input-yzmBox{
+  margin-bottom: 8px;
+}
+.input-info{
+  font-size: 14px;
+  margin-bottom: 8px;
+  height: 19px;
+}
+.input-info span{
+  color: #FD5C5C;
+}
+.iconbg1,.iconbg2,.iconbg3{
+  width: 54px;
+  height: 100%;
+  position: absolute;
+}
+.iconbg1{
+  background: url(./images/icon-user.png) no-repeat;
+  background-position: 20px center;
+}
+.iconbg2{
+  background: url(./images/icon-pwd.png) no-repeat;
+  background-position: 21px center;
+}
+.iconbg3{
+  background: url(./images/icon-yzm.png) no-repeat;
+  background-position: 20px center;
+}
+.input-box input{
+  width: 100%;
+  height: 100%;
+  padding-left: 54px;
+  box-sizing: border-box;
+  border: none;
+  font-size: 16px;
+}
+.input-box input::-webkit-input-placeholder {
+  color: #ccc;
+}
+.input-box input:-moz-placeholder {
+ color: #ccc;
+}
+.input-box input::-moz-placeholder {
+ color: #ccc;
+}
+.input-box input:-ms-input-placeholder {
+ color: #ccc;
+}
+.yzmInput{
+  padding-right: 78px;
+}
+.yzmLink{
+  width: 78px;
+  position: absolute;
+  height: 50px;
+  top: -2px;
+  right: 0;
+  overflow: hidden;
+}
+.input-btnBox{
+  width: 100%;
+  height: 48px;
+  text-align: center;
+}
+.input-btn{
+  width: 160px;
+  height: 100%;
+  border-radius: 24px;
+  background: #1595D4;
+  border: none;
+  font-size: 16px;
+  color: #ffffff;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 6px 10px rgba(21,149,212,0.5);
+}
+.input-btn:hover{
+  background: rgba(21,149,212,0.8);
+}
+.login-footer{
+  font-size: 16px;
+  color: #ffffff;
+  position: absolute;
+  bottom: 2%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  text-align: center;
+}
+@media screen and (min-height:900px){
+  .login-title{
+    padding-top: 6vh;
+  }
+  .login-box{
+    margin-top: 6vh;
+  }
+}
+@media screen and (max-height:700px){
+  .login-title{
+    padding-top: 4vh;
+  }
+  .login-box{
+    margin-top: 3vh;
+  }
+}

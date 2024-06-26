@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.ResDeptActivityExtMapper" >
+    <resultMap id="listMap" type="hashmap">
+        <result column="PLAN_FLOW" property="planFlow" jdbcType="VARCHAR" />
+        <result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
+        <result column="PLAN_DATE" property="planDate" jdbcType="VARCHAR" />
+        <result column="PLAN_TYPE_ID" property="planTypeId" jdbcType="VARCHAR" />
+        <result column="PLAN_TYPE_NAME" property="planTypeName" jdbcType="VARCHAR" />
+        <result column="AUDIT_STATUS_ID" property="auditStatusId" jdbcType="VARCHAR" />
+        <result column="AUDIT_STATUS_NAME" property="auditStatusName" jdbcType="VARCHAR" />
+        <result column="AUDIT_USER_FLOW" property="auditUserFlow" jdbcType="VARCHAR" />
+        <result column="IS_REPORT" property="isReport" jdbcType="VARCHAR" />
+        <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    </resultMap>
+    <update id="updateItemCfg">
+        update Sys_Dept_Month_Plan_Item
+        set eval_cfg=(select cfg_big_value FROM qingpu_lecture_eval_cfg where record_flow=#{recordFlow})
+        where record_status='Y'
+        and plan_flow=#{planFlow}
+        and item_type_id=#{id}
+    </update>
+    <select id="searchList" resultMap="listMap">
+        SELECT MP.PLAN_FLOW,
+                MP.DEPT_FLOW,
+                MP.PLAN_DATE,
+                MP.PLAN_TYPE_ID,
+                MP.PLAN_TYPE_NAME,
+                MP.AUDIT_STATUS_ID,
+                MP.AUDIT_STATUS_NAME,
+                MP.AUDIT_USER_FLOW,
+                MP.IS_REPORT,
+                SD.DEPT_NAME
+        FROM SYS_DEPT_MONTH_PLAN MP
+        LEFT JOIN SYS_DEPT SD
+        ON  MP.DEPT_FLOW=SD.DEPT_FLOW
+        WHERE SD.RECORD_STATUS='Y'
+        AND MP.RECORD_STATUS='Y'
+        <if test="role =='head'.toString()">
+            AND SD.DEPT_FLOW IN ( select dept_flow
+            from (select dept_flow, dept_name from sys_user where record_status = 'Y' and user_flow = #{userFlow}
+            union select dept_flow, dept_name from sys_user_dept where record_status = 'Y' and user_flow = #{userFlow})
+            )
+        </if>
+        <if test="role !='head'.toString()">
+            AND SD.ORG_FLOW=#{orgFlow}
+        </if>
+        <if test='deptFlow!=null and deptFlow!=""'>
+            and sd.DEPT_FLOW = #{deptFlow}
+        </if>
+        <if test='planDate!=null and planDate!=""'>
+            and MP.PLAN_DATE = #{planDate}
+        </if>
+        <if test='planTypeId!=null and planTypeId!=""'>
+            and MP.PLAN_TYPE_ID = #{planTypeId}
+        </if>
+        order by  mp.dept_flow,mp.plan_date,mp.create_time
+    </select>
+    <resultMap id="StatisticListMap" type="hashmap">
+        <result column="PLAN_FLOW" property="planFlow" jdbcType="VARCHAR" />
+        <result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
+        <result column="PLAN_DATE" property="planDate" jdbcType="VARCHAR" />
+        <result column="PLAN_TYPE_ID" property="planTypeId" jdbcType="VARCHAR" />
+        <result column="PLAN_TYPE_NAME" property="planTypeName" jdbcType="VARCHAR" />
+        <result column="IS_REPORT" property="isReport" jdbcType="VARCHAR" />
+        <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+        <result column="ITEM_FLOW" property="itemFlow" jdbcType="VARCHAR" />
+        <result column="PLAN_TIME" property="planTime" jdbcType="VARCHAR" />
+        <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+        <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+        <result column="TITLE" property="title" jdbcType="VARCHAR" />
+        <result column="ITEM_TYPE_ID" property="itemTypeId" jdbcType="VARCHAR" />
+        <result column="ITEM_TYPE_NAME" property="itemTypeName" jdbcType="VARCHAR" />
+        <result column="JOIN_USER_FLOW" property="joinUserFlow" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="joinUserName" jdbcType="VARCHAR" />
+        <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+        <result column="EVAL_FLOW" property="evalFlow" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="searchStatisticList" resultMap="StatisticListMap">
+        SELECT PM.PLAN_FLOW,
+        PM.DEPT_FLOW,
+        PM.PLAN_DATE,
+        PM.PLAN_TYPE_ID,
+        PM.PLAN_TYPE_NAME,
+        PM.IS_REPORT,
+        SD.DEPT_NAME,
+        ITEM.ITEM_FLOW,
+        ITEM.PLAN_TIME ,
+        ITEM.ADDRESS ,
+        ITEM.CONTENT ,
+        ITEM.TITLE ,
+        ITEM.ITEM_TYPE_ID ,
+        ITEM.ITEM_TYPE_NAME ,
+        ITEM.JOIN_USER_FLOW,
+        SU.USER_NAME,
+        SU.USER_CODE
+        <if test='role=="doctor"'>
+            ,eval.eval_flow
+        </if>
+        FROM
+        SYS_DEPT_MONTH_PLAN PM
+        LEFT JOIN SYS_DEPT_MONTH_PLAN_ITEM ITEM
+        ON PM.PLAN_FLOW=ITEM.PLAN_FLOW
+        LEFT JOIN SYS_DEPT SD
+        ON  PM.DEPT_FLOW=SD.DEPT_FLOW
+        LEFT JOIN SYS_USER SU ON
+        SU.USER_FLOW=ITEM.JOIN_USER_FLOW
+        <if test='role=="doctor"'>
+        left join Sys_Dept_Month_Plan_Item_Eval eval
+            on eval.item_flow=ITEM.item_flow
+            and eval.oper_user_flow=#{userFlow}
+        </if>
+        WHERE SD.RECORD_STATUS='Y'
+        AND PM.RECORD_STATUS='Y'
+        AND ITEM.RECORD_STATUS='Y'
+        and pm.audit_status_id='Pass'
+        AND SD.ORG_FLOW=#{orgFlow}
+        <if test='deptFlow!=null and deptFlow!=""'>
+            and sd.DEPT_FLOW = #{deptFlow}
+        </if>
+        <if test='isEval!=null and isEval!=""'>
+            and eval.eval_flow is not null
+        </if>
+        <if test='planDate!=null and planDate!=""'>
+            and PM.PLAN_DATE = #{planDate}
+        </if>
+        <if test='itemTypeId!=null and itemTypeId!=""'>
+            and ITEM.ITEM_TYPE_ID = #{itemTypeId}
+        </if>
+        <if test='role=="doctor"'>
+          and pm.is_report='Y'
+            <if test='isEval!=null and isEval!=""'>
+                and eval.eval_flow is not null
+            </if>
+        </if>
+        <if test='role=="head"'>
+            and sd.DEPT_FLOW in  (select dept_flow from sys_user where record_status = 'Y' and user_flow = #{userFlow}
+            union all select dept_flow from sys_user_dept where record_status = 'Y' and user_flow = #{userFlow})
+        </if>
+        order by  PM.dept_flow,PM.plan_date,PM.create_time,ITEM.CREATE_TIME
+    </select>
+</mapper>

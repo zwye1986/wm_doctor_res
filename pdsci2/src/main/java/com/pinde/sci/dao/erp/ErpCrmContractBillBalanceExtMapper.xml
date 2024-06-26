@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.erp.ErpCrmContractBillBalanceExtMapper">
+    <resultMap id="erpCrmContractBillBalanceExt" type="com.pinde.sci.model.erp.ErpCrmContractBillBalanceExt" extends="com.pinde.sci.dao.base.ErpCrmContractBillBalanceMapper.BaseResultMap">
+        <result column="createUserName" property="createUserName" jdbcType="VARCHAR" />
+        <result column="modifyUserName" property="modifyUserName" jdbcType="VARCHAR" />
+    </resultMap>
+
+     <select id="getBalanceFund" parameterType="com.pinde.sci.model.mo.ErpCrmContractBillBalance" resultType="java.math.BigDecimal">
+			select NVL(SUM(BILL_FUND),0)
+			from pdsci.ERP_CRM_CONTRACT_Bill_BALANCE
+			where RECORD_STATUS = 'Y' and CONTRACT_FLOW = #{contractFlow} and BILL_PLAN_FLOW = #{billPlanFlow}
+			and status_id='AuditPass'
+     </select>
+     
+     <select id="getAllBillMoneyByContractFlow" parameterType="java.lang.String" resultType="java.math.BigDecimal">
+			select nvl(sum(BILL_FUND),0) from pdsci.ERP_CRM_CONTRACT_BILL_BALANCE
+			where RECORD_STATUS = 'Y'
+            and CONTRACT_FLOW = #{contractFlow}
+            and status_id='AuditPass'
+     </select>
+
+    <select id="getBillBalanceExtByContractFlow" parameterType="map" resultMap="erpCrmContractBillBalanceExt">
+        select bb.record_flow,bb.contract_flow,bb.bill_plan_flow,bb.bill_date,bb.bill_fund,bb.bill_no,bb.bill_tracke_number,bb.bill_tracke_content,
+            bb.record_status,bb.create_time,
+            bb.create_user_flow,(select u.user_name from sys_user u where u.user_flow = bb.create_user_flow) createUserName,
+            bb.modify_user_flow,(select u.user_name from sys_user u where u.user_flow = bb.modify_user_flow) modifyUserName,
+            bb.modify_time,
+             bb.BILL_APPLY_USER_FLOW,
+             bb.BILL_APPLY_USER_NAME,
+             bb.HANDLE_USER_FLOW,
+             bb.HANDLE_USER_NAME,
+             bb.HANDLE_TIME,
+             bb.TRACKE_USER_FLOW,
+             bb.TRACKE_USER_NAME,
+             bb.TRACKE_TIME,
+             bb.AUDIT_USER_FLOW,
+             bb.AUDIT_USER_NAME,
+             bb.AUDIT_REASON,
+             bb.AUDIT_TIME,
+             bb.STATUS_ID,
+             bb.STATUS_NAME
+        from erp_crm_contract_bill_balance bb
+        where RECORD_STATUS = 'Y'
+         and bb.contract_flow = #{contractFlow}
+        <if test="billPlanFlow != null">
+            and bb.bill_plan_flow = #{billPlanFlow}
+        </if>
+        <if test="statusId != null and statusId!=''">
+            and bb.status_id = #{statusId}
+        </if>
+    </select>
+    <select id="sumBalancePayFundByFlow" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select nvl(sum(BILL_FUND),0) from pdsci.ERP_CRM_CONTRACT_BILL_BALANCE
+        where RECORD_STATUS = 'Y'
+        and CONTRACT_FLOW = #{contractFlow}
+    </select>
+
+</mapper>

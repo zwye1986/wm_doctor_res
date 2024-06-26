@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.sch.SchRotationCfgExtMapper">
+
+    <select id="checkRotationCfg" resultType="java.lang.Integer">
+        select count(1) from res_doctor
+        where record_status='Y'
+        and org_flow=#{orgFlow}
+        and session_number=#{sessionNumber}
+        and training_years=#{selectYear}
+        and (
+            rotation_flow =#{rotationFlow}
+            or
+            second_rotation_flow =#{rotationFlow}
+        )
+        and (sel_all_flag='Y' and sch_all_flag='N'
+        or sel_one_flag='Y' and sch_one_flag='N'
+        or sel_two_flag='Y' and sch_two_flag='N'
+        or sel_three_flag='Y' and sch_three_flag='N')
+        and exists(
+          select 1 from SCH_DOCTOR_SELECT_DEPT where record_status='Y'
+          and SCH_DOCTOR_SELECT_DEPT.rotation_flow = #{rotationFlow}
+          and SCH_DOCTOR_SELECT_DEPT.doctor_flow=res_doctor.doctor_flow
+          and SCH_DOCTOR_SELECT_DEPT.session_number=res_doctor.session_Number
+        )
+    </select>
+    <select id="checkSelNum" resultType="java.lang.Integer">
+        select count(1) from res_doctor
+        where record_status='Y'
+        and org_flow=#{orgFlow}
+        and session_number=#{sessionNumber}
+        and (
+            rotation_flow =#{rotationFlow}
+            or
+            second_rotation_flow =#{rotationFlow}
+        )
+        and (sel_all_flag='Y' and sch_all_flag='N'
+        or sel_one_flag='Y' and sch_one_flag='N'
+        or sel_two_flag='Y' and sch_two_flag='N'
+        or sel_three_flag='Y' and sch_three_flag='N')
+        and exists(
+              select 1 from SCH_DOCTOR_SELECT_DEPT where record_status='Y'
+              and SCH_DOCTOR_SELECT_DEPT.rotation_flow = #{rotationFlow}
+              and SCH_DOCTOR_SELECT_DEPT.doctor_flow=res_doctor.doctor_flow
+              and SCH_DOCTOR_SELECT_DEPT.session_number=res_doctor.session_Number
+        )
+    </select>
+    <select id="checkSchNum" resultType="java.lang.Integer">
+        select count(1) from res_doctor
+        where record_status='Y'
+        and org_flow=#{orgFlow}
+        and session_number=#{sessionNumber}
+        and (
+            rotation_flow =#{rotationFlow}
+            or
+            second_rotation_flow =#{rotationFlow}
+        )
+        and exists(
+              select 1 from SCH_ORG_ARRANGE_RESULT where record_status='Y'
+              and SCH_ORG_ARRANGE_RESULT.rotation_flow = #{rotationFlow}
+              and SCH_ORG_ARRANGE_RESULT.doctor_flow=res_doctor.doctor_flow
+              and SCH_ORG_ARRANGE_RESULT.session_number=res_doctor.session_Number
+        )
+    </select>
+    <update id="delSchInfo">
+        UPDATE SCH_ORG_ARRANGE_RESULT set record_status='N'
+        where record_status='Y'
+        and exists(
+            select 1 from res_doctor
+            where record_status='Y'
+            and org_flow=#{orgFlow}
+            and session_number=#{sessionNumber}
+            and (
+                rotation_flow =#{rotationFlow}
+                or
+                second_rotation_flow =#{rotationFlow}
+            )
+              and SCH_ORG_ARRANGE_RESULT.rotation_flow = #{rotationFlow}
+              and SCH_ORG_ARRANGE_RESULT.doctor_flow=res_doctor.doctor_flow
+              and SCH_ORG_ARRANGE_RESULT.session_number=res_doctor.session_Number
+        )
+    </update>
+    <update id="delSelInfo">
+        UPDATE SCH_DOCTOR_SELECT_DEPT set record_status='N'
+        where record_status='Y'
+
+        and exists(
+            select 1 from res_doctor
+            where record_status='Y'
+            and org_flow=#{orgFlow}
+            and session_number=#{sessionNumber}
+            <if test="selectYear!=null and selectYear !=''">
+                and training_years=#{selectYear}
+            </if>
+            and (
+                rotation_flow =#{rotationFlow}
+                or
+                second_rotation_flow =#{rotationFlow}
+            )
+        and (sel_all_flag='Y' and sch_all_flag='N'
+            or sel_one_flag='Y' and sch_one_flag='N'
+            or sel_two_flag='Y' and sch_two_flag='N'
+            or sel_three_flag='Y' and sch_three_flag='N')
+              and SCH_DOCTOR_SELECT_DEPT.rotation_flow = #{rotationFlow}
+              and SCH_DOCTOR_SELECT_DEPT.doctor_flow=res_doctor.doctor_flow
+              and SCH_DOCTOR_SELECT_DEPT.session_number=res_doctor.session_Number
+        )
+    </update>
+    <update id="updateSelN">
+            update res_doctor
+            set SEL_all_FLAG='N', sch_all_flag='N',
+            sel_one_flag='N' , sch_one_flag='N',
+            sel_two_flag='N' , sch_two_flag='N',
+            sel_three_flag='N' , sch_three_flag='N'
+            where record_status='Y'
+            and org_flow=#{orgFlow}
+            and session_number=#{sessionNumber}
+            <if test="selectYear!=null and selectYear !=''">
+                and training_years=#{selectYear}
+            </if>
+            and (
+                rotation_flow =#{rotationFlow}
+                or
+                second_rotation_flow =#{rotationFlow}
+            )
+        and (sel_all_flag='Y' and sch_all_flag='N'
+            or sel_one_flag='Y' and sch_one_flag='N'
+            or sel_two_flag='Y' and sch_two_flag='N'
+            or sel_three_flag='Y' and sch_three_flag='N')
+    </update>
+    <update id="updateSchN">
+            update res_doctor
+            set sel_all_flag='N', sch_all_flag='N',
+            sel_one_flag='N' , sch_one_flag='N',
+            sel_two_flag='N' , sch_two_flag='N',
+            sel_three_flag='N' , sch_three_flag='N'
+            where record_status='Y'
+            and org_flow=#{orgFlow}
+            and session_number=#{sessionNumber}
+            and (
+                rotation_flow =#{rotationFlow}
+                or
+                second_rotation_flow =#{rotationFlow}
+            )
+        and (sel_all_flag='Y' and sch_all_flag='Y'
+            or sel_one_flag='Y' and sch_one_flag='Y'
+            or sel_two_flag='Y' and sch_two_flag='Y'
+            or sel_three_flag='Y' and sch_three_flag='Y')
+    </update>
+    <update id="delOrgSchDepts">
+            update sch_rotation_org_dept
+            set record_status='N'
+            where record_status='Y'
+            and org_flow=#{orgFlow}
+            and session_number=#{sessionNumber}
+            and select_year=#{selectYear}
+            and rotation_flow =#{rotationFlow}
+            and sch_dept_flow is not null
+            <if test="orgDeptFlows!=null and orgDeptFlows.size()>0">
+                and record_flow not in
+                <foreach collection="orgDeptFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+            </if>
+    </update>
+    <update id="delDocSelInfo">
+            update SCH_DOCTOR_SELECT_DEPT
+            set record_status='N'
+            where record_status='Y'
+            and org_flow=#{orgFlow}
+            and doctor_flow=#{doctorFlow}
+            and session_number=#{sessionNumber}
+            and rotation_flow =#{rotationFlow}
+            and sch_dept_flow is not null
+    </update>
+</mapper>

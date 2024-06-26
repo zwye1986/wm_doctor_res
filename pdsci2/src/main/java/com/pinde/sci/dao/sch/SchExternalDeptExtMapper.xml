@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.sch.SchExternalDeptExtMapper">
+    <select id="checkTime"  resultType="int">
+        select count(0)
+        from pdsci.SCH_EXTERNAL_DEPT
+        where record_status = 'Y'
+        and STANDARD_DEPT_ID=#{schExternalDept.standardDeptId}
+        and sch_dept_flow=#{schExternalDept.schDeptFlow}
+        and (
+            (
+            start_date <![CDATA[<=]]> #{schExternalDept.startDate}
+            and end_date >= #{schExternalDept.startDate}
+            )
+            or
+            (
+            start_date <![CDATA[<=]]> #{schExternalDept.endDate}
+            and end_date >= #{schExternalDept.endDate}
+            )
+            or
+            (
+            start_date <![CDATA[>=]]> #{schExternalDept.startDate}
+            and end_date <![CDATA[<=]]> #{schExternalDept.endDate}
+            )
+        )
+    </select>
+    <select id="isHaveSelect" parameterType="map" resultType="java.lang.Integer">
+        select count(0)
+        from pdsci.RES_DOCTOR_SCH_PROCESS
+        where record_status = 'Y'
+        and IS_EXTERNAL='Y'
+        and sch_dept_flow=#{schDeptFlow}
+        and (
+            (
+            sch_start_date <![CDATA[<=]]> #{startDate}
+            and sch_end_date >= #{startDate}
+            )
+            or
+            (
+            sch_start_date <![CDATA[<=]]> #{endDate}
+            and sch_end_date >= #{endDate}
+            )
+            or
+            (
+            sch_start_date <![CDATA[>=]]> #{startDate}
+            and sch_end_date <![CDATA[<=]]> #{endDate}
+            )
+        )
+    </select>
+    <select id="getNotSelfSchDeptByDeptIdAndExternal" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap">
+        SELECT * FROM
+        SCH_DEPT
+        WHERE RECORD_STATUS='Y'
+        AND ORG_FLOW !=#{orgFlow}
+        AND SCH_DEPT_FLOW IN (
+          SELECT SCH_DEPT_FLOW FROM SCH_DEPT_REL
+          WHERE RECORD_STATUS='Y'
+          AND STANDARD_DEPT_ID=#{standardDeptId}
+        )
+        AND EXTERNAL='Y'
+    </select>
+
+    <resultMap id="ResDoctorExt" type="com.pinde.sci.model.res.ResDoctorExt" extends="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+        <association property="sysUser" column="USER_FLOW" javaType="com.pinde.sci.model.mo.SysUser"
+                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+    </resultMap>
+    <select id="getStudents" resultMap="ResDoctorExt">
+        select * from res_doctor INNER JOIN  sys_user on  res_doctor.DOCTOR_FLOW = sys_user.USER_FLOW
+        where  sys_user.RECORD_STATUS = 'Y'
+        and res_doctor.record_status='Y'
+        <if test='sessionNumber != null and sessionNumber != ""'>
+            AND res_doctor.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test='trainingSpeId != null and trainingSpeId != ""'>
+            AND res_doctor.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test='rotationFlow != null and rotationFlow != ""'>
+            AND res_doctor.rotation_Flow = #{rotationFlow}
+        </if>
+        <if test='doctorCategoryId != null and doctorCategoryId != ""'>
+            AND res_doctor.DOCTOR_CATEGORY_ID = #{doctorCategoryId}
+        </if>
+        <if test='orgFlow != null and orgFlow != ""'>
+            AND RES_DOCTOR.org_flow = #{orgFlow}
+        </if>
+        AND (res_doctor.DOCTOR_STATUS_ID not in( 'UnPassed','Passed','UnSubmit')
+        or res_doctor.DOCTOR_STATUS_ID is null)
+        AND res_doctor.org_flow is not null
+        AND res_doctor.org_flow != '20160914888888'
+        AND res_doctor.org_flow != '566c9f36cf014f63a569b453efa284d7'
+        AND res_doctor.org_flow != '00000000000000000000000000000000'
+        ORDER BY res_doctor.session_number desc, sys_user.user_code,res_doctor.CREATE_TIME
+    </select>
+    <resultMap id="extStudnetMap" type="map">
+        <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow" />
+        <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+        <result column="RESULT_FLOW" jdbcType="VARCHAR" property="resultFlow" />
+        <result column="PROCESS_FLOW" jdbcType="VARCHAR" property="processFlow" />
+        <result column="ORG_FLOW" jdbcType="VARCHAR" property="orgFlow" />
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
+        <result column="DEPT_FLOW" jdbcType="VARCHAR" property="deptFlow" />
+        <result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+        <result column="SCH_DEPT_FLOW" jdbcType="VARCHAR" property="schDeptFlow" />
+        <result column="SCH_DEPT_NAME" jdbcType="VARCHAR" property="schDeptName" />
+        <result column="SCH_START_DATE" jdbcType="VARCHAR" property="schStartDate" />
+        <result column="SCH_END_DATE" jdbcType="VARCHAR" property="schEndDate" />
+        <result column="START_DATE" jdbcType="VARCHAR" property="startDate" />
+        <result column="END_DATE" jdbcType="VARCHAR" property="endDate" />
+        <result column="TEACHER_USER_FLOW" jdbcType="VARCHAR" property="teacherUserFlow" />
+        <result column="HEAD_USER_FLOW" jdbcType="VARCHAR" property="headUserFlow" />
+        <result column="SCH_FLAG" jdbcType="VARCHAR" property="schFlag" />
+        <result column="IS_CURRENT_FLAG" jdbcType="VARCHAR" property="isCurrentFlag" />
+        <result column="SCH_MONTH" jdbcType="VARCHAR" property="schMonth" />
+    </resultMap>
+    <select id="getExtStudents" resultMap="extStudnetMap">
+         SELECT SYS_USER.USER_FLOW,
+        SYS_USER.USER_NAME,
+        SAR.RESULT_FLOW,
+        RDSP.PROCESS_FLOW,
+        RDSP.ORG_FLOW,
+        RDSP.ORG_NAME,
+        RDSP.DEPT_FLOW,
+        RDSP.DEPT_NAME,
+        RDSP.SCH_DEPT_FLOW,
+        RDSP.SCH_DEPT_NAME,
+        RDSP.SCH_START_DATE,
+        RDSP.SCH_END_DATE,
+        RDSP.START_DATE,
+        RDSP.END_DATE,
+        RDSP.SCH_FLAG,
+        RDSP.IS_CURRENT_FLAG,
+        RDSP.TEACHER_USER_FLOW,
+        RDSP.HEAD_USER_FLOW,
+        SAR.SCH_MONTH
+           FROM RES_DOCTOR
+          INNER JOIN SYS_USER
+             ON RES_DOCTOR.DOCTOR_FLOW = SYS_USER.USER_FLOW
+           JOIN SCH_ARRANGE_RESULT SAR
+             ON SAR.DOCTOR_FLOW = SYS_USER.USER_FLOW
+            AND SAR.ROTATION_FLOW = RES_DOCTOR.ROTATION_FLOW
+           JOIN RES_DOCTOR_SCH_PROCESS RDSP
+             ON RDSP.USER_FLOW = SYS_USER.USER_FLOW
+            AND RDSP.SCH_RESULT_FLOW = SAR.RESULT_FLOW
+          WHERE SYS_USER.RECORD_STATUS = 'Y'
+            AND RES_DOCTOR.RECORD_STATUS = 'Y'
+            AND RDSP.RECORD_STATUS = 'Y'
+            AND SAR.RECORD_STATUS = 'Y'
+            AND RDSP.IS_EXTERNAL = 'Y'
+        <if test='sessionNumber != null and sessionNumber != ""'>
+            AND res_doctor.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test='trainingSpeId != null and trainingSpeId != ""'>
+            AND res_doctor.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test='doctorCategoryId != null and doctorCategoryId != ""'>
+            AND res_doctor.DOCTOR_CATEGORY_ID = #{doctorCategoryId}
+        </if>
+        <if test='orgFlow != null and orgFlow != ""'>
+            AND RES_DOCTOR.org_flow = #{orgFlow}
+        </if>
+        AND RES_DOCTOR.org_flow is not null
+        AND RES_DOCTOR.org_flow != '20160914888888'
+        AND RES_DOCTOR.org_flow != '566c9f36cf014f63a569b453efa284d7'
+        AND RES_DOCTOR.org_flow != '00000000000000000000000000000000'
+        ORDER BY res_doctor.session_number desc, sys_user.user_code,res_doctor.CREATE_TIME,sar.sch_start_date
+    </select>
+</mapper>

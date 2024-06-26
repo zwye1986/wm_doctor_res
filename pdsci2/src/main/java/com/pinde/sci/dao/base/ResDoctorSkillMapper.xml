@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.ResDoctorSkillMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResDoctorSkill" >
+    <id column="DOCTOR_SKILL_FLOW" property="doctorSkillFlow" jdbcType="VARCHAR" />
+    <result column="CITY_ID" property="cityId" jdbcType="VARCHAR" />
+    <result column="TEST_ID" property="testId" jdbcType="VARCHAR" />
+    <result column="TEST_NAME" property="testName" jdbcType="VARCHAR" />
+    <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
+    <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+    <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+    <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+    <result column="TICKET_NUMBER" property="ticketNumber" jdbcType="VARCHAR" />
+    <result column="SKILL_ORG_FLOW" property="skillOrgFlow" jdbcType="VARCHAR" />
+    <result column="SKILL_ORG_NAME" property="skillOrgName" jdbcType="VARCHAR" />
+    <result column="SKILL_TIME" property="skillTime" jdbcType="VARCHAR" />
+    <result column="SKILL_ORG_PHONE" property="skillOrgPhone" jdbcType="VARCHAR" />
+    <result column="SKILL_NOTE" property="skillNote" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    DOCTOR_SKILL_FLOW, CITY_ID, TEST_ID, TEST_NAME, DOCTOR_FLOW, DOCTOR_NAME, ID_NO, 
+    SPE_ID, SPE_NAME, TICKET_NUMBER, SKILL_ORG_FLOW, SKILL_ORG_NAME, SKILL_TIME, SKILL_ORG_PHONE, 
+    SKILL_NOTE, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResDoctorSkillExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_DOCTOR_SKILL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_DOCTOR_SKILL
+    where DOCTOR_SKILL_FLOW = #{doctorSkillFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.RES_DOCTOR_SKILL
+    where DOCTOR_SKILL_FLOW = #{doctorSkillFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResDoctorSkillExample" >
+    delete from PDSCI.RES_DOCTOR_SKILL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResDoctorSkill" >
+    insert into PDSCI.RES_DOCTOR_SKILL (DOCTOR_SKILL_FLOW, CITY_ID, TEST_ID, 
+      TEST_NAME, DOCTOR_FLOW, DOCTOR_NAME, 
+      ID_NO, SPE_ID, SPE_NAME, 
+      TICKET_NUMBER, SKILL_ORG_FLOW, SKILL_ORG_NAME, 
+      SKILL_TIME, SKILL_ORG_PHONE, SKILL_NOTE, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW)
+    values (#{doctorSkillFlow,jdbcType=VARCHAR}, #{cityId,jdbcType=VARCHAR}, #{testId,jdbcType=VARCHAR}, 
+      #{testName,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, 
+      #{idNo,jdbcType=VARCHAR}, #{speId,jdbcType=VARCHAR}, #{speName,jdbcType=VARCHAR}, 
+      #{ticketNumber,jdbcType=VARCHAR}, #{skillOrgFlow,jdbcType=VARCHAR}, #{skillOrgName,jdbcType=VARCHAR}, 
+      #{skillTime,jdbcType=VARCHAR}, #{skillOrgPhone,jdbcType=VARCHAR}, #{skillNote,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResDoctorSkill" >
+    insert into PDSCI.RES_DOCTOR_SKILL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="doctorSkillFlow != null" >
+        DOCTOR_SKILL_FLOW,
+      </if>
+      <if test="cityId != null" >
+        CITY_ID,
+      </if>
+      <if test="testId != null" >
+        TEST_ID,
+      </if>
+      <if test="testName != null" >
+        TEST_NAME,
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW,
+      </if>
+      <if test="doctorName != null" >
+        DOCTOR_NAME,
+      </if>
+      <if test="idNo != null" >
+        ID_NO,
+      </if>
+      <if test="speId != null" >
+        SPE_ID,
+      </if>
+      <if test="speName != null" >
+        SPE_NAME,
+      </if>
+      <if test="ticketNumber != null" >
+        TICKET_NUMBER,
+      </if>
+      <if test="skillOrgFlow != null" >
+        SKILL_ORG_FLOW,
+      </if>
+      <if test="skillOrgName != null" >
+        SKILL_ORG_NAME,
+      </if>
+      <if test="skillTime != null" >
+        SKILL_TIME,
+      </if>
+      <if test="skillOrgPhone != null" >
+        SKILL_ORG_PHONE,
+      </if>
+      <if test="skillNote != null" >
+        SKILL_NOTE,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="doctorSkillFlow != null" >
+        #{doctorSkillFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="testId != null" >
+        #{testId,jdbcType=VARCHAR},
+      </if>
+      <if test="testName != null" >
+        #{testName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null" >
+        #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="speId != null" >
+        #{speId,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        #{speName,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketNumber != null" >
+        #{ticketNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="skillOrgFlow != null" >
+        #{skillOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="skillOrgName != null" >
+        #{skillOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="skillTime != null" >
+        #{skillTime,jdbcType=VARCHAR},
+      </if>
+      <if test="skillOrgPhone != null" >
+        #{skillOrgPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="skillNote != null" >
+        #{skillNote,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResDoctorSkillExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.RES_DOCTOR_SKILL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.RES_DOCTOR_SKILL
+    <set >
+      <if test="record.doctorSkillFlow != null" >
+        DOCTOR_SKILL_FLOW = #{record.doctorSkillFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityId != null" >
+        CITY_ID = #{record.cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.testId != null" >
+        TEST_ID = #{record.testId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.testName != null" >
+        TEST_NAME = #{record.testName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorFlow != null" >
+        DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorName != null" >
+        DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idNo != null" >
+        ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speId != null" >
+        SPE_ID = #{record.speId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speName != null" >
+        SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ticketNumber != null" >
+        TICKET_NUMBER = #{record.ticketNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skillOrgFlow != null" >
+        SKILL_ORG_FLOW = #{record.skillOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skillOrgName != null" >
+        SKILL_ORG_NAME = #{record.skillOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skillTime != null" >
+        SKILL_TIME = #{record.skillTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skillOrgPhone != null" >
+        SKILL_ORG_PHONE = #{record.skillOrgPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skillNote != null" >
+        SKILL_NOTE = #{record.skillNote,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.RES_DOCTOR_SKILL
+    set DOCTOR_SKILL_FLOW = #{record.doctorSkillFlow,jdbcType=VARCHAR},
+      CITY_ID = #{record.cityId,jdbcType=VARCHAR},
+      TEST_ID = #{record.testId,jdbcType=VARCHAR},
+      TEST_NAME = #{record.testName,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
+      ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      SPE_ID = #{record.speId,jdbcType=VARCHAR},
+      SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      TICKET_NUMBER = #{record.ticketNumber,jdbcType=VARCHAR},
+      SKILL_ORG_FLOW = #{record.skillOrgFlow,jdbcType=VARCHAR},
+      SKILL_ORG_NAME = #{record.skillOrgName,jdbcType=VARCHAR},
+      SKILL_TIME = #{record.skillTime,jdbcType=VARCHAR},
+      SKILL_ORG_PHONE = #{record.skillOrgPhone,jdbcType=VARCHAR},
+      SKILL_NOTE = #{record.skillNote,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResDoctorSkill" >
+    update PDSCI.RES_DOCTOR_SKILL
+    <set >
+      <if test="cityId != null" >
+        CITY_ID = #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="testId != null" >
+        TEST_ID = #{testId,jdbcType=VARCHAR},
+      </if>
+      <if test="testName != null" >
+        TEST_NAME = #{testName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null" >
+        DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        ID_NO = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="speId != null" >
+        SPE_ID = #{speId,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        SPE_NAME = #{speName,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketNumber != null" >
+        TICKET_NUMBER = #{ticketNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="skillOrgFlow != null" >
+        SKILL_ORG_FLOW = #{skillOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="skillOrgName != null" >
+        SKILL_ORG_NAME = #{skillOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="skillTime != null" >
+        SKILL_TIME = #{skillTime,jdbcType=VARCHAR},
+      </if>
+      <if test="skillOrgPhone != null" >
+        SKILL_ORG_PHONE = #{skillOrgPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="skillNote != null" >
+        SKILL_NOTE = #{skillNote,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DOCTOR_SKILL_FLOW = #{doctorSkillFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResDoctorSkill" >
+    update PDSCI.RES_DOCTOR_SKILL
+    set CITY_ID = #{cityId,jdbcType=VARCHAR},
+      TEST_ID = #{testId,jdbcType=VARCHAR},
+      TEST_NAME = #{testName,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      ID_NO = #{idNo,jdbcType=VARCHAR},
+      SPE_ID = #{speId,jdbcType=VARCHAR},
+      SPE_NAME = #{speName,jdbcType=VARCHAR},
+      TICKET_NUMBER = #{ticketNumber,jdbcType=VARCHAR},
+      SKILL_ORG_FLOW = #{skillOrgFlow,jdbcType=VARCHAR},
+      SKILL_ORG_NAME = #{skillOrgName,jdbcType=VARCHAR},
+      SKILL_TIME = #{skillTime,jdbcType=VARCHAR},
+      SKILL_ORG_PHONE = #{skillOrgPhone,jdbcType=VARCHAR},
+      SKILL_NOTE = #{skillNote,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where DOCTOR_SKILL_FLOW = #{doctorSkillFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

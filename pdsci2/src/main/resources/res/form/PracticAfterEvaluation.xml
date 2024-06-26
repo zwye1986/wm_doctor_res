@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+    <!-- 轮转出科考核表记录表单 -->
+    <!--
+    {0}:表单所属机构(开关控制)
+    {1}:版本号
+ -->
+    <jsp path="res/form/{0}/case_{1}"/>
+    <jszy ver="1.0">
+        <page ver="1.0">
+            <item name="attendance" remark="出勤" multiple="N"/>
+            <item name="leave" remark="病事假" multiple="N"/>
+            <item name="attendanceEva" select="Y" remark="考勤结果" multiple="N"/>
+            <item name="service" select="Y" remark="服务态度、爱伤观念" multiple="N"/>
+            <item name="workAttitude" select="Y" remark="工作认真负责、无差错" multiple="N"/>
+            <item name="style" select="Y" remark="医疗作风端正、廉洁行医" multiple="N"/>
+            <item name="unite" select="Y" remark="团结协作、遵守制度" multiple="N"/>
+            <item name="serviceEva" select="Y" remark="医德医风结果" multiple="N"/>
+            <item name="examination" select="Y" remark="接诊、问诊、体检" multiple="N"/>
+            <item name="communicate" select="Y" remark="医患交往（沟通技巧）" multiple="N"/>
+            <item name="assessment" select="Y" remark="整体性健康评估" multiple="N"/>
+            <item name="deal" select="Y" remark="主要健康问题的处理" multiple="N"/>
+            <item name="write" select="Y" remark="健康档案（病历）的使用和书写" multiple="N"/>
+            <item name="standard" select="Y" remark="社区用药规范性" multiple="N"/>
+            <item name="renderService" select="Y" remark="提供以病人为中心的整体性服务" multiple="N"/>
+            <item name="examinationEva" select="Y" remark="全科医疗门诊结果" multiple="N"/>
+            <item name="information" select="Y" remark="社区基线调查、基础信息收集" multiple="N"/>
+            <item name="diagnosis" select="Y" remark="社区诊断报告" multiple="N"/>
+            <item name="informationEva" select="Y" remark="社区卫生调查结果" multiple="N"/>
+            <item name="hypertension" select="Y" remark="高血压、糖尿病患者的筛查" multiple="N"/>
+            <item name="healthEducation" select="Y" remark="危险因素评价、健康教育" multiple="N"/>
+            <item name="programme" select="Y" remark="干预治疗方案的制订" multiple="N"/>
+            <item name="interview" select="Y" remark="家庭访视全过程质量检测评价能力" multiple="N"/>
+            <item name="apply" select="Y" remark="健康档案的使用" multiple="N"/>
+            <item name="hypertensionEva" select="Y" remark="社区慢病管理结果" multiple="N"/>
+            <item name="infection" select="Y" remark="社区传染病管理" multiple="N"/>
+            <item name="healthService" select="Y" remark="人群健康服务" multiple="N"/>
+            <item name="infectionEva" select="Y" remark="传染病防治结果" multiple="N"/>
+            <item name="child" select="Y" remark="儿童保健" multiple="N"/>
+            <item name="aged" select="Y" remark="老年人保健" multiple="N"/>
+            <item name="women" select="Y" remark="妇女保健" multiple="N"/>
+            <item name="disabled" select="Y" remark="残疾人保健" multiple="N"/>
+            <item name="childEva" select="Y" remark="社区重点人群保健结果" multiple="N"/>
+            <item name="quality" select="Y" remark="社区卫生服务质量管理评价水平" multiple="N"/>
+            <item name="dispute" select="Y" remark="医疗纠纷防范" multiple="N"/>
+            <item name="routine" select="Y" remark="社区卫生服务机构运行常规管理参与既熟悉" multiple="N"/>
+            <item name="topic" select="Y" remark="提出、参与社区卫生服务课题研究" multiple="N"/>
+            <item name="qualityEva" select="Y" remark="社区卫生服务管理结果" multiple="N"/>
+            <item name="frequency" remark="参加各种形式学习" multiple="N"/>
+            <item name="teach" select="Y" remark="教学能力" multiple="N"/>
+            <item name="evaluation" select="Y" remark="考核总结果" multiple="N"/>
+            <item name="opinion" remark="考核意见" multiple="N"/>
+        </page>
+    </jszy>
+    <gzzyyy ver="1.0">
+        <page ver="1.0">
+            <item name="attendance" remark="出勤" multiple="N"/>
+            <item name="leave" remark="病事假" multiple="N"/>
+            <item name="attendanceEva" select="Y" remark="考勤结果" multiple="N"/>
+            <item name="service" select="Y" remark="服务态度、爱伤观念" multiple="N"/>
+            <item name="workAttitude" select="Y" remark="工作认真负责、无差错" multiple="N"/>
+            <item name="style" select="Y" remark="医疗作风端正、廉洁行医" multiple="N"/>
+            <item name="unite" select="Y" remark="团结协作、遵守制度" multiple="N"/>
+            <item name="serviceEva" select="Y" remark="医德医风结果" multiple="N"/>
+            <item name="examination" select="Y" remark="接诊、问诊、体检" multiple="N"/>
+            <item name="communicate" select="Y" remark="医患交往（沟通技巧）" multiple="N"/>
+            <item name="assessment" select="Y" remark="整体性健康评估" multiple="N"/>
+            <item name="deal" select="Y" remark="主要健康问题的处理" multiple="N"/>
+            <item name="write" select="Y" remark="健康档案（病历）的使用和书写" multiple="N"/>
+            <item name="standard" select="Y" remark="社区用药规范性" multiple="N"/>
+            <item name="renderService" select="Y" remark="提供以病人为中心的整体性服务" multiple="N"/>
+            <item name="examinationEva" select="Y" remark="全科医疗门诊结果" multiple="N"/>
+            <item name="information" select="Y" remark="社区基线调查、基础信息收集" multiple="N"/>
+            <item name="diagnosis" select="Y" remark="社区诊断报告" multiple="N"/>
+            <item name="informationEva" select="Y" remark="社区卫生调查结果" multiple="N"/>
+            <item name="hypertension" select="Y" remark="高血压、糖尿病患者的筛查" multiple="N"/>
+            <item name="healthEducation" select="Y" remark="危险因素评价、健康教育" multiple="N"/>
+            <item name="programme" select="Y" remark="干预治疗方案的制订" multiple="N"/>
+            <item name="interview" select="Y" remark="家庭访视全过程质量检测评价能力" multiple="N"/>
+            <item name="apply" select="Y" remark="健康档案的使用" multiple="N"/>
+            <item name="hypertensionEva" select="Y" remark="社区慢病管理结果" multiple="N"/>
+            <item name="infection" select="Y" remark="社区传染病管理" multiple="N"/>
+            <item name="healthService" select="Y" remark="人群健康服务" multiple="N"/>
+            <item name="infectionEva" select="Y" remark="传染病防治结果" multiple="N"/>
+            <item name="child" select="Y" remark="儿童保健" multiple="N"/>
+            <item name="aged" select="Y" remark="老年人保健" multiple="N"/>
+            <item name="women" select="Y" remark="妇女保健" multiple="N"/>
+            <item name="disabled" select="Y" remark="残疾人保健" multiple="N"/>
+            <item name="childEva" select="Y" remark="社区重点人群保健结果" multiple="N"/>
+            <item name="quality" select="Y" remark="社区卫生服务质量管理评价水平" multiple="N"/>
+            <item name="dispute" select="Y" remark="医疗纠纷防范" multiple="N"/>
+            <item name="routine" select="Y" remark="社区卫生服务机构运行常规管理参与既熟悉" multiple="N"/>
+            <item name="topic" select="Y" remark="提出、参与社区卫生服务课题研究" multiple="N"/>
+            <item name="qualityEva" select="Y" remark="社区卫生服务管理结果" multiple="N"/>
+            <item name="frequency" remark="参加各种形式学习" multiple="N"/>
+            <item name="teach" select="Y" remark="教学能力" multiple="N"/>
+            <item name="evaluation" select="Y" remark="考核总结果" multiple="N"/>
+            <item name="opinion" remark="考核意见" multiple="N"/>
+        </page>
+    </gzzyyy>
+</jspForm>
+

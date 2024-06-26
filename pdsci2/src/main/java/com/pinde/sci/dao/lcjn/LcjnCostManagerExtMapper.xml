@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.lcjn.LcjnCostManagerExtMapper">
+
+	<select id="searchCfgByCourseFlow" resultMap="com.pinde.sci.dao.base.LcjnSkillCfgDetailMapper.BaseResultMap">
+		select
+		lscd.record_flow recordFlow,
+		lscd.skill_flow skillFlow,
+		lscd.skill_name skillName,
+		lscd.Materia_FLOW materiaFlow,
+		lscd.USE_NUM useNum
+		from lcjn_skill_cfg_detail lscd,lcjn_course_skill
+		where lscd.skill_flow = lcjn_course_skill.skill_flow AND
+		lscd.record_status = 'Y' and lcjn_course_skill.record_status = 'Y'
+		<if test='courseFlow!=null and courseFlow!=""'>
+			and lcjn_course_skill.course_Flow = #{courseFlow}
+		</if>
+	</select>
+</mapper>

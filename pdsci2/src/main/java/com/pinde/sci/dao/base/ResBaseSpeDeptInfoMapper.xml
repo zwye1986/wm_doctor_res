@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.ResBaseSpeDeptInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResBaseSpeDeptInfo" >
+    <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+    <result column="SPE_FLOW" property="speFlow" jdbcType="VARCHAR" />
+    <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+    <result column="STANDARD_DEPT_NAME" property="standardDeptName" jdbcType="VARCHAR" />
+    <result column="STANDARD_DEPT_ID" property="standardDeptId" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="ORDINAL" property="ordinal" jdbcType="DECIMAL" />
+    <result column="ARR_NUM" property="arrNum" jdbcType="VARCHAR" />
+    <result column="ARR_ONE" property="arrOne" jdbcType="VARCHAR" />
+    <result column="ARR_TWO" property="arrTwo" jdbcType="VARCHAR" />
+    <result column="ARR_THREE" property="arrThree" jdbcType="VARCHAR" />
+    <result column="ARR_FOUR" property="arrFour" jdbcType="VARCHAR" />
+    <result column="ARR_ONE_CLO" property="arrOneClo" jdbcType="VARCHAR" />
+    <result column="ARR_ONE_ROW" property="arrOneRow" jdbcType="VARCHAR" />
+    <result column="ARR_TWO_CLO" property="arrTwoClo" jdbcType="VARCHAR" />
+    <result column="ARR_TWO_ROW" property="arrTwoRow" jdbcType="VARCHAR" />
+    <result column="ARR_THREE_CLO" property="arrThreeClo" jdbcType="VARCHAR" />
+    <result column="ARR_THREE_ROW" property="arrThreeRow" jdbcType="VARCHAR" />
+    <result column="ARR_FOUR_CLO" property="arrFourClo" jdbcType="VARCHAR" />
+    <result column="ARR_FOUR_ROW" property="arrFourRow" jdbcType="VARCHAR" />
+    <result column="IS_TH" property="isTh" jdbcType="VARCHAR" />
+    <result column="IS_TD" property="isTd" jdbcType="VARCHAR" />
+    <result column="ARR_NAME" property="arrName" jdbcType="VARCHAR" />
+    <result column="PLA_INFO" property="plaInfo" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="ARR_FIVE" property="arrFive" jdbcType="VARCHAR" />
+    <result column="ARR_FIVE_CLO" property="arrFiveClo" jdbcType="VARCHAR" />
+    <result column="ARR_FIVE_ROW" property="arrFiveRow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RECORD_FLOW, SPE_FLOW, SPE_NAME, STANDARD_DEPT_NAME, STANDARD_DEPT_ID, TYPE, ORDINAL, 
+    ARR_NUM, ARR_ONE, ARR_TWO, ARR_THREE, ARR_FOUR, ARR_ONE_CLO, ARR_ONE_ROW, ARR_TWO_CLO, 
+    ARR_TWO_ROW, ARR_THREE_CLO, ARR_THREE_ROW, ARR_FOUR_CLO, ARR_FOUR_ROW, IS_TH, IS_TD, 
+    ARR_NAME, PLA_INFO, RECORD_STATUS, ARR_FIVE, ARR_FIVE_CLO, ARR_FIVE_ROW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResBaseSpeDeptInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_BASE_SPE_DEPT_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_BASE_SPE_DEPT_INFO
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.RES_BASE_SPE_DEPT_INFO
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResBaseSpeDeptInfoExample" >
+    delete from PDSCI.RES_BASE_SPE_DEPT_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResBaseSpeDeptInfo" >
+    insert into PDSCI.RES_BASE_SPE_DEPT_INFO (RECORD_FLOW, SPE_FLOW, SPE_NAME, 
+      STANDARD_DEPT_NAME, STANDARD_DEPT_ID, TYPE, 
+      ORDINAL, ARR_NUM, ARR_ONE, 
+      ARR_TWO, ARR_THREE, ARR_FOUR, 
+      ARR_ONE_CLO, ARR_ONE_ROW, ARR_TWO_CLO, 
+      ARR_TWO_ROW, ARR_THREE_CLO, ARR_THREE_ROW, 
+      ARR_FOUR_CLO, ARR_FOUR_ROW, IS_TH, 
+      IS_TD, ARR_NAME, PLA_INFO, 
+      RECORD_STATUS, ARR_FIVE, ARR_FIVE_CLO, 
+      ARR_FIVE_ROW)
+    values (#{recordFlow,jdbcType=VARCHAR}, #{speFlow,jdbcType=VARCHAR}, #{speName,jdbcType=VARCHAR}, 
+      #{standardDeptName,jdbcType=VARCHAR}, #{standardDeptId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{ordinal,jdbcType=DECIMAL}, #{arrNum,jdbcType=VARCHAR}, #{arrOne,jdbcType=VARCHAR}, 
+      #{arrTwo,jdbcType=VARCHAR}, #{arrThree,jdbcType=VARCHAR}, #{arrFour,jdbcType=VARCHAR}, 
+      #{arrOneClo,jdbcType=VARCHAR}, #{arrOneRow,jdbcType=VARCHAR}, #{arrTwoClo,jdbcType=VARCHAR}, 
+      #{arrTwoRow,jdbcType=VARCHAR}, #{arrThreeClo,jdbcType=VARCHAR}, #{arrThreeRow,jdbcType=VARCHAR}, 
+      #{arrFourClo,jdbcType=VARCHAR}, #{arrFourRow,jdbcType=VARCHAR}, #{isTh,jdbcType=VARCHAR}, 
+      #{isTd,jdbcType=VARCHAR}, #{arrName,jdbcType=VARCHAR}, #{plaInfo,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{arrFive,jdbcType=VARCHAR}, #{arrFiveClo,jdbcType=VARCHAR}, 
+      #{arrFiveRow,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResBaseSpeDeptInfo" >
+    insert into PDSCI.RES_BASE_SPE_DEPT_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        RECORD_FLOW,
+      </if>
+      <if test="speFlow != null" >
+        SPE_FLOW,
+      </if>
+      <if test="speName != null" >
+        SPE_NAME,
+      </if>
+      <if test="standardDeptName != null" >
+        STANDARD_DEPT_NAME,
+      </if>
+      <if test="standardDeptId != null" >
+        STANDARD_DEPT_ID,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="ordinal != null" >
+        ORDINAL,
+      </if>
+      <if test="arrNum != null" >
+        ARR_NUM,
+      </if>
+      <if test="arrOne != null" >
+        ARR_ONE,
+      </if>
+      <if test="arrTwo != null" >
+        ARR_TWO,
+      </if>
+      <if test="arrThree != null" >
+        ARR_THREE,
+      </if>
+      <if test="arrFour != null" >
+        ARR_FOUR,
+      </if>
+      <if test="arrOneClo != null" >
+        ARR_ONE_CLO,
+      </if>
+      <if test="arrOneRow != null" >
+        ARR_ONE_ROW,
+      </if>
+      <if test="arrTwoClo != null" >
+        ARR_TWO_CLO,
+      </if>
+      <if test="arrTwoRow != null" >
+        ARR_TWO_ROW,
+      </if>
+      <if test="arrThreeClo != null" >
+        ARR_THREE_CLO,
+      </if>
+      <if test="arrThreeRow != null" >
+        ARR_THREE_ROW,
+      </if>
+      <if test="arrFourClo != null" >
+        ARR_FOUR_CLO,
+      </if>
+      <if test="arrFourRow != null" >
+        ARR_FOUR_ROW,
+      </if>
+      <if test="isTh != null" >
+        IS_TH,
+      </if>
+      <if test="isTd != null" >
+        IS_TD,
+      </if>
+      <if test="arrName != null" >
+        ARR_NAME,
+      </if>
+      <if test="plaInfo != null" >
+        PLA_INFO,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="arrFive != null" >
+        ARR_FIVE,
+      </if>
+      <if test="arrFiveClo != null" >
+        ARR_FIVE_CLO,
+      </if>
+      <if test="arrFiveRow != null" >
+        ARR_FIVE_ROW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="speFlow != null" >
+        #{speFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        #{speName,jdbcType=VARCHAR},
+      </if>
+      <if test="standardDeptName != null" >
+        #{standardDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="standardDeptId != null" >
+        #{standardDeptId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="ordinal != null" >
+        #{ordinal,jdbcType=DECIMAL},
+      </if>
+      <if test="arrNum != null" >
+        #{arrNum,jdbcType=VARCHAR},
+      </if>
+      <if test="arrOne != null" >
+        #{arrOne,jdbcType=VARCHAR},
+      </if>
+      <if test="arrTwo != null" >
+        #{arrTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="arrThree != null" >
+        #{arrThree,jdbcType=VARCHAR},
+      </if>
+      <if test="arrFour != null" >
+        #{arrFour,jdbcType=VARCHAR},
+      </if>
+      <if test="arrOneClo != null" >
+        #{arrOneClo,jdbcType=VARCHAR},
+      </if>
+      <if test="arrOneRow != null" >
+        #{arrOneRow,jdbcType=VARCHAR},
+      </if>
+      <if test="arrTwoClo != null" >
+        #{arrTwoClo,jdbcType=VARCHAR},
+      </if>
+      <if test="arrTwoRow != null" >
+        #{arrTwoRow,jdbcType=VARCHAR},
+      </if>
+      <if test="arrThreeClo != null" >
+        #{arrThreeClo,jdbcType=VARCHAR},
+      </if>
+      <if test="arrThreeRow != null" >
+        #{arrThreeRow,jdbcType=VARCHAR},
+      </if>
+      <if test="arrFourClo != null" >
+        #{arrFourClo,jdbcType=VARCHAR},
+      </if>
+      <if test="arrFourRow != null" >
+        #{arrFourRow,jdbcType=VARCHAR},
+      </if>
+      <if test="isTh != null" >
+        #{isTh,jdbcType=VARCHAR},
+      </if>
+      <if test="isTd != null" >
+        #{isTd,jdbcType=VARCHAR},
+      </if>
+      <if test="arrName != null" >
+        #{arrName,jdbcType=VARCHAR},
+      </if>
+      <if test="plaInfo != null" >
+        #{plaInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="arrFive != null" >
+        #{arrFive,jdbcType=VARCHAR},
+      </if>
+      <if test="arrFiveClo != null" >
+        #{arrFiveClo,jdbcType=VARCHAR},
+      </if>
+      <if test="arrFiveRow != null" >
+        #{arrFiveRow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResBaseSpeDeptInfoExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.RES_BASE_SPE_DEPT_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.RES_BASE_SPE_DEPT_INFO
+    <set >
+      <if test="record.recordFlow != null" >
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speFlow != null" >
+        SPE_FLOW = #{record.speFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speName != null" >
+        SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.standardDeptName != null" >
+        STANDARD_DEPT_NAME = #{record.standardDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.standardDeptId != null" >
+        STANDARD_DEPT_ID = #{record.standardDeptId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        TYPE = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ordinal != null" >
+        ORDINAL = #{record.ordinal,jdbcType=DECIMAL},
+      </if>
+      <if test="record.arrNum != null" >
+        ARR_NUM = #{record.arrNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrOne != null" >
+        ARR_ONE = #{record.arrOne,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrTwo != null" >
+        ARR_TWO = #{record.arrTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrThree != null" >
+        ARR_THREE = #{record.arrThree,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrFour != null" >
+        ARR_FOUR = #{record.arrFour,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrOneClo != null" >
+        ARR_ONE_CLO = #{record.arrOneClo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrOneRow != null" >
+        ARR_ONE_ROW = #{record.arrOneRow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrTwoClo != null" >
+        ARR_TWO_CLO = #{record.arrTwoClo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrTwoRow != null" >
+        ARR_TWO_ROW = #{record.arrTwoRow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrThreeClo != null" >
+        ARR_THREE_CLO = #{record.arrThreeClo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrThreeRow != null" >
+        ARR_THREE_ROW = #{record.arrThreeRow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrFourClo != null" >
+        ARR_FOUR_CLO = #{record.arrFourClo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrFourRow != null" >
+        ARR_FOUR_ROW = #{record.arrFourRow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isTh != null" >
+        IS_TH = #{record.isTh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isTd != null" >
+        IS_TD = #{record.isTd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrName != null" >
+        ARR_NAME = #{record.arrName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.plaInfo != null" >
+        PLA_INFO = #{record.plaInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrFive != null" >
+        ARR_FIVE = #{record.arrFive,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrFiveClo != null" >
+        ARR_FIVE_CLO = #{record.arrFiveClo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrFiveRow != null" >
+        ARR_FIVE_ROW = #{record.arrFiveRow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.RES_BASE_SPE_DEPT_INFO
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      SPE_FLOW = #{record.speFlow,jdbcType=VARCHAR},
+      SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      STANDARD_DEPT_NAME = #{record.standardDeptName,jdbcType=VARCHAR},
+      STANDARD_DEPT_ID = #{record.standardDeptId,jdbcType=VARCHAR},
+      TYPE = #{record.type,jdbcType=VARCHAR},
+      ORDINAL = #{record.ordinal,jdbcType=DECIMAL},
+      ARR_NUM = #{record.arrNum,jdbcType=VARCHAR},
+      ARR_ONE = #{record.arrOne,jdbcType=VARCHAR},
+      ARR_TWO = #{record.arrTwo,jdbcType=VARCHAR},
+      ARR_THREE = #{record.arrThree,jdbcType=VARCHAR},
+      ARR_FOUR = #{record.arrFour,jdbcType=VARCHAR},
+      ARR_ONE_CLO = #{record.arrOneClo,jdbcType=VARCHAR},
+      ARR_ONE_ROW = #{record.arrOneRow,jdbcType=VARCHAR},
+      ARR_TWO_CLO = #{record.arrTwoClo,jdbcType=VARCHAR},
+      ARR_TWO_ROW = #{record.arrTwoRow,jdbcType=VARCHAR},
+      ARR_THREE_CLO = #{record.arrThreeClo,jdbcType=VARCHAR},
+      ARR_THREE_ROW = #{record.arrThreeRow,jdbcType=VARCHAR},
+      ARR_FOUR_CLO = #{record.arrFourClo,jdbcType=VARCHAR},
+      ARR_FOUR_ROW = #{record.arrFourRow,jdbcType=VARCHAR},
+      IS_TH = #{record.isTh,jdbcType=VARCHAR},
+      IS_TD = #{record.isTd,jdbcType=VARCHAR},
+      ARR_NAME = #{record.arrName,jdbcType=VARCHAR},
+      PLA_INFO = #{record.plaInfo,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      ARR_FIVE = #{record.arrFive,jdbcType=VARCHAR},
+      ARR_FIVE_CLO = #{record.arrFiveClo,jdbcType=VARCHAR},
+      ARR_FIVE_ROW = #{record.arrFiveRow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResBaseSpeDeptInfo" >
+    update PDSCI.RES_BASE_SPE_DEPT_INFO
+    <set >
+      <if test="speFlow != null" >
+        SPE_FLOW = #{speFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        SPE_NAME = #{speName,jdbcType=VARCHAR},
+      </if>
+      <if test="standardDeptName != null" >
+        STANDARD_DEPT_NAME = #{standardDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="standardDeptId != null" >
+        STANDARD_DEPT_ID = #{standardDeptId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="ordinal != null" >
+        ORDINAL = #{ordinal,jdbcType=DECIMAL},
+      </if>
+      <if test="arrNum != null" >
+        ARR_NUM = #{arrNum,jdbcType=VARCHAR},
+      </if>
+      <if test="arrOne != null" >
+        ARR_ONE = #{arrOne,jdbcType=VARCHAR},
+      </if>
+      <if test="arrTwo != null" >
+        ARR_TWO = #{arrTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="arrThree != null" >
+        ARR_THREE = #{arrThree,jdbcType=VARCHAR},
+      </if>
+      <if test="arrFour != null" >
+        ARR_FOUR = #{arrFour,jdbcType=VARCHAR},
+      </if>
+      <if test="arrOneClo != null" >
+        ARR_ONE_CLO = #{arrOneClo,jdbcType=VARCHAR},
+      </if>
+      <if test="arrOneRow != null" >
+        ARR_ONE_ROW = #{arrOneRow,jdbcType=VARCHAR},
+      </if>
+      <if test="arrTwoClo != null" >
+        ARR_TWO_CLO = #{arrTwoClo,jdbcType=VARCHAR},
+      </if>
+      <if test="arrTwoRow != null" >
+        ARR_TWO_ROW = #{arrTwoRow,jdbcType=VARCHAR},
+      </if>
+      <if test="arrThreeClo != null" >
+        ARR_THREE_CLO = #{arrThreeClo,jdbcType=VARCHAR},
+      </if>
+      <if test="arrThreeRow != null" >
+        ARR_THREE_ROW = #{arrThreeRow,jdbcType=VARCHAR},
+      </if>
+      <if test="arrFourClo != null" >
+        ARR_FOUR_CLO = #{arrFourClo,jdbcType=VARCHAR},
+      </if>
+      <if test="arrFourRow != null" >
+        ARR_FOUR_ROW = #{arrFourRow,jdbcType=VARCHAR},
+      </if>
+      <if test="isTh != null" >
+        IS_TH = #{isTh,jdbcType=VARCHAR},
+      </if>
+      <if test="isTd != null" >
+        IS_TD = #{isTd,jdbcType=VARCHAR},
+      </if>
+      <if test="arrName != null" >
+        ARR_NAME = #{arrName,jdbcType=VARCHAR},
+      </if>
+      <if test="plaInfo != null" >
+        PLA_INFO = #{plaInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="arrFive != null" >
+        ARR_FIVE = #{arrFive,jdbcType=VARCHAR},
+      </if>
+      <if test="arrFiveClo != null" >
+        ARR_FIVE_CLO = #{arrFiveClo,jdbcType=VARCHAR},
+      </if>
+      <if test="arrFiveRow != null" >
+        ARR_FIVE_ROW = #{arrFiveRow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResBaseSpeDeptInfo" >
+    update PDSCI.RES_BASE_SPE_DEPT_INFO
+    set SPE_FLOW = #{speFlow,jdbcType=VARCHAR},
+      SPE_NAME = #{speName,jdbcType=VARCHAR},
+      STANDARD_DEPT_NAME = #{standardDeptName,jdbcType=VARCHAR},
+      STANDARD_DEPT_ID = #{standardDeptId,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      ORDINAL = #{ordinal,jdbcType=DECIMAL},
+      ARR_NUM = #{arrNum,jdbcType=VARCHAR},
+      ARR_ONE = #{arrOne,jdbcType=VARCHAR},
+      ARR_TWO = #{arrTwo,jdbcType=VARCHAR},
+      ARR_THREE = #{arrThree,jdbcType=VARCHAR},
+      ARR_FOUR = #{arrFour,jdbcType=VARCHAR},
+      ARR_ONE_CLO = #{arrOneClo,jdbcType=VARCHAR},
+      ARR_ONE_ROW = #{arrOneRow,jdbcType=VARCHAR},
+      ARR_TWO_CLO = #{arrTwoClo,jdbcType=VARCHAR},
+      ARR_TWO_ROW = #{arrTwoRow,jdbcType=VARCHAR},
+      ARR_THREE_CLO = #{arrThreeClo,jdbcType=VARCHAR},
+      ARR_THREE_ROW = #{arrThreeRow,jdbcType=VARCHAR},
+      ARR_FOUR_CLO = #{arrFourClo,jdbcType=VARCHAR},
+      ARR_FOUR_ROW = #{arrFourRow,jdbcType=VARCHAR},
+      IS_TH = #{isTh,jdbcType=VARCHAR},
+      IS_TD = #{isTd,jdbcType=VARCHAR},
+      ARR_NAME = #{arrName,jdbcType=VARCHAR},
+      PLA_INFO = #{plaInfo,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      ARR_FIVE = #{arrFive,jdbcType=VARCHAR},
+      ARR_FIVE_CLO = #{arrFiveClo,jdbcType=VARCHAR},
+      ARR_FIVE_ROW = #{arrFiveRow,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.ResScheduleScoreMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResScheduleScore" >
+    <id column="SCHEDULE_FLOW" property="scheduleFlow" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+    <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+    <result column="ITEM_ID" property="itemId" jdbcType="VARCHAR" />
+    <result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR" />
+    <result column="EVALUATION_YEAR" property="evaluationYear" jdbcType="VARCHAR" />
+    <result column="SCORE" property="score" jdbcType="VARCHAR" />
+    <result column="ITEM_DETAILED" property="itemDetailed" jdbcType="VARCHAR" />
+    <result column="GRADE" property="grade" jdbcType="VARCHAR" />
+    <result column="SCORE_TYPE" property="scoreType" jdbcType="VARCHAR" />
+    <result column="FILE_ROUTE" property="fileRoute" jdbcType="VARCHAR" />
+    <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="SUBJECT_FLOW" property="subjectFlow" jdbcType="VARCHAR" />
+    <result column="SUBJECT_NAME" property="subjectName" jdbcType="VARCHAR" />
+    <result column="DEDUCT_POINTS" property="deductPoints" jdbcType="VARCHAR" />
+    <result column="SUBSTANDARD" property="substandard" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SCHEDULE_FLOW, ORG_FLOW, ORG_NAME, SPE_ID, SPE_NAME, ITEM_ID, ITEM_NAME, EVALUATION_YEAR, 
+    SCORE, ITEM_DETAILED, GRADE, SCORE_TYPE, FILE_ROUTE, USER_FLOW, RECORD_STATUS, CREATE_TIME, 
+    CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, SUBJECT_FLOW, SUBJECT_NAME, DEDUCT_POINTS, 
+    SUBSTANDARD
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResScheduleScoreExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_SCHEDULE_SCORE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_SCHEDULE_SCORE
+    where SCHEDULE_FLOW = #{scheduleFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.RES_SCHEDULE_SCORE
+    where SCHEDULE_FLOW = #{scheduleFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResScheduleScoreExample" >
+    delete from PDSCI.RES_SCHEDULE_SCORE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResScheduleScore" >
+    insert into PDSCI.RES_SCHEDULE_SCORE (SCHEDULE_FLOW, ORG_FLOW, ORG_NAME, 
+      SPE_ID, SPE_NAME, ITEM_ID, 
+      ITEM_NAME, EVALUATION_YEAR, SCORE, 
+      ITEM_DETAILED, GRADE, SCORE_TYPE, 
+      FILE_ROUTE, USER_FLOW, RECORD_STATUS, 
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+      MODIFY_USER_FLOW, SUBJECT_FLOW, SUBJECT_NAME, 
+      DEDUCT_POINTS, SUBSTANDARD)
+    values (#{scheduleFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, 
+      #{speId,jdbcType=VARCHAR}, #{speName,jdbcType=VARCHAR}, #{itemId,jdbcType=VARCHAR}, 
+      #{itemName,jdbcType=VARCHAR}, #{evaluationYear,jdbcType=VARCHAR}, #{score,jdbcType=VARCHAR}, 
+      #{itemDetailed,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, #{scoreType,jdbcType=VARCHAR}, 
+      #{fileRoute,jdbcType=VARCHAR}, #{userFlow,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
+      #{modifyUserFlow,jdbcType=VARCHAR}, #{subjectFlow,jdbcType=VARCHAR}, #{subjectName,jdbcType=VARCHAR}, 
+      #{deductPoints,jdbcType=VARCHAR}, #{substandard,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResScheduleScore" >
+    insert into PDSCI.RES_SCHEDULE_SCORE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scheduleFlow != null" >
+        SCHEDULE_FLOW,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="speId != null" >
+        SPE_ID,
+      </if>
+      <if test="speName != null" >
+        SPE_NAME,
+      </if>
+      <if test="itemId != null" >
+        ITEM_ID,
+      </if>
+      <if test="itemName != null" >
+        ITEM_NAME,
+      </if>
+      <if test="evaluationYear != null" >
+        EVALUATION_YEAR,
+      </if>
+      <if test="score != null" >
+        SCORE,
+      </if>
+      <if test="itemDetailed != null" >
+        ITEM_DETAILED,
+      </if>
+      <if test="grade != null" >
+        GRADE,
+      </if>
+      <if test="scoreType != null" >
+        SCORE_TYPE,
+      </if>
+      <if test="fileRoute != null" >
+        FILE_ROUTE,
+      </if>
+      <if test="userFlow != null" >
+        USER_FLOW,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="subjectFlow != null" >
+        SUBJECT_FLOW,
+      </if>
+      <if test="subjectName != null" >
+        SUBJECT_NAME,
+      </if>
+      <if test="deductPoints != null" >
+        DEDUCT_POINTS,
+      </if>
+      <if test="substandard != null" >
+        SUBSTANDARD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scheduleFlow != null" >
+        #{scheduleFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="speId != null" >
+        #{speId,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        #{speName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null" >
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null" >
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationYear != null" >
+        #{evaluationYear,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=VARCHAR},
+      </if>
+      <if test="itemDetailed != null" >
+        #{itemDetailed,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreType != null" >
+        #{scoreType,jdbcType=VARCHAR},
+      </if>
+      <if test="fileRoute != null" >
+        #{fileRoute,jdbcType=VARCHAR},
+      </if>
+      <if test="userFlow != null" >
+        #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectFlow != null" >
+        #{subjectFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null" >
+        #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="deductPoints != null" >
+        #{deductPoints,jdbcType=VARCHAR},
+      </if>
+      <if test="substandard != null" >
+        #{substandard,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResScheduleScoreExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.RES_SCHEDULE_SCORE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.RES_SCHEDULE_SCORE
+    <set >
+      <if test="record.scheduleFlow != null" >
+        SCHEDULE_FLOW = #{record.scheduleFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speId != null" >
+        SPE_ID = #{record.speId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speName != null" >
+        SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemId != null" >
+        ITEM_ID = #{record.itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemName != null" >
+        ITEM_NAME = #{record.itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evaluationYear != null" >
+        EVALUATION_YEAR = #{record.evaluationYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.score != null" >
+        SCORE = #{record.score,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemDetailed != null" >
+        ITEM_DETAILED = #{record.itemDetailed,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grade != null" >
+        GRADE = #{record.grade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scoreType != null" >
+        SCORE_TYPE = #{record.scoreType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileRoute != null" >
+        FILE_ROUTE = #{record.fileRoute,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userFlow != null" >
+        USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectFlow != null" >
+        SUBJECT_FLOW = #{record.subjectFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectName != null" >
+        SUBJECT_NAME = #{record.subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deductPoints != null" >
+        DEDUCT_POINTS = #{record.deductPoints,jdbcType=VARCHAR},
+      </if>
+      <if test="record.substandard != null" >
+        SUBSTANDARD = #{record.substandard,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.RES_SCHEDULE_SCORE
+    set SCHEDULE_FLOW = #{record.scheduleFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      SPE_ID = #{record.speId,jdbcType=VARCHAR},
+      SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      ITEM_ID = #{record.itemId,jdbcType=VARCHAR},
+      ITEM_NAME = #{record.itemName,jdbcType=VARCHAR},
+      EVALUATION_YEAR = #{record.evaluationYear,jdbcType=VARCHAR},
+      SCORE = #{record.score,jdbcType=VARCHAR},
+      ITEM_DETAILED = #{record.itemDetailed,jdbcType=VARCHAR},
+      GRADE = #{record.grade,jdbcType=VARCHAR},
+      SCORE_TYPE = #{record.scoreType,jdbcType=VARCHAR},
+      FILE_ROUTE = #{record.fileRoute,jdbcType=VARCHAR},
+      USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      SUBJECT_FLOW = #{record.subjectFlow,jdbcType=VARCHAR},
+      SUBJECT_NAME = #{record.subjectName,jdbcType=VARCHAR},
+      DEDUCT_POINTS = #{record.deductPoints,jdbcType=VARCHAR},
+      SUBSTANDARD = #{record.substandard,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResScheduleScore" >
+    update PDSCI.RES_SCHEDULE_SCORE
+    <set >
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="speId != null" >
+        SPE_ID = #{speId,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        SPE_NAME = #{speName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null" >
+        ITEM_ID = #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null" >
+        ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationYear != null" >
+        EVALUATION_YEAR = #{evaluationYear,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        SCORE = #{score,jdbcType=VARCHAR},
+      </if>
+      <if test="itemDetailed != null" >
+        ITEM_DETAILED = #{itemDetailed,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        GRADE = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreType != null" >
+        SCORE_TYPE = #{scoreType,jdbcType=VARCHAR},
+      </if>
+      <if test="fileRoute != null" >
+        FILE_ROUTE = #{fileRoute,jdbcType=VARCHAR},
+      </if>
+      <if test="userFlow != null" >
+        USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectFlow != null" >
+        SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null" >
+        SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="deductPoints != null" >
+        DEDUCT_POINTS = #{deductPoints,jdbcType=VARCHAR},
+      </if>
+      <if test="substandard != null" >
+        SUBSTANDARD = #{substandard,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SCHEDULE_FLOW = #{scheduleFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResScheduleScore" >
+    update PDSCI.RES_SCHEDULE_SCORE
+    set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      SPE_ID = #{speId,jdbcType=VARCHAR},
+      SPE_NAME = #{speName,jdbcType=VARCHAR},
+      ITEM_ID = #{itemId,jdbcType=VARCHAR},
+      ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      EVALUATION_YEAR = #{evaluationYear,jdbcType=VARCHAR},
+      SCORE = #{score,jdbcType=VARCHAR},
+      ITEM_DETAILED = #{itemDetailed,jdbcType=VARCHAR},
+      GRADE = #{grade,jdbcType=VARCHAR},
+      SCORE_TYPE = #{scoreType,jdbcType=VARCHAR},
+      FILE_ROUTE = #{fileRoute,jdbcType=VARCHAR},
+      USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR},
+      SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      DEDUCT_POINTS = #{deductPoints,jdbcType=VARCHAR},
+      SUBSTANDARD = #{substandard,jdbcType=VARCHAR}
+    where SCHEDULE_FLOW = #{scheduleFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

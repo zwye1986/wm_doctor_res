@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>	
+	<!-- 360评价患者对住院医师评价 -->
+	<!-- 
+	{0}:表单所属机构(开关控制)
+	{1}:版本号
+ -->
+	<jsp path="res/form/{3}/{0}/360_patient_{1}{2}"></jsp>
+	<!--上海奉贤表单-->
+	<shfx ver="1.0">
+		<page ver="1.0">
+			<item name="studentName" remark="医师姓名" multiple="N"></item>
+			<item name="seeTimes" select="Y" remark="去年一年你看这位医师的次数" multiple="N"></item>
+			<item name="receptionMode" select="Y" remark="这位医师接待你的方式" multiple="N"></item>
+			<item name="care1" select="Y" remark="对患者的关怀1" multiple="N"></item>
+			<item name="care2" select="Y" remark="对患者的关怀2" multiple="N"></item>
+			<item name="care3" select="Y" remark="对患者的关怀3" multiple="N"></item>
+			<item name="care4" select="Y" remark="对患者的关怀4" multiple="N"></item>
+			<item name="care5" select="Y" remark="对患者的关怀5" multiple="N"></item>
+			<item name="care6" select="Y" remark="对患者的关怀6" multiple="N"></item>
+			<item name="care7" select="Y" remark="对患者的关怀7" multiple="N"></item>
+			<item name="morality1" select="Y" remark="职业道德1" multiple="N"></item>
+			<item name="morality2" select="Y" remark="职业道德2" multiple="N"></item>
+			<item name="interpersonal1" select="Y" remark="人际关系和交流能力1" multiple="N"></item>
+			<item name="interpersonal2" select="Y" remark="人际关系和交流能力2" multiple="N"></item>
+			<item name="interpersonal3" select="Y" remark="人际关系和交流能力3" multiple="N"></item>
+			<item name="interpersonal4" select="Y" remark="人际关系和交流能力4" multiple="N"></item>
+			<item name="interpersonal5" select="Y" remark="人际关系和交流能力5" multiple="N"></item>
+			<item name="interpersonal6" select="Y" remark="人际关系和交流能力6" multiple="N"></item>
+			<item name="interpersonal7" select="Y" remark="人际关系和交流能力7" multiple="N"></item>
+			<item name="practice1" select="Y" remark="基于系统的实践1" multiple="N"></item>
+			<item name="practice2" select="Y" remark="基于系统的实践2" multiple="N"></item>
+			<item name="summary1" select="Y" remark="总结1" multiple="N"></item>
+			<item name="summary2" select="Y" remark="总结2" multiple="N"></item>
+			<item name="summary3" select="Y" remark="总结3" multiple="N"></item>
+			<item name="summary4" remark="总结4" multiple="N"></item>
+			<item name="summary5" remark="总结5" multiple="N"></item>
+			<item name="summary6" remark="总结6" multiple="N"></item>
+			<item name="sex" select="Y" remark="性别" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+		</page>
+	</shfx>
+</jspForm>
+

@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.EdcPatientVisitMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.EdcPatientVisit" >
+    <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+    <result column="INPUT_OPER1_FLOW" property="inputOper1Flow" jdbcType="VARCHAR" />
+    <result column="INPUT_OPER1_NAME" property="inputOper1Name" jdbcType="VARCHAR" />
+    <result column="INPUT_OPER1_TIME" property="inputOper1Time" jdbcType="VARCHAR" />
+    <result column="INPUT_OPER1_STATUS_ID" property="inputOper1StatusId" jdbcType="VARCHAR" />
+    <result column="INPUT_OPER1_STATUS_NAME" property="inputOper1StatusName" jdbcType="VARCHAR" />
+    <result column="INPUT_OPER2_FLOW" property="inputOper2Flow" jdbcType="VARCHAR" />
+    <result column="INPUT_OPER2_NAME" property="inputOper2Name" jdbcType="VARCHAR" />
+    <result column="INPUT_OPER2_TIME" property="inputOper2Time" jdbcType="VARCHAR" />
+    <result column="INPUT_OPER2_STATUS_ID" property="inputOper2StatusId" jdbcType="VARCHAR" />
+    <result column="INPUT_OPER2_STATUS_NAME" property="inputOper2StatusName" jdbcType="VARCHAR" />
+    <result column="INPUT_OPER_FLOW" property="inputOperFlow" jdbcType="VARCHAR" />
+    <result column="INPUT_OPER_NAME" property="inputOperName" jdbcType="VARCHAR" />
+    <result column="INPUT_OPER_TIME" property="inputOperTime" jdbcType="VARCHAR" />
+    <result column="INPUT_OPER_STATUS_ID" property="inputOperStatusId" jdbcType="VARCHAR" />
+    <result column="INPUT_OPER_STATUS_NAME" property="inputOperStatusName" jdbcType="VARCHAR" />
+    <result column="SDV_OPER_FLOW" property="sdvOperFlow" jdbcType="VARCHAR" />
+    <result column="SDV_OPER_NAME" property="sdvOperName" jdbcType="VARCHAR" />
+    <result column="SDV_OPER_TIME" property="sdvOperTime" jdbcType="VARCHAR" />
+    <result column="SDV_OPER_STATUS_ID" property="sdvOperStatusId" jdbcType="VARCHAR" />
+    <result column="SDV_OPER_STATUS_NAME" property="sdvOperStatusName" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RECORD_FLOW, INPUT_OPER1_FLOW, INPUT_OPER1_NAME, INPUT_OPER1_TIME, INPUT_OPER1_STATUS_ID, 
+    INPUT_OPER1_STATUS_NAME, INPUT_OPER2_FLOW, INPUT_OPER2_NAME, INPUT_OPER2_TIME, INPUT_OPER2_STATUS_ID, 
+    INPUT_OPER2_STATUS_NAME, INPUT_OPER_FLOW, INPUT_OPER_NAME, INPUT_OPER_TIME, INPUT_OPER_STATUS_ID, 
+    INPUT_OPER_STATUS_NAME, SDV_OPER_FLOW, SDV_OPER_NAME, SDV_OPER_TIME, SDV_OPER_STATUS_ID, 
+    SDV_OPER_STATUS_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+    MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.EdcPatientVisitExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.EDC_PATIENT_VISIT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.EDC_PATIENT_VISIT
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.EDC_PATIENT_VISIT
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.EdcPatientVisitExample" >
+    delete from PDSCI.EDC_PATIENT_VISIT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.EdcPatientVisit" >
+    insert into PDSCI.EDC_PATIENT_VISIT (RECORD_FLOW, INPUT_OPER1_FLOW, INPUT_OPER1_NAME, 
+      INPUT_OPER1_TIME, INPUT_OPER1_STATUS_ID, INPUT_OPER1_STATUS_NAME, 
+      INPUT_OPER2_FLOW, INPUT_OPER2_NAME, INPUT_OPER2_TIME, 
+      INPUT_OPER2_STATUS_ID, INPUT_OPER2_STATUS_NAME, 
+      INPUT_OPER_FLOW, INPUT_OPER_NAME, INPUT_OPER_TIME, 
+      INPUT_OPER_STATUS_ID, INPUT_OPER_STATUS_NAME, 
+      SDV_OPER_FLOW, SDV_OPER_NAME, SDV_OPER_TIME, 
+      SDV_OPER_STATUS_ID, SDV_OPER_STATUS_NAME, RECORD_STATUS, 
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+      MODIFY_USER_FLOW)
+    values (#{recordFlow,jdbcType=VARCHAR}, #{inputOper1Flow,jdbcType=VARCHAR}, #{inputOper1Name,jdbcType=VARCHAR}, 
+      #{inputOper1Time,jdbcType=VARCHAR}, #{inputOper1StatusId,jdbcType=VARCHAR}, #{inputOper1StatusName,jdbcType=VARCHAR}, 
+      #{inputOper2Flow,jdbcType=VARCHAR}, #{inputOper2Name,jdbcType=VARCHAR}, #{inputOper2Time,jdbcType=VARCHAR}, 
+      #{inputOper2StatusId,jdbcType=VARCHAR}, #{inputOper2StatusName,jdbcType=VARCHAR}, 
+      #{inputOperFlow,jdbcType=VARCHAR}, #{inputOperName,jdbcType=VARCHAR}, #{inputOperTime,jdbcType=VARCHAR}, 
+      #{inputOperStatusId,jdbcType=VARCHAR}, #{inputOperStatusName,jdbcType=VARCHAR}, 
+      #{sdvOperFlow,jdbcType=VARCHAR}, #{sdvOperName,jdbcType=VARCHAR}, #{sdvOperTime,jdbcType=VARCHAR}, 
+      #{sdvOperStatusId,jdbcType=VARCHAR}, #{sdvOperStatusName,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
+      #{modifyUserFlow,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.EdcPatientVisit" >
+    insert into PDSCI.EDC_PATIENT_VISIT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        RECORD_FLOW,
+      </if>
+      <if test="inputOper1Flow != null" >
+        INPUT_OPER1_FLOW,
+      </if>
+      <if test="inputOper1Name != null" >
+        INPUT_OPER1_NAME,
+      </if>
+      <if test="inputOper1Time != null" >
+        INPUT_OPER1_TIME,
+      </if>
+      <if test="inputOper1StatusId != null" >
+        INPUT_OPER1_STATUS_ID,
+      </if>
+      <if test="inputOper1StatusName != null" >
+        INPUT_OPER1_STATUS_NAME,
+      </if>
+      <if test="inputOper2Flow != null" >
+        INPUT_OPER2_FLOW,
+      </if>
+      <if test="inputOper2Name != null" >
+        INPUT_OPER2_NAME,
+      </if>
+      <if test="inputOper2Time != null" >
+        INPUT_OPER2_TIME,
+      </if>
+      <if test="inputOper2StatusId != null" >
+        INPUT_OPER2_STATUS_ID,
+      </if>
+      <if test="inputOper2StatusName != null" >
+        INPUT_OPER2_STATUS_NAME,
+      </if>
+      <if test="inputOperFlow != null" >
+        INPUT_OPER_FLOW,
+      </if>
+      <if test="inputOperName != null" >
+        INPUT_OPER_NAME,
+      </if>
+      <if test="inputOperTime != null" >
+        INPUT_OPER_TIME,
+      </if>
+      <if test="inputOperStatusId != null" >
+        INPUT_OPER_STATUS_ID,
+      </if>
+      <if test="inputOperStatusName != null" >
+        INPUT_OPER_STATUS_NAME,
+      </if>
+      <if test="sdvOperFlow != null" >
+        SDV_OPER_FLOW,
+      </if>
+      <if test="sdvOperName != null" >
+        SDV_OPER_NAME,
+      </if>
+      <if test="sdvOperTime != null" >
+        SDV_OPER_TIME,
+      </if>
+      <if test="sdvOperStatusId != null" >
+        SDV_OPER_STATUS_ID,
+      </if>
+      <if test="sdvOperStatusName != null" >
+        SDV_OPER_STATUS_NAME,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper1Flow != null" >
+        #{inputOper1Flow,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper1Name != null" >
+        #{inputOper1Name,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper1Time != null" >
+        #{inputOper1Time,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper1StatusId != null" >
+        #{inputOper1StatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper1StatusName != null" >
+        #{inputOper1StatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper2Flow != null" >
+        #{inputOper2Flow,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper2Name != null" >
+        #{inputOper2Name,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper2Time != null" >
+        #{inputOper2Time,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper2StatusId != null" >
+        #{inputOper2StatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper2StatusName != null" >
+        #{inputOper2StatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOperFlow != null" >
+        #{inputOperFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOperName != null" >
+        #{inputOperName,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOperTime != null" >
+        #{inputOperTime,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOperStatusId != null" >
+        #{inputOperStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOperStatusName != null" >
+        #{inputOperStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="sdvOperFlow != null" >
+        #{sdvOperFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="sdvOperName != null" >
+        #{sdvOperName,jdbcType=VARCHAR},
+      </if>
+      <if test="sdvOperTime != null" >
+        #{sdvOperTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sdvOperStatusId != null" >
+        #{sdvOperStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="sdvOperStatusName != null" >
+        #{sdvOperStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.EdcPatientVisitExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.EDC_PATIENT_VISIT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.EDC_PATIENT_VISIT
+    <set >
+      <if test="record.recordFlow != null" >
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputOper1Flow != null" >
+        INPUT_OPER1_FLOW = #{record.inputOper1Flow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputOper1Name != null" >
+        INPUT_OPER1_NAME = #{record.inputOper1Name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputOper1Time != null" >
+        INPUT_OPER1_TIME = #{record.inputOper1Time,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputOper1StatusId != null" >
+        INPUT_OPER1_STATUS_ID = #{record.inputOper1StatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputOper1StatusName != null" >
+        INPUT_OPER1_STATUS_NAME = #{record.inputOper1StatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputOper2Flow != null" >
+        INPUT_OPER2_FLOW = #{record.inputOper2Flow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputOper2Name != null" >
+        INPUT_OPER2_NAME = #{record.inputOper2Name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputOper2Time != null" >
+        INPUT_OPER2_TIME = #{record.inputOper2Time,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputOper2StatusId != null" >
+        INPUT_OPER2_STATUS_ID = #{record.inputOper2StatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputOper2StatusName != null" >
+        INPUT_OPER2_STATUS_NAME = #{record.inputOper2StatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputOperFlow != null" >
+        INPUT_OPER_FLOW = #{record.inputOperFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputOperName != null" >
+        INPUT_OPER_NAME = #{record.inputOperName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputOperTime != null" >
+        INPUT_OPER_TIME = #{record.inputOperTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputOperStatusId != null" >
+        INPUT_OPER_STATUS_ID = #{record.inputOperStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inputOperStatusName != null" >
+        INPUT_OPER_STATUS_NAME = #{record.inputOperStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sdvOperFlow != null" >
+        SDV_OPER_FLOW = #{record.sdvOperFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sdvOperName != null" >
+        SDV_OPER_NAME = #{record.sdvOperName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sdvOperTime != null" >
+        SDV_OPER_TIME = #{record.sdvOperTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sdvOperStatusId != null" >
+        SDV_OPER_STATUS_ID = #{record.sdvOperStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sdvOperStatusName != null" >
+        SDV_OPER_STATUS_NAME = #{record.sdvOperStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.EDC_PATIENT_VISIT
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      INPUT_OPER1_FLOW = #{record.inputOper1Flow,jdbcType=VARCHAR},
+      INPUT_OPER1_NAME = #{record.inputOper1Name,jdbcType=VARCHAR},
+      INPUT_OPER1_TIME = #{record.inputOper1Time,jdbcType=VARCHAR},
+      INPUT_OPER1_STATUS_ID = #{record.inputOper1StatusId,jdbcType=VARCHAR},
+      INPUT_OPER1_STATUS_NAME = #{record.inputOper1StatusName,jdbcType=VARCHAR},
+      INPUT_OPER2_FLOW = #{record.inputOper2Flow,jdbcType=VARCHAR},
+      INPUT_OPER2_NAME = #{record.inputOper2Name,jdbcType=VARCHAR},
+      INPUT_OPER2_TIME = #{record.inputOper2Time,jdbcType=VARCHAR},
+      INPUT_OPER2_STATUS_ID = #{record.inputOper2StatusId,jdbcType=VARCHAR},
+      INPUT_OPER2_STATUS_NAME = #{record.inputOper2StatusName,jdbcType=VARCHAR},
+      INPUT_OPER_FLOW = #{record.inputOperFlow,jdbcType=VARCHAR},
+      INPUT_OPER_NAME = #{record.inputOperName,jdbcType=VARCHAR},
+      INPUT_OPER_TIME = #{record.inputOperTime,jdbcType=VARCHAR},
+      INPUT_OPER_STATUS_ID = #{record.inputOperStatusId,jdbcType=VARCHAR},
+      INPUT_OPER_STATUS_NAME = #{record.inputOperStatusName,jdbcType=VARCHAR},
+      SDV_OPER_FLOW = #{record.sdvOperFlow,jdbcType=VARCHAR},
+      SDV_OPER_NAME = #{record.sdvOperName,jdbcType=VARCHAR},
+      SDV_OPER_TIME = #{record.sdvOperTime,jdbcType=VARCHAR},
+      SDV_OPER_STATUS_ID = #{record.sdvOperStatusId,jdbcType=VARCHAR},
+      SDV_OPER_STATUS_NAME = #{record.sdvOperStatusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.EdcPatientVisit" >
+    update PDSCI.EDC_PATIENT_VISIT
+    <set >
+      <if test="inputOper1Flow != null" >
+        INPUT_OPER1_FLOW = #{inputOper1Flow,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper1Name != null" >
+        INPUT_OPER1_NAME = #{inputOper1Name,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper1Time != null" >
+        INPUT_OPER1_TIME = #{inputOper1Time,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper1StatusId != null" >
+        INPUT_OPER1_STATUS_ID = #{inputOper1StatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper1StatusName != null" >
+        INPUT_OPER1_STATUS_NAME = #{inputOper1StatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper2Flow != null" >
+        INPUT_OPER2_FLOW = #{inputOper2Flow,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper2Name != null" >
+        INPUT_OPER2_NAME = #{inputOper2Name,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper2Time != null" >
+        INPUT_OPER2_TIME = #{inputOper2Time,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper2StatusId != null" >
+        INPUT_OPER2_STATUS_ID = #{inputOper2StatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOper2StatusName != null" >
+        INPUT_OPER2_STATUS_NAME = #{inputOper2StatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOperFlow != null" >
+        INPUT_OPER_FLOW = #{inputOperFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOperName != null" >
+        INPUT_OPER_NAME = #{inputOperName,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOperTime != null" >
+        INPUT_OPER_TIME = #{inputOperTime,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOperStatusId != null" >
+        INPUT_OPER_STATUS_ID = #{inputOperStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="inputOperStatusName != null" >
+        INPUT_OPER_STATUS_NAME = #{inputOperStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="sdvOperFlow != null" >
+        SDV_OPER_FLOW = #{sdvOperFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="sdvOperName != null" >
+        SDV_OPER_NAME = #{sdvOperName,jdbcType=VARCHAR},
+      </if>
+      <if test="sdvOperTime != null" >
+        SDV_OPER_TIME = #{sdvOperTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sdvOperStatusId != null" >
+        SDV_OPER_STATUS_ID = #{sdvOperStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="sdvOperStatusName != null" >
+        SDV_OPER_STATUS_NAME = #{sdvOperStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.EdcPatientVisit" >
+    update PDSCI.EDC_PATIENT_VISIT
+    set INPUT_OPER1_FLOW = #{inputOper1Flow,jdbcType=VARCHAR},
+      INPUT_OPER1_NAME = #{inputOper1Name,jdbcType=VARCHAR},
+      INPUT_OPER1_TIME = #{inputOper1Time,jdbcType=VARCHAR},
+      INPUT_OPER1_STATUS_ID = #{inputOper1StatusId,jdbcType=VARCHAR},
+      INPUT_OPER1_STATUS_NAME = #{inputOper1StatusName,jdbcType=VARCHAR},
+      INPUT_OPER2_FLOW = #{inputOper2Flow,jdbcType=VARCHAR},
+      INPUT_OPER2_NAME = #{inputOper2Name,jdbcType=VARCHAR},
+      INPUT_OPER2_TIME = #{inputOper2Time,jdbcType=VARCHAR},
+      INPUT_OPER2_STATUS_ID = #{inputOper2StatusId,jdbcType=VARCHAR},
+      INPUT_OPER2_STATUS_NAME = #{inputOper2StatusName,jdbcType=VARCHAR},
+      INPUT_OPER_FLOW = #{inputOperFlow,jdbcType=VARCHAR},
+      INPUT_OPER_NAME = #{inputOperName,jdbcType=VARCHAR},
+      INPUT_OPER_TIME = #{inputOperTime,jdbcType=VARCHAR},
+      INPUT_OPER_STATUS_ID = #{inputOperStatusId,jdbcType=VARCHAR},
+      INPUT_OPER_STATUS_NAME = #{inputOperStatusName,jdbcType=VARCHAR},
+      SDV_OPER_FLOW = #{sdvOperFlow,jdbcType=VARCHAR},
+      SDV_OPER_NAME = #{sdvOperName,jdbcType=VARCHAR},
+      SDV_OPER_TIME = #{sdvOperTime,jdbcType=VARCHAR},
+      SDV_OPER_STATUS_ID = #{sdvOperStatusId,jdbcType=VARCHAR},
+      SDV_OPER_STATUS_NAME = #{sdvOperStatusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,76 @@
+package com.pinde.sci.biz.hbzy;
+
+import com.pinde.sci.form.hbzy.JszyBaseInfoForm;
+import com.pinde.sci.model.hbzy.JszyResBaseExt;
+import com.pinde.sci.model.mo.ResBase;
+import com.pinde.sci.model.mo.ResOrgSpe;
+import com.pinde.sci.model.mo.ResPassScoreCfg;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+@Service
+@Transactional(rollbackFor = Exception.class)
+public interface IJszyResBaseBiz {
+
+    /**
+     * 保存
+     *
+     * @param resBase
+     * @return
+     */
+    int saveResBase(ResBase resBase);
+
+    /**
+     * 保存基地信息
+     *
+     * @throws IOException
+     * @throws JAXBException
+     */
+    int saveBaseInfo(String flag, JszyBaseInfoForm baseInfoForm, String index) throws Exception;
+
+    /**
+     * 保存专业信息
+     *
+     * @param orgName
+     */
+    int saveTrainSpe(List<ResOrgSpe> saveList, String oldCategory, String orgFlow, String orgName);
+
+    /**
+     * 查找基地
+     */
+    ResBase readBase(String orgFlow);
+
+    /**
+     * 查找扩展的基地信息
+     *
+     * @param paramMap
+     * @return
+     */
+    List<JszyResBaseExt> searchResBaseExtList(Map<String, Object> paramMap);
+
+    /**
+     * 保存年份合格线配置
+     * @param resPassScoreCfg
+     * @return
+     */
+    int savePassScoreCfg(ResPassScoreCfg resPassScoreCfg);
+
+    /**
+     * 加载分数配置
+     */
+    ResPassScoreCfg readResPassScoreCfg(ResPassScoreCfg resPassScoreCfg);
+
+    List<ResPassScoreCfg> readCfgs(ResPassScoreCfg resPassScoreCfg);
+    /**
+     * 删除分数配置信息
+     * @param cfgYear
+     * @return
+     */
+    int delScoreConf(String cfgYear);
+
+}

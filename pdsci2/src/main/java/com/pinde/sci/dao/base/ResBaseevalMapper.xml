@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.sci.dao.base.ResBaseevalMapper">
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResBaseeval">
+    <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
+    <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="EVAL_YEAR" jdbcType="VARCHAR" property="evalYear" />
+    <result column="FORM_FLOW" jdbcType="VARCHAR" property="formFlow" />
+    <result column="FORM_NAME" jdbcType="VARCHAR" property="formName" />
+    <result column="EVAL_DATE" jdbcType="VARCHAR" property="evalDate" />
+    <result column="STATUS_ID" jdbcType="VARCHAR" property="statusId" />
+    <result column="STATUS_NAME" jdbcType="VARCHAR" property="statusName" />
+    <result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_USER_FLOW" jdbcType="VARCHAR" property="createUserFlow" />
+    <result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime" />
+    <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
+    <result column="SPE_ID" jdbcType="VARCHAR" property="speId" />
+    <result column="SPE_NAME" jdbcType="VARCHAR" property="speName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    RECORD_FLOW, USER_FLOW, USER_NAME, EVAL_YEAR, FORM_FLOW, FORM_NAME, EVAL_DATE, STATUS_ID, 
+    STATUS_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+    SPE_ID, SPE_NAME
+  </sql>
+  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.ResBaseevalExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_BASEEVAL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_BASEEVAL
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PDSCI.RES_BASEEVAL
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResBaseevalExample">
+    delete from PDSCI.RES_BASEEVAL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResBaseeval">
+    insert into PDSCI.RES_BASEEVAL (RECORD_FLOW, USER_FLOW, USER_NAME, 
+      EVAL_YEAR, FORM_FLOW, FORM_NAME, 
+      EVAL_DATE, STATUS_ID, STATUS_NAME, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW, SPE_ID, 
+      SPE_NAME)
+    values (#{recordFlow,jdbcType=VARCHAR}, #{userFlow,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{evalYear,jdbcType=VARCHAR}, #{formFlow,jdbcType=VARCHAR}, #{formName,jdbcType=VARCHAR}, 
+      #{evalDate,jdbcType=VARCHAR}, #{statusId,jdbcType=VARCHAR}, #{statusName,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{speId,jdbcType=VARCHAR}, 
+      #{speName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResBaseeval">
+    insert into PDSCI.RES_BASEEVAL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recordFlow != null">
+        RECORD_FLOW,
+      </if>
+      <if test="userFlow != null">
+        USER_FLOW,
+      </if>
+      <if test="userName != null">
+        USER_NAME,
+      </if>
+      <if test="evalYear != null">
+        EVAL_YEAR,
+      </if>
+      <if test="formFlow != null">
+        FORM_FLOW,
+      </if>
+      <if test="formName != null">
+        FORM_NAME,
+      </if>
+      <if test="evalDate != null">
+        EVAL_DATE,
+      </if>
+      <if test="statusId != null">
+        STATUS_ID,
+      </if>
+      <if test="statusName != null">
+        STATUS_NAME,
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="speId != null">
+        SPE_ID,
+      </if>
+      <if test="speName != null">
+        SPE_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recordFlow != null">
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userFlow != null">
+        #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="evalYear != null">
+        #{evalYear,jdbcType=VARCHAR},
+      </if>
+      <if test="formFlow != null">
+        #{formFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="formName != null">
+        #{formName,jdbcType=VARCHAR},
+      </if>
+      <if test="evalDate != null">
+        #{evalDate,jdbcType=VARCHAR},
+      </if>
+      <if test="statusId != null">
+        #{statusId,jdbcType=VARCHAR},
+      </if>
+      <if test="statusName != null">
+        #{statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="speId != null">
+        #{speId,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null">
+        #{speName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResBaseevalExample" resultType="java.lang.Integer">
+    select count(*) from PDSCI.RES_BASEEVAL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update PDSCI.RES_BASEEVAL
+    <set>
+      <if test="record.recordFlow != null">
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userFlow != null">
+        USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null">
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evalYear != null">
+        EVAL_YEAR = #{record.evalYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.formFlow != null">
+        FORM_FLOW = #{record.formFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.formName != null">
+        FORM_NAME = #{record.formName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evalDate != null">
+        EVAL_DATE = #{record.evalDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusId != null">
+        STATUS_ID = #{record.statusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusName != null">
+        STATUS_NAME = #{record.statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null">
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null">
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null">
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speId != null">
+        SPE_ID = #{record.speId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speName != null">
+        SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update PDSCI.RES_BASEEVAL
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      EVAL_YEAR = #{record.evalYear,jdbcType=VARCHAR},
+      FORM_FLOW = #{record.formFlow,jdbcType=VARCHAR},
+      FORM_NAME = #{record.formName,jdbcType=VARCHAR},
+      EVAL_DATE = #{record.evalDate,jdbcType=VARCHAR},
+      STATUS_ID = #{record.statusId,jdbcType=VARCHAR},
+      STATUS_NAME = #{record.statusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      SPE_ID = #{record.speId,jdbcType=VARCHAR},
+      SPE_NAME = #{record.speName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResBaseeval">
+    update PDSCI.RES_BASEEVAL
+    <set>
+      <if test="userFlow != null">
+        USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="evalYear != null">
+        EVAL_YEAR = #{evalYear,jdbcType=VARCHAR},
+      </if>
+      <if test="formFlow != null">
+        FORM_FLOW = #{formFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="formName != null">
+        FORM_NAME = #{formName,jdbcType=VARCHAR},
+      </if>
+      <if test="evalDate != null">
+        EVAL_DATE = #{evalDate,jdbcType=VARCHAR},
+      </if>
+      <if test="statusId != null">
+        STATUS_ID = #{statusId,jdbcType=VARCHAR},
+      </if>
+      <if test="statusName != null">
+        STATUS_NAME = #{statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="speId != null">
+        SPE_ID = #{speId,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null">
+        SPE_NAME = #{speName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResBaseeval">
+    update PDSCI.RES_BASEEVAL
+    set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      EVAL_YEAR = #{evalYear,jdbcType=VARCHAR},
+      FORM_FLOW = #{formFlow,jdbcType=VARCHAR},
+      FORM_NAME = #{formName,jdbcType=VARCHAR},
+      EVAL_DATE = #{evalDate,jdbcType=VARCHAR},
+      STATUS_ID = #{statusId,jdbcType=VARCHAR},
+      STATUS_NAME = #{statusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      SPE_ID = #{speId,jdbcType=VARCHAR},
+      SPE_NAME = #{speName,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

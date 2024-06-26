@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.osca.OscaSysOrgExtMapper" >
+    <resultMap id="OrgSpeResultMap" type="com.pinde.sci.model.osca.OscaOrgSpeExt">
+        <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="OSCE_DOCTOR_SHOW" property="sysOrg.osceDoctorShow" jdbcType="VARCHAR" />
+        <result column="OSCE_TEACHER_SHOW" property="sysOrg.osceTeacherShow" jdbcType="VARCHAR" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+        <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+        <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+        <result column="IS_EXAM_ORG" property="sysOrg.isExamOrg" jdbcType="VARCHAR"/>
+        <result column="ORDINAL" property="sysOrg.ordinal" jdbcType="INTEGER" />
+        <result column="ORG_CITY_NAME" property="sysOrg.orgCityName" jdbcType="VARCHAR" />
+        <result column="RECORD_STATUS" property="sysOrg.recordStatus" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="searchOrgCitys" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+        select distinct ORG_CITY_ID , ORG_CITY_NAME
+        from PDSCI.SYS_ORG
+        where RECORD_STATUS='Y'
+        <if test="orgProvId!=null and orgProvId!=''">
+            and  ORG_PROV_ID=#{orgProvId}
+        </if>
+    </select>
+
+    <select id="searchAllSites" resultMap="OrgSpeResultMap">
+        select distinct oos.org_flow,oos.org_name,so.IS_EXAM_ORG,SO.ORDINAL,so.OSCE_DOCTOR_SHOW,so.OSCE_TEACHER_SHOW
+        from OSCA_ORG_SPE oos
+        LEFT JOIN SYS_ORG SO
+        ON oos.org_flow=so.org_flow
+        and so.record_status='Y'
+        where oos.record_status='Y'
+        and oos.org_flow in (
+        select distinct org_flow from SYS_ORG
+        where record_status='Y'
+        <if test="orgProvId!=null and orgProvId!=''">
+            and  ORG_PROV_ID=#{orgProvId}
+        </if>
+        <if test="orgCityId!=null and orgCityId!=''">
+            and  ORG_CITY_ID=#{orgCityId}
+        </if>
+        <if test='orgName!=null and orgName!=""'>
+            <bind name="name" value="'%'+orgName+'%'"/>
+            and  ORG_NAME like #{name}
+        </if>
+        )ORDER BY so.ORDINAL
+    </select>
+
+    <select id="searchAllOrg" resultMap="OrgSpeResultMap">
+        select distinct so.org_flow,so.org_code,so.org_name,so.IS_EXAM_ORG,so.ORDINAL,so.org_city_name,so.OSCE_DOCTOR_SHOW,so.OSCE_TEACHER_SHOW,
+        so.record_status
+        from SYS_ORG SO
+        LEFT JOIN OSCA_ORG_SPE oos
+        ON oos.org_flow=so.org_flow
+        and oos.record_status='Y'
+        where 1=1
+        <if test='withN != "Y"'>
+            and so.record_status='Y'
+        </if>
+        <if test="orgProvId!=null and orgProvId!=''">
+            and  so.ORG_PROV_ID=#{orgProvId}
+        </if>
+        <if test="orgCityId!=null and orgCityId!=''">
+            and  so.ORG_CITY_ID=#{orgCityId}
+        </if>
+        <if test="isExamOrg!=null and isExamOrg!=''">
+            and  so.IS_EXAM_ORG=#{isExamOrg}
+        </if>
+        <if test='orgName!=null and orgName!=""'>
+            <bind name="name" value="'%'+orgName+'%'"/>
+            and so.ORG_NAME like #{name}
+        </if>
+        ORDER BY so.ORDINAL,so.org_code,so.org_flow
+    </select>
+
+    <update id="updateOscaOrgSpe" parameterType="map">
+        update PDSCI.OSCA_ORG_SPE
+        set record_status='N' ,
+            MODIFY_TIME=#{modifyTime},
+            MODIFY_USER_FLOW=#{modifyUserFlow}
+        where org_flow=#{orgFlow}
+    </update>
+
+    <resultMap id="OrgSpeAll" type="com.pinde.sci.model.osca.OscaOrgMenuExt">
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="searchAllOrgSpes" resultMap="OrgSpeAll">
+        select distinct oos.org_flow,oos.org_name
+        from SYS_ORG SO
+        INNER JOIN OSCA_ORG_SPE oos
+        ON oos.org_flow=so.org_flow
+        and oos.record_status='Y'
+        where so.record_status='Y'
+        <if test="orgProvId!=null and orgProvId!=''">
+            and  so.ORG_PROV_ID=#{orgProvId}
+        </if>
+        <if test='orgName!=null and orgName!=""'>
+            <bind name="name" value="'%'+orgName+'%'"/>
+            and oos.ORG_NAME like #{name}
+        </if>
+    </select>
+
+    <select id="searchManagerList" resultType="java.util.Map" parameterType="java.util.Map">
+        select su.org_name,su.user_name,su.user_flow,so.org_city_name,su.user_code,su.status_id
+        from SYS_USER SU
+        LEFT JOIN sys_user_role sur on su.user_flow = sur.user_flow
+        LEFT JOIN SYS_ROLE SR on sr.role_flow = sur.role_flow
+        left join sys_org so on su.org_flow = so.org_flow
+        where SU.record_status='Y' and sur.record_status='Y' and sr.record_status = 'Y'
+        and sr.role_name = '管理员' and sr.ws_id = 'osca'
+        <if test="orgCityId!=null and orgCityId!=''">
+            and  so.org_City_Id = #{orgCityId}
+        </if>
+        <if test='orgName!=null and orgName!=""'>
+            <bind name="name" value="'%'+orgName+'%'"/>
+            and su.ORG_NAME like #{name}
+        </if>
+        <if test='userCode!=null and userCode!=""'>
+            and su.user_Code = '${userCode}'
+        </if>
+    </select>
+</mapper>

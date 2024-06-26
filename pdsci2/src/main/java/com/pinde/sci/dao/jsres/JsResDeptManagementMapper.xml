@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jsres.JsResDeptManagementMapper">
+    <resultMap id="BaseStandardDeptResultMap" type="com.pinde.sci.model.vo.ResStandardDeptVO">
+        <id column="standard_dept_flow" property="standardDeptFlow" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="standard_dept_code" property="standardDeptCode" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="standard_dept_name" property="standardDeptName" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="top_level_dept_code" property="topLevelDeptCode" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="dept_status" property="deptStatus" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="parent_dept_code" property="parentDeptCode" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="dept_level" property="deptLevel" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="dept_level_name" property="deptLevelName" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="record_status" property="recordStatus" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="create_user_flow" property="createUserFlow" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="modify_time" property="modifyTime" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="modify_user_flow" property="modifyUserFlow" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List_Standard_dept">
+         standard_dept_flow,
+         standard_dept_code,
+         standard_dept_name,
+         top_level_dept_code,
+         dept_status,
+         parent_dept_code,
+         dept_level,
+         dept_level_name,
+         record_status,
+         create_time,
+         create_user_flow,
+         modify_time,
+         modify_user_flow
+    </sql>
+    <sql id="Base_Column_List_Spe_Base_Std_Dept">
+        spe_base_std_dept_flow,
+        spe_base_id,
+          standard_dept_flow,
+          rotation_require_status,
+          record_status,
+          create_time,
+          create_user_flow,
+          modify_time,
+          modify_user_flow
+    </sql>
+    <sql id="Base_Column_List_Dept_Rel_Std_Dept">
+        dept_flow,
+        dept_code,
+        dept_name,
+        standard_dept_flow,
+        org_flow,
+        org_name,
+        dept_status,
+        record_status,
+        create_time,
+        create_user_flow,
+        modify_time,
+        modify_user_flow
+    </sql>
+
+    <!-- 科室名称模糊查询：取list元素的方法[0], [1]... -->
+    <sql id="Base_Standard_Dept_Search_Condition">
+        <if test="deptNameCodeOrPair != null and deptNameCodeOrPair.size() == 2">
+            and (standard_dept_name = #{deptNameCodeOrPair[0]} or standard_dept_code = #{deptNameCodeOrPair[1]})
+        </if>
+        <if test="standardDeptFlow != null and standardDeptFlow != ''">
+            and standard_dept_flow = #{standardDeptFlow}
+        </if>
+        <if test="standardDeptCode != null and standardDeptCode != ''">
+            and standard_dept_code = #{standardDeptCode}
+        </if>
+        <if test="parentDeptCode != null and parentDeptCode != ''">
+            and parent_dept_code = #{parentDeptCode}
+        </if>
+        <if test="topLevelDeptCode != null and topLevelDeptCode != ''">
+            and top_level_dept_code = #{topLevelDeptCode}
+        </if>
+        <if test="standardDeptFlowList != null and standardDeptFlowList.size() > 0">
+            and standard_dept_flow in
+            <foreach collection="standardDeptFlowList" item="standardDeptFlow" open="(" close=")" separator=",">
+                #{standardDeptFlow, jdbcType=VARCHAR}
+            </foreach>
+        </if>
+    </sql>
+
+    <sql id="Dept_Name_Fuzzy_Level_All_Search_Condition">
+        <!-- and top_level_dept_code in
+        (select distinct top_level_dept_code
+        from pdsci.RES_STANDARD_DEPT
+        where standard_dept_name like concat('%', concat(#{standardDeptNameFuzzy}, '%')))
+        -->
+        and standard_dept_name like concat('%', concat(#{standardDeptNameFuzzy}, '%'))
+    </sql>
+
+    <sql id="Base_Spe_Base_Std_Dept_Search_Condition">
+        <if test="requireStatusIn != null and requireStatusIn.size() > 0">
+            and rotation_require_status in
+            <foreach collection="requireStatusIn" item="requireStatus" open="(" close=")" separator=",">
+                #{requireStatus}
+            </foreach>
+        </if>
+        <if test="standardDeptFlowIn != null and standardDeptFlowIn.size() > 0">
+            and standard_dept_flow in
+            <!-- 这里item不要定义为standardDeptFlow，否则下面的if会取到值 -->
+            <foreach collection="standardDeptFlowIn" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test="standardDeptFlow != null and standardDeptFlow != ''">
+            and standard_dept_flow = #{standardDeptFlow}
+        </if>
+        <if test="speBaseId != null and speBaseId != ''">
+            and spe_base_id = #{speBaseId}
+        </if>
+        <if test='rotationRequireStatus != null and rotationRequireStatus != ""' >
+            and rotation_require_status = #{rotationRequireStatus}
+        </if>
+    </sql>
+
+    <sql id="Base_Dept_Rel_Std_Dept_Search_Condition">
+        <if test="orgFlow != null and orgFlow != ''">
+            and org_flow = #{orgFlow}
+        </if>
+        <if test="deptFlow != null and deptFlow != ''">
+            and dept_flow = #{deptFlow}
+        </if>
+        <if test='deptCode != null and deptCode != ""'>
+            and dept_code = #{deptCode}
+        </if>
+        <if test="deptNameFuzzy != null and deptNameFuzzy != ''">
+            and dept_name like concat('%', concat(#{deptNameFuzzy}, '%'))
+        </if>
+        <if test='"Y" == relStdDeptFlag'>
+            and standard_dept_flow is not null
+        </if>
+        <if test='"N" == relStdDeptFlag'>
+            and standard_dept_flow is null
+        </if>
+        <if test='standardDeptFlow != null and standardDeptFlow != ""'>
+            and standard_dept_flow = #{standardDeptFlow}
+        </if>
+        <if test="deptNameCodeOrPair != null and deptNameCodeOrPair.size() == 2">
+            and (dept_name = #{deptNameCodeOrPair[0]} or dept_code = #{deptNameCodeOrPair[1]})
+        </if>
+        <if test="deptStatus != null and deptStatus != ''">
+            and dept_status = #{deptStatus}
+        </if>
+    </sql>
+
+    <sql id="Base_Sys_Dept_Rel_Std_Dept_Search_Condition">
+        <where>
+            <if test="orgFlow != null and orgFlow != ''">
+                and sd.org_flow = #{orgFlow}
+            </if>
+            <if test="deptFlow != null and deptFlow != ''">
+                and sd.dept_flow = #{deptFlow}
+            </if>
+            <if test="deptNameFuzzy != null and deptNameFuzzy != ''">
+                and sd.dept_name like concat('%', concat(#{deptNameFuzzy}, '%'))
+            </if>
+            <if test='"Y" == relStdDeptFlag'>
+                and rd.standard_dept_flow is not null
+            </if>
+            <if test='"N" == relStdDeptFlag'>
+                and rd.standard_dept_flow is null
+            </if>
+            <if test='deptCode != null and deptCode != ""'>
+                and sd.dept_code = #{deptCode}
+            </if>
+            <if test='standardDeptFlow != null and standardDeptFlow != ""'>
+                and rd.standard_dept_flow = #{standardDeptFlow}
+            </if>
+        </where>
+    </sql>
+
+    <select id="searchStandardDept" parameterType="com.pinde.sci.model.vo.ResStandardDeptVO" resultType="com.pinde.sci.model.vo.ResStandardDeptVO">
+        select
+            <include refid="Base_Column_List_Standard_dept"/>
+        from pdsci.RES_STANDARD_DEPT
+        where record_status = 'Y'
+        <include refid="Base_Standard_Dept_Search_Condition"/>
+    </select>
+
+    <select id="searchStandardDeptLevelAllByNameFuzzy" parameterType="com.pinde.sci.model.vo.ResStandardDeptVO" resultType="com.pinde.sci.model.vo.ResStandardDeptVO">
+        select
+        <include refid="Base_Column_List_Standard_dept"/>
+        from pdsci.RES_STANDARD_DEPT
+        where record_status = 'Y'
+        <include refid="Dept_Name_Fuzzy_Level_All_Search_Condition"/>
+    </select>
+
+    <insert id="saveStandardDept" parameterType="com.pinde.sci.model.vo.ResStandardDeptVO">
+        insert into pdsci.res_standard_dept(<include refid="Base_Column_List_Standard_dept"/>)
+        values(
+           #{standardDeptFlow,jdbcType=VARCHAR},
+           #{standardDeptCode,jdbcType=VARCHAR},
+           #{standardDeptName,jdbcType=VARCHAR},
+           #{topLevelDeptCode,jdbcType=VARCHAR},
+           #{deptStatus,jdbcType=VARCHAR},
+           #{parentDeptCode,jdbcType=VARCHAR},
+           #{deptLevel,jdbcType=VARCHAR},
+           #{deptLevelName,jdbcType=VARCHAR},
+           #{recordStatus,jdbcType=VARCHAR},
+           #{createTime,jdbcType=VARCHAR},
+           #{createUserFlow,jdbcType=VARCHAR},
+           #{modifyTime,jdbcType=VARCHAR},
+           #{modifyUserFlow,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateStandardDept" parameterType="com.pinde.sci.model.vo.ResStandardDeptVO">
+        update pdsci.res_standard_dept
+        <set>
+            <if test="standardDeptCode != null and standardDeptCode != ''">
+                standard_dept_code = #{standardDeptCode},
+            </if>
+            <if test="standardDeptName != null and standardDeptName != ''">
+                standard_dept_name = #{standardDeptName},
+            </if>
+            <if test="modifyTime != null and modifyTime != ''">
+                modify_time = #{modifyTime},
+            </if>
+            <if test="modifyUserFlow != null and modifyUserFlow != ''">
+                modify_user_flow = #{modifyUserFlow},
+            </if>
+            <if test="deptStatus != null and deptStatus != ''">
+                dept_status = #{deptStatus},
+            </if>
+        </set>
+        where standard_dept_flow = #{standardDeptFlow}
+        and record_status = 'Y'
+    </update>
+
+    <!-- 批量更新的写法，另有批量插入的写法，代码里搜insert all -->
+    <update id="batchUpdateStandardDeptSelective" parameterType="com.pinde.sci.model.vo.ResStandardDeptVO">
+        <foreach collection="standardDeptVOList" separator=";" open="begin" close=";end;" item="standardDeptVO">
+            update pdsci.res_standard_dept
+            <set>
+                <if test="standardDeptVO.parentDeptCode != null and standardDeptVO.parentDeptCode != ''">
+                    parent_dept_code = #{standardDeptVO.parentDeptCode},
+                </if>
+                <if test="standardDeptVO.topLevelDeptCode != null and standardDeptVO.topLevelDeptCode != ''">
+                    top_level_dept_code = #{standardDeptVO.topLevelDeptCode},
+                </if>
+            </set>
+            where record_status = 'Y'
+            and standard_dept_flow = #{standardDeptVO.standardDeptFlow}
+        </foreach>
+    </update>
+
+    <delete id="deleteStandardDept">
+        update pdsci.res_standard_dept
+        set record_status = 'N'
+        where record_status = 'Y'
+        and standard_dept_flow = #{standardDeptFlow}
+    </delete>
+    
+    <select id="searchSpeBaseStdDept" parameterType="com.pinde.sci.model.vo.ResSpeBaseStdDeptVO" resultType="com.pinde.sci.model.vo.ResSpeBaseStdDeptVO">
+        select
+        <include refid="Base_Column_List_Spe_Base_Std_Dept"/>
+        from pdsci.RES_SPE_BASE_STD_DEPT
+        where record_status = 'Y'
+        <include refid="Base_Spe_Base_Std_Dept_Search_Condition"/>
+    </select>
+
+    <update id="updateSpeBaseStdDept" parameterType="com.pinde.sci.model.vo.ResSpeBaseStdDeptVO">
+        update pdsci.RES_SPE_BASE_STD_DEPT
+        set spe_base_id = #{speBaseId,jdbcType=VARCHAR},
+            standard_dept_flow = #{standardDeptFlow,jdbcType=VARCHAR},
+            rotation_require_status = #{rotationRequireStatus,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=VARCHAR},
+            create_user_flow = #{createUserFlow,jdbcType=VARCHAR},
+            modify_time = #{modifyTime,jdbcType=VARCHAR},
+            modify_user_flow = #{modifyUserFlow,jdbcType=VARCHAR}
+        where record_status = 'Y'
+          and spe_base_std_dept_flow = #{speBaseStdDeptFlow,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateSpeBaseStdDeptSelective" parameterType="com.pinde.sci.model.vo.ResSpeBaseStdDeptVO">
+        update pdsci.RES_SPE_BASE_STD_DEPT
+        <set>
+            <if test="speBaseId != null and speBaseId != ''">
+                spe_base_id = #{speBaseId},
+            </if>
+            <if test="standardDeptFlow != null and standardDeptFlow != ''">
+                standard_dept_flow = #{standardDeptFlow},
+            </if>
+            <if test="rotationRequireStatus != null and rotationRequireStatus != ''">
+                rotation_require_status = #{rotationRequireStatus},
+            </if>
+            <if test="createTime != null and createTime != ''">
+                create_time = #{createTime},
+            </if>
+            <if test="createUserFlow != null and createUserFlow != ''">
+                create_user_flow = #{createUserFlow},
+            </if>
+            <if test="modifyTime != null and modifyTime != ''">
+                modify_time = #{modifyTime},
+            </if>
+            <if test="modifyUserFlow != null and modifyUserFlow != ''">
+                modify_user_flow = #{modifyUserFlow},
+            </if>
+        </set>
+        where record_status = 'Y'
+        and spe_base_std_dept_flow = #{speBaseStdDeptFlow,jdbcType=VARCHAR}
+    </update>
+
+    <insert id="saveSpeBaseStdDept" parameterType="com.pinde.sci.model.vo.ResSpeBaseStdDeptVO">
+        insert into pdsci.RES_SPE_BASE_STD_DEPT(<include refid="Base_Column_List_Spe_Base_Std_Dept"/>)
+        values(
+        #{speBaseStdDeptFlow,jdbcType=VARCHAR},
+        #{speBaseId,jdbcType=VARCHAR},
+        #{standardDeptFlow,jdbcType=VARCHAR},
+        #{rotationRequireStatus,jdbcType=VARCHAR},
+        #{recordStatus, jdbcType=VARCHAR},
+        #{createTime,jdbcType=VARCHAR},
+        #{createUserFlow,jdbcType=VARCHAR},
+        #{modifyTime,jdbcType=VARCHAR},
+        #{modifyUserFlow,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <delete id="deleteSpeBaseStdDeptByKey">
+        update pdsci.RES_SPE_BASE_STD_DEPT
+        set record_status = 'N'
+        where record_status = 'Y'
+          and spe_base_std_dept_flow = #{speBaseStdDeptFlow,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectResDeptRelStdDept" parameterType="com.pinde.sci.model.vo.ResDeptRelStdDeptVO" resultType="com.pinde.sci.model.vo.ResDeptRelStdDeptVO">
+        select
+        <include refid="Base_Column_List_Dept_Rel_Std_Dept"/>
+        from pdsci.RES_DEPT_REL_STD_DEPT
+        where record_status = 'Y'
+        <include refid="Base_Dept_Rel_Std_Dept_Search_Condition"/>
+        order by modify_time desc
+    </select>
+
+    <select id="selectSysDeptRelStdDept" parameterType="com.pinde.sci.model.vo.SysDeptVO" resultType="com.pinde.sci.model.vo.SysDeptVO">
+        select
+            sd.DEPT_FLOW, sd.ORG_FLOW, sd.DEPT_CODE, sd.DEPT_NAME, sd.ORDINAL, sd.RECORD_STATUS, sd.CREATE_TIME, sd.CREATE_USER_FLOW,
+            sd.MODIFY_TIME, sd.MODIFY_USER_FLOW, sd.DEPT_PINYIN, sd.DEPT_ID, sd.DEPT_PID,
+            rd.standard_dept_flow, sttd.standard_dept_name, sttd.standard_dept_code, rd.dept_flow relDeptFlow, rd.dept_status
+        from pdsci.sys_dept sd
+        left join pdsci.RES_DEPT_REL_STD_DEPT rd on sd.org_flow = rd.org_flow and sd.dept_code = rd.dept_code and rd.record_status = 'Y'
+        left join pdsci.RES_STANDARD_DEPT sttd on rd.standard_dept_flow = sttd.standard_dept_flow and sttd.record_status = 'Y'
+        <include refid="Base_Sys_Dept_Rel_Std_Dept_Search_Condition"/>
+        order by sd.RECORD_STATUS DESC,sd.ORDINAL, sd.modify_time desc
+    </select>
+
+    <insert id="saveDeptRelStdDept">
+        insert into pdsci.RES_DEPT_REL_STD_DEPT(
+            <include refid="Base_Column_List_Dept_Rel_Std_Dept"/>
+        )values (
+        #{deptFlow, jdbcType=VARCHAR},
+        #{deptCode, jdbcType=VARCHAR},
+        #{deptName, jdbcType=VARCHAR},
+        #{standardDeptFlow, jdbcType=VARCHAR},
+        #{orgFlow, jdbcType=VARCHAR},
+        #{orgName, jdbcType=VARCHAR},
+        #{deptStatus, jdbcType=VARCHAR},
+        #{recordStatus, jdbcType=VARCHAR},
+        #{createTime, jdbcType=VARCHAR},
+        #{createUserFlow, jdbcType=VARCHAR},
+        #{modifyTime, jdbcType=VARCHAR},
+        #{modifyUserFlow, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateDeptRelStdDept">
+        update pdsci.RES_DEPT_REL_STD_DEPT
+        <set>
+            <if test="deptCode != null and deptCode != ''">
+                dept_code = #{deptCode, jdbcType=VARCHAR},
+            </if>
+            <if test="deptName != null and deptName != ''">
+                dept_name = #{deptName, jdbcType=VARCHAR},
+            </if>
+            <if test="standardDeptFlow != null and standardDeptFlow != ''">
+                standard_dept_flow = #{standardDeptFlow, jdbcType=VARCHAR},
+            </if>
+            <if test="deptStatus != null and deptStatus != ''">
+                dept_status = #{deptStatus, jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null and modifyTime != ''">
+                modify_time = #{modifyTime},
+            </if>
+            <if test="modifyUserFlow != null and modifyUserFlow != ''">
+                modify_user_flow = #{modifyUserFlow},
+            </if>
+        </set>
+        where record_status = 'Y'
+        and dept_flow = #{deptFlow, jdbcType=VARCHAR}
+    </update>
+
+    <delete id="deleteBaseDeptRelStdDeptByKey">
+        update pdsci.RES_DEPT_REL_STD_DEPT
+        set record_status = 'N'
+        where dept_flow = #{deptFlow, jdbcType=VARCHAR}
+        and record_status = 'Y'
+    </delete>
+</mapper>

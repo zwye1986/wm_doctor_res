@@ -1,0 +1,1205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.sys.SysUserExtMapper" >
+	<select id="selectIrbUserByForm" parameterType="com.pinde.sci.form.sys.SysUserForm" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+		select <include refid="com.pinde.sci.dao.base.SysUserMapper.Base_Column_List"/> from PDSCI.sys_user u where record_status = 'Y' and  not exists(
+		  select null from PDSCI.irb_info_user iu where record_status = 'Y' and u.user_flow = iu.user_flow
+		  	<if test='irbInfoFlow!=null and irbInfoFlow!=""'>
+				and irb_info_flow = #{irbInfoFlow}
+			</if>	
+		  	<if test='roleFlow!=null and roleFlow!=""'>
+				and role_flow = #{roleFlow}
+			</if>	
+		) 
+		<if test="user!=null">
+			<if test='user.orgFlow!=null and user.orgFlow!=""'>
+				and org_flow = #{user.orgFlow}
+			</if>
+			<if test='user.statusId!=null and user.statusId!=""'>
+				and status_Id = #{user.statusId}
+			</if>
+			<if test='user.deptFlow!=null and user.deptFlow!=""'>
+				and dept_flow = #{user.deptFlow}
+			</if>
+			<if test='user.userName!=null and user.userName!=""'>
+				and user_name like #{user.userName}
+			</if>
+		</if>
+		order by nlssort(user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+	<select id="selectResUserByForm" parameterType="com.pinde.sci.form.sys.SysUserForm" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+		select <include refid="com.pinde.sci.dao.base.SysUserMapper.Base_Column_List"/> from PDSCI.sys_user u where record_status = 'Y' and  not exists(
+		  select null from PDSCI.pub_proj_user iu where record_status = 'Y' and u.user_flow = iu.user_flow
+		  	<if test='projFlow!=null and projFlow!=""'>
+				and proj_flow = #{projFlow}
+			</if>	
+		  	<if test='roleFlow!=null and roleFlow!=""'>
+				and role_flow = #{roleFlow}
+			</if>	
+		) 
+		<if test="user!=null">
+			<if test='user.orgFlow!=null and user.orgFlow!=""'>
+				and org_flow = #{user.orgFlow}
+			</if>
+			<if test='user.statusId!=null and user.statusId!=""'>
+				and status_Id = #{user.statusId}
+			</if>
+			<if test='user.deptFlow!=null and user.deptFlow!=""'>
+				and dept_flow = #{user.deptFlow}
+			</if>
+			<if test='user.userName!=null and user.userName!=""'>
+				and user_name like #{user.userName}
+			</if>
+		</if>
+	</select>
+	
+	<!-- searchUserListByOrgFlow -->
+	<select id="searchUserListByOrgFlow" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    	select u.USER_FLOW,u.USER_CODE,u.USER_PASSWD,u.USER_NAME,u.SEX_ID,u.SEX_NAME,u.STATUS_ID,u.STATUS_DESC,u.USER_PHONE,u.USER_EMAIL,
+			u.DEPT_FLOW,u.DEPT_NAME,u.ORG_FLOW,u.ORG_NAME,u.ID_NO,u.USER_BIRTHDAY,u.TITLE_ID,u.TITLE_NAME,u.DEGREE_ID,u.DEGREE_NAME,u.EDUCATION_ID,
+			u.EDUCATION_NAME,u.POST_ID,u.POST_NAME,u.SRM_EXPERT_FLAG,u.RECORD_STATUS,u.CREATE_TIME,u.CREATE_USER_FLOW,u.MODIFY_TIME,
+			u.MODIFY_USER_FLOW,u.WEI_XIN_ID,u.WEI_XIN_NAME,u.WEI_XIN_STATUS_ID,u.WEI_XIN_STATUS_DESC
+		from PDSCI.SYS_USER u 
+		inner join PDSCI.SYS_USER_ROLE ur
+		on u.USER_FLOW = ur.USER_FLOW
+		where u.RECORD_STATUS ='Y' and ur.RECORD_STATUS = 'Y'
+		<if test='roleFlow != null and roleFlow != "" '>
+			and ur.ROLE_FLOW = #{roleFlow}
+       	</if>
+		<if test='orgFlow != null and orgFlow != "" '>
+			and u.ORG_FLOW = #{orgFlow}
+       	</if>
+	</select>
+	
+	<select id="teacherRoleCheckUser" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+	   select su.* from SYS_USER su,SYS_USER_ROLE sur
+		where su.RECORD_STATUS='Y'
+		and sur.RECORD_STATUS='Y'
+		and su.USER_FLOW=sur.USER_FLOW
+		<if test='doctorName!=null and doctorName!=""'>
+			<bind name="name" value="'%'+doctorName+'%'"/>
+			and su.USER_NAME like #{name}
+		</if>
+           AND ((EXISTS (SELECT NULL
+                           FROM SYS_USER_DEPT sud
+                          WHERE sud.RECORD_STATUS = 'Y'
+                            AND sud.USER_FLOW =#{userFlow}
+                            AND su.DEPT_FLOW = sud.DEPT_FLOW)
+                            <if test="deptFlow!=null and deptFlow!=''">
+                                or  su.DEPT_FLOW=#{deptFlow}
+                            </if>
+              ) or
+               (exists
+                (SELECT NULL
+                    FROM SYS_USER_DEPT sud
+                   WHERE sud.RECORD_STATUS = 'Y'
+                     AND sud.USER_FLOW = su.user_flow
+                     and sud.dept_flow in
+                         (SELECT dept_flow
+                            FROM SYS_USER_DEPT
+                           WHERE RECORD_STATUS = 'Y'
+                             AND USER_FLOW =#{userFlow}))))
+		<if test='role!=null and role!=""'>
+			and sur.ROLE_FLOW=#{role}
+		</if>
+		<if test='speAdminAdeptFlow!=null and speAdminAdeptFlow!=""'>
+			and su.DEPT_FLOW = #{speAdminAdeptFlow}
+		</if>
+	</select>
+	
+	
+	<select id="selectUserByOrgFlowAndRoleFlow" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+	    select su.* from 
+	    sys_user su , 
+	    sys_user_role sur 
+	    where 
+	    su.user_flow=sur.user_flow 
+	    and su.status_id='Activated'
+	    and su.record_status = 'Y'
+	    and sur.record_status = 'Y'
+	    <if test='orgFlow!=null and orgFlow!=""'>
+	      and su.ORG_FLOW=#{orgFlow}
+	    </if>
+	    <if test='roleFlow!=null and roleFlow!=""'> 
+	      and sur.ROLE_FLOW=#{roleFlow}
+	    </if>
+		ORDER BY NLSSORT(su.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
+	</select>
+	
+	<select id="selectTeacherUserByOrgFlowAndRoleFlow" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+	    select su.* from 
+	    sys_user su , 
+	    sys_user_role sur 
+	    where 
+	    su.user_flow=sur.user_flow 
+	    and su.status_id='Activated'
+	    and su.record_status = 'Y'
+	    and sur.record_status = 'Y'
+	    <if test='orgFlow!=null and orgFlow!=""'>
+	      and su.ORG_FLOW=#{orgFlow}
+	    </if>
+	    <if test='roleFlow!=null and roleFlow!=""'> 
+	      and sur.ROLE_FLOW=#{roleFlow}
+	    </if>
+	    <if test="sysUser!=null">
+	    	<if test='sysUser.deptFlow!=null and sysUser.deptFlow!=""'>
+				and su.DEPT_FLOW like #{sysUser.deptFlow}
+			</if>
+			<if test='sysUser.userName!=null and sysUser.userName!=""'>
+				<bind name="userName" value="'%'+sysUser.userName+'%'"/>
+				and su.USER_NAME like #{userName}
+			</if>
+	    </if>
+		ORDER BY su.create_time desc
+	</select>
+
+	<select id="selectHeadUserByOrgFlowAndRoleFlow" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+		select su.* from
+		sys_user su ,
+		sys_user_role sur
+		where
+		su.user_flow=sur.user_flow
+		and su.status_id='Activated'
+		and su.record_status = 'Y'
+		and sur.record_status = 'Y'
+		<if test='orgFlow!=null and orgFlow!=""'>
+			and su.ORG_FLOW=#{orgFlow}
+		</if>
+		<if test='roleFlow!=null and roleFlow!=""'>
+			and sur.ROLE_FLOW=#{roleFlow}
+		</if>
+		<if test="sysUser!=null">
+			<if test='sysUser.deptFlow!=null and sysUser.deptFlow!=""'>
+				and su.DEPT_FLOW like #{sysUser.deptFlow}
+			</if>
+			<if test='sysUser.userName!=null and sysUser.userName!=""'>
+				<bind name="userName" value="'%'+sysUser.userName+'%'"/>
+				and su.USER_NAME like #{userName}
+			</if>
+		</if>
+
+		<if test="deptList != null">
+			AND SU.dept_FLOW IN
+			<foreach collection="deptList" item="dict" open="(" separator="," close=")">
+				#{dict.dictId}
+			</foreach>
+		</if>
+
+
+		ORDER BY su.create_time desc
+	</select>
+
+
+	<!--<select id="selectUserByRoleFlow" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">-->
+	<!--select su.* from -->
+	<!--sys_user su , -->
+	<!--sys_user_role sur -->
+	<!--where su.record_status='Y' and sur.record_status='Y'-->
+	<!--and su.user_flow=sur.user_flow -->
+	<!--and su.status_id='Activated'-->
+	<!--<if test='orgFlow!=null and orgFlow!=""'>-->
+	<!--and su.ORG_FLOW=#{orgFlow}-->
+	<!--</if>-->
+	<!--<if test='roleFlow!=null and roleFlow!=""'> -->
+	<!--and sur.ROLE_FLOW=#{roleFlow}-->
+	<!--</if>-->
+	<!--</select>-->
+	
+	<select id="searchUserByRoleAndOrgFlows" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+		SELECT SU.*
+		FROM SYS_USER SU,SYS_USER_ROLE SUR
+		WHERE
+		SU.RECORD_STATUS = 'Y'
+		AND SUR.RECORD_STATUS = 'Y'
+		AND SU.USER_FLOW = SUR.USER_FLOW
+		<if test="roleFlow != null and roleFlow != ''">
+			AND SUR.ROLE_FLOW = #{roleFlow}
+		</if>
+		<if test="orgFlows != null">
+			AND SU.ORG_FLOW IN
+			<foreach collection="orgFlows" item="orgFlow" open="(" separator="," close=")">
+				#{orgFlow}
+			</foreach>
+		</if>
+		ORDER BY SU.CREATE_TIME
+	</select>
+	
+	<select id="selectUserByMenuId" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+	    select * from SYS_USER
+        where record_status='Y' and status_id='Activated' and user_flow in (
+        select user_flow from SYS_USER_ROLE
+        where record_status='Y' and  ws_id='erp' and role_flow in(
+        select ROLE_FLOW from SYS_ROLE_POPEDOM where record_status='Y' and menu_id=#{menuId}
+        ))
+        <if test='deptFlow!=null and deptFlow!=""'>
+           and dept_flow=#{deptFlow}
+        </if>
+	</select>
+	
+	<select id="searchResManageUser" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    	select su.* from PDSCI.SYS_USER su
+		<if test='roleFlow!=null and roleFlow!=""'>
+		left join 	PDSCI.SYS_USER_ROLE sur on su.user_flow = sur.user_flow
+		</if>
+		where su.RECORD_STATUS ='Y'
+		and not exists (select null from res_doctor rd where su.user_flow=rd.doctor_flow and rd.RECORD_STATUS='Y')
+		<if test='roleFlow!=null and roleFlow!=""'>
+			and sur.role_flow = #{roleFlow}
+			and sur.RECORD_STATUS ='Y'
+		</if>
+		<if test='userFlow!=null and userFlow!=""'>
+			and su.user_flow != #{userFlow}
+		</if>
+       	<if test='orgFlow!=null and orgFlow!=""'>
+			and su.org_flow = #{orgFlow}
+		</if>
+		<if test="orgFlowList !=null and orgFlowList.size>0">
+			and su.org_flow in
+			<foreach collection="orgFlowList" close=")" item="item2" open="(" separator=",">
+				#{item2}
+			</foreach>
+		</if>
+		<if test='deptFlow!=null and deptFlow!=""'>
+			and su.dept_flow = #{deptFlow}
+		</if>
+		<if test='deptName!=null and deptName!=""'>
+			<bind name="deptName" value="'%'+deptName+'%'"/>
+			and su.DEPT_NAME like #{deptName}
+		</if>
+		<if test='idNo!=null and idNo!=""'>
+			<bind name="idNo" value="'%'+idNo+'%'"/>
+			and su.id_no like #{idNo}
+		</if>
+		<if test='userPhone!=null and userPhone!=""'>
+			<bind name="userPhone" value="'%'+userPhone+'%'"/>
+			and su.user_phone like #{userPhone}
+		</if>
+		<if test='userEmail!=null and userEmail!=""'>
+			<bind name="userEmail" value="'%'+userEmail+'%'"/>
+			and su.user_email like #{userEmail}
+		</if>
+		<if test='userName!=null and userName!=""'>
+			<bind name="userName" value="'%'+userName+'%'"/>
+			and su.user_name like #{userName}
+		</if>
+		<if test='userCode!=null and userCode!=""'>
+			and su.user_code = #{userCode}
+		</if>
+		<if test='certificateLevelId!=null and certificateLevelId!=""'>
+			and su.certificate_level_id = #{certificateLevelId}
+		</if>
+		<if test='statusId!=null and statusId!=""'>
+			and su.status_Id = #{statusId}
+		</if>
+		<if test="roleList!=null">
+		and (
+				exists(
+					select null from SYS_USER_ROLE sur
+					where sur.RECORD_STATUS='Y'
+					and su.USER_FLOW=sur.USER_FLOW
+					and sur.ROLE_FLOW in
+		           	 <foreach collection="roleList" item="item" index="index" open="(" separator="," close=")">  
+			  			#{item}  
+			 		 </foreach>
+				)
+				<if test="isAll!=null and isAll!='' and isAll=='Y'.toString()">
+					or not exists(
+						select null from SYS_USER_ROLE sur
+						where sur.RECORD_STATUS='Y'
+						and su.USER_FLOW=sur.USER_FLOW
+					)
+				</if>
+			)
+		</if>
+		<if test='moreDept!=null and moreDept!=""'>
+			<if test='deptFlow!=null and deptFlow!=""'>
+				or exists (select 1 from sys_user_dept sud where sud.user_flow=su.user_flow and sud.record_status='Y' and sud.dept_flow= #{deptFlow})
+			</if>
+		</if>
+		order by NLSSORT(su.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
+	</select>
+	<select id="searchResManageUserNotSelf" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    	select su.* from PDSCI.SYS_USER su
+		where RECORD_STATUS ='Y'
+		and not exists (select null from res_doctor rd where su.user_flow=rd.doctor_flow and rd.RECORD_STATUS='Y')
+       	<if test='userFlow!=null and userFlow!=""'>
+			and su.user_flow != #{userFlow}
+		</if>
+       	<if test='orgFlow!=null and orgFlow!=""'>
+			and su.org_flow = #{orgFlow}
+		</if>
+		<if test='deptFlow!=null and deptFlow!=""'>
+			and ( su.dept_flow = #{deptFlow}
+			or exists (select 1 from sys_user_dept sud where
+			sud.user_flow=su.user_flow
+			and sud.record_status = 'Y'
+			and sud.dept_flow= #{deptFlow})
+			)
+		</if>
+		<if test='deptName!=null and deptName!=""'>
+			<bind name="deptName" value="'%'+deptName+'%'"/>
+			and (su.DEPT_NAME like #{deptName}
+			or exists (select 1 from sys_user_dept sud
+			left join sys_dept sd
+			on sd.dept_flow = sud.dept_flow
+			where sud.user_flow=su.user_flow
+			and sud.record_status = 'Y'
+			and sd.record_status = 'Y'
+			and sd.DEPT_NAME like #{deptName})
+			)
+		</if>
+		<if test='idNo!=null and idNo!=""'>
+			<bind name="idNo" value="'%'+idNo+'%'"/>
+			and su.id_no like #{idNo}
+		</if>
+		<if test='userPhone!=null and userPhone!=""'>
+			<bind name="userPhone" value="'%'+userPhone+'%'"/>
+			and su.user_phone like #{userPhone}
+		</if>
+		<if test='userEmail!=null and userEmail!=""'>
+			<bind name="userEmail" value="'%'+userEmail+'%'"/>
+			and su.user_email like #{userEmail}
+		</if>
+		<if test='userCode!=null and userCode!=""'>
+			<bind name="userCode" value="'%'+userCode+'%'"/>
+			and su.user_code like #{userCode}
+		</if>
+		<if test='userName!=null and userName!=""'>
+			<bind name="userName" value="'%'+userName+'%'"/>
+			and su.user_name like #{userName}
+		</if>
+		<if test='statusId!=null and statusId!=""'>
+			and su.status_Id = #{statusId}
+		</if>
+
+		<if test="roleList!=null">
+		and (
+				exists(
+					select null from SYS_USER_ROLE sur
+					where sur.RECORD_STATUS='Y'
+					and su.USER_FLOW=sur.USER_FLOW
+					and sur.ROLE_FLOW in
+		           	 <foreach collection="roleList" item="item" index="index" open="(" separator="," close=")">
+			  			#{item}
+			 		 </foreach>
+				)
+			    <if test="isSelect!=null and isSelect!='' and isSelect=='N'.toString()">
+				or (not exists(
+					select null from SYS_USER_ROLE sur
+					where sur.RECORD_STATUS='Y'
+					and su.USER_FLOW=sur.USER_FLOW
+					and sur.ROLE_FLOW in
+					<foreach collection="roleList" item="item" index="index" open="(" separator="," close=")">
+						#{item}
+					</foreach>
+				)
+					and not exists (
+						select null from SYS_USER_ROLE sur
+						where sur.RECORD_STATUS='Y'
+						and su.USER_FLOW=sur.USER_FLOW
+						and sur.ROLE_FLOW = #{examTeaRole}
+					)
+				)
+				</if>
+			)
+		</if>
+		order by NLSSORT(su.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
+	</select>
+	
+	<select id="searchUserByDeptAndRole" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+		select DISTINCT su.*
+		from sys_user su
+		inner join sys_user_role sur
+		on sur.user_flow = su.user_flow
+		where su.record_status = 'Y'
+		and sur.record_status = 'Y'
+		AND SU.STATUS_ID = 'Activated'
+		and sur.role_flow = #{roleFlow}
+		and (
+			exists(
+				select null
+				from sys_user_dept sud
+				where sud.dept_flow =	#{deptFlow}
+				and sud.user_flow = su.user_flow
+				and sud.record_status='Y'
+			)
+		or su.dept_flow =  #{deptFlow}
+		)
+	</select>
+	<select id="searchOtherUserByDeptAndRole" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+		SELECT DISTINCT SU.*
+		FROM
+			PDSCI.SYS_USER SU,
+			PDSCI.SYS_USER_ROLE SUR,
+			PDSCI.SYS_USER_DEPT SUD
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND SUR.RECORD_STATUS = 'Y'
+		AND SUD.RECORD_STATUS = 'Y'
+		AND SU.STATUS_ID = 'Activated'
+		AND SU.USER_FLOW = SUR.USER_FLOW
+		AND SU.USER_FLOW = SUD.USER_FLOW
+		AND SUR.USER_FLOW = SUD.USER_FLOW
+		AND SU.ORG_FLOW=#{orgFlow}
+		AND SUR.ROLE_FLOW = #{roleFlow}
+		AND SUD.DEPT_FLOW != #{deptFlow}
+		AND SU.USER_FLOW NOT IN (
+				SELECT  SU.USER_FLOW
+				FROM
+					PDSCI.SYS_USER SU,
+					PDSCI.SYS_USER_ROLE SUR,
+					PDSCI.SYS_USER_DEPT SUD
+				WHERE SU.RECORD_STATUS = 'Y'
+				AND SUR.RECORD_STATUS = 'Y'
+				AND SUD.RECORD_STATUS = 'Y'
+				AND SU.STATUS_ID = 'Activated'
+				AND SU.USER_FLOW = SUR.USER_FLOW
+				AND SU.USER_FLOW = SUD.USER_FLOW
+				AND SUR.USER_FLOW = SUD.USER_FLOW
+				AND SUR.ROLE_FLOW = #{roleFlow}
+				AND SUD.DEPT_FLOW = #{deptFlow}
+		)
+	</select>
+
+	<!--<select id="searchAfterAuditUser" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">-->
+	<!--SELECT SU.*-->
+	<!--FROM PDSCI.SYS_USER SU-->
+	<!--WHERE SU.RECORD_STATUS = 'Y'-->
+	<!--AND SU.USER_FLOW IN (-->
+	<!--SELECT RDSP.USER_FLOW-->
+	<!--FROM PDSCI.RES_DOCTOR_SCH_PROCESS RDSP-->
+	<!--WHERE RDSP.RECORD_STATUS = 'Y'-->
+	<!--<if test='process!=null'>-->
+	<!--<if test='process.teacherUserFlow!=null and process.teacherUserFlow!=""'>-->
+	<!--AND RDSP.TEACHER_USER_FLOW = #{process.teacherUserFlow}-->
+	<!--</if>-->
+	<!--<if test='process.headUserFlow!=null and process.headUserFlow!=""'>-->
+	<!--AND RDSP.HEAD_USER_FLOW = #{process.headUserFlow}-->
+	<!--</if>-->
+	<!--<if test='process.isCurrentFlag!=null and process.isCurrentFlag!=""'>-->
+	<!--AND RDSP.IS_CURRENT_FLAG = #{process.isCurrentFlag}-->
+	<!--</if>-->
+	<!--</if>-->
+	<!--)-->
+	<!--<if test='user!=null'>-->
+	<!--<if test='user.userName!=null and user.userName!=""'>-->
+	<!--SU.USER_NAME LIKE #{user.userName}-->
+	<!--</if>-->
+	<!--</if>-->
+	<!--</select>-->
+	
+	<update id="lockHaveNotRegOverMonth">
+		update pdsci.sys_user su
+		set su.status_id = 'Locked' , 
+			su.status_desc = '锁定' ,
+			su.lock_time = to_char(sysDate,'yyyymmddhh24miss')
+		where su.record_status = 'Y'
+		and not exists(
+			select null
+			from pdsci.res_rec rr
+			where rr.record_status = 'Y'
+			and su.user_flow = rr.oper_user_flow
+			and rr.oper_time like '${month}%'
+		)
+		and exists(
+			select null
+			from pdsci.res_doctor rd
+			where su.user_flow = rd.doctor_flow
+		)
+	</update>
+	
+	<select id="getUserByRec" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+		select su.*
+		from pdsci.sys_user su
+		where su.record_status = 'Y'
+		and exists(
+			select null
+			from pdsci.sys_user_role sur
+			where record_status = 'Y'
+			and sur.user_flow = su.user_flow
+			and sur.role_flow = #{roleFlow}
+		)
+		and su.org_flow = #{orgFlow}
+		and exists(
+			select null
+			from pdsci.res_doctor_sch_process rdsp
+			where rdsp.record_status = 'Y'
+			and rdsp.teacher_user_flow = su.user_flow
+			and exists(
+				select null
+				from pdsci.res_rec rr
+				where rr.record_status = 'Y'
+				and rdsp.process_flow = rr.process_flow
+				<if test='operStartDate!=null and operStartDate!=""'>
+					and rr.oper_time >= #{operStartDate}
+				</if>
+				<if test='operEndDate!=null and operEndDate!=""'>
+					and rr.oper_time <![CDATA[<=]]> #{operEndDate}
+				</if>
+				<if test='recTypeId!=null and recTypeId!=""'>
+					and rr.rec_type_id = #{recTypeId}
+				</if>
+			)
+			<if test='userName!=null and userName!=""'>
+				and su.user_name like '%${userName}%'
+			</if>
+			<if test='deptFlow!=null and deptFlow!=""'>
+				and su.dept_flow = #{deptFlow}
+			</if>
+			<if test='deptName!=null and deptName!=""'>
+				and su.dept_Name like '%${deptName}%'
+			</if>
+		)
+		order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M'),su.user_code
+	</select>
+
+	<select id="getUserByRecForUni" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+		select su.*
+		from pdsci.sys_user su
+		where su.record_status = 'Y'
+		and exists(
+			select null
+			from pdsci.sys_user_role sur
+			where record_status = 'Y'
+			and sur.user_flow = su.user_flow
+			and sur.role_flow = #{roleFlow}
+		)
+		and su.org_flow = #{orgFlow}
+		and exists(
+			select null
+			from pdsci.res_doctor_sch_process rdsp
+			where rdsp.record_status = 'Y'
+			and rdsp.teacher_user_flow = su.user_flow
+			and exists(
+				select null from
+					RES_DOCTOR RD
+					JOIN SYS_USER SU
+					ON SU.USER_FLOW = RD.DOCTOR_FLOW
+					WHERE RD.RECORD_STATUS = 'Y'
+					AND SU.RECORD_STATUS = 'Y'
+					AND RD.DOCTOR_TYPE_ID = 'Graduate'
+					AND (
+					<trim prefix="" prefixOverrides="OR">
+						<if test="(org.sendSchoolId != null and org.sendSchoolId != '')">OR rd.work_org_id = #{org.sendSchoolId}</if>
+						<if test="(org.sendSchoolName != null and org.sendSchoolName != '')">OR rd.work_org_name = #{org.sendSchoolName}</if>
+					</trim>
+					)
+					and rd.doctor_flow =rdsp.user_flow
+				AND RD.ORG_FLOW IS NOT NULL
+			)
+			and exists(
+				select null
+				from pdsci.res_rec rr
+				where rr.record_status = 'Y'
+				and rdsp.process_flow = rr.process_flow
+				<if test='operStartDate!=null and operStartDate!=""'>
+					and rr.oper_time >= #{operStartDate}
+				</if>
+				<if test='operEndDate!=null and operEndDate!=""'>
+					and rr.oper_time <![CDATA[<=]]> #{operEndDate}
+				</if>
+				<if test='recTypeId!=null and recTypeId!=""'>
+					and rr.rec_type_id = #{recTypeId}
+				</if>
+			)
+		)
+		<if test='userName!=null and userName!=""'>
+			and su.user_name like '%${userName}%'
+		</if>
+		<if test='deptFlow!=null and deptFlow!=""'>
+			and su.dept_flow = #{deptFlow}
+		</if>
+		<if test='deptName!=null and deptName!=""'>
+			and su.dept_Name like '%${deptName}%'
+		</if>
+		order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+
+	<select id="searchUserWithRole" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" parameterType="java.util.Map">
+		select distinct su.USER_FLOW,su.USER_CODE,su.USER_PASSWD,su.USER_NAME,su.SEX_ID,su.SEX_NAME,su.STATUS_ID,su.STATUS_DESC,su.
+		USER_PHONE,su.USER_EMAIL,su.DEPT_FLOW,su.DEPT_NAME,su.ORG_FLOW,su.ORG_NAME,su.ID_NO,su.USER_BIRTHDAY,su.
+		TITLE_ID,su.TITLE_NAME,su.DEGREE_ID,su.DEGREE_NAME,su.EDUCATION_ID,su.EDUCATION_NAME,su.POST_ID,su.
+		POST_NAME,su.SRM_EXPERT_FLAG,su.RECORD_STATUS,su.CREATE_TIME,su.CREATE_USER_FLOW,su.MODIFY_TIME,su.
+		MODIFY_USER_FLOW,su.WEI_XIN_ID,su.WEI_XIN_NAME,su.WEI_XIN_STATUS_ID,su.WEI_XIN_STATUS_DESC,su.
+		NATION_ID,su.NATION_NAME,su.USER_ADDRESS,su.USER_EMAIL_STATUS_ID,su.USER_EMAIL_STATUS_DESC,su.
+		USER_PHONE_STATUS_ID,su.USER_PHONE_STATUS_DESC,su.CRET_TYPE_ID,su.CRET_TYPE_NAME,su.USER_HEAD_IMG,su.
+		POLITICS_STATUS_ID,su.POLITICS_STATUS_NAME,su.NATIVE_PLACE_PROV_ID,su.NATIVE_PLACE_CITY_ID,su.
+		DOMICILE_PLACE_ID,su.DOMICILE_PLACE_NAME,su.USER_QQ,su.MARITAL_ID,su.MARITAL_NAME,su.DOMICILE_PLACE_ADDRESS,su.
+		BEAR_ID,su.BEAR_NAME,su.NATIVE_PLACE_AREA_ID,su.NATIVE_PLACE_PROV_NAME,su.NATIVE_PLACE_CITY_NAME,su.
+		NATIVE_PLACE_AREA_NAME,su.LOCK_TIME,su.IS_EXAM_TEA,su.APP_LOGIN_TIME,su.WEB_LOGIN_TIME,su.IS_OWNER_STU,su.
+		LCJN_SPE_NAME,su.LCJN_SPE_ID,su.WORK_ORG_NAME,su.REPORTING_AUTHORITY,su.IS_ORG_ADMIN,su.CERTIFICATE_ID,su.
+		IS_OSCA,su.WORK_CODE,su.ACCOUNT_NO,su.RES_TRAINING_SPE_ID,su.RES_TRAINING_SPE_NAME,su.PROMOTE_TIME,su.
+		USER_MAJOR,su.PASSPORT_NO,su.NATIONALITY_ID,su.NATIONALITY_NAME,su.IS_FOREIGN,su.USER_PINYIN,su.
+		USER_ID,su.CERTIFICATE_LEVEL_ID,su.CERTIFICATE_LEVEL_NAME,su.CERTIFICATE_FILE,su.CERTIFICATE_TIME,su.
+		PARTY_BRANCH_ID,su.PARTY_BRANCH_NAME,su.TIP_PASSWORD,su.MEDICINE_TYPE_ID,su.MEDICINE_TYPE_NAME,su.
+		TEACHER_TYPE_ID,su.TEACHER_TYPE_NAME,su.BASE_FLOW,su.BASE_NAME,su.IS_VERIFY,su.VERIFY_CODE,su.
+		VERIFY_CODE_TIME,su.IS_SUBMIT_ID,su.IS_SUBMIT_NAME,su.CHECK_STATUS_ID,su.CHECK_STATUS_NAME,su.CHECK_REASON,su.AUDIT_STATUS from sys_user su
+		left join sys_user_role sur on su.user_flow = sur.user_flow
+		where su.RECORD_STATUS = 'Y'
+		<choose>
+			<when test='orgFlow!=null and orgFlow!=""'>
+				and su.org_Flow = #{orgFlow}
+			</when>
+			<otherwise>
+				<if test='orgFlows!=null '>
+					AND SU.ORG_FLOW IN
+					<foreach collection="orgFlows" item="org" open="(" separator="," close=")">
+						#{org}
+					</foreach>
+				</if>
+			</otherwise>
+		</choose>
+		<if test='orgName!=null and orgName!=""'>
+			and su.org_Name like '%${orgName}%'
+		</if>
+		<if test='deptFlow!=null and deptFlow!=""'>
+			and su.dept_flow = #{deptFlow}
+		</if>
+		<if test='idNo!=null and idNo!=""'>
+			<bind name="idNo" value="'%'+idNo+'%'"/>
+			and su.id_no like #{idNo}
+		</if>
+		<if test='userPhone!=null and userPhone!=""'>
+			<bind name="userPhone" value="'%'+userPhone+'%'"/>
+			and su.user_phone like #{userPhone}
+		</if>
+		<if test='userEmail!=null and userEmail!=""'>
+			<bind name="userEmail" value="'%'+userEmail+'%'"/>
+			and su.user_email like #{userEmail}
+		</if>
+		<if test='userName!=null and userName!=""'>
+			<bind name="userName" value="'%'+userName+'%'"/>
+			and su.user_name like #{userName}
+		</if>
+		<if test='userEmail!=null and userEmail!=""'>
+			<bind name="userEmail" value="'%'+userEmail+'%'"/>
+			and su.user_Email like #{userEmail}
+		</if>
+		<if test='userCode!=null and userCode!=""'>
+			<bind name="userCode" value="'%'+userCode+'%'"/>
+			and su.user_code like #{userCode}
+		</if>
+		<if test='statusId!=null and statusId!=""'>
+			and su.status_Id = #{statusId}
+		</if>
+		<if test='auditStatus!=null and auditStatus!=""'>
+			and su.AUDIT_STATUS = #{auditStatus}
+		</if>
+		<if test='resTrainingSpeId!=null and resTrainingSpeId!=""'>
+			and su.res_training_Spe_Id = #{resTrainingSpeId}
+		</if>
+		<if test='resTrainingSpeName!=null and resTrainingSpeName!=""'>
+			and su.res_training_Spe_Name = #{resTrainingSpeName}
+		</if>
+		<if test='roleFlow!=null and roleFlow!=""'>
+			and sur.role_flow = #{roleFlow}
+			and sur.ws_id = #{wsId}
+			and sur.RECORD_STATUS = 'Y'
+		</if>
+		order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+
+	<select id="searchUserWithRoleByJx" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" parameterType="java.util.Map">
+		select distinct su.* from sys_user su
+		left join sys_user_role sur on su.user_flow = sur.user_flow
+		where su.RECORD_STATUS = 'Y'
+        and sur.RECORD_STATUS = 'Y'
+		<if test='orgFlow!=null and orgFlow!=""'>
+			and su.org_Flow = #{orgFlow}
+		</if>
+
+		<if test='deptFlow!=null and deptFlow!=""'>
+			and su.dept_flow = #{deptFlow}
+		</if>
+
+		<if test='userCode!=null and userCode!=""'>
+			<bind name="userCode" value="'%'+userCode+'%'"/>
+			and su.user_code like #{userCode}
+		</if>
+
+		<if test='userName!=null and userName!=""'>
+			<bind name="userName" value="'%'+userName+'%'"/>
+			and su.user_name like #{userName}
+		</if>
+
+        <if test='wsId!=null and wsId!=""'>
+            and sur.ws_id = #{wsId}
+        </if>
+
+		<if test='roleFlow!=null and roleFlow!=""'>
+			and sur.role_flow = #{roleFlow}
+		</if>
+        <if test='roleFlows!=null and roleFlows!=""'>
+           and  sur.role_flow in
+            <foreach collection="roleFlows" item="roleFlow" open="(" separator="," close=")">
+                #{roleFlow}
+            </foreach>
+        </if>
+		order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+
+
+    <select id="searchUserWithRoleByJx2" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" parameterType="java.util.Map">
+        select distinct su.* from sys_user su
+        left join sys_user_role sur on su.user_flow = sur.user_flow
+        where su.RECORD_STATUS = 'Y'
+        and sur.RECORD_STATUS = 'Y'
+        and su.dept_flow is null and su.dept_name is not null
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and su.org_Flow = #{orgFlow}
+        </if>
+
+        <if test='userCode!=null and userCode!=""'>
+            <bind name="userCode" value="'%'+userCode+'%'"/>
+            and su.user_code like #{userCode}
+        </if>
+
+        <if test='userName!=null and userName!=""'>
+            <bind name="userName" value="'%'+userName+'%'"/>
+            and su.user_name like #{userName}
+        </if>
+
+        <if test='wsId!=null and wsId!=""'>
+            and sur.ws_id = #{wsId}
+        </if>
+
+        <if test='roleFlow!=null and roleFlow!=""'>
+            and sur.role_flow = #{roleFlow}
+        </if>
+        <if test='roleFlows!=null and roleFlows!=""'>
+            and  sur.role_flow in
+            <foreach collection="roleFlows" item="roleFlow" open="(" separator="," close=")">
+                #{roleFlow}
+            </foreach>
+        </if>
+        order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+    </select>
+
+    <select id="readDeptTeachAndHead" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" >
+		select distinct su.* from sys_user su
+		left join sys_user_role sur on su.user_flow = sur.user_flow
+		where su.RECORD_STATUS = 'Y'
+		<if test='deptFlow!=null and deptFlow!=""'>
+			and( su.dept_flow = #{deptFlow}
+			 or su.user_flow in (
+			  select user_Flow from sys_user_dept sud where record_status='Y'
+			  and sud.dept_flow =#{deptFlow}
+			) 
+			)
+		</if>
+		and  sur.role_flow in
+		<foreach collection="roles" item="r" open="(" separator="," close=")">
+			#{r}
+		</foreach>
+		  and sur.RECORD_STATUS = 'Y' and su.status_id ='Activated'
+		order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+    <select id="readOrgTeas" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" >
+		select distinct su.* from sys_user su
+		left join sys_user_role sur on su.user_flow = sur.user_flow
+		where su.RECORD_STATUS = 'Y'
+		and su.org_flow=#{orgFlow}
+
+		and  sur.role_flow in
+		<foreach collection="roles" item="r" open="(" separator="," close=")">
+			#{r}
+		</foreach>
+		  and sur.RECORD_STATUS = 'Y'
+		order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+	<select id="readUserBySpe" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" >
+		select distinct su.* from sys_user su
+		left join sys_user_role sur on su.user_flow = sur.user_flow
+		where su.RECORD_STATUS = 'Y'
+		and su.org_flow=#{orgFlow}
+		<if test='roleFlow!=null and roleFlow!="" '>
+			and sur.role_flow = #{roleFlow}
+		</if>
+		<if test='resTrainingSpeId!=null and resTrainingSpeId!="" '>
+			and su.res_training_spe_id = #{resTrainingSpeId}
+		</if>
+		<if test="deptFlow !=null and deptFlow !=''">
+			and exists (
+			select 1 from Res_Training_Spe_Dept
+				where record_status='Y'
+				AND ORG_FLOW =  su.org_flow
+				and training_spe_id = su.res_training_spe_id
+				and dept_flow =#{deptFlow}
+			)
+		</if>
+		  and sur.RECORD_STATUS = 'Y'
+		order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+    <select id="queryTeaList" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" >
+		select su.* from sys_user su
+		where su.RECORD_STATUS = 'Y'
+		and su.org_flow=#{orgFlow}
+        and su.status_id in ('Activated')
+        and exists(
+					select null from SYS_USER_ROLE sur
+					where sur.RECORD_STATUS='Y'
+					and su.USER_FLOW=sur.USER_FLOW
+					and sur.ROLE_FLOW =#{examTeaRole}
+				)
+		order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+
+	<resultMap id="GateUserMap" type="java.util.Map">
+		<result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow" />
+		<result column="USER_CODE" jdbcType="VARCHAR" property="userCode" />
+		<result column="USER_PASSWD" jdbcType="VARCHAR" property="userPasswd" />
+		<result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+		<result column="SEX_ID" jdbcType="VARCHAR" property="sexId" />
+		<result column="SEX_NAME" jdbcType="VARCHAR" property="sexName" />
+		<result column="STATUS_ID" jdbcType="VARCHAR" property="statusId" />
+		<result column="STATUS_DESC" jdbcType="VARCHAR" property="statusDesc" />
+		<result column="USER_PHONE" jdbcType="VARCHAR" property="userPhone" />
+		<result column="USER_EMAIL" jdbcType="VARCHAR" property="userEmail" />
+		<result column="DEPT_FLOW" jdbcType="VARCHAR" property="deptFlow" />
+		<result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+		<result column="ORG_FLOW" jdbcType="VARCHAR" property="orgFlow" />
+		<result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
+		<result column="ID_NO" jdbcType="VARCHAR" property="idNo" />
+		<result column="USER_BIRTHDAY" jdbcType="VARCHAR" property="userBirthday" />
+		<result column="TITLE_ID" jdbcType="VARCHAR" property="titleId" />
+		<result column="TITLE_NAME" jdbcType="VARCHAR" property="titleName" />
+		<result column="DEGREE_ID" jdbcType="VARCHAR" property="degreeId" />
+		<result column="DEGREE_NAME" jdbcType="VARCHAR" property="degreeName" />
+		<result column="EDUCATION_ID" jdbcType="VARCHAR" property="educationId" />
+		<result column="EDUCATION_NAME" jdbcType="VARCHAR" property="educationName" />
+		<result column="POST_ID" jdbcType="VARCHAR" property="postId" />
+		<result column="POST_NAME" jdbcType="VARCHAR" property="postName" />
+		<result column="WEI_XIN_ID" jdbcType="VARCHAR" property="weiXinId" />
+		<result column="WEI_XIN_NAME" jdbcType="VARCHAR" property="weiXinName" />
+		<result column="WEI_XIN_STATUS_ID" jdbcType="VARCHAR" property="weiXinStatusId" />
+		<result column="WEI_XIN_STATUS_DESC" jdbcType="VARCHAR" property="weiXinStatusDesc" />
+		<result column="SRM_EXPERT_FLAG" jdbcType="VARCHAR" property="srmExpertFlag" />
+		<result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
+		<result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+		<result column="CREATE_USER_FLOW" jdbcType="VARCHAR" property="createUserFlow" />
+		<result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime" />
+		<result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
+		<result column="NATION_ID" jdbcType="VARCHAR" property="nationId" />
+		<result column="NATION_NAME" jdbcType="VARCHAR" property="nationName" />
+		<result column="USER_ADDRESS" jdbcType="VARCHAR" property="userAddress" />
+		<result column="USER_EMAIL_STATUS_ID" jdbcType="VARCHAR" property="userEmailStatusId" />
+		<result column="USER_EMAIL_STATUS_DESC" jdbcType="VARCHAR" property="userEmailStatusDesc" />
+		<result column="USER_PHONE_STATUS_ID" jdbcType="VARCHAR" property="userPhoneStatusId" />
+		<result column="USER_PHONE_STATUS_DESC" jdbcType="VARCHAR" property="userPhoneStatusDesc" />
+		<result column="CRET_TYPE_ID" jdbcType="VARCHAR" property="cretTypeId" />
+		<result column="CRET_TYPE_NAME" jdbcType="VARCHAR" property="cretTypeName" />
+		<result column="USER_HEAD_IMG" jdbcType="VARCHAR" property="userHeadImg" />
+		<result column="POLITICS_STATUS_ID" jdbcType="VARCHAR" property="politicsStatusId" />
+		<result column="POLITICS_STATUS_NAME" jdbcType="VARCHAR" property="politicsStatusName" />
+		<result column="NATIVE_PLACE_PROV_ID" jdbcType="VARCHAR" property="nativePlaceProvId" />
+		<result column="NATIVE_PLACE_CITY_ID" jdbcType="VARCHAR" property="nativePlaceCityId" />
+		<result column="DOMICILE_PLACE_ID" jdbcType="VARCHAR" property="domicilePlaceId" />
+		<result column="DOMICILE_PLACE_NAME" jdbcType="VARCHAR" property="domicilePlaceName" />
+		<result column="USER_QQ" jdbcType="VARCHAR" property="userQq" />
+		<result column="MARITAL_ID" jdbcType="VARCHAR" property="maritalId" />
+		<result column="MARITAL_NAME" jdbcType="VARCHAR" property="maritalName" />
+		<result column="DOMICILE_PLACE_ADDRESS" jdbcType="VARCHAR" property="domicilePlaceAddress" />
+		<result column="BEAR_ID" jdbcType="VARCHAR" property="bearId" />
+		<result column="BEAR_NAME" jdbcType="VARCHAR" property="bearName" />
+		<result column="NATIVE_PLACE_AREA_ID" jdbcType="VARCHAR" property="nativePlaceAreaId" />
+		<result column="NATIVE_PLACE_PROV_NAME" jdbcType="VARCHAR" property="nativePlaceProvName" />
+		<result column="NATIVE_PLACE_CITY_NAME" jdbcType="VARCHAR" property="nativePlaceCityName" />
+		<result column="NATIVE_PLACE_AREA_NAME" jdbcType="VARCHAR" property="nativePlaceAreaName" />
+		<result column="LOCK_TIME" jdbcType="VARCHAR" property="lockTime" />
+		<result column="IS_EXAM_TEA" jdbcType="VARCHAR" property="isExamTea" />
+		<result column="APP_LOGIN_TIME" jdbcType="VARCHAR" property="appLoginTime" />
+		<result column="WEB_LOGIN_TIME" jdbcType="VARCHAR" property="webLoginTime" />
+		<result column="IS_OWNER_STU" jdbcType="VARCHAR" property="isOwnerStu" />
+		<result column="LCJN_SPE_NAME" jdbcType="VARCHAR" property="lcjnSpeName" />
+		<result column="LCJN_SPE_ID" jdbcType="VARCHAR" property="lcjnSpeId" />
+		<result column="WORK_ORG_NAME" jdbcType="VARCHAR" property="workOrgName" />
+		<result column="REPORTING_AUTHORITY" jdbcType="VARCHAR" property="reportingAuthority" />
+		<result column="IS_ORG_ADMIN" jdbcType="VARCHAR" property="isOrgAdmin" />
+		<result column="CERTIFICATE_ID" jdbcType="VARCHAR" property="certificateId" />
+		<result column="IS_OSCA" jdbcType="VARCHAR" property="isOsca" />
+		<result column="role_name" jdbcType="VARCHAR" property="roleName" />
+	</resultMap>
+	<select id="getGateUserList" resultMap="GateUserMap">
+		select distinct su.*,(select wm_concat(r.role_name) from sys_role r
+		left join sys_user_role ur on ur.role_flow=r.role_flow
+		where r.record_status='Y' and ur.record_status='Y'
+		and role_level_id='GateLevel'
+		and ur.user_flow=su.user_flow) role_name from sys_user su
+		left join sys_user_role sur on su.user_flow = sur.user_flow
+		where su.RECORD_STATUS = 'Y'
+		and sur.record_status='Y'
+		and sur.role_flow in (select role_flow from sys_role where record_status='Y'and role_level_id='GateLevel')
+		<if test='orgName!=null and orgName!=""'>
+			and su.org_Name like '%${orgName}%'
+		</if>
+		<if test='deptFlow!=null and deptFlow!=""'>
+			and su.dept_flow = #{deptFlow}
+		</if>
+		<if test='idNo!=null and idNo!=""'>
+			<bind name="idNo" value="'%'+idNo+'%'"/>
+			and su.id_no like #{idNo}
+		</if>
+		<if test='userPhone!=null and userPhone!=""'>
+			<bind name="userPhone" value="'%'+userPhone+'%'"/>
+			and su.user_phone like #{userPhone}
+		</if>
+		<if test='userEmail!=null and userEmail!=""'>
+			<bind name="userEmail" value="'%'+userEmail+'%'"/>
+			and su.user_email like #{userEmail}
+		</if>
+		<if test='userName!=null and userName!=""'>
+			<bind name="userName" value="'%'+userName+'%'"/>
+			and su.user_name like #{userName}
+		</if>
+		<if test='userEmail!=null and userEmail!=""'>
+			<bind name="userEmail" value="'%'+userEmail+'%'"/>
+			and su.user_Email like #{userEmail}
+		</if>
+		<if test='userCode!=null and userCode!=""'>
+			<bind name="userCode" value="'%'+userCode+'%'"/>
+			and su.user_code like #{userCode}
+		</if>
+		<if test='statusId!=null and statusId!=""'>
+			and su.status_Id = #{statusId}
+		</if>
+		<if test='resTrainingSpeId!=null and resTrainingSpeId!=""'>
+			and su.res_training_Spe_Id = #{resTrainingSpeId}
+		</if>
+		<if test='resTrainingSpeName!=null and resTrainingSpeName!=""'>
+			and su.res_training_Spe_Name = #{resTrainingSpeName}
+		</if>
+		order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+	<select id="getPortalUserList" resultMap="GateUserMap">
+		select distinct su.*
+		from sys_user su
+		where su.RECORD_STATUS = 'Y'
+		and su.NATION_ID = 'portal'
+		<if test='orgName!=null and orgName!=""'>
+			and su.org_Name like '%${orgName}%'
+		</if>
+		<if test='deptFlow!=null and deptFlow!=""'>
+			and su.dept_flow = #{deptFlow}
+		</if>
+		<if test='idNo!=null and idNo!=""'>
+			<bind name="idNo" value="'%'+idNo+'%'"/>
+			and su.id_no like #{idNo}
+		</if>
+		<if test='userPhone!=null and userPhone!=""'>
+			<bind name="userPhone" value="'%'+userPhone+'%'"/>
+			and su.user_phone like #{userPhone}
+		</if>
+		<if test='userEmail!=null and userEmail!=""'>
+			<bind name="userEmail" value="'%'+userEmail+'%'"/>
+			and su.user_email like #{userEmail}
+		</if>
+		<if test='userName!=null and userName!=""'>
+			<bind name="userName" value="'%'+userName+'%'"/>
+			and su.user_name like #{userName}
+		</if>
+		<if test='userEmail!=null and userEmail!=""'>
+			<bind name="userEmail" value="'%'+userEmail+'%'"/>
+			and su.user_Email like #{userEmail}
+		</if>
+		<if test='userCode!=null and userCode!=""'>
+			<bind name="userCode" value="'%'+userCode+'%'"/>
+			and su.user_code like #{userCode}
+		</if>
+		<if test='statusId!=null and statusId!=""'>
+			and su.status_Id = #{statusId}
+		</if>
+		<if test='resTrainingSpeId!=null and resTrainingSpeId!=""'>
+			and su.res_training_Spe_Id = #{resTrainingSpeId}
+		</if>
+		<if test='resTrainingSpeName!=null and resTrainingSpeName!=""'>
+			and su.res_training_Spe_Name = #{resTrainingSpeName}
+		</if>
+		order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+	<select id="getUserRoles" resultMap="GateUserMap">
+		select distinct su.*,(select wm_concat(r.role_flow) from sys_role r
+		left join sys_user_role ur on ur.role_flow=r.role_flow
+		where r.record_status='Y' and ur.record_status='Y'
+		and role_level_id='GateLevel'
+		and ur.user_flow=su.user_flow) role_name from sys_user su
+		left join sys_user_role sur on su.user_flow = sur.user_flow
+		where su.RECORD_STATUS = 'Y'
+		and sur.record_status='Y'
+		and sur.role_flow in (select role_flow from sys_role where record_status='Y'and role_level_id='GateLevel')
+		and su.user_flow=#{userFlow}
+	</select>
+	<update id="deleteGateRole" >
+		update sys_user_role sur set record_status='N'
+		where sur.record_status='Y'
+		and sur.role_flow in (select role_flow from sys_role where record_status='Y'and role_level_id='GateLevel')
+		and sur.user_flow=#{user.userFlow}
+		and sur.role_Flow not in
+		<foreach collection="roleFlows" item="r" open="(" separator="," close=")">
+			#{r}
+		</foreach>
+	</update>
+	<update id="deletePortalRole" >
+		update sys_user_role sur set record_status='N'
+		where sur.record_status='Y'
+		and sur.user_flow=#{user.userFlow}
+		and sur.role_Flow not in
+		<foreach collection="roleFlows" item="r" open="(" separator="," close=")">
+			#{r}
+		</foreach>
+	</update>
+	<update id="updateTipPassword" >
+		update sys_user a set a.tip_password=(select b.user_passwd from sys_user b where a.user_flow=b.user_flow)
+		where a.record_status='Y'
+	</update>
+	<resultMap id="dataMap" type="java.util.Map">
+		<result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow" />
+		<result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+		<result column="SID" jdbcType="VARCHAR" property="studentId" />
+		<result column="CONTENT" jdbcType="VARCHAR" property="content" />
+	</resultMap>
+	<select id="queryEduUserList" resultMap="dataMap">
+		select a.user_flow,a.user_name,b.sid,b.content
+		  from sys_user a, edu_user b, res_doctor c, sys_user_role d
+		 where a.user_flow = b.user_flow
+		   and a.user_flow = c.doctor_flow
+		   and a.user_flow = d.user_flow
+		   and a.record_status = 'Y'
+		   and b.record_status = 'Y'
+		   and c.record_status = 'Y'
+		   and d.record_status = 'Y'
+		   and d.role_flow = #{stuRole}
+	</select>
+	<select id="findByNotBlackIdNo" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+		SELECT a.*
+		FROM sys_user a
+		WHERE (a.record_status = 'Y'
+		<if test='idNo!=null and idNo!=""'>
+			and a.id_no = #{idNo}
+		</if>
+		)
+		OR EXISTS (SELECT NULL
+		FROM jsres_user_balcklist b
+		WHERE b.record_status = 'Y'
+		<if test='idNo!=null and idNo!=""'>
+			and b.id_no = #{idNo}
+		</if>
+		)
+
+	</select>
+	<select id="searchRecruitManagers" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+		select su.* from PDSCI.SYS_USER su
+		where su.RECORD_STATUS ='Y'
+		<if test='userFlow!=null and userFlow!=""'>
+			and su.user_flow != #{userFlow}
+		</if>
+		<if test='orgFlow!=null and orgFlow!=""'>
+			and su.org_flow = #{orgFlow}
+		</if>
+		<if test='deptFlow!=null and deptFlow!=""'>
+			and su.dept_flow = #{deptFlow}
+		</if>
+		<if test='deptName!=null and deptName!=""'>
+			<bind name="deptName" value="'%'+deptName+'%'"/>
+			and su.DEPT_NAME like #{deptName}
+		</if>
+		<if test='idNo!=null and idNo!=""'>
+			<bind name="idNo" value="'%'+idNo+'%'"/>
+			and su.id_no like #{idNo}
+		</if>
+		<if test='userPhone!=null and userPhone!=""'>
+			<bind name="userPhone" value="'%'+userPhone+'%'"/>
+			and su.user_phone like #{userPhone}
+		</if>
+		<if test='userEmail!=null and userEmail!=""'>
+			<bind name="userEmail" value="'%'+userEmail+'%'"/>
+			and su.user_email like #{userEmail}
+		</if>
+		<if test='userName!=null and userName!=""'>
+			<bind name="userName" value="'%'+userName+'%'"/>
+			and su.user_name like #{userName}
+		</if>
+		<if test='userCode!=null and userCode!=""'>
+			and su.user_code = #{userCode}
+		</if>
+		<if test='statusId!=null and statusId!=""'>
+			and su.status_Id = #{statusId}
+		</if>
+		<if test="roleList!=null">
+			and (
+			exists(
+			select null from SYS_USER_ROLE sur
+			where sur.RECORD_STATUS='Y'
+			and su.USER_FLOW=sur.USER_FLOW
+			and sur.ROLE_FLOW in
+			<foreach collection="roleList" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			)
+			)
+		</if>
+		order by NLSSORT(su.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
+	</select>
+
+	<update id="updateTeaSubmit" parameterType="list">
+		update sys_user
+		set is_submit_id = 'Submit',is_submit_name = '已提交'
+		, check_status_id = 'Passing',check_status_name = '待审核'
+		where user_flow in
+		<foreach collection="list"  item="userFlow" open="(" separator="," close=")">
+			#{userFlow}
+		</foreach>
+	</update>
+
+	<update id="updateCheckAll" parameterType="map">
+		update sys_user
+		<if test="flag != null and flag == 'Y'.toString()">
+			set check_status_id = 'Passed',check_status_name = '审核通过'
+		</if>
+		<if test="flag != null and flag == 'N'.toString()">
+			set check_status_id = 'UnPassed',check_status_name = '审核不通过'
+		</if>
+		<if test="checkReason != null and checkReason != ''">
+			,check_reason = #{checkReason}
+		</if>
+		where user_flow in
+		<foreach collection="list"  item="userFlow" open="(" separator="," close=")">
+			#{userFlow}
+		</foreach>
+	</update>
+
+	<update id="updateTeaNotSubmit" parameterType="list">
+		update sys_user
+		set is_submit_id = 'NotSubmit',is_submit_name = '未提交'
+		, check_status_id = '',check_status_name = '',check_reason = ''
+		where user_flow in
+		<foreach collection="list"  item="userFlow" open="(" separator="," close=")">
+			#{userFlow}
+		</foreach>
+	</update>
+
+	<select id="searchUserList" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+		select u.* from PDSCI.sys_user u
+		where record_status='Y'
+		and status_id='Activated'
+		and u.user_flow in(
+		select u.user_flow
+		from PDSCI.sys_user_role iu, sys_user u
+		where iu.user_flow = u.user_flow and iu.record_status = 'Y'
+		and iu.role_flow = #{roleFlow}
+		and u.dept_flow = #{sysDeptFlow}
+		union
+		select u.user_flow
+		from PDSCI.sys_user_role iu, sys_user u
+		where iu.user_flow = u.user_flow and iu.record_status = 'Y'
+		and iu.role_flow = #{roleFlow}
+		and exists(select 1
+		from pdsci.sys_user_dept sud
+		where sud.record_status = 'Y'
+		and u.user_flow = sud.user_flow
+		and sud.dept_flow = #{sysDeptFlow})
+		)
+		<if test='userName!=null and userName!=""'>
+			and (u.user_name like '%${userName}%')
+		</if>
+		order by nlssort(u.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+</mapper>

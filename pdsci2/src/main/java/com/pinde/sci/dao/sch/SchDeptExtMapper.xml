@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.sch.SchDeptExtMapper" >
+	<select id="searchTeachDept" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap">
+		SELECT * 
+		FROM PDSCI.SCH_DEPT
+		WHERE RECORD_STATUS = 'Y'
+		AND SCH_DEPT_FLOW IN (
+			SELECT DISTINCT SCH_DEPT_FLOW
+			FROM PDSCI.RES_DOCTOR_SCH_PROCESS
+			WHERE RECORD_STATUS = 'Y'
+			<if test='teacherUserFlow!=null and teacherUserFlow!=""'>
+				AND TEACHER_USER_FLOW = #{teacherUserFlow}
+			</if>
+		)
+	</select>
+	
+	<select id="searchrotationDept" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap">
+		SELECT * 
+		FROM PDSCI.SCH_DEPT
+		WHERE RECORD_STATUS = 'Y'
+		AND SCH_DEPT_FLOW IN (
+			SELECT DISTINCT SCH_DEPT_FLOW
+			FROM PDSCI.SCH_ARRANGE_RESULT
+			WHERE RECORD_STATUS = 'Y'
+			<if test='userFlow!=null and userFlow!=""'>
+				AND DOCTOR_FLOW = #{userFlow}
+			</if>
+		)
+	</select>
+	
+	<select id="countDeptArea" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap">
+		SELECT * 
+		FROM PDSCI.SCH_DEPT
+		WHERE RECORD_STATUS = 'Y'
+		AND SCH_DEPT_FLOW IN (
+			SELECT SCH_DEPT_FLOW
+			FROM PDSCI.SCH_ARRANGE_RESULT
+			WHERE RECORD_STATUS = 'Y'
+			AND DOCTOR_FLOW IN(
+				SELECT DOCTOR_FLOW
+				FROM PDSCI.RES_DOCTOR
+				WHERE RECORD_STATUS = 'Y'
+				AND SCH_STATUS_ID IS NOT NULL
+				<if test='doctor!=null'>
+					<if test='doctor.orgFlow!=null and doctor.orgFlow!=""'>
+						AND ORG_FLOW = #{doctor.orgFlow}
+					</if>
+					<if test='doctor.doctorCategoryId!=null and doctor.doctorCategoryId!=""'>
+						AND DOCTOR_CATEGORY_ID = #{doctor.doctorCategoryId}
+					</if>
+					<if test='doctor.sessionNumber!=null and doctor.sessionNumber!=""'>
+						AND	SESSION_NUMBER = #{doctor.sessionNumber}
+					</if>
+					<if test='doctor.trainingSpeId!=null and doctor.trainingSpeId!=""'>
+						AND	TRAINING_SPE_ID = #{doctor.trainingSpeId}
+					</if>
+					<if test='doctor.doctorName!=null and doctor.doctorName!=""'>
+						AND	DOCTOR_NAME LIKE '%${doctor.doctorName}%'
+					</if>
+				</if>
+			)
+		)
+		ORDER BY ORDINAL
+	</select>
+	
+	<select id="userSchDept" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap">
+		SELECT * 
+		FROM PDSCI.SCH_DEPT SD
+		WHERE SD.RECORD_STATUS = 'Y'
+		AND SD.DEPT_FLOW IN (
+			SELECT SSD.DEPT_FLOW
+			FROM PDSCI.SYS_DEPT SSD,PDSCI.SYS_USER_DEPT SUD
+			WHERE SSD.RECORD_STATUS = 'Y'
+			AND SUD.RECORD_STATUS = 'Y'
+			AND SUD.USER_FLOW = #{userFlow}
+			AND SUD.DEPT_FLOW = SSD.DEPT_FLOW
+		)
+	</select>
+	
+	<select id="getExternalNum" resultType="int">
+		select count(0)
+		from sys_user_dept sud
+		where sud.record_status = 'Y'
+		and sud.user_flow = #{userFlow}
+		and exists(
+			select null
+			from pdsci.sch_dept_external_rel sder
+			where sder.record_status = 'Y'
+			and sud.dept_flow = sder.dept_flow
+		)
+	</select>
+	<select id="searchSchDeptHadRelated" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap" parameterType="map">
+		select * from sch_dept sd
+		where exists (
+			   select 1 from  Sch_And_Standard_Dept_Cfg sas
+					  where sd.sch_dept_flow = sas.sch_dept_flow
+					  and sd.org_flow=sas.org_flow
+					  and sd.record_status = 'Y'
+					  and sas.record_status = 'Y')
+		  <if test="orgFlow != null and orgFlow != ''">
+			  and sd.org_flow = #{orgFlow}
+		  </if>
+	</select>
+	<select id="readSchDeptByOrgAndStandardId" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap" >
+		select dept.* from Sch_Dept_Rel rel
+		join
+		sch_dept dept on rel.sch_dept_flow=dept.sch_dept_flow
+		where rel.record_status='Y'
+		and dept.record_status='Y'
+		and dept.org_flow=#{orgFlow}
+		and rel.standard_dept_id=#{standardDeptId}
+		order by rel.create_time
+	</select>
+	<select id="searchRelByStandard" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap" >
+		select DISTINCT dept.*
+		from Sch_Dept_Rel rel
+		join sch_dept dept
+		on rel.sch_dept_flow=dept.sch_dept_flow
+		where rel.record_status='Y'
+		and dept.record_status='Y'
+		and dept.org_flow=#{orgFlow}
+		and rel.standard_dept_id=#{standardDeptId}
+		order by dept.create_time
+	</select>
+</mapper>

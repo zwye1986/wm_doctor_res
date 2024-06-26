@@ -1,0 +1,42 @@
+@charset "UTF-8";
+/* CSS Document */
+body,html {height:100%;}
+body,div,h1,img,h3,table,th,td,tr,input,a,h4,ul,li,span{ margin:0; padding:0; font-family:myriadSetPro,"微软雅黑","Microsoft YaHei";}
+input{ border:none; font-size:14px; color:#878787; outline:none;}
+li{ list-style:none;}
+a{ text-decoration:none;}
+
+/* logo */
+#con_main {position:relative; height:auto; min-height:100%;}
+.main{ position:relative;padding-bottom:48px;}
+.logo{ width:100%; height:100px; background-color:#f0f1f4;}
+.logo img{ width:391px; height:60px; margin-top:22px; position:absolute; left:50%; margin-left:-550px;}
+
+/* banner */
+.banner{ width:100%; height:468px; background:no-repeat center url(../images/banner.png); position:relative;}
+h3 img{ position:absolute; top:60px; left:50%; margin-left:-458px;}
+.bg_login{ background-color:#FFFFFF; width:294px; height:306px; opacity:0.8; border-radius:12px; position:absolute; top:80px; left:60%; margin-left:80px;}
+table{ border-spacing:15px;}
+.bg_login th{ margin:30px auto; font-size:20px;}
+.bg_login td{ float:left; border:#c5c5c5 solid 1px; border-radius:2px; width:250px;;margin-left:6px;}
+.bg_login td img{ float:left;margin:9px 10px;}
+.bg_login td input{ float:left; line-height:40px;}
+.bg_login td a .dl,.bg_login td a .zz{ width:114px; height:40px; font-size:16px; color:#FFFFFF;}
+.bg_login td a .dl{ background-color:#72ccb7; margin-right:8px;}
+.bg_login td a .zz{ background-color:#dcc5aa; margin-left:9px;}
+.bg_login td a .dl:hover{ background-color:#61dbbf;}
+.bg_login td a .zz:hover{ background-color:#ebc89f;}
+
+/* notice */
+.notice{ width:1100px; height:50px; margin:30px auto; border:#dcc5aa solid 1px;}
+.notice li{ font-size:16px;line-height:50px;}
+.notice li h4{float:left; font-size:18px; background-color:#dcc5aa; color:#FFFFFF; padding:0 40px;line-height:50px;}
+.notice .first{ float:left; background-image:url(../images/circle.png); background-repeat:no-repeat; background-position:center left; padding:0 20px; margin:0 40px; color:#333333;}
+.notice .first:hover{ text-decoration:underline;}
+.notice .more{ float:right; padding-right:20px; color:#dcc5aa;}
+.notice .more:hover{ text-decoration:underline;}
+
+/* bottom*/
+.bottom{ background-color:#808080; width:100%; height:68px;  position:absolute; bottom:0;text-align:center;}
+.bottom span{ display:block;font-size:14px; color:#fff; height:35px; line-height: 68px;}
+.bottom span a{color:#333333;}

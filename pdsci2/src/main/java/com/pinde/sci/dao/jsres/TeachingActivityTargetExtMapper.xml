@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jsres.TeachingActivityTargetExtMapper">
+    <resultMap id="targetMap" type="com.pinde.sci.model.mo.TeachingActivityTarget" extends="com.pinde.sci.dao.base.TeachingActivityTargetMapper.BaseResultMap">
+        <id column="TARGET_FLOW" property="targetFlow" jdbcType="VARCHAR" />
+        <result column="TARGET_NAME" property="targetName" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORDINAL" property="ordinal" jdbcType="DECIMAL" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+        <result column="TARGET_TYPE" property="targetType" jdbcType="VARCHAR" />
+        <result column="ACTIVITY_TYPE_ID" property="activityTypeId" jdbcType="VARCHAR" />
+        <result column="ACTIVITY_TYPE_NAME" property="activityTypeName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <!-- 查询教学活动评价指标信息 -->
+    <select id="searchTargetList" parameterType="com.pinde.sci.form.res.ActivityTargetForm" resultMap="targetMap">
+        SELECT
+            TARGET_FLOW,
+            TARGET_NAME,
+            TARGET_TYPE,
+            ORG_FLOW,
+            ACTIVITY_TYPE_ID,
+            ACTIVITY_TYPE_NAME
+        FROM
+            TEACHING_ACTIVITY_TARGET
+        WHERE
+            RECORD_STATUS = 'Y'
+        AND TARGET_TYPE = #{targetType}
+        <if test="activityTypeId != null and activityTypeId != ''">
+            AND ACTIVITY_TYPE_ID = #{activityTypeId}
+        </if>
+        <if test="orgFlow != null and orgFlow != ''">
+            AND ORG_FLOW = #{orgFlow}
+        </if>
+        <if test="targetName != null and targetName != ''">
+            AND TARGET_NAME LIKE CONCAT(CONCAT('%',#{targetName}),'%')
+        </if>
+        <if test="targetFlowArrs != null and targetFlowArrs.length > 0">
+            AND TARGET_FLOW IN
+            <foreach collection="targetFlowArrs" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        ORDER BY ORDINAL
+    </select>
+
+    <!--保存教学活动指标信息-->
+    <insert id="saveTargetDate" parameterType="java.util.List">
+        INSERT ALL
+        <foreach item="list" index="index" collection="list"  separator="">
+            INTO TEACHING_ACTIVITY_TARGET (
+                TARGET_FLOW,
+                TARGET_NAME,
+                ORG_FLOW,
+                RECORD_STATUS,
+                CREATE_TIME,
+                CREATE_USER_FLOW,
+                MODIFY_TIME,
+                MODIFY_USER_FLOW,
+                TARGET_TYPE,
+                ACTIVITY_TYPE_ID,
+                ACTIVITY_TYPE_NAME,
+                ORDINAL
+            )
+            values
+            (
+                #{list[${index}].targetFlow},
+                #{list[${index}].targetName},
+                #{list[${index}].orgFlow},
+                #{list[${index}].recordStatus},
+                #{list[${index}].createTime},
+                #{list[${index}].createUserFlow},
+                #{list[${index}].modifyTime},
+                #{list[${index}].modifyUserFlow},
+                #{list[${index}].targetType},
+                #{list[${index}].activityTypeId},
+                #{list[${index}].activityTypeName},
+                #{list[${index}].ordinal}
+            )
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+
+    <!-- 查询教学活动形式ID -->
+    <select id="getActivityTypeIdByName" parameterType="String" resultType="String">
+        SELECT
+            DICT_ID
+        FROM
+            SYS_DICT
+        WHERE
+            RECORD_STATUS = 'Y'
+        AND DICT_TYPE_ID = 'ActivityType'
+        AND DICT_NAME = #{activityTypeName}
+    </select>
+
+    <!-- 查询同一指标名称和指标类型的指标数量 -->
+    <select id="countTargetData" parameterType="String" resultType="int">
+        SELECT
+            COUNT(1)
+        FROM
+            TEACHING_ACTIVITY_TARGET
+        WHERE
+            RECORD_STATUS = 'Y'
+        AND TARGET_TYPE = 'JX'
+        AND TARGET_NAME = #{targetName}
+    </select>
+
+    <!-- 根据指标类型查询最大的排序码 -->
+    <select id="getMaxOrdinalByType" parameterType="String" resultType="int">
+        SELECT
+            NVL(MAX(ORDINAL), 0) + 1
+        FROM
+            TEACHING_ACTIVITY_TARGET
+        WHERE
+            RECORD_STATUS = 'Y'
+        AND TARGET_TYPE = #{targetType}
+    </select>
+
+    <select id="getMaxOrdinalByTypeNew" parameterType="String" resultType="int">
+        SELECT
+            NVL(MAX(ORDINAL), 0) + 1
+        FROM
+            TEACHING_ACTIVITY_TARGET
+        WHERE
+            RECORD_STATUS = 'Y'
+        AND ORG_FLOW = #{orgFlow}
+        AND ACTIVITY_TYPE_ID = #{activityTypeId}
+    </select>
+</mapper>

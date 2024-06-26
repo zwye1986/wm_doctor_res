@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.njmuedu.NjmuEduAnswerExtMapper">
+	
+	<resultMap id="answerExtMap" type="com.pinde.sci.model.njmuedu.EduAnswerExt" extends="com.pinde.sci.dao.base.EduAnswerMapper.BaseResultMap" >
+		<association property="user" javaType="com.pinde.sci.model.mo.SysUser">
+			<id column="SU_USER_FLOW" jdbcType="VARCHAR" property="userFlow" />
+    		<result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+		</association>
+		<association property="eduUser" javaType="com.pinde.sci.model.mo.EduUser">
+			<id column="EU_USER_FLOW" jdbcType="VARCHAR" property="userFlow" />
+		    <result column="MAJOR_NAME" jdbcType="VARCHAR" property="majorName" />
+		    <result column="PERIOD" jdbcType="VARCHAR" property="period" />
+		    <result column="SID" jdbcType="VARCHAR" property="sid" />
+		</association>
+	</resultMap>
+
+	<select id="getAnsGradeSum" parameterType="java.util.Map" resultType="double">
+		select nvl(sum(ANS_GRADE), 0)
+		from pdsci.EDU_ANSWER
+		where RECORD_STATUS = 'Y'
+		and QUESTION_FLOW in 
+		<foreach collection="questionFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+  		<!-- <foreach item="item" index="index" collection="list" open="(" separator="," close=")">#{item}</foreach> -->
+		and ANSWER_USER_FLOW = #{answerUserFlow}
+	</select>
+	
+	
+	<select id="searchStudentWorkAnswerList" parameterType="java.util.Map" resultMap="answerExtMap">
+		select ea.ANSWER_FLOW, ea.QUESTION_FLOW, ea.ANSWER_USER_FLOW, ea.ANSWER_TIME, ea.ANS_DIR, ea.ANS_GRADE,
+				su.USER_FLOW su_user_flow, su.USER_NAME,
+				eu.USER_FLOW eu_user_flow, eu.MAJOR_NAME, eu.PERIOD, eu.SID
+		from pdsci.EDU_ANSWER ea 
+		left join pdsci.SYS_USER su on ea.ANSWER_USER_FLOW = su.USER_FLOW
+		left join pdsci.EDU_USER eu on su.USER_FLOW = eu.USER_FLOW
+		where ea.RECORD_STATUS = 'Y' and su.RECORD_STATUS = 'Y' and eu.RECORD_STATUS = 'Y'
+		and ea.QUESTION_FLOW = #{answer.questionFlow}
+		and ea.ANS_TYPE_ID = #{answer.ansTypeId}
+		<if test="sysUser != null">
+			<if test='sysUser.userName != null and sysUser.userName != "" '>
+	        	<bind name="userName" value="'%'+sysUser.userName+'%'"/>
+	        	and su.USER_NAME like #{userName}
+	        </if>
+        </if>
+		order by ea.CREATE_TIME DESC
+	</select>
+	
+</mapper>

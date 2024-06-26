@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>	
+	<!-- 360评价带教对学员表单 -->
+	<!-- 
+	{0}:表单所属机构(开关控制)
+	{1}:版本号
+ -->
+	<jsp path="res/form/{3}/{0}/360_teacher_{1}{2}"></jsp>
+	<!--上海奉贤表单-->
+	<shfx ver="1.0">
+		<page ver="1.0">
+			<item name="studentName" remark="姓名" multiple="N"></item>
+			<item name="sessionNumber" remark="届别" multiple="N"></item>
+			<item name="trainingSpeName" remark="培训专业" multiple="N"></item>
+			<item name="deptName" remark="轮转科室名称" multiple="N"></item>
+			<item name="cycleTimeQ" remark="轮转时间(前)" multiple="N"></item>
+			<item name="cycleTimeH" remark="轮转时间(后)" multiple="N"></item>
+			<item name="part00" remark="评价内容1" multiple="N"></item>
+			<item name="part01" remark="评价内容2" multiple="N"></item>
+			<item name="part02" remark="评价内容3" multiple="N"></item>
+			<item name="part03" remark="评价内容4" multiple="N"></item>
+			<item name="part04" remark="评价内容5" multiple="N"></item>
+			<item name="part05" remark="评价内容6" multiple="N"></item>
+			<item name="part06" remark="评价内容7" multiple="N"></item>
+			<item name="part07" remark="评价内容8" multiple="N"></item>
+			<item name="part08" remark="评价内容9" multiple="N"></item>
+			<item name="part09" remark="评价内容10" multiple="N"></item>
+			<item name="part10" remark="总得分" multiple="N"></item>
+		</page>
+	</shfx>
+</jspForm>
+

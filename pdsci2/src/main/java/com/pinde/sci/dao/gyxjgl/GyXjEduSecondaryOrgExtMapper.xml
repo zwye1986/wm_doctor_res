@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.gyxjgl.GyXjEduSecondaryOrgExtMapper">
+    <resultMap id="userExtMap" type="com.pinde.sci.model.gyxjgl.XjEduStudentCourseExt"
+               extends="com.pinde.sci.dao.base.EduStudentCourseMapper.BaseResultMap">
+        <association property="eduUser" javaType="com.pinde.sci.model.mo.EduUser" column="eduUserFlow">
+            <id column="eduUserFlow" jdbcType="VARCHAR" property="userFlow"/>
+            <result column="SID" jdbcType="VARCHAR" property="sid"/>
+            <result column="CLASS_NAME" jdbcType="VARCHAR" property="className"/>
+            <result column="TRAIN_CATEGORY_ID" jdbcType="VARCHAR" property="trainCategoryId"/>
+            <result column="TRAIN_CATEGORY_NAME" jdbcType="VARCHAR" property="trainCategoryName"/>
+        </association>
+        <association property="sysUser" javaType="com.pinde.sci.model.mo.SysUser" column="sysUserFlow">
+            <id column="sysUserFlow" jdbcType="VARCHAR" property="userFlow"/>
+            <result column="USER_NAME" jdbcType="VARCHAR" property="userName"/>
+            <result column="USER_PHONE" jdbcType="VARCHAR" property="userPhone"/>
+        </association>
+        <association property="resDoctor" javaType="com.pinde.sci.model.mo.ResDoctor" column="resDoctorFlow">
+            <id column="resDoctorFlow" jdbcType="VARCHAR" property="doctorFlow"/>
+            <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+        </association>
+    </resultMap>
+    <select id="queryUserList" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+        select u.* from sys_user u ,sys_user_role sur
+        where u.record_status='Y' and sur.record_status='Y'
+        and u.user_flow=sur.user_flow
+        <if test='roleFlow!=null and roleFlow!=""'>
+            and sur.role_flow=#{roleFlow}
+        </if>
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and u.org_flow=#{orgFlow}
+        </if>
+        <if test='orgFlow==null or orgFlow==""'>
+            and u.org_flow in (
+            select distinct ec.assume_org_flow from edu_course ec
+            where ec.record_status='Y' and ec.assume_org_flow is not null)
+        </if>
+        order by u.org_name
+    </select>
+    <select id="queryStudentCourseBySecondaryOrg" parameterType="java.util.Map" resultMap="userExtMap">
+        select esc.RECORD_FLOW,esc.STUDENT_PERIOD, esc.GRADE_TERM_NAME,esc.USER_FLOW, esc.COURSE_TYPE_ID, esc.COURSE_TYPE_NAME,
+        esc.COURSE_PERIOD, esc.COURSE_CREDIT, esc.REPLENISH_FLAG,esc.ROLE_FLAG,esc.SUBMIT_FLAG,esc.AUDIT_STATUS_ID,esc.AUDIT_STATUS_NAME,
+        esc.COURSE_FLOW, esc.COURSE_CODE, esc.COURSE_NAME,su.user_name,eu.sid,esc.COURSE_GRADE,esc.STUDY_WAY_ID,
+        esc.STUDY_WAY_NAME,esc.ASSESS_TYPE_NAME,esc.ASSESS_TYPE_ID,esc.PACIFIC_GRADE,esc.TEAM_END_GRADE
+        from EDU_STUDENT_COURSE esc ,SYS_USER su,EDU_USER eu
+        where esc.RECORD_STATUS = 'Y' and esc.user_flow=su.user_flow and su.user_flow=eu.user_flow
+        and esc.course_flow in (select distinct course_flow from edu_course where record_status='Y' and assume_org_flow=#{assumeOrgFlow})
+        <if test="courseCode!=null and courseCode!=''">
+            and esc.COURSE_CODE = #{courseCode}
+        </if>
+        <if test="courseName!=null and courseName!=''">
+            and esc.COURSE_NAME like '%${courseName}%'
+        </if>
+        <if test="userName!=null and userName!=''">
+            and su.USER_NAME like '%${userName}%'
+        </if>
+        <if test="sid!=null and sid!=''">
+            and eu.sid like '%${sid}%'
+        </if>
+        <if test="impFlow!=null and impFlow!=''">
+            and esc.IMP_FLOW = #{impFlow}
+        </if>
+        <if test="studentPeriod!=null and studentPeriod!=''">
+            and esc.STUDENT_PERIOD = #{studentPeriod}
+        </if>
+        <if test="gradeTermId!=null and gradeTermId!=''">
+            and esc.GRADE_TERM_ID = #{gradeTermId}
+        </if>
+        <if test="courseGrade!=null and courseGrade!=''">
+            <if test='courseGrade == "1"'>
+                and esc.COURSE_GRADE is not null
+            </if>
+            <if test='courseGrade == "2"'>
+                and esc.COURSE_GRADE is null
+            </if>
+        </if>
+        <if test="submitFlag!=null and submitFlag!=''">
+            and esc.SUBMIT_FLAG = #{submitFlag}
+        </if>
+        <if test="auditStatusId!=null and auditStatusId!=''">
+            and esc.AUDIT_STATUS_ID = #{auditStatusId}
+        </if>
+        <if test="studyWayId!=null and studyWayId!=''">
+            and esc.STUDY_WAY_ID = #{studyWayId}
+        </if>
+        order by eu.sid desc,esc.COURSE_TYPE_ID, esc.COURSE_CODE
+    </select>
+    <select id="getGradeAuditStus" parameterType="java.util.Map" resultType="java.util.Map">
+        select a.record_flow,
+            b.user_flow,
+            b.user_name,
+            c.sid,
+            a.course_name,
+            a.course_type_id,
+            a.course_type_name,
+            a.course_period,
+            a.course_credit,
+            a.study_way_id,
+            a.study_way_name,
+            a.assess_type_id,
+            a.assess_type_name,
+            a.pacific_grade,
+            a.team_end_grade,
+            a.course_grade,
+            a.grade_term_id,
+            a.grade_term_name,
+            a.student_Period,
+            a.audit_status_id,
+            a.audit_status_name,
+            d.assume_org_flow,
+            d.assume_org_name,
+            d.course_code,
+            d.course_flow
+        from edu_student_course a
+        left join sys_user b on a.user_flow = b.user_flow
+        left join edu_user c on b.user_flow = c.user_flow
+        left join edu_course d on a.course_flow=d.course_flow
+        where a.record_status = 'Y'
+        and b.record_status = 'Y'
+        and c.record_status = 'Y'
+        and d.record_status = 'Y'
+        <if test="roleFlag=='secondaryOrg'">
+            and (a.role_flag != 'admin' or a.role_flag is null)
+            and (a.audit_status_id != 'Passed' or a.audit_status_id is null)
+        </if>
+        <if test="roleFlag=='admin'">
+            and a.submit_flag = 'Y'
+            and a.role_flag = 'teachingGroup'
+            and a.audit_status_id is null
+        </if>
+        <if test="courseFlow!=null and courseFlow!=''">
+            and a.course_flow = #{courseFlow}
+        </if>
+        <if test="courseCode!=null and courseCode!=''">
+            and a.course_code = #{courseCode}
+        </if>
+        <if test="assumeOrgFlow!=null and assumeOrgFlow!=''">
+            and d.assume_org_flow = #{assumeOrgFlow}
+        </if>
+        <if test="sid!=null and sid!=''">
+            and c.sid like '%${sid}%'
+        </if>
+        <if test="userName!=null and userName!=''">
+            and b.user_Name like '%${userName}%'
+        </if>
+        <if test="studentPeriod!=null and studentPeriod!=''">
+            and a.student_Period = #{studentPeriod}
+        </if>
+        <if test="gradeTermId!=null and gradeTermId!=''">
+            and a.grade_Term_Id = #{gradeTermId}
+        </if>
+        <if test="studyWayId!=null and studyWayId!=''">
+            and a.study_way_id = #{studyWayId}
+        </if>
+        <if test="courseCode!=null and courseCode!=''">
+            and d.course_code = #{courseCode}
+        </if>
+        <if test="courseFlow!=null and courseFlow!=''">
+            and d.course_flow = #{courseFlow}
+        </if>
+        order by c.sid desc
+    </select>
+</mapper>

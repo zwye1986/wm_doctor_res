@@ -1,0 +1,638 @@
+/*!
+ * FullCalendar v2.0.0-beta2 Stylesheet
+ * Docs & License: http://arshaw.com/fullcalendar/
+ * (c) 2013 Adam Shaw
+ */
+
+
+.lc {
+	direction: ltr;
+	text-align: left;
+	}
+	
+.lc table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	}
+	
+html .lc,
+.lc table {
+	font-size: 1em;
+	}
+	
+.lc td,
+.lc th {
+	padding: 0;
+	vertical-align: top;
+	}
+
+
+
+/* Header
+------------------------------------------------------------------------*/
+
+.lc-header td {
+	white-space: nowrap;
+	}
+
+.lc-header-left {
+	width: 25%;
+	text-align: left;
+	}
+	
+.lc-header-center {
+	text-align: center;
+	}
+	
+.lc-header-right {
+	width: 25%;
+	text-align: right;
+	}
+	
+.lc-header-title {
+	display: inline-block;
+	vertical-align: top;
+	}
+	
+.lc-header-title h2 {
+	margin-top: 0;
+	white-space: nowrap;
+	}
+	
+.lc .lc-header-space {
+	padding-left: 10px;
+	}
+	
+.lc-header .lc-button {
+	margin-bottom: 1em;
+	vertical-align: top;
+	}
+	
+/* buttons edges butting together */
+
+.lc-header .lc-button {
+	margin-right: -1px;
+	}
+	
+.lc-header .lc-corner-right,  /* non-theme */
+.lc-header .ui-corner-right { /* theme */
+	margin-right: 0; /* back to normal */
+	}
+	
+/* button layering (for border precedence) */
+	
+.lc-header .lc-state-hover,
+.lc-header .ui-state-hover {
+	z-index: 2;
+	}
+	
+.lc-header .lc-state-down {
+	z-index: 3;
+	}
+
+.lc-header .lc-state-active,
+.lc-header .ui-state-active {
+	z-index: 4;
+	}
+	
+	
+	
+/* Content
+------------------------------------------------------------------------*/
+	
+.lc-content {
+	position: relative;
+	z-index: 1; /* scopes all other z-index's to be inside this container */
+	clear: both;
+	zoom: 1; /* for IE7, gives accurate coordinates for [un]freezeContentHeight */
+	}
+	
+.lc-view {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	}
+	
+	
+
+/* Cell Styles
+------------------------------------------------------------------------*/
+
+.lc-widget-header,    /* <th>, usually */
+.lc-widget-content {  /* <td>, usually */
+	border: 1px solid #ddd;
+	}
+	
+.lc-state-highlight { /* <td> today cell */ /* TODO: add .lc-today to <th> */
+	background: #fcf8e3;
+	}
+	
+.lc-cell-overlay { /* semi-transparent rectangle while dragging */
+	background: #bce8f1;
+	opacity: .3;
+	filter: alpha(opacity=30); /* for IE */
+	}
+	
+
+
+/* Buttons
+------------------------------------------------------------------------*/
+
+.lc-button {
+	position: relative;
+	display: inline-block;
+	padding: 0 .6em;
+	overflow: hidden;
+	height: 1.9em;
+	line-height: 1.9em;
+	white-space: nowrap;
+	cursor: pointer;
+	}
+	
+.lc-state-default { /* non-theme */
+	border: 1px solid;
+	}
+
+.lc-state-default.lc-corner-left { /* non-theme */
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	}
+
+.lc-state-default.lc-corner-right { /* non-theme */
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	}
+
+/*
+	Our default prev/next buttons use HTML entities like &lsaquo; &rsaquo; &laquo; &raquo;
+	and we'll try to make them look good cross-browser.
+*/
+
+.lc-button .lc-icon {
+	margin: 0 .1em;
+	font-size: 2em;
+	font-family: "Courier New", Courier, monospace;
+	vertical-align: baseline; /* for IE7 */
+	}
+
+.lc-icon-left-single-arrow:after {
+	content: "\02039";
+	font-weight: bold;
+	}
+
+.lc-icon-right-single-arrow:after {
+	content: "\0203A";
+	font-weight: bold;
+	}
+
+.lc-icon-left-double-arrow:after {
+	content: "\000AB";
+	}
+
+.lc-icon-right-double-arrow:after {
+	content: "\000BB";
+	}
+	
+/* icon (for jquery ui) */
+
+.lc-button .ui-icon {
+	position: relative;
+	top: 50%;
+	float: left;
+	margin-top: -8px; /* we know jqui icons are always 16px tall */
+	}
+	
+/*
+  button states
+  borrowed from twitter bootstrap (http://twitter.github.com/bootstrap/)
+*/
+
+.lc-state-default {
+	background-color: #f5f5f5;
+	background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+	background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+	background-repeat: repeat-x;
+	border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	color: #333;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+	}
+
+.lc-state-hover,
+.lc-state-down,
+.lc-state-active,
+.lc-state-disabled {
+	color: #333333;
+	background-color: #e6e6e6;
+	}
+
+.lc-state-hover {
+	color: #333333;
+	text-decoration: none;
+	background-position: 0 -15px;
+	-webkit-transition: background-position 0.1s linear;
+	   -moz-transition: background-position 0.1s linear;
+	     -o-transition: background-position 0.1s linear;
+	        transition: background-position 0.1s linear;
+	}
+
+.lc-state-down,
+.lc-state-active {
+	background-color: #cccccc;
+	background-image: none;
+	outline: 0;
+	box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+	}
+
+.lc-state-disabled {
+	cursor: default;
+	background-image: none;
+	opacity: 0.65;
+	filter: alpha(opacity=65);
+	box-shadow: none;
+	}
+
+	
+
+/* Global Event Styles
+------------------------------------------------------------------------*/
+
+.lc-event-container > * {
+	z-index: 8;
+	}
+
+.lc-event-container > .ui-draggable-dragging,
+.lc-event-container > .ui-resizable-resizing {
+	z-index: 9;
+	}
+	 
+.lc-event {
+	border: 1px solid #3a87ad; /* default BORDER color */
+	background-color: #3a87ad; /* default BACKGROUND color */
+	color: #fff;               /* default TEXT color */
+	font-size: .85em;
+	cursor: default;
+	}
+
+a.lc-event {
+	text-decoration: none;
+	}
+	
+a.lc-event,
+.lc-event-draggable {
+	cursor: pointer;
+	}
+	
+.lc-rtl .lc-event {
+	text-align: right;
+	}
+
+.lc-event-inner {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	}
+	
+.lc-event-time,
+.lc-event-title {
+	padding: 0 1px;
+	}
+	
+.lc .ui-resizable-handle {
+	display: block;
+	position: absolute;
+	z-index: 99999;
+	overflow: hidden; /* hacky spaces (IE6/7) */
+	font-size: 300%;  /* */
+	line-height: 50%; /* */
+	}
+	
+	
+	
+/* Horizontal Events
+------------------------------------------------------------------------*/
+
+.lc-event-hori {
+	border-width: 1px 0;
+	margin-bottom: 1px;
+	}
+
+.lc-ltr .lc-event-hori.lc-event-start,
+.lc-rtl .lc-event-hori.lc-event-end {
+	border-left-width: 1px;
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+	}
+
+.lc-ltr .lc-event-hori.lc-event-end,
+.lc-rtl .lc-event-hori.lc-event-start {
+	border-right-width: 1px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+	}
+	
+/* resizable */
+	
+.lc-event-hori .ui-resizable-e {
+	top: 0           !important; /* importants override pre jquery ui 1.7 styles */
+	right: -3px      !important;
+	width: 7px       !important;
+	height: 100%     !important;
+	cursor: e-resize;
+	}
+	
+.lc-event-hori .ui-resizable-w {
+	top: 0           !important;
+	left: -3px       !important;
+	width: 7px       !important;
+	height: 100%     !important;
+	cursor: w-resize;
+	}
+	
+.lc-event-hori .ui-resizable-handle {
+	_padding-bottom: 14px; /* IE6 had 0 height */
+	}
+	
+	
+	
+/* Reusable Separate-border Table
+------------------------------------------------------------*/
+
+table.lc-border-separate {
+	border-collapse: separate;
+	}
+	
+.lc-border-separate th,
+.lc-border-separate td {
+	border-width: 1px 0 0 1px;
+	}
+	
+.lc-border-separate th.lc-last,
+.lc-border-separate td.lc-last {
+	border-right-width: 1px;
+	}
+	
+.lc-border-separate tr.lc-last th,
+.lc-border-separate tr.lc-last td {
+	border-bottom-width: 1px;
+	}
+	
+.lc-border-separate tbody tr.lc-first td,
+.lc-border-separate tbody tr.lc-first th {
+	border-top-width: 0;
+	}
+	
+	
+
+/* Month View, Basic Week View, Basic Day View
+------------------------------------------------------------------------*/
+
+.lc-grid th {
+	text-align: center;
+	}
+
+.lc .lc-week-number {
+	width: 22px;
+	text-align: center;
+	}
+
+.lc .lc-week-number div {
+	padding: 0 2px;
+	}
+	
+.lc-grid .lc-day-number {
+	float: right;
+	padding: 0 2px;
+	}
+	
+.lc-grid .lc-other-month .lc-day-number {
+	opacity: 0.3;
+	filter: alpha(opacity=30); /* for IE */
+	/* opacity with small font can sometimes look too faded
+	   might want to set the 'color' property instead
+	   making day-numbers bold also fixes the problem */
+	}
+	
+.lc-grid .lc-day-content {
+	clear: both;
+	padding: 2px 2px 1px; /* distance between events and day edges */
+	}
+	
+/* event styles */
+	
+.lc-grid .lc-event-time {
+	font-weight: bold;
+	}
+	
+/* right-to-left */
+	
+.lc-rtl .lc-grid .lc-day-number {
+	float: left;
+	}
+	
+.lc-rtl .lc-grid .lc-event-time {
+	float: right;
+	}
+	
+	
+
+/* Agenda Week View, Agenda Day View
+------------------------------------------------------------------------*/
+
+.lc-agenda table {
+	border-collapse: separate;
+	}
+	
+.lc-agenda-days th {
+	text-align: center;
+	}
+	
+.lc-agenda .lc-agenda-axis {
+	width: 50px;
+	padding: 0 4px;
+	vertical-align: middle;
+	text-align: right;
+	font-weight: normal;
+	}
+
+.lc-agenda-slots .lc-agenda-axis {
+	white-space: nowrap;
+	}
+
+.lc-agenda .lc-week-number {
+	font-weight: bold;
+	}
+	
+.lc-agenda .lc-day-content {
+	padding: 2px 2px 1px;
+	}
+	
+/* make axis border take precedence */
+	
+.lc-agenda-days .lc-agenda-axis {
+	border-right-width: 1px;
+	}
+	
+.lc-agenda-days .lc-col0 {
+	border-left-width: 0;
+	}
+	
+/* all-day area */
+	
+.lc-agenda-allday th {
+	border-width: 0 1px;
+	}
+	
+.lc-agenda-allday .lc-day-content {
+	min-height: 34px; /* TODO: doesnt work well in quirksmode */
+	_height: 34px;
+	}
+	
+/* divider (between all-day and slots) */
+	
+.lc-agenda-divider-inner {
+	height: 2px;
+	overflow: hidden;
+	}
+	
+.lc-widget-header .lc-agenda-divider-inner {
+	background: #eee;
+	}
+	
+/* slot rows */
+	
+.lc-agenda-slots th {
+	border-width: 1px 1px 0;
+	}
+	
+.lc-agenda-slots td {
+	border-width: 1px 0 0;
+	background: none;
+	}
+	
+.lc-agenda-slots td div {
+	height: 20px;
+	}
+	
+.lc-agenda-slots tr.lc-slot0 th,
+.lc-agenda-slots tr.lc-slot0 td {
+	border-top-width: 0;
+	}
+
+.lc-agenda-slots tr.lc-minor th,
+.lc-agenda-slots tr.lc-minor td {
+	border-top-style: dotted;
+	}
+	
+.lc-agenda-slots tr.lc-minor th.ui-widget-header {
+	*border-top-style: solid; /* doesn't work with background in IE6/7 */
+	}
+	
+
+
+/* Vertical Events
+------------------------------------------------------------------------*/
+
+.lc-event-vert {
+	border-width: 0 1px;
+	}
+
+.lc-event-vert.lc-event-start {
+	border-top-width: 1px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	}
+
+.lc-event-vert.lc-event-end {
+	border-bottom-width: 1px;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	}
+	
+.lc-event-vert .lc-event-time {
+	white-space: nowrap;
+	font-size: 10px;
+	}
+
+.lc-event-vert .lc-event-inner {
+	position: relative;
+	z-index: 2;
+	}
+	
+.lc-event-vert .lc-event-bg { /* makes the event lighter w/ a semi-transparent overlay  */
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #fff;
+	opacity: .25;
+	filter: alpha(opacity=25);
+	}
+	
+.lc .ui-draggable-dragging .lc-event-bg, /* TODO: something nicer like .lc-opacity */
+.lc-select-helper .lc-event-bg {
+	display: none\9; /* for IE6/7/8. nested opacity filters while dragging don't work */
+	}
+	
+/* resizable */
+	
+.lc-event-vert .ui-resizable-s {
+	bottom: 0        !important; /* importants override pre jquery ui 1.7 styles */
+	width: 100%      !important;
+	height: 8px      !important;
+	overflow: hidden !important;
+	line-height: 8px !important;
+	font-size: 11px  !important;
+	font-family: monospace;
+	text-align: center;
+	cursor: s-resize;
+	}
+	
+.lc-agenda .ui-resizable-resizing { /* TODO: better selector */
+	_overflow: hidden;
+	}
+
+.triangle {
+	opacity: 0.8;
+	float: right;
+	border-color: #4AF white white white;
+	border-width: 50px;
+	border-style: solid none none solid;
+}
+.triangle2 {
+	opacity: 0.8;
+	float: right;
+	border-color: transparent  #4AF transparent transparent   ;
+	border-width: 50px;
+	border-style:  none solid solid none ;
+}
+.triangleDiv {
+	opacity: 0.8;
+	float: right;
+	width: 50px;
+	height: 50px;
+}
+.triangleNum {
+	position: relative;
+	left: 114px;
+	top: 5px;
+	text-align: center;
+	transform-origin: center;
+	transform: rotate(45deg);
+}
+.triangle_tag {
+	position: relative;
+	left: 106px;
+	opacity: 0.8;
+	width: 0;
+	height: 0;
+	border-width: 50px;
+	border-color: #4AF white white white;
+	border-style: solid none none solid;
+}

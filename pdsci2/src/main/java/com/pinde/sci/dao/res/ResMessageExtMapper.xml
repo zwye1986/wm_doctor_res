@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.ResMessageExtMapper">
+    <resultMap id="findMessageOrgAndCountMap" type="map">
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR"/>
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR"/>
+        <result column="NUM" property="num" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="findMessageOrgAndCount" resultMap="findMessageOrgAndCountMap">
+	    SELECT ORG_FLOW,ORG_NAME,COUNT(*) NUM
+		FROM PDSCI.RES_MESSAGE
+		WHERE RECORD_STATUS = 'Y'
+        <if test="sessionNumber!=null and sessionNumber!=''">
+            AND  substr(CREATE_TIME,0,4) = #{sessionNumber}
+        </if>
+        GROUP BY ORG_FLOW, ORG_NAME
+		ORDER BY ORG_FLOW
+    </select>
+
+    <select id="findMessageOrgAndTime" parameterType="string" resultMap="findMessageOrgAndCountMap">
+        SELECT ORG_FLOW,ORG_NAME,COUNT(*) NUM
+        FROM PDSCI.RES_MESSAGE
+        WHERE RECORD_STATUS = 'Y'
+        AND CREATE_TIME >= #{time}
+        GROUP BY ORG_FLOW, ORG_NAME
+        ORDER BY ORG_FLOW
+    </select>
+
+
+    <select id="findMessageByOrgFlow" parameterType="string" resultMap="com.pinde.sci.dao.base.ResMessageMapper.ResultMapWithBLOBs">
+       	SELECT MESSAGE_FLOW, MESSAGE_TITLE, ORG_FLOW, ORG_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW,
+    MODIFY_TIME, MODIFY_USER_FLOW, MESSAGE_CONTENT
+	    FROM PDSCI.RES_MESSAGE
+	    WHERE RECORD_STATUS = 'Y'
+		AND ORG_FLOW = #{orgFlow}
+		AND  substr(CREATE_TIME,0,4) = #{sessionNumber}
+	    ORDER BY CREATE_TIME DESC
+    </select>
+</mapper>

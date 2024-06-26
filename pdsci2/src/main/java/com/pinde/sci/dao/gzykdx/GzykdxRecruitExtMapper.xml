@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.gzykdx.GzykdxRecruitExtMapper">
+    <resultMap id="reexamineMap" type="hashMap">
+        <result  property="userFlow" column="user_flow" javaType="string"/>
+        <result  property="userCode" column="user_code" javaType="string"/>
+        <result  property="userName" column="user_name" javaType="string"/>
+        <result  property="sexName" column="sex_name" javaType="string"/>
+        <result  property="ResearchAreaName" column="Research_Area_Name" javaType="string"/>
+        <result  property="speName" column="spe_name" javaType="string"/>
+        <result  property="speId" column="spe_id" javaType="string"/>
+        <result  property="degreeTypeName" column="degree_type_name" javaType="string"/>
+        <result  property="recruitTypeName" column="recruit_type_name" javaType="string"/>
+        <result  property="teacherName" column="teacher_name" javaType="string"/>
+        <result  property="orgName" column="org_name" javaType="string"/>
+        <result  property="isOwnerStu" column="is_owner_stu" javaType="string"/>
+        <result  property="userResume" column="user_resume" javaType="string"/>
+    </resultMap>
+    <select id="searchReexamineStudent" resultMap="reexamineMap" parameterType="java.util.Map">
+        select
+          su.user_flow user_flow,
+          su.user_code user_code,
+          su.user_name user_name,
+          su.sex_name sex_name,
+          dtr.spe_name spe_name,
+          dtr.spe_id spe_id,
+          dtr.degree_type_name degree_type_name,
+          dtr.recruit_type_name recruit_type_name,
+          dtr.user_name teacher_name,
+          dtr.org_name org_name,
+          su.is_owner_stu is_owner_stu,
+          pur.user_resume user_resume,
+          dtr.Research_Area_Name Research_Area_Name
+        from sys_user su,doctor_teacher_recruit dtr,pub_user_resume pur WHERE
+        su.user_flow = dtr.doctor_flow and su.user_flow = pur.user_flow
+        and su.RECORD_STATUS = 'Y' and dtr.RECORD_STATUS = 'Y' and pur.RECORD_STATUS = 'Y'
+        <if test='userCode!=null and userCode!=""'>
+            and su.user_Code like '%${userCode}%'
+        </if>
+        <if test='userName!=null and userName!=""'>
+            and su.user_Name like '%${userName}%'
+        </if>
+        <if test='isOwnerStu!=null and isOwnerStu!=""'>
+            and su.is_owner_stu = #{isOwnerStu}
+        </if>
+        <if test='speId!=null and speId!=""'>
+            and dtr.spe_id = #{speId}
+        </if>
+        <if test='degreeTypeId!=null and degreeTypeId!=""'>
+            and dtr.degree_type_id = #{degreeTypeId}
+        </if>
+        <if test='year!=null and year!=""'>
+            and dtr.RECRUIT_YEAR = #{year}
+        </if>
+        <if test='researchAreaName!=null and researchAreaName!=""'>
+            and dtr.Research_Area_Name like '%${researchAreaName}%'
+        </if>
+        ORDER by su.user_code
+    </select>
+
+
+    <select id="vacanciesQuery" resultType="java.util.Map" parameterType="java.util.Map">
+        select rtm.RECRUIT_YEAR,
+                rtmd.ORG_FLOW,
+                rtmd.ORG_NAME,
+                rtmd.ACADEMIC_NUM,
+                rtmd.SPECIALIZED_NUM
+        FROM RECRUIT_TARGET_MAIN rtm,RECRUIT_TARGET_MAIN_DETAIL rtmd
+        WHERE rtm.IS_REPORT = 'Y' and rtmd.IS_REPORT = 'Y' and rtm.RECORD_STATUS = 'Y' and rtmd.RECORD_STATUS = 'Y'
+        and rtm.RARGET_FLOW = rtmd.RARGET_FLOW
+        <if test='year!="" and year!=null'>
+            and rtm.RECRUIT_YEAR = #{year}
+        </if>
+        <if test='orgFlow!="" and orgFlow!=null'>
+            and rtmd.org_flow = #{orgFlow}
+        </if>
+    </select>
+
+    <select id="teacherRecruitInfo" resultType="java.util.Map" parameterType="java.util.Map">
+        select tta.org_name,
+                tta.spe_id,
+                tta.RESEARCH_DIRECTION_ID,
+                tta.RESEARCH_DIRECTION,
+                tta.spe_name,
+                tta.user_flow,
+                tta.user_name,
+                tta.ACADEMIC_NUM,
+                tta.SPECIALIZED_NUM,
+                dtr.doctor_name,
+                dtr.doctor_flow
+        from DOCTOR_TEACHER_RECRUIT dtr,TEACHER_TARGET_APPLY tta
+        where dtr.final_user_flow = tta.user_flow and dtr.RECORD_STATUS = 'Y' and tta.RECORD_STATUS = 'Y'
+        and dtr.SCHOOL_AUDIT_STATUS_ID = 'Passed' and tta.AUDIT_STATUS_ID = 'SchoolPassed'
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and tta.org_flow = #{orgFlow}
+        </if>
+        <if test='degreeTypeId!=null and degreeTypeId!=""'>
+            and dtr.final_degree_type_id = #{degreeTypeId}
+        </if>
+        <if test='year!=null and year!=""'>
+            and dtr.RECRUIT_YEAR = #{year}
+        </if>
+    </select>
+
+    <select id="searchSecondaryRecriutInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        select rtmd.ORG_NAME,
+               rtmd.ACADEMIC_NUM,
+               rtmd.SPECIALIZED_NUM,
+               rtmd.ALL_NUM
+        FROM
+        RECRUIT_TARGET_MAIN rtm , RECRUIT_TARGET_MAIN_DETAIL rtmd
+        where rtm.RARGET_FLOW = rtmd.RARGET_FLOW and rtm.IS_REPORT = 'Y' and rtmd.IS_REPORT = 'Y'
+        and rtm.RECORD_STATUS='Y' and rtmd.RECORD_STATUS='Y'
+        <if test='year!=null and year!=""'>
+            and rtm.RECRUIT_YEAR = #{year}
+        </if>
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and rtmd.org_flow = #{orgFlow}
+        </if>
+    </select>
+
+
+    <resultMap id="searchSecondaryReexamine" type="hashMap">
+        <result  property="user_resume" column="user_resume" javaType="string"/>
+    </resultMap>
+    <select id="searchSecondaryReexamineStudent" resultMap="searchSecondaryReexamine"
+           parameterType="java.util.Map">
+        select
+        su.user_flow user_flow,
+        su.user_code user_code,
+        su.user_name user_name,
+        su.sex_name sex_name,
+        dtr.Research_Area_Name Research_Area_Name,
+        dtr.spe_name spe_name,
+        dtr.degree_type_name degree_type_name,
+        dtr.recruit_type_name recruit_type_name,
+        dtr.user_name teacher_name,
+        dtr.recruit_batch,
+        dtr.school_audit_status_id,
+        dtr.school_audit_status_name school_audit_status_name,
+        pur.user_resume user_resume,
+        dtr.RECORD_FLOW,
+        tta.ACADEMIC_NUM,
+        tta.ACADEMIC_RECRUIT_NUM,
+        tta.SPECIALIZED_NUM,
+        tta.SPECIALIZED_RECRUIT_NUM,
+        dtr.ORG_NAME,
+        dtr.recruit_Year,
+        dtr.final_user_name,
+        dtr.final_spe_name,
+        dtr.final_degree_type_name,
+        dtr.final_Research_Area_Name,
+        dtr.final_ORG_NAME,
+        dtr.RECRUIT_NUM
+        from sys_user su inner join doctor_teacher_recruit dtr on su.user_flow = dtr.doctor_flow
+             left join pub_user_resume pur on su.user_flow = pur.user_flow
+             left JOIN TEACHER_TARGET_APPLY tta on (tta.user_flow = dtr.final_user_flow and tta.spe_id = dtr.final_spe_id and dtr.FINAL_RESEARCH_AREA_NAME = tta.RESEARCH_DIRECTION)
+             WHERE su.RECORD_STATUS = 'Y' and dtr.RECORD_STATUS = 'Y' and pur.RECORD_STATUS = 'Y'
+        <if test='userCode!=null and userCode!=""'>
+            and su.user_Code like '%${userCode}%'
+        </if>
+        <if test='userName!=null and userName!=""'>
+            and su.user_Name like '%${userName}%'
+        </if>
+        <if test='speId!=null and speId!=""'>
+            and dtr.final_spe_id = #{speId}
+        </if>
+        <if test='schoolAuditStatusId!=null and schoolAuditStatusId!=""'>
+            and dtr.school_audit_status_id = #{schoolAuditStatusId}
+        </if>
+        <if test='recruitYear!=null and recruitYear!=""'>
+            and dtr.recruit_Year = #{recruitYear}
+            and dtr.recruit_Year = tta.recruit_Year
+        </if>
+        <if test='degreeTypeId!=null and degreeTypeId!=""'>
+            and dtr.final_degree_type_id = #{degreeTypeId}
+        </if>
+        <if test='researchAreaName!=null and researchAreaName!=""'>
+            and dtr.final_Research_Area_Name like '%${researchAreaName}%'
+        </if>
+        <if test='isOwnerStu!=null and isOwnerStu!=""'>
+            and su.is_owner_stu = #{isOwnerStu}
+        </if>
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and dtr.final_org_Flow = #{orgFlow}
+        </if>
+        <if test='recruitBatch!=null and recruitBatch!=""'>
+            and dtr.recruit_Batch = #{recruitBatch}
+        </if>
+        ORDER by to_number(dtr.RECRUIT_NUM),su.user_code
+    </select>
+
+    <select id="changeTeacherList" parameterType="java.util.Map"
+            resultMap="com.pinde.sci.dao.base.TeacherTargetApplyMapper.BaseResultMap">
+        select
+        tta.* from
+        TEACHER_TARGET_APPLY tta
+        where tta.RECORD_STATUS = 'Y' and tta.AUDIT_STATUS_ID = 'SchoolPassed'
+        <if test='recruitYear!=null and recruitYear!=""'>
+            and tta.recruit_Year = #{recruitYear}
+        </if>
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and tta.org_Flow = #{orgFlow}
+        </if>
+        <if test='userName!=null and userName!=""'>
+            and tta.user_name like '%${userName}%'
+        </if>
+        <if test='degreeTypeId == "Academic"'>
+            and
+            to_number(tta.ACADEMIC_NUM) >
+            to_number(tta.ACADEMIC_RECRUIT_NUM)
+        </if>
+        <if test='degreeTypeId == "Profession"'>
+            and
+            to_number(tta.SPECIALIZED_NUM) >
+            to_number(tta.SPECIALIZED_RECRUIT_NUM)
+        </if>
+        <if test='degreeTypeId =="" or degreeTypeId==null'>
+            and
+            (
+            to_number(tta.ACADEMIC_NUM) >to_number(tta.ACADEMIC_RECRUIT_NUM)
+            OR
+            to_number(tta.SPECIALIZED_NUM) >to_number(tta.SPECIALIZED_RECRUIT_NUM)
+            )
+        </if>
+    </select>
+
+    <select id="leftStuNum" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select
+          <if test='degreeTypeId == "Academic"'>
+              to_number(tta.ACADEMIC_NUM)-
+          </if>
+          <if test='degreeTypeId == "Profession"'>
+              to_number(tta.SPECIALIZED_NUM)-
+          </if>
+            (select count(*)
+            from TEACHER_TARGET_APPLY tta,DOCTOR_TEACHER_RECRUIT dtr
+            WHERE tta.user_flow = dtr.user_flow and tta.recruit_Year = dtr.recruit_Year
+                    and tta.RECORD_STATUS = 'Y' and dtr.RECORD_STATUS = 'Y'
+                    and dtr.SCHOOL_AUDIT_STATUS_ID = 'Passed'
+                    <if test='degreeTypeId!=null and degreeTypeId!=""'>
+                      AND dtr.degree_type_id = #{degreeTypeId}
+                    </if>
+                    <if test='userFlow!=null and userFlow!=""'>
+                        AND dtr.user_flow = #{userFlow}
+                    </if>
+                    <if test='recruitYear!=null and recruitYear!=""'>
+                        and dtr.recruit_Year = #{recruitYear}
+                    </if>)
+                from TEACHER_TARGET_APPLY tta
+                WHERE tta.RECORD_STATUS = 'Y' and tta.RECORD_STATUS = 'Y' and tta.AUDIT_STATUS_ID = 'SchoolPassed'
+                <if test='userFlow!=null and userFlow!=""'>
+                    AND tta.user_flow = #{userFlow}
+                </if>
+                <if test='recruitYear!=null and recruitYear!=""'>
+                    and tta.recruit_Year = #{recruitYear}
+                </if>
+    </select>
+</mapper>

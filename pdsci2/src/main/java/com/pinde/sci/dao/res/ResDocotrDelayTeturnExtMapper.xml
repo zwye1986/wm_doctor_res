@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.ResDocotrDelayTeturnExtMapper" >
+    <resultMap id="findTrainChartsMap" type="map">
+        <result property="orgFlow" column="ORG_FLOW" javaType="string"/>
+        <result property="orgName" column="ORG_NAME" javaType="string"/>
+        <result property="countNum" column="COUNT_NUM" javaType="string"/>
+    </resultMap>
+    <select id="findTrainCharts" resultMap="findTrainChartsMap">
+        select a.org_flow, a.org_name, count(1) COUNT_NUM
+        from (select org.org_flow,
+        org.org_name,
+        rddt.session_number AS session_Number,
+        rddt.training_spe_name AS train_Spe
+        from sys_org org
+        left join res_docotr_delay_teturn rddt
+        on rddt.org_flow = org.org_flow
+        where org.record_status = 'Y'
+        and rddt.record_status='Y'
+        <if test="resTrainingSpeId !=null and resTrainingSpeId!=''">
+            and rddt.TRAINING_SPE_ID=#{resTrainingSpeId}
+        </if>
+        and rddt.type_id = 'ReturnTraining'
+        AND rddt.audit_status_id = '1'
+        <if test="orgFlowList !=null and orgFlowList.size>0">
+            and org.org_flow in
+            <foreach collection="orgFlowList" close=")" item="orgFlow" open="(" separator=",">
+                #{orgFlow}
+            </foreach>
+        </if>
+        ) a
+        where 1=1
+
+        <if test="year !=null and year!=''">
+            and a.session_number=#{year}
+        </if>
+        <if test="speName !=null and speName !=''">
+            AND a.train_Spe like  '%${speName}%'
+        </if>
+        group by a.org_flow, a.org_name
+    </select>
+
+
+    <select id="findTrainCharts2" resultMap="findTrainChartsMap">
+        select a.org_flow, a.org_name, count(1) COUNT_NUM
+        from (select org.org_flow,
+        org.org_name,
+        rddt.session_number AS session_Number,
+        rddt.training_spe_name AS train_Spe
+        from sys_org org
+        left join res_docotr_delay_teturn rddt
+        on rddt.org_flow = org.org_flow
+        where org.record_status = 'Y'
+        and rddt.record_status='Y'
+        <if test="resTrainingSpeId !=null and resTrainingSpeId!=''">
+            and rddt.TRAINING_SPE_ID=#{resTrainingSpeId}
+        </if>
+        <if test="resTrainingTypeId !=null and resTrainingTypeId!=''">
+            and rddt.TRAINING_TYPE_ID=#{resTrainingTypeId}
+        </if>
+        and rddt.type_id = 'ReturnTraining'
+        AND rddt.audit_status_id = '1'
+        <if test="orgFlowList !=null and orgFlowList.size>0">
+            and org.org_flow in
+            <foreach collection="orgFlowList" close=")" item="orgFlow" open="(" separator=",">
+                #{orgFlow}
+            </foreach>
+        </if>
+        ) a
+        where 1=1
+
+        <if test="year !=null and year!=''">
+            and a.session_number=#{year}
+        </if>
+        <if test="speName !=null and speName !=''">
+            AND a.train_Spe like  '%${speName}%'
+        </if>
+        group by a.org_flow, a.org_name
+    </select>
+
+    <select id="findJszyTrainCharts" resultMap="findTrainChartsMap">
+        select a.org_flow, a.org_name, count(1) COUNT_NUM
+        from (select org.org_flow,
+        org.org_name,
+        rddt.session_number AS session_Number,
+        rddt.training_spe_name AS train_Spe
+        from sys_org org
+        left join res_docotr_delay_teturn rddt
+        on rddt.org_flow = org.org_flow
+        where org.record_status = 'Y'
+        and rddt.record_status='Y'
+        and rddt.type_id = 'ReturnTraining'
+        <if test="orgFlowList !=null and orgFlowList.size>0">
+            and org.org_flow in
+            <foreach collection="orgFlowList" close=")" item="orgFlow" open="(" separator=",">
+                #{orgFlow}
+            </foreach>
+        </if>
+        ) a
+        where 1=1
+
+        <if test="year !=null and year!=''">
+            and a.session_number=#{year}
+        </if>
+        <if test="speName !=null and speName !=''">
+            AND a.train_Spe like  '%${speName}%'
+        </if>
+        group by a.org_flow, a.org_name
+    </select>
+<!--/*************************************************高校角色******************************************************/-->
+    <select id="searchInfoForUni" resultMap="com.pinde.sci.dao.base.ResDocotrDelayTeturnMapper.BaseResultMap">
+
+        select
+        a.*
+        from (
+        select
+        rddt.ORG_FLOW ORG_FLOW,
+        rddt.ORG_NAME ORG_NAME,
+        rddt.DOCTOR_NAME DOCTOR_NAME,
+        rddt.DOCTOR_FLOW DOCTOR_FLOW,
+        rddt.REASON_NAME REASON_NAME,
+        rddt.REASON_ID REASON_ID,
+        rddt.POLICY_NAME POLICY_NAME,
+        rddt.POLICY_ID POLICY_ID,
+        rddt.REASON REASON,
+        rddt.POLICY POLICY,
+        rddt.DISPOSITON DISPOSITON,
+        rddt.REMARK REMARK,
+        rddt.GRADUATION_YEAR,
+        rddt.DELAY_FILE_PATH,
+        rddt.SESSION_NUMBER SESSION_NUMBER,
+        rddt.TRAINING_SPE_NAME TRAINING_SPE_NAME,
+        d.WORK_ORG_ID,
+        d.WORK_ORG_NAME,
+        rddt.DOCTOR_TYPE_ID,
+        rddt.DOCTOR_TYPE_NAME,
+        rddt.TRAINING_TYPE_ID,
+        rddt.TRAINING_TYPE_NAME,
+        rddt.CREATE_TIME,
+        rddt.MODIFY_TIME
+        from res_docotr_delay_teturn rddt
+        left join RES_DOCTOR d on rddt.DOCTOR_FLOW = d.DOCTOR_FLOW
+        where  rddt.record_status='Y'
+        AND d.RECORD_STATUS = 'Y'
+        <if test="docotrDelayTeturn.typeId != null and docotrDelayTeturn.typeId != ''">
+            and rddt.type_id = #{docotrDelayTeturn.typeId}
+        </if>
+        <if test="docotrDelayTeturn.typeId == 'ReturnTraining'">
+            and rddt.AUDIT_STATUS_ID in ('0','1')
+        </if>
+        <if test="docotrDelayTeturn != null">
+            <if test="docotrDelayTeturn.orgFlow != null and docotrDelayTeturn.orgFlow!=''">
+                and rddt.ORG_FLOW = #{docotrDelayTeturn.orgFlow}
+            </if>
+            <if test="docotrDelayTeturn.doctorName != null and docotrDelayTeturn.doctorName != ''">
+                and rddt.DOCTOR_NAME like '%${docotrDelayTeturn.doctorName}%'
+            </if>
+        </if>
+        <if test="resDoctor != null">
+            <if test="resDoctor.school!=null and resDoctor.school!=''">
+                and d.SCHOOL = #{resDoctor.school}
+            </if>
+        </if>
+        ) a
+        where 1=1
+        <if test="resDoctor != null">
+            and (
+            <trim prefix="" prefixOverrides="OR">
+                <if test="resDoctor.workOrgId != null and resDoctor.workOrgId != ''">OR A.work_org_id = #{resDoctor.workOrgId}</if>
+                <if test="resDoctor.workOrgName != null and resDoctor.workOrgName != ''">OR A.work_org_name = #{resDoctor.workOrgName}</if>
+            </trim>
+            )
+            and a.DOCTOR_TYPE_ID = 'Graduate'
+            <if test="docotrDelayTeturn.trainingSpeName !=null and docotrDelayTeturn.trainingSpeName != ''">
+                and A.TRAINING_SPE_NAME like  '%${docotrDelayTeturn.trainingSpeName}%'
+            </if>
+            <if test="docotrDelayTeturn.trainingTypeId != null and docotrDelayTeturn.trainingTypeId != ''">
+                and A.TRAINING_TYPE_ID = #{docotrDelayTeturn.trainingTypeId}
+            </if>
+            <if test="docotrDelayTeturn.sessionNumber != null and docotrDelayTeturn.sessionNumber != ''">
+                and A.SESSION_NUMBER = #{docotrDelayTeturn.sessionNumber}
+            </if>
+            <if test="docotrDelayTeturn.reasonId != null and docotrDelayTeturn.reasonId != ''">
+                and A.REASON_ID = #{docotrDelayTeturn.reasonId}
+            </if>
+            <if test="docotrDelayTeturn.policyId != null and docotrDelayTeturn.policyId != ''">
+                and A.POLICY_ID = #{docotrDelayTeturn.policyId}
+            </if>
+        </if>
+        order by A.create_time desc
+    </select>
+    <resultMap type="HashMap" id="docDelayBackMap">
+        <result  property="userFlow" column="user_flow" javaType="string"/>
+        <result  property="userName" column="user_Name" javaType="string"/>
+        <result property="idNo" column="id_no" javaType="string"/>
+        <result property="sessionNumber" column="session_number" javaType="string"/>
+        <result property="orgName" column="org_Name" javaType="string"/>
+        <result property="trainingYears" column="training_Years" javaType="string"/>
+        <result property="graduationYear" column="graduation_Year" javaType="string"/>
+        <result property="delayreason" column="delayreason" javaType="string"/>
+        <result property="auditStatusName" column="audit_Status_Name" javaType="string"/>
+        <result property="auditOpinion" column="audit_Opinion" javaType="string"/>
+        <result property="delayFilePath" column="delay_File_Path" javaType="string"/>
+        <result property="globalCheckFile" column="GLOBAL_CHECK_FILE" javaType="string"/>
+        <result property="recruitFlow" column="recruit_Flow" javaType="string"/>
+        <result property="recordFlow" column="record_Flow" javaType="string"/>
+        <result property="modifyTime" column="modify_Time" javaType="string"/>
+        <result property="trainingSpeName" column="training_Spe_Name" javaType="string"/>
+        <result property="reasonName" column="reason_Name" javaType="string"/>
+        <result property="reason" column="reason" javaType="string"/>
+        <result property="policyName" column="policy_Name" javaType="string"/>
+        <result property="policy" column="policy" javaType="string"/>
+        <result property="dispositon" column="dispositon" javaType="string"/>
+        <result property="remark" column="remark" javaType="string"/>
+    </resultMap>
+    <select id="searchDelayInfoByParamMap" parameterType="java.util.Map" resultMap="docDelayBackMap">
+        SELECT *
+        FROM (
+          SELECT DISTINCT su.user_flow AS user_flow,rddt.record_Flow as record_Flow,rddt.modify_Time as modify_Time,
+        su.user_name AS user_name, su.id_no AS id_no, rd.session_number AS session_number,rddt.GLOBAL_CHECK_FILE as GLOBAL_CHECK_FILE,
+        rddt.CREATE_TIME AS CREATE_TIME,rddt.org_Name as org_Name,rddt.training_Years as training_Years,
+        rddt.graduation_Year as graduation_Year,rddt.delayreason as delayreason,rddt.audit_Status_Name as audit_Status_Name,
+        rddt.audit_Opinion as audit_Opinion,rddt.delay_File_Path as delay_File_Path,rddt.recruit_Flow as recruit_Flow
+            , ROW_NUMBER() OVER (PARTITION BY su.user_flow ORDER BY rddt.CREATE_TIME DESC) AS mm
+                FROM sys_user su
+                LEFT JOIN res_doctor rd ON rd.doctor_flow = su.user_flow
+                    LEFT JOIN Res_Docotr_Delay_Teturn rddt ON rddt.doctor_flow = rd.doctor_flow
+                WHERE rd.record_status = 'Y'
+                    AND su.record_status = 'Y'
+                    AND rddt.record_status = 'Y'
+                    AND rddt.TYPE_ID = 'Delay'
+                    <if test="docTypeList!=null and docTypeList.size>0">
+                        and rd.DOCTOR_TYPE_ID in
+                        <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+                    </if>
+                    <if test="delayStatusIdList!=null and delayStatusIdList.size()>0">
+                        AND rddt.AUDIT_STATUS_ID in
+                        <foreach collection="delayStatusIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+                    </if>
+                    <if test="doctor!=null">
+                        <if test="doctor.doctorName!=null and doctor.doctorName!=''">
+                            <bind name="doctorName" value="'%'+doctor.doctorName+'%'"/>
+                            and rd.DOCTOR_NAME like #{doctorName}
+                        </if>
+                        <if test="doctor.sessionNumber!=null and doctor.sessionNumber!=''">
+                            and rd.SESSION_NUMBER = #{doctor.sessionNumber}
+                        </if>
+                        <if test="doctor.orgFlow!=null and doctor.orgFlow!=''">
+                            and rd.ORG_FLOW = #{doctor.orgFlow}
+                        </if>
+                    </if>
+                    <if test="orgFlowList!=null and orgFlowList.size()>0">
+                        and rddt.ORG_FLOW in
+                        <foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+                    </if>
+                ORDER BY rddt.CREATE_TIME DESC
+            )
+        WHERE mm = 1
+    </select>
+
+    <select id="searchBackTrainInfoByParamMap" parameterType="java.util.Map" resultMap="docDelayBackMap">
+        SELECT *
+        FROM (
+        SELECT DISTINCT su.user_flow AS user_flow, su.user_name AS user_name, su.id_no AS id_no, rddt.session_number AS session_number,rddt.GLOBAL_CHECK_FILE as GLOBAL_CHECK_FILE,
+        rddt.CREATE_TIME AS CREATE_TIME,rddt.training_Spe_Name training_Spe_Name,rddt.reason_Name reason_Name,rddt.modify_Time as modify_Time,
+        rddt.reason reason,rddt.policy_Name policy_Name,rddt.policy policy,rddt.dispositon dispositon,rddt.org_Name as org_Name,rddt.recruit_Flow as recruit_Flow,
+        rddt.remark remark,rddt.audit_Status_Name as audit_Status_Name,rddt.record_Flow as record_Flow,rddt.audit_Opinion as audit_Opinion
+        , ROW_NUMBER() OVER (PARTITION BY su.user_flow ORDER BY rddt.CREATE_TIME DESC) AS mm
+        FROM sys_user su
+        LEFT JOIN res_doctor rd ON rd.doctor_flow = su.user_flow
+        LEFT JOIN Res_Docotr_Delay_Teturn rddt ON rddt.doctor_flow = rd.doctor_flow
+        WHERE rddt.record_status = 'Y'
+        AND rddt.TYPE_ID = 'ReturnTraining'
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and rd.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="backTrainStatusIdList!=null and backTrainStatusIdList.size()>0">
+            AND rddt.AUDIT_STATUS_ID in
+            <foreach collection="backTrainStatusIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="doctor!=null">
+            <if test="doctor.doctorName!=null and doctor.doctorName!=''">
+                <bind name="doctorName" value="'%'+doctor.doctorName+'%'"/>
+                and rd.DOCTOR_NAME like #{doctorName}
+            </if>
+        </if>
+        <if test="backTrainDoc!=null">
+            <if test="backTrainDoc.reasonId!=null and backTrainDoc.reasonId!=''">
+                AND rddt.REASON_ID = #{backTrainDoc.reasonId}
+            </if>
+            <if test="backTrainDoc.policyId!=null and backTrainDoc.policyId!=''">
+                and rddt.POLICY_ID = #{backTrainDoc.policyId}
+            </if>
+            <if test="backTrainDoc.sessionNumber!=null and backTrainDoc.sessionNumber!=''">
+                and rddt.SESSION_NUMBER = #{doctor.sessionNumber}
+            </if>
+            <if test="backTrainDoc.orgFlow!=null and backTrainDoc.orgFlow!=''">
+                and rddt.ORG_FLOW = #{backTrainDoc.orgFlow}
+            </if>
+        </if>
+        <if test="orgFlowList!=null and orgFlowList.size()>0">
+            and rddt.ORG_FLOW in
+            <foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+
+        ORDER BY rddt.CREATE_TIME DESC
+        )
+        WHERE mm = 1
+    </select>
+    <select id="backTrainCheck"  resultMap="com.pinde.sci.dao.base.ResDocotrDelayTeturnMapper.BaseResultMap">
+        select rddt.* from res_docotr_delay_teturn rddt
+          left join res_doctor rd on rddt.doctor_flow=rd.doctor_flow
+        where rddt.record_status='Y'
+        <if test="backTrainStatusIdList!=null and backTrainStatusIdList.size()>0">
+            AND rddt.AUDIT_STATUS_ID in
+            <foreach collection="backTrainStatusIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="b!=null">
+            <if test="b.reasonId!=null and b.reasonId!=''">
+                AND rddt.REASON_ID = #{b.reasonId}
+            </if>
+            <if test="b.policyId!=null and b.policyId!=''">
+                and rddt.POLICY_ID = #{b.policyId}
+            </if>
+            <if test="b.sessionNumber!=null and b.sessionNumber!=''">
+                and rddt.SESSION_NUMBER = #{b.sessionNumber}
+            </if>
+            <if test="b.trainingTypeId!=null and b.trainingTypeId!=''">
+                and rddt.TRAINING_TYPE_ID = #{b.trainingTypeId}
+            </if>
+            <if test="b.doctorTypeId!=null and b.doctorTypeId!=''">
+                and rddt.training_TYPE_ID = #{b.doctorTypeId}
+            </if>
+            <if test="b.auditStatusId!=null and b.auditStatusId!=''">
+                and rddt.Audit_Status_Id = #{b.auditStatusId}
+            </if>
+            <if test="b.trainingSpeId!=null and b.trainingSpeId!=''">
+                and rddt.TRAINING_SPE_ID = #{b.trainingSpeId}
+            </if>
+            <if test="b.orgFlow!=null and b.orgFlow!=''">
+                and rddt.ORG_FLOW = #{b.orgFlow}
+            </if>
+            <if test="b.doctorFlow!=null and b.doctorFlow!=''">
+                and rddt.DOCTOR_FLOW = #{b.doctorFlow}
+            </if>
+            <if test="b.typeId!=null and b.typeId!=''">
+                and rddt.TYPE_ID = #{b.typeId}
+            </if>
+            <if test="b.doctorName!=null and b.doctorName!=''">
+                and rddt.doctor_NAME LIKE '%${b.doctorName}%'
+            </if>
+            <if test="b.trainingSpeName!=null and b.trainingSpeName!=''">
+                and rddt.TRAINING_SPE_NAME LIKE '%${b.trainingSpeName}%'
+            </if>
+            <if test="b.orgName!=null and b.orgName!=''">
+                and rddt.ORG_NAME LIKE '%${b.orgName}%'
+            </if>
+        </if>
+        <if test="orgFlowList!=null and orgFlowList.size()>0">
+            and rddt.ORG_FLOW in
+            <foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="docTypeList!=null and docTypeList.size()>0">
+            and rd.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="workOrgId!=null and workOrgId!=''">
+            and rd.work_Org_Id = #{workOrgId}
+        </if>
+        <if test='medicineTypeId!=null and medicineTypeId!=""'>
+            and exists (select 1 from sys_user su where su.user_flow=rddt.doctor_flow
+            AND instr('${medicineTypeId}',su.medicine_Type_Id)>0
+            )
+        </if>
+        order by rddt.create_time desc
+    </select>
+    <select id="searchInfo"  resultMap="com.pinde.sci.dao.base.ResDocotrDelayTeturnMapper.BaseResultMap">
+        select rddt.* from res_docotr_delay_teturn rddt
+          left join res_doctor rd on rddt.doctor_flow = rd.doctor_flow
+        where rddt.record_status='Y'
+        <if test="rddt!=null">
+            <if test="rddt.orgFlow!=null and rddt.orgFlow!=''">
+                AND rddt.org_flow = #{rddt.orgFlow}
+            </if>
+            <if test="rddt.orgName!=null and rddt.orgName!=''">
+                AND rddt.org_name like '%${rddt.orgName}%'
+            </if>
+            <if test="rddt.doctorFlow!=null and rddt.doctorFlow!=''">
+                AND rddt.doctor_flow = #{rddt.doctorFlow}
+            </if>
+            <if test="rddt.doctorName!=null and rddt.doctorName!=''">
+                AND rddt.doctor_name like '%${rddt.doctorName}%'
+            </if>
+            <if test="rddt.sessionNumber!=null and rddt.sessionNumber!=''">
+                AND rddt.session_number = #{rddt.sessionNumber}
+            </if>
+            <if test="rddt.trainingTypeId!=null and rddt.trainingTypeId!=''">
+                AND rddt.training_type_id = #{rddt.trainingTypeId}
+            </if>
+            <if test="rddt.trainingSpeId!=null and rddt.trainingSpeId!=''">
+                AND rddt.training_spe_id = #{rddt.trainingSpeId}
+            </if>
+            <if test="rddt.trainingSpeName!=null and rddt.trainingSpeName!=''">
+                AND rddt.training_spe_name like '%${rddt.trainingSpeName}%'
+            </if>
+            <if test="rddt.policyId!=null and rddt.policyId!=''">
+                AND rddt.policy_id = #{rddt.policyId}
+            </if>
+            <if test="rddt.doctorTypeId!=null and rddt.doctorTypeId!=''">
+                AND rddt.doctor_type_id = #{rddt.doctorTypeId}
+            </if>
+            <if test="rddt.reasonId!=null and rddt.reasonId!=''">
+                AND rddt.reason_id = #{rddt.reasonId}
+            </if>
+            <if test="rddt.auditStatusId!=null and rddt.auditStatusId!=''">
+                AND rddt.audit_status_id = #{rddt.auditStatusId}
+            </if>
+            <if test="rddt.typeId!=null and rddt.typeId!=''">
+                AND rddt.type_id = #{rddt.typeId}
+            </if>
+        </if>
+        <if test="docTypeList!=null and docTypeList.size()>0">
+            and rd.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="orgFlowList!=null and orgFlowList.size()>0">
+            and rddt.ORG_FLOW in
+            <foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        order by rddt.create_time desc
+    </select>
+
+    <sql id="Base_Column_List">
+    RECORD_FLOW, ORG_FLOW, ORG_NAME, SESSION_NUMBER, TRAINING_YEARS, DOCTOR_FLOW, DOCTOR_NAME,
+    TRAINING_SPE_ID, TRAINING_SPE_NAME, TRAINING_TYPE_ID, TRAINING_TYPE_NAME, DOCTOR_TYPE_ID,
+    DOCTOR_TYPE_NAME, GRADUATION_YEAR, TYPE_ID, TYPE_NAME, RECRUIT_FLOW, POLICY_ID, POLICY_NAME,
+    POLICY, REASON_ID, REASON_NAME, REASON, DISPOSITON, REMARK, DELAYREASON, POLICY_TIME,
+    POLICY_USER_FLOW, POLICY_USER_NAME, AUDIT_TIME, AUDIT_STATUS_ID, AUDIT_STATUS_NAME,
+    AUDIT_USER_FLOW, AUDIT_USER_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME,
+    MODIFY_USER_FLOW, AUDIT_OPINION, DELAY_FILE_PATH, SECOND_SPE_ID, SECOND_SPE_NAME,
+    GLOBAL_CHECK_FILE
+  </sql>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <select id="searchInfoNew" resultMap="com.pinde.sci.dao.base.ResDocotrDelayTeturnMapper.BaseResultMap"
+            parameterType="com.pinde.sci.model.mo.ResDocotrDelayTeturnExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from
+        (
+        SELECT SO.ORG_NAME, dr.GLOBAL_CHECK_FILE, dr.SECOND_SPE_ID, dr.SECOND_SPE_NAME, dr.RECORD_FLOW
+        , dr.ORG_FLOW, dr.SESSION_NUMBER, dr.TRAINING_YEARS, dr.DOCTOR_FLOW, dr.DOCTOR_NAME
+        , dr.TRAINING_SPE_ID, dr.TRAINING_SPE_NAME, dr.TRAINING_TYPE_ID, dr.TRAINING_TYPE_NAME, dr.DOCTOR_TYPE_ID
+        , dr.DOCTOR_TYPE_NAME, dr.GRADUATION_YEAR, dr.TYPE_ID, dr.TYPE_NAME, dr.RECRUIT_FLOW
+        , dr.POLICY_ID, dr.POLICY_NAME, dr.POLICY, dr.REASON_ID, dr.REASON_NAME
+        , dr.REASON, dr.DISPOSITON, dr.REMARK, dr.DELAYREASON, dr.POLICY_TIME
+        , dr.POLICY_USER_FLOW, dr.POLICY_USER_NAME, dr.AUDIT_TIME, dr.AUDIT_STATUS_ID, dr.AUDIT_STATUS_NAME
+        , dr.AUDIT_USER_FLOW, dr.AUDIT_USER_NAME, dr.RECORD_STATUS, dr.CREATE_TIME, dr.CREATE_USER_FLOW
+        , dr.MODIFY_TIME, dr.MODIFY_USER_FLOW, dr.AUDIT_OPINION, dr.DELAY_FILE_PATH
+        FROM PDSCI.RES_DOCOTR_DELAY_TETURN dr
+        LEFT JOIN pdsci.SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_ORG SO ON DR.ORG_FLOW = SO.ORG_FLOW
+        WHERE DR.RECORD_STATUS = 'Y' AND U.RECORD_STATUS = 'Y'
+        AND SO.RECORD_STATUS = 'Y'
+        )
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+</mapper>

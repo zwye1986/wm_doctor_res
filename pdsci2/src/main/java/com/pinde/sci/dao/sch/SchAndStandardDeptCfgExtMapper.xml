@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.sch.SchAndStandardDeptCfgExtMapper" >
+
+	<resultMap type="HashMap" id="searchByRequiredMap">
+		<result column="STANDARD_DEPT_ID" property="standardDeptId" javaType="string"/>
+		<result column="STANDARD_DEPT_NAME" property="standardDeptName" javaType="string"/>
+	</resultMap>
+	<select id="searchByRequired" resultMap="searchByRequiredMap">
+		SELECT STANDARD_DEPT_ID,STANDARD_DEPT_NAME
+		FROM SCH_ROTATION_DEPT
+		WHERE RECORD_STATUS = 'Y'
+		AND ORG_FLOW IS NULL
+		AND ROTATION_FLOW = #{rotationFlow}
+			AND IS_REQUIRED = #{isRequired}
+		GROUP BY STANDARD_DEPT_ID,STANDARD_DEPT_NAME
+		ORDER BY STANDARD_DEPT_ID
+	</select>
+
+
+
+
+
+	<resultMap type="HashMap" id="searchByLastRotationMap">
+		<result column="SPE_ID" property="speId" javaType="string"/>
+		<result column="SPE_INFO" property="speInfo" javaType="string"/>
+		<result column="SCH_DEPT_FLOW" property="schDeptFlow" javaType="string"/>
+		<result column="SCH_DEPT_NAME" property="schDeptName" javaType="string"/>
+	</resultMap>
+
+	<select id="searchByLastRotation" resultMap="searchByLastRotationMap">
+		SELECT * FROM (
+  			SELECT S.SPE_ID || C.SCH_DEPT_NAME AS SPE_INFO,S.SPE_ID, C.SCH_DEPT_FLOW,C.SCH_DEPT_NAME FROM SCH_AND_STANDARD_DEPT_CFG C
+  			LEFT JOIN SCH_ROTATION_DEPT D ON C.STANDARD_DEPT_ID=D.STANDARD_DEPT_ID
+  			LEFT JOIN SCH_ROTATION S ON S.ROTATION_FLOW=D.ROTATION_FLOW
+  			 LEFT JOIN SYS_DEPT SD ON SD.DEPT_FLOW = C.SCH_DEPT_FLOW
+   			WHERE D.RECORD_STATUS = 'Y'
+   			AND SD.RECORD_STATUS = 'Y'
+   			AND D.ORG_FLOW IS NULL
+   			AND D.ROTATION_FLOW IN (
+   				SELECT ROTATION_FLOW FROM (
+        			SELECT A.*, ROW_NUMBER() OVER (PARTITION BY SPE_ID ORDER BY CREATE_TIME DESC) RN
+        			FROM SCH_ROTATION A
+        			WHERE RECORD_STATUS = 'Y'
+        			AND DOCTOR_CATEGORY_ID = 'Doctor'
+        			AND PUBLISH_FLAG = 'Y') T
+        		WHERE T.RN = 1)
+   			AND D.IS_REQUIRED ='Y'
+   			AND C.ORG_FLOW= #{orgFlow}
+   			AND C.RECORD_STATUS = 'Y'
+		)GROUP BY SPE_INFO,SCH_DEPT_FLOW,SPE_ID,SCH_DEPT_NAME
+		ORDER BY SPE_INFO
+	</select>
+
+
+	<select id="searchByLastRotationBySpe" resultMap="searchByLastRotationMap">
+		SELECT * FROM (
+  			SELECT S.SPE_ID || C.SCH_DEPT_NAME AS SPE_INFO,S.SPE_ID, C.SCH_DEPT_FLOW,C.SCH_DEPT_NAME FROM SCH_AND_STANDARD_DEPT_CFG C
+  			LEFT JOIN SCH_ROTATION_DEPT D ON C.STANDARD_DEPT_ID=D.STANDARD_DEPT_ID
+  			LEFT JOIN SCH_ROTATION S ON S.ROTATION_FLOW=D.ROTATION_FLOW
+  			 LEFT JOIN SYS_DEPT SD ON SD.DEPT_FLOW = C.SCH_DEPT_FLOW
+   			WHERE D.RECORD_STATUS = 'Y'
+   			AND SD.RECORD_STATUS = 'Y'
+   			AND D.ORG_FLOW IS NULL
+   			AND D.ROTATION_FLOW IN (
+   				SELECT ROTATION_FLOW FROM (
+        			SELECT A.*, ROW_NUMBER() OVER (PARTITION BY SPE_ID ORDER BY CREATE_TIME DESC) RN
+        			FROM SCH_ROTATION A
+        			WHERE RECORD_STATUS = 'Y'
+        			AND DOCTOR_CATEGORY_ID = 'Doctor'
+        			AND PUBLISH_FLAG = 'Y') T
+        		WHERE T.RN = 1)
+   			AND D.IS_REQUIRED = #{isRequired}
+   			AND C.ORG_FLOW= #{orgFlow}
+   			 AND S.SPE_ID=#{speId}
+   			AND C.RECORD_STATUS = 'Y'
+		)GROUP BY SPE_INFO,SCH_DEPT_FLOW,SPE_ID,SCH_DEPT_NAME
+		ORDER BY SPE_INFO
+	</select>
+</mapper>

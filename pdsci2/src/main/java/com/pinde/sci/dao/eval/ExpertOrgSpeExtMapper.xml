@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.eval.ExpertOrgSpeExtMapper">
+    <resultMap id="orgSpeMap" type="hashmap">
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+        <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="expertOrgSpeList" resultMap="orgSpeMap">
+        SELECT ORG.ORG_FLOW,ORG.ORG_NAME,SPE.SPE_ID,SPE.SPE_NAME FROM SYS_ORG ORG
+        LEFT JOIN RES_ORG_SPE SPE
+        ON ORG.ORG_FLOW=SPE.ORG_FLOW
+        AND SPE.SPE_TYPE_ID='DoctorTrainingSpe'
+        WHERE ORG.RECORD_STATUS='Y'
+        AND SPE.RECORD_STATUS='Y'
+        <if test="speName!=null and speName !=''">
+        AND   SPE.SPE_NAME  LIKE '%${speName}%'
+        </if>
+        <if test="speId!=null and speId !=''">
+        AND   SPE.SPE_ID =#{speId}
+        </if>
+        <if test="orgName!=null and orgName !=''">
+            AND  ORG.ORG_NAME  LIKE '%${orgName}%'
+        </if>
+        AND EXISTS (
+            SELECT 1 FROM EXPERT_ORG_SPE CFG
+            WHERE CFG.RECORD_STATUS='Y'
+            AND CFG.ORG_FLOW=ORG.ORG_FLOW
+            AND CFG.SPE_ID=SPE.SPE_ID
+            AND CFG.EVAL_YEAR=#{evalYear}
+        )
+        order by org.org_code,spe.spe_id
+    </select>
+    <select id="getSpeExpertByYearAndOrgFlow" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+        SELECT * FROM SYS_USER SU
+        WHERE RECORD_STATUS='Y'
+        AND EXISTS (
+            SELECT 1 FROM EXPERT_EVAL_ORG_SPE ORG
+            WHERE RECORD_STATUS='Y'
+            AND EVAL_YEAR=#{evalYear}
+            AND ORG_FLOW=#{orgFlow}
+            AND SPE_ID=#{speId}
+            AND ORG.EXPERT_USER_FLOW =SU.USER_FLOW
+        )
+    </select>
+</mapper>

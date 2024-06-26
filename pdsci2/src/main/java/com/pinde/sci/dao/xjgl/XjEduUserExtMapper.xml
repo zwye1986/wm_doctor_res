@@ -1,0 +1,1308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.xjgl.XjEduUserExtMapper">
+    <resultMap id="extMap" type="com.pinde.sci.model.xjgl.XjEduUserExt"
+               extends="com.pinde.sci.dao.base.EduUserMapper.BaseResultMap">
+        <association property="sysUser" column="user_flow"
+                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+    </resultMap>
+
+    <resultMap id="userExtMap" type="com.pinde.sci.model.xjgl.XjEduUserExt"
+               extends="com.pinde.sci.dao.base.EduUserMapper.BaseResultMap">
+        <association property="sysUser" column="sysUserFlow"
+                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+    </resultMap>
+
+    <resultMap id="userSunMap" type="com.pinde.sci.model.xjgl.XjEduUserExt" extends="com.pinde.sci.dao.base.EduUserMapper.BaseResultMap">
+        <collection property="courseExtsList" ofType="com.pinde.sci.model.xjgl.XjEduStudentCourseExt" column="USER_FLOW">
+            <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow"/>
+            <result column="COURSE_GRADE" jdbcType="VARCHAR" property="courseGrade"/>
+            <result column="COURSE_CREDIT" jdbcType="VARCHAR" property="courseCredit"/>
+            <result column="COURSE_PERIOD" jdbcType="VARCHAR" property="coursePeriod"/>
+            <result column="GRADE_TERM_ID" jdbcType="VARCHAR" property="gradeTermId"/>
+            <result column="GRADE_TERM_NAME" jdbcType="VARCHAR" property="gradeTermName"/>
+            <result column="COURSE_FLOW" jdbcType="VARCHAR" property="courseFlow"/>
+            <result column="COURSE_NAME" jdbcType="VARCHAR" property="courseName"/>
+            <result column="COURSE_CODE" jdbcType="VARCHAR" property="courseCode"/>
+            <result column="COURSE_TYPE_ID" jdbcType="VARCHAR" property="courseTypeId"/>
+            <result column="COURSE_TYPE_NAME" jdbcType="VARCHAR" property="courseTypeName"/>
+            <result column="STUDY_WAY_ID" jdbcType="VARCHAR" property="studyWayId"/>
+            <result column="STUDY_WAY_NAME" jdbcType="VARCHAR" property="studyWayName"/>
+            <result column="ASSESS_TYPE_NAME" jdbcType="VARCHAR" property="assessTypeName"/>
+            <result column="ASSESS_TYPE_ID" jdbcType="VARCHAR" property="assessTypeId"/>
+            <result column="PACIFIC_GRADE" jdbcType="VARCHAR" property="pacificGrade"/>
+            <result column="TEAM_END_GRADE" jdbcType="VARCHAR" property="teamEndGrade"/>
+            <result column="COURSE_NAME_EN" jdbcType="VARCHAR" property="courseNameEn"/>
+            <result column="DEGREE_COURSE_FLAG" jdbcType="VARCHAR" property="degreeCourseFlag"/>
+            <result column="SCORE_MODE" jdbcType="VARCHAR" property="scoreMode"/>
+            <result column="GRADE_YEAR" jdbcType="VARCHAR" property="gradeYear"/>
+            <association property="course" column="COURSE_FLOW" javaType="com.pinde.sci.model.mo.EduCourse">
+                <id column="COURSE_FLOW" jdbcType="VARCHAR" property="courseFlow" />
+                <result column="EFFECTIVE_GRADE" jdbcType="VARCHAR" property="effectiveGrade"/>
+                <!--课程类别区别于课程类型-->
+                <result column="COURSETYPENAME" jdbcType="VARCHAR" property="courseTypeName"/>
+            </association>
+        </collection>
+    </resultMap>
+
+    <select id="searchEduUserCourseExtMajorList" parameterType="java.util.Map" resultMap="userSunMap">
+        select
+        eu.MAJOR_ID,eu.MAJOR_NAME,esc.course_code,esc.COURSE_FLOW,esc.COURSE_NAME,esc.COURSE_TYPE_ID,esc.COURSE_TYPE_Name,eu.USER_FLOW,eu.TRAIN_TYPE_NAME,eu.TRAIN_CATEGORY_NAME,esc.COURSE_PERIOD,esc.COURSE_CREDIT,esc.COURSE_GRADE,esc.RECORD_FLOW,esc.GRADE_TERM_ID,esc.GRADE_TERM_NAME,
+        esc.PACIFIC_GRADE,esc.TEAM_END_GRADE,esc.STUDY_WAY_ID,esc.STUDY_WAY_NAME,esc.ASSESS_TYPE_ID,esc.ASSESS_TYPE_NAME,esc.course_grade,ec.COURSE_NAME_EN,NVL(ec.EFFECTIVE_GRADE,'60') EFFECTIVE_GRADE,esc.DEGREE_COURSE_FLAG,ec.course_type_name COURSETYPENAME,esc.SCORE_MODE,esc.GRADE_YEAR
+        from edu_student_course esc
+        inner join EDU_USER eu on eu.USER_FLOW = esc.USER_FLOW
+        left join edu_course ec on esc.course_flow = ec.course_flow
+        where esc.RECORD_STATUS='Y' and eu.RECORD_STATUS='Y'
+        <if test='userFlowList!=null and userFlowList.size>0'>
+            and esc.user_flow in
+            <foreach collection="userFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="studentCourse!=null and studentCourse!=''">
+            <if test="studentCourse.courseName!=null and studentCourse.courseName!=''">
+                <bind name="courseName" value="'%'+studentCourse.courseName+'%'"/>
+                and esc.course_Name like #{courseName}
+            </if>
+            <if test="studentCourse.gradeTermId!=null and studentCourse.gradeTermId!=''">
+                and esc.GRADE_TERM_ID = #{studentCourse.gradeTermId}
+            </if>
+            <if test="studentCourse.impFlow!=null and studentCourse.impFlow!=''">
+                and esc.IMP_FLOW = #{studentCourse.impFlow}
+            </if>
+            <if test="studentCourse.createTime=='pydw'">
+                and esc.COURSE_CODE in ('22016013','12016122','32016017','12016123','22016011','22016012')
+            </if>
+        </if>
+        ORDER BY esc.COURSE_TYPE_ID,esc.COURSE_CODE
+    </select>
+    <resultMap id="majorCourseExtMap" type="com.pinde.sci.model.xjgl.XjEduCourseMajorExt"
+               extends="com.pinde.sci.dao.base.EduCourseMajorMapper.BaseResultMap">
+        <association property="course" column="courseFlow"
+                     resultMap="com.pinde.sci.dao.base.EduCourseMapper.BaseResultMap"/>
+        <association property="studentCourse" column="courseFlow"
+                     resultMap="com.pinde.sci.dao.base.EduStudentCourseMapper.BaseResultMap"/>
+    </resultMap>
+
+    <resultMap id="cerInfoMap" type="java.util.Map" extends="com.pinde.sci.dao.base.EduUserMapper.ResultMapWithBLOBs">
+        <result column="SEX_ID" property="sexId" jdbcType="VARCHAR" />
+        <result column="SEX_NAME" property="sexName" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="USER_BIRTHDAY" property="userBirthday" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="searchEduLogList" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.EduLogMapper.BaseResultMap">
+        SELECT *
+        FROM Edu_log
+        WHERE RECORD_STATUS= 'Y'
+        <if test='startStudyId!=null and startStudyId!=""'>
+            and (
+            (study_id)>=#{startStudyId} )
+            or
+            (change_item = '学号' and new_data>=#{startStudyId} )
+            )
+        </if>
+        <if test='endStudyId!=null and endStudyId!=""'>
+            and (
+            (#{endStudyId}>=study_id)
+            or
+            (change_item = '学号' and #{endStudyId}>=to_number(new_data) )
+            )
+        </if>
+        <if test='gradeNumber!=null and gradeNumber!=""'>
+            and (grade_number = #{gradeNumber}
+            or (change_item = '年级' and new_data = #{gradeNumber})
+            )
+        </if>
+        <if test='userName!=null and userName!=""'>
+            and (user_name like '%${userName}%'
+            or (change_item = '姓名' and new_data = #{userName})
+            )
+        </if>
+        <if test='changeItem!=null and changeItem!=""'>
+            and change_item = #{changeItem}
+        </if>
+        <if test='changeItem==null or changeItem==""'>
+            and change_item not in ('成绩管理')
+        </if>
+        <if test='startChangeTime!=null and startChangeTime!=""'>
+            and change_time>=#{startChangeTime}
+        </if>
+        <if test='endChangeTime!=null and endChangeTime!=""'>
+            and #{endChangeTime}>=change_time
+        </if>
+        order by change_time Desc
+    </select>
+
+    <select id="searchEduUserCourseList" parameterType="java.util.Map" resultMap="majorCourseExtMap">
+        select DISTINCT ecm.RECORD_FLOW,
+        ecm.MAJOR_ID,
+        ecm.MAJOR_NAME,
+        ecm.course_Flow,
+        ecm.course_Name,
+        ecm.COURSE_TYPE_ID,
+        ecm.COURSE_TYPE_NAME,
+        ecm.PLAN_YEAR,
+        ecm.RECORD_STATUS,
+        ec.course_Flow,
+        ec.course_Name,
+        ec.COURSE_CREDIT,
+        ec.COURSE_PERIOD,
+        ec.COURSE_CATEGORY_ID,
+        ec.COURSE_CATEGORY_NAME,
+        ec.COURSE_STATUS_ID,
+        ec.COURSE_STATUS_NAME,
+        ec.COURSE_SPEAKER,
+        ec.DEPT_FLOW,
+        ec.DEPT_NAME,
+        ec.COURSE_IMG_NAME,
+        ec.CREATE_USER_NAME,
+        ec.GRADATION_ID,
+        ec.GRADATION_NAME,
+        ec.COURSE_PERIOD_TEACH,
+        ec.COURSE_PERIOD_EXPER,
+        ec.COURSE_PERIOD_MACHINE,
+        ec.COURSE_PERIOD_OTHER,
+        ec.COURSE_CODE,
+        ec.COURSE_NAME_EN,
+        ec.COURSE_USER_COUNT,
+        esc.COURSE_GRADE,
+        esc.RECORD_FLOW
+        from edu_course_major ecm,edu_course ec
+        LEFT JOIN EDU_STUDENT_COURSE esc ON ec.COURSE_FLOW=esc.COURSE_FLOW
+        where ec.RECORD_STATUS='Y' and ecm.RECORD_STATUS='Y'
+        and ecm.COURSE_FLOW=ec.COURSE_FLOW
+        <if test="majorId!=null and majorId!=''">
+            and ecm.MAJOR_ID=#{majorId}
+        </if>
+        <if test="period!=null and period!=''">
+            and ecm.PLAN_YEAR=#{period}
+        </if>
+        ORDER BY ecm.COURSE_TYPE_ID
+    </select>
+    <!--<select id="selectEduUserStudentCourse" parameterType="java.util.Map" resultMap="extMap">-->
+    <!--select eu.User_flow,su.USER_NAME,eu.SID,su.ID_NO,eu.MAJOR_NAME,eu.MAJOR_ID,eu.PERIOD -->
+    <!--from EDU_USER eu,SYS_USER su-->
+    <!--where su.RECORD_STATUS='Y' -->
+    <!--and eu.USER_FLOW in (select DISTINCT esc.USER_FLOW from EDU_STUDENT_COURSE esc where  -->
+    <!--esc.RECORD_STATUS='Y' -->
+    <!--<if test="studentCourse!=null">-->
+    <!--<if test="studentCourse.courseName!=null and studentCourse.courseName!=''">-->
+    <!--<bind name="courseName" value="'%'+studentCourse.courseName+'%'"/>-->
+    <!--and esc.course_Name like #{courseName}-->
+    <!--</if>-->
+    <!--<if test="studentCourse.gradeTermId!=null and studentCourse.gradeTermId!=''">-->
+    <!--and esc.GRADE_TERM_ID = #{studentCourse.gradeTermId}-->
+    <!--</if>-->
+    <!--<if test="studentCourse.impFlow!=null and studentCourse.impFlow!=''">-->
+    <!--and esc.IMP_FLOW = #{studentCourse.impFlow}-->
+    <!--</if>-->
+    <!--</if>-->
+    <!--)-->
+    <!--and eu.USER_FLOW=su.USER_FLOW-->
+    <!--<if test="sysUser!=null and sysUser!=''">-->
+    <!--<if test="sysUser.userName!=null and sysUser.userName!=''">-->
+    <!--<bind name="userName" value="'%'+sysUser.userName+'%'"/>-->
+    <!--and su.USER_NAME like #{userName}-->
+    <!--</if>-->
+    <!--<if test="sysUser.idNo!=null and sysUser.idNo!=''">-->
+    <!--and su.id_no = #{sysUser.idNo}-->
+    <!--</if>-->
+    <!--</if>-->
+    <!--<if test="eduUser!=null and eduUser!=''">-->
+    <!--<if test="eduUser.sid!=null and eduUser.sid!=''">-->
+    <!--and eu.sid = #{eduUser.sid}-->
+    <!--</if>-->
+    <!--<if test="eduUser.period!=null and eduUser.period!=''">-->
+    <!--and eu.PERIOD = #{eduUser.period}-->
+    <!--</if>-->
+    <!--</if>-->
+    <!--ORDER BY eu.SID , eu.CREATE_TIME-->
+    <!--</select>-->
+
+    <select id="searchEduUserExtList" parameterType="java.util.Map" resultMap="userExtMap">
+        select
+        eu.USER_FLOW, eu.SID, eu.MAJOR_ID, eu.MAJOR_NAME, eu.PERIOD,
+        su.USER_FLOW sysUserFlow, su.USER_NAME
+        from pdsci.EDU_USER eu
+        left join pdsci.SYS_USER su on su.USER_FLOW = eu.USER_FLOW
+        left join pdsci.SYS_USER_ROLE sur on sur.USER_FLOW = eu.USER_FLOW
+        where eu.RECORD_STATUS='Y' and su.RECORD_STATUS='Y' and sur.RECORD_STATUS='Y'
+        <if test='roleFlow!=null and roleFlow!=""'>
+            and sur.ROLE_FLOW = #{roleFlow}
+        </if>
+        <if test='sysUser!=null and sysUser!=""'>
+            <if test='sysUser.userName!=null and sysUser.userName!=""'>
+                <bind name="userName" value="'%'+sysUser.userName+'%'"/>
+                and su.USER_NAME like #{userName}
+            </if>
+            <if test='sysUser.idNo!=null and sysUser.idNo!=""'>
+                <bind name="idNo" value="'%'+sysUser.idNo+'%'"/>
+                and su.ID_NO like #{idNo}
+            </if>
+        </if>
+        <if test='eduUser!=null and eduUser!=""'>
+            <if test='eduUser.sid!=null and eduUser.sid!=""'>
+                <bind name="sid" value="'%'+eduUser.sid+'%'"/>
+                and eu.SID like #{sid}
+            </if>
+            <if test="eduUser.majorId!=null and eduUser.majorId!=''">
+                and eu.MAJOR_ID = #{eduUser.majorId}
+            </if>
+            <if test='eduUser.period!=null and eduUser.period!=""'>
+                and eu.PERIOD = #{eduUser.period}
+            </if>
+            <if test='eduUser.trainTypeId!=null and eduUser.trainTypeId!=""'>
+                and eu.TRAIN_TYPE_ID = #{eduUser.trainTypeId}
+            </if>
+            <if test='eduUser.trainOrgId!=null and eduUser.trainOrgId!=""'>
+                and eu.TRAIN_ORG_ID = #{eduUser.trainOrgId}
+            </if>
+        </if>
+        <if test='resDoctor!=null and resDoctor!=""'>
+            <if test='resDoctor.orgFlow!=null and resDoctor.orgFlow!=""'>
+                and exists (select null from res_doctor where doctor_flow=eu.user_flow and org_flow=
+                #{resDoctor.orgFlow} and record_status='Y')
+            </if>
+        </if>
+        order BY eu.sid desc
+    </select>
+
+    <select id="selectList" parameterType="com.pinde.sci.model.xjgl.XjEduUserExt" resultMap="extMap">
+        select eu.*,su.* from pdsci.edu_user eu,pdsci.sys_user su,pdsci.sys_user_role sur where eu.RECORD_STATUS = 'Y'
+        and su.RECORD_STATUS = 'Y' and eu.user_flow = su.user_flow
+        and su.user_flow = sur.user_flow
+        <if test="sysUser!=null">
+            <if test='sysUser.statusId!=null and sysUser.statusId!=""'>
+                and su.status_id = #{sysUser.statusId}
+            </if>
+            <if test='sysUser.orgFlow!=null and sysUser.orgFlow!=""'>
+                and su.org_flow = #{sysUser.orgFlow}
+            </if>
+            <if test='sysUser.userName!=null and sysUser.userName!=""'>
+                and su.user_name like #{sysUser.userName}
+            </if>
+        </if>
+        <if test="sysRole!=null">
+            <if test='sysRole.roleFlow!=null and sysRole.roleFlow!=""'>
+                and sur.role_flow = #{sysRole.roleFlow}
+            </if>
+        </if>
+        order by eu.create_time desc
+    </select>
+
+    <resultMap id="eduUserExtMap" type="com.pinde.sci.model.xjgl.XjEduUserExt"
+               extends="com.pinde.sci.dao.base.EduUserMapper.BaseResultMap">
+        <association property="sysUser" column="user_flow"
+                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+        <association property="sysOrg" column="org_flow" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap"/>
+    </resultMap>
+
+    <select id="searchEduUserForManage" parameterType="java.util.Map" resultMap="eduUserExtMap">
+        select eu.user_flow,eu.major_id,eu.major_name,eu.period,
+        eu.sid,su.user_head_img,eu.credit,eu.intro,
+        su.user_name,su.user_code,su.sex_id,su.sex_name,su.status_id,
+        su.status_desc,su.user_phone,su.user_email,
+        su.id_no,su.user_birthday,su.title_id,su.title_name,
+        su.degree_id,su.degree_name,su.education_id,su.education_name,
+        su.post_id,su.post_name,su.CREATE_TIME,
+        so.org_flow,so.org_name
+        from pdsci.edu_user eu,pdsci.sys_user su,pdsci.sys_org so,pdsci.sys_user_role sur
+        where eu.RECORD_STATUS = 'Y' and su.RECORD_STATUS = 'Y'
+        and so.RECORD_STATUS = 'Y' and sur.RECORD_STATUS = 'Y'
+        and eu.user_flow = su.user_flow
+        and so.org_flow = su.org_flow
+        and su.user_flow =sur.user_flow
+        <if test="sysUser!=null">
+            <if test='sysUser.orgFlow!=null and sysUser.orgFlow!=""'>
+                and so.org_flow=#{sysUser.orgFlow}
+            </if>
+            <if test='sysUser.statusId!=null and sysUser.statusId!=""'>
+                and su.status_id=#{sysUser.statusId}
+            </if>
+        </if>
+        <if test='roleFlow!=null and roleFlow!=""'>
+            and sur.role_flow=#{roleFlow}
+        </if>
+        <if test='condition!=null and condition!=""'>
+            and (su.user_name like #{condition}
+            or so.org_name like #{condition}
+            or eu.major_name like #{condition}
+            )
+        </if>
+        <if test='userFlow!=null and userFlow!=""'>
+            and eu.user_flow=#{userFlow}
+        </if>
+        group by eu.user_flow,eu.major_id,eu.major_name,eu.period,
+        eu.sid,su.user_head_img,eu.credit,eu.intro,
+        su.user_name,su.user_code,su.sex_id,su.sex_name,su.status_id,
+        su.status_desc,su.user_phone,su.user_email,
+        su.id_no,su.user_birthday,su.title_id,su.title_name,
+        su.degree_id,su.degree_name,su.education_id,su.education_name,
+        su.post_id,su.post_name,su.CREATE_TIME,
+        so.org_flow,so.org_name
+        <if test='sort!=null and sort!=""'>
+            order by #{sort}
+        </if>
+    </select>
+
+    <select id="searchEduUserForCourseDetail" parameterType="java.util.Map" resultMap="eduUserExtMap">
+        select eu.user_flow,eu.major_id,eu.major_name,eu.period,
+        eu.sid,su.user_head_img,eu.credit,eu.intro,
+        su.user_name,su.sex_id,su.sex_name,su.status_id,
+        su.status_desc,su.user_phone,su.user_email,
+        su.id_no,su.user_birthday,su.title_id,su.title_name,
+        su.degree_id,su.degree_name,su.education_id,su.education_name,
+        su.post_id,su.post_name,
+        so.org_flow,so.org_name
+        from pdsci.edu_user eu,pdsci.sys_user su,pdsci.sys_org so,pdsci.sys_user_role sur
+        where eu.RECORD_STATUS = 'Y' and su.RECORD_STATUS = 'Y'
+        and so.RECORD_STATUS = 'Y' and sur.RECORD_STATUS = 'Y'
+        and eu.user_flow = su.user_flow
+        and so.org_flow = su.org_flow
+        and su.user_flow =sur.user_flow
+        <if test='roleFlow!=null and roleFlow!=""'>
+            and sur.role_flow=#{roleFlow}
+        </if>
+        <if test='condition!=null and  condition!=""'>
+            and (su.user_Name like #{condition}
+            or so.org_Name like #{condition}
+            or eu.major_Name like #{condition})
+        </if>
+        <if test='courseFlow!=null and courseFlow!=""'>
+            and eu.user_flow in (
+            select distinct(user_flow) from pdsci.edu_student_course
+            where course_flow=#{courseFlow}
+            )
+        </if>
+
+        order by su.org_flow asc,eu.major_id asc
+    </select>
+
+
+    <resultMap id="eduSysUserExtMap" type="com.pinde.sci.model.xjgl.XjEduUserExt"
+               extends="com.pinde.sci.dao.base.EduUserMapper.BaseResultMap">
+        <association property="sysUser" column="user_flow"
+                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+    </resultMap>
+    <select id="readEduUserInfo" parameterType="string" resultMap="eduUserExtMap">
+        select eu.*, su.*
+        from pdsci.EDU_USER eu, pdsci.SYS_USER su
+        where eu.RECORD_STATUS = 'Y' and su.RECORD_STATUS = 'Y'
+        and eu.USER_FLOW = su.user_flow
+        and su.USER_FLOW = #{userFlow}
+    </select>
+
+    <resultMap id="eduUserAndCourseExtMap" type="com.pinde.sci.model.xjgl.XjEduUserExt"
+               extends="com.pinde.sci.dao.base.EduUserMapper.BaseResultMap">
+        <association property="sysUser" column="user_flow"
+                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+        <association property="sysOrg" column="org_flow" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap"/>
+        <collection property="courseList" ofType="com.pinde.sci.model.mo.EduCourse" column="course_flow">
+            <id column="course_flow" jdbcType="VARCHAR" property="courseFlow"/>
+            <result column="course_name" jdbcType="VARCHAR" property="courseName"/>
+        </collection>
+    </resultMap>
+
+    <select id="searchEduAndCourseList" parameterType="java.util.Map" resultMap="eduUserAndCourseExtMap">
+        select eu.user_flow,eu.major_id,eu.major_name,eu.period,
+        eu.sid,su.user_head_img,eu.credit,eu.intro,
+        su.user_name,su.user_code,su.sex_id,su.sex_name,su.status_id,
+        su.status_desc,su.user_phone,su.user_email,
+        su.id_no,su.user_birthday,su.title_id,su.title_name,
+        su.degree_id,su.degree_name,su.education_id,su.education_name,
+        su.post_id,su.post_name,su.CREATE_TIME,
+        so.org_flow,so.org_name,ec.course_flow,ec.course_name
+        from pdsci.edu_user eu,pdsci.sys_user su,pdsci.sys_org so,pdsci.sys_user_role sur,pdsci.edu_course ec
+        where eu.RECORD_STATUS = 'Y' and su.RECORD_STATUS = 'Y'
+        and so.RECORD_STATUS = 'Y' and sur.RECORD_STATUS = 'Y'
+        and ec.RECORD_STATUS = 'Y'
+        and eu.user_flow = su.user_flow
+        and so.org_flow = su.org_flow
+        and su.user_flow =sur.user_flow
+        and ec.course_flow in (
+        <if test='role!=null and role=="teacher"'>
+            select distinct(course_flow)
+            from pdsci.edu_course_chapter
+            where RECORD_STATUS = 'Y' and teacher_id=eu.user_flow
+        </if>
+        <if test='role!=null and role=="student"'>
+            select distinct(course_flow)
+            from pdsci.edu_student_course
+            where RECORD_STATUS = 'Y' and user_flow=eu.user_flow
+        </if>
+        )
+        <if test="sysUser!=null">
+            <if test='sysUser.orgFlow!=null and sysUser.orgFlow!=""'>
+                and so.org_flow=#{sysUser.orgFlow}
+            </if>
+            <if test='sysUser.statusId!=null and sysUser.statusId!=""'>
+                and su.status_id=#{sysUser.statusId}
+            </if>
+        </if>
+        <if test='roleFlow!=null and roleFlow!=""'>
+            and sur.role_flow=#{roleFlow}
+        </if>
+        <if test='condition!=null and condition!=""'>
+            and (su.user_name like #{condition}
+            or so.org_name like #{condition}
+            or eu.major_name like #{condition}
+            or ec.course_name like #{condition}
+            )
+        </if>
+        <if test='userFlow!=null and userFlow!=""'>
+            and eu.user_flow=#{userFlow}
+        </if>
+        group by eu.user_flow,eu.major_id,eu.major_name,eu.period,
+        eu.sid,su.user_head_img,eu.credit,eu.intro,
+        su.user_name,su.user_code,su.sex_id,su.sex_name,su.status_id,
+        su.status_desc,su.user_phone,su.user_email,
+        su.id_no,su.user_birthday,su.title_id,su.title_name,
+        su.degree_id,su.degree_name,su.education_id,su.education_name,
+        su.post_id,su.post_name,su.CREATE_TIME,
+        so.org_flow,so.org_name,ec.course_flow,ec.course_name
+
+    </select>
+
+    <resultMap id="eduUserExtTeacherMap" type="com.pinde.sci.model.xjgl.XjEduUserExt"
+               extends="com.pinde.sci.dao.base.EduUserMapper.BaseResultMap">
+        <association property="sysUser" column="user_flow"
+                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+    </resultMap>
+
+    <!--<select id="searchEduUserList" parameterType="java.util.Map" resultMap="eduUserExtTeacherMap">-->
+    <!--select eu.*, su.*-->
+    <!--from pdsci.EDU_USER eu, pdsci.SYS_USER su-->
+    <!--where eu.RECORD_STATUS = 'Y' and su.RECORD_STATUS = 'Y' -->
+    <!--and eu.USER_FLOW = su.user_flow-->
+    <!--<if test='teacherFlowList!=null and teacherFlowList.size>0'>-->
+    <!--and eu.user_flow in -->
+    <!--<foreach collection="teacherFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>-->
+    <!--</if>-->
+    <!--</select>-->
+    <!--      -->
+    <select id="searchEduUserBySysUser" parameterType="java.util.Map"
+            resultMap="com.pinde.sci.dao.base.EduUserMapper.ResultMapWithBLOBs">
+        SELECT PEU.*
+        FROM PDSCI.EDU_USER PEU,PDSCI.SYS_USER PSU,PDSCI.RES_DOCTOR PDU
+        WHERE PEU.RECORD_STATUS = 'Y'
+        AND PSU.RECORD_STATUS = 'Y'
+        AND PEU.USER_FLOW = PSU.USER_FLOW
+        AND PEU.USER_FLOW = PDU.DOCTOR_FLOW
+        <!-- 		学年 -->
+        <if test='startDate!=null and startDate!=""'>
+            and peu.period >= #{startDate}
+        </if>
+        <if test='endDate!=null and endDate!=""'>
+            and peu.period <![CDATA[<=]]>  #{endDate}
+        </if>
+        <!--     	在校状态 -->
+        <if test='eduUser.atSchoolStatusId!=null and eduUser.atSchoolStatusId!=""'>
+            and peu.at_school_status_id = #{eduUser.atSchoolStatusId}
+        </if>
+        <!--     	是否授予学位 -->
+        <if test='eduUser.awardDegreeFlag!=null and eduUser.awardDegreeFlag!=""'>
+            and peu.award_degree_flag = #{eduUser.awardDegreeFlag}
+        </if>
+        <!--     	培养单位 -->
+        <if test='resDoctor.orgName!=null and resDoctor.orgName!=""'>
+            and pdu.org_name = #{resDoctor.orgName}
+        </if>
+        <!-- 		年级 -->
+        <if test='eduUser.period!=null and eduUser.period!=""'>
+            and peu.period = #{eduUser.period}
+        </if>
+        <!-- 		所属学位分委员会 -->
+        <if test='eduUser.trainOrgId!=null and eduUser.trainOrgId!=""'>
+            and peu.train_org_id = #{eduUser.trainOrgId}
+        </if>
+        <!--     	培训基地 -->
+        <if test='resDoctor.orgFlow!=null and resDoctor.orgFlow!=""'>
+            and pdu.org_Flow = #{resDoctor.orgFlow}
+        </if>
+        <!-- 		班级 -->
+        <if test='eduUser.classId!=null and eduUser.classId!=""'>
+            and peu.class_id = #{eduUser.classId}
+        </if>
+        <!--     	学习形式 -->
+        <if test='eduUser.studyFormId!=null and eduUser.studyFormId!=""'>
+            and peu.STUDY_FORM_ID = #{eduUser.studyFormId}
+        </if>
+        <!--     	姓名 -->
+        <if test='sysUser.userName!=null and sysUser.userName!=""'>
+            <bind name="userName" value="'%'+sysUser.userName+'%'"/>
+            and psu.user_name like #{userName}
+        </if>
+        <!--     	性别 -->
+        <if test='sysUser.sexId!=null and sysUser.sexId!=""'>
+            and psu.sex_id = #{sysUser.sexId}
+        </if>
+        <!--     	民族 -->
+        <if test='sysUser.nationId!=null and sysUser.nationId!=""'>
+            and psu.nation_id = #{sysUser.nationId}
+        </if>
+        <!--     	培养类型 -->
+        <if test='eduUser.trainCategoryId!=null and eduUser.trainCategoryId!=""'>
+            and peu.train_category_id = #{eduUser.trainCategoryId}
+        </if>
+        <!--     	政治面貌 -->
+        <if test='sysUser.politicsStatusId!=null and sysUser.politicsStatusId!=""'>
+            and psu.politics_status_id = #{sysUser.politicsStatusId}
+        </if>
+        <!-- 	   	出生年月 -->
+        <if test='startBirthday!=null and startBirthday!=""'>
+            and psu.user_birthday >= #{startBirthday}
+        </if>
+        <if test='endBirthday!=null and endBirthday!=""'>
+            and psu.user_birthday <![CDATA[<=]]> #{endBirthday}
+        </if>
+        <!--     	有效证件类型 -->
+        <if test='sysUser.cretTypeId!=null and sysUser.cretTypeId!=""'>
+            and psu.cret_type_id like #{sysUser.cretTypeId}
+        </if>
+        <!--        专业 -->
+        <if test='eduUser.majorId!=null and eduUser.majorId!=""'>
+            and peu.major_id = #{eduUser.majorId}
+        </if>
+        <!--     	学号 -->
+        <if test='eduUser.sid!=null and eduUser.sid!=""'>
+            and peu.sid like '%${eduUser.sid}%'
+        </if>
+        <if test='startSid!=null and startSid!=""'>
+            and peu.sid >= #{startSid}
+        </if>
+        <if test='endSid!=null and endSid!=""'>
+            and peu.sid <![CDATA[<=]]> #{endSid}
+        </if>
+        <!--     	导师 -->
+        <if test='eduUser.firstTeacher!=null and eduUser.firstTeacher!=""'>
+            and peu.first_teacher like #{eduUser.firstTeacher}
+        </if>
+        <!--     	录取类别 -->
+        <if test='eduUser.admitTypeId!=null and eduUser.admitTypeId!=""'>
+            and peu.admit_type_id = #{eduUser.admitTypeId}
+        </if>
+        <!--     	考生来源 -->
+        <if test='eduUser.studentSourceId!=null and eduUser.studentSourceId!=""'>
+            and peu.student_source_id = #{eduUser.studentSourceId}
+        </if>
+        <!--     	是否免费推荐生-->
+        <if test='eduUser.isRecommendId!=null and eduUser.isRecommendId!=""'>
+            and peu.is_recommend_id like #{eduUser.isRecommendId}
+        </if>
+        <!--     	婚姻状况 -->
+        <if test='sysUser.maritalId!=null and sysUser.maritalId!=""'>
+            and psu.marital_id = #{sysUser.maritalId}
+        </if>
+        <!--     	是否破格-->
+        <if test='eduUser.isExceptionalId!=null and eduUser.isExceptionalId!=""'>
+            and peu.is_exceptional_id like #{eduUser.isExceptionalId}
+        </if>
+        <!--     	录取层次-->
+        <if test='eduUser.trainTypeId!=null and eduUser.trainTypeId!=""'>
+            and peu.train_type_id like #{eduUser.trainTypeId}
+        </if>
+        <!-- 		是否休学 -->
+        <if test='eduUser.isOutOfSchool!=null and eduUser.isOutOfSchool!=""'>
+            and peu.is_out_of_school = #{eduUser.isOutOfSchool}
+        </if>
+        <!-- 		是否复学 -->
+        <if test='eduUser.isBackToSchool!=null and eduUser.isBackToSchool!=""'>
+            and peu.is_back_to_school = #{eduUser.isBackToSchool}
+        </if>
+        <!-- 		是否5+3培养模式 -->
+        <if test='eduUser.is5plus3!=null and eduUser.is5plus3!=""'>
+            and peu.is5plus3 = #{eduUser.is5plus3}
+        </if>
+        <!-- 		是否硕博连读 -->
+        <if test='eduUser.isMbaDba!=null and eduUser.isMbaDba!=""'>
+            and peu.is_mba_dba = #{eduUser.isMbaDba}
+        </if>
+        <!-- 		是否报到 -->
+        <if test='eduUser.isReported!=null and eduUser.isReported!=""'>
+            and peu.is_reported = #{eduUser.isReported}
+        </if>
+        <!-- 	导师	 -->
+        <if test='teacherName!=null and teacherName!=""'>
+            <bind name="teacherName" value="'%'+teacherName+'%'"/>
+            and (peu.first_teacher like #{teacherName} OR peu.second_teacher like #{teacherName})
+        </if>
+        <if test='partId!=null and partId!="" and partStatus!=null and partStatus!=""'>
+            <!--<if test='partStatus == "Y"'>-->
+                and peu.user_flow in (select user_flow from EDU_USER_INFO_STATUS where record_status='Y' and part_id = #{partId} and part_status=#{partStatus} group by user_Flow)
+            <!--</if>-->
+            <!--<if test='partStatus == "N"'>-->
+                <!--and peu.user_flow not in (select user_flow from EDU_USER_INFO_STATUS where record_status='Y' and part_id = #{partId} and part_status='Y' group by user_Flow)-->
+            <!--</if>-->
+        </if>
+        <if test='registerFlag!=null and registerFlag!=""'>
+            and <if test='registerFlag == "N"'>not</if> exists (select null from pub_user_generic_content pugc where pugc.record_status='Y' and pugc.user_flow=peu.user_flow)
+        </if>
+        <!-- 	  预毕业时间 -->
+        <if test='startGraduateDate!=null and startGraduateDate!=""'>
+            and peu.pre_Graduate_Date >= #{startGraduateDate}
+        </if>
+        <if test='endGraduateDate!=null and endGraduateDate!=""'>
+            and peu.pre_Graduate_Date <![CDATA[<=]]> #{endGraduateDate}
+        </if>
+        <!-- 	  毕业时间 -->
+        <if test='graduateTimeYear!=null and graduateTimeYear!=""'>
+            <bind name="year" value="graduateTimeYear+'%'"/>
+            and peu.Graduate_time like #{year}
+        </if>
+        <if test='graduateTimeYM!=null and graduateTimeYM!=""'>
+            <bind name="ym" value="graduateTimeYM+'%'"/>
+            and peu.Graduate_time like #{ym}
+        </if>
+        <!-- 	  授予学业时间 -->
+        <if test='awardDegreeTimeYear!=null and awardDegreeTimeYear!=""'>
+            <bind name="year" value="awardDegreeTimeYear+'%'"/>
+            and peu.Award_Degree_Time like #{year}
+        </if>
+        <if test='awardDegreeTimeYM!=null and awardDegreeTimeYM!=""'>
+            <bind name="ym" value="awardDegreeTimeYM+'%'"/>
+            and peu.Award_Degree_Time like #{ym}
+        </if>
+        order by peu.period DESC nulls last,peu.sid
+    </select>
+
+    <resultMap id="eduUserInfoExt" type="com.pinde.sci.model.xjgl.XjEduUserInfoExt"
+               extends="com.pinde.sci.dao.base.EduUserMapper.ResultMapWithBLOBs">
+        <result column="defence_time" jdbcType="VARCHAR" property="defenceTime"/>
+        <association property="sysUser" column="USER_FLOW" javaType="com.pinde.sci.model.mo.SysUser"
+                     select="com.pinde.sci.dao.base.SysUserMapper.selectByPrimaryKey"/>
+        <association property="resDoctor" column="USER_FLOW" javaType="com.pinde.sci.model.mo.ResDoctor"
+                     select="com.pinde.sci.dao.base.ResDoctorMapper.selectByPrimaryKey"/>
+    </resultMap>
+    <select id="searchEduUserInfoExtBySysUser" parameterType="java.util.Map" resultMap="eduUserInfoExt">
+        SELECT PEU.*,(select defence_time from nydb_defence_apply nda where rownum= 1 and nda.record_status='Y' and nda.user_flow=psu.user_flow) defence_time
+        FROM PDSCI.EDU_USER PEU,PDSCI.SYS_USER PSU,PDSCI.RES_DOCTOR PDU
+        WHERE PEU.RECORD_STATUS = 'Y'
+        AND PSU.RECORD_STATUS = 'Y'
+        AND PEU.USER_FLOW = PSU.USER_FLOW
+        AND PEU.USER_FLOW = PDU.DOCTOR_FLOW
+        <!-- 		学年 -->
+        <if test='startDate!=null and startDate!=""'>
+            and peu.period >= #{startDate}
+        </if>
+
+        <if test='endDate!=null and endDate!=""'>
+            and peu.period <![CDATA[<=]]>  #{endDate}
+        </if>
+        <!--     	学号-->
+        <if test='eduUser.sid!=null and eduUser.sid!=""'>
+            and peu.sid like '%${eduUser.sid}%'
+        </if>
+        <!--     	在校状态 -->
+        <if test='eduUser.atSchoolStatusId!=null and eduUser.atSchoolStatusId!=""'>
+            and peu.at_school_status_id = #{eduUser.atSchoolStatusId}
+        </if>
+        <!--     	是否授予学位 -->
+        <if test='eduUser.awardDegreeFlag!=null and eduUser.awardDegreeFlag!=""'>
+            and peu.award_degree_flag = #{eduUser.awardDegreeFlag}
+        </if>
+        <!--     	培养单位 -->
+        <if test='resDoctor.orgName!=null and resDoctor.orgName!=""'>
+            and pdu.org_name = #{resDoctor.orgName}
+        </if>
+        <!-- 		年级 -->
+        <if test='eduUser.period!=null and eduUser.period!=""'>
+            and peu.period = #{eduUser.period}
+        </if>
+        <!-- 		所属学位分委员会 -->
+        <if test='eduUser.trainOrgId!=null and eduUser.trainOrgId!=""'>
+            and peu.train_org_id = #{eduUser.trainOrgId}
+        </if>
+        <!--     	培训基地 -->
+        <if test='resDoctor.orgFlow!=null and resDoctor.orgFlow!=""'>
+            and pdu.org_Flow = #{resDoctor.orgFlow}
+        </if>
+        <!-- 		班级 -->
+        <if test='eduUser.classId!=null and eduUser.classId!=""'>
+            and peu.class_id = #{eduUser.classId}
+        </if>
+        <!--     	姓名 -->
+        <if test='sysUser.userName!=null and sysUser.userName!=""'>
+            and psu.user_name like #{sysUser.userName}
+        </if>
+        <!--     	性别 -->
+        <if test='sysUser.sexId!=null and sysUser.sexId!=""'>
+            and psu.sex_id = #{sysUser.sexId}
+        </if>
+        <!--     	民族 -->
+        <if test='sysUser.nationId!=null and sysUser.nationId!=""'>
+            and psu.nation_id = #{sysUser.nationId}
+        </if>
+        <!--     	培养类型 -->
+        <if test='eduUser.trainCategoryId!=null and eduUser.trainCategoryId!=""'>
+            and peu.train_category_id = #{eduUser.trainCategoryId}
+        </if>
+        <!--     	培养层次 -->
+        <if test='eduUser.trainTypeId!=null and eduUser.trainTypeId!=""'>
+            and peu.train_type_id = #{eduUser.trainTypeId}
+        </if>
+        <!--     	政治面貌 -->
+        <if test='sysUser.politicsStatusId!=null and sysUser.politicsStatusId!=""'>
+            and psu.politics_status_id = #{sysUser.politicsStatusId}
+        </if>
+        <!-- 	   	出生年月 -->
+        <if test='startBirthday!=null and startBirthday!=""'>
+            and psu.user_birthday >= #{startBirthday}
+        </if>
+        <if test='endBirthday!=null and endBirthday!=""'>
+            and psu.user_birthday <![CDATA[<=]]> #{endBirthday}
+        </if>
+        <!--     	有效证件类型 -->
+        <if test='sysUser.cretTypeId!=null and sysUser.cretTypeId!=""'>
+            and psu.cret_type_id like #{sysUser.cretTypeId}
+        </if>
+        <!--        专业 -->
+        <if test='eduUser.majorId!=null and eduUser.majorId!=""'>
+            and peu.major_id = #{eduUser.majorId}
+        </if>
+        <!--     	学号 -->
+        <if test='startSid!=null and startSid!=""'>
+            and peu.sid >= #{startSid}
+        </if>
+        <if test='endSid!=null and endSid!=""'>
+            and peu.sid <![CDATA[<=]]> #{endSid}
+        </if>
+        <!--     	录取类别 -->
+        <if test='eduUser.admitTypeId!=null and eduUser.admitTypeId!=""'>
+            and peu.admit_type_id = #{eduUser.admitTypeId}
+        </if>
+        <!--     	考生来源 -->
+        <if test='eduUser.studentSourceId!=null and eduUser.studentSourceId!=""'>
+            and peu.student_source_id = #{eduUser.studentSourceId}
+        </if>
+        <!--     	是否免费推荐生-->
+        <if test='eduUser.isRecommendId!=null and eduUser.isRecommendId!=""'>
+            and peu.is_recommend_id like #{eduUser.isRecommendId}
+        </if>
+        <!--     	婚姻状况 -->
+        <if test='sysUser.maritalId!=null and sysUser.maritalId!=""'>
+            and psu.marital_id = #{sysUser.maritalId}
+        </if>
+        <!--     	是否破格-->
+        <if test='eduUser.isExceptionalId!=null and eduUser.isExceptionalId!=""'>
+            and peu.is_exceptional_id like #{eduUser.isExceptionalId}
+        </if>
+        <!-- 		是否5+3培养模式 -->
+        <if test='eduUser.is5plus3!=null and eduUser.is5plus3!=""'>
+            and peu.is5plus3 = #{eduUser.is5plus3}
+        </if>
+        <!-- 		是否硕博连读 -->
+        <if test='eduUser.isMbaDba!=null and eduUser.isMbaDba!=""'>
+            and peu.is_mba_dba = #{eduUser.isMbaDba}
+        </if>
+        <!-- 		是否报到 -->
+        <if test='eduUser.isReported!=null and eduUser.isReported!=""'>
+            and peu.is_reported = #{eduUser.isReported}
+        </if>
+        <!-- 	导师	 -->
+        <if test='teacherName!=null and teacherName!=""'>
+            <bind name="teacherName" value="'%'+teacherName+'%'"/>
+            and (peu.first_teacher like #{teacherName} OR peu.second_teacher like #{teacherName})
+        </if>
+        <if test='partId!=null and partId!="" and partStatus!=null and partStatus!=""'>
+            <if test='partStatus == "Y"'>
+                and peu.user_flow in (select user_flow from EDU_USER_INFO_STATUS where record_status='Y' and part_id = #{partId} and part_status='Y' group by user_Flow)
+            </if>
+            <if test='partStatus == "N"'>
+                and peu.user_flow not in (select user_flow from EDU_USER_INFO_STATUS where record_status='Y' and part_id = #{partId} and part_status='Y' group by user_Flow)
+            </if>
+        </if>
+        <if test='registerFlag!=null and registerFlag!=""'>
+            and <if test='registerFlag == "N"'>not</if> exists (select null from pub_user_generic_content pugc where pugc.record_status='Y' and pugc.user_flow=peu.user_flow)
+        </if>
+        order by peu.period desc nulls last, peu.sid asc, peu.create_time asc
+    </select>
+    <!--学籍导出SQL优化-->
+    <resultMap id="eduUserInfoExt1" type="com.pinde.sci.model.xjgl.XjEduUserInfoExt"
+               extends="com.pinde.sci.dao.base.EduUserMapper.ResultMapWithBLOBs">
+        <result column="defence_time" jdbcType="VARCHAR" property="defenceTime"/>
+        <association property="sysUser" javaType="com.pinde.sci.model.mo.SysUser">
+            <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+            <result column="SEX_NAME" property="sexName" jdbcType="VARCHAR" />
+            <result column="USER_BIRTHDAY" property="userBirthday" jdbcType="VARCHAR" />
+            <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+            <result column="CRET_TYPE_NAME" property="cretTypeName" jdbcType="VARCHAR" />
+            <result column="DOMICILE_PLACE_NAME" property="domicilePlaceName" jdbcType="VARCHAR" />
+            <result column="NATION_NAME" property="nationName" jdbcType="VARCHAR" />
+            <result column="POLITICS_STATUS_NAME" property="politicsStatusName" jdbcType="VARCHAR" />
+            <result column="NATIVE_PLACE_PROV_NAME" property="nativePlaceProvName" jdbcType="VARCHAR" />
+            <result column="NATIVE_PLACE_CITY_NAME" property="nativePlaceCityName" jdbcType="VARCHAR" />
+            <result column="NATIVE_PLACE_AREA_NAME" property="nativePlaceAreaName" jdbcType="VARCHAR" />
+            <result column="MARITAL_NAME" property="maritalName" jdbcType="VARCHAR" />
+            <result column="DOMICILE_PLACE_NAME" property="domicilePlaceName" jdbcType="VARCHAR" />
+            <result column="DOMICILE_PLACE_ADDRESS" property="domicilePlaceAddress" jdbcType="VARCHAR" />
+            <result column="USER_QQ" property="userQq" jdbcType="VARCHAR" />
+            <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR" />
+            <result column="USER_EMAIL" property="userEmail" jdbcType="VARCHAR" />
+            <result column="WEI_XIN_NAME" property="weiXinName" jdbcType="VARCHAR" />
+            <result column="BEAR_NAME" property="bearName" jdbcType="VARCHAR" />
+        </association>
+        <association property="resDoctor" javaType="com.pinde.sci.model.mo.ResDoctor">
+            <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        </association>
+    </resultMap>
+    <select id="searchEduUserInfoExtBySysUser1" parameterType="java.util.Map" resultMap="eduUserInfoExt1">
+        SELECT PEU.*,PSU.USER_NAME,PSU.SEX_NAME
+        ,PSU.USER_BIRTHDAY,PSU.ID_NO,PSU.CRET_TYPE_NAME
+        ,PSU.DOMICILE_PLACE_NAME,PSU.NATION_NAME,PSU.POLITICS_STATUS_NAME
+        ,PSU.NATIVE_PLACE_PROV_NAME,PSU.NATIVE_PLACE_CITY_NAME,PSU.NATIVE_PLACE_AREA_NAME
+        ,PSU.MARITAL_NAME,PSU.DOMICILE_PLACE_NAME,PSU.DOMICILE_PLACE_ADDRESS
+        ,PSU.USER_QQ,PSU.USER_PHONE,PSU.USER_EMAIL
+        ,PSU.WEI_XIN_NAME,PSU.BEAR_NAME,PDU.ORG_NAME
+        ,(select defence_time from nydb_defence_apply nda where rownum= 1 and nda.record_status='Y' and nda.user_flow=psu.user_flow) defence_time
+        FROM PDSCI.EDU_USER PEU,PDSCI.SYS_USER PSU,PDSCI.RES_DOCTOR PDU
+        WHERE PEU.RECORD_STATUS = 'Y'
+        AND PSU.RECORD_STATUS = 'Y'
+        AND PEU.USER_FLOW = PSU.USER_FLOW
+        AND PEU.USER_FLOW = PDU.DOCTOR_FLOW
+        <!-- 		学年 -->
+        <if test='startDate!=null and startDate!=""'>
+            and peu.period >= #{startDate}
+        </if>
+
+        <if test='endDate!=null and endDate!=""'>
+            and peu.period <![CDATA[<=]]>  #{endDate}
+        </if>
+        <!--     	学号-->
+        <if test='eduUser.sid!=null and eduUser.sid!=""'>
+            and peu.sid like '%${eduUser.sid}%'
+        </if>
+        <!--     	在校状态 -->
+        <if test='eduUser.atSchoolStatusId!=null and eduUser.atSchoolStatusId!=""'>
+            and peu.at_school_status_id = #{eduUser.atSchoolStatusId}
+        </if>
+        <!--     	是否授予学位 -->
+        <if test='eduUser.awardDegreeFlag!=null and eduUser.awardDegreeFlag!=""'>
+            and peu.award_degree_flag = #{eduUser.awardDegreeFlag}
+        </if>
+        <!--     	培养单位 -->
+        <if test='resDoctor.orgName!=null and resDoctor.orgName!=""'>
+            and pdu.org_name = #{resDoctor.orgName}
+        </if>
+        <!-- 		年级 -->
+        <if test='eduUser.period!=null and eduUser.period!=""'>
+            and peu.period = #{eduUser.period}
+        </if>
+        <!-- 		所属学位分委员会 -->
+        <if test='eduUser.trainOrgId!=null and eduUser.trainOrgId!=""'>
+            and peu.train_org_id = #{eduUser.trainOrgId}
+        </if>
+        <!--     	培训基地 -->
+        <if test='resDoctor.orgFlow!=null and resDoctor.orgFlow!=""'>
+            and pdu.org_Flow = #{resDoctor.orgFlow}
+        </if>
+        <!-- 		班级 -->
+        <if test='eduUser.classId!=null and eduUser.classId!=""'>
+            and peu.class_id = #{eduUser.classId}
+        </if>
+        <!--     	姓名 -->
+        <if test='sysUser.userName!=null and sysUser.userName!=""'>
+            and psu.user_name like #{sysUser.userName}
+        </if>
+        <!--     	性别 -->
+        <if test='sysUser.sexId!=null and sysUser.sexId!=""'>
+            and psu.sex_id = #{sysUser.sexId}
+        </if>
+        <!--     	民族 -->
+        <if test='sysUser.nationId!=null and sysUser.nationId!=""'>
+            and psu.nation_id = #{sysUser.nationId}
+        </if>
+        <!--     	培养类型 -->
+        <if test='eduUser.trainCategoryId!=null and eduUser.trainCategoryId!=""'>
+            and peu.train_category_id = #{eduUser.trainCategoryId}
+        </if>
+        <!--     	培养层次 -->
+        <if test='eduUser.trainTypeId!=null and eduUser.trainTypeId!=""'>
+            and peu.train_type_id = #{eduUser.trainTypeId}
+        </if>
+        <!--     	政治面貌 -->
+        <if test='sysUser.politicsStatusId!=null and sysUser.politicsStatusId!=""'>
+            and psu.politics_status_id = #{sysUser.politicsStatusId}
+        </if>
+        <!-- 	   	出生年月 -->
+        <if test='startBirthday!=null and startBirthday!=""'>
+            and psu.user_birthday >= #{startBirthday}
+        </if>
+        <if test='endBirthday!=null and endBirthday!=""'>
+            and psu.user_birthday <![CDATA[<=]]> #{endBirthday}
+        </if>
+        <!--     	有效证件类型 -->
+        <if test='sysUser.cretTypeId!=null and sysUser.cretTypeId!=""'>
+            and psu.cret_type_id like #{sysUser.cretTypeId}
+        </if>
+        <!--        专业 -->
+        <if test='eduUser.majorId!=null and eduUser.majorId!=""'>
+            and peu.major_id = #{eduUser.majorId}
+        </if>
+        <!--     	学号 -->
+        <if test='startSid!=null and startSid!=""'>
+            and peu.sid >= #{startSid}
+        </if>
+        <if test='endSid!=null and endSid!=""'>
+            and peu.sid <![CDATA[<=]]> #{endSid}
+        </if>
+        <!--     	录取类别 -->
+        <if test='eduUser.admitTypeId!=null and eduUser.admitTypeId!=""'>
+            and peu.admit_type_id = #{eduUser.admitTypeId}
+        </if>
+        <!--     	考生来源 -->
+        <if test='eduUser.studentSourceId!=null and eduUser.studentSourceId!=""'>
+            and peu.student_source_id = #{eduUser.studentSourceId}
+        </if>
+        <!--     	是否免费推荐生-->
+        <if test='eduUser.isRecommendId!=null and eduUser.isRecommendId!=""'>
+            and peu.is_recommend_id like #{eduUser.isRecommendId}
+        </if>
+        <!--     	婚姻状况 -->
+        <if test='sysUser.maritalId!=null and sysUser.maritalId!=""'>
+            and psu.marital_id = #{sysUser.maritalId}
+        </if>
+        <!--     	是否破格-->
+        <if test='eduUser.isExceptionalId!=null and eduUser.isExceptionalId!=""'>
+            and peu.is_exceptional_id like #{eduUser.isExceptionalId}
+        </if>
+        <!-- 		是否5+3培养模式 -->
+        <if test='eduUser.is5plus3!=null and eduUser.is5plus3!=""'>
+            and peu.is5plus3 = #{eduUser.is5plus3}
+        </if>
+        <!-- 		是否硕博连读 -->
+        <if test='eduUser.isMbaDba!=null and eduUser.isMbaDba!=""'>
+            and peu.is_mba_dba = #{eduUser.isMbaDba}
+        </if>
+        <!-- 		是否报到 -->
+        <if test='eduUser.isReported!=null and eduUser.isReported!=""'>
+            and peu.is_reported = #{eduUser.isReported}
+        </if>
+        <!-- 	导师	 -->
+        <if test='teacherName!=null and teacherName!=""'>
+            <bind name="teacherName" value="'%'+teacherName+'%'"/>
+            and (peu.first_teacher like #{teacherName} OR peu.second_teacher like #{teacherName})
+        </if>
+        <if test='partId!=null and partId!="" and partStatus!=null and partStatus!=""'>
+            <if test='partStatus == "Y"'>
+                and peu.user_flow in (select user_flow from EDU_USER_INFO_STATUS where record_status='Y' and part_id = #{partId} and part_status='Y' group by user_Flow)
+            </if>
+            <if test='partStatus == "N"'>
+                and peu.user_flow not in (select user_flow from EDU_USER_INFO_STATUS where record_status='Y' and part_id = #{partId} and part_status='Y' group by user_Flow)
+            </if>
+        </if>
+        <if test='registerFlag!=null and registerFlag!=""'>
+            and <if test='registerFlag == "N"'>not</if> exists (select null from pub_user_generic_content pugc where pugc.record_status='Y' and pugc.user_flow=peu.user_flow)
+        </if>
+        order by peu.period desc nulls last, peu.sid asc, peu.create_time asc
+    </select>
+    <!--学籍导出SQL优化-->
+
+    <select id="searchCerInfoLstByUserFlow" parameterType="string" resultMap="cerInfoMap">
+        SELECT su.SEX_ID,
+                su.SEX_NAME,
+                su.USER_NAME,
+                su.USER_BIRTHDAY,
+                eu.AWARD_DEGREE_CERT_CODE,
+                eu.TRAIN_TYPE_ID,
+                eu.TRAIN_TYPE_NAME,
+                eu.MAJOR_ID,
+                eu.MAJOR_NAME,
+                eu.PERIOD,
+                eu.GRADUATE_TIME,
+                eu.DIPLOMA_CODE,
+                eu.CONTENT
+        FROM EDU_USER eu, SYS_USER su, RES_DOCTOR rd
+            WHERE eu.RECORD_STATUS = 'Y'
+                AND su.RECORD_STATUS = 'Y'
+                AND eu.USER_FLOW = su.USER_FLOW
+                AND eu.USER_FLOW = rd.DOCTOR_FLOW
+        <if test='userFlow!=null and userFlow!=""'>
+            AND eu.USER_FLOW = #{userFlow}
+        </if>
+    </select>
+    <select id="queryStuInfo" parameterType="string" resultType="java.util.Map">
+        SELECT su.USER_NAME,eu.SID
+        FROM EDU_USER eu, SYS_USER su
+        WHERE eu.RECORD_STATUS = 'Y'
+        AND su.RECORD_STATUS = 'Y'
+        AND eu.USER_FLOW = su.USER_FLOW
+        <if test='sid!=null and sid!=""'>
+            AND eu.SID = #{sid}
+        </if>
+    </select>
+
+    <resultMap id="graduateInfoExtMap" type="com.pinde.sci.model.xjgl.XjEduGraduateInfoExt"
+               extends="com.pinde.sci.dao.base.EduUserMapper.ResultMapWithBLOBs">
+        <result column="PUGC_CONTENT" property="content"/>
+        <association property="sysUser" column="USER_FLOW" javaType="com.pinde.sci.model.mo.SysUser"
+                     select="com.pinde.sci.dao.base.SysUserMapper.selectByPrimaryKey"/>
+        <association property="resDoctor" column="USER_FLOW" javaType="com.pinde.sci.model.mo.ResDoctor"
+                     select="com.pinde.sci.dao.base.ResDoctorMapper.selectByPrimaryKey"/>
+    </resultMap>
+    <select id="searchEduGraduateInfo" parameterType="java.util.Map"
+            resultMap="graduateInfoExtMap">
+        SELECT PEU.*,PSU.USER_NAME,PUGC.CONTENT PUGC_CONTENT
+        FROM PDSCI.EDU_USER PEU,PDSCI.SYS_USER PSU,PDSCI.RES_DOCTOR PDU,PDSCI.PUB_USER_GENERIC_CONTENT PUGC
+        WHERE PEU.RECORD_STATUS = 'Y'
+        AND PSU.RECORD_STATUS = 'Y'
+        AND PEU.USER_FLOW = PSU.USER_FLOW
+        AND PEU.USER_FLOW = PDU.DOCTOR_FLOW
+        AND PUGC.USER_FLOW = PSU.USER_FLOW
+        AND PUGC.CONTENT_TYPE = 'RegistrationForm'
+        <!-- 		学年 -->
+        <if test='startDate!=null and startDate!=""'>
+            and peu.period >= #{startDate}
+        </if>
+        <if test='endDate!=null and endDate!=""'>
+            and peu.period <![CDATA[<=]]>  #{endDate}
+        </if>
+        <!--     	在校状态 -->
+        <if test='eduUser.atSchoolStatusId!=null and eduUser.atSchoolStatusId!=""'>
+            and peu.at_school_status_id = #{eduUser.atSchoolStatusId}
+        </if>
+        <!--     	是否授予学位 -->
+        <if test='eduUser.awardDegreeFlag!=null and eduUser.awardDegreeFlag!=""'>
+            and peu.award_degree_flag = #{eduUser.awardDegreeFlag}
+        </if>
+        <!--     	培养单位 -->
+        <if test='resDoctor.orgName!=null and resDoctor.orgName!=""'>
+            and pdu.org_name = #{resDoctor.orgName}
+        </if>
+        <!-- 		年级 -->
+        <if test='eduUser.period!=null and eduUser.period!=""'>
+            and peu.period = #{eduUser.period}
+        </if>
+        <!-- 		所属学位分委员会 -->
+        <if test='eduUser.trainOrgId!=null and eduUser.trainOrgId!=""'>
+            and peu.train_org_id = #{eduUser.trainOrgId}
+        </if>
+        <!--     	培训基地 -->
+        <if test='resDoctor.orgFlow!=null and resDoctor.orgFlow!=""'>
+            and pdu.org_Flow = #{resDoctor.orgFlow}
+        </if>
+        <!-- 		班级 -->
+        <if test='eduUser.classId!=null and eduUser.classId!=""'>
+            and peu.class_id = #{eduUser.classId}
+        </if>
+        <!--     	学习形式 -->
+        <if test='eduUser.studyFormId!=null and eduUser.studyFormId!=""'>
+            and peu.STUDY_FORM_ID = #{eduUser.studyFormId}
+        </if>
+        <!--     	姓名 -->
+        <if test='sysUser.userName!=null and sysUser.userName!=""'>
+            <bind name="userName" value="'%'+sysUser.userName+'%'"/>
+            and psu.user_name like #{userName}
+        </if>
+        <!--     	性别 -->
+        <if test='sysUser.sexId!=null and sysUser.sexId!=""'>
+            and psu.sex_id = #{sysUser.sexId}
+        </if>
+        <!--     	民族 -->
+        <if test='sysUser.nationId!=null and sysUser.nationId!=""'>
+            and psu.nation_id = #{sysUser.nationId}
+        </if>
+        <!--     	培养类型 -->
+        <if test='eduUser.trainCategoryId!=null and eduUser.trainCategoryId!=""'>
+            and peu.train_category_id = #{eduUser.trainCategoryId}
+        </if>
+        <!--     	政治面貌 -->
+        <if test='sysUser.politicsStatusId!=null and sysUser.politicsStatusId!=""'>
+            and psu.politics_status_id = #{sysUser.politicsStatusId}
+        </if>
+        <!-- 	   	出生年月 -->
+        <if test='startBirthday!=null and startBirthday!=""'>
+            and psu.user_birthday >= #{startBirthday}
+        </if>
+        <if test='endBirthday!=null and endBirthday!=""'>
+            and psu.user_birthday <![CDATA[<=]]> #{endBirthday}
+        </if>
+        <!--     	有效证件类型 -->
+        <if test='sysUser.cretTypeId!=null and sysUser.cretTypeId!=""'>
+            and psu.cret_type_id like #{sysUser.cretTypeId}
+        </if>
+        <!--        专业 -->
+        <if test='eduUser.majorId!=null and eduUser.majorId!=""'>
+            and peu.major_id = #{eduUser.majorId}
+        </if>
+        <!--     	学号 -->
+        <if test='eduUser.sid!=null and eduUser.sid!=""'>
+            and peu.sid like '%${eduUser.sid}%'
+        </if>
+        <if test='startSid!=null and startSid!=""'>
+            and peu.sid >= #{startSid}
+        </if>
+        <if test='endSid!=null and endSid!=""'>
+            and peu.sid <![CDATA[<=]]> #{endSid}
+        </if>
+        <!--     	导师 -->
+        <if test='eduUser.firstTeacher!=null and eduUser.firstTeacher!=""'>
+            and peu.first_teacher like #{eduUser.firstTeacher}
+        </if>
+        <!--     	录取类别 -->
+        <if test='eduUser.admitTypeId!=null and eduUser.admitTypeId!=""'>
+            and peu.admit_type_id = #{eduUser.admitTypeId}
+        </if>
+        <!--     	考生来源 -->
+        <if test='eduUser.studentSourceId!=null and eduUser.studentSourceId!=""'>
+            and peu.student_source_id = #{eduUser.studentSourceId}
+        </if>
+        <!--     	是否免费推荐生-->
+        <if test='eduUser.isRecommendId!=null and eduUser.isRecommendId!=""'>
+            and peu.is_recommend_id like #{eduUser.isRecommendId}
+        </if>
+        <!--     	婚姻状况 -->
+        <if test='sysUser.maritalId!=null and sysUser.maritalId!=""'>
+            and psu.marital_id = #{sysUser.maritalId}
+        </if>
+        <!--     	是否破格-->
+        <if test='eduUser.isExceptionalId!=null and eduUser.isExceptionalId!=""'>
+            and peu.is_exceptional_id like #{eduUser.isExceptionalId}
+        </if>
+        <!--     	录取层次-->
+        <if test='eduUser.trainTypeId!=null and eduUser.trainTypeId!=""'>
+            and peu.train_type_id like #{eduUser.trainTypeId}
+        </if>
+        <!-- 		是否休学 -->
+        <if test='eduUser.isOutOfSchool!=null and eduUser.isOutOfSchool!=""'>
+            and peu.is_out_of_school = #{eduUser.isOutOfSchool}
+        </if>
+        <!-- 		是否复学 -->
+        <if test='eduUser.isBackToSchool!=null and eduUser.isBackToSchool!=""'>
+            and peu.is_back_to_school = #{eduUser.isBackToSchool}
+        </if>
+        <!-- 		是否5+3培养模式 -->
+        <if test='eduUser.is5plus3!=null and eduUser.is5plus3!=""'>
+            and peu.is5plus3 = #{eduUser.is5plus3}
+        </if>
+        <!-- 		是否硕博连读 -->
+        <if test='eduUser.isMbaDba!=null and eduUser.isMbaDba!=""'>
+            and peu.is_mba_dba = #{eduUser.isMbaDba}
+        </if>
+        <!-- 		是否报到 -->
+        <if test='eduUser.isReported!=null and eduUser.isReported!=""'>
+            and peu.is_reported = #{eduUser.isReported}
+        </if>
+        <!-- 	导师	 -->
+        <if test='teacherName!=null and teacherName!=""'>
+            <bind name="teacherName" value="'%'+teacherName+'%'"/>
+            and (peu.first_teacher like #{teacherName} OR peu.second_teacher like #{teacherName})
+        </if>
+        <if test='partId!=null and partId!="" and partStatus!=null and partStatus!=""'>
+            <!--<if test='partStatus == "Y"'>-->
+            and peu.user_flow in (select user_flow from EDU_USER_INFO_STATUS where record_status='Y' and part_id = #{partId} and part_status=#{partStatus} group by user_Flow)
+            <!--</if>-->
+            <!--<if test='partStatus == "N"'>-->
+            <!--and peu.user_flow not in (select user_flow from EDU_USER_INFO_STATUS where record_status='Y' and part_id = #{partId} and part_status='Y' group by user_Flow)-->
+            <!--</if>-->
+        </if>
+        <if test='registerFlag!=null and registerFlag!=""'>
+            and <if test='registerFlag == "N"'>not</if> exists (select null from pub_user_generic_content pugc where pugc.record_status='Y' and pugc.user_flow=peu.user_flow)
+        </if>
+        order by peu.period desc nulls last, peu.sid asc, peu.create_time asc
+    </select>
+    <select id="queryDegreeInfoList" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.DegreeInfoMainMapper.BaseResultMap">
+        select dim.* from
+        Degree_Info_Main dim
+        left join edu_user eu
+        on dim.user_flow=eu.user_flow
+        where dim.record_status='Y'
+        and eu.record_status='Y'
+        <if test='main.userFlow!=null and main.userFlow!=""'>
+            and dim.user_flow= #{main.userFlow}
+        </if>
+        <if test='main.userName!=null and main.userName!=""'>
+            <bind name="userName" value="'%'+main.userName+'%'"/>
+            and dim.user_name like #{userName}
+        </if>
+        <if test='main.sid!=null and main.sid!=""'>
+            <bind name="sid" value="'%'+main.sid+'%'"/>
+            and dim.sid like #{sid}
+        </if>
+        <if test='main.sexId!=null and main.sexId!=""'>
+            and dim.sex_id= #{main.sexId}
+        </if>
+        <if test='main.trainCategoryId!=null and main.trainCategoryId!=""'>
+            and dim.train_category_id= #{main.trainCategoryId}
+        </if>
+        <if test='main.trainTypeId!=null and main.trainTypeId!=""'>
+            and dim.train_type_id= #{main.trainTypeId}
+        </if>
+        <if test='main.majorId!=null and main.majorId!=""'>
+            and dim.major_id= #{main.majorId}
+        </if>
+        <if test='main.period!=null and main.period!=""'>
+            and dim.period= #{main.period}
+        </if>
+        <if test='main.nationId!=null and main.nationId!=""'>
+            and dim.nation_id= #{main.nationId}
+        </if>
+        <if test='main.politicsStatusId!=null and main.politicsStatusId!=""'>
+            and dim.politics_status_id= #{main.politicsStatusId}
+        </if>
+        <if test='main.orgFlow!=null and main.orgFlow!=""'>
+            and dim.org_flow= #{main.orgFlow}
+        </if>
+        <if test='main.deptFlow!=null and main.deptFlow!=""'>
+            and dim.dept_flow= #{main.deptFlow}
+        </if>
+        <if test='periodList!=null and periodList.size>0'>
+            and dim.period in
+            <foreach collection="periodList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <!--  起止时间-开始时间 -->
+        <if test='main.createTime!=null and main.createTime!=""'>
+            and dim.create_Time <![CDATA[>=]]>  #{main.createTime}
+        </if>
+        <!--  起止时间-结束时间 -->
+        <if test='main.createUserFlow!=null and main.createUserFlow!=""'>
+            and dim.create_Time <![CDATA[<=]]>  #{main.createUserFlow}
+        </if>
+        <!-- modifyUserFlow用作学习形式 -->
+        <if test='main.modifyUserFlow!=null and main.modifyUserFlow!=""'>
+            and eu.STUDY_FORM_ID = #{main.modifyUserFlow}
+        </if>
+        order by dim.SID,dim.CREATE_TIME
+    </select>
+    <select id="supplementList" parameterType="java.util.Map" resultType="java.util.Map">
+        select a.user_flow,
+        a.sid,
+        b.user_name,
+        c.xm,
+        c.zjlx,
+        c.zjhm,
+        c.sfzz,
+        c.rxrq,
+        c.xjzt,
+        c.fmxm1,
+        c.fmzjlx1,
+        c.fmzjhm1,
+        c.fmxm2,
+        c.fmzjlx2,
+        c.fmzjhm2
+        from edu_user a
+        left join sys_user b
+        on a.user_flow = b.user_flow
+        left join gydxj_supplement_info c
+        on a.user_flow = c.user_flow
+        where a.record_status = 'Y'
+        and b.record_status = 'Y'
+        <if test='sid!=null and sid!=""'>
+            and a.sid like '%${sid}%'
+        </if>
+        <if test='userName!=null and userName!=""'>
+            and b.user_name like '%${userName}%'
+        </if>
+        <if test='trainTypeId!=null and trainTypeId!=""'>
+            and a.train_type_id = #{trainTypeId}
+        </if>
+        <if test='trainCategoryId!=null and trainCategoryId!=""'>
+            and a.train_category_id = #{trainCategoryId}
+        </if>
+        <if test='submitFlag!=null and submitFlag!=""'>
+            <if test='submitFlag=="Y"'>
+                and c.submit_flag = 'Y'
+            </if>
+            <if test='submitFlag=="N"'>
+                and c.submit_flag  is null
+            </if>
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,128 @@
+<html>
+<head>
+<title></title>
+<style type="text/css">
+body {
+	margin-left: 5px;
+	margin-right: 5px;
+	font-family: Arial Unicode MS;
+}
+
+@page {   
+    size: A3 landscape;
+    margin-left:40px;
+ 	margin-right:40px;
+ 	margin-top:10px;
+    
+    @top-center { 
+    	content: element(header);
+    };  
+    @bottom-center{  
+        content:"第" counter(page) "页/共 " counter(pages) "页";
+        font-family: Arial Unicode MS;   
+        font-size: 12px;  
+        color:#000;  
+    };  
+}
+</style>
+</head>
+<body>
+<div id="qrcode" style="text-align: center;" hidden="hidden"></div>
+<div class="head" style="background-color:#0092f0; height:45px; font-size:20px; color:#FFFFFF; text-align:center; line-height:45px;">
+	江苏省${oscaSkillsAssessmentExt.clinicalYear!}年住院医师临床技能考核
+</div>
+<h1 style="font-size:18px; text-align:center;  margin-bottom:5px;">准考证</h1>
+<div style="float: left;width:65%;margin-left: 5%;">
+	<div style="line-height: 170%;margin-top: 20px;" >
+		<table>
+			<tr>
+				<td style="text-align: left" width="80">姓&#12288;&#12288;名:</td>
+				<td style="text-align: left;border-bottom:#181818 solid 1px;width: 300px">${oscaSkillsAssessmentExt.oscaDoctorAssessment.doctorName!}</td>
+			</tr>
+			<tr>
+				<td style="  ;">准考证号:</td>
+				<td style="text-align: left;border-bottom:#181818 solid 1px;width: 300px">${oscaSkillsAssessmentExt.oscaDoctorAssessment.ticketNumber!}</td>
+					<!--<input value="${oscaSkillsAssessmentExt.oscaDoctorAssessment.ticketNumber}" style="border:0; border-bottom:#181818 1px solid;font-size:12px;vertical-align: middle; padding: 0; margin: 0; width:300px; text-align: center" readonly="true"/></td>-->
+			</tr>
+			<tr>
+				<td style="  ;">考试时间:
+					<!--<input value="${oscaSkillsAssessmentExt.oscaDoctorAssessment.examStartTime}~${oscaSkillsAssessmentExt.oscaDoctorAssessment.examEndTime}" style="border:0; border-bottom:#181818 1px solid;font-size:12px;vertical-align: middle; padding: 0; margin: 0; width:300px; text-align: center" readonly="true"/>-->
+				</td>
+				<td style="text-align: left;border-bottom:#181818 solid 1px;width: 300px">${oscaSkillsAssessmentExt.oscaDoctorAssessment.examStartTime!}~${oscaSkillsAssessmentExt.oscaDoctorAssessment.examEndTime!}</td>
+			</tr>
+			<tr>
+				<td>考试地点:</td>
+					<!--<textarea rows="1" id="t1" readonly="true" style="resize:none;width: 300px; border-bottom:#181818 1px solid;">${oscaSkillsAssessmentExt.examAddress}</textarea></td>-->
+				<td id="t1" style="text-align: left;border-bottom:#181818 solid 1px;width: 300px;height: 40px">
+					 ${oscaSkillsAssessmentExt.examAddress!}
+				</td>
+			</tr>
+			<tr>
+				<td>备&#12288;&#12288;注:</td>
+					<!--<textarea rows="1" id="t2" readonly="true" style="width: 300px;border:0; border-bottom:#181818 1px solid;">${oscaSkillsAssessmentExt.remarks}</textarea></td>-->
+				<td id="t2" style="text-align: left;border-bottom:#181818 solid 1px;width: 300px;height: 80px">
+					${oscaSkillsAssessmentExt.remarks!}
+				</td>
+			</tr>
+			<tr>
+				<td style=";" id="t3">考试专业:</td>
+				<td style="text-align: left;border-bottom:#181818 solid 1px;width: 300px">
+					<!--<input value="${oscaSkillsAssessmentExt.speName}" class="input1" style="border:0; border-bottom:#181818 1px solid;font-size:12px;vertical-align: middle; padding: 0; margin: 0; width:160px;text-align: center" readonly="true"/>-->
+					<!--(代码：<input value="${oscaSkillsAssessmentExt.speId}" class="input2" style="border:0; border-bottom:#181818 1px solid;font-size:12px;vertical-align: middle; padding: 0; margin: 0; width:85px;text-align: center" readonly="true"/>)-->
+					${oscaSkillsAssessmentExt.speName!}(代码：${oscaSkillsAssessmentExt.speId!})
+				</td>
+			</tr>
+			<tr>
+				<td>有效证件号码:</td>
+				<td style="text-align: left;border-bottom:#181818 solid 1px;width: 300px">${oscaSkillsAssessmentExt.sysUser.idNo!}</td>
+			</tr>
+		</table>
+	</div><br/>
+	<div style="line-height: 150%;margin-top: 25px;">
+		<h3 style="margin:0; padding:0; clear:both; font-size:14px; ">
+			考生须知：</h3><br/>
+		1、考生须凭身份证、准考证进考场。（考官需扫准考证二维码识别信息，务必不要忘带）<br/>
+		2、考生自带洁净白大褂、听诊器、手套、帽子、口罩等。<br/>
+		3、自备笔试用常规文具。<br/>
+		4、请自带安装省规培系统APP的手机，并开通网络（用于签到、考站查询）。<br/>
+		5、服从考务工作人员管理和安排，不得扰乱考场秩序，违者取消考试资格。
+	</div>
+</div>
+
+<div style="float: right;width:30%;text-align: left">
+	<div>
+		<img src="${headImg!}" id="showImg" style="text-align: center;" width="140px" height="185px"/>
+	</div>
+	<br/><br/>
+	<div>
+		<img src="${signUrl}" id="codeImg" style="text-align: center;" width="140px" height="140px"/>
+	</div>
+</div>
+<div style="clear:both"></div>
+<div style="text-align: center;margin-top:15px;">
+	你可以在已考核的站点打√，来检查是否完成全部考核内容，以免漏考。
+	<table class="xllist" id="table2" style="width:98%;margin-top:5px;"  border="1">
+		<tr>
+			<#list subjectStations as station>
+				<td>${station.partName}</td>
+			</#list>
+		</tr>
+		<tr>
+			<#list subjectStations as station>
+				<td style="width:${width}">${station.stationName}</td>
+			</#list>
+		</tr>
+		<tr>
+			<#list subjectStations as station>
+				<td>${station.examinedContent}</td>
+			</#list>
+		</tr>
+		<tr>
+			<#list subjectStations as station>
+				<td height="27px"></td>
+			</#list>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

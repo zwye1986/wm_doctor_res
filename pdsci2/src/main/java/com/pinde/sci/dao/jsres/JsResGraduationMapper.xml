@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jsres.JsResGraduationMapper">
+
+    <resultMap id="userMap1" type="java.util.HashMap" >
+        <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+        <result column="RECRUIT_FLOW" property="recruitFlow" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+        <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+        <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+        <result column="CAT_SPE_ID" property="catSpeId" jdbcType="VARCHAR" />
+        <result column="CAT_SPE_NAME" property="catSpeName" jdbcType="VARCHAR" />
+        <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
+        <result column="DOCTOR_TYPE_NAME" property="doctorTypeName" jdbcType="VARCHAR" />
+        <result column="THEORY_SCORE" property="theoryScore" jdbcType="VARCHAR" />
+        <result column="qualified_num" property="qualifiedNum" jdbcType="VARCHAR" />
+        <result column="total_num" property="totalNum" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="userList" resultMap="userMap1">
+        SELECT RD.DOCTOR_FLOW, DR.RECRUIT_FLOW, DR.ORG_NAME, DR.ORG_FLOW, SU.USER_NAME
+        , SU.ID_NO, DR.SPE_ID, DR.SPE_NAME, DR.CAT_SPE_ID, DR.CAT_SPE_NAME
+        , DR.SESSION_NUMBER, rd.DOCTOR_TYPE_NAME, c.theory_score,
+        nvl(tg.qualified_num,0) qualified_num,n.total_num
+        FROM res_doctor_recruit dr
+        LEFT JOIN RES_DOCTOR RD ON DR.DOCTOR_FLOW = RD.DOCTOR_FLOW
+        INNER JOIN SYS_USER SU ON RD.DOCTOR_FLOW = SU.USER_FLOW
+        inner JOIN (
+        SELECT MAX(ger1.THEORY_SCORE) AS THEORY_SCORE, rdge2.doctor_flow AS doctor_flow
+        FROM RES_DOCTOR_GRADUATION_EXAM rdge2
+        LEFT JOIN RES_DOCTOR RD1 ON rdge2.doctor_flow = rd1.doctor_flow
+        INNER JOIN GRADUATION_EXAM_RESULTS ger1 ON rdge2.exam_flow = ger1.process_flow
+        WHERE rd1.record_status = 'Y'
+        AND rdge2.record_status = 'Y'
+        AND ger1.record_status = 'Y'
+        GROUP BY rdge2.doctor_flow
+        ) c ON c.doctor_flow = RD.DOCTOR_FLOW
+
+        left join (
+        SELECT a.doctor_flow, COUNT(1) qualified_num
+        FROM (
+        SELECT rdge.doctor_flow
+        FROM RES_DOCTOR_GRADUATION_EXAM rdge
+        LEFT JOIN RES_DOCTOR RD2 ON rd2.doctor_flow = rdge.doctor_flow
+        INNER JOIN GRADUATION_EXAM_RESULTS ger3 ON rdge.exam_flow = ger3.process_flow
+        WHERE rd2.record_status = 'Y'
+        AND rdge.record_status = 'Y'
+        AND ger3.record_status = 'Y'
+        AND ger3.is_pass = 'Y'
+
+        ) a group by a.doctor_flow
+        ) tg on tg.doctor_flow = rd.doctor_flow
+
+        inner join  (
+        SELECT b.doctor_flow, COUNT(1) total_num
+        FROM (
+        SELECT rdge1.doctor_flow
+        FROM RES_DOCTOR_GRADUATION_EXAM rdge1
+        LEFT JOIN RES_DOCTOR RD3 ON rd3.doctor_flow = rdge1.doctor_flow
+        INNER JOIN GRADUATION_EXAM_RESULTS ger4 ON rdge1.exam_flow = ger4.process_flow
+        WHERE rd3.record_status = 'Y'
+        AND rdge1.record_status = 'Y'
+        AND ger4.record_status = 'Y'
+
+        )b group by b.doctor_flow
+        ) n on n.doctor_flow = rd.doctor_flow
+        WHERE RD.RECORD_STATUS = 'Y'
+        AND DR.RECORD_STATUS = 'Y'
+        AND SU.RECORD_STATUS = 'Y'
+        <if test="orgFlow!=null and orgFlow!=''">
+            AND DR.org_flow = #{orgFlow}
+        </if>
+        <if test="orgFlowList!=null and orgFlowList.size>0">
+            and DR.org_flow in
+            <foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="trainingTypeId!=null and trainingTypeId!=''">
+            and dr.CAT_SPE_ID = #{trainingTypeId}
+        </if>
+        <if test="trainingSpeId!=null and trainingSpeId!=''">
+            and dr.SPE_ID = #{trainingSpeId}
+        </if>
+        <if test="sessionNumber!=null and sessionNumber!=''">
+            and dr.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test="userName!=null and userName!=''">
+            <bind name="userName" value="'%'+userName+'%'"/>
+            and Su.USER_NAME like #{userName}
+        </if>
+        <if test="idNo!=null and idNo!=''">
+            <bind name="idNo" value="'%'+idNo+'%'"/>
+            and Su.ID_NO like #{idNo}
+        </if>
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and rd.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        AND dr.audit_status_id = 'Passed'
+        order by
+            DR.SESSION_NUMBER,
+            DR.CAT_SPE_ID,
+            DR.SPE_ID,
+            DR.DOCTOR_FLOW
+    </select>
+    <select id="getDoctorArrangements" resultMap="com.pinde.sci.dao.base.SchExamDoctorArrangementMapper.BaseResultMap">
+        SELECT RECORD_FLOW,
+                ARRANGE_FLOW,
+                DOCTOR_FLOW,
+                DOCTOR_NAME,
+                EXAM_SCORE,
+                EXAM_DOWLAND,
+                RECORD_STATUS,
+                CREATE_TIME,
+                CREATE_USER_FLOW,
+                MODIFY_TIME,
+                MODIFY_USER_FLOW,
+                ORG_FLOW,
+                ORG_NAME,
+                SESSION_NUMBER
+          FROM (
+                  SELECT ROW_NUMBER() OVER(PARTITION BY ARRANGE_FLOW, DOCTOR_FLOW, ORG_FLOW, SESSION_NUMBER ORDER BY TO_NUMBER(EXAM_SCORE) DESC) RN,
+                       SCH_EXAM_DOCTOR_ARRANGEMENT.*
+                  FROM SCH_EXAM_DOCTOR_ARRANGEMENT
+                  WHERE RECORD_STATUS='Y'
+                      AND org_flow = #{orgFlow}
+                        <if test="userFlows!=null and userFlows.size>0">
+                            and DOCTOR_FLOW in
+                            <foreach collection="userFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+                        </if>
+                      AND EXAM_SCORE is not null
+                  )
+         WHERE RN = 1
+    </select>
+
+    <resultMap id="scoreMap" type="java.util.HashMap" >
+        <result column="RESULTS_ID" property="resultsId" jdbcType="VARCHAR" />
+        <result column="SOLU_NAME" property="soluName" jdbcType="VARCHAR" />
+        <result column="EXAM_TIME" property="examTime" jdbcType="VARCHAR" />
+        <result column="SUBMIT_TIME" property="submitTime" jdbcType="VARCHAR" />
+        <result column="EXAM_FLOW" property="examFlow" jdbcType="VARCHAR" />
+        <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+        <result column="EXAM_PASS_SCORE" property="examPassScore" jdbcType="VARCHAR" />
+        <result column="EXAM_YEAR" property="examYear" jdbcType="VARCHAR" />
+        <result column="THEORY_SCORE" property="theoryScore" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="findExamBydoctorFlow" resultMap="scoreMap">
+        SELECT ger.results_id,ger.SOLU_NAME,ger.EXAM_TIME,ger.SUBMIT_TIME,ger.THEORY_SCORE,ger.EXAM_PASS_SCORE,
+        RDGE.EXAM_FLOW, RDGE.DOCTOR_FLOW,RDGE.EXAM_YEAR
+        FROM RES_DOCTOR_GRADUATION_EXAM RDGE
+        INNER JOIN GRADUATION_EXAM_RESULTS GER
+        ON RDGE.EXAM_FLOW = GER.PROCESS_FLOW
+        WHERE RDGE.RECORD_STATUS = 'Y'
+        AND GER.RECORD_STATUS = 'Y'
+        <if test="doctorFlow!=null and doctorFlow!=''">
+            AND RDGE.DOCTOR_FLOW = #{doctorFlow}
+        </if>
+    </select>
+</mapper>

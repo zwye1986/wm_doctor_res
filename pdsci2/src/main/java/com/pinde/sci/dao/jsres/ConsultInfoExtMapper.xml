@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jsres.ConsultInfoExtMapper" >
+    <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ConsultInfo" >
+        <id column="CONSULT_INFO_FLOW" property="consultInfoFlow" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="CONSULT_QUESTION" property="consultQuestion" jdbcType="VARCHAR" />
+        <result column="CONSULT_QUESTIONER_FLOW" property="consultQuestionerFlow" jdbcType="VARCHAR" />
+        <result column="CONSULT_QUESTIONER_NAME" property="consultQuestionerName" jdbcType="VARCHAR" />
+        <result column="CONSULT_QUESTIONER_GRADE" property="consultQuestionerGrade" jdbcType="VARCHAR" />
+        <result column="CONSULT_QUESTIONER_BASE_NAME" property="consultQuestionerBaseName" jdbcType="VARCHAR" />
+        <result column="CONSULT_QUESTIONER_BASE_FLOW" property="consultQuestionerBaseFlow" jdbcType="VARCHAR" />
+        <result column="CONSULT_QUESTION_CREATE_TIME" property="consultQuestionCreateTime" jdbcType="VARCHAR" />
+        <result column="CONSULT_QUESTION_MODIFY_TIME" property="consultQuestionModifyTime" jdbcType="VARCHAR" />
+        <result column="CONSULT_VISIT_NUMBER" property="consultVisitNumber" jdbcType="VARCHAR" />
+        <result column="CONSULT_QUESTION_ROLE_ID" property="consultQuestionRoleId" jdbcType="VARCHAR" />
+        <result column="CONSULT_QUESTION_ROLE_NAME" property="consultQuestionRoleName" jdbcType="VARCHAR" />
+        <result column="CONSULT_TYPE_ID" property="consultTypeId" jdbcType="VARCHAR" />
+        <result column="CONSULT_TYPE_NAME" property="consultTypeName" jdbcType="VARCHAR" />
+        <result column="CONSULT_TYPE_SON_ID" property="consultTypeSonId" jdbcType="VARCHAR" />
+        <result column="CONSULT_TYPE_SON_NAME" property="consultTypeSonName" jdbcType="VARCHAR" />
+        <result column="IS_ANSWER" property="isAnswer" jdbcType="VARCHAR" />
+        <result column="IS_POLICY" property="isPolicy" jdbcType="VARCHAR" />
+        <result column="ORG_CITY_ID" property="orgCityId" jdbcType="VARCHAR" />
+        <result column="ORG_CITY_NAME" property="orgCityName" jdbcType="VARCHAR" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+        <result column="CHARGE_NAME" property="chargeName" jdbcType="VARCHAR" />
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ConsultInfo" extends="BaseResultMap" >
+        <result column="CONSULT_ANSWER" property="consultAnswer" jdbcType="CLOB" />
+    </resultMap>
+    <select id="searchOrgCityNameList" resultType="String">
+      select ORG_CITY_NAME from CONSULT_INFO where RECORD_STATUS = 'Y' GROUP BY ORG_CITY_NAME
+    </select>
+    <select id="selectByExampleWithBLOBs" parameterType="map" resultMap="ResultMapWithBLOBs">
+      SELECT CONSULT_INFO_FLOW, ORG_FLOW, CONSULT_QUESTION, CONSULT_QUESTIONER_FLOW, CONSULT_QUESTIONER_NAME
+			, CONSULT_QUESTIONER_GRADE, CONSULT_QUESTIONER_BASE_NAME, CONSULT_QUESTIONER_BASE_FLOW, CONSULT_QUESTION_CREATE_TIME, CONSULT_QUESTION_MODIFY_TIME
+			, CONSULT_VISIT_NUMBER, CONSULT_QUESTION_ROLE_ID, CONSULT_QUESTION_ROLE_NAME, CONSULT_TYPE_ID, CONSULT_TYPE_NAME
+			, CONSULT_TYPE_SON_ID, CONSULT_TYPE_SON_NAME, IS_ANSWER, IS_POLICY, ORG_CITY_ID
+			, ORG_CITY_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME
+			, MODIFY_USER_FLOW, CONSULT_ANSWER ,CHARGE_NAME
+		FROM PDSCI.CONSULT_INFO c
+		WHERE RECORD_STATUS = 'Y'
+        <if test="consultQuestion !=null and consultQuestion !=''">
+            AND (dbms_lob.instr(CONSULT_ANSWER,#{consultQuestion},1,1)&lt;&gt;0
+            OR c.CONSULT_QUESTION like '%'||#{consultQuestion}||'%')
+        </if>
+        <if test="consultTypeId !=null and consultTypeId !=''">
+            AND c.CONSULT_TYPE_ID = #{consultTypeId}
+        </if>
+        <if test="consultTypeSonId !=null and consultTypeSonId !=''">
+            AND c.CONSULT_TYPE_SON_ID = #{consultTypeSonId}
+        </if>
+        <if test="consultQuestionRoleId !=null and consultQuestionRoleId !=''">
+            AND c.CONSULT_QUESTION_ROLE_ID = #{consultQuestionRoleId}
+        </if>
+        <if test="isAnswer !=null and isAnswer !=''">
+            AND c.IS_ANSWER = #{isAnswer}
+        </if>
+        <if test="isPolicy !=null and isPolicy !=''">
+            AND c.IS_POLICY = #{isPolicy}
+        </if>
+        <if test="orgCityId !=null and orgCityId !=''">
+            AND c.ORG_CITY_ID = #{orgCityId}
+        </if>
+        <if test="orgCityName !=null and orgCityName !=''">
+            AND c.ORG_CITY_NAME = #{orgCityName}
+        </if>
+        <if test="orderBy !=null and orderBy !=''">
+            <if test="orderBy == 'number'">
+                ORDER BY to_number(c.CONSULT_VISIT_NUMBER) DESC,c.CONSULT_QUESTION_CREATE_TIME DESC
+            </if>
+        </if>
+        <if test="orderBy ==null or orderBy !='number'">
+            ORDER BY c.CONSULT_QUESTION_CREATE_TIME DESC, to_number(c.CONSULT_VISIT_NUMBER) DESC
+        </if>
+    </select>
+    <select id="searchNumber" resultType="Integer">
+      select TO_NUMBER(CONSULT_VISIT_NUMBER) from CONSULT_INFO where RECORD_STATUS = 'Y' AND CONSULT_INFO_FLOW = #{consultInfoFlow}
+    </select>
+</mapper>

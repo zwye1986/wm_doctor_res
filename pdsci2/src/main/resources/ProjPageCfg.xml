@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<projPage>
+	<!-- projType 定义
+	1. 产品默认项目类型
+	szwsj.lczcbzzljs 苏州市临床重点病种诊疗技术专项
+	szwsj.yxxjs 苏州市医学新技术项目
+	szwsj.qnkj 苏州市青年科技
+	szwsj.zdxk 苏州市青年科技
+	szwsj.lcyxzx 苏州市临床医学中心
+	szwsj.zdjbcrbyfkz 苏州市重大疾病、传染病预防和控制关键技术
+	szwsj.szlczdzkjs 苏州市科教兴卫专项资金资助项目临床重点专科建设
+	szwsj.zjtd 苏州市引进临床医学专家团队项目
+
+	wxwsj.zdxm 无锡卫生局重大项目
+	wxwsj.msxm 无锡卫生局面上项目
+	wxwsj.qnxm 无锡卫生局青年项目
+	wxwsj.kjcgtg 无锡卫生局科技成果和适宜技术推广项目
+	wxwsj.lcyxzx 无锡市临床医学中心
+	wxwsj.yxcxpt 无锡市医学创新平台
+	wxwsj.qnyxrc 无锡市青年医学人才
+	wxwsj.yxjcrc 无锡市医学杰出人才申报书
+    wxwsj.yxzdxk 无锡市医学重点学科(实验室)申报书
+    wxwsj.yxljrc 无锡市医学领军人才与创新团队申报书
+    wxwsj.yxzdrc 无锡市医学重点人才申报书
+
+		
+	yhwsj.zdxm 余杭区医疗卫生科研重点项目
+	yhwsj.ybxm 余杭区医疗卫生科研一般项目
+	yhwsj.ydxm 余杭区医疗卫生科研引导项目
+
+	xzzxyy 徐州中心医院
+
+    jszyyj.zyykjxm 江苏省中医药管理局科技项目
+
+	jsswst.lcyx 江苏省临床医学中心（创新平台）
+	jsswst.jcrc 江苏省医学杰出人才
+	jsswst.qnyxrc 江苏省青年医学人才
+	jsswst.yxzdrc 江苏省医学重点人才
+	jsswst.yxzdxk 江苏省医学重点学科(实验室)申报书
+	jsswst.jcrc 江苏省卫生厅杰出人才
+	jsswst.lcyx 江苏省临床医学中心（创新平台）
+	江苏省科研课题(申报书相同<jsswst.kykt>)
+	jsswst.mskt  面上课题
+	jsswst.qnkt  青年课题
+	jsswst.zdxkt  指导性课题
+	jsswst.xxhkt  信息化课题
+	jsswst.hlxkt  护理学课题
+	jsswst.jcws  江苏省卫计委基层卫生课题
+	jsswst.wsbzyj  江苏省卫计委卫生标准研究课题
+	jsswst.rsrcgl  江苏省卫计委人事人才管理课题项目类型
+	jsswst.wszyjsjy  江苏省卫生职业技术教育科研课题
+	jsswst.dxwtkt    定向委托课题
+
+	江苏省中科研：
+	jsszyy.kyxm 江苏省中医院 科研项目
+	jsszyy.ywxm 江苏省中医院 院外项目
+	jsszyy.ywxm2 江苏省中医院 院外项目
+
+	备案项目：
+	szwsj.ky 苏州科研备案
+	
+	yhwsj.ky 余杭非直报
+	yhwsj.xjsxxm 余杭卫生局.新技术新项目
+	yhwsj.xkba 余杭卫生局.学科备案
+	
+	jsswst.kyba 江苏省卫生厅.科研备案
+
+    项目登记
+    wxdermyy.xmdj 无锡第二人民医院项目登记
+	 -->
+	<!--
+	Info 基本信息
+	ky 科研项目
+	qw 科教强卫
+	xk 重点学科
+	rc 重点人才
+	bj 科技报奖
+	gl 院版科研 项目管理
+	wxdermyy.xmdj 无锡第二人民医院 项目登记
+	-->
+	<!-- 基本信息-->
+	<Info>
+		<projType id="ky.info" pageGroupName="product"></projType>
+		<projType id="qw.info" pageGroupName="product"></projType>
+		<projType id="xk.info" pageGroupName="xkInfo"></projType>
+		<projType id="rc.info" pageGroupName="product"></projType>
+		<projType id="bj.info" pageGroupName="product"></projType>
+		<projType id="gl.info" pageGroupName="glInfo"></projType>
+		<projType id="wxwsj.info" pageGroupName="product"></projType>
+		<projType id="yhwsj.info" pageGroupName="product"></projType>
+		<projType id="jsswst.info" pageGroupName="product"></projType>
+		<projType id="addsetup.info" pageGroupName="addsetup"></projType>
+
+        <projType id="wxdermyy.xmdj" pageGroupName="wxdermyy.xmdj"></projType>
+	</Info>
+	<!-- 申请报告-->
+	<Apply>
+		<projType id="demo.zdxm" pageGroupName=""></projType>
+		<projType id="demo.zdianxm" pageGroupName=""></projType>
+		
+		<projType id="szwsj.lczcbzzljs" pageGroupName="szwsj.lczcbzzljs"></projType>
+		<projType id="szwsj.yxxjs" pageGroupName="szwsj.yxxjs"></projType>
+		<projType id="szwsj.qnkj" pageGroupName="szwsj.qnkj"></projType>
+		<projType id="szwsj.zdxk" pageGroupName="szwsj.zdxk"></projType>
+		<projType id="szwsj.lcyxzx" pageGroupName="szwsj.lcyxzx"></projType>
+		<projType id="szwsj.zdjbcrbyfkz" pageGroupName="szwsj.zdjbcrbyfkz"></projType>
+		<projType id="szwsj.zjtd" pageGroupName="szwsj.zjtd"></projType>
+
+		<projType id="jsswst.kyxm" pageGroupName="jsswst.kyxm"></projType>
+		<projType id="jsswst.jcrc" pageGroupName="jsswst.jcrc"></projType>
+		<projType id="jsswst.lcyxzx" pageGroupName="jsswst.lcyxzx"></projType>
+		<projType id="jsswst.zdxk" pageGroupName="jsswst.zdxk"></projType>
+		<projType id="jsswst.zdrc" pageGroupName="jsswst.zdrc"></projType>
+		<projType id="jsswst.lcyx" pageGroupName="jsswst.lcyx"></projType>
+		<projType id="jsswst.yxcx" pageGroupName="jsswst.yxcx"></projType>
+		<projType id="jsswst.yxzdrc" pageGroupName="jsswst.yxzdrc"></projType>
+		<projType id="jsswst.qnyxrc" pageGroupName="jsswst.qnyxrc"></projType>
+		<projType id="jsswst.yxzdxk" pageGroupName="jsswst.yxzdxk"></projType>
+
+		<projType id="jsswst.mskt" pageGroupName="jsswst.kykt"></projType>
+		<projType id="jsswst.qnkt" pageGroupName="jsswst.kykt"></projType>
+		<projType id="jsswst.zdxkt" pageGroupName="jsswst.kykt"></projType>
+		<projType id="jsswst.xxhkt" pageGroupName="jsswst.kykt"></projType>
+		<projType id="jsswst.hlxkt" pageGroupName="jsswst.kykt"></projType>
+		<projType id="jsswst.jcws" pageGroupName="jsswst.kykt"></projType>
+		<projType id="jsswst.wsbzyj" pageGroupName="jsswst.kykt"></projType>
+		<projType id="jsswst.rsrcgl" pageGroupName="jsswst.kykt"></projType>
+		<projType id="jsswst.wszyjsjy" pageGroupName="jsswst.kykt"></projType>
+		<projType id="jsswst.dxwtkt" pageGroupName="jsswst.kykt"></projType>
+		<projType id="jsswst.xjsyjj" pageGroupName="jsswst.xjsyjj"></projType>
+
+		<projType id="jszyyj.zdxm" pageGroupName="jszyyj.zyykjxm"></projType>
+		<projType id="jszyyj.ybxm" pageGroupName="jszyyj.zyykjxm"></projType>
+
+		<projType id="jsszyy.kyxm" pageGroupName="jsszyy.kyxm"></projType>
+		<projType id="jsszyy.ywxm2" pageGroupName="jsszyy.kyxm"></projType>
+		<projType id="jsszyy.ywxm" pageGroupName="jsszyy.ywxm"></projType>
+
+		<projType id="wxwsj.zdxm" pageGroupName="wxwsj.zdxm"></projType>
+		<projType id="wxwsj.kpxm" pageGroupName="wxwsj.kpxm"></projType>
+		<projType id="wxwsj.msxm" pageGroupName="wxwsj.zdxm"></projType>
+		<projType id="wxwsj.qnxm" pageGroupName="wxwsj.zdxm"></projType>
+		<projType id="wxwsj.kjcgtg" pageGroupName="wxwsj.kjcgtg"></projType>
+		<projType id="wxwsj.lcyxzx" pageGroupName="wxwsj.lcyxzx"></projType>
+        <projType id="wxwsj.yxcxpt" pageGroupName="wxwsj.yxcxpt"></projType>
+		<projType id="wxwsj.qnyxrc" pageGroupName="wxwsj.qnyxrc"></projType>
+		<projType id="wxwsj.yxjcrc" pageGroupName="wxwsj.yxjcrc"></projType>
+		<projType id="wxwsj.yxzdxk" pageGroupName="wxwsj.yxzdxk"></projType>
+		<projType id="wxwsj.yxljrc" pageGroupName="wxwsj.yxljrc"></projType>
+		<projType id="wxwsj.yxzdrc" pageGroupName="wxwsj.yxzdrc"></projType>
+
+		<projType id="yhwsj.zdxm" pageGroupName="yhwsj.zdxm"></projType>
+		<projType id="yhwsj.ybxm" pageGroupName="yhwsj.zdxm"></projType>
+		<projType id="yhwsj.ydxm" pageGroupName="yhwsj.zdxm"></projType>
+		<projType id="yhwsj.zdxk" pageGroupName="yhwsj.zdxk"></projType>
+		<projType id="yhwsj.zdrc" pageGroupName="yhwsj.zdrc"></projType>
+		<projType id="yhwsj.zdrc_1" pageGroupName="yhwsj.zdrc"></projType>
+		<projType id="yhwsj.zdrc_2" pageGroupName="yhwsj.zdrc"></projType>
+		<projType id="yhwsj.zdrc_3" pageGroupName="yhwsj.zdrc"></projType>
+		<projType id="yhwsj.zdrc_4" pageGroupName="yhwsj.zdrc"></projType>
+		<projType id="yhwsj.zdrc_5" pageGroupName="yhwsj.zdrc"></projType>
+		<projType id="yhwsj.zdrc_6" pageGroupName="yhwsj.zdrc"></projType>
+		<projType id="yhwsj.zdrc_7" pageGroupName="yhwsj.zdrc"></projType>
+		<projType id="yhwsj.zdrc_8" pageGroupName="yhwsj.zdrc"></projType>
+	    <projType id="yhwsj.xjsxxm" pageGroupName="yhwsj.xjsxxm"></projType>
+
+        <projType id="xzzxyy" pageGroupName="xzzxyy.product"></projType>
+	</Apply>
+	<!-- 立项报告/评选结果-->
+	<SetUp>
+	    <projType id="yhwsj.xjsxxm" pageGroupName="yhwsj.xjsxxm"></projType>
+	</SetUp>
+	<!--合同书-->
+	<Contract>
+		<projType id="demo.zdxm" pageGroupName="product"></projType>
+		<projType id="demo.zdianxm" pageGroupName="product"></projType>
+		
+		<projType id="szwsj.zdxk" pageGroupName="szwsj.zdxk"></projType>
+		<projType id="szwsj.lczcbzzljs" pageGroupName="szwsj.lczcbzzljs"></projType>
+		<projType id="szwsj.yxxjs" pageGroupName=""></projType>
+		<projType id="szwsj.qnkj" pageGroupName="szwsj.qnkj"></projType>
+		<projType id="szwsj.zjtd" pageGroupName="szwsj.zjtd"></projType>
+
+		<!-- 2016年1月4日 09:16:40-->
+		<projType id="szwsj.zdjbcrbyfkz" pageGroupName="szwsj.zdjbcrbyfkz"></projType>
+		<projType id="szwsj.lcyxzx" pageGroupName="szwsj.lcyxzx"></projType>
+
+		<projType id="szwsj.szlczdzkjs" pageGroupName="szwsj.szlczdzkjs"></projType>
+
+		
+		<projType id="jsswst.zdxk" pageGroupName="jsswst.zdxk"></projType>
+		<projType id="jsswst.zdrc" pageGroupName="jsswst.zdrc"></projType>
+        <projType id="jsswst.jcrc" pageGroupName="jsswst.jcrc"></projType>
+        <projType id="jsswst.lcyx" pageGroupName="jsswst.lcyx"></projType>
+        <projType id="jsswst.qnyxrc" pageGroupName="jsswst.qnyxrc"></projType>
+		<projType id="jsswst.yxcx" pageGroupName="jsswst.yxcx"></projType>
+		<projType id="jsswst.yxzdrc" pageGroupName="jsswst.yxzdrc"></projType>
+		<projType id="jsswst.yxzdxk" pageGroupName="jsswst.yxzdxk"></projType>
+
+		<projType id="jsszyy.kyxm" pageGroupName="jsszyy.kyxm"></projType>
+		<projType id="jsszyy.ywxm2" pageGroupName="jsszyy.kyxm"></projType>
+		<projType id="jsszyy.ywxm" pageGroupName="jsszyy.ywxm"></projType>
+
+		<projType id="jszyyj.zdxm" pageGroupName="jszyyj.zyykjxm"></projType>
+		<projType id="jszyyj.ybxm" pageGroupName="jszyyj.zyykjxm"></projType>
+
+		<projType id="wxwsj.zdxm" pageGroupName="wxwsj.zdxm"></projType>
+		<projType id="wxwsj.msxm" pageGroupName="wxwsj.zdxm"></projType>
+		<projType id="wxwsj.qnxm" pageGroupName="wxwsj.zdxm"></projType>
+		<projType id="wxwsj.kjcgtg" pageGroupName="wxwsj.kjcgtg"></projType>
+
+		<projType id="wxwsj.lcyxzx" pageGroupName="wxwsj.lcyxzx"></projType>
+		<projType id="wxwsj.qnyxrc" pageGroupName="wxwsj.qnyxrc"></projType>
+		<projType id="wxwsj.yxjcrc" pageGroupName="wxwsj.yxjcrc"></projType>
+		<projType id="wxwsj.yxzdxk" pageGroupName="wxwsj.yxzdxk"></projType>
+		<projType id="wxwsj.yxljrc" pageGroupName="wxwsj.yxljrc"></projType>
+		<projType id="wxwsj.yxzdrc" pageGroupName="wxwsj.yxzdrc"></projType>
+		<projType id="wxwsj.yxcxpt" pageGroupName="wxwsj.yxcxpt"></projType>
+
+		
+		<projType id="yhwsj.zdxm" pageGroupName="yhwsj.zdxm"></projType>
+		<projType id="yhwsj.ybxm" pageGroupName="yhwsj.zdxm"></projType>
+		<projType id="yhwsj.ydxm" pageGroupName="yhwsj.zdxm"></projType>
+		<projType id="yhwsj.zdxk" pageGroupName="yhwsj.zdxk"></projType>
+	</Contract>
+	<!--进展报告-->
+	<ScheduleReport>
+		<projType id="demo.zdxm" pageGroupName="product"></projType>
+		<projType id="demo.zdianxm" pageGroupName="product"></projType>
+		
+		<projType id="szwsj.zdxk" pageGroupName="product"></projType>
+		<projType id="szwsj.lczcbzzljs" pageGroupName="product"></projType>
+		<projType id="szwsj.yxxjs" pageGroupName=""></projType>
+		<projType id="szwsj.qnkj" pageGroupName="product"></projType>
+
+		<projType id="wxwsj.kjcgtg" pageGroupName="wxwsj.kjcgtg"></projType>
+
+		<projType id="yhwsj.zdxm" pageGroupName="yhwsj.zdxm"></projType>
+		<projType id="yhwsj.ybxm" pageGroupName="yhwsj.zdxm"></projType>
+		<projType id="yhwsj.ydxm" pageGroupName="yhwsj.zdxm"></projType>
+
+		<projType id="jsszyy.kyxm" pageGroupName="jsszyy.kyxm"></projType>
+		<projType id="jsszyy.ywxm2" pageGroupName="jsszyy.kyxm"></projType>
+		<projType id="jsszyy.ywxm" pageGroupName="jsszyy.ywxm"></projType>
+	</ScheduleReport>
+	<!--变更报告-->
+	<ChangeReport>
+		<projType id="demo.zdxm" pageGroupName="product"></projType>
+		<projType id="demo.zdianxm" pageGroupName="product"></projType>
+		
+		<projType id="szwsj.zdxk" pageGroupName="product"></projType>
+		<projType id="szwsj.lczcbzzljs" pageGroupName="product"></projType>
+		<projType id="szwsj.yxxjs" pageGroupName=""></projType>
+		<projType id="szwsj.qnkj" pageGroupName="product"></projType>
+
+		<projType id="jsszyy.kyxm" pageGroupName="jsszyy.kyxm"></projType>
+		<projType id="jsszyy.ywxm2" pageGroupName="jsszyy.kyxm"></projType>
+		<projType id="jsszyy.ywxm" pageGroupName="jsszyy.ywxm"></projType>
+		
+		<projType id="yhwsj.zdxm" pageGroupName="yhwsj.zdxm"></projType>
+		<projType id="yhwsj.ybxm" pageGroupName="yhwsj.zdxm"></projType>
+		<projType id="yhwsj.ydxm" pageGroupName="yhwsj.zdxm"></projType>
+
+	</ChangeReport>
+	<!-- 延期报告-->
+	<DelayReport>
+		<projType id="demo.zdxm" pageGroupName="product"></projType>
+		<projType id="demo.zdianxm" pageGroupName="product"></projType>
+
+		<!--<projType id="jsszyy.ywxm" pageGroupName="jsszyy.ywxm"></projType>-->
+		
+		<projType id="szwsj.zdxk" pageGroupName="product"></projType>
+		<projType id="szwsj.lczcbzzljs" pageGroupName="product"></projType>
+		<projType id="szwsj.yxxjs" pageGroupName=""></projType>
+		<projType id="szwsj.qnkj" pageGroupName="product"></projType>
+	</DelayReport>
+	<!--终止报告-->
+	<TerminateReport>
+		<projType id="demo.zdxm" pageGroupName="product"></projType>
+		<projType id="demo.zdianxm" pageGroupName="product"></projType>
+
+		<projType id="jsszyy.kyxm" pageGroupName="jsszyy.kyxm"></projType>
+		<projType id="jsszyy.ywxm2" pageGroupName="jsszyy.kyxm"></projType>
+		<projType id="jsszyy.ywxm" pageGroupName="jsszyy.ywxm"></projType>
+
+		<projType id="szwsj.zdxk" pageGroupName="product"></projType>
+		<projType id="szwsj.lczcbzzljs" pageGroupName="product"></projType>
+		<projType id="szwsj.yxxjs" pageGroupName=""></projType>
+		<projType id="szwsj.qnkj" pageGroupName="product"></projType>
+
+	</TerminateReport>
+	<!-- 验收报告-->
+	<CompleteReport>
+		<projType id="demo.zdxm" pageGroupName="product"></projType>
+		<projType id="demo.zdianxm" pageGroupName="product"></projType>
+
+		<projType id="jsszyy.kyxm" pageGroupName="jsszyy.kyxm"></projType>
+		<projType id="jsszyy.ywxm2" pageGroupName="jsszyy.kyxm"></projType>
+		<projType id="jsszyy.ywxm" pageGroupName="jsszyy.ywxm"></projType>
+		
+		<projType id="szwsj.zdxk" pageGroupName="product"></projType>
+		<projType id="szwsj.lczcbzzljs" pageGroupName="product"></projType>
+		<projType id="szwsj.yxxjs" pageGroupName=""></projType>
+		<projType id="szwsj.qnkj" pageGroupName="product"></projType>
+		
+		<projType id="yhwsj.zdxm" pageGroupName="yhwsj.zdxm"></projType>
+		<projType id="yhwsj.ybxm" pageGroupName="yhwsj.zdxm"></projType>
+		<projType id="yhwsj.ydxm" pageGroupName="yhwsj.zdxm"></projType>
+	</CompleteReport>
+	<!-- 项目备案-->
+	<Aid>
+	    <projType id="szwsj.ky" pageGroupName="szwsj.ky"></projType>
+	    
+	    <projType id="yhwsj.ky" pageGroupName="yhwsj.ky"></projType>
+	    <projType id="yhwsj.xjsxxm" pageGroupName="yhwsj.xjsxxm"></projType>
+	    <projType id="yhwsj.xkba" pageGroupName="yhwsj.xkba"></projType>
+	    
+	    <projType id="jsswst.kyba" pageGroupName="jsswst.kyba"></projType>
+	</Aid>
+	
+</projPage>
+

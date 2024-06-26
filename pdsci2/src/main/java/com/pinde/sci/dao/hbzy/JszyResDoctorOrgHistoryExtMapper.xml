@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.hbzy.HbzyResDoctorOrgHistoryExtMapper">
+	
+	<resultMap id="docOrgHistoryExtMap" type="com.pinde.sci.model.hbzy.JszyResDoctorOrgHistoryExt" extends="com.pinde.sci.dao.base.ResDoctorOrgHistoryMapper.ResultMapWithBLOBs" >
+		<association property="resDoctor" javaType="com.pinde.sci.model.mo.ResDoctor">
+			<id column="doctorFlow" jdbcType="VARCHAR" property="doctorFlow"/>
+		 	<result column="doctorName" jdbcType="VARCHAR" property="doctorName" />
+		 	<result column="dsessionNumber" jdbcType="VARCHAR" property="sessionNumber" />
+		</association>
+	</resultMap>
+	
+	<select id="searchDoctorOrgHistoryExtList" parameterType="java.util.Map" resultMap="docOrgHistoryExtMap">
+	  	SELECT doh.*,
+	  		   d.DOCTOR_FLOW doctorFlow, d.DOCTOR_NAME doctorName, d.SESSION_NUMBER dsessionNumber
+		from pdsci.RES_DOCTOR_ORG_HISTORY doh, pdsci.RES_DOCTOR d
+		where doh.DOCTOR_FLOW = d.DOCTOR_FLOW
+		and doh.RECORD_STATUS = 'Y' and d.RECORD_STATUS = 'Y'
+		<if test="docOrgHistory!=null">
+			<if test="docOrgHistory.doctorFlow!=null and docOrgHistory.doctorFlow!=''">
+				and doh.DOCTOR_FLOW = #{docOrgHistory.doctorFlow}
+			</if>
+  			<if test="docOrgHistory.orgFlow!=null and docOrgHistory.orgFlow!=''">
+   				and doh.ORG_FLOW = #{docOrgHistory.orgFlow} 
+   			</if>
+  			<if test="docOrgHistory.historyOrgFlow!=null and docOrgHistory.historyOrgFlow!=''">
+   				and doh.HISTORY_ORG_FLOW = #{docOrgHistory.historyOrgFlow} 
+   			</if>
+  			<if test="docOrgHistory.changeStatusId!=null and docOrgHistory.changeStatusId!=''">
+   				and doh.CHANGE_STATUS_ID = #{docOrgHistory.changeStatusId} 
+   			</if>
+  			<if test="docOrgHistory.changeTypeId!=null and docOrgHistory.changeTypeId!=''">
+   				and doh.CHANGE_TYPE_ID = #{docOrgHistory.changeTypeId} 
+   			</if>
+  		</if>
+  		<if test="changeStatusIdList!=null">
+			and doh.CHANGE_STATUS_ID in 
+   			<foreach collection="changeStatusIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+   		</if>
+  		<if test="orgFlowList!=null">
+			and  (doh.ORG_FLOW in 
+   			<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+   				or doh.HISTORY_ORG_FLOW in
+   			<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+   			)
+   		</if>
+  		<if test="resDoctor!=null">
+  			<if test="resDoctor.doctorName!=null and resDoctor.doctorName!=''">
+   				<bind name="doctorName" value="'%'+resDoctor.doctorName+'%'"/>
+   				and d.DOCTOR_NAME like #{doctorName} 
+   			</if>
+  			<if test="resDoctor.sessionNumber!=null and resDoctor.sessionNumber!=''">
+   				and d.SESSION_NUMBER = #{resDoctor.sessionNumber} 
+   			</if>
+  			<if test="resDoctor.orgFlow!=null and resDoctor.orgFlow!=''">
+   				and d.ORG_FLOW = #{resDoctor.orgFlow} 
+   			</if>
+  		</if>
+		order by doh.CREATE_TIME DESC
+	</select>
+
+	<resultMap type="HashMap" id="docOrgHistoryUserMap">
+		<result  property="userFlow" column="user_flow" javaType="string"/>
+		<result  property="userName" column="user_Name" javaType="string"/>
+		<result property="idNo" column="id_no" javaType="string"/>
+		<result property="sessionNumber" column="session_number" javaType="string"/>
+	</resultMap>
+	<select id="searchChangeOrgInfoByParamMap" parameterType="java.util.Map" resultMap="docOrgHistoryUserMap">
+		select * from
+		(
+			SELECT distinct(su.user_flow) user_flow,su.user_name user_name,
+			su.id_no id_no,rd.session_number session_number,doh.CREATE_TIME CREATE_TIME,
+			row_number()over(partition by su.user_flow order by doh.CREATE_TIME desc) mm
+			FROM sys_user su
+			left join res_doctor rd on rd.doctor_flow = su.user_flow
+			left join RES_DOCTOR_ORG_HISTORY doh on doh.doctor_flow = rd.doctor_flow
+			where rd.record_status = 'Y'
+			and su.record_status = 'Y'
+			and doh.record_status = 'Y'
+			<if test="outOrIn!=null and outOrIn!='' and outOrIn=='changeIn'">
+				and doh.ORG_FLOW in
+				<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+				<if test="changeStatusIdList!=null">
+					and doh.CHANGE_STATUS_ID in
+					<foreach collection="changeStatusIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+				</if>
+			</if>
+			<if test="outOrIn!=null and outOrIn!='' and outOrIn=='changeOut'">
+				and doh.HISTORY_ORG_FLOW in
+				<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+				<if test="changeStatusIdList!=null">
+					and doh.CHANGE_STATUS_ID in
+					<foreach collection="changeStatusIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+				</if>
+			</if>
+			<if test="outOrIn!=null and outOrIn!='' and outOrIn=='all'">
+				and  (
+				(
+				doh.ORG_FLOW in
+				<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+				<if test="changeStatusIdList4In!=null">
+					and doh.CHANGE_STATUS_ID in
+					<foreach collection="changeStatusIdList4In" open="(" separator="," close=")" item="item">#{item}</foreach>
+				</if>
+				)
+				or
+				(
+				doh.HISTORY_ORG_FLOW in
+				<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+				<if test="changeStatusIdList4Out!=null">
+					and doh.CHANGE_STATUS_ID in
+					<foreach collection="changeStatusIdList4Out" open="(" separator="," close=")" item="item">#{item}</foreach>
+				</if>
+				)
+				)
+			</if>
+			<if test="doctor!=null">
+				<if test="doctor.doctorName!=null and doctor.doctorName!=''">
+					<bind name="doctorName" value="'%'+doctor.doctorName+'%'"/>
+					and rd.DOCTOR_NAME like #{doctorName}
+				</if>
+				<if test="doctor.sessionNumber!=null and doctor.sessionNumber!=''">
+					and rd.SESSION_NUMBER = #{doctor.sessionNumber}
+				</if>
+				<if test="doctor.orgFlow!=null and doctor.orgFlow!=''">
+					and rd.ORG_FLOW = #{doctor.orgFlow}
+				</if>
+			</if>
+			<if test="orgHistory!=null">
+				<if test="orgHistory.changeTypeId!=null and orgHistory.changeTypeId!=''">
+					and doh.CHANGE_TYPE_ID = #{orgHistory.changeTypeId}
+				</if>
+			</if>
+			<if test="changeStatusIdList!=null and changeStatusIdList.size()>0">
+				and doh.CHANGE_STATUS_ID in
+				<foreach collection="changeStatusIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+			</if>
+			order by doh.CREATE_TIME DESC
+		)
+		where mm=1
+	</select>
+	<select id="searchChangeSpeInfoByParamMap" parameterType="java.util.Map" resultMap="docOrgHistoryUserMap">
+		select * from
+		(
+		SELECT distinct(su.user_flow) user_flow,su.user_name user_name,
+		su.id_no id_no,rd.session_number session_number,doh.CREATE_TIME CREATE_TIME,
+		row_number()over(partition by su.user_flow order by doh.CREATE_TIME desc) mm
+		FROM sys_user su
+		left join res_doctor rd on rd.doctor_flow = su.user_flow
+		left join RES_DOCTOR_ORG_HISTORY doh on doh.doctor_flow = rd.doctor_flow
+		where rd.record_status = 'Y'
+		and su.record_status = 'Y'
+		and doh.record_status = 'Y'
+		<if test="doctor!=null">
+			<if test="doctor.doctorName!=null and doctor.doctorName!=''">
+				<bind name="doctorName" value="'%'+doctor.doctorName+'%'"/>
+				and rd.DOCTOR_NAME like #{doctorName}
+			</if>
+			<if test="doctor.sessionNumber!=null and doctor.sessionNumber!=''">
+				and rd.SESSION_NUMBER = #{doctor.sessionNumber}
+			</if>
+			<if test="doctor.orgFlow!=null and doctor.orgFlow!=''">
+				and rd.ORG_FLOW = #{doctor.orgFlow}
+			</if>
+		</if>
+		<if test="orgFlowList!=null and orgFlowList.size()>0">
+			and doh.ORG_FLOW in
+			<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="orgHistory!=null">
+			<if test="orgHistory.changeTypeId!=null and orgHistory.changeTypeId!=''">
+				and doh.CHANGE_TYPE_ID = #{orgHistory.changeTypeId}
+			</if>
+		</if>
+		<if test="changeStatusIdList!=null and changeStatusIdList.size()>0">
+			and doh.CHANGE_STATUS_ID in
+			<foreach collection="changeStatusIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		order by doh.CREATE_TIME DESC
+		)
+		where mm=1
+	</select>
+	<select id="searchDelayInfoByParamMap" parameterType="java.util.Map" resultMap="docOrgHistoryUserMap">
+		SELECT distinct(su.user_flow) user_flow,su.user_name user_name,
+		su.id_no id_no,rd.session_number session_number
+		FROM sys_user su
+		left join res_doctor rd on rd.doctor_flow = su.user_flow
+		left join RES_DOCOTR_DELAY_TETURN ddt on ddt.doctor_flow = rd.doctor_flow
+		where rd.record_status = 'Y'
+		and su.record_status = 'Y'
+		and ddt.record_status = 'Y'
+		<if test="docotrDelayTeturn!=null">
+			<if test="docotrDelayTeturn.doctorName!=null and docotrDelayTeturn.doctorName!=''">
+				<bind name="doctorName" value="'%'+docotrDelayTeturn.doctorName+'%'"/>
+				and rd.DOCTOR_NAME like #{doctorName}
+			</if>
+			<if test="docotrDelayTeturn.sessionNumber!=null and docotrDelayTeturn.sessionNumber!=''">
+				and rd.SESSION_NUMBER = #{docotrDelayTeturn.sessionNumber}
+			</if>
+			<if test="docotrDelayTeturn.orgFlow!=null and docotrDelayTeturn.orgFlow!=''">
+				and rd.ORG_FLOW = #{docotrDelayTeturn.orgFlow}
+			</if>
+			<if test="docotrDelayTeturn.typeId!=null and docotrDelayTeturn.typeId!=''">
+				and ddt.type_Id = #{docotrDelayTeturn.typeId}
+			</if>
+		</if>
+	</select>
+</mapper>

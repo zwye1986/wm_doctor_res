@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.res.TjDocinfoExtMapper" >
+    <resultMap id="TjDocinfoExtMap" type="com.pinde.sci.model.res.TjDocinfoExt" extends="com.pinde.sci.dao.base.TjDocinfoMapper.BaseResultMap">
+        <result column="docrole" property="docrole" jdbcType="VARCHAR" />
+        <result column="site_one_name" property="siteOneName" jdbcType="VARCHAR" />
+        <result column="site_two_name" property="siteTwoName" jdbcType="VARCHAR" />
+        <result column="site_three_name" property="siteThreeName" jdbcType="VARCHAR" />
+        <result column="site_one_state_name" property="siteOneStateName" jdbcType="VARCHAR" />
+        <result column="site_two_state_name" property="siteTwoStateName" jdbcType="VARCHAR" />
+        <result column="site_three_state_name" property="siteThreeStateName" jdbcType="VARCHAR" />
+        <result column="total_score_state_name" property="totalScoreStateName" jdbcType="VARCHAR" />
+        <result column="docrole_Name" property="docroleName" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="searchTjDocinfo"  parameterType="com.pinde.sci.model.mo.TjDocinfo"  resultMap="TjDocinfoExtMap">
+
+        select user_flow,org_flow,org_code,org_name,docrole,decode(docrole,'1','学员','2','基地管理员','3','系统管理员') docrole_name,
+        user_id,user_name,id_no,qualified_no,spe_code,spe_name,ticket_num,user_sex,degree,bef_org_name,user_phone,phone_path,remark,
+        site_one,begindate,enddate,
+        decode(site_one,'1','天津医科大学总医院','2','武警后勤学院附属医院','3','天津市人民医院','4','天津市第三中心医院','5','天津市儿童医院','6','天津市安定医院','7','天津医科大学口腔医院','8','天津市口腔医院','9','天津市眼科医院','0','天津市第一中心医院','A','天津中医药大学第一附属医院','B','天津市中医药大学第二附属医院','C','天津市中医药研究院附属医院') site_one_name,
+        site_one_time,site_one_score,site_one_state,decode(site_one_state,'Y','通过','N','不通过') site_one_state_name,
+        site_two,
+        decode(site_two,'1','天津医科大学总医院','2','武警后勤学院附属医院','3','天津市人民医院','4','天津市第三中心医院','5','天津市儿童医院','6','天津市安定医院','7','天津医科大学口腔医院','8','天津市口腔医院','9','天津市眼科医院','0','天津市第一中心医院','A','天津中医药大学第一附属医院','B','天津市中医药大学第二附属医院','C','天津市中医药研究院附属医院') site_two_name,
+        site_two_time,site_two_score,site_two_state,decode(site_two_state,'Y','通过','N','不通过') site_two_state_name,
+        site_three,
+        decode(site_three,'1','天津医科大学总医院','2','武警后勤学院附属医院','3','天津市人民医院','4','天津市第三中心医院','5','天津市儿童医院','6','天津市安定医院','7','天津医科大学口腔医院','8','天津市口腔医院','9','天津市眼科医院','0','天津市第一中心医院','A','天津中医药大学第一附属医院','B','天津市中医药大学第二附属医院','C','天津市中医药研究院附属医院') site_three_name,
+        site_three_time,site_three_score,site_three_state,decode(site_three_state,'Y','通过','N','不通过') site_three_state_name,
+        total_score_state,decode(total_score_state,'Y','通过','N','不通过') total_score_state_name,
+        complete_no,memo,record_status,create_time,create_user_flow,modify_time,modify_user_flow
+        from tj_docinfo
+        where RECORD_STATUS = 'Y'
+        <if test="userId != null and userId != ''">
+        and USER_ID = #{userId}
+        </if>
+        <if test="userName != null and userName != ''">
+            and USER_NAME like '%${userName}%'
+        </if>
+        <if test="idNo != null and idNo != ''">
+        and ID_NO = #{idNo}
+        </if>
+        <if test="ticketNum != null and ticketNum != ''">
+        and TICKET_NUM = #{ticketNum}
+        </if>
+        <if test="qualifiedNo != null and qualifiedNo != ''">
+        and QUALIFIED_NO = #{qualifiedNo}
+        </if>
+        <if test="docrole != null and docrole != ''">
+        and DOCROLE = #{docrole}
+        </if>
+        <if test="orgCode != null and orgCode != ''">
+        and ORG_CODE like '%${orgCode}%'
+        </if>
+        <if test="orgName != null and orgName != ''">
+        and ORG_NAME like '%${orgName}%'
+        </if>
+        <if test="siteOneState != null and siteOneState != ''">
+        and SITE_ONE_STATE = #{siteOneState}
+        </if>
+        <if test="siteTwoState != null and siteTwoState != ''">
+        and SITE_TWO_STATE = #{siteTwoState}
+        </if>
+        <if test="siteThreeState != null and siteThreeState != ''">
+        and SITE_THREE_STATE = #{siteThreeState}
+        </if>
+        <if test="totalScoreState != null and totalScoreState != ''">
+        and TOTAL_SCORE_STATE = #{totalScoreState}
+        </if>
+        ORDER BY CREATE_TIME DESC
+    </select>
+
+</mapper>

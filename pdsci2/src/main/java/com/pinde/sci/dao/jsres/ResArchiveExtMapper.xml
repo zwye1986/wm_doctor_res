@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jsres.ResArchiveExtMapper">
+    <resultMap id="DoctorRecruitLog" type="com.pinde.sci.model.jsres.JsResArchDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitLogMapper.BaseResultMap" >
+        <association property="sysUser" column="user_flow"  resultMap="com.pinde.sci.dao.base.SysUserLogMapper.BaseResultMap" />
+        <association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorLogMapper.BaseResultMap" >
+            <id column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
+            <result column="edOrgFlow" jdbcType="VARCHAR" property="orgFlow"/>
+            <result column="edOrgName" jdbcType="VARCHAR" property="orgName"/>
+        </association>
+    </resultMap>
+    <resultMap id="doctorInfo" type="com.pinde.sci.model.jsres.JsDoctorInfoLogExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitLogMapper.BaseResultMap" >
+        <association property="sysUser" column="userFlow"  resultMap="com.pinde.sci.dao.base.SysUserLogMapper.BaseResultMap" />
+        <association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorLogMapper.BaseResultMap" />
+        <association property="userResume" column="userFlow"  resultMap="com.pinde.sci.dao.base.ResUserResumeLogMapper.BaseResultMap" />
+    </resultMap>
+
+    <sql id="ResDoctor_Column_List" >
+        DOCTOR_FLOW, DOCTOR_CODE, DOCTOR_TYPE_ID, DOCTOR_TYPE_NAME, ORG_FLOW,
+        ORG_NAME, DEPT_FLOW, DEPT_NAME, WORK_ORG_NAME,  GRADUATED_ID, GRADUATED_NAME,
+        SPECIALIZED, GRADUATION_TIME, SESSION_NUMBER, CERTIFICATE_NO, DEGREE_NO, IN_HOS_DATE,
+        TRAINING_YEARS, TRAINING_TYPE_ID, TRAINING_TYPE_NAME, TRAINING_SPE_ID, TRAINING_SPE_NAME,
+        ROTATION_FLOW, ROTATION_NAME, DOCTOR_STATUS_ID, DOCTOR_STATUS_NAME, COMPLETE_DATE,
+        COMPLETE_NO, TERMINAT_REASON, TERMINAT_DATE, SEL_DEPT_FLAG, SCH_FLAG, QUALIFIED_NO,
+        QUALIFIED_DATE,  REG_NO, REG_ADDRESS, COMPUTER_SKILLS, FOREIGN_SKILLS,
+        EMERGENCY_NAME, EMERGENCY_PHONE, EMERGENCY_RELATION, RECORD_STATUS, CREATE_TIME,
+        CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, DISACTIVE_REASON, REEDIT_FLAG, DOCTOR_CATEGORY_ID,
+        DOCTOR_CATEGORY_NAME, DOCTOR_NAME, SCH_STATUS_ID, SCH_STATUS_NAME, REG_DATE, GROUP_ID,
+        GROUP_NAME, GROUP_ROLE_ID, GROUP_ROLE_NAME, DOCTOR_LICENSE_FLAG, TUTOR_NAME, RESEARCH_DIRECTION,
+        SPECIALIZED_ID, DOCTOR_LICENSE_NO, TUTOR_FLOW, DEGREE_CATEGORY_ID, DEGREE_CATEGORY_NAME,
+        WORK_ORG_LEVEL_ID, WORK_ORG_LEVEL_NAME, IS_YEAR_GRADUATE, WORK_ORG_ID, GRADUATION_STATUS_ID,
+        GRADUATION_STATUS_NAME, DISAGREE_REASON, COMPLETE_START_DATE, COMPLETE_END_DATE,
+        DISCIPLE_TEACHER_FLOW, DISCIPLE_TEACHER_NAME
+    </sql>
+    <insert id="saveResDoctorLog" parameterType="java.lang.String">
+        insert into PDSCI.RES_DOCTOR_LOG (
+        RECORD_FLOW,DOCTOR_HEAD_IMG,DISPATCH_FILE,QUALIFIED_FILE, <include refid="ResDoctor_Column_List" />,ARCHIVE_FLOW
+        )
+        select sys_guid(),'/${archiveFlow}/'||DOCTOR_HEAD_IMG, '/${archiveFlow}/'||DISPATCH_FILE,'/${archiveFlow}/'||QUALIFIED_FILE,
+        <include refid="ResDoctor_Column_List" />,#{archiveFlow}
+        from PDSCI.RES_DOCTOR rd where rd.RECORD_STATUS='Y'
+    </insert>
+
+    <sql id="SysUser_Column_List">
+        USER_FLOW, USER_CODE, USER_PASSWD, USER_NAME, SEX_ID, SEX_NAME, STATUS_ID, STATUS_DESC,
+        USER_PHONE, USER_EMAIL, DEPT_FLOW, DEPT_NAME, ORG_FLOW, ORG_NAME, ID_NO, USER_BIRTHDAY,
+        TITLE_ID, TITLE_NAME, DEGREE_ID, DEGREE_NAME, EDUCATION_ID, EDUCATION_NAME, POST_ID,
+        POST_NAME, WEI_XIN_ID, WEI_XIN_NAME, WEI_XIN_STATUS_ID, WEI_XIN_STATUS_DESC, SRM_EXPERT_FLAG,
+        RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, NATION_ID,
+        NATION_NAME, USER_ADDRESS, USER_EMAIL_STATUS_ID, USER_EMAIL_STATUS_DESC, USER_PHONE_STATUS_ID,
+        USER_PHONE_STATUS_DESC, CRET_TYPE_ID, CRET_TYPE_NAME, POLITICS_STATUS_ID,
+        POLITICS_STATUS_NAME, NATIVE_PLACE_PROV_ID, NATIVE_PLACE_CITY_ID, DOMICILE_PLACE_ID,
+        DOMICILE_PLACE_NAME, USER_QQ, MARITAL_ID, MARITAL_NAME, DOMICILE_PLACE_ADDRESS, BEAR_ID,
+        BEAR_NAME, NATIVE_PLACE_AREA_ID, NATIVE_PLACE_PROV_NAME, NATIVE_PLACE_CITY_NAME,
+        NATIVE_PLACE_AREA_NAME, LOCK_TIME, IS_EXAM_TEA, APP_LOGIN_TIME, WEB_LOGIN_TIME, IS_OWNER_STU,
+        LCJN_SPE_NAME, LCJN_SPE_ID, WORK_ORG_NAME, REPORTING_AUTHORITY, IS_ORG_ADMIN, CERTIFICATE_ID,
+        IS_OSCA
+    </sql>
+    <insert id="saveSysUserLog" parameterType="java.lang.String">
+        insert into PDSCI.SYS_USER_LOG (
+        RECORD_FLOW,USER_HEAD_IMG, <include refid="SysUser_Column_List" />,ARCHIVE_FLOW
+        )
+        select sys_guid(),'/${archiveFlow}/'||USER_HEAD_IMG,<include refid="SysUser_Column_List" />,#{archiveFlow}
+        from PDSCI.SYS_USER su where su.RECORD_STATUS='Y'
+
+    </insert>
+
+    <sql id="ResDoctorRecruit_Column_List">
+        RECRUIT_FLOW, DOCTOR_FLOW, ORG_FLOW, ORG_NAME, SPE_ID, SPE_NAME, SWAP_FLAG,
+        RECRUIT_TYPE_ID, RECRUIT_TYPE_NAME, RECRUIT_YEAR, RETEST_FLAG, EXAM_RESULT, AUDITION_RESULT,
+        OPER_RESULT, TOTLE_RESULT, ADMIT_FLAG, RECRUIT_FLAG, CONFIRM_FLAG, SWAP_SPE_ID, SWAP_SPE_NAME,
+        RECRUIT_DATE, CAT_SPE_ID, CAT_SPE_NAME, SESSION_NUMBER, YET_TRAIN_YEAR, DOCTOR_STATUS_ID,
+        DOCTOR_STATUS_NAME, DOCTOR_STRIKE_ID, DOCTOR_STRIKE_NAME, TRAIN_NO, AUDIT_STATUS_ID,
+        AUDIT_STATUS_NAME, TRAIN_YEAR, PLACE_ID, PLACE_NAME,  COMPLETE_CERT_NO,
+         CURR_DEGREE_CATEGORY_ID, CURR_DEGREE_CATEGORY_NAME, GRADUATION_YEAR,
+        ADMIN_SWAP_FLAG, ROTATION_FLOW, ROTATION_NAME, SPECIAL_CERT_NO,
+        AVG_COMPLETE, AVG_AUDIT, MATERIAL_ID, PRACTICING_SCOPE_ID, PRACTICING_SCOPE_NAME,
+        SPECIAL_CERTIFICATION_URI, QUALIFICATION_MATERIAL_CODE,
+        TYPE_ID, REGISTE_MANUA, SECOND_SPE_ID, SECOND_SPE_NAME
+    </sql>
+    <insert id="saveResDoctorRecruitLog" parameterType="java.lang.String">
+        insert into PDSCI.RES_DOCTOR_RECRUIT_LOG (
+        RECORD_FLOW,PROVE_FILE_URL,COMPLETE_FILE_URL,SPECIAL_FILE_URL,CERTIFICATE_URI,QUALIFICATION_MATERIAL_URI,DOCTOR_AUTH,
+        RECORD_STATUS,CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW,
+        <include refid="ResDoctorRecruit_Column_List" />,ARCHIVE_FLOW
+        )
+        select sys_guid(),'/${archiveFlow}/'||PROVE_FILE_URL,'/${archiveFlow}/'||COMPLETE_FILE_URL,'/${archiveFlow}/'||SPECIAL_FILE_URL,
+        '/${archiveFlow}/'||CERTIFICATE_URI,'/${archiveFlow}/'||QUALIFICATION_MATERIAL_URI,'/${archiveFlow}/'||da.IMAGE_URL,
+        rdr.RECORD_STATUS,rdr.CREATE_TIME, rdr.CREATE_USER_FLOW, rdr.MODIFY_TIME, rdr.MODIFY_USER_FLOW,
+        <include refid="ResDoctorRecruit_Column_List" />,#{archiveFlow}
+        from PDSCI.RES_DOCTOR_RECRUIT rdr
+        left JOIN  ( SELECT ROW_NUMBER() OVER(PARTITION BY OPER_USER_FLOW ORDER BY create_time DESC) rn,
+        DOCTOR_AUTH.*
+        FROM DOCTOR_AUTH) da ON rdr.DOCTOR_FLOW = da.OPER_USER_FLOW and da.RECORD_STATUS = 'Y' and da.rn=1
+        where rdr.RECORD_STATUS='Y'
+    </insert>
+    <select id="resDoctorPathTitle" resultType="java.util.Map">
+      select distinct substr(DOCTOR_HEAD_IMG,0,instr(DOCTOR_HEAD_IMG,'/',1,1)-1),
+      substr(DISPATCH_FILE,0,instr(DISPATCH_FILE,'/',1,1)-1),
+      substr(QUALIFIED_FILE,0,instr(QUALIFIED_FILE,'/',1,1)-1)
+      from RES_DOCTOR
+      where RECORD_STATUS='Y'
+    </select>
+    <select id="sysUserPathTitle" resultType="java.util.Map">
+      select distinct substr(USER_HEAD_IMG,0,instr(USER_HEAD_IMG,'/',1,1)-1)
+      from PDSCI.SYS_USER
+        where RECORD_STATUS='Y'
+    </select>
+    <resultMap id="BaseResultMap" type="java.util.Map">
+        <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
+        <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow" />
+        <result column="USER_CODE" jdbcType="VARCHAR" property="userCode" />
+        <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+        <result column="USER_PHONE" jdbcType="VARCHAR" property="userPhone" />
+        <result column="USER_EMAIL" jdbcType="VARCHAR" property="userEmail" />
+        <result column="ORG_FLOW" jdbcType="VARCHAR" property="orgFlow" />
+    </resultMap>
+    <select id="resDoctorRecruitPathTitle" resultType="java.util.Map">
+      select distinct substr(PROVE_FILE_URL,0,instr(PROVE_FILE_URL,'/',1,1)-1) PROVE_FILE_URL,
+      substr(COMPLETE_FILE_URL,0,instr(COMPLETE_FILE_URL,'/',1,1)-1) COMPLETE_FILE_URL,
+      substr(SPECIAL_FILE_URL,0,instr(SPECIAL_FILE_URL,'/',1,1)-1) SPECIAL_FILE_URL,
+      substr(CERTIFICATE_URI,0,instr(CERTIFICATE_URI,'/',1,1)-1) CERTIFICATE_URI,
+      substr(QUALIFICATION_MATERIAL_URI,0,instr(QUALIFICATION_MATERIAL_URI,'/',1,1)-1) QUALIFICATION_MATERIAL_URI,
+      substr(da.IMAGE_URL ,0,instr(da.IMAGE_URL ,'/',1,1)-1) IMAGE_URL
+      from RES_DOCTOR_RECRUIT rdr
+        left JOIN DOCTOR_AUTH da ON rdr.DOCTOR_FLOW = da.OPER_USER_FLOW
+        AND da.RECORD_STATUS = 'Y'
+        where rdr.RECORD_STATUS='Y'
+    </select>
+
+
+    <select id="searchJsDoctorRecruitExtList"  parameterType="java.util.Map" resultMap="DoctorRecruitLog">
+        select dr.RECORD_FLOW, dr.RECRUIT_FLOW, dr.DOCTOR_FLOW, dr.ORG_FLOW, dr.ORG_NAME, dr.SPE_ID, dr.SPE_NAME, dr.SWAP_FLAG,
+        dr.RECRUIT_TYPE_ID, dr.RECRUIT_TYPE_NAME, dr.RECRUIT_YEAR, dr.RETEST_FLAG, dr.EXAM_RESULT, dr.AUDITION_RESULT,
+        dr.OPER_RESULT, dr.TOTLE_RESULT, dr.ADMIT_FLAG, dr.RECRUIT_FLAG, dr.CONFIRM_FLAG, dr.SWAP_SPE_ID, dr.SWAP_SPE_NAME,
+        dr.RECRUIT_DATE, dr.CAT_SPE_ID, dr.CAT_SPE_NAME, dr.SESSION_NUMBER, dr.YET_TRAIN_YEAR, dr.DOCTOR_STATUS_ID,
+        dr.DOCTOR_STATUS_NAME, dr.DOCTOR_STRIKE_ID, dr.DOCTOR_STRIKE_NAME, dr.TRAIN_NO, dr.AUDIT_STATUS_ID,
+        dr.AUDIT_STATUS_NAME, dr.TRAIN_YEAR, dr.PLACE_ID, dr.PLACE_NAME, dr.PROVE_FILE_URL, dr.COMPLETE_CERT_NO,
+        dr.COMPLETE_FILE_URL, dr.CURR_DEGREE_CATEGORY_ID, dr.CURR_DEGREE_CATEGORY_NAME, dr.GRADUATION_YEAR,
+        dr.ADMIN_SWAP_FLAG, dr.ROTATION_FLOW, dr.ROTATION_NAME, dr.SPECIAL_CERT_NO, dr.SPECIAL_FILE_URL,
+        dr.AVG_COMPLETE, dr.AVG_AUDIT, dr.MATERIAL_ID, dr.PRACTICING_SCOPE_ID, dr.PRACTICING_SCOPE_NAME,
+        dr.CERTIFICATE_URI, dr.QUALIFICATION_MATERIAL_URI, dr.SPECIAL_CERTIFICATION_URI, dr.QUALIFICATION_MATERIAL_CODE,
+        dr.TYPE_ID, dr.REGISTE_MANUA, dr.SECOND_SPE_ID, dr.SECOND_SPE_NAME, dr.ARCHIVE_FLOW, dr.DOCTOR_AUTH,
+        dr.RECORD_STATUS, dr.CREATE_TIME, dr.CREATE_USER_FLOW, dr.MODIFY_TIME, dr.MODIFY_USER_FLOW,u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL
+        , u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
+        ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName
+        from pdsci.RES_DOCTOR_RECRUIT_LOG dr
+        left join  pdsci.SYS_USER_LOG u
+        on dr.DOCTOR_FLOW =  u.USER_FLOW
+        <if test="archiveFlow != null and archiveFlow != ''">
+            and u.archive_Flow = #{archiveFlow}
+        </if>
+        left join  RES_DOCTOR_LOG ed
+        on dr.DOCTOR_FLOW =  ed.DOCTOR_FLOW
+        <if test="archiveFlow != null and archiveFlow != ''">
+            and ed.archive_Flow = #{archiveFlow}
+        </if>
+        where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y'
+        and dr.org_flow in(
+        SELECT ORG_FLOW
+        FROM PDSCI.SYS_ORG
+        WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        <if test="sysOrg!=null">
+            <if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
+                AND ORG_PROV_ID = #{sysOrg.orgProvId}
+            </if>
+            <if test="sysOrg.orgCityId!=null and sysOrg.orgCityId!=''">
+                AND ORG_CITY_ID = #{sysOrg.orgCityId}
+            </if>
+            <if test="sysOrg.orgFlow!=null and sysOrg.orgFlow!=''">
+                AND ORG_FLOW = #{sysOrg.orgFlow}
+            </if>
+            <if test="sysOrg.orgLevelId!=null and sysOrg.orgLevelId!=''">
+                AND ORG_LEVEL_ID = #{sysOrg.orgLevelId}
+            </if>
+            <if test="sysOrg.orgTypeId!=null and sysOrg.orgTypeId!=''">
+                AND ORG_TYPE_ID = #{sysOrg.orgTypeId}
+            </if>
+        </if>
+        <if test="jointOrgFlowList!=null and jointOrgFlowList.size>0">
+            and dr.ORG_FLOW in
+            <foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and ed.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        )
+        <if test="resDoctorRecruit!=null">
+            <if test="resDoctorRecruit.sessionNumber!=null and resDoctorRecruit.sessionNumber!=''">
+                and dr.SESSION_NUMBER = #{resDoctorRecruit.sessionNumber}
+            </if>
+            <if test="resDoctorRecruit.catSpeId!=null and resDoctorRecruit.catSpeId!=''">
+                and dr.CAT_SPE_ID = #{resDoctorRecruit.catSpeId}
+            </if>
+            <if test="resDoctorRecruit.speId!=null and resDoctorRecruit.speId!=''">
+                and dr.SPE_ID = #{resDoctorRecruit.speId}
+            </if>
+            <if test='resDoctorRecruit.orgFlow!=null and resDoctorRecruit.orgFlow!=""'>
+                and dr.ORG_FLOW = #{resDoctorRecruit.orgFlow}
+            </if>
+            <if test="resDoctorRecruit.graduationYear!=null and resDoctorRecruit.graduationYear!=''">
+                and dr.GRADUATION_YEAR=#{resDoctorRecruit.graduationYear}
+            </if>
+            <if test="resDoctorRecruit.auditStatusId!=null and resDoctorRecruit.auditStatusId!=''">
+                and dr.AUDIT_STATUS_ID=#{resDoctorRecruit.auditStatusId}
+            </if>
+        </if>
+        <if test="derateFlag!=null and resDoctorRecruit.trainYear!=null and resDoctorRecruit.trainYear!='' ">
+            and dr.TRAIN_YEAR not in (#{resDoctorRecruit.trainYear})
+        </if>
+        <if test="user!=null">
+            <if test="user.userName!=null and user.userName!=''">
+                <bind name="userName" value="'%'+user.userName+'%'"/>
+                and u.USER_NAME like #{userName}
+            </if>
+            <if test="user.idNo!=null and user.idNo!=''">
+                <bind name="idNo" value="'%'+user.idNo+'%'"/>
+                and u.ID_NO like #{idNo}
+            </if>
+        </if>
+        <if test="doctor!=null">
+            <if test="doctor.trainingTypeId!=null and doctor.trainingTypeId!=''">
+                and dr.CAT_SPE_ID = #{doctor.trainingTypeId}
+            </if>
+            <if test="doctor.trainingSpeId!=null and doctor.trainingSpeId!=''">
+                and dr.SPE_ID = #{doctor.trainingSpeId}
+            </if>
+            <if test="doctor.sessionNumber!=null and doctor.sessionNumber!=''">
+                and dr.SESSION_NUMBER = #{doctor.sessionNumber}
+            </if>
+            <if test="doctor.doctorTypeId!=null and doctor.doctorTypeId!=''">
+                and ed.DOCTOR_TYPE_ID = #{doctor.doctorTypeId}
+            </if>
+            <if test="doctor.workOrgLevelId!=null and doctor.workOrgLevelId!=''">
+                and ed.WORK_ORG_LEVEL_ID = #{doctor.workOrgLevelId}
+            </if>
+            <if test="doctor.isYearGraduate!=null and doctor.isYearGraduate!=''">
+                and ed.IS_YEAR_GRADUATE = #{doctor.isYearGraduate}
+            </if>
+            <if test="doctor.doctorStatusId!=null and doctor.doctorStatusId!=''">
+                and ed.doctor_Status_Id = #{doctor.doctorStatusId}
+            </if>
+            <if test="archiveFlow == null or archiveFlow == ''">
+                and ed.archive_Flow is null
+                and dr.archive_Flow is null
+                and u.archive_Flow is null
+            </if>
+            <if test="archiveFlow != null and archiveFlow != ''">
+                and ed.archive_Flow = #{archiveFlow}
+                and dr.archive_Flow = #{archiveFlow}
+                and u.archive_Flow = #{archiveFlow}
+            </if>
+            <if test="doctor.workOrgName!=null and doctor.workOrgName!=''">
+                and (
+                <trim prefix="" prefixOverrides="OR">
+                    <if test="(doctor.workOrgId != null and doctor.workOrgId != '')">OR ed.work_org_id = #{doctor.workOrgId}</if>
+                    <if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name = #{doctor.workOrgName}</if>
+                </trim>
+                )
+            </if>
+        </if>
+        order by  dr.org_flow,dr.session_number,dr.cat_spe_id,dr.spe_id, dr.doctor_flow,dr.CREATE_TIME desc
+    </select>
+
+
+    <select id="searchDoctorInfoExts"  parameterType="java.util.Map" resultMap="doctorInfo">
+        select *
+        from pdsci.RES_DOCTOR_RECRUIT_LOG dr
+        left join  pdsci.SYS_USER_LOG u
+        on dr.DOCTOR_FLOW =  u.USER_FLOW
+        <if test="archiveFlow != null and archiveFlow != ''">
+            and u.archive_Flow = #{archiveFlow}
+        </if>
+        left join  RES_DOCTOR_LOG ed
+        on dr.DOCTOR_FLOW =  ed.DOCTOR_FLOW
+        <if test="archiveFlow != null and archiveFlow != ''">
+            and ed.archive_Flow = #{archiveFlow}
+        </if>
+        left join pdsci.RES_USER_RESUME_LOG pur
+        on pur.USER_FLOW=dr.DOCTOR_FLOW
+        where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y'
+        and dr.org_flow in(
+        SELECT ORG_FLOW
+        FROM PDSCI.SYS_ORG
+        WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        <if test="sysOrg!=null">
+            <if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
+                AND ORG_PROV_ID = #{sysOrg.orgProvId}
+            </if>
+            <if test="sysOrg.orgCityId!=null and sysOrg.orgCityId!=''">
+                AND ORG_CITY_ID = #{sysOrg.orgCityId}
+            </if>
+            <if test="sysOrg.orgFlow!=null and sysOrg.orgFlow!=''">
+                AND ORG_FLOW = #{sysOrg.orgFlow}
+            </if>
+            <if test="sysOrg.orgLevelId!=null and sysOrg.orgLevelId!=''">
+                AND ORG_LEVEL_ID = #{sysOrg.orgLevelId}
+            </if>
+            <if test="sysOrg.orgTypeId!=null and sysOrg.orgTypeId!=''">
+                AND ORG_TYPE_ID = #{sysOrg.orgTypeId}
+            </if>
+        </if>
+        <if test="jointOrgFlowList!=null and jointOrgFlowList.size>0">
+            and dr.ORG_FLOW in
+            <foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and ed.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        )
+        <if test="resDoctorRecruit!=null">
+            <if test="resDoctorRecruit.sessionNumber!=null and resDoctorRecruit.sessionNumber!=''">
+                and dr.SESSION_NUMBER = #{resDoctorRecruit.sessionNumber}
+            </if>
+            <if test="resDoctorRecruit.catSpeId!=null and resDoctorRecruit.catSpeId!=''">
+                and dr.CAT_SPE_ID = #{resDoctorRecruit.catSpeId}
+            </if>
+            <if test="resDoctorRecruit.speId!=null and resDoctorRecruit.speId!=''">
+                and dr.SPE_ID = #{resDoctorRecruit.speId}
+            </if>
+            <if test='resDoctorRecruit.orgFlow!=null and resDoctorRecruit.orgFlow!=""'>
+                and dr.ORG_FLOW = #{resDoctorRecruit.orgFlow}
+            </if>
+            <if test="resDoctorRecruit.auditStatusId!=null and resDoctorRecruit.auditStatusId!=''">
+                and dr.AUDIT_STATUS_ID=#{resDoctorRecruit.auditStatusId}
+            </if>
+            <if test="resDoctorRecruit.graduationYear!=null and resDoctorRecruit.graduationYear!=''">
+                and dr.GRADUATION_YEAR=#{resDoctorRecruit.graduationYear}
+            </if>
+        </if>
+        <if test="derateFlag!=null and resDoctorRecruit.trainYear!=null and resDoctorRecruit.trainYear!='' ">
+            and dr.TRAIN_YEAR not in (#{resDoctorRecruit.trainYear})
+        </if>
+        <if test="user!=null">
+            <if test="user.userName!=null and user.userName!=''">
+                <bind name="userName" value="'%'+user.userName+'%'"/>
+                and u.USER_NAME like #{userName}
+            </if>
+            <if test="user.idNo!=null and user.idNo!=''">
+                <bind name="idNo" value="'%'+user.idNo+'%'"/>
+                and u.ID_NO like #{idNo}
+            </if>
+        </if>
+        <if test="doctor!=null">
+            <if test="doctor.trainingTypeId!=null and doctor.trainingTypeId!=''">
+                and dr.CAT_SPE_ID = #{doctor.trainingTypeId}
+            </if>
+            <if test="doctor.trainingSpeId!=null and doctor.trainingSpeId!=''">
+                and dr.SPE_ID = #{doctor.trainingSpeId}
+            </if>
+            <if test="doctor.sessionNumber!=null and doctor.sessionNumber!=''">
+                and dr.SESSION_NUMBER = #{doctor.sessionNumber}
+            </if>
+            <if test="doctor.doctorTypeId!=null and doctor.doctorTypeId!=''">
+                and ed.DOCTOR_TYPE_ID = #{doctor.doctorTypeId}
+            </if>
+            <if test="doctor.isYearGraduate!=null and doctor.isYearGraduate!=''">
+                and ed.IS_YEAR_GRADUATE = #{doctor.isYearGraduate}
+            </if>
+            <if test="doctor.doctorStatusId!=null and doctor.doctorStatusId!=''">
+                and ed.doctor_Status_Id = #{doctor.doctorStatusId}
+            </if>
+            <if test="archiveFlow == null or archiveFlow == ''">
+                and ed.archive_Flow is null
+                and dr.archive_Flow is null
+                and u.archive_Flow is null
+                and pur.archive_Flow is null
+            </if>
+            <if test="archiveFlow != null and archiveFlow != ''">
+                and ed.archive_Flow = #{archiveFlow}
+                and dr.archive_Flow = #{archiveFlow}
+                and u.archive_Flow = #{archiveFlow}
+                and pur.archive_Flow = #{archiveFlow}
+            </if>
+            <if test="doctor.workOrgName!=null and doctor.workOrgName!=''">
+                and (
+                <trim prefix="" prefixOverrides="OR">
+                    <if test="(doctor.workOrgId != null and doctor.workOrgId != '')">OR ed.work_org_id = #{doctor.workOrgId}</if>
+                    <if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name = #{doctor.workOrgName}</if>
+                </trim>
+                )
+            </if>
+        </if>
+        order by  dr.org_flow,dr.session_number,dr.cat_spe_id,dr.spe_id, dr.doctor_flow,dr.CREATE_TIME desc
+    </select>
+</mapper>

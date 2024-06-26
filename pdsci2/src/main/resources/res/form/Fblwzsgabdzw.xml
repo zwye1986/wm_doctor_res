@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+    <!-- 社区学习情况记录表单 -->
+    <!--
+    {0}:表单所属机构(开关控制)
+    {1}:版本号
+ -->
+    <jsp path="res/form/{3}/{0}/fblwzsgabdzw_{1}"/>
+    <shzs_qk_sqsj_fblwzsgabdzw ver="1.0">
+        <page  ver="1.0">
+            <item name="social_date" isView="3" remark="日期" multiple="N"/>
+            <item name="social_subject" isView="0" remark="题目" multiple="N"/>
+            <item name="social_category" remark="类别1~4" multiple="N"/>
+            <item name="social_reportJournal" isView="1" remark="发表刊物" multiple="N"/>
+            <item name="social_fewAuthor" isView="2" remark="第几作者" multiple="N"/>
+            <!--<item name="social_reportDissertation" isView="0" remark="发表/撰写论文，综述，个案报道，泽文" multiple="N"/>-->
+        </page>
+    </shzs_qk_sqsj_fblwzsgabdzw>
+</jspForm>
+

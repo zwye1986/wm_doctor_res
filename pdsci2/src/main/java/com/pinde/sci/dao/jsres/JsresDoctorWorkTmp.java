@@ -1,0 +1,11 @@
+package com.pinde.sci.dao.jsres;
+
+
+import org.apache.ibatis.annotations.Update;
+
+public interface JsresDoctorWorkTmp {
+
+	@Update("MERGE INTO DOCTOR_WORK_TMP T1 USING ( select t.attendance_flow AS ATTENDANCE_FLOW, sdi.DATE_FLOW AS DATE_FLOW, t.doctor_flow AS DOCTOR_FLOW, sdi.date_day AS DATE_DAY, t.attend_status AS ATTEND_STATUS  from SYS_DATE_INFO sdi join JSRES_ATTENDANCE t on sdi.date_day = t.attend_date where t.RECORD_Status = 'Y') T2 ON ( T1.ATTENDANCE_FLOW = T2.ATTENDANCE_FLOW ) WHEN MATCHED THEN UPDATE SET T1.DATE_FLOW = T2.DATE_FLOW, T1.DOCTOR_FLOW = T2.DOCTOR_FLOW, T1.DATE_DAY = T2.DATE_DAY,T1.ATTEND_STATUS = T2.ATTEND_STATUS\tWHEN NOT MATCHED THEN\tINSERT (T1.ATTENDANCE_FLOW, T1.DATE_FLOW, T1.DOCTOR_FLOW,T1.DATE_DAY ,T1.ATTEND_STATUS ) VALUES (T2.ATTENDANCE_FLOW, T2.DATE_FLOW, T2.DOCTOR_FLOW,T2.DATE_DAY,T2.ATTEND_STATUS )")
+	int InStartKaoQinQuartz();
+
+}

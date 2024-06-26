@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.dwjxres.EvaluationExtMapper">
+    <resultMap id="StuUserExtMap" type="com.pinde.sci.model.res.StuUserExt"
+               extends="com.pinde.sci.dao.base.StuUserResumeMapper.ResultMapWithBLOBs">
+        <association property="sysUser" column="USER_FLOW" javaType="com.pinde.sci.model.mo.SysUser"
+                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+        <association property="auditProcess" column="PROCESS_FLOW" javaType="com.pinde.sci.model.mo.StuAuditProcess"
+                     resultMap="com.pinde.sci.dao.base.StuAuditProcessMapper.BaseResultMap"/>
+        <association property="stuBatch" column="BATCH_FLOW" javaType="com.pinde.sci.model.mo.StuBatch"
+                     resultMap="com.pinde.sci.dao.base.StuBatchMapper.BaseResultMap"/>
+    </resultMap>
+    <select id="searchStuUserForDept" parameterType="java.util.Map" resultMap="StuUserExtMap">
+        SELECT SU.USER_FLOW,
+        SU.USER_NAME,
+        SU.ID_NO,
+        SUR.RESUME_FLOW,
+        SUR.STU_BAT_ID,
+        SUR.STU_BAT_NAME,
+        SUR.SCHOOL_SPE_NAME,
+        SUR.STU_TIME_NAME,
+        SUR.SPE_ID,
+        SUR.SPE_NAME,
+        SUR.STU_STATUS_ID,
+        SUR.STU_STATUS_NAME,
+        SUR.TEACHER_FLOW,
+        SUR.TEACHER_NAME,
+        SUR.IS_GRADUATION,
+        SUR.GRADUATION_DATE,
+        SUR.IS_PUBLISH,
+        SUR.RESUME_INFO,
+        SUR.ISSUE_CERTIFICATE
+        FROM STU_USER_RESUME SUR
+        INNER JOIN SYS_USER SU
+        ON SUR.USER_FLOW = SU.USER_FLOW
+        LEFT JOIN RES_DOCTOR_SCH_PROCESS_EVAL rdspe
+        ON rdspe.DOCTOR_FLOW = SUR.USER_FLOW
+        AND rdspe.EVAL_USER_FLOW = SUR.SPE_ID
+        WHERE SU.RECORD_STATUS = 'Y'
+        AND SUR.RECORD_STATUS = 'Y'
+        <if test='batchFlow != null and batchFlow != ""'>
+            AND SUR.STU_BAT_ID = #{batchFlow}
+        </if>
+        <if test="status!=null and status.size>0">
+            and SUR.STU_STATUS_ID in
+            <foreach collection="status" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='userName != null and userName != ""'>
+            <bind name="name" value="'%'+userName+'%'"/>
+            AND SU.USER_NAME LIKE #{name}
+        </if>
+        <if test="deptFlows!=null and deptFlows.size>0">
+            and SUR.SPE_ID in
+            <foreach collection="deptFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='teacherFlow != null and teacherFlow != ""'>
+            AND SUR.TEACHER_FLOW = #{teacherFlow}
+        </if>
+        <if test='speId != null and speId != ""'>
+            AND SUR.SPE_ID = #{speId}
+        </if>
+        <if test='evalStatueId != null and evalStatueId != "" and evalStatueId == "1"'>
+            AND rdspe.PROCESS_FLOW IS NOT NULL
+        </if>
+        <if test='evalStatueId != null and evalStatueId != "" and evalStatueId == "2"'>
+            AND rdspe.PROCESS_FLOW IS NULL
+        </if>
+        ORDER BY SUR.SPE_ID DESC,SUR.CREATE_TIME DESC
+    </select>
+    <select id="searchStuUserForTeacher" parameterType="java.util.Map" resultMap="StuUserExtMap">
+        SELECT SU.USER_FLOW,
+        SU.USER_NAME,
+        SU.ID_NO,
+        SUR.RESUME_FLOW,
+        SUR.STU_BAT_ID,
+        SUR.STU_BAT_NAME,
+        SUR.SCHOOL_SPE_NAME,
+        SUR.STU_TIME_NAME,
+        SUR.SPE_ID,
+        SUR.SPE_NAME,
+        SUR.STU_STATUS_ID,
+        SUR.STU_STATUS_NAME,
+        SUR.TEACHER_FLOW,
+        SUR.TEACHER_NAME,
+        SUR.IS_GRADUATION,
+        SUR.GRADUATION_DATE,
+        SUR.IS_PUBLISH,
+        SUR.RESUME_INFO,
+        SUR.ISSUE_CERTIFICATE
+        FROM STU_USER_RESUME SUR
+        INNER JOIN SYS_USER SU
+        ON SUR.USER_FLOW = SU.USER_FLOW
+        LEFT JOIN RES_DOCTOR_SCH_PROCESS_EVAL rdspe
+        ON  rdspe.DOCTOR_FLOW = SUR.USER_FLOW
+        AND rdspe.EVAL_USER_FLOW = SUR.TEACHER_FLOW
+        WHERE SU.RECORD_STATUS = 'Y'
+        AND SUR.RECORD_STATUS = 'Y'
+        <if test='batchFlow != null and batchFlow != ""'>
+            AND SUR.STU_BAT_ID = #{batchFlow}
+        </if>
+        <if test="status!=null and status.size>0">
+            and SUR.STU_STATUS_ID in
+            <foreach collection="status" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='userName != null and userName != ""'>
+            <bind name="name" value="'%'+userName+'%'"/>
+            AND SU.USER_NAME LIKE #{name}
+        </if>
+        <if test="deptFlows!=null and deptFlows.size>0">
+            and SUR.SPE_ID in
+            <foreach collection="deptFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='teacherFlow != null and teacherFlow != ""'>
+            AND SUR.TEACHER_FLOW = #{teacherFlow}
+        </if>
+        <if test='speId != null and speId != ""'>
+            AND SUR.SPE_ID = #{speId}
+        </if>
+        <if test='evalStatueId != null and evalStatueId != "" and evalStatueId == "1"'>
+            AND rdspe.PROCESS_FLOW IS NOT NULL
+        </if>
+        <if test='evalStatueId != null and evalStatueId != "" and evalStatueId == "2"'>
+            AND rdspe.PROCESS_FLOW IS NULL
+        </if>
+        ORDER BY SUR.SPE_ID DESC,SUR.CREATE_TIME DESC
+    </select>
+</mapper>

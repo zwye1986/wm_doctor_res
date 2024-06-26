@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+	<!-- 大病历登记表单 -->
+	<!--
+	{0}:表单所属机构(开关控制)
+	{1}:版本号
+ -->
+	<jsp path="res/form/{3}/{0}/teachActicity_{1}"/>
+	<shzs_qk_jxhd_ty ver="1.0">
+		<page  ver="1.0">
+			<item name="teach_date" isView="2" remark="日期" multiple="N"/>
+			<item name="teach_content" isView="1" remark="内容" multiple="N"/>
+			<item name="teach_activityForm"  remark="活动形式" multiple="N"/>
+			<item name="teach_period" remark="学时" multiple="N"/>
+			<item name="teach_keynoteSpeaker" isView="0" remark="主讲人" multiple="N"/>
+			<item name="teach_remark" remark="备注" multiple="N"/>
+		</page>
+	</shzs_qk_jxhd_ty>
+	
+</jspForm>
+

@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.sci.dao.base.ErpCrmContractBillBalanceMapper">
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ErpCrmContractBillBalance">
+    <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
+    <result column="CONTRACT_FLOW" jdbcType="VARCHAR" property="contractFlow" />
+    <result column="BILL_PLAN_FLOW" jdbcType="VARCHAR" property="billPlanFlow" />
+    <result column="BILL_DATE" jdbcType="VARCHAR" property="billDate" />
+    <result column="BILL_FUND" jdbcType="DECIMAL" property="billFund" />
+    <result column="BILL_NO" jdbcType="VARCHAR" property="billNo" />
+    <result column="BILL_TRACKE_NUMBER" jdbcType="VARCHAR" property="billTrackeNumber" />
+    <result column="BILL_TRACKE_CONTENT" jdbcType="VARCHAR" property="billTrackeContent" />
+    <result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_USER_FLOW" jdbcType="VARCHAR" property="createUserFlow" />
+    <result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime" />
+    <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
+    <result column="BILL_APPLY_USER_FLOW" jdbcType="VARCHAR" property="billApplyUserFlow" />
+    <result column="BILL_APPLY_USER_NAME" jdbcType="VARCHAR" property="billApplyUserName" />
+    <result column="HANDLE_USER_FLOW" jdbcType="VARCHAR" property="handleUserFlow" />
+    <result column="HANDLE_USER_NAME" jdbcType="VARCHAR" property="handleUserName" />
+    <result column="HANDLE_TIME" jdbcType="VARCHAR" property="handleTime" />
+    <result column="TRACKE_USER_FLOW" jdbcType="VARCHAR" property="trackeUserFlow" />
+    <result column="TRACKE_USER_NAME" jdbcType="VARCHAR" property="trackeUserName" />
+    <result column="TRACKE_TIME" jdbcType="VARCHAR" property="trackeTime" />
+    <result column="AUDIT_USER_FLOW" jdbcType="VARCHAR" property="auditUserFlow" />
+    <result column="AUDIT_USER_NAME" jdbcType="VARCHAR" property="auditUserName" />
+    <result column="AUDIT_REASON" jdbcType="VARCHAR" property="auditReason" />
+    <result column="AUDIT_TIME" jdbcType="VARCHAR" property="auditTime" />
+    <result column="STATUS_ID" jdbcType="VARCHAR" property="statusId" />
+    <result column="STATUS_NAME" jdbcType="VARCHAR" property="statusName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    RECORD_FLOW, CONTRACT_FLOW, BILL_PLAN_FLOW, BILL_DATE, BILL_FUND, BILL_NO, BILL_TRACKE_NUMBER, 
+    BILL_TRACKE_CONTENT, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+    BILL_APPLY_USER_FLOW, BILL_APPLY_USER_NAME, HANDLE_USER_FLOW, HANDLE_USER_NAME, HANDLE_TIME, 
+    TRACKE_USER_FLOW, TRACKE_USER_NAME, TRACKE_TIME, AUDIT_USER_FLOW, AUDIT_USER_NAME, 
+    AUDIT_REASON, AUDIT_TIME, STATUS_ID, STATUS_NAME
+  </sql>
+  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.ErpCrmContractBillBalanceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.ERP_CRM_CONTRACT_BILL_BALANCE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.ERP_CRM_CONTRACT_BILL_BALANCE
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PDSCI.ERP_CRM_CONTRACT_BILL_BALANCE
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ErpCrmContractBillBalanceExample">
+    delete from PDSCI.ERP_CRM_CONTRACT_BILL_BALANCE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.ErpCrmContractBillBalance">
+    insert into PDSCI.ERP_CRM_CONTRACT_BILL_BALANCE (RECORD_FLOW, CONTRACT_FLOW, BILL_PLAN_FLOW, 
+      BILL_DATE, BILL_FUND, BILL_NO, 
+      BILL_TRACKE_NUMBER, BILL_TRACKE_CONTENT, RECORD_STATUS, 
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+      MODIFY_USER_FLOW, BILL_APPLY_USER_FLOW, BILL_APPLY_USER_NAME, 
+      HANDLE_USER_FLOW, HANDLE_USER_NAME, HANDLE_TIME, 
+      TRACKE_USER_FLOW, TRACKE_USER_NAME, TRACKE_TIME, 
+      AUDIT_USER_FLOW, AUDIT_USER_NAME, AUDIT_REASON, 
+      AUDIT_TIME, STATUS_ID, STATUS_NAME
+      )
+    values (#{recordFlow,jdbcType=VARCHAR}, #{contractFlow,jdbcType=VARCHAR}, #{billPlanFlow,jdbcType=VARCHAR}, 
+      #{billDate,jdbcType=VARCHAR}, #{billFund,jdbcType=DECIMAL}, #{billNo,jdbcType=VARCHAR}, 
+      #{billTrackeNumber,jdbcType=VARCHAR}, #{billTrackeContent,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
+      #{modifyUserFlow,jdbcType=VARCHAR}, #{billApplyUserFlow,jdbcType=VARCHAR}, #{billApplyUserName,jdbcType=VARCHAR}, 
+      #{handleUserFlow,jdbcType=VARCHAR}, #{handleUserName,jdbcType=VARCHAR}, #{handleTime,jdbcType=VARCHAR}, 
+      #{trackeUserFlow,jdbcType=VARCHAR}, #{trackeUserName,jdbcType=VARCHAR}, #{trackeTime,jdbcType=VARCHAR}, 
+      #{auditUserFlow,jdbcType=VARCHAR}, #{auditUserName,jdbcType=VARCHAR}, #{auditReason,jdbcType=VARCHAR}, 
+      #{auditTime,jdbcType=VARCHAR}, #{statusId,jdbcType=VARCHAR}, #{statusName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ErpCrmContractBillBalance">
+    insert into PDSCI.ERP_CRM_CONTRACT_BILL_BALANCE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recordFlow != null">
+        RECORD_FLOW,
+      </if>
+      <if test="contractFlow != null">
+        CONTRACT_FLOW,
+      </if>
+      <if test="billPlanFlow != null">
+        BILL_PLAN_FLOW,
+      </if>
+      <if test="billDate != null">
+        BILL_DATE,
+      </if>
+      <if test="billFund != null">
+        BILL_FUND,
+      </if>
+      <if test="billNo != null">
+        BILL_NO,
+      </if>
+      <if test="billTrackeNumber != null">
+        BILL_TRACKE_NUMBER,
+      </if>
+      <if test="billTrackeContent != null">
+        BILL_TRACKE_CONTENT,
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="billApplyUserFlow != null">
+        BILL_APPLY_USER_FLOW,
+      </if>
+      <if test="billApplyUserName != null">
+        BILL_APPLY_USER_NAME,
+      </if>
+      <if test="handleUserFlow != null">
+        HANDLE_USER_FLOW,
+      </if>
+      <if test="handleUserName != null">
+        HANDLE_USER_NAME,
+      </if>
+      <if test="handleTime != null">
+        HANDLE_TIME,
+      </if>
+      <if test="trackeUserFlow != null">
+        TRACKE_USER_FLOW,
+      </if>
+      <if test="trackeUserName != null">
+        TRACKE_USER_NAME,
+      </if>
+      <if test="trackeTime != null">
+        TRACKE_TIME,
+      </if>
+      <if test="auditUserFlow != null">
+        AUDIT_USER_FLOW,
+      </if>
+      <if test="auditUserName != null">
+        AUDIT_USER_NAME,
+      </if>
+      <if test="auditReason != null">
+        AUDIT_REASON,
+      </if>
+      <if test="auditTime != null">
+        AUDIT_TIME,
+      </if>
+      <if test="statusId != null">
+        STATUS_ID,
+      </if>
+      <if test="statusName != null">
+        STATUS_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recordFlow != null">
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="contractFlow != null">
+        #{contractFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="billPlanFlow != null">
+        #{billPlanFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="billDate != null">
+        #{billDate,jdbcType=VARCHAR},
+      </if>
+      <if test="billFund != null">
+        #{billFund,jdbcType=DECIMAL},
+      </if>
+      <if test="billNo != null">
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billTrackeNumber != null">
+        #{billTrackeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="billTrackeContent != null">
+        #{billTrackeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="billApplyUserFlow != null">
+        #{billApplyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="billApplyUserName != null">
+        #{billApplyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="handleUserFlow != null">
+        #{handleUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="handleUserName != null">
+        #{handleUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="handleTime != null">
+        #{handleTime,jdbcType=VARCHAR},
+      </if>
+      <if test="trackeUserFlow != null">
+        #{trackeUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="trackeUserName != null">
+        #{trackeUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="trackeTime != null">
+        #{trackeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserFlow != null">
+        #{auditUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserName != null">
+        #{auditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditReason != null">
+        #{auditReason,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null">
+        #{auditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="statusId != null">
+        #{statusId,jdbcType=VARCHAR},
+      </if>
+      <if test="statusName != null">
+        #{statusName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ErpCrmContractBillBalanceExample" resultType="java.lang.Integer">
+    select count(*) from PDSCI.ERP_CRM_CONTRACT_BILL_BALANCE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update PDSCI.ERP_CRM_CONTRACT_BILL_BALANCE
+    <set>
+      <if test="record.recordFlow != null">
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contractFlow != null">
+        CONTRACT_FLOW = #{record.contractFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billPlanFlow != null">
+        BILL_PLAN_FLOW = #{record.billPlanFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billDate != null">
+        BILL_DATE = #{record.billDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billFund != null">
+        BILL_FUND = #{record.billFund,jdbcType=DECIMAL},
+      </if>
+      <if test="record.billNo != null">
+        BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billTrackeNumber != null">
+        BILL_TRACKE_NUMBER = #{record.billTrackeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billTrackeContent != null">
+        BILL_TRACKE_CONTENT = #{record.billTrackeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null">
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null">
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null">
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billApplyUserFlow != null">
+        BILL_APPLY_USER_FLOW = #{record.billApplyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billApplyUserName != null">
+        BILL_APPLY_USER_NAME = #{record.billApplyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.handleUserFlow != null">
+        HANDLE_USER_FLOW = #{record.handleUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.handleUserName != null">
+        HANDLE_USER_NAME = #{record.handleUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.handleTime != null">
+        HANDLE_TIME = #{record.handleTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trackeUserFlow != null">
+        TRACKE_USER_FLOW = #{record.trackeUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trackeUserName != null">
+        TRACKE_USER_NAME = #{record.trackeUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trackeTime != null">
+        TRACKE_TIME = #{record.trackeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditUserFlow != null">
+        AUDIT_USER_FLOW = #{record.auditUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditUserName != null">
+        AUDIT_USER_NAME = #{record.auditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditReason != null">
+        AUDIT_REASON = #{record.auditReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditTime != null">
+        AUDIT_TIME = #{record.auditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusId != null">
+        STATUS_ID = #{record.statusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusName != null">
+        STATUS_NAME = #{record.statusName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update PDSCI.ERP_CRM_CONTRACT_BILL_BALANCE
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      CONTRACT_FLOW = #{record.contractFlow,jdbcType=VARCHAR},
+      BILL_PLAN_FLOW = #{record.billPlanFlow,jdbcType=VARCHAR},
+      BILL_DATE = #{record.billDate,jdbcType=VARCHAR},
+      BILL_FUND = #{record.billFund,jdbcType=DECIMAL},
+      BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      BILL_TRACKE_NUMBER = #{record.billTrackeNumber,jdbcType=VARCHAR},
+      BILL_TRACKE_CONTENT = #{record.billTrackeContent,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      BILL_APPLY_USER_FLOW = #{record.billApplyUserFlow,jdbcType=VARCHAR},
+      BILL_APPLY_USER_NAME = #{record.billApplyUserName,jdbcType=VARCHAR},
+      HANDLE_USER_FLOW = #{record.handleUserFlow,jdbcType=VARCHAR},
+      HANDLE_USER_NAME = #{record.handleUserName,jdbcType=VARCHAR},
+      HANDLE_TIME = #{record.handleTime,jdbcType=VARCHAR},
+      TRACKE_USER_FLOW = #{record.trackeUserFlow,jdbcType=VARCHAR},
+      TRACKE_USER_NAME = #{record.trackeUserName,jdbcType=VARCHAR},
+      TRACKE_TIME = #{record.trackeTime,jdbcType=VARCHAR},
+      AUDIT_USER_FLOW = #{record.auditUserFlow,jdbcType=VARCHAR},
+      AUDIT_USER_NAME = #{record.auditUserName,jdbcType=VARCHAR},
+      AUDIT_REASON = #{record.auditReason,jdbcType=VARCHAR},
+      AUDIT_TIME = #{record.auditTime,jdbcType=VARCHAR},
+      STATUS_ID = #{record.statusId,jdbcType=VARCHAR},
+      STATUS_NAME = #{record.statusName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ErpCrmContractBillBalance">
+    update PDSCI.ERP_CRM_CONTRACT_BILL_BALANCE
+    <set>
+      <if test="contractFlow != null">
+        CONTRACT_FLOW = #{contractFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="billPlanFlow != null">
+        BILL_PLAN_FLOW = #{billPlanFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="billDate != null">
+        BILL_DATE = #{billDate,jdbcType=VARCHAR},
+      </if>
+      <if test="billFund != null">
+        BILL_FUND = #{billFund,jdbcType=DECIMAL},
+      </if>
+      <if test="billNo != null">
+        BILL_NO = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billTrackeNumber != null">
+        BILL_TRACKE_NUMBER = #{billTrackeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="billTrackeContent != null">
+        BILL_TRACKE_CONTENT = #{billTrackeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="billApplyUserFlow != null">
+        BILL_APPLY_USER_FLOW = #{billApplyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="billApplyUserName != null">
+        BILL_APPLY_USER_NAME = #{billApplyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="handleUserFlow != null">
+        HANDLE_USER_FLOW = #{handleUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="handleUserName != null">
+        HANDLE_USER_NAME = #{handleUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="handleTime != null">
+        HANDLE_TIME = #{handleTime,jdbcType=VARCHAR},
+      </if>
+      <if test="trackeUserFlow != null">
+        TRACKE_USER_FLOW = #{trackeUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="trackeUserName != null">
+        TRACKE_USER_NAME = #{trackeUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="trackeTime != null">
+        TRACKE_TIME = #{trackeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserFlow != null">
+        AUDIT_USER_FLOW = #{auditUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserName != null">
+        AUDIT_USER_NAME = #{auditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditReason != null">
+        AUDIT_REASON = #{auditReason,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null">
+        AUDIT_TIME = #{auditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="statusId != null">
+        STATUS_ID = #{statusId,jdbcType=VARCHAR},
+      </if>
+      <if test="statusName != null">
+        STATUS_NAME = #{statusName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ErpCrmContractBillBalance">
+    update PDSCI.ERP_CRM_CONTRACT_BILL_BALANCE
+    set CONTRACT_FLOW = #{contractFlow,jdbcType=VARCHAR},
+      BILL_PLAN_FLOW = #{billPlanFlow,jdbcType=VARCHAR},
+      BILL_DATE = #{billDate,jdbcType=VARCHAR},
+      BILL_FUND = #{billFund,jdbcType=DECIMAL},
+      BILL_NO = #{billNo,jdbcType=VARCHAR},
+      BILL_TRACKE_NUMBER = #{billTrackeNumber,jdbcType=VARCHAR},
+      BILL_TRACKE_CONTENT = #{billTrackeContent,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      BILL_APPLY_USER_FLOW = #{billApplyUserFlow,jdbcType=VARCHAR},
+      BILL_APPLY_USER_NAME = #{billApplyUserName,jdbcType=VARCHAR},
+      HANDLE_USER_FLOW = #{handleUserFlow,jdbcType=VARCHAR},
+      HANDLE_USER_NAME = #{handleUserName,jdbcType=VARCHAR},
+      HANDLE_TIME = #{handleTime,jdbcType=VARCHAR},
+      TRACKE_USER_FLOW = #{trackeUserFlow,jdbcType=VARCHAR},
+      TRACKE_USER_NAME = #{trackeUserName,jdbcType=VARCHAR},
+      TRACKE_TIME = #{trackeTime,jdbcType=VARCHAR},
+      AUDIT_USER_FLOW = #{auditUserFlow,jdbcType=VARCHAR},
+      AUDIT_USER_NAME = #{auditUserName,jdbcType=VARCHAR},
+      AUDIT_REASON = #{auditReason,jdbcType=VARCHAR},
+      AUDIT_TIME = #{auditTime,jdbcType=VARCHAR},
+      STATUS_ID = #{statusId,jdbcType=VARCHAR},
+      STATUS_NAME = #{statusName,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

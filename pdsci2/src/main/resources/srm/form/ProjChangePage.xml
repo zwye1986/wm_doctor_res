@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>	
+	<!-- 变更申请表单 -->
+	<pageGroup name="product" firstPage="step1" view="srm/proj/form/change/product/view">
+		<page name="step1" remark="步骤1" jsp="srm/proj/form/change/product/step1">
+		    <item name="projName" remark="项目名称" multiple="N"></item>
+			<item name="orgName" remark="单位名称" multiple="N"></item>
+			<item name="userName" remark="联系人" multiple="N"></item>
+			<item name="userPhone" remark="联系电话" multiple="N"></item>
+			<item name="addressId" remark="邮政编码" multiple="N"></item>
+			<item name="userEmail" remark="电子信箱" multiple="N"></item>
+			<item name="orgAddress" remark="通信地址" multiple="N"></item>
+			<item name="chargeOrg" remark="项目主管部门" multiple="N"></item>
+			<item name="projStartTime" remark="项目合同开始时间" multiple="N"></item>
+			<item name="projEndTime" remark="项目合同结束时间" multiple="N"></item>
+			<item name="planEndTime" remark="计划结束时间" multiple="N"></item>
+			<item name="projContentTarget" remark="合同内容和指标" multiple="N"></item>
+			<item name="changeContent" remark="申请调整内容" multiple="N"></item>
+			<item name="changeReason" remark="调整原因说明" multiple="N"></item>
+			<item name="afterChangeTarget" remark="调整后的考核指标" multiple="N"></item>
+		</page>
+		<page name="step2" remark="步骤2" jsp="srm/proj/form/change/product/step2">
+			<itemGroup name="projMainPeop" remark="项目负责人情况表" jsp="srm/proj/form/change/product/itemGroup_applyUser" flow="" modelStyle="add">
+				<item name="projMainPeop_name" remark="姓名" multiple="N"></item>
+			    <item name="projMainPeop_sex" remark="性别" multiple="N"></item>
+			    <item name="projMainPeop_birthday" remark="生日" multiple="N"></item>
+			    <item name="projMainPeop_degree" remark="学位" multiple="N"></item>
+			    <item name="projMainPeop_professional" remark="职称" multiple="N"></item>
+			    <item name="projMainPeop_post" remark="所在单位" multiple="N"></item>
+			    <item name="projMainPeop_workOrg" remark="所在单位" multiple="N"></item>
+			    <item name="projMainPeop_workTime" remark="为本项目工作时间" multiple="N"></item>
+			  </itemGroup>
+			  	<item name="sumCount" remark="研发总人数" multiple="N"></item>
+		  		<item name="boShiCount" remark="博士个数" multiple="N"></item>
+		  		<item name="shuoShiCount" remark="硕士个数" multiple="N"></item>
+		  		<item name="hightDutyCount" remark="高级职称个数" multiple="N"></item>
+		  		<item name="midDutyCount" remark="中级职称个数" multiple="N"></item>
+		</page>
+		<page name="step3" remark="步骤3" jsp="srm/proj/form/change/product/step3">
+			<item name="allCostCount" remark="" multiple="N"></item>
+		    <item name="countryCost" remark="" multiple="N"></item>
+		    <item name="provinceCost" remark="" multiple="N"></item>
+		    <item name="cityCost" remark="" multiple="N"></item>
+		    <item name="orgBelongPost" remark="" multiple="N"></item>
+		    <item name="orgDoPost" remark="" multiple="N"></item>
+		    <item name="otherPost" remark="" multiple="N"></item>
+		    
+		    <itemGroup name="cost" remark="项目经纬支出情况" jsp="" flow="" modelStyle="add">
+		    	<item name="cost_costReason" remark="栏目" multiple="N"></item>
+				<item name="cost_costCount" remark="金额" multiple="N"></item>
+		    </itemGroup>
+		    <item name="costSum" remark="项目经费支出合计" multiple="N"></item>
+		</page>
+	</pageGroup>
+
+	<pageGroup name="yhwsj.zdxm" firstPage="step1" view="srm/proj/form/change/yhwsj.zdxm/view" printTemeplete="/jsp/srm/proj/form/change/yhwsj.zdxm/printTemeplete.docx">
+		<page name="step1" remark="步骤1" jsp="srm/proj/form/change/yhwsj.zdxm/step1">
+			<item name="projNo" remark="项目编号" multiple="N"></item>
+			<item name="projLeader" remark="项目负责人" multiple="N"></item>
+			<item name="projName" remark="项目名称" multiple="N"></item>
+			<item name="applyOrgName" remark="承担单位" multiple="N"></item>
+			<item name="startTime" remark="起止时间" multiple="N"></item>
+			<item name="endTime" remark="起止时间" multiple="N"></item>
+			<item name="fillDate" remark="填报日期" multiple="N"></item>
+			
+			<item name="file" remark="附件" multiple="Y" isFile="Y"></item>
+		</page>
+	</pageGroup>
+
+	<pageGroup name="jsszyy.kyxm" firstPage="step1" view="srm/proj/form/change/jsszyy.kyxm/view" printTemeplete="/jsp/srm/proj/form/change/jsszyy.kyxm/printTemeplete.docx">
+		<page name="step1" remark="步骤1" jsp="srm/proj/form/change/jsszyy.kyxm/step1">
+			<item name="projName" remark="项目名称" multiple="N"></item>
+			<item name="projDeclarer" remark="项目来源" multiple="N"></item>
+			<item name="projContractNo" remark="项目合同号" multiple="N"></item>
+			<item name="projYear" remark="立项年度" multiple="N"></item>
+			<item name="applyOrgName" remark="承担科室" multiple="N"></item>
+			<item name="applyUserName" remark="负责人" multiple="N"></item>
+			<item name="change_conclusionTime" remark="变更结题时间" multiple="N"></item>
+			<item name="change_research" remark="变更研究方案" multiple="N"></item>
+			<item name="change_applyUserName" remark="变更项目负责人" multiple="N"></item>
+			<item name="change_member" remark="变更课题组成员" multiple="N"></item>
+			<item name="change_other" remark="变更内容其他" multiple="N"></item>
+			<item name="otherState" remark="其他说明" multiple="N"></item>
+		</page>
+		<page name="step2" remark="步骤2" jsp="srm/proj/form/change/jsszyy.kyxm/step2">
+			<item name="prescribedWork" remark="变更事由及项目已完成情况" multiple="N"></item>
+			<item name="research" remark="下阶段工作打算" multiple="N"></item>
+			<item name="suggestion" remark="科技处审查意见" multiple="N"></item>
+		</page>
+		<page name="step3" remark="步骤3" jsp="srm/proj/form/change/jsszyy.kyxm/step3">
+			<itemGroup name="outmemberList" remark="退出成员名单" jsp="" flow="" modelStyle="add">
+				<item name="outmemberList_name" remark="退出人员姓名" multiple="N"></item>
+				<item name="outmemberList_ranking" remark="排名" multiple="N"></item>
+				<item name="outmemberList_reason" remark="变更理由" multiple="N"></item>
+				<item name="outmemberList_sign" remark="本人签名" multiple="N"></item>
+				<item name="outmemberList_memo" remark="备注" multiple="N"></item>
+			</itemGroup>
+			<itemGroup name="changememberList" remark="变更后成员名单" jsp="" flow="" modelStyle="add">
+				<item name="changememberList_name" remark="变更后全部人员姓名" multiple="N"></item>
+				<item name="changememberList_ranking" remark="排名" multiple="N"></item>
+				<item name="changememberList_mainTask" remark="承担主要研究任务" multiple="N"></item>
+				<item name="changememberList_sign" remark="本人签名" multiple="N"></item>
+				<item name="changememberList_memo" remark="备注" multiple="N"></item>
+			</itemGroup>
+		</page>
+	</pageGroup>
+
+
+
+	<!--江苏省中医院院外项目变更申请 -->
+	<pageGroup name="jsszyy.ywxm" firstPage="step1" view="srm/proj/form/change/jsszyy.ywxm/view">
+		<page name="step1" remark="步骤1" jsp="srm/proj/form/change/jsszyy.ywxm/step1">
+			<item name="file" remark="附件" multiple="Y" isFile="Y"></item>
+		</page>
+	</pageGroup>
+
+</jspForm>
+

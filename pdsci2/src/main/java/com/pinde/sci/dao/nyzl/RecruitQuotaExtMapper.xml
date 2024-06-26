@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.nyzl.RecruitQuotaExtMapper">
+    <resultMap id="RecruitQuotaExtResultMap" type="com.pinde.sci.model.nyzl.NyzlOrgRecruitQuotaExt">
+        <id column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="queryOrgList" parameterType="com.pinde.sci.model.mo.SysOrg" resultMap="RecruitQuotaExtResultMap">
+        select so.org_flow,so.org_name from sys_org so
+        where so.record_status='Y'
+        <if test="orgFlow!=null and orgFlow!=''">
+            and so.org_flow=#{orgFlow}
+        </if>
+        order by CREATE_TIME
+    </select>
+    <select id="queryFwhList" parameterType="map" resultType="map">
+        select de.dept_flow,de.dept_name,nrq.*
+        from sys_dept de
+        left join Nyzl_Recruit_Quota nrq
+        on de.dept_flow=nrq.fwh_flow
+        and nrq.record_status='Y'
+        <if test="recruitYear!=null and recruitYear!=''">
+            and nrq.recruit_year=#{recruitYear}
+        </if>
+        <if test="stuSign!=null and stuSign!=''">
+            and nrq.stu_sign=#{stuSign}
+        </if>
+        <if test="publishFlag!=null and publishFlag!=''">
+            and nrq.PUBLISH_FLAG=#{publishFlag}
+        </if>
+        where de.record_status='Y'
+        and de.org_flow=(
+        select org_flow from sys_org
+        where org_name='南方医科大学' and record_status='Y')
+        <if test="fwhFlow!=null and fwhFlow!=''">
+            and de.dept_flow=#{fwhFlow}
+        </if>
+        order by de.ordinal
+    </select>
+
+    <select id="countRecruitQuota" parameterType="map" resultType="map">
+        select NVL(SUM(nrq.tk_academic_num),0) tk_academic_num,
+                NVL(SUM(nrq.tk_special_num),0) tk_special_num,
+                NVL(SUM(nrq.tms_academic_num),0) tms_academic_num,
+                NVL(SUM(nrq.tms_special_num),0) tms_special_num
+        from Nyzl_Recruit_Quota nrq
+        where nrq.record_status='Y'
+        <if test="recruitYear!=null and recruitYear!=''">
+            and nrq.recruit_year=#{recruitYear}
+        </if>
+        <if test="stuSign!=null and stuSign!=''">
+            and nrq.stu_sign=#{stuSign}
+        </if>
+        <if test="fwhFlow!=null and fwhFlow!=''">
+            and nrq.fwh_flow=#{fwhFlow}
+        </if>
+    </select>
+</mapper>

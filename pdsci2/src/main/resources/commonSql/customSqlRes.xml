@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 通用获取数据方法的sql库 -->
+<!-- 该库为通用获取数据方法提供指定sql来获取指定文件 -->
+<!-- 每一个sql元素的id不能重复 -->
+<!-- 参数使用替换符带入{0}{1}{2}..... -->
+<!-- 列别名必须需按照数据库列明格式命名 WORD_WORD_WORD -->
+<!-- 建议 id定义格式为 工作站_jsp名称_ajax方法名 -->
+
+<!-- 查询大字段是需要使用to_char函数 -->
+
+<!-- sql不使用时应及时删除 -->
+<resource>
+    <sql id="res_evaluation_1.0_getDoctorDatas">
+        select
+        rd.doctor_flow doctor_flow,
+        rd.session_number session_number,
+        rd.training_spe_name training_spe_name,
+        rdsp.sch_dept_name sch_dept_name,
+        rdsp.sch_start_date sch_start_date,
+        rdsp.sch_end_date sch_end_date,
+        rs.theory_score theory_score
+        from res_doctor_sch_process rdsp
+        inner join res_doctor rd
+        on rdsp.user_flow = rd.doctor_flow
+        left join res_score rs
+        on rdsp.process_flow = rs.process_flow
+        and rs.record_status = 'Y'
+        where rdsp.record_status = 'Y'
+        and rd.record_status = 'Y'
+        and rdsp.process_flow = '{0}'
+    </sql>
+    <sql id="res_evaluation_1.0_getDoctorDatas_cap">
+        select to_char(rec_content) rec_content
+        from res_rec
+        where record_status = 'Y'
+        and rec_type_id = '{0}'
+        and process_flow = '{1}'
+    </sql>
+    <sql id="res_evaluation_1.0_getGradeDatas_cap">
+        select to_char(rec_content) rec_content
+        from dept_teacher_grade_info
+        where record_status = 'Y'
+        and rec_type_id = '{0}'
+        and process_flow = '{1}'
+    </sql>
+    <sql id="res_evaluation_1.0_getDoctorDatas_Activtiy_cap">
+        select xmltype(rec_content).extract('//activity_way').getstringval() rec_content
+        from res_rec
+        where record_status = 'Y'
+        and rec_type_id = '{0}'
+        and process_flow = '{1}'
+    </sql>
+</resource>

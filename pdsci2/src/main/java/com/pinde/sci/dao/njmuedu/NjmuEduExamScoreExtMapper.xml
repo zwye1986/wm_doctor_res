@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.njmuedu.NjmuEduExamScoreExtMapper">
+    <resultMap id="eduExamScoreMap" type="com.pinde.sci.model.njmuedu.EduExamScoreExt" extends="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+        <!--<result column="MAJOR_ID" property="majorId" jdbcType="VARCHAR" />-->
+        <!--<result column="MAJOR_NAME" property="majorName" jdbcType="VARCHAR" />-->
+        <!--<association property="SysUser" column="user_flow" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />-->
+        <association property="eduUser" column="user_flow" resultMap="com.pinde.sci.dao.base.EduUserMapper.BaseResultMap"/>
+        <collection property="examScoreList" ofType="com.pinde.sci.model.mo.EduExamScore" column="detail_flow">
+            <id column="detail_flow" jdbcType="VARCHAR" property="detaliFlow"/>
+            <result column="course_flow" jdbcType="VARCHAR" property="courseFlow"/>
+            <result column="course_name" jdbcType="VARCHAR" property="courseName"/>
+            <result column="score" jdbcType="VARCHAR" property="score"/>
+        </collection>
+    </resultMap>
+    <select id="searchEduExamScoreList" parameterType="java.util.Map" resultMap="eduExamScoreMap">
+            select su.user_flow,su.user_name,su.id_no,su.org_flow,su.org_name,major_id,major_name,
+                   ees.course_flow,ees.course_name,ees.score
+            from  edu_exam_score ees
+            left join sys_user su   on su.user_flow = ees.user_flow
+            left join edu_user eu on su.user_flow = eu.user_flow
+            where ees.record_status ='Y' and su.record_status = 'Y' and eu.record_status ='Y'
+            <if test="sysUser != null">
+               <if test ="sysUser.userName != null and sysUser.userName != ''">
+                   and su.user_Name like '%${sysUser.userName}%'
+               </if>
+               <if test ="sysUser.idNo != null and sysUser.idNo != ''">
+                   and su.id_No = #{sysUser.idNo}
+               </if>
+               <if test ="sysUser.orgFlow != null and sysUser.orgFlow != ''">
+                   and su.org_flow = #{sysUser.orgFlow}
+               </if>
+            </if>
+            <if test="majorId != null and majorId != ''">
+                   and eu.major_Id = #{maojorId}
+            </if>
+    </select>
+
+    <resultMap id="eduUserMap" type="com.pinde.sci.model.njmuedu.EduUserCourseExt" extends="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+        <association property="eduUser" column="user_flow" resultMap="com.pinde.sci.dao.base.EduUserMapper.BaseResultMap"/>
+        <association property="studentCourse" column="record_flow" resultMap="com.pinde.sci.dao.base.EduStudentCourseMapper.BaseResultMap"/>
+    </resultMap>
+    <select id="searchEduUserList" parameterType="java.util.Map" resultMap="eduUserMap">
+          select su.user_flow,su.user_name,su.id_no,su.org_flow,su.org_name,major_id,major_name,
+                   esc.course_flow,esc.study_status_id,esc.study_status_name
+            from  edu_student_course esc
+            left join sys_user su on su.user_flow = esc.user_flow
+            left join edu_user eu on su.user_flow = eu.user_flow
+            where esc.record_status ='Y' and su.record_status = 'Y' and eu.record_status ='Y'
+            <if test="sysUser != null">
+                <if test ="sysUser.userName != null and sysUser.userName != ''">
+                    and su.user_Name like '%${sysUser.userName}%'
+                </if>
+                <if test ="sysUser.idNo != null and sysUser.idNo != ''">
+                    and su.id_No = #{sysUser.idNo}
+                </if>
+                <if test ="sysUser.orgFlow != null and sysUser.orgFlow != ''">
+                    and su.org_flow = #{sysUser.orgFlow}
+                </if>
+            </if>
+            <if test="majorId != null and majorId != ''">
+                and eu.major_Id = #{maojorId}
+            </if>
+
+
+    </select>
+
+</mapper>
