@@ -27,7 +27,7 @@
 
     <!-- 声明变量，如果后面用到可使用${变量名}来替代 -->
     <properties>
-        <lib.dir>${basedir}\src\main\lib</lib.dir>
+        <lib.dir>${basedir}/src/main/lib</lib.dir>
     </properties>
 
     <dependencies>
