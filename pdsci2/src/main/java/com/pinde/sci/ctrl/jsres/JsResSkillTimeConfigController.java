@@ -24,7 +24,6 @@ import com.pinde.sci.enums.osca.SignStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaCheckInfoExt;
 import com.pinde.sci.model.osca.OscaSkillsAssessmentExt;
-import jdk.nashorn.internal.runtime.GlobalConstants;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
