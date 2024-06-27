@@ -29,7 +29,7 @@
 				<c:if test="${dept.recordStatus == GlobalConstant.RECORD_STATUS_Y }">
 					<a href="javascript:edit('${dept.deptFlow}');" class="btn">编辑</a>
 					<a href="javascript:del('${dept.deptFlow}','${dept.deptName}','${GlobalConstant.RECORD_STATUS_N}');" class="btn">停用</a>
-					<%--<a href="javascript:publicOpen('${dept.deptFlow}');" class="btn">对外开放</a>--%>
+					<a href="javascript:publicOpen('${dept.deptFlow}');" class="btn">对外开放</a>
 				</c:if>
 				<c:if test="${dept.recordStatus == GlobalConstant.RECORD_STATUS_N }">
 					<a href="javascript:del('${dept.deptFlow}','','${GlobalConstant.RECORD_STATUS_Y}');" class="btn">启用</a>

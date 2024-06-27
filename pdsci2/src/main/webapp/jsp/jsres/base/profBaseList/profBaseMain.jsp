@@ -221,12 +221,12 @@
                 <input type="hidden" name="ishos" value="${ishos}">
                 <div>
                     <div class="search-div">
-                        <label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">年份</label>
+                        <label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">年份：</label>
                         <input class="input" name="sessionNumber" id="sessionNumber" style="width: 158px;margin: 0;padding-left: 22px"
                                value="${pdfn:getCurrYear()}"/>
                     </div>
                     <div id="mainBaseDiv" style=""  class="search-div">
-                        <label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">培训基地</label>
+                        <label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">培训基地：</label>
                         <select name="mainBase" id="mainBase" class="show-menu-arrow" multiple title="请至少选择一项" data-live-search="true"
                             data-live-search-placeholder="搜索" data-actions-box="true">
                             <c:if test='${not empty mainBaseList}'>
@@ -237,7 +237,7 @@
                         </select>
                     </div>
                     <div id="jointOrgDiv" style="" class="search-div">
-                        <label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">协同单位</label>
+                        <label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">协同单位：</label>
                         <select name="jointOrg" id="jointOrg" class="show-menu-arrow" multiple data-live-search="true"
                                 data-live-search-placeholder="搜索" data-actions-box="true" title="请选择">
                             <c:if test='${not empty jointOrgList}'>
@@ -248,7 +248,7 @@
                         </select>
                     </div>
                     <div id="profDeptDiv" style="" class="search-div">
-                        <label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">专业基地</label>
+                        <label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">专业基地：</label>
                         <select name="profDept" id="profDept" class="show-menu-arrow" multiple title="请至少选择一项" data-live-search="true"
                                 data-live-search-placeholder="搜索" data-actions-box="true">
                             <c:if test='${not empty dictTypeEnumDoctorTrainingSpeList}'>
