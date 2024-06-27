@@ -114,7 +114,7 @@
 		}
 		$(".minRecruitCapacityCount").text(minRecruitCapacityCount);
 
-		var capacityUsePercentCount = 0;
+		/*var capacityUsePercentCount = 0;
 		var capacityUsePercentTotal = 0;
 		if($(".capacityUsePercent") && $(".capacityUsePercent").length) {
 			$(".capacityUsePercent").each(function(i, item) {
@@ -127,7 +127,7 @@
 		}
 		if(capacityUsePercentTotal > 0) {
 			$(".capacityUsePercentCount").text(Math.round(capacityUsePercentCount / capacityUsePercentTotal).toFixed(1));
-		}
+		}*/
 
 		var zyysTotalCount = 0;
 		if($(".zyysTotal") && $(".zyysTotal").length) {
@@ -161,6 +161,10 @@
 			});
 		}
 		$(".zxzsTotalCount").text(zxzsTotalCount);
+
+		if(baseCapacityCount > 0) {
+			$(".capacityUsePercentCount").text(Math.round(trainingSumTotalCount * 100 / baseCapacityCount).toFixed(1));
+		}
 	}
 
 	function showSpe(speFlow, isJoin, ishos) {
