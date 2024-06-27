@@ -946,7 +946,10 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
             return "请先完善报考信息";
         }
         // 查询招录信息
-        List<ResDoctorRecruit> doctorRecruitList = recruitExtMapper.getDoctorRecruitInfo(sysUser.getUserFlow());
+        ResDoctorRecruitExample doctorRecruitExample = new ResDoctorRecruitExample();
+        doctorRecruitExample.createCriteria().andRecordStatusEqualTo("Y").andDoctorFlowEqualTo(sysUser.getUserFlow()).andDoctorStatusIdNotIn(Arrays.asList("21", "23", "24"));
+        doctorRecruitExample.setOrderByClause("create_time desc");
+        List<ResDoctorRecruit> doctorRecruitList = this.recruitMapper.selectByExample(doctorRecruitExample);
         if (null != doctorRecruitList && 0 < doctorRecruitList.size()) {
             ResDoctorRecruit doctorRecruit = doctorRecruitList.get(0);
             //有报送记录只能走报送通道
