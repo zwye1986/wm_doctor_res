@@ -76,17 +76,17 @@
                 <td>${orgSpe.baseCode}</td>
                 <td style="text-align: left"><a onclick="showProfBaseInfo(event)" dataspeid="${orgSpe.speId}" datasessionnumber="${sessionNumber}"
                     dataorgflow="${orgSpe.orgFlow}">${orgSpe.orgName}</a></td>
-                <td><span class="curInHospitalDoctors">${orgSpe.curInHospitalDoctors}</span>人</td>
-                <td><span class="curInCollegeMasters">${orgSpe.curInCollegeMasters}</span>人</td>
+                <td><span class="curInHospitalDoctors">${empty orgSpe.curInHospitalDoctors ? '0' : orgSpe.curInHospitalDoctors}</span>人</td>
+                <td><span class="curInCollegeMasters">${empty orgSpe.curInCollegeMasters ? '0' : orgSpe.curInCollegeMasters}</span>人</td>
                 <c:if test="${sessionNumber eq pdfn:getCurrYear()}">
-                    <td><span class="inHospitalDoctors">${orgSpe.inHospitalDoctors}</span>人</td>
-                    <td><span class="inCollegeMasters">${orgSpe.inCollegeMasters}</span>人</td>
-                    <td><span class="inTrains">${orgSpe.inTrains}</span>人</td>
+                    <td><span class="inHospitalDoctors">${empty orgSpe.inHospitalDoctors ? '0' : orgSpe.inHospitalDoctors}</span>人</td>
+                    <td><span class="inCollegeMasters">${empty orgSpe.inCollegeMasters ? '0' : orgSpe.inCollegeMasters}</span>人</td>
+                    <td><span class="inTrains">${empty orgSpe.inTrains ? '0' : orgSpe.inTrains}</span>人</td>
                     <td>
-                        <span class="baseCapacity" id="baseCapacity${orgSpe.speId}">${orgSpe.baseCapacity}</span>人
+                        <span class="baseCapacity" id="baseCapacity${orgSpe.speId}">${empty orgSpe.baseCapacity ? '0' : orgSpe.baseCapacity}</span>人
                     </td>
-                    <td><span class="minRecruitCapacity">${orgSpe.minRecruitCapacity}</span>人</td>
-                    <td><span class="trainingCapacityUsePer">${orgSpe.trainingCapacityUsePer}</span>%</td>
+                    <td><span class="minRecruitCapacity">${empty orgSpe.minRecruitCapacity ? '0' : orgSpe.minRecruitCapacity}</span>人</td>
+                    <td><span class="trainingCapacityUsePer">${empty orgSpe.trainingCapacityUsePer ? '0' : orgSpe.trainingCapacityUsePer}</span>%</td>
                 </c:if>
             </tr>
             <c:if test="${not empty orgSpe.jointOrgList}">
@@ -95,17 +95,17 @@
                     <td>${orgSpeSub.baseCode}</td>
                     <td style="text-align: left">------<a onclick="showProfBaseInfo(event)" dataspeid="${orgSpeSub.speId}" datasessionnumber="${sessionNumber}"
                           dataorgflow="${orgSpeSub.orgFlow}">${orgSpeSub.orgName}</a></td>
-                    <td><span class="curInHospitalDoctors">${orgSpeSub.curInHospitalDoctors}</span>人</td>
-                    <td><span class="curInCollegeMasters">${orgSpeSub.curInCollegeMasters}</span>人</td>
+                    <td><span class="curInHospitalDoctors">${empty orgSpeSub.curInHospitalDoctors ? '0' : orgSpeSub.curInHospitalDoctors}</span>人</td>
+                    <td><span class="curInCollegeMasters">${empty orgSpeSub.curInCollegeMasters ? '0' : orgSpeSub.curInCollegeMasters}</span>人</td>
                     <c:if test="${sessionNumber eq pdfn:getCurrYear()}">
-                        <td><span class="inHospitalDoctors">${orgSpeSub.inHospitalDoctors}</span>人</td>
-                        <td><span class="inCollegeMasters">${orgSpeSub.inCollegeMasters}</span>人</td>
-                        <td><span class="inTrains">${orgSpeSub.inTrains}</span>人</td>
+                        <td><span class="inHospitalDoctors">${empty orgSpeSub.inHospitalDoctors ? '0' : orgSpeSub.inHospitalDoctors}</span>人</td>
+                        <td><span class="inCollegeMasters">${empty orgSpeSub.inCollegeMasters ? '0' : orgSpeSub.inCollegeMasters}</span>人</td>
+                        <td><span class="inTrains">${empty orgSpeSub.inTrains ? '0' : orgSpeSub.inTrains}</span>人</td>
                         <td>
-                            <span class="baseCapacity" id="baseCapacity${orgSpeSub.speId}">${orgSpeSub.baseCapacity}</span>人
+                            <span class="baseCapacity" id="baseCapacity${orgSpeSub.speId}">${empty orgSpeSub.baseCapacity ? '0' : orgSpeSub.baseCapacity}</span>人
                         </td>
-                        <td><span class="minRecruitCapacity">${orgSpeSub.minRecruitCapacity}</span>人</td>
-                        <td><span class="trainingCapacityUsePer">${orgSpeSub.trainingCapacityUsePer}</span>%</td>
+                        <td><span class="minRecruitCapacity">${empty orgSpeSub.minRecruitCapacity ? '0' : orgSpeSub.minRecruitCapacity}</span>人</td>
+                        <td><span class="trainingCapacityUsePer">${empty orgSpeSub.trainingCapacityUsePer ? '0' : orgSpeSub.trainingCapacityUsePer}</span>%</td>
                     </c:if>
                 </tr>
                 </c:forEach>
