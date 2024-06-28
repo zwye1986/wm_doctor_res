@@ -38,7 +38,7 @@
 </head>
 
 <body>
-<jsp:include page="doctorHead.jsp"/>
+<jsp:include page="doctorHead.jsp" flush="true"/>
 <div class="body">
     <div class="container">
         <div class="course_top">

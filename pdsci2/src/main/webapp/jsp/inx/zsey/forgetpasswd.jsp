@@ -43,7 +43,7 @@ function reloadVerifyCode() {
 </head>
 <body>
 <div class="yw">
-  <jsp:include page="/jsp/hbres/head.jsp">
+  <jsp:include page="/jsp/hbres/head.jsp" flush="true">
       <jsp:param value="/inx/hbres" name="indexUrl"/>
       <jsp:param value="true" name="notShowAccount"/>
   </jsp:include>
@@ -84,7 +84,7 @@ function reloadVerifyCode() {
   </div>
 </div>
 
-<jsp:include page="/jsp/hbres/foot.jsp" />
+<jsp:include page="/jsp/hbres/foot.jsp"  flush="true"/>
 </div>
 </body>
 </html>

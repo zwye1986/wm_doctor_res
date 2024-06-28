@@ -29,69 +29,69 @@
 		 <div class="title1 clearfix">
 		 </div>
 		 <c:if test='${param.questionTypeId == "15"}'>
-             <jsp:include page="/jsp/exam/manage/question/type_15.jsp"></jsp:include>
+             <jsp:include page="/jsp/exam/manage/question/type_15.jsp" flush="true"></jsp:include>
          </c:if>
         <c:if test='${param.questionTypeId == "1501"}'>
-            <jsp:include page="/jsp/exam/manage/question/type_1501.jsp"></jsp:include>
+            <jsp:include page="/jsp/exam/manage/question/type_1501.jsp" flush="true"></jsp:include>
         </c:if>
         <c:if test='${param.questionTypeId == "1502"}'>
-            <jsp:include page="/jsp/exam/manage/question/type_1502.jsp"></jsp:include>
+            <jsp:include page="/jsp/exam/manage/question/type_1502.jsp" flush="true"></jsp:include>
         </c:if>
          <c:if test='${param.questionTypeId == "18"}'>
-             <jsp:include page="/jsp/exam/manage/question/type_18.jsp"></jsp:include>
+             <jsp:include page="/jsp/exam/manage/question/type_18.jsp" flush="true"></jsp:include>
          </c:if>
          <c:if test='${param.questionTypeId == "24"}'>
-             <jsp:include page="/jsp/exam/manage/question/type_24.jsp"></jsp:include>
+             <jsp:include page="/jsp/exam/manage/question/type_24.jsp" flush="true"></jsp:include>
          </c:if>
         <c:if test='${param.questionTypeId == "25"}'>
-            <jsp:include page="/jsp/exam/manage/question/type_25.jsp"></jsp:include>
+            <jsp:include page="/jsp/exam/manage/question/type_25.jsp" flush="true"></jsp:include>
         </c:if>
         <c:if test='${param.questionTypeId == "2501"}'>
-            <jsp:include page="/jsp/exam/manage/question/type_2501.jsp"></jsp:include>
+            <jsp:include page="/jsp/exam/manage/question/type_2501.jsp" flush="true"></jsp:include>
         </c:if>
         <c:if test='${param.questionTypeId == "2502"}'>
-            <jsp:include page="/jsp/exam/manage/question/type_2502.jsp"></jsp:include>
+            <jsp:include page="/jsp/exam/manage/question/type_2502.jsp" flush="true"></jsp:include>
         </c:if>
          <c:if test='${param.questionTypeId == "26"}'>
-             <jsp:include page="/jsp/exam/manage/question/type_26.jsp"></jsp:include>
+             <jsp:include page="/jsp/exam/manage/question/type_26.jsp" flush="true"></jsp:include>
          </c:if>
          <c:if test='${param.questionTypeId == "27"}'>
-             <jsp:include page="/jsp/exam/manage/question/type_27.jsp"></jsp:include>
+             <jsp:include page="/jsp/exam/manage/question/type_27.jsp" flush="true"></jsp:include>
          </c:if>
          <c:if test='${param.questionTypeId == "28"}'>
-             <jsp:include page="/jsp/exam/manage/question/type_28.jsp"></jsp:include>
+             <jsp:include page="/jsp/exam/manage/question/type_28.jsp" flush="true"></jsp:include>
          </c:if>
          <c:if test='${param.questionTypeId == "29"}'>
-             <jsp:include page="/jsp/exam/manage/question/type_29.jsp"></jsp:include>
+             <jsp:include page="/jsp/exam/manage/question/type_29.jsp" flush="true"></jsp:include>
          </c:if>
          <c:if test='${param.questionTypeId == "30"}'>
-             <jsp:include page="/jsp/exam/manage/question/type_30.jsp"></jsp:include>
+             <jsp:include page="/jsp/exam/manage/question/type_30.jsp" flush="true"></jsp:include>
          </c:if>
          <c:if test='${param.questionTypeId == "31"}'>
-             <jsp:include page="/jsp/exam/manage/question/type_31.jsp"></jsp:include>
+             <jsp:include page="/jsp/exam/manage/question/type_31.jsp" flush="true"></jsp:include>
          </c:if>
          <!-- K型题 暂时没有 -->
          <c:if test='${param.questionTypeId == "33"}'>
-             <jsp:include page="/jsp/exam/manage/question/type_33.jsp"></jsp:include>
+             <jsp:include page="/jsp/exam/manage/question/type_33.jsp" flush="true"></jsp:include>
          </c:if>
          <c:if test='${param.questionTypeId == "34"}'>
-             <jsp:include page="/jsp/exam/manage/question/type_34.jsp"></jsp:include>
+             <jsp:include page="/jsp/exam/manage/question/type_34.jsp" flush="true"></jsp:include>
          </c:if>
          <c:if test='${param.questionTypeId == "35"}'>
-             <jsp:include page="/jsp/exam/manage/question/type_35.jsp"></jsp:include>
+             <jsp:include page="/jsp/exam/manage/question/type_35.jsp" flush="true"></jsp:include>
          </c:if>
          <c:if test='${param.questionTypeId == "36"}'>
-             <jsp:include page="/jsp/exam/manage/question/type_36.jsp"></jsp:include>
+             <jsp:include page="/jsp/exam/manage/question/type_36.jsp" flush="true"></jsp:include>
          </c:if>
          <c:if test='${param.questionTypeId == "37"}'>
-             <jsp:include page="/jsp/exam/manage/question/type_37.jsp"></jsp:include>
+             <jsp:include page="/jsp/exam/manage/question/type_37.jsp" flush="true"></jsp:include>
          </c:if>
          <c:if test='${param.questionTypeId == "38"}'>
-             <jsp:include page="/jsp/exam/manage/question/type_38.jsp"></jsp:include>
+             <jsp:include page="/jsp/exam/manage/question/type_38.jsp" flush="true"></jsp:include>
          </c:if>
          <!-- 多媒体暂时没有 -->
          <c:if test='${param.questionTypeId == "48"}'>
-             <jsp:include page="/jsp/exam/manage/question/type_48.jsp"></jsp:include>
+             <jsp:include page="/jsp/exam/manage/question/type_48.jsp" flush="true"></jsp:include>
          </c:if>
     </div>
 </div>

@@ -64,7 +64,7 @@
     <c:if test="${param.recTypeId==afterRecTypeEnumDOPS.id}">
         <c:if test="${not empty resRecList}">
             <c:forEach items="${resRecList}" var="rec">
-                <jsp:include page="/jsp/jsres/teacher/dops.jsp">
+                <jsp:include page="/jsp/jsres/teacher/dops.jsp" flush="true">
                     <jsp:param name="style" value="flase"/>
                     <jsp:param name="noHead" value="true"/>
                     <jsp:param name="recFlow" value="${rec.recFlow}"/>
@@ -83,7 +83,7 @@
                     <%--<div class="title_tab">--%>
                     <%--</div>--%>
                 <%--</div>--%>
-                <jsp:include page="/jsp/jsres/teacher/mini_cex.jsp">
+                <jsp:include page="/jsp/jsres/teacher/mini_cex.jsp" flush="true">
                     <jsp:param name="style" value="flase"/>
                     <jsp:param name="noHead" value="true"/>
                     <jsp:param name="recFlow" value="${rec.recFlow}"/>
@@ -97,7 +97,7 @@
     <c:if test="${param.recTypeId==afterRecTypeEnumAfterEvaluation.id}">
         <c:if test="${not empty resRecList}">
             <c:forEach items="${resRecList}" var="rec">
-                <jsp:include page="/jsp/jsres/teacher/evaluation.jsp">
+                <jsp:include page="/jsp/jsres/teacher/evaluation.jsp" flush="true">
                     <jsp:param name="noHead" value="true"/>
                     <jsp:param name="recFlow" value="${rec.recFlow}"/>
                 </jsp:include>

@@ -26,7 +26,7 @@
 			
 	        <div id="tagContent" style="margin-top: 10px;border:none;">
 	            <div class="tagContent selectTag" id="tagContent0" style="padding-top: 0px;">
-					<jsp:include page="step1.jsp">
+					<jsp:include page="step1.jsp" flush="true">
 						<jsp:param  name="view" value="${GlobalConstant.FLAG_Y}"/>
 					</jsp:include>
 	            </div>

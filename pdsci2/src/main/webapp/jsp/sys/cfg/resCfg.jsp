@@ -82,7 +82,7 @@ function compareDate(id) {
  		<form id="saveCfgForm" >
  		<div class="title1 clearfix">
 			<div><font color="red">&#12288;&#12288;所有参数保存后，需刷新内存才能生效!!!</font></div>
-			<jsp:include page="/jsp/sys/cfg/sysCfg.jsp"/>
+			<jsp:include page="/jsp/sys/cfg/sysCfg.jsp" flush="true"/>
 			<c:if test="${'resRoleCfg'==param.tagId }">
 				<fieldset>
 					<legend>角色配置</legend>

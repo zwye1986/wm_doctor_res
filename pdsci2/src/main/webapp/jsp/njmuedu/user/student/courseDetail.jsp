@@ -131,7 +131,7 @@
 </script>
 </head>
 <body>
-<jsp:include page="/jsp/njmuedu/include/top.jsp"/>
+<jsp:include page="/jsp/njmuedu/include/top.jsp" flush="true"/>
 <!--videoList-->
 <div class="videoList cbody clearfix">
 

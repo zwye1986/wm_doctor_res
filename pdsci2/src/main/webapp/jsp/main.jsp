@@ -703,12 +703,12 @@ $(function(){
 	</table>
 
 	<c:if test="${applicationScope.sysCfgMap['show_res_new_notice']=='Y'}">
-		<jsp:include page="/res/doc/newNoticeList2">
+		<jsp:include page="/res/doc/newNoticeList2" flush="true">
 			<jsp:param name="fromSch" value="N"></jsp:param>
 		</jsp:include>
 	</c:if>
 	<c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-		<jsp:include page="service.jsp"></jsp:include>
+		<jsp:include page="service.jsp" flush="true"></jsp:include>
 	</c:if>
 </body>
 </html>

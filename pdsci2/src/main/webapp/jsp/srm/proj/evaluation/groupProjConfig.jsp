@@ -202,11 +202,11 @@ function doClose(){
 			<div id="content" style="width: 100%;margin-top: 10px;">
 	     	<!-- 会审显示内容 --> 
 		    <c:if test='${groupProj.evaluationWayId==evaluationWayEnumMeetingWay.id and groupProj.evalStatusId eq evaluationStatusEnumSubmit.id}'> 
-		    	<jsp:include page="meetingConfig.jsp"></jsp:include>
+		    	<jsp:include page="meetingConfig.jsp" flush="true"></jsp:include>
 		    </c:if>
          	<!-- 网评显示内容 --> 
            <c:if test='${groupProj.evaluationWayId==evaluationWayEnumNetWorkWay.id and groupProj.evalStatusId eq evaluationStatusEnumSubmit.id}'>
-           		<jsp:include page="netWorkConfig.jsp"></jsp:include>
+           		<jsp:include page="netWorkConfig.jsp" flush="true"></jsp:include>
            </c:if>
            </div>
         </form>

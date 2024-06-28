@@ -56,7 +56,7 @@ function countDown(secs){
     </div>
 </div>
 <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-		<jsp:include page="/jsp/service.jsp"></jsp:include>
+		<jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
 	</c:if>
 <div class="footer">主管单位：江苏省卫生厅科教处 | 协管单位：江苏省毕业后医学继续教育委员会</div>
 </body>

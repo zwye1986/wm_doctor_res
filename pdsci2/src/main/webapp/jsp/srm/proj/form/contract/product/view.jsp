@@ -36,27 +36,27 @@
            </ul>
 	        <div id="tagContent" style="border-style: none;">
 	            <div class="tagContent selectTag" id="tagContent0" style="padding-top: 0px;">
-					<jsp:include page="step1.jsp">
+					<jsp:include page="step1.jsp" flush="true">
 						<jsp:param value="${GlobalConstant.FLAG_Y}" name="view"/>
 					</jsp:include>		
 	      		</div>
             <div class="tagContent" id="tagContent1" style="padding-top: 0px;">
-            	<jsp:include page="step2.jsp">
+            	<jsp:include page="step2.jsp" flush="true">
 					<jsp:param value="${GlobalConstant.FLAG_Y}" name="view"/>
 				</jsp:include>
             </div>
             <div class="tagContent" id="tagContent2" style="padding-top: 0px;">
-            	<jsp:include page="step3.jsp">
+            	<jsp:include page="step3.jsp" flush="true">
 					<jsp:param value="${GlobalConstant.FLAG_Y}" name="view"/>
 				</jsp:include>      
             </div>
             <div class="tagContent" id="tagContent3" style="padding-top: 0px;">
-            	<jsp:include page="step4.jsp">
+            	<jsp:include page="step4.jsp" flush="true">
 					<jsp:param value="${GlobalConstant.FLAG_Y}" name="view"/>
 				</jsp:include>
             </div>
             <div class="tagContent" id="tagContent4" style="padding-top: 0px;">
-            	<jsp:include page="file.jsp">
+            	<jsp:include page="file.jsp" flush="true">
 					<jsp:param value="${GlobalConstant.FLAG_Y}" name="view"/>
 				</jsp:include>
             </div>

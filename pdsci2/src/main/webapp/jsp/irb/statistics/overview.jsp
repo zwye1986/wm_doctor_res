@@ -53,7 +53,7 @@
 					<th width="100" >会议报告</th>
 					<th width="100" >合计</th>
 					<td rowspan="${fn:length(irbTypeEnumList)+2 }" >
-						<jsp:include page="irb_type_chart.jsp"></jsp:include> 
+						<jsp:include page="irb_type_chart.jsp" flush="true"></jsp:include>
 					</td>
 				</tr>
 				<c:set var="fastAmount" value="0"/>
@@ -94,7 +94,7 @@
 					<th width="100" >会议报告</th>
 					<th width="100" >合计</th>
 					<td rowspan="${fn:length(gcpProjSubTypeEnumList)+2 }" >
-						<jsp:include page="proj_type_chart.jsp"></jsp:include> 
+						<jsp:include page="proj_type_chart.jsp" flush="true"></jsp:include>
 					</td>
 				</tr>
 				<c:set var="gcpFastAmount" value="0"/>
@@ -134,7 +134,7 @@
 					<th width="100" >会议报告</th>
 					<th width="100" >合计</th>
 					<td rowspan="${fn:length(irbDecisionEnumList)+2 }">
-						<jsp:include page="dec_type_chart.jsp"></jsp:include> 
+						<jsp:include page="dec_type_chart.jsp" flush="true"></jsp:include>
 					</td>
 				</tr>
 				<c:set var="decFastAmount" value="0"/>

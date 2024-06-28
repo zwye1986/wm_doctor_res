@@ -74,7 +74,7 @@ var tip = {
 </script>
 </head>
 <body>
-  <jsp:include page="/jsp/hbres/head.jsp">
+  <jsp:include page="/jsp/hbres/head.jsp" flush="true">
          <jsp:param value="/inx/hbres" name="indexUrl"/>
          <jsp:param value="true" name="notShowAccount"/>
      </jsp:include>
@@ -116,7 +116,7 @@ var tip = {
   </div>
 </div>
 
-<jsp:include page="/jsp/hbres/foot.jsp" />
+<jsp:include page="/jsp/hbres/foot.jsp"  flush="true"/>
 
 </body>
 </html>

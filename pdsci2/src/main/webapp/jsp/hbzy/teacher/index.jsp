@@ -90,7 +90,7 @@ body{overflow:hidden;}
        <h2 class="head_right">${sessionScope.currUser.orgName }-${sessionScope.currUser.userName }老师</h2>
        <div class="head_right">
 <!--        引入切换角色功能 -->
-       	<jsp:include page="/jsp/jsres/changeRole.jsp"></jsp:include>
+       	<jsp:include page="/jsp/jsres/changeRole.jsp" flush="true"></jsp:include>
         <a onclick="shouye();">首页</a>&#12288;
          <a href="<s:url value='/inx/hbzy/logout'/>">退出</a>
        </div>
@@ -197,7 +197,7 @@ body{overflow:hidden;}
  </div>
  </div>
   <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-		<jsp:include page="/jsp/service.jsp"></jsp:include>
+		<jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
 	</c:if>
  
  

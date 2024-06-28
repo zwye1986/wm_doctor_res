@@ -163,7 +163,7 @@ function audit(status){
                 </div>
             </div>
         </div>
-        <jsp:include page="/jsp/dwjxres/foot.jsp" />
+        <jsp:include page="/jsp/dwjxres/foot.jsp"  flush="true"/>
     </div>
 </body>
 </html>

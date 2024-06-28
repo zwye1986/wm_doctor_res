@@ -73,22 +73,22 @@
 </div>
 <div class="main_bd">
     <div id="report_01">
-        <jsp:include page="report_01.jsp" />
+        <jsp:include page="report_01.jsp"  flush="true"/>
     </div>
     <div id="report_02" style="display:none;">
-        <jsp:include page="report_02.jsp" />
+        <jsp:include page="report_02.jsp"  flush="true"/>
     </div>
     <div id="report_03" style="display:none;">
-        <jsp:include page="report_03.jsp" />
+        <jsp:include page="report_03.jsp"  flush="true"/>
     </div>
     <div id="report_04" style="display:none;">
-        <jsp:include page="report_04.jsp" />
+        <jsp:include page="report_04.jsp"  flush="true"/>
     </div>
     <div id="report_05" style="display:none;">
-        <jsp:include page="report_05.jsp" />
+        <jsp:include page="report_05.jsp"  flush="true"/>
     </div>
     <div id="report_06" style="display:none;">
-        <jsp:include page="report_06.jsp" />
+        <jsp:include page="report_06.jsp"  flush="true"/>
     </div>
 </div>
 </body>

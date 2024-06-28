@@ -415,7 +415,7 @@ function exportExcel(){
 				</form>
 			</div>
 			<div class="index_table" id="chartsInfoDiv"style="height: auto;width:100%;margin-top: 50px;">
-				<jsp:include page="chartsInfo.jsp"></jsp:include>
+				<jsp:include page="chartsInfo.jsp" flush="true"></jsp:include>
 			</div>
 		</li>
 	</ul>

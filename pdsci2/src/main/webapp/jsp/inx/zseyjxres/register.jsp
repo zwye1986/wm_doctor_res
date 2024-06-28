@@ -163,8 +163,8 @@ function register(){
     </div>
 </div>
 <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-	<jsp:include page="/jsp/service.jsp"></jsp:include>
+	<jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
 </c:if>
-<div class="footer"><jsp:include page="/jsp/zseyjxres/foot.jsp"/></div>
+<div class="footer"><jsp:include page="/jsp/zseyjxres/foot.jsp" flush="true"/></div>
 </body>
 </html>

@@ -132,7 +132,7 @@ function clearChoose(){
 </script>
 </head>
 <body>
- <jsp:include page="/jsp/edu/include/top.jsp"/>
+ <jsp:include page="/jsp/edu/include/top.jsp" flush="true"/>
    
 <!--content-->
 <div class="register cbody clearfix">
@@ -210,6 +210,6 @@ function clearChoose(){
 
 </div>
 <!--footer-->
- <jsp:include page="/jsp/edu/include/foot.jsp"/>
+ <jsp:include page="/jsp/edu/include/foot.jsp" flush="true"/>
 </body>
 </html>

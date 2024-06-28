@@ -163,7 +163,7 @@ function toNext(flag){
 </head>
 <body>
 <a id="editTarget"></a>
-<jsp:include page="/jsp/edu/include/top.jsp"/>
+<jsp:include page="/jsp/edu/include/top.jsp" flush="true"/>
 <c:out value="" escapeXml=""></c:out>
 <!--videoList-->
 <div class="videoList cbody clearfix">
@@ -356,6 +356,6 @@ function toNext(flag){
   <!--/ siderbar--> 
 </div>
 <!--/videoList-->
-<jsp:include page="/jsp/edu/include/foot.jsp"/>
+<jsp:include page="/jsp/edu/include/foot.jsp" flush="true"/>
 </body>
 </html>

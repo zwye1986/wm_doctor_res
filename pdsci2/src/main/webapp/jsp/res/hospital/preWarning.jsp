@@ -76,7 +76,7 @@
 <body>
 <div class="queryDiv" style="width:100%;">
     <div style="margin-left: 23px;margin-bottom: 8px;">
-        <jsp:include page="/res/doc/newNoticeList">
+        <jsp:include page="/res/doc/newNoticeList" flush="true">
             <jsp:param name="fromSch" value="Y"></jsp:param>
         </jsp:include>
     </div>

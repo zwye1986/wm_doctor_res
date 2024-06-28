@@ -440,7 +440,7 @@
     </div>
 </div>
 <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-    <jsp:include page="/jsp/service.jsp"></jsp:include>
+    <jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
 </c:if>
 <div style="width: 100%;line-height: 25px;padding: 15px 0;position: relative;">
     <a href="http://bszs.conac.cn/sitename?method=show&id=105E03E77DC921CFE053012819ACD4B6" target="_blank" style="position: absolute;left: 20%;">

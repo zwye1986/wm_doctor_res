@@ -342,7 +342,7 @@ margin-right:0;
 </head>
 <body onkeydown="return onEvent(this,event);">
 <div style="overflow: auto;height: 100%;width: 100%" id="mainDiv">
-<jsp:include page="/jsp/njmuedu/include/top.jsp"/>
+<jsp:include page="/jsp/njmuedu/include/top.jsp" flush="true"/>
 <!--videoPage-->
 <div class="videoPage cbody clearfix" >
    <div class="video-title">

@@ -95,7 +95,7 @@ function exportGrade() {
 </form>
 </div>
 <div id='gradelist'>
-    <jsp:include page="./gradelist.jsp">
+    <jsp:include page="./gradelist.jsp" flush="true">
 		<jsp:param name="isFree" value="${isFree}"></jsp:param>
 	</jsp:include>
 </div>

@@ -53,7 +53,7 @@
 <body>
 <div class="mainright">
     <div class="content">
-        <jsp:include page="edit.jsp">
+        <jsp:include page="edit.jsp" flush="true">
             <jsp:param name="auditFlag" value="audit"/>
         </jsp:include>
         <c:if test="${param.editFlag != GlobalConstant.FLAG_N}">

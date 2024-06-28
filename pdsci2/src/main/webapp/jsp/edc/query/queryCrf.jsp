@@ -244,7 +244,7 @@ function checkCode(field,rules, i,options){
 	 				<!-- 单次录入 -->
 	 			<c:if test="${sessionScope.projDescForm.elementMap[visitElement.elementCode].elementSerial eq GlobalConstant.FLAG_N}">
 		 			<td>
-		 					<jsp:include page="queryCrf_single.jsp" flush="true"> 
+		 					<jsp:include page="queryCrf_single.jsp" flush="true">
 		 						<jsp:param name="visitFlow" value="${visit.visitFlow }" />
 		 						<jsp:param name="moduleCode" value="${moduleCode }" />
 	 							<jsp:param name="commAttrCode" value="${commAttrCode }" />
@@ -258,7 +258,7 @@ function checkCode(field,rules, i,options){
 	 				<c:choose>
 	 					<c:when test="${fn:length(sessionScope.projDescForm.visitElementAttributeMap[commAttrCode]) <=  sysCfgMap['edc_serial_attr_count'] }">
 			 				<td>
-			 					<jsp:include page="queryCrf_serial.jsp" flush="true"> 
+			 					<jsp:include page="queryCrf_serial.jsp" flush="true">
 				 						<jsp:param name="visitFlow" value="${visit.visitFlow }" />
 				 						<jsp:param name="moduleCode" value="${moduleCode }" />
 			 							<jsp:param name="commAttrCode" value="${commAttrCode }" />
@@ -268,7 +268,7 @@ function checkCode(field,rules, i,options){
 		 				</c:when>
 		 				<c:otherwise>
 		 					<td>
-			 					<jsp:include page="queryCrf_serial_vertical.jsp" flush="true"> 
+			 					<jsp:include page="queryCrf_serial_vertical.jsp" flush="true">
 			 							<jsp:param name="visitFlow" value="${visit.visitFlow }" />
 				 						<jsp:param name="moduleCode" value="${moduleCode }" />
 			 							<jsp:param name="commAttrCode" value="${commAttrCode }" />
@@ -291,7 +291,7 @@ function checkCode(field,rules, i,options){
 	 			<!-- 单次录入 -->
 	 			<c:if test="${sessionScope.projDescForm.elementMap[visitElement.elementCode].elementSerial eq GlobalConstant.FLAG_N}">
 		 			<td>
-		 					<jsp:include page="queryCrf_single.jsp" flush="true"> 
+		 					<jsp:include page="queryCrf_single.jsp" flush="true">
 		 						<jsp:param name="visitFlow" value="${visit.visitFlow }" />
 		 						<jsp:param name="moduleCode" value="${moduleCode }" />
 	 							<jsp:param name="commAttrCode" value="${commAttrCode }" />
@@ -305,7 +305,7 @@ function checkCode(field,rules, i,options){
 	 				<c:choose>
 	 					<c:when test="${fn:length(sessionScope.projDescForm.visitElementAttributeMap[commAttrCode]) <=  sysCfgMap['edc_serial_attr_count'] }">
 			 				<td>
-			 					<jsp:include page="queryCrf_serial.jsp" flush="true"> 
+			 					<jsp:include page="queryCrf_serial.jsp" flush="true">
 				 						<jsp:param name="visitFlow" value="${visit.visitFlow }" />
 				 						<jsp:param name="moduleCode" value="${moduleCode }" />
 			 							<jsp:param name="commAttrCode" value="${commAttrCode }" />
@@ -315,7 +315,7 @@ function checkCode(field,rules, i,options){
 		 				</c:when>
 		 				<c:otherwise>
 		 					<td>
-			 					<jsp:include page="queryCrf_serial_vertical.jsp" flush="true"> 
+			 					<jsp:include page="queryCrf_serial_vertical.jsp" flush="true">
 			 							<jsp:param name="visitFlow" value="${visit.visitFlow }" />
 				 						<jsp:param name="moduleCode" value="${moduleCode }" />
 			 							<jsp:param name="commAttrCode" value="${commAttrCode }" />

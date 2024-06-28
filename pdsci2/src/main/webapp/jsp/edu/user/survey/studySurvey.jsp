@@ -6,7 +6,7 @@
 </div>
 <!-- 报表开始 -->
 <div >
-<jsp:include page="study_schedule_chart.jsp" ></jsp:include>
+<jsp:include page="study_schedule_chart.jsp"  flush="true"></jsp:include>
 </div>
 <!-- 报表结束 -->
 <div class="module-tabs">

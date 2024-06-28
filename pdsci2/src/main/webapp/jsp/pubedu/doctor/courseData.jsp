@@ -32,7 +32,7 @@
 </head>
 <body>
 <div style="height:100%;overflow: auto">
-<jsp:include page="doctorHead.jsp"/>
+<jsp:include page="doctorHead.jsp" flush="true"/>
 <div class="body">
     <div class="container">
         <a style="padding-left: 30px" href="javascript:history.back(-1);" title="返回">&lt;&lt;&lt;返回上一页</a>
