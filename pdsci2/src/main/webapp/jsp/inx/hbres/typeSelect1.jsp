@@ -451,7 +451,7 @@
 </head>
 <body>
 <div class="yw">
-  <jsp:include page="/jsp/hbres/head.jsp">
+  <jsp:include page="/jsp/hbres/head.jsp" flush="true">
          <jsp:param value="/inx/hbres" name="indexUrl"/>
          <jsp:param value="true" name="notShowAccount"/>
      </jsp:include>
@@ -1302,8 +1302,8 @@
 </div>
 	<span id="repeatIdNoSpan" style="display: none;">请<a href='<s:url value='/inx/hbres'/>' target="_blank" style="color: blue;"> 登录 </a>或者<a href='<s:url value='/inx/hbres/forgetpasswd'/>' target="_blank" style="color: blue;"> 找回密码 </a></span>
 	<c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-		<jsp:include page="/jsp/service.jsp"></jsp:include>
+		<jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
 	</c:if>
-	<jsp:include page="/jsp/hbres/foot.jsp" />
+	<jsp:include page="/jsp/hbres/foot.jsp"  flush="true"/>
 </body>
 </html>

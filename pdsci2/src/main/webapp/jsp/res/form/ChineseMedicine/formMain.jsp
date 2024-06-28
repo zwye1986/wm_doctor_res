@@ -470,7 +470,7 @@
 	        <input type="hidden" name="" value="" id="AUDIT_STATUS" disabled="disabled">
 	        
 	        <!-- 引入表单正文 -->
-			<jsp:include page="/jsp/${formPath}.jsp"></jsp:include>
+			<jsp:include page="/jsp/${formPath}.jsp" flush="true"></jsp:include>
 		</form>
 	</div>
 	

@@ -36,33 +36,33 @@
         </ul>
         <div id="tagContent">
             <div class="tagContent selectTag" id="tagContent0">
-					<jsp:include page="step1.jsp">
+					<jsp:include page="step1.jsp" flush="true">
 						<jsp:param  name="view" value="${GlobalConstant.FLAG_Y }"/>
 					</jsp:include>
             </div>
             <div class="tagContent" id="tagContent1">
-            		<jsp:include page="step2.jsp">
+            		<jsp:include page="step2.jsp" flush="true">
 						<jsp:param  name="view" value="${GlobalConstant.FLAG_Y }"/>
 					</jsp:include>
             </div>
             <div class="tagContent" id="tagContent2">
-            	<jsp:include page="step3.jsp">
+            	<jsp:include page="step3.jsp" flush="true">
 						<jsp:param  name="view" value="${GlobalConstant.FLAG_Y }"/>
 					</jsp:include>
             </div>
          
             <div class="tagContent" id="tagContent3">
-            	<jsp:include page="step5.jsp">
+            	<jsp:include page="step5.jsp" flush="true">
 						<jsp:param  name="view" value="${GlobalConstant.FLAG_Y }"/>
 					</jsp:include>
             </div>
             <div class='tagContent' id='tagContent4'>
-            	<jsp:include page="step6.jsp">
+            	<jsp:include page="step6.jsp" flush="true">
 						<jsp:param  name="view" value="${GlobalConstant.FLAG_Y }"/>
 					</jsp:include>
             </div>
             <div class="tagContent" id="tagContent5">
-            	<jsp:include page="file.jsp">
+            	<jsp:include page="file.jsp" flush="true">
 						<jsp:param  name="view" value="${GlobalConstant.FLAG_Y }"/>
 					</jsp:include>
             </div>

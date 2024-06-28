@@ -310,7 +310,7 @@ margin-right:0;
 </head>
 <body onkeydown="return onEvent(this,event);">
 <div style="overflow: auto;height: 100%;width: 100%" id="mainDiv">
-<jsp:include page="/jsp/edu/include/top.jsp"/>
+<jsp:include page="/jsp/edu/include/top.jsp" flush="true"/>
 <!--videoPage-->
 <div class="videoPage cbody clearfix" >
    <div class="video-title">
@@ -603,7 +603,7 @@ margin-right:0;
 </div>
 
 <!--/content-->
-<jsp:include page="/jsp/edu/include/foot.jsp"/>
+<jsp:include page="/jsp/edu/include/foot.jsp" flush="true"/>
 </div>
 <div id="qClone" style="display: none">
 <dl>

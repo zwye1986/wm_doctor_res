@@ -256,7 +256,7 @@ function ckeckNum(obj){
 	                    </tr>
 	        	  </table>
 	        	  <c:if test='${setupFormPath!=null}'>
-	        	      <jsp:include page="/jsp/${setupFormPath}.jsp"></jsp:include>
+	        	      <jsp:include page="/jsp/${setupFormPath}.jsp" flush="true"></jsp:include>
 	        	  </c:if>
         	  </form>
         	  <div style='text-align: center;margin-top: 20px;'>

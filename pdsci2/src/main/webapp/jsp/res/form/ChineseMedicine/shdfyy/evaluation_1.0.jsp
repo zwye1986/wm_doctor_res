@@ -158,7 +158,7 @@ function save(){
 				</p>
 
                 <!-- 引入科室表单 -->
-                <jsp:include page="/jsp/res/form/ChineseMedicine/deptFormHandel.jsp"></jsp:include>
+                <jsp:include page="/jsp/res/form/ChineseMedicine/deptFormHandel.jsp" flush="true"></jsp:include>
 				<table class="basic" width="100%" style="margin-top: 10px;">
 				</table>
 				<p align="center" style="margin-top: 10px;">

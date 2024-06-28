@@ -455,7 +455,7 @@
     </div>
 </div>
 <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-    <jsp:include page="/jsp/service.jsp"></jsp:include>
+    <jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
 </c:if>
 <div class="footer">主管单位：${sysCfgMap['the_competent_unit']} | 技术支持：南京品德网络信息技术有限公司 | <a href="https://beian.miit.gov.cn/"
                                                                                        target="_blank"

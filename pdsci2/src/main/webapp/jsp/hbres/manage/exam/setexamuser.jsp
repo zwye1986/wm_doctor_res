@@ -145,7 +145,7 @@ $(function(){
         <h2>考试管理
        <span class="tips">当前考试：${sessionScope.currExam.examName}</span>
        </h2>
-         <jsp:include page="./nvtab.jsp">
+         <jsp:include page="./nvtab.jsp" flush="true">
              <jsp:param value="2" name="tabIndex"/>
          </jsp:include>
       </div>

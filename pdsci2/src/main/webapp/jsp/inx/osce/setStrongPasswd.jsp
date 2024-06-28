@@ -4,7 +4,7 @@
 <%@include file="/jsp/common/doctype.jsp" %>
 <html>
 <head>
-    <jsp:include page="/jsp/inx/osce/htmlheadosca.jsp">
+    <jsp:include page="/jsp/inx/osce/htmlheadosca.jsp" flush="true">
         <jsp:param name="basic" value="true"/>
         <jsp:param name="register" value="true"/>
         <jsp:param name="jbox" value="true"/>

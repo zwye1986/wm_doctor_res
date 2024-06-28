@@ -6,7 +6,7 @@
 </head>  
 <body>  
 <div data-role="page">
-	<jsp:include page="/jsp/common/page-common-mobile.jsp"></jsp:include>
+	<jsp:include page="/jsp/common/page-common-mobile.jsp" flush="true"></jsp:include>
 	<div data-role="header" data-position="fixed">
 		<a href="javascript:window.history.back(-1);" data-role="button">返回</a>
 	    <h1>出错了</h1>

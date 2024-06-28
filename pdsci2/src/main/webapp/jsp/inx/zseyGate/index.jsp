@@ -60,7 +60,7 @@
 </head>
 <body>
 <div class="centerbox" >
-    <jsp:include page="header.jsp">
+    <jsp:include page="header.jsp" flush="true">
         <jsp:param value="${ param.roleFlow }" name="roleFlow"/>
         <jsp:param value="${ param.modelId }" name="modelId"/>
     </jsp:include>

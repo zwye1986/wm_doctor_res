@@ -146,7 +146,7 @@ function register(){
 	<div class="footer">主管单位：江苏省中医药局 | 协管单位：江苏省中医药毕业后继续教育委员会办公室</div>
 </div>
 <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-	<jsp:include page="/jsp/service.jsp"></jsp:include>
+	<jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
 </c:if>
 </body>
 </html>

@@ -181,7 +181,7 @@ function init(){
 	 				<!-- 单次录入 -->
 	 			<c:if test="${sessionScope.projDescForm.elementMap[visitElement.elementCode].elementSerial eq GlobalConstant.FLAG_N}">
 		 			<td>
-		 				<jsp:include page="manual_single.jsp" flush="true"> 
+		 				<jsp:include page="manual_single.jsp" flush="true">
 		 						<jsp:param name="visitFlow" value="${visit.visitFlow }" />
 		 						<jsp:param name="moduleCode" value="${moduleCode }" />
 	 							<jsp:param name="commAttrCode" value="${commAttrCode }" />
@@ -195,7 +195,7 @@ function init(){
 	 				<c:choose>
 	 					<c:when test="${fn:length(sessionScope.projDescForm.elementAttrMap[visitElement.elementCode]) <=  sysCfgMap['edc_serial_attr_count'] }">
 	 				<td>
-	 					<jsp:include page="manual_serial.jsp" flush="true"> 
+	 					<jsp:include page="manual_serial.jsp" flush="true">
 	 							<jsp:param name="visitFlow" value="${visit.visitFlow }" />
 	 							<jsp:param name="moduleCode" value="${moduleCode }" />
 	 							<jsp:param name="commAttrCode" value="${commAttrCode }" />
@@ -205,7 +205,7 @@ function init(){
 	 				</c:when>
 	 				<c:otherwise>
 	 					<td>
-	 					<jsp:include page="manual_serial_vertical.jsp" flush="true"> 
+	 					<jsp:include page="manual_serial_vertical.jsp" flush="true">
 	 							<jsp:param name="visitFlow" value="${visit.visitFlow }" />
 	 							<jsp:param name="moduleCode" value="${moduleCode }" />
 	 							<jsp:param name="commAttrCode" value="${commAttrCode }" />
@@ -228,7 +228,7 @@ function init(){
 	 				<!-- 单次录入 -->
 	 			<c:if test="${sessionScope.projDescForm.elementMap[visitElement.elementCode].elementSerial eq GlobalConstant.FLAG_N}">
 		 			<td>
-		 				<jsp:include page="manual_single.jsp" flush="true"> 
+		 				<jsp:include page="manual_single.jsp" flush="true">
 		 						<jsp:param name="visitFlow" value="${visit.visitFlow }" />
 		 						<jsp:param name="moduleCode" value="${moduleCode }" />
 	 							<jsp:param name="commAttrCode" value="${commAttrCode }" />
@@ -242,7 +242,7 @@ function init(){
 	 				<c:choose>
 	 					<c:when test="${fn:length(sessionScope.projDescForm.elementAttrMap[visitElement.elementCode]) <=  sysCfgMap['edc_serial_attr_count'] }">
 	 				<td>
-	 					<jsp:include page="manual_serial.jsp" flush="true"> 
+	 					<jsp:include page="manual_serial.jsp" flush="true">
 	 							<jsp:param name="visitFlow" value="${visit.visitFlow }" />
 	 							<jsp:param name="moduleCode" value="${moduleCode }" />
 	 							<jsp:param name="commAttrCode" value="${commAttrCode }" />
@@ -252,7 +252,7 @@ function init(){
 	 				</c:when>
 	 				<c:otherwise>
 	 					<td>
-	 					<jsp:include page="manual_serial_vertical.jsp" flush="true"> 
+	 					<jsp:include page="manual_serial_vertical.jsp" flush="true">
 	 							<jsp:param name="visitFlow" value="${visit.visitFlow }" />
 	 							<jsp:param name="moduleCode" value="${moduleCode }" />
 	 							<jsp:param name="commAttrCode" value="${commAttrCode }" />

@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>中山大学孙逸仙纪念医院住院医师规范化培训管理平台</title>
-<jsp:include page="htmlhead-zsey.jsp">
+<jsp:include page="htmlhead-zsey.jsp" flush="true">
 	<jsp:param name="basic" value="true"/>
 	<jsp:param name="jbox" value="true"/>
 	<jsp:param name="font" value="true"/>
@@ -140,7 +140,7 @@ function hideThis(type){
     </div>
     <div class="notice_login">
         <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-            <jsp:include page="/jsp/service.jsp"></jsp:include>
+            <jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
         </c:if>
        <h1 class="index_title">通知公告<p>Announcement</p></h1>
        <div class="notice_bd">

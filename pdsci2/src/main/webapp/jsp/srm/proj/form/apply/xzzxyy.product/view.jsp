@@ -43,13 +43,13 @@
                 </div>
                 <div id="tagContent">
                     <div class="tagContent selectTag" id="tagContent0" style="padding-top: 0px;">
-                        <jsp:include page="step1.jsp">
+                        <jsp:include page="step1.jsp" flush="true">
                             <jsp:param name="view" value="${ GlobalConstant.FLAG_Y}"/>
                         </jsp:include>
                     </div>
 
                     <div class="tagContent" id="tagContent1" style="padding-top: 0px;">
-                        <jsp:include page="step2.jsp">
+                        <jsp:include page="step2.jsp" flush="true">
                             <jsp:param name="view" value="${ GlobalConstant.FLAG_Y}"/>
                         </jsp:include>
                     </div>

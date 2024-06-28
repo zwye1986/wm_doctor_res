@@ -45,7 +45,7 @@
     <div class="footer">技术支持：南京品德网络信息技术有限公司</div>
 </div>
 <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-    <jsp:include page="/jsp/service.jsp"></jsp:include>
+    <jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
 </c:if>
 
 </body>

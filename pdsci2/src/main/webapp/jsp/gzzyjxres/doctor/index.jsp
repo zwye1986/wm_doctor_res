@@ -126,7 +126,7 @@
 <div style="overflow:auto;" id="indexBody">
     <div class="bd_bg">
         <div class="<%--yw--%>">
-            <jsp:include page="/jsp/gzzyjxres/head.jsp">
+            <jsp:include page="/jsp/gzzyjxres/head.jsp" flush="true">
                 <jsp:param value="true" name="notice"/>
             </jsp:include>
             <div class="body">
@@ -342,9 +342,9 @@
         </div>
     </div>
     <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-        <jsp:include page="/jsp/service.jsp"></jsp:include>
+        <jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
     </c:if>
-    <jsp:include page="/jsp/gzzyjxres/foot.jsp"/>
+    <jsp:include page="/jsp/gzzyjxres/foot.jsp" flush="true"/>
 </div>
 </body>
 </html>

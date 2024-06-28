@@ -30,7 +30,7 @@ function checkRole(courseFlow){
 </script>
 </head>
 <body style="background:#f4f4f4;">
-<jsp:include page="/jsp/edu/include/top.jsp"/>
+<jsp:include page="/jsp/edu/include/top.jsp" flush="true"/>
   <div class="teacher-detail-pic-bg">
   <!-- <div class="mask" ></div> -->
       <div class="teacher-detail-breadcrumb-bg">
@@ -125,6 +125,6 @@ function checkRole(courseFlow){
 </div>
   
 
-<jsp:include page="/jsp/edu/include/foot.jsp"/>
+<jsp:include page="/jsp/edu/include/foot.jsp" flush="true"/>
 </body>
 </html>

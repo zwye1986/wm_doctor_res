@@ -98,7 +98,7 @@
 	<div class="content" >
 		<div>
 			<div>
-				<jsp:include page="/res/doc/newNoticeList">
+				<jsp:include page="/res/doc/newNoticeList" flush="true">
 					<jsp:param name="fromSch" value="Y"></jsp:param>
 				</jsp:include>
 			</div>

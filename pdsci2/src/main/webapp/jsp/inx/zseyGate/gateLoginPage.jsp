@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>中山大学孙逸仙纪念医院住院医师规范化培训管理平台</title>
-<jsp:include page="htmlhead-zsey.jsp">
+<jsp:include page="htmlhead-zsey.jsp" flush="true">
 	<jsp:param name="basic" value="true"/>
 	<jsp:param name="jbox" value="true"/>
 	<jsp:param name="font" value="true"/>

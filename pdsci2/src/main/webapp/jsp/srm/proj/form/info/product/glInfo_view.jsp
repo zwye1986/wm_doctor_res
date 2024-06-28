@@ -35,7 +35,7 @@
 <div id="main" style="width: 100%;">
     <div class="mainright">
         <div class="content">
-            <jsp:include page="glInfo.jsp">
+            <jsp:include page="glInfo.jsp" flush="true">
                 <jsp:param  name="view" value="${ GlobalConstant.FLAG_Y}"/>
             </jsp:include>
         </div>

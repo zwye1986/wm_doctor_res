@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>天津市卫生健康委员会住院医师规范化培训网络管理平台</title>
-    <jsp:include page="/jsp/inx/tjres/htmlhead_tjres.jsp">
+    <jsp:include page="/jsp/inx/tjres/htmlhead_tjres.jsp" flush="true">
         <jsp:param name="bootstrap" value="true"/>
     </jsp:include>
     <link rel="stylesheet"

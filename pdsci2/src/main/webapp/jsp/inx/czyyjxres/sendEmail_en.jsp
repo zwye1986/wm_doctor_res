@@ -71,7 +71,7 @@ function countDown(secs){
     </div>
 </div>
 <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-		<jsp:include page="/jsp/service.jsp"></jsp:include>
+		<jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
 	</c:if>
 <%--<div class="footer">--%>
 	<%--<c:if test="${sysCfgMap['jx_templete_name'] eq 'cd'}">--%>
@@ -81,7 +81,7 @@ function countDown(secs){
 		<%--主办单位：徐州中心医院--%>
 	<%--</c:if>--%>
 <%--</div>--%>
-    <div class="footer"><jsp:include page="/jsp/czyyjxres/english_foot.jsp"/></div>
+    <div class="footer"><jsp:include page="/jsp/czyyjxres/english_foot.jsp" flush="true"/></div>
 
 </body>
 </html>

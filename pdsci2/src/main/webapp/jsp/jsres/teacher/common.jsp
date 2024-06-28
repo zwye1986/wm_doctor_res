@@ -44,7 +44,7 @@
   <div class="i-content" style="width:100%">
   
   <div id="recRecord" style="display: none;">
-  	<jsp:include page="/jsp/${jspPath}.jsp">
+  	<jsp:include page="/jsp/${jspPath}.jsp" flush="true">
   		<jsp:param value="true" name="noHead"/>
   	</jsp:include>
   </div>

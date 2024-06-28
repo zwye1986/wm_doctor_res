@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-	<jsp:include page="../../service.jsp"></jsp:include>
+	<jsp:include page="../../service.jsp" flush="true"></jsp:include>
 </c:if>
 <div id="footer">
 	主办单位：${sysCfgMap['the_competent_unit']}&#12288;地址：南京市玄武区中央路42号 <br />

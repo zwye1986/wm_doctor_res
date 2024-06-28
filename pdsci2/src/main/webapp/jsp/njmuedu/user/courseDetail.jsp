@@ -183,7 +183,7 @@ function toNext(flag){
 </head>
 <body>
 <a id="editTarget"></a>
-<jsp:include page="/jsp/njmuedu/include/top.jsp"/>
+<jsp:include page="/jsp/njmuedu/include/top.jsp" flush="true"/>
 <c:out value="" escapeXml=""></c:out>
 <!--videoList-->
 <div class="videoList cbody clearfix">

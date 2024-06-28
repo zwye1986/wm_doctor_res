@@ -9,7 +9,7 @@
 			<h2>${sessionScope.currUser.orgName }&emsp;${empty param.logName?'':sessionScope.currUser.userName}</h2>
 			<div class="head_right">
 				<!--        引入切换角色功能 -->
-				<jsp:include page="/jsp/jsres/changeRole.jsp"></jsp:include>
+				<jsp:include page="/jsp/jsres/changeRole.jsp" flush="true"></jsp:include>
 
 				<c:if test="${param.logName ne 'graduate'}">
 				<a href="<s:url value='${param.indexUrl}'/>">首页</a>&#12288;

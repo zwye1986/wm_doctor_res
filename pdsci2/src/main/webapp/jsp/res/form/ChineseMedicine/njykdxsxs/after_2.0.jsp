@@ -211,7 +211,7 @@ function check(num){
 				<table class="basic" style="width: 100%;">
 					<tr>
 						<td colspan="4"><!-- 引入科室表单 -->
-							<jsp:include page="/jsp/res/form/ChineseMedicine/deptFormHandel.jsp"></jsp:include>
+							<jsp:include page="/jsp/res/form/ChineseMedicine/deptFormHandel.jsp" flush="true"></jsp:include>
 						</td>
 					</tr>
 					<tr>

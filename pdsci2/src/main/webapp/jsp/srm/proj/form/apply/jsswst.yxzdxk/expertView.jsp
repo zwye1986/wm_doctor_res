@@ -48,28 +48,28 @@
                 </div>
                 <div id="tagContent">
                     <div class="tagContent selectTag" id="tagContent0" style="padding-top: 0px;">
-                        <jsp:include page="step3.jsp">
+                        <jsp:include page="step3.jsp" flush="true">
                             <jsp:param name="view" value="${ GlobalConstant.FLAG_Y}"/>
                             <jsp:param  name="expert" value="${ GlobalConstant.FLAG_Y}"/>
                         </jsp:include>
                     </div>
 
                     <div class="tagContent" id="tagContent1" style="padding-top: 0px;">
-                        <jsp:include page="step5.jsp">
+                        <jsp:include page="step5.jsp" flush="true">
                             <jsp:param name="view" value="${ GlobalConstant.FLAG_Y}"/>
                             <jsp:param  name="expert" value="${ GlobalConstant.FLAG_Y}"/>
                         </jsp:include>
                     </div>
 
                     <div class="tagContent" id="tagContent2" style="padding-top: 0px;">
-                        <jsp:include page="step7.jsp">
+                        <jsp:include page="step7.jsp" flush="true">
                             <jsp:param name="view" value="${ GlobalConstant.FLAG_Y}"/>
                             <jsp:param  name="expert" value="${ GlobalConstant.FLAG_Y}"/>
                         </jsp:include>
                     </div>
 
                     <div class="tagContent" id="tagContent3" style="padding-top: 0px;">
-                        <jsp:include page="step8.jsp">
+                        <jsp:include page="step8.jsp" flush="true">
                             <jsp:param name="view" value="${ GlobalConstant.FLAG_Y}"/>
                             <jsp:param  name="expert" value="${ GlobalConstant.FLAG_Y}"/>
                         </jsp:include>
@@ -82,13 +82,13 @@
                         </jsp:include>
                     </div>--%>
                     <div class="tagContent" id="tagContent4" style="padding-top: 0px;">
-                        <jsp:include page="step10_1.jsp">
+                        <jsp:include page="step10_1.jsp" flush="true">
                             <jsp:param name="view" value="${ GlobalConstant.FLAG_Y}"/>
                             <jsp:param  name="expert" value="${ GlobalConstant.FLAG_Y}"/>
                         </jsp:include>
                     </div>
                     <div class="tagContent" id="tagContent5" style="padding-top: 0px;">
-                        <jsp:include page="step11.jsp">
+                        <jsp:include page="step11.jsp" flush="true">
                             <jsp:param name="view" value="${ GlobalConstant.FLAG_Y}"/>
                             <jsp:param  name="expert" value="${ GlobalConstant.FLAG_Y}"/>
                         </jsp:include>

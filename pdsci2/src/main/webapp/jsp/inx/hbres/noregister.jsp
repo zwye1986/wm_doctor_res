@@ -14,7 +14,7 @@
 <body>
 <div class="bd_bg">
 <div class="yw">
- <jsp:include page="/jsp/hbres/head.jsp">
+ <jsp:include page="/jsp/hbres/head.jsp" flush="true">
      <jsp:param value="/inx/hbres" name="indexUrl"/>
      <jsp:param value="true" name="notShowAccount"/>
  </jsp:include>
@@ -32,6 +32,6 @@
  </div>
 </div>
 </div>
-<jsp:include page="/jsp/hbres/foot.jsp" />
+<jsp:include page="/jsp/hbres/foot.jsp"  flush="true"/>
 </body>
 </html>

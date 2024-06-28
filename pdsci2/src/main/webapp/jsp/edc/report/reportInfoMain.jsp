@@ -57,7 +57,7 @@
 	 				<c:choose>
 	 					<c:when test="${fn:length(sessionScope.projDescForm.elementAttrMap[visitElement.elementCode]) <=  sysCfgMap['edc_serial_attr_count'] }">
 	 				<td>
-	 					<jsp:include page="report_serial.jsp" flush="true"> 
+	 					<jsp:include page="report_serial.jsp" flush="true">
 	 							<jsp:param name="patientFlow" value="${patient.patientFlow }" /> 
 	 							<jsp:param name="visitFlow" value="${visit.visitFlow }" />
 	 							<jsp:param name="moduleCode" value="${moduleCode }" />
@@ -70,7 +70,7 @@
 	 				</c:when>
 	 				<c:otherwise>
 	 					<td>
-	 					<jsp:include page="report_serial_vertical.jsp" flush="true"> 
+	 					<jsp:include page="report_serial_vertical.jsp" flush="true">
 	 							<jsp:param name="patientFlow" value="${patient.patientFlow }" /> 
 	 							<jsp:param name="visitFlow" value="${visit.visitFlow }" />
 	 							<jsp:param name="moduleCode" value="${moduleCode }" />
@@ -110,7 +110,7 @@
 	 				<c:choose>
 	 					<c:when test="${fn:length(sessionScope.projDescForm.elementAttrMap[visitElement.elementCode]) <=  sysCfgMap['edc_serial_attr_count'] }">
 	 				<td>
-	 					<jsp:include page="report_serial.jsp" flush="true"> 
+	 					<jsp:include page="report_serial.jsp" flush="true">
 	 							<jsp:param name="patientFlow" value="${patient.patientFlow }" /> 
 	 							<jsp:param name="visitFlow" value="${visit.visitFlow }" />
 	 							<jsp:param name="moduleCode" value="${moduleCode }" />
@@ -123,7 +123,7 @@
 	 				</c:when>
 	 				<c:otherwise>
 	 					<td>
-	 					<jsp:include page="report_serial_vertical.jsp" flush="true"> 
+	 					<jsp:include page="report_serial_vertical.jsp" flush="true">
 	 							<jsp:param name="patientFlow" value="${patient.patientFlow }" /> 
 	 							<jsp:param name="visitFlow" value="${visit.visitFlow }" />
 	 							<jsp:param name="moduleCode" value="${moduleCode }" />
