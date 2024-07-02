@@ -173,12 +173,12 @@
             <c:choose>
                 <c:when test="${not empty sysOrg.orgPersonInCharge}">
                     <tr>
-                        <td>${sysOrg.orgPersonInCharge}</td>
-                        <td>${basicInfo.jdfzrMobilephone}</td>
-                        <td>${basicInfo.jdfzrFixedPhone}</td>
-                        <td>${basicInfo.jdfzrMailAddress}</td>
-                        <td>${basicInfo.jdfzrTitleName}</td>
-                        <td>${basicInfo.jdfzrPostName}</td>
+                        <td style="text-align: center">${sysOrg.orgPersonInCharge}</td>
+                        <td style="text-align: center">${basicInfo.jdfzrMobilephone}</td>
+                        <td style="text-align: center">${basicInfo.jdfzrFixedPhone}</td>
+                        <td style="text-align: center">${basicInfo.jdfzrMailAddress}</td>
+                        <td style="text-align: center">${basicInfo.jdfzrTitleName}</td>
+                        <td style="text-align: center">${basicInfo.jdfzrPostName}</td>
                     </tr>
                 </c:when>
                 <c:otherwise>
@@ -328,12 +328,12 @@
                 </tr>
                 <c:forEach var="zpglbm" items="${basicInfo.zpglbmfzrList}" varStatus="status">
                     <tr>
-                    <td>${zpglbm.contactorName}</td>
-                    <td>${zpglbm.mobilephone}</td>
-                    <td>${zpglbm.fixedPhone}</td>
-                    <td>${zpglbm.mailAddress}</td>
-                    <td>${zpglbm.titleName}</td>
-                    <td>${zpglbm.postName}</td>
+                    <td style="text-align: center">${zpglbm.contactorName}</td>
+                    <td style="text-align: center">${zpglbm.mobilephone}</td>
+                    <td style="text-align: center">${zpglbm.fixedPhone}</td>
+                    <td style="text-align: center">${zpglbm.mailAddress}</td>
+                    <td style="text-align: center">${zpglbm.titleName}</td>
+                    <td style="text-align: center">${zpglbm.postName}</td>
                     </tr>
                     <%--<tr>
                         <th style="background-color: #f4f5f9;">住培管理部门负责人：</th>
@@ -396,12 +396,12 @@
                     </tr>
                     <c:forEach var="contactMan" items="${basicInfo.contactManList}" varStatus="status">
                         <tr>
-                            <td>${contactMan.contactorName}</td>
-                            <td>${contactMan.mobilephone}</td>
-                            <td>${contactMan.fixedPhone}</td>
-                            <td>${contactMan.mailAddress}</td>
-                            <td>${contactMan.titleName}</td>
-                            <td>${contactMan.postName}</td>
+                            <td style="text-align: center">${contactMan.contactorName}</td>
+                            <td style="text-align: center">${contactMan.mobilephone}</td>
+                            <td style="text-align: center">${contactMan.fixedPhone}</td>
+                            <td style="text-align: center">${contactMan.mailAddress}</td>
+                            <td style="text-align: center">${contactMan.titleName}</td>
+                            <td style="text-align: center">${contactMan.postName}</td>
                         </tr>
                         <%--<tr>
                             <th style="background-color: #f4f5f9;">住培管理部门负责人：</th>

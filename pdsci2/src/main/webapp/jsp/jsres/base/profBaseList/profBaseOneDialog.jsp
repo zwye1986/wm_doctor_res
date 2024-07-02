@@ -27,11 +27,11 @@
         if($("#jointOrgFlag").val() == 'Y') {
             $(".jointSub").css("display", "");
             $(".one-level-bottom").css("border-bottom", 'inherit');
-            $(".two-level-bottom").css("border-bottom", '1px solid black');
+            $(".two-level-bottom").css("border-bottom", '1px solid #e7e7eb');
         }else {
             $(".jointSub").css("display", "none");
             $(".two-level-bottom").css("border-bottom", 'inherit');
-            $(".one-level-bottom").css("border-bottom", '1px solid black');
+            $(".one-level-bottom").css("border-bottom", '1px solid #e7e7eb');
         }
     }
 
