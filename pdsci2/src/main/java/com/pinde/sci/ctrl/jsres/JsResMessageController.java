@@ -244,13 +244,13 @@ public class JsResMessageController extends GeneralController {
         Map<String,String> paramMap = new HashMap<>();
         paramMap.put("orgFlow", orgFlow);
         paramMap.put("assignYear", assignYear);
-        List<Map<String, String>> orgSpeListAlready = speAssignBiz.searchAssignOrgSpeList(paramMap);
+        List<Map<String, String>> orgSpeListAlready = speAssignBiz.searchAssignOrgSpeListNew(paramMap);
         if(CollectionUtils.isEmpty(orgSpeListAlready) && StringUtil.isNotBlank(assignYear)){
             // 保存基地专业信息到招生计划表
             speAssignBiz.insertOrgSpeAssign(paramMap);
         }
         // 查询主基地住院医师和助理全科专业信息
-        List<Map<String, String>> orgSpeList = speAssignBiz.searchAssignOrgSpeList(paramMap);
+        List<Map<String, String>> orgSpeList = speAssignBiz.searchAssignOrgSpeListNew(paramMap);
         for (Map<String, String> orgSpe : orgSpeList) {
             ResOrgSpe resOrgSpe = speAssignBiz.findOrgSpe(orgFlow, assignYear, orgSpe.get("SPE_ID"));
             if (resOrgSpe != null) {
