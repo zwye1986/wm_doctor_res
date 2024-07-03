@@ -1,5 +1,4 @@
 <jsp:include page="/jsp/jsres/htmlhead-jsres.jsp">
-	<jsp:param name="basic" value="true"/>
 	<jsp:param name="queryFont" value="true"/>
 	<jsp:param name="jquery_form" value="true"/>
 	<jsp:param name="jquery_ui_combobox" value="false"/>
@@ -14,8 +13,9 @@
 	<jsp:param name="jquery_fixedtableheader" value="true"/>
 	<jsp:param name="jquery_placeholder" value="true"/>
 	<jsp:param name="jquery_iealert" value="false"/>
+	<jsp:param name="bootstrapSelect" value="true"/>
 </jsp:include>
-<style type="text/css">
+<style>
 	.boxHome .item:HOVER{background-color: #eee;}
 	.cur{color:red;}
 	.searchTable{
@@ -24,19 +24,80 @@
 	.searchTable td{
 		width: auto;
 		height: auto;
-		line-height: auto;
 		text-align: left;
 	}
 	.searchTable .td_left{
 		word-wrap:break-word;
 		width:5em;
 		height: auto;
-		line-height: auto;
 		text-align: right;
+	}
+	.text{
+		margin-left: 0;
+		width: auto;
+		height: auto;
+		line-height: inherit;
+		color: black;
+	}
+	.selected a{
+		padding: 0;
+		background: none;
+	}
+	.btn{
+		/*height: 28px !important;*/
+		border: 1px solid #e7e7eb;
+		padding: 0px;
+	}
+	.body{
+		width: 90%;
+		margin-left: auto;
+		margin-right: auto;
+		padding: 0 0 88px;
+	}
+	.container{
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.btn-default{
+		background-color: #fff;
+	}
+	.form-control,.input{
+		height: 28px;
+		padding: 0;
+	}
+	/*.bootstrap-select{
+		width: 182px !important;
+	}*/
+	.bootstrap-select>.dropdown-toggle{
+		width: 130px !important;
+	}
+	.div_search span{
+		float: none;
+		font-weight: inherit;
+	}
+	.btn-default:hover,.open > .dropdown-toggle.btn-default {
+		background-color: inherit;
+		border-color: #e7e7eb;
 	}
 </style>
 <script type="text/javascript" src="<s:url value='/js/jquery-select/js/jquery.select.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <script type="text/javascript">
+	// 十二个月份
+	var schMonthsMap = [
+		["01", "一月"],
+		["02", "二月"],
+		["03", "三月"],
+		["04", "四月"],
+		["05", "五月"],
+		["06", "六月"],
+		["07", "七月"],
+		["08", "八月"],
+		["09", "九月"],
+		["10", "十月"],
+		["11", "十一月"],
+		["12", "十二月"]
+	];
+
 	$(document).ready(function(){
 		$('#sessionNumber').datepicker({
 			startView: 2,
@@ -50,6 +111,17 @@
 			minViewMode:2,
 			format:'yyyy'
 		});
+
+		$("#schMonths").selectpicker({
+			deselectAllText: "全不选",
+			selectAllText: "全选",
+			noneSelectedText: "未选中"
+		});
+		for(var i = 0; i < schMonthsMap.length; i++) {
+			$("#schMonths").append($("<option></option>").val(schMonthsMap[i][0]).text(schMonthsMap[i][1]).attr("selected", "selected"));
+		}
+		$("#schMonths").selectpicker("refresh");
+
 		initOrg();
 		$("#trainOrg").val("${org.orgName}");
 		$("#orgFlow").val("${org.orgFlow}");
@@ -193,8 +265,13 @@
 				</td>
 			</tr>
 			<tr>
+				<td class="td_left">轮转月份：</td>
+				<td>
+					<select name="schMonths" id="schMonths" class="show-menu-arrow" multiple title="请选择" data-actions-box="true">
+					</select>
+				</td>
 				<td class="td_left">人员类型：</td>
-				<td colspan="7">
+				<td colspan="5">
 					<c:forEach items="${jsResDocTypeEnumList}" var="type">
 						<label><input type="checkbox" id="${type.id}"value="${type.id}" checked class="docType" name="datas" />${type.name}&nbsp;</label>
 					</c:forEach>

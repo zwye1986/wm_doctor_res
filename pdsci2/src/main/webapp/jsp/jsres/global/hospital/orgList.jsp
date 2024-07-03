@@ -273,11 +273,11 @@ function hideTable(obj) {
 			<input type="hidden" name="currentPage" id="currentPage" value=""/>
 			<table style="border-collapse:separate; border-spacing:0px 20px;">
 				<tr>
-					<td class="td_right" style="color: #000000;font: 14px Microsoft YaHei;font-weight: 400;">&#12288;年份：</td>
+					<td class="td_right" style="color: #000000;font: 14px Microsoft YaHei;font-weight: 400;">年份：</td>
 					<td class="td_left">
 						<input class="input" type="text" name="sessionYear" value="${sessionYear}" onclick="WdatePicker({dateFmt:'yyyy'})" readonly="readonly">
 					</td>
-					<td class="td_right" style="color: #000000;font: 14px Microsoft YaHei;font-weight: 400;">基地名称：</td>
+					<td class="td_right" style="color: #000000;font: 14px Microsoft YaHei;font-weight: 400;">&#12288;基地名称：</td>
 					<td class="td_left">
 						<input class="input" type="text" name="orgName" value="${param.orgName}">
 					</td>

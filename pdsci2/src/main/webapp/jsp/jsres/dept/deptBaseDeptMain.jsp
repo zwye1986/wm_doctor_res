@@ -3,6 +3,12 @@
     <jsp:param name="impromptu" value="true"/>
 </jsp:include>
 <style type="text/css">
+    .searchTable td:nth-child(1),.searchTable td:nth-child(3){
+        width: 5em;
+    }
+    .searchTable td:nth-child(5){
+        width: 7em;
+    }
 </style>
 <script type="text/javascript">
     $(document).ready(function(){
@@ -164,15 +170,6 @@
             <input id="orgFlow" type="hidden" name="orgFlow" value="${sessionScope.currUser.orgFlow}"/>
             <input id="orgName" type="hidden" name="orgName" value="${sessionScope.currUser.orgName}"/>
             <table class="searchTable">
-                <colgroup>
-                    <col style="width: 10%">
-                    <col style="width: 10%">
-                    <col style="width: 10%">
-                    <col style="width: 10%">
-                    <col style="width: 15%">
-                    <col style="width: 15%">
-                    <col style="width: 30%">
-                </colgroup>
                 <tr>
                     <td class="td_left">
                         科室代码：

@@ -1,5 +1,4 @@
 <jsp:include page="/jsp/jsres/htmlhead-jsres.jsp">
-	<jsp:param name="basic" value="true"/>
 	<jsp:param name="queryFont" value="true"/>
 	<jsp:param name="jquery_form" value="true"/>
 	<jsp:param name="jquery_ui_combobox" value="false"/>

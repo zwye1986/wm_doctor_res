@@ -5474,13 +5474,14 @@ public class JsResBaseManagerController extends GeneralController {
 		if (currentPage == null) {
 			currentPage = 1;
 		}
-		if (StringUtil.isBlank(sysOrgExt.getSessionYear())) {
+		sysOrgExt.setSessionYear(DateUtil.getYear());
+		/*if (StringUtil.isBlank(sysOrgExt.getSessionYear())) {
 			if (DateUtil.getCurrDate().compareTo(DateUtil.getYear() + "-09-30") > 0) {
 				sysOrgExt.setSessionYear(DateUtil.getYear());
 			} else {
 				sysOrgExt.setSessionYear(String.valueOf(Integer.parseInt(DateUtil.getYear()) - 1));
 			}
-		}
+		}*/
 		model.addAttribute("sessionYear", sysOrgExt.getSessionYear());
 		List<SysOrgExt> sysOrgExtList = orgBiz.searchOrgListByParamNew(sysOrgExt);
 //		List<SysOrgExt> sysOrgExtList = orgBiz.searchOrgListByParam(sysOrgExt);
@@ -6214,6 +6215,15 @@ public class JsResBaseManagerController extends GeneralController {
 						jointOrgList.add(jointOrgVO);
 					}
 				}
+				jointOrgList = jointOrgList.stream().sorted((vo1, vo2) -> {
+					if(StringUtils.isNotEmpty(vo1.getBaseCode()) && StringUtils.isNotEmpty(vo2.getBaseCode())) {
+						return Integer.compare(Integer.parseInt(vo1.getBaseCode()), Integer.parseInt(vo2.getBaseCode()));
+					}else if(StringUtils.isNotEmpty(vo1.getBaseCode())){
+						return -1;
+					}else if(StringUtils.isNotEmpty(vo2.getBaseCode())) {
+						return 1;
+					}else return 0;
+				}).collect(Collectors.toList());
 				mainOrgVO.setJointOrgList(jointOrgList);
 				// 顺便把baseCode添上
 				mainOrgVO.setBaseCode(orgToEntityMap.getOrDefault(mainOrgVO.getOrgFlow(), new SysOrg()).getOrgCode());
@@ -6222,7 +6232,16 @@ public class JsResBaseManagerController extends GeneralController {
 
 		});
 
-		model.addAttribute("orgSpeList", resList);
+		List<ResOrgSepVO> orgSpeVOList = resList.stream().sorted((vo1, vo2) -> {
+			if(StringUtils.isNotEmpty(vo1.getBaseCode()) && StringUtils.isNotEmpty(vo2.getBaseCode())) {
+				return Integer.compare(Integer.parseInt(vo1.getBaseCode()), Integer.parseInt(vo2.getBaseCode()));
+			}else if(StringUtils.isNotEmpty(vo1.getBaseCode())){
+				return -1;
+			}else if(StringUtils.isNotEmpty(vo2.getBaseCode())) {
+				return 1;
+			}else return 0;
+		}).collect(Collectors.toList());
+		model.addAttribute("orgSpeList", orgSpeVOList);
 
 		logger.info("[JsResBaseManagerController.profBaseOneDialog] end");
 		return "/jsres/base/profBaseList/profBaseOneDialog";

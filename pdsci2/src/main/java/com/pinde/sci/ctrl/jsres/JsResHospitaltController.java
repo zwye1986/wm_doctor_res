@@ -21,6 +21,7 @@ import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,8 +32,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -128,7 +127,7 @@ public class JsResHospitaltController extends GeneralController{
 	public String docProcessEvalList(Model model,Integer currentPage ,HttpServletRequest request,
 							String trainingTypeId,String trainingSpeId,String datas[],
 							String sessionNumber,String graduationYear,
-							String userName,String idNo,String orgFlow,String doctorStatusId,String isQuery
+							String userName,String idNo,String orgFlow,String doctorStatusId,String isQuery, String[] schMonths
 	) throws ParseException {
 		SysUser currentUser = GlobalContext.getCurrentUser();
 		//查询条件
@@ -157,6 +156,9 @@ public class JsResHospitaltController extends GeneralController{
 		if(StringUtil.isNotBlank(isQuery)&&StringUtil.isBlank(orgFlow))
 		{
 			orgFlow=currentUser.getOrgFlow();
+		}
+		if(ArrayUtils.isNotEmpty(schMonths) && schMonths.length < 12) { // 不是全选，（全选all等于没这个条件）
+			param.put("schMonthList", Arrays.asList(schMonths));
 		}
 		param.put("orgFlowList",orgFlowList);//培训基地
 		param.put("orgFlow",orgFlow);
@@ -200,7 +202,7 @@ public class JsResHospitaltController extends GeneralController{
 	public void exportEvalList(Model model ,HttpServletResponse response,
 									 String trainingTypeId,String trainingSpeId,String datas[],
 									 String sessionNumber,String graduationYear,
-									 String userName,String idNo,String orgFlow,String doctorStatusId,String isQuery
+									 String userName,String idNo,String orgFlow,String doctorStatusId,String isQuery, String[] schMonths
 	) throws Exception {
 		SysUser currentUser = GlobalContext.getCurrentUser();
 		//查询条件
@@ -229,6 +231,9 @@ public class JsResHospitaltController extends GeneralController{
 		if(StringUtil.isNotBlank(isQuery)&&StringUtil.isBlank(orgFlow))
 		{
 			orgFlow=currentUser.getOrgFlow();
+		}
+		if(ArrayUtils.isNotEmpty(schMonths) && schMonths.length < 12) { // 不是全选，（全选all等于没这个条件）
+			param.put("schMonthList", Arrays.asList(schMonths));
 		}
 		param.put("orgFlowList",orgFlowList);//培训基地
 		param.put("orgFlow",orgFlow);
@@ -269,6 +274,9 @@ public class JsResHospitaltController extends GeneralController{
 							exportData.put("time",eval.get("startTime")+"~"+eval.get("endTime"));
 							exportData.put("status",Objects.isNull(eval.get("recordFlow")) ? "待考评" : "已考评");
 							exportData.put("score",eval.get("evalScore"));
+							exportData.put("attendance", eval.get("ATTENDANCE"));
+							exportData.put("leave", eval.get("LEAVE"));
+							exportData.put("absenteeism", eval.get("ABSENTEEISM"));
 							exportData.putAll(process);
 							exportList.add(exportData);
 						});
@@ -293,13 +301,16 @@ public class JsResHospitaltController extends GeneralController{
 				"name:名称",
 				"time:时间",
 				"status:状态",
-				"score:成绩"
+				"score:成绩",
+				"attendance:出勤天数",
+				"leave:请假天数",
+				"absenteeism:缺勤天数"
 		};
 		String fileName = "考评指标成绩列表.xls";
 		fileName = URLEncoder.encode(fileName, "UTF-8");
 		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-		ExcleUtile.exportSimpleExcleByObjs(titles, exportList, response.getOutputStream(), new String[]{"0"});
 		response.setContentType("application/octet-stream;charset=UTF-8");
+		ExcleUtile.exportSimpleExcleByObjs(titles, exportList, response.getOutputStream(), new String[]{"0"});
 	}
 
 
