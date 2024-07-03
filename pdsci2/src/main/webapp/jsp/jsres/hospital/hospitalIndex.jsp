@@ -10,7 +10,6 @@
         <jsp:param name="jquery_datePicker" value="true"/>
         <jsp:param name="jquery_placeholder" value="true"/>
         <jsp:param name="jquery_validation" value="true"/>
-        <jsp:param name="jquery_ui_tooltip" value="true"/>
     </jsp:include>
     <script type="text/javascript"
             src="<s:url value='/js/echarts/echarts.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
