@@ -158,6 +158,7 @@
 		 */
 		function searchResOrgSpeList(val){
 		    val = '${catSpeId}';
+			var sessionNumber = $('#sessionNumberTd').text();
 			var year=$("#sessionNumber").val();
 			//清空原来专业！！！
 			$("select[name=speId] option[value != '']").remove();
@@ -171,7 +172,7 @@
 			}
 			top.jboxStartLoading();
 			<%--var url = "<s:url value='/jsres/doctor/searchResOrgSpeList?orgFlow='/>" + orgFlow +"&sessionNumber=2020";--%>
-            var url = "<s:url value='/jsres/doctor/searchResOrgSpeListNew?orgFlow='/>" + orgFlow +"&sessionNumber=2020&trainCategoryTypeId="+val;
+            var url = "<s:url value='/jsres/doctor/searchResOrgSpeListNew?orgFlow='/>" + orgFlow +"&sessionNumber="+ sessionNumber +"&trainCategoryTypeId="+val;
 			top.jboxGet(url, null, function(resp){
 				top.jboxEndLoading();
 				// var dataObj = resp.main;
@@ -627,9 +628,9 @@
 								<option value="50">助理全科</option>
 							</c:if>
 
-							<%-- <c:forEach items="${speList}" var="spe">
-                                <option value="${spe.speId}" ${doctorRecruit.speId eq spe.speId?'selected':''}>${spe.speName}</option>
-                            </c:forEach> --%>
+<%--							 <c:forEach items="${speList}" var="spe">--%>
+<%--                                <option value="${spe.speId}" ${doctorRecruit.speId eq spe.speId?'selected':''}>${spe.speName}</option>--%>
+<%--                            </c:forEach> --%>
 						</select>
 					</td>
 				</tr>
