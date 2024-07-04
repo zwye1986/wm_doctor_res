@@ -358,7 +358,7 @@ function hideTable(obj) {
 									<td>${org.orgCode}</td>
 									<td class="left-content"><a onclick="showOrg('${org.orgFlow}', '${sessionYear}');">${org.orgName}</a></td>
 									<td>${org.orgBaseGradeName}</td>
-									<td></td>
+									<td>————</td>
 <%--									<td></td>--%>
 <%--									<td></td>--%>
 								</tr>

@@ -470,7 +470,7 @@
             <tr>
                 <th style="background-color: #f4f5f9;">类别：</th>
                 <td >${basicInfo.lx}</td>
-                <th style="background-color: #f4f5f9;">等级等次：</th>
+                <th style="background-color: #f4f5f9;">级别：</th>
                 <td >${basicInfo.levelRankName}</td>
             </tr>
             <tr>
@@ -498,7 +498,7 @@
                 <td>${sysOrg.creditCode}</td>
             </tr>
             <tr>
-                <th style="background-color: #f4f5f9;">职业许可证：</th>
+                <th style="background-color: #f4f5f9;">执业许可证：</th>
                 <td>
                             <span style="display:${!empty basicInfo.professionLicenceUrl?'':'none'} ">
                                 <a href="${sysCfgMap['upload_base_url']}/${basicInfo.professionLicenceUrl}"

@@ -1100,36 +1100,38 @@ public class JsResBaseManagerController extends GeneralController {
 		}
 
 		String curYear = DateUtil.getYear();
-		if(curYear.equals(sessionNumber)) {
-			// 状态的处理，如果有一家是open，那结果是open，
-			// 如果没有open，有一家是stop，那结果是stop
-			// 如果没有open，没有stop,即只有close，那结果是close
-			for (Map<String, String> orgSpe : orgSpeList) {
-				ResOrgSpeExample resOrgSpeExample = new ResOrgSpeExample();
-				resOrgSpeExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSpeIdEqualTo(orgSpe.get("SPE_ID"))
-								.andOrgFlowIn(Arrays.stream(speOpt).collect(Collectors.toList())).andSessionYearEqualTo(sessionNumber);
-				List<ResOrgSpe> orgSpeList2 = speAssignBiz.findOrgSpeByExample(resOrgSpeExample);
-				if(CollectionUtils.isEmpty(orgSpeList2)) {
-					orgSpe.put("STATUS", "close");
+		// 状态的处理，如果有一家是open，那结果是open，
+		// 如果没有open，有一家是stop，那结果是stop
+		// 如果没有open，没有stop,即只有close，那结果是close
+		for (Map<String, String> orgSpe : orgSpeList) {
+			ResOrgSpeExample resOrgSpeExample = new ResOrgSpeExample();
+			resOrgSpeExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSpeIdEqualTo(orgSpe.get("SPE_ID"))
+					.andOrgFlowIn(Arrays.stream(speOpt).collect(Collectors.toList())).andSessionYearEqualTo(sessionNumber);
+			List<ResOrgSpe> orgSpeList2 = speAssignBiz.findOrgSpeByExample(resOrgSpeExample);
+			if(CollectionUtils.isEmpty(orgSpeList2)) {
+				orgSpe.put("STATUS", "close");
+			}else {
+				ResOrgSpe resOrgSpe = orgSpeList2.stream().filter(vo -> "open".equals(vo.getStatus())).findFirst().orElse(null);
+				if(resOrgSpe != null) {
+					orgSpe.put("STATUS", "open");
 				}else {
-					ResOrgSpe resOrgSpe = orgSpeList2.stream().filter(vo -> "open".equals(vo.getStatus())).findFirst().orElse(null);
+					resOrgSpe = orgSpeList2.stream().filter(vo -> "stop".equals(vo.getStatus())).findFirst().orElse(null);
 					if(resOrgSpe != null) {
-						orgSpe.put("STATUS", "open");
+						orgSpe.put("STATUS", "stop");
 					}else {
-						resOrgSpe = orgSpeList2.stream().filter(vo -> "stop".equals(vo.getStatus())).findFirst().orElse(null);
-						if(resOrgSpe != null) {
-							orgSpe.put("STATUS", "stop");
-						}else {
-							orgSpe.put("STATUS", "close");
-						}
+						orgSpe.put("STATUS", "close");
 					}
 				}
+			}
 
+			if(curYear.equals(sessionNumber)) {
 				String minRecruitCapacity = orgSpeList2.stream().filter(vo -> StringUtils.isNotEmpty(vo.getMinRecruitCapacity())).map(vo -> Integer.parseInt(vo.getMinRecruitCapacity()))
 						.reduce(0, (vo1, vo2) -> vo1 + vo2).toString();
 				orgSpe.put("minRecruitCapacity", minRecruitCapacity);
 			}
+		}
 
+		if(curYear.equals(sessionNumber)) {
 			// 在培住院医师
 			Map<String, Object> doctorRecruitMap = new HashMap<>();
 			doctorRecruitMap.put("doctorStatusId", "20");
