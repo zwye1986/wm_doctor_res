@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.nydyjs.ext.UserInfoExtMapper">
+
+	<select id="seachUser" parameterType="map" resultMap="com.pinde.res.dao.njmu.base.UserinfoMapper.BaseResultMap">
+		SELECT UserInfo.UserID,Sex,TrueName,RoleID as RoleIDs, PassWord, WorkSpace, CardID, Sex, Duty, SectionID,
+        SchoolID, TeacherID, DegreeID, SpecialtyID, GraduateTime, Email, MobileTel, Tel,
+        CreateTime, LastEnterTime, StartYear, IsComplete, IsAdmin, FLability, Comability,
+        DipState, DipTakeTo, PersonSpecialtyID, DiplomaNum, OverTime, TtpName, HosID, RYSJ,
+        XNJB, PYNX, JYZSBH, SZKS, BZPX, CSNY, Marry, MZ, ZZMM, JKZK, JWBS, xueli, ISFresh,
+        Fllevel, YB, zyzbh, zydd, zyfw, byzsbh, syd, lcjnkhfs, JSLB, ZYYSZGZ, getDateOfZGZ,
+        ZYYSZCZ, areaOfZY, DocTemp, IsUser, Tec, No, workNo, workLevel, WorkCardNo, XWZUrl,
+        ZYYSZUrl, GPHGZUrl, YSZGUrl, OtherUrl
+        FROM UserInfo
+        inner join UserRole on UserRole.UserID = UserInfo.UserID
+        WHERE UserName = #{userCode}  AND RoleID = #{roleId}
+	</select>
+</mapper>

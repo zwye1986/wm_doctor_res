@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.jswjw.ext.SysUserExtMapper" >
+	<select id="searchUserList" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+		select u.* from PDSCI.sys_user u
+		where record_status='Y'
+        and status_id='Activated'
+        and u.user_flow in(
+            select u.user_flow
+            from PDSCI.sys_user_role iu, sys_user u
+                where iu.user_flow = u.user_flow and iu.record_status = 'Y'
+                and iu.role_flow = #{roleFlow}
+                and u.dept_flow = #{sysDeptFlow}
+            union
+            select u.user_flow
+                from PDSCI.sys_user_role iu, sys_user u
+                where iu.user_flow = u.user_flow and iu.record_status = 'Y'
+                and iu.role_flow = #{roleFlow}
+                    and exists(select 1
+                    from pdsci.sys_user_dept sud
+                    where sud.record_status = 'Y'
+                    and u.user_flow = sud.user_flow
+                    and sud.dept_flow = #{sysDeptFlow})
+        )
+		<if test='userName!=null and userName!=""'>
+			and (u.user_name like '%${userName}%')
+		</if>
+		order by nlssort(u.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+	<select id="teacherRoleCheckUser" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+		select u.*
+		from PDSCI.sys_user u
+		where record_status='Y'
+            and status_id='Activated'
+            and u.user_flow in(
+                select u.user_flow
+                from PDSCI.sys_user_role iu, sys_user u
+                    where iu.user_flow = u.user_flow and iu.record_status = 'Y'
+                    and iu.role_flow = #{roleFlow}
+            )
+           AND ((EXISTS (SELECT NULL
+                           FROM SYS_USER_DEPT sud
+                          WHERE sud.RECORD_STATUS = 'Y'
+                            AND sud.USER_FLOW =#{userFlow}
+                            AND u.DEPT_FLOW = sud.DEPT_FLOW)
+                            <if test="sysDeptFlow!=null and sysDeptFlow!=''">
+                                or  u.DEPT_FLOW=#{sysDeptFlow}
+                            </if>
+              ) or
+               (exists
+                (SELECT NULL
+                    FROM SYS_USER_DEPT sud
+                   WHERE sud.RECORD_STATUS = 'Y'
+                     AND sud.USER_FLOW = u.user_flow
+                     and sud.dept_flow in
+                         (SELECT dept_flow
+                            FROM SYS_USER_DEPT
+                           WHERE RECORD_STATUS = 'Y'
+                             AND USER_FLOW =#{userFlow}))))
+            <if test='userName!=null and userName!=""'>
+                and (u.user_name like '%${userName}%')
+            </if>
+		order by nlssort(u.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+    <resultMap id="speUserMap" type="hashmap" extends="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+        <result column="EVAL_SCORE" property="evalScore" jdbcType="VARCHAR" />
+    </resultMap>
+	<select id="teacherRoleCheckSpeUser" parameterType="java.util.Map" resultMap="speUserMap">
+        SELECT B.USER_FLOW,B.DEPT_FLOW,B.DEPT_NAME,B.USER_NAME,EV.EVAL_SCORE
+          FROM (SELECT A.*,
+                       D.DEPT_NAME,
+                       SU.USER_NAME,
+                       ROW_NUMBER() OVER(PARTITION BY A.USER_FLOW ORDER BY A.DEPT_FLOW) RN
+                  FROM (SELECT USER_FLOW, DEPT_FLOW
+                          FROM SYS_USER_DEPT
+                         WHERE RECORD_STATUS = 'Y'
+                        UNION
+                        SELECT USER_FLOW, DEPT_FLOW
+                          FROM SYS_USER
+                         WHERE RECORD_STATUS = 'Y'
+                           AND DEPT_FLOW IS NOT NULL) A
+                  LEFT JOIN SYS_DEPT D
+                    ON D.DEPT_FLOW = A.DEPT_FLOW
+                  LEFT JOIN SYS_USER SU
+                    ON A.USER_FLOW = SU.USER_FLOW
+                 WHERE D.RECORD_STATUS = 'Y'
+                   AND SU.RECORD_STATUS = 'Y'
+                   AND A.DEPT_FLOW IN
+                       (SELECT D.DEPT_FLOW
+                          FROM RES_TRAINING_SPE_DEPT D
+                         WHERE D.TRAINING_SPE_ID IN
+                               (SELECT RES_TRAINING_SPE_ID
+                                  FROM SYS_USER
+                                 WHERE USER_FLOW = #{userFlow})
+                           AND D.RECORD_STATUS = 'Y')
+                   AND EXISTS
+                 (SELECT 1
+                          FROM SYS_USER_ROLE ROLE
+                         WHERE ROLE.RECORD_STATUS = 'Y'
+                           AND ROLE.USER_FLOW = A.USER_FLOW
+                           AND ROLE.ROLE_FLOW =#{roleFlow})) b
+        left join (
+                    SELECT TEACHER_USER_FLOW,CEIL(SUM(total_Score)/COUNT(1)) EVAL_SCORE FROM (
+                       SELECT
+                              xmltype(INFO.REC_CONTENT).extract('//totalScore/text()').getstringval() total_Score,
+                              P.TEACHER_USER_FLOW,
+                              P.TEACHER_USER_NAME
+                         FROM DEPT_TEACHER_GRADE_INFO INFO
+                         LEFT JOIN RES_DOCTOR_SCH_PROCESS P
+                           ON INFO.PROCESS_FLOW = P.PROCESS_FLOW
+                        WHERE INFO.RECORD_STATUS = 'Y'
+                          AND P.RECORD_STATUS = 'Y'
+                          AND REC_TYPE_ID = 'TeacherGrade'
+            )A GROUP BY TEACHER_USER_FLOW
+        ) EV
+        ON b.USER_FLOW=EV.TEACHER_USER_FLOW
+         WHERE RN = 1
+        <if test="deptFlow!=null and deptFlow!=''">
+            and B.DEPT_FLOW=#{deptFlow}
+        </if>
+        <if test='userName!=null and userName!=""'>
+            and (B.user_name like '%${userName}%')
+        </if>
+		order by EVAL_SCORE ${orderBy},nlssort(user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+    <resultMap id="deptUserMap" type="hashmap" extends="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+
+    </resultMap>
+	<select id="deptUsers" parameterType="java.util.Map" resultMap="deptUserMap">
+         SELECT * FROM (
+              SELECT A.*,
+                       D.DEPT_NAME,
+                       SU.USER_NAME,
+                       ROW_NUMBER() OVER(PARTITION BY A.USER_FLOW ORDER BY A.DEPT_FLOW) RN
+                      FROM (SELECT USER_FLOW, DEPT_FLOW
+                              FROM SYS_USER_DEPT
+                             WHERE RECORD_STATUS = 'Y'
+                             AND DEPT_FLOW IN (
+                                SELECT DEPT_FLOW FROM SYS_USER_DEPT  WHERE RECORD_STATUS = 'Y' AND USER_FLOW=#{userFlow}
+                                UNION ALL
+                                SELECT DEPT_FLOW FROM SYS_USER  WHERE RECORD_STATUS = 'Y' AND USER_FLOW=#{userFlow}
+                             )
+                            UNION
+                            SELECT USER_FLOW, DEPT_FLOW
+                              FROM SYS_USER
+                             WHERE RECORD_STATUS = 'Y'
+                             AND DEPT_FLOW IN (
+                                SELECT DEPT_FLOW FROM SYS_USER_DEPT  WHERE RECORD_STATUS = 'Y' AND USER_FLOW=#{userFlow}
+                                UNION ALL
+                                SELECT DEPT_FLOW FROM SYS_USER  WHERE RECORD_STATUS = 'Y' AND USER_FLOW=#{userFlow}
+                             )
+                        ) A
+                  LEFT JOIN SYS_DEPT D
+                    ON D.DEPT_FLOW = A.DEPT_FLOW
+                  LEFT JOIN SYS_USER SU
+                    ON A.USER_FLOW = SU.USER_FLOW
+                 WHERE D.RECORD_STATUS = 'Y'
+                   AND SU.RECORD_STATUS = 'Y'
+                    and su.status_id='Activated'
+                   AND EXISTS
+                 (SELECT 1
+                          FROM SYS_USER_ROLE ROLE
+                         WHERE ROLE.RECORD_STATUS = 'Y'
+                           AND ROLE.USER_FLOW = A.USER_FLOW
+                           AND ROLE.ROLE_FLOW =#{roleFlow})
+                   <if test='deptFlow!=null and deptFlow!=""'>
+                    AND A.DEPT_FLOW =#{deptFlow}
+                   </if>
+                   ) B WHERE RN=1
+                    <if test='seachStr!=null and seachStr!=""'>
+                        and (B.user_name like '%${seachStr}%')
+                    </if>
+	</select>
+
+    <select id="readDeptTeachAndHead" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" >
+        select distinct su.* from sys_user su
+        left join sys_user_role sur on su.user_flow = sur.user_flow
+        where su.RECORD_STATUS = 'Y'
+        and su.status_id='Activated'
+        <if test='deptFlow!=null and deptFlow!=""'>
+            and( su.dept_flow = #{deptFlow}
+            or su.user_flow in (
+            select user_Flow from sys_user_dept sud where record_status='Y'
+            and sud.dept_flow =#{deptFlow}
+            )
+            )
+        </if>
+        <if test='teacherRoleFlow!=null and teacherRoleFlow!="" and (headRoleFlow==null or headRoleFlow=="")'>
+            and sur.role_flow = #{teacherRoleFlow}
+        </if>
+        <if test='headRoleFlow!=null and headRoleFlow!="" and (teacherRoleFlow==null or teacherRoleFlow=="")'>
+            and sur.role_flow = #{headRoleFlow}
+        </if>
+        <if test='headRoleFlow!=null and headRoleFlow!="" and teacherRoleFlow!=null and teacherRoleFlow!=""'>
+            and(
+            sur.role_flow = #{teacherRoleFlow}
+            or
+            sur.role_flow = #{headRoleFlow}
+            )
+        </if>
+        and sur.RECORD_STATUS = 'Y'
+        order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+    </select>
+
+    <!-- 查询用户基本信息 -->
+    <select id="getUserBaseInfo" parameterType="String" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+        SELECT
+            USER_FLOW,
+            USER_CODE,
+            USER_PASSWD,
+            USER_NAME,
+            SEX_ID,
+            SEX_NAME,
+            STATUS_ID,
+            STATUS_DESC,
+            USER_PHONE,
+            USER_EMAIL,
+            DEPT_FLOW,
+            DEPT_NAME,
+            ORG_FLOW,
+            ORG_NAME,
+            ID_NO,
+            IS_VERIFY,
+            VERIFY_CODE,
+            VERIFY_CODE_TIME,
+            USER_HEAD_IMG
+        FROM
+            SYS_USER
+        WHERE
+            USER_FLOW = #{userFlow}
+    </select>
+</mapper>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.lcjn.ext.InxInfoExtMapper">
+
+	<select id="getDocNoReadInfos" resultMap="com.pinde.sci.dao.base.InxInfoMapper.ResultMapWithBLOBs">
+		SELECT INFO_FLOW, INFO_TITLE, TITLE_IMG, COLUMN_ID, COLUMN_NAME, INFO_STATUS_ID, INFO_STATUS_NAME,
+		to_char(to_date(INFO_TIME,'yyyymmddhh24miss'),'yyyy-MM-dd HH24:MI:ss') INFO_TIME, PASS_TIME, PASS_USER_FLOW, CANCEL_TIME, CANCEL_USER_FLOW, DELETE_TIME,
+		DELETE_USER_FLOW, INFO_KEYWORD, IS_TOP, VIEW_NUM, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW,
+		MODIFY_TIME, MODIFY_USER_FLOW, ORG_FLOW, ORG_NAME,INFO_CONTENT
+		FROM INX_INFO
+		WHERE RECORD_STATUS='Y'
+		AND COLUMN_ID='lcjn'
+		AND INFO_FLOW NOT IN (
+			SELECT INFO_FLOW FROM
+			LCJN_DOCTOR_READ_INFO
+			WHERE RECORD_STATUS='Y'
+			AND DOCTOR_FLOW =#{userFlow}
+		)
+	</select>
+	<select id="getInfos" resultMap="com.pinde.sci.dao.base.InxInfoMapper.ResultMapWithBLOBs">
+		SELECT  info.INFO_FLOW, INFO_TITLE, TITLE_IMG, COLUMN_ID, COLUMN_NAME, INFO_STATUS_ID, INFO_STATUS_NAME,
+		to_char(to_date(INFO_TIME,'yyyymmddhh24miss'),'yyyy-MM-dd HH24:MI:ss') INFO_TIME, PASS_TIME, PASS_USER_FLOW, CANCEL_TIME, CANCEL_USER_FLOW, DELETE_TIME,
+		DELETE_USER_FLOW, INFO_KEYWORD, IS_TOP, VIEW_NUM, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW,
+		MODIFY_TIME, MODIFY_USER_FLOW, ORG_FLOW, ORG_NAME,INFO_CONTENT,B.READ_FLAG
+		FROM INX_INFO INFO
+		LEFT JOIN (SELECT INFO_FLOW,'1' READ_FLAG
+		FROM LCJN_DOCTOR_READ_INFO
+		WHERE RECORD_STATUS='Y'
+		AND DOCTOR_FLOW=#{userFlow}
+		GROUP BY DOCTOR_FLOW,INFO_FLOW) B
+		ON INFO.INFO_FLOW=B.INFO_FLOW
+		 WHERE RECORD_STATUS='Y'
+		AND COLUMN_ID='lcjn'
+		 ORDER BY B.READ_FLAG DESC,INFO.CREATE_TIME DESC
+	</select>
+	<update id="updateInfoState" parameterType="com.pinde.res.model.stdp.mo.InxInfoForm">
+		update  PDSCI.INX_INFO set INFO_STATUS_ID = #{infoStatusId},INFO_STATUS_NAME = #{infoStatusName} where INFO_STATUS_ID <![CDATA[<>]]> 'Failure' and   info_flow in
+		<foreach collection="infoFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		<if test='infoStatusId=="Passing"'>
+			and (INFO_STATUS_ID = 'Edit' or INFO_STATUS_ID = 'NoPassed')
+		</if>
+	</update>
+	<update id="deleteInfoRole" >
+		update  PDSCI.RES_INFO_ROLE set RECORD_STATUS='N'
+		where INFO_FLOW=#{info.infoFlow} and RECORD_STATUS='Y'
+		<if test="roleFlows !=null and roleFlows.size()>0">
+			and   INFO_ROLE in
+			<foreach collection="roleFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+	</update>
+
+	<resultMap id="infoMap" type="hashmap" extends="com.pinde.sci.dao.base.InxInfoMapper.ResultMapWithBLOBs">
+		<result column="record_flow" jdbcType="VARCHAR" property="recordFlow" />
+	</resultMap>
+	<select id="searchInfoByOrgBeforeDate" resultMap="infoMap">
+		SELECT info.*,r.record_flow
+		FROM PDSCI.INX_INFO info
+		left join RES_READ_INFO R
+		on info.info_flow=r.info_flow
+		and r.user_flow=#{userFlow}
+		and r.record_status='Y'
+		WHERE info.RECORD_STATUS = 'Y'
+		<if test='resNoticeTypeId!=null and resNoticeTypeId!=""'>
+			AND COLUMN_ID = #{resNoticeTypeId}
+		</if>
+		<if test='resSysId!=null and resSysId!=""'>
+			AND info.ROLE_FLOW = #{resSysId}
+		</if>
+		<if test='orgFlow!=null and orgFlow!=""'>
+			AND (ORG_FLOW = #{orgFlow} OR ORG_FLOW IS NULL)
+		</if>
+		<if test='orgFlow==null or orgFlow==""'>
+			AND ORG_FLOW IS NULL
+		</if>
+		<if test='date!=null and date!=""'>
+			AND INFO_TIME >= #{date}
+		</if>
+		AND (
+		NOT EXISTS (
+		SELECT 1 FROM RES_INFO_ROLE WHERE RECORD_STATUS='Y' AND RES_INFO_ROLE.INFO_FLOW=info.INFO_FLOW
+		)
+		<if test='userFlow!=null and userFlow!=""'>
+			OR EXISTS(
+			SELECT 1 FROM RES_INFO_ROLE WHERE RECORD_STATUS='Y' AND RES_INFO_ROLE.INFO_FLOW=info.INFO_FLOW
+			<if test='sessionNumber!=null and sessionNumber!=""'>
+				and (session_Number=#{sessionNumber} or session_number is null)
+			</if>
+			AND INFO_ROLE IN (SELECT ROLE_FLOW FROM SYS_USER_ROLE WHERE RECORD_STATUS='Y' AND USER_FLOW =#{userFlow})
+			)
+		</if>
+		)
+		ORDER BY R.CREATE_TIME DESC,INFO_TIME DESC
+	</select>
+	<select id="searchInfoByOrgNotRead" resultMap="infoMap">
+		SELECT info.*,r.record_flow
+		FROM PDSCI.INX_INFO info
+		left join RES_READ_INFO R
+		on info.info_flow=r.info_flow
+		and r.user_flow=#{userFlow}
+		and r.record_status='Y'
+		WHERE info.RECORD_STATUS = 'Y'
+		and r.record_flow is null
+		<if test='resNoticeTypeId!=null and resNoticeTypeId!=""'>
+			AND COLUMN_ID = #{resNoticeTypeId}
+		</if>
+		<if test='resSysId!=null and resSysId!=""'>
+			AND info.ROLE_FLOW = #{resSysId}
+		</if>
+		<if test='orgFlow!=null and orgFlow!=""'>
+			AND (ORG_FLOW = #{orgFlow} OR ORG_FLOW IS NULL)
+		</if>
+		<if test='orgFlow==null or orgFlow==""'>
+			AND ORG_FLOW IS NULL
+		</if>
+		AND (
+		NOT EXISTS (
+		SELECT 1 FROM RES_INFO_ROLE WHERE RECORD_STATUS='Y' AND RES_INFO_ROLE.INFO_FLOW=info.INFO_FLOW
+		)
+		<if test='userFlow!=null and userFlow!=""'>
+			OR EXISTS(
+			SELECT 1 FROM RES_INFO_ROLE WHERE RECORD_STATUS='Y' AND RES_INFO_ROLE.INFO_FLOW=info.INFO_FLOW
+			AND INFO_ROLE IN (SELECT ROLE_FLOW FROM SYS_USER_ROLE WHERE RECORD_STATUS='Y' AND USER_FLOW =#{userFlow})
+			)
+		</if>
+		)
+		ORDER BY R.CREATE_TIME DESC,INFO_TIME DESC
+	</select>
+	<select id="findNoticeWithBLOBsNotHaveRole" resultMap="com.pinde.sci.dao.base.InxInfoMapper.ResultMapWithBLOBs">
+		SELECT *
+		FROM PDSCI.INX_INFO
+		WHERE RECORD_STATUS = 'Y'
+		<if test='info.columnId!=null and info.columnId!=""'>
+			AND COLUMN_ID = #{info.columnId}
+		</if>
+		<if test='info.roleFlow!=null and info.roleFlow!=""'>
+			AND ROLE_FLOW = #{info.roleFlow}
+		</if>
+		<if test='info.orgFlow!=null and info.orgFlow!=""'>
+			AND (ORG_FLOW = #{info.orgFlow} OR ORG_FLOW IS NULL)
+		</if>
+		<if test='info.orgFlow==null or info.orgFlow==""'>
+			AND ORG_FLOW IS NULL
+		</if>
+		AND NOT EXISTS (
+		SELECT 1 FROM RES_INFO_ROLE WHERE RECORD_STATUS='Y' AND RES_INFO_ROLE.INFO_FLOW=INX_INFO.INFO_FLOW
+		)
+		ORDER BY INFO_TIME DESC
+	</select>
+</mapper>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>	
+	<!-- 实习课程成绩单表单 -->
+	<!-- 
+	{0}:表单所属机构(开关控制)
+	{1}:版本号
+	医德医风
+医学文案
+内科诊疗技能	理论
+	技能
+外科诊疗技能	理论
+	技能
+妇产科诊疗技能	理论
+	技能
+儿科诊疗技能	理论
+	技能
+传染科诊疗	理论
+	技能
+眼科诊疗	理论
+	技能
+耳鼻喉科诊疗	理论
+	技能
+皮肤科诊疗	理论
+	技能
+心电图解读	理论
+	技能
+X光片解读
+护理操作
+社区医疗卫生
+选修一
+选修二
+
+ -->
+	<jsp path="res/form/{0}/courseScore_{1}"></jsp>
+	<product ver="1.0">
+		<page ver="1.0">
+			<item name="ydyf" isView="0" remark="医德医风" multiple="N"></item>
+			<item name="yxwa" isView="0" remark="医学文案" multiple="N"></item>
+			<item name="nkzljnll" isView="0" remark="内科诊疗技能【理论】" multiple="N"></item>
+			<item name="nkzljnjn" isView="0" remark="内科诊疗技能【技能】" multiple="N"></item>
+			<item name="wkzljnll" isView="0" remark="外科诊疗技能【理论】" multiple="N"></item>
+			<item name="wkzljnjn" isView="0" remark="外科诊疗技能【技能】" multiple="N"></item>
+			<item name="fckzljnll" isView="0" remark="妇产科诊疗技能【理论】" multiple="N"></item>
+			<item name="fckzljnjn" isView="0" remark="妇产科诊疗技能【技能】" multiple="N"></item>
+			<item name="ekzljnll" isView="0" remark="儿科诊疗技能【理论】" multiple="N"></item>
+			<item name="ekzljnjn" isView="0" remark="儿科诊疗技能【技能】" multiple="N"></item>
+			<item name="crkzlll" isView="0" remark="传染科诊疗【理论】" multiple="N"></item>
+			<item name="crkzljn" isView="0" remark="传染科诊疗【技能】" multiple="N"></item>
+			<item name="ykzlll" isView="0" remark="眼科诊疗【理论】" multiple="N"></item>
+			<item name="ykzljn" isView="0" remark="眼科诊疗【技能】" multiple="N"></item>
+			<item name="ebhkzlll" isView="0" remark="耳鼻喉科诊疗【理论】" multiple="N"></item>
+			<item name="ebhkzljn" isView="0" remark="耳鼻喉科诊疗【技能】" multiple="N"></item>
+			<item name="pfkzlll" isView="0" remark="皮肤科诊疗【理论】" multiple="N"></item>
+			<item name="pfkzljn" isView="0" remark="皮肤科诊疗【技能】" multiple="N"></item>
+			<item name="ndtjdll" isView="0" remark="心电图解读【理论】" multiple="N"></item>
+			<item name="ndtjdjn" isView="0" remark="心电图解读【技能】" multiple="N"></item>
+			<item name="xgpjd" remark="X光片解读" multiple="N"></item>
+			<item name="hlcz" remark="护理操作" multiple="N"></item>
+			<item name="sqylws" remark="社区医疗卫生" multiple="N"></item>
+			<item name="xxy" remark="选修一" multiple="N"></item>
+			<item name="xxe" remark="选修二" multiple="N"></item>
+		</page>
+	</product>
+	<njykdxsxs ver="1.0">
+		<page ver="1.0">
+			<item name="ydyf" isView="0" remark="医德医风" multiple="N"></item>
+			<item name="yxwa" isView="0" remark="医学文案" multiple="N"></item>
+			<item name="nkzljnll" isView="0" remark="内科诊疗技能【理论】" multiple="N"></item>
+			<item name="nkzljnjn" isView="0" remark="内科诊疗技能【技能】" multiple="N"></item>
+			<item name="wkzljnll" isView="0" remark="外科诊疗技能【理论】" multiple="N"></item>
+			<item name="wkzljnjn" isView="0" remark="外科诊疗技能【技能】" multiple="N"></item>
+			<item name="fckzljnll" isView="0" remark="妇产科诊疗技能【理论】" multiple="N"></item>
+			<item name="fckzljnjn" isView="0" remark="妇产科诊疗技能【技能】" multiple="N"></item>
+			<item name="ekzljnll" isView="0" remark="儿科诊疗技能【理论】" multiple="N"></item>
+			<item name="ekzljnjn" isView="0" remark="儿科诊疗技能【技能】" multiple="N"></item>
+			<item name="crkzlll" isView="0" remark="传染科诊疗【理论】" multiple="N"></item>
+			<item name="crkzljn" isView="0" remark="传染科诊疗【技能】" multiple="N"></item>
+			<item name="ykzlll" isView="0" remark="眼科诊疗【理论】" multiple="N"></item>
+			<item name="ykzljn" isView="0" remark="眼科诊疗【技能】" multiple="N"></item>
+			<item name="ebhkzlll" isView="0" remark="耳鼻喉科诊疗【理论】" multiple="N"></item>
+			<item name="ebhkzljn" isView="0" remark="耳鼻喉科诊疗【技能】" multiple="N"></item>
+			<item name="pfkzlll" isView="0" remark="皮肤科诊疗【理论】" multiple="N"></item>
+			<item name="pfkzljn" isView="0" remark="皮肤科诊疗【技能】" multiple="N"></item>
+			<item name="ndtjdll" isView="0" remark="心电图解读【理论】" multiple="N"></item>
+			<item name="ndtjdjn" isView="0" remark="心电图解读【技能】" multiple="N"></item>
+			<item name="xgpjd" remark="X光片解读" multiple="N"></item>
+			<item name="hlcz" remark="护理操作" multiple="N"></item>
+			<item name="sqylws" remark="社区医疗卫生" multiple="N"></item>
+			<item name="xxy" remark="选修一" multiple="N"></item>
+			<item name="xxe" remark="选修二" multiple="N"></item>
+		</page>
+	</njykdxsxs>
+</jspForm>
+

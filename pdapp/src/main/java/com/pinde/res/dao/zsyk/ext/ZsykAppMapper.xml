@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.res.dao.zsyk.ext.ZsykAppMapper">
+  	<resultMap id="userMap" type="hashmap">
+        <result column="userFlow"  property="userFlow" javaType="java.lang.String"/>
+        <result column="userCode"  property="userCode" javaType="java.lang.String"/>
+        <result column="userSex"  property="userSex" javaType="java.lang.String"/>
+        <result column="userName"  property="userName" javaType="java.lang.String"/>
+        <result column="userType"  property="userType" javaType="java.lang.String"/>
+        <result column="roleFlow"  property="roleFlow" javaType="java.lang.String"/>
+        <result column="roleId"  property="roleId" javaType="java.lang.String"/>
+        <result column="roleName"  property="roleName" javaType="java.lang.String"/>
+        <result column="password"  property="password" javaType="java.lang.String"/>
+        <result column="hosID"  property="hosID" javaType="java.lang.String"/>
+   	</resultMap>
+   	
+  <select id="login" parameterType="string" resultMap="userMap">
+      SELECT UserInfo.UserID as userFlow,
+      	UserInfo.Password as password,
+      	CASE when Sex = 0 then '女'
+			  when Sex = 1 then '男'
+	  	END as userSex,
+      	TrueName as userName,
+      	UserType as userType,
+      	roleId as roleFlow,
+      	CASE when roleId = 4 then 'Trainee'
+			 when roleId = 6 then 'Teacher'
+			 when roleId = 1 then 'Trainee'
+			 when roleId = 2 then 'Trainee'
+			 when roleId = 5 then 'Trainee'
+			 when roleId = 36 then 'Secretary'
+	  	END as roleId,
+      	CASE when roleId = 4 then '实习生'
+			 when roleId = 6 then '带教老师'
+			 when roleId = 1 then '研究生'
+			 when roleId = 2 then '住院医师'
+			 when roleId = 5 then '八年制'
+			 when roleId = 36 then '教学秘书'
+	  	END as roleName,hosID
+      FROM UserInfo  
+      LEFT JOIN UserRole on UserRole.UserID = UserInfo.UserID 
+      WHERE UserInfo.UserName = #{userCode}
+      AND (UserRole.roleId=4 or UserRole.roleId=1 or UserRole.roleId=2 or UserRole.roleId=5 or UserRole.roleId=6 or UserRole.roleId=36)
+  </select>
+  
+  <select id="readUser" parameterType="string" resultMap="userMap">
+      SELECT UserInfo.UserID as userFlow,
+      	UserInfo.userName as userCode,
+      	UserInfo.Password as password,
+      	CASE when Sex = 0 then '女'
+			  when Sex = 1 then '男'
+	  	END as userSex,
+      	TrueName as userName,
+      	UserType as userType,
+      	szks  as szks ,
+      	HosID as hosID,
+      	roleId as roleFlow,
+      	CASE when roleId = 4 then 'Trainee'
+			 when roleId = 6 then 'Teacher'
+			 when roleId = 1 then 'Trainee'
+			 when roleId = 2 then 'Trainee'
+			 when roleId = 5 then 'Trainee'
+			 when roleId = 36 then 'Secretary'
+	  	END as roleId,
+      	CASE when roleId = 4 then '实习生'
+			 when roleId = 6 then '带教老师'
+			 when roleId = 1 then '研究生'
+			 when roleId = 2 then '住院医师'
+			 when roleId = 5 then '八年制'
+			 when roleId = 36 then '教学秘书'
+	  	END as roleName
+      FROM UserInfo  
+      LEFT JOIN UserRole on UserRole.UserID = UserInfo.UserID 
+      WHERE UserInfo.UserID = #{userFlow} and UserRole.roleId in(4,6,1,2,5,36)
+  </select>
+  
+  <select id="readDoctor" parameterType="string" resultMap="userMap">
+      SELECT UserInfo.UserID as userFlow,
+      	UserInfo.Password as password,
+      	CASE when Sex = 0 then '女'
+			  when Sex = 1 then '男'
+	  	END as userSex,
+      	TrueName as userName,
+      	UserType as userType,
+      	roleId as roleFlow,
+      	CASE when roleId = 4 then 'Trainee'
+			 when roleId = 6 then 'Teacher'
+			 when roleId = 1 then 'Trainee'
+			 when roleId = 2 then 'Trainee'
+			 when roleId = 5 then 'Trainee'
+	  	END as roleId,
+      	CASE when roleId = 4 then '实习生'
+			 when roleId = 6 then '带教老师'
+			 when roleId = 1 then '研究生'
+			 when roleId = 2 then '住院医师'
+			 when roleId = 5 then '八年制'
+	  	END as roleName
+      FROM UserInfo  
+      LEFT JOIN UserRole on UserRole.UserID = UserInfo.UserID 
+      LEFT JOIN UserCycleSec on UserCycleSec.UserID = UserInfo.UserID 
+      WHERE UCSID = #{doctorFlow} and UserRole.roleId in(4,6,1,2,5)
+  </select>
+
+</mapper>

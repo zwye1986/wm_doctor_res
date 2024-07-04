@@ -1,0 +1,2044 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.jswjw.ext.ResRecCampaignRegistryExtMapper" >
+	<resultMap type="HashMap" id="auditCountMap">
+		<result  property="key" column="REC_TYPE_ID" javaType="string"/>
+		<result property="value" column="audit_count" javaType="java.math.BigDecimal"/>
+	</resultMap>
+	
+	<resultMap type="HashMap" id="recCountMap">
+		<result property="recKey" column="REC_KEY" javaType="string"/>
+		<result property="finishCount" column="FINISH_COUNT" javaType="java.math.BigDecimal"/>
+	</resultMap>
+	
+	<resultMap type="HashMap" id="teacherAuditCount">
+		<result property="teacherFlow" column="TEACHER_FLOW" javaType="string"/>
+		<result property="teacherName" column="TEACHER_NAME" javaType="string"/>
+		<result property="auditCount" column="AUDIT_COUNT" javaType="java.math.BigDecimal"/>
+	</resultMap>
+	
+	<select id="searchAuditCount" resultMap="auditCountMap">
+		select REC_TYPE_ID,count(REC_TYPE_ID) audit_count from pdsci.RES_REC rr,pdsci.RES_DOCTOR_SCH_PROCESS rdp 
+			where rr.RECORD_STATUS='Y' and rdp.RECORD_STATUS='Y'  and user_flow = oper_user_flow and rr.SCH_DEPT_FLOW= rdp.SCH_DEPT_FLOW
+			   <if test='roleFlag=="teacher"'> 
+			   and TEACHER_USER_FLOW=#{userFlow} and (AUDIT_STATUS_ID is null)
+			   </if>
+			   <if test='roleFlag=="head"'> 
+			   and HEAD_USER_FLOW=#{userFlow} and (HEAD_AUDIT_STATUS_ID is null )
+			   </if>
+			   GROUP BY REC_TYPE_ID
+	</select>
+	<select id="notAudited" resultType="int">
+		select count(1) from RES_REC rr
+		join res_doctor_sch_process p
+		on rr.process_flow=p.process_flow
+		join res_doctor rd
+		on rr.oper_user_flow =rd.doctor_flow
+		 where rr.RECORD_STATUS='Y'
+		 and rr.AUDIT_STATUS_ID is null
+		 <if test="startDate!=null and startDate!=''">
+			 and rr.OPER_TIME<![CDATA[>=]]>#{startDate}
+		</if>
+	    <if test="endDate!=null and endDate!=''">
+		 	 and rr.OPER_TIME<![CDATA[<=]]>#{endDate}
+	    </if>
+		and rr.rec_type_id in ('CaseRegistry','DiseaseRegistry','SkillRegistry','OperationRegistry','CampaignRegistry')
+
+		and p.record_status='Y'
+		and rd.record_status='Y'
+		<if test="typeList!=null and typeList.size()>0">
+			and rd.doctor_Type_Id in
+			<foreach collection="typeList" item="item" open="(" close=")" separator="," >
+				#{item}
+			</foreach>
+		</if>
+		<if test="teacherUserFlow!=null and teacherUserFlow!=''">
+			and p.TEACHER_USER_FLOW=#{teacherUserFlow}
+		</if>
+		AND (p.SCH_START_DATE <![CDATA[ <= ]]> nvl((select cfg2.power_start_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '0000-00-00')
+		AND p.SCH_END_DATE >= nvl((select cfg2.power_end_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '9999-99-99')
+		OR p.SCH_START_DATE >= nvl((select cfg2.power_start_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '0000-00-00')
+		AND p.SCH_START_DATE <![CDATA[ <= ]]> nvl((select cfg2.power_end_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '9999-99-99')
+		OR p.SCH_END_DATE >= nvl((select cfg2.power_start_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '0000-00-00')
+		AND p.SCH_END_DATE <![CDATA[ <= ]]> nvl((select cfg2.power_end_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '9999-99-99'))
+		and  nvl(( select
+		CFG_VALUE
+		FROM jsres_power_cfg cfg
+		WHERE cfg.record_status = 'Y'
+		AND cfg.cfg_code = ('jsres_doctor_app_menu_' || rd.doctor_flow))
+		, 'N') = 'Y'
+	</select>
+	
+	<select id="isNotAudited" resultType="int">
+		select count(rr.REC_FLOW) from RES_REC rr 
+		 where rr.RECORD_STATUS='Y'
+		 and rr.AUDIT_STATUS_ID is not null
+		 <if test="startDate!=null and startDate!=''">
+			 and rr.OPER_TIME<![CDATA[>=]]>#{startDate}
+		</if>
+	    <if test="endDate!=null and endDate!=''">
+		 	 and rr.OPER_TIME<![CDATA[<=]]>#{endDate}
+	    </if>
+		 and (
+			exists(
+			  select null
+			  from RES_DOCTOR_SCH_PROCESS rdsp
+			  where rdsp.RECORD_STATUS='Y' 
+			  and 
+			  rr.PROCESS_FLOW=rdsp.PROCESS_FLOW
+			  <if test="teacherUserFlow!=null and teacherUserFlow!=''">
+			  	and rdsp.TEACHER_USER_FLOW=#{teacherUserFlow}
+			  </if>
+			)
+		)
+		<if test="typeList!=null and typeList.size()>0">
+			and exists (
+			select 1 from res_doctor where doctor_Type_Id in
+			<foreach collection="typeList" item="item" open="(" close=")" separator="," >
+				#{item}
+			</foreach>
+			and doctor_flow=oper_user_flow
+			)
+		</if>
+	</select>
+
+	<resultMap type="HashMap" id="auditedCountMap">
+		<result property="counts" column="COUNTS" javaType="string"/>
+		<result property="teacherUserFlow" column="TEACHER_USER_FLOW" javaType="string"/>
+	</resultMap>
+	<select id="notAuditedMaps" resultMap="auditedCountMap">
+		select count(1) counts,p.TEACHER_USER_FLOW TEACHER_USER_FLOW from RES_REC rr
+		join res_doctor_sch_process p
+		on rr.process_flow=p.process_flow
+		join res_doctor rd
+		on rr.oper_user_flow =rd.doctor_flow
+		where rr.RECORD_STATUS='Y'
+		and rr.AUDIT_STATUS_ID is null
+		<if test="startDate!=null and startDate!=''">
+			and rr.OPER_TIME<![CDATA[>=]]>#{startDate}
+		</if>
+		<if test="endDate!=null and endDate!=''">
+			and rr.OPER_TIME<![CDATA[<=]]>#{endDate}
+		</if>
+		and rr.rec_type_id in ('CaseRegistry','DiseaseRegistry','SkillRegistry','OperationRegistry','CampaignRegistry')
+
+		and p.record_status='Y'
+		and rd.record_status='Y'
+		<if test="typeList!=null and typeList.size()>0">
+			and rd.doctor_Type_Id in
+			<foreach collection="typeList" item="item" open="(" close=")" separator="," >
+				#{item}
+			</foreach>
+		</if>
+		<if test="workOrgId != null and workOrgId != ''">
+			and rd.work_org_id = #{workOrgId}
+		</if>
+		<!--<if test="teacherUserFlows!=null and teacherUserFlows.size()>0">-->
+			<!--and p.TEACHER_USER_FLOW in-->
+			<!--<foreach collection="teacherUserFlows" item="item" open="(" close=")" separator="," >-->
+				<!--#{item}-->
+			<!--</foreach>-->
+		<!--</if>-->
+		<if test="teacherUserFlows != null and teacherUserFlows.size() > 0">
+			<choose>
+				<when test="teacherUserFlows.size() >= 1000">
+					AND EXISTS(
+						SELECT
+							1
+						FROM
+							sys_user su
+						WHERE
+							su.user_flow = p.TEACHER_USER_FLOW
+						AND	su.record_status = 'Y'
+						AND su.IS_EXAM_TEA IS NULL
+						<if test='orgFlowList != null and orgFlowList.size > 0'>
+							and su.ORG_FLOW in
+							<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+						</if>
+						<if test="orgFlow != null and orgFlow != ''">
+							and su.org_flow = #{orgFlow}
+						</if>
+						AND EXISTS (
+							SELECT
+								1
+							FROM
+								sys_user_role sur
+							WHERE
+								sur.user_flow = su.user_flow
+							AND sur.record_status = 'Y'
+							<if test='roleFlow != null and roleFlow != ""'>
+								and sur.ROLE_FLOW = #{roleFlow}
+							</if>
+						)
+						AND NOT EXISTS (
+							SELECT
+								1
+							FROM
+								res_doctor rd
+							WHERE
+								su.user_flow = rd.doctor_flow
+							AND rd.RECORD_STATUS = 'Y'
+						)
+						<if test="sysUser != null">
+							<if test='sysUser.deptFlow != null and sysUser.deptFlow != "" '>
+								and su.DEPT_FLOW = #{sysUser.deptFlow}
+							</if>
+							<if test='sysUser.userName != null and sysUser.userName != ""'>
+								<bind name="userName" value="'%' + sysUser.userName + '%'"/>
+								and su.USER_NAME like #{userName}
+							</if>
+						</if>
+					)
+				</when>
+				<otherwise>
+					and p.TEACHER_USER_FLOW in
+					<foreach collection="teacherUserFlows" item="item" open="(" close=")" separator="," >
+						#{item}
+					</foreach>
+				</otherwise>
+			</choose>
+		</if>
+		AND (p.SCH_START_DATE <![CDATA[ <= ]]> nvl((select cfg2.power_start_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '0000-00-00')
+		AND p.SCH_END_DATE >= nvl((select cfg2.power_end_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '9999-99-99')
+		OR p.SCH_START_DATE >= nvl((select cfg2.power_start_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '0000-00-00')
+		AND p.SCH_START_DATE <![CDATA[ <= ]]> nvl((select cfg2.power_end_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '9999-99-99')
+		OR p.SCH_END_DATE >= nvl((select cfg2.power_start_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '0000-00-00')
+		AND p.SCH_END_DATE <![CDATA[ <= ]]> nvl((select cfg2.power_end_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '9999-99-99'))
+		and  nvl(( select
+		CFG_VALUE
+		FROM jsres_power_cfg cfg
+		WHERE cfg.record_status = 'Y'
+		AND cfg.cfg_code = ('jsres_doctor_app_menu_' || rd.doctor_flow))
+		, 'N') = 'Y'
+		group by p.TEACHER_USER_FLOW
+	</select>
+
+	<select id="isNotAuditedMaps" resultMap="auditedCountMap">
+		select count(rr.REC_FLOW) counts, rdsp.TEACHER_USER_FLOW TEACHER_USER_FLOW from RES_REC rr
+		left join RES_DOCTOR_SCH_PROCESS rdsp
+		on rr.PROCESS_FLOW = rdsp.PROCESS_FLOW
+		where rr.RECORD_STATUS='Y'
+		and rdsp.RECORD_STATUS = 'Y'
+		and rr.AUDIT_STATUS_ID is not null
+		<if test="startDate!=null and startDate!=''">
+			and rr.OPER_TIME<![CDATA[>=]]>#{startDate}
+		</if>
+		<if test="endDate!=null and endDate!=''">
+			and rr.OPER_TIME<![CDATA[<=]]>#{endDate}
+		</if>
+		<!--<if test="teacherUserFlows!=null and teacherUserFlows.size()>0">-->
+			<!--and rdsp.TEACHER_USER_FLOW in-->
+			<!--<foreach collection="teacherUserFlows" item="item" open="(" close=")" separator="," >-->
+				<!--#{item}-->
+			<!--</foreach>-->
+		<!--</if>-->
+		<if test="teacherUserFlows != null and teacherUserFlows.size() > 0">
+			<choose>
+				<when test="teacherUserFlows.size() >= 1000">
+					AND EXISTS(
+						SELECT
+							1
+						FROM
+							sys_user su
+						WHERE
+							su.user_flow = rdsp.TEACHER_USER_FLOW
+						AND	su.record_status = 'Y'
+						AND su.IS_EXAM_TEA IS NULL
+						<if test='orgFlowList != null and orgFlowList.size > 0'>
+							and su.ORG_FLOW in
+							<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+						</if>
+						<if test="orgFlow != null and orgFlow != ''">
+							and su.org_flow = #{orgFlow}
+						</if>
+						AND EXISTS (
+							SELECT
+								1
+							FROM
+								sys_user_role sur
+							WHERE
+								sur.user_flow = su.user_flow
+							AND sur.record_status = 'Y'
+							<if test='roleFlow != null and roleFlow != ""'>
+								and sur.ROLE_FLOW = #{roleFlow}
+							</if>
+						)
+						AND NOT EXISTS (
+							SELECT
+								1
+							FROM
+								res_doctor rd
+							WHERE
+								su.user_flow = rd.doctor_flow
+							AND rd.RECORD_STATUS = 'Y'
+						)
+						<if test="sysUser != null">
+							<if test='sysUser.deptFlow != null and sysUser.deptFlow != "" '>
+								and su.DEPT_FLOW = #{sysUser.deptFlow}
+							</if>
+							<if test='sysUser.userName != null and sysUser.userName != ""'>
+								<bind name="userName" value="'%' + sysUser.userName + '%'"/>
+								and su.USER_NAME like #{userName}
+							</if>
+						</if>
+					)
+				</when>
+				<otherwise>
+					and rdsp.TEACHER_USER_FLOW in
+					<foreach collection="teacherUserFlows" item="item" open="(" close=")" separator="," >
+						#{item}
+					</foreach>
+				</otherwise>
+			</choose>
+		</if>
+		<if test="typeList!=null and typeList.size()>0">
+			and exists (
+			select 1 from res_doctor where doctor_Type_Id in
+			<foreach collection="typeList" item="item" open="(" close=")" separator="," >
+				#{item}
+			</foreach>
+			and doctor_flow=oper_user_flow
+			<if test="workOrgId != null and workOrgId != ''">
+				and work_org_id = #{workOrgId}
+			</if>
+			)
+		</if>
+		group by rdsp.TEACHER_USER_FLOW
+	</select>
+
+	<select id="resSearchProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs">
+		select * from DEPT_TEACHER_GRADE_INFO  rr
+		where rr.RECORD_STATUS='Y'
+		<if test="startDate!=null and startDate!=''">
+			and rr.OPER_TIME<![CDATA[>=]]>#{startDate}
+		</if>
+		<if test="endDate!=null and endDate!=''">
+			and rr.OPER_TIME<![CDATA[<=]]>#{endDate}
+		</if>
+		and (exists(
+		select null from RES_DOCTOR_SCH_PROCESS rdsp
+		where rdsp.RECORD_STATUS='Y'
+		<if test="teacherUserFlow!=null and teacherUserFlow!=''">
+			and rdsp.TEACHER_USER_FLOW=#{teacherUserFlow}
+		</if>
+		and rr.PROCESS_FLOW =rdsp.PROCESS_FLOW
+		and rr.OPER_USER_FLOW=rdsp.USER_FLOW
+		and rr.rec_type_id ='TeacherGrade'
+		))
+	</select>
+	<select id="searchProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs">
+		select * from DEPT_TEACHER_GRADE_INFO  rr
+		where rr.RECORD_STATUS='Y'
+		<if test="startDate!=null and startDate!=''">
+			 and rr.OPER_TIME<![CDATA[>=]]>#{startDate}
+		</if>
+	    <if test="endDate!=null and endDate!=''">
+		 	 and rr.OPER_TIME<![CDATA[<=]]>#{endDate}
+	    </if>
+		and (exists(
+				select null
+				from (select  P.TEACHER_USER_FLOW TEACHER_USER_FLOW,
+				p.PROCESS_FLOW PROCESS_FLOW,
+				su.user_flow user_flow,
+				RD.DOCTOR_TYPE_ID,
+				nvl((select CFG_VALUE from jsres_power_cfg cfg where cfg.record_status='Y' and cfg.cfg_code = 'jsres_doctor_app_menu_'||rd.doctor_flow),'N')APP_MENU_FLAG
+
+		from res_doctor_sch_process p
+				left join res_doctor rd
+				on p.user_flow = rd.doctor_flow
+				left join sys_user su
+				on su.user_flow = rd.doctor_flow
+				left join sys_user tu
+				on tu.user_flow = p.teacher_user_flow
+				where p.record_status = 'Y'
+				and rd.record_status = 'Y'
+				and su.record_status = 'Y'
+				and tu.record_status = 'Y') A
+				WHERE A.APP_MENU_FLAG='Y'
+			  <if test="teacherUserFlow!=null and teacherUserFlow!=''">
+				  and a.TEACHER_USER_FLOW=#{teacherUserFlow}
+			  </if>
+			  and rr.PROCESS_FLOW =a.PROCESS_FLOW
+			  and rr.OPER_USER_FLOW=a.USER_FLOW
+			  and rr.rec_type_id ='TeacherGrade'
+	 	))
+	</select>
+	
+	<select id="searchProssFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs">
+   			 select rr.* from RES_DOCTOR_SCH_PROCESS rdsp
+   			  inner join SCH_ARRANGE_RESULT sar on rdsp.SCH_RESULT_FLOW=sar.RESULT_FLOW
+   			  inner join SCH_ROTATION_DEPT srd on srd.GROUP_FLOW=sar.STANDARD_GROUP_FLOW 
+   			  								and srd.STANDARD_DEPT_ID=sar.STANDARD_DEPT_ID
+   			  inner join  RES_SCH_PROCESS_EXPRESS  rr on rr.OPER_USER_FLOW=rdsp.USER_FLOW	and srd.RECORD_FLOW=rr.SCH_ROTATION_DEPT_FLOW
+			  where rdsp.RECORD_STATUS='Y' and sar.RECORD_STATUS='Y' and srd.RECORD_STATUS='Y' and rr.RECORD_STATUS='Y'
+			  and rr.REC_CONTENT is not null
+			  <if test="teacherUserFlow!=null and teacherUserFlow!=''">
+				  and rdsp.TEACHER_USER_FLOW=#{teacherUserFlow}
+			  </if>
+			  and rr.rec_type_id ='AfterSummary'
+	</select>
+	
+	<select id="searchDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs">
+		select * from DEPT_TEACHER_GRADE_INFO  rr
+		where rr.RECORD_STATUS='Y'
+		<if test="startDate!=null and startDate!=''">
+			 and rr.OPER_TIME<![CDATA[>=]]>#{startDate}
+		</if>
+	    <if test="endDate!=null and endDate!=''">
+		 	 and rr.OPER_TIME<![CDATA[<=]]>#{endDate}
+	    </if>
+		and (exists(
+				select NULL
+				from (select p.PROCESS_FLOW PROCESS_FLOW,
+				P.USER_FLOW USER_FLOW ,
+				P.DEPT_FLOW DEPT_FLOW,
+				RD.DOCTOR_TYPE_ID,
+		nvl((select CFG_VALUE from jsres_power_cfg cfg where cfg.record_status='Y' and cfg.cfg_code = 'jsres_doctor_app_menu_'||rd.doctor_flow),'N')APP_MENU_FLAG
+		from res_doctor_sch_process p
+				left join res_doctor rd
+				on p.user_flow = rd.doctor_flow
+				left join sys_user su
+				on su.user_flow = rd.doctor_flow
+				left join sys_user tu
+				on tu.user_flow = p.teacher_user_flow
+				where p.record_status = 'Y'
+				and rd.record_status = 'Y'
+				and su.record_status = 'Y'
+				and tu.record_status = 'Y') A
+				WHERE  A.APP_MENU_FLAG='Y'
+				AND rr.PROCESS_FLOW = a.PROCESS_FLOW
+				AND rr.OPER_USER_FLOW = a.USER_FLOW
+				AND rr.rec_type_id = 'DeptGrade'
+				<if test="deptFlow!=null and deptFlow!=''">
+					and a.DEPT_FLOW=#{deptFlow}
+				</if>
+				and rr.rec_type_id ='DeptGrade'
+	 	))
+	</select>
+
+	<select id="resSearchDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs">
+		select * from DEPT_TEACHER_GRADE_INFO  rr
+		where rr.RECORD_STATUS='Y'
+		<if test="startDate!=null and startDate!=''">
+			and rr.OPER_TIME<![CDATA[>=]]>#{startDate}
+		</if>
+		<if test="endDate!=null and endDate!=''">
+			and rr.OPER_TIME<![CDATA[<=]]>#{endDate}
+		</if>
+		and (exists(
+		select null from RES_DOCTOR_SCH_PROCESS rdsp
+		where rdsp.RECORD_STATUS='Y'
+		<if test="deptFlow!=null and deptFlow!=''">
+			and rdsp.DEPT_FLOW=#{deptFlow}
+		</if>
+		and rr.PROCESS_FLOW =rdsp.PROCESS_FLOW
+		and rr.OPER_USER_FLOW=rdsp.USER_FLOW
+		and rr.rec_type_id ='DeptGrade'
+		))
+	</select>
+	
+	<select id="searchRecByUserAndSchdept" resultMap="com.pinde.sci.dao.base.ResRecMapper.BaseResultMap">
+		SELECT * 
+		FROM PDSCI.RES_REC
+		WHERE RECORD_STATUS = 'Y'
+		AND OPER_USER_FLOW IN
+		<foreach collection="userFlows" item="userFlow" open="(" separator="," close=")">  
+  			#{userFlow}
+ 		</foreach>
+ 		<if test='recTypeId != null and recTypeId != ""'>
+ 			AND REC_TYPE_ID = #{recTypeId}
+ 		</if>
+ 		<if test='itemName != null and itemName != ""'>
+ 			AND ITEM_NAME LIKE '%${itemName}%'
+ 		</if>
+		AND PROCESS_FLOW IN
+		<foreach collection="processFlows" item="processFlow" open="(" separator="," close=")">
+  			#{processFlow}
+ 		</foreach>
+	</select>
+	
+	<select id="countRecWithDoc" resultMap="recCountMap">
+		SELECT OPER_USER_FLOW||process_flow||REC_TYPE_ID REC_KEY,COUNT(*) FINISH_COUNT
+		FROM PDSCI.RES_REC
+		WHERE RECORD_STATUS = 'Y'
+		AND OPER_USER_FLOW IN 
+		<foreach collection="userFlows" item="userFlow" open="(" separator="," close=")">
+			#{userFlow}
+		</foreach>
+		AND PROCESS_FLOW IN
+		<foreach collection="processFlows" item="processFlow" open="(" separator="," close=")">
+			#{processFlow}
+		</foreach>
+		<if test='isAudit != null and isAudit == "teacher"'>
+			AND AUDIT_STATUS_ID IS NULL
+		</if>
+		<if test='isAudit != null and isAudit == "head"'>
+			AND HEAD_AUDIT_STATUS_ID IS NULL
+		</if>
+        <if test='isAudit != null and isAudit == "secretary"'>
+            AND HEAD_AUDIT_STATUS_ID IS NULL
+        </if>
+		GROUP BY OPER_USER_FLOW,REC_TYPE_ID,SCH_DEPT_FLOW,process_flow
+	</select>
+	
+	<select id="searchByRecForAudit" resultMap="com.pinde.sci.dao.base.ResRecMapper.BaseResultMap">
+		SELECT *
+		FROM PDSCI.RES_REC
+		WHERE RECORD_STATUS = 'Y'
+		<if test='recTypeId != null and recTypeId != ""'>
+			AND REC_TYPE_ID = #{recTypeId}
+		</if>
+		<if test='processFlow != null and processFlow != ""'>
+			AND PROCESS_FLOW = #{processFlow}
+		</if>
+<!-- 		AND (AUDIT_STATUS_ID <![CDATA[<>]]> 'TeacherAuditN' OR AUDIT_STATUS_ID IS NULL) -->
+		ORDER BY AUDIT_STATUS_ID NULLS FIRST,OPER_TIME
+	</select>
+	
+	<select id="searchTeacherAuditCount" resultMap="teacherAuditCount">
+		SELECT RDSP.TEACHER_USER_FLOW TEACHER_FLOW,RDSP.TEACHER_USER_NAME TEACHER_NAME,COUNT(*) AUDIT_COUNT 
+		FROM PDSCI.RES_REC RR,PDSCI.RES_DOCTOR_SCH_PROCESS RDSP
+		WHERE RR.RECORD_STATUS = 'Y'
+		AND RDSP.RECORD_STATUS = 'Y'
+		AND RR.OPER_USER_FLOW = RDSP.USER_FLOW
+		AND RR.SCH_DEPT_FLOW = RDSP.SCH_DEPT_FLOW
+<!-- 		AND RDSP.IS_CURRENT_FLAG = 'Y' -->
+		<if test='headUserFlow!=null and headUserFlow!=""'>
+			AND RDSP.HEAD_USER_FLOW = #{headUserFlow}
+		</if>
+		<if test='isAudit!=null and isAudit=="Y"'>
+			AND RR.AUDIT_STATUS_ID IS NOT NULL
+		</if>
+		<if test='isAudit!=null and isAudit=="N"'>
+			AND RR.AUDIT_STATUS_ID IS NULL
+		</if>
+		GROUP BY RDSP.TEACHER_USER_FLOW,RDSP.TEACHER_USER_NAME
+	</select>
+	
+	<select id="searchDoctorNotAuditCount" resultMap="recCountMap">
+		SELECT RDSP.USER_FLOW REC_KEY,COUNT(*) FINISH_COUNT 
+		FROM PDSCI.RES_REC RR,PDSCI.RES_DOCTOR_SCH_PROCESS RDSP
+		WHERE RR.RECORD_STATUS = 'Y'
+		AND RDSP.RECORD_STATUS = 'Y'
+		AND RR.OPER_USER_FLOW = RDSP.USER_FLOW
+		AND RR.SCH_DEPT_FLOW = RDSP.SCH_DEPT_FLOW
+		AND RDSP.IS_CURRENT_FLAG = 'Y'
+		<if test='schDeptFlow!=null and schDeptFlow!=""'>
+			AND RDSP.SCH_DEPT_FLOW = #{schDeptFlow}
+		</if>
+		<if test='teacherUserFlow!=null and teacherUserFlow!=""'>
+			AND RDSP.TEACHER_USER_FLOW = #{teacherUserFlow}
+		</if>
+		<if test='isAudit!=null and isAudit=="Y"'>
+			AND RR.AUDIT_STATUS_ID IS NOT NULL
+		</if>
+		<if test='isAudit!=null and isAudit=="N"'>
+			AND RR.AUDIT_STATUS_ID IS NULL
+		</if>
+		<if test='recTypeIds!=null'>
+			AND RR.REC_TYPE_ID IN
+			<foreach collection="recTypeIds" close=")" item="recTypeId" open="(" separator=",">
+				#{recTypeId}
+			</foreach>
+		</if>
+		GROUP BY RDSP.USER_FLOW
+	</select>
+
+	<select id="searchAfterAuditRecNew" resultMap="com.pinde.sci.dao.base.ResSchProcessExpressMapper.ResultMapWithBLOBs">
+		SELECT RR.*
+		FROM PDSCI.SYS_USER SU,PDSCI.RES_DOCTOR_SCH_PROCESS RDSP,PDSCI.RES_SCH_PROCESS_EXPRESS RR
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND RDSP.RECORD_STATUS = 'Y'
+		AND RR.RECORD_STATUS = 'Y'
+		AND SU.USER_FLOW = RR.OPER_USER_FLOW
+		AND RDSP.USER_FLOW = RR.OPER_USER_FLOW
+		AND RR.REC_TYPE_ID IN
+		<foreach collection="recTypeIds" close=")" item="recTypeId" open="(" separator=",">
+			#{recTypeId}
+		</foreach>
+
+		AND RR.PROCESS_FLOW = RDSP.PROCESS_FLOW
+		<if test='process!=null'>
+			<if test='process.teacherUserFlow!=null and process.teacherUserFlow!=""'>
+				AND RDSP.TEACHER_USER_FLOW = #{process.teacherUserFlow}
+			</if>
+			<if test='process.headUserFlow!=null and process.headUserFlow!=""'>
+				AND RDSP.HEAD_USER_FLOW = #{process.headUserFlow}
+			</if>
+			<if test='process.isCurrentFlag!=null and process.isCurrentFlag!=""'>
+				AND RDSP.IS_CURRENT_FLAG = #{process.isCurrentFlag}
+			</if>
+			<if test='process.userFlow!=null and process.userFlow!=""'>
+				AND RDSP.USER_FLOW = #{process.userFlow}
+			</if>
+		</if>
+		<if test='user!=null'>
+			<if test='user.name!=null and user.name!=""'>
+				AND SU.USER_NAME LIKE #{user.name}
+			</if>
+		</if>
+		<if test='roleFlagMap!=null'>
+			<if test='roleFlagMap.year!=null and roleFlagMap.year!=""'>
+				AND RR.OPER_TIME LIKE '${roleFlagMap.year}%'
+			</if>
+			<if test='roleFlagMap.roleFlag!=null and roleFlagMap.roleFlag!=""'>
+				<if test='roleFlagMap.roleFlag=="teacher"'>
+					ORDER BY rr.process_flow,rr.rec_type_id ,rr.modify_time,RR.AUDIT_STATUS_ID NULLS FIRST
+				</if>
+				<if test='roleFlagMap.roleFlag=="head"'>
+					<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
+						AND( RR.DEPT_FLOW IN (
+						SELECT SUD.DEPT_FLOW
+						FROM PDSCI.SYS_USER_DEPT SUD
+						WHERE SUD.RECORD_STATUS = 'Y'
+						AND SUD.USER_FLOW = #{roleFlagMap.val}
+						) or rdsp.head_user_flow=#{roleFlagMap.val} )
+					</if>
+					ORDER BY rr.process_flow,rr.rec_type_id ,rr.modify_time,RR.HEAD_AUDIT_STATUS_ID NULLS FIRST
+				</if>
+				<if test='roleFlagMap.roleFlag=="manager"'>
+					<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
+						AND RDSP.USER_FLOW IN (
+						SELECT DOCTOR_FLOW
+						FROM PDSCI.RES_DOCTOR
+						WHERE RECORD_STATUS = 'Y'
+						<if test='roleFlagMap.trainingSpeId!=null and roleFlagMap.trainingSpeId!=""'>
+							AND TRAINING_SPE_ID = #{roleFlagMap.trainingSpeId}
+						</if>
+						<if test='roleFlagMap.trainingSpeId==null or roleFlagMap.trainingSpeId==""'>
+							AND TRAINING_SPE_ID IN (
+							SELECT TRAINING_SPE_ID
+							FROM PDSCI.RES_USER_SPE
+							WHERE RECORD_STATUS = 'Y'
+							AND USER_FLOW = #{roleFlagMap.val}
+							)
+						</if>
+						AND ORG_FLOW IN (
+						SELECT ORG_FLOW
+						FROM PDSCI.SYS_USER
+						WHERE USER_FLOW = #{roleFlagMap.val}
+						)
+						)
+					</if>
+					ORDER BY rr.process_flow,rr.rec_type_id ,rr.modify_time,RR.MANAGER_AUDIT_STATUS_ID NULLS FIRST
+				</if>
+				<if test='roleFlagMap.roleFlag=="admin"'>
+					<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
+						AND RR.ORG_FLOW = #{roleFlagMap.val}
+					</if>
+					ORDER BY rr.process_flow,rr.rec_type_id ,rr.modify_time,RR.ADMIN_AUDIT_STATUS_ID NULLS FIRST
+				</if>
+			</if>
+		</if>
+	</select>
+
+
+	<select id="searchAfterAuditRec" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs">
+	    SELECT RR.*
+	    FROM PDSCI.SYS_USER SU,PDSCI.RES_DOCTOR_SCH_PROCESS RDSP,PDSCI.RES_REC RR
+	    WHERE SU.RECORD_STATUS = 'Y'
+    	AND RDSP.RECORD_STATUS = 'Y'
+    	AND RR.RECORD_STATUS = 'Y'
+    	AND SU.USER_FLOW = RR.OPER_USER_FLOW
+    	AND RDSP.USER_FLOW = RR.OPER_USER_FLOW
+    	AND RR.REC_TYPE_ID IN 
+   		<foreach collection="recTypeIds" close=")" item="recTypeId" open="(" separator=",">
+   			#{recTypeId}
+   		</foreach>
+    	
+    	AND RR.PROCESS_FLOW = RDSP.PROCESS_FLOW
+    	<if test='process!=null'>
+    		<if test='process.teacherUserFlow!=null and process.teacherUserFlow!=""'>
+    			AND RDSP.TEACHER_USER_FLOW = #{process.teacherUserFlow}
+    		</if>
+    		<if test='process.headUserFlow!=null and process.headUserFlow!=""'>
+    			AND RDSP.HEAD_USER_FLOW = #{process.headUserFlow}
+    		</if>
+    		<if test='process.isCurrentFlag!=null and process.isCurrentFlag!=""'>
+    			AND RDSP.IS_CURRENT_FLAG = #{process.isCurrentFlag}
+    		</if>
+    		<if test='process.userFlow!=null and process.userFlow!=""'>
+    			AND RDSP.USER_FLOW = #{process.userFlow}
+    		</if>
+    	</if>
+	    <if test='user!=null'>
+		    <if test='user.name!=null and user.name!=""'>
+		    	AND SU.USER_NAME LIKE #{user.name}
+		    </if>
+	    </if>
+	    <if test='roleFlagMap!=null'>
+	    	<if test='roleFlagMap.year!=null and roleFlagMap.year!=""'>
+	    		AND RR.OPER_TIME LIKE '${roleFlagMap.year}%'
+	    	</if>
+		    <if test='roleFlagMap.roleFlag!=null and roleFlagMap.roleFlag!=""'>
+		    	<if test='roleFlagMap.roleFlag=="teacher"'>
+		    		ORDER BY RR.AUDIT_STATUS_ID NULLS FIRST
+		    	</if>
+		    	<if test='roleFlagMap.roleFlag=="head"'>
+		    		<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
+		    			AND( RR.DEPT_FLOW IN (
+		    				SELECT SUD.DEPT_FLOW 
+							FROM PDSCI.SYS_USER_DEPT SUD
+							WHERE SUD.RECORD_STATUS = 'Y'
+							AND SUD.USER_FLOW = #{roleFlagMap.val}
+						) or rdsp.head_user_flow=#{roleFlagMap.val} )
+		    		</if>
+		    		ORDER BY RR.HEAD_AUDIT_STATUS_ID NULLS FIRST
+		    	</if>
+		    	<if test='roleFlagMap.roleFlag=="manager"'>
+		    		<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
+		    			AND RDSP.USER_FLOW IN (
+		    				SELECT DOCTOR_FLOW
+		    				FROM PDSCI.RES_DOCTOR
+		    				WHERE RECORD_STATUS = 'Y'
+		    				<if test='roleFlagMap.trainingSpeId!=null and roleFlagMap.trainingSpeId!=""'>
+		    					AND TRAINING_SPE_ID = #{roleFlagMap.trainingSpeId}
+		    				</if>
+		    				<if test='roleFlagMap.trainingSpeId==null or roleFlagMap.trainingSpeId==""'>
+			    				AND TRAINING_SPE_ID IN (
+			    					SELECT TRAINING_SPE_ID
+			    					FROM PDSCI.RES_USER_SPE
+			    					WHERE RECORD_STATUS = 'Y'
+			    					AND USER_FLOW = #{roleFlagMap.val}
+			    				)
+		    				</if>
+			    			AND ORG_FLOW IN (
+			    				SELECT ORG_FLOW
+			    				FROM PDSCI.SYS_USER
+			    				WHERE USER_FLOW = #{roleFlagMap.val}
+			    			)
+		    			)
+		    		</if>
+		    		ORDER BY RR.MANAGER_AUDIT_STATUS_ID NULLS FIRST
+		    	</if>
+		    	<if test='roleFlagMap.roleFlag=="admin"'>
+		    		<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
+		    			AND RR.ORG_FLOW = #{roleFlagMap.val}
+		    		</if>
+		    		ORDER BY RR.ADMIN_AUDIT_STATUS_ID NULLS FIRST
+		    	</if>
+		    </if>
+	    </if>
+	</select>
+	<select id="searchSXSRecData" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs">
+	    SELECT RR.*
+	    FROM PDSCI.SYS_USER SU,PDSCI.RES_REC RR
+	    WHERE SU.RECORD_STATUS = 'Y'
+    	AND RR.RECORD_STATUS = 'Y'
+    	AND SU.USER_FLOW = RR.OPER_USER_FLOW
+		<if test='roleFlagMap.roleFlag=="admin"'>
+			<if test='roleFlagMap.doctorFlow!=null and roleFlagMap.doctorFlow!=""'>
+				AND RR.oper_user_flow = #{roleFlagMap.doctorFlow}
+			</if>
+		</if>
+    	AND RR.REC_TYPE_ID IN
+   		<foreach collection="recTypeIds" close=")" item="recTypeId" open="(" separator=",">
+   			#{recTypeId}
+   		</foreach>
+	    <if test='roleFlagMap!=null'>
+	    	<if test='roleFlagMap.year!=null and roleFlagMap.year!=""'>
+	    		AND RR.OPER_TIME LIKE '${roleFlagMap.year}%'
+	    	</if>
+		    <if test='roleFlagMap.roleFlag!=null and roleFlagMap.roleFlag!=""'>
+		    	<if test='roleFlagMap.roleFlag=="teacher"'>
+		    		ORDER BY RR.AUDIT_STATUS_ID NULLS FIRST
+		    	</if>
+		    	<if test='roleFlagMap.roleFlag=="head"'>
+		    		<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
+		    			AND( RR.DEPT_FLOW IN (
+		    				SELECT SUD.DEPT_FLOW
+							FROM PDSCI.SYS_USER_DEPT SUD
+							WHERE SUD.RECORD_STATUS = 'Y'
+							AND SUD.USER_FLOW = #{roleFlagMap.val}
+						) or su.user_flow in ( select user_flow from res_doctor_sch_process rdsp where rdsp.record_status='Y' and rdsp.head_user_flow=#{roleFlagMap.val}) )
+		    		</if>
+		    		ORDER BY RR.HEAD_AUDIT_STATUS_ID NULLS FIRST
+		    	</if>
+		    	<if test='roleFlagMap.roleFlag=="manager"'>
+		    		<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
+		    			AND su.USER_FLOW IN (
+		    				SELECT DOCTOR_FLOW
+		    				FROM PDSCI.RES_DOCTOR
+		    				WHERE RECORD_STATUS = 'Y'
+		    				<if test='roleFlagMap.trainingSpeId!=null and roleFlagMap.trainingSpeId!=""'>
+		    					AND TRAINING_SPE_ID = #{roleFlagMap.trainingSpeId}
+		    				</if>
+			    			AND ORG_FLOW IN (
+			    				SELECT ORG_FLOW
+			    				FROM PDSCI.SYS_USER
+			    				WHERE USER_FLOW = #{roleFlagMap.val}
+			    			)
+		    			)
+		    		</if>
+		    		ORDER BY RR.MANAGER_AUDIT_STATUS_ID NULLS FIRST
+		    	</if>
+		    	<if test='roleFlagMap.roleFlag=="admin"'>
+		    		<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
+		    			AND RR.ORG_FLOW = #{roleFlagMap.val}
+		    		</if>
+		    		ORDER BY RR.ADMIN_AUDIT_STATUS_ID NULLS FIRST
+		    	</if>
+		    </if>
+	    </if>
+	</select>
+	<resultMap id="findTrainChartsMap" type="map">
+		<result property="orgFlow" column="ORG_FLOW" javaType="string"/>
+		<result property="orgName" column="ORG_NAME" javaType="string"/>
+		<result property="countNum" column="COUNT_NUM" javaType="string"/>
+	</resultMap>
+	<select id="findTrainCharts" resultMap="findTrainChartsMap">
+		select a.org_flow, a.org_name, count(1) COUNT_NUM
+		from (select org.org_flow,
+		org.org_name,
+		xmltype(rec_content).extract('//sessionNumber/text()').getstringval()      session_Number,
+		xmltype(rec_content).extract('//trainSpe/text()').getstringval()      train_Spe
+		from sys_org org
+		left join res_rec rr
+		on rr.org_flow = org.org_flow
+		where org.record_status = 'Y'
+		and rr.record_status='Y'
+		and rr.rec_type_id = 'ReturnTraining'
+		AND substr(xmltype(rr.rec_content).extract('//auditStatusName').getstringval(),22,1) = '1'
+		<if test="orgFlowList !=null and orgFlowList.size>0">
+			and org.org_flow in
+			<foreach collection="orgFlowList" close=")" item="orgFlow" open="(" separator=",">
+				#{orgFlow}
+			</foreach>
+		</if>
+		) a
+		where 1=1
+
+		<if test="year !=null and year!=''">
+			and a.session_number=#{year}
+		</if>
+		<if test="speName !=null and speName !=''">
+			AND a.train_Spe like  '%${speName}%'
+		</if>
+		group by a.org_flow, a.org_name
+	</select>
+
+	<resultMap type="HashMap" id="willAfterCount">
+		<result property="deptFlow" column="DEPT_FLOW" javaType="string"/>
+		<result property="countNum" column="COUNT_NUM" javaType="java.math.BigDecimal"/>
+	</resultMap>
+	<select id="searchDeptWillAfter" resultMap="willAfterCount">
+		SELECT RDSP.DEPT_FLOW DEPT_FLOW,COUNT(1) COUNT_NUM
+		FROM  PDSCI.RES_DOCTOR_SCH_PROCESS RDSP
+		WHERE RDSP.RECORD_STATUS = 'Y'
+			AND RDSP.IS_CURRENT_FLAG = 'Y'
+			AND RDSP.ORG_FLOW = #{orgFlow}
+			AND RDSP.PROCESS_FLOW IN (
+			SELECT PROCESS_FLOW
+			FROM  PDSCI.RES_SCH_PROCESS_EXPRESS RR
+			WHERE RR.RECORD_STATUS = 'Y'
+			AND RR.ORG_FLOW = #{orgFlow}
+			AND (RR.REC_TYPE_ID = 'AfterEvaluation' OR RR.REC_TYPE_ID = 'AfterSummary')
+		)
+		GROUP BY RDSP.DEPT_FLOW
+	</select>
+	
+	<resultMap type="HashMap" id="willAfterCountDoc">
+		<result property="processFlow" column="PROCESS_FLOW" javaType="string"/>
+		<result property="countNum" column="COUNT_NUM" javaType="java.math.BigDecimal"/>
+	</resultMap>
+	<select id="searchDeptWillAfterDoc" resultMap="willAfterCountDoc">
+		SELECT RDSP.PROCESS_FLOW PROCESS_FLOW,COUNT(1) COUNT_NUM
+		FROM  PDSCI.RES_DOCTOR_SCH_PROCESS RDSP
+		WHERE RDSP.RECORD_STATUS = 'Y'
+			AND RDSP.IS_CURRENT_FLAG = 'Y'
+			AND RDSP.ORG_FLOW = #{orgFlow}
+			<if test="deptFlow!=null and deptFlow!=''">
+				and dept_flow=#{deptFlow}
+			</if>
+			AND RDSP.PROCESS_FLOW IN (
+			SELECT PROCESS_FLOW 
+			FROM  PDSCI.RES_SCH_PROCESS_EXPRESS RR
+			WHERE RR.RECORD_STATUS = 'Y'
+			AND RR.ORG_FLOW = #{orgFlow}
+			AND (RR.REC_TYPE_ID = 'AfterEvaluation' OR RR.REC_TYPE_ID = 'AfterSummary')
+		)
+		GROUP BY RDSP.PROCESS_FLOW
+	</select>
+
+    <sql id="Res_Base_Column_List" >
+        REC_FLOW, ORG_FLOW, ORG_NAME, DEPT_FLOW, DEPT_NAME, SCH_DEPT_FLOW, SCH_DEPT_NAME,REC_CONTENT,
+        REC_TYPE_ID, REC_TYPE_NAME, ITEM_NAME, REC_VERSION, OPER_TIME, OPER_USER_FLOW, OPER_USER_NAME,
+        STATUS_ID, STATUS_NAME, AUDIT_TIME, AUDIT_USER_FLOW, AUDIT_USER_NAME, AUDIT_STATUS_ID,
+        AUDIT_STATUS_NAME, HEAD_AUDIT_TIME, HEAD_AUDIT_USER_FLOW, HEAD_AUDIT_USER_NAME, HEAD_AUDIT_STATUS_ID,
+        HEAD_AUDIT_STATUS_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME,
+        MODIFY_USER_FLOW, MANAGER_AUDIT_TIME, MANAGER_AUDIT_USER_FLOW, MANAGER_AUDIT_USER_NAME,
+        MANAGER_AUDIT_STATUS_ID, MANAGER_AUDIT_STATUS_NAME, ADMIN_AUDIT_TIME, ADMIN_AUDIT_USER_FLOW,
+        ADMIN_AUDIT_USER_NAME, ADMIN_AUDIT_STATUS_ID, ADMIN_AUDIT_STATUS_NAME, ITEM_ID, PROCESS_FLOW,
+        REC_FORM, SCH_ROTATION_DEPT_FLOW, MEDICINE_TYPE
+    </sql>
+	<select id="searchProssingRec" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResRecMapper.BaseResultMap">
+		select <include refid="Res_Base_Column_List" />
+		 from res_rec_campaign_registry rr
+		where rr.record_status = 'Y'
+		<if test="doctorFlow!=null and doctorFlow!=''">
+			and rr.oper_user_flow = #{doctorFlow}
+		</if>
+		and exists (
+			select null
+			from sch_arrange_result sar
+			where sar.record_status = 'Y'
+			and sar.doctor_flow = rr.oper_user_flow
+			<if test="standardDeptId!=null and standardDeptId!=''">
+				and sar.standard_dept_id = #{standardDeptId}
+			</if>
+			<if test="standardGroupFlow!=null and standardGroupFlow!=''">
+		  		and sar.standard_group_flow = #{standardGroupFlow}
+		  	</if>
+ 		  	and to_char(to_date(rr.oper_time,'yyyymmddhh24miss'),'yyyy-mm-dd') <![CDATA[<=]]> sar.sch_end_date
+		  	and to_char(to_date(rr.oper_time,'yyyymmddhh24miss'),'yyyy-mm-dd') <![CDATA[>=]]> sar.sch_start_date
+ 		)
+		<if test="processFlow!=null and processFlow!=''">
+			and rr.sch_rotation_dept_flow = #{processFlow}
+		</if>
+	</select>
+	
+	<resultMap type="HashMap" id="gradeContentMap">
+		<result property="key" column="KEY" javaType="string"/>
+		<result property="operUserName" column="OPER_USER_NAME" javaType="string"/>
+		<result property="operUserFlow" column="OPER_USER_FLOW" javaType="string"/>
+		<result property="content" column="CONTENT" javaType="string"/>
+		<result property="recFlow" column="REC_FLOW" javaType="string"/>
+		<result property="sessionNumber" column="SESSION_NUMBER" javaType="string"/>
+	</resultMap>
+	<select id="getRecContentByProcess"  parameterType="java.util.Map" resultMap="gradeContentMap">
+		select 
+			<if test='recTypeId!=null and recTypeId=="TeacherGrade"'>
+				rdsp.teacher_user_flow KEY,
+			</if>
+			<if test='recTypeId!=null and recTypeId=="DeptGrade"'>
+				rdsp.dept_flow KEY,
+			</if>
+			rr.oper_user_name OPER_USER_NAME,
+			rr.oper_user_flow OPER_USER_FLOW,
+			rr.rec_content CONTENT,
+			rr.rec_flow REC_FLOW,
+			rd.SESSION_NUMBER
+		from pdsci.res_rec rr
+		inner join pdsci.res_doctor_sch_process rdsp
+		on rdsp.record_status = 'Y'
+		and rdsp.process_flow = rr.process_flow
+		left join res_doctor rd
+		on rd.doctor_flow=rr.oper_user_flow
+		where rr.record_status = 'Y'
+		and rd.record_status='Y'
+		<if test="sessionNumber!=null and sessionNumber!=''">
+			and rd.SESSION_NUMBER=#{sessionNumber}
+		</if>
+		and rr.rec_type_id = #{recTypeId}
+		<if test='deptFlow!=null and deptFlow!=""'>
+			and rdsp.dept_flow = #{deptFlow}
+		</if>
+		<if test='deptName!=null and deptName!=""'>
+			and rdsp.dept_Name like '%${deptName}%'
+		</if>
+		<if test='teacherFlow!=null and teacherFlow!=""'>
+			and rdsp.teacher_user_flow = #{teacherFlow}
+		</if>
+		<if test='operStartDate!=null and operStartDate!=""'>
+			and rr.oper_time >= #{operStartDate}
+		</if>
+		<if test='operEndDate!=null and operEndDate!=""'>
+			and rr.oper_time <![CDATA[<=]]> #{operEndDate}
+		</if>
+		
+		<if test='teacherFlows!=null and teacherFlows.size()>0'>
+			and rdsp.teacher_user_flow in 
+			<foreach collection="teacherFlows" close=")" item="tf" open="(" separator=",">
+				#{tf}
+			</foreach>
+		</if>
+		<if test='deptFlows!=null and deptFlows.size()>0'>
+			and rdsp.dept_flow in 
+			<foreach collection="deptFlows" close=")" item="df" open="(" separator=",">
+				#{df}
+			</foreach>
+		</if>
+		order by rr.oper_time
+	</select>
+	<select id="getRecContentByProcessForUni"  parameterType="java.util.Map" resultMap="gradeContentMap">
+		select
+			<if test='recTypeId!=null and recTypeId=="TeacherGrade"'>
+				rdsp.teacher_user_flow KEY,
+			</if>
+			<if test='recTypeId!=null and recTypeId=="DeptGrade"'>
+				rdsp.dept_flow KEY,
+			</if>
+			rr.oper_user_name OPER_USER_NAME,
+			rr.oper_user_flow OPER_USER_FLOW,
+			rr.rec_content CONTENT,
+			rr.rec_flow REC_FLOW,
+			rd.SESSION_NUMBER
+		from pdsci.DEPT_TEACHER_GRADE_INFO rr
+		inner join pdsci.res_doctor_sch_process rdsp
+		on rdsp.record_status = 'Y'
+		and rdsp.process_flow = rr.process_flow
+		left join res_doctor rd
+		on rd.doctor_flow=rr.oper_user_flow
+		where rr.record_status = 'Y'
+		and rd.record_status='Y'
+		AND RD.DOCTOR_TYPE_ID = 'Graduate'
+		<if test="sessionNumber!=null and sessionNumber!=''">
+			and rd.SESSION_NUMBER=#{sessionNumber}
+		</if>
+		AND (
+		<trim prefix="" prefixOverrides="OR">
+			<if test="(org.sendSchoolId != null and org.sendSchoolId != '')">OR rd.work_org_id = #{org.sendSchoolId}</if>
+			<if test="(org.sendSchoolName != null and org.sendSchoolName != '')">OR rd.work_org_name = #{org.sendSchoolName}</if>
+		</trim>
+		)
+		and rr.rec_type_id = #{recTypeId}
+		<if test='deptFlow!=null and deptFlow!=""'>
+			and rdsp.dept_flow = #{deptFlow}
+		</if>
+		<if test='deptName!=null and deptName!=""'>
+			and rdsp.dept_Name like '%${deptName}%'
+		</if>
+		<if test='teacherFlow!=null and teacherFlow!=""'>
+			and rdsp.teacher_user_flow = #{teacherFlow}
+		</if>
+		<if test='operStartDate!=null and operStartDate!=""'>
+			and rr.oper_time >= #{operStartDate}
+		</if>
+		<if test='operEndDate!=null and operEndDate!=""'>
+			and rr.oper_time <![CDATA[<=]]> #{operEndDate}
+		</if>
+
+		<if test='teacherFlows!=null and teacherFlows.size()>0'>
+			and rdsp.teacher_user_flow in
+			<foreach collection="teacherFlows" close=")" item="tf" open="(" separator=",">
+				#{tf}
+			</foreach>
+		</if>
+		<if test='deptFlows!=null and deptFlows.size()>0'>
+			and rdsp.dept_flow in
+			<foreach collection="deptFlows" close=")" item="df" open="(" separator=",">
+				#{df}
+			</foreach>
+		</if>
+		order by rr.oper_time
+	</select>
+
+	<update id="modifyResRegStatus" parameterType="java.util.Map">
+		update PDSCI.RES_REG SET STATUS_ID = #{statusId},STATUS_NAME = #{statusName}
+		WHERE REG_YEAR = #{regNumber}
+		 and exists(select null from res_doctor where RES_DOCTOR.RECORD_STATUS = 'Y' AND RES_DOCTOR.DOCTOR_STATUS_ID=#{oldStatusId} and RES_REG.user_flow = res_doctor.doctor_flow)
+	</update>
+	<update id="orgBatchAuditDoctorInfo" parameterType="java.util.Map">
+		UPDATE RES_REC
+		SET AUDIT_TIME =to_char(sysdate, 'YYYYMMDDHH24MISS'),
+			AUDIT_USER_FLOW= '${sysuser.userFlow}',
+			AUDIT_USER_NAME= '${sysuser.userName}(一键审核)',
+			AUDIT_STATUS_ID='TeacherAuditY',
+			AUDIT_STATUS_NAME='带教老师审核通过',
+			MODIFY_TIME=to_char(sysdate, 'YYYYMMDDHH24MISS'),
+			MODIFY_USER_FLOW ='${sysuser.userFlow}'
+		 WHERE RECORD_STATUS = 'Y'
+		   AND AUDIT_STATUS_ID IS NULL
+		   AND ORG_FLOW = #{orgFlow}
+		   AND REC_TYPE_ID IN ('CaseRegistry',
+							   'DiseaseRegistry',
+							   'SkillRegistry',
+							   'OperationRegistry',
+							   'CampaignRegistry')
+		   AND EXISTS
+		 (SELECT 1
+				  FROM PDSCI.RES_DOCTOR_RECRUIT DR
+				  LEFT JOIN SCH_ROTATION_DEPT T
+					ON DR.ROTATION_FLOW = T.ROTATION_FLOW
+				   AND T.ORG_FLOW IS NULL
+				 WHERE DR.RECORD_STATUS = 'Y'
+				   AND DR.AUDIT_STATUS_ID = 'Passed'
+				   AND DR.ORG_FLOW = #{orgFlow}
+				   AND DR.GRADUATION_YEAR = #{graduationYear}
+				   AND T.RECORD_STATUS = 'Y'
+				   AND T.RECORD_FLOW IS NOT NULL
+				   AND T.RECORD_FLOW = RES_REC.SCH_ROTATION_DEPT_FLOW)
+	</update>
+	<select id="searchByRecWithBLOBsByMap4Hb" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs" parameterType="map">
+		select * from res_rec
+			   where record_status='Y'
+			   <if test="recTypeId != null and recTypeId != ''">
+				   and rec_type_id=#{recTypeId}
+			   </if>
+			   <if test="doctorFlow != null and doctorFlow != ''">
+				   and oper_user_flow=#{doctorFlow}
+			   </if>
+			   and exists (
+				   select 1 from res_doctor_sch_process p
+				   where p.record_status='Y'
+				   <if test="doctorFlow != null and doctorFlow != ''">
+					   and p.user_flow=#{doctorFlow}
+				   </if>
+				   and p.sch_result_flow in (
+					   select result_flow from sch_arrange_result
+					   where record_status='Y'
+					   <if test="doctorFlow != null and doctorFlow != ''">
+						   and doctor_flow=#{doctorFlow}
+					   </if>
+					   <if test="rotationFlow != null and rotationFlow != ''">
+						   and rotation_flow=#{rotationFlow}
+					   </if>
+				   )
+			  )
+	</select>
+
+	<!--/****************************高******校******管******理******员******角******色************************************************/-->
+
+	<resultMap type="HashMap" id="uniBarkingMap">
+		<result column="ORG_FLOW" property="orgFlow" javaType="string"/>
+		<result column="ORG_NAME" property="orgName" javaType="string"/>
+		<result column="REASON_NAME" property="reasonName" javaType="string"/>
+		<result column="REASON_ID" property="reasonId" javaType="string"/>
+		<result column="POLICY_NAME" property="policyName" javaType="string"/>
+		<result column="POLICY_ID" property="policyId" javaType="string"/>
+		<result column="REASON" property="reason" javaType="string"/>
+		<result column="POLICY" property="policy" javaType="string"/>
+		<result column="DISPOSITON" property="dispositon" javaType="string"/>
+		<result column="REMARK" property="remark" javaType="string"/>
+		<result column="SESSION_NUMBER" property="sessionNumber" javaType="string"/>
+		<result column="TRAIN_SPE" property="trainSpe" javaType="string"/>
+		<result column="WORK_ORG_ID" property="workOrgId" javaType="string"/>
+		<result column="WORK_ORG_NAME" property="workOrgName" javaType="string"/>
+		<result column="DOCTOR_TYPE_ID" property="doctorTypeId" javaType="string"/>
+		<result column="DOCTOR_TYPE_NAME" property="doctorTypeName" javaType="string"/>
+		<result column="TRAINING_TYPE_ID" property="trainingTypeId" javaType="string"/>
+		<result column="TRAINING_TYPE_NAME" property="trainingTypeName" javaType="string"/>
+		<result column="CREATE_TIME" property="createTime" javaType="string"/>
+		<result column="OPER_USER_NAME" property="operUserName" javaType="string"/>
+		<result column="OPER_USER_FLOW" property="operUserFlow"  javaType="string"/>
+	</resultMap>
+	<select id="searchInfoForUni" resultMap="uniBarkingMap" parameterType="map">
+
+		select *
+		from (
+			select
+			rr.ORG_FLOW,
+			rr.ORG_NAME,
+			rr.OPER_USER_NAME,
+			rr.OPER_USER_FLOW,
+			xmltype(rec_content).extract('//reasonName/text()').getstringval()      REASON_NAME,
+			substr(xmltype(rec_content).extract('//reasonName').getstringval(),17,1)      REASON_ID,
+			xmltype(rec_content).extract('//policyName/text()').getstringval()      POLICY_NAME,
+			substr(xmltype(rec_content).extract('//policyName').getstringval(),17,1)      POLICY_ID,
+			xmltype(rec_content).extract('//reason/text()').getstringval()      REASON,
+			xmltype(rec_content).extract('//policy/text()').getstringval()      POLICY,
+			xmltype(rec_content).extract('//dispositon/text()').getstringval()      DISPOSITON,
+			xmltype(rec_content).extract('//remark/text()').getstringval()      REMARK,
+			xmltype(rec_content).extract('//sessionNumber/text()').getstringval()      SESSION_NUMBER,
+			xmltype(rec_content).extract('//trainSpe/text()').getstringval()      TRAIN_SPE,
+			d.WORK_ORG_ID,
+			d.WORK_ORG_NAME,
+		 	D.DOCTOR_TYPE_ID,
+			D.DOCTOR_TYPE_NAME,
+			D.TRAINING_TYPE_ID,
+			D.TRAINING_TYPE_NAME,
+			rr.CREATE_TIME
+			from res_rec rr
+				left join RES_DOCTOR d on rr.OPER_USER_FLOW = d.DOCTOR_FLOW
+			where  rr.record_status='Y'
+			AND d.RECORD_STATUS = 'Y'
+			and rr.rec_type_id = 'ReturnTraining'
+			<if test="resRec!=null">
+				<if test="resRec.orgFlow!=null and resRec.orgFlow!=''">
+					and rr.ORG_FLOW = #{resRec.orgFlow}
+				</if>
+				<if test="resRec.operUserName!=null and resRec.operUserName!=''">
+					and rr.OPER_USER_NAME like '%${resRec.operUserName}%'
+				</if>
+			</if>
+			) a
+		where 1=1
+		<if test="resDoctor!=null">
+			and (
+			<trim prefix="" prefixOverrides="OR">
+				<if test="resDoctor.workOrgId != null and resDoctor.workOrgId != ''">OR A.work_org_id = #{resDoctor.workOrgId}</if>
+				<if test="resDoctor.workOrgName != null and resDoctor.workOrgName != ''">OR A.work_org_name = #{resDoctor.workOrgName}</if>
+			</trim>
+			)
+			and a.DOCTOR_TYPE_ID = 'Graduate'
+			<if test="resDoctor.trainingSpeName!=null and resDoctor.trainingSpeName!=''">
+				and A.TRAIN_SPE like  '%${resDoctor.trainingSpeName}%'
+			</if>
+			<if test="resDoctor.trainingTypeId!=null and resDoctor.trainingTypeId!=''">
+				and A.TRAINING_TYPE_ID = #{resDoctor.trainingTypeId}
+			</if>
+			<if test="resDoctor.sessionNumber!=null and resDoctor.sessionNumber!=''">
+				and A.SESSION_NUMBER = #{resDoctor.sessionNumber}
+			</if>
+			<if test="resDoctor.regNo!=null and resDoctor.regNo!=''">
+				and A.REASON_ID = #{resDoctor.regNo}
+			</if>
+			<if test="resDoctor.emergencyPhone!=null and resDoctor.emergencyPhone!=''">
+				and A.POLICY_ID = #{resDoctor.emergencyPhone}
+			</if>
+		</if>
+		order by A.create_time desc
+	</select>
+	<resultMap type="HashMap" id="searchInfo2Map">
+		<result column="REC_FLOW" property="recFlow" javaType="string"/>
+		<result column="ORG_FLOW" property="orgFlow" javaType="string"/>
+		<result column="ORG_NAME" property="orgName" javaType="string"/>
+		<result column="REASON_NAME" property="reasonName" javaType="string"/>
+		<result column="REASON_ID" property="reasonId" javaType="string"/>
+		<result column="POLICY_NAME" property="policyName" javaType="string"/>
+		<result column="POLICY_ID" property="policyId" javaType="string"/>
+		<result column="REASON" property="reason" javaType="string"/>
+		<result column="POLICY" property="policy" javaType="string"/>
+		<result column="DISPOSITON" property="dispositon" javaType="string"/>
+		<result column="REMARK" property="remark" javaType="string"/>
+		<result column="SESSION_NUMBER" property="sessionNumber" javaType="string"/>
+		<result column="TRAIN_SPE" property="trainSpe" javaType="string"/>
+		<result column="AUDIT_STATUS_NAME" property="auditStatusName" javaType="string"/>
+		<result column="AUDIT_STATUS_ID" property="auditStatusId" javaType="string"/>
+		<result column="AUDIT_OPINION" property="auditOpinion" javaType="string"/>
+		<result column="WORK_ORG_ID" property="workOrgId" javaType="string"/>
+		<result column="WORK_ORG_NAME" property="workOrgName" javaType="string"/>
+		<result column="DOCTOR_TYPE_ID" property="doctorTypeId" javaType="string"/>
+		<result column="DOCTOR_TYPE_NAME" property="doctorTypeName" javaType="string"/>
+		<result column="TRAINING_TYPE_ID" property="trainingTypeId" javaType="string"/>
+		<result column="TRAINING_TYPE_NAME" property="trainingTypeName" javaType="string"/>
+		<result column="CREATE_TIME" property="createTime" javaType="string"/>
+		<result column="MODIFY_TIME" property="modifyTime" javaType="string"/>
+		<result column="OPER_USER_NAME" property="operUserName" javaType="string"/>
+		<result column="OPER_USER_FLOW" property="operUserFlow"  javaType="string"/>
+	</resultMap>
+	<select id="searchInfo2" resultMap="searchInfo2Map" parameterType="map">
+
+		select *
+		from (
+			select
+			rr.REC_FLOW REC_FLOW,
+			rr.ORG_FLOW,
+			rr.ORG_NAME,
+			rr.OPER_USER_NAME,
+			rr.OPER_USER_FLOW,
+			xmltype(rec_content).extract('//reasonName/text()').getstringval()      REASON_NAME,
+			substr(xmltype(rec_content).extract('//reasonName').getstringval(),17,1)      REASON_ID,
+			xmltype(rec_content).extract('//policyName/text()').getstringval()      POLICY_NAME,
+			substr(xmltype(rec_content).extract('//policyName').getstringval(),17,1)      POLICY_ID,
+			xmltype(rec_content).extract('//reason/text()').getstringval()      REASON,
+			xmltype(rec_content).extract('//policy/text()').getstringval()      POLICY,
+			xmltype(rec_content).extract('//dispositon/text()').getstringval()      DISPOSITON,
+			xmltype(rec_content).extract('//remark/text()').getstringval()      REMARK,
+			xmltype(rec_content).extract('//sessionNumber/text()').getstringval()      SESSION_NUMBER,
+			xmltype(rec_content).extract('//trainSpe/text()').getstringval()      TRAIN_SPE,
+			xmltype(rec_content).extract('//auditStatusName/text()').getstringval()      AUDIT_STATUS_NAME,
+			substr(xmltype(rec_content).extract('//auditStatusName').getstringval(),22,1)      AUDIT_STATUS_ID,
+			xmltype(rec_content).extract('//auditOpinion/text()').getstringval()      AUDIT_OPINION,
+			rr.CREATE_TIME,
+			rr.MODIFY_TIME
+			from res_rec rr
+			where  rr.record_status='Y'
+			and rr.rec_type_id = 'ReturnTraining'
+			<if test="resRec!=null">
+				<if test="resRec.orgFlow!=null and resRec.orgFlow!=''">
+					and rr.ORG_FLOW = #{resRec.orgFlow}
+				</if>
+				<if test="resRec.operUserName!=null and resRec.operUserName!=''">
+					and rr.OPER_USER_NAME like '%${resRec.operUserName}%'
+				</if>
+			</if>
+			) a
+		where 1=1
+		<if test="orgFlowList !=null and orgFlowList.size>0">
+			and a.org_flow in
+			<foreach collection="orgFlowList" close=")" item="orgFlow" open="(" separator=",">
+				#{orgFlow}
+			</foreach>
+		</if>
+		<if test="userFlowList !=null and userFlowList.size>0">
+			and a.OPER_USER_FLOW in
+			<foreach collection="userFlowList" close=")" item="userFlow" open="(" separator=",">
+				#{userFlow}
+			</foreach>
+		</if>
+		<if test="resDoctor!=null">
+			<if test="resDoctor.trainingSpeName!=null and resDoctor.trainingSpeName!=''">
+				and A.TRAIN_SPE like  '%${resDoctor.trainingSpeName}%'
+			</if>
+			<if test="resDoctor.trainingTypeId!=null and resDoctor.trainingTypeId!=''">
+				and A.TRAINING_TYPE_ID = #{resDoctor.trainingTypeId}
+			</if>
+			<if test="resDoctor.sessionNumber!=null and resDoctor.sessionNumber!=''">
+				and A.SESSION_NUMBER = #{resDoctor.sessionNumber}
+			</if>
+			<if test="resDoctor.regNo!=null and resDoctor.regNo!=''">
+				and A.REASON_ID = #{resDoctor.regNo}
+			</if>
+			<if test="resDoctor.emergencyPhone!=null and resDoctor.emergencyPhone!=''">
+				and A.POLICY_ID = #{resDoctor.emergencyPhone}
+			</if>
+			<if test="resDoctor.emergencyName!=null and resDoctor.emergencyName!=''">
+				and A.AUDIT_STATUS_ID = #{resDoctor.emergencyName}
+			</if>
+			<if test="resDoctor.groupId!=null and resDoctor.groupId!=''">
+				and A.AUDIT_STATUS_ID not in ('2')
+			</if>
+		</if>
+		order by A.create_time desc
+	</select>
+	<select id="searchDelayInfoForUni" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs" parameterType="map">
+		select r.*
+		from PDSCI.RES_REC r
+		left join RES_DOCTOR d on r.OPER_USER_FLOW = d.DOCTOR_FLOW
+		WHERE r.RECORD_STATUS = 'Y'
+		AND d.RECORD_STATUS = 'Y'
+		<if test="resRec!=null">
+			<if test="resRec.recTypeId!=null and resRec.recTypeId!=''">
+				and r.REC_TYPE_ID = #{resRec.recTypeId}
+			</if>
+			<if test="resRec.orgFlow!=null and resRec.orgFlow!=''">
+				and r.ORG_FLOW = #{resRec.orgFlow}
+			</if>
+			<if test="resRec.operUserName!=null and resRec.operUserName!=''">
+				and r.OPER_USER_NAME like '%${resRec.operUserName}%'
+			</if>
+		</if>
+		<if test="resDoctor!=null">
+			and (
+			<trim prefix="" prefixOverrides="OR">
+				<if test="resDoctor.workOrgId != null and resDoctor.workOrgId != ''">OR d.work_org_id = #{resDoctor.workOrgId}</if>
+				<if test="resDoctor.workOrgName != null and resDoctor.workOrgName != ''">OR d.work_org_name = #{resDoctor.workOrgName}</if>
+			</trim>
+			)
+			<if test="resDoctor.doctorTypeId!=null and resDoctor.doctorTypeId!=''">
+				and d.DOCTOR_TYPE_ID = #{resDoctor.doctorTypeId}
+			</if>
+			<if test="resDoctor.trainingSpeId!=null and resDoctor.trainingSpeId!=''">
+				and d.TRAINING_SPE_ID = #{resDoctor.trainingSpeId}
+			</if>
+			<if test="resDoctor.trainingTypeId!=null and resDoctor.trainingTypeId!=''">
+				and d.TRAINING_TYPE_ID = #{resDoctor.trainingTypeId}
+			</if>
+		</if>
+		order by r.create_time desc
+	</select>
+	<select id="searchJoinActivityByProcessFlow" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.BaseResultMap">
+		SELECT INFO.*
+		FROM TEACHING_ACTIVITY_RESULT R
+		LEFT JOIN TEACHING_ACTIVITY_INFO INFO
+		ON R.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+		LEFT JOIN SCH_ARRANGE_RESULT SAR
+		ON R.USER_FLOW = SAR.DOCTOR_FLOW
+		LEFT JOIN RES_DOCTOR_SCH_PROCESS P
+		ON P.USER_FLOW=R.USER_FLOW
+		AND SAR.RESULT_FLOW=P.SCH_RESULT_FLOW
+		WHERE R.RECORD_STATUS = 'Y'
+		AND INFO.RECORD_STATUS = 'Y'
+		AND P.RECORD_STATUS = 'Y'
+		AND P.PROCESS_FLOW=#{processFlow}
+		AND SAR.RECORD_STATUS = 'Y'
+		AND INFO.IS_EFFECTIVE = 'Y'
+		AND R.IS_EFFECTIVE = 'Y'
+		AND ((SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.start_time, 0, 10) AND
+		SAR.SCH_END_DATE >= substr(info.end_time, 0, 10)) or
+		(SAR.SCH_START_DATE >= substr(info.start_time, 0, 10) AND
+		SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)) or
+		(SAR.SCH_END_DATE >= substr(info.start_time, 0, 10) AND
+		SAR.SCH_END_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)))
+	</select>
+	<select id="searchJoinActivityByProcessFlow2" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.BaseResultMap">
+		SELECT INFO.*
+		FROM TEACHING_ACTIVITY_RESULT R
+		LEFT JOIN TEACHING_ACTIVITY_INFO INFO
+		ON R.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+		LEFT JOIN SCH_ARRANGE_RESULT SAR
+		ON R.USER_FLOW = SAR.DOCTOR_FLOW
+		LEFT JOIN RES_DOCTOR_SCH_PROCESS P
+		ON P.USER_FLOW=R.USER_FLOW
+		AND SAR.RESULT_FLOW=P.SCH_RESULT_FLOW
+		WHERE R.RECORD_STATUS = 'Y'
+		AND INFO.RECORD_STATUS = 'Y'
+		AND P.RECORD_STATUS = 'Y'
+		AND P.PROCESS_FLOW=#{processFlow}
+		AND SAR.RECORD_STATUS = 'Y'
+		AND R.EVAL_SCORE IS NOT NULL
+		AND INFO.IS_EFFECTIVE = 'Y'
+		AND R.IS_EFFECTIVE = 'Y'
+		AND ((SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.start_time, 0, 10) AND
+		SAR.SCH_END_DATE >= substr(info.end_time, 0, 10)) or
+		(SAR.SCH_START_DATE >= substr(info.start_time, 0, 10) AND
+		SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)) or
+		(SAR.SCH_END_DATE >= substr(info.start_time, 0, 10) AND
+		SAR.SCH_END_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)))
+	</select>
+	<select id="searchJoinActivityByStrandDeptFlow" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.BaseResultMap">
+		SELECT INFO.*
+		  FROM TEACHING_ACTIVITY_RESULT R
+		  LEFT JOIN TEACHING_ACTIVITY_INFO INFO
+			ON R.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+		  LEFT JOIN SCH_ARRANGE_RESULT SAR
+			ON R.USER_FLOW = SAR.DOCTOR_FLOW
+		  LEFT JOIN SCH_ROTATION_DEPT SRD
+			ON SAR.STANDARD_GROUP_FLOW = SRD.GROUP_FLOW
+		   AND SAR.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID
+		 WHERE R.RECORD_STATUS = 'Y'
+		   AND SRD.RECORD_STATUS = 'Y'
+		   AND INFO.RECORD_STATUS = 'Y'
+		   AND SAR.RECORD_STATUS = 'Y'
+		   AND INFO.IS_EFFECTIVE = 'Y'
+		   AND R.IS_EFFECTIVE = 'Y'
+		   AND SRD.RECORD_FLOW = #{recordFlow}
+		   AND R.USER_FLOW = #{doctorFlow}
+		   AND ((SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.start_time, 0, 10) AND
+			   SAR.SCH_END_DATE >= substr(info.end_time, 0, 10)) or
+			   (SAR.SCH_START_DATE >= substr(info.start_time, 0, 10) AND
+			   SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)) or
+			   (SAR.SCH_END_DATE >= substr(info.start_time, 0, 10) AND
+			   SAR.SCH_END_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)))
+	</select>
+
+	<select id="searchJoinActivityByStrandDeptFlowAndNotScore" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.BaseResultMap">
+		SELECT INFO.*
+		  FROM TEACHING_ACTIVITY_RESULT R
+		  LEFT JOIN TEACHING_ACTIVITY_INFO INFO
+			ON R.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+		  LEFT JOIN SCH_ARRANGE_RESULT SAR
+			ON R.USER_FLOW = SAR.DOCTOR_FLOW
+		  LEFT JOIN SCH_ROTATION_DEPT SRD
+			ON SAR.STANDARD_GROUP_FLOW = SRD.GROUP_FLOW
+		   AND SAR.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID
+		 WHERE R.RECORD_STATUS = 'Y'
+		   AND SRD.RECORD_STATUS = 'Y'
+		   AND INFO.RECORD_STATUS = 'Y'
+		   AND SAR.RECORD_STATUS = 'Y'
+		   AND INFO.IS_EFFECTIVE = 'Y'
+		   AND R.EVAL_SCORE IS NOT NULL
+		   AND R.IS_EFFECTIVE = 'Y'
+		   AND SRD.RECORD_FLOW = #{recordFlow}
+		   AND R.USER_FLOW = #{doctorFlow}
+		   AND ((SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.start_time, 0, 10) AND
+			   SAR.SCH_END_DATE >= substr(info.end_time, 0, 10)) or
+			   (SAR.SCH_START_DATE >= substr(info.start_time, 0, 10) AND
+			   SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)) or
+			   (SAR.SCH_END_DATE >= substr(info.start_time, 0, 10) AND
+			   SAR.SCH_END_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)))
+	</select>
+
+	<resultMap type="HashMap" id="JoinActivityMap">
+		<result column="SPEAKER_FLOW" javaType="string" property="speakerFlow" />
+		<result column="SPEAKER_NAME" javaType="string" property="speakerName" />
+		<result column="SPEAKER_PHONE" javaType="string" property="speakerPhone" />
+		<result column="ACTIVITY_NAME" javaType="string" property="activityName" />
+		<result column="ACTIVITY_TYPE_ID" javaType="string" property="activityTypeId" />
+		<result column="ACTIVITY_TYPE_NAME" javaType="string" property="activityTypeName" />
+		<result column="START_TIME" javaType="string" property="startTime" />
+		<result column="END_TIME" javaType="string" property="endTime" />
+		<result column="ACTIVITY_ADDRESS" javaType="string" property="activityAddress" />
+		<result column="ACTIVITY_REMARK" javaType="string" property="activityRemark" />
+		<result column="REC_CONTENT" javaType="string" property="recContent" />
+		<result column="REC_FLOW" javaType="string" property="recFlow" />
+		<result column="REC_TYPE_ID" javaType="string" property="recTypeId" />
+		<result column="RESULT_FLOW" javaType="string" property="resultFlow" />
+	</resultMap>
+	<select id="queryJoinActivityAndEditList" resultMap="JoinActivityMap" parameterType="map">
+		SELECT * FROM (
+		SELECT INFO.ACTIVITY_FLOW REC_FLOW,
+			   INFO.ACTIVITY_NAME,
+			   INFO.SPEAKER_FLOW,
+			   SU.USER_NAME SPEAKER_NAME,
+			   INFO.ACTIVITY_TYPE_ID,
+			   INFO.ACTIVITY_TYPE_NAME,
+			   substr(info.start_time, 0, 10) START_TIME,
+			   INFO.END_TIME,
+			   INFO.ACTIVITY_ADDRESS,
+			   INFO.ACTIVITY_REMARK,
+			   NULL REC_CONTENT,
+			   '' REC_TYPE_ID,
+			   '1' ORNIAL,
+			   INFO.CREATE_TIME
+		  FROM TEACHING_ACTIVITY_RESULT R
+		  LEFT JOIN TEACHING_ACTIVITY_INFO INFO
+			ON R.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+		  LEFT JOIN SCH_ARRANGE_RESULT SAR
+			ON R.USER_FLOW = SAR.DOCTOR_FLOW
+		  LEFT JOIN SCH_ROTATION_DEPT SRD
+			ON SAR.STANDARD_GROUP_FLOW = SRD.GROUP_FLOW
+		   AND SAR.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID
+		  LEFT JOIN SYS_USER SU ON SU.USER_FLOW =INFO.SPEAKER_FLOW
+		 WHERE R.RECORD_STATUS = 'Y'
+		   AND SRD.RECORD_STATUS = 'Y'
+		   AND INFO.RECORD_STATUS = 'Y'
+		   AND SAR.RECORD_STATUS = 'Y'
+		   AND INFO.IS_EFFECTIVE = 'Y'
+		   AND R.IS_EFFECTIVE = 'Y'
+		   AND SRD.RECORD_FLOW = #{deptFlow}
+		   AND R.USER_FLOW = #{userFlow}
+		   AND ((SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.start_time, 0, 10) AND
+			   SAR.SCH_END_DATE >= substr(info.end_time, 0, 10)) or
+			   (SAR.SCH_START_DATE >= substr(info.start_time, 0, 10) AND
+			   SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)) or
+			   (SAR.SCH_END_DATE >= substr(info.start_time, 0, 10) AND
+			   SAR.SCH_END_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)))
+		union all
+		select REC_FLOW,
+			   '' ACTIVITY_NAME,
+			   '' SPEAKER_FLOW,
+			   '' SPEAKER_NAME,
+			   '' ACTIVITY_TYPE_ID,
+			   '' ACTIVITY_TYPE_NAME,
+			   '' START_TIME,
+			   '' END_TIME,
+			   '' ACTIVITY_ADDRESS,
+			   '' ACTIVITY_REMARK,
+			   REC_CONTENT,
+			   REC_TYPE_ID,
+			   '2' ORNIAL,
+			   CREATE_TIME
+		  from res_rec_campaign_registry
+		 where record_status = 'Y'
+		   and rec_type_id =#{recTypeId}
+		   and oper_user_flow = #{userFlow}
+		   and Sch_Rotation_Dept_Flow =#{deptFlow}
+		) ORDER BY ORNIAL,CREATE_TIME,REC_FLOW
+	</select>
+
+    <update id="oneKeyAudit" parameterType="map" >
+        update PDSCI.RES_REC
+        <set >
+            <if test="record.recFlow != null" >
+                REC_FLOW = #{record.recFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="record.orgFlow != null" >
+                ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="record.orgName != null" >
+                ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.deptFlow != null" >
+                DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="record.deptName != null" >
+                DEPT_NAME = #{record.deptName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.schDeptFlow != null" >
+                SCH_DEPT_FLOW = #{record.schDeptFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="record.schDeptName != null" >
+                SCH_DEPT_NAME = #{record.schDeptName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.recTypeId != null" >
+                REC_TYPE_ID = #{record.recTypeId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.recTypeName != null" >
+                REC_TYPE_NAME = #{record.recTypeName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.itemName != null" >
+                ITEM_NAME = #{record.itemName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.recVersion != null" >
+                REC_VERSION = #{record.recVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="record.operTime != null" >
+                OPER_TIME = #{record.operTime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.operUserFlow != null" >
+                OPER_USER_FLOW = #{record.operUserFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="record.operUserName != null" >
+                OPER_USER_NAME = #{record.operUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.statusId != null" >
+                STATUS_ID = #{record.statusId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.statusName != null" >
+                STATUS_NAME = #{record.statusName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.auditTime != null" >
+                AUDIT_TIME = #{record.auditTime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.auditUserFlow != null" >
+                AUDIT_USER_FLOW = #{record.auditUserFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="record.auditUserName != null" >
+                AUDIT_USER_NAME = #{record.auditUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.auditStatusId != null" >
+                AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.auditStatusName != null" >
+                AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.headAuditTime != null" >
+                HEAD_AUDIT_TIME = #{record.headAuditTime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.headAuditUserFlow != null" >
+                HEAD_AUDIT_USER_FLOW = #{record.headAuditUserFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="record.headAuditUserName != null" >
+                HEAD_AUDIT_USER_NAME = #{record.headAuditUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.headAuditStatusId != null" >
+                HEAD_AUDIT_STATUS_ID = #{record.headAuditStatusId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.headAuditStatusName != null" >
+                HEAD_AUDIT_STATUS_NAME = #{record.headAuditStatusName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.recordStatus != null" >
+                RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null" >
+                CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createUserFlow != null" >
+                CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="record.modifyTime != null" >
+                MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.modifyUserFlow != null" >
+                MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="record.managerAuditTime != null" >
+                MANAGER_AUDIT_TIME = #{record.managerAuditTime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.managerAuditUserFlow != null" >
+                MANAGER_AUDIT_USER_FLOW = #{record.managerAuditUserFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="record.managerAuditUserName != null" >
+                MANAGER_AUDIT_USER_NAME = #{record.managerAuditUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.managerAuditStatusId != null" >
+                MANAGER_AUDIT_STATUS_ID = #{record.managerAuditStatusId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.managerAuditStatusName != null" >
+                MANAGER_AUDIT_STATUS_NAME = #{record.managerAuditStatusName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.adminAuditTime != null" >
+                ADMIN_AUDIT_TIME = #{record.adminAuditTime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.adminAuditUserFlow != null" >
+                ADMIN_AUDIT_USER_FLOW = #{record.adminAuditUserFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="record.adminAuditUserName != null" >
+                ADMIN_AUDIT_USER_NAME = #{record.adminAuditUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.adminAuditStatusId != null" >
+                ADMIN_AUDIT_STATUS_ID = #{record.adminAuditStatusId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.adminAuditStatusName != null" >
+                ADMIN_AUDIT_STATUS_NAME = #{record.adminAuditStatusName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.itemId != null" >
+                ITEM_ID = #{record.itemId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.processFlow != null" >
+                PROCESS_FLOW = #{record.processFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="record.recForm != null" >
+                REC_FORM = #{record.recForm,jdbcType=VARCHAR},
+            </if>
+            <if test="record.schRotationDeptFlow != null" >
+                SCH_ROTATION_DEPT_FLOW = #{record.schRotationDeptFlow,jdbcType=VARCHAR},
+            </if>
+            <if test="record.recContent != null" >
+                REC_CONTENT = #{record.recContent,jdbcType=CLOB},
+            </if>
+        </set>
+        WHERE rec_type_id  in
+        <foreach collection="regTypeIds" item="listItem" open="(" close=")" separator="," >
+            #{listItem}
+        </foreach>
+        and record_status='Y' and audit_status_id is null
+        and process_flow in(
+          select process_flow from res_doctor_sch_process
+                  where record_status='Y' and teacher_user_flow=#{userFlow,jdbcType=VARCHAR})
+    </update>
+
+    <update id="oneKeyAuditByOrg" parameterType="string" >
+        UPDATE RES_REC
+        SET AUDIT_TIME        = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
+        AUDIT_USER_FLOW   = (SELECT TEACHER_USER_FLOW
+        FROM RES_DOCTOR_SCH_PROCESS
+        WHERE PROCESS_FLOW = RES_REC.PROCESS_FLOW),
+        AUDIT_USER_NAME   = (SELECT TEACHER_USER_NAME
+        FROM RES_DOCTOR_SCH_PROCESS
+        WHERE PROCESS_FLOW = RES_REC.PROCESS_FLOW),
+        AUDIT_STATUS_ID   = 'TeacherAuditY',
+        AUDIT_STATUS_NAME = '带教老师审核通过',
+        MODIFY_TIME       = TO_CHAR(SYSDATE, 'yyyymmddhh24miss'),
+        MODIFY_USER_FLOW  = #{userFlow,jdbcType=VARCHAR}
+        WHERE RECORD_STATUS = 'Y'
+        AND AUDIT_STATUS_ID IS NULL
+        AND PROCESS_FLOW IS NOT NULL
+        AND OPER_USER_FLOW IN (SELECT DOCTOR_FLOW
+        FROM RES_DOCTOR
+        WHERE RECORD_STATUS = 'Y'
+        AND ORG_FLOW =#{orgFlow,jdbcType=VARCHAR})
+
+    </update>
+
+	<select id="searchEvalFormGradeInfo" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+		SELECT RR.*
+		FROM PDSCI.SYS_USER SU,PDSCI.RES_DOCTOR_SCH_PROCESS RDSP,PDSCI.DEPT_TEACHER_GRADE_INFO RR
+		WHERE SU.RECORD_STATUS = 'Y'
+		AND RDSP.RECORD_STATUS = 'Y'
+		AND RR.RECORD_STATUS = 'Y'
+		AND SU.USER_FLOW = RR.OPER_USER_FLOW
+		AND RDSP.USER_FLOW = RR.OPER_USER_FLOW
+		AND RR.REC_TYPE_ID IN
+		<foreach collection="recTypeIds" close=")" item="recTypeId" open="(" separator=",">
+			#{recTypeId}
+		</foreach>
+		AND RR.PROCESS_FLOW = RDSP.PROCESS_FLOW
+		<if test='process!=null'>
+			<if test='process.teacherUserFlow!=null and process.teacherUserFlow!=""'>
+				AND RDSP.TEACHER_USER_FLOW = #{process.teacherUserFlow}
+			</if>
+			<if test='process.headUserFlow!=null and process.headUserFlow!=""'>
+				AND RDSP.HEAD_USER_FLOW = #{process.headUserFlow}
+			</if>
+			<if test='process.isCurrentFlag!=null and process.isCurrentFlag!=""'>
+				AND RDSP.IS_CURRENT_FLAG = #{process.isCurrentFlag}
+			</if>
+			<if test='process.userFlow!=null and process.userFlow!=""'>
+				AND RDSP.USER_FLOW = #{process.userFlow}
+			</if>
+		</if>
+		<if test='user!=null'>
+			<if test='user.name!=null and user.name!=""'>
+				AND SU.USER_NAME LIKE #{user.name}
+			</if>
+		</if>
+		<if test='roleFlagMap!=null'>
+			<if test='roleFlagMap.year!=null and roleFlagMap.year!=""'>
+				AND RR.OPER_TIME LIKE '${roleFlagMap.year}%'
+			</if>
+			<if test='roleFlagMap.roleFlag!=null and roleFlagMap.roleFlag!=""'>
+				<if test='roleFlagMap.roleFlag=="teacher"'>
+					ORDER BY rr.process_flow,rr.rec_type_id ,rr.modify_time
+				</if>
+				<if test='roleFlagMap.roleFlag=="head"'>
+					<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
+						AND( RR.DEPT_FLOW IN (
+						SELECT SUD.DEPT_FLOW
+						FROM PDSCI.SYS_USER_DEPT SUD
+						WHERE SUD.RECORD_STATUS = 'Y'
+						AND SUD.USER_FLOW = #{roleFlagMap.val}
+						) or rdsp.head_user_flow=#{roleFlagMap.val} )
+					</if>
+					ORDER BY rr.process_flow,rr.rec_type_id ,rr.modify_time
+				</if>
+				<if test='roleFlagMap.roleFlag=="manager"'>
+					<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
+						AND RDSP.USER_FLOW IN (
+						SELECT DOCTOR_FLOW
+						FROM PDSCI.RES_DOCTOR
+						WHERE RECORD_STATUS = 'Y'
+						<if test='roleFlagMap.trainingSpeId!=null and roleFlagMap.trainingSpeId!=""'>
+							AND TRAINING_SPE_ID = #{roleFlagMap.trainingSpeId}
+						</if>
+						<if test='roleFlagMap.trainingSpeId==null or roleFlagMap.trainingSpeId==""'>
+							AND TRAINING_SPE_ID IN (
+							SELECT TRAINING_SPE_ID
+							FROM PDSCI.RES_USER_SPE
+							WHERE RECORD_STATUS = 'Y'
+							AND USER_FLOW = #{roleFlagMap.val}
+							)
+						</if>
+						AND ORG_FLOW IN (
+						SELECT ORG_FLOW
+						FROM PDSCI.SYS_USER
+						WHERE USER_FLOW = #{roleFlagMap.val}
+						)
+						)
+					</if>
+					ORDER BY rr.process_flow,rr.rec_type_id ,rr.modify_time
+				</if>
+				<if test='roleFlagMap.roleFlag=="admin"'>
+					<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
+						AND RR.ORG_FLOW = #{roleFlagMap.val}
+					</if>
+					ORDER BY rr.process_flow,rr.rec_type_id ,rr.modify_time
+				</if>
+			</if>
+		</if>
+	</select>
+
+	<resultMap type="HashMap" id="auditMap">
+		<result property="notAudited" column="not_audited" javaType="String"/>
+		<result property="isNotAudited" column="is_not_audited" javaType="String"/>
+		<result property="teacherUserFlow" column="TEACHER_USER_FLOW" javaType="String"/>
+	</resultMap>
+	<select id="searchAuditedDataList" resultMap="auditMap">
+		select
+			count(case when audit_status_id is null then 1 else null end) AS not_audited,
+			count(case when audit_status_id is not null then 1 else null end) as is_not_audited,
+			p.TEACHER_USER_FLOW
+		from RES_REC rr
+		join res_doctor_sch_process p
+		on rr.process_flow=p.process_flow
+		inner join (select * from (
+		   <foreach collection="teacherUserFlows" item="partsNo" separator="union">
+				SELECT #{partsNo,jdbcType=VARCHAR} TEACHER_USER_FLOW FROM DUAL
+		   </foreach>))T1 on p.TEACHER_USER_FLOW = T1.TEACHER_USER_FLOW
+		join res_doctor rd
+		on rr.oper_user_flow = rd.doctor_flow
+		where rr.RECORD_STATUS = 'Y'
+		<if test="startDate!=null and startDate!=''">
+			and rr.OPER_TIME<![CDATA[>=]]>#{startDate}
+		</if>
+		<if test="endDate!=null and endDate!=''">
+			and rr.OPER_TIME<![CDATA[<=]]>#{endDate}
+		</if>
+		and rr.rec_type_id in ('CaseRegistry','DiseaseRegistry','SkillRegistry','OperationRegistry','CampaignRegistry')
+		and p.record_status='Y'
+		and rd.record_status='Y'
+		<if test="typeList!=null and typeList.size()>0">
+			and rd.doctor_Type_Id in
+			<foreach collection="typeList" item="item" open="(" close=")" separator="," >
+				#{item}
+			</foreach>
+		</if>
+		<if test="workOrgId != null and workOrgId != ''">
+			and rd.work_org_id = #{workOrgId}
+		</if>
+		<if test="teacherUserFlows != null and teacherUserFlows.size() > 0">
+			<!--<choose>
+				<when test="teacherUserFlows.size() >= 1000">
+					AND EXISTS(
+						SELECT
+							1
+						FROM
+							sys_user su
+						WHERE
+							su.user_flow = p.TEACHER_USER_FLOW
+						AND	su.record_status = 'Y'
+						AND su.IS_EXAM_TEA IS NULL
+					<if test='orgFlowList != null and orgFlowList.size > 0'>
+						and su.ORG_FLOW in
+						<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+					</if>
+					<if test="orgFlow != null and orgFlow != ''">
+						and su.org_flow = #{orgFlow}
+					</if>
+					AND EXISTS (
+						SELECT
+							1
+						FROM
+							sys_user_role sur
+						WHERE
+							sur.user_flow = su.user_flow
+						AND sur.record_status = 'Y'
+						<if test='roleFlow != null and roleFlow != ""'>
+							and sur.ROLE_FLOW = #{roleFlow}
+						</if>
+					)
+					AND NOT EXISTS (
+						SELECT
+							1
+						FROM
+							res_doctor rd
+						WHERE
+							su.user_flow = rd.doctor_flow
+						AND rd.RECORD_STATUS = 'Y'
+					)
+					<if test="sysUser != null">
+						<if test='sysUser.deptFlow != null and sysUser.deptFlow != "" '>
+							and su.DEPT_FLOW = #{sysUser.deptFlow}
+						</if>
+						<if test='sysUser.userName != null and sysUser.userName != ""'>
+							<bind name="userName" value="'%' + sysUser.userName + '%'"/>
+							and su.USER_NAME like #{userName}
+						</if>
+					</if>
+					)
+				</when>
+				<otherwise>
+					and p.TEACHER_USER_FLOW in
+					<foreach collection="teacherUserFlows" item="item" open="(" close=")" separator="," >
+						#{item}
+					</foreach>
+				</otherwise>
+			</choose>-->
+		</if>
+		AND (p.SCH_START_DATE <![CDATA[ <= ]]> nvl((select cfg2.power_start_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '0000-00-00')
+		AND p.SCH_END_DATE >= nvl((select cfg2.power_end_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '9999-99-99')
+		OR p.SCH_START_DATE >= nvl((select cfg2.power_start_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '0000-00-00')
+		AND p.SCH_START_DATE <![CDATA[ <= ]]> nvl((select cfg2.power_end_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '9999-99-99')
+		OR p.SCH_END_DATE >= nvl((select cfg2.power_start_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '0000-00-00')
+		AND p.SCH_END_DATE <![CDATA[ <= ]]> nvl((select cfg2.power_end_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '9999-99-99'))
+		and  nvl(( select
+		CFG_VALUE
+		FROM jsres_power_cfg cfg
+		WHERE cfg.record_status = 'Y'
+		AND cfg.cfg_code = ('jsres_doctor_app_menu_' || rd.doctor_flow))
+		, 'N') = 'Y'
+		group by p.TEACHER_USER_FLOW
+	</select>
+
+	<resultMap type="HashMap" id="auditMapByOper">
+		<result property="notAudited" column="not_audited" javaType="String"/>
+		<result property="isNotAudited" column="is_not_audited" javaType="String"/>
+		<result property="teacherUserFlow" column="TEACHER_USER_FLOW" javaType="String"/>
+		<result property="operUserName" column="oper_user_name" javaType="String"/>
+	</resultMap>
+	<select id="searchAuditedDataListByOper" resultMap="auditMapByOper">
+		select
+		count(case when audit_status_id is null then 1 else null end) AS not_audited,
+		count(case when audit_status_id is not null then 1 else null end) as is_not_audited,
+		p.TEACHER_USER_FLOW,
+		rr.oper_user_name
+		from RES_REC rr
+		join res_doctor_sch_process p
+		on rr.process_flow=p.process_flow
+		inner join (select * from (
+		<foreach collection="teacherUserFlows" item="partsNo" separator="union">
+			SELECT #{partsNo,jdbcType=VARCHAR} TEACHER_USER_FLOW FROM DUAL
+		</foreach>))T1 on p.TEACHER_USER_FLOW = T1.TEACHER_USER_FLOW
+		join res_doctor rd
+		on rr.oper_user_flow = rd.doctor_flow
+		where rr.RECORD_STATUS = 'Y'
+		<if test="startDate!=null and startDate!=''">
+			and rr.OPER_TIME<![CDATA[>=]]>#{startDate}
+		</if>
+		<if test="endDate!=null and endDate!=''">
+			and rr.OPER_TIME<![CDATA[<=]]>#{endDate}
+		</if>
+		and rr.rec_type_id in ('CaseRegistry','DiseaseRegistry','SkillRegistry','OperationRegistry','CampaignRegistry')
+		and p.record_status='Y'
+		and rd.record_status='Y'
+		<if test="typeList!=null and typeList.size()>0">
+			and rd.doctor_Type_Id in
+			<foreach collection="typeList" item="item" open="(" close=")" separator="," >
+				#{item}
+			</foreach>
+		</if>
+		<if test="workOrgId != null and workOrgId != ''">
+			and rd.work_org_id = #{workOrgId}
+		</if>
+		AND (p.SCH_START_DATE <![CDATA[ <= ]]> nvl((select cfg2.power_start_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '0000-00-00')
+		AND p.SCH_END_DATE >= nvl((select cfg2.power_end_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '9999-99-99')
+		OR p.SCH_START_DATE >= nvl((select cfg2.power_start_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '0000-00-00')
+		AND p.SCH_START_DATE <![CDATA[ <= ]]> nvl((select cfg2.power_end_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '9999-99-99')
+		OR p.SCH_END_DATE >= nvl((select cfg2.power_start_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '0000-00-00')
+		AND p.SCH_END_DATE <![CDATA[ <= ]]> nvl((select cfg2.power_end_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
+		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)
+		), '9999-99-99'))
+		and  nvl(( select
+		CFG_VALUE
+		FROM jsres_power_cfg cfg
+		WHERE cfg.record_status = 'Y'
+		AND cfg.cfg_code = ('jsres_doctor_app_menu_' || rd.doctor_flow))
+		, 'N') = 'Y'
+		group by p.TEACHER_USER_FLOW,rr.oper_user_name
+	</select>
+
+	<select id="searchRecAndActivityByProcess" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.ResRecExample" >
+		select * from (
+		SELECT
+		distinct '1' QUERY_TYPE, INFO.ACTIVITY_FLOW REC_FLOW,INFO.ACTIVITY_NAME SCH_DEPT_NAME,SU.USER_NAME  AUDIT_USER_NAME,
+		INFO.ACTIVITY_TYPE_NAME REC_TYPE_NAME,INFO.ACTIVITY_REMARK REC_FORM ,SUBSTR (info.start_time, 0, 10) AS CREATE_TIME,
+		'' ORG_FLOW, '' ORG_NAME, '' DEPT_FLOW, '' DEPT_NAME, '' SCH_DEPT_FLOW,
+		'' REC_TYPE_ID, '' ITEM_NAME, ''  REC_VERSION, ''  OPER_USER_FLOW, ''  OPER_USER_NAME, ''
+		STATUS_ID, ''  STATUS_NAME, ''  AUDIT_TIME, ''  AUDIT_USER_FLOW,  ''  AUDIT_STATUS_ID, ''
+		AUDIT_STATUS_NAME, ''  HEAD_AUDIT_TIME, ''  HEAD_AUDIT_USER_FLOW, ''  HEAD_AUDIT_USER_NAME, ''  HEAD_AUDIT_STATUS_ID, ''
+		HEAD_AUDIT_STATUS_NAME, ''  RECORD_STATUS, '' OPER_TIME, ''  CREATE_USER_FLOW, ''  MODIFY_TIME, ''
+		MODIFY_USER_FLOW, ''  MANAGER_AUDIT_TIME, ''  MANAGER_AUDIT_USER_FLOW, ''  MANAGER_AUDIT_USER_NAME, ''
+		MANAGER_AUDIT_STATUS_ID, ''  MANAGER_AUDIT_STATUS_NAME, ''  ADMIN_AUDIT_TIME, ''  ADMIN_AUDIT_USER_FLOW, ''
+		ADMIN_AUDIT_USER_NAME, ''  ADMIN_AUDIT_STATUS_ID, ''  ADMIN_AUDIT_STATUS_NAME, ''  ITEM_ID, ''  PROCESS_FLOW,
+		'' SCH_ROTATION_DEPT_FLOW, ''  MEDICINE_TYPE,'' REC_CONTENT
+		FROM
+		TEACHING_ACTIVITY_RESULT R
+		LEFT JOIN TEACHING_ACTIVITY_INFO INFO ON R.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+		LEFT JOIN SCH_ARRANGE_RESULT SAR ON R.USER_FLOW = SAR.DOCTOR_FLOW
+		LEFT JOIN SCH_ROTATION_DEPT SRD ON SAR.STANDARD_GROUP_FLOW = SRD.GROUP_FLOW
+		AND SAR.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID
+		LEFT JOIN SYS_USER SU ON SU.USER_FLOW = INFO.SPEAKER_FLOW
+		WHERE
+		R.RECORD_STATUS = 'Y'
+		AND SRD.RECORD_STATUS = 'Y'
+		AND INFO.RECORD_STATUS = 'Y'
+		AND SAR.RECORD_STATUS = 'Y'
+		AND INFO.IS_EFFECTIVE = 'Y'
+		AND R.IS_EFFECTIVE = 'Y'
+		AND R.USER_FLOW = #{doctorFlow}
+		<if test="schRotationDeptFlow !=null and schRotationDeptFlow!=''">
+			AND RECORD_FLOW = #{schRotationDeptFlow}
+		</if>
+		<if test="processFlow !=null and processFlow!=''">
+			and SAR.result_flow in ( select sch_result_flow  from res_doctor_sch_process rsp where  process_flow=#{processFlow} )
+		</if>
+		AND ((SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.start_time, 0, 10) AND
+		SAR.SCH_END_DATE >= substr(info.end_time, 0, 10)) or
+		(SAR.SCH_START_DATE >= substr(info.start_time, 0, 10) AND
+		SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)) or
+		(SAR.SCH_END_DATE >= substr(info.start_time, 0, 10) AND
+		SAR.SCH_END_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)))
+		union all
+		select
+		'2' QUERY_TYPE,REC_FLOW, SCH_DEPT_NAME,AUDIT_USER_NAME,REC_TYPE_NAME,REC_FORM,CREATE_TIME,
+		ORG_FLOW, ORG_NAME, DEPT_FLOW, DEPT_NAME, SCH_DEPT_FLOW,
+		REC_TYPE_ID,  ITEM_NAME, REC_VERSION,  OPER_USER_FLOW, OPER_USER_NAME,
+		STATUS_ID, STATUS_NAME, AUDIT_TIME, AUDIT_USER_FLOW,  AUDIT_STATUS_ID,
+		AUDIT_STATUS_NAME, HEAD_AUDIT_TIME, HEAD_AUDIT_USER_FLOW, HEAD_AUDIT_USER_NAME, HEAD_AUDIT_STATUS_ID,
+		HEAD_AUDIT_STATUS_NAME, RECORD_STATUS, OPER_TIME, CREATE_USER_FLOW, MODIFY_TIME,
+		MODIFY_USER_FLOW, MANAGER_AUDIT_TIME, MANAGER_AUDIT_USER_FLOW, MANAGER_AUDIT_USER_NAME,
+		MANAGER_AUDIT_STATUS_ID, MANAGER_AUDIT_STATUS_NAME, ADMIN_AUDIT_TIME, ADMIN_AUDIT_USER_FLOW,
+		ADMIN_AUDIT_USER_NAME, ADMIN_AUDIT_STATUS_ID, ADMIN_AUDIT_STATUS_NAME, ITEM_ID, PROCESS_FLOW,
+		SCH_ROTATION_DEPT_FLOW, MEDICINE_TYPE,to_char(REC_CONTENT) REC_CONTENT
+		from PDSCI.RES_REC_CAMPAIGN_REGISTRY
+		WHERE RECORD_STATUS = 'Y'
+		AND REC_TYPE_ID = #{recTypeId}
+		<if test="schRotationDeptFlow !=null and schRotationDeptFlow!=''">
+			AND SCH_ROTATION_DEPT_FLOW = #{schRotationDeptFlow}
+		</if>
+		<if test="processFlow !=null and processFlow!=''">
+			AND PROCESS_FLOW = #{processFlow}
+		</if>
+
+		AND OPER_USER_FLOW = #{doctorFlow}
+		) ORDER BY QUERY_TYPE,CREATE_TIME,REC_FLOW
+	</select>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>	
+	<!-- 大病历登记表单 -->
+	<!-- 
+	{0}:表单所属机构(开关控制)
+	{1}:版本号
+ -->
+	<jsp path="res/form/{3}/{0}/grave_{1}"></jsp>
+	<product ver="1.0">
+		<page  ver="1.0">
+			<item name="dept" isView="0" remark="科室" multiple="N"></item>
+			<item name="time" isView="0" remark="时间" multiple="N"></item>
+			<item name="name" isView="0" remark="姓名" multiple="N"></item>
+			<item name="caseNo" isView="0" remark="病例号" multiple="N"></item>
+		</page>
+	</product>
+	<njykdxsxs ver="1.0">
+		<page  ver="1.0">
+			<item name="dept" isView="0" remark="科室" multiple="N"></item>
+			<item name="time" isView="1" remark="时间" multiple="N"></item>
+			<item name="caseName" isView="2" remark="病名" multiple="N"></item>
+			<item name="caseNo" isView="3" remark="病例号" multiple="N"></item>
+		</page>
+	</njykdxsxs>
+	<sczyfy ver="1.0">
+		<page  ver="1.0">
+			<item name="time" isView="0" remark="时间" multiple="N"></item>
+			<item name="name" isView="0" remark="姓名" multiple="N"></item>
+			<item name="caseNo" isView="0" remark="病历号" multiple="N"></item>
+			<item name="explain" isView="0" remark="诊断说明" multiple="N"></item>
+		</page>
+	</sczyfy>
+	<shdfyy ver="1.0">
+		<page ver="1.0">
+			<item name="date" isView="0" remark="日期" multiple="N"></item>
+			<item name="patientName" isView="1" remark="病人姓名" multiple="N"></item>
+			<item name="cardNo" isView="2" remark="病历号" multiple="N"></item>
+			<item name="diseaseName" isView="3" remark="疾病名称" multiple="N"></item>
+			<item name="prognosis" isView="4" remark="转归情况" multiple="N"></item>
+			<item name="higherDoctor" isView="5" remark="上级医师" multiple="N"></item>
+		</page>
+	</shdfyy>
+</jspForm>
+

@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>	
+	<!-- 迷你临床演练评估 -->
+	<!-- 
+	{0}:表单所属机构(开关控制)
+	{1}:版本号
+ -->
+	<jsp path="res/form/{3}/{0}/mini_cex_{1}"></jsp>
+	<product ver="1.0">
+		<page  ver="1.0">
+			<item name="studentName" remark="学生姓名" multiple="N"></item>
+			<item name="grade" remark="年级" multiple="N"></item>
+			<item name="professional" remark="专业" multiple="N"></item>
+			<item name="studentType" remark="学生类型" multiple="N"></item>
+			<item name="teacherType" remark="教师类型" multiple="N"></item>
+			<item name="assessmentDate" remark="评估日期" multiple="N"></item>
+			<item name="assessmentPlace" remark="评估地点" multiple="N"></item>
+			<item name="patientName" remark="病人姓名" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+			<item name="sex" remark="性别" multiple="N"></item>
+			<item name="patientSource" remark="病人来源" multiple="N"></item>
+			<item name="diagnosis" remark="诊断" multiple="N"></item>
+			<item name="severity" remark="严重程度" multiple="N"></item>
+			<item name="diagnosisKeynote" remark="诊断重点" multiple="N"></item>
+			<item name="medicalInterview" remark="医疗面谈" multiple="N"></item>
+			<item name="physicalExamination" remark="体格检查" multiple="N"></item>
+			<item name="humanisticCare" remark="人文关怀" multiple="N"></item>
+			<item name="clinicalJudgment" remark="临床判断" multiple="N"></item>
+			<item name="communicationSkills" remark="沟通技能" multiple="N"></item>
+			<item name="organization" remark="组织效能" multiple="N"></item>
+			<item name="holisticCare" remark="整体关怀" multiple="N"></item>
+			<item name="observationTime" remark="观察时间" multiple="N"></item>
+			<item name="feedbackTime" remark="反馈时间" multiple="N"></item>
+			<item name="degreeSatisfaction" remark="满意程度" multiple="N"></item>
+			<item name="teacherComment" remark="教师评语" multiple="N"></item>
+			<item name="studentDegreeSatisfaction" remark="学员满意程度" multiple="N"></item>
+			<item name="teacherSign" remark="教师签字" multiple="N"></item>
+			<item name="studentSign" remark="学员签字" multiple="N"></item>
+			<item name="ZongHe" remark="总和" multiple="N"></item> 
+		</page>
+	</product>
+	<nfykdxpt ver="1.0">
+		<page ver="1.0">
+			<item name="studentName" remark="学生姓名" multiple="N"></item>
+			<item name="grade" remark="年级" multiple="N"></item>
+			<item name="professional" remark="专业" multiple="N"></item>
+			<item name="studentType" remark="学生类型" multiple="N"></item>
+			<item name="teacherType" remark="教师类型" multiple="N"></item>
+			<item name="assessmentDate" remark="评估日期" multiple="N"></item>
+			<item name="assessmentPlace" remark="评估地点" multiple="N"></item>
+			<item name="patientName" remark="病人姓名" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+			<item name="sex" remark="性别" multiple="N"></item>
+			<item name="patientSource" remark="病人来源" multiple="N"></item>
+			<item name="diagnosis" remark="诊断" multiple="N"></item>
+			<item name="severity" remark="严重程度" multiple="N"></item>
+			<item name="diagnosisKeynote" remark="诊断重点" multiple="N"></item>
+			<item name="medicalInterview" remark="医疗面谈" multiple="N"></item>
+			<item name="physicalExamination" remark="体格检查" multiple="N"></item>
+			<item name="humanisticCare" remark="人文关怀" multiple="N"></item>
+			<item name="clinicalJudgment" remark="临床判断" multiple="N"></item>
+			<item name="communicationSkills" remark="沟通技能" multiple="N"></item>
+			<item name="organization" remark="组织效能" multiple="N"></item>
+			<item name="holisticCare" remark="整体关怀" multiple="N"></item>
+			<item name="observationTime" remark="观察时间" multiple="N"></item>
+			<item name="feedbackTime" remark="反馈时间" multiple="N"></item>
+			<item name="degreeSatisfaction" remark="满意程度" multiple="N"></item>
+			<item name="teacherComment" remark="教师评语" multiple="N"></item>
+			<item name="studentDegreeSatisfaction" remark="学员满意程度" multiple="N"></item>
+			<item name="teacherSign" remark="教师签字" multiple="N"></item>
+			<item name="studentSign" remark="学员签字" multiple="N"></item>
+			<item name="ZongHe" remark="总和" multiple="N"></item> 
+		</page>
+	</nfykdxpt>
+	<hbszyysgfhpxglpt ver="1.0">
+		<page  ver="1.0">
+			<item name="studentName" remark="学生姓名" multiple="N"></item>
+			<item name="grade" remark="年级" multiple="N"></item>
+			<item name="professional" remark="专业" multiple="N"></item>
+			<item name="studentType" remark="学生类型" multiple="N"></item>
+			<item name="teacherType" remark="教师类型" multiple="N"></item>
+			<item name="assessmentDate" remark="评估日期" multiple="N"></item>
+			<item name="assessmentPlace" remark="评估地点" multiple="N"></item>
+			<item name="patientName" remark="病人姓名" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+			<item name="sex" remark="性别" multiple="N"></item>
+			<item name="patientSource" remark="病人来源" multiple="N"></item>
+			<item name="patientSourceType" remark="病人类型" multiple="N"></item>
+			<item name="diagnosis" remark="诊断" multiple="N"></item>
+			<item name="severity" remark="严重程度" multiple="N"></item>
+			<item name="diagnosisKeynote" remark="诊断重点" multiple="N"></item>
+			<item name="medicalInterview" remark="医疗面谈" multiple="N"></item>
+			<item name="physicalExamination" remark="体格检查" multiple="N"></item>
+			<item name="humanisticCare" remark="人文关怀" multiple="N"></item>
+			<item name="clinicalJudgment" remark="临床判断" multiple="N"></item>
+			<item name="communicationSkills" remark="沟通技能" multiple="N"></item>
+			<item name="organization" remark="组织效能" multiple="N"></item>
+			<item name="holisticCare" remark="整体关怀" multiple="N"></item>
+			<item name="observationTime" remark="观察时间" multiple="N"></item>
+			<item name="feedbackTime" remark="反馈时间" multiple="N"></item>
+			<item name="degreeSatisfaction" remark="满意程度" multiple="N"></item>
+			<item name="teacherComment" remark="教师评语" multiple="N"></item>
+			<item name="studentDegreeSatisfaction" remark="学员满意程度" multiple="N"></item>
+			<item name="teacherSign" remark="教师签字" multiple="N"></item>
+			<item name="studentSign" remark="学员签字" multiple="N"></item>
+			<item name="ZongHe" remark="总和" multiple="N"></item>
+		</page>
+	</hbszyysgfhpxglpt>
+	<sczyfy ver="1.0">
+		<page  ver="1.0">
+			<item name="studentName" remark="学生姓名" multiple="N"></item>
+			<item name="grade" remark="年级" multiple="N"></item>
+			<item name="professional" remark="专业" multiple="N"></item>
+			<item name="studentType" remark="学生类型" multiple="N"></item>
+			<item name="teacherType" remark="教师类型" multiple="N"></item>
+			<item name="assessmentDate" remark="评估日期" multiple="N"></item>
+			<item name="assessmentPlace" remark="评估地点" multiple="N"></item>
+			<item name="patientName" remark="病人姓名" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+			<item name="sex" remark="性别" multiple="N"></item>
+			<item name="patientSource" remark="病人来源" multiple="N"></item>
+			<item name="patientSourceType" remark="病人类型" multiple="N"></item>
+			<item name="diagnosis" remark="诊断" multiple="N"></item>
+			<item name="severity" remark="严重程度" multiple="N"></item>
+			<item name="diagnosisKeynote" remark="诊断重点" multiple="N"></item>
+			<item name="medicalInterview" remark="医疗面谈" multiple="N"></item>
+			<item name="physicalExamination" remark="体格检查" multiple="N"></item>
+			<item name="humanisticCare" remark="人文关怀" multiple="N"></item>
+			<item name="clinicalJudgment" remark="临床判断" multiple="N"></item>
+			<item name="communicationSkills" remark="沟通技能" multiple="N"></item>
+			<item name="organization" remark="组织效能" multiple="N"></item>
+			<item name="holisticCare" remark="整体关怀" multiple="N"></item>
+			<item name="observationTime" remark="观察时间" multiple="N"></item>
+			<item name="feedbackTime" remark="反馈时间" multiple="N"></item>
+			<item name="degreeSatisfaction" remark="满意程度" multiple="N"></item>
+			<item name="teacherComment" remark="教师评语" multiple="N"></item>
+			<item name="studentDegreeSatisfaction" remark="学员满意程度" multiple="N"></item>
+			<item name="teacherSign" remark="教师签字" multiple="N"></item>
+			<item name="studentSign" remark="学员签字" multiple="N"></item>
+			<item name="ZongHe" remark="总和" multiple="N"></item>
+		</page>
+	</sczyfy>
+	<zsey ver="1.0">
+		<page  ver="1.0">
+			<item name="studentName" remark="学生姓名" multiple="N"></item>
+			<item name="grade" remark="年级" multiple="N"></item>
+			<item name="professional" remark="专业" multiple="N"></item>
+			<item name="studentType" remark="学生类型" multiple="N"></item>
+			<item name="teacherType" remark="教师类型" multiple="N"></item>
+			<item name="assessmentDate" remark="评估日期" multiple="N"></item>
+			<item name="assessmentPlace" remark="评估地点" multiple="N"></item>
+			<item name="patientName" remark="病人姓名" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+			<item name="sex" remark="性别" multiple="N"></item>
+			<item name="patientSource" remark="病人来源" multiple="N"></item>
+			<item name="patientSourceType" remark="病人类型" multiple="N"></item>
+			<item name="diagnosis" remark="诊断" multiple="N"></item>
+			<item name="severity" remark="严重程度" multiple="N"></item>
+			<item name="diagnosisKeynote" remark="诊断重点" multiple="N"></item>
+			<item name="medicalInterview" remark="医疗面谈" multiple="N"></item>
+			<item name="physicalExamination" remark="体格检查" multiple="N"></item>
+			<item name="humanisticCare" remark="人文关怀" multiple="N"></item>
+			<item name="clinicalJudgment" remark="临床判断" multiple="N"></item>
+			<item name="communicationSkills" remark="沟通技能" multiple="N"></item>
+			<item name="organization" remark="组织效能" multiple="N"></item>
+			<item name="holisticCare" remark="整体关怀" multiple="N"></item>
+			<item name="observationTime" remark="观察时间" multiple="N"></item>
+			<item name="feedbackTime" remark="反馈时间" multiple="N"></item>
+			<item name="degreeSatisfaction" remark="满意程度" multiple="N"></item>
+			<item name="teacherComment" remark="教师评语" multiple="N"></item>
+			<item name="studentDegreeSatisfaction" remark="学员满意程度" multiple="N"></item>
+			<item name="teacherSign" remark="教师签字" multiple="N"></item>
+			<item name="studentSign" remark="学员签字" multiple="N"></item>
+			<item name="ZongHe" remark="总和" multiple="N"></item>
+		</page>
+	</zsey>
+	<jszy ver="1.0">
+		<page  ver="1.0">
+			<item name="studentName" remark="学生姓名" multiple="N"></item>
+			<item name="grade" remark="年级" multiple="N"></item>
+			<item name="professional" remark="专业" multiple="N"></item>
+			<item name="studentType" remark="学生类型" multiple="N"></item>
+			<item name="teacherType" remark="教师类型" multiple="N"></item>
+			<item name="assessmentDate" remark="评估日期" multiple="N"></item>
+			<item name="assessmentPlace" remark="评估地点" multiple="N"></item>
+			<item name="patientName" remark="病人姓名" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+			<item name="sex" remark="性别" multiple="N"></item>
+			<item name="patientSource" remark="病人来源" multiple="N"></item>
+			<item name="patientSourceType" remark="病人来源" multiple="N"></item>
+			<item name="diagnosis" remark="诊断" multiple="N"></item>
+			<item name="severity" remark="严重程度" multiple="N"></item>
+			<item name="diagnosisKeynote" remark="诊断重点" multiple="N"></item>
+			<item name="medicalInterview" remark="医疗面谈" multiple="N"></item>
+			<item name="physicalExamination" remark="体格检查" multiple="N"></item>
+			<item name="humanisticCare" remark="人文关怀" multiple="N"></item>
+			<item name="clinicalJudgment" remark="临床判断" multiple="N"></item>
+			<item name="communicationSkills" remark="沟通技能" multiple="N"></item>
+			<item name="organization" remark="组织效能" multiple="N"></item>
+			<item name="holisticCare" remark="整体关怀" multiple="N"></item>
+			<item name="observationTime" remark="观察时间" multiple="N"></item>
+			<item name="feedbackTime" remark="反馈时间" multiple="N"></item>
+			<item name="degreeSatisfaction" remark="满意程度" multiple="N"></item>
+			<item name="teacherComment" remark="教师评语" multiple="N"></item>
+			<item name="studentDegreeSatisfaction" remark="学员满意程度" multiple="N"></item>
+			<item name="teacherSign" remark="教师签字" multiple="N"></item>
+			<item name="studentSign" remark="学员签字" multiple="N"></item>
+			<item name="ZongHe" remark="总和" multiple="N"></item>
+			<item name="headFlow" remark="科主任" multiple="N"></item>
+			<item name="teaFlow" remark="带教老师" multiple="N"></item>
+		</page>
+	</jszy>
+	<dgdhyy ver="1.0">
+		<page  ver="1.0">
+			<item name="teacher" remark="教师" multiple="N"></item>
+			<item name="titleName" remark="教师职称" multiple="N"></item>
+			<item name="doctor" remark="姓名" multiple="N"></item>
+			<item name="spe" remark="专业" multiple="N"></item>
+			<item name="workNumber" remark="工号" multiple="N"></item>
+			<item name="doctorType" remark="人员类型" multiple="N"></item>
+			<item name="year" remark="第几年" multiple="N"></item>
+			<item name="trainType" remark="培养类型" multiple="N"></item>
+			<item name="patientDesc" remark="病人诊断" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+			<item name="sex" remark="性别" multiple="N"></item>
+			<item name="time" remark="初复诊" multiple="N"></item>
+			<item name="assessTime" remark="评估时间" multiple="N"></item>
+			<item name="assessPlace" remark="评估地点" multiple="N"></item>
+			<item name="bscj" remark="病史采集" multiple="N"></item>
+			<item name="zd" remark="诊断" multiple="N"></item>
+			<item name="treat" remark="治疗" multiple="N"></item>
+			<item name="jkxj" remark="健康宣教" multiple="N"></item>
+			<item name="bscjProj" remark="病史采集" multiple="N"></item>
+			<item name="bscjProjFlag" select="Y" remark="评估标识" multiple="N"></item>
+			<item name="tgjc" remark="体格检查" multiple="N"></item>
+			<item name="tgjcFlag" select="Y" remark="评估标识" multiple="N"></item>
+			<item name="yhgt" remark="医患沟通" multiple="N"></item>
+			<item name="yhgtFlag" select="Y" remark="评估标识" multiple="N"></item>
+			<item name="lcpd" remark="临床判断" multiple="N"></item>
+			<item name="lcpdFlag" select="Y" remark="评估标识" multiple="N"></item>
+			<item name="zysy" remark="专业素养" multiple="N"></item>
+			<item name="zysyFlag" select="Y" remark="评估标识" multiple="N"></item>
+			<item name="zzxn" remark="组织效能" multiple="N"></item>
+			<item name="zzxnFlag" select="Y" remark="评估标识" multiple="N"></item>
+			<item name="ztbx" remark="整体表现" multiple="N"></item>
+			<item name="ztbxFlag" select="Y" remark="评估标识" multiple="N"></item>
+			<item name="seeTime" remark="观察时间" multiple="N"></item>
+			<item name="backTime" remark="反馈时间" multiple="N"></item>
+			<item name="teacherFeel" remark="教师对测评满意度" multiple="N"></item>
+			<item name="doctorFeel" remark="学员对测评满意度" multiple="N"></item>
+			<item name="bxlhxm" remark="表现良好项目" multiple="N"></item>
+			<item name="jyjqxm" remark="建议加强项目" multiple="N"></item>
+		</page>
+	</dgdhyy>
+	<shfx ver="1.0">
+		<page  ver="1.0">
+			<item name="studentName" remark="学生姓名" multiple="N"></item>
+			<item name="stuLevel" remark="级别" multiple="N"></item>
+			<item name="stuSid" remark="学号/工号" multiple="N"></item>
+			<item name="grade" remark="年级" multiple="N"></item>
+			<item name="professional" remark="专业" multiple="N"></item>
+			<item name="studentType" remark="学生类型" multiple="N"></item>
+			<item name="teacherType" remark="教师类型" multiple="N"></item>
+			<item name="assessmentDate" remark="评估日期" multiple="N"></item>
+			<item name="assessmentPlace" remark="评估地点" multiple="N"></item>
+			<item name="assessmentDate" remark="考核教师" multiple="N"></item>
+			<item name="patientName" remark="病人姓名" multiple="N"></item>
+			<item name="age" remark="年龄" multiple="N"></item>
+			<item name="sex" remark="性别" multiple="N"></item>
+			<item name="deptName" remark="科室" multiple="N"></item>
+			<item name="qutpatientNum" remark="住院号/门诊号" multiple="N"></item>
+			<item name="patientSource" remark="病人来源" multiple="N"></item>
+			<item name="patientSourceType" remark="病人类型" multiple="N"></item>
+			<item name="patientConsent" remark="已获得病人(或家属)的同意" multiple="N"></item>
+			<item name="diagnosis" remark="诊断" multiple="N"></item>
+			<item name="severity" remark="严重程度" multiple="N"></item>
+			<item name="diagnosisKeynote" remark="诊断重点" multiple="N"></item>
+			<item name="medicalInterview" remark="医疗面谈" multiple="N"></item>
+			<item name="physicalExamination" remark="体格检查" multiple="N"></item>
+			<item name="humanisticCare" remark="人文关怀" multiple="N"></item>
+			<item name="clinicalJudgment" remark="临床判断" multiple="N"></item>
+			<item name="communicationSkills" remark="沟通技能" multiple="N"></item>
+			<item name="organization" remark="组织效能" multiple="N"></item>
+			<item name="holisticCare" remark="整体关怀" multiple="N"></item>
+			<item name="observationTime" remark="观察时间" multiple="N"></item>
+			<item name="feedbackTime" remark="反馈时间" multiple="N"></item>
+			<item name="degreeSatisfaction" remark="满意程度" multiple="N"></item>
+			<item name="teacherComment" remark="教师评语" multiple="N"></item>
+			<item name="doctorComment" remark="学生改进计划" multiple="N"></item>
+			<item name="studentDegreeSatisfaction" remark="学员满意程度" multiple="N"></item>
+			<item name="assessmentTea" remark="考核教师" multiple="N"></item>
+			<item name="teacherSign" remark="教师签字" multiple="N"></item>
+			<item name="studentSign" remark="学员签字" multiple="N"></item>
+			<item name="ZongHe" remark="总和" multiple="N"></item>
+		</page>
+	</shfx>
+</jspForm>
+

@@ -1,0 +1,684 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.jswjw.ext.DeptTeacherGradeInfoExtMapper" >
+    <resultMap type="HashMap" id="processCountMap">
+        <result  property="key" column="USER_FLOW" javaType="string"/>
+        <result property="value" column="PROCESS_COUNT" javaType="java.math.BigDecimal"/>
+    </resultMap>
+    <resultMap type="HashMap" id="processResRecShMap">
+        <result property="processFlow" column="PROCESS_FLOW" javaType="string"/>
+        <result property="userFlow" column="USER_FLOW" javaType="string"/>
+        <result property="userName" column="USER_NAME" javaType="string"/>
+        <result property="content" column="REC_CONTENT" javaType="string"/>
+    </resultMap>
+    <select id="processRecShMap" resultMap="processResRecShMap">
+        select rdsp.PROCESS_FLOW, rdsp.USER_FLOW,su.USER_NAME,dtgi.REC_CONTENT from RES_DOCTOR_SCH_PROCESS rdsp,DEPT_TEACHER_GRADE_INFO dtgi,SYS_USER su
+        where rdsp.RECORD_STATUS='Y' and dtgi.RECORD_STATUS='Y' and su.RECORD_STATUS='Y'
+        and dtgi.PROCESS_FLOW =rdsp.PROCESS_FLOW
+        and dtgi.OPER_USER_FLOW=rdsp.USER_FLOW
+        and su.USER_FLOW=rdsp.USER_FLOW
+        and dtgi.rec_type_id ='DeptGrade'
+        <if test="deptFlow!=null and deptFlow!=''">
+            and rdsp.DEPT_FLOW=#{deptFlow}
+        </if>
+        <if test="startDate!=null and startDate!=''">
+            and dtgi.OPER_TIME<![CDATA[>=]]>#{startDate}
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            and dtgi.OPER_TIME<![CDATA[<=]]>#{endDate}
+        </if>
+    </select>
+    <select id="processJsresRecShMap" resultMap="processResRecShMap">
+        select rdsp.PROCESS_FLOW, rdsp.USER_FLOW,su.USER_NAME,dtgi.REC_CONTENT from RES_DOCTOR_SCH_PROCESS rdsp,DEPT_TEACHER_GRADE_INFO dtgi,SYS_USER su,jsres_power_cfg cfg
+        where rdsp.RECORD_STATUS='Y' and dtgi.RECORD_STATUS='Y' and su.RECORD_STATUS='Y'
+        and cfg.RECORD_STATUS='Y'
+        AND cfg.cfg_code = ('jsres_doctor_app_menu_' || SU.USER_FLOW)
+        AND CFG.CFG_VALUE='Y'
+        and dtgi.PROCESS_FLOW =rdsp.PROCESS_FLOW
+        and dtgi.OPER_USER_FLOW=rdsp.USER_FLOW
+        and su.USER_FLOW=rdsp.USER_FLOW
+        and dtgi.rec_type_id ='DeptGrade'
+        <if test="deptFlow!=null and deptFlow!=''">
+            and rdsp.DEPT_FLOW=#{deptFlow}
+        </if>
+        <if test="startDate!=null and startDate!=''">
+            and dtgi.OPER_TIME<![CDATA[>=]]>#{startDate}
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            and dtgi.OPER_TIME<![CDATA[<=]]>#{endDate}
+        </if>
+    </select>
+    <select id="searchDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+        select * from DEPT_TEACHER_GRADE_INFO  dtgi
+        where dtgi.RECORD_STATUS='Y'
+        <if test="startDate!=null and startDate!=''">
+            and dtgi.OPER_TIME<![CDATA[>=]]>#{startDate}
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            and dtgi.OPER_TIME<![CDATA[<=]]>#{endDate}
+        </if>
+        and (exists(
+        select NULL
+        from (select p.PROCESS_FLOW PROCESS_FLOW,
+        P.USER_FLOW USER_FLOW ,
+        P.DEPT_FLOW DEPT_FLOW,
+        RD.DOCTOR_TYPE_ID,
+        nvl((select CFG_VALUE from jsres_power_cfg cfg where cfg.record_status='Y' and cfg.cfg_code = 'jsres_doctor_app_menu_'||rd.doctor_flow),'N')APP_MENU_FLAG
+        from res_doctor_sch_process p
+        left join res_doctor rd
+        on p.user_flow = rd.doctor_flow
+        left join sys_user su
+        on su.user_flow = rd.doctor_flow
+        left join sys_user tu
+        on tu.user_flow = p.teacher_user_flow
+        where p.record_status = 'Y'
+        and rd.record_status = 'Y'
+        and su.record_status = 'Y'
+        and tu.record_status = 'Y') A
+        WHERE  A.APP_MENU_FLAG='Y'
+        AND dtgi.PROCESS_FLOW = a.PROCESS_FLOW
+        AND dtgi.OPER_USER_FLOW = a.USER_FLOW
+        <if test="deptFlow!=null and deptFlow!=''">
+            and a.DEPT_FLOW=#{deptFlow}
+        </if>
+        and dtgi.rec_type_id ='DeptGrade'
+        ))
+    </select>
+
+    <select id="searchProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+        select * from DEPT_TEACHER_GRADE_INFO  dtgi
+        where dtgi.RECORD_STATUS='Y'
+        <if test="startDate!=null and startDate!=''">
+            and dtgi.OPER_TIME<![CDATA[>=]]>#{startDate}
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            and dtgi.OPER_TIME<![CDATA[<=]]>#{endDate}
+        </if>
+        and (exists(
+        select null
+        from (select  P.TEACHER_USER_FLOW TEACHER_USER_FLOW,
+        p.PROCESS_FLOW PROCESS_FLOW,
+        su.user_flow user_flow,
+        RD.DOCTOR_TYPE_ID,
+        nvl((select CFG_VALUE from jsres_power_cfg cfg where cfg.record_status='Y' and cfg.cfg_code = 'jsres_doctor_app_menu_'||rd.doctor_flow),'N')APP_MENU_FLAG
+        from res_doctor_sch_process p
+        left join res_doctor rd
+        on p.user_flow = rd.doctor_flow
+        left join sys_user su
+        on su.user_flow = rd.doctor_flow
+        left join sys_user tu
+        on tu.user_flow = p.teacher_user_flow
+        where p.record_status = 'Y'
+        and rd.record_status = 'Y'
+        and su.record_status = 'Y'
+        and tu.record_status = 'Y') A
+        WHERE A.APP_MENU_FLAG='Y'
+        <if test="teacherUserFlow!=null and teacherUserFlow!=''">
+            and a.TEACHER_USER_FLOW=#{teacherUserFlow}
+        </if>
+        and dtgi.PROCESS_FLOW =a.PROCESS_FLOW
+        and dtgi.OPER_USER_FLOW=a.USER_FLOW
+        and dtgi.rec_type_id ='TeacherGrade'
+        ))
+    </select>
+
+    <select id="searchHbresDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+        select * from DEPT_TEACHER_GRADE_INFO  dtgi
+        where dtgi.RECORD_STATUS='Y'
+        <if test="startDate!=null and startDate!=''">
+            and dtgi.OPER_TIME<![CDATA[>=]]>#{startDate}
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            and dtgi.OPER_TIME<![CDATA[<=]]>#{endDate}
+        </if>
+        and (exists(
+        select NULL
+        from (select p.PROCESS_FLOW PROCESS_FLOW,
+        P.USER_FLOW USER_FLOW ,
+        P.DEPT_FLOW DEPT_FLOW,
+        RD.DOCTOR_TYPE_ID,
+        rpc.record_status APP_MENU_FLAG,
+        rpc.POWER_START_TIME,
+        rpc.POWER_end_TIME,
+        p.SCH_START_DATE,
+        p.SCH_END_DATE
+        from res_doctor_sch_process p
+        left join res_doctor rd
+        on p.user_flow = rd.doctor_flow
+        left join sys_user su
+        on su.user_flow = rd.doctor_flow
+        left join sys_user tu
+        on tu.user_flow = p.teacher_user_flow
+        left join RES_POWER_CFG RPC
+        on 'res_doctor_app_login_'|| p.USER_FLOW = RPC.CFG_CODE
+        where p.record_status = 'Y'
+        and rd.record_status = 'Y'
+        and su.record_status = 'Y'
+        and tu.record_status = 'Y') A
+        WHERE  dtgi.PROCESS_FLOW = a.PROCESS_FLOW
+        AND dtgi.OPER_USER_FLOW = a.USER_FLOW
+        <if test="deptFlow!=null and deptFlow!=''">
+            and a.DEPT_FLOW=#{deptFlow}
+        </if>
+        <if test='isOpen!=null and isOpen!="" and isOpen=="Y".toString()'>
+            and (a.POWER_START_TIME BETWEEN a.SCH_START_DATE AND a.SCH_END_DATE
+            OR a.POWER_END_TIME BETWEEN a.SCH_START_DATE AND a.SCH_END_DATE
+            OR a.SCH_START_DATE <![CDATA[>=]]> a.POWER_START_TIME
+            AND a.SCH_END_DATE <![CDATA[<=]]> a.POWER_END_TIME)
+            and a.POWER_START_TIME is not null
+            and a.POWER_END_TIME is not null
+            AND A.APP_MENU_FLAG='Y'
+        </if>
+        and dtgi.rec_type_id ='DeptGrade'
+        ))
+    </select>
+
+    <select id="searchHbresProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+        select *
+        from DEPT_TEACHER_GRADE_INFO  dtgi
+        where dtgi.RECORD_STATUS='Y'
+        <if test="startDate!=null and startDate!=''">
+            and dtgi.OPER_TIME<![CDATA[>=]]>#{startDate}
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            and dtgi.OPER_TIME<![CDATA[<=]]>#{endDate}
+        </if>
+        and (exists(
+        select null
+        from (select  P.TEACHER_USER_FLOW TEACHER_USER_FLOW,
+        p.PROCESS_FLOW PROCESS_FLOW,
+        su.user_flow user_flow,
+        RD.DOCTOR_TYPE_ID,
+        rpc.record_status APP_MENU_FLAG,
+        rpc.POWER_START_TIME,
+        rpc.POWER_end_TIME,
+        p.SCH_START_DATE,
+        p.SCH_END_DATE
+        from res_doctor_sch_process p
+        left join res_doctor rd
+        on p.user_flow = rd.doctor_flow
+        left join sys_user su
+        on su.user_flow = rd.doctor_flow
+        left join sys_user tu
+        on tu.user_flow = p.teacher_user_flow
+        left join RES_POWER_CFG RPC
+        on 'res_doctor_app_login_'||p.USER_FLOW = RPC.CFG_CODE
+        where p.record_status = 'Y'
+        and rd.record_status = 'Y'
+        and su.record_status = 'Y'
+        and tu.record_status = 'Y') A
+        WHERE
+         dtgi.PROCESS_FLOW =a.PROCESS_FLOW
+        and dtgi.OPER_USER_FLOW=a.USER_FLOW
+        <if test="teacherUserFlow!=null and teacherUserFlow!=''">
+            and a.TEACHER_USER_FLOW=#{teacherUserFlow}
+        </if>
+        <if test='isOpen!=null and isOpen!="" and isOpen=="Y".toString()'>
+            and (a.POWER_START_TIME BETWEEN a.SCH_START_DATE AND a.SCH_END_DATE
+            OR a.POWER_END_TIME BETWEEN a.SCH_START_DATE AND a.SCH_END_DATE
+            OR a.SCH_START_DATE <![CDATA[>=]]> a.POWER_START_TIME
+            AND a.SCH_END_DATE <![CDATA[<=]]> a.POWER_END_TIME)
+            and a.POWER_START_TIME is not null
+            and a.POWER_END_TIME is not null
+            AND A.APP_MENU_FLAG='Y'
+        </if>
+        ))
+        and dtgi.rec_type_id ='TeacherGrade'
+    </select>
+
+    <select id="processRecRecTeacherMap" resultMap="processResRecShMap">
+        select rdsp.PROCESS_FLOW, rdsp.USER_FLOW,su.USER_NAME,dtgi.REC_CONTENT from RES_DOCTOR_SCH_PROCESS rdsp,DEPT_TEACHER_GRADE_INFO dtgi,SYS_USER su
+        where rdsp.RECORD_STATUS='Y' and dtgi.RECORD_STATUS='Y' and su.RECORD_STATUS='Y'
+        and dtgi.PROCESS_FLOW =rdsp.PROCESS_FLOW
+        and dtgi.OPER_USER_FLOW=rdsp.USER_FLOW
+        and su.USER_FLOW=rdsp.USER_FLOW
+        and dtgi.rec_type_id ='TeacherGrade'
+        <if test="teacherFlow!=null and teacherFlow!=''">
+            and rdsp.TEACHER_USER_FLOW=#{teacherFlow}
+        </if>
+        <if test="startDate!=null and startDate!=''">
+            and dtgi.OPER_TIME<![CDATA[>=]]>#{startDate}
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            and dtgi.OPER_TIME<![CDATA[<=]]>#{endDate}
+        </if>
+    </select>
+    <select id="processJsresRecRecTeacherMap" resultMap="processResRecShMap">
+        select rdsp.PROCESS_FLOW, rdsp.USER_FLOW,su.USER_NAME,dtgi.REC_CONTENT from RES_DOCTOR_SCH_PROCESS rdsp,DEPT_TEACHER_GRADE_INFO dtgi,SYS_USER su,jsres_power_cfg cfg
+        where rdsp.RECORD_STATUS='Y' and dtgi.RECORD_STATUS='Y' and su.RECORD_STATUS='Y'
+        and dtgi.PROCESS_FLOW =rdsp.PROCESS_FLOW
+        and cfg.RECORD_STATUS='Y'
+        AND cfg.cfg_code = ('jsres_doctor_app_menu_' || SU.USER_FLOW)
+        AND CFG.CFG_VALUE='Y'
+        and dtgi.OPER_USER_FLOW=rdsp.USER_FLOW
+        and su.USER_FLOW=rdsp.USER_FLOW
+        and dtgi.rec_type_id ='TeacherGrade'
+        <if test="teacherFlow!=null and teacherFlow!=''">
+            and rdsp.TEACHER_USER_FLOW=#{teacherFlow}
+        </if>
+        <if test="startDate!=null and startDate!=''">
+            and dtgi.OPER_TIME<![CDATA[>=]]>#{startDate}
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            and dtgi.OPER_TIME<![CDATA[<=]]>#{endDate}
+        </if>
+    </select>
+
+    <resultMap type="HashMap" id="gradeContentMap">
+        <result property="key" column="KEY" javaType="string"/>
+        <result property="operUserName" column="OPER_USER_NAME" javaType="string"/>
+        <result property="operUserFlow" column="OPER_USER_FLOW" javaType="string"/>
+        <result property="content" column="CONTENT" javaType="string"/>
+        <result property="recFlow" column="REC_FLOW" javaType="string"/>
+        <result property="sessionNumber" column="SESSION_NUMBER" javaType="string"/>
+    </resultMap>
+    <select id="getRecContentByProcess"  parameterType="java.util.Map" resultMap="gradeContentMap">
+        select
+        <if test='recTypeId!=null and recTypeId=="TeacherGrade"'>
+            rdsp.teacher_user_flow KEY,
+        </if>
+        <if test='recTypeId!=null and recTypeId=="DeptGrade"'>
+            rdsp.dept_flow KEY,
+        </if>
+        dtgi.oper_user_name OPER_USER_NAME,
+        dtgi.oper_user_flow OPER_USER_FLOW,
+        dtgi.rec_content CONTENT,
+        dtgi.rec_flow REC_FLOW,
+        rd.SESSION_NUMBER
+        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
+        inner join pdsci.res_doctor_sch_process rdsp
+        on rdsp.record_status = 'Y'
+        and rdsp.process_flow = dtgi.process_flow
+        left join res_doctor rd
+        on rd.doctor_flow=dtgi.oper_user_flow
+        where dtgi.record_status = 'Y'
+        and rd.record_status='Y'
+        <if test="sessionNumber!=null and sessionNumber!=''">
+            and rd.SESSION_NUMBER=#{sessionNumber}
+        </if>
+        and dtgi.rec_type_id = #{recTypeId}
+        <if test='deptFlow!=null and deptFlow!=""'>
+            and rdsp.dept_flow = #{deptFlow}
+        </if>
+        <if test='deptName!=null and deptName!=""'>
+            and rdsp.dept_Name like '%${deptName}%'
+        </if>
+        <if test='teacherFlow!=null and teacherFlow!=""'>
+            and rdsp.teacher_user_flow = #{teacherFlow}
+        </if>
+        <if test='operStartDate!=null and operStartDate!=""'>
+            and dtgi.oper_time >= #{operStartDate}
+        </if>
+        <if test='operEndDate!=null and operEndDate!=""'>
+            and dtgi.oper_time <![CDATA[<=]]> #{operEndDate}
+        </if>
+
+        <if test='teacherFlows!=null and teacherFlows.size()>0'>
+            and rdsp.teacher_user_flow in
+            <foreach collection="teacherFlows" close=")" item="tf" open="(" separator=",">
+                #{tf}
+            </foreach>
+        </if>
+        <if test='deptFlows!=null and deptFlows.size()>0'>
+            and rdsp.dept_flow in
+            <foreach collection="deptFlows" close=")" item="df" open="(" separator=",">
+                #{df}
+            </foreach>
+        </if>
+        order by dtgi.oper_time
+    </select>
+
+    <select id="getJsresRecContentByProcess"  parameterType="java.util.Map" resultMap="gradeContentMap">
+        select
+        <if test='recTypeId!=null and recTypeId=="TeacherGrade"'>
+            rdsp.teacher_user_flow KEY,
+        </if>
+        <if test='recTypeId!=null and recTypeId=="DeptGrade"'>
+            rdsp.dept_flow KEY,
+        </if>
+        dtgi.oper_user_name OPER_USER_NAME,
+        dtgi.oper_user_flow OPER_USER_FLOW,
+        dtgi.rec_content CONTENT,
+        dtgi.rec_flow REC_FLOW,
+        rd.SESSION_NUMBER
+        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
+        inner join pdsci.res_doctor_sch_process rdsp
+        on rdsp.record_status = 'Y'
+        and rdsp.process_flow = dtgi.process_flow
+        left join res_doctor rd
+        on rd.doctor_flow=dtgi.oper_user_flow
+        inner join jsres_power_cfg cfg on cfg.cfg_code = ('jsres_doctor_app_menu_' || rd.doctor_FLOW)
+        where dtgi.record_status = 'Y'
+        and rd.record_status='Y'
+        and cfg.RECORD_STATUS='Y'
+        AND CFG.CFG_VALUE='Y'
+        <if test="sessionNumber!=null and sessionNumber!=''">
+            and rd.SESSION_NUMBER=#{sessionNumber}
+        </if>
+        and dtgi.rec_type_id = #{recTypeId}
+        <if test='deptFlow!=null and deptFlow!=""'>
+            and rdsp.dept_flow = #{deptFlow}
+        </if>
+        <if test='deptName!=null and deptName!=""'>
+            and rdsp.dept_Name like '%${deptName}%'
+        </if>
+        <if test='teacherFlow!=null and teacherFlow!=""'>
+            and rdsp.teacher_user_flow = #{teacherFlow}
+        </if>
+        <if test='operStartDate!=null and operStartDate!=""'>
+            and dtgi.oper_time >= #{operStartDate}
+        </if>
+        <if test='operEndDate!=null and operEndDate!=""'>
+            and dtgi.oper_time <![CDATA[<=]]> #{operEndDate}
+        </if>
+        <if test='recFlow!=null and recFlow!=""'>
+            and dtgi.REC_FLOW = #{recFlow}
+        </if>
+        <if test='teacherFlows!=null and teacherFlows.size()>0'>
+            and rdsp.teacher_user_flow in
+            <foreach collection="teacherFlows" close=")" item="tf" open="(" separator=",">
+                #{tf}
+            </foreach>
+        </if>
+        <if test='deptFlows!=null and deptFlows.size()>0'>
+            and rdsp.dept_flow in
+            <foreach collection="deptFlows" close=")" item="df" open="(" separator=",">
+                #{df}
+            </foreach>
+        </if>
+        order by dtgi.oper_time
+    </select>
+
+    <select id="getUserByRec" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+        select su.*
+        from pdsci.sys_user su
+        where su.record_status = 'Y'
+        and exists(
+        select null
+        from pdsci.sys_user_role sur
+        where record_status = 'Y'
+        and sur.user_flow = su.user_flow
+        and sur.role_flow = #{roleFlow}
+        )
+        and su.org_flow = #{orgFlow}
+        and exists(
+        select null
+        from pdsci.res_doctor_sch_process rdsp
+        where rdsp.record_status = 'Y'
+        and rdsp.teacher_user_flow = su.user_flow
+        and exists(
+        select null
+        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
+        where dtgi.record_status = 'Y'
+        and rdsp.process_flow = dtgi.process_flow
+        <if test='operStartDate!=null and operStartDate!=""'>
+            and dtgi.oper_time >= #{operStartDate}
+        </if>
+        <if test='operEndDate!=null and operEndDate!=""'>
+            and dtgi.oper_time <![CDATA[<=]]> #{operEndDate}
+        </if>
+        <if test='recTypeId!=null and recTypeId!=""'>
+            and dtgi.rec_type_id = #{recTypeId}
+        </if>
+        )
+        <if test='userName!=null and userName!=""'>
+            and su.user_name like '%${userName}%'
+        </if>
+        <if test='deptFlow!=null and deptFlow!=""'>
+            and su.dept_flow = #{deptFlow}
+        </if>
+        <if test='deptName!=null and deptName!=""'>
+            and su.dept_Name like '%${deptName}%'
+        </if>
+        )
+        order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M'),su.user_code
+    </select>
+    <select id="getDeptByRec" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+        select sd.*
+        from pdsci.sys_dept sd
+        where sd.record_status = 'Y'
+        and sd.org_flow = #{orgFlow}
+        and exists(
+        select null
+        from pdsci.res_doctor_sch_process rdsp
+        where rdsp.record_status = 'Y'
+        and rdsp.dept_flow = sd.dept_flow
+        and exists(
+        select null
+        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
+        where dtgi.record_status = 'Y'
+        and rdsp.process_flow = dtgi.process_flow
+        <if test='operStartDate!=null and operStartDate!=""'>
+            and dtgi.oper_time >= #{operStartDate}
+        </if>
+        <if test='operEndDate!=null and operEndDate!=""'>
+            and dtgi.oper_time <![CDATA[<=]]> #{operEndDate}
+        </if>
+        <if test='recTypeId!=null and recTypeId!=""'>
+            and dtgi.rec_type_id = #{recTypeId}
+        </if>
+        )
+        )
+        <if test='deptFlow!=null and deptFlow!=""'>
+            and sd.dept_flow = #{deptFlow}
+        </if>
+        order by sd.ordinal
+    </select>
+    <select id="resSearchProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+        select * from DEPT_TEACHER_GRADE_INFO  rr
+        where rr.RECORD_STATUS='Y'
+        <if test="startDate!=null and startDate!=''">
+            and rr.OPER_TIME<![CDATA[>=]]>#{startDate}
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            and rr.OPER_TIME<![CDATA[<=]]>#{endDate}
+        </if>
+        and (exists(
+        select null from RES_DOCTOR_SCH_PROCESS rdsp
+        where rdsp.RECORD_STATUS='Y'
+        <if test="teacherUserFlow!=null and teacherUserFlow!=''">
+            and rdsp.TEACHER_USER_FLOW=#{teacherUserFlow}
+        </if>
+        and rr.PROCESS_FLOW =rdsp.PROCESS_FLOW
+        and rr.OPER_USER_FLOW=rdsp.USER_FLOW
+        and rr.rec_type_id ='TeacherGrade'
+        ))
+    </select>
+    <select id="resSearchDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+        select * from DEPT_TEACHER_GRADE_INFO  rr
+        where rr.RECORD_STATUS='Y'
+        <if test="startDate!=null and startDate!=''">
+            and rr.OPER_TIME<![CDATA[>=]]>#{startDate}
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            and rr.OPER_TIME<![CDATA[<=]]>#{endDate}
+        </if>
+        and (exists(
+        select null from RES_DOCTOR_SCH_PROCESS rdsp
+        where rdsp.RECORD_STATUS='Y'
+        <if test="deptFlow!=null and deptFlow!=''">
+            and rdsp.DEPT_FLOW=#{deptFlow}
+        </if>
+        and rr.PROCESS_FLOW =rdsp.PROCESS_FLOW
+        and rr.OPER_USER_FLOW=rdsp.USER_FLOW
+        and rr.rec_type_id ='DeptGrade'
+        ))
+    </select>
+
+    <select id="getUserByRecForUni" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+        select su.*
+        from pdsci.sys_user su
+        where su.record_status = 'Y'
+        and exists(
+        select null
+        from pdsci.sys_user_role sur
+        where record_status = 'Y'
+        and sur.user_flow = su.user_flow
+        and sur.role_flow = #{roleFlow}
+        )
+        and su.org_flow = #{orgFlow}
+        and exists(
+        select null
+        from pdsci.res_doctor_sch_process rdsp
+        where rdsp.record_status = 'Y'
+        and rdsp.teacher_user_flow = su.user_flow
+        and exists(
+        select null from
+        RES_DOCTOR RD
+        JOIN SYS_USER SU
+        ON SU.USER_FLOW = RD.DOCTOR_FLOW
+        WHERE RD.RECORD_STATUS = 'Y'
+        AND SU.RECORD_STATUS = 'Y'
+        AND RD.DOCTOR_TYPE_ID = 'Graduate'
+        AND (
+        <trim prefix="" prefixOverrides="OR">
+            <if test="(org.sendSchoolId != null and org.sendSchoolId != '')">OR rd.work_org_id = #{org.sendSchoolId}</if>
+            <if test="(org.sendSchoolName != null and org.sendSchoolName != '')">OR rd.work_org_name = #{org.sendSchoolName}</if>
+        </trim>
+        )
+        and rd.doctor_flow =rdsp.user_flow
+        AND RD.ORG_FLOW IS NOT NULL
+        )
+        and exists(
+        select null
+        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
+        where dtgi.record_status = 'Y'
+        and rdsp.process_flow = dtgi.process_flow
+        <if test='operStartDate!=null and operStartDate!=""'>
+            and dtgi.oper_time >= #{operStartDate}
+        </if>
+        <if test='operEndDate!=null and operEndDate!=""'>
+            and dtgi.oper_time <![CDATA[<=]]> #{operEndDate}
+        </if>
+        <if test='recTypeId!=null and recTypeId!=""'>
+            and dtgi.rec_type_id = #{recTypeId}
+        </if>
+        )
+        )
+        <if test='userName!=null and userName!=""'>
+            and su.user_name like '%${userName}%'
+        </if>
+        <if test='deptFlow!=null and deptFlow!=""'>
+            and su.dept_flow = #{deptFlow}
+        </if>
+        <if test='deptName!=null and deptName!=""'>
+            and su.dept_Name like '%${deptName}%'
+        </if>
+        order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+    </select>
+
+    <select id="getDeptByRecForUni" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+        select sd.*
+        from pdsci.sys_dept sd
+        where sd.record_status = 'Y'
+        and sd.org_flow = #{orgFlow}
+        and exists(
+        select null
+        from pdsci.res_doctor_sch_process rdsp
+        where rdsp.record_status = 'Y'
+        and rdsp.dept_flow = sd.dept_flow
+        and exists(
+        select null from
+        RES_DOCTOR RD
+        JOIN SYS_USER SU
+        ON SU.USER_FLOW = RD.DOCTOR_FLOW
+        WHERE RD.RECORD_STATUS = 'Y'
+        AND SU.RECORD_STATUS = 'Y'
+        AND RD.DOCTOR_TYPE_ID = 'Graduate'
+        AND (
+        <trim prefix="" prefixOverrides="OR">
+            <if test="(org.sendSchoolId != null and org.sendSchoolId != '')">OR rd.work_org_id = #{org.sendSchoolId}</if>
+            <if test="(org.sendSchoolName != null and org.sendSchoolName != '')">OR rd.work_org_name = #{org.sendSchoolName}</if>
+        </trim>
+        )
+        and rd.doctor_flow =rdsp.user_flow
+        AND RD.ORG_FLOW IS NOT NULL
+        )
+        and exists(
+        select null
+        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
+        where dtgi.record_status = 'Y'
+        and rdsp.process_flow = dtgi.process_flow
+        <if test='operStartDate!=null and operStartDate!=""'>
+            and dtgi.oper_time >= #{operStartDate}
+        </if>
+        <if test='operEndDate!=null and operEndDate!=""'>
+            and dtgi.oper_time <![CDATA[<=]]> #{operEndDate}
+        </if>
+        <if test='recTypeId!=null and recTypeId!=""'>
+            and dtgi.rec_type_id = #{recTypeId}
+        </if>
+        )
+        )
+        <if test='deptFlow!=null and deptFlow!=""'>
+            and sd.dept_flow = #{deptFlow}
+        </if>
+        order by sd.ordinal
+    </select>
+
+    <select id="getRecContentByProcessForUni"  parameterType="java.util.Map" resultMap="gradeContentMap">
+        select
+        <if test='recTypeId!=null and recTypeId=="TeacherGrade"'>
+            rdsp.teacher_user_flow KEY,
+        </if>
+        <if test='recTypeId!=null and recTypeId=="DeptGrade"'>
+            rdsp.dept_flow KEY,
+        </if>
+        dtgi.oper_user_name OPER_USER_NAME,
+        dtgi.oper_user_flow OPER_USER_FLOW,
+        dtgi.rec_content CONTENT,
+        dtgi.rec_flow REC_FLOW,
+        rd.SESSION_NUMBER
+        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
+        inner join pdsci.res_doctor_sch_process rdsp
+        on rdsp.record_status = 'Y'
+        and rdsp.process_flow = dtgi.process_flow
+        left join res_doctor rd
+        on rd.doctor_flow=dtgi.oper_user_flow
+        inner join jsres_power_cfg cfg on cfg.cfg_code = ('jsres_doctor_app_menu_' || rd.doctor_FLOW)
+        where dtgi.record_status = 'Y'
+        and rd.record_status='Y'
+        and cfg.RECORD_STATUS='Y'
+        AND CFG.CFG_VALUE='Y'
+        AND RD.DOCTOR_TYPE_ID = 'Graduate'
+        <if test="sessionNumber!=null and sessionNumber!=''">
+            and rd.SESSION_NUMBER=#{sessionNumber}
+        </if>
+        AND (
+        <trim prefix="" prefixOverrides="OR">
+            <if test="(org.sendSchoolId != null and org.sendSchoolId != '')">OR rd.work_org_id = #{org.sendSchoolId}</if>
+            <if test="(org.sendSchoolName != null and org.sendSchoolName != '')">OR rd.work_org_name = #{org.sendSchoolName}</if>
+        </trim>
+        )
+        and dtgi.rec_type_id = #{recTypeId}
+        <if test='deptFlow!=null and deptFlow!=""'>
+            and rdsp.dept_flow = #{deptFlow}
+        </if>
+        <if test='deptName!=null and deptName!=""'>
+            and rdsp.dept_Name like '%${deptName}%'
+        </if>
+        <if test='teacherFlow!=null and teacherFlow!=""'>
+            and rdsp.teacher_user_flow = #{teacherFlow}
+        </if>
+        <if test='operStartDate!=null and operStartDate!=""'>
+            and dtgi.oper_time >= #{operStartDate}
+        </if>
+        <if test='operEndDate!=null and operEndDate!=""'>
+            and dtgi.oper_time <![CDATA[<=]]> #{operEndDate}
+        </if>
+
+        <if test='teacherFlows!=null and teacherFlows.size()>0'>
+            and rdsp.teacher_user_flow in
+            <foreach collection="teacherFlows" close=")" item="tf" open="(" separator=",">
+                #{tf}
+            </foreach>
+        </if>
+        <if test='deptFlows!=null and deptFlows.size()>0'>
+            and rdsp.dept_flow in
+            <foreach collection="deptFlows" close=")" item="df" open="(" separator=",">
+                #{df}
+            </foreach>
+        </if>
+        order by dtgi.oper_time
+    </select>
+</mapper>

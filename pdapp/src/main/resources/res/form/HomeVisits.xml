@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+    <!-- 家庭随访、家访情况记录表单 -->
+    <!--
+    {0}:表单所属机构(开关控制)
+    {1}:版本号
+ -->
+    <jsp path="res/form/{3}/{0}/homeVisits_{1}"/>
+    <jszy ver="1.0">
+        <page ver="1.0">
+            <item name="householderName" isView="0" remark="户主姓名" multiple="N"/>
+            <item name="address" remark="家庭住址" multiple="N"/>
+            <item name="zipCode" isView="0" remark="邮编" multiple="N"/>
+            <item name="telephoneNumber" isView="0" remark="联系电话" multiple="N"/>
+            <itemGroup name="familyMemberInfo" remark="家庭成员信息" modelStyle="add">
+                <item name="member_name" remark="姓名" multiple="N"></item>
+                <item name="member_gender" select="Y" remark="性别" multiple="N"></item>
+                <item name="member_age" remark="年龄" multiple="N"></item>
+                <item name="member_health_statues" remark="健康状况" multiple="N"></item>
+                <item name="member_remarks" remark="备注" multiple="N"></item>
+            </itemGroup>
+            <itemGroup name="homeVisitsInfo" remark="随访、家访情况" modelStyle="add">
+                <item name="visits_time" remark="时间" multiple="N"></item>
+                <item name="visits_content" remark="随访、家访内容（包括家庭病床管理记录）" multiple="N"></item>
+                <item name="visits_accessories" remark="附件" isFile="Y" multiple="Y"></item>
+            </itemGroup>
+        </page>
+    </jszy>
+</jspForm>

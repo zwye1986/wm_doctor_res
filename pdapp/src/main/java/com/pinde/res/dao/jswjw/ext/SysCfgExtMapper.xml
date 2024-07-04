@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.jswjw.ext.SysCfgExtMapper" >
+
+    <!-- 查询系统配置的特定角色flow信息 -->
+    <select id="getUserRoleCfgInfo" resultType="map">
+        select
+            max (
+                case
+                when cfg_code = 'res_admin_role_flow' then
+                    cfg_value
+                else
+                    ''
+                end
+            ) as res_admin_role_flow,
+            max (
+                case
+                when c.cfg_code = 'res_charge_role_flow' then
+                    c.cfg_value
+                else
+                    ''
+                end
+            ) as res_charge_role_flow,
+            max (
+                case
+                when c.cfg_code = 'res_doctor_role_flow' then
+                    c.cfg_value
+                else
+                    ''
+                end
+            ) as res_doctor_role_flow,
+            max (
+                case
+                when c.cfg_code = 'res_head_role_flow' then
+                    c.cfg_value
+                else
+                    ''
+                end
+            ) as res_head_role_flow,
+            max (
+                case
+                when c.cfg_code = 'res_teaching_head_role_flow' then
+                    c.cfg_value
+                else
+                    ''
+                end
+            ) as res_header_role_flow,
+            max (
+                case
+                when c.cfg_code = 'res_secretary_role_flow' then
+                    c.cfg_value
+                else
+                    ''
+                end
+            ) as res_secretary_role_flow,
+            max (
+                case
+                when c.cfg_code = 'res_teaching_secretary_role_flow' then
+                    c.cfg_value
+                else
+                    ''
+                end
+            ) as res_secretaryer_role_flow,
+            max (
+                case
+                when c.cfg_code = 'res_teacher_role_flow' then
+                    c.cfg_value
+                else
+                    ''
+                end
+            ) as res_teacher_role_flow,
+            max (
+                case
+                when c.cfg_code = 'res_hospitalLeader_role_flow' then
+                    c.cfg_value
+                else
+                    ''
+                end
+            ) as res_hospitalLeader_role_flow,
+            max (
+                case
+                when c.cfg_code = 'res_nurse_role_flow' then
+                    c.cfg_value
+                else
+                    ''
+                end
+            ) as res_nurse_role_flow
+        from
+            sys_cfg c
+        where
+            c.record_status = 'Y'
+        and c.cfg_code in (
+            'res_doctor_role_flow',
+            'res_teacher_role_flow',
+            'res_head_role_flow',
+            'res_secretary_role_flow',
+            'res_teaching_head_role_flow',
+            'res_teaching_secretary_role_flow',
+            'res_admin_role_flow',
+            'res_charge_role_flow',
+            'res_hospitalLeader_role_flow',
+            'res_nurse_role_flow'
+        )
+    </select>
+
+</mapper>

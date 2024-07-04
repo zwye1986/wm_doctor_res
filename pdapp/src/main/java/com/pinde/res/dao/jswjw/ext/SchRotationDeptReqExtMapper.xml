@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.jswjw.ext.SchRotationDeptReqExtMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SchRotationDeptReq" >
+    <id column="REQ_FLOW" property="reqFlow" jdbcType="VARCHAR" />
+    <result column="ROTATION_FLOW" property="rotationFlow" jdbcType="VARCHAR" />
+    <result column="STANDARD_DEPT_ID" property="standardDeptId" jdbcType="VARCHAR" />
+    <result column="STANDARD_DEPT_NAME" property="standardDeptName" jdbcType="VARCHAR" />
+    <result column="REL_RECORD_FLOW" property="relRecordFlow" jdbcType="VARCHAR" />
+    <result column="REC_TYPE_ID" property="recTypeId" jdbcType="VARCHAR" />
+    <result column="REC_TYPE_NAME" property="recTypeName" jdbcType="VARCHAR" />
+    <result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR" />
+    <result column="REQ_NUM" property="reqNum" jdbcType="DECIMAL" />
+    <result column="REQ_NOTE" property="reqNote" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="ITEM_ID" property="itemId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.SchRotationDeptReq" extends="BaseResultMap" >
+    <result column="REQ_STANDARD" property="reqStandard" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    REQ_FLOW, ROTATION_FLOW, STANDARD_DEPT_ID, STANDARD_DEPT_NAME, REL_RECORD_FLOW, REC_TYPE_ID, 
+    REC_TYPE_NAME, ITEM_NAME, REQ_NUM, REQ_NOTE, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+    MODIFY_TIME, MODIFY_USER_FLOW, ORG_FLOW, ORG_NAME, ITEM_ID
+  </sql>
+  <sql id="Blob_Column_List" >
+    REQ_STANDARD
+  </sql>
+  <select id="selectByExampleTwo" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SchRotationDeptReqExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    REL_RECORD_FLOW,REC_TYPE_ID,ITEM_ID,REQ_NUM
+    from PDSCI.SCH_ROTATION_DEPT_REQ
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

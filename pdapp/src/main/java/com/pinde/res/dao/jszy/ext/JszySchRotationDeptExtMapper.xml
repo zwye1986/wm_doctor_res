@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.jszy.ext.JszySchRotationDeptExtMapper">
+	<resultMap id="standardDeptMap" type="hashmap">
+		<result column="record_flow" property="recordFlow" javaType="java.lang.String" />
+		<result column="stage_name" property="stageName" javaType="java.lang.String" />
+		<result column="group_flow" property="groupFlow" javaType="java.lang.String" />
+		<result column="group_name" property="groupName" javaType="java.lang.String" />
+		<result column="standard_dept_id" property="standardDeptId" javaType="java.lang.String" />
+		<result column="standard_dept_name" property="standardDeptName" javaType="java.lang.String" />
+		<result column="sch_month" property="schMonth" javaType="java.lang.String" />
+		<result column="dept_note" property="deptNote" javaType="java.lang.String" />
+	</resultMap>
+	<select id="getDoctorRotationDept" resultMap="standardDeptMap">
+		SELECT * from (
+			select srd.record_flow record_flow,
+			srg.sch_stage_name stage_name,
+			srd.group_flow group_flow,
+			srg.group_name group_name,
+			srd.standard_dept_id standard_dept_id,
+			'【'||srg.group_name ||' '||srg.sch_stage_name||'】'||srd.standard_dept_name standard_dept_name,
+			<if test='isReduction!=null and isReduction=="Y"'>
+				(
+				select sch_month
+				from sch_doctor_dept sdd
+				where sdd.record_status='Y'
+				and doctor_flow = #{doctorFlow}
+				and sdd.rotation_flow = #{rotationFlow}
+				and sdd.group_flow = srd.group_flow
+				and sdd.standard_dept_id = srd.standard_dept_id
+				and exists ( select null
+				from res_doctor where doctor_flow=#{doctorFlow} and sdd.org_flow=org_flow
+				)
+				) sch_month,
+			</if>
+			<if test='isReduction==null or isReduction=="N"'>
+				srd.sch_month,
+			</if>
+			srd.dept_note dept_note,
+			1 ORDINAL,
+			srg.ORDINAL ORDINAL1,
+			srd.ORDINAL ORDINAL2
+			from sch_rotation_dept srd
+			inner join sch_rotation_group srg
+			on srd.group_flow = srg.group_flow
+			where srd.record_status = 'Y'
+			and srg.record_status = 'Y'
+			<if test='schDeptName!=null and schDeptName!=""'>
+				and srd.standard_dept_name like '%${schDeptName}%'
+			</if>
+			and srd.org_flow is null
+			and srd.rotation_flow = #{rotationFlow}
+			<if test='isReduction!=null and isReduction=="Y"'>
+				and (exists (
+						select null
+					from sch_doctor_dept sdd
+					where sdd.record_status='Y'
+					and doctor_flow = #{doctorFlow}
+					and sdd.rotation_flow = #{rotationFlow}
+					and sdd.group_flow = srd.group_flow
+					and sdd.standard_dept_id = srd.standard_dept_id
+					)
+					or (
+					select count(1)
+					from sch_doctor_dept sdd
+					where sdd.record_status='Y'
+					and doctor_flow = #{doctorFlow}
+					)=0
+				)
+			</if>
+			<if test="secondRotationFlow!=null and secondRotationFlow!=''">
+			union all
+				select srd.record_flow record_flow,
+				srg.sch_stage_name stage_name,
+				srd.group_flow group_flow,
+				srg.group_name group_name,
+				srd.standard_dept_id standard_dept_id,
+				'【'||srg.group_name ||' '||srg.sch_stage_name||'】'||srd.standard_dept_name standard_dept_name,
+				<if test='isReduction!=null and isReduction=="Y"'>
+					(
+					select sch_month
+					from sch_doctor_dept sdd
+					where sdd.record_status='Y'
+					and doctor_flow = #{doctorFlow}
+					and sdd.rotation_flow = #{secondRotationFlow}
+					and sdd.group_flow = srd.group_flow
+					and sdd.standard_dept_id = srd.standard_dept_id
+					and exists ( select null
+						from res_doctor where doctor_flow=#{doctorFlow} and sdd.org_flow=org_flow
+					)
+					) sch_month,
+				</if>
+				<if test='isReduction==null or isReduction=="N"'>
+					srd.sch_month,
+				</if>
+				srd.dept_note dept_note,
+				2 ORDINAL,
+				srg.ORDINAL ORDINAL1,
+				srd.ORDINAL ORDINAL2
+				from sch_rotation_dept srd
+				inner join sch_rotation_group srg
+				on srd.group_flow = srg.group_flow
+				where srd.record_status = 'Y'
+				and srg.record_status = 'Y'
+				<if test='schDeptName!=null and schDeptName!=""'>
+					and srd.standard_dept_name like '%${schDeptName}%'
+				</if>
+				and srd.org_flow is null
+				and srd.rotation_flow =#{secondRotationFlow}
+				<if test='isReduction!=null and isReduction=="Y"'>
+					and ( exists (
+					select null
+					from sch_doctor_dept sdd
+					where sdd.record_status='Y'
+					and doctor_flow = #{doctorFlow}
+					and sdd.rotation_flow = #{secondRotationFlow}
+					and sdd.group_flow = srd.group_flow
+					and sdd.standard_dept_id = srd.standard_dept_id
+					)
+					or (
+					select count(1)
+					from sch_doctor_dept sdd
+					where sdd.record_status='Y'
+					and doctor_flow = #{doctorFlow}
+					)=0
+					)
+				</if>
+			</if>
+		) a
+		order by ORDINAL asc,ORDINAL1 asc,ORDINAL2 asc,record_flow
+
+	</select>
+</mapper>

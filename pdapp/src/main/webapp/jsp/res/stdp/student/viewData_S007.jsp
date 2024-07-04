@@ -1,0 +1,29 @@
+<%@ page language="java" contentType="aplication/json; charset=UTF-8" pageEncoding="UTF-8"%>
+"action":{
+		"save":"保存", 
+		"del":"删除"
+	},
+"inputs":[
+		{
+			"inputId":"time",
+			"inputType":"date",
+			"label":"时间",
+			"readonly":true
+		},
+		{
+			"inputId":"content",
+			"inputType":"textarea",
+			"label":"实习主要内容",
+			"readonly":true
+		}
+	],
+	"values":[
+		{
+			"inputId":"time",
+			"value":"2015-06-23"
+		},
+		{
+			"inputId":"content",
+			"value":"门诊常规心电图操作"
+		}
+	]

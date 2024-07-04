@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.EdcAppLogMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.EdcAppLog" >
+    <id column="LOG_FLOW" property="logFlow" jdbcType="VARCHAR" />
+    <result column="REQ_CODE" property="reqCode" jdbcType="VARCHAR" />
+    <result column="REQ_CODE_NAME" property="reqCodeName" jdbcType="VARCHAR" />
+    <result column="REQ_PARAM" property="reqParam" jdbcType="VARCHAR" />
+    <result column="REQ_USER_FLOW" property="reqUserFlow" jdbcType="VARCHAR" />
+    <result column="REQ_USER_NAME" property="reqUserName" jdbcType="VARCHAR" />
+    <result column="REQ_PROJ_FLOW" property="reqProjFlow" jdbcType="VARCHAR" />
+    <result column="REQ_PROJ_NAME" property="reqProjName" jdbcType="VARCHAR" />
+    <result column="RESULT_ID" property="resultId" jdbcType="VARCHAR" />
+    <result column="RESULT_NAME" property="resultName" jdbcType="VARCHAR" />
+    <result column="SIGN" property="sign" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.EdcAppLog" extends="BaseResultMap" >
+    <result column="RESPON_CONTENT" property="responContent" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    LOG_FLOW, REQ_CODE, REQ_CODE_NAME, REQ_PARAM, REQ_USER_FLOW, REQ_USER_NAME, REQ_PROJ_FLOW, 
+    REQ_PROJ_NAME, RESULT_ID, RESULT_NAME, SIGN, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+    MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <sql id="Blob_Column_List" >
+    RESPON_CONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.EdcAppLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.EDC_APP_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.EdcAppLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.EDC_APP_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.EDC_APP_LOG
+    where LOG_FLOW = #{logFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.EDC_APP_LOG
+    where LOG_FLOW = #{logFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.EdcAppLogExample" >
+    delete from PDSCI.EDC_APP_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.EdcAppLog" >
+    insert into PDSCI.EDC_APP_LOG (LOG_FLOW, REQ_CODE, REQ_CODE_NAME, 
+      REQ_PARAM, REQ_USER_FLOW, REQ_USER_NAME, 
+      REQ_PROJ_FLOW, REQ_PROJ_NAME, RESULT_ID, 
+      RESULT_NAME, SIGN, RECORD_STATUS, 
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+      MODIFY_USER_FLOW, RESPON_CONTENT)
+    values (#{logFlow,jdbcType=VARCHAR}, #{reqCode,jdbcType=VARCHAR}, #{reqCodeName,jdbcType=VARCHAR}, 
+      #{reqParam,jdbcType=VARCHAR}, #{reqUserFlow,jdbcType=VARCHAR}, #{reqUserName,jdbcType=VARCHAR}, 
+      #{reqProjFlow,jdbcType=VARCHAR}, #{reqProjName,jdbcType=VARCHAR}, #{resultId,jdbcType=VARCHAR}, 
+      #{resultName,jdbcType=VARCHAR}, #{sign,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
+      #{modifyUserFlow,jdbcType=VARCHAR}, #{responContent,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.EdcAppLog" >
+    insert into PDSCI.EDC_APP_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logFlow != null" >
+        LOG_FLOW,
+      </if>
+      <if test="reqCode != null" >
+        REQ_CODE,
+      </if>
+      <if test="reqCodeName != null" >
+        REQ_CODE_NAME,
+      </if>
+      <if test="reqParam != null" >
+        REQ_PARAM,
+      </if>
+      <if test="reqUserFlow != null" >
+        REQ_USER_FLOW,
+      </if>
+      <if test="reqUserName != null" >
+        REQ_USER_NAME,
+      </if>
+      <if test="reqProjFlow != null" >
+        REQ_PROJ_FLOW,
+      </if>
+      <if test="reqProjName != null" >
+        REQ_PROJ_NAME,
+      </if>
+      <if test="resultId != null" >
+        RESULT_ID,
+      </if>
+      <if test="resultName != null" >
+        RESULT_NAME,
+      </if>
+      <if test="sign != null" >
+        SIGN,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="responContent != null" >
+        RESPON_CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logFlow != null" >
+        #{logFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="reqCode != null" >
+        #{reqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="reqCodeName != null" >
+        #{reqCodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="reqParam != null" >
+        #{reqParam,jdbcType=VARCHAR},
+      </if>
+      <if test="reqUserFlow != null" >
+        #{reqUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="reqUserName != null" >
+        #{reqUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="reqProjFlow != null" >
+        #{reqProjFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="reqProjName != null" >
+        #{reqProjName,jdbcType=VARCHAR},
+      </if>
+      <if test="resultId != null" >
+        #{resultId,jdbcType=VARCHAR},
+      </if>
+      <if test="resultName != null" >
+        #{resultName,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="responContent != null" >
+        #{responContent,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.EdcAppLogExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.EDC_APP_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.EDC_APP_LOG
+    <set >
+      <if test="record.logFlow != null" >
+        LOG_FLOW = #{record.logFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reqCode != null" >
+        REQ_CODE = #{record.reqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reqCodeName != null" >
+        REQ_CODE_NAME = #{record.reqCodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reqParam != null" >
+        REQ_PARAM = #{record.reqParam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reqUserFlow != null" >
+        REQ_USER_FLOW = #{record.reqUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reqUserName != null" >
+        REQ_USER_NAME = #{record.reqUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reqProjFlow != null" >
+        REQ_PROJ_FLOW = #{record.reqProjFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reqProjName != null" >
+        REQ_PROJ_NAME = #{record.reqProjName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resultId != null" >
+        RESULT_ID = #{record.resultId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resultName != null" >
+        RESULT_NAME = #{record.resultName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sign != null" >
+        SIGN = #{record.sign,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.responContent != null" >
+        RESPON_CONTENT = #{record.responContent,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update PDSCI.EDC_APP_LOG
+    set LOG_FLOW = #{record.logFlow,jdbcType=VARCHAR},
+      REQ_CODE = #{record.reqCode,jdbcType=VARCHAR},
+      REQ_CODE_NAME = #{record.reqCodeName,jdbcType=VARCHAR},
+      REQ_PARAM = #{record.reqParam,jdbcType=VARCHAR},
+      REQ_USER_FLOW = #{record.reqUserFlow,jdbcType=VARCHAR},
+      REQ_USER_NAME = #{record.reqUserName,jdbcType=VARCHAR},
+      REQ_PROJ_FLOW = #{record.reqProjFlow,jdbcType=VARCHAR},
+      REQ_PROJ_NAME = #{record.reqProjName,jdbcType=VARCHAR},
+      RESULT_ID = #{record.resultId,jdbcType=VARCHAR},
+      RESULT_NAME = #{record.resultName,jdbcType=VARCHAR},
+      SIGN = #{record.sign,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      RESPON_CONTENT = #{record.responContent,jdbcType=CLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.EDC_APP_LOG
+    set LOG_FLOW = #{record.logFlow,jdbcType=VARCHAR},
+      REQ_CODE = #{record.reqCode,jdbcType=VARCHAR},
+      REQ_CODE_NAME = #{record.reqCodeName,jdbcType=VARCHAR},
+      REQ_PARAM = #{record.reqParam,jdbcType=VARCHAR},
+      REQ_USER_FLOW = #{record.reqUserFlow,jdbcType=VARCHAR},
+      REQ_USER_NAME = #{record.reqUserName,jdbcType=VARCHAR},
+      REQ_PROJ_FLOW = #{record.reqProjFlow,jdbcType=VARCHAR},
+      REQ_PROJ_NAME = #{record.reqProjName,jdbcType=VARCHAR},
+      RESULT_ID = #{record.resultId,jdbcType=VARCHAR},
+      RESULT_NAME = #{record.resultName,jdbcType=VARCHAR},
+      SIGN = #{record.sign,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.EdcAppLog" >
+    update PDSCI.EDC_APP_LOG
+    <set >
+      <if test="reqCode != null" >
+        REQ_CODE = #{reqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="reqCodeName != null" >
+        REQ_CODE_NAME = #{reqCodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="reqParam != null" >
+        REQ_PARAM = #{reqParam,jdbcType=VARCHAR},
+      </if>
+      <if test="reqUserFlow != null" >
+        REQ_USER_FLOW = #{reqUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="reqUserName != null" >
+        REQ_USER_NAME = #{reqUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="reqProjFlow != null" >
+        REQ_PROJ_FLOW = #{reqProjFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="reqProjName != null" >
+        REQ_PROJ_NAME = #{reqProjName,jdbcType=VARCHAR},
+      </if>
+      <if test="resultId != null" >
+        RESULT_ID = #{resultId,jdbcType=VARCHAR},
+      </if>
+      <if test="resultName != null" >
+        RESULT_NAME = #{resultName,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        SIGN = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="responContent != null" >
+        RESPON_CONTENT = #{responContent,jdbcType=CLOB},
+      </if>
+    </set>
+    where LOG_FLOW = #{logFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.EdcAppLog" >
+    update PDSCI.EDC_APP_LOG
+    set REQ_CODE = #{reqCode,jdbcType=VARCHAR},
+      REQ_CODE_NAME = #{reqCodeName,jdbcType=VARCHAR},
+      REQ_PARAM = #{reqParam,jdbcType=VARCHAR},
+      REQ_USER_FLOW = #{reqUserFlow,jdbcType=VARCHAR},
+      REQ_USER_NAME = #{reqUserName,jdbcType=VARCHAR},
+      REQ_PROJ_FLOW = #{reqProjFlow,jdbcType=VARCHAR},
+      REQ_PROJ_NAME = #{reqProjName,jdbcType=VARCHAR},
+      RESULT_ID = #{resultId,jdbcType=VARCHAR},
+      RESULT_NAME = #{resultName,jdbcType=VARCHAR},
+      SIGN = #{sign,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      RESPON_CONTENT = #{responContent,jdbcType=CLOB}
+    where LOG_FLOW = #{logFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.EdcAppLog" >
+    update PDSCI.EDC_APP_LOG
+    set REQ_CODE = #{reqCode,jdbcType=VARCHAR},
+      REQ_CODE_NAME = #{reqCodeName,jdbcType=VARCHAR},
+      REQ_PARAM = #{reqParam,jdbcType=VARCHAR},
+      REQ_USER_FLOW = #{reqUserFlow,jdbcType=VARCHAR},
+      REQ_USER_NAME = #{reqUserName,jdbcType=VARCHAR},
+      REQ_PROJ_FLOW = #{reqProjFlow,jdbcType=VARCHAR},
+      REQ_PROJ_NAME = #{reqProjName,jdbcType=VARCHAR},
+      RESULT_ID = #{resultId,jdbcType=VARCHAR},
+      RESULT_NAME = #{resultName,jdbcType=VARCHAR},
+      SIGN = #{sign,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where LOG_FLOW = #{logFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.sctcm120.ext.ResDoctorKqExtMapper">
+    <resultMap type="HashMap" id="signinMap" extends="com.pinde.sci.dao.base.ResDoctorSigninMapper.BaseResultMap">
+        <result property="schDeptName" column="SCH_DEPT_NAME" javaType="string"/>
+        <result property="schStartDate" column="SCH_START_DATE" javaType="string"/>
+        <result property="schEndDate" column="SCH_END_DATE" javaType="string"/>
+        <result property="doctorName" column="DOCTOR_NAME" javaType="string"/>
+        <result property="teacherUserName" column="HEAD_USER_NAME" javaType="string"/>
+        <result property="trainingSpeName" column="TRAINING_SPE_NAME" javaType="string"/>
+        <result property="sessionNumber" column="SESSION_NUMBER" javaType="string"/>
+    </resultMap>
+    <select id="getSigninList"  parameterType="java.util.Map" resultMap="signinMap">
+        SELECT qds.*,SAR.SCH_DEPT_NAME,SAR.SCH_START_DATE,SAR.SCH_END_DATE,
+        SU.USER_NAME DOCTOR_NAME,HEAD.USER_NAME HEAD_USER_NAME,
+        ED.training_SPE_NAME,ED.SESSION_NUMBER
+        FROM res_DOCTOR_SIGNIN qds
+        LEFT JOIN SCH_ARRANGE_RESULT SAR
+        ON qds.RESULT_FLOW=SAR.RESULT_FLOW
+        LEFT JOIN SYS_USER SU
+        ON qds.DOCTOR_FLOW=SU.USER_FLOW
+        LEFT JOIN SYS_USER HEAD
+        ON qds.TEACHER_USER_FLOW =HEAD.USER_FLOW
+        LEFT JOIN RES_DOCTOR ED
+        ON qds.DOCTOR_FLOW=ED.DOCTOR_FLOW
+        WHERE qds.RECORD_STATUS='Y'
+        AND SAR.RECORD_STATUS='Y'
+        <if test="deptFlows!=null and deptFlows.size()>0">
+            and SAR.DEPT_FLOW IN
+            <foreach collection="deptFlows" close=")" item="deptFlow" open="(" separator=",">
+                #{deptFlow}
+            </foreach>
+        </if>
+        <if test='doctorName!=null and doctorName!=""'>
+            and SU.USER_NAME LIKE  '%${doctorName}%'
+        </if>
+        <if test='doctorFlow!=null and doctorFlow!=""'>
+            and SU.USER_FLOW = #{doctorFlow}
+        </if>
+        <if test='teacherUserFlow!=null and teacherUserFlow!=""'>
+            and qds.TEACHER_USER_FLOW = #{teacherUserFlow}
+        </if>
+        <if test='trainingYears!=null and trainingYears!=""'>
+            and ed.training_Years = #{trainingYears}
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and ed.training_Spe_Id = #{trainingSpeId}
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and ed.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test='signinDate!=null and signinDate!=""'>
+            and qds.SIGNIN_DATE = #{signinDate}
+        </if>
+        ORDER by SIGNIN_DATE DESC,SIGNIN_TIME DESC ,qds.CREATE_TIME DESC
+    </select>
+    <select id="searchResDoctorKq"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResDoctorKqMapper.BaseResultMap">
+        SELECT *
+        FROM res_doctor_kq
+        WHERE RECORD_STATUS='Y'
+        and teacher_flow=#{teacherFlow}
+        and org_flow=#{orgFlow}
+        and teacher_name !='-'
+        and audit_status_id !='Revoke'
+        <if test="statusId !=null and statusId!='' and statusId=='Auditing'.toString()">
+            and teacher_Agree_Flag is null
+        </if>
+        <if test="statusId !=null and statusId!='' and statusId=='Audited'.toString()">
+            and teacher_Agree_Flag is not null
+        </if>
+        ORDER by  CREATE_TIME
+    </select>
+    <select id="checkTime" resultType="java.lang.Integer">
+        select count(1) from res_doctor_kq where record_status='Y'
+        and doctor_flow=#{doctorFlow}
+        and kq_type_id=#{id}
+        <if test="recordFlow!=null and recordFlow !=''">
+            and record_flow !=#{recordFlow}
+        </if>
+        and audit_status_id in ('Auditing','TeacherPass','HeadPass','TutorPass','ManagerPass','Passed')
+        AND  ( ( START_DATE  <![CDATA[ <= ]]> #{startDate} AND END_DATE >= #{endDate})
+          or (START_DATE  <![CDATA[ >= ]]> #{startDate} AND START_DATE <![CDATA[ <= ]]>#{endDate})
+          or (END_DATE  <![CDATA[ >= ]]> #{startDate} AND END_DATE <![CDATA[ <= ]]>#{endDate}))
+    </select>
+    <select id="readAllIntervalDays" resultType="java.lang.Double">
+        select nvl(sum(INTERVAL_DAYS),0) from res_doctor_kq where record_status='Y'
+        and doctor_flow=#{doctorFlow}
+        and kq_type_id=#{id}
+        <if test="recordFlow!=null and recordFlow !=''">
+            and record_flow !=#{recordFlow}
+        </if>
+        and audit_status_id in ('Auditing','TeacherPass','HeadPass','TutorPass','ManagerPass','Passed')
+    </select>
+
+    <resultMap type="HashMap" id="doctorKqExtMap">
+        <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+        <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+        <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
+        <result column="START_DATE" property="startDate" jdbcType="VARCHAR" />
+        <result column="END_DATE" property="endDate" jdbcType="VARCHAR" />
+        <result column="INTERVAL_DAYS" property="intervalDays" jdbcType="VARCHAR" />
+        <result column="SCH_DEPT_FLOW" property="schDeptFlow" jdbcType="VARCHAR" />
+        <result column="SCH_DEPT_NAME" property="schDeptName" jdbcType="VARCHAR" />
+        <result column="SCH_DEPT_START_DATE" property="schDeptStartDate" jdbcType="VARCHAR" />
+        <result column="SCH_DEPT_END_DATE" property="schDeptEndDate" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="KQ_TYPE_ID" property="kqTypeId" jdbcType="VARCHAR" />
+        <result column="KQ_TYPE_NAME" property="kqTypeName" jdbcType="VARCHAR" />
+        <result column="TYPE_ID" property="typeId" jdbcType="VARCHAR" />
+        <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+        <result column="DOCTOR_REMARKS" property="doctorRemarks" jdbcType="VARCHAR" />
+        <result column="AUDIT_STATUS_ID" property="auditStatusId" jdbcType="VARCHAR" />
+        <result column="AUDIT_STATUS_NAME" property="auditStatusName" jdbcType="VARCHAR" />
+        <result column="TEACHER_FLOW" property="teacherFlow" jdbcType="VARCHAR" />
+        <result column="TEACHER_NAME" property="teacherName" jdbcType="VARCHAR" />
+        <result column="HEAD_FLOW" property="headFlow" jdbcType="VARCHAR" />
+        <result column="HEAD_NAME" property="headName" jdbcType="VARCHAR" />
+        <result column="TUTOR_FLOW" property="tutorFlow" jdbcType="VARCHAR" />
+        <result column="TUTOR_NAME" property="tutorName" jdbcType="VARCHAR" />
+        <result column="MANAGER_FLOW" property="managerFlow" jdbcType="VARCHAR" />
+        <result column="MANAGER_NAME" property="managerName" jdbcType="VARCHAR" />
+        <result column="TEACHER_AGREE_FLAG" property="teacherAgreeFlag" jdbcType="VARCHAR" />
+        <result column="TEACHER_AUDIT_TIME" property="teacherAuditTime" jdbcType="VARCHAR" />
+        <result column="TEACHER_AUDIT_INFO" property="teacherAuditInfo" jdbcType="VARCHAR" />
+        <result column="HEAD_AGREE_FLAG" property="headAgreeFlag" jdbcType="VARCHAR" />
+        <result column="HEAD_AUDIT_TIME" property="headAuditTime" jdbcType="VARCHAR" />
+        <result column="HEAD_AUDIT_INFO" property="headAuditInfo" jdbcType="VARCHAR" />
+        <result column="TUTOR_AGREE_FLAG" property="tutorAgreeFlag" jdbcType="VARCHAR" />
+        <result column="TUTOR_AUDIT_TIME" property="tutorAuditTime" jdbcType="VARCHAR" />
+        <result column="TUTOR_AUDIT_INFO" property="tutorAuditInfo" jdbcType="VARCHAR" />
+        <result column="MANAGER_AGREE_FLAG" property="managerAgreeFlag" jdbcType="VARCHAR" />
+        <result column="MANAGER_AUDIT_TIME" property="managerAuditTime" jdbcType="VARCHAR" />
+        <result column="MANAGER_AUDIT_INFO" property="managerAuditInfo" jdbcType="VARCHAR" />
+        <result column="PROCESS_FLOW" property="processFlow" jdbcType="VARCHAR" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+        <result column="SESSION_NUMBER_NOW" property="sessionNumberNow" jdbcType="VARCHAR" />
+        <result column="AUDIT_ROLE_NOW" property="auditRoleNow" jdbcType="VARCHAR" />
+        <result column="AUDIT_ROLE_NOW" property="auditRoleNow" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="searchDoctorKqList" parameterType="map" resultMap="doctorKqExtMap">
+        SELECT RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME, START_DATE, END_DATE, INTERVAL_DAYS, SCH_DEPT_FLOW,
+        SCH_DEPT_NAME, SCH_DEPT_START_DATE, SCH_DEPT_END_DATE, ORG_FLOW, ORG_NAME, KQ_TYPE_ID,
+        KQ_TYPE_NAME, TYPE_ID, TYPE_NAME, DOCTOR_REMARKS, AUDIT_STATUS_ID, AUDIT_STATUS_NAME,
+        TEACHER_FLOW, TEACHER_NAME, HEAD_FLOW, HEAD_NAME, TUTOR_FLOW, TUTOR_NAME, MANAGER_FLOW,
+        MANAGER_NAME, TEACHER_AGREE_FLAG, TEACHER_AUDIT_TIME, TEACHER_AUDIT_INFO, HEAD_AGREE_FLAG,
+        HEAD_AUDIT_TIME, HEAD_AUDIT_INFO, TUTOR_AGREE_FLAG, TUTOR_AUDIT_TIME, TUTOR_AUDIT_INFO,
+        MANAGER_AGREE_FLAG, MANAGER_AUDIT_TIME, MANAGER_AUDIT_INFO, PROCESS_FLOW, SESSION_NUMBER_NOW,
+        AUDIT_ROLE_NOW,CREATE_TIME,CASE WHEN PF.FILE_FLOWS IS NULL THEN 'N' ELSE 'Y' END AS FILE_FLOWS
+        FROM RES_DOCTOR_KQ K
+        left join(select product_flow,wm_concat(file_flow) AS FILE_FLOWS
+        from PUB_FILE
+        where record_status = 'Y'
+        AND product_type = 'ResDoctorKqFile'
+        group by product_flow
+        ) pf on pf.product_flow = k.record_flow
+        WHERE k.RECORD_STATUS = 'Y'
+        AND K.ORG_FLOW = #{orgFlow}
+        AND K.DOCTOR_FLOW = #{doctorFlow}
+        AND K.KQ_TYPE_ID = #{kqTypeId}
+        <if test="typeId!='' and typeId!=null">
+            and K.TYPE_ID = #{typeId}
+        </if>
+        <if test="schDeptFlow!='' and schDeptFlow!=null">
+            and K.SCH_DEPT_FLOW = #{schDeptFlow}
+        </if>
+        <if test="auditStatusId!='' and auditStatusId!=null">
+            and K.AUDIT_STATUS_ID = #{auditStatusId}
+        </if>
+        ORDER BY K.CREATE_TIME DESC
+    </select>
+
+    <resultMap type="HashMap" id="leaveTypeMap">
+        <result column="DICT_ID" property="typeId" jdbcType="VARCHAR" />
+        <result column="DICT_NAME" property="typeName" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="searchDictList" parameterType="string" resultMap="leaveTypeMap">
+        select dict_id,dict_name
+        from sys_dict
+        where record_status = 'Y'
+        and dict_type_id = #{dictTypeId}
+    </select>
+
+    <select id="checkLeaveTime" resultType="java.lang.Integer">
+        select count(1) from res_doctor_kq where record_status='Y'
+        and doctor_flow=#{doctorFlow}
+        and kq_type_id=#{typeId}
+        <if test="recordFlow!=null and recordFlow !=''">
+            and record_flow !=#{recordFlow}
+        </if>
+        and audit_status_id in ('Auditing','HeadAuditing','ManagerAuditing','TeacherPass','HeadUnPass','TutorPass','ManagerPass','Passed',
+        'RevokeAuditing','RevokeHeadAuditing','RevokeManagerAuditing')
+        AND  ( ( START_DATE  <![CDATA[ <= ]]> #{startDate} AND END_DATE >= #{endDate})
+        or (START_DATE  <![CDATA[ >= ]]> #{startDate} AND START_DATE <![CDATA[ <= ]]>#{endDate})
+        or (END_DATE  <![CDATA[ >= ]]> #{startDate} AND END_DATE <![CDATA[ <= ]]>#{endDate}))
+    </select>
+
+    <update id="updateKqLogsRecordStatusN">
+        update res_doctor_kq_log set record_status = 'N'
+        where record_status = 'Y'
+        and kq_record_flow = #{kqRecordFlow}
+        and type_id = #{typeId}
+    </update>
+
+    <select id="getKqStatistics" parameterType="java.util.Map" resultType="java.util.Map">
+        select su.user_name,su.user_flow,rd.training_spe_name,rd.session_number
+        <if test="dictList!=null and dictList.size()>0">,
+            <foreach collection="dictList" item="item" index="inx">
+                (select count(0) from RES_DOCTOR_KQ qdk where qdk.doctor_flow=rd.doctor_flow and qdk.RECORD_STATUS='Y'
+                and qdk.KQ_TYPE_ID='LeaveType'
+                and AUDIT_ROLE_NOW = 'Pass'
+                and qdk.type_id=#{item.dictId}
+                <if test="startDate!='' and startDate!=null">
+                    and qdk.end_Date >= #{startDate}
+                </if>
+                <if test="endDate!='' and endDate!=null">
+                    and #{endDate} >= qdk.start_Date
+                </if>
+                ) ${item.dictId}
+                <if test="inx != (dictList.size() - 1)">,</if>
+            </foreach>
+        </if>
+        FROM res_doctor rd
+        LEFT join sys_user su on su.user_flow=rd.doctor_flow
+        where rd.RECORD_STATUS='Y' and su.RECORD_STATUS='Y'
+        <if test="orgFlow!='' and orgFlow!=null">
+            and rd.org_Flow = #{orgFlow}
+        </if>
+        <if test="doctorName!='' and doctorName!=null">
+            and rd.doctor_name like '%${doctorName}%'
+        </if>
+        <if test="trainingTypeId!='' and trainingTypeId!=null">
+            and rd.training_type_id = #{trainingTypeId}
+        </if>
+    </select>
+
+    <select id="kqStatisticsDetail"   resultMap="com.pinde.sci.dao.base.ResDoctorKqMapper.BaseResultMap">
+        select
+        RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME, START_DATE, END_DATE
+        , INTERVAL_DAYS, SCH_DEPT_FLOW, SCH_DEPT_NAME, SCH_DEPT_START_DATE, SCH_DEPT_END_DATE
+        , ORG_FLOW, ORG_NAME, KQ_TYPE_ID, KQ_TYPE_NAME, TYPE_ID
+        , TYPE_NAME, DOCTOR_REMARKS, AUDIT_STATUS_ID, AUDIT_STATUS_NAME, TEACHER_FLOW
+        , TEACHER_NAME, HEAD_FLOW, HEAD_NAME, TUTOR_FLOW, TUTOR_NAME
+        , MANAGER_FLOW, MANAGER_NAME, TEACHER_AGREE_FLAG, TEACHER_AUDIT_TIME, TEACHER_AUDIT_INFO
+        , HEAD_AGREE_FLAG, HEAD_AUDIT_TIME, HEAD_AUDIT_INFO, TUTOR_AGREE_FLAG, TUTOR_AUDIT_TIME
+        , TUTOR_AUDIT_INFO, MANAGER_AGREE_FLAG, MANAGER_AUDIT_TIME, MANAGER_AUDIT_INFO, PROCESS_FLOW
+        , RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+        , SESSION_NUMBER_NOW, AUDIT_ROLE_NOW
+        from RES_DOCTOR_KQ qdk
+        where qdk.doctor_flow=#{doctorFlow}
+        and qdk.RECORD_STATUS='Y'
+        and qdk.KQ_TYPE_ID='LeaveType'
+        and AUDIT_ROLE_NOW = 'Pass'
+        and qdk.type_id=#{typeId}
+        <if test="startDate!='' and startDate!=null">
+            and qdk.end_Date >= #{startDate}
+        </if>
+        <if test="endDate!='' and endDate!=null">
+            and #{endDate} >= qdk.start_Date
+        </if>
+        order by end_Date
+    </select>
+</mapper>

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.sci.dao.base.SysWsConfigMapper">
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysWsConfig">
+    <id column="WS_ID" jdbcType="VARCHAR" property="wsId" />
+    <result column="WS_NAME" jdbcType="VARCHAR" property="wsName" />
+    <result column="LOGIN_URL" jdbcType="VARCHAR" property="loginUrl" />
+    <result column="LOGOUT_URL" jdbcType="VARCHAR" property="logoutUrl" />
+    <result column="SYS_LOGIN_IMG" jdbcType="VARCHAR" property="sysLoginImg" />
+    <result column="SYS_HEAD_IMG" jdbcType="VARCHAR" property="sysHeadImg" />
+    <result column="SYS_TITLE_NAME" jdbcType="VARCHAR" property="sysTitleName" />
+    <result column="ADMISSION_TIME" jdbcType="VARCHAR" property="admissionTime" />
+    <result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_USER_FLOW" jdbcType="VARCHAR" property="createUserFlow" />
+    <result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime" />
+    <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
+    <result column="IS_DEFAULT" jdbcType="VARCHAR" property="isDefault" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    WS_ID, WS_NAME, LOGIN_URL, LOGOUT_URL, SYS_LOGIN_IMG, SYS_HEAD_IMG, SYS_TITLE_NAME, 
+    ADMISSION_TIME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+    IS_DEFAULT
+  </sql>
+  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.SysWsConfigExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.SYS_WS_CONFIG
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.SYS_WS_CONFIG
+    where WS_ID = #{wsId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PDSCI.SYS_WS_CONFIG
+    where WS_ID = #{wsId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysWsConfigExample">
+    delete from PDSCI.SYS_WS_CONFIG
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysWsConfig">
+    insert into PDSCI.SYS_WS_CONFIG (WS_ID, WS_NAME, LOGIN_URL, 
+      LOGOUT_URL, SYS_LOGIN_IMG, SYS_HEAD_IMG, 
+      SYS_TITLE_NAME, ADMISSION_TIME, RECORD_STATUS, 
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+      MODIFY_USER_FLOW, IS_DEFAULT)
+    values (#{wsId,jdbcType=VARCHAR}, #{wsName,jdbcType=VARCHAR}, #{loginUrl,jdbcType=VARCHAR}, 
+      #{logoutUrl,jdbcType=VARCHAR}, #{sysLoginImg,jdbcType=VARCHAR}, #{sysHeadImg,jdbcType=VARCHAR}, 
+      #{sysTitleName,jdbcType=VARCHAR}, #{admissionTime,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
+      #{modifyUserFlow,jdbcType=VARCHAR}, #{isDefault,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysWsConfig">
+    insert into PDSCI.SYS_WS_CONFIG
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="wsId != null">
+        WS_ID,
+      </if>
+      <if test="wsName != null">
+        WS_NAME,
+      </if>
+      <if test="loginUrl != null">
+        LOGIN_URL,
+      </if>
+      <if test="logoutUrl != null">
+        LOGOUT_URL,
+      </if>
+      <if test="sysLoginImg != null">
+        SYS_LOGIN_IMG,
+      </if>
+      <if test="sysHeadImg != null">
+        SYS_HEAD_IMG,
+      </if>
+      <if test="sysTitleName != null">
+        SYS_TITLE_NAME,
+      </if>
+      <if test="admissionTime != null">
+        ADMISSION_TIME,
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="isDefault != null">
+        IS_DEFAULT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="wsId != null">
+        #{wsId,jdbcType=VARCHAR},
+      </if>
+      <if test="wsName != null">
+        #{wsName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginUrl != null">
+        #{loginUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="logoutUrl != null">
+        #{logoutUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sysLoginImg != null">
+        #{sysLoginImg,jdbcType=VARCHAR},
+      </if>
+      <if test="sysHeadImg != null">
+        #{sysHeadImg,jdbcType=VARCHAR},
+      </if>
+      <if test="sysTitleName != null">
+        #{sysTitleName,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionTime != null">
+        #{admissionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null">
+        #{isDefault,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysWsConfigExample" resultType="java.lang.Integer">
+    select count(*) from PDSCI.SYS_WS_CONFIG
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update PDSCI.SYS_WS_CONFIG
+    <set>
+      <if test="record.wsId != null">
+        WS_ID = #{record.wsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wsName != null">
+        WS_NAME = #{record.wsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginUrl != null">
+        LOGIN_URL = #{record.loginUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logoutUrl != null">
+        LOGOUT_URL = #{record.logoutUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysLoginImg != null">
+        SYS_LOGIN_IMG = #{record.sysLoginImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysHeadImg != null">
+        SYS_HEAD_IMG = #{record.sysHeadImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysTitleName != null">
+        SYS_TITLE_NAME = #{record.sysTitleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.admissionTime != null">
+        ADMISSION_TIME = #{record.admissionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null">
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null">
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null">
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDefault != null">
+        IS_DEFAULT = #{record.isDefault,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update PDSCI.SYS_WS_CONFIG
+    set WS_ID = #{record.wsId,jdbcType=VARCHAR},
+      WS_NAME = #{record.wsName,jdbcType=VARCHAR},
+      LOGIN_URL = #{record.loginUrl,jdbcType=VARCHAR},
+      LOGOUT_URL = #{record.logoutUrl,jdbcType=VARCHAR},
+      SYS_LOGIN_IMG = #{record.sysLoginImg,jdbcType=VARCHAR},
+      SYS_HEAD_IMG = #{record.sysHeadImg,jdbcType=VARCHAR},
+      SYS_TITLE_NAME = #{record.sysTitleName,jdbcType=VARCHAR},
+      ADMISSION_TIME = #{record.admissionTime,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      IS_DEFAULT = #{record.isDefault,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysWsConfig">
+    update PDSCI.SYS_WS_CONFIG
+    <set>
+      <if test="wsName != null">
+        WS_NAME = #{wsName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginUrl != null">
+        LOGIN_URL = #{loginUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="logoutUrl != null">
+        LOGOUT_URL = #{logoutUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sysLoginImg != null">
+        SYS_LOGIN_IMG = #{sysLoginImg,jdbcType=VARCHAR},
+      </if>
+      <if test="sysHeadImg != null">
+        SYS_HEAD_IMG = #{sysHeadImg,jdbcType=VARCHAR},
+      </if>
+      <if test="sysTitleName != null">
+        SYS_TITLE_NAME = #{sysTitleName,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionTime != null">
+        ADMISSION_TIME = #{admissionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null">
+        IS_DEFAULT = #{isDefault,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where WS_ID = #{wsId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysWsConfig">
+    update PDSCI.SYS_WS_CONFIG
+    set WS_NAME = #{wsName,jdbcType=VARCHAR},
+      LOGIN_URL = #{loginUrl,jdbcType=VARCHAR},
+      LOGOUT_URL = #{logoutUrl,jdbcType=VARCHAR},
+      SYS_LOGIN_IMG = #{sysLoginImg,jdbcType=VARCHAR},
+      SYS_HEAD_IMG = #{sysHeadImg,jdbcType=VARCHAR},
+      SYS_TITLE_NAME = #{sysTitleName,jdbcType=VARCHAR},
+      ADMISSION_TIME = #{admissionTime,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      IS_DEFAULT = #{isDefault,jdbcType=VARCHAR}
+    where WS_ID = #{wsId,jdbcType=VARCHAR}
+  </update>
+</mapper>

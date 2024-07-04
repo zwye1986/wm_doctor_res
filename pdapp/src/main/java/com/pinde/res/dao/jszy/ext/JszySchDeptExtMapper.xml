@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.jszy.ext.JszySchDeptExtMapper">
+
+	<select id="getUserListBySchDept" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+		select *
+		from sys_user su
+		inner join sys_user_role sur
+		on sur.user_flow = su.user_flow
+		where su.record_status = 'Y'
+		and sur.record_status = 'Y'
+		and sur.role_flow = #{roleFlow}
+		<if test="userName !=null and userName !=''">
+			and su.user_name like '%${userName}%'
+		</if>
+		and (
+		  exists(
+			select null
+			from sys_user_dept sud
+			where sud.dept_flow = (select sd.dept_flow from sch_dept sd where sd.record_status = 'Y' and sd.sch_dept_flow = #{schDeptFlow})
+			and sud.user_flow = su.user_flow
+			and sud.record_status='Y'
+		  )
+		  or su.dept_flow = (select sd.dept_flow from sch_dept sd where sd.record_status = 'Y' and sd.sch_dept_flow = #{schDeptFlow})
+		)
+	</select>
+	<select id="searchRelByStandard" resultMap="com.pinde.sci.dao.base.SchDeptRelMapper.BaseResultMap" >
+		select DISTINCT dept.sch_dept_flow,dept.sch_dept_name,dept.create_time
+		from Sch_Dept_Rel rel
+		join sch_dept dept
+		on rel.sch_dept_flow=dept.sch_dept_flow
+		where rel.record_status='Y'
+		and dept.record_status='Y'
+		and dept.org_flow=#{orgFlow}
+		and rel.standard_dept_id=#{standardDeptId}
+		<if test='deptName!=null and deptName!=""'>
+			AND dept.Dept_name like '%${deptName}%'
+		</if>
+		order by dept.create_time
+	</select>
+</mapper>

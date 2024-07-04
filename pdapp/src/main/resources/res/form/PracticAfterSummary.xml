@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+    <!-- 轮转出科个人小结记录表单 -->
+    <!--
+    {0}:表单所属机构(开关控制)
+    {1}:版本号
+ -->
+    <jsp path="res/form/{0}/case_{1}"/>
+    <jszy ver="1.0">
+        <page ver="1.0">
+            <item name="summary" isView="0" remark="内容" multiple="N"/>
+        </page>
+    </jszy>
+</jspForm>
+

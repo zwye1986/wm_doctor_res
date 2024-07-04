@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.sci.dao.base.ResAnnualAssessmentRecordMapper">
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResAnnualAssessmentRecord">
+    <id column="ANNUAL_ASSESSMENT_FLOW" jdbcType="VARCHAR" property="annualAssessmentFlow" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow" />
+    <result column="DAILY_FINISH_SCORE" jdbcType="VARCHAR" property="dailyFinishScore" />
+    <result column="TRAINING_MANUAL_SCORE" jdbcType="VARCHAR" property="trainingManualScore" />
+    <result column="PROFESSIONAL_THEORY_SCORE" jdbcType="VARCHAR" property="professionalTheoryScore" />
+    <result column="SKILL_NAME" jdbcType="VARCHAR" property="skillName" />
+    <result column="SKILL_SCORE" jdbcType="VARCHAR" property="skillScore" />
+    <result column="PUBLIC_SKILLS_SCORE" jdbcType="VARCHAR" property="publicSkillsScore" />
+    <result column="APPROVED_TOTAL_SCORE" jdbcType="VARCHAR" property="approvedTotalScore" />
+    <result column="MEMO" jdbcType="VARCHAR" property="memo" />
+    <result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_USER_FLOW" jdbcType="VARCHAR" property="createUserFlow" />
+    <result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime" />
+    <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
+    <result column="MATERIAL_URL" jdbcType="VARCHAR" property="materialUrl" />
+    <result column="MATERIAL_NAME" jdbcType="VARCHAR" property="materialName" />
+    <result column="ASSESSMENT_YEAR" jdbcType="VARCHAR" property="assessmentYear" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ANNUAL_ASSESSMENT_FLOW, USER_NAME, USER_FLOW, DAILY_FINISH_SCORE, TRAINING_MANUAL_SCORE, 
+    PROFESSIONAL_THEORY_SCORE, SKILL_NAME, SKILL_SCORE, PUBLIC_SKILLS_SCORE, APPROVED_TOTAL_SCORE, 
+    MEMO, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+    MATERIAL_URL, MATERIAL_NAME, ASSESSMENT_YEAR
+  </sql>
+  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.ResAnnualAssessmentRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_ANNUAL_ASSESSMENT_RECORD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_ANNUAL_ASSESSMENT_RECORD
+    where ANNUAL_ASSESSMENT_FLOW = #{annualAssessmentFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PDSCI.RES_ANNUAL_ASSESSMENT_RECORD
+    where ANNUAL_ASSESSMENT_FLOW = #{annualAssessmentFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResAnnualAssessmentRecordExample">
+    delete from PDSCI.RES_ANNUAL_ASSESSMENT_RECORD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResAnnualAssessmentRecord">
+    insert into PDSCI.RES_ANNUAL_ASSESSMENT_RECORD (ANNUAL_ASSESSMENT_FLOW, USER_NAME, USER_FLOW, 
+      DAILY_FINISH_SCORE, TRAINING_MANUAL_SCORE, 
+      PROFESSIONAL_THEORY_SCORE, SKILL_NAME, SKILL_SCORE, 
+      PUBLIC_SKILLS_SCORE, APPROVED_TOTAL_SCORE, 
+      MEMO, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+      MATERIAL_URL, MATERIAL_NAME, ASSESSMENT_YEAR
+      )
+    values (#{annualAssessmentFlow,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userFlow,jdbcType=VARCHAR}, 
+      #{dailyFinishScore,jdbcType=VARCHAR}, #{trainingManualScore,jdbcType=VARCHAR}, 
+      #{professionalTheoryScore,jdbcType=VARCHAR}, #{skillName,jdbcType=VARCHAR}, #{skillScore,jdbcType=VARCHAR}, 
+      #{publicSkillsScore,jdbcType=VARCHAR}, #{approvedTotalScore,jdbcType=VARCHAR}, 
+      #{memo,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{materialUrl,jdbcType=VARCHAR}, #{materialName,jdbcType=VARCHAR}, #{assessmentYear,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResAnnualAssessmentRecord">
+    insert into PDSCI.RES_ANNUAL_ASSESSMENT_RECORD
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="annualAssessmentFlow != null">
+        ANNUAL_ASSESSMENT_FLOW,
+      </if>
+      <if test="userName != null">
+        USER_NAME,
+      </if>
+      <if test="userFlow != null">
+        USER_FLOW,
+      </if>
+      <if test="dailyFinishScore != null">
+        DAILY_FINISH_SCORE,
+      </if>
+      <if test="trainingManualScore != null">
+        TRAINING_MANUAL_SCORE,
+      </if>
+      <if test="professionalTheoryScore != null">
+        PROFESSIONAL_THEORY_SCORE,
+      </if>
+      <if test="skillName != null">
+        SKILL_NAME,
+      </if>
+      <if test="skillScore != null">
+        SKILL_SCORE,
+      </if>
+      <if test="publicSkillsScore != null">
+        PUBLIC_SKILLS_SCORE,
+      </if>
+      <if test="approvedTotalScore != null">
+        APPROVED_TOTAL_SCORE,
+      </if>
+      <if test="memo != null">
+        MEMO,
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="materialUrl != null">
+        MATERIAL_URL,
+      </if>
+      <if test="materialName != null">
+        MATERIAL_NAME,
+      </if>
+      <if test="assessmentYear != null">
+        ASSESSMENT_YEAR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="annualAssessmentFlow != null">
+        #{annualAssessmentFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userFlow != null">
+        #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="dailyFinishScore != null">
+        #{dailyFinishScore,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingManualScore != null">
+        #{trainingManualScore,jdbcType=VARCHAR},
+      </if>
+      <if test="professionalTheoryScore != null">
+        #{professionalTheoryScore,jdbcType=VARCHAR},
+      </if>
+      <if test="skillName != null">
+        #{skillName,jdbcType=VARCHAR},
+      </if>
+      <if test="skillScore != null">
+        #{skillScore,jdbcType=VARCHAR},
+      </if>
+      <if test="publicSkillsScore != null">
+        #{publicSkillsScore,jdbcType=VARCHAR},
+      </if>
+      <if test="approvedTotalScore != null">
+        #{approvedTotalScore,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="materialUrl != null">
+        #{materialUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="materialName != null">
+        #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="assessmentYear != null">
+        #{assessmentYear,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResAnnualAssessmentRecordExample" resultType="java.lang.Integer">
+    select count(*) from PDSCI.RES_ANNUAL_ASSESSMENT_RECORD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update PDSCI.RES_ANNUAL_ASSESSMENT_RECORD
+    <set>
+      <if test="record.annualAssessmentFlow != null">
+        ANNUAL_ASSESSMENT_FLOW = #{record.annualAssessmentFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null">
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userFlow != null">
+        USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dailyFinishScore != null">
+        DAILY_FINISH_SCORE = #{record.dailyFinishScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingManualScore != null">
+        TRAINING_MANUAL_SCORE = #{record.trainingManualScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.professionalTheoryScore != null">
+        PROFESSIONAL_THEORY_SCORE = #{record.professionalTheoryScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skillName != null">
+        SKILL_NAME = #{record.skillName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skillScore != null">
+        SKILL_SCORE = #{record.skillScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publicSkillsScore != null">
+        PUBLIC_SKILLS_SCORE = #{record.publicSkillsScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approvedTotalScore != null">
+        APPROVED_TOTAL_SCORE = #{record.approvedTotalScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memo != null">
+        MEMO = #{record.memo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null">
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null">
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null">
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.materialUrl != null">
+        MATERIAL_URL = #{record.materialUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.materialName != null">
+        MATERIAL_NAME = #{record.materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assessmentYear != null">
+        ASSESSMENT_YEAR = #{record.assessmentYear,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update PDSCI.RES_ANNUAL_ASSESSMENT_RECORD
+    set ANNUAL_ASSESSMENT_FLOW = #{record.annualAssessmentFlow,jdbcType=VARCHAR},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      DAILY_FINISH_SCORE = #{record.dailyFinishScore,jdbcType=VARCHAR},
+      TRAINING_MANUAL_SCORE = #{record.trainingManualScore,jdbcType=VARCHAR},
+      PROFESSIONAL_THEORY_SCORE = #{record.professionalTheoryScore,jdbcType=VARCHAR},
+      SKILL_NAME = #{record.skillName,jdbcType=VARCHAR},
+      SKILL_SCORE = #{record.skillScore,jdbcType=VARCHAR},
+      PUBLIC_SKILLS_SCORE = #{record.publicSkillsScore,jdbcType=VARCHAR},
+      APPROVED_TOTAL_SCORE = #{record.approvedTotalScore,jdbcType=VARCHAR},
+      MEMO = #{record.memo,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      MATERIAL_URL = #{record.materialUrl,jdbcType=VARCHAR},
+      MATERIAL_NAME = #{record.materialName,jdbcType=VARCHAR},
+      ASSESSMENT_YEAR = #{record.assessmentYear,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResAnnualAssessmentRecord">
+    update PDSCI.RES_ANNUAL_ASSESSMENT_RECORD
+    <set>
+      <if test="userName != null">
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userFlow != null">
+        USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="dailyFinishScore != null">
+        DAILY_FINISH_SCORE = #{dailyFinishScore,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingManualScore != null">
+        TRAINING_MANUAL_SCORE = #{trainingManualScore,jdbcType=VARCHAR},
+      </if>
+      <if test="professionalTheoryScore != null">
+        PROFESSIONAL_THEORY_SCORE = #{professionalTheoryScore,jdbcType=VARCHAR},
+      </if>
+      <if test="skillName != null">
+        SKILL_NAME = #{skillName,jdbcType=VARCHAR},
+      </if>
+      <if test="skillScore != null">
+        SKILL_SCORE = #{skillScore,jdbcType=VARCHAR},
+      </if>
+      <if test="publicSkillsScore != null">
+        PUBLIC_SKILLS_SCORE = #{publicSkillsScore,jdbcType=VARCHAR},
+      </if>
+      <if test="approvedTotalScore != null">
+        APPROVED_TOTAL_SCORE = #{approvedTotalScore,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        MEMO = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="materialUrl != null">
+        MATERIAL_URL = #{materialUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="materialName != null">
+        MATERIAL_NAME = #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="assessmentYear != null">
+        ASSESSMENT_YEAR = #{assessmentYear,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ANNUAL_ASSESSMENT_FLOW = #{annualAssessmentFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResAnnualAssessmentRecord">
+    update PDSCI.RES_ANNUAL_ASSESSMENT_RECORD
+    set USER_NAME = #{userName,jdbcType=VARCHAR},
+      USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      DAILY_FINISH_SCORE = #{dailyFinishScore,jdbcType=VARCHAR},
+      TRAINING_MANUAL_SCORE = #{trainingManualScore,jdbcType=VARCHAR},
+      PROFESSIONAL_THEORY_SCORE = #{professionalTheoryScore,jdbcType=VARCHAR},
+      SKILL_NAME = #{skillName,jdbcType=VARCHAR},
+      SKILL_SCORE = #{skillScore,jdbcType=VARCHAR},
+      PUBLIC_SKILLS_SCORE = #{publicSkillsScore,jdbcType=VARCHAR},
+      APPROVED_TOTAL_SCORE = #{approvedTotalScore,jdbcType=VARCHAR},
+      MEMO = #{memo,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      MATERIAL_URL = #{materialUrl,jdbcType=VARCHAR},
+      MATERIAL_NAME = #{materialName,jdbcType=VARCHAR},
+      ASSESSMENT_YEAR = #{assessmentYear,jdbcType=VARCHAR}
+    where ANNUAL_ASSESSMENT_FLOW = #{annualAssessmentFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

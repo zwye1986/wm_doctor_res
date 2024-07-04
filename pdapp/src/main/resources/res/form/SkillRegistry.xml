@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>	
+	<!-- 大病历登记表单 -->
+	<!-- 
+	{0}:表单所属机构(开关控制)
+	{1}:版本号
+ -->
+	<jsp path="res/form/{3}/{0}/skill_{1}"></jsp>
+	<product ver="1.0">
+		<page  ver="1.0">
+			<item name="skillName" isView="0" remark="操作名称" multiple="N"></item>
+			<item name="operateDate" remark="操作日期" multiple="N"></item>
+			<item name="operateTime" remark="操作时机" multiple="N"></item>
+			<item name="patientName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="caseNo" isView="0" remark="病历号" multiple="N"></item>
+			<item name="objective" remark="目的" multiple="N"></item>
+			<item name="status" remark="状态" multiple="Y"></item>
+			<item name="operateType" remark="操作类别" multiple="N"></item>
+			<item name="diagnosisType" remark="诊断类型" multiple="N"></item>
+			<item name="failReason" remark="失败原因" multiple="N"></item>
+			<item name="remark" remark="备注" multiple="N"></item>
+			<item name="record" remark="记录" multiple="N"></item>
+			<item name="file" remark="附件" multiple="N"></item>
+		</page>
+	</product>
+	<njykdxsxs ver="1.0">
+		<page  ver="1.0">
+			<item name="skillName" isView="0" remark="操作名称"></item>
+			<item name="dept" isView="1" remark="科室"></item>
+			<item name="operateDate" isView="2" remark="时间"></item>
+			<item name="status" isView="3"  select="Y" remark="操作方式"></item>
+		</page>
+	</njykdxsxs>
+	<shetyy ver="1.0">
+		<page  ver="1.0">
+			<item name="date" remark="日期" multiple="N"></item>
+			<item name="skillName" isView="0" remark="操作名称" multiple="N"></item>
+			<!-- <item name="cases" isView="0" remark="例次(份)" multiple="N"></item> -->
+			<item name="status" isView="0" remark="住院号" multiple="Y"></item>
+			<item name="firstAssistant" isView="0" remark="第一助手" multiple="Y"></item>
+			<item name="secondAssistant" isView="0" remark="第二助手" multiple="Y"></item>
+			<item name="assessment" isView="0" remark="考核者" multiple="Y"></item>
+		</page>
+	</shetyy>
+	<njzyykdxzs ver="1.0">
+		<page  ver="1.0">
+			<item name="date" remark="日期" multiple="N"></item>
+			<item name="skillName" isView="0" remark="操作名称" multiple="N"></item>
+			<!-- <item name="cases" isView="0" remark="例次(份)" multiple="N"></item> -->
+			<item name="status" isView="0" remark="住院号" multiple="Y"></item>
+			<item name="firstAssistant" isView="0" remark="第一助手" multiple="Y"></item>
+			<item name="secondAssistant" isView="0" remark="第二助手" multiple="Y"></item>
+			<item name="assessment" isView="0" remark="考核者" multiple="Y"></item>
+		</page>
+	</njzyykdxzs>
+	<nfykdxpt ver="1.0">
+		<page  ver="1.0">
+			<item name="skillName" isView="0" remark="操作名称" multiple="N"></item>
+			<item name="id" isView="0" remark="ID号" multiple="N"></item>
+			<item name="patientName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="hospitaNumber" remark="住院号" multiple="N"></item>
+			<item name="admissionDate" remark="入院日期" multiple="N"></item>
+			<item name="mainDiagnosis" remark="主要诊断" multiple="N"></item>
+			<item name="skillIdentity" remark="操作人身份" multiple="N"></item>
+		</page>
+	</nfykdxpt>
+	<jsst ver="2.0">
+		<page ver="1.0">
+			<item name="skill_pName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="skill_operDate" isView="0" remark="操作日期" multiple="N"></item>
+			<item name="skill_operName" isView="0" remark="操作名称" multiple="N"></item>
+			<item name="skill_mrNo" remark="病历号/检查号" multiple="N"></item>
+			<item name="skill_result" remark="是否成功" multiple="N"></item>
+			<item name="fail_reason" remark="失败原因" multiple="N"></item>
+		</page>
+		<page ver="2.0">
+			<item name="skill_pName" isView="1" remark="病人姓名" multiple="N"></item>
+			<item name="skill_operDate" isView="3" remark="操作日期" multiple="N"></item>
+			<item name="skill_operName" isView="2" remark="操作名称" multiple="N"></item>
+			<item name="skill_mrNo" isView="0" remark="病历号/检查号" multiple="N"></item>
+			<item name="skill_result" isView="4" select="Y" remark="是否成功" multiple="N"></item>
+			<item name="fail_reason" isView="5" remark="失败原因" multiple="N"></item>
+		</page>
+	</jsst>
+	<sczyfy ver="1.0">
+		<page ver="1.0">
+			<item name="skill_pName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="skill_operDate" isView="0" remark="操作日期" multiple="N"></item>
+			<item name="skill_operName" isView="0" remark="操作名称" multiple="N"></item>
+			<item name="skill_mrNo" remark="病历号/检查号" multiple="N"></item>
+			<item name="skill_result" select="Y" remark="是否成功" multiple="N"></item>
+			<item name="fail_diagnosticResults" remark="诊断结果" multiple="N"></item>
+			<item name="fail_reason" remark="失败原因" multiple="N"></item>
+		</page>
+	</sczyfy>
+	<hbszyysgfhpxglpt ver="1.0">
+		<page ver="1.0">
+			<item name="skill_pName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="skill_operDate" isView="1" remark="操作日期" multiple="N"></item>
+			<item name="skill_operName" isView="2" remark="操作名称" multiple="N"></item>
+			<item name="skill_mrNo" remark="病历号/检查号" multiple="N"></item>
+			<item name="skill_result" select="Y" remark="是否成功" multiple="N"></item>
+			<item name="fail_reason" remark="失败原因" multiple="N"></item>
+		</page>
+	</hbszyysgfhpxglpt>
+	<dgdhyy ver="1.0">
+		<page ver="1.0">
+			<item name="skill_pName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="skill_operDate" isView="1" remark="操作日期" multiple="N"></item>
+			<item name="skill_operName" isView="2" remark="操作名称" multiple="N"></item>
+			<item name="skill_mrNo" remark="病历号/检查号" multiple="N"></item>
+			<item name="skill_result" select="Y" remark="是否成功" multiple="N"></item>
+			<item name="fail_reason" remark="失败原因" multiple="N"></item>
+		</page>
+	</dgdhyy>
+	<zsey ver="1.0">
+		<page ver="1.0">
+			<item name="skill_pName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="skill_operDate" isView="1" remark="操作日期" multiple="N"></item>
+			<item name="skill_operName" isView="2" remark="操作名称" multiple="N"></item>
+			<item name="skill_mrNo" remark="病历号/检查号" multiple="N"></item>
+			<item name="skill_result" select="Y" remark="是否成功" multiple="N"></item>
+			<item name="fail_reason" remark="失败原因" multiple="N"></item>
+		</page>
+	</zsey>
+	<jsst ver="1.0">
+		<page ver="1.0">
+			<item name="skill_pName" isView="1" remark="病人姓名" multiple="N"></item>
+			<item name="skill_operDate" isView="3" remark="操作日期" multiple="N"></item>
+			<item name="skill_operName" isView="2" remark="操作名称" multiple="N"></item>
+			<item name="skill_mrNo" isView="0" remark="病历号" multiple="N"></item>
+			<item name="skill_status" isView="4" remark="状态" multiple="N"></item>
+		</page>
+	</jsst>
+	<shdfyy ver="1.0">
+		<page ver="1.0">
+			<item name="skill_pName" isView="1" remark="病人姓名" multiple="N"></item>
+			<item name="skill_operDate" isView="3" remark="操作日期" multiple="N"></item>
+			<item name="skill_operName" isView="2" remark="操作名称" multiple="N"></item>
+			<item name="skill_mrNo" isView="0" remark="病历号" multiple="N"></item>
+			<item name="skill_status" isView="4" remark="状态" multiple="N"></item>
+		</page>
+	</shdfyy>
+
+	<shzs_qk_jncz_ty ver="1.0">
+		<page ver="1.0">
+			<item name="skill_operDate" isView="3" remark="日期" multiple="N"></item>
+			<item name="skill_pName" isView="1" remark="病人姓名" multiple="N"></item>
+			<item name="skill_mrNo" isView="0" remark="病例号" multiple="N"></item>
+			<item name="skill_operName" isView="2" remark="操作名称" multiple="N"></item>
+			<item name="skill_operatorOrHelper" select="Y" remark="术者/助手" multiple="N"></item>
+			<item name="skill_remark"  remark="备注" multiple="N"></item>
+		</page>
+	</shzs_qk_jncz_ty>
+
+	<shzs_qk_jncz_wk ver="1.0">
+		<page ver="1.0">
+			<item name="skill_operDate" isView="3" remark="日期" multiple="N"></item>
+			<item name="skill_pName" isView="1" remark="病人姓名" multiple="N"></item>
+			<item name="skill_mrNo" isView="0" remark="病例号" multiple="N"></item>
+			<item name="skill_operName" isView="2" remark="操作名称" multiple="N"></item>
+			<item name="skill_operatorOrHelper" select="Y"  remark="术者/助手" multiple="N"></item>
+			<item name="skill_superiorPhysicianName"  remark="上级医师姓名" multiple="N"></item>
+		</page>
+	</shzs_qk_jncz_wk>
+	<shzs_qk_jncz_jzjj ver="1.0">
+		<page ver="1.0">
+			<item name="skill_operName" isView="2" remark="操作名称" multiple="N"></item>
+			<item name="skill_pName" isView="1" remark="病人姓名" multiple="N"></item>
+			<item name="skill_mrNo" isView="0" remark="病例号" multiple="N"></item>
+			<item name="skill_diseaseNiagnose"  remark="疾病诊断" multiple="N"></item>
+			<item name="skill_yourselfOrHelper" select="Y"  remark="自己完成/助手" multiple="N"></item>
+			<item name="skill_directorPhysician" isView="3" remark="主管医师" multiple="N"></item>
+			<item name="skill_succeedOrFail" select="Y"  remark="成功/失败" multiple="N"></item>
+		</page>
+	</shzs_qk_jncz_jzjj>
+	<shzs_qk_jncz_jzjj2 ver="1.0">
+		<page ver="1.0">
+			<item name="skill_operName" isView="2" remark="操作名称" multiple="N"></item>
+			<item name="skill_pName" isView="1" remark="病人姓名" multiple="N"></item>
+			<item name="skill_mrNo" isView="0" remark="病例号" multiple="N"></item>
+			<item name="skill_mainDiagnosis"  remark="主要诊断" multiple="N"></item>
+			<item name="skill_secondaryDiagnosis"  remark="次要诊断" multiple="N"></item>
+			<item name="skill_director" select="Y"  remark="是否主管" multiple="N"></item>
+			<item name="skill_remark"  remark="备注" multiple="N"></item>
+		</page>
+	</shzs_qk_jncz_jzjj2>
+	<shzs_qk_jncz_yk ver="1.0">
+		<page ver="1.0">
+			<item name="skill_operName" isView="2" remark="操作名称" multiple="N"></item>
+			<item name="skill_pName" isView="1" remark="病人姓名" multiple="N"></item>
+			<item name="skill_mrNo" isView="0" remark="病例号" multiple="N"></item>
+			<item name="skill_diseaseName" isView="3" remark="疾病名称" multiple="N"></item>
+			<item name="skill_directorPhysician" isView="0" remark="主管医师" multiple="N"></item>
+		</page>
+	</shzs_qk_jncz_yk>
+	<shzs_qk_jncz_ebhk ver="1.0">
+		<page ver="1.0">
+			<item name="skill_operName" isView="2" remark="操作名称" multiple="N"></item>
+			<item name="skill_pName" isView="1" remark="病人姓名" multiple="N"></item>
+			<item name="skill_mrNo" isView="0" remark="病例号" multiple="N"></item>
+			<item name="skill_diseaseName" isView="3" remark="疾病名称" multiple="N"></item>
+			<item name="skill_superiorPhysicianName"  remark="上级医师" multiple="N"></item>
+			<item name="skill_outcome"  remark="转归" multiple="N"></item>
+		</page>
+	</shzs_qk_jncz_ebhk>
+	<shfx ver="1.0">
+		<page ver="1.0">
+			<item name="skill_pName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="skill_operDate" isView="1" remark="操作日期" multiple="N"></item>
+			<item name="skill_operName" isView="2" remark="操作名称" multiple="N"></item>
+			<item name="skill_mrNo" remark="病历号/检查号" multiple="N"></item>
+			<item name="skill_result" select="Y" remark="是否成功" multiple="N"></item>
+			<item name="fail_reason" remark="失败原因" multiple="N"></item>
+		</page>
+	</shfx>
+</jspForm>
+

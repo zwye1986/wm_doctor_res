@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.jswjw.ext.StudentExtMapper">
+    <resultMap type="HashMap" id="signinMap" extends="com.pinde.sci.dao.base.ResDoctorSigninMapper.BaseResultMap">
+        <result property="schDeptName" column="SCH_DEPT_NAME" javaType="string"/>
+        <result property="schStartDate" column="SCH_START_DATE" javaType="string"/>
+        <result property="schEndDate" column="SCH_END_DATE" javaType="string"/>
+        <result property="doctorName" column="DOCTOR_NAME" javaType="string"/>
+        <result property="teacherUserName" column="HEAD_USER_NAME" javaType="string"/>
+        <result property="trainingSpeName" column="TRAINING_SPE_NAME" javaType="string"/>
+        <result property="sessionNumber" column="SESSION_NUMBER" javaType="string"/>
+    </resultMap>
+
+    <select id="readAllIntervalDays" resultType="java.lang.Double">
+        select nvl(sum(INTERVAL_DAYS),0)
+        from res_doctor_kq where record_status='Y'
+        and doctor_flow =#{doctorFlow}
+        and kq_type_id =#{id}
+        <if test="recordFlow!=null and recordFlow !=''">
+            and record_flow !=#{recordFlow}
+        </if>
+        <if test="sessionNumber!=null and sessionNumber !=''">
+            and SESSION_NUMBER_NOW =#{sessionNumber}
+        </if>
+        and audit_status_id in ('Auditing','TeacherPass','HeadPass','TutorPass','ManagerPass','Passed')
+    </select>
+
+    <select id="searchUserWithRole" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" parameterType="java.util.Map">
+        select distinct su.* from sys_user su
+        left join sys_user_role sur on su.user_flow = sur.user_flow
+        where su.RECORD_STATUS = 'Y'
+        <choose>
+            <when test='orgFlow!=null and orgFlow!=""'>
+                and su.org_Flow = #{orgFlow}
+            </when>
+            <otherwise>
+                <if test='orgFlows!=null '>
+                    AND SU.ORG_FLOW IN
+                    <foreach collection="orgFlows" item="org" open="(" separator="," close=")">
+                        #{org}
+                    </foreach>
+                </if>
+            </otherwise>
+        </choose>
+        <if test='orgName!=null and orgName!=""'>
+            and su.org_Name like '%${orgName}%'
+        </if>
+        <if test='deptFlow!=null and deptFlow!=""'>
+            and su.dept_flow = #{deptFlow}
+        </if>
+        <if test='idNo!=null and idNo!=""'>
+            <bind name="idNo" value="'%'+idNo+'%'"/>
+            and su.id_no like #{idNo}
+        </if>
+        <if test='userPhone!=null and userPhone!=""'>
+            <bind name="userPhone" value="'%'+userPhone+'%'"/>
+            and su.user_phone like #{userPhone}
+        </if>
+        <if test='userEmail!=null and userEmail!=""'>
+            <bind name="userEmail" value="'%'+userEmail+'%'"/>
+            and su.user_email like #{userEmail}
+        </if>
+        <if test='userName!=null and userName!=""'>
+            <bind name="userName" value="'%'+userName+'%'"/>
+            and su.user_name like #{userName}
+        </if>
+        <if test='userEmail!=null and userEmail!=""'>
+            <bind name="userEmail" value="'%'+userEmail+'%'"/>
+            and su.user_Email like #{userEmail}
+        </if>
+        <if test='userCode!=null and userCode!=""'>
+            <bind name="userCode" value="'%'+userCode+'%'"/>
+            and su.user_code like #{userCode}
+        </if>
+        <if test='statusId!=null and statusId!=""'>
+            and su.status_Id = #{statusId}
+        </if>
+        <if test='resTrainingSpeId!=null and resTrainingSpeId!=""'>
+            and su.res_training_Spe_Id = #{resTrainingSpeId}
+        </if>
+        <if test='resTrainingSpeName!=null and resTrainingSpeName!=""'>
+            and su.res_training_Spe_Name = #{resTrainingSpeName}
+        </if>
+        <if test='roleFlow!=null and roleFlow!=""'>
+            and sur.role_flow = #{roleFlow}
+            and sur.ws_id = #{wsId}
+            and sur.RECORD_STATUS = 'Y'
+        </if>
+        order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+    </select>
+
+    <select id="checkTime" resultType="java.lang.Integer">
+        select count(1) from res_doctor_kq where record_status='Y'
+        and doctor_flow =#{doctorFlow}
+        and kq_type_id= #{id}
+        <if test="recordFlow!=null and recordFlow !=''">
+            and record_flow !=#{recordFlow}
+        </if>
+        <if test="sessionNumber!=null and sessionNumber !=''">
+            and SESSION_NUMBER_NOW =#{sessionNumber}
+        </if>
+        and audit_status_id in ('Auditing','TeacherPass','HeadPass','TutorPass','ManagerPass','Passed')
+        AND  ( ( START_DATE  <![CDATA[ <= ]]> #{startDate} AND END_DATE >= #{endDate})
+        or (START_DATE  <![CDATA[ >= ]]> #{startDate} AND START_DATE <![CDATA[ <= ]]>#{endDate})
+        or (END_DATE  <![CDATA[ >= ]]> #{startDate} AND END_DATE <![CDATA[ <= ]]>#{endDate}))
+    </select>
+
+    <sql id="resDoctorKqSql">
+        and org_flow=#{orgFlow}
+        and audit_status_id !='Revoke'
+        <if test="roleFlag!='' and roleFlag!=null">
+            <!-- 带教 -->
+            <if test="roleFlag =='Teacher'.toString()">
+                AND teacher_name != '-'
+                <if test="statusId !='' and statusId !=null">
+                    <if test="statusId =='Auditing'.toString()">
+                        and audit_Role_Now = 'teacher'
+                    </if>
+                    <if test="statusId !='Auditing'.toString()">
+                        and (TEACHER_AGREE_FLAG = 'Y' OR TEACHER_AGREE_FLAG = 'N')
+                    </if>
+                </if>
+            </if>
+
+            <!-- 科主任 -->
+            <if test="roleFlag =='Head'.toString()">
+                AND HEAD_NAME != '-'
+                <if test="statusId!='' and statusId!=null">
+                    <if test="statusId =='Auditing'.toString()">
+                        and audit_Role_Now = 'head'
+                    </if>
+                    <if test="statusId !='Auditing'.toString()">
+                        and (head_AGREE_FLAG = 'Y' OR head_AGREE_FLAG = 'N')
+                    </if>
+                </if>
+            </if>
+        </if>
+        <if test="teacherFlow!='' and teacherFlow!=null">
+            and teacher_Flow = #{teacherFlow}
+        </if>
+        <if test="tutorFlow!='' and tutorFlow!=null">
+            and tutor_Flow = #{tutorFlow}
+        </if>
+        <if test="headFlow!='' and headFlow!=null">
+            and head_Flow = #{headFlow}
+        </if>
+        <if test="managerFlow!='' and managerFlow!=null">
+            and manager_Flow = #{managerFlow}
+        </if>
+        <!--<if test="teacherFlow !=null and teacherFlow!='' ">
+            and teacher_Flow =#{teacherFlow}
+            and teacher_name != '-'
+        </if>
+        <if test="headFlow !=null and headFlow!='' ">
+            and head_flow =#{headFlow}
+            and head_name != '-'
+        </if>
+
+        <if test="statusId !=null and statusId!='' and statusId=='Auditing'.toString()">
+            <if test="teacherFlow !=null and teacherFlow!='' ">
+                AND teacher_Agree_Flag IS NULL
+            </if>
+            <if test="headFlow !=null and headFlow!='' ">
+                AND head_Agree_Flag IS NULL
+            </if>
+        </if>
+        <if test="statusId !=null and statusId!='' and statusId=='Audited'.toString()">
+            <if test="teacherFlow !=null and teacherFlow!='' ">
+                AND teacher_Agree_Flag IS not NULL
+            </if>
+            <if test="headFlow !=null and headFlow!='' ">
+                AND head_Agree_Flag IS not NULL
+            </if>
+        </if>-->
+    </sql>
+
+    <select id="searchResDoctorKq"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResDoctorKqMapper.BaseResultMap">
+        select
+        RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME, START_DATE, END_DATE
+        , INTERVAL_DAYS, SCH_DEPT_FLOW, SCH_DEPT_NAME, SCH_DEPT_START_DATE, SCH_DEPT_END_DATE
+        , ORG_FLOW, ORG_NAME, KQ_TYPE_ID, KQ_TYPE_NAME, TYPE_ID
+        , TYPE_NAME, DOCTOR_REMARKS, AUDIT_STATUS_ID, AUDIT_STATUS_NAME, TEACHER_FLOW
+        , TEACHER_NAME, HEAD_FLOW, HEAD_NAME, TUTOR_FLOW, TUTOR_NAME
+        , MANAGER_FLOW, MANAGER_NAME, TEACHER_AGREE_FLAG, TEACHER_AUDIT_TIME, TEACHER_AUDIT_INFO
+        , HEAD_AGREE_FLAG, HEAD_AUDIT_TIME, HEAD_AUDIT_INFO, TUTOR_AGREE_FLAG, TUTOR_AUDIT_TIME
+        , TUTOR_AUDIT_INFO, MANAGER_AGREE_FLAG, MANAGER_AUDIT_TIME, MANAGER_AUDIT_INFO, PROCESS_FLOW
+        , RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+        from RES_DOCTOR_KQ
+        WHERE RECORD_STATUS='Y'
+        <include refid="resDoctorKqSql"/>
+        ORDER by CREATE_TIME
+    </select>
+
+    <select id="queryResDoctorKqCount" resultType="java.util.HashMap">
+        select
+        <if test="teacherFlow !=null and teacherFlow!='' ">
+            case when teacher_Agree_Flag is not null then 'audited' else 'auditing' end type,
+        </if>
+        <if test="headFlow !=null and headFlow!='' ">
+            case when head_Agree_Flag is not null then 'audited' else 'auditing' end type,
+        </if>
+        count(1) scount from (
+            SELECT HEAD_AGREE_FLAG,TEACHER_AGREE_FLAG
+            FROM res_doctor_kq
+            WHERE RECORD_STATUS='Y'
+            <include refid="resDoctorKqSql"/>
+        ) group by
+        <if test="teacherFlow !=null and teacherFlow!='' ">
+            case when teacher_Agree_Flag is not null then 'audited' else 'auditing' end
+        </if>
+        <if test="headFlow !=null and headFlow!='' ">
+            case when head_Agree_Flag is not null then 'audited' else 'auditing' end
+        </if>
+
+    </select>
+
+    <select id="searchAuditResDoctorKq" resultMap="com.pinde.sci.dao.base.ResDoctorKqMapper.BaseResultMap" parameterType="java.util.Map">
+        select
+        rdk.RECORD_FLOW, rdk.DOCTOR_FLOW, rdk.DOCTOR_NAME, rdk.START_DATE, rdk.END_DATE
+        , rdk.INTERVAL_DAYS, rdk.SCH_DEPT_FLOW, rdk.SCH_DEPT_NAME, rdk.SCH_DEPT_START_DATE, rdk.SCH_DEPT_END_DATE
+        , rdk.ORG_FLOW, rdk.ORG_NAME, rdk.KQ_TYPE_ID, rdk.KQ_TYPE_NAME, rdk.TYPE_ID
+        , rdk.TYPE_NAME, rdk.DOCTOR_REMARKS, rdk.AUDIT_STATUS_ID, rdk.AUDIT_STATUS_NAME, rdk.TEACHER_FLOW
+        , rdk.TEACHER_NAME, rdk.HEAD_FLOW, rdk.HEAD_NAME, rdk.TUTOR_FLOW, rdk.TUTOR_NAME
+        , rdk.MANAGER_FLOW, rdk.MANAGER_NAME, rdk.TEACHER_AGREE_FLAG, rdk.TEACHER_AUDIT_TIME, rdk.TEACHER_AUDIT_INFO
+        , rdk.HEAD_AGREE_FLAG, rdk.HEAD_AUDIT_TIME, rdk.HEAD_AUDIT_INFO, rdk.TUTOR_AGREE_FLAG, rdk.TUTOR_AUDIT_TIME
+        , rdk.TUTOR_AUDIT_INFO, rdk.MANAGER_AGREE_FLAG, rdk.MANAGER_AUDIT_TIME, rdk.MANAGER_AUDIT_INFO, rdk.PROCESS_FLOW
+        , rdk.RECORD_STATUS, rdk.CREATE_TIME, rdk.CREATE_USER_FLOW, rdk.MODIFY_TIME, rdk.MODIFY_USER_FLOW
+        from RES_DOCTOR_KQ rdk
+        left join res_doctor rd on rdk.doctor_flow = rd.doctor_flow and rd.RECORD_STATUS='Y'
+        where rdk.RECORD_STATUS='Y'
+        <if test="doctorName!='' and doctorName!=null">
+            and rdk.doctor_Name like '%${doctorName}%'
+        </if>
+        <if test="orgFlow!='' and orgFlow!=null">
+            AND rdk.org_flow = #{orgFlow}
+        </if>
+        <if test="auditStatusId!='' and auditStatusId!=null">
+            and rdk.audit_status_id = #{auditStatusId}
+        </if>
+        <if test="managerAgreeFlag !='' and managerAgreeFlag!=null">
+            and rdk.manager_AGREE_FLAG = #{managerAgreeFlag}
+        </if>
+        <if test="typeId!='' and typeId!=null">
+            and rdk.type_Id like #{typeId}
+        </if>
+        <if test="startDate!='' and startDate!=null">
+            and rdk.end_Date >= #{startDate}
+        </if>
+        <if test="endDate!='' and endDate!=null">
+            and #{endDate} >= rdk.start_Date
+        </if>
+        <if test="teacherFlow!='' and teacherFlow!=null">
+            and rdk.teacher_Flow = #{teacherFlow}
+        </if>
+        <if test="tutorFlow!='' and tutorFlow!=null">
+            and rdk.tutor_Flow = #{tutorFlow}
+        </if>
+        <if test="headFlow!='' and headFlow!=null">
+            and rdk.head_Flow = #{headFlow}
+        </if>
+        <if test="managerFlow!='' and managerFlow!=null">
+            and rdk.manager_Flow = #{managerFlow}
+        </if>
+        <if test="notStatus!=null and notStatus.size>0">
+            and rdk.Audit_Status_Id not in
+            <foreach collection="notStatus" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="auditStatusIdList!=null and auditStatusIdList.size>0">
+            and rdk.Audit_Status_Id in
+            <foreach collection="auditStatusIdList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="doctorTypeIdList!=null and doctorTypeIdList.size>0">
+            and rd.DOCTOR_TYPE_ID in
+            <foreach collection="doctorTypeIdList" open="(" separator="," close=")" item="item1">#{item1}</foreach>
+        </if>
+        <if test="sessionNumber!='' and sessionNumber!=null">
+            and rd.session_Number = #{sessionNumber}
+        </if>
+        <if test="agreeFlag!='' and agreeFlag!=null">
+            <if test="roleFlag!='' and roleFlag!=null and roleFlag == 'Teacher'.toString()">
+                and rdk.TEACHER_AGREE_FLAG is not null
+            </if>
+            <if test="roleFlag!='' and roleFlag!=null and roleFlag == 'Head'.toString()">
+                and rdk.HEAD_AGREE_FLAG is not null
+            </if>
+            <if test="roleFlag!='' and roleFlag!=null and roleFlag == 'Admin'.toString()">
+                and rdk.MANAGER_AGREE_FLAG is not null
+            </if>
+        </if>
+        order by rdk.create_time desc
+    </select>
+
+    <select id="queryResDoctorKqCountNew" resultType="java.util.HashMap">
+        select
+        <if test="teacherFlow !=null and teacherFlow!='' ">
+            case when teacher_Agree_Flag is not null then 'audited' else 'auditing' end type,
+        </if>
+        <if test="headFlow !=null and headFlow!='' ">
+            case when head_Agree_Flag is not null then 'audited' else 'auditing' end type,
+        </if>
+        <if test="managerFlow !=null and managerFlow!='' ">
+            case when manager_Agree_Flag is not null then 'audited' else 'auditing' end type,
+        </if>
+        count(1) scount from (
+        SELECT HEAD_AGREE_FLAG,TEACHER_AGREE_FLAG,MANAGER_AGREE_FLAG
+        FROM res_doctor_kq
+        WHERE RECORD_STATUS='Y'
+        <if test="orgFlow!='' and orgFlow!=null">
+            AND org_flow = #{orgFlow}
+        </if>
+        <if test="teacherFlow!='' and teacherFlow!=null">
+            and teacher_Flow = #{teacherFlow}
+            and teacher_name != '-'
+        </if>
+        <if test="headFlow!='' and headFlow!=null">
+            and head_Flow = #{headFlow}
+            and head_name != '-'
+        </if>
+        <if test="managerFlow!='' and managerFlow!=null">
+            and manager_Flow = #{managerFlow}
+            and manager_name != '-'
+        </if>
+        <if test="notStatus!=null and notStatus.size>0">
+            and Audit_Status_Id not in
+            <foreach collection="notStatus" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        ) group by
+        <if test="teacherFlow !=null and teacherFlow!='' ">
+            case when teacher_Agree_Flag is not null then 'audited' else 'auditing' end
+        </if>
+        <if test="headFlow !=null and headFlow!='' ">
+            case when head_Agree_Flag is not null then 'audited' else 'auditing' end
+        </if>
+        <if test="managerFlow !=null and managerFlow!='' ">
+            case when manager_Agree_Flag is not null then 'audited' else 'auditing' end
+        </if>
+    </select>
+</mapper>

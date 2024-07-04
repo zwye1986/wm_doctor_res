@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.NydsDoctorPaperMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.NydsDoctorPaper" >
+    <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+    <result column="PAPER_TITLE" property="paperTitle" jdbcType="VARCHAR" />
+    <result column="PERIODICAL_NAME" property="periodicalName" jdbcType="VARCHAR" />
+    <result column="PUBLISH_TIME" property="publishTime" jdbcType="VARCHAR" />
+    <result column="INFLUENCE_FACTOR" property="influenceFactor" jdbcType="VARCHAR" />
+    <result column="JCR_PARTITION_ID" property="jcrPartitionId" jdbcType="VARCHAR" />
+    <result column="JCR_PARTITION_NAME" property="jcrPartitionName" jdbcType="VARCHAR" />
+    <result column="PERIODICAL_PIC_URL" property="periodicalPicUrl" jdbcType="VARCHAR" />
+    <result column="PAPER_PIC_URL" property="paperPicUrl" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="AUTHOR_RANK" property="authorRank" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RECORD_FLOW, DOCTOR_FLOW, PAPER_TITLE, PERIODICAL_NAME, PUBLISH_TIME, INFLUENCE_FACTOR, 
+    JCR_PARTITION_ID, JCR_PARTITION_NAME, PERIODICAL_PIC_URL, PAPER_PIC_URL, RECORD_STATUS, 
+    CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, AUTHOR_RANK
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.NydsDoctorPaperExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.NYDS_DOCTOR_PAPER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.NYDS_DOCTOR_PAPER
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.NYDS_DOCTOR_PAPER
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.NydsDoctorPaperExample" >
+    delete from PDSCI.NYDS_DOCTOR_PAPER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.NydsDoctorPaper" >
+    insert into PDSCI.NYDS_DOCTOR_PAPER (RECORD_FLOW, DOCTOR_FLOW, PAPER_TITLE, 
+      PERIODICAL_NAME, PUBLISH_TIME, INFLUENCE_FACTOR, 
+      JCR_PARTITION_ID, JCR_PARTITION_NAME, PERIODICAL_PIC_URL, 
+      PAPER_PIC_URL, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+      AUTHOR_RANK)
+    values (#{recordFlow,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, #{paperTitle,jdbcType=VARCHAR}, 
+      #{periodicalName,jdbcType=VARCHAR}, #{publishTime,jdbcType=VARCHAR}, #{influenceFactor,jdbcType=VARCHAR}, 
+      #{jcrPartitionId,jdbcType=VARCHAR}, #{jcrPartitionName,jdbcType=VARCHAR}, #{periodicalPicUrl,jdbcType=VARCHAR}, 
+      #{paperPicUrl,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{authorRank,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.NydsDoctorPaper" >
+    insert into PDSCI.NYDS_DOCTOR_PAPER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        RECORD_FLOW,
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW,
+      </if>
+      <if test="paperTitle != null" >
+        PAPER_TITLE,
+      </if>
+      <if test="periodicalName != null" >
+        PERIODICAL_NAME,
+      </if>
+      <if test="publishTime != null" >
+        PUBLISH_TIME,
+      </if>
+      <if test="influenceFactor != null" >
+        INFLUENCE_FACTOR,
+      </if>
+      <if test="jcrPartitionId != null" >
+        JCR_PARTITION_ID,
+      </if>
+      <if test="jcrPartitionName != null" >
+        JCR_PARTITION_NAME,
+      </if>
+      <if test="periodicalPicUrl != null" >
+        PERIODICAL_PIC_URL,
+      </if>
+      <if test="paperPicUrl != null" >
+        PAPER_PIC_URL,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="authorRank != null" >
+        AUTHOR_RANK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="paperTitle != null" >
+        #{paperTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="periodicalName != null" >
+        #{periodicalName,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null" >
+        #{publishTime,jdbcType=VARCHAR},
+      </if>
+      <if test="influenceFactor != null" >
+        #{influenceFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="jcrPartitionId != null" >
+        #{jcrPartitionId,jdbcType=VARCHAR},
+      </if>
+      <if test="jcrPartitionName != null" >
+        #{jcrPartitionName,jdbcType=VARCHAR},
+      </if>
+      <if test="periodicalPicUrl != null" >
+        #{periodicalPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="paperPicUrl != null" >
+        #{paperPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="authorRank != null" >
+        #{authorRank,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.NydsDoctorPaperExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.NYDS_DOCTOR_PAPER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.NYDS_DOCTOR_PAPER
+    <set >
+      <if test="record.recordFlow != null" >
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorFlow != null" >
+        DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paperTitle != null" >
+        PAPER_TITLE = #{record.paperTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.periodicalName != null" >
+        PERIODICAL_NAME = #{record.periodicalName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publishTime != null" >
+        PUBLISH_TIME = #{record.publishTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.influenceFactor != null" >
+        INFLUENCE_FACTOR = #{record.influenceFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jcrPartitionId != null" >
+        JCR_PARTITION_ID = #{record.jcrPartitionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jcrPartitionName != null" >
+        JCR_PARTITION_NAME = #{record.jcrPartitionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.periodicalPicUrl != null" >
+        PERIODICAL_PIC_URL = #{record.periodicalPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paperPicUrl != null" >
+        PAPER_PIC_URL = #{record.paperPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorRank != null" >
+        AUTHOR_RANK = #{record.authorRank,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.NYDS_DOCTOR_PAPER
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      PAPER_TITLE = #{record.paperTitle,jdbcType=VARCHAR},
+      PERIODICAL_NAME = #{record.periodicalName,jdbcType=VARCHAR},
+      PUBLISH_TIME = #{record.publishTime,jdbcType=VARCHAR},
+      INFLUENCE_FACTOR = #{record.influenceFactor,jdbcType=VARCHAR},
+      JCR_PARTITION_ID = #{record.jcrPartitionId,jdbcType=VARCHAR},
+      JCR_PARTITION_NAME = #{record.jcrPartitionName,jdbcType=VARCHAR},
+      PERIODICAL_PIC_URL = #{record.periodicalPicUrl,jdbcType=VARCHAR},
+      PAPER_PIC_URL = #{record.paperPicUrl,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      AUTHOR_RANK = #{record.authorRank,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.NydsDoctorPaper" >
+    update PDSCI.NYDS_DOCTOR_PAPER
+    <set >
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="paperTitle != null" >
+        PAPER_TITLE = #{paperTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="periodicalName != null" >
+        PERIODICAL_NAME = #{periodicalName,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null" >
+        PUBLISH_TIME = #{publishTime,jdbcType=VARCHAR},
+      </if>
+      <if test="influenceFactor != null" >
+        INFLUENCE_FACTOR = #{influenceFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="jcrPartitionId != null" >
+        JCR_PARTITION_ID = #{jcrPartitionId,jdbcType=VARCHAR},
+      </if>
+      <if test="jcrPartitionName != null" >
+        JCR_PARTITION_NAME = #{jcrPartitionName,jdbcType=VARCHAR},
+      </if>
+      <if test="periodicalPicUrl != null" >
+        PERIODICAL_PIC_URL = #{periodicalPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="paperPicUrl != null" >
+        PAPER_PIC_URL = #{paperPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="authorRank != null" >
+        AUTHOR_RANK = #{authorRank,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.NydsDoctorPaper" >
+    update PDSCI.NYDS_DOCTOR_PAPER
+    set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      PAPER_TITLE = #{paperTitle,jdbcType=VARCHAR},
+      PERIODICAL_NAME = #{periodicalName,jdbcType=VARCHAR},
+      PUBLISH_TIME = #{publishTime,jdbcType=VARCHAR},
+      INFLUENCE_FACTOR = #{influenceFactor,jdbcType=VARCHAR},
+      JCR_PARTITION_ID = #{jcrPartitionId,jdbcType=VARCHAR},
+      JCR_PARTITION_NAME = #{jcrPartitionName,jdbcType=VARCHAR},
+      PERIODICAL_PIC_URL = #{periodicalPicUrl,jdbcType=VARCHAR},
+      PAPER_PIC_URL = #{paperPicUrl,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      AUTHOR_RANK = #{authorRank,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

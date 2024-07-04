@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.res.dao.zsyk.ext.ZsykDoctorMapper">
+	<resultMap id="bigHistoryMap" type="hashmap">
+		<result column="dataFlow" property="dataFlow" javaType="java.lang.String" />
+		<result column="CheckStatus" property="CheckStatus" javaType="java.lang.String" />
+		<result column="FromID" property="FromID" javaType="java.lang.String" />
+		<result column="RecDate" property="RecDate" javaType="java.lang.String" />
+		<result column="DocCount" property="DocCount" javaType="java.lang.String" />
+		<result column="DocGRPID" property="DocGRPID" javaType="java.lang.String" />
+		<result column="RecData1" property="RecData1" javaType="java.lang.String" />
+		<result column="RecData2" property="RecData2" javaType="java.lang.String" />
+		<result column="RecData3" property="RecData3" javaType="java.lang.String" />
+		<result column="RecData4" property="RecData4" javaType="java.lang.String" />
+		<result column="RecData5" property="RecData5" javaType="java.lang.String" />
+		<result column="RecData6" property="RecData6" javaType="java.lang.String" />
+	</resultMap>
+
+	<select id="selectBigHistorys" parameterType="string" resultMap="bigHistoryMap">
+		
+		SELECT * FROM ( 
+			SELECT ROW_NUMBER() OVER (order by T.RecDate)AS Row, T.*  
+			from (
+					SELECT RecID as dataFlow, 
+						case CheckStatus 
+							when 0 then '未审核' 
+							when 1 then '通过'
+							when 2 then '否决'
+							when 3 then '退回修改'
+						end as CheckStatus,
+						FromID, 
+						convert(varchar(100),RecDate,23) RecDate,
+						DocCount, DocGRPID,RecData1 as RecData1,RecData2 as RecData2,RecData3 as RecData3,
+						RecData4 as RecData4,RecData5 as RecData5,RecData6 as RecData6
+					FROM Rec_BigHistory
+					LEFT JOIN BigHistoryCase ON BigHistoryCase.BHID = Rec_BigHistory.FromID
+					WHERE UserID = ${userFlow} AND CySecID = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow})
+				) as T 
+			) as TT
+		WHERE TT.Row between #{start} and #{end}
+		ORDER BY RecDate 
+	</select>
+	
+	<select id="selectBigHistory" parameterType="string" resultMap="bigHistoryMap">
+		SELECT RecID as dataFlow ,UserID, CheckStatus,FromID, RecDate,isnull(DocCount,0) as DocCount, isnull(DocGRPID,0) as DocGRPID ,
+		RecData1 as RecData1,RecData2 as RecData2,RecData3 as RecData3,RecData4 as RecData4,RecData5 as RecData5,RecData6 as RecData6 
+		FROM Rec_BigHistory
+		WHERE RecID = ${dataFlow}
+	</select>
+
+	<insert id="insertBigHistory">
+		insert into Rec_BigHistory(UserID,FromID,HosSecID,CheckStatus,RecDate,RecData1,RecData2,RecData3,RecData4,RecData5,RecData6,DocCount) 
+            values (${userFlow},(select top 1 BHID from BigHistoryCase where CySecID = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow})),(select HosSecID from UserCycleSec left join HosCycleSection on HosCycleSection.HosCySecID = UserCycleSec.HosCySecID where UCSID = ${schDeptFlow}),0,getdate(),#{RecData1},#{RecData2},#{RecData3},#{RecData4},#{RecData5},#{RecData6},0)
+	</insert>
+
+	<update id="updateBigHistory">
+		UPDATE Rec_BigHistory SET RecData1=#{RecData1},RecData2=#{RecData2},RecData3=#{RecData3},RecData4=#{RecData4},RecData5=#{RecData5},RecData6=#{RecData6}
+			WHERE RecID = ${dataFlow}
+	</update>
+
+	<delete id="deleteBigHistory">
+		DELETE Rec_BigHistory WHERE RecID = ${dataFlow}
+	</delete>
+
+	<resultMap id="outPatientMap" type="hashmap">
+		<result column="dataFlow" property="dataFlow" javaType="java.lang.String" />
+		<result column="CheckStatus" property="CheckStatus" javaType="java.lang.String" />
+		<result column="FromID" property="FromID" javaType="java.lang.String" />
+		<result column="RecDate" property="RecDate" javaType="java.lang.String" />
+		<result column="DocCount" property="DocCount" javaType="java.lang.String" />
+		<result column="DocGRPID" property="DocGRPID" javaType="java.lang.String" />
+		<result column="RecData1" property="RecData1" javaType="java.lang.String" />
+		<result column="RecData2" property="RecData2" javaType="java.lang.String" />
+		<result column="RecData3" property="RecData3" javaType="java.lang.String" />
+		<result column="RecData4" property="RecData4" javaType="java.lang.String" />
+	</resultMap>
+
+    <select id="selectOutPatients" parameterType="string" resultMap="outPatientMap">
+        SELECT * FROM (
+        SELECT ROW_NUMBER() OVER (order by T.RecDate)AS Row, T.*
+        from (
+        SELECT RecID as dataFlow,
+        case CheckStatus
+        when 0 then '未审核'
+        when 1 then '通过'
+        when 2 then '否决'
+        when 3 then '退回修改'
+        end as CheckStatus,
+        FromID,
+        convert(varchar(100),RecDate,23) RecDate,
+        DocCount, DocGRPID,RecData1 as RecData1,RecData2 as RecData2,RecData3 as RecData3,
+        RecData4 as RecData4,RecData5 as RecData5,RecData6 as RecData6
+        FROM Rec_OutPatient
+        LEFT JOIN OutpatientRecords  ON OutpatientRecords.ORID  = Rec_OutPatient.FromID
+        WHERE UserID = ${userFlow} AND CySecID = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow})
+        ) as T
+        ) as TT
+        WHERE TT.Row between #{start} and #{end}
+        ORDER BY RecDate
+	</select>
+
+	<select id="selectOutPatient" parameterType="string" resultMap="outPatientMap">
+		SELECT RecID as dataFlow ,UserID, CheckStatus,FromID, RecDate,isnull(DocCount,0) as DocCount, isnull(DocGRPID,0) as DocGRPID ,
+		RecData1 as RecData1,RecData2 as RecData2,RecData3 as RecData3,RecData4 as RecData4,RecData5 as RecData5,RecData6 as RecData6
+		FROM Rec_OutPatient
+		WHERE RecID = ${dataFlow}
+	</select>
+
+	<insert id="insertOutPatient">
+		insert into Rec_OutPatient(UserID,FromID,HosSecID,CheckStatus,RecDate,RecData1,RecData2,RecData3,RecData4,DocCount)
+		values (${userFlow},(select top 1 ORID from OutpatientRecords where CySecID = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow})),(select HosSecID from UserCycleSec left join HosCycleSection on HosCycleSection.HosCySecID = UserCycleSec.HosCySecID where UCSID = ${schDeptFlow}),0,getdate(),#{RecData1},#{RecData2},#{RecData3},#{RecData4},0)
+	</insert>
+
+	<update id="updateOutPatient">
+		UPDATE Rec_OutPatient SET RecData1=#{RecData1},RecData2=#{RecData2},RecData3=#{RecData3},RecData4=#{RecData4}
+		WHERE RecID = ${dataFlow}
+	</update>
+
+	<delete id="deleteOutPatient">
+		DELETE Rec_Outpatient WHERE RecID = ${dataFlow}
+	</delete>
+	
+	<resultMap id="caseClassCataMap" type="hashmap">
+		<result column="cataFlow" property="cataFlow" javaType="java.lang.String" />
+		<result column="TableID" property="TableID" javaType="java.lang.String" />
+		<result column="CySecID" property="CySecID" javaType="java.lang.String" />
+		<result column="CaName" property="CaName" javaType="java.lang.String" />
+		<result column="neededNum" property="neededNum" javaType="java.lang.Integer" />
+		<result column="CaHoldDegree" property="CaHoldDegree" javaType="java.lang.String" />
+		<result column="finishedNum" property="finishedNum" javaType="java.lang.Integer" />
+		<result column="auditedNum" property="auditedNum" javaType="java.lang.Integer" />
+		<result column="Balance" property="Balance" javaType="java.lang.String" />
+		<result column="SSFinishCount" property="SSFinishCount" javaType="java.lang.String" />
+		<result column="appealNum" property="appealNum" javaType="java.lang.Integer" />
+	</resultMap>
+	
+	<select id="selectCaseClassCatas" parameterType="string" resultMap="caseClassCataMap">
+		WITH
+		DynamicData AS(
+			select CaID,TableID,CySecID,CaName,CaRequireNumber,CaHoldDegree from CaseClass 
+			left join Rec_CaseClass on Rec_CaseClass.FromID = CaseClass.CaID
+			where cysecid = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow}) 
+			GROUP BY CaID,TableID,CySecID,CaName,CaRequireNumber,CaHoldDegree),
+			NoCheckDynamicData as(select CaID,count(CaID) AS Finish from CaseClass 
+			left join Rec_CaseClass on Rec_CaseClass.FromID = CaseClass.CaID
+			where cysecid = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow}) AND userid = ${userFlow} 
+			GROUP BY CaID,TableID,CySecID,CaName,CaRequireNumber,CaHoldDegree),
+			CheckDynamicData as(select CaID,count(CaID) AS CheckCount from CaseClass 
+			left join Rec_CaseClass on Rec_CaseClass.FromID = CaseClass.CaID
+			where cysecid = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow}) AND userid = ${userFlow} and CheckStatus > 0
+			GROUP BY CaID,TableID,CySecID,CaName,CaRequireNumber,CaHoldDegree),
+			SSDynamicDataFinish as(select ExplanObjID,sum(Num) AS SSFinishCount from Explan
+			left join CaseClass on CaseClass.CaID = Explan.ExplanObjID
+			where Explan.cysecid = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow}) AND Explan.userid = ${userFlow} and ExplanState = 1  AND ExplanSort=1
+			group by ExplanObjID),
+			SSDynamicData as(select ExplanObjID,sum(Num) AS SSCount from Explan
+			left join CaseClass on CaseClass.CaID = Explan.ExplanObjID
+			where Explan.cysecid = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow}) AND Explan.userid = ${userFlow} AND ExplanSort=1
+			group by ExplanObjID
+		)
+		
+		SELECT * FROM ( 
+			SELECT ROW_NUMBER() OVER (order by T.CaName)AS Row, T.*  
+			from (
+				SELECT 
+					DynamicData.CaID as cataFlow,
+					TableID,
+					CySecID,
+					CaName,
+					CaRequireNumber as neededNum,
+					CaHoldDegree,
+					isnull(Finish,0) as finishedNum,
+					isnull(CheckCount,0) as auditedNum,
+					isnull((Finish-CheckCount),0) AS Balance,
+					isnull(SSFinishCount,0) AS SSFinishCount,
+					isnull(SSCount,0) AS appealNum
+				FROM DynamicData
+				left join NoCheckDynamicData on NoCheckDynamicData.CaID = DynamicData.CaID
+				left join CheckDynamicData on CheckDynamicData.CaID = DynamicData.CaID
+				left join SSDynamicDataFinish on SSDynamicDataFinish.ExplanObjID = DynamicData.CaID
+				left join SSDynamicData on SSDynamicData.ExplanObjID = DynamicData.CaID
+				) as T 
+			) as TT
+		WHERE TT.Row between #{start} and #{end}
+		ORDER BY CaName 
+	</select>
+	
+	<select id="selectCaseClassCataName" parameterType="string" resultType="string">
+		select CaName from CaseClass where CaID=${cataFlow}
+	</select>
+	
+	<resultMap id="caseClassMap" type="hashmap">
+		<result column="dataFlow" property="dataFlow" javaType="java.lang.String" />
+		<result column="CheckStatus" property="CheckStatus" javaType="java.lang.String" />
+		<result column="FromID" property="FromID" javaType="java.lang.String" />
+		<result column="RecDate" property="RecDate" javaType="java.lang.String" />
+		<result column="DocCount" property="DocCount" javaType="java.lang.String" />
+		<result column="DocGRPID" property="DocGRPID" javaType="java.lang.String" />
+		<result column="RecData1" property="RecData1" javaType="java.lang.String" />
+		<result column="RecData2" property="RecData2" javaType="java.lang.String" />
+		<result column="RecData3" property="RecData3" javaType="java.lang.String" />
+		<result column="RecData4" property="RecData4" javaType="java.lang.String" />
+		<result column="RecData5" property="RecData5" javaType="java.lang.String" />
+		<result column="RecData6" property="RecData6" javaType="java.lang.String" />
+		<result column="OtherCaseClass" property="OtherCaseClass" javaType="java.lang.String" />
+		
+	</resultMap>
+
+	<select id="selectCaseClasses" parameterType="string" resultMap="caseClassMap">
+		SELECT * FROM ( 
+			SELECT ROW_NUMBER() OVER (order by T.RecDate)AS Row, T.*  
+			from (
+					SELECT RecID as dataFlow , 
+					 case CheckStatus 
+					 when 0 then '未审核' 
+					 when 1 then '通过'
+					 when 2 then '否决'
+					 when 3 then '退回修改'
+					 end as CheckStatus,
+					FromID, convert(varchar(100),RecDate,23) RecDate,DocCount, DocGRPID ,RecData1 as RecData1,RecData2 as RecData2,RecData3 as RecData3,RecData4 as RecData4,
+					RecData5 as RecData5,RecData6 as RecData6,OtherCaseClass as OtherCaseClass
+					FROM Rec_CaseClass
+					LEFT JOIN CaseClass ON CaseClass.CaID = Rec_CaseClass.FromID
+					WHERE UserID = ${userFlow} AND FromID=${cataFlow} AND CySecID = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow})
+				) as T 
+			) TT
+		WHERE TT.Row between #{start} and #{end}
+		ORDER BY RecDate 
+	</select>
+	
+	<select id="selectCaseClass" parameterType="string" resultMap="caseClassMap">
+		SELECT RecID as dataFlow ,UserID, CheckStatus,FromID,OtherCaseClass, RecDate,isnull(DocCount,0) as DocCount, isnull(DocGRPID,0) as DocGRPID ,
+		RecData1 as RecData1,RecData2 as RecData2,RecData3 as RecData3,RecData4 as RecData4,RecData5 as RecData5,RecData6 as RecData6,OtherCaseClass as OtherCaseClass
+		FROM Rec_CaseClass
+		WHERE RecID = ${dataFlow}
+	</select>
+
+	<insert id="insertCaseClass">
+		insert into Rec_CaseClass(UserID,FromID,HosSecID,CheckStatus,RecDate,RecData1,RecData2,RecData3,RecData4,RecData5,RecData6,DocCount,OtherCaseClass) 
+		values (${userFlow},${cataFlow},(select HosSecID from UserCycleSec left join HosCycleSection on HosCycleSection.HosCySecID = UserCycleSec.HosCySecID where UCSID = ${schDeptFlow}),0,getdate(),(select CaName from CaseClass where CaID=${cataFlow}),#{RecData2},#{RecData3},#{RecData4},#{RecData5},#{RecData6},0,#{OtherCaseClass})
+	</insert>
+
+	<update id="updateCaseClass">
+		UPDATE Rec_CaseClass SET OtherCaseClass=#{OtherCaseClass},RecData1=#{RecData1},RecData2=#{RecData2},RecData3=#{RecData3},RecData4=#{RecData4},RecData5=#{RecData5},RecData6=#{RecData6}
+		WHERE RecID = ${dataFlow}
+	</update>
+
+	<delete id="deleteCaseClass">
+		DELETE Rec_CaseClass WHERE RecID = ${dataFlow}
+	</delete>
+	
+	<resultMap id="operateSkillCataMap" type="hashmap">
+		<result column="cataFlow" property="cataFlow" javaType="java.lang.String" />
+		<result column="TableID" property="TableID" javaType="java.lang.String" />
+		<result column="CySecID" property="CySecID" javaType="java.lang.String" />
+		<result column="OpClass" property="OpClass" javaType="java.lang.String" />
+		<result column="neededNum" property="neededNum" javaType="java.lang.Integer" />
+		<result column="OpHoldDegree" property="OpHoldDegree" javaType="java.lang.String" />
+		<result column="finishedNum" property="finishedNum" javaType="java.lang.Integer" />
+		<result column="auditedNum" property="auditedNum" javaType="java.lang.Integer" />
+		<result column="Balance" property="Balance" javaType="java.lang.String" />
+		<result column="SSFinishCount" property="SSFinishCount" javaType="java.lang.String" />
+		<result column="appealNum" property="appealNum" javaType="java.lang.Integer" />
+	</resultMap>
+	
+	<select id="selectOperateSkillCatas" parameterType="string" resultMap="operateSkillCataMap">
+		WITH
+           DynamicData AS(
+	           	select OpID,TableID,CySecID,OpClass,OpRequireNumber,OpHoldDegree from OperateSkill 
+	           left join Rec_OperateSkill on Rec_OperateSkill.FromID = OperateSkill.OpID
+	           where cysecid = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow}) 
+	           GROUP BY OpID,TableID,CySecID,OpClass,OpRequireNumber,OpHoldDegree),
+	           NoCheckDynamicData as(select OpID,count(OpID) AS Finish from OperateSkill 
+	           left join Rec_OperateSkill on Rec_OperateSkill.FromID = OperateSkill.OpID
+	           where cysecid = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow})  AND userid = ${userFlow} 
+	           GROUP BY OpID,TableID,CySecID,OpClass,OpRequireNumber,OpHoldDegree),
+	           CheckDynamicData as(select OpID,count(OpID) AS CheckCount from OperateSkill 
+	           left join Rec_OperateSkill on Rec_OperateSkill.FromID = OperateSkill.OpID
+	           where cysecid = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow})  AND userid = ${userFlow} and CheckStatus > 0
+	           GROUP BY OpID,TableID,CySecID,OpClass,OpRequireNumber,OpHoldDegree),
+	           SSDynamicDataFinish as(select ExplanObjID,sum(Num) AS SSFinishCount from Explan
+	           left join OperateSkill on OperateSkill.OpID = Explan.ExplanObjID
+	           where Explan.cysecid = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow})  AND Explan.userid = ${userFlow} and ExplanState = 1  AND ExplanSort = 2
+	           group by ExplanObjID),
+	           SSDynamicData as(select ExplanObjID,sum(Num) AS SSCount from Explan
+	           left join OperateSkill on OperateSkill.OpID = Explan.ExplanObjID
+	           where Explan.cysecid = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow})  AND Explan.userid = ${userFlow} AND ExplanSort = 2
+	           group by ExplanObjID
+	     )
+	     
+	     SELECT * FROM ( 
+			SELECT ROW_NUMBER() OVER (order by T.OpClass)AS Row, T.*  
+			from (
+					SELECT 
+			           DynamicData.OpID as cataFlow,
+			           TableID,
+			           CySecID,
+			           OpClass,
+			           OpRequireNumber as neededNum,
+			           OpHoldDegree,
+			           isnull(Finish,0) as finishedNum,
+			           isnull(CheckCount,0) as auditedNum,
+			           isnull((Finish-CheckCount),0) AS Balance,
+			           isnull(SSFinishCount,0) AS SSFinishCount,
+			           isnull(SSCount,0) AS appealNum 
+		           FROM DynamicData
+		           left join NoCheckDynamicData on NoCheckDynamicData.OpID = DynamicData.OpID
+		           left join CheckDynamicData on CheckDynamicData.OpID = DynamicData.OpID
+		           left join SSDynamicDataFinish on SSDynamicDataFinish.ExplanObjID = DynamicData.OpID
+		           left join SSDynamicData on SSDynamicData.ExplanObjID = DynamicData.OpID
+				) as T 
+			) TT
+		WHERE TT.Row between #{start} and #{end}
+		ORDER BY OpClass 
+	</select>
+	
+	<select id="selectOperateSkillCataName" parameterType="string" resultType="string">
+		select OpClass from OperateSkill where OpID=${cataFlow}
+	</select>
+	
+	<resultMap id="operateSkillMap" type="hashmap">
+		<result column="dataFlow" property="dataFlow" javaType="java.lang.String" />
+		<result column="CheckStatus" property="CheckStatus" javaType="java.lang.String" />
+		<result column="FromID" property="FromID" javaType="java.lang.String" />
+		<result column="RecDate" property="RecDate" javaType="java.lang.String" />
+		<result column="DocCount" property="DocCount" javaType="java.lang.String" />
+		<result column="DocGRPID" property="DocGRPID" javaType="java.lang.String" />
+		<result column="RecData1" property="RecData1" javaType="java.lang.String" />
+		<result column="RecData2" property="RecData2" javaType="java.lang.String" />
+		<result column="RecData3" property="RecData3" javaType="java.lang.String" />
+		<result column="RecData4" property="RecData4" javaType="java.lang.String" />
+		<result column="RecData5" property="RecData5" javaType="java.lang.String" />
+		<result column="RecData6" property="RecData6" javaType="java.lang.String" />
+		<result column="RecData7" property="RecData7" javaType="java.lang.String" />
+		<result column="OtherSkill" property="OtherSkill" javaType="java.lang.String" />
+	</resultMap>
+
+	<select id="selectOperateSkills" parameterType="string" resultMap="operateSkillMap">
+		SELECT * FROM ( 
+			SELECT ROW_NUMBER() OVER (order by T.RecDate)AS Row, T.*  
+			from (
+					SELECT RecID as dataFlow , 
+					case CheckStatus when 0 then '未审核' 
+					when 1 then '通过'
+					when 2 then '否决'
+					when 3 then '退回修改'
+					end as CheckStatus,
+					FromID, convert(varchar(100),RecDate,23) RecDate,DocCount, DocGRPID ,RecData1 as RecData1,RecData2 as RecData2,RecData3 as RecData3,RecData4 as RecData4,RecData5 as RecData5,RecData6 as RecData6,RecData7 as RecData7,OtherSkill as OtherSkill
+					FROM Rec_OperateSkill
+					LEFT JOIN OperateSkill ON OperateSkill.OpID = Rec_OperateSkill.FromID
+					WHERE UserID = ${userFlow} AND FromID=${cataFlow} AND CySecID = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow})
+				) as T 
+			) TT
+		WHERE TT.Row between #{start} and #{end}
+		ORDER BY RecDate 
+	</select>
+	
+	<select id="selectOperateSkill" parameterType="string" resultMap="operateSkillMap">
+		SELECT RecID as OnlyRowIndex ,UserID, CheckStatus,FromID, otherSkill,RecDate,isnull(DocCount,0) as DocCount, isnull(DocGRPID,0) as DocGRPID ,
+		RecData1 as RecData1,RecData2 as RecData2,RecData3 as RecData3,RecData4 as RecData4,RecData5 as RecData5,RecData6 as RecData6,RecData7 as RecData7,OtherSkill as OtherSkill
+		FROM Rec_OperateSkill
+		WHERE RecID = ${dataFlow}
+	</select>
+
+	<insert id="insertOperateSkill">
+		insert into Rec_OperateSkill(UserID,FromID,HosSecID,CheckStatus,RecDate,RecData1,RecData2,RecData3,RecData4,RecData5,RecData6,RecData7,OtherSkill) 
+            values (${userFlow},${cataFlow},(select HosSecID from UserCycleSec left join HosCycleSection on HosCycleSection.HosCySecID = UserCycleSec.HosCySecID where UCSID = ${schDeptFlow}),0,getdate(),(select OpClass from OperateSkill where OpID=${cataFlow}),#{RecData2},#{RecData3},#{RecData4},#{RecData5},#{RecData6},#{RecData7},#{OtherSkill})
+	</insert>
+
+	<update id="updateOperateSkill">
+		UPDATE Rec_OperateSkill SET RecData1=#{RecData1},RecData2=#{RecData2},RecData3=#{RecData3},RecData4=#{RecData4},RecData5=#{RecData5},
+		RecData6=#{RecData6},RecData7=#{RecData7},OtherSkill=#{OtherSkill}
+		WHERE RecID = ${dataFlow}
+	</update>
+
+	<delete id="deleteOperateSkill">
+		DELETE Rec_OperateSkill WHERE RecID = ${dataFlow}
+	</delete>
+	
+	<resultMap id="posSkillCataMap" type="hashmap">
+		<result column="cataFlow" property="cataFlow" javaType="java.lang.String" />
+		<result column="TableID" property="TableID" javaType="java.lang.String" />
+		<result column="CySecID" property="CySecID" javaType="java.lang.String" />
+		<result column="OpsName" property="OpsName" javaType="java.lang.String" />
+		<result column="neededNum" property="neededNum" javaType="java.lang.Integer" />
+		<result column="OpsHoldDegree" property="OpsHoldDegree" javaType="java.lang.String" />
+		<result column="OPSHoldRole" property="OPSHoldRole" javaType="java.lang.String" />
+		<result column="finishedNum" property="finishedNum" javaType="java.lang.Integer" />
+		<result column="auditedNum" property="auditedNum" javaType="java.lang.Integer" />
+		<result column="Balance" property="Balance" javaType="java.lang.String" />
+		<result column="SSFinishCount" property="SSFinishCount" javaType="java.lang.String" />
+		<result column="appealNum" property="appealNum" javaType="java.lang.Integer" />
+	</resultMap>
+	
+	<select id="selectPOSSkillCatas" parameterType="string" resultMap="posSkillCataMap">
+		WITH
+            DynamicData AS(
+            	select OpsID,TableID,CySecID,OpsName,OpsRequireNumber,OpsHoldDegree,OPSHoldRole from OPSSkill 
+	            left join Rec_POSSkill on Rec_POSSkill.FromID = OPSSkill.OpsID
+	            where cysecid = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow}) 
+	            GROUP BY OpsID,TableID,CySecID,OpsName,OpsRequireNumber,OpsHoldDegree,OPSHoldRole),
+	            NoCheckDynamicData as(select OpsID,count(OpsID) AS Finish from OPSSkill 
+	            left join Rec_POSSkill on Rec_POSSkill.FromID = OPSSkill.OpsID
+	            where cysecid = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow})  AND userid = ${userFlow} 
+	            GROUP BY OpsID,TableID,CySecID,OpsName,OpsRequireNumber,OpsHoldDegree),
+	            CheckDynamicData as(select OpsID,count(OpsID) AS CheckCount from OPSSkill 
+	            left join Rec_POSSkill on Rec_POSSkill.FromID = OPSSkill.OpsID
+	            where cysecid = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow})  AND userid = ${userFlow} and CheckStatus > 0
+	            GROUP BY OpsID,TableID,CySecID,OpsName,OpsRequireNumber,OpsHoldDegree),
+	            SSDynamicDataFinish as(select ExplanObjID,sum(Num) AS SSFinishCount from Explan
+	            left join OPSSkill on OPSSkill.OpsID = Explan.ExplanObjID
+	            where Explan.cysecid = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow})  AND Explan.userid = ${userFlow} and ExplanState = 1  AND ExplanSort = 3
+	            group by ExplanObjID),
+	            SSDynamicData as(select ExplanObjID,sum(Num) AS SSCount from Explan
+	            left join OPSSkill on OPSSkill.OpsID = Explan.ExplanObjID
+	            where Explan.cysecid = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow})  AND Explan.userid = ${userFlow}  AND ExplanSort = 3
+	            group by ExplanObjID
+	        )
+	        SELECT * FROM ( 
+				SELECT ROW_NUMBER() OVER (order by T.OpsName)AS Row, T.*  
+				from (
+						SELECT 
+			            	DynamicData.OpsID as cataFlow,
+			            	TableID,CySecID,
+			            	OpsName,
+			            	OpsRequireNumber as neededNum,
+			            	OpsHoldDegree,OPSHoldRole,
+				            isnull(Finish,0) as finishedNum,
+				            isnull(CheckCount,0) as auditedNum,
+				            isnull((Finish-CheckCount),0) AS Balance,
+				            isnull(SSFinishCount,0) AS SSFinishCount,
+				            isnull(SSCount,0) AS appealNum  
+			            FROM DynamicData
+			            left join NoCheckDynamicData on NoCheckDynamicData.OpsID = DynamicData.OpsID
+			            left join CheckDynamicData on CheckDynamicData.OpsID = DynamicData.OpsID
+			            left join SSDynamicDataFinish on SSDynamicDataFinish.ExplanObjID = DynamicData.OpsID
+			            left join SSDynamicData on SSDynamicData.ExplanObjID = DynamicData.OpsID
+					) as T 
+				) TT
+			WHERE TT.Row between #{start} and #{end}
+			ORDER BY OpsName 
+	</select>
+	
+	<select id="selectPOSSkillCataName" parameterType="string" resultType="string">
+		select OpsName from OPSSkill where OpsID=${cataFlow}
+	</select>
+	
+	<resultMap id="posSkillMap" type="hashmap">
+		<result column="dataFlow" property="dataFlow" javaType="java.lang.String" />
+		<result column="CheckStatus" property="CheckStatus" javaType="java.lang.String" />
+		<result column="FromID" property="FromID" javaType="java.lang.String" />
+		<result column="RecDate" property="RecDate" javaType="java.lang.String" />
+		<result column="DocCount" property="DocCount" javaType="java.lang.String" />
+		<result column="DocGRPID" property="DocGRPID" javaType="java.lang.String" />
+		<result column="RecData1" property="RecData1" javaType="java.lang.String" />
+		<result column="RecData2" property="RecData2" javaType="java.lang.String" />
+		<result column="RecData3" property="RecData3" javaType="java.lang.String" />
+		<result column="RecData4" property="RecData4" javaType="java.lang.String" />
+		<result column="RecData5" property="RecData5" javaType="java.lang.String" />
+		<result column="RecData6" property="RecData6" javaType="java.lang.String" />
+		<result column="RecData7" property="RecData7" javaType="java.lang.String" />
+		<result column="OtherPOSSkill" property="OtherPOSSkill" javaType="java.lang.String" />
+	</resultMap>
+
+	<select id="selectPOSSkills" parameterType="string" resultMap="posSkillMap">
+		SELECT * FROM ( 
+			SELECT ROW_NUMBER() OVER (order by T.RecDate)AS Row, T.*  
+			from (
+					SELECT RecID as dataFlow , case CheckStatus when 0 then '未审核' 
+					when 1 then '通过'
+					when 2 then '否决'
+					when 3 then '退回修改'
+					end as CheckStatus,
+					FromID, convert(varchar(100),RecDate,23) RecDate,DocCount, DocGRPID ,RecData1 as RecData1,RecData2 as RecData2,RecData3 as RecData3,RecData4 as RecData4,RecData5 as RecData5,RecData6 as RecData6,RecData7 as RecData7,OtherPOSSkill as OtherPOSSkill
+					FROM Rec_POSSkill
+					LEFT JOIN OPSSkill ON OPSSkill.OpsID = Rec_POSSkill.FromID
+					WHERE UserID = ${userFlow} AND FromID=${cataFlow} AND CySecID = (select CySecID from UserCycleSec where UCSID = ${schDeptFlow})
+				) as T 
+			) TT
+		WHERE TT.Row between #{start} and #{end}
+		ORDER BY RecDate 
+	</select>
+	
+	<select id="selectPOSSkill" parameterType="string" resultMap="posSkillMap">
+		SELECT RecID as dataFlow , UserID,CheckStatus,FromID,otherPOSSkill, RecDate,isnull(DocCount,0) as DocCount, isnull(DocGRPID,0) as DocGRPID, otherPOSSkill ,
+		RecData1 as RecData1,RecData2 as RecData2,RecData3 as RecData3,RecData4 as RecData4,RecData5 as RecData5,RecData6 as RecData6,RecData7 as RecData7,OtherPOSSkill as OtherPOSSkill
+		FROM Rec_POSSkill
+		WHERE RecID = ${dataFlow}
+	</select>
+
+	<insert id="insertPOSSkill">
+		insert into Rec_POSSkill(UserID,FromID,HosSecID,CheckStatus,RecDate,RecData1,RecData2,RecData3,RecData4,RecData5,RecData6,RecData7,DocCount,OtherPOSSkill) 
+            values (${userFlow},${cataFlow},(select HosSecID from UserCycleSec left join HosCycleSection on HosCycleSection.HosCySecID = UserCycleSec.HosCySecID where UCSID = ${schDeptFlow}),0,getdate(),(select OpsName from OPSSkill where OpsID=${cataFlow}),#{RecData2},#{RecData3},#{RecData4},#{RecData5},#{RecData6},#{RecData7},0,#{OtherPOSSkill})
+	</insert>
+
+	<update id="updatePOSSkill">
+		UPDATE Rec_POSSkill SET RecData1=#{RecData1},RecData2=#{RecData2},RecData3=#{RecData3},RecData4=#{RecData4},RecData5=#{RecData5},
+		RecData6=#{RecData6},RecData7=#{RecData7},OtherPOSSkill=#{OtherPOSSkill}
+		WHERE RecID = ${dataFlow}
+	</update>
+
+	<delete id="deletePOSSkill">
+		DELETE Rec_POSSkill WHERE RecID = ${dataFlow}
+	</delete>
+	
+	<resultMap id="outSecBriefMap" type="hashmap">
+		<result column="BriefRequrie" property="BriefRequrie" javaType="java.lang.String" />
+		<result column="GainsDefect" property="GainsDefect" javaType="java.lang.String" />
+	</resultMap>
+	
+	<select id="selectOutSecBrief" parameterType="string" resultMap="outSecBriefMap">
+      select  
+      	BriefRequrie, GainsDefect , CheckStatus ,VerifyState
+      from OutSecBrief where UCSID = #{schDeptFlow}
+  	</select>
+  
+	<insert id="insertOutSecBrief">
+	    INSERT INTO OutSecBrief
+		(
+			UserID ,
+			CySecID ,
+			UCSID ,
+			RequireCycleMonth ,
+			CaseDiscussNum ,
+			ProfessorWardRoundNum ,
+			BigCaseNum ,
+			PatientsInChargeNum ,
+			CreateDate ,
+			OutDate ,
+			OSBHtml ,
+			BriefRequrie ,
+			GainsDefect ,
+			AttendInfo,
+			VerifyState,
+			CheckStatus,
+			SICK,
+			LEAVE
+		)
+		VALUES(
+			${userFlow} ,
+			(select CySecID from UserCycleSec where UCSID = ${schDeptFlow}) ,
+			${schDeptFlow} ,
+			(SELECT datediff(month,RStartTime,REndTime)+1 as RequireCycleMonth from UserRealCycleSec WHERE RUCSID = ${schDeptFlow}) ,
+			(select count(1) from casediscuss a left join DicItem d on a.CaDisPlayClass=d.DicItemID where a.UCSID=${schDeptFlow} and CheckStatus=6 and d.DicItem='教学病例讨论' and isnumeric(a.CaDisPlayClass)=1),
+			(select count(1) from casediscuss a left join DicItem d on a.CaDisPlayClass=d.DicItemID where a.UCSID=${schDeptFlow} and CheckStatus=6 and d.DicItem='教学查房' and isnumeric(a.CaDisPlayClass)=1) ,
+			0 ,
+			0 ,
+			getdate() ,
+			getdate()  ,
+			'' ,
+			#{BriefRequrie} ,
+			#{GainsDefect} ,
+			(SELECT  datediff(day,RStartTime,REndTime)+1 as Cytime from UserRealCycleSec WHERE RUCSID = ${schDeptFlow}),
+			0,
+			0,
+			0,
+			0
+		)
+	</insert>
+	
+	<update id="updateOutSecBrief">
+	    UPDATE  OutSecBrief SET     
+		BriefRequrie = #{BriefRequrie} ,
+		GainsDefect = #{GainsDefect} 
+	    where UCSID= #{schDeptFlow}
+	</update>
+
+</mapper>

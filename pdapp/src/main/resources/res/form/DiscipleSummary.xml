@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>	
+	<!-- 大病历登记表单 -->
+	<!-- 
+	{0}:表单所属机构(开关控制)
+	{1}:版本号
+ -->
+	<jsp path="res/form/{3}/{0}/disciple_{1}"></jsp>
+	<product ver="1.0">
+		<page  ver="1.0">
+			<item name="personalSummary" remark="门诊跟师个人小结" multiple="N"></item>
+			<item name="deptAppraise" remark="科室评价" multiple="N"></item>
+			<item name="deptHeadAutograth" remark="科主任签名" multiple="N"></item>
+			<item name="isAgree" remark="同意出科" multiple="N"></item>
+			<item name="head" remark="主任" multiple="N"></item>
+			<item name="date" remark="日期" multiple="N"></item>
+		</page>
+	</product>
+	<sczyfy ver="1.0">
+		<page  ver="1.0">
+			<item name="personalSummary" remark="门诊跟师个人小结" multiple="N"></item>
+			<item name="deptAppraise" remark="科室评价" multiple="N"></item>
+			<item name="deptHeadAutograth" remark="科主任签名" multiple="N"></item>
+			<item name="isAgree" remark="同意出科" multiple="N"></item>
+			<item name="head" remark="主任" multiple="N"></item>
+			<item name="date" remark="日期" multiple="N"></item>
+		</page>
+	</sczyfy>
+</jspForm>
+

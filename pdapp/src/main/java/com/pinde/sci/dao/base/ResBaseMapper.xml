@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.ResBaseMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResBase" >
+    <id column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="BASE_GRADE_ID" property="baseGradeId" jdbcType="VARCHAR" />
+    <result column="BASE_GRADE_NAME" property="baseGradeName" jdbcType="VARCHAR" />
+    <result column="BASE_TYPE_ID" property="baseTypeId" jdbcType="VARCHAR" />
+    <result column="BASE_TYPE_NAME" property="baseTypeName" jdbcType="VARCHAR" />
+    <result column="BASE_PROPERTY_ID" property="basePropertyId" jdbcType="VARCHAR" />
+    <result column="BASE_PROPERTY_NAME" property="basePropertyName" jdbcType="VARCHAR" />
+    <result column="RES_APPROVAL_NUMBER_ID" property="resApprovalNumberId" jdbcType="VARCHAR" />
+    <result column="RES_APPROVAL_NUMBER_NAME" property="resApprovalNumberName" jdbcType="VARCHAR" />
+    <result column="GPS_APPROVAL_NUMBER_ID" property="gpsApprovalNumberId" jdbcType="VARCHAR" />
+    <result column="GPS_APPROVAL_NUMBER_NAME" property="gpsApprovalNumberName" jdbcType="VARCHAR" />
+    <result column="BASE_STATUS_ID" property="baseStatusId" jdbcType="VARCHAR" />
+    <result column="BASE_STATUS_NAME" property="baseStatusName" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS_ID" property="auditStatusId" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS_NAME" property="auditStatusName" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ResBase" extends="BaseResultMap" >
+    <result column="BASE_INFO" property="baseInfo" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ORG_FLOW, ORG_NAME, EMAIL, BASE_GRADE_ID, BASE_GRADE_NAME, BASE_TYPE_ID, BASE_TYPE_NAME, 
+    BASE_PROPERTY_ID, BASE_PROPERTY_NAME, RES_APPROVAL_NUMBER_ID, RES_APPROVAL_NUMBER_NAME, 
+    GPS_APPROVAL_NUMBER_ID, GPS_APPROVAL_NUMBER_NAME, BASE_STATUS_ID, BASE_STATUS_NAME, 
+    AUDIT_STATUS_ID, AUDIT_STATUS_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+    MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <sql id="Blob_Column_List" >
+    BASE_INFO
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.ResBaseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.RES_BASE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResBaseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.RES_BASE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.RES_BASE
+    where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.RES_BASE
+    where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResBaseExample" >
+    delete from PDSCI.RES_BASE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResBase" >
+    insert into PDSCI.RES_BASE (ORG_FLOW, ORG_NAME, EMAIL, 
+      BASE_GRADE_ID, BASE_GRADE_NAME, BASE_TYPE_ID, 
+      BASE_TYPE_NAME, BASE_PROPERTY_ID, BASE_PROPERTY_NAME, 
+      RES_APPROVAL_NUMBER_ID, RES_APPROVAL_NUMBER_NAME, 
+      GPS_APPROVAL_NUMBER_ID, GPS_APPROVAL_NUMBER_NAME, 
+      BASE_STATUS_ID, BASE_STATUS_NAME, AUDIT_STATUS_ID, 
+      AUDIT_STATUS_NAME, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+      BASE_INFO)
+    values (#{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{baseGradeId,jdbcType=VARCHAR}, #{baseGradeName,jdbcType=VARCHAR}, #{baseTypeId,jdbcType=VARCHAR}, 
+      #{baseTypeName,jdbcType=VARCHAR}, #{basePropertyId,jdbcType=VARCHAR}, #{basePropertyName,jdbcType=VARCHAR}, 
+      #{resApprovalNumberId,jdbcType=VARCHAR}, #{resApprovalNumberName,jdbcType=VARCHAR}, 
+      #{gpsApprovalNumberId,jdbcType=VARCHAR}, #{gpsApprovalNumberName,jdbcType=VARCHAR}, 
+      #{baseStatusId,jdbcType=VARCHAR}, #{baseStatusName,jdbcType=VARCHAR}, #{auditStatusId,jdbcType=VARCHAR}, 
+      #{auditStatusName,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{baseInfo,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResBase" >
+    insert into PDSCI.RES_BASE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="baseGradeId != null" >
+        BASE_GRADE_ID,
+      </if>
+      <if test="baseGradeName != null" >
+        BASE_GRADE_NAME,
+      </if>
+      <if test="baseTypeId != null" >
+        BASE_TYPE_ID,
+      </if>
+      <if test="baseTypeName != null" >
+        BASE_TYPE_NAME,
+      </if>
+      <if test="basePropertyId != null" >
+        BASE_PROPERTY_ID,
+      </if>
+      <if test="basePropertyName != null" >
+        BASE_PROPERTY_NAME,
+      </if>
+      <if test="resApprovalNumberId != null" >
+        RES_APPROVAL_NUMBER_ID,
+      </if>
+      <if test="resApprovalNumberName != null" >
+        RES_APPROVAL_NUMBER_NAME,
+      </if>
+      <if test="gpsApprovalNumberId != null" >
+        GPS_APPROVAL_NUMBER_ID,
+      </if>
+      <if test="gpsApprovalNumberName != null" >
+        GPS_APPROVAL_NUMBER_NAME,
+      </if>
+      <if test="baseStatusId != null" >
+        BASE_STATUS_ID,
+      </if>
+      <if test="baseStatusName != null" >
+        BASE_STATUS_NAME,
+      </if>
+      <if test="auditStatusId != null" >
+        AUDIT_STATUS_ID,
+      </if>
+      <if test="auditStatusName != null" >
+        AUDIT_STATUS_NAME,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="baseInfo != null" >
+        BASE_INFO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="baseGradeId != null" >
+        #{baseGradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="baseGradeName != null" >
+        #{baseGradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="baseTypeId != null" >
+        #{baseTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="baseTypeName != null" >
+        #{baseTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="basePropertyId != null" >
+        #{basePropertyId,jdbcType=VARCHAR},
+      </if>
+      <if test="basePropertyName != null" >
+        #{basePropertyName,jdbcType=VARCHAR},
+      </if>
+      <if test="resApprovalNumberId != null" >
+        #{resApprovalNumberId,jdbcType=VARCHAR},
+      </if>
+      <if test="resApprovalNumberName != null" >
+        #{resApprovalNumberName,jdbcType=VARCHAR},
+      </if>
+      <if test="gpsApprovalNumberId != null" >
+        #{gpsApprovalNumberId,jdbcType=VARCHAR},
+      </if>
+      <if test="gpsApprovalNumberName != null" >
+        #{gpsApprovalNumberName,jdbcType=VARCHAR},
+      </if>
+      <if test="baseStatusId != null" >
+        #{baseStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="baseStatusName != null" >
+        #{baseStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusId != null" >
+        #{auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusName != null" >
+        #{auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="baseInfo != null" >
+        #{baseInfo,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResBaseExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.RES_BASE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.RES_BASE
+    <set >
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseGradeId != null" >
+        BASE_GRADE_ID = #{record.baseGradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseGradeName != null" >
+        BASE_GRADE_NAME = #{record.baseGradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseTypeId != null" >
+        BASE_TYPE_ID = #{record.baseTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseTypeName != null" >
+        BASE_TYPE_NAME = #{record.baseTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.basePropertyId != null" >
+        BASE_PROPERTY_ID = #{record.basePropertyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.basePropertyName != null" >
+        BASE_PROPERTY_NAME = #{record.basePropertyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resApprovalNumberId != null" >
+        RES_APPROVAL_NUMBER_ID = #{record.resApprovalNumberId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resApprovalNumberName != null" >
+        RES_APPROVAL_NUMBER_NAME = #{record.resApprovalNumberName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gpsApprovalNumberId != null" >
+        GPS_APPROVAL_NUMBER_ID = #{record.gpsApprovalNumberId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gpsApprovalNumberName != null" >
+        GPS_APPROVAL_NUMBER_NAME = #{record.gpsApprovalNumberName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseStatusId != null" >
+        BASE_STATUS_ID = #{record.baseStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseStatusName != null" >
+        BASE_STATUS_NAME = #{record.baseStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditStatusId != null" >
+        AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditStatusName != null" >
+        AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseInfo != null" >
+        BASE_INFO = #{record.baseInfo,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update PDSCI.RES_BASE
+    set ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      BASE_GRADE_ID = #{record.baseGradeId,jdbcType=VARCHAR},
+      BASE_GRADE_NAME = #{record.baseGradeName,jdbcType=VARCHAR},
+      BASE_TYPE_ID = #{record.baseTypeId,jdbcType=VARCHAR},
+      BASE_TYPE_NAME = #{record.baseTypeName,jdbcType=VARCHAR},
+      BASE_PROPERTY_ID = #{record.basePropertyId,jdbcType=VARCHAR},
+      BASE_PROPERTY_NAME = #{record.basePropertyName,jdbcType=VARCHAR},
+      RES_APPROVAL_NUMBER_ID = #{record.resApprovalNumberId,jdbcType=VARCHAR},
+      RES_APPROVAL_NUMBER_NAME = #{record.resApprovalNumberName,jdbcType=VARCHAR},
+      GPS_APPROVAL_NUMBER_ID = #{record.gpsApprovalNumberId,jdbcType=VARCHAR},
+      GPS_APPROVAL_NUMBER_NAME = #{record.gpsApprovalNumberName,jdbcType=VARCHAR},
+      BASE_STATUS_ID = #{record.baseStatusId,jdbcType=VARCHAR},
+      BASE_STATUS_NAME = #{record.baseStatusName,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      BASE_INFO = #{record.baseInfo,jdbcType=CLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.RES_BASE
+    set ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      BASE_GRADE_ID = #{record.baseGradeId,jdbcType=VARCHAR},
+      BASE_GRADE_NAME = #{record.baseGradeName,jdbcType=VARCHAR},
+      BASE_TYPE_ID = #{record.baseTypeId,jdbcType=VARCHAR},
+      BASE_TYPE_NAME = #{record.baseTypeName,jdbcType=VARCHAR},
+      BASE_PROPERTY_ID = #{record.basePropertyId,jdbcType=VARCHAR},
+      BASE_PROPERTY_NAME = #{record.basePropertyName,jdbcType=VARCHAR},
+      RES_APPROVAL_NUMBER_ID = #{record.resApprovalNumberId,jdbcType=VARCHAR},
+      RES_APPROVAL_NUMBER_NAME = #{record.resApprovalNumberName,jdbcType=VARCHAR},
+      GPS_APPROVAL_NUMBER_ID = #{record.gpsApprovalNumberId,jdbcType=VARCHAR},
+      GPS_APPROVAL_NUMBER_NAME = #{record.gpsApprovalNumberName,jdbcType=VARCHAR},
+      BASE_STATUS_ID = #{record.baseStatusId,jdbcType=VARCHAR},
+      BASE_STATUS_NAME = #{record.baseStatusName,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResBase" >
+    update PDSCI.RES_BASE
+    <set >
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="baseGradeId != null" >
+        BASE_GRADE_ID = #{baseGradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="baseGradeName != null" >
+        BASE_GRADE_NAME = #{baseGradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="baseTypeId != null" >
+        BASE_TYPE_ID = #{baseTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="baseTypeName != null" >
+        BASE_TYPE_NAME = #{baseTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="basePropertyId != null" >
+        BASE_PROPERTY_ID = #{basePropertyId,jdbcType=VARCHAR},
+      </if>
+      <if test="basePropertyName != null" >
+        BASE_PROPERTY_NAME = #{basePropertyName,jdbcType=VARCHAR},
+      </if>
+      <if test="resApprovalNumberId != null" >
+        RES_APPROVAL_NUMBER_ID = #{resApprovalNumberId,jdbcType=VARCHAR},
+      </if>
+      <if test="resApprovalNumberName != null" >
+        RES_APPROVAL_NUMBER_NAME = #{resApprovalNumberName,jdbcType=VARCHAR},
+      </if>
+      <if test="gpsApprovalNumberId != null" >
+        GPS_APPROVAL_NUMBER_ID = #{gpsApprovalNumberId,jdbcType=VARCHAR},
+      </if>
+      <if test="gpsApprovalNumberName != null" >
+        GPS_APPROVAL_NUMBER_NAME = #{gpsApprovalNumberName,jdbcType=VARCHAR},
+      </if>
+      <if test="baseStatusId != null" >
+        BASE_STATUS_ID = #{baseStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="baseStatusName != null" >
+        BASE_STATUS_NAME = #{baseStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusId != null" >
+        AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusName != null" >
+        AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="baseInfo != null" >
+        BASE_INFO = #{baseInfo,jdbcType=CLOB},
+      </if>
+    </set>
+    where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResBase" >
+    update PDSCI.RES_BASE
+    set ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      BASE_GRADE_ID = #{baseGradeId,jdbcType=VARCHAR},
+      BASE_GRADE_NAME = #{baseGradeName,jdbcType=VARCHAR},
+      BASE_TYPE_ID = #{baseTypeId,jdbcType=VARCHAR},
+      BASE_TYPE_NAME = #{baseTypeName,jdbcType=VARCHAR},
+      BASE_PROPERTY_ID = #{basePropertyId,jdbcType=VARCHAR},
+      BASE_PROPERTY_NAME = #{basePropertyName,jdbcType=VARCHAR},
+      RES_APPROVAL_NUMBER_ID = #{resApprovalNumberId,jdbcType=VARCHAR},
+      RES_APPROVAL_NUMBER_NAME = #{resApprovalNumberName,jdbcType=VARCHAR},
+      GPS_APPROVAL_NUMBER_ID = #{gpsApprovalNumberId,jdbcType=VARCHAR},
+      GPS_APPROVAL_NUMBER_NAME = #{gpsApprovalNumberName,jdbcType=VARCHAR},
+      BASE_STATUS_ID = #{baseStatusId,jdbcType=VARCHAR},
+      BASE_STATUS_NAME = #{baseStatusName,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      BASE_INFO = #{baseInfo,jdbcType=CLOB}
+    where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResBase" >
+    update PDSCI.RES_BASE
+    set ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      BASE_GRADE_ID = #{baseGradeId,jdbcType=VARCHAR},
+      BASE_GRADE_NAME = #{baseGradeName,jdbcType=VARCHAR},
+      BASE_TYPE_ID = #{baseTypeId,jdbcType=VARCHAR},
+      BASE_TYPE_NAME = #{baseTypeName,jdbcType=VARCHAR},
+      BASE_PROPERTY_ID = #{basePropertyId,jdbcType=VARCHAR},
+      BASE_PROPERTY_NAME = #{basePropertyName,jdbcType=VARCHAR},
+      RES_APPROVAL_NUMBER_ID = #{resApprovalNumberId,jdbcType=VARCHAR},
+      RES_APPROVAL_NUMBER_NAME = #{resApprovalNumberName,jdbcType=VARCHAR},
+      GPS_APPROVAL_NUMBER_ID = #{gpsApprovalNumberId,jdbcType=VARCHAR},
+      GPS_APPROVAL_NUMBER_NAME = #{gpsApprovalNumberName,jdbcType=VARCHAR},
+      BASE_STATUS_ID = #{baseStatusId,jdbcType=VARCHAR},
+      BASE_STATUS_NAME = #{baseStatusName,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.osca.ext.OscaCheckInfoExtMapper">
+
+	<resultMap id="resBaseExtMap" type="com.pinde.res.model.osca.mo.OscaCheckInfoExt" extends="com.pinde.sci.dao.base.OscaDoctorAssessmentMapper.BaseResultMap" >
+		<id property="recordFlow" column="RECORD_FLOW" jdbcType="VARCHAR"/>
+		<result property="auditPassNum" column="AUDITPASSNUM" jdbcType="VARCHAR"/>
+		<association property="sysUser" column="userFlow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+		<association property="doctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" />
+		<association property="sysOrg" column="orgFlow"  resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap" />
+		<association property="skillAssess" column="CLINICAL_FLOW"  resultMap="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap" />
+	</resultMap>
+
+    <select id="queryAppointList"  parameterType="java.util.Map" resultMap="resBaseExtMap">
+		select b.*,rownum from(
+			select oda.*,
+				su.SEX_ID,
+				su.SEX_NAME,
+				su.ID_NO,
+				su.USER_PHONE,
+				rd.SESSION_NUMBER,
+				rd.ORG_FLOW,
+				rd.ORG_NAME,
+				osa.SPE_ID,
+				osa.SPE_NAME
+			from OSCA_DOCTOR_ASSESSMENT oda
+			inner join SYS_USER su on oda.DOCTOR_FLOW = su.USER_FLOW
+			inner join RES_DOCTOR rd on su.USER_FLOW = rd.DOCTOR_FLOW
+			left join OSCA_SKILLS_ASSESSMENT osa on osa.CLINICAL_FLOW = oda.CLINICAL_FLOW
+			left join res_doctor_recruit rdr on
+			(rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+			and rdr.RECORD_STATUS = 'Y'
+			and rd.org_flow = rdr.org_flow
+			and rd.session_number = rdr.SESSION_NUMBER
+			and rdr.AUDIT_STATUS_ID='Passed'
+			and rdr.spe_id = rd.Training_Spe_Id)
+			where oda.RECORD_STATUS = 'Y'
+				and su.RECORD_STATUS = 'Y'
+				and rd.RECORD_STATUS = 'Y'
+			<if test='clinicalFlow!=null and clinicalFlow!=""'>
+				and oda.CLINICAL_FLOW = #{clinicalFlow}
+			</if>
+			<if test='doctorName!=null and doctorName!=""'>
+				<bind name="name" value="'%'+doctorName+'%'"/>
+				and oda.DOCTOR_NAME like #{name}
+			</if>
+			<if test='auditStatusId!=null and auditStatusId!=""'>
+				and oda.AUDIT_STATUS_ID = #{auditStatusId}
+			</if>
+			<if test='siginStatusId!=null and siginStatusId!=""'>
+				and oda.SIGIN_STATUS_ID = #{siginStatusId}
+			</if>
+			<if test='examStartTime!=null and examStartTime!=""'>
+				and oda.exam_Start_Time = #{examStartTime}
+			</if>
+			<if test='examEndTime!=null and examEndTime!=""'>
+				and oda.exam_End_Time = #{examEndTime}
+			</if>
+			<if test='sessionId == "1"'>
+				and rdr.GRADUATION_YEAR = #{year,jdbcType=VARCHAR}
+			</if>
+			<if test='sessionId == "0"'>
+				and (#{year,jdbcType=VARCHAR}>rdr.GRADUATION_YEAR or rdr.GRADUATION_YEAR is null)
+			</if>
+			order by oda.TICKET_NUMBER
+		)b
+    </select>
+
+	<select id="queryAppointByFlow" resultMap="resBaseExtMap">
+		select oda.CLINICAL_YEAR,oda.DOCTOR_FLOW,osa.SPE_ID,osa.CODE_INFO,so.ORG_CODE,nvl(a.AUDITPASSNUM,0)+1 AUDITPASSNUM,osa.skill_order,oda.CLINICAL_FLOW
+			from OSCA_DOCTOR_ASSESSMENT oda
+		left join OSCA_SKILLS_ASSESSMENT osa on oda.CLINICAL_FLOW =  osa.CLINICAL_FLOW
+		left join SYS_ORG so on osa.ORG_FLOW = so.ORG_FLOW
+		left join (select distinct oda.CLINICAL_FLOW,count(oda.RECORD_FLOW)over(partition by oda.CLINICAL_FLOW) AUDITPASSNUM
+			from OSCA_DOCTOR_ASSESSMENT oda where oda.RECORD_STATUS='Y' and oda.TICKET_NUMBER is not null)a on oda.CLINICAL_FLOW = a.CLINICAL_FLOW
+		where oda.RECORD_STATUS = 'Y'
+			and oda.RECORD_FLOW = #{recordFlow}
+	</select>
+
+	<select id="queryAppointCount" resultType="java.lang.Integer">
+		select count(CLINICAL_FLOW) from OSCA_SKILLS_ASSESSMENT where RECORD_STATUS = 'Y' and  ORG_FLOW = #{orgFlow}
+	</select>
+
+	<select id="queryGuideInfoList" resultType="java.util.Map">
+		select osa.CLINICAL_FLOW,
+			   osa.CLINICAL_NAME,
+			   osa.SUBJECT_FLOW,
+			   osa.SUBJECT_NAME,
+			   osa.SPE_ID,
+			   osa.SPE_NAME,
+			   osa.APPOINT_START_TIME,
+			   osa.APPOINT_END_TIME,
+			   nvl(a.DSHNUM,0) DSHNUM,
+			   nvl(b.CGNUM,0) CGNUM,
+			   osa.APPOINT_NUM
+		  from OSCA_SKILLS_ASSESSMENT osa
+		  left join (select oda.CLINICAL_FLOW, count(oda.RECORD_FLOW) DSHNUM
+					   from OSCA_DOCTOR_ASSESSMENT oda
+					  where oda.RECORD_STATUS = 'Y'
+						and oda.AUDIT_STATUS_ID = 'Passing'
+					  group by oda.CLINICAL_FLOW) a
+			on osa.CLINICAL_FLOW = a.CLINICAL_FLOW
+		  left join (select oda.CLINICAL_FLOW, count(oda.RECORD_FLOW) CGNUM
+					   from OSCA_DOCTOR_ASSESSMENT oda
+					  where oda.RECORD_STATUS = 'Y'
+						and oda.AUDIT_STATUS_ID = 'Passed'
+					  group by oda.CLINICAL_FLOW) b
+			on osa.CLINICAL_FLOW = b.CLINICAL_FLOW
+		 where osa.RECORD_STATUS = 'Y'
+		 	and osa.ORG_FLOW = #{orgFlow}
+		 	and nvl(a.DSHNUM,0) > 0
+	</select>
+	<select id="queryRoomList" resultType="java.util.Map">
+		select oss.STATION_FLOW,
+				oss.STATION_NAME,
+				osr.RECORD_FLOW,
+				osr.ROOM_FLOW,
+				osr.ROOM_NAME,
+				nvl(a.PDNUM, 0) PDNUM,
+				nvl(d.signNum,0)-nvl(b.ykhNum,0) DKHNUM,
+				nvl(c.ROOMNUM,0) ROOMNUM,
+				max(nvl(c.ROOMNUM,0)) over(partition by osa.CLINICAL_FLOW) MAXROOMNUM
+			from OSCA_SUBJECT_STATION oss
+		left join OSCA_SKILLS_ASSESSMENT osa on oss.SUBJECT_FLOW = osa.SUBJECT_FLOW
+		left join (select RECORD_FLOW,STATION_FLOW,ROOM_FLOW,ROOM_NAME from OSCA_SKILL_ROOM where RECORD_STATUS = 'Y' and CLINICAL_FLOW = #{clinicalFlow}) osr
+			on oss.STATION_FLOW = osr.STATION_FLOW
+		left join (select  distinct osrd.ROOM_RECORD_FLOW,count(osrd.DOC_ROOM_FLOW) over(partition by osrd.ROOM_RECORD_FLOW) pdNum
+				from OSCA_SKILL_ROOM_DOC osrd,OSCA_DOCTOR_ASSESSMENT oda
+				where osrd.DOCTOR_FLOW = oda.DOCTOR_FLOW
+					and osrd.CLINICAL_FLOW = oda.CLINICAL_FLOW
+					and oda.SIGIN_STATUS_ID='SignIn'
+				    and osrd.EXAM_STATUS_ID = 'Waiting'
+				    and osrd.CLINICAL_FLOW = #{clinicalFlow}) a
+			on osr.RECORD_FLOW = a.ROOM_RECORD_FLOW
+		left join (select distinct osrd.STATION_FLOW,
+				count(osrd.DOC_ROOM_FLOW) over(partition by osrd.STATION_FLOW) ykhNum
+				from OSCA_SKILL_ROOM_DOC osrd,OSCA_DOCTOR_ASSESSMENT oda
+				where osrd.DOCTOR_FLOW = oda.DOCTOR_FLOW
+					and osrd.CLINICAL_FLOW = oda.CLINICAL_FLOW
+					and oda.SIGIN_STATUS_ID='SignIn'
+				    and osrd.EXAM_STATUS_ID in ('AssessIng','Assessment')
+				    and osrd.CLINICAL_FLOW = #{clinicalFlow}) b
+			on oss.STATION_FLOW = b.STATION_FLOW
+		left join (select distinct osr.STATION_FLOW,
+				count(osr.RECORD_FLOW) ROOMNUM
+				from OSCA_SKILL_ROOM osr
+				where osr.RECORD_STATUS='Y' and osr.clinical_flow = #{clinicalFlow} group by osr.STATION_FLOW) c
+    		on c.STATION_FLOW = oss.STATION_FLOW
+		left join (select oda.CLINICAL_FLOW,count(oda.RECORD_FLOW) signNum from OSCA_DOCTOR_ASSESSMENT oda where oda.RECORD_STATUS='Y' and oda.SIGIN_STATUS_ID='SignIn'
+				and oda.clinical_flow = #{clinicalFlow} group by oda.CLINICAL_FLOW)d on d.CLINICAL_FLOW=osa.CLINICAL_FLOW
+		where oss.RECORD_STATUS = 'Y'
+		and osa.CLINICAL_FLOW = #{clinicalFlow}
+		order by oss.ORDINAL,oss.STATION_FLOW,osr.ROOM_FLOW,osr.RECORD_FLOW
+	</select>
+	<select id="queryScheduleList"  parameterType="java.util.Map" resultType="java.util.Map">
+		 select oda.TICKET_NUMBER,
+		 		 oda.DOCTOR_FLOW,
+		 		 oda.DOCTOR_NAME,
+		 		 oss.SPE_ID,
+		 		 rd.TRAINING_SPE_NAME SPE_NAME,
+				 rd.TRAINING_TYPE_ID,
+				 rd.TRAINING_TYPE_NAME,
+				 a.STATION_FLOW,
+				 a.STATION_NAME,
+				 a.EXAM_STATUS_ID,
+				 a.EXAM_STATUS_NAME,
+				 nvl(b.NUM,0) NUM
+			 from OSCA_DOCTOR_ASSESSMENT oda
+		left join RES_DOCTOR rd on rd.DOCTOR_FLOW = oda.DOCTOR_FLOW
+		left join OSCA_SKILLS_ASSESSMENT oss on oda.CLINICAL_FLOW = oss.CLINICAL_FLOW
+		left join (select osrd.DOCTOR_FLOW,wm_concat(osrd.STATION_FLOW) STATION_FLOW, wm_concat(osrd.STATION_NAME) STATION_NAME, wm_concat(osrd.EXAM_STATUS_ID) EXAM_STATUS_ID,
+					wm_concat(osrd.EXAM_STATUS_NAME) EXAM_STATUS_NAME from OSCA_SKILL_ROOM_DOC osrd where osrd.RECORD_STATUS='Y'
+			<if test='clinicalFlow!=null and clinicalFlow!=""'>
+				and osrd.CLINICAL_FLOW = #{clinicalFlow}
+			</if>
+			group by osrd.DOCTOR_FLOW) a on oda.DOCTOR_FLOW = a.DOCTOR_FLOW
+		left join (select distinct osrd.DOCTOR_FLOW,count(osrd.EXAM_STATUS_ID)over(partition by osrd.DOCTOR_FLOW) NUM from OSCA_SKILL_ROOM_DOC osrd where osrd.EXAM_STATUS_ID='Assessment'
+			<if test='clinicalFlow!=null and clinicalFlow!=""'>
+				and osrd.CLINICAL_FLOW = #{clinicalFlow}
+			</if>
+			)b on b.DOCTOR_FLOW = oda.DOCTOR_FLOW
+		where oda.RECORD_STATUS='Y'
+		<if test='auditStatusId!=null and auditStatusId!=""'>
+			and oda.AUDIT_STATUS_ID = #{auditStatusId}
+		</if>
+		<if test='signStatusId!=null and signStatusId!=""'>
+			and oda.SIGIN_STATUS_ID = #{signStatusId}
+		</if>
+		<if test='clinicalFlow!=null and clinicalFlow!=""'>
+			and oss.CLINICAL_FLOW = #{clinicalFlow}
+		</if>
+		<if test='categoryId!=null and categoryId!=""'>
+			and rd.TRAINING_TYPE_ID = #{categoryId}
+		</if>
+		<if test='examStartTime!=null and examStartTime!=""'>
+			and oda.exam_Start_Time = #{examStartTime}
+		</if>
+		<if test='examEndTime!=null and examEndTime!=""'>
+			and oda.exam_End_Time = #{examEndTime}
+		</if>
+		 order by oda.TICKET_NUMBER
+	</select>
+
+	<select id="studentsProcess"  parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT DISTINCT oda.DOCTOR_FLOW, oda.DOCTOR_NAME, osa.SPE_ID,osa.SPE_NAME osa_name, rd.TRAINING_SPE_NAME AS SPE_NAME, rd.TRAINING_TYPE_ID
+		, rd.TRAINING_TYPE_NAME
+		<if test="stationNumList!=null and stationNumList.size>0">
+			<foreach collection="stationNumList" open="," separator="," item="item">
+				(select osrd.EXAM_STATUS_ID
+				from OSCA_SKILL_ROOM_DOC osrd
+				left join OSCA_DOCTOR_ASSESSMENT oda2 on osrd.doctor_Flow = oda2.doctor_flow
+				left join OSCA_SUBJECT_STATION oss2 on osrd.STATION_FLOW = oss2.STATION_FLOW
+				where
+				oda2.record_flow = oda.record_flow
+				and osrd.clinical_flow = oda.clinical_flow
+				and oss2.ORDINAL=#{item}
+				and osrd.RECORD_STATUS = 'Y'
+				and oss2.RECORD_STATUS = 'Y') station${item}
+			</foreach>
+		</if>
+		FROM OSCA_DOCTOR_ASSESSMENT oda
+		LEFT JOIN RES_DOCTOR rd ON rd.DOCTOR_FLOW = oda.DOCTOR_FLOW
+		LEFT JOIN OSCA_SKILLS_ASSESSMENT osa ON oda.CLINICAL_FLOW = osa.CLINICAL_FLOW
+		LEFT JOIN OSCA_SUBJECT_MAIN osm ON osa.SUBJECT_FLOW = osm.SUBJECT_FLOW
+		LEFT JOIN OSCA_SUBJECT_STATION oss on osm.SUBJECT_FLOW = oss.SUBJECT_FLOW
+		WHERE oda.RECORD_STATUS = 'Y'
+		AND rd.RECORD_STATUS = 'Y'
+		AND osa.RECORD_STATUS = 'Y'
+		<if test="clinicalFlows!=null and clinicalFlows.size>0">
+			and oda.clinical_flow in
+			<foreach collection="clinicalFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test='auditStatusId!=null and auditStatusId!=""'>
+			and oda.AUDIT_STATUS_ID = #{auditStatusId}
+		</if>
+		<if test='signStatusId!=null and signStatusId!=""'>
+			and oda.SIGIN_STATUS_ID = #{signStatusId}
+		</if>
+		order by oda.DOCTOR_FLOW,osa.SPE_ID
+	</select>
+
+	<select id="queryGradeList"  parameterType="java.util.Map" resultType="java.util.Map">
+		select oda.TICKET_NUMBER,
+				oda.DOCTOR_FLOW,
+				oda.DOCTOR_NAME,
+				rd.ORG_FLOW,
+				rd.ORG_NAME,
+				rd.WORK_ORG_ID,
+				rd.WORK_ORG_NAME,
+				rd.TRAINING_SPE_ID SPE_ID,
+				rd.TRAINING_SPE_NAME SPE_NAME,
+				rd.TRAINING_TYPE_ID,
+				rd.TRAINING_TYPE_NAME,
+				a.STATION_FLOW,
+				a.STATION_NAME,
+				a.EXAM_SCORE,
+				oda.IS_PASS,
+				oda.IS_PASS_NAME
+			from OSCA_DOCTOR_ASSESSMENT oda
+		left join RES_DOCTOR rd on rd.DOCTOR_FLOW = oda.DOCTOR_FLOW
+		left join OSCA_SKILLS_ASSESSMENT oss on oda.CLINICAL_FLOW = oss.CLINICAL_FLOW
+		left join (select osrd.DOCTOR_FLOW,wm_concat(osrd.STATION_FLOW) STATION_FLOW,wm_concat(osrd.STATION_NAME) STATION_NAME,wm_concat(nvl(osrd.EXAM_SCORE,'*')) EXAM_SCORE
+						from OSCA_SKILL_ROOM_DOC osrd where osrd.RECORD_STATUS = 'Y'
+			<if test='clinicalFlow!=null and clinicalFlow!=""'>
+				and osrd.CLINICAL_FLOW = #{clinicalFlow}
+			</if>
+			group by osrd.DOCTOR_FLOW) a on oda.DOCTOR_FLOW = a.DOCTOR_FLOW
+		left join (select osrd.DOCTOR_FLOW, sum(osrd.EXAM_SCORE) SCORESUM from OSCA_SKILL_ROOM_DOC osrd where osrd.RECORD_STATUS = 'Y'
+			<if test='clinicalFlow!=null and clinicalFlow!=""'>
+				and osrd.CLINICAL_FLOW = #{clinicalFlow}
+			</if>
+			group by osrd.DOCTOR_FLOW) c on c.DOCTOR_FLOW = oda.DOCTOR_FLOW
+		where oda.RECORD_STATUS='Y'
+		<if test='auditStatusId!=null and auditStatusId!=""'>
+			and oda.AUDIT_STATUS_ID = #{auditStatusId}
+		</if>
+		<if test='clinicalFlow!=null and clinicalFlow!=""'>
+			and oss.CLINICAL_FLOW = #{clinicalFlow}
+		</if>
+		<if test='ticketNumber!=null and ticketNumber!=""'>
+			<bind name="name" value="'%'+ticketNumber+'%'"/>
+			and oda.TICKET_NUMBER like #{name}
+		</if>
+		<if test='gradeDoctorName!=null and gradeDoctorName!=""'>
+			<bind name="name" value="'%'+gradeDoctorName+'%'"/>
+			and oda.DOCTOR_NAME like #{name}
+		</if>
+		<if test='trainCategoryId!=null and trainCategoryId!=""'>
+			and rd.TRAINING_TYPE_ID = #{trainCategoryId}
+		</if>
+		<if test='resultId!=null and resultId!=""'>
+			and oda.IS_PASS = #{resultId}
+		</if>
+		<if test='examStartTime!=null and examStartTime!=""'>
+			and oda.exam_Start_Time = #{examStartTime}
+		</if>
+		<if test='examEndTime!=null and examEndTime!=""'>
+			and oda.exam_End_Time = #{examEndTime}
+		</if>
+		<if test='order == "ASC"'>
+			order by nvl(c.SCORESUM,0) ASC,oda.TICKET_NUMBER
+		</if>
+		<if test='order == "DESC"'>
+			order by nvl(c.SCORESUM,0) DESC,oda.TICKET_NUMBER
+		</if>
+		<if test='order == ""or order==null '>
+			order by oda.TICKET_NUMBER
+		</if>
+	</select>
+	<select id="queryDoctorGrade"  parameterType="java.util.Map" resultType="java.util.Map">
+		select oda.DOCTOR_FLOW,
+				rd.DOCTOR_NAME,
+				rd.ORG_NAME,
+				oss.SPE_NAME,
+				rd.TRAINING_TYPE_NAME,
+				oss.CLINICAL_FLOW,
+				oss.CLINICAL_NAME,
+				oda.IS_PASS,
+				wm_concat(osrd.DOC_ROOM_FLOW) DOC_ROOM_FLOW,
+				wm_concat(osrd.STATION_FLOW) STATION_FLOW,
+				wm_concat(osrd.STATION_NAME) STATION_NAME,
+				wm_concat(nvl(osrd.EXAM_SCORE,'0')) EXAM_SCORE
+		  from OSCA_DOCTOR_ASSESSMENT oda
+		left join RES_DOCTOR rd on rd.DOCTOR_FLOW = oda.DOCTOR_FLOW
+		left join OSCA_SKILLS_ASSESSMENT oss on oss.CLINICAL_FLOW = oda.CLINICAL_FLOW
+		left join (select DOC_ROOM_FLOW,DOCTOR_FLOW,STATION_FLOW,STATION_NAME,EXAM_SCORE,CLINICAL_FLOW from OSCA_SKILL_ROOM_DOC where RECORD_STATUS='Y') osrd on (rd.DOCTOR_FLOW = osrd.DOCTOR_FLOW and osrd.CLINICAL_FLOW = oss.CLINICAL_FLOW)
+	 	where oda.RECORD_STATUS='Y'
+		<if test='clinicalFlow!=null and clinicalFlow!=""'>
+			and oss.CLINICAL_FLOW = #{clinicalFlow}
+		</if>
+		<if test='doctorFlow!=null and doctorFlow!=""'>
+			and oda.DOCTOR_FLOW = #{doctorFlow}
+		</if>
+	  	group by oda.DOCTOR_FLOW,rd.DOCTOR_NAME,rd.ORG_NAME,oss.SPE_NAME,rd.TRAINING_TYPE_NAME,oss.CLINICAL_FLOW,oss.CLINICAL_NAME,oda.IS_PASS
+	</select>
+	<select id="queryStationByFlow" resultType="java.util.Map">
+		select oss.station_flow,
+				oss.station_name,
+				oss.station_score,
+				nvl(osm.pass_per,60) pass_per
+			from osca_skills_assessment osa
+		left join osca_subject_main osm on osa.subject_flow = osm.subject_flow
+		left join osca_subject_station oss on osm.subject_flow = oss.subject_flow
+		where osa.CLINICAL_FLOW = #{clinicalFlow} and osm.record_status='Y' and oss.record_status='Y' and osa.record_status='Y'
+		order by oss.ordinal
+	</select>
+	<select id="registDoctor" resultType="java.lang.Integer">
+		select count(su.USER_FLOW) from SYS_USER su,RES_DOCTOR rd WHERE su.RECORD_STATUS='Y' and rd.RECORD_STATUS='Y' and su.USER_FLOW = rd.DOCTOR_FLOW and rd.DOCTOR_FLOW = #{userFlow}
+	</select>
+	<select id="queryRoomDoctorList"  parameterType="java.util.Map" resultType="java.util.Map">
+		select d.room_flow,d.room_name,d.doctor_name,d.spe_name,d.pd_num,d.pd_doctor_name_list
+			from( select e.room_flow,e.room_name,e.doctor_name,e.spe_name,e.pd_num,max(e.pd_doctor_name_list) pd_doctor_name_list
+				from (select c.room_flow,c.room_name,c.doctor_name,c.spe_name,c.pd_num,wm_concat(c.pd_doctor_name)over(partition by c.room_flow order by c.group_idx) pd_doctor_name_list
+					from (select osrd.room_flow,osrd.room_name,a.doctor_name,a.spe_name,b.pd_num,b.doctor_name pd_doctor_name,b.group_idx
+						  from osca_skill_room_doc osrd
+						  left join (select doctor_flow,doctor_name,osa.spe_name,room_flow,row_number() over(partition by room_flow order by room_flow) group_idx
+						  				from osca_skill_room_doc osrd
+									  	left join osca_skills_assessment osa
+											on osrd.clinical_flow = osa.clinical_flow
+		where osrd.record_status = 'Y'
+											and osrd.clinical_flow in
+										   		(select osa.clinical_flow from osca_skills_assessment osa
+													inner join osca_skills_assessment_time osat on osa.clinical_flow=osat.clinical_flow
+													where to_char(sysdate,'yyyy-mm-dd hh24:mi') between osat.exam_start_time and osat.exam_end_time
+													<if test='orgFlow!=null and orgFlow!=""'>
+														and osa.org_flow = #{orgFlow}
+													</if>)
+									   		and osrd.exam_status_id = 'AssessIng') a
+							on a.room_flow = osrd.room_flow
+						  left join (select doctor_flow,doctor_name,room_flow,row_number() over(partition by room_flow order by waiting_time) group_idx,count(doctor_flow) over(partition by room_flow) pd_num
+										from osca_skill_room_doc
+									 	where record_status = 'Y'
+									   		and clinical_flow in
+										   		(select osa.clinical_flow from osca_skills_assessment osa
+													inner join osca_skills_assessment_time osat on osa.clinical_flow=osat.clinical_flow
+													where to_char(sysdate,'yyyy-mm-dd hh24:mi') between osat.exam_start_time and osat.exam_end_time
+													<if test='orgFlow!=null and orgFlow!=""'>
+														and osa.org_flow = #{orgFlow}
+													</if> )
+									   		and exam_status_id = 'Waiting') b
+							on b.room_flow = osrd.room_flow
+						 where osrd.record_status = 'Y'
+					  	 	and osrd.room_flow in
+							   (select sd.dict_id from sys_dict sd
+							  		where sd.dict_type_id = 'ExamRoom'
+										<if test='orgFlow!=null and orgFlow!=""'>
+											and sd.org_flow = #{orgFlow}
+										</if> )
+						   	and osrd.clinical_flow in
+							   (select osa.clinical_flow from osca_skills_assessment osa
+									inner join osca_skills_assessment_time osat on osa.clinical_flow=osat.clinical_flow
+									where to_char(sysdate,'yyyy-mm-dd hh24:mi') between osat.exam_start_time and osat.exam_end_time
+									<if test='orgFlow!=null and orgFlow!=""'>
+										and osa.org_flow = #{orgFlow}
+									</if>)
+						   	and (a.group_idx = 1 or a.doctor_flow is null)
+						   	and (b.group_idx in (1, 2, 3) or b.doctor_flow is null)
+						 group by osrd.room_flow,osrd.room_name,a.doctor_flow,a.doctor_name,a.spe_name,b.doctor_flow,b.doctor_name,b.pd_num,b.group_idx
+						 order by osrd.room_name,b.group_idx) c ) e
+				 group by e.room_flow,e.room_name,e.doctor_name,e.spe_name,e.pd_num) d
+		 where d.doctor_name is not null
+		 	or d.pd_doctor_name_list is not null
+		 order by d.room_name
+	</select>
+	<select id="queryRoomDoctorList2"  parameterType="java.util.Map" resultType="java.util.Map">
+		select osr.room_flow,osr.room_name,
+		(select a.doctor_name||'('||a.spe_name||')'
+		from
+		(select osrd.doctor_name,osa.spe_name,osrd.room_flow,ROW_NUMBER() OVER (PARTITION BY osrd.room_flow ORDER BY osrd.CREATE_TIME DESC) AS group_idx
+		from osca_skill_room_doc osrd
+		left join osca_skills_assessment osa on osrd.clinical_flow = osa.clinical_flow
+		where  osrd.record_status = 'Y' and osa.record_status = 'Y'
+		<if test="clinicalFlows!=null and clinicalFlows.size>0">
+			and osrd.clinical_flow in
+			<foreach collection="clinicalFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+			AND osrd.exam_status_id = 'AssessIng')a
+		where a.group_idx = 1
+		and a.room_flow = osr.room_flow) doctor_name,
+
+		(select wm_concat(oda.doctor_name||'('||osa.spe_name||')')
+		from osca_doctor_assessment oda
+		left join osca_skills_assessment osa on oda.clinical_flow = osa.clinical_flow
+		where oda.record_status = 'Y' and osa.record_status = 'Y'
+		and oda.SIGIN_STATUS_ID = 'SignIn'
+		<if test="clinicalFlows!=null and clinicalFlows.size>0">
+			and oda.clinical_flow in
+			<foreach collection="clinicalFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		and oda.doctor_flow not in
+		(
+			select osrd.doctor_flow
+			from osca_skill_room_doc osrd
+			where osrd.record_status = 'Y'
+			and (osrd.EXAM_STATUS_ID = 'AssessIng' or osrd.EXAM_STATUS_ID = 'Assessment')
+			and osrd.station_flow in
+				(
+				select osr2.station_flow
+				from osca_skill_room osr2
+				where osr2.record_status = 'Y'
+				and osr2.room_flow = osr.room_flow
+				)
+		)
+		)pd_doctor_name_list
+
+		from osca_skill_room osr
+		where osr.record_status = 'Y'
+		<if test="clinicalFlows!=null and clinicalFlows.size>0">
+			and osr.clinical_flow in
+			<foreach collection="clinicalFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		group by osr.room_flow,osr.room_name
+		ORDER BY osr.room_name
+	</select>
+	<select id="querySignNoSubScoreNum" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(1)
+		  from osca_tea_scan_doc a
+		 where a.record_status = 'Y'
+			and a.clinical_flow = #{clinicalFlow}
+			and a.room_record_flow = #{roomRecordFlow}
+			and a.partner_flow in (select partner_flow from osca_skill_room_tea where record_status = 'Y'
+				and room_record_flow = #{roomRecordFlow}
+				and partner_flow not in
+				<foreach collection="teaFlowList" item="teaFlow" open="(" close=")" separator="," >
+					#{teaFlow}
+				</foreach>
+			)
+		and (exists(select null from osca_skill_doc_score b where b.record_status='Y' and b.status_id=#{statusId} and a.clinical_flow=b.clinical_flow and a.partner_flow=b.partner_flow and b.station_flow=#{stationFlow})
+			or not exists(select null from osca_skill_doc_score c where c.record_status='Y' and a.clinical_flow=c.clinical_flow and a.partner_flow=c.partner_flow and c.doctor_flow=a.doctor_flow and c.station_flow=#{stationFlow})
+		)
+	</select>
+	<resultMap id="dataExtMap" type="java.util.HashMap">
+		<result property="clinicalFlow" column="CLINICAL_FLOW" jdbcType="VARCHAR"/>
+		<result property="clinicalName" column="CLINICAL_NAME" jdbcType="VARCHAR"/>
+		<result property="clinicalYear" column="CLINICAL_YEAR" jdbcType="VARCHAR"/>
+		<result property="speId" column="SPE_ID" jdbcType="VARCHAR"/>
+		<result property="speName" column="SPE_NAME" jdbcType="VARCHAR"/>
+		<result property="actionTypeId" column="ACTION_TYPE_ID" jdbcType="VARCHAR"/>
+		<result property="actionTypeName" column="ACTION_TYPE_NAME" jdbcType="VARCHAR"/>
+		<result property="subjectFlow" column="SUBJECT_FLOW" jdbcType="VARCHAR"/>
+		<result property="subjectName" column="SUBJECT_NAME" jdbcType="VARCHAR"/>
+		<result property="appointStartTime" column="APPOINT_START_TIME" jdbcType="VARCHAR"/>
+		<result property="appointEndTime" column="APPOINT_END_TIME" jdbcType="VARCHAR"/>
+		<result property="appointNum" column="APPOINT_NUM" jdbcType="VARCHAR"/>
+		<result property="examAddress" column="EXAM_ADDRESS" jdbcType="VARCHAR"/>
+		<result property="isLocal" column="IS_LOCAL" jdbcType="VARCHAR"/>
+		<result property="orgFlow" column="ORG_FLOW" jdbcType="VARCHAR"/>
+		<result property="orgName" column="ORG_NAME" jdbcType="VARCHAR"/>
+		<result property="isShow" column="IS_SHOW" jdbcType="VARCHAR"/>
+		<result property="isReleased" column="IS_RELEASED" jdbcType="VARCHAR"/>
+		<result property="codeInfo" column="CODE_INFO" jdbcType="VARCHAR"/>
+		<result property="examStartTimeList" column="EXAM_START_TIME_LIST" jdbcType="VARCHAR"/>
+		<result property="examEndTimeList" column="EXAM_END_TIME_LIST" jdbcType="VARCHAR"/>
+		<result property="dshNum" column="DSH_NUM" jdbcType="VARCHAR"/>
+		<result property="useNum" column="USE_NUM" jdbcType="VARCHAR"/>
+	</resultMap>
+	<select id="queryDataList" parameterType="java.util.Map" resultMap="dataExtMap">
+		select distinct a.*, b.exam_start_time_list, b.exam_end_time_list, nvl(d.dsh_num, 0) dsh_num, nvl(f.use_num, 0) use_num
+		  from osca_skills_assessment a
+		  left join (select clinical_flow,max(exam_start_time_list) exam_start_time_list,max(exam_end_time_list) exam_end_time_list from(
+							select clinical_flow,wm_concat(exam_start_time) over(partition by clinical_flow order by exam_start_time) exam_start_time_list,wm_concat(exam_end_time) over(partition by clinical_flow) exam_end_time_list
+								from osca_skills_assessment_time where record_status='Y')group by clinical_flow) b
+			on a.clinical_flow = b.clinical_flow
+		  left join (select c.clinical_flow,
+							count(c.record_flow) over(partition by c.clinical_flow) dsh_num
+					   from osca_doctor_assessment c
+					  where c.record_status = 'Y'
+						and c.audit_status_id = 'Passing') d
+			on d.clinical_flow = a.clinical_flow
+		  left join (select e.clinical_flow,
+							count(e.record_flow) over(partition by e.clinical_flow) use_num
+						from osca_doctor_assessment e
+					  where e.record_status = 'Y'
+						and e.audit_status_id in('Passing','Passed')) f
+			on f.clinical_flow = a.clinical_flow
+		 where a.record_status = 'Y'
+		<if test='clinicalYear!=null and clinicalYear!=""'>
+			and a.clinical_year = #{clinicalYear}
+		</if>
+		<if test='speId!=null and speId!=""'>
+			and a.spe_id = #{speId}
+		</if>
+		<if test='dictList!=null and dictList.size>0'>
+			and a.spe_id in
+			<foreach collection="dictList" item="item" open="(" close=")" separator="," >
+				#{item.dictId}
+			</foreach>
+		</if>
+		<if test='clinicalName!=null and clinicalName!=""'>
+			<bind name="name" value="'%'+clinicalName+'%'"/>
+			and a.clinical_name like #{name}
+		</if>
+		<if test='isLocal!=null and isLocal!=""'>
+			and a.is_local = #{isLocal}
+		</if>
+		<if test='orgFlow!=null and orgFlow!=""'>
+			and a.org_flow = #{orgFlow}
+		</if>
+		order by a.APPOINT_START_TIME DESC
+	</select>
+	<select id="queryDoctorFlowList"  parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT a.doctor_flow
+		FROM (
+		SELECT temp.*, rownum AS row_id
+		FROM (
+		select oda.doctor_flow from osca_doctor_assessment oda
+		where oda.record_status='Y'
+		and oda.clinical_flow=#{clinicalFlow}
+		and oda.audit_status_id='Passed'
+		<if test='testNum!=null and testNum!=""'>
+			and (oda.exam_start_time=''
+			or oda.exam_start_time is null)
+			and rownum <![CDATA[<=]]> #{testNum}
+		</if>
+		order by oda.appoint_time
+		)temp)a
+		WHERE row_id <![CDATA[>]]> 0
+	</select>
+
+	<select id="queryOsaTime" parameterType="java.lang.String" resultType="java.util.Map">
+		select wm_concat(osat.exam_start_time) exam_start_time,wm_concat(osat.exam_end_time) exam_end_time
+		from osca_skills_assessment_time osat
+		where osat.record_status='Y'
+		and osat.clinical_flow=#{clinicalFlow}
+	</select>
+
+	<select id="queryOsaFirstTime" parameterType="java.lang.String" resultType="java.lang.String">
+		select osat.exam_start_time
+		from osca_skills_assessment_time osat
+		where osat.record_status='Y'
+		and osat.clinical_flow=#{clinicalFlow}
+		order by osat.exam_start_time
+	</select>
+
+	<select id="screenInfo" parameterType="java.util.Map" resultType="java.util.Map">
+
+		SELECT *
+		FROM (
+		SELECT osr.ROOM_flow, osr.ROOM_NAME, (
+		SELECT WM_CONCAT(DISTINCT PARTNER_NAME)
+		FROM OSCA_SKILL_ROOM_TEA osrt
+		WHERE osrt.record_status = 'Y'
+		AND osr.ROOM_FLOW = osrt.ROOM_FLOW
+		AND 4 >= rownum
+		AND osr.clinical_Flow = osrt.clinical_Flow
+		and  osrt.STATION_FLOW = oss.STATION_FLOW
+		<if test='clinicalFlow!=null and clinicalFlow!=""'>
+			and osr.clinical_Flow = #{clinicalFlow}
+		</if>
+		) AS PARTNER_NAME, (
+		SELECT WM_CONCAT(DISTINCT DOCTOR_NAME)
+		FROM OSCA_SKILL_ROOM_DOC osrd
+		WHERE osrd.record_status = 'Y'
+		AND osr.ROOM_FLOW = osrd.ROOM_FLOW
+		AND 4 >= rownum
+		AND osr.clinical_Flow = osrd.clinical_Flow
+		and osrd.STATION_FLOW = oss.STATION_FLOW
+		<if test='clinicalFlow!=null and clinicalFlow!=""'>
+			and osr.clinical_Flow = #{clinicalFlow}
+		</if>
+		AND osrd.EXAM_STATUS_ID = 'AssessIng'
+		) AS DOCTOR_NAME, osr.STATION_NAME
+		FROM OSCA_SKILL_ROOM osr
+		LEFT JOIN osca_subject_station oss ON osr.STATION_FLOW = oss.STATION_FLOW
+		WHERE osr.record_status = 'Y'
+		<if test='clinicalFlow!=null and clinicalFlow!=""'>
+			and osr.clinical_Flow = #{clinicalFlow}
+		</if>
+		GROUP BY osr.ROOM_flow, oss.STATION_FLOW,osr.STATION_NAME, osr.ROOM_NAME,osr.clinical_Flow,  oss.ORDINAL
+		ORDER BY oss.ORDINAL, osr.ROOM_NAME
+		) a
+		WHERE PARTNER_NAME IS NOT NULL
+
+	</select>
+
+	<select id="screenSelect" parameterType="java.util.Map" resultType="java.util.Map">
+		select osa.CLINICAL_FLOW,osa.CLINICAL_NAME,osat.EXAM_START_TIME,osat.EXAM_END_TIME
+		from OSCA_SKILLS_ASSESSMENT osa
+		inner join OSCA_SKILLS_ASSESSMENT_TIME osat on osa.CLINICAL_FLOW = osat.CLINICAL_FLOW
+		where osat.record_status='Y' and osa.record_status='Y'
+		and substr(osat.EXAM_START_TIME,1,10) <![CDATA[<=]]> #{date} and substr(osat.EXAM_END_TIME,1,10) >= #{date}
+		and osa.org_flow = #{orgFlow}
+	</select>
+</mapper>
