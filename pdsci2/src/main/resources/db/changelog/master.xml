@@ -1,0 +1,23 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!--<includeAll path="db/changelog/" relativeToChangelogFile="false"/>
+
+    <changeSet id="20240617-01" author="sjy">
+        <sqlFile path="db/sql/create_table_6_17.sql"/>
+    </changeSet>
+
+    <changeSet id="20240626-01" author="sjy">
+        <sql>
+            ALTER TABLE `SYS_ACTION_LOG` ADD COLUMN ACTION_IP VARCHAR (255) AFTER ACTION_PATH
+        </sql>
+    </changeSet>-->
+    <!-- 按年份引changelog，分文件夹，防止时间久了一长串文件，sql文件也按年份分文件夹存 -->
+    <include file="classpath:db/changelog/2024/*.xml" relativeToChangelogFile="false"></include>
+
+</databaseChangeLog>
+
