@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.ErpCrmCustomerUserMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ErpCrmCustomerUser" >
+    <id column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_FLOW" property="customerFlow" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="SEX_ID" property="sexId" jdbcType="VARCHAR" />
+    <result column="SEX_NAME" property="sexName" jdbcType="VARCHAR" />
+    <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="POST_NAME" property="postName" jdbcType="VARCHAR" />
+    <result column="IS_MAIN" property="isMain" jdbcType="VARCHAR" />
+    <result column="USER_TELPHONE" property="userTelphone" jdbcType="VARCHAR" />
+    <result column="USER_CELPHONE" property="userCelphone" jdbcType="VARCHAR" />
+    <result column="USER_EMAIL" property="userEmail" jdbcType="VARCHAR" />
+    <result column="USER_QQ" property="userQq" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    USER_FLOW, CUSTOMER_FLOW, USER_NAME, SEX_ID, SEX_NAME, ID_NO, BIRTHDAY, DEPT_NAME, 
+    POST_NAME, IS_MAIN, USER_TELPHONE, USER_CELPHONE, USER_EMAIL, USER_QQ, REMARK, RECORD_STATUS, 
+    CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ErpCrmCustomerUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.ERP_CRM_CUSTOMER_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.ERP_CRM_CUSTOMER_USER
+    where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.ERP_CRM_CUSTOMER_USER
+    where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ErpCrmCustomerUserExample" >
+    delete from PDSCI.ERP_CRM_CUSTOMER_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.ErpCrmCustomerUser" >
+    insert into PDSCI.ERP_CRM_CUSTOMER_USER (USER_FLOW, CUSTOMER_FLOW, USER_NAME, 
+      SEX_ID, SEX_NAME, ID_NO, 
+      BIRTHDAY, DEPT_NAME, POST_NAME, 
+      IS_MAIN, USER_TELPHONE, USER_CELPHONE, 
+      USER_EMAIL, USER_QQ, REMARK, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW)
+    values (#{userFlow,jdbcType=VARCHAR}, #{customerFlow,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{sexId,jdbcType=VARCHAR}, #{sexName,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, #{postName,jdbcType=VARCHAR}, 
+      #{isMain,jdbcType=VARCHAR}, #{userTelphone,jdbcType=VARCHAR}, #{userCelphone,jdbcType=VARCHAR}, 
+      #{userEmail,jdbcType=VARCHAR}, #{userQq,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ErpCrmCustomerUser" >
+    insert into PDSCI.ERP_CRM_CUSTOMER_USER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userFlow != null" >
+        USER_FLOW,
+      </if>
+      <if test="customerFlow != null" >
+        CUSTOMER_FLOW,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="sexId != null" >
+        SEX_ID,
+      </if>
+      <if test="sexName != null" >
+        SEX_NAME,
+      </if>
+      <if test="idNo != null" >
+        ID_NO,
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY,
+      </if>
+      <if test="deptName != null" >
+        DEPT_NAME,
+      </if>
+      <if test="postName != null" >
+        POST_NAME,
+      </if>
+      <if test="isMain != null" >
+        IS_MAIN,
+      </if>
+      <if test="userTelphone != null" >
+        USER_TELPHONE,
+      </if>
+      <if test="userCelphone != null" >
+        USER_CELPHONE,
+      </if>
+      <if test="userEmail != null" >
+        USER_EMAIL,
+      </if>
+      <if test="userQq != null" >
+        USER_QQ,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userFlow != null" >
+        #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="customerFlow != null" >
+        #{customerFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sexId != null" >
+        #{sexId,jdbcType=VARCHAR},
+      </if>
+      <if test="sexName != null" >
+        #{sexName,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null" >
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="postName != null" >
+        #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="isMain != null" >
+        #{isMain,jdbcType=VARCHAR},
+      </if>
+      <if test="userTelphone != null" >
+        #{userTelphone,jdbcType=VARCHAR},
+      </if>
+      <if test="userCelphone != null" >
+        #{userCelphone,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userQq != null" >
+        #{userQq,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ErpCrmCustomerUserExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.ERP_CRM_CUSTOMER_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.ERP_CRM_CUSTOMER_USER
+    <set >
+      <if test="record.userFlow != null" >
+        USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerFlow != null" >
+        CUSTOMER_FLOW = #{record.customerFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sexId != null" >
+        SEX_ID = #{record.sexId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sexName != null" >
+        SEX_NAME = #{record.sexName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idNo != null" >
+        ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null" >
+        BIRTHDAY = #{record.birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptName != null" >
+        DEPT_NAME = #{record.deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postName != null" >
+        POST_NAME = #{record.postName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isMain != null" >
+        IS_MAIN = #{record.isMain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userTelphone != null" >
+        USER_TELPHONE = #{record.userTelphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userCelphone != null" >
+        USER_CELPHONE = #{record.userCelphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userEmail != null" >
+        USER_EMAIL = #{record.userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userQq != null" >
+        USER_QQ = #{record.userQq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.ERP_CRM_CUSTOMER_USER
+    set USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      CUSTOMER_FLOW = #{record.customerFlow,jdbcType=VARCHAR},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      SEX_ID = #{record.sexId,jdbcType=VARCHAR},
+      SEX_NAME = #{record.sexName,jdbcType=VARCHAR},
+      ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      BIRTHDAY = #{record.birthday,jdbcType=VARCHAR},
+      DEPT_NAME = #{record.deptName,jdbcType=VARCHAR},
+      POST_NAME = #{record.postName,jdbcType=VARCHAR},
+      IS_MAIN = #{record.isMain,jdbcType=VARCHAR},
+      USER_TELPHONE = #{record.userTelphone,jdbcType=VARCHAR},
+      USER_CELPHONE = #{record.userCelphone,jdbcType=VARCHAR},
+      USER_EMAIL = #{record.userEmail,jdbcType=VARCHAR},
+      USER_QQ = #{record.userQq,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ErpCrmCustomerUser" >
+    update PDSCI.ERP_CRM_CUSTOMER_USER
+    <set >
+      <if test="customerFlow != null" >
+        CUSTOMER_FLOW = #{customerFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sexId != null" >
+        SEX_ID = #{sexId,jdbcType=VARCHAR},
+      </if>
+      <if test="sexName != null" >
+        SEX_NAME = #{sexName,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        ID_NO = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null" >
+        DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="postName != null" >
+        POST_NAME = #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="isMain != null" >
+        IS_MAIN = #{isMain,jdbcType=VARCHAR},
+      </if>
+      <if test="userTelphone != null" >
+        USER_TELPHONE = #{userTelphone,jdbcType=VARCHAR},
+      </if>
+      <if test="userCelphone != null" >
+        USER_CELPHONE = #{userCelphone,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        USER_EMAIL = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userQq != null" >
+        USER_QQ = #{userQq,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ErpCrmCustomerUser" >
+    update PDSCI.ERP_CRM_CUSTOMER_USER
+    set CUSTOMER_FLOW = #{customerFlow,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      SEX_ID = #{sexId,jdbcType=VARCHAR},
+      SEX_NAME = #{sexName,jdbcType=VARCHAR},
+      ID_NO = #{idNo,jdbcType=VARCHAR},
+      BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      POST_NAME = #{postName,jdbcType=VARCHAR},
+      IS_MAIN = #{isMain,jdbcType=VARCHAR},
+      USER_TELPHONE = #{userTelphone,jdbcType=VARCHAR},
+      USER_CELPHONE = #{userCelphone,jdbcType=VARCHAR},
+      USER_EMAIL = #{userEmail,jdbcType=VARCHAR},
+      USER_QQ = #{userQq,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

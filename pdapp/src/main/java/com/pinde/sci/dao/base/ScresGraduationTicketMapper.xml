@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.ScresGraduationTicketMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ScresGraduationTicket" >
+    <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+    <result column="APPLY_FLOW" property="applyFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
+    <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+    <result column="GRADUATION_YEAR" property="graduationYear" jdbcType="VARCHAR" />
+    <result column="TICKET_NUMBER" property="ticketNumber" jdbcType="VARCHAR" />
+    <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+    <result column="THEORY_EXAM_DATE" property="theoryExamDate" jdbcType="VARCHAR" />
+    <result column="THEORY_EXAM_TIME1" property="theoryExamTime1" jdbcType="VARCHAR" />
+    <result column="THEORY_EXAM_TIME1_BARCH" property="theoryExamTime1Barch" jdbcType="VARCHAR" />
+    <result column="THEORY_EXAM_TIME2" property="theoryExamTime2" jdbcType="VARCHAR" />
+    <result column="THEORY_EXAM_TIME2_BARCH" property="theoryExamTime2Barch" jdbcType="VARCHAR" />
+    <result column="SKILL_EXAM_DATE" property="skillExamDate" jdbcType="VARCHAR" />
+    <result column="SKILL_EXAM_TIME1" property="skillExamTime1" jdbcType="VARCHAR" />
+    <result column="SKILL_EXAM_TIME1_BARCH" property="skillExamTime1Barch" jdbcType="VARCHAR" />
+    <result column="SKILL_EXAM_TIME2" property="skillExamTime2" jdbcType="VARCHAR" />
+    <result column="SKILL_EXAM_TIME2_BARCH" property="skillExamTime2Barch" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="ORG_ADDRESS" property="orgAddress" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="USER_IMG" property="userImg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RECORD_FLOW, APPLY_FLOW, DOCTOR_NAME, DOCTOR_FLOW, GRADUATION_YEAR, TICKET_NUMBER, 
+    ID_NO, THEORY_EXAM_DATE, THEORY_EXAM_TIME1, THEORY_EXAM_TIME1_BARCH, THEORY_EXAM_TIME2, 
+    THEORY_EXAM_TIME2_BARCH, SKILL_EXAM_DATE, SKILL_EXAM_TIME1, SKILL_EXAM_TIME1_BARCH, 
+    SKILL_EXAM_TIME2, SKILL_EXAM_TIME2_BARCH, ORG_NAME, ORG_ADDRESS, RECORD_STATUS, CREATE_TIME, 
+    CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, USER_IMG
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ScresGraduationTicketExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.SCRES_GRADUATION_TICKET
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.SCRES_GRADUATION_TICKET
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.SCRES_GRADUATION_TICKET
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ScresGraduationTicketExample" >
+    delete from PDSCI.SCRES_GRADUATION_TICKET
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.ScresGraduationTicket" >
+    insert into PDSCI.SCRES_GRADUATION_TICKET (RECORD_FLOW, APPLY_FLOW, DOCTOR_NAME, 
+      DOCTOR_FLOW, GRADUATION_YEAR, TICKET_NUMBER, 
+      ID_NO, THEORY_EXAM_DATE, THEORY_EXAM_TIME1, 
+      THEORY_EXAM_TIME1_BARCH, THEORY_EXAM_TIME2, 
+      THEORY_EXAM_TIME2_BARCH, SKILL_EXAM_DATE, SKILL_EXAM_TIME1, 
+      SKILL_EXAM_TIME1_BARCH, SKILL_EXAM_TIME2, SKILL_EXAM_TIME2_BARCH, 
+      ORG_NAME, ORG_ADDRESS, RECORD_STATUS, 
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+      MODIFY_USER_FLOW, USER_IMG)
+    values (#{recordFlow,jdbcType=VARCHAR}, #{applyFlow,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, 
+      #{doctorFlow,jdbcType=VARCHAR}, #{graduationYear,jdbcType=VARCHAR}, #{ticketNumber,jdbcType=VARCHAR}, 
+      #{idNo,jdbcType=VARCHAR}, #{theoryExamDate,jdbcType=VARCHAR}, #{theoryExamTime1,jdbcType=VARCHAR}, 
+      #{theoryExamTime1Barch,jdbcType=VARCHAR}, #{theoryExamTime2,jdbcType=VARCHAR}, 
+      #{theoryExamTime2Barch,jdbcType=VARCHAR}, #{skillExamDate,jdbcType=VARCHAR}, #{skillExamTime1,jdbcType=VARCHAR}, 
+      #{skillExamTime1Barch,jdbcType=VARCHAR}, #{skillExamTime2,jdbcType=VARCHAR}, #{skillExamTime2Barch,jdbcType=VARCHAR}, 
+      #{orgName,jdbcType=VARCHAR}, #{orgAddress,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
+      #{modifyUserFlow,jdbcType=VARCHAR}, #{userImg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ScresGraduationTicket" >
+    insert into PDSCI.SCRES_GRADUATION_TICKET
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        RECORD_FLOW,
+      </if>
+      <if test="applyFlow != null" >
+        APPLY_FLOW,
+      </if>
+      <if test="doctorName != null" >
+        DOCTOR_NAME,
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW,
+      </if>
+      <if test="graduationYear != null" >
+        GRADUATION_YEAR,
+      </if>
+      <if test="ticketNumber != null" >
+        TICKET_NUMBER,
+      </if>
+      <if test="idNo != null" >
+        ID_NO,
+      </if>
+      <if test="theoryExamDate != null" >
+        THEORY_EXAM_DATE,
+      </if>
+      <if test="theoryExamTime1 != null" >
+        THEORY_EXAM_TIME1,
+      </if>
+      <if test="theoryExamTime1Barch != null" >
+        THEORY_EXAM_TIME1_BARCH,
+      </if>
+      <if test="theoryExamTime2 != null" >
+        THEORY_EXAM_TIME2,
+      </if>
+      <if test="theoryExamTime2Barch != null" >
+        THEORY_EXAM_TIME2_BARCH,
+      </if>
+      <if test="skillExamDate != null" >
+        SKILL_EXAM_DATE,
+      </if>
+      <if test="skillExamTime1 != null" >
+        SKILL_EXAM_TIME1,
+      </if>
+      <if test="skillExamTime1Barch != null" >
+        SKILL_EXAM_TIME1_BARCH,
+      </if>
+      <if test="skillExamTime2 != null" >
+        SKILL_EXAM_TIME2,
+      </if>
+      <if test="skillExamTime2Barch != null" >
+        SKILL_EXAM_TIME2_BARCH,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="orgAddress != null" >
+        ORG_ADDRESS,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="userImg != null" >
+        USER_IMG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="applyFlow != null" >
+        #{applyFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null" >
+        #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationYear != null" >
+        #{graduationYear,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketNumber != null" >
+        #{ticketNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="theoryExamDate != null" >
+        #{theoryExamDate,jdbcType=VARCHAR},
+      </if>
+      <if test="theoryExamTime1 != null" >
+        #{theoryExamTime1,jdbcType=VARCHAR},
+      </if>
+      <if test="theoryExamTime1Barch != null" >
+        #{theoryExamTime1Barch,jdbcType=VARCHAR},
+      </if>
+      <if test="theoryExamTime2 != null" >
+        #{theoryExamTime2,jdbcType=VARCHAR},
+      </if>
+      <if test="theoryExamTime2Barch != null" >
+        #{theoryExamTime2Barch,jdbcType=VARCHAR},
+      </if>
+      <if test="skillExamDate != null" >
+        #{skillExamDate,jdbcType=VARCHAR},
+      </if>
+      <if test="skillExamTime1 != null" >
+        #{skillExamTime1,jdbcType=VARCHAR},
+      </if>
+      <if test="skillExamTime1Barch != null" >
+        #{skillExamTime1Barch,jdbcType=VARCHAR},
+      </if>
+      <if test="skillExamTime2 != null" >
+        #{skillExamTime2,jdbcType=VARCHAR},
+      </if>
+      <if test="skillExamTime2Barch != null" >
+        #{skillExamTime2Barch,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddress != null" >
+        #{orgAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userImg != null" >
+        #{userImg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ScresGraduationTicketExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.SCRES_GRADUATION_TICKET
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.SCRES_GRADUATION_TICKET
+    <set >
+      <if test="record.recordFlow != null" >
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyFlow != null" >
+        APPLY_FLOW = #{record.applyFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorName != null" >
+        DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorFlow != null" >
+        DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationYear != null" >
+        GRADUATION_YEAR = #{record.graduationYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ticketNumber != null" >
+        TICKET_NUMBER = #{record.ticketNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idNo != null" >
+        ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.theoryExamDate != null" >
+        THEORY_EXAM_DATE = #{record.theoryExamDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.theoryExamTime1 != null" >
+        THEORY_EXAM_TIME1 = #{record.theoryExamTime1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.theoryExamTime1Barch != null" >
+        THEORY_EXAM_TIME1_BARCH = #{record.theoryExamTime1Barch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.theoryExamTime2 != null" >
+        THEORY_EXAM_TIME2 = #{record.theoryExamTime2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.theoryExamTime2Barch != null" >
+        THEORY_EXAM_TIME2_BARCH = #{record.theoryExamTime2Barch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skillExamDate != null" >
+        SKILL_EXAM_DATE = #{record.skillExamDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skillExamTime1 != null" >
+        SKILL_EXAM_TIME1 = #{record.skillExamTime1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skillExamTime1Barch != null" >
+        SKILL_EXAM_TIME1_BARCH = #{record.skillExamTime1Barch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skillExamTime2 != null" >
+        SKILL_EXAM_TIME2 = #{record.skillExamTime2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skillExamTime2Barch != null" >
+        SKILL_EXAM_TIME2_BARCH = #{record.skillExamTime2Barch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgAddress != null" >
+        ORG_ADDRESS = #{record.orgAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userImg != null" >
+        USER_IMG = #{record.userImg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.SCRES_GRADUATION_TICKET
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      APPLY_FLOW = #{record.applyFlow,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      GRADUATION_YEAR = #{record.graduationYear,jdbcType=VARCHAR},
+      TICKET_NUMBER = #{record.ticketNumber,jdbcType=VARCHAR},
+      ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      THEORY_EXAM_DATE = #{record.theoryExamDate,jdbcType=VARCHAR},
+      THEORY_EXAM_TIME1 = #{record.theoryExamTime1,jdbcType=VARCHAR},
+      THEORY_EXAM_TIME1_BARCH = #{record.theoryExamTime1Barch,jdbcType=VARCHAR},
+      THEORY_EXAM_TIME2 = #{record.theoryExamTime2,jdbcType=VARCHAR},
+      THEORY_EXAM_TIME2_BARCH = #{record.theoryExamTime2Barch,jdbcType=VARCHAR},
+      SKILL_EXAM_DATE = #{record.skillExamDate,jdbcType=VARCHAR},
+      SKILL_EXAM_TIME1 = #{record.skillExamTime1,jdbcType=VARCHAR},
+      SKILL_EXAM_TIME1_BARCH = #{record.skillExamTime1Barch,jdbcType=VARCHAR},
+      SKILL_EXAM_TIME2 = #{record.skillExamTime2,jdbcType=VARCHAR},
+      SKILL_EXAM_TIME2_BARCH = #{record.skillExamTime2Barch,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      ORG_ADDRESS = #{record.orgAddress,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      USER_IMG = #{record.userImg,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ScresGraduationTicket" >
+    update PDSCI.SCRES_GRADUATION_TICKET
+    <set >
+      <if test="applyFlow != null" >
+        APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null" >
+        DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationYear != null" >
+        GRADUATION_YEAR = #{graduationYear,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketNumber != null" >
+        TICKET_NUMBER = #{ticketNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        ID_NO = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="theoryExamDate != null" >
+        THEORY_EXAM_DATE = #{theoryExamDate,jdbcType=VARCHAR},
+      </if>
+      <if test="theoryExamTime1 != null" >
+        THEORY_EXAM_TIME1 = #{theoryExamTime1,jdbcType=VARCHAR},
+      </if>
+      <if test="theoryExamTime1Barch != null" >
+        THEORY_EXAM_TIME1_BARCH = #{theoryExamTime1Barch,jdbcType=VARCHAR},
+      </if>
+      <if test="theoryExamTime2 != null" >
+        THEORY_EXAM_TIME2 = #{theoryExamTime2,jdbcType=VARCHAR},
+      </if>
+      <if test="theoryExamTime2Barch != null" >
+        THEORY_EXAM_TIME2_BARCH = #{theoryExamTime2Barch,jdbcType=VARCHAR},
+      </if>
+      <if test="skillExamDate != null" >
+        SKILL_EXAM_DATE = #{skillExamDate,jdbcType=VARCHAR},
+      </if>
+      <if test="skillExamTime1 != null" >
+        SKILL_EXAM_TIME1 = #{skillExamTime1,jdbcType=VARCHAR},
+      </if>
+      <if test="skillExamTime1Barch != null" >
+        SKILL_EXAM_TIME1_BARCH = #{skillExamTime1Barch,jdbcType=VARCHAR},
+      </if>
+      <if test="skillExamTime2 != null" >
+        SKILL_EXAM_TIME2 = #{skillExamTime2,jdbcType=VARCHAR},
+      </if>
+      <if test="skillExamTime2Barch != null" >
+        SKILL_EXAM_TIME2_BARCH = #{skillExamTime2Barch,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddress != null" >
+        ORG_ADDRESS = #{orgAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userImg != null" >
+        USER_IMG = #{userImg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ScresGraduationTicket" >
+    update PDSCI.SCRES_GRADUATION_TICKET
+    set APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      GRADUATION_YEAR = #{graduationYear,jdbcType=VARCHAR},
+      TICKET_NUMBER = #{ticketNumber,jdbcType=VARCHAR},
+      ID_NO = #{idNo,jdbcType=VARCHAR},
+      THEORY_EXAM_DATE = #{theoryExamDate,jdbcType=VARCHAR},
+      THEORY_EXAM_TIME1 = #{theoryExamTime1,jdbcType=VARCHAR},
+      THEORY_EXAM_TIME1_BARCH = #{theoryExamTime1Barch,jdbcType=VARCHAR},
+      THEORY_EXAM_TIME2 = #{theoryExamTime2,jdbcType=VARCHAR},
+      THEORY_EXAM_TIME2_BARCH = #{theoryExamTime2Barch,jdbcType=VARCHAR},
+      SKILL_EXAM_DATE = #{skillExamDate,jdbcType=VARCHAR},
+      SKILL_EXAM_TIME1 = #{skillExamTime1,jdbcType=VARCHAR},
+      SKILL_EXAM_TIME1_BARCH = #{skillExamTime1Barch,jdbcType=VARCHAR},
+      SKILL_EXAM_TIME2 = #{skillExamTime2,jdbcType=VARCHAR},
+      SKILL_EXAM_TIME2_BARCH = #{skillExamTime2Barch,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      ORG_ADDRESS = #{orgAddress,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      USER_IMG = #{userImg,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

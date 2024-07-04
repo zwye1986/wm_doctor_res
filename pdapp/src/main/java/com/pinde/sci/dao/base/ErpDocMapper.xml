@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.ErpDocMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ErpDoc" >
+    <id column="DOC_FLOW" property="docFlow" jdbcType="VARCHAR" />
+    <result column="DOC_NAME" property="docName" jdbcType="VARCHAR" />
+    <result column="DOC_SUMMARY" property="docSummary" jdbcType="VARCHAR" />
+    <result column="DOC_TYPE_ID" property="docTypeId" jdbcType="VARCHAR" />
+    <result column="DOC_TYPE_NAME" property="docTypeName" jdbcType="VARCHAR" />
+    <result column="FILE_FLOW" property="fileFlow" jdbcType="VARCHAR" />
+    <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
+    <result column="FILE_TYPE" property="fileType" jdbcType="VARCHAR" />
+    <result column="IS_PUBLIC" property="isPublic" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    DOC_FLOW, DOC_NAME, DOC_SUMMARY, DOC_TYPE_ID, DOC_TYPE_NAME, FILE_FLOW, FILE_NAME, 
+    FILE_TYPE, IS_PUBLIC, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+    MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ErpDocExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.ERP_DOC
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.ERP_DOC
+    where DOC_FLOW = #{docFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.ERP_DOC
+    where DOC_FLOW = #{docFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ErpDocExample" >
+    delete from PDSCI.ERP_DOC
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.ErpDoc" >
+    insert into PDSCI.ERP_DOC (DOC_FLOW, DOC_NAME, DOC_SUMMARY, 
+      DOC_TYPE_ID, DOC_TYPE_NAME, FILE_FLOW, 
+      FILE_NAME, FILE_TYPE, IS_PUBLIC, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW)
+    values (#{docFlow,jdbcType=VARCHAR}, #{docName,jdbcType=VARCHAR}, #{docSummary,jdbcType=VARCHAR}, 
+      #{docTypeId,jdbcType=VARCHAR}, #{docTypeName,jdbcType=VARCHAR}, #{fileFlow,jdbcType=VARCHAR}, 
+      #{fileName,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR}, #{isPublic,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ErpDoc" >
+    insert into PDSCI.ERP_DOC
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="docFlow != null" >
+        DOC_FLOW,
+      </if>
+      <if test="docName != null" >
+        DOC_NAME,
+      </if>
+      <if test="docSummary != null" >
+        DOC_SUMMARY,
+      </if>
+      <if test="docTypeId != null" >
+        DOC_TYPE_ID,
+      </if>
+      <if test="docTypeName != null" >
+        DOC_TYPE_NAME,
+      </if>
+      <if test="fileFlow != null" >
+        FILE_FLOW,
+      </if>
+      <if test="fileName != null" >
+        FILE_NAME,
+      </if>
+      <if test="fileType != null" >
+        FILE_TYPE,
+      </if>
+      <if test="isPublic != null" >
+        IS_PUBLIC,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="docFlow != null" >
+        #{docFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="docName != null" >
+        #{docName,jdbcType=VARCHAR},
+      </if>
+      <if test="docSummary != null" >
+        #{docSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="docTypeId != null" >
+        #{docTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="docTypeName != null" >
+        #{docTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileFlow != null" >
+        #{fileFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null" >
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null" >
+        #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublic != null" >
+        #{isPublic,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ErpDocExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.ERP_DOC
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.ERP_DOC
+    <set >
+      <if test="record.docFlow != null" >
+        DOC_FLOW = #{record.docFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docName != null" >
+        DOC_NAME = #{record.docName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docSummary != null" >
+        DOC_SUMMARY = #{record.docSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docTypeId != null" >
+        DOC_TYPE_ID = #{record.docTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docTypeName != null" >
+        DOC_TYPE_NAME = #{record.docTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileFlow != null" >
+        FILE_FLOW = #{record.fileFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileName != null" >
+        FILE_NAME = #{record.fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileType != null" >
+        FILE_TYPE = #{record.fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isPublic != null" >
+        IS_PUBLIC = #{record.isPublic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.ERP_DOC
+    set DOC_FLOW = #{record.docFlow,jdbcType=VARCHAR},
+      DOC_NAME = #{record.docName,jdbcType=VARCHAR},
+      DOC_SUMMARY = #{record.docSummary,jdbcType=VARCHAR},
+      DOC_TYPE_ID = #{record.docTypeId,jdbcType=VARCHAR},
+      DOC_TYPE_NAME = #{record.docTypeName,jdbcType=VARCHAR},
+      FILE_FLOW = #{record.fileFlow,jdbcType=VARCHAR},
+      FILE_NAME = #{record.fileName,jdbcType=VARCHAR},
+      FILE_TYPE = #{record.fileType,jdbcType=VARCHAR},
+      IS_PUBLIC = #{record.isPublic,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ErpDoc" >
+    update PDSCI.ERP_DOC
+    <set >
+      <if test="docName != null" >
+        DOC_NAME = #{docName,jdbcType=VARCHAR},
+      </if>
+      <if test="docSummary != null" >
+        DOC_SUMMARY = #{docSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="docTypeId != null" >
+        DOC_TYPE_ID = #{docTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="docTypeName != null" >
+        DOC_TYPE_NAME = #{docTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileFlow != null" >
+        FILE_FLOW = #{fileFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null" >
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null" >
+        FILE_TYPE = #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublic != null" >
+        IS_PUBLIC = #{isPublic,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DOC_FLOW = #{docFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ErpDoc" >
+    update PDSCI.ERP_DOC
+    set DOC_NAME = #{docName,jdbcType=VARCHAR},
+      DOC_SUMMARY = #{docSummary,jdbcType=VARCHAR},
+      DOC_TYPE_ID = #{docTypeId,jdbcType=VARCHAR},
+      DOC_TYPE_NAME = #{docTypeName,jdbcType=VARCHAR},
+      FILE_FLOW = #{fileFlow,jdbcType=VARCHAR},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      FILE_TYPE = #{fileType,jdbcType=VARCHAR},
+      IS_PUBLIC = #{isPublic,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where DOC_FLOW = #{docFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.hbres.ext.HbresSchRotationDeptExtMapper">
+	<resultMap id="standardDeptMap" type="hashmap">
+		<result column="record_flow" property="recordFlow" javaType="java.lang.String" />
+		<result column="stage_name" property="stageName" javaType="java.lang.String" />
+		<result column="group_flow" property="groupFlow" javaType="java.lang.String" />
+		<result column="group_name" property="groupName" javaType="java.lang.String" />
+		<result column="standard_dept_id" property="standardDeptId" javaType="java.lang.String" />
+		<result column="standard_dept_name" property="standardDeptName" javaType="java.lang.String" />
+		<result column="sch_month" property="schMonth" javaType="java.lang.String" />
+		<result column="dept_note" property="deptNote" javaType="java.lang.String" />
+	</resultMap>
+	<select id="getDoctorRotationDept" resultMap="standardDeptMap">
+		select srd.record_flow record_flow,
+			srg.sch_stage_name stage_name,
+			srd.group_flow group_flow,
+			srg.group_name group_name,
+			srd.standard_dept_id standard_dept_id,
+			srd.standard_dept_name standard_dept_name,
+			srd.sch_month sch_month,
+			srd.dept_note dept_note
+		from sch_rotation_dept srd
+		inner join sch_rotation_group srg
+		on srd.group_flow = srg.group_flow
+		where srd.record_status = 'Y'
+		and srg.record_status = 'Y'
+		<if test='schDeptName!=null and schDeptName!=""'>
+			and srd.standard_dept_name like '%${schDeptName}%'
+		</if>
+		and srd.org_flow is null
+		and srd.rotation_flow = #{rotationFlow}
+		order by srg.ORDINAL,srd.ORDINAL,record_flow
+	</select>
+</mapper>

@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.sci.dao.base.ErpCrmProductBuildInfoMapper">
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ErpCrmProductBuildInfo">
+    <id column="INFO_FLOW" jdbcType="VARCHAR" property="infoFlow" />
+    <result column="CONTRACT_FLOW" jdbcType="VARCHAR" property="contractFlow" />
+    <result column="DEPT_FLOW" jdbcType="VARCHAR" property="deptFlow" />
+    <result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+    <result column="BUILDING_USER_FLOW" jdbcType="VARCHAR" property="buildingUserFlow" />
+    <result column="BUILDING_USER_NAME" jdbcType="VARCHAR" property="buildingUserName" />
+    <result column="BUILDING_ADDRESS" jdbcType="VARCHAR" property="buildingAddress" />
+    <result column="TRAVEL_DATE" jdbcType="VARCHAR" property="travelDate" />
+    <result column="BUILDING_DATE" jdbcType="VARCHAR" property="buildingDate" />
+    <result column="ACCEPT_DATE" jdbcType="VARCHAR" property="acceptDate" />
+    <result column="ORDER_NO" jdbcType="VARCHAR" property="orderNo" />
+    <result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_USER_FLOW" jdbcType="VARCHAR" property="createUserFlow" />
+    <result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime" />
+    <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    INFO_FLOW, CONTRACT_FLOW, DEPT_FLOW, DEPT_NAME, BUILDING_USER_FLOW, BUILDING_USER_NAME, 
+    BUILDING_ADDRESS, TRAVEL_DATE, BUILDING_DATE, ACCEPT_DATE, ORDER_NO, RECORD_STATUS, 
+    CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.ErpCrmProductBuildInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.ERP_CRM_PRODUCT_BUILD_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.ERP_CRM_PRODUCT_BUILD_INFO
+    where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PDSCI.ERP_CRM_PRODUCT_BUILD_INFO
+    where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ErpCrmProductBuildInfoExample">
+    delete from PDSCI.ERP_CRM_PRODUCT_BUILD_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.ErpCrmProductBuildInfo">
+    insert into PDSCI.ERP_CRM_PRODUCT_BUILD_INFO (INFO_FLOW, CONTRACT_FLOW, DEPT_FLOW, 
+      DEPT_NAME, BUILDING_USER_FLOW, BUILDING_USER_NAME, 
+      BUILDING_ADDRESS, TRAVEL_DATE, BUILDING_DATE, 
+      ACCEPT_DATE, ORDER_NO, RECORD_STATUS, 
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+      MODIFY_USER_FLOW)
+    values (#{infoFlow,jdbcType=VARCHAR}, #{contractFlow,jdbcType=VARCHAR}, #{deptFlow,jdbcType=VARCHAR}, 
+      #{deptName,jdbcType=VARCHAR}, #{buildingUserFlow,jdbcType=VARCHAR}, #{buildingUserName,jdbcType=VARCHAR}, 
+      #{buildingAddress,jdbcType=VARCHAR}, #{travelDate,jdbcType=VARCHAR}, #{buildingDate,jdbcType=VARCHAR}, 
+      #{acceptDate,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
+      #{modifyUserFlow,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ErpCrmProductBuildInfo">
+    insert into PDSCI.ERP_CRM_PRODUCT_BUILD_INFO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="infoFlow != null">
+        INFO_FLOW,
+      </if>
+      <if test="contractFlow != null">
+        CONTRACT_FLOW,
+      </if>
+      <if test="deptFlow != null">
+        DEPT_FLOW,
+      </if>
+      <if test="deptName != null">
+        DEPT_NAME,
+      </if>
+      <if test="buildingUserFlow != null">
+        BUILDING_USER_FLOW,
+      </if>
+      <if test="buildingUserName != null">
+        BUILDING_USER_NAME,
+      </if>
+      <if test="buildingAddress != null">
+        BUILDING_ADDRESS,
+      </if>
+      <if test="travelDate != null">
+        TRAVEL_DATE,
+      </if>
+      <if test="buildingDate != null">
+        BUILDING_DATE,
+      </if>
+      <if test="acceptDate != null">
+        ACCEPT_DATE,
+      </if>
+      <if test="orderNo != null">
+        ORDER_NO,
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="infoFlow != null">
+        #{infoFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="contractFlow != null">
+        #{contractFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="deptFlow != null">
+        #{deptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null">
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingUserFlow != null">
+        #{buildingUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingUserName != null">
+        #{buildingUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingAddress != null">
+        #{buildingAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="travelDate != null">
+        #{travelDate,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingDate != null">
+        #{buildingDate,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptDate != null">
+        #{acceptDate,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ErpCrmProductBuildInfoExample" resultType="java.lang.Integer">
+    select count(*) from PDSCI.ERP_CRM_PRODUCT_BUILD_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update PDSCI.ERP_CRM_PRODUCT_BUILD_INFO
+    <set>
+      <if test="record.infoFlow != null">
+        INFO_FLOW = #{record.infoFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contractFlow != null">
+        CONTRACT_FLOW = #{record.contractFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptFlow != null">
+        DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptName != null">
+        DEPT_NAME = #{record.deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buildingUserFlow != null">
+        BUILDING_USER_FLOW = #{record.buildingUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buildingUserName != null">
+        BUILDING_USER_NAME = #{record.buildingUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buildingAddress != null">
+        BUILDING_ADDRESS = #{record.buildingAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.travelDate != null">
+        TRAVEL_DATE = #{record.travelDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buildingDate != null">
+        BUILDING_DATE = #{record.buildingDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acceptDate != null">
+        ACCEPT_DATE = #{record.acceptDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderNo != null">
+        ORDER_NO = #{record.orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null">
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null">
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null">
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update PDSCI.ERP_CRM_PRODUCT_BUILD_INFO
+    set INFO_FLOW = #{record.infoFlow,jdbcType=VARCHAR},
+      CONTRACT_FLOW = #{record.contractFlow,jdbcType=VARCHAR},
+      DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
+      DEPT_NAME = #{record.deptName,jdbcType=VARCHAR},
+      BUILDING_USER_FLOW = #{record.buildingUserFlow,jdbcType=VARCHAR},
+      BUILDING_USER_NAME = #{record.buildingUserName,jdbcType=VARCHAR},
+      BUILDING_ADDRESS = #{record.buildingAddress,jdbcType=VARCHAR},
+      TRAVEL_DATE = #{record.travelDate,jdbcType=VARCHAR},
+      BUILDING_DATE = #{record.buildingDate,jdbcType=VARCHAR},
+      ACCEPT_DATE = #{record.acceptDate,jdbcType=VARCHAR},
+      ORDER_NO = #{record.orderNo,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ErpCrmProductBuildInfo">
+    update PDSCI.ERP_CRM_PRODUCT_BUILD_INFO
+    <set>
+      <if test="contractFlow != null">
+        CONTRACT_FLOW = #{contractFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="deptFlow != null">
+        DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null">
+        DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingUserFlow != null">
+        BUILDING_USER_FLOW = #{buildingUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingUserName != null">
+        BUILDING_USER_NAME = #{buildingUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingAddress != null">
+        BUILDING_ADDRESS = #{buildingAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="travelDate != null">
+        TRAVEL_DATE = #{travelDate,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingDate != null">
+        BUILDING_DATE = #{buildingDate,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptDate != null">
+        ACCEPT_DATE = #{acceptDate,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        ORDER_NO = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ErpCrmProductBuildInfo">
+    update PDSCI.ERP_CRM_PRODUCT_BUILD_INFO
+    set CONTRACT_FLOW = #{contractFlow,jdbcType=VARCHAR},
+      DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
+      DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      BUILDING_USER_FLOW = #{buildingUserFlow,jdbcType=VARCHAR},
+      BUILDING_USER_NAME = #{buildingUserName,jdbcType=VARCHAR},
+      BUILDING_ADDRESS = #{buildingAddress,jdbcType=VARCHAR},
+      TRAVEL_DATE = #{travelDate,jdbcType=VARCHAR},
+      BUILDING_DATE = #{buildingDate,jdbcType=VARCHAR},
+      ACCEPT_DATE = #{acceptDate,jdbcType=VARCHAR},
+      ORDER_NO = #{orderNo,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

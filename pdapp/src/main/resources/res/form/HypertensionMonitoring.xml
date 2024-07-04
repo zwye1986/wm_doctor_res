@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+    <!-- 高血压监测记录表单 -->
+    <!--
+    {0}:表单所属机构(开关控制)
+    {1}:版本号
+ -->
+    <jsp path="res/form/{3}/{0}/hypertensionMonitoring_{1}"/>
+    <jszy ver="1.0">
+        <page ver="1.0">
+            <item name="diseasePersonName" isView="0" remark="姓名" multiple="N"/>
+            <item name="gender" isView="0" select="Y" remark="性别" multiple="N"/>
+            <item name="age" isView="0" remark="年龄" multiple="N"/>
+            <item name="personDocumentNum" remark="个人档案号" multiple="N"/>
+            <item name="idNo" remark="身份证号" multiple="N"/>
+            <item name="homeAddress" remark="家庭住址" multiple="N"/>
+            <item name="symptom_other_name" remark="症状-其他" multiple="N"/>
+            <item name="sign_other_name" remark="体征-其他" multiple="N"/>
+            <item name="referral_other_name" remark="转诊-其他" multiple="N"/>
+            <item name="guidance_other_name" remark="指导-其他" multiple="N"/>
+            <itemGroup name="monitoringDetail" remark="监测详情" modelStyle="add">
+                <item name="monitoringTime" remark="时间" multiple="N"></item>
+                <item name="headache" remark="头痛" multiple="N"></item>
+                <item name="dizzy" remark="头晕" multiple="N"></item>
+                <item name="palpitation" remark="心悸" multiple="N"></item>
+                <item name="symptom_other" remark="其他" multiple="N"></item>
+                <item name="bloodPressure" remark="血压（mmHg）" multiple="N"></item>
+                <item name="heartRate" remark="心率（次/分）" multiple="N"></item>
+                <item name="weight" remark="体重（Kg）" multiple="N"></item>
+                <item name="height" remark="身高（cm）" multiple="N"></item>
+                <item name="bodyMassIndex" remark="体重指数BMI" multiple="N"></item>
+                <item name="waistline" remark="腰围" multiple="N"></item>
+                <item name="hipline" remark="臀围" multiple="N"></item>
+                <item name="WHR" remark="腰围/臀围" multiple="N"></item>
+                <item name="consciousness" remark="意识" multiple="N"></item>
+                <item name="edema" remark="浮肿" multiple="N"></item>
+                <item name="eyeground" remark="眼底" multiple="N"></item>
+                <item name="sign_other" remark="其他" multiple="N"></item>
+                <item name="electrocardiogram" remark="心电图检查" multiple="N"></item>
+                <item name="FPG" remark="空腹静脉血糖" multiple="N"></item>
+                <item name="a2hPBG" remark="餐后2H静脉血糖" multiple="N"></item>
+                <item name="FBBG" remark="空腹指血血糖" multiple="N"></item>
+                <item name="P2HBG" remark="餐后2H指血血糖" multiple="N"></item>
+                <item name="totalCholesterol" remark="总胆固醇TC" multiple="N"></item>
+                <item name="HDL" remark="高密度脂蛋白HDL" multiple="N"></item>
+                <item name="LDL" remark="低密度脂蛋白LDL" multiple="N"></item>
+                <item name="TG" remark="甘油三酯TG" multiple="N"></item>
+                <item name="creatinine" remark="肌酐" multiple="N"></item>
+                <item name="BUN" remark="血尿素氮BUN" multiple="N"></item>
+                <item name="urineProtein" remark="尿蛋白" multiple="N"></item>
+                <item name="tubular" remark="管型" multiple="N"></item>
+                <item name="microglobulin" remark="微球蛋白" multiple="N"></item>
+                <item name="complication" remark="合并症" multiple="N"></item>
+                <item name="gradeOfHypertension" remark="高血压等级" multiple="N"></item>
+                <item name="cardiologyDepartment" remark="心内科" multiple="N"></item>
+                <item name="Eye" remark="眼科" multiple="N"></item>
+                <item name="nephrology" remark="肾内科" multiple="N"></item>
+                <item name="neurology" remark="神经内科" multiple="N"></item>
+                <item name="referral_other" remark="转诊-其他" multiple="N"></item>
+                <item name="quitSmoking" remark="戒烟" multiple="N"></item>
+                <item name="diet" remark="饮食" multiple="N"></item>
+                <item name="motion" remark="运动" multiple="N"></item>
+                <item name="complianceBehavior" remark="遵医行为" multiple="N"></item>
+                <item name="psychologicalAdjustment" remark="心理调整" multiple="N"></item>
+                <item name="guidance_other" remark="指导-其他" multiple="N"></item>
+                <item name="medication" remark="用药" multiple="N"></item>
+            </itemGroup>
+            <item name="accessories" remark="附件" isFile="Y" multiple="N"/>
+        </page>
+    </jszy>
+</jspForm>

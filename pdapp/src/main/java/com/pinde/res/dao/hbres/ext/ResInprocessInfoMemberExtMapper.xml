@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.hbres.ext.ResInprocessInfoMemberExtMapper">
+   <update id="deleteMemberNotInFlow">
+       UPDATE  RES_INPROCESS_INFO_MEMBER
+       SET RECORD_STATUS='N',MODIFY_TIME=to_char(sysdate,'YYYYMMDDHH24MISS')
+       WHERE RECORD_STATUS='Y'
+       AND INFO_RECORD_FLOW=#{recordFlow}
+       <if test='memberFlows!=null and memberFlows.size()>0'>
+           AND RECORD_FLOW NOT IN
+           <foreach collection="memberFlows" close=")" item="flows" open="(" separator=",">
+               #{flows}
+           </foreach>
+       </if>
+   </update>
+    <select id="readInfoList" resultMap="com.pinde.sci.dao.base.ResInprocessInfoMapper.ResultMapWithBLOBs">
+        SELECT RII.* FROM SYS_DEPT D
+        JOIN RES_INPROCESS_INFO RII
+        ON D.DEPT_FLOW=RII.DEPT_FLOW
+        AND D.ORG_FLOW=RII.ORG_FLOW
+        WHERE D.RECORD_STATUS='Y'
+        AND RII.RECORD_STATUS='Y'
+        AND D.ORG_FLOW= #{orgFlow}
+    </select>
+
+</mapper>

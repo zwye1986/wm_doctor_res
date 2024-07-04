@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.jswjw.ext.OscaSkillRoomExtMapper" >
+    <resultMap id="ExtBaseResultMap" type="com.pinde.res.model.jswjw.mo.OscaSkillRoomExt" >
+        <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+        <result column="ROOM_FLOW" property="roomFlow" jdbcType="VARCHAR" />
+        <result column="ROOM_NAME" property="roomName" jdbcType="VARCHAR" />
+        <result column="CLINICAL_FLOW" property="clinicalFlow" jdbcType="VARCHAR" />
+        <result column="CLINICAL_NAME" property="clinicalName" jdbcType="VARCHAR" />
+        <result column="STATION_FLOW" property="stationFlow" jdbcType="VARCHAR" />
+        <result column="STATION_NAME" property="stationName" jdbcType="VARCHAR" />
+        <result column="ORDINAL" property="ordinal" jdbcType="DECIMAL" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+        <result column="EXAM_STATUS_ID" property="examStatusId" jdbcType="VARCHAR" />
+        <result column="EXAM_STATUS_NAME" property="examStatusName" jdbcType="VARCHAR" />
+        <result column="EXAM_SCORE" property="examScore" jdbcType="VARCHAR" />
+        <result column="PEOPLE_COUNT" property="peopleCount" jdbcType="VARCHAR" />
+        <result column="WAITING_COUNT" property="waitingCount" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getDocRoom" parameterType="map" resultMap="ExtBaseResultMap">
+        SELECT ROOM.*,
+        OSRD.EXAM_STATUS_ID,
+        OSRD.EXAM_STATUS_NAME,
+        OSRD.EXAM_SCORE,
+        (SELECT COUNT(1)
+        FROM OSCA_SKILL_ROOM_DOC OS
+        WHERE OS.RECORD_STATUS = 'Y'
+        AND OS.ROOM_FLOW = OSRD.ROOM_FLOW
+        AND OS.STATION_FLOW = OSRD.STATION_FLOW
+        AND (OS.EXAM_STATUS_ID = 'Waiting')
+        AND OS.CLINICAL_FLOW = OSRD.CLINICAL_FLOW) PEOPLE_COUNT,
+        nvl((SELECT COUNT(1)
+        FROM OSCA_SKILL_ROOM_DOC OS
+        WHERE OS.RECORD_STATUS = 'Y'
+        AND OS.DOCTOR_FLOW != OSRD.DOCTOR_FLOW
+        AND OS.ROOM_FLOW = OSRD.ROOM_FLOW
+        AND OS.STATION_FLOW = OSRD.STATION_FLOW
+        AND OS.CLINICAL_FLOW = OSRD.CLINICAL_FLOW
+        AND (OS.EXAM_STATUS_ID = 'Waiting')
+        AND OS.WAITING_TIME  <![CDATA[<]]> OSRD.WAITING_TIME ),0) WAITING_COUNT
+        FROM OSCA_SKILL_ROOM_DOC OSRD
+        JOIN OSCA_SKILL_ROOM ROOM
+        ON OSRD.ROOM_RECORD_FLOW = ROOM.RECORD_FLOW
+        WHERE OSRD.RECORD_STATUS = 'Y'
+        AND OSRD.DOCTOR_FLOW = #{userFlow}
+        AND OSRD.CLINICAL_FLOW = #{clinicalFlow}
+        AND OSRD.STATION_FLOW = #{stationFlow}
+        and osrd.EXAM_STATUS_ID is not null
+    </select>
+    <select id="getStationBestRoom" parameterType="map" resultMap="ExtBaseResultMap">
+        SELECT B.*
+        FROM (SELECT ROOM.*,
+        'StayAssessment' EXAM_STATUS_ID,
+        '待考核' EXAM_STATUS_NAME,
+        '' EXAM_SCORE,
+        (SELECT COUNT(1)
+        FROM OSCA_SKILL_ROOM_DOC OS
+        WHERE OS.RECORD_STATUS = 'Y'
+        AND OS.ROOM_FLOW = ROOM.ROOM_FLOW
+        AND OS.STATION_FLOW = ROOM.STATION_FLOW
+        AND (OS.EXAM_STATUS_ID = 'Waiting')
+        AND OS.CLINICAL_FLOW = ROOM.CLINICAL_FLOW) PEOPLE_COUNT
+        FROM OSCA_SKILL_ROOM ROOM
+        WHERE ROOM.RECORD_STATUS = 'Y'
+        AND ROOM.CLINICAL_FLOW = #{clinicalFlow}
+        AND ROOM.STATION_FLOW = #{stationFlow}) B
+        WHERE ROWNUM = 1
+        ORDER BY B.PEOPLE_COUNT ASC
+    </select>
+
+    <!--	 AND OSRD.STATION_FLOW = #{stationFlow}-->
+    <select id="checkIsWait" parameterType="map" resultType="int">
+        select COUNT(1)
+        from OSCA_SKILL_ROOM_DOC OSRD
+        WHERE OSRD.RECORD_STATUS = 'Y'
+        AND OSRD.DOCTOR_FLOW = #{userFlow}
+        AND OSRD.CLINICAL_FLOW =  #{clinicalFlow}
+        AND (OSRD.EXAM_STATUS_ID = 'Waiting'
+        OR OSRD.EXAM_STATUS_ID ='AssessIng')
+        AND OSRD.ROOM_RECORD_FLOW != #{roomRecordFlow}
+    </select>
+    <select id="checkIsAssess" parameterType="map" resultType="int">
+        select COUNT(1)
+        from OSCA_SKILL_ROOM_DOC OSRD
+        WHERE OSRD.RECORD_STATUS = 'Y'
+        AND OSRD.DOCTOR_FLOW = #{userFlow}
+        AND OSRD.CLINICAL_FLOW =  #{clinicalFlow}
+        AND (OSRD.EXAM_STATUS_ID = 'Assessment'
+        OR OSRD.EXAM_STATUS_ID ='AssessIng')
+        AND OSRD.STATION_FLOW = #{stationFlow}
+        AND OSRD.ROOM_RECORD_FLOW = #{roomRecordFlow}
+    </select>
+    <select id="getStationAllRoom" parameterType="map" resultMap="ExtBaseResultMap">
+        SELECT B.*
+        FROM (SELECT ROOM.*,
+        'StayAssessment' EXAM_STATUS_ID,
+        '待考核' EXAM_STATUS_NAME,
+        '' EXAM_SCORE,
+        (SELECT COUNT(1)
+        FROM OSCA_SKILL_ROOM_DOC OS
+        WHERE OS.RECORD_STATUS = 'Y'
+        AND OS.ROOM_FLOW = ROOM.ROOM_FLOW
+        AND OS.STATION_FLOW = ROOM.STATION_FLOW
+        AND OS.CLINICAL_FLOW = ROOM.CLINICAL_FLOW) PEOPLE_COUNT
+        FROM OSCA_SKILL_ROOM ROOM
+        WHERE ROOM.RECORD_STATUS = 'Y'
+        AND ROOM.CLINICAL_FLOW = #{clinicalFlow}
+        AND ROOM.STATION_FLOW = #{stationFlow}
+        <if test="roomRecordFlow!=null and roomRecordFlow!=''">
+            AND ROOM.RECORD_FLOW !=#{roomRecordFlow}
+        </if>
+        ) B
+        ORDER BY B.PEOPLE_COUNT ASC
+    </select>
+</mapper>

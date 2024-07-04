@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.qpres.ext.QpresAppMapper" >
+
+	<resultMap id="StatisticListMap" type="hashmap">
+		<result column="PLAN_FLOW" property="planFlow" jdbcType="VARCHAR" />
+		<result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
+		<result column="PLAN_DATE" property="planDate" jdbcType="VARCHAR" />
+		<result column="PLAN_TYPE_ID" property="planTypeId" jdbcType="VARCHAR" />
+		<result column="PLAN_TYPE_NAME" property="planTypeName" jdbcType="VARCHAR" />
+		<result column="IS_REPORT" property="isReport" jdbcType="VARCHAR" />
+		<result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+		<result column="ITEM_FLOW" property="itemFlow" jdbcType="VARCHAR" />
+		<result column="PLAN_TIME" property="planTime" jdbcType="VARCHAR" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+		<result column="CONTENT" property="content" jdbcType="VARCHAR" />
+		<result column="TITLE" property="title" jdbcType="VARCHAR" />
+		<result column="ITEM_TYPE_ID" property="itemTypeId" jdbcType="VARCHAR" />
+		<result column="ITEM_TYPE_NAME" property="itemTypeName" jdbcType="VARCHAR" />
+		<result column="JOIN_USER_FLOW" property="joinUserFlow" jdbcType="VARCHAR" />
+		<result column="USER_NAME" property="joinUserName" jdbcType="VARCHAR" />
+		<result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+		<result column="EVAL_FLOW" property="evalFlow" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="searchStatisticList" resultMap="StatisticListMap">
+		SELECT PM.PLAN_FLOW,
+		PM.DEPT_FLOW,
+		PM.PLAN_DATE,
+		PM.PLAN_TYPE_ID,
+		PM.PLAN_TYPE_NAME,
+		PM.IS_REPORT,
+		SD.DEPT_NAME,
+		ITEM.ITEM_FLOW,
+		ITEM.PLAN_TIME ,
+		ITEM.ADDRESS ,
+		ITEM.CONTENT ,
+		ITEM.TITLE ,
+		ITEM.ITEM_TYPE_ID ,
+		ITEM.ITEM_TYPE_NAME ,
+		ITEM.JOIN_USER_FLOW,
+		SU.USER_NAME,
+		SU.USER_CODE,eval.eval_flow
+		FROM
+		SYS_DEPT_MONTH_PLAN PM
+		LEFT JOIN SYS_DEPT_MONTH_PLAN_ITEM ITEM
+		ON PM.PLAN_FLOW=ITEM.PLAN_FLOW
+		LEFT JOIN SYS_DEPT SD
+		ON  PM.DEPT_FLOW=SD.DEPT_FLOW
+		LEFT JOIN SYS_USER SU ON
+		SU.USER_FLOW=ITEM.JOIN_USER_FLOW
+			left join Sys_Dept_Month_Plan_Item_Eval eval
+			on eval.item_flow=ITEM.item_flow
+			and eval.oper_user_flow=#{userFlow}
+		WHERE SD.RECORD_STATUS='Y'
+		AND PM.RECORD_STATUS='Y'
+		AND ITEM.RECORD_STATUS='Y'
+		and pm.audit_status_id='Pass'
+		AND SD.ORG_FLOW=#{orgFlow}
+		and pm.is_report='Y'
+		<if test='isEval!=null and isEval!="" and isEval=="Y"'>
+			and eval.eval_flow is not null
+		</if>
+		<if test='isEval!=null and isEval!="" and isEval=="N"'>
+			and eval.eval_flow is null
+		</if>
+		<if test='itemTypeIds != null and itemTypeIds.size()>0'>
+			and ITEM.ITEM_TYPE_ID in
+			<foreach collection="itemTypeIds" item="itemTypeId" open="(" separator="," close=")">
+				#{itemTypeId}
+			</foreach>
+		</if>
+		order by  PM.dept_flow,PM.plan_date,PM.create_time,ITEM.CREATE_TIME
+	</select>
+</mapper>

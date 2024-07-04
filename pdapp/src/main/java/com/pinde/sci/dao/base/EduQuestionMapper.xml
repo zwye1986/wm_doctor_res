@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.EduQuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.EduQuestion" >
+    <id column="QUESTION_FLOW" property="questionFlow" jdbcType="VARCHAR" />
+    <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+    <result column="COURSE_FLOW" property="courseFlow" jdbcType="VARCHAR" />
+    <result column="CHAPTER_FLOW" property="chapterFlow" jdbcType="VARCHAR" />
+    <result column="QUESTION_STATUS_ID" property="questionStatusId" jdbcType="VARCHAR" />
+    <result column="QUESTION_STATUS_NAME" property="questionStatusName" jdbcType="VARCHAR" />
+    <result column="QUESTION_CONTENT" property="questionContent" jdbcType="VARCHAR" />
+    <result column="QUESTION_TIME" property="questionTime" jdbcType="VARCHAR" />
+    <result column="SUBMIT_TEACHER" property="submitTeacher" jdbcType="VARCHAR" />
+    <result column="QUINTESSENCE" property="quintessence" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="QUES_TYPE_ID" property="quesTypeId" jdbcType="VARCHAR" />
+    <result column="QUES_TYPE_NAME" property="quesTypeName" jdbcType="VARCHAR" />
+    <result column="QUES_DIR" property="quesDir" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    QUESTION_FLOW, USER_FLOW, COURSE_FLOW, CHAPTER_FLOW, QUESTION_STATUS_ID, QUESTION_STATUS_NAME, 
+    QUESTION_CONTENT, QUESTION_TIME, SUBMIT_TEACHER, QUINTESSENCE, RECORD_STATUS, CREATE_TIME, 
+    CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, QUES_TYPE_ID, QUES_TYPE_NAME, QUES_DIR
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.EduQuestionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.EDU_QUESTION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.EDU_QUESTION
+    where QUESTION_FLOW = #{questionFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.EDU_QUESTION
+    where QUESTION_FLOW = #{questionFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.EduQuestionExample" >
+    delete from PDSCI.EDU_QUESTION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.EduQuestion" >
+    insert into PDSCI.EDU_QUESTION (QUESTION_FLOW, USER_FLOW, COURSE_FLOW, 
+      CHAPTER_FLOW, QUESTION_STATUS_ID, QUESTION_STATUS_NAME, 
+      QUESTION_CONTENT, QUESTION_TIME, SUBMIT_TEACHER, 
+      QUINTESSENCE, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+      QUES_TYPE_ID, QUES_TYPE_NAME, QUES_DIR
+      )
+    values (#{questionFlow,jdbcType=VARCHAR}, #{userFlow,jdbcType=VARCHAR}, #{courseFlow,jdbcType=VARCHAR}, 
+      #{chapterFlow,jdbcType=VARCHAR}, #{questionStatusId,jdbcType=VARCHAR}, #{questionStatusName,jdbcType=VARCHAR}, 
+      #{questionContent,jdbcType=VARCHAR}, #{questionTime,jdbcType=VARCHAR}, #{submitTeacher,jdbcType=VARCHAR}, 
+      #{quintessence,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{quesTypeId,jdbcType=VARCHAR}, #{quesTypeName,jdbcType=VARCHAR}, #{quesDir,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.EduQuestion" >
+    insert into PDSCI.EDU_QUESTION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="questionFlow != null" >
+        QUESTION_FLOW,
+      </if>
+      <if test="userFlow != null" >
+        USER_FLOW,
+      </if>
+      <if test="courseFlow != null" >
+        COURSE_FLOW,
+      </if>
+      <if test="chapterFlow != null" >
+        CHAPTER_FLOW,
+      </if>
+      <if test="questionStatusId != null" >
+        QUESTION_STATUS_ID,
+      </if>
+      <if test="questionStatusName != null" >
+        QUESTION_STATUS_NAME,
+      </if>
+      <if test="questionContent != null" >
+        QUESTION_CONTENT,
+      </if>
+      <if test="questionTime != null" >
+        QUESTION_TIME,
+      </if>
+      <if test="submitTeacher != null" >
+        SUBMIT_TEACHER,
+      </if>
+      <if test="quintessence != null" >
+        QUINTESSENCE,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="quesTypeId != null" >
+        QUES_TYPE_ID,
+      </if>
+      <if test="quesTypeName != null" >
+        QUES_TYPE_NAME,
+      </if>
+      <if test="quesDir != null" >
+        QUES_DIR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="questionFlow != null" >
+        #{questionFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userFlow != null" >
+        #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="courseFlow != null" >
+        #{courseFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="chapterFlow != null" >
+        #{chapterFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="questionStatusId != null" >
+        #{questionStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="questionStatusName != null" >
+        #{questionStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="questionContent != null" >
+        #{questionContent,jdbcType=VARCHAR},
+      </if>
+      <if test="questionTime != null" >
+        #{questionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="submitTeacher != null" >
+        #{submitTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="quintessence != null" >
+        #{quintessence,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="quesTypeId != null" >
+        #{quesTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="quesTypeName != null" >
+        #{quesTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="quesDir != null" >
+        #{quesDir,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.EduQuestionExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.EDU_QUESTION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.EDU_QUESTION
+    <set >
+      <if test="record.questionFlow != null" >
+        QUESTION_FLOW = #{record.questionFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userFlow != null" >
+        USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseFlow != null" >
+        COURSE_FLOW = #{record.courseFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chapterFlow != null" >
+        CHAPTER_FLOW = #{record.chapterFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionStatusId != null" >
+        QUESTION_STATUS_ID = #{record.questionStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionStatusName != null" >
+        QUESTION_STATUS_NAME = #{record.questionStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionContent != null" >
+        QUESTION_CONTENT = #{record.questionContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionTime != null" >
+        QUESTION_TIME = #{record.questionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submitTeacher != null" >
+        SUBMIT_TEACHER = #{record.submitTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quintessence != null" >
+        QUINTESSENCE = #{record.quintessence,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quesTypeId != null" >
+        QUES_TYPE_ID = #{record.quesTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quesTypeName != null" >
+        QUES_TYPE_NAME = #{record.quesTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quesDir != null" >
+        QUES_DIR = #{record.quesDir,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.EDU_QUESTION
+    set QUESTION_FLOW = #{record.questionFlow,jdbcType=VARCHAR},
+      USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      COURSE_FLOW = #{record.courseFlow,jdbcType=VARCHAR},
+      CHAPTER_FLOW = #{record.chapterFlow,jdbcType=VARCHAR},
+      QUESTION_STATUS_ID = #{record.questionStatusId,jdbcType=VARCHAR},
+      QUESTION_STATUS_NAME = #{record.questionStatusName,jdbcType=VARCHAR},
+      QUESTION_CONTENT = #{record.questionContent,jdbcType=VARCHAR},
+      QUESTION_TIME = #{record.questionTime,jdbcType=VARCHAR},
+      SUBMIT_TEACHER = #{record.submitTeacher,jdbcType=VARCHAR},
+      QUINTESSENCE = #{record.quintessence,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      QUES_TYPE_ID = #{record.quesTypeId,jdbcType=VARCHAR},
+      QUES_TYPE_NAME = #{record.quesTypeName,jdbcType=VARCHAR},
+      QUES_DIR = #{record.quesDir,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.EduQuestion" >
+    update PDSCI.EDU_QUESTION
+    <set >
+      <if test="userFlow != null" >
+        USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="courseFlow != null" >
+        COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="chapterFlow != null" >
+        CHAPTER_FLOW = #{chapterFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="questionStatusId != null" >
+        QUESTION_STATUS_ID = #{questionStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="questionStatusName != null" >
+        QUESTION_STATUS_NAME = #{questionStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="questionContent != null" >
+        QUESTION_CONTENT = #{questionContent,jdbcType=VARCHAR},
+      </if>
+      <if test="questionTime != null" >
+        QUESTION_TIME = #{questionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="submitTeacher != null" >
+        SUBMIT_TEACHER = #{submitTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="quintessence != null" >
+        QUINTESSENCE = #{quintessence,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="quesTypeId != null" >
+        QUES_TYPE_ID = #{quesTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="quesTypeName != null" >
+        QUES_TYPE_NAME = #{quesTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="quesDir != null" >
+        QUES_DIR = #{quesDir,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where QUESTION_FLOW = #{questionFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.EduQuestion" >
+    update PDSCI.EDU_QUESTION
+    set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR},
+      CHAPTER_FLOW = #{chapterFlow,jdbcType=VARCHAR},
+      QUESTION_STATUS_ID = #{questionStatusId,jdbcType=VARCHAR},
+      QUESTION_STATUS_NAME = #{questionStatusName,jdbcType=VARCHAR},
+      QUESTION_CONTENT = #{questionContent,jdbcType=VARCHAR},
+      QUESTION_TIME = #{questionTime,jdbcType=VARCHAR},
+      SUBMIT_TEACHER = #{submitTeacher,jdbcType=VARCHAR},
+      QUINTESSENCE = #{quintessence,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      QUES_TYPE_ID = #{quesTypeId,jdbcType=VARCHAR},
+      QUES_TYPE_NAME = #{quesTypeName,jdbcType=VARCHAR},
+      QUES_DIR = #{quesDir,jdbcType=VARCHAR}
+    where QUESTION_FLOW = #{questionFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

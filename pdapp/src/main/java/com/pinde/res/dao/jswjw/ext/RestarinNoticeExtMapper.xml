@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.jswjw.ext.RestarinNoticeExtMapper" >
+
+    <select id="searchByTitleOrgFlowAndWorkOrgId" resultMap="com.pinde.sci.dao.base.ResTarinNoticeMapper.ResultMapWithBLOBs">
+        SELECT
+            RECORD_FLOW,
+            RES_NOTICE_TITLE,
+            ORG_FLOW,
+            ORG_NAME,
+            RECORD_STATUS,
+            CREATE_TIME,
+            CREATE_USER_FLOW,
+            MODIFY_TIME,
+            MODIFY_USER_FLOW,
+            NOTICE_PIC_PATH
+        FROM
+            RES_TARIN_NOTICE N
+        WHERE
+            RECORD_STATUS = 'Y'
+        <if test="resNoticeTitle != null and resNoticeTitle != ''">
+            AND RES_NOTICE_TITLE LIKE CONCAT(CONCAT('%', #{resNoticeTitle}), '%')
+        </if>
+        AND (
+            ORG_FLOW IS NULL
+            <if test="orgFlow != null and orgFlow != ''">
+                OR ORG_FLOW = #{orgFlow}
+            </if>
+            <if test="doctor != null and doctor.doctorTypeId != null and doctor.doctorTypeId == 'Graduate'">
+                OR EXISTS (
+                    SELECT
+                        1
+                    FROM
+                        SYS_ORG O
+                    WHERE
+                        O.RECORD_STATUS = 'Y'
+                    AND N.ORG_FLOW = O.ORG_FLOW
+                    AND O.ORG_TYPE_ID = 'University'
+                    <if test="doctor.workOrgName != null and doctor.workOrgName != ''">
+                        AND O.SEND_SCHOOL_NAME = #{doctor.workOrgName}
+                    </if>
+                    <if test="doctor.workOrgId != null and doctor.workOrgId != ''">
+                        AND O.SEND_SCHOOL_ID = #{doctor.workOrgId}
+                    </if>
+                )
+            </if>
+        )
+        ORDER BY CREATE_TIME DESC
+
+        <!--SELECT * FROM (-->
+            <!--SELECT *-->
+            <!--FROM PDSCI.RES_TARIN_NOTICE-->
+            <!--WHERE RECORD_STATUS = 'Y'-->
+            <!--<if test="orgFlow !=null and orgFlow !=''">-->
+                <!--AND ORG_FLOW = #{orgFlow}-->
+            <!--</if>-->
+            <!--<if test="resNoticeTitle !=null and resNoticeTitle !=''">-->
+                <!--AND RES_NOTICE_TITLE like '%${resNoticeTitle}%'-->
+            <!--</if>-->
+            <!--or (-->
+            <!--RECORD_STATUS = 'Y' and org_flow is null-->
+            <!--<if test="resNoticeTitle !=null and resNoticeTitle !=''">-->
+                <!--AND RES_NOTICE_TITLE like '%${resNoticeTitle}%'-->
+            <!--</if>-->
+            <!--)-->
+            <!--<if test="doctor!=null">-->
+                <!--union all-->
+                <!--SELECT *-->
+                <!--FROM PDSCI.RES_TARIN_NOTICE-->
+                <!--WHERE RECORD_STATUS = 'Y'-->
+                <!--AND ORG_FLOW IN (-->
+                <!--SELECT ORG_FLOW FROM SYS_ORG-->
+                <!--WHERE RECORD_STATUS='Y'-->
+                <!--AND ORG_TYPE_ID='University'-->
+                <!--AND (-->
+                <!--<if test="(doctor.workOrgName==null or doctor.workOrgName=='') and (doctor.workOrgId!=null and doctor.workOrgId!='')">-->
+                    <!--SEND_SCHOOL_ID=#{doctor.workOrgId}-->
+                <!--</if>-->
+                <!--<if test="(doctor.workOrgId==null or doctor.workOrgId=='') and (doctor.workOrgName!=null and doctor.workOrgName!='')">-->
+                    <!--SEND_SCHOOL_NAME= #{doctor.workOrgName}-->
+                <!--</if>-->
+                <!--<if test="doctor.workOrgId!=null and doctor.workOrgId!='' and doctor.workOrgName!=null and doctor.workOrgName!=''">-->
+                    <!--SEND_SCHOOL_NAME = #{doctor.workOrgName} OR SEND_SCHOOL_ID =#{doctor.workOrgId}-->
+                <!--</if>-->
+                <!--)-->
+                <!--)-->
+            <!--</if>-->
+        <!--) A-->
+        <!--ORDER BY CREATE_TIME DESC-->
+    </select>
+</mapper>

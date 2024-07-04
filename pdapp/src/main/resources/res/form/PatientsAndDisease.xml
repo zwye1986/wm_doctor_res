@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+    <!-- 管理病人和所见病种记录表单 -->
+    <!--
+    {0}:表单所属机构(开关控制)
+    {1}:版本号
+ -->
+    <jsp path="res/form/{3}/{0}/patientsAndDisease_{1}"/>
+    <jszy ver="1.0">
+        <page ver="1.0">
+            <item name="diseasePersonName" isView="0" remark="姓名" multiple="N"/>
+            <item name="gender" isView="0" select="Y" remark="性别" multiple="N"/>
+            <item name="age" isView="0" remark="年龄" multiple="N"/>
+            <item name="medicalRecordNumber" isView="0" remark="就诊号/病历号" multiple="N"/>
+            <item name="healthProblem" remark="健康问题" multiple="N"/>
+            <item name="remarks" remark="备注" multiple="N"/>
+        </page>
+    </jszy>
+</jspForm>
+

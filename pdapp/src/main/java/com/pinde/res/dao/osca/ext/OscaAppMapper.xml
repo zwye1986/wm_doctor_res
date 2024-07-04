@@ -1,0 +1,875 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.osca.ext.OscaAppMapper">
+
+    <select id="getTeaDocStation" parameterType="map"
+            resultMap="com.pinde.sci.dao.base.OscaSubjectStationMapper.BaseResultMap">
+		SELECT distinct S.*
+		  FROM OSCA_SKILL_ROOM_TEA T
+		  join OSCA_SUBJECT_STATION S ON T.STATION_FLOW=S.STATION_FLOW
+		 WHERE CLINICAL_FLOW = #{clinicalFlow}
+		   AND T.RECORD_STATUS = 'Y'
+			   AND T.PARTNER_FLOW = #{userFlow}
+		   ORDER BY S.ORDINAL ASC
+
+	</select>
+    <select id="getTeaSubDocStation" parameterType="map"
+            resultMap="com.pinde.sci.dao.base.OscaSubjectStationMapper.BaseResultMap">
+		SELECT  S.*
+		  FROM OSCA_SUBJECT_STATION S
+		 WHERE S.STATION_FLOW IN (
+		 select T.STATION_FLOW
+		  from OSCA_SKILL_DOC_SCORE t
+		 where record_status = 'Y'
+		   and partner_flow = #{userFlow}
+		   and doctor_flow = #{doctorFlow}
+		    AND CLINICAL_FLOW=#{clinicalFlow}
+		 )
+		   ORDER BY S.ORDINAL ASC
+	</select>
+    <select id="getStationExamFroms" parameterType="map"
+            resultMap="com.pinde.sci.dao.base.OscaSubjectStationFromMapper.BaseResultMap">
+		SELECT 	   SCORE_FLOW RECORD_FLOW,
+				   CLINICAL_FLOW,
+				   CLINICAL_NAME,
+				   STATION_FLOW,
+				   STATION_NAME,
+				   FROM_FLOW,
+				   FROM_NAME,
+				   IS_REQUIRED
+		  FROM OSCA_SKILL_DOC_SCORE
+		 WHERE RECORD_STATUS = 'Y'
+		   and partner_flow = #{userFlow}
+		   and doctor_flow = #{doctorFlow}
+		    AND CLINICAL_FLOW=#{clinicalFlow}
+		    AND STATION_FLOW=#{stationFlow}
+	</select>
+    <select id="getTeaRooms" parameterType="map"
+            resultMap="com.pinde.sci.dao.base.OscaSkillRoomTeaMapper.BaseResultMap">
+		SELECT t.*
+		  FROM OSCA_SKILL_ROOM_TEA T
+		  join OSCA_SUBJECT_STATION S ON T.STATION_FLOW=S.STATION_FLOW
+		 WHERE T.CLINICAL_FLOW = #{clinicalFlow}
+		   AND T.RECORD_STATUS = 'Y'
+		  AND T.PARTNER_FLOW = #{userFlow}
+		  AND T.STATION_FLOW= #{stationFlow}
+		   ORDER BY S.ORDINAL ASC
+
+	</select>
+    <select id="getOscaSkillRoomDocByDoc" parameterType="string"
+            resultMap="com.pinde.sci.dao.base.OscaSkillRoomDocMapper.BaseResultMap">
+		SELECT *
+		FROM OSCA_SKILL_ROOM_DOC OSRD
+		WHERE OSRD.RECORD_STATUS = 'Y'
+		AND OSRD.DOCTOR_FLOW = #{doctorFlow}
+		AND OSRD.CLINICAL_FLOW = #{clinicalFlow}
+		AND OSRD.STATION_FLOW = #{stationFlow}
+		order by create_time desc
+	</select>
+    <select id="getOscaSkillRoomTeaScoreByDoc" parameterType="string"
+            resultMap="com.pinde.sci.dao.base.OscaSkillDocTeaScoreMapper.BaseResultMap">
+		SELECT *
+		FROM OSCA_SKILL_DOC_TEA_SCORE OSRD
+		WHERE OSRD.RECORD_STATUS = 'Y'
+		AND OSRD.DOCTOR_FLOW = #{doctorFlow}
+		AND OSRD.partner_flow = #{userFlow}
+		AND OSRD.CLINICAL_FLOW = #{clinicalFlow}
+		AND OSRD.STATION_FLOW = #{stationFlow}
+		order by create_time desc
+	</select>
+    <select id="getOscaSkillDocTeaScores" parameterType="string" resultMap="com.pinde.sci.dao.base.OscaSkillDocTeaScoreMapper.BaseResultMap">
+		SELECT *
+		FROM OSCA_SKILL_DOC_TEA_SCORE OSRD
+		WHERE OSRD.RECORD_STATUS = 'Y'
+		AND OSRD.DOCTOR_FLOW = #{doctorFlow}
+		AND OSRD.CLINICAL_FLOW = #{clinicalFlow}
+		AND OSRD.STATION_FLOW = #{stationFlow}
+		AND EXAM_SCORE IS NOT NULL
+		order by EXAM_SCORE desc
+	</select>
+    <select id="getDocScoreByParam" parameterType="string"
+            resultMap="com.pinde.sci.dao.base.OscaSkillDocScoreMapper.ResultMapWithBLOBs">
+        SELECT *
+        FROM OSCA_SKILL_DOC_SCORE OSRD
+        WHERE OSRD.RECORD_STATUS = 'Y'
+        AND OSRD.DOCTOR_FLOW = #{doctorFlow}
+        AND OSRD.CLINICAL_FLOW = #{clinicalFlow}
+        AND OSRD.STATION_FLOW = #{stationFlow}
+        AND OSRD.PARTNER_FLOW = #{userFlow}
+        <if test="roomRecordFlow!=null and roomRecordFlow!=''">
+            AND OSRD.ROOM_RECORD_FLOW= #{roomRecordFlow}
+        </if>
+        order by create_time desc
+    </select>
+    <select id="getNoFromScoreByParam" resultMap="com.pinde.sci.dao.base.OscaSkillDocScoreMapper.ResultMapWithBLOBs">
+        SELECT *
+        FROM OSCA_SKILL_DOC_SCORE OSRD
+        WHERE OSRD.RECORD_STATUS = 'Y'
+        AND OSRD.DOCTOR_FLOW = #{doctorFlow}
+        AND OSRD.CLINICAL_FLOW = #{clinicalFlow}
+        AND OSRD.STATION_FLOW = #{stationFlow}
+        AND OSRD.PARTNER_FLOW = #{userFlow}
+        AND OSRD.FROM_FLOW IS NULL
+        <if test="roomRecordFlow!=null and roomRecordFlow!=''">
+            AND OSRD.ROOM_RECORD_FLOW= #{roomRecordFlow}
+        </if>
+        order by create_time desc
+    </select>
+    <select id="getNotRequiredFromScoreByParam"
+            resultMap="com.pinde.sci.dao.base.OscaSkillDocScoreMapper.ResultMapWithBLOBs">
+        SELECT *
+        FROM OSCA_SKILL_DOC_SCORE OSRD
+        WHERE OSRD.RECORD_STATUS = 'Y'
+        AND OSRD.DOCTOR_FLOW = #{doctorFlow}
+        AND OSRD.CLINICAL_FLOW = #{clinicalFlow}
+        AND OSRD.STATION_FLOW = #{stationFlow}
+        AND OSRD.PARTNER_FLOW = #{userFlow}
+        AND OSRD.IS_REQUIRED ='N'
+        <if test="roomRecordFlow!=null and roomRecordFlow!=''">
+            AND OSRD.ROOM_RECORD_FLOW= #{roomRecordFlow}
+        </if>
+        order by create_time desc
+    </select>
+    <select id="getRequiredFromScoreByParam"
+            resultMap="com.pinde.sci.dao.base.OscaSkillDocScoreMapper.ResultMapWithBLOBs">
+        SELECT *
+        FROM OSCA_SKILL_DOC_SCORE OSRD
+        WHERE OSRD.RECORD_STATUS = 'Y'
+        AND OSRD.DOCTOR_FLOW = #{doctorFlow}
+        AND OSRD.CLINICAL_FLOW = #{clinicalFlow}
+        AND OSRD.STATION_FLOW = #{stationFlow}
+        AND OSRD.PARTNER_FLOW = #{userFlow}
+        AND OSRD.FROM_FLOW = #{fromFlow}
+        AND OSRD.IS_REQUIRED ='Y'
+        <if test="roomRecordFlow!=null and roomRecordFlow!=''">
+            AND OSRD.ROOM_RECORD_FLOW= #{roomRecordFlow}
+        </if>
+        order by create_time desc
+    </select>
+
+    <resultMap id="studentMap" type="hashmap">
+        <result column="USER_NAME" property="userName" javaType="java.lang.String"/>
+        <result column="USER_HEAD_IMG" property="userHeadImg" javaType="java.lang.String"/>
+        <result column="TRAINING_SPE_NAME" property="speName" javaType="java.lang.String"/>
+        <result column="USER_PHONE" property="userPhone" javaType="java.lang.String"/>
+    </resultMap>
+    <select id="notExamStudentList" resultMap="studentMap">
+        SELECT SU.USER_NAME,SU.USER_HEAD_IMG,RD.TRAINING_SPE_NAME,SU.USER_PHONE
+        FROM OSCA_DOCTOR_ASSESSMENT T
+        LEFT JOIN RES_DOCTOR RD
+        ON T.DOCTOR_FLOW=RD.DOCTOR_FLOW
+        LEFT JOIN SYS_USER SU
+        ON T.DOCTOR_FLOW=SU.USER_FLOW
+        WHERE T.RECORD_STATUS = 'Y'
+        AND RD.RECORD_STATUS='Y'
+        AND SU.RECORD_STATUS='Y'
+        AND T.CLINICAL_FLOW IN
+        (SELECT CLINICAL_FLOW
+        FROM OSCA_SKILL_ROOM_TEA
+        WHERE RECORD_STATUS = 'Y'
+        AND PARTNER_FLOW = #{partnerFlow})
+        AND T.SIGIN_STATUS_ID = 'SignIn'
+        AND NOT EXISTS (SELECT 1
+        FROM OSCA_TEA_SCAN_DOC TSD
+        WHERE TSD.RECORD_STATUS = 'Y'
+        AND TSD.DOCTOR_FLOW = T.DOCTOR_FLOW
+        AND TSD.CLINICAL_FLOW = T.CLINICAL_FLOW)
+        <if test='searchStr!=null and searchStr!=""'>
+            and (
+            rd.TRAINING_SPE_NAME like '%${searchStr}%'
+            OR su.USER_NAME like '%${searchStr}%'
+            )
+        </if>
+        AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+        AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate}
+        order by SU.USER_NAME desc
+    </select>
+    <select id="getOscaTeaScanDoc" parameterType="map"
+            resultMap="com.pinde.sci.dao.base.OscaTeaScanDocMapper.BaseResultMap">
+		SELECT *
+		FROM OSCA_TEA_SCAN_DOC OSRD
+		WHERE
+		 OSRD.DOCTOR_FLOW = #{doctorFlow}
+		AND OSRD.CLINICAL_FLOW = #{clinicalFlow}
+		AND OSRD.PARTNER_FLOW = #{userFlow}
+		order by create_time desc
+	</select>
+    <select id="getScanDocList" parameterType="map"
+            resultMap="com.pinde.sci.dao.base.OscaTeaScanDocMapper.BaseResultMap">
+        SELECT *
+        FROM OSCA_TEA_SCAN_DOC OSRD
+        WHERE
+        OSRD.RECORD_STATUS='Y'
+        <if test='userName!="" and userName!=null'>
+            <bind name="userName" value="'%'+userName+'%'"/>
+            and DOCTOR_FLOW in (
+            select USER_FLOW
+            from pdsci.SYS_USER
+            where RECORD_STATUS ='Y'
+            and USER_NAME like #{userName}
+            )
+        </if>
+
+        <if test='statusId!="" and statusId!=null'>
+            <if test='statusId=="submit"'>
+                and status_id ='Submit'
+            </if>
+            <if test='statusId=="notSubmit"'>
+                and status_id in ('StayAssessment','NotSubmit')
+            </if>
+        </if>
+        <if test='selectDate!="" and selectDate!=null'>
+            AND OSRD.EXAM_TIME LIKE '${selectDate}%'
+        </if>
+        AND OSRD.PARTNER_FLOW = #{partnerFlow}
+        ORDER BY OSRD.EXAM_TIME DESC
+    </select>
+    <select id="getTeaDocScores" resultMap="com.pinde.sci.dao.base.OscaSkillDocScoreMapper.BaseResultMap">
+        SELECT * FROM OSCA_SKILL_DOC_SCORE A
+        WHERE A.RECORD_STATUS='Y'
+        <if test='list!=null and list.size>0'>
+            AND A.DOCTOR_FLOW IN
+            <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        AND A.PARTNER_FLOW=#{userFlow}
+        AND A.STATUS_ID='Save'
+        AND EXISTS (
+        SELECT 1 FROM OSCA_TEA_SCAN_DOC B
+        WHERE B.RECORD_STATUS='Y'
+        AND A.DOCTOR_FLOW = B.DOCTOR_FLOW
+        AND A.CLINICAL_FLOW=B.CLINICAL_FLOW
+        AND A.PARTNER_FLOW=B.PARTNER_FLOW
+        )
+    </select>
+    <select id="findStationFiles" resultMap="com.pinde.sci.dao.base.PubFileMapper.BaseResultMap">
+		SELECT *
+		FROM PUB_FILE F
+		WHERE RECORD_STATUS = 'Y'
+		AND EXISTS (SELECT 1
+		FROM OSCA_SUBJECT_STATION_FILE OSSF
+		WHERE RECORD_STATUS = 'Y'
+		AND OSSF.FILE_FLOW = F.FILE_FLOW
+		AND OSSF.STATION_FLOW = #{stationFlow}
+		AND OSSF.ORG_FLOW = #{orgFlow})
+		order by F.CREATE_TIME ASC
+	</select>
+    <select id="getFromByScoreFlow" resultMap="com.pinde.sci.dao.base.OscaFromMapper.ResultMapWithBLOBs">
+		SELECT FROM_FLOW, FROM_NAME, FROM_TYPE_ID,
+			   FROM_URL,FROM_SCORE,
+			  FROM_CONTENT RROM_CONTENT
+       FROM OSCA_SKILL_DOC_SCORE A
+		WHERE A.RECORD_STATUS='Y'
+		AND A.SCORE_FLOW=#{recordFlow}
+	</select>
+    <select id="getSelectDateSkills" resultMap="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap">
+		SELECT *
+		  FROM OSCA_SKILLS_ASSESSMENT
+		 WHERE RECORD_STATUS = 'Y'
+			AND ORG_FLOW=#{orgFlow}
+			AND EXISTS (
+			SELECT 1 FROM OSCA_SKILLS_ASSESSMENT_TIME WHERE  RECORD_STATUS = 'Y'
+			AND OSCA_SKILLS_ASSESSMENT_TIME.CLINICAL_FLOW=OSCA_SKILLS_ASSESSMENT.CLINICAL_FLOW
+			AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+			AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate}
+			)
+	</select>
+
+    <resultMap id="SelectDateDocSkills" type="com.pinde.res.model.osca.mo.OscaDoctorSkillsExt"
+               extends="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap">
+        <collection property="doctorAssessments" ofType="com.pinde.sci.model.mo.OscaDoctorAssessment"
+                    resultMap="com.pinde.sci.dao.base.OscaDoctorAssessmentMapper.BaseResultMap"/>
+    </resultMap>
+    <select id="getSelectDateDocSkills" resultMap="SelectDateDocSkills">
+		SELECT ODA.*,OSA.*
+		  FROM OSCA_DOCTOR_ASSESSMENT ODA , OSCA_SKILLS_ASSESSMENT OSA
+		 WHERE ODA.RECORD_STATUS = 'Y'
+		 	AND  ODA.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+		   AND OSA.RECORD_STATUS = 'Y'
+		   AND OSA.ORG_FLOW = #{orgFlow}
+			AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+			AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate}
+            <if test="speId!='' and speId !=null">
+                AND OSA.SPE_ID = #{speId}
+            </if>
+		   AND EXISTS
+		 (SELECT 1
+				  FROM OSCA_SKILLS_ASSESSMENT_TIME
+				 WHERE RECORD_STATUS = 'Y'
+				   AND OSCA_SKILLS_ASSESSMENT_TIME.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+					AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+					AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate})
+		   AND (SELECT COUNT(1)
+				  FROM OSCA_SUBJECT_STATION
+				 WHERE RECORD_STATUS = 'Y'
+				   AND SUBJECT_FLOW = OSA.SUBJECT_FLOW) =
+			   (SELECT COUNT(1)
+				  FROM OSCA_SKILL_ROOM_DOC
+				 WHERE RECORD_STATUS = 'Y'
+				   AND CLINICAL_FLOW = ODA.CLINICAL_FLOW
+				   AND DOCTOR_FLOW = ODA.DOCTOR_FLOW
+				   AND EXAM_STATUS_ID ='Assessment'
+				   AND STATION_FLOW IN
+					   (SELECT STATION_FLOW
+						  FROM OSCA_SUBJECT_STATION
+						 WHERE RECORD_STATUS = 'Y'
+						   AND SUBJECT_FLOW = OSA.SUBJECT_FLOW))
+	</select>
+    <select id="getSelectDateDocSignIns" resultMap="SelectDateDocSkills">
+		SELECT ODA.*,OSA.*
+		  FROM OSCA_DOCTOR_ASSESSMENT ODA , OSCA_SKILLS_ASSESSMENT OSA
+		 WHERE ODA.RECORD_STATUS = 'Y'
+		 	AND  ODA.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+		   AND OSA.RECORD_STATUS = 'Y'
+		   AND OSA.ORG_FLOW = #{orgFlow}
+			AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+			AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate}
+			AND SIGIN_STATUS_ID='SignIn'
+            <if test="speId!='' and speId !=null">
+                AND OSA.SPE_ID = #{speId}
+            </if>
+		   AND EXISTS
+		 (SELECT 1
+				  FROM OSCA_SKILLS_ASSESSMENT_TIME
+				 WHERE RECORD_STATUS = 'Y'
+				   AND OSCA_SKILLS_ASSESSMENT_TIME.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+					AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+					AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate})
+	</select>
+    <resultMap id="SelectDateSkillRooms" type="com.pinde.res.model.osca.mo.OscaSkillsRoomExt"
+               extends="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap">
+        <collection property="skillRooms" ofType="com.pinde.sci.model.mo.OscaSkillRoom"
+                    resultMap="com.pinde.sci.dao.base.OscaSkillRoomMapper.BaseResultMap"/>
+    </resultMap>
+    <select id="getSelectDateSkillRooms" resultMap="SelectDateSkillRooms">
+		SELECT ODA.*,OSA.*
+		  FROM OSCA_SKILL_ROOM ODA, OSCA_SKILLS_ASSESSMENT OSA
+		 WHERE ODA.RECORD_STATUS = 'Y'
+		 	AND  ODA.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+		   AND OSA.RECORD_STATUS = 'Y'
+		   AND OSA.ORG_FLOW = #{orgFlow}
+		   AND EXISTS
+		 (SELECT 1
+				  FROM OSCA_SKILLS_ASSESSMENT_TIME
+				 WHERE RECORD_STATUS = 'Y'
+				   AND OSCA_SKILLS_ASSESSMENT_TIME.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+					AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+					AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate})
+	</select>
+    <resultMap id="SelectDateSkillPartners" type="com.pinde.res.model.osca.mo.OscaSkillsPartnerExt"
+               extends="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap">
+        <collection property="roomTeas" ofType="com.pinde.sci.model.mo.OscaSkillRoomTea"
+                    resultMap="com.pinde.sci.dao.base.OscaSkillRoomTeaMapper.BaseResultMap"/>
+    </resultMap>
+    <select id="getSelectDateSkillPartners" resultMap="SelectDateSkillPartners">
+		SELECT ODA.*,OSA.*
+		  FROM OSCA_SKILL_ROOM_TEA ODA, OSCA_SKILLS_ASSESSMENT OSA
+		 WHERE ODA.RECORD_STATUS = 'Y'
+		 	AND  ODA.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+		   AND OSA.RECORD_STATUS = 'Y'
+		   AND OSA.ORG_FLOW = #{orgFlow}
+		   AND EXISTS
+		 (SELECT 1
+				  FROM OSCA_SKILLS_ASSESSMENT_TIME
+				 WHERE RECORD_STATUS = 'Y'
+				   AND OSCA_SKILLS_ASSESSMENT_TIME.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+					AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+					AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate})
+	</select>
+    <resultMap id="SelectDateSkillTimes" type="com.pinde.res.model.osca.mo.OscaSkillsTimeExt"
+               extends="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap">
+        <collection property="times" ofType="com.pinde.sci.model.mo.OscaSkillsAssessmentTime"
+                    resultMap="com.pinde.sci.dao.base.OscaSkillsAssessmentTimeMapper.BaseResultMap"/>
+    </resultMap>
+    <select id="getSelectDateSkillTimes" resultMap="SelectDateSkillTimes">
+		SELECT ODA.*,OSA.*
+		  FROM OSCA_SKILLS_ASSESSMENT_TIME ODA, OSCA_SKILLS_ASSESSMENT OSA
+		 WHERE ODA.RECORD_STATUS = 'Y'
+		  AND  ODA.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+		  AND OSA.RECORD_STATUS = 'Y'
+		  AND OSA.ORG_FLOW = #{orgFlow}
+		  AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+		  AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate}
+		  <if test="speId!='' and speId !=null">
+              AND OSA.SPE_ID = #{speId}
+          </if>
+		  order by osa.SPE_ID
+	</select>
+    <select id="getSelectDateAudited" resultMap="SelectDateDocSkills">
+		SELECT ODA.*,OSA.*
+		  FROM OSCA_DOCTOR_ASSESSMENT ODA , OSCA_SKILLS_ASSESSMENT OSA
+		 WHERE ODA.RECORD_STATUS = 'Y'
+		 	AND  ODA.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+		   AND OSA.RECORD_STATUS = 'Y'
+		   AND OSA.ORG_FLOW = #{orgFlow}
+			AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+			AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate}
+			AND ODA.AUDIT_STATUS_ID='Passed'
+		   AND EXISTS
+		 (SELECT 1
+				  FROM OSCA_SKILLS_ASSESSMENT_TIME
+				 WHERE RECORD_STATUS = 'Y'
+				   AND OSCA_SKILLS_ASSESSMENT_TIME.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+					AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+					AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate})
+        <if test="speId!='' and speId !=null">
+            AND OSA.SPE_ID = #{speId}
+        </if>
+	</select>
+
+    <resultMap id="maxTimeMap" type="hashmap">
+        <result column="EXAM_END_TIME" property="examEndTime" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getSelectDateMaxExamTime" resultMap="maxTimeMap">
+		SELECT  max(EXAM_END_TIME) EXAM_END_TIME
+		  FROM  OSCA_SKILLS_ASSESSMENT OSA
+          LEFT JOIN OSCA_SKILLS_ASSESSMENT_TIME OSAT
+          on OSAT.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+		 WHERE OSAT.RECORD_STATUS = 'Y'
+		   AND OSA.RECORD_STATUS = 'Y'
+		   AND OSA.ORG_FLOW = #{orgFlow}
+			AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+			AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate}
+            <if test="speId!='' and speId !=null">
+                AND OSA.SPE_ID = #{speId}
+            </if>
+	</select>
+
+    <resultMap id="teaInfoMap" type="hashmap">
+        <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+        <result column="SEX_NAME" property="sexName" jdbcType="VARCHAR" />
+        <result column="TITLE_NAME" property="titleName" jdbcType="VARCHAR" />
+        <result column="CLINICAL_NAME" property="clinicalName" jdbcType="VARCHAR" />
+        <result column="spe_name" property="speName" jdbcType="VARCHAR" />
+        <result column="room_name" property="roomName" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getTeaList" resultMap="teaInfoMap">
+        SELECT * FROM (
+        SELECT
+        SU.USER_FLOW,
+        SU.USER_NAME,
+        SU.USER_CODE,
+        SU.SEX_NAME,
+        SU.TITLE_NAME,
+        wm_concat(distinct ODA.clinical_name) clinical_name,
+        wm_concat(distinct OSA.spe_name) spe_name,
+        wm_concat(distinct room_name) room_name
+        FROM OSCA_SKILL_ROOM_TEA ODA, OSCA_SKILLS_ASSESSMENT OSA, sys_user su
+        WHERE ODA.RECORD_STATUS = 'Y'
+        AND SU.RECORD_STATUS = 'Y'
+        AND SU.USER_FLOW = ODA.PARTNER_FLOW
+        AND ODA.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+        AND OSA.RECORD_STATUS = 'Y'
+        AND OSA.ORG_FLOW = #{orgFlow}
+        AND EXISTS
+        (SELECT 1
+        FROM OSCA_SKILLS_ASSESSMENT_TIME
+        WHERE RECORD_STATUS = 'Y'
+        AND OSCA_SKILLS_ASSESSMENT_TIME.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+        AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+        AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate})
+            GROUP BY SU.USER_FLOW,SU.USER_NAME,SU.USER_CODE,SU.SEX_NAME,SU.TITLE_NAME
+        ) SU
+        WHERE 1=1
+        <if test="searchStr!='' and searchStr !=null">AND
+            (SU.USER_NAME like '%${searchStr}%'
+            OR SU.USER_CODE like '%${searchStr}%'
+            OR SU.spe_name like '%${searchStr}%'
+            OR SU.room_name like '%${searchStr}%'
+            )
+        </if>
+
+        ORDER BY SU.USER_FLOW,SU.USER_NAME,SU.USER_CODE,SU.SEX_NAME,SU.TITLE_NAME
+	</select>
+    <resultMap id="docMap" type="hashmap">
+        <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+        <result column="SEX_NAME" property="sexName" jdbcType="VARCHAR" />
+        <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+        <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
+        <result column="TICKET_NUMBER" property="ticketNumber" jdbcType="VARCHAR" />
+        <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+        <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getNoSiginList" resultMap="docMap">
+		SELECT SU.USER_FLOW,SU.USER_NAME,SU.USER_CODE,SU.SEX_NAME,OSA.SPE_NAME,RD.SESSION_NUMBER,
+        ODA.TICKET_NUMBER,SU.ID_NO,SU.USER_PHONE
+		  FROM OSCA_DOCTOR_ASSESSMENT ODA
+        LEFT JOIN OSCA_SKILLS_ASSESSMENT OSA
+        ON  ODA.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+        LEFT JOIN SYS_USER SU
+        ON SU.USER_FLOW=ODA.DOCTOR_FLOW
+        LEFT JOIN RES_DOCTOR RD
+        ON RD.DOCTOR_FLOW=ODA.DOCTOR_FLOW
+		 WHERE ODA.RECORD_STATUS = 'Y'
+		   AND OSA.RECORD_STATUS = 'Y'
+		   AND OSA.ORG_FLOW = #{orgFlow}
+			AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+			AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate}
+			AND ODA.AUDIT_STATUS_ID='Passed'
+            AND ODA.SIGIN_STATUS_ID != 'SignIn'
+            <if test="clinicalFlow!='' and clinicalFlow !=null">
+                AND OSA.CLINICAL_FLOW = #{clinicalFlow}
+            </if>
+		   AND EXISTS
+		    (SELECT 1
+				  FROM OSCA_SKILLS_ASSESSMENT_TIME
+				 WHERE RECORD_STATUS = 'Y'
+				   AND OSCA_SKILLS_ASSESSMENT_TIME.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+                    <if test="recordFlow!='' and recordFlow !=null">
+                        AND recrod_Flow = #{recordFlow}
+                    </if>
+					AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+					AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate})
+        <if test='searchStr!=null and searchStr!=""'>
+            and  SU.USER_NAME like '%${searchStr}%'
+        </if>
+        ORDER BY OSA.CLINICAL_FLOW,RD.SESSION_NUMBER,SU.USER_NAME,SU.USER_CODE
+	</select>
+
+    <resultMap id="DoctorExamMap" type="com.pinde.res.model.osca.mo.OscaDoctorExamBean">
+       <result column="CLINICAL_FLOW" property="clinicalFlow" jdbcType="VARCHAR" />
+       <result column="CLINICAL_NAME" property="clinicalName" jdbcType="VARCHAR" />
+       <result column="CLINICAL_YEAR" property="clinicalYear" jdbcType="VARCHAR" />
+       <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+       <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+       <result column="SUBJECT_FLOW" property="subjectFlow" jdbcType="VARCHAR" />
+       <result column="SUBJECT_NAME" property="subjectName" jdbcType="VARCHAR" />
+       <result column="APPOINT_START_TIME" property="appointStartTime" jdbcType="VARCHAR" />
+       <result column="APPOINT_END_TIME" property="appointEndTime" jdbcType="VARCHAR" />
+       <result column="EXAM_ADDRESS" property="examAddress" jdbcType="VARCHAR" />
+       <result column="IS_LOCAL" property="isLocal" jdbcType="VARCHAR" />
+       <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+       <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+       <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+       <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
+       <result column="APPOINT_TIME" property="appointTime" jdbcType="VARCHAR" />
+       <result column="AUDIT_STATUS_ID" property="auditStatusId" jdbcType="VARCHAR" />
+       <result column="AUDIT_STATUS_NAME" property="auditStatusName" jdbcType="VARCHAR" />
+       <result column="SIGIN_TIME" property="siginTime" jdbcType="VARCHAR" />
+       <result column="SIGIN_STATUS_ID" property="siginStatusId" jdbcType="VARCHAR" />
+       <result column="SIGIN_STATUS_NAME" property="siginStatusName" jdbcType="VARCHAR" />
+       <result column="TICKET_NUMBER" property="ticketNumber" jdbcType="VARCHAR" />
+       <result column="IS_PASS" property="isPass" jdbcType="VARCHAR" />
+       <result column="IS_PASS_NAME" property="isPassName" jdbcType="VARCHAR" />
+       <result column="IS_ADMIN_AUDIT" property="isAdminAudit" jdbcType="VARCHAR" />
+       <result column="EXAM_START_TIME" property="examStartTime" jdbcType="VARCHAR" />
+       <result column="EXAM_END_TIME" property="examEndTime" jdbcType="VARCHAR" />
+       <result column="IS_SAVE_PASS" property="isSavePass" jdbcType="VARCHAR" />
+        <result column="USER_HEAD_IMG" property="userHeadImg" javaType="java.lang.String"/>
+    </resultMap>
+    <select id="getOscaDoctorExamList" resultMap="DoctorExamMap">
+		SELECT ODA.DOCTOR_FLOW,
+            SU.USER_HEAD_IMG,
+            SU.USER_NAME DOCTOR_NAME,
+            OSA.SPE_NAME,
+            RD.SESSION_NUMBER,
+            ODA.TICKET_NUMBER,
+            ODA.IS_SAVE_PASS,
+            ODA.IS_PASS,
+            ODA.IS_PASS_NAME,
+            ODA.CLINICAL_FLOW,
+            OSA.SUBJECT_FLOW,
+            ODA.EXAM_START_TIME,
+            ODA.EXAM_END_TIME
+		  FROM OSCA_DOCTOR_ASSESSMENT ODA
+        LEFT JOIN OSCA_SKILLS_ASSESSMENT OSA
+        ON  ODA.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+        LEFT JOIN SYS_USER SU
+        ON SU.USER_FLOW=ODA.DOCTOR_FLOW
+        LEFT JOIN RES_DOCTOR RD
+        ON RD.DOCTOR_FLOW=ODA.DOCTOR_FLOW
+		 WHERE ODA.RECORD_STATUS = 'Y'
+		   AND OSA.RECORD_STATUS = 'Y'
+		   AND OSA.ORG_FLOW = #{orgFlow}
+			AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+			AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate}
+			AND ODA.AUDIT_STATUS_ID ='Passed'
+            AND ODA.SIGIN_STATUS_ID = 'SignIn'
+            <if test="speId!='' and speId !=null">
+                AND OSA.SPE_ID = #{speId}
+            </if>
+            <if test='searchStr!=null and searchStr!=""'>
+                and (
+                 su.USER_NAME like '%${searchStr}%'
+                )
+            </if>
+            <if test='isPass!=null and isPass!=""'>
+                and IS_SAVE_PASS=#{isPass}
+            </if>
+		   AND EXISTS
+		    (SELECT 1
+				  FROM OSCA_SKILLS_ASSESSMENT_TIME
+				 WHERE RECORD_STATUS = 'Y'
+				   AND OSCA_SKILLS_ASSESSMENT_TIME.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+					AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+					AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate})
+        ORDER BY OSA.CLINICAL_FLOW,RD.SESSION_NUMBER,SU.USER_NAME,SU.USER_CODE
+	</select>
+    <select id="getDoctorExamScore" resultType="java.lang.Double">
+        SELECT  sum(EXAM_SAVE_SCORE)
+        FROM OSCA_SKILL_ROOM_DOC t
+		 where record_status = 'Y'
+		   and doctor_flow = #{doctorFlow}
+		    AND CLINICAL_FLOW=#{clinicalFlow}
+    </select>
+    <select id="getOrgRoomList" resultMap="com.pinde.sci.dao.base.SysDictMapper.BaseResultMap">
+        SELECT DISTINCT ROOM.*
+      FROM SYS_DICT ROOM
+      LEFT JOIN OSCA_SKILL_ROOM OSR
+        ON OSR.ROOM_FLOW = ROOM.DICT_ID
+      LEFT JOIN OSCA_SKILLS_ASSESSMENT_TIME OSAT
+        ON OSAT.CLINICAL_FLOW = OSR.CLINICAL_FLOW
+      LEFT JOIN OSCA_SKILLS_ASSESSMENT OSA
+        ON OSAT.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+        AND ROOM.ORG_FLOW=OSA.ORG_FLOW
+     WHERE ROOM.DICT_TYPE_ID = 'ExamRoom'
+       AND ROOM.ORG_FLOW =  #{orgFlow}
+       AND OSR.RECORD_STATUS = 'Y'
+       AND OSA.RECORD_STATUS = 'Y'
+       AND OSAT.RECORD_STATUS = 'Y'
+        AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+        AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate}
+        <if test='searchStr!=null and searchStr!=""'>
+            AND ROOM.DICT_NAME LIKE '%${searchStr}%'
+        </if>
+       order by ROOM.DICT_NAME,ROOM.DICT_ID
+    </select>
+    <select id="getOrgRooms" resultMap="com.pinde.sci.dao.base.SysDictMapper.BaseResultMap">
+        SELECT  ROOM.*
+      FROM SYS_DICT ROOM
+     WHERE ROOM.DICT_TYPE_ID = 'ExamRoom'
+       AND ROOM.ORG_FLOW =  #{orgFlow}
+       AND ROOM.RECORD_STATUS = 'Y'
+       order by ROOM.DICT_NAME,ROOM.DICT_ID
+    </select>
+
+    <resultMap id="roomInfoMap" type="hashmap">
+        <result column="DICT_ID" property="roomFLow" jdbcType="VARCHAR" />
+        <result column="DICT_NAME" property="roomName" jdbcType="VARCHAR" />
+        <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+        <result column="PARTNER_FLOW" property="partnerFlow" jdbcType="VARCHAR" />
+        <result column="PARTNER_NAME" property="partnerName" jdbcType="VARCHAR" />
+        <result column="STATION_FLOW" jdbcType="VARCHAR" property="stationFlow" />
+        <result column="STATION_NAME" jdbcType="VARCHAR" property="stationName" />
+        <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+        <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getRoomInfoByRoomFlow" resultMap="roomInfoMap">
+        SELECT DISTINCT
+                        OSRT.PARTNER_FLOW,
+                        OSRT.PARTNER_NAME,
+                        wm_concat(DISTINCT OSA.SPE_NAME) SPE_NAME,
+                        DOCTOR_INFO.STATION_FLOW,
+                        DOCTOR_INFO.STATION_NAME,
+                        DOCTOR_INFO.DOCTOR_FLOW,
+                        DOCTOR_INFO.DOCTOR_NAME
+          FROM  OSCA_SKILL_ROOM OSR
+          LEFT JOIN OSCA_SKILLS_ASSESSMENT_TIME OSAT
+            ON OSAT.CLINICAL_FLOW = OSR.CLINICAL_FLOW
+          LEFT JOIN OSCA_SKILLS_ASSESSMENT OSA
+            ON OSAT.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+          LEFT JOIN OSCA_SKILL_ROOM_TEA OSRT
+            ON OSR.ROOM_FLOW = OSRT.ROOM_FLOW
+           AND OSRT.RECORD_STATUS = 'Y'
+           AND OSRT.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+          LEFT JOIN (
+            select OSRT.ROOM_FLOW,OSRT.PARTNER_FLOW,OSRC.STATION_FLOW,OSRC.STATION_NAME,OSRC.DOCTOR_FLOW,OSRC.DOCTOR_NAME,
+           ROW_NUMBER() OVER(PARTITION BY OSRT.ROOM_FLOW,OSRT.PARTNER_FLOW ORDER BY OSRC.CREATE_TIME DESC) AS RN
+             from OSCA_SKILL_ROOM_TEA OSRT
+             LEFT JOIN OSCA_SKILLS_ASSESSMENT OSA
+               ON OSRT.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+             LEFT JOIN OSCA_SKILLS_ASSESSMENT_TIME OSAT
+               ON OSAT.CLINICAL_FLOW = osa.CLINICAL_FLOW
+            LEFT JOIN Osca_Tea_Scan_Doc OTSC
+            ON OTSC.CLINICAL_FLOW = OSRT.CLINICAL_FLOW
+            AND OTSC.PARTNER_FLOW=OSRT.PARTNER_FLOW
+            and otsc.record_status='Y'
+            LEFT JOIN OSCA_SKILL_ROOM_DOC OSRC
+            ON OSRC.CLINICAL_FLOW = OSRT.CLINICAL_FLOW
+            AND OSRC.STATION_FLOW = OSRT.STATION_FLOW
+            and osrc.doctor_flow=otsc.doctor_flow
+            where OSA.RECORD_STATUS = 'Y'
+              AND OSAT.RECORD_STATUS = 'Y'
+              AND OSRT.RECORD_STATUS = 'Y'
+              AND OSRC.RECORD_STATUS='Y'
+              AND OSRC.EXAM_STATUS_ID='AssessIng'
+            AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+            AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate}
+          )DOCTOR_INFO
+          ON OSRT.ROOM_FLOW=DOCTOR_INFO.ROOM_FLOW
+          AND OSRT.PARTNER_FLOW=DOCTOR_INFO.PARTNER_FLOW
+          AND DOCTOR_INFO.RN=1
+         WHERE   OSR.ROOM_FLOW=#{roomFLow}
+           AND OSR.RECORD_STATUS = 'Y'
+           AND OSRT.RECORD_STATUS = 'Y'
+           AND OSA.RECORD_STATUS = 'Y'
+           AND OSA.org_flow =#{orgFlow}
+           AND OSAT.RECORD_STATUS = 'Y'
+        AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+        AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate}
+        GROUP BY
+        OSRT.PARTNER_FLOW,
+        OSRT.PARTNER_NAME,
+        DOCTOR_INFO.STATION_FLOW,
+        DOCTOR_INFO.STATION_NAME,
+        DOCTOR_INFO.DOCTOR_FLOW,
+        DOCTOR_INFO.DOCTOR_NAME
+    </select>
+    <select id="getRoomPartnerExam" resultType="hashmap">
+        select OSRC.EXAM_STATUS_ID,to_char(count(DISTINCT osrc.doctor_Flow)) EXAM_NUM
+        from OSCA_SKILL_ROOM_TEA OSRT
+        LEFT JOIN OSCA_SKILLS_ASSESSMENT OSA
+        ON OSRT.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+        LEFT JOIN OSCA_SKILLS_ASSESSMENT_TIME OSAT
+        ON OSAT.CLINICAL_FLOW = osa.CLINICAL_FLOW
+            LEFT JOIN Osca_Tea_Scan_Doc OTSC
+            ON OTSC.CLINICAL_FLOW = OSRT.CLINICAL_FLOW
+            AND OTSC.PARTNER_FLOW=OSRT.PARTNER_FLOW
+            and otsc.record_status='Y'
+        LEFT JOIN OSCA_SKILL_ROOM_DOC OSRC
+        ON OSRC.CLINICAL_FLOW=OSRT.CLINICAL_FLOW
+        AND OSRC.STATION_FLOW=OSRT.STATION_FLOW
+            and osrc.doctor_flow=otsc.doctor_flow
+        where OSA.RECORD_STATUS = 'Y'
+        AND OSAT.RECORD_STATUS = 'Y'
+        AND OSRT.RECORD_STATUS = 'Y'
+        AND OSRC.RECORD_STATUS='Y'
+        AND OSRT.ROOM_FLOW=#{roomFLow}
+        AND OSRT.PARTNER_FLOW=#{partnerFlow}
+        AND OSA.ORG_FLOW=#{orgFlow}
+
+        AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+        AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate}
+        GROUP BY OSRC.EXAM_STATUS_ID
+    </select>
+    <select id="getCalendarInfo" resultType="hashmap">
+        SELECT DATE_DAY,
+        COUNT(DISTINCT OSA.CLINICAL_FLOW) QTY,
+        WM_CONCAT(DISTINCT OSA.IS_LOCAL) IS_LOCAL
+        FROM SYS_DATE_INFO D
+        LEFT JOIN OSCA_SKILLS_ASSESSMENT_TIME OSAT
+        ON OSAT.RECORD_STATUS = 'Y'
+        AND SUBSTR(OSAT.EXAM_START_TIME,0,10) <![CDATA[<=]]> D.DATE_DAY
+        AND SUBSTR(OSAT.EXAM_END_TIME,0,10) <![CDATA[>=]]> D.DATE_DAY
+        LEFT JOIN OSCA_SKILLS_ASSESSMENT OSA
+        ON OSAT.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+        AND OSA.RECORD_STATUS = 'Y'
+        WHERE OSAT.RECORD_STATUS = 'Y'
+        AND OSA.RECORD_STATUS = 'Y'
+        AND OSA.ORG_FLOW=#{orgFlow}
+        AND DATE_MONTH = #{month}
+        GROUP BY DATE_DAY
+        ORDER BY DATE_DAY
+    </select>
+    <select id="getTypeInfoByMonth" resultType="hashmap">
+        SELECT   COUNT(DISTINCT OSA.CLINICAL_FLOW) QTY,
+        IS_LOCAL
+        FROM SYS_DATE_INFO D
+        LEFT JOIN OSCA_SKILLS_ASSESSMENT_TIME OSAT
+        ON OSAT.RECORD_STATUS = 'Y'
+        AND SUBSTR(OSAT.EXAM_START_TIME,0,10) <![CDATA[<=]]> D.DATE_DAY
+        AND SUBSTR(OSAT.EXAM_END_TIME,0,10) <![CDATA[>=]]> D.DATE_DAY
+        LEFT JOIN OSCA_SKILLS_ASSESSMENT OSA
+        ON OSAT.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+        AND OSA.RECORD_STATUS = 'Y'
+        WHERE OSAT.RECORD_STATUS = 'Y'
+        AND OSA.RECORD_STATUS = 'Y'
+        AND OSA.ORG_FLOW=#{orgFlow}
+        AND DATE_MONTH = #{month}
+        GROUP BY IS_LOCAL
+        ORDER BY IS_LOCAL
+    </select>
+    <select id="getTypeInfoByYear" resultType="hashmap">
+        SELECT   COUNT(DISTINCT OSA.CLINICAL_FLOW) QTY,
+        IS_LOCAL
+        FROM SYS_DATE_INFO D
+        LEFT JOIN OSCA_SKILLS_ASSESSMENT_TIME OSAT
+        ON OSAT.RECORD_STATUS = 'Y'
+        AND SUBSTR(OSAT.EXAM_START_TIME,0,10) <![CDATA[<=]]> D.DATE_DAY
+        AND SUBSTR(OSAT.EXAM_END_TIME,0,10) <![CDATA[>=]]> D.DATE_DAY
+        LEFT JOIN OSCA_SKILLS_ASSESSMENT OSA
+        ON OSAT.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+        AND OSA.RECORD_STATUS = 'Y'
+        WHERE OSAT.RECORD_STATUS = 'Y'
+        AND OSA.RECORD_STATUS = 'Y'
+        AND OSA.ORG_FLOW=#{orgFlow}
+        AND data_year = #{year}
+        GROUP BY IS_LOCAL
+        ORDER BY IS_LOCAL
+    </select>
+    <select id="getMonthInfo" resultType="hashmap">
+        SELECT DATE_MONTH,
+        COUNT(DISTINCT OSA.CLINICAL_FLOW) QTY,
+        WM_CONCAT(DISTINCT OSA.IS_LOCAL) IS_LOCAL
+        FROM SYS_DATE_INFO D
+        LEFT JOIN OSCA_SKILLS_ASSESSMENT_TIME OSAT
+        ON OSAT.RECORD_STATUS = 'Y'
+        AND SUBSTR(OSAT.EXAM_START_TIME,0,10) <![CDATA[<=]]> D.DATE_DAY
+        AND SUBSTR(OSAT.EXAM_END_TIME,0,10) <![CDATA[>=]]> D.DATE_DAY
+        LEFT JOIN OSCA_SKILLS_ASSESSMENT OSA
+        ON OSAT.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+        AND OSA.RECORD_STATUS = 'Y'
+        WHERE OSAT.RECORD_STATUS = 'Y'
+        AND OSA.RECORD_STATUS = 'Y'
+        AND OSA.ORG_FLOW=#{orgFlow}
+        AND data_year = #{year}
+        GROUP BY DATE_MONTH
+        ORDER BY DATE_MONTH
+    </select>
+    <select id="getRoomPartnerNotExam" resultType="integer">
+        select count(DISTINCT ODA.DOCTOR_FLOW)
+        from OSCA_SKILL_ROOM_TEA OSRT
+        LEFT JOIN OSCA_SKILLS_ASSESSMENT OSA
+        ON OSRT.CLINICAL_FLOW = OSA.CLINICAL_FLOW
+        LEFT JOIN OSCA_SKILLS_ASSESSMENT_TIME OSAT
+        ON OSAT.CLINICAL_FLOW = osa.CLINICAL_FLOW
+        LEFT JOIN OSCA_DOCTOR_ASSESSMENT ODA
+        ON OSA.CLINICAL_FLOW=ODA.CLINICAL_FLOW
+        LEFT JOIN OSCA_SUBJECT_STATION S
+        ON OSA.SUBJECT_FLOW=S.SUBJECT_FLOW
+        AND S.STATION_FLOW=OSRT.STATION_FLOW
+        where OSA.RECORD_STATUS = 'Y'
+        AND S.RECORD_STATUS='Y'
+        AND ODA.RECORD_STATUS = 'Y'
+        AND OSAT.RECORD_STATUS = 'Y'
+        AND OSRT.RECORD_STATUS = 'Y'
+        AND ODA.SIGIN_STATUS_ID='SignIn'
+        AND OSRT.ROOM_FLOW=#{roomFLow}
+        AND OSRT.PARTNER_FLOW=#{partnerFlow}
+        AND OSA.ORG_FLOW=#{orgFlow}
+        AND NOT EXISTS(
+            SELECT 1 FROM OSCA_SKILL_ROOM_DOC OSRC
+            WHERE OSRC.CLINICAL_FLOW=OSRT.CLINICAL_FLOW
+            AND OSRC.STATION_FLOW=OSRT.STATION_FLOW
+            AND OSRC.RECORD_STATUS='Y'
+            AND OSRC.DOCTOR_FLOW=ODA.DOCTOR_FLOW
+        )
+        <if test='searchStr!=null and searchStr!=""'>
+            AND (  osa.spe_name like '%${searchStr}%' )
+        </if>
+        AND SUBSTR(OSAT.EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+        AND SUBSTR(OSAT.EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate}
+        AND SUBSTR(ODA.EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
+        AND SUBSTR(ODA.EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate}
+    </select>
+
+    <select id="findClinicalStationFiles"  resultMap="com.pinde.sci.dao.base.PubFileMapper.BaseResultMap">
+		SELECT *
+	  FROM PUB_FILE F
+	 WHERE RECORD_STATUS = 'Y'
+	   AND EXISTS (SELECT 1
+			  FROM OSCA_SKILLS_STATION_FILE OSSF
+			 WHERE RECORD_STATUS = 'Y'
+			   AND OSSF.FILE_FLOW = F.FILE_FLOW
+			   AND OSSF.STATION_FLOW = #{stationFlow}
+			   AND OSSF.CLINICAL_FLOW = #{clinicalFlow}
+			   AND OSSF.ORG_FLOW = #{orgFlow}
+			   )
+		order by F.CREATE_TIME ASC
+	</select>
+</mapper>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.jswjw.ext.SysOrgExtMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysOrg" >
+    <id column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="ORG_PROV_ID" property="orgProvId" jdbcType="VARCHAR" />
+    <result column="ORG_PROV_NAME" property="orgProvName" jdbcType="VARCHAR" />
+    <result column="ORG_CITY_ID" property="orgCityId" jdbcType="VARCHAR" />
+    <result column="ORG_CITY_NAME" property="orgCityName" jdbcType="VARCHAR" />
+    <result column="ORG_AREA_ID" property="orgAreaId" jdbcType="VARCHAR" />
+    <result column="ORG_AREA_NAME" property="orgAreaName" jdbcType="VARCHAR" />
+    <result column="ORG_TYPE_ID" property="orgTypeId" jdbcType="VARCHAR" />
+    <result column="ORG_TYPE_NAME" property="orgTypeName" jdbcType="VARCHAR" />
+    <result column="ORG_ADDRESS" property="orgAddress" jdbcType="VARCHAR" />
+    <result column="ORG_PHONE" property="orgPhone" jdbcType="VARCHAR" />
+    <result column="CHARGE_ORG_FLOW" property="chargeOrgFlow" jdbcType="VARCHAR" />
+    <result column="CHARGE_ORG_NAME" property="chargeOrgName" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="ORG_ZIP" property="orgZip" jdbcType="VARCHAR" />
+    <result column="ORDINAL" property="ordinal" jdbcType="DECIMAL" />
+    <result column="ORG_LEVEL_ID" property="orgLevelId" jdbcType="VARCHAR" />
+    <result column="ORG_LEVEL_NAME" property="orgLevelName" jdbcType="VARCHAR" />
+    <result column="IS_EXAM_ORG" property="isExamOrg" jdbcType="VARCHAR" />
+    <result column="IS_EXAM_TEA" property="isExamTea" jdbcType="VARCHAR" />
+    <result column="SEND_SCHOOL_ID" property="sendSchoolId" jdbcType="VARCHAR" />
+    <result column="SEND_SCHOOL_NAME" property="sendSchoolName" jdbcType="VARCHAR" />
+    <result column="IS_SECOND_FLAG" property="isSecondFlag" jdbcType="VARCHAR" />
+    <result column="IDENTIFY_NO" property="identifyNo" jdbcType="VARCHAR" />
+    <result column="HOSPITAL_PASSWORD" property="hospitalPassword" jdbcType="VARCHAR" />
+    <result column="OSCE_DOCTOR_SHOW" property="osceDoctorShow" jdbcType="VARCHAR" />
+    <result column="OSCE_TEACHER_SHOW" property="osceTeacherShow" jdbcType="VARCHAR" />
+    <result column="IS_TRAIN_ORG" property="isTrainOrg" jdbcType="VARCHAR" />
+    <result column="CREDIT_CODE" property="creditCode" jdbcType="VARCHAR" />
+    <result column="IS_SUBMIT_ID" property="isSubmitId" jdbcType="VARCHAR" />
+    <result column="IS_SUBMIT_NAME" property="isSubmitName" jdbcType="VARCHAR" />
+    <result column="CHECK_STATUS_ID" property="checkStatusId" jdbcType="VARCHAR" />
+    <result column="CHECK_STATUS_NAME" property="checkStatusName" jdbcType="VARCHAR" />
+    <result column="CHECK_REASON" property="checkReason" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.SysOrg" extends="BaseResultMap" >
+    <result column="ORG_INFO" property="orgInfo" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ORG_FLOW, ORG_CODE, ORG_NAME, ORG_PROV_ID, ORG_PROV_NAME, ORG_CITY_ID, ORG_CITY_NAME, 
+    ORG_AREA_ID, ORG_AREA_NAME, ORG_TYPE_ID, ORG_TYPE_NAME, ORG_ADDRESS, ORG_PHONE, CHARGE_ORG_FLOW, 
+    CHARGE_ORG_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+    ORG_ZIP, ORDINAL, ORG_LEVEL_ID, ORG_LEVEL_NAME, IS_EXAM_ORG, IS_EXAM_TEA, SEND_SCHOOL_ID, 
+    SEND_SCHOOL_NAME, IS_SECOND_FLAG, IDENTIFY_NO, HOSPITAL_PASSWORD, OSCE_DOCTOR_SHOW, 
+    OSCE_TEACHER_SHOW, IS_TRAIN_ORG, CREDIT_CODE, IS_SUBMIT_ID, IS_SUBMIT_NAME, CHECK_STATUS_ID, 
+    CHECK_STATUS_NAME, CHECK_REASON
+  </sql>
+  <sql id="Blob_Column_List" >
+    ORG_INFO
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.SYS_ORG
+    where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+  </select>
+
+  <select id="searchOrgNotJointOrg" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+    select o.ORG_FLOW, o.ORG_NAME
+    from PDSCI.SYS_ORG o
+    where o.RECORD_STATUS='Y'
+    and o.ORG_TYPE_ID = #{sysOrg.orgTypeId}
+    and o.ORG_CITY_ID = #{sysOrg.orgCityId}
+    and (
+    o.ORG_LEVEL_ID in
+    <foreach collection="orgLevelList" open="(" separator="," close=")" item="item">#{item}</foreach>
+    )
+    AND NOT EXISTS (SELECT 1
+    FROM RES_JOINT_ORG J
+    WHERE J.RECORD_STATUS = 'Y'
+    AND J.JOINT_ORG_FLOW = O.ORG_FLOW)
+  </select>
+  <select id="searchJointOrgsByOrg" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+    select *
+    from PDSCI.SYS_ORG
+    where RECORD_STATUS='Y'
+    and ORG_FLOW in (
+    select rjo.JOINT_ORG_FLOW
+    from  PDSCI.RES_JOINT_ORG rjo
+    where rjo.RECORD_STATUS='Y'
+    <if test="_parameter != null and _parameter != ''">
+      and rjo.ORG_FLOW = #{orgFlow}
+    </if>
+
+    )
+    ORDER BY ORDINAL, RECORD_STATUS DESC, ORG_FLOW
+  </select>
+</mapper>

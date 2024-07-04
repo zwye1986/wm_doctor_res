@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+    <!-- 学术讲座登记表单 -->
+    <!--
+    {0}:表单所属机构(开关控制)
+    {1}:版本号
+ -->
+    <jsp path="res/form/{3}/{0}/lecture_{1}"></jsp>
+    <gzzyjx ver="1.0">
+        <page  ver="1.0">
+            <item name="lectureDate" isView="0" remark="时间" multiple="N"></item>
+            <item name="lectureName" isView="1" remark="题目" multiple="N"></item>
+            <item name="speaker" isView="2" remark="讲者" multiple="N"></item>
+        </page>
+    </gzzyjx>
+</jspForm>
+

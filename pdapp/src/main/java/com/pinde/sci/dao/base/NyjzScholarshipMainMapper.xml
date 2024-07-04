@@ -1,0 +1,933 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.NyjzScholarshipMainMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.NyjzScholarshipMain" >
+    <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+    <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+    <result column="STUDENT_ID" property="studentId" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="CLASS_ID" property="classId" jdbcType="VARCHAR" />
+    <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
+    <result column="APPLY_FLAG" property="applyFlag" jdbcType="VARCHAR" />
+    <result column="APPLY_TIME" property="applyTime" jdbcType="VARCHAR" />
+    <result column="APPLY_TYPE_ID" property="applyTypeId" jdbcType="VARCHAR" />
+    <result column="APPLY_TYPE_NAME" property="applyTypeName" jdbcType="VARCHAR" />
+    <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_AUDIT_STATUS_ID" property="doctorAuditStatusId" jdbcType="VARCHAR" />
+    <result column="DOCTOR_AUDIT_STATUS_NAME" property="doctorAuditStatusName" jdbcType="VARCHAR" />
+    <result column="DOCTOR_AUDIT_ADVICE" property="doctorAuditAdvice" jdbcType="VARCHAR" />
+    <result column="DOCTOR_AUDIT_TIME" property="doctorAuditTime" jdbcType="VARCHAR" />
+    <result column="SECOND_DOCTOR_FLOW" property="secondDoctorFlow" jdbcType="VARCHAR" />
+    <result column="SECOND_AUDIT_STATUS_ID" property="secondAuditStatusId" jdbcType="VARCHAR" />
+    <result column="SECOND_AUDIT_STATUS_NAME" property="secondAuditStatusName" jdbcType="VARCHAR" />
+    <result column="SECOND_AUDIT_ADVICE" property="secondAuditAdvice" jdbcType="VARCHAR" />
+    <result column="SECOND_AUDIT_TIME" property="secondAuditTime" jdbcType="VARCHAR" />
+    <result column="PYDW_ORG_FLOW" property="pydwOrgFlow" jdbcType="VARCHAR" />
+    <result column="PYDW_AUDIT_STATUS_ID" property="pydwAuditStatusId" jdbcType="VARCHAR" />
+    <result column="PYDW_AUDIT_STATUS_NAME" property="pydwAuditStatusName" jdbcType="VARCHAR" />
+    <result column="PYDW_AUDIT_ADVICE" property="pydwAuditAdvice" jdbcType="VARCHAR" />
+    <result column="PYDW_AUDIT_TIME" property="pydwAuditTime" jdbcType="VARCHAR" />
+    <result column="FWH_ORG_FLOW" property="fwhOrgFlow" jdbcType="VARCHAR" />
+    <result column="FWH_AUDIT_STATUS_ID" property="fwhAuditStatusId" jdbcType="VARCHAR" />
+    <result column="FWH_AUDIT_STATUS_NAME" property="fwhAuditStatusName" jdbcType="VARCHAR" />
+    <result column="FWH_AUDIT_ADVICE" property="fwhAuditAdvice" jdbcType="VARCHAR" />
+    <result column="FWH_AUDIT_TIME" property="fwhAuditTime" jdbcType="VARCHAR" />
+    <result column="SZK_ORG_FLOW" property="szkOrgFlow" jdbcType="VARCHAR" />
+    <result column="SZK_AUDIT_STATUS_ID" property="szkAuditStatusId" jdbcType="VARCHAR" />
+    <result column="SZK_AUDIT_STATUS_NAME" property="szkAuditStatusName" jdbcType="VARCHAR" />
+    <result column="SZK_AUDIT_ADVICE" property="szkAuditAdvice" jdbcType="VARCHAR" />
+    <result column="SZK_AUDIT_TIME" property="szkAuditTime" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="APPLY_LEVEL" property="applyLevel" jdbcType="VARCHAR" />
+    <result column="WORK_DAY" property="workDay" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.NyjzScholarshipMain" extends="BaseResultMap" >
+    <result column="CONTENT" property="content" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RECORD_FLOW, USER_FLOW, STUDENT_ID, USER_NAME, CLASS_ID, SESSION_NUMBER, APPLY_FLAG, 
+    APPLY_TIME, APPLY_TYPE_ID, APPLY_TYPE_NAME, DOCTOR_FLOW, DOCTOR_AUDIT_STATUS_ID, 
+    DOCTOR_AUDIT_STATUS_NAME, DOCTOR_AUDIT_ADVICE, DOCTOR_AUDIT_TIME, SECOND_DOCTOR_FLOW, 
+    SECOND_AUDIT_STATUS_ID, SECOND_AUDIT_STATUS_NAME, SECOND_AUDIT_ADVICE, SECOND_AUDIT_TIME, 
+    PYDW_ORG_FLOW, PYDW_AUDIT_STATUS_ID, PYDW_AUDIT_STATUS_NAME, PYDW_AUDIT_ADVICE, PYDW_AUDIT_TIME, 
+    FWH_ORG_FLOW, FWH_AUDIT_STATUS_ID, FWH_AUDIT_STATUS_NAME, FWH_AUDIT_ADVICE, FWH_AUDIT_TIME, 
+    SZK_ORG_FLOW, SZK_AUDIT_STATUS_ID, SZK_AUDIT_STATUS_NAME, SZK_AUDIT_ADVICE, SZK_AUDIT_TIME, 
+    RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, APPLY_LEVEL, 
+    WORK_DAY
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.NyjzScholarshipMainExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.NYJZ_SCHOLARSHIP_MAIN
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.NyjzScholarshipMainExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.NYJZ_SCHOLARSHIP_MAIN
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.NYJZ_SCHOLARSHIP_MAIN
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.NYJZ_SCHOLARSHIP_MAIN
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.NyjzScholarshipMainExample" >
+    delete from PDSCI.NYJZ_SCHOLARSHIP_MAIN
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.NyjzScholarshipMain" >
+    insert into PDSCI.NYJZ_SCHOLARSHIP_MAIN (RECORD_FLOW, USER_FLOW, STUDENT_ID, 
+      USER_NAME, CLASS_ID, SESSION_NUMBER, 
+      APPLY_FLAG, APPLY_TIME, APPLY_TYPE_ID, 
+      APPLY_TYPE_NAME, DOCTOR_FLOW, DOCTOR_AUDIT_STATUS_ID, 
+      DOCTOR_AUDIT_STATUS_NAME, DOCTOR_AUDIT_ADVICE, 
+      DOCTOR_AUDIT_TIME, SECOND_DOCTOR_FLOW, SECOND_AUDIT_STATUS_ID, 
+      SECOND_AUDIT_STATUS_NAME, SECOND_AUDIT_ADVICE, 
+      SECOND_AUDIT_TIME, PYDW_ORG_FLOW, PYDW_AUDIT_STATUS_ID, 
+      PYDW_AUDIT_STATUS_NAME, PYDW_AUDIT_ADVICE, PYDW_AUDIT_TIME, 
+      FWH_ORG_FLOW, FWH_AUDIT_STATUS_ID, FWH_AUDIT_STATUS_NAME, 
+      FWH_AUDIT_ADVICE, FWH_AUDIT_TIME, SZK_ORG_FLOW, 
+      SZK_AUDIT_STATUS_ID, SZK_AUDIT_STATUS_NAME, SZK_AUDIT_ADVICE, 
+      SZK_AUDIT_TIME, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+      APPLY_LEVEL, WORK_DAY, CONTENT
+      )
+    values (#{recordFlow,jdbcType=VARCHAR}, #{userFlow,jdbcType=VARCHAR}, #{studentId,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{classId,jdbcType=VARCHAR}, #{sessionNumber,jdbcType=VARCHAR}, 
+      #{applyFlag,jdbcType=VARCHAR}, #{applyTime,jdbcType=VARCHAR}, #{applyTypeId,jdbcType=VARCHAR}, 
+      #{applyTypeName,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, #{doctorAuditStatusId,jdbcType=VARCHAR}, 
+      #{doctorAuditStatusName,jdbcType=VARCHAR}, #{doctorAuditAdvice,jdbcType=VARCHAR}, 
+      #{doctorAuditTime,jdbcType=VARCHAR}, #{secondDoctorFlow,jdbcType=VARCHAR}, #{secondAuditStatusId,jdbcType=VARCHAR}, 
+      #{secondAuditStatusName,jdbcType=VARCHAR}, #{secondAuditAdvice,jdbcType=VARCHAR}, 
+      #{secondAuditTime,jdbcType=VARCHAR}, #{pydwOrgFlow,jdbcType=VARCHAR}, #{pydwAuditStatusId,jdbcType=VARCHAR}, 
+      #{pydwAuditStatusName,jdbcType=VARCHAR}, #{pydwAuditAdvice,jdbcType=VARCHAR}, #{pydwAuditTime,jdbcType=VARCHAR}, 
+      #{fwhOrgFlow,jdbcType=VARCHAR}, #{fwhAuditStatusId,jdbcType=VARCHAR}, #{fwhAuditStatusName,jdbcType=VARCHAR}, 
+      #{fwhAuditAdvice,jdbcType=VARCHAR}, #{fwhAuditTime,jdbcType=VARCHAR}, #{szkOrgFlow,jdbcType=VARCHAR}, 
+      #{szkAuditStatusId,jdbcType=VARCHAR}, #{szkAuditStatusName,jdbcType=VARCHAR}, #{szkAuditAdvice,jdbcType=VARCHAR}, 
+      #{szkAuditTime,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{applyLevel,jdbcType=VARCHAR}, #{workDay,jdbcType=VARCHAR}, #{content,jdbcType=CLOB}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.NyjzScholarshipMain" >
+    insert into PDSCI.NYJZ_SCHOLARSHIP_MAIN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        RECORD_FLOW,
+      </if>
+      <if test="userFlow != null" >
+        USER_FLOW,
+      </if>
+      <if test="studentId != null" >
+        STUDENT_ID,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="classId != null" >
+        CLASS_ID,
+      </if>
+      <if test="sessionNumber != null" >
+        SESSION_NUMBER,
+      </if>
+      <if test="applyFlag != null" >
+        APPLY_FLAG,
+      </if>
+      <if test="applyTime != null" >
+        APPLY_TIME,
+      </if>
+      <if test="applyTypeId != null" >
+        APPLY_TYPE_ID,
+      </if>
+      <if test="applyTypeName != null" >
+        APPLY_TYPE_NAME,
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW,
+      </if>
+      <if test="doctorAuditStatusId != null" >
+        DOCTOR_AUDIT_STATUS_ID,
+      </if>
+      <if test="doctorAuditStatusName != null" >
+        DOCTOR_AUDIT_STATUS_NAME,
+      </if>
+      <if test="doctorAuditAdvice != null" >
+        DOCTOR_AUDIT_ADVICE,
+      </if>
+      <if test="doctorAuditTime != null" >
+        DOCTOR_AUDIT_TIME,
+      </if>
+      <if test="secondDoctorFlow != null" >
+        SECOND_DOCTOR_FLOW,
+      </if>
+      <if test="secondAuditStatusId != null" >
+        SECOND_AUDIT_STATUS_ID,
+      </if>
+      <if test="secondAuditStatusName != null" >
+        SECOND_AUDIT_STATUS_NAME,
+      </if>
+      <if test="secondAuditAdvice != null" >
+        SECOND_AUDIT_ADVICE,
+      </if>
+      <if test="secondAuditTime != null" >
+        SECOND_AUDIT_TIME,
+      </if>
+      <if test="pydwOrgFlow != null" >
+        PYDW_ORG_FLOW,
+      </if>
+      <if test="pydwAuditStatusId != null" >
+        PYDW_AUDIT_STATUS_ID,
+      </if>
+      <if test="pydwAuditStatusName != null" >
+        PYDW_AUDIT_STATUS_NAME,
+      </if>
+      <if test="pydwAuditAdvice != null" >
+        PYDW_AUDIT_ADVICE,
+      </if>
+      <if test="pydwAuditTime != null" >
+        PYDW_AUDIT_TIME,
+      </if>
+      <if test="fwhOrgFlow != null" >
+        FWH_ORG_FLOW,
+      </if>
+      <if test="fwhAuditStatusId != null" >
+        FWH_AUDIT_STATUS_ID,
+      </if>
+      <if test="fwhAuditStatusName != null" >
+        FWH_AUDIT_STATUS_NAME,
+      </if>
+      <if test="fwhAuditAdvice != null" >
+        FWH_AUDIT_ADVICE,
+      </if>
+      <if test="fwhAuditTime != null" >
+        FWH_AUDIT_TIME,
+      </if>
+      <if test="szkOrgFlow != null" >
+        SZK_ORG_FLOW,
+      </if>
+      <if test="szkAuditStatusId != null" >
+        SZK_AUDIT_STATUS_ID,
+      </if>
+      <if test="szkAuditStatusName != null" >
+        SZK_AUDIT_STATUS_NAME,
+      </if>
+      <if test="szkAuditAdvice != null" >
+        SZK_AUDIT_ADVICE,
+      </if>
+      <if test="szkAuditTime != null" >
+        SZK_AUDIT_TIME,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="applyLevel != null" >
+        APPLY_LEVEL,
+      </if>
+      <if test="workDay != null" >
+        WORK_DAY,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userFlow != null" >
+        #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="studentId != null" >
+        #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null" >
+        #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionNumber != null" >
+        #{sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="applyFlag != null" >
+        #{applyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null" >
+        #{applyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTypeId != null" >
+        #{applyTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTypeName != null" >
+        #{applyTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorAuditStatusId != null" >
+        #{doctorAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorAuditStatusName != null" >
+        #{doctorAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorAuditAdvice != null" >
+        #{doctorAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorAuditTime != null" >
+        #{doctorAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="secondDoctorFlow != null" >
+        #{secondDoctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="secondAuditStatusId != null" >
+        #{secondAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="secondAuditStatusName != null" >
+        #{secondAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="secondAuditAdvice != null" >
+        #{secondAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="secondAuditTime != null" >
+        #{secondAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwOrgFlow != null" >
+        #{pydwOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwAuditStatusId != null" >
+        #{pydwAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwAuditStatusName != null" >
+        #{pydwAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwAuditAdvice != null" >
+        #{pydwAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwAuditTime != null" >
+        #{pydwAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhOrgFlow != null" >
+        #{fwhOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhAuditStatusId != null" >
+        #{fwhAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhAuditStatusName != null" >
+        #{fwhAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhAuditAdvice != null" >
+        #{fwhAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhAuditTime != null" >
+        #{fwhAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="szkOrgFlow != null" >
+        #{szkOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="szkAuditStatusId != null" >
+        #{szkAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="szkAuditStatusName != null" >
+        #{szkAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="szkAuditAdvice != null" >
+        #{szkAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="szkAuditTime != null" >
+        #{szkAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="applyLevel != null" >
+        #{applyLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="workDay != null" >
+        #{workDay,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.NyjzScholarshipMainExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.NYJZ_SCHOLARSHIP_MAIN
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.NYJZ_SCHOLARSHIP_MAIN
+    <set >
+      <if test="record.recordFlow != null" >
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userFlow != null" >
+        USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentId != null" >
+        STUDENT_ID = #{record.studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classId != null" >
+        CLASS_ID = #{record.classId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionNumber != null" >
+        SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyFlag != null" >
+        APPLY_FLAG = #{record.applyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyTime != null" >
+        APPLY_TIME = #{record.applyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyTypeId != null" >
+        APPLY_TYPE_ID = #{record.applyTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyTypeName != null" >
+        APPLY_TYPE_NAME = #{record.applyTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorFlow != null" >
+        DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorAuditStatusId != null" >
+        DOCTOR_AUDIT_STATUS_ID = #{record.doctorAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorAuditStatusName != null" >
+        DOCTOR_AUDIT_STATUS_NAME = #{record.doctorAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorAuditAdvice != null" >
+        DOCTOR_AUDIT_ADVICE = #{record.doctorAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorAuditTime != null" >
+        DOCTOR_AUDIT_TIME = #{record.doctorAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondDoctorFlow != null" >
+        SECOND_DOCTOR_FLOW = #{record.secondDoctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondAuditStatusId != null" >
+        SECOND_AUDIT_STATUS_ID = #{record.secondAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondAuditStatusName != null" >
+        SECOND_AUDIT_STATUS_NAME = #{record.secondAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondAuditAdvice != null" >
+        SECOND_AUDIT_ADVICE = #{record.secondAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondAuditTime != null" >
+        SECOND_AUDIT_TIME = #{record.secondAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pydwOrgFlow != null" >
+        PYDW_ORG_FLOW = #{record.pydwOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pydwAuditStatusId != null" >
+        PYDW_AUDIT_STATUS_ID = #{record.pydwAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pydwAuditStatusName != null" >
+        PYDW_AUDIT_STATUS_NAME = #{record.pydwAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pydwAuditAdvice != null" >
+        PYDW_AUDIT_ADVICE = #{record.pydwAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pydwAuditTime != null" >
+        PYDW_AUDIT_TIME = #{record.pydwAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fwhOrgFlow != null" >
+        FWH_ORG_FLOW = #{record.fwhOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fwhAuditStatusId != null" >
+        FWH_AUDIT_STATUS_ID = #{record.fwhAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fwhAuditStatusName != null" >
+        FWH_AUDIT_STATUS_NAME = #{record.fwhAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fwhAuditAdvice != null" >
+        FWH_AUDIT_ADVICE = #{record.fwhAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fwhAuditTime != null" >
+        FWH_AUDIT_TIME = #{record.fwhAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.szkOrgFlow != null" >
+        SZK_ORG_FLOW = #{record.szkOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.szkAuditStatusId != null" >
+        SZK_AUDIT_STATUS_ID = #{record.szkAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.szkAuditStatusName != null" >
+        SZK_AUDIT_STATUS_NAME = #{record.szkAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.szkAuditAdvice != null" >
+        SZK_AUDIT_ADVICE = #{record.szkAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.szkAuditTime != null" >
+        SZK_AUDIT_TIME = #{record.szkAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyLevel != null" >
+        APPLY_LEVEL = #{record.applyLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workDay != null" >
+        WORK_DAY = #{record.workDay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        CONTENT = #{record.content,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update PDSCI.NYJZ_SCHOLARSHIP_MAIN
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      STUDENT_ID = #{record.studentId,jdbcType=VARCHAR},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      CLASS_ID = #{record.classId,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      APPLY_FLAG = #{record.applyFlag,jdbcType=VARCHAR},
+      APPLY_TIME = #{record.applyTime,jdbcType=VARCHAR},
+      APPLY_TYPE_ID = #{record.applyTypeId,jdbcType=VARCHAR},
+      APPLY_TYPE_NAME = #{record.applyTypeName,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_AUDIT_STATUS_ID = #{record.doctorAuditStatusId,jdbcType=VARCHAR},
+      DOCTOR_AUDIT_STATUS_NAME = #{record.doctorAuditStatusName,jdbcType=VARCHAR},
+      DOCTOR_AUDIT_ADVICE = #{record.doctorAuditAdvice,jdbcType=VARCHAR},
+      DOCTOR_AUDIT_TIME = #{record.doctorAuditTime,jdbcType=VARCHAR},
+      SECOND_DOCTOR_FLOW = #{record.secondDoctorFlow,jdbcType=VARCHAR},
+      SECOND_AUDIT_STATUS_ID = #{record.secondAuditStatusId,jdbcType=VARCHAR},
+      SECOND_AUDIT_STATUS_NAME = #{record.secondAuditStatusName,jdbcType=VARCHAR},
+      SECOND_AUDIT_ADVICE = #{record.secondAuditAdvice,jdbcType=VARCHAR},
+      SECOND_AUDIT_TIME = #{record.secondAuditTime,jdbcType=VARCHAR},
+      PYDW_ORG_FLOW = #{record.pydwOrgFlow,jdbcType=VARCHAR},
+      PYDW_AUDIT_STATUS_ID = #{record.pydwAuditStatusId,jdbcType=VARCHAR},
+      PYDW_AUDIT_STATUS_NAME = #{record.pydwAuditStatusName,jdbcType=VARCHAR},
+      PYDW_AUDIT_ADVICE = #{record.pydwAuditAdvice,jdbcType=VARCHAR},
+      PYDW_AUDIT_TIME = #{record.pydwAuditTime,jdbcType=VARCHAR},
+      FWH_ORG_FLOW = #{record.fwhOrgFlow,jdbcType=VARCHAR},
+      FWH_AUDIT_STATUS_ID = #{record.fwhAuditStatusId,jdbcType=VARCHAR},
+      FWH_AUDIT_STATUS_NAME = #{record.fwhAuditStatusName,jdbcType=VARCHAR},
+      FWH_AUDIT_ADVICE = #{record.fwhAuditAdvice,jdbcType=VARCHAR},
+      FWH_AUDIT_TIME = #{record.fwhAuditTime,jdbcType=VARCHAR},
+      SZK_ORG_FLOW = #{record.szkOrgFlow,jdbcType=VARCHAR},
+      SZK_AUDIT_STATUS_ID = #{record.szkAuditStatusId,jdbcType=VARCHAR},
+      SZK_AUDIT_STATUS_NAME = #{record.szkAuditStatusName,jdbcType=VARCHAR},
+      SZK_AUDIT_ADVICE = #{record.szkAuditAdvice,jdbcType=VARCHAR},
+      SZK_AUDIT_TIME = #{record.szkAuditTime,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      APPLY_LEVEL = #{record.applyLevel,jdbcType=VARCHAR},
+      WORK_DAY = #{record.workDay,jdbcType=VARCHAR},
+      CONTENT = #{record.content,jdbcType=CLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.NYJZ_SCHOLARSHIP_MAIN
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      STUDENT_ID = #{record.studentId,jdbcType=VARCHAR},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      CLASS_ID = #{record.classId,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      APPLY_FLAG = #{record.applyFlag,jdbcType=VARCHAR},
+      APPLY_TIME = #{record.applyTime,jdbcType=VARCHAR},
+      APPLY_TYPE_ID = #{record.applyTypeId,jdbcType=VARCHAR},
+      APPLY_TYPE_NAME = #{record.applyTypeName,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_AUDIT_STATUS_ID = #{record.doctorAuditStatusId,jdbcType=VARCHAR},
+      DOCTOR_AUDIT_STATUS_NAME = #{record.doctorAuditStatusName,jdbcType=VARCHAR},
+      DOCTOR_AUDIT_ADVICE = #{record.doctorAuditAdvice,jdbcType=VARCHAR},
+      DOCTOR_AUDIT_TIME = #{record.doctorAuditTime,jdbcType=VARCHAR},
+      SECOND_DOCTOR_FLOW = #{record.secondDoctorFlow,jdbcType=VARCHAR},
+      SECOND_AUDIT_STATUS_ID = #{record.secondAuditStatusId,jdbcType=VARCHAR},
+      SECOND_AUDIT_STATUS_NAME = #{record.secondAuditStatusName,jdbcType=VARCHAR},
+      SECOND_AUDIT_ADVICE = #{record.secondAuditAdvice,jdbcType=VARCHAR},
+      SECOND_AUDIT_TIME = #{record.secondAuditTime,jdbcType=VARCHAR},
+      PYDW_ORG_FLOW = #{record.pydwOrgFlow,jdbcType=VARCHAR},
+      PYDW_AUDIT_STATUS_ID = #{record.pydwAuditStatusId,jdbcType=VARCHAR},
+      PYDW_AUDIT_STATUS_NAME = #{record.pydwAuditStatusName,jdbcType=VARCHAR},
+      PYDW_AUDIT_ADVICE = #{record.pydwAuditAdvice,jdbcType=VARCHAR},
+      PYDW_AUDIT_TIME = #{record.pydwAuditTime,jdbcType=VARCHAR},
+      FWH_ORG_FLOW = #{record.fwhOrgFlow,jdbcType=VARCHAR},
+      FWH_AUDIT_STATUS_ID = #{record.fwhAuditStatusId,jdbcType=VARCHAR},
+      FWH_AUDIT_STATUS_NAME = #{record.fwhAuditStatusName,jdbcType=VARCHAR},
+      FWH_AUDIT_ADVICE = #{record.fwhAuditAdvice,jdbcType=VARCHAR},
+      FWH_AUDIT_TIME = #{record.fwhAuditTime,jdbcType=VARCHAR},
+      SZK_ORG_FLOW = #{record.szkOrgFlow,jdbcType=VARCHAR},
+      SZK_AUDIT_STATUS_ID = #{record.szkAuditStatusId,jdbcType=VARCHAR},
+      SZK_AUDIT_STATUS_NAME = #{record.szkAuditStatusName,jdbcType=VARCHAR},
+      SZK_AUDIT_ADVICE = #{record.szkAuditAdvice,jdbcType=VARCHAR},
+      SZK_AUDIT_TIME = #{record.szkAuditTime,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      APPLY_LEVEL = #{record.applyLevel,jdbcType=VARCHAR},
+      WORK_DAY = #{record.workDay,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.NyjzScholarshipMain" >
+    update PDSCI.NYJZ_SCHOLARSHIP_MAIN
+    <set >
+      <if test="userFlow != null" >
+        USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="studentId != null" >
+        STUDENT_ID = #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null" >
+        CLASS_ID = #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionNumber != null" >
+        SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="applyFlag != null" >
+        APPLY_FLAG = #{applyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null" >
+        APPLY_TIME = #{applyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTypeId != null" >
+        APPLY_TYPE_ID = #{applyTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTypeName != null" >
+        APPLY_TYPE_NAME = #{applyTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorAuditStatusId != null" >
+        DOCTOR_AUDIT_STATUS_ID = #{doctorAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorAuditStatusName != null" >
+        DOCTOR_AUDIT_STATUS_NAME = #{doctorAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorAuditAdvice != null" >
+        DOCTOR_AUDIT_ADVICE = #{doctorAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorAuditTime != null" >
+        DOCTOR_AUDIT_TIME = #{doctorAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="secondDoctorFlow != null" >
+        SECOND_DOCTOR_FLOW = #{secondDoctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="secondAuditStatusId != null" >
+        SECOND_AUDIT_STATUS_ID = #{secondAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="secondAuditStatusName != null" >
+        SECOND_AUDIT_STATUS_NAME = #{secondAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="secondAuditAdvice != null" >
+        SECOND_AUDIT_ADVICE = #{secondAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="secondAuditTime != null" >
+        SECOND_AUDIT_TIME = #{secondAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwOrgFlow != null" >
+        PYDW_ORG_FLOW = #{pydwOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwAuditStatusId != null" >
+        PYDW_AUDIT_STATUS_ID = #{pydwAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwAuditStatusName != null" >
+        PYDW_AUDIT_STATUS_NAME = #{pydwAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwAuditAdvice != null" >
+        PYDW_AUDIT_ADVICE = #{pydwAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwAuditTime != null" >
+        PYDW_AUDIT_TIME = #{pydwAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhOrgFlow != null" >
+        FWH_ORG_FLOW = #{fwhOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhAuditStatusId != null" >
+        FWH_AUDIT_STATUS_ID = #{fwhAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhAuditStatusName != null" >
+        FWH_AUDIT_STATUS_NAME = #{fwhAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhAuditAdvice != null" >
+        FWH_AUDIT_ADVICE = #{fwhAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhAuditTime != null" >
+        FWH_AUDIT_TIME = #{fwhAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="szkOrgFlow != null" >
+        SZK_ORG_FLOW = #{szkOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="szkAuditStatusId != null" >
+        SZK_AUDIT_STATUS_ID = #{szkAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="szkAuditStatusName != null" >
+        SZK_AUDIT_STATUS_NAME = #{szkAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="szkAuditAdvice != null" >
+        SZK_AUDIT_ADVICE = #{szkAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="szkAuditTime != null" >
+        SZK_AUDIT_TIME = #{szkAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="applyLevel != null" >
+        APPLY_LEVEL = #{applyLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="workDay != null" >
+        WORK_DAY = #{workDay,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=CLOB},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.NyjzScholarshipMain" >
+    update PDSCI.NYJZ_SCHOLARSHIP_MAIN
+    set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      STUDENT_ID = #{studentId,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      CLASS_ID = #{classId,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      APPLY_FLAG = #{applyFlag,jdbcType=VARCHAR},
+      APPLY_TIME = #{applyTime,jdbcType=VARCHAR},
+      APPLY_TYPE_ID = #{applyTypeId,jdbcType=VARCHAR},
+      APPLY_TYPE_NAME = #{applyTypeName,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_AUDIT_STATUS_ID = #{doctorAuditStatusId,jdbcType=VARCHAR},
+      DOCTOR_AUDIT_STATUS_NAME = #{doctorAuditStatusName,jdbcType=VARCHAR},
+      DOCTOR_AUDIT_ADVICE = #{doctorAuditAdvice,jdbcType=VARCHAR},
+      DOCTOR_AUDIT_TIME = #{doctorAuditTime,jdbcType=VARCHAR},
+      SECOND_DOCTOR_FLOW = #{secondDoctorFlow,jdbcType=VARCHAR},
+      SECOND_AUDIT_STATUS_ID = #{secondAuditStatusId,jdbcType=VARCHAR},
+      SECOND_AUDIT_STATUS_NAME = #{secondAuditStatusName,jdbcType=VARCHAR},
+      SECOND_AUDIT_ADVICE = #{secondAuditAdvice,jdbcType=VARCHAR},
+      SECOND_AUDIT_TIME = #{secondAuditTime,jdbcType=VARCHAR},
+      PYDW_ORG_FLOW = #{pydwOrgFlow,jdbcType=VARCHAR},
+      PYDW_AUDIT_STATUS_ID = #{pydwAuditStatusId,jdbcType=VARCHAR},
+      PYDW_AUDIT_STATUS_NAME = #{pydwAuditStatusName,jdbcType=VARCHAR},
+      PYDW_AUDIT_ADVICE = #{pydwAuditAdvice,jdbcType=VARCHAR},
+      PYDW_AUDIT_TIME = #{pydwAuditTime,jdbcType=VARCHAR},
+      FWH_ORG_FLOW = #{fwhOrgFlow,jdbcType=VARCHAR},
+      FWH_AUDIT_STATUS_ID = #{fwhAuditStatusId,jdbcType=VARCHAR},
+      FWH_AUDIT_STATUS_NAME = #{fwhAuditStatusName,jdbcType=VARCHAR},
+      FWH_AUDIT_ADVICE = #{fwhAuditAdvice,jdbcType=VARCHAR},
+      FWH_AUDIT_TIME = #{fwhAuditTime,jdbcType=VARCHAR},
+      SZK_ORG_FLOW = #{szkOrgFlow,jdbcType=VARCHAR},
+      SZK_AUDIT_STATUS_ID = #{szkAuditStatusId,jdbcType=VARCHAR},
+      SZK_AUDIT_STATUS_NAME = #{szkAuditStatusName,jdbcType=VARCHAR},
+      SZK_AUDIT_ADVICE = #{szkAuditAdvice,jdbcType=VARCHAR},
+      SZK_AUDIT_TIME = #{szkAuditTime,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      APPLY_LEVEL = #{applyLevel,jdbcType=VARCHAR},
+      WORK_DAY = #{workDay,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=CLOB}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.NyjzScholarshipMain" >
+    update PDSCI.NYJZ_SCHOLARSHIP_MAIN
+    set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      STUDENT_ID = #{studentId,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      CLASS_ID = #{classId,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      APPLY_FLAG = #{applyFlag,jdbcType=VARCHAR},
+      APPLY_TIME = #{applyTime,jdbcType=VARCHAR},
+      APPLY_TYPE_ID = #{applyTypeId,jdbcType=VARCHAR},
+      APPLY_TYPE_NAME = #{applyTypeName,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_AUDIT_STATUS_ID = #{doctorAuditStatusId,jdbcType=VARCHAR},
+      DOCTOR_AUDIT_STATUS_NAME = #{doctorAuditStatusName,jdbcType=VARCHAR},
+      DOCTOR_AUDIT_ADVICE = #{doctorAuditAdvice,jdbcType=VARCHAR},
+      DOCTOR_AUDIT_TIME = #{doctorAuditTime,jdbcType=VARCHAR},
+      SECOND_DOCTOR_FLOW = #{secondDoctorFlow,jdbcType=VARCHAR},
+      SECOND_AUDIT_STATUS_ID = #{secondAuditStatusId,jdbcType=VARCHAR},
+      SECOND_AUDIT_STATUS_NAME = #{secondAuditStatusName,jdbcType=VARCHAR},
+      SECOND_AUDIT_ADVICE = #{secondAuditAdvice,jdbcType=VARCHAR},
+      SECOND_AUDIT_TIME = #{secondAuditTime,jdbcType=VARCHAR},
+      PYDW_ORG_FLOW = #{pydwOrgFlow,jdbcType=VARCHAR},
+      PYDW_AUDIT_STATUS_ID = #{pydwAuditStatusId,jdbcType=VARCHAR},
+      PYDW_AUDIT_STATUS_NAME = #{pydwAuditStatusName,jdbcType=VARCHAR},
+      PYDW_AUDIT_ADVICE = #{pydwAuditAdvice,jdbcType=VARCHAR},
+      PYDW_AUDIT_TIME = #{pydwAuditTime,jdbcType=VARCHAR},
+      FWH_ORG_FLOW = #{fwhOrgFlow,jdbcType=VARCHAR},
+      FWH_AUDIT_STATUS_ID = #{fwhAuditStatusId,jdbcType=VARCHAR},
+      FWH_AUDIT_STATUS_NAME = #{fwhAuditStatusName,jdbcType=VARCHAR},
+      FWH_AUDIT_ADVICE = #{fwhAuditAdvice,jdbcType=VARCHAR},
+      FWH_AUDIT_TIME = #{fwhAuditTime,jdbcType=VARCHAR},
+      SZK_ORG_FLOW = #{szkOrgFlow,jdbcType=VARCHAR},
+      SZK_AUDIT_STATUS_ID = #{szkAuditStatusId,jdbcType=VARCHAR},
+      SZK_AUDIT_STATUS_NAME = #{szkAuditStatusName,jdbcType=VARCHAR},
+      SZK_AUDIT_ADVICE = #{szkAuditAdvice,jdbcType=VARCHAR},
+      SZK_AUDIT_TIME = #{szkAuditTime,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      APPLY_LEVEL = #{applyLevel,jdbcType=VARCHAR},
+      WORK_DAY = #{workDay,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

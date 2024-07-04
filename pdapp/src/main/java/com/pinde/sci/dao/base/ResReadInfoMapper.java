@@ -1,0 +1,30 @@
+package com.pinde.sci.dao.base;
+
+import com.pinde.sci.model.mo.ResReadInfo;
+import com.pinde.sci.model.mo.ResReadInfoExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface ResReadInfoMapper {
+    int countByExample(ResReadInfoExample example);
+
+    int deleteByExample(ResReadInfoExample example);
+
+    int deleteByPrimaryKey(String recordFlow);
+
+    int insert(ResReadInfo record);
+
+    int insertSelective(ResReadInfo record);
+
+    List<ResReadInfo> selectByExample(ResReadInfoExample example);
+
+    ResReadInfo selectByPrimaryKey(String recordFlow);
+
+    int updateByExampleSelective(@Param("record") ResReadInfo record, @Param("example") ResReadInfoExample example);
+
+    int updateByExample(@Param("record") ResReadInfo record, @Param("example") ResReadInfoExample example);
+
+    int updateByPrimaryKeySelective(ResReadInfo record);
+
+    int updateByPrimaryKey(ResReadInfo record);
+}

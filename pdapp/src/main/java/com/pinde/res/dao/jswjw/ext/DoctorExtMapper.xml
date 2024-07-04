@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.jswjw.ext.DoctorExtMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResDoctor" >
+    <id column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_CODE" property="doctorCode" jdbcType="VARCHAR" />
+    <result column="DOCTOR_HEAD_IMG" property="doctorHeadImg" jdbcType="VARCHAR" />
+    <result column="DOCTOR_TYPE_ID" property="doctorTypeId" jdbcType="VARCHAR" />
+    <result column="DOCTOR_TYPE_NAME" property="doctorTypeName" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="WORK_ORG_NAME" property="workOrgName" jdbcType="VARCHAR" />
+    <result column="DISPATCH_FILE" property="dispatchFile" jdbcType="VARCHAR" />
+    <result column="GRADUATED_ID" property="graduatedId" jdbcType="VARCHAR" />
+    <result column="GRADUATED_NAME" property="graduatedName" jdbcType="VARCHAR" />
+    <result column="SPECIALIZED" property="specialized" jdbcType="VARCHAR" />
+    <result column="GRADUATION_TIME" property="graduationTime" jdbcType="VARCHAR" />
+    <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_NO" property="certificateNo" jdbcType="VARCHAR" />
+    <result column="DEGREE_NO" property="degreeNo" jdbcType="VARCHAR" />
+    <result column="IN_HOS_DATE" property="inHosDate" jdbcType="VARCHAR" />
+    <result column="TRAINING_YEARS" property="trainingYears" jdbcType="VARCHAR" />
+    <result column="TRAINING_TYPE_ID" property="trainingTypeId" jdbcType="VARCHAR" />
+    <result column="TRAINING_TYPE_NAME" property="trainingTypeName" jdbcType="VARCHAR" />
+    <result column="TRAINING_SPE_ID" property="trainingSpeId" jdbcType="VARCHAR" />
+    <result column="TRAINING_SPE_NAME" property="trainingSpeName" jdbcType="VARCHAR" />
+    <result column="ROTATION_FLOW" property="rotationFlow" jdbcType="VARCHAR" />
+    <result column="ROTATION_NAME" property="rotationName" jdbcType="VARCHAR" />
+    <result column="DOCTOR_STATUS_ID" property="doctorStatusId" jdbcType="VARCHAR" />
+    <result column="DOCTOR_STATUS_NAME" property="doctorStatusName" jdbcType="VARCHAR" />
+    <result column="COMPLETE_DATE" property="completeDate" jdbcType="VARCHAR" />
+    <result column="COMPLETE_NO" property="completeNo" jdbcType="VARCHAR" />
+    <result column="TERMINAT_REASON" property="terminatReason" jdbcType="VARCHAR" />
+    <result column="TERMINAT_DATE" property="terminatDate" jdbcType="VARCHAR" />
+    <result column="SEL_DEPT_FLAG" property="selDeptFlag" jdbcType="VARCHAR" />
+    <result column="SCH_FLAG" property="schFlag" jdbcType="VARCHAR" />
+    <result column="QUALIFIED_NO" property="qualifiedNo" jdbcType="VARCHAR" />
+    <result column="QUALIFIED_DATE" property="qualifiedDate" jdbcType="VARCHAR" />
+    <result column="QUALIFIED_FILE" property="qualifiedFile" jdbcType="VARCHAR" />
+    <result column="REG_NO" property="regNo" jdbcType="VARCHAR" />
+    <result column="REG_ADDRESS" property="regAddress" jdbcType="VARCHAR" />
+    <result column="COMPUTER_SKILLS" property="computerSkills" jdbcType="VARCHAR" />
+    <result column="FOREIGN_SKILLS" property="foreignSkills" jdbcType="VARCHAR" />
+    <result column="EMERGENCY_NAME" property="emergencyName" jdbcType="VARCHAR" />
+    <result column="EMERGENCY_PHONE" property="emergencyPhone" jdbcType="VARCHAR" />
+    <result column="EMERGENCY_RELATION" property="emergencyRelation" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="DISACTIVE_REASON" property="disactiveReason" jdbcType="VARCHAR" />
+    <result column="REEDIT_FLAG" property="reeditFlag" jdbcType="VARCHAR" />
+    <result column="DOCTOR_CATEGORY_ID" property="doctorCategoryId" jdbcType="VARCHAR" />
+    <result column="DOCTOR_CATEGORY_NAME" property="doctorCategoryName" jdbcType="VARCHAR" />
+    <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
+    <result column="SCH_STATUS_ID" property="schStatusId" jdbcType="VARCHAR" />
+    <result column="SCH_STATUS_NAME" property="schStatusName" jdbcType="VARCHAR" />
+    <result column="REG_DATE" property="regDate" jdbcType="VARCHAR" />
+    <result column="GROUP_ID" property="groupId" jdbcType="VARCHAR" />
+    <result column="GROUP_NAME" property="groupName" jdbcType="VARCHAR" />
+    <result column="GROUP_ROLE_ID" property="groupRoleId" jdbcType="VARCHAR" />
+    <result column="GROUP_ROLE_NAME" property="groupRoleName" jdbcType="VARCHAR" />
+    <result column="DOCTOR_LICENSE_FLAG" property="doctorLicenseFlag" jdbcType="VARCHAR" />
+    <result column="TUTOR_NAME" property="tutorName" jdbcType="VARCHAR" />
+    <result column="RESEARCH_DIRECTION" property="researchDirection" jdbcType="VARCHAR" />
+    <result column="SPECIALIZED_ID" property="specializedId" jdbcType="VARCHAR" />
+    <result column="DOCTOR_LICENSE_NO" property="doctorLicenseNo" jdbcType="VARCHAR" />
+    <result column="TUTOR_FLOW" property="tutorFlow" jdbcType="VARCHAR" />
+    <result column="DEGREE_CATEGORY_ID" property="degreeCategoryId" jdbcType="VARCHAR" />
+    <result column="DEGREE_CATEGORY_NAME" property="degreeCategoryName" jdbcType="VARCHAR" />
+    <result column="WORK_ORG_LEVEL_ID" property="workOrgLevelId" jdbcType="VARCHAR" />
+    <result column="WORK_ORG_LEVEL_NAME" property="workOrgLevelName" jdbcType="VARCHAR" />
+    <result column="IS_YEAR_GRADUATE" property="isYearGraduate" jdbcType="VARCHAR" />
+    <result column="WORK_ORG_ID" property="workOrgId" jdbcType="VARCHAR" />
+    <result column="GRADUATION_STATUS_ID" property="graduationStatusId" jdbcType="VARCHAR" />
+    <result column="GRADUATION_STATUS_NAME" property="graduationStatusName" jdbcType="VARCHAR" />
+    <result column="DISAGREE_REASON" property="disagreeReason" jdbcType="VARCHAR" />
+    <result column="COMPLETE_START_DATE" property="completeStartDate" jdbcType="VARCHAR" />
+    <result column="COMPLETE_END_DATE" property="completeEndDate" jdbcType="VARCHAR" />
+    <result column="DISCIPLE_TEACHER_FLOW" property="discipleTeacherFlow" jdbcType="VARCHAR" />
+    <result column="DISCIPLE_TEACHER_NAME" property="discipleTeacherName" jdbcType="VARCHAR" />
+    <result column="GRADUATION_YEAR" property="graduationYear" jdbcType="VARCHAR" />
+    <result column="SECOND_SPE_ID" property="secondSpeId" jdbcType="VARCHAR" />
+    <result column="SECOND_SPE_NAME" property="secondSpeName" jdbcType="VARCHAR" />
+    <result column="COMPANY_TYPE" property="companyType" jdbcType="VARCHAR" />
+    <result column="IS_PARTNER" property="isPartner" jdbcType="VARCHAR" />
+    <result column="SOURCE_PROVINCES_ID" property="sourceProvincesId" jdbcType="VARCHAR" />
+    <result column="SOURCE_PROVINCES_NAME" property="sourceProvincesName" jdbcType="VARCHAR" />
+    <result column="SECOND_ROTATION_FLOW" property="secondRotationFlow" jdbcType="VARCHAR" />
+    <result column="SECOND_ROTATION_NAME" property="secondRotationName" jdbcType="VARCHAR" />
+    <result column="STANDARD_DEPT_NAME" property="standardDeptName" jdbcType="VARCHAR" />
+    <result column="STANDARD_DEPT_ID" property="standardDeptId" jdbcType="VARCHAR" />
+    <result column="PRACT_PHYSICIAN_CERTIFICATE_NO" property="practPhysicianCertificateNo" jdbcType="VARCHAR" />
+    <result column="PRACT_PHYSICIAN_FLAG" property="practPhysicianFlag" jdbcType="CHAR" />
+    <result column="IS_UNDER_LINE" property="isUnderLine" jdbcType="VARCHAR" />
+    <result column="DEPART_MENT_FLOW" property="departMentFlow" jdbcType="VARCHAR" />
+    <result column="DEPART_MENT_NAME" property="departMentName" jdbcType="VARCHAR" />
+    <result column="OSCA_STUDENT_SUBMIT" property="oscaStudentSubmit" jdbcType="VARCHAR" />
+    <result column="SCZY_RECRIUT_BANCH" property="sczyRecriutBanch" jdbcType="VARCHAR" />
+    <result column="SEL_ONE_FLAG" property="selOneFlag" jdbcType="VARCHAR" />
+    <result column="SEL_TWO_FLAG" property="selTwoFlag" jdbcType="VARCHAR" />
+    <result column="SEL_THREE_FLAG" property="selThreeFlag" jdbcType="VARCHAR" />
+    <result column="SCH_ONE_FLAG" property="schOneFlag" jdbcType="VARCHAR" />
+    <result column="SCH_TWO_FLAG" property="schTwoFlag" jdbcType="VARCHAR" />
+    <result column="SCH_THREE_FLAG" property="schThreeFlag" jdbcType="VARCHAR" />
+    <result column="SEL_ALL_FLAG" property="selAllFlag" jdbcType="VARCHAR" />
+    <result column="SCH_ALL_FLAG" property="schAllFlag" jdbcType="VARCHAR" />
+    <result column="IS_SCH_FLAG" property="isSchFlag" jdbcType="VARCHAR" />
+    <result column="SEND_CITY_ID" property="sendCityId" jdbcType="VARCHAR" />
+    <result column="SEND_CITY_NAME" property="sendCityName" jdbcType="VARCHAR" />
+    <result column="SEND_PROV_ID" property="sendProvId" jdbcType="VARCHAR" />
+    <result column="SEND_PROV_NAME" property="sendProvName" jdbcType="VARCHAR" />
+    <result column="SECOND_ORG_FLOW" property="secondOrgFlow" jdbcType="VARCHAR" />
+    <result column="SECOND_ORG_NAME" property="secondOrgName" jdbcType="VARCHAR" />
+    <result column="ORG_NATURE_ID" property="orgNatureId" jdbcType="VARCHAR" />
+    <result column="ORG_NATURE_NAME" property="orgNatureName" jdbcType="VARCHAR" />
+    <result column="IS_SEND" property="isSend" jdbcType="VARCHAR" />
+    <result column="LOCK_STATUS" property="lockStatus" jdbcType="VARCHAR" />
+    <result column="IS_SUBMIT_ID" property="isSubmitId" jdbcType="VARCHAR" />
+    <result column="IS_SUBMIT_NAME" property="isSubmitName" jdbcType="VARCHAR" />
+    <result column="CHECK_STATUS_ID" property="checkStatusId" jdbcType="VARCHAR" />
+    <result column="CHECK_STATUS_NAME" property="checkStatusName" jdbcType="VARCHAR" />
+    <result column="CHECK_REASON" property="checkReason" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    DOCTOR_FLOW, DOCTOR_CODE, DOCTOR_HEAD_IMG, DOCTOR_TYPE_ID, DOCTOR_TYPE_NAME, ORG_FLOW, 
+    ORG_NAME, DEPT_FLOW, DEPT_NAME, WORK_ORG_NAME, DISPATCH_FILE, GRADUATED_ID, GRADUATED_NAME, 
+    SPECIALIZED, GRADUATION_TIME, SESSION_NUMBER, CERTIFICATE_NO, DEGREE_NO, IN_HOS_DATE, 
+    TRAINING_YEARS, TRAINING_TYPE_ID, TRAINING_TYPE_NAME, TRAINING_SPE_ID, TRAINING_SPE_NAME, 
+    ROTATION_FLOW, ROTATION_NAME, DOCTOR_STATUS_ID, DOCTOR_STATUS_NAME, COMPLETE_DATE, 
+    COMPLETE_NO, TERMINAT_REASON, TERMINAT_DATE, SEL_DEPT_FLAG, SCH_FLAG, QUALIFIED_NO, 
+    QUALIFIED_DATE, QUALIFIED_FILE, REG_NO, REG_ADDRESS, COMPUTER_SKILLS, FOREIGN_SKILLS, 
+    EMERGENCY_NAME, EMERGENCY_PHONE, EMERGENCY_RELATION, RECORD_STATUS, CREATE_TIME, 
+    CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, DISACTIVE_REASON, REEDIT_FLAG, DOCTOR_CATEGORY_ID, 
+    DOCTOR_CATEGORY_NAME, DOCTOR_NAME, SCH_STATUS_ID, SCH_STATUS_NAME, REG_DATE, GROUP_ID, 
+    GROUP_NAME, GROUP_ROLE_ID, GROUP_ROLE_NAME, DOCTOR_LICENSE_FLAG, TUTOR_NAME, RESEARCH_DIRECTION, 
+    SPECIALIZED_ID, DOCTOR_LICENSE_NO, TUTOR_FLOW, DEGREE_CATEGORY_ID, DEGREE_CATEGORY_NAME, 
+    WORK_ORG_LEVEL_ID, WORK_ORG_LEVEL_NAME, IS_YEAR_GRADUATE, WORK_ORG_ID, GRADUATION_STATUS_ID, 
+    GRADUATION_STATUS_NAME, DISAGREE_REASON, COMPLETE_START_DATE, COMPLETE_END_DATE, 
+    DISCIPLE_TEACHER_FLOW, DISCIPLE_TEACHER_NAME, GRADUATION_YEAR, SECOND_SPE_ID, SECOND_SPE_NAME, 
+    COMPANY_TYPE, IS_PARTNER, SOURCE_PROVINCES_ID, SOURCE_PROVINCES_NAME, SECOND_ROTATION_FLOW, 
+    SECOND_ROTATION_NAME, STANDARD_DEPT_NAME, STANDARD_DEPT_ID, PRACT_PHYSICIAN_CERTIFICATE_NO, 
+    PRACT_PHYSICIAN_FLAG, IS_UNDER_LINE, DEPART_MENT_FLOW, DEPART_MENT_NAME, OSCA_STUDENT_SUBMIT, 
+    SCZY_RECRIUT_BANCH, SEL_ONE_FLAG, SEL_TWO_FLAG, SEL_THREE_FLAG, SCH_ONE_FLAG, SCH_TWO_FLAG, 
+    SCH_THREE_FLAG, SEL_ALL_FLAG, SCH_ALL_FLAG, IS_SCH_FLAG, SEND_CITY_ID, SEND_CITY_NAME, 
+    SEND_PROV_ID, SEND_PROV_NAME, SECOND_ORG_FLOW, SECOND_ORG_NAME, ORG_NATURE_ID, ORG_NATURE_NAME, 
+    IS_SEND, LOCK_STATUS, IS_SUBMIT_ID, IS_SUBMIT_NAME, CHECK_STATUS_ID, CHECK_STATUS_NAME, CHECK_REASON
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    DOCTOR_FLOW, ORG_FLOW, SECOND_ORG_FLOW,TRAINING_TYPE_ID, TRAINING_SPE_ID, SESSION_NUMBER, TRAINING_YEARS,
+    ROTATION_FLOW, LOCK_STATUS, CREATE_TIME,DOCTOR_STATUS_ID, DOCTOR_STATUS_NAME
+    from PDSCI.RES_DOCTOR
+    where DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR}
+  </select>
+
+  <select id="searchDoctorSpe" resultType="map">
+		select jds.id_no,rd.doctor_type_id
+		from jsres_doctor_spe jds
+		left join sys_user su on su.id_no = jds.id_no
+		inner join res_doctor rd on rd.doctor_flow = su.user_flow
+		where jds.record_status = 'Y'
+		and su.record_status = 'Y'
+		and rd.record_status = 'Y'
+	</select>
+</mapper>

@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.PubPatientRecipeMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PubPatientRecipe" >
+    <id column="RECIPE_FLOW" property="recipeFlow" jdbcType="VARCHAR" />
+    <result column="PATIENT_FLOW" property="patientFlow" jdbcType="VARCHAR" />
+    <result column="PATIENT_CODE" property="patientCode" jdbcType="VARCHAR" />
+    <result column="PATIENT_NAME_PY" property="patientNamePy" jdbcType="VARCHAR" />
+    <result column="PROJ_FLOW" property="projFlow" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="VISIT_FLOW" property="visitFlow" jdbcType="VARCHAR" />
+    <result column="RECIPE_DATE" property="recipeDate" jdbcType="VARCHAR" />
+    <result column="RECIPE_DOCTOR_FLOW" property="recipeDoctorFlow" jdbcType="VARCHAR" />
+    <result column="RECIPE_DOCTOR_NAME" property="recipeDoctorName" jdbcType="VARCHAR" />
+    <result column="RECIPE_INFO" property="recipeInfo" jdbcType="VARCHAR" />
+    <result column="SEND_DATE" property="sendDate" jdbcType="VARCHAR" />
+    <result column="SEND_USER_FLOW" property="sendUserFlow" jdbcType="VARCHAR" />
+    <result column="SEND_USER_NAME" property="sendUserName" jdbcType="VARCHAR" />
+    <result column="RECIPE_STATUS_ID" property="recipeStatusId" jdbcType="VARCHAR" />
+    <result column="RECIPE_STATUS_NAME" property="recipeStatusName" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RECIPE_FLOW, PATIENT_FLOW, PATIENT_CODE, PATIENT_NAME_PY, PROJ_FLOW, ORG_FLOW, VISIT_FLOW, 
+    RECIPE_DATE, RECIPE_DOCTOR_FLOW, RECIPE_DOCTOR_NAME, RECIPE_INFO, SEND_DATE, SEND_USER_FLOW, 
+    SEND_USER_NAME, RECIPE_STATUS_ID, RECIPE_STATUS_NAME, RECORD_STATUS, CREATE_TIME, 
+    CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.PubPatientRecipeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.PUB_PATIENT_RECIPE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.PUB_PATIENT_RECIPE
+    where RECIPE_FLOW = #{recipeFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.PUB_PATIENT_RECIPE
+    where RECIPE_FLOW = #{recipeFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PubPatientRecipeExample" >
+    delete from PDSCI.PUB_PATIENT_RECIPE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.PubPatientRecipe" >
+    insert into PDSCI.PUB_PATIENT_RECIPE (RECIPE_FLOW, PATIENT_FLOW, PATIENT_CODE, 
+      PATIENT_NAME_PY, PROJ_FLOW, ORG_FLOW, 
+      VISIT_FLOW, RECIPE_DATE, RECIPE_DOCTOR_FLOW, 
+      RECIPE_DOCTOR_NAME, RECIPE_INFO, SEND_DATE, 
+      SEND_USER_FLOW, SEND_USER_NAME, RECIPE_STATUS_ID, 
+      RECIPE_STATUS_NAME, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+      )
+    values (#{recipeFlow,jdbcType=VARCHAR}, #{patientFlow,jdbcType=VARCHAR}, #{patientCode,jdbcType=VARCHAR}, 
+      #{patientNamePy,jdbcType=VARCHAR}, #{projFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, 
+      #{visitFlow,jdbcType=VARCHAR}, #{recipeDate,jdbcType=VARCHAR}, #{recipeDoctorFlow,jdbcType=VARCHAR}, 
+      #{recipeDoctorName,jdbcType=VARCHAR}, #{recipeInfo,jdbcType=VARCHAR}, #{sendDate,jdbcType=VARCHAR}, 
+      #{sendUserFlow,jdbcType=VARCHAR}, #{sendUserName,jdbcType=VARCHAR}, #{recipeStatusId,jdbcType=VARCHAR}, 
+      #{recipeStatusName,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PubPatientRecipe" >
+    insert into PDSCI.PUB_PATIENT_RECIPE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recipeFlow != null" >
+        RECIPE_FLOW,
+      </if>
+      <if test="patientFlow != null" >
+        PATIENT_FLOW,
+      </if>
+      <if test="patientCode != null" >
+        PATIENT_CODE,
+      </if>
+      <if test="patientNamePy != null" >
+        PATIENT_NAME_PY,
+      </if>
+      <if test="projFlow != null" >
+        PROJ_FLOW,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="visitFlow != null" >
+        VISIT_FLOW,
+      </if>
+      <if test="recipeDate != null" >
+        RECIPE_DATE,
+      </if>
+      <if test="recipeDoctorFlow != null" >
+        RECIPE_DOCTOR_FLOW,
+      </if>
+      <if test="recipeDoctorName != null" >
+        RECIPE_DOCTOR_NAME,
+      </if>
+      <if test="recipeInfo != null" >
+        RECIPE_INFO,
+      </if>
+      <if test="sendDate != null" >
+        SEND_DATE,
+      </if>
+      <if test="sendUserFlow != null" >
+        SEND_USER_FLOW,
+      </if>
+      <if test="sendUserName != null" >
+        SEND_USER_NAME,
+      </if>
+      <if test="recipeStatusId != null" >
+        RECIPE_STATUS_ID,
+      </if>
+      <if test="recipeStatusName != null" >
+        RECIPE_STATUS_NAME,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recipeFlow != null" >
+        #{recipeFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="patientFlow != null" >
+        #{patientFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="patientCode != null" >
+        #{patientCode,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNamePy != null" >
+        #{patientNamePy,jdbcType=VARCHAR},
+      </if>
+      <if test="projFlow != null" >
+        #{projFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="visitFlow != null" >
+        #{visitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recipeDate != null" >
+        #{recipeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="recipeDoctorFlow != null" >
+        #{recipeDoctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recipeDoctorName != null" >
+        #{recipeDoctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="recipeInfo != null" >
+        #{recipeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="sendDate != null" >
+        #{sendDate,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUserFlow != null" >
+        #{sendUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUserName != null" >
+        #{sendUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="recipeStatusId != null" >
+        #{recipeStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="recipeStatusName != null" >
+        #{recipeStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PubPatientRecipeExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.PUB_PATIENT_RECIPE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.PUB_PATIENT_RECIPE
+    <set >
+      <if test="record.recipeFlow != null" >
+        RECIPE_FLOW = #{record.recipeFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.patientFlow != null" >
+        PATIENT_FLOW = #{record.patientFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.patientCode != null" >
+        PATIENT_CODE = #{record.patientCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.patientNamePy != null" >
+        PATIENT_NAME_PY = #{record.patientNamePy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projFlow != null" >
+        PROJ_FLOW = #{record.projFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visitFlow != null" >
+        VISIT_FLOW = #{record.visitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recipeDate != null" >
+        RECIPE_DATE = #{record.recipeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recipeDoctorFlow != null" >
+        RECIPE_DOCTOR_FLOW = #{record.recipeDoctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recipeDoctorName != null" >
+        RECIPE_DOCTOR_NAME = #{record.recipeDoctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recipeInfo != null" >
+        RECIPE_INFO = #{record.recipeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendDate != null" >
+        SEND_DATE = #{record.sendDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendUserFlow != null" >
+        SEND_USER_FLOW = #{record.sendUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendUserName != null" >
+        SEND_USER_NAME = #{record.sendUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recipeStatusId != null" >
+        RECIPE_STATUS_ID = #{record.recipeStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recipeStatusName != null" >
+        RECIPE_STATUS_NAME = #{record.recipeStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.PUB_PATIENT_RECIPE
+    set RECIPE_FLOW = #{record.recipeFlow,jdbcType=VARCHAR},
+      PATIENT_FLOW = #{record.patientFlow,jdbcType=VARCHAR},
+      PATIENT_CODE = #{record.patientCode,jdbcType=VARCHAR},
+      PATIENT_NAME_PY = #{record.patientNamePy,jdbcType=VARCHAR},
+      PROJ_FLOW = #{record.projFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      VISIT_FLOW = #{record.visitFlow,jdbcType=VARCHAR},
+      RECIPE_DATE = #{record.recipeDate,jdbcType=VARCHAR},
+      RECIPE_DOCTOR_FLOW = #{record.recipeDoctorFlow,jdbcType=VARCHAR},
+      RECIPE_DOCTOR_NAME = #{record.recipeDoctorName,jdbcType=VARCHAR},
+      RECIPE_INFO = #{record.recipeInfo,jdbcType=VARCHAR},
+      SEND_DATE = #{record.sendDate,jdbcType=VARCHAR},
+      SEND_USER_FLOW = #{record.sendUserFlow,jdbcType=VARCHAR},
+      SEND_USER_NAME = #{record.sendUserName,jdbcType=VARCHAR},
+      RECIPE_STATUS_ID = #{record.recipeStatusId,jdbcType=VARCHAR},
+      RECIPE_STATUS_NAME = #{record.recipeStatusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PubPatientRecipe" >
+    update PDSCI.PUB_PATIENT_RECIPE
+    <set >
+      <if test="patientFlow != null" >
+        PATIENT_FLOW = #{patientFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="patientCode != null" >
+        PATIENT_CODE = #{patientCode,jdbcType=VARCHAR},
+      </if>
+      <if test="patientNamePy != null" >
+        PATIENT_NAME_PY = #{patientNamePy,jdbcType=VARCHAR},
+      </if>
+      <if test="projFlow != null" >
+        PROJ_FLOW = #{projFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="visitFlow != null" >
+        VISIT_FLOW = #{visitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recipeDate != null" >
+        RECIPE_DATE = #{recipeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="recipeDoctorFlow != null" >
+        RECIPE_DOCTOR_FLOW = #{recipeDoctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recipeDoctorName != null" >
+        RECIPE_DOCTOR_NAME = #{recipeDoctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="recipeInfo != null" >
+        RECIPE_INFO = #{recipeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="sendDate != null" >
+        SEND_DATE = #{sendDate,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUserFlow != null" >
+        SEND_USER_FLOW = #{sendUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUserName != null" >
+        SEND_USER_NAME = #{sendUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="recipeStatusId != null" >
+        RECIPE_STATUS_ID = #{recipeStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="recipeStatusName != null" >
+        RECIPE_STATUS_NAME = #{recipeStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECIPE_FLOW = #{recipeFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PubPatientRecipe" >
+    update PDSCI.PUB_PATIENT_RECIPE
+    set PATIENT_FLOW = #{patientFlow,jdbcType=VARCHAR},
+      PATIENT_CODE = #{patientCode,jdbcType=VARCHAR},
+      PATIENT_NAME_PY = #{patientNamePy,jdbcType=VARCHAR},
+      PROJ_FLOW = #{projFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      VISIT_FLOW = #{visitFlow,jdbcType=VARCHAR},
+      RECIPE_DATE = #{recipeDate,jdbcType=VARCHAR},
+      RECIPE_DOCTOR_FLOW = #{recipeDoctorFlow,jdbcType=VARCHAR},
+      RECIPE_DOCTOR_NAME = #{recipeDoctorName,jdbcType=VARCHAR},
+      RECIPE_INFO = #{recipeInfo,jdbcType=VARCHAR},
+      SEND_DATE = #{sendDate,jdbcType=VARCHAR},
+      SEND_USER_FLOW = #{sendUserFlow,jdbcType=VARCHAR},
+      SEND_USER_NAME = #{sendUserName,jdbcType=VARCHAR},
+      RECIPE_STATUS_ID = #{recipeStatusId,jdbcType=VARCHAR},
+      RECIPE_STATUS_NAME = #{recipeStatusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where RECIPE_FLOW = #{recipeFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

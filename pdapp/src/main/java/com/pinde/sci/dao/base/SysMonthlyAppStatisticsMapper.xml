@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.SysMonthlyAppStatisticsMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysMonthlyAppStatistics" >
+    <id column="APP_FLOW" property="appFlow" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ALL_NUM" property="allNum" jdbcType="DECIMAL" />
+    <result column="USER_NUM" property="userNum" jdbcType="DECIMAL" />
+    <result column="PER_NUM" property="perNum" jdbcType="DECIMAL" />
+    <result column="DATE_MONTH" property="dateMonth" jdbcType="VARCHAR" />
+    <result column="DOCTOR_TYPE_ID" property="doctorTypeId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    APP_FLOW, ORG_FLOW, ALL_NUM, USER_NUM, PER_NUM, DATE_MONTH, DOCTOR_TYPE_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatisticsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.SYS_MONTHLY_APP_STATISTICS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.SYS_MONTHLY_APP_STATISTICS
+    where APP_FLOW = #{appFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.SYS_MONTHLY_APP_STATISTICS
+    where APP_FLOW = #{appFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatisticsExample" >
+    delete from PDSCI.SYS_MONTHLY_APP_STATISTICS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatistics" >
+    insert into PDSCI.SYS_MONTHLY_APP_STATISTICS (APP_FLOW, ORG_FLOW, ALL_NUM, 
+      USER_NUM, PER_NUM, DATE_MONTH, 
+      DOCTOR_TYPE_ID)
+    values (#{appFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, #{allNum,jdbcType=DECIMAL}, 
+      #{userNum,jdbcType=DECIMAL}, #{perNum,jdbcType=DECIMAL}, #{dateMonth,jdbcType=VARCHAR}, 
+      #{doctorTypeId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatistics" >
+    insert into PDSCI.SYS_MONTHLY_APP_STATISTICS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="appFlow != null" >
+        APP_FLOW,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="allNum != null" >
+        ALL_NUM,
+      </if>
+      <if test="userNum != null" >
+        USER_NUM,
+      </if>
+      <if test="perNum != null" >
+        PER_NUM,
+      </if>
+      <if test="dateMonth != null" >
+        DATE_MONTH,
+      </if>
+      <if test="doctorTypeId != null" >
+        DOCTOR_TYPE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="appFlow != null" >
+        #{appFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="allNum != null" >
+        #{allNum,jdbcType=DECIMAL},
+      </if>
+      <if test="userNum != null" >
+        #{userNum,jdbcType=DECIMAL},
+      </if>
+      <if test="perNum != null" >
+        #{perNum,jdbcType=DECIMAL},
+      </if>
+      <if test="dateMonth != null" >
+        #{dateMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTypeId != null" >
+        #{doctorTypeId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatisticsExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.SYS_MONTHLY_APP_STATISTICS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.SYS_MONTHLY_APP_STATISTICS
+    <set >
+      <if test="record.appFlow != null" >
+        APP_FLOW = #{record.appFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allNum != null" >
+        ALL_NUM = #{record.allNum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.userNum != null" >
+        USER_NUM = #{record.userNum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.perNum != null" >
+        PER_NUM = #{record.perNum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dateMonth != null" >
+        DATE_MONTH = #{record.dateMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorTypeId != null" >
+        DOCTOR_TYPE_ID = #{record.doctorTypeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.SYS_MONTHLY_APP_STATISTICS
+    set APP_FLOW = #{record.appFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ALL_NUM = #{record.allNum,jdbcType=DECIMAL},
+      USER_NUM = #{record.userNum,jdbcType=DECIMAL},
+      PER_NUM = #{record.perNum,jdbcType=DECIMAL},
+      DATE_MONTH = #{record.dateMonth,jdbcType=VARCHAR},
+      DOCTOR_TYPE_ID = #{record.doctorTypeId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatistics" >
+    update PDSCI.SYS_MONTHLY_APP_STATISTICS
+    <set >
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="allNum != null" >
+        ALL_NUM = #{allNum,jdbcType=DECIMAL},
+      </if>
+      <if test="userNum != null" >
+        USER_NUM = #{userNum,jdbcType=DECIMAL},
+      </if>
+      <if test="perNum != null" >
+        PER_NUM = #{perNum,jdbcType=DECIMAL},
+      </if>
+      <if test="dateMonth != null" >
+        DATE_MONTH = #{dateMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTypeId != null" >
+        DOCTOR_TYPE_ID = #{doctorTypeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where APP_FLOW = #{appFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatistics" >
+    update PDSCI.SYS_MONTHLY_APP_STATISTICS
+    set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ALL_NUM = #{allNum,jdbcType=DECIMAL},
+      USER_NUM = #{userNum,jdbcType=DECIMAL},
+      PER_NUM = #{perNum,jdbcType=DECIMAL},
+      DATE_MONTH = #{dateMonth,jdbcType=VARCHAR},
+      DOCTOR_TYPE_ID = #{doctorTypeId,jdbcType=VARCHAR}
+    where APP_FLOW = #{appFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

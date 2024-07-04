@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.stdp.ext.StdpSchRotationDeptReqExtMapper">
+	<resultMap type="HashMap" id="processReqMap">
+	</resultMap>
+	<select id="getReqAndProcess" resultMap="processReqMap">
+		select rdsp.process_flow,rdsp.sch_result_flow,srdr.req_num
+		from pdsci.sch_rotation_dept_req srdr
+			inner join pdsci.sch_rotation_dept srd
+				on srd.record_status = 'Y'
+				and srdr.rel_record_flow = srd.record_flow
+			inner join pdsci.sch_arrange_result sar
+				on sar.record_status = 'Y'
+				and srd.group_flow = sar.standard_group_flow
+				and srd.standard_dept_id = sar.standard_dept_id
+				and sar.doctor_flow = #{userFlow}
+			inner join pdsci.res_doctor_sch_process rdsp
+				on rdsp.record_status = 'Y'
+				and sar.result_flow = rdsp.sch_result_flow
+		where srdr.record_status = 'Y'
+		and srdr.rotation_flow = #{rotationFlow}
+		<if test='relRecordFlow!=null and relRecordFlow!=""'>
+			and srdr.rel_record_flow = #{relRecordFlow}
+		</if>
+	</select>
+</mapper>

@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.StudySubjectMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.StudySubject" >
+    <id column="SUBJECT_FLOW" property="subjectFlow" jdbcType="VARCHAR" />
+    <result column="SUBJECT_NAME" property="subjectName" jdbcType="VARCHAR" />
+    <result column="SUBJECT_YEAR" property="subjectYear" jdbcType="VARCHAR" />
+    <result column="SUBJECT_TYPE" property="subjectType" jdbcType="VARCHAR" />
+    <result column="SUBJECT_START_TIME" property="subjectStartTime" jdbcType="VARCHAR" />
+    <result column="SUBJECT_END_TIME" property="subjectEndTime" jdbcType="VARCHAR" />
+    <result column="RESERVATIONS_NUM" property="reservationsNum" jdbcType="VARCHAR" />
+    <result column="REMAINDER_NUM" property="remainderNum" jdbcType="VARCHAR" />
+    <result column="SUBJECT_EXPLAIN" property="subjectExplain" jdbcType="VARCHAR" />
+    <result column="POST_STATUS" property="postStatus" jdbcType="VARCHAR" />
+    <result column="OPER_STATUS_ID" property="operStatusId" jdbcType="VARCHAR" />
+    <result column="OPER_STATUS_NAME" property="operStatusName" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SUBJECT_FLOW, SUBJECT_NAME, SUBJECT_YEAR, SUBJECT_TYPE, SUBJECT_START_TIME, SUBJECT_END_TIME, 
+    RESERVATIONS_NUM, REMAINDER_NUM, SUBJECT_EXPLAIN, POST_STATUS, OPER_STATUS_ID, OPER_STATUS_NAME, 
+    RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.StudySubjectExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.STUDY_SUBJECT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.STUDY_SUBJECT
+    where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.STUDY_SUBJECT
+    where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.StudySubjectExample" >
+    delete from PDSCI.STUDY_SUBJECT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.StudySubject" >
+    insert into PDSCI.STUDY_SUBJECT (SUBJECT_FLOW, SUBJECT_NAME, SUBJECT_YEAR, 
+      SUBJECT_TYPE, SUBJECT_START_TIME, SUBJECT_END_TIME, 
+      RESERVATIONS_NUM, REMAINDER_NUM, SUBJECT_EXPLAIN, 
+      POST_STATUS, OPER_STATUS_ID, OPER_STATUS_NAME, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW)
+    values (#{subjectFlow,jdbcType=VARCHAR}, #{subjectName,jdbcType=VARCHAR}, #{subjectYear,jdbcType=VARCHAR}, 
+      #{subjectType,jdbcType=VARCHAR}, #{subjectStartTime,jdbcType=VARCHAR}, #{subjectEndTime,jdbcType=VARCHAR}, 
+      #{reservationsNum,jdbcType=VARCHAR}, #{remainderNum,jdbcType=VARCHAR}, #{subjectExplain,jdbcType=VARCHAR}, 
+      #{postStatus,jdbcType=VARCHAR}, #{operStatusId,jdbcType=VARCHAR}, #{operStatusName,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.StudySubject" >
+    insert into PDSCI.STUDY_SUBJECT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="subjectFlow != null" >
+        SUBJECT_FLOW,
+      </if>
+      <if test="subjectName != null" >
+        SUBJECT_NAME,
+      </if>
+      <if test="subjectYear != null" >
+        SUBJECT_YEAR,
+      </if>
+      <if test="subjectType != null" >
+        SUBJECT_TYPE,
+      </if>
+      <if test="subjectStartTime != null" >
+        SUBJECT_START_TIME,
+      </if>
+      <if test="subjectEndTime != null" >
+        SUBJECT_END_TIME,
+      </if>
+      <if test="reservationsNum != null" >
+        RESERVATIONS_NUM,
+      </if>
+      <if test="remainderNum != null" >
+        REMAINDER_NUM,
+      </if>
+      <if test="subjectExplain != null" >
+        SUBJECT_EXPLAIN,
+      </if>
+      <if test="postStatus != null" >
+        POST_STATUS,
+      </if>
+      <if test="operStatusId != null" >
+        OPER_STATUS_ID,
+      </if>
+      <if test="operStatusName != null" >
+        OPER_STATUS_NAME,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="subjectFlow != null" >
+        #{subjectFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null" >
+        #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectYear != null" >
+        #{subjectYear,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectType != null" >
+        #{subjectType,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectStartTime != null" >
+        #{subjectStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectEndTime != null" >
+        #{subjectEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="reservationsNum != null" >
+        #{reservationsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="remainderNum != null" >
+        #{remainderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectExplain != null" >
+        #{subjectExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="postStatus != null" >
+        #{postStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="operStatusId != null" >
+        #{operStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="operStatusName != null" >
+        #{operStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.StudySubjectExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.STUDY_SUBJECT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.STUDY_SUBJECT
+    <set >
+      <if test="record.subjectFlow != null" >
+        SUBJECT_FLOW = #{record.subjectFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectName != null" >
+        SUBJECT_NAME = #{record.subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectYear != null" >
+        SUBJECT_YEAR = #{record.subjectYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectType != null" >
+        SUBJECT_TYPE = #{record.subjectType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectStartTime != null" >
+        SUBJECT_START_TIME = #{record.subjectStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectEndTime != null" >
+        SUBJECT_END_TIME = #{record.subjectEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reservationsNum != null" >
+        RESERVATIONS_NUM = #{record.reservationsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remainderNum != null" >
+        REMAINDER_NUM = #{record.remainderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectExplain != null" >
+        SUBJECT_EXPLAIN = #{record.subjectExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postStatus != null" >
+        POST_STATUS = #{record.postStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operStatusId != null" >
+        OPER_STATUS_ID = #{record.operStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operStatusName != null" >
+        OPER_STATUS_NAME = #{record.operStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.STUDY_SUBJECT
+    set SUBJECT_FLOW = #{record.subjectFlow,jdbcType=VARCHAR},
+      SUBJECT_NAME = #{record.subjectName,jdbcType=VARCHAR},
+      SUBJECT_YEAR = #{record.subjectYear,jdbcType=VARCHAR},
+      SUBJECT_TYPE = #{record.subjectType,jdbcType=VARCHAR},
+      SUBJECT_START_TIME = #{record.subjectStartTime,jdbcType=VARCHAR},
+      SUBJECT_END_TIME = #{record.subjectEndTime,jdbcType=VARCHAR},
+      RESERVATIONS_NUM = #{record.reservationsNum,jdbcType=VARCHAR},
+      REMAINDER_NUM = #{record.remainderNum,jdbcType=VARCHAR},
+      SUBJECT_EXPLAIN = #{record.subjectExplain,jdbcType=VARCHAR},
+      POST_STATUS = #{record.postStatus,jdbcType=VARCHAR},
+      OPER_STATUS_ID = #{record.operStatusId,jdbcType=VARCHAR},
+      OPER_STATUS_NAME = #{record.operStatusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.StudySubject" >
+    update PDSCI.STUDY_SUBJECT
+    <set >
+      <if test="subjectName != null" >
+        SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectYear != null" >
+        SUBJECT_YEAR = #{subjectYear,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectType != null" >
+        SUBJECT_TYPE = #{subjectType,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectStartTime != null" >
+        SUBJECT_START_TIME = #{subjectStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectEndTime != null" >
+        SUBJECT_END_TIME = #{subjectEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="reservationsNum != null" >
+        RESERVATIONS_NUM = #{reservationsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="remainderNum != null" >
+        REMAINDER_NUM = #{remainderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectExplain != null" >
+        SUBJECT_EXPLAIN = #{subjectExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="postStatus != null" >
+        POST_STATUS = #{postStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="operStatusId != null" >
+        OPER_STATUS_ID = #{operStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="operStatusName != null" >
+        OPER_STATUS_NAME = #{operStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.StudySubject" >
+    update PDSCI.STUDY_SUBJECT
+    set SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
+      SUBJECT_YEAR = #{subjectYear,jdbcType=VARCHAR},
+      SUBJECT_TYPE = #{subjectType,jdbcType=VARCHAR},
+      SUBJECT_START_TIME = #{subjectStartTime,jdbcType=VARCHAR},
+      SUBJECT_END_TIME = #{subjectEndTime,jdbcType=VARCHAR},
+      RESERVATIONS_NUM = #{reservationsNum,jdbcType=VARCHAR},
+      REMAINDER_NUM = #{remainderNum,jdbcType=VARCHAR},
+      SUBJECT_EXPLAIN = #{subjectExplain,jdbcType=VARCHAR},
+      POST_STATUS = #{postStatus,jdbcType=VARCHAR},
+      OPER_STATUS_ID = #{operStatusId,jdbcType=VARCHAR},
+      OPER_STATUS_NAME = #{operStatusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

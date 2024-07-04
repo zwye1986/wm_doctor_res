@@ -1,0 +1,2116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.SysUserMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysUser" >
+    <id column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+    <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+    <result column="USER_PASSWD" property="userPasswd" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="SEX_ID" property="sexId" jdbcType="VARCHAR" />
+    <result column="SEX_NAME" property="sexName" jdbcType="VARCHAR" />
+    <result column="STATUS_ID" property="statusId" jdbcType="VARCHAR" />
+    <result column="STATUS_DESC" property="statusDesc" jdbcType="VARCHAR" />
+    <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR" />
+    <result column="USER_EMAIL" property="userEmail" jdbcType="VARCHAR" />
+    <result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+    <result column="USER_BIRTHDAY" property="userBirthday" jdbcType="VARCHAR" />
+    <result column="TITLE_ID" property="titleId" jdbcType="VARCHAR" />
+    <result column="TITLE_NAME" property="titleName" jdbcType="VARCHAR" />
+    <result column="DEGREE_ID" property="degreeId" jdbcType="VARCHAR" />
+    <result column="DEGREE_NAME" property="degreeName" jdbcType="VARCHAR" />
+    <result column="EDUCATION_ID" property="educationId" jdbcType="VARCHAR" />
+    <result column="EDUCATION_NAME" property="educationName" jdbcType="VARCHAR" />
+    <result column="POST_ID" property="postId" jdbcType="VARCHAR" />
+    <result column="POST_NAME" property="postName" jdbcType="VARCHAR" />
+    <result column="SRM_EXPERT_FLAG" property="srmExpertFlag" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="WEI_XIN_ID" property="weiXinId" jdbcType="VARCHAR" />
+    <result column="WEI_XIN_NAME" property="weiXinName" jdbcType="VARCHAR" />
+    <result column="WEI_XIN_STATUS_ID" property="weiXinStatusId" jdbcType="VARCHAR" />
+    <result column="WEI_XIN_STATUS_DESC" property="weiXinStatusDesc" jdbcType="VARCHAR" />
+    <result column="NATION_ID" property="nationId" jdbcType="VARCHAR" />
+    <result column="NATION_NAME" property="nationName" jdbcType="VARCHAR" />
+    <result column="USER_ADDRESS" property="userAddress" jdbcType="VARCHAR" />
+    <result column="USER_EMAIL_STATUS_ID" property="userEmailStatusId" jdbcType="VARCHAR" />
+    <result column="USER_EMAIL_STATUS_DESC" property="userEmailStatusDesc" jdbcType="VARCHAR" />
+    <result column="USER_PHONE_STATUS_ID" property="userPhoneStatusId" jdbcType="VARCHAR" />
+    <result column="USER_PHONE_STATUS_DESC" property="userPhoneStatusDesc" jdbcType="VARCHAR" />
+    <result column="CRET_TYPE_ID" property="cretTypeId" jdbcType="VARCHAR" />
+    <result column="CRET_TYPE_NAME" property="cretTypeName" jdbcType="VARCHAR" />
+    <result column="USER_HEAD_IMG" property="userHeadImg" jdbcType="VARCHAR" />
+    <result column="POLITICS_STATUS_ID" property="politicsStatusId" jdbcType="VARCHAR" />
+    <result column="POLITICS_STATUS_NAME" property="politicsStatusName" jdbcType="VARCHAR" />
+    <result column="NATIVE_PLACE_PROV_ID" property="nativePlaceProvId" jdbcType="VARCHAR" />
+    <result column="NATIVE_PLACE_CITY_ID" property="nativePlaceCityId" jdbcType="VARCHAR" />
+    <result column="DOMICILE_PLACE_ID" property="domicilePlaceId" jdbcType="VARCHAR" />
+    <result column="DOMICILE_PLACE_NAME" property="domicilePlaceName" jdbcType="VARCHAR" />
+    <result column="USER_QQ" property="userQq" jdbcType="VARCHAR" />
+    <result column="MARITAL_ID" property="maritalId" jdbcType="VARCHAR" />
+    <result column="MARITAL_NAME" property="maritalName" jdbcType="VARCHAR" />
+    <result column="DOMICILE_PLACE_ADDRESS" property="domicilePlaceAddress" jdbcType="VARCHAR" />
+    <result column="BEAR_ID" property="bearId" jdbcType="VARCHAR" />
+    <result column="BEAR_NAME" property="bearName" jdbcType="VARCHAR" />
+    <result column="NATIVE_PLACE_AREA_ID" property="nativePlaceAreaId" jdbcType="VARCHAR" />
+    <result column="NATIVE_PLACE_PROV_NAME" property="nativePlaceProvName" jdbcType="VARCHAR" />
+    <result column="NATIVE_PLACE_CITY_NAME" property="nativePlaceCityName" jdbcType="VARCHAR" />
+    <result column="NATIVE_PLACE_AREA_NAME" property="nativePlaceAreaName" jdbcType="VARCHAR" />
+    <result column="LOCK_TIME" property="lockTime" jdbcType="VARCHAR" />
+    <result column="IS_EXAM_TEA" property="isExamTea" jdbcType="VARCHAR" />
+    <result column="IS_OWNER_STU" property="isOwnerStu" jdbcType="VARCHAR" />
+    <result column="LCJN_SPE_ID" property="lcjnSpeId" jdbcType="VARCHAR" />
+    <result column="LCJN_SPE_NAME" property="lcjnSpeName" jdbcType="VARCHAR" />
+    <result column="APP_LOGIN_TIME" property="appLoginTime" jdbcType="VARCHAR" />
+    <result column="WEB_LOGIN_TIME" property="webLoginTime" jdbcType="VARCHAR" />
+    <result column="WORK_ORG_NAME" property="workOrgName" jdbcType="VARCHAR" />
+    <result column="REPORTING_AUTHORITY" property="reportingAuthority" jdbcType="VARCHAR" />
+    <result column="IS_ORG_ADMIN" property="isOrgAdmin" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_ID" property="certificateId" jdbcType="VARCHAR" />
+    <result column="IS_OSCA" property="isOsca" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_NO" property="accountNo" jdbcType="VARCHAR" />
+    <result column="WORK_CODE" property="workCode" jdbcType="VARCHAR" />
+    <result column="RES_TRAINING_SPE_ID" property="resTrainingSpeId" jdbcType="VARCHAR" />
+    <result column="RES_TRAINING_SPE_NAME" property="resTrainingSpeName" jdbcType="VARCHAR" />
+    <result column="PROMOTE_TIME" property="promoteTime" jdbcType="VARCHAR" />
+    <result column="USER_MAJOR" property="userMajor" jdbcType="VARCHAR" />
+    <result column="PASSPORT_NO" property="passportNo" jdbcType="VARCHAR" />
+    <result column="NATIONALITY_ID" property="nationalityId" jdbcType="VARCHAR" />
+    <result column="NATIONALITY_NAME" property="nationalityName" jdbcType="VARCHAR" />
+    <result column="IS_FOREIGN" property="isForeign" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="USER_PINYIN" property="userPinyin" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_LEVEL_ID" property="certificateLevelId" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_LEVEL_NAME" property="certificateLevelName" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_FILE" property="certificateFile" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_TIME" property="certificateTime" jdbcType="VARCHAR" />
+    <result column="PARTY_BRANCH_ID" property="partyBranchId" jdbcType="VARCHAR" />
+    <result column="PARTY_BRANCH_NAME" property="partyBranchName" jdbcType="VARCHAR" />
+    <result column="TIP_PASSWORD" property="tipPassword" jdbcType="VARCHAR" />
+    <result column="MEDICINE_TYPE_ID" property="medicineTypeId" jdbcType="VARCHAR" />
+    <result column="MEDICINE_TYPE_NAME" property="medicineTypeName" jdbcType="VARCHAR" />
+    <result column="TEACHER_TYPE_ID" property="teacherTypeId" jdbcType="VARCHAR" />
+    <result column="TEACHER_TYPE_NAME" property="teacherTypeName" jdbcType="VARCHAR" />
+    <result column="BASE_FLOW" property="baseFlow" jdbcType="VARCHAR" />
+    <result column="BASE_NAME" property="baseName" jdbcType="VARCHAR" />
+    <result column="IS_VERIFY" property="isVerify" jdbcType="VARCHAR" />
+    <result column="VERIFY_CODE" property="verifyCode" jdbcType="VARCHAR" />
+    <result column="VERIFY_CODE_TIME" property="verifyCodeTime" jdbcType="VARCHAR" />
+    <result column="IS_SEND" property="isSend" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="IDCARD_FRONT_IMG" property="idcardFrontImg" jdbcType="VARCHAR" />
+    <result column="IDCARD_OPPOSITE_IMG" property="idcardOppositeImg" jdbcType="VARCHAR" />
+    <result column="NATIONALITY" property="nationality" jdbcType="VARCHAR" />
+    <result column="LAST_LOGIN_ERROR_TIME" property="lastLoginErrorTime" jdbcType="VARCHAR" />
+    <result column="LOGIN_ERROR_COUNT" property="loginErrorCount" jdbcType="VARCHAR" />
+    <result column="CHANGE_PASSWORD_TIME" property="changePasswordTime" jdbcType="VARCHAR" />
+    <result column="IS_SUBMIT_ID" property="isSubmitId" jdbcType="VARCHAR" />
+    <result column="IS_SUBMIT_NAME" property="isSubmitName" jdbcType="VARCHAR" />
+    <result column="CHECK_STATUS_ID" property="checkStatusId" jdbcType="VARCHAR" />
+    <result column="CHECK_STATUS_NAME" property="checkStatusName" jdbcType="VARCHAR" />
+    <result column="CHECK_REASON" property="checkReason" jdbcType="VARCHAR" />
+    <result column="APP_LAST_LOGIN_ERROR_TIME" property="appLastLoginErrorTime" jdbcType="VARCHAR" />
+    <result column="APP_LOGIN_ERROR_COUNT" property="appLoginErrorCount" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS" property="auditStatus" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW_GX" property="orgFlowGx" jdbcType="VARCHAR" />
+    <result column="SCHOOL" property="school" jdbcType="VARCHAR" />
+    <result column="USER_LEVEL_ID" property="userLevelId" jdbcType="VARCHAR" />
+    <result column="USER_LEVEL_NAME" property="userLevelName" jdbcType="VARCHAR" />
+    <result column="USER_SIGN_URL" property="userSignUrl" jdbcType="VARCHAR" />
+    <result column="BANK_OF_DEPOSIT" property="bankOfDeposit" jdbcType="VARCHAR" />
+    <result column="BANK_ACCOUNT_NUMBER" property="bankAccountNumber" jdbcType="VARCHAR" />
+    <result column="OPEN_ID" property="openId" jdbcType="VARCHAR" />
+    <result column="UN_LOCK_TIME" property="unLockTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    USER_FLOW, USER_CODE, USER_PASSWD, USER_NAME, SEX_ID, SEX_NAME, STATUS_ID, STATUS_DESC, 
+    USER_PHONE, USER_EMAIL, DEPT_FLOW, DEPT_NAME, ORG_FLOW, ORG_NAME, ID_NO, USER_BIRTHDAY, 
+    TITLE_ID, TITLE_NAME, DEGREE_ID, DEGREE_NAME, EDUCATION_ID, EDUCATION_NAME, POST_ID, 
+    POST_NAME, SRM_EXPERT_FLAG, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+    MODIFY_USER_FLOW, WEI_XIN_ID, WEI_XIN_NAME, WEI_XIN_STATUS_ID, WEI_XIN_STATUS_DESC, 
+    NATION_ID, NATION_NAME, USER_ADDRESS, USER_EMAIL_STATUS_ID, USER_EMAIL_STATUS_DESC, 
+    USER_PHONE_STATUS_ID, USER_PHONE_STATUS_DESC, CRET_TYPE_ID, CRET_TYPE_NAME, USER_HEAD_IMG, 
+    POLITICS_STATUS_ID, POLITICS_STATUS_NAME, NATIVE_PLACE_PROV_ID, NATIVE_PLACE_CITY_ID, 
+    DOMICILE_PLACE_ID, DOMICILE_PLACE_NAME, USER_QQ, MARITAL_ID, MARITAL_NAME, DOMICILE_PLACE_ADDRESS, 
+    BEAR_ID, BEAR_NAME, NATIVE_PLACE_AREA_ID, NATIVE_PLACE_PROV_NAME, NATIVE_PLACE_CITY_NAME, 
+    NATIVE_PLACE_AREA_NAME, LOCK_TIME, IS_EXAM_TEA, IS_OWNER_STU, LCJN_SPE_ID, LCJN_SPE_NAME, 
+    APP_LOGIN_TIME, WEB_LOGIN_TIME, WORK_ORG_NAME, REPORTING_AUTHORITY, IS_ORG_ADMIN, 
+    CERTIFICATE_ID, IS_OSCA, ACCOUNT_NO, WORK_CODE, RES_TRAINING_SPE_ID, RES_TRAINING_SPE_NAME, 
+    PROMOTE_TIME, USER_MAJOR, PASSPORT_NO, NATIONALITY_ID, NATIONALITY_NAME, IS_FOREIGN, 
+    USER_ID, USER_PINYIN, CERTIFICATE_LEVEL_ID, CERTIFICATE_LEVEL_NAME, CERTIFICATE_FILE, 
+    CERTIFICATE_TIME, PARTY_BRANCH_ID, PARTY_BRANCH_NAME, TIP_PASSWORD, MEDICINE_TYPE_ID, 
+    MEDICINE_TYPE_NAME, TEACHER_TYPE_ID, TEACHER_TYPE_NAME, BASE_FLOW, BASE_NAME, IS_VERIFY, 
+    VERIFY_CODE, VERIFY_CODE_TIME, IS_SEND, REMARK, IDCARD_FRONT_IMG, IDCARD_OPPOSITE_IMG, 
+    NATIONALITY, LAST_LOGIN_ERROR_TIME, LOGIN_ERROR_COUNT, CHANGE_PASSWORD_TIME, IS_SUBMIT_ID, 
+    IS_SUBMIT_NAME, CHECK_STATUS_ID, CHECK_STATUS_NAME, CHECK_REASON, APP_LAST_LOGIN_ERROR_TIME, 
+    APP_LOGIN_ERROR_COUNT, AUDIT_STATUS, ORG_FLOW_GX, SCHOOL, USER_LEVEL_ID, USER_LEVEL_NAME, 
+    USER_SIGN_URL, BANK_OF_DEPOSIT, BANK_ACCOUNT_NUMBER, OPEN_ID, UN_LOCK_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.SYS_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.SYS_USER
+    where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.SYS_USER
+    where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysUserExample" >
+    delete from PDSCI.SYS_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysUser" >
+    insert into PDSCI.SYS_USER (USER_FLOW, USER_CODE, USER_PASSWD, 
+      USER_NAME, SEX_ID, SEX_NAME, 
+      STATUS_ID, STATUS_DESC, USER_PHONE, 
+      USER_EMAIL, DEPT_FLOW, DEPT_NAME, 
+      ORG_FLOW, ORG_NAME, ID_NO, 
+      USER_BIRTHDAY, TITLE_ID, TITLE_NAME, 
+      DEGREE_ID, DEGREE_NAME, EDUCATION_ID, 
+      EDUCATION_NAME, POST_ID, POST_NAME, 
+      SRM_EXPERT_FLAG, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+      WEI_XIN_ID, WEI_XIN_NAME, WEI_XIN_STATUS_ID, 
+      WEI_XIN_STATUS_DESC, NATION_ID, NATION_NAME, 
+      USER_ADDRESS, USER_EMAIL_STATUS_ID, USER_EMAIL_STATUS_DESC, 
+      USER_PHONE_STATUS_ID, USER_PHONE_STATUS_DESC, 
+      CRET_TYPE_ID, CRET_TYPE_NAME, USER_HEAD_IMG, 
+      POLITICS_STATUS_ID, POLITICS_STATUS_NAME, NATIVE_PLACE_PROV_ID, 
+      NATIVE_PLACE_CITY_ID, DOMICILE_PLACE_ID, DOMICILE_PLACE_NAME, 
+      USER_QQ, MARITAL_ID, MARITAL_NAME, 
+      DOMICILE_PLACE_ADDRESS, BEAR_ID, BEAR_NAME, 
+      NATIVE_PLACE_AREA_ID, NATIVE_PLACE_PROV_NAME, 
+      NATIVE_PLACE_CITY_NAME, NATIVE_PLACE_AREA_NAME, 
+      LOCK_TIME, IS_EXAM_TEA, IS_OWNER_STU, 
+      LCJN_SPE_ID, LCJN_SPE_NAME, APP_LOGIN_TIME, 
+      WEB_LOGIN_TIME, WORK_ORG_NAME, REPORTING_AUTHORITY, 
+      IS_ORG_ADMIN, CERTIFICATE_ID, IS_OSCA, 
+      ACCOUNT_NO, WORK_CODE, RES_TRAINING_SPE_ID, 
+      RES_TRAINING_SPE_NAME, PROMOTE_TIME, USER_MAJOR, 
+      PASSPORT_NO, NATIONALITY_ID, NATIONALITY_NAME, 
+      IS_FOREIGN, USER_ID, USER_PINYIN, 
+      CERTIFICATE_LEVEL_ID, CERTIFICATE_LEVEL_NAME, 
+      CERTIFICATE_FILE, CERTIFICATE_TIME, PARTY_BRANCH_ID, 
+      PARTY_BRANCH_NAME, TIP_PASSWORD, MEDICINE_TYPE_ID, 
+      MEDICINE_TYPE_NAME, TEACHER_TYPE_ID, TEACHER_TYPE_NAME, 
+      BASE_FLOW, BASE_NAME, IS_VERIFY, 
+      VERIFY_CODE, VERIFY_CODE_TIME, IS_SEND, 
+      REMARK, IDCARD_FRONT_IMG, IDCARD_OPPOSITE_IMG, 
+      NATIONALITY, LAST_LOGIN_ERROR_TIME, LOGIN_ERROR_COUNT, 
+      CHANGE_PASSWORD_TIME, IS_SUBMIT_ID, IS_SUBMIT_NAME, 
+      CHECK_STATUS_ID, CHECK_STATUS_NAME, CHECK_REASON, 
+      APP_LAST_LOGIN_ERROR_TIME, APP_LOGIN_ERROR_COUNT, 
+      AUDIT_STATUS, ORG_FLOW_GX, SCHOOL, 
+      USER_LEVEL_ID, USER_LEVEL_NAME, USER_SIGN_URL, 
+      BANK_OF_DEPOSIT, BANK_ACCOUNT_NUMBER, OPEN_ID, 
+      UN_LOCK_TIME)
+    values (#{userFlow,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}, #{userPasswd,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{sexId,jdbcType=VARCHAR}, #{sexName,jdbcType=VARCHAR}, 
+      #{statusId,jdbcType=VARCHAR}, #{statusDesc,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, 
+      #{userEmail,jdbcType=VARCHAR}, #{deptFlow,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, 
+      #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, 
+      #{userBirthday,jdbcType=VARCHAR}, #{titleId,jdbcType=VARCHAR}, #{titleName,jdbcType=VARCHAR}, 
+      #{degreeId,jdbcType=VARCHAR}, #{degreeName,jdbcType=VARCHAR}, #{educationId,jdbcType=VARCHAR}, 
+      #{educationName,jdbcType=VARCHAR}, #{postId,jdbcType=VARCHAR}, #{postName,jdbcType=VARCHAR}, 
+      #{srmExpertFlag,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{weiXinId,jdbcType=VARCHAR}, #{weiXinName,jdbcType=VARCHAR}, #{weiXinStatusId,jdbcType=VARCHAR}, 
+      #{weiXinStatusDesc,jdbcType=VARCHAR}, #{nationId,jdbcType=VARCHAR}, #{nationName,jdbcType=VARCHAR}, 
+      #{userAddress,jdbcType=VARCHAR}, #{userEmailStatusId,jdbcType=VARCHAR}, #{userEmailStatusDesc,jdbcType=VARCHAR}, 
+      #{userPhoneStatusId,jdbcType=VARCHAR}, #{userPhoneStatusDesc,jdbcType=VARCHAR}, 
+      #{cretTypeId,jdbcType=VARCHAR}, #{cretTypeName,jdbcType=VARCHAR}, #{userHeadImg,jdbcType=VARCHAR}, 
+      #{politicsStatusId,jdbcType=VARCHAR}, #{politicsStatusName,jdbcType=VARCHAR}, #{nativePlaceProvId,jdbcType=VARCHAR}, 
+      #{nativePlaceCityId,jdbcType=VARCHAR}, #{domicilePlaceId,jdbcType=VARCHAR}, #{domicilePlaceName,jdbcType=VARCHAR}, 
+      #{userQq,jdbcType=VARCHAR}, #{maritalId,jdbcType=VARCHAR}, #{maritalName,jdbcType=VARCHAR}, 
+      #{domicilePlaceAddress,jdbcType=VARCHAR}, #{bearId,jdbcType=VARCHAR}, #{bearName,jdbcType=VARCHAR}, 
+      #{nativePlaceAreaId,jdbcType=VARCHAR}, #{nativePlaceProvName,jdbcType=VARCHAR}, 
+      #{nativePlaceCityName,jdbcType=VARCHAR}, #{nativePlaceAreaName,jdbcType=VARCHAR}, 
+      #{lockTime,jdbcType=VARCHAR}, #{isExamTea,jdbcType=VARCHAR}, #{isOwnerStu,jdbcType=VARCHAR}, 
+      #{lcjnSpeId,jdbcType=VARCHAR}, #{lcjnSpeName,jdbcType=VARCHAR}, #{appLoginTime,jdbcType=VARCHAR}, 
+      #{webLoginTime,jdbcType=VARCHAR}, #{workOrgName,jdbcType=VARCHAR}, #{reportingAuthority,jdbcType=VARCHAR}, 
+      #{isOrgAdmin,jdbcType=VARCHAR}, #{certificateId,jdbcType=VARCHAR}, #{isOsca,jdbcType=VARCHAR}, 
+      #{accountNo,jdbcType=VARCHAR}, #{workCode,jdbcType=VARCHAR}, #{resTrainingSpeId,jdbcType=VARCHAR}, 
+      #{resTrainingSpeName,jdbcType=VARCHAR}, #{promoteTime,jdbcType=VARCHAR}, #{userMajor,jdbcType=VARCHAR}, 
+      #{passportNo,jdbcType=VARCHAR}, #{nationalityId,jdbcType=VARCHAR}, #{nationalityName,jdbcType=VARCHAR}, 
+      #{isForeign,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userPinyin,jdbcType=VARCHAR}, 
+      #{certificateLevelId,jdbcType=VARCHAR}, #{certificateLevelName,jdbcType=VARCHAR}, 
+      #{certificateFile,jdbcType=VARCHAR}, #{certificateTime,jdbcType=VARCHAR}, #{partyBranchId,jdbcType=VARCHAR}, 
+      #{partyBranchName,jdbcType=VARCHAR}, #{tipPassword,jdbcType=VARCHAR}, #{medicineTypeId,jdbcType=VARCHAR}, 
+      #{medicineTypeName,jdbcType=VARCHAR}, #{teacherTypeId,jdbcType=VARCHAR}, #{teacherTypeName,jdbcType=VARCHAR}, 
+      #{baseFlow,jdbcType=VARCHAR}, #{baseName,jdbcType=VARCHAR}, #{isVerify,jdbcType=VARCHAR}, 
+      #{verifyCode,jdbcType=VARCHAR}, #{verifyCodeTime,jdbcType=VARCHAR}, #{isSend,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{idcardFrontImg,jdbcType=VARCHAR}, #{idcardOppositeImg,jdbcType=VARCHAR}, 
+      #{nationality,jdbcType=VARCHAR}, #{lastLoginErrorTime,jdbcType=VARCHAR}, #{loginErrorCount,jdbcType=VARCHAR}, 
+      #{changePasswordTime,jdbcType=VARCHAR}, #{isSubmitId,jdbcType=VARCHAR}, #{isSubmitName,jdbcType=VARCHAR}, 
+      #{checkStatusId,jdbcType=VARCHAR}, #{checkStatusName,jdbcType=VARCHAR}, #{checkReason,jdbcType=VARCHAR}, 
+      #{appLastLoginErrorTime,jdbcType=VARCHAR}, #{appLoginErrorCount,jdbcType=VARCHAR}, 
+      #{auditStatus,jdbcType=VARCHAR}, #{orgFlowGx,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
+      #{userLevelId,jdbcType=VARCHAR}, #{userLevelName,jdbcType=VARCHAR}, #{userSignUrl,jdbcType=VARCHAR}, 
+      #{bankOfDeposit,jdbcType=VARCHAR}, #{bankAccountNumber,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, 
+      #{unLockTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysUser" >
+    insert into PDSCI.SYS_USER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userFlow != null" >
+        USER_FLOW,
+      </if>
+      <if test="userCode != null" >
+        USER_CODE,
+      </if>
+      <if test="userPasswd != null" >
+        USER_PASSWD,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="sexId != null" >
+        SEX_ID,
+      </if>
+      <if test="sexName != null" >
+        SEX_NAME,
+      </if>
+      <if test="statusId != null" >
+        STATUS_ID,
+      </if>
+      <if test="statusDesc != null" >
+        STATUS_DESC,
+      </if>
+      <if test="userPhone != null" >
+        USER_PHONE,
+      </if>
+      <if test="userEmail != null" >
+        USER_EMAIL,
+      </if>
+      <if test="deptFlow != null" >
+        DEPT_FLOW,
+      </if>
+      <if test="deptName != null" >
+        DEPT_NAME,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="idNo != null" >
+        ID_NO,
+      </if>
+      <if test="userBirthday != null" >
+        USER_BIRTHDAY,
+      </if>
+      <if test="titleId != null" >
+        TITLE_ID,
+      </if>
+      <if test="titleName != null" >
+        TITLE_NAME,
+      </if>
+      <if test="degreeId != null" >
+        DEGREE_ID,
+      </if>
+      <if test="degreeName != null" >
+        DEGREE_NAME,
+      </if>
+      <if test="educationId != null" >
+        EDUCATION_ID,
+      </if>
+      <if test="educationName != null" >
+        EDUCATION_NAME,
+      </if>
+      <if test="postId != null" >
+        POST_ID,
+      </if>
+      <if test="postName != null" >
+        POST_NAME,
+      </if>
+      <if test="srmExpertFlag != null" >
+        SRM_EXPERT_FLAG,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="weiXinId != null" >
+        WEI_XIN_ID,
+      </if>
+      <if test="weiXinName != null" >
+        WEI_XIN_NAME,
+      </if>
+      <if test="weiXinStatusId != null" >
+        WEI_XIN_STATUS_ID,
+      </if>
+      <if test="weiXinStatusDesc != null" >
+        WEI_XIN_STATUS_DESC,
+      </if>
+      <if test="nationId != null" >
+        NATION_ID,
+      </if>
+      <if test="nationName != null" >
+        NATION_NAME,
+      </if>
+      <if test="userAddress != null" >
+        USER_ADDRESS,
+      </if>
+      <if test="userEmailStatusId != null" >
+        USER_EMAIL_STATUS_ID,
+      </if>
+      <if test="userEmailStatusDesc != null" >
+        USER_EMAIL_STATUS_DESC,
+      </if>
+      <if test="userPhoneStatusId != null" >
+        USER_PHONE_STATUS_ID,
+      </if>
+      <if test="userPhoneStatusDesc != null" >
+        USER_PHONE_STATUS_DESC,
+      </if>
+      <if test="cretTypeId != null" >
+        CRET_TYPE_ID,
+      </if>
+      <if test="cretTypeName != null" >
+        CRET_TYPE_NAME,
+      </if>
+      <if test="userHeadImg != null" >
+        USER_HEAD_IMG,
+      </if>
+      <if test="politicsStatusId != null" >
+        POLITICS_STATUS_ID,
+      </if>
+      <if test="politicsStatusName != null" >
+        POLITICS_STATUS_NAME,
+      </if>
+      <if test="nativePlaceProvId != null" >
+        NATIVE_PLACE_PROV_ID,
+      </if>
+      <if test="nativePlaceCityId != null" >
+        NATIVE_PLACE_CITY_ID,
+      </if>
+      <if test="domicilePlaceId != null" >
+        DOMICILE_PLACE_ID,
+      </if>
+      <if test="domicilePlaceName != null" >
+        DOMICILE_PLACE_NAME,
+      </if>
+      <if test="userQq != null" >
+        USER_QQ,
+      </if>
+      <if test="maritalId != null" >
+        MARITAL_ID,
+      </if>
+      <if test="maritalName != null" >
+        MARITAL_NAME,
+      </if>
+      <if test="domicilePlaceAddress != null" >
+        DOMICILE_PLACE_ADDRESS,
+      </if>
+      <if test="bearId != null" >
+        BEAR_ID,
+      </if>
+      <if test="bearName != null" >
+        BEAR_NAME,
+      </if>
+      <if test="nativePlaceAreaId != null" >
+        NATIVE_PLACE_AREA_ID,
+      </if>
+      <if test="nativePlaceProvName != null" >
+        NATIVE_PLACE_PROV_NAME,
+      </if>
+      <if test="nativePlaceCityName != null" >
+        NATIVE_PLACE_CITY_NAME,
+      </if>
+      <if test="nativePlaceAreaName != null" >
+        NATIVE_PLACE_AREA_NAME,
+      </if>
+      <if test="lockTime != null" >
+        LOCK_TIME,
+      </if>
+      <if test="isExamTea != null" >
+        IS_EXAM_TEA,
+      </if>
+      <if test="isOwnerStu != null" >
+        IS_OWNER_STU,
+      </if>
+      <if test="lcjnSpeId != null" >
+        LCJN_SPE_ID,
+      </if>
+      <if test="lcjnSpeName != null" >
+        LCJN_SPE_NAME,
+      </if>
+      <if test="appLoginTime != null" >
+        APP_LOGIN_TIME,
+      </if>
+      <if test="webLoginTime != null" >
+        WEB_LOGIN_TIME,
+      </if>
+      <if test="workOrgName != null" >
+        WORK_ORG_NAME,
+      </if>
+      <if test="reportingAuthority != null" >
+        REPORTING_AUTHORITY,
+      </if>
+      <if test="isOrgAdmin != null" >
+        IS_ORG_ADMIN,
+      </if>
+      <if test="certificateId != null" >
+        CERTIFICATE_ID,
+      </if>
+      <if test="isOsca != null" >
+        IS_OSCA,
+      </if>
+      <if test="accountNo != null" >
+        ACCOUNT_NO,
+      </if>
+      <if test="workCode != null" >
+        WORK_CODE,
+      </if>
+      <if test="resTrainingSpeId != null" >
+        RES_TRAINING_SPE_ID,
+      </if>
+      <if test="resTrainingSpeName != null" >
+        RES_TRAINING_SPE_NAME,
+      </if>
+      <if test="promoteTime != null" >
+        PROMOTE_TIME,
+      </if>
+      <if test="userMajor != null" >
+        USER_MAJOR,
+      </if>
+      <if test="passportNo != null" >
+        PASSPORT_NO,
+      </if>
+      <if test="nationalityId != null" >
+        NATIONALITY_ID,
+      </if>
+      <if test="nationalityName != null" >
+        NATIONALITY_NAME,
+      </if>
+      <if test="isForeign != null" >
+        IS_FOREIGN,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="userPinyin != null" >
+        USER_PINYIN,
+      </if>
+      <if test="certificateLevelId != null" >
+        CERTIFICATE_LEVEL_ID,
+      </if>
+      <if test="certificateLevelName != null" >
+        CERTIFICATE_LEVEL_NAME,
+      </if>
+      <if test="certificateFile != null" >
+        CERTIFICATE_FILE,
+      </if>
+      <if test="certificateTime != null" >
+        CERTIFICATE_TIME,
+      </if>
+      <if test="partyBranchId != null" >
+        PARTY_BRANCH_ID,
+      </if>
+      <if test="partyBranchName != null" >
+        PARTY_BRANCH_NAME,
+      </if>
+      <if test="tipPassword != null" >
+        TIP_PASSWORD,
+      </if>
+      <if test="medicineTypeId != null" >
+        MEDICINE_TYPE_ID,
+      </if>
+      <if test="medicineTypeName != null" >
+        MEDICINE_TYPE_NAME,
+      </if>
+      <if test="teacherTypeId != null" >
+        TEACHER_TYPE_ID,
+      </if>
+      <if test="teacherTypeName != null" >
+        TEACHER_TYPE_NAME,
+      </if>
+      <if test="baseFlow != null" >
+        BASE_FLOW,
+      </if>
+      <if test="baseName != null" >
+        BASE_NAME,
+      </if>
+      <if test="isVerify != null" >
+        IS_VERIFY,
+      </if>
+      <if test="verifyCode != null" >
+        VERIFY_CODE,
+      </if>
+      <if test="verifyCodeTime != null" >
+        VERIFY_CODE_TIME,
+      </if>
+      <if test="isSend != null" >
+        IS_SEND,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="idcardFrontImg != null" >
+        IDCARD_FRONT_IMG,
+      </if>
+      <if test="idcardOppositeImg != null" >
+        IDCARD_OPPOSITE_IMG,
+      </if>
+      <if test="nationality != null" >
+        NATIONALITY,
+      </if>
+      <if test="lastLoginErrorTime != null" >
+        LAST_LOGIN_ERROR_TIME,
+      </if>
+      <if test="loginErrorCount != null" >
+        LOGIN_ERROR_COUNT,
+      </if>
+      <if test="changePasswordTime != null" >
+        CHANGE_PASSWORD_TIME,
+      </if>
+      <if test="isSubmitId != null" >
+        IS_SUBMIT_ID,
+      </if>
+      <if test="isSubmitName != null" >
+        IS_SUBMIT_NAME,
+      </if>
+      <if test="checkStatusId != null" >
+        CHECK_STATUS_ID,
+      </if>
+      <if test="checkStatusName != null" >
+        CHECK_STATUS_NAME,
+      </if>
+      <if test="checkReason != null" >
+        CHECK_REASON,
+      </if>
+      <if test="appLastLoginErrorTime != null" >
+        APP_LAST_LOGIN_ERROR_TIME,
+      </if>
+      <if test="appLoginErrorCount != null" >
+        APP_LOGIN_ERROR_COUNT,
+      </if>
+      <if test="auditStatus != null" >
+        AUDIT_STATUS,
+      </if>
+      <if test="orgFlowGx != null" >
+        ORG_FLOW_GX,
+      </if>
+      <if test="school != null" >
+        SCHOOL,
+      </if>
+      <if test="userLevelId != null" >
+        USER_LEVEL_ID,
+      </if>
+      <if test="userLevelName != null" >
+        USER_LEVEL_NAME,
+      </if>
+      <if test="userSignUrl != null" >
+        USER_SIGN_URL,
+      </if>
+      <if test="bankOfDeposit != null" >
+        BANK_OF_DEPOSIT,
+      </if>
+      <if test="bankAccountNumber != null" >
+        BANK_ACCOUNT_NUMBER,
+      </if>
+      <if test="openId != null" >
+        OPEN_ID,
+      </if>
+      <if test="unLockTime != null" >
+        UN_LOCK_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userFlow != null" >
+        #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userPasswd != null" >
+        #{userPasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sexId != null" >
+        #{sexId,jdbcType=VARCHAR},
+      </if>
+      <if test="sexName != null" >
+        #{sexName,jdbcType=VARCHAR},
+      </if>
+      <if test="statusId != null" >
+        #{statusId,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDesc != null" >
+        #{statusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="deptFlow != null" >
+        #{deptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null" >
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userBirthday != null" >
+        #{userBirthday,jdbcType=VARCHAR},
+      </if>
+      <if test="titleId != null" >
+        #{titleId,jdbcType=VARCHAR},
+      </if>
+      <if test="titleName != null" >
+        #{titleName,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeId != null" >
+        #{degreeId,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeName != null" >
+        #{degreeName,jdbcType=VARCHAR},
+      </if>
+      <if test="educationId != null" >
+        #{educationId,jdbcType=VARCHAR},
+      </if>
+      <if test="educationName != null" >
+        #{educationName,jdbcType=VARCHAR},
+      </if>
+      <if test="postId != null" >
+        #{postId,jdbcType=VARCHAR},
+      </if>
+      <if test="postName != null" >
+        #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="srmExpertFlag != null" >
+        #{srmExpertFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="weiXinId != null" >
+        #{weiXinId,jdbcType=VARCHAR},
+      </if>
+      <if test="weiXinName != null" >
+        #{weiXinName,jdbcType=VARCHAR},
+      </if>
+      <if test="weiXinStatusId != null" >
+        #{weiXinStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="weiXinStatusDesc != null" >
+        #{weiXinStatusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="nationId != null" >
+        #{nationId,jdbcType=VARCHAR},
+      </if>
+      <if test="nationName != null" >
+        #{nationName,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddress != null" >
+        #{userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmailStatusId != null" >
+        #{userEmailStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmailStatusDesc != null" >
+        #{userEmailStatusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhoneStatusId != null" >
+        #{userPhoneStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhoneStatusDesc != null" >
+        #{userPhoneStatusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="cretTypeId != null" >
+        #{cretTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="cretTypeName != null" >
+        #{cretTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="userHeadImg != null" >
+        #{userHeadImg,jdbcType=VARCHAR},
+      </if>
+      <if test="politicsStatusId != null" >
+        #{politicsStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="politicsStatusName != null" >
+        #{politicsStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlaceProvId != null" >
+        #{nativePlaceProvId,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlaceCityId != null" >
+        #{nativePlaceCityId,jdbcType=VARCHAR},
+      </if>
+      <if test="domicilePlaceId != null" >
+        #{domicilePlaceId,jdbcType=VARCHAR},
+      </if>
+      <if test="domicilePlaceName != null" >
+        #{domicilePlaceName,jdbcType=VARCHAR},
+      </if>
+      <if test="userQq != null" >
+        #{userQq,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalId != null" >
+        #{maritalId,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalName != null" >
+        #{maritalName,jdbcType=VARCHAR},
+      </if>
+      <if test="domicilePlaceAddress != null" >
+        #{domicilePlaceAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="bearId != null" >
+        #{bearId,jdbcType=VARCHAR},
+      </if>
+      <if test="bearName != null" >
+        #{bearName,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlaceAreaId != null" >
+        #{nativePlaceAreaId,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlaceProvName != null" >
+        #{nativePlaceProvName,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlaceCityName != null" >
+        #{nativePlaceCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlaceAreaName != null" >
+        #{nativePlaceAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="lockTime != null" >
+        #{lockTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isExamTea != null" >
+        #{isExamTea,jdbcType=VARCHAR},
+      </if>
+      <if test="isOwnerStu != null" >
+        #{isOwnerStu,jdbcType=VARCHAR},
+      </if>
+      <if test="lcjnSpeId != null" >
+        #{lcjnSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="lcjnSpeName != null" >
+        #{lcjnSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="appLoginTime != null" >
+        #{appLoginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="webLoginTime != null" >
+        #{webLoginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="workOrgName != null" >
+        #{workOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="reportingAuthority != null" >
+        #{reportingAuthority,jdbcType=VARCHAR},
+      </if>
+      <if test="isOrgAdmin != null" >
+        #{isOrgAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateId != null" >
+        #{certificateId,jdbcType=VARCHAR},
+      </if>
+      <if test="isOsca != null" >
+        #{isOsca,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNo != null" >
+        #{accountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="workCode != null" >
+        #{workCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resTrainingSpeId != null" >
+        #{resTrainingSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="resTrainingSpeName != null" >
+        #{resTrainingSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="promoteTime != null" >
+        #{promoteTime,jdbcType=VARCHAR},
+      </if>
+      <if test="userMajor != null" >
+        #{userMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="passportNo != null" >
+        #{passportNo,jdbcType=VARCHAR},
+      </if>
+      <if test="nationalityId != null" >
+        #{nationalityId,jdbcType=VARCHAR},
+      </if>
+      <if test="nationalityName != null" >
+        #{nationalityName,jdbcType=VARCHAR},
+      </if>
+      <if test="isForeign != null" >
+        #{isForeign,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userPinyin != null" >
+        #{userPinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateLevelId != null" >
+        #{certificateLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateLevelName != null" >
+        #{certificateLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateFile != null" >
+        #{certificateFile,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateTime != null" >
+        #{certificateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="partyBranchId != null" >
+        #{partyBranchId,jdbcType=VARCHAR},
+      </if>
+      <if test="partyBranchName != null" >
+        #{partyBranchName,jdbcType=VARCHAR},
+      </if>
+      <if test="tipPassword != null" >
+        #{tipPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="medicineTypeId != null" >
+        #{medicineTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="medicineTypeName != null" >
+        #{medicineTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherTypeId != null" >
+        #{teacherTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherTypeName != null" >
+        #{teacherTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="baseFlow != null" >
+        #{baseFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="baseName != null" >
+        #{baseName,jdbcType=VARCHAR},
+      </if>
+      <if test="isVerify != null" >
+        #{isVerify,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyCode != null" >
+        #{verifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyCodeTime != null" >
+        #{verifyCodeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isSend != null" >
+        #{isSend,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardFrontImg != null" >
+        #{idcardFrontImg,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardOppositeImg != null" >
+        #{idcardOppositeImg,jdbcType=VARCHAR},
+      </if>
+      <if test="nationality != null" >
+        #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginErrorTime != null" >
+        #{lastLoginErrorTime,jdbcType=VARCHAR},
+      </if>
+      <if test="loginErrorCount != null" >
+        #{loginErrorCount,jdbcType=VARCHAR},
+      </if>
+      <if test="changePasswordTime != null" >
+        #{changePasswordTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isSubmitId != null" >
+        #{isSubmitId,jdbcType=VARCHAR},
+      </if>
+      <if test="isSubmitName != null" >
+        #{isSubmitName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatusId != null" >
+        #{checkStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatusName != null" >
+        #{checkStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkReason != null" >
+        #{checkReason,jdbcType=VARCHAR},
+      </if>
+      <if test="appLastLoginErrorTime != null" >
+        #{appLastLoginErrorTime,jdbcType=VARCHAR},
+      </if>
+      <if test="appLoginErrorCount != null" >
+        #{appLoginErrorCount,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        #{auditStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlowGx != null" >
+        #{orgFlowGx,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevelId != null" >
+        #{userLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevelName != null" >
+        #{userLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="userSignUrl != null" >
+        #{userSignUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bankOfDeposit != null" >
+        #{bankOfDeposit,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountNumber != null" >
+        #{bankAccountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="unLockTime != null" >
+        #{unLockTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysUserExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.SYS_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.SYS_USER
+    <set >
+      <if test="record.userFlow != null" >
+        USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userCode != null" >
+        USER_CODE = #{record.userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPasswd != null" >
+        USER_PASSWD = #{record.userPasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sexId != null" >
+        SEX_ID = #{record.sexId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sexName != null" >
+        SEX_NAME = #{record.sexName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusId != null" >
+        STATUS_ID = #{record.statusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDesc != null" >
+        STATUS_DESC = #{record.statusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPhone != null" >
+        USER_PHONE = #{record.userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userEmail != null" >
+        USER_EMAIL = #{record.userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptFlow != null" >
+        DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptName != null" >
+        DEPT_NAME = #{record.deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idNo != null" >
+        ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userBirthday != null" >
+        USER_BIRTHDAY = #{record.userBirthday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.titleId != null" >
+        TITLE_ID = #{record.titleId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.titleName != null" >
+        TITLE_NAME = #{record.titleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.degreeId != null" >
+        DEGREE_ID = #{record.degreeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.degreeName != null" >
+        DEGREE_NAME = #{record.degreeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationId != null" >
+        EDUCATION_ID = #{record.educationId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationName != null" >
+        EDUCATION_NAME = #{record.educationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postId != null" >
+        POST_ID = #{record.postId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postName != null" >
+        POST_NAME = #{record.postName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.srmExpertFlag != null" >
+        SRM_EXPERT_FLAG = #{record.srmExpertFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weiXinId != null" >
+        WEI_XIN_ID = #{record.weiXinId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weiXinName != null" >
+        WEI_XIN_NAME = #{record.weiXinName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weiXinStatusId != null" >
+        WEI_XIN_STATUS_ID = #{record.weiXinStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weiXinStatusDesc != null" >
+        WEI_XIN_STATUS_DESC = #{record.weiXinStatusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nationId != null" >
+        NATION_ID = #{record.nationId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nationName != null" >
+        NATION_NAME = #{record.nationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userAddress != null" >
+        USER_ADDRESS = #{record.userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userEmailStatusId != null" >
+        USER_EMAIL_STATUS_ID = #{record.userEmailStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userEmailStatusDesc != null" >
+        USER_EMAIL_STATUS_DESC = #{record.userEmailStatusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPhoneStatusId != null" >
+        USER_PHONE_STATUS_ID = #{record.userPhoneStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPhoneStatusDesc != null" >
+        USER_PHONE_STATUS_DESC = #{record.userPhoneStatusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cretTypeId != null" >
+        CRET_TYPE_ID = #{record.cretTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cretTypeName != null" >
+        CRET_TYPE_NAME = #{record.cretTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userHeadImg != null" >
+        USER_HEAD_IMG = #{record.userHeadImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.politicsStatusId != null" >
+        POLITICS_STATUS_ID = #{record.politicsStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.politicsStatusName != null" >
+        POLITICS_STATUS_NAME = #{record.politicsStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nativePlaceProvId != null" >
+        NATIVE_PLACE_PROV_ID = #{record.nativePlaceProvId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nativePlaceCityId != null" >
+        NATIVE_PLACE_CITY_ID = #{record.nativePlaceCityId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.domicilePlaceId != null" >
+        DOMICILE_PLACE_ID = #{record.domicilePlaceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.domicilePlaceName != null" >
+        DOMICILE_PLACE_NAME = #{record.domicilePlaceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userQq != null" >
+        USER_QQ = #{record.userQq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maritalId != null" >
+        MARITAL_ID = #{record.maritalId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maritalName != null" >
+        MARITAL_NAME = #{record.maritalName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.domicilePlaceAddress != null" >
+        DOMICILE_PLACE_ADDRESS = #{record.domicilePlaceAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bearId != null" >
+        BEAR_ID = #{record.bearId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bearName != null" >
+        BEAR_NAME = #{record.bearName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nativePlaceAreaId != null" >
+        NATIVE_PLACE_AREA_ID = #{record.nativePlaceAreaId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nativePlaceProvName != null" >
+        NATIVE_PLACE_PROV_NAME = #{record.nativePlaceProvName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nativePlaceCityName != null" >
+        NATIVE_PLACE_CITY_NAME = #{record.nativePlaceCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nativePlaceAreaName != null" >
+        NATIVE_PLACE_AREA_NAME = #{record.nativePlaceAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lockTime != null" >
+        LOCK_TIME = #{record.lockTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isExamTea != null" >
+        IS_EXAM_TEA = #{record.isExamTea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isOwnerStu != null" >
+        IS_OWNER_STU = #{record.isOwnerStu,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lcjnSpeId != null" >
+        LCJN_SPE_ID = #{record.lcjnSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lcjnSpeName != null" >
+        LCJN_SPE_NAME = #{record.lcjnSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appLoginTime != null" >
+        APP_LOGIN_TIME = #{record.appLoginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.webLoginTime != null" >
+        WEB_LOGIN_TIME = #{record.webLoginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workOrgName != null" >
+        WORK_ORG_NAME = #{record.workOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportingAuthority != null" >
+        REPORTING_AUTHORITY = #{record.reportingAuthority,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isOrgAdmin != null" >
+        IS_ORG_ADMIN = #{record.isOrgAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateId != null" >
+        CERTIFICATE_ID = #{record.certificateId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isOsca != null" >
+        IS_OSCA = #{record.isOsca,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountNo != null" >
+        ACCOUNT_NO = #{record.accountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workCode != null" >
+        WORK_CODE = #{record.workCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resTrainingSpeId != null" >
+        RES_TRAINING_SPE_ID = #{record.resTrainingSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resTrainingSpeName != null" >
+        RES_TRAINING_SPE_NAME = #{record.resTrainingSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.promoteTime != null" >
+        PROMOTE_TIME = #{record.promoteTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userMajor != null" >
+        USER_MAJOR = #{record.userMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passportNo != null" >
+        PASSPORT_NO = #{record.passportNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nationalityId != null" >
+        NATIONALITY_ID = #{record.nationalityId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nationalityName != null" >
+        NATIONALITY_NAME = #{record.nationalityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isForeign != null" >
+        IS_FOREIGN = #{record.isForeign,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPinyin != null" >
+        USER_PINYIN = #{record.userPinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateLevelId != null" >
+        CERTIFICATE_LEVEL_ID = #{record.certificateLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateLevelName != null" >
+        CERTIFICATE_LEVEL_NAME = #{record.certificateLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateFile != null" >
+        CERTIFICATE_FILE = #{record.certificateFile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateTime != null" >
+        CERTIFICATE_TIME = #{record.certificateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partyBranchId != null" >
+        PARTY_BRANCH_ID = #{record.partyBranchId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partyBranchName != null" >
+        PARTY_BRANCH_NAME = #{record.partyBranchName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tipPassword != null" >
+        TIP_PASSWORD = #{record.tipPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.medicineTypeId != null" >
+        MEDICINE_TYPE_ID = #{record.medicineTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.medicineTypeName != null" >
+        MEDICINE_TYPE_NAME = #{record.medicineTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherTypeId != null" >
+        TEACHER_TYPE_ID = #{record.teacherTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherTypeName != null" >
+        TEACHER_TYPE_NAME = #{record.teacherTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseFlow != null" >
+        BASE_FLOW = #{record.baseFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseName != null" >
+        BASE_NAME = #{record.baseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isVerify != null" >
+        IS_VERIFY = #{record.isVerify,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verifyCode != null" >
+        VERIFY_CODE = #{record.verifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verifyCodeTime != null" >
+        VERIFY_CODE_TIME = #{record.verifyCodeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSend != null" >
+        IS_SEND = #{record.isSend,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcardFrontImg != null" >
+        IDCARD_FRONT_IMG = #{record.idcardFrontImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcardOppositeImg != null" >
+        IDCARD_OPPOSITE_IMG = #{record.idcardOppositeImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nationality != null" >
+        NATIONALITY = #{record.nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastLoginErrorTime != null" >
+        LAST_LOGIN_ERROR_TIME = #{record.lastLoginErrorTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginErrorCount != null" >
+        LOGIN_ERROR_COUNT = #{record.loginErrorCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.changePasswordTime != null" >
+        CHANGE_PASSWORD_TIME = #{record.changePasswordTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSubmitId != null" >
+        IS_SUBMIT_ID = #{record.isSubmitId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSubmitName != null" >
+        IS_SUBMIT_NAME = #{record.isSubmitName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkStatusId != null" >
+        CHECK_STATUS_ID = #{record.checkStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkStatusName != null" >
+        CHECK_STATUS_NAME = #{record.checkStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkReason != null" >
+        CHECK_REASON = #{record.checkReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appLastLoginErrorTime != null" >
+        APP_LAST_LOGIN_ERROR_TIME = #{record.appLastLoginErrorTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appLoginErrorCount != null" >
+        APP_LOGIN_ERROR_COUNT = #{record.appLoginErrorCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditStatus != null" >
+        AUDIT_STATUS = #{record.auditStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlowGx != null" >
+        ORG_FLOW_GX = #{record.orgFlowGx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.school != null" >
+        SCHOOL = #{record.school,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userLevelId != null" >
+        USER_LEVEL_ID = #{record.userLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userLevelName != null" >
+        USER_LEVEL_NAME = #{record.userLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userSignUrl != null" >
+        USER_SIGN_URL = #{record.userSignUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankOfDeposit != null" >
+        BANK_OF_DEPOSIT = #{record.bankOfDeposit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankAccountNumber != null" >
+        BANK_ACCOUNT_NUMBER = #{record.bankAccountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openId != null" >
+        OPEN_ID = #{record.openId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unLockTime != null" >
+        UN_LOCK_TIME = #{record.unLockTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.SYS_USER
+    set USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      USER_CODE = #{record.userCode,jdbcType=VARCHAR},
+      USER_PASSWD = #{record.userPasswd,jdbcType=VARCHAR},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      SEX_ID = #{record.sexId,jdbcType=VARCHAR},
+      SEX_NAME = #{record.sexName,jdbcType=VARCHAR},
+      STATUS_ID = #{record.statusId,jdbcType=VARCHAR},
+      STATUS_DESC = #{record.statusDesc,jdbcType=VARCHAR},
+      USER_PHONE = #{record.userPhone,jdbcType=VARCHAR},
+      USER_EMAIL = #{record.userEmail,jdbcType=VARCHAR},
+      DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
+      DEPT_NAME = #{record.deptName,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      USER_BIRTHDAY = #{record.userBirthday,jdbcType=VARCHAR},
+      TITLE_ID = #{record.titleId,jdbcType=VARCHAR},
+      TITLE_NAME = #{record.titleName,jdbcType=VARCHAR},
+      DEGREE_ID = #{record.degreeId,jdbcType=VARCHAR},
+      DEGREE_NAME = #{record.degreeName,jdbcType=VARCHAR},
+      EDUCATION_ID = #{record.educationId,jdbcType=VARCHAR},
+      EDUCATION_NAME = #{record.educationName,jdbcType=VARCHAR},
+      POST_ID = #{record.postId,jdbcType=VARCHAR},
+      POST_NAME = #{record.postName,jdbcType=VARCHAR},
+      SRM_EXPERT_FLAG = #{record.srmExpertFlag,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      WEI_XIN_ID = #{record.weiXinId,jdbcType=VARCHAR},
+      WEI_XIN_NAME = #{record.weiXinName,jdbcType=VARCHAR},
+      WEI_XIN_STATUS_ID = #{record.weiXinStatusId,jdbcType=VARCHAR},
+      WEI_XIN_STATUS_DESC = #{record.weiXinStatusDesc,jdbcType=VARCHAR},
+      NATION_ID = #{record.nationId,jdbcType=VARCHAR},
+      NATION_NAME = #{record.nationName,jdbcType=VARCHAR},
+      USER_ADDRESS = #{record.userAddress,jdbcType=VARCHAR},
+      USER_EMAIL_STATUS_ID = #{record.userEmailStatusId,jdbcType=VARCHAR},
+      USER_EMAIL_STATUS_DESC = #{record.userEmailStatusDesc,jdbcType=VARCHAR},
+      USER_PHONE_STATUS_ID = #{record.userPhoneStatusId,jdbcType=VARCHAR},
+      USER_PHONE_STATUS_DESC = #{record.userPhoneStatusDesc,jdbcType=VARCHAR},
+      CRET_TYPE_ID = #{record.cretTypeId,jdbcType=VARCHAR},
+      CRET_TYPE_NAME = #{record.cretTypeName,jdbcType=VARCHAR},
+      USER_HEAD_IMG = #{record.userHeadImg,jdbcType=VARCHAR},
+      POLITICS_STATUS_ID = #{record.politicsStatusId,jdbcType=VARCHAR},
+      POLITICS_STATUS_NAME = #{record.politicsStatusName,jdbcType=VARCHAR},
+      NATIVE_PLACE_PROV_ID = #{record.nativePlaceProvId,jdbcType=VARCHAR},
+      NATIVE_PLACE_CITY_ID = #{record.nativePlaceCityId,jdbcType=VARCHAR},
+      DOMICILE_PLACE_ID = #{record.domicilePlaceId,jdbcType=VARCHAR},
+      DOMICILE_PLACE_NAME = #{record.domicilePlaceName,jdbcType=VARCHAR},
+      USER_QQ = #{record.userQq,jdbcType=VARCHAR},
+      MARITAL_ID = #{record.maritalId,jdbcType=VARCHAR},
+      MARITAL_NAME = #{record.maritalName,jdbcType=VARCHAR},
+      DOMICILE_PLACE_ADDRESS = #{record.domicilePlaceAddress,jdbcType=VARCHAR},
+      BEAR_ID = #{record.bearId,jdbcType=VARCHAR},
+      BEAR_NAME = #{record.bearName,jdbcType=VARCHAR},
+      NATIVE_PLACE_AREA_ID = #{record.nativePlaceAreaId,jdbcType=VARCHAR},
+      NATIVE_PLACE_PROV_NAME = #{record.nativePlaceProvName,jdbcType=VARCHAR},
+      NATIVE_PLACE_CITY_NAME = #{record.nativePlaceCityName,jdbcType=VARCHAR},
+      NATIVE_PLACE_AREA_NAME = #{record.nativePlaceAreaName,jdbcType=VARCHAR},
+      LOCK_TIME = #{record.lockTime,jdbcType=VARCHAR},
+      IS_EXAM_TEA = #{record.isExamTea,jdbcType=VARCHAR},
+      IS_OWNER_STU = #{record.isOwnerStu,jdbcType=VARCHAR},
+      LCJN_SPE_ID = #{record.lcjnSpeId,jdbcType=VARCHAR},
+      LCJN_SPE_NAME = #{record.lcjnSpeName,jdbcType=VARCHAR},
+      APP_LOGIN_TIME = #{record.appLoginTime,jdbcType=VARCHAR},
+      WEB_LOGIN_TIME = #{record.webLoginTime,jdbcType=VARCHAR},
+      WORK_ORG_NAME = #{record.workOrgName,jdbcType=VARCHAR},
+      REPORTING_AUTHORITY = #{record.reportingAuthority,jdbcType=VARCHAR},
+      IS_ORG_ADMIN = #{record.isOrgAdmin,jdbcType=VARCHAR},
+      CERTIFICATE_ID = #{record.certificateId,jdbcType=VARCHAR},
+      IS_OSCA = #{record.isOsca,jdbcType=VARCHAR},
+      ACCOUNT_NO = #{record.accountNo,jdbcType=VARCHAR},
+      WORK_CODE = #{record.workCode,jdbcType=VARCHAR},
+      RES_TRAINING_SPE_ID = #{record.resTrainingSpeId,jdbcType=VARCHAR},
+      RES_TRAINING_SPE_NAME = #{record.resTrainingSpeName,jdbcType=VARCHAR},
+      PROMOTE_TIME = #{record.promoteTime,jdbcType=VARCHAR},
+      USER_MAJOR = #{record.userMajor,jdbcType=VARCHAR},
+      PASSPORT_NO = #{record.passportNo,jdbcType=VARCHAR},
+      NATIONALITY_ID = #{record.nationalityId,jdbcType=VARCHAR},
+      NATIONALITY_NAME = #{record.nationalityName,jdbcType=VARCHAR},
+      IS_FOREIGN = #{record.isForeign,jdbcType=VARCHAR},
+      USER_ID = #{record.userId,jdbcType=VARCHAR},
+      USER_PINYIN = #{record.userPinyin,jdbcType=VARCHAR},
+      CERTIFICATE_LEVEL_ID = #{record.certificateLevelId,jdbcType=VARCHAR},
+      CERTIFICATE_LEVEL_NAME = #{record.certificateLevelName,jdbcType=VARCHAR},
+      CERTIFICATE_FILE = #{record.certificateFile,jdbcType=VARCHAR},
+      CERTIFICATE_TIME = #{record.certificateTime,jdbcType=VARCHAR},
+      PARTY_BRANCH_ID = #{record.partyBranchId,jdbcType=VARCHAR},
+      PARTY_BRANCH_NAME = #{record.partyBranchName,jdbcType=VARCHAR},
+      TIP_PASSWORD = #{record.tipPassword,jdbcType=VARCHAR},
+      MEDICINE_TYPE_ID = #{record.medicineTypeId,jdbcType=VARCHAR},
+      MEDICINE_TYPE_NAME = #{record.medicineTypeName,jdbcType=VARCHAR},
+      TEACHER_TYPE_ID = #{record.teacherTypeId,jdbcType=VARCHAR},
+      TEACHER_TYPE_NAME = #{record.teacherTypeName,jdbcType=VARCHAR},
+      BASE_FLOW = #{record.baseFlow,jdbcType=VARCHAR},
+      BASE_NAME = #{record.baseName,jdbcType=VARCHAR},
+      IS_VERIFY = #{record.isVerify,jdbcType=VARCHAR},
+      VERIFY_CODE = #{record.verifyCode,jdbcType=VARCHAR},
+      VERIFY_CODE_TIME = #{record.verifyCodeTime,jdbcType=VARCHAR},
+      IS_SEND = #{record.isSend,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      IDCARD_FRONT_IMG = #{record.idcardFrontImg,jdbcType=VARCHAR},
+      IDCARD_OPPOSITE_IMG = #{record.idcardOppositeImg,jdbcType=VARCHAR},
+      NATIONALITY = #{record.nationality,jdbcType=VARCHAR},
+      LAST_LOGIN_ERROR_TIME = #{record.lastLoginErrorTime,jdbcType=VARCHAR},
+      LOGIN_ERROR_COUNT = #{record.loginErrorCount,jdbcType=VARCHAR},
+      CHANGE_PASSWORD_TIME = #{record.changePasswordTime,jdbcType=VARCHAR},
+      IS_SUBMIT_ID = #{record.isSubmitId,jdbcType=VARCHAR},
+      IS_SUBMIT_NAME = #{record.isSubmitName,jdbcType=VARCHAR},
+      CHECK_STATUS_ID = #{record.checkStatusId,jdbcType=VARCHAR},
+      CHECK_STATUS_NAME = #{record.checkStatusName,jdbcType=VARCHAR},
+      CHECK_REASON = #{record.checkReason,jdbcType=VARCHAR},
+      APP_LAST_LOGIN_ERROR_TIME = #{record.appLastLoginErrorTime,jdbcType=VARCHAR},
+      APP_LOGIN_ERROR_COUNT = #{record.appLoginErrorCount,jdbcType=VARCHAR},
+      AUDIT_STATUS = #{record.auditStatus,jdbcType=VARCHAR},
+      ORG_FLOW_GX = #{record.orgFlowGx,jdbcType=VARCHAR},
+      SCHOOL = #{record.school,jdbcType=VARCHAR},
+      USER_LEVEL_ID = #{record.userLevelId,jdbcType=VARCHAR},
+      USER_LEVEL_NAME = #{record.userLevelName,jdbcType=VARCHAR},
+      USER_SIGN_URL = #{record.userSignUrl,jdbcType=VARCHAR},
+      BANK_OF_DEPOSIT = #{record.bankOfDeposit,jdbcType=VARCHAR},
+      BANK_ACCOUNT_NUMBER = #{record.bankAccountNumber,jdbcType=VARCHAR},
+      OPEN_ID = #{record.openId,jdbcType=VARCHAR},
+      UN_LOCK_TIME = #{record.unLockTime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysUser" >
+    update PDSCI.SYS_USER
+    <set >
+      <if test="userCode != null" >
+        USER_CODE = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userPasswd != null" >
+        USER_PASSWD = #{userPasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sexId != null" >
+        SEX_ID = #{sexId,jdbcType=VARCHAR},
+      </if>
+      <if test="sexName != null" >
+        SEX_NAME = #{sexName,jdbcType=VARCHAR},
+      </if>
+      <if test="statusId != null" >
+        STATUS_ID = #{statusId,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDesc != null" >
+        STATUS_DESC = #{statusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        USER_EMAIL = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="deptFlow != null" >
+        DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null" >
+        DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        ID_NO = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userBirthday != null" >
+        USER_BIRTHDAY = #{userBirthday,jdbcType=VARCHAR},
+      </if>
+      <if test="titleId != null" >
+        TITLE_ID = #{titleId,jdbcType=VARCHAR},
+      </if>
+      <if test="titleName != null" >
+        TITLE_NAME = #{titleName,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeId != null" >
+        DEGREE_ID = #{degreeId,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeName != null" >
+        DEGREE_NAME = #{degreeName,jdbcType=VARCHAR},
+      </if>
+      <if test="educationId != null" >
+        EDUCATION_ID = #{educationId,jdbcType=VARCHAR},
+      </if>
+      <if test="educationName != null" >
+        EDUCATION_NAME = #{educationName,jdbcType=VARCHAR},
+      </if>
+      <if test="postId != null" >
+        POST_ID = #{postId,jdbcType=VARCHAR},
+      </if>
+      <if test="postName != null" >
+        POST_NAME = #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="srmExpertFlag != null" >
+        SRM_EXPERT_FLAG = #{srmExpertFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="weiXinId != null" >
+        WEI_XIN_ID = #{weiXinId,jdbcType=VARCHAR},
+      </if>
+      <if test="weiXinName != null" >
+        WEI_XIN_NAME = #{weiXinName,jdbcType=VARCHAR},
+      </if>
+      <if test="weiXinStatusId != null" >
+        WEI_XIN_STATUS_ID = #{weiXinStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="weiXinStatusDesc != null" >
+        WEI_XIN_STATUS_DESC = #{weiXinStatusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="nationId != null" >
+        NATION_ID = #{nationId,jdbcType=VARCHAR},
+      </if>
+      <if test="nationName != null" >
+        NATION_NAME = #{nationName,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddress != null" >
+        USER_ADDRESS = #{userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmailStatusId != null" >
+        USER_EMAIL_STATUS_ID = #{userEmailStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmailStatusDesc != null" >
+        USER_EMAIL_STATUS_DESC = #{userEmailStatusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhoneStatusId != null" >
+        USER_PHONE_STATUS_ID = #{userPhoneStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhoneStatusDesc != null" >
+        USER_PHONE_STATUS_DESC = #{userPhoneStatusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="cretTypeId != null" >
+        CRET_TYPE_ID = #{cretTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="cretTypeName != null" >
+        CRET_TYPE_NAME = #{cretTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="userHeadImg != null" >
+        USER_HEAD_IMG = #{userHeadImg,jdbcType=VARCHAR},
+      </if>
+      <if test="politicsStatusId != null" >
+        POLITICS_STATUS_ID = #{politicsStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="politicsStatusName != null" >
+        POLITICS_STATUS_NAME = #{politicsStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlaceProvId != null" >
+        NATIVE_PLACE_PROV_ID = #{nativePlaceProvId,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlaceCityId != null" >
+        NATIVE_PLACE_CITY_ID = #{nativePlaceCityId,jdbcType=VARCHAR},
+      </if>
+      <if test="domicilePlaceId != null" >
+        DOMICILE_PLACE_ID = #{domicilePlaceId,jdbcType=VARCHAR},
+      </if>
+      <if test="domicilePlaceName != null" >
+        DOMICILE_PLACE_NAME = #{domicilePlaceName,jdbcType=VARCHAR},
+      </if>
+      <if test="userQq != null" >
+        USER_QQ = #{userQq,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalId != null" >
+        MARITAL_ID = #{maritalId,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalName != null" >
+        MARITAL_NAME = #{maritalName,jdbcType=VARCHAR},
+      </if>
+      <if test="domicilePlaceAddress != null" >
+        DOMICILE_PLACE_ADDRESS = #{domicilePlaceAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="bearId != null" >
+        BEAR_ID = #{bearId,jdbcType=VARCHAR},
+      </if>
+      <if test="bearName != null" >
+        BEAR_NAME = #{bearName,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlaceAreaId != null" >
+        NATIVE_PLACE_AREA_ID = #{nativePlaceAreaId,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlaceProvName != null" >
+        NATIVE_PLACE_PROV_NAME = #{nativePlaceProvName,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlaceCityName != null" >
+        NATIVE_PLACE_CITY_NAME = #{nativePlaceCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlaceAreaName != null" >
+        NATIVE_PLACE_AREA_NAME = #{nativePlaceAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="lockTime != null" >
+        LOCK_TIME = #{lockTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isExamTea != null" >
+        IS_EXAM_TEA = #{isExamTea,jdbcType=VARCHAR},
+      </if>
+      <if test="isOwnerStu != null" >
+        IS_OWNER_STU = #{isOwnerStu,jdbcType=VARCHAR},
+      </if>
+      <if test="lcjnSpeId != null" >
+        LCJN_SPE_ID = #{lcjnSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="lcjnSpeName != null" >
+        LCJN_SPE_NAME = #{lcjnSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="appLoginTime != null" >
+        APP_LOGIN_TIME = #{appLoginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="webLoginTime != null" >
+        WEB_LOGIN_TIME = #{webLoginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="workOrgName != null" >
+        WORK_ORG_NAME = #{workOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="reportingAuthority != null" >
+        REPORTING_AUTHORITY = #{reportingAuthority,jdbcType=VARCHAR},
+      </if>
+      <if test="isOrgAdmin != null" >
+        IS_ORG_ADMIN = #{isOrgAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateId != null" >
+        CERTIFICATE_ID = #{certificateId,jdbcType=VARCHAR},
+      </if>
+      <if test="isOsca != null" >
+        IS_OSCA = #{isOsca,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNo != null" >
+        ACCOUNT_NO = #{accountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="workCode != null" >
+        WORK_CODE = #{workCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resTrainingSpeId != null" >
+        RES_TRAINING_SPE_ID = #{resTrainingSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="resTrainingSpeName != null" >
+        RES_TRAINING_SPE_NAME = #{resTrainingSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="promoteTime != null" >
+        PROMOTE_TIME = #{promoteTime,jdbcType=VARCHAR},
+      </if>
+      <if test="userMajor != null" >
+        USER_MAJOR = #{userMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="passportNo != null" >
+        PASSPORT_NO = #{passportNo,jdbcType=VARCHAR},
+      </if>
+      <if test="nationalityId != null" >
+        NATIONALITY_ID = #{nationalityId,jdbcType=VARCHAR},
+      </if>
+      <if test="nationalityName != null" >
+        NATIONALITY_NAME = #{nationalityName,jdbcType=VARCHAR},
+      </if>
+      <if test="isForeign != null" >
+        IS_FOREIGN = #{isForeign,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userPinyin != null" >
+        USER_PINYIN = #{userPinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateLevelId != null" >
+        CERTIFICATE_LEVEL_ID = #{certificateLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateLevelName != null" >
+        CERTIFICATE_LEVEL_NAME = #{certificateLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateFile != null" >
+        CERTIFICATE_FILE = #{certificateFile,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateTime != null" >
+        CERTIFICATE_TIME = #{certificateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="partyBranchId != null" >
+        PARTY_BRANCH_ID = #{partyBranchId,jdbcType=VARCHAR},
+      </if>
+      <if test="partyBranchName != null" >
+        PARTY_BRANCH_NAME = #{partyBranchName,jdbcType=VARCHAR},
+      </if>
+      <if test="tipPassword != null" >
+        TIP_PASSWORD = #{tipPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="medicineTypeId != null" >
+        MEDICINE_TYPE_ID = #{medicineTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="medicineTypeName != null" >
+        MEDICINE_TYPE_NAME = #{medicineTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherTypeId != null" >
+        TEACHER_TYPE_ID = #{teacherTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherTypeName != null" >
+        TEACHER_TYPE_NAME = #{teacherTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="baseFlow != null" >
+        BASE_FLOW = #{baseFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="baseName != null" >
+        BASE_NAME = #{baseName,jdbcType=VARCHAR},
+      </if>
+      <if test="isVerify != null" >
+        IS_VERIFY = #{isVerify,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyCode != null" >
+        VERIFY_CODE = #{verifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyCodeTime != null" >
+        VERIFY_CODE_TIME = #{verifyCodeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isSend != null" >
+        IS_SEND = #{isSend,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardFrontImg != null" >
+        IDCARD_FRONT_IMG = #{idcardFrontImg,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardOppositeImg != null" >
+        IDCARD_OPPOSITE_IMG = #{idcardOppositeImg,jdbcType=VARCHAR},
+      </if>
+      <if test="nationality != null" >
+        NATIONALITY = #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginErrorTime != null" >
+        LAST_LOGIN_ERROR_TIME = #{lastLoginErrorTime,jdbcType=VARCHAR},
+      </if>
+      <if test="loginErrorCount != null" >
+        LOGIN_ERROR_COUNT = #{loginErrorCount,jdbcType=VARCHAR},
+      </if>
+      <if test="changePasswordTime != null" >
+        CHANGE_PASSWORD_TIME = #{changePasswordTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isSubmitId != null" >
+        IS_SUBMIT_ID = #{isSubmitId,jdbcType=VARCHAR},
+      </if>
+      <if test="isSubmitName != null" >
+        IS_SUBMIT_NAME = #{isSubmitName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatusId != null" >
+        CHECK_STATUS_ID = #{checkStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatusName != null" >
+        CHECK_STATUS_NAME = #{checkStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkReason != null" >
+        CHECK_REASON = #{checkReason,jdbcType=VARCHAR},
+      </if>
+      <if test="appLastLoginErrorTime != null" >
+        APP_LAST_LOGIN_ERROR_TIME = #{appLastLoginErrorTime,jdbcType=VARCHAR},
+      </if>
+      <if test="appLoginErrorCount != null" >
+        APP_LOGIN_ERROR_COUNT = #{appLoginErrorCount,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        AUDIT_STATUS = #{auditStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlowGx != null" >
+        ORG_FLOW_GX = #{orgFlowGx,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        SCHOOL = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevelId != null" >
+        USER_LEVEL_ID = #{userLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevelName != null" >
+        USER_LEVEL_NAME = #{userLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="userSignUrl != null" >
+        USER_SIGN_URL = #{userSignUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bankOfDeposit != null" >
+        BANK_OF_DEPOSIT = #{bankOfDeposit,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountNumber != null" >
+        BANK_ACCOUNT_NUMBER = #{bankAccountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        OPEN_ID = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="unLockTime != null" >
+        UN_LOCK_TIME = #{unLockTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysUser" >
+    update PDSCI.SYS_USER
+    set USER_CODE = #{userCode,jdbcType=VARCHAR},
+      USER_PASSWD = #{userPasswd,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      SEX_ID = #{sexId,jdbcType=VARCHAR},
+      SEX_NAME = #{sexName,jdbcType=VARCHAR},
+      STATUS_ID = #{statusId,jdbcType=VARCHAR},
+      STATUS_DESC = #{statusDesc,jdbcType=VARCHAR},
+      USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+      USER_EMAIL = #{userEmail,jdbcType=VARCHAR},
+      DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
+      DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      ID_NO = #{idNo,jdbcType=VARCHAR},
+      USER_BIRTHDAY = #{userBirthday,jdbcType=VARCHAR},
+      TITLE_ID = #{titleId,jdbcType=VARCHAR},
+      TITLE_NAME = #{titleName,jdbcType=VARCHAR},
+      DEGREE_ID = #{degreeId,jdbcType=VARCHAR},
+      DEGREE_NAME = #{degreeName,jdbcType=VARCHAR},
+      EDUCATION_ID = #{educationId,jdbcType=VARCHAR},
+      EDUCATION_NAME = #{educationName,jdbcType=VARCHAR},
+      POST_ID = #{postId,jdbcType=VARCHAR},
+      POST_NAME = #{postName,jdbcType=VARCHAR},
+      SRM_EXPERT_FLAG = #{srmExpertFlag,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      WEI_XIN_ID = #{weiXinId,jdbcType=VARCHAR},
+      WEI_XIN_NAME = #{weiXinName,jdbcType=VARCHAR},
+      WEI_XIN_STATUS_ID = #{weiXinStatusId,jdbcType=VARCHAR},
+      WEI_XIN_STATUS_DESC = #{weiXinStatusDesc,jdbcType=VARCHAR},
+      NATION_ID = #{nationId,jdbcType=VARCHAR},
+      NATION_NAME = #{nationName,jdbcType=VARCHAR},
+      USER_ADDRESS = #{userAddress,jdbcType=VARCHAR},
+      USER_EMAIL_STATUS_ID = #{userEmailStatusId,jdbcType=VARCHAR},
+      USER_EMAIL_STATUS_DESC = #{userEmailStatusDesc,jdbcType=VARCHAR},
+      USER_PHONE_STATUS_ID = #{userPhoneStatusId,jdbcType=VARCHAR},
+      USER_PHONE_STATUS_DESC = #{userPhoneStatusDesc,jdbcType=VARCHAR},
+      CRET_TYPE_ID = #{cretTypeId,jdbcType=VARCHAR},
+      CRET_TYPE_NAME = #{cretTypeName,jdbcType=VARCHAR},
+      USER_HEAD_IMG = #{userHeadImg,jdbcType=VARCHAR},
+      POLITICS_STATUS_ID = #{politicsStatusId,jdbcType=VARCHAR},
+      POLITICS_STATUS_NAME = #{politicsStatusName,jdbcType=VARCHAR},
+      NATIVE_PLACE_PROV_ID = #{nativePlaceProvId,jdbcType=VARCHAR},
+      NATIVE_PLACE_CITY_ID = #{nativePlaceCityId,jdbcType=VARCHAR},
+      DOMICILE_PLACE_ID = #{domicilePlaceId,jdbcType=VARCHAR},
+      DOMICILE_PLACE_NAME = #{domicilePlaceName,jdbcType=VARCHAR},
+      USER_QQ = #{userQq,jdbcType=VARCHAR},
+      MARITAL_ID = #{maritalId,jdbcType=VARCHAR},
+      MARITAL_NAME = #{maritalName,jdbcType=VARCHAR},
+      DOMICILE_PLACE_ADDRESS = #{domicilePlaceAddress,jdbcType=VARCHAR},
+      BEAR_ID = #{bearId,jdbcType=VARCHAR},
+      BEAR_NAME = #{bearName,jdbcType=VARCHAR},
+      NATIVE_PLACE_AREA_ID = #{nativePlaceAreaId,jdbcType=VARCHAR},
+      NATIVE_PLACE_PROV_NAME = #{nativePlaceProvName,jdbcType=VARCHAR},
+      NATIVE_PLACE_CITY_NAME = #{nativePlaceCityName,jdbcType=VARCHAR},
+      NATIVE_PLACE_AREA_NAME = #{nativePlaceAreaName,jdbcType=VARCHAR},
+      LOCK_TIME = #{lockTime,jdbcType=VARCHAR},
+      IS_EXAM_TEA = #{isExamTea,jdbcType=VARCHAR},
+      IS_OWNER_STU = #{isOwnerStu,jdbcType=VARCHAR},
+      LCJN_SPE_ID = #{lcjnSpeId,jdbcType=VARCHAR},
+      LCJN_SPE_NAME = #{lcjnSpeName,jdbcType=VARCHAR},
+      APP_LOGIN_TIME = #{appLoginTime,jdbcType=VARCHAR},
+      WEB_LOGIN_TIME = #{webLoginTime,jdbcType=VARCHAR},
+      WORK_ORG_NAME = #{workOrgName,jdbcType=VARCHAR},
+      REPORTING_AUTHORITY = #{reportingAuthority,jdbcType=VARCHAR},
+      IS_ORG_ADMIN = #{isOrgAdmin,jdbcType=VARCHAR},
+      CERTIFICATE_ID = #{certificateId,jdbcType=VARCHAR},
+      IS_OSCA = #{isOsca,jdbcType=VARCHAR},
+      ACCOUNT_NO = #{accountNo,jdbcType=VARCHAR},
+      WORK_CODE = #{workCode,jdbcType=VARCHAR},
+      RES_TRAINING_SPE_ID = #{resTrainingSpeId,jdbcType=VARCHAR},
+      RES_TRAINING_SPE_NAME = #{resTrainingSpeName,jdbcType=VARCHAR},
+      PROMOTE_TIME = #{promoteTime,jdbcType=VARCHAR},
+      USER_MAJOR = #{userMajor,jdbcType=VARCHAR},
+      PASSPORT_NO = #{passportNo,jdbcType=VARCHAR},
+      NATIONALITY_ID = #{nationalityId,jdbcType=VARCHAR},
+      NATIONALITY_NAME = #{nationalityName,jdbcType=VARCHAR},
+      IS_FOREIGN = #{isForeign,jdbcType=VARCHAR},
+      USER_ID = #{userId,jdbcType=VARCHAR},
+      USER_PINYIN = #{userPinyin,jdbcType=VARCHAR},
+      CERTIFICATE_LEVEL_ID = #{certificateLevelId,jdbcType=VARCHAR},
+      CERTIFICATE_LEVEL_NAME = #{certificateLevelName,jdbcType=VARCHAR},
+      CERTIFICATE_FILE = #{certificateFile,jdbcType=VARCHAR},
+      CERTIFICATE_TIME = #{certificateTime,jdbcType=VARCHAR},
+      PARTY_BRANCH_ID = #{partyBranchId,jdbcType=VARCHAR},
+      PARTY_BRANCH_NAME = #{partyBranchName,jdbcType=VARCHAR},
+      TIP_PASSWORD = #{tipPassword,jdbcType=VARCHAR},
+      MEDICINE_TYPE_ID = #{medicineTypeId,jdbcType=VARCHAR},
+      MEDICINE_TYPE_NAME = #{medicineTypeName,jdbcType=VARCHAR},
+      TEACHER_TYPE_ID = #{teacherTypeId,jdbcType=VARCHAR},
+      TEACHER_TYPE_NAME = #{teacherTypeName,jdbcType=VARCHAR},
+      BASE_FLOW = #{baseFlow,jdbcType=VARCHAR},
+      BASE_NAME = #{baseName,jdbcType=VARCHAR},
+      IS_VERIFY = #{isVerify,jdbcType=VARCHAR},
+      VERIFY_CODE = #{verifyCode,jdbcType=VARCHAR},
+      VERIFY_CODE_TIME = #{verifyCodeTime,jdbcType=VARCHAR},
+      IS_SEND = #{isSend,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      IDCARD_FRONT_IMG = #{idcardFrontImg,jdbcType=VARCHAR},
+      IDCARD_OPPOSITE_IMG = #{idcardOppositeImg,jdbcType=VARCHAR},
+      NATIONALITY = #{nationality,jdbcType=VARCHAR},
+      LAST_LOGIN_ERROR_TIME = #{lastLoginErrorTime,jdbcType=VARCHAR},
+      LOGIN_ERROR_COUNT = #{loginErrorCount,jdbcType=VARCHAR},
+      CHANGE_PASSWORD_TIME = #{changePasswordTime,jdbcType=VARCHAR},
+      IS_SUBMIT_ID = #{isSubmitId,jdbcType=VARCHAR},
+      IS_SUBMIT_NAME = #{isSubmitName,jdbcType=VARCHAR},
+      CHECK_STATUS_ID = #{checkStatusId,jdbcType=VARCHAR},
+      CHECK_STATUS_NAME = #{checkStatusName,jdbcType=VARCHAR},
+      CHECK_REASON = #{checkReason,jdbcType=VARCHAR},
+      APP_LAST_LOGIN_ERROR_TIME = #{appLastLoginErrorTime,jdbcType=VARCHAR},
+      APP_LOGIN_ERROR_COUNT = #{appLoginErrorCount,jdbcType=VARCHAR},
+      AUDIT_STATUS = #{auditStatus,jdbcType=VARCHAR},
+      ORG_FLOW_GX = #{orgFlowGx,jdbcType=VARCHAR},
+      SCHOOL = #{school,jdbcType=VARCHAR},
+      USER_LEVEL_ID = #{userLevelId,jdbcType=VARCHAR},
+      USER_LEVEL_NAME = #{userLevelName,jdbcType=VARCHAR},
+      USER_SIGN_URL = #{userSignUrl,jdbcType=VARCHAR},
+      BANK_OF_DEPOSIT = #{bankOfDeposit,jdbcType=VARCHAR},
+      BANK_ACCOUNT_NUMBER = #{bankAccountNumber,jdbcType=VARCHAR},
+      OPEN_ID = #{openId,jdbcType=VARCHAR},
+      UN_LOCK_TIME = #{unLockTime,jdbcType=VARCHAR}
+    where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,1236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.res.dao.zsyk.ext.ZsykTeacherMapper">
+  	<resultMap id="doctorMap" type="hashmap">
+        <result column="UCSID"  property="UCSID" javaType="java.lang.String"/>
+        <result column="DoctorFlow"  property="doctorFlow" javaType="java.lang.String"/>
+        <result column="RCySecID"  property="cySecId" javaType="java.lang.String"/>
+        <result column="TrueName"  property="TrueName" javaType="java.lang.String"/>
+        <result column="RStartTime"  property="RStartTime" javaType="java.lang.String"/>
+        <result column="REndTime"  property="REndTime" javaType="java.lang.String"/>
+        <result column="schStatusId"  property="schStatusId" javaType="java.lang.String"/>
+        <result column="schStatusDesc"  property="schStatusDesc" javaType="java.lang.String"/>
+   	</resultMap>
+
+	<select id="getDoctorListEntering" resultMap="doctorMap">
+      SELECT * FROM (
+          SELECT ROW_NUMBER() OVER (order by T.RStartTime)AS Row, T.*
+          from (
+          	select UserInfo.TrueName,CONVERT(varchar(100), RStartTime, 23) as RStartTime,
+		CONVERT(varchar(100), REndTime, 23) as REndTime,UserRealCycleSec.RUCSID as UCSID,
+		'Entering' as schStatusId,'轮转中' as schStatusDesc,UserRealCycleSec.RCySecID,
+		USERINFO.USERID AS DoctorFlow
+			from UserRealTec
+			left join UserRealCycleSec on UserRealCycleSec.RUCSID = UserRealTec.UCSID
+			left join S_UserReadSecDocument on S_UserReadSecDocument.UCSID = UserRealCycleSec.RUCSID
+			left join UserInfo on UserInfo.UserID = UserRealTec.UserDipID
+			left join OutSecBrief on OutSecBrief.UCSID = UserRealCycleSec.RUCSID
+			where UserTecID = #{userFlow} and S_UserReadSecDocument.State = 1 and (CheckStatus is null or CheckStatus=0)
+			and (UserInfo.UserType = 1 or UserInfo.UserType = 2 or UserInfo.UserType = 4 or UserInfo.UserType = 5)
+			<if test='doctorName!=null and doctorName!=""'>
+              and UserInfo.TrueName like '%${doctorName}%'
+          	</if>
+			)as T
+          ) TT
+      WHERE TT.Row between #{start} and #{end}
+      ORDER BY RStartTime
+  </select>
+
+  <select id="getDoctorListNotEntered" resultMap="doctorMap">
+      SELECT * FROM (
+          SELECT ROW_NUMBER() OVER (order by T.RStartTime)AS Row, T.*
+          from (
+          	select UserInfo.TrueName,CONVERT(varchar(100), RStartTime, 23) as RStartTime,CONVERT(varchar(100), REndTime, 23) as REndTime,UserRealCycleSec.RUCSID as UCSID,'NotEntered' as schStatusId,'待入科' as schStatusDesc,UserRealCycleSec.RCySecID,
+	  USERINFO.USERID AS DoctorFlow
+			from UserRealTec
+			left join UserRealCycleSec on UserRealCycleSec.RUCSID = UserRealTec.UCSID
+			left join S_UserReadSecDocument on S_UserReadSecDocument.UCSID = UserRealCycleSec.RUCSID
+			left join UserInfo on UserInfo.UserID = UserRealTec.UserDipID
+			where UserTecID = #{userFlow} and S_UserReadSecDocument.State = 0
+	  and (UserInfo.UserType = 1 or UserInfo.UserType = 2 or UserInfo.UserType = 4 or UserInfo.UserType = 5)
+			<if test='doctorName!=null and doctorName!=""'>
+              and UserInfo.TrueName like '%${doctorName}%'
+          	</if>
+			)as T
+          ) TT
+      WHERE TT.Row between #{start} and #{end}
+      ORDER BY RStartTime
+  </select>
+
+  <select id="getDoctorListExited" resultMap="doctorMap">
+      SELECT * FROM (
+          SELECT ROW_NUMBER() OVER (order by T.RStartTime)AS Row, T.*
+          from (
+          	select UserInfo.TrueName,CONVERT(varchar(100), RStartTime, 23) as RStartTime,CONVERT(varchar(100), REndTime, 23) as REndTime,UserRealCycleSec.RUCSID as UCSID,'Exited' as schStatusId,'已出科' as schStatusDesc,UserRealCycleSec.RCySecID,
+	  USERINFO.USERID AS DoctorFlow
+			from UserRealTec
+			left join UserRealCycleSec on UserRealCycleSec.RUCSID = UserRealTec.UCSID
+			left join S_UserReadSecDocument on S_UserReadSecDocument.UCSID = UserRealCycleSec.RUCSID
+			left join UserInfo on UserInfo.UserID = UserRealTec.UserDipID
+			left join OutSecBrief on OutSecBrief.UCSID = UserRealCycleSec.RUCSID
+			where UserTecID = #{userFlow} and S_UserReadSecDocument.State = 1 and CheckStatus = 1
+	  and (UserInfo.UserType = 1 or UserInfo.UserType = 2 or UserInfo.UserType = 4 or UserInfo.UserType = 5)
+			<if test='doctorName!=null and doctorName!=""'>
+              and UserInfo.TrueName like '%${doctorName}%'
+          	</if>
+			)as T
+          ) TT
+      WHERE TT.Row between #{start} and #{end}
+      ORDER BY RStartTime
+  </select>
+
+  <resultMap id="deptStatusMap" type="hashmap">
+        <result column="DeptStatusId"  property="DeptStatusId" javaType="java.lang.String"/>
+        <result column="DeptStatusDesc"  property="DeptStatusDesc" javaType="java.lang.String"/>
+  </resultMap>
+
+  <select id="readDoctorDeptStatus" resultMap="deptStatusMap">
+      select State as DeptStatusId,
+      	CASE when State = 0 then '未确认'
+			  when State = 1 then '已确认'
+	  	end as DeptStatusDesc
+      from S_UserReadSecDocument
+	  where URSD_ID = (select URSD_ID from S_UserReadSecDocument where UCSID = #{doctorFlow})
+  </select>
+
+  <resultMap id="doctorInfoMap" type="hashmap">
+        <result column="TrueName"  property="TrueName" javaType="java.lang.String"/>
+        <result column="SpName"  property="SpName" javaType="java.lang.String"/>
+        <result column="HosSecName"  property="HosSecName" javaType="java.lang.String"/>
+        <result column="StartTime"  property="StartTime" javaType="java.lang.String"/>
+        <result column="EndTime"  property="EndTime" javaType="java.lang.String"/>
+  </resultMap>
+
+  <select id="readDoctorInfo" resultMap="doctorInfoMap">
+      	select  TrueName,SpName, HosSecName,
+		CONVERT(varchar(100), StartTime, 23) as StartTime,
+		CONVERT(varchar(100), EndTime, 23) as EndTime
+		from UserCycleSec
+		left join userinfo on userinfo.userid = UserCycleSec.UserID
+		left join HosCycleSection on HosCycleSection.HosCySecID = UserCycleSec.HosCySecID
+		left join HosSection on HosSection.HosSecID = HosCycleSection.HosSecID
+		left join Specialty on Specialty.SpID = UserInfo.SpecialtyID
+		where UCSID = #{doctorFlow}
+  </select>
+
+  <update id="enterDeptConfirm">
+      	update S_UserReadSecDocument set State = 1 where URSD_ID =  (select URSD_ID from S_UserReadSecDocument where UCSID = #{doctorFlow})
+  </update>
+
+  <resultMap id="evalInfoMap" type="hashmap">
+        <result column="Eval"  property="Eval" javaType="java.lang.String"/>
+  </resultMap>
+
+  <select id="readEvalInfo" resultMap="evalInfoMap">
+      	select Eval from S_UserReadSecDocument  where UCSID = #{doctorFlow}
+  </select>
+
+  <update id="saveEvalInfo">
+      	Update S_UserReadSecDocument set Eval = #{eval} where UCSID = #{doctorFlow}
+  </update>
+
+  <resultMap id="activeMap" type="hashmap">
+        <result column="CaDisID"  property="CaDisID" javaType="java.lang.String"/>
+        <result column="CaDisTime"  property="CaDisTime" javaType="java.lang.String"/>
+        <result column="CaEndDisTime"  property="CaEndDisTime" javaType="java.lang.String"/>
+        <result column="CaName"  property="CaName" javaType="java.lang.String"/>
+        <result column="SCaDisID"  property="SCaDisID" javaType="java.lang.String"/>
+        <result column="CaDisContent"  property="CaDisContent" javaType="java.lang.String"/>
+        <result column="Score"  property="Score" javaType="java.lang.String"/>
+        <result column="CaDisMainSpeaker"  property="CaDisMainSpeaker" javaType="java.lang.String"/>
+        <result column="CaAddress"  property="CaAddress" javaType="java.lang.String"/>
+        <result column="DicItem"  property="DicItem" javaType="java.lang.String"/>
+        <result column="Ismdmq"  property="Ismdmq" javaType="java.lang.String"/>
+        <result column="Isgfsl"  property="Isgfsl" javaType="java.lang.String"/>
+        <result column="Isjxdw"  property="Isjxdw" javaType="java.lang.String"/>
+        <result column="Isxgh"  property="Isxgh" javaType="java.lang.String"/>
+  </resultMap>
+
+  <select id="getActives" resultMap="activeMap">
+      	SELECT * FROM (
+			SELECT ROW_NUMBER() OVER (order by T.CaDisTime)AS Row, T.*
+			from (
+				select CaseDiscuss.CaDisID,CaseDiscuss.CaDisTime,CaseDiscuss.CaEndDisTime,
+				CaseDiscuss.CaName,
+				case isnull(SCaseDiscuss.CaDisID,0)
+				when 0  THEN '未参加' else '参加' end SCaDisID,isnull(SCaseDiscuss.Score,0) as Score,
+				CaseDiscuss.CaDisMainSpeaker
+				from  CaseDiscuss
+				left join CaseDiscussTec on CaseDiscussTec.CaDisID = CaseDiscuss.CaDisID
+				left join DicItem on DicItem.DicItemID = CaseDiscuss.CaDisPlayClass
+				left join CaseDiscuss as SCaseDiscuss on SCaseDiscuss.FCaDisID = CaseDiscuss.CaDisID
+				and SCaseDiscuss.UserID = (select UserID from UserCycleSec where UCSID = #{doctorFlow})
+				left join Attach on Attach.AttachGroupID = CaseDiscuss.AttachID
+				where CaseDiscuss.FCaDisID is null
+				AND CaseDiscuss.CheckStatus = 4
+				AND SCaseDiscuss.UCSID = #{doctorFlow}
+				AND SCaseDiscuss.score > 0
+			) as  T
+		) TT
+	    WHERE TT.Row between #{start} and #{end}
+	    ORDER BY CaDisTime
+  </select>
+
+  <select id="readActivity" resultMap="activeMap">
+      	SELECT CaseDiscuss.CaDisID, CaseDiscuss.CaDisMainSpeaker, DicItem,
+      		CaseDiscuss.CaDisContent, CaseDiscuss.CaDisTime, CaseDiscuss.CaEndDisTime,
+      		CaseDiscuss.CaAddress, CaseDiscuss.CaName,
+			CASE CaseDiscuss.CaDisMainSpeakerType WHEN 0 THEN '带教老师' WHEN 1 THEN '轮转学员' WHEN 2 THEN '其他人员' ELSE NULL END AS CaDisMainSpeakerType,
+			CASE isnull(SCaseDiscuss.CaDisID, 0) WHEN 0 THEN '未参加' ELSE '参加' END AS SCaDisID
+			, SCaseDiscuss.Score, SCaseDiscuss.Ismdmq,
+			SCaseDiscuss.Isgfsl, SCaseDiscuss.Isjxdw,
+			SCaseDiscuss.Isxgh
+		FROM CaseDiscuss
+			LEFT JOIN CaseDiscussTec ON CaseDiscussTec.CaDisID = CaseDiscuss.CaDisID
+			LEFT JOIN DicItem ON DicItem.DicItemID = CaseDiscuss.CaDisPlayClass
+			LEFT JOIN CaseDiscuss SCaseDiscuss ON SCaseDiscuss.FCaDisID = CaseDiscuss.CaDisID
+				AND SCaseDiscuss.UserID = (select UserID from UserCycleSec where UCSID = #{doctorFlow})
+			LEFT JOIN Attach ON Attach.AttachGroupID = CaseDiscuss.AttachID
+		WHERE CaseDiscuss.CaDisID = #{dataFlow}
+  </select>
+
+  <resultMap id="outSecBriefMap" type="hashmap">
+        <result column="UserID"  property="UserID" javaType="java.lang.String"/>
+        <result column="BriefID"  property="BriefID" javaType="java.lang.String"/>
+        <result column="BriefRequrie"  property="BriefRequrie" javaType="java.lang.String"/>
+        <result column="GainsDefect"  property="GainsDefect" javaType="java.lang.String"/>
+        <result column="SecAppraise"  property="SecAppraise" javaType="java.lang.String"/>
+        <result column="SecretaryContent"  property="SecretaryContent" javaType="java.lang.String"/>
+        <result column="HosSecName"  property="HosSecName" javaType="java.lang.String"/>
+        <result column="VerifyState"  property="VerifyState" javaType="java.lang.String"/>
+        <result column="CheckStatus"  property="CheckStatus" javaType="java.lang.String"/>
+  </resultMap>
+
+  <select id="readOutSecBrief" resultMap="outSecBriefMap">
+  	select  UserID,BriefID,BriefRequrie,GainsDefect,SecAppraise,SecretaryContent,HosSecName,OutSecBrief.VerifyState,CheckStatus
+		from  OutSecBrief
+		left join  UserRealCycleSec on UserRealCycleSec.RUCSID = OutSecBrief.UCSID
+		left join HosCycleSection on HosCycleSection.HosCySecID = UserRealCycleSec.RHosCySecID
+		left join HosSection on HosSection.HosSecID = HosCycleSection.HosSecID
+	where UCSID = #{doctorFlow}
+  </select>
+
+  <update id="saveOutSecBrief">
+   	Update OutSecBrief set
+    	BriefRequrie = #{BriefRequrie} ,
+    	GainsDefect = #{GainsDefect} ,
+    	SecAppraise = #{SecAppraise} ,
+    	TecUserID = #{userFlow} ,
+    	TecCheckDate = getdate() ,
+    	VerifyState = 1
+   	where UCSID = #{doctorFlow}
+  </update>
+
+  <resultMap id="cycleOutSectionRecordMap" type="hashmap">
+        <result column="UserID"  property="UserID" javaType="java.lang.String"/>
+        <result column="UCSID"  property="UCSID" javaType="java.lang.String"/>
+        <result column="TeacherID"  property="TeacherID" javaType="java.lang.String"/>
+        <result column="TecComment"  property="TecComment" javaType="java.lang.String"/>
+        <result column="TecDate"  property="TecDate" javaType="java.lang.String"/>
+        <result column="ExamineMark"  property="ExamineMark" javaType="java.lang.String"/>
+        <result column="AssessmentMark"  property="AssessmentMark" javaType="java.lang.String"/>
+        <result column="AttendanceDay"  property="AttendanceDay" javaType="java.lang.String"/>
+        <result column="SickLeaveDay"  property="SickLeaveDay" javaType="java.lang.String"/>
+        <result column="AbsenteeismDay"  property="AbsenteeismDay" javaType="java.lang.String"/>
+        <result column="VerifyState"  property="VerifyState" javaType="java.lang.String"/>
+  </resultMap>
+
+  <select id="readCycleOutSectionRecord" resultMap="cycleOutSectionRecordMap">
+  	select  UserID ,UCSID ,TeacherID ,TecComment ,TecDate ,ExamineMark ,AssessmentMark ,
+		AttendanceDay,SickLeaveDay,AbsenteeismDay,VerifyState
+	from CycleOutSectionRecord_NF
+	where UCSID = #{doctorFlow}
+  </select>
+
+  <insert id="addCycleOutSectionRecord" parameterType="map">
+   	INSERT INTO CycleOutSectionRecord_NF
+	(
+		UserID ,
+		UCSID ,
+		ExamInfoID,
+		TeacherID ,
+		TecComment ,
+		TecDate ,
+		ExamineMark ,
+		AssessmentMark ,
+		AttendanceDay,
+		SickLeaveDay,
+		AbsenteeismDay,
+		VerifyState
+	)
+	VALUES
+	(
+		(select UserID from UserCycleSec where UCSID = #{doctorFlow} ),
+		#{doctorFlow}  ,
+		#{ExamInfoID}  ,
+		#{userFlow} ,
+		#{SecAppraise} ,
+		getdate() ,
+		0 ,
+		#{AssessmentMark} ,
+		0,
+		#{SickLeaveDay},
+		#{AbsenteeismDay},
+		1
+	)
+  </insert>
+
+  <update id="modCycleOutSectionRecord" parameterType="map">
+   	UPDATE  CycleOutSectionRecord_NF SET
+		AssessmentMark=#{AssessmentMark}  ,
+		SickLeaveDay=#{SickLeaveDay}  ,
+		AbsenteeismDay=#{AbsenteeismDay} ,
+		TeacherID=#{userFlow} ,
+		TecDate=getdate(),
+		TecComment=#{SecAppraise}
+	WHERE UCSID = #{doctorFlow}
+  </update>
+
+  <resultMap id="examInfoMap" type="hashmap">
+        <result column="ExamInfoDF"  property="ExamInfoDF" javaType="java.lang.Integer"/>
+  </resultMap>
+
+  <select id="readExamInfo" resultMap="examInfoMap">
+  	select top 1 ExamInfoDF from ExamInfo
+	where ExamInfoType = #{examInfoType} and UCSID = #{doctorFlow}
+  </select>
+
+  <resultMap id="marksMap" type="hashmap">
+        <result column="ExamInfoID"  property="ExamInfoID" javaType="java.lang.String"/>
+        <result column="ReqItemID"  property="ReqItemID" javaType="java.lang.String"/>
+        <result column="MarkDF"  property="MarkDF" javaType="java.lang.String"/>
+  </resultMap>
+
+  <select id="getMarks" resultMap="marksMap">
+  	select ExamInfo.ExamInfoID,ReqItemID,MarkDF from ExamInfo
+		left join Mark on Mark.ExamInfoID = ExamInfo.ExamInfoID
+	where ExamInfoType = #{examInfoType} and UCSID = #{doctorFlow}
+  </select>
+
+  <insert id="addExamInfo" parameterType="map" useGeneratedKeys="true" keyProperty="ExamInfoID">
+  	INSERT INTO ExamInfo
+	(
+		ExamInfoType,
+		UserID,
+		ExamInfoKHSJ,
+		ExamInfoDF,
+		KHRID,
+		UCSID)
+	VALUES
+	(
+		#{examInfoType},
+		(select UserID from UserCycleSec where UCSID = #{doctorFlow} ),
+		getdate(),
+		#{total_score},
+		#{userFlow} ,
+		#{doctorFlow}
+	)
+  </insert>
+
+  <insert id="addMark" parameterType="map">
+  	INSERT INTO Mark
+  	(
+  		ExamInfoID,
+  		ReqItemID,
+  		MarkDF
+  	)
+	VALUES
+	(
+		#{ExamInfoID},
+		#{ReqItemID},
+		#{MarkDF}
+	)
+  </insert>
+
+  <update id="modExamInfo" parameterType="map">
+  	UPDATE ExamInfo SET ExamInfoDF=#{total_score}
+	WHERE ExamInfoID=(select ExamInfoID from ExamInfo where ExamInfoType = #{examInfoType} and UCSID = #{doctorFlow} )
+  </update>
+
+  <update id="modMark" parameterType="map">
+  	UPDATE Mark SET MarkDF=#{MarkDF} WHERE ReqItemID=#{ReqItemID}
+	AND ExamInfoID=(select ExamInfoID from ExamInfo where ExamInfoType = #{examInfoType} and UCSID = #{doctorFlow} )
+  </update>
+
+  <resultMap id="outDopsMap" type="hashmap">
+  	<result column="DOPS_ID"  property="DOPS_ID" javaType="java.lang.String"/>
+	<result column="DOPS_UCSID"  property="DOPS_UCSID" javaType="java.lang.String"/>
+	<result column="DOPS_TecType"  property="DOPS_TecType" javaType="java.lang.String"/>
+	<result column="DOPS_Time"  property="DOPS_Time" javaType="java.lang.String"/>
+	<result column="DOPS_Address"  property="DOPS_Address" javaType="java.lang.String"/>
+	<result column="DOPS_Name"  property="DOPS_Name" javaType="java.lang.String"/>
+	<result column="DOPS_Age"  property="DOPS_Age" javaType="java.lang.String"/>
+	<result column="DOPS_Sex"  property="DOPS_Sex" javaType="java.lang.String"/>
+	<result column="DOPS_PType"  property="DOPS_PType" javaType="java.lang.String"/>
+	<result column="DOPS_PDiagnosis"  property="DOPS_PDiagnosis" javaType="java.lang.String"/>
+	<result column="DOPS_Operate"  property="DOPS_Operate" javaType="java.lang.String"/>
+	<result column="DOPS_Num"  property="DOPS_Num" javaType="java.lang.String"/>
+	<result column="DOPS_Level"  property="DOPS_Level" javaType="java.lang.String"/>
+	<result column="DOPS_ReviewTime"  property="DOPS_ReviewTime" javaType="java.lang.String"/>
+	<result column="DOPS_Feedback"  property="DOPS_Feedback" javaType="java.lang.String"/>
+	<result column="DOPS_TecScore"  property="DOPS_TecScore" javaType="java.lang.String"/>
+	<result column="DOPS_TecMessage"  property="DOPS_TecMessage" javaType="java.lang.String"/>
+	<result column="DOPS_StuScore"  property="DOPS_StuScore" javaType="java.lang.String"/>
+	<result column="DOPS_UserID"  property="DOPS_UserID" javaType="java.lang.String"/>
+	<result column="DOPS_State"  property="DOPS_State" javaType="java.lang.Integer"/>
+	<result column="DOPS_TecID"  property="DOPS_TecID" javaType="java.lang.String"/>
+	<result column="DOPS_PTypeState"  property="DOPS_PTypeState" javaType="java.lang.String"/>
+  </resultMap>
+
+  <select id="readOutDops" resultMap="outDopsMap">
+	 select top 1
+		DOPS_ID,DOPS_UCSID,DOPS_TecType,DOPS_Time,DOPS_Address,DOPS_Name,DOPS_Age,DOPS_Sex,DOPS_PType,DOPS_PDiagnosis,DOPS_Operate,DOPS_Num,DOPS_Level,DOPS_ReviewTime,DOPS_Feedback,DOPS_TecScore,DOPS_TecMessage,DOPS_StuScore,DOPS_UserID,DOPS_State,DOPS_TecID,DOPS_PTypeState
+	 from Out_DOPS
+	 where DOPS_UCSID = #{doctorFlow}
+  </select>
+
+  <insert id="addOutDops" parameterType="map">
+  	insert into Out_DOPS(
+		DOPS_ID,
+		DOPS_UCSID,
+		DOPS_TecType,
+		DOPS_Time,
+		DOPS_Address,
+		DOPS_Name,
+		DOPS_Age,
+		DOPS_Sex,
+		DOPS_PType,
+		DOPS_PDiagnosis,
+		DOPS_Operate,
+		DOPS_Num,
+		DOPS_Level,
+		DOPS_ReviewTime,
+		DOPS_Feedback,
+		DOPS_TecScore,
+		DOPS_TecMessage,
+		DOPS_StuScore,
+		DOPS_UserID,
+		DOPS_State,
+		DOPS_TecID,
+		DOPS_PTypeState,
+		DOPS_Template
+	)
+	values
+	(
+		#{DOPS_ID},
+		#{doctorFlow},
+		#{DOPS_TecType},
+		#{DOPS_Time},
+		#{DOPS_Address},
+		#{DOPS_Name},
+		#{DOPS_Age},
+		#{DOPS_Sex},
+		#{DOPS_PType},
+		#{DOPS_PDiagnosis},
+		#{DOPS_Operate},
+		#{DOPS_Num},
+		#{DOPS_Level},
+		#{DOPS_ReviewTime},
+		#{DOPS_Feedback},
+		#{DOPS_TecScore},
+		#{DOPS_TecMessage},
+		#{DOPS_StuScore},
+		0,
+		0,
+		(select UserTecID from UserRealTec where UCSID = #{doctorFlow}),
+		#{DOPS_PTypeState},
+		#{DOPS_Template}
+	)
+  </insert>
+
+  <update id="modOutDops" parameterType="map">
+  	update Out_DOPS set
+		DOPS_TecType=#{DOPS_TecType},
+		DOPS_Time=#{DOPS_Time},
+		DOPS_Address=#{DOPS_Address},
+		DOPS_Name=#{DOPS_Name},
+		DOPS_Age=#{DOPS_Age},
+		DOPS_Sex=#{DOPS_Sex},
+		DOPS_PType=#{DOPS_PType},
+		DOPS_PDiagnosis=#{DOPS_PDiagnosis},
+		DOPS_Operate=#{DOPS_Operate},
+		DOPS_Num=#{DOPS_Num},
+		DOPS_Level=#{DOPS_Level},
+		DOPS_ReviewTime=#{DOPS_ReviewTime},
+		DOPS_Feedback=#{DOPS_Feedback},
+		DOPS_TecScore=#{DOPS_TecScore},
+		DOPS_TecMessage=#{DOPS_TecMessage},
+		DOPS_StuScore=#{DOPS_StuScore},
+        DOPS_TecID=(select UserTecID from UserRealTec where UCSID = #{doctorFlow}),
+        DOPS_PTypeState=#{DOPS_PTypeState}
+	where DOPS_UCSID=#{doctorFlow}
+  </update>
+
+  <resultMap id="miniCexMap" type="hashmap">
+    <result column="Mini_ID"  property="Mini_ID" javaType="java.lang.String"/>
+	<result column="Mini_PTypeState"  property="Mini_PTypeState" javaType="java.lang.String"/>
+	<result column="Mini_PDiagnosis"  property="Mini_PDiagnosis" javaType="java.lang.String"/>
+	<result column="Mini_Operate"  property="Mini_Operate" javaType="java.lang.String"/>
+	<result column="Mini_Num"  property="Mini_Num" javaType="java.lang.String"/>
+	<result column="Mini_ReviewTime"  property="Mini_ReviewTime" javaType="java.lang.String"/>
+	<result column="Mini_Feedback"  property="Mini_Feedback" javaType="java.lang.String"/>
+	<result column="Mini_TecScore"  property="Mini_TecScore" javaType="java.lang.String"/>
+	<result column="Mini_TecMessage"  property="Mini_TecMessage" javaType="java.lang.String"/>
+	<result column="Mini_StuScore"  property="Mini_StuScore" javaType="java.lang.String"/>
+	<result column="Mini_TecID"  property="Mini_TecID" javaType="java.lang.String"/>
+	<result column="Mini_UCSID"  property="Mini_UCSID" javaType="java.lang.String"/>
+	<result column="Mini_UserID"  property="Mini_UserID" javaType="java.lang.String"/>
+	<result column="Mini_State"  property="Mini_State" javaType="java.lang.Integer"/>
+	<result column="Mini_TecType"  property="Mini_TecType" javaType="java.lang.String"/>
+	<result column="Mini_Time"  property="Mini_Time" javaType="java.lang.String"/>
+	<result column="Mini_Address"  property="Mini_Address" javaType="java.lang.String"/>
+	<result column="Mini_Name"  property="Mini_Name" javaType="java.lang.String"/>
+	<result column="Mini_Age"  property="Mini_Age" javaType="java.lang.String"/>
+	<result column="Mini_Sex"  property="Mini_Sex" javaType="java.lang.String"/>
+	<result column="Mini_PType"  property="Mini_PType" javaType="java.lang.String"/>
+  </resultMap>
+
+  <select id="readOutMiniCex" resultMap="miniCexMap">
+  	select top 1
+  	  Mini_ID,Mini_PTypeState,Mini_PDiagnosis,Mini_Operate,Mini_Num,Mini_ReviewTime,Mini_Feedback,Mini_TecScore,Mini_TecMessage,Mini_StuScore,Mini_TecID,Mini_UCSID,Mini_UserID,Mini_State,Mini_TecType,Mini_Time,Mini_Address,Mini_Name,Mini_Age,Mini_Sex,Mini_PType
+  	from  Out_Mini_CEX
+	where Mini_UCSID = #{doctorFlow}
+  </select>
+
+  <insert id="addOutMiniCex" parameterType="map">
+  	insert into Out_Mini_CEX(
+		Mini_ID,
+		Mini_PTypeState,
+		Mini_PDiagnosis,
+		Mini_Operate,
+		Mini_Num,
+		Mini_ReviewTime,
+		Mini_Feedback,
+		Mini_TecScore,
+		Mini_TecMessage,
+		Mini_StuScore,
+		Mini_TecID,
+		Mini_UCSID,
+		Mini_UserID,
+		Mini_State,
+		Mini_TecType,
+		Mini_Time,
+		Mini_Address,
+		Mini_Name,
+		Mini_Age,
+		Mini_Sex,
+		Mini_PType
+	)
+	values
+	(
+		#{Mini_ID},
+		#{Mini_PTypeState},
+		#{Mini_PDiagnosis},
+		#{Mini_Operate},
+		#{Mini_Num},
+		#{Mini_ReviewTime},
+		#{Mini_Feedback},
+		#{Mini_TecScore},
+		#{Mini_TecMessage},
+		#{Mini_StuScore},
+		(select UserTecID from UserRealTec where UCSID = #{doctorFlow}),
+		#{doctorFlow},
+		0,
+		0,
+		#{Mini_TecType},
+		#{Mini_Time},
+		#{Mini_Address},
+		#{Mini_Name},
+		#{Mini_Age},
+		#{Mini_Sex},
+		#{Mini_PType}
+	)
+  </insert>
+	<insert id="insertItemScore">
+		INSERT INTO TemplateAssessmentItemScore
+		(TSFlow,Skill_ID,TItemFlow,Score)        VALUES
+		(newid(),#{skillId},#{tItemFlow},#{score})
+	</insert>
+	<insert id="insertOutSkill">
+		Insert into Out_Skill(Skill_ID,Skill_PatientName,Skill_No,Skill_Time,Skill_Name,Skill_Score,Skill_UCSID,Skill_TFlow)
+		values (#{skillId},#{skill_patientName},#{skill_no},#{skill_time},#{skill_name},#{skill_score},#{doctorFlow},#{skillFlow})
+	</insert>
+	<insert id="insertOutPatient">
+		insert into Out_Patient(Patient_ID,Patient_Name,Patient_Score,Patient_No,Patient_Remark,Patient_UCSID,Patient_TecID,Patient_Time,Patient_Type,Patient_TypeName)
+		values (#{patientId},#{patient_name},#{patient_score},#{patient_no},#{patient_remark},#{doctorFlow},#{userFlow},#{currDateTime2},#{patientTypeId},#{patientTypeName})
+	</insert>
+	<insert id="insertPatientItemScore">
+		INSERT INTO Out_PatientItemScore  (PTFlow,Patient_ID,Score,ScoreIndex)
+		VALUES (newid(),#{patientId},#{s},#{index})
+	</insert>
+
+	<update id="modOutMiniCex" parameterType="map">
+  	update Out_Mini_CEX set
+      Mini_PTypeState = #{Mini_PTypeState },
+      Mini_PDiagnosis = #{Mini_PDiagnosis },
+      Mini_Operate = #{Mini_Operate },
+      Mini_Num = #{Mini_Num },
+      Mini_ReviewTime = #{Mini_ReviewTime },
+      Mini_Feedback = #{Mini_Feedback },
+      Mini_TecScore = #{Mini_TecScore },
+      Mini_TecMessage = #{Mini_TecMessage },
+      Mini_StuScore = #{Mini_StuScore },
+      Mini_TecID = (select UserTecID from UserRealTec where UCSID = #{doctorFlow}),
+      Mini_TecType = #{Mini_TecType },
+      Mini_Time = #{Mini_Time },
+      Mini_Address = #{Mini_Address },
+      Mini_Name = #{Mini_Name },
+      Mini_Age = #{Mini_Age },
+      Mini_Sex = #{Mini_Sex },
+      Mini_PType = #{Mini_PType }
+    where Mini_UCSID = #{doctorFlow}
+  </update>
+
+  <resultMap id="evalOutSecBriefMap" type="hashmap">
+    <result column="UCSID"  property="UCSID" javaType="java.lang.String"/>
+	<result column="TrueName"  property="TrueName" javaType="java.lang.String"/>
+  </resultMap>
+
+  <select id="getWaitEvalOutSecBriefList" resultMap="evalOutSecBriefMap">
+	select UserRealTec.UCSID,TrueName
+		from UserRealTec
+		inner join UserInfo on UserInfo.UserID = UserRealTec.UserDipID
+		left join HosSection on HosSection.HosSecID = UserRealTec.HosSecID
+		left join OutSecBrief on OutSecBrief.UCSID = UserRealTec.UCSID
+	where UserTecID = #{doctorFlow} and VerifyState = 0  and CheckStatus = 0
+  </select>
+
+  <resultMap id="arrangeActivityMap" type="hashmap">
+    <result column="arrangeCount"  property="arrangeCount" javaType="java.lang.Integer"/>
+  </resultMap>
+
+  <select id="getWaitArrangeActivityCount" resultMap="arrangeActivityMap">
+	select COUNT(*) as arrangeCount
+		from CaseDiscuss
+		left join DicItem on DicItem.DicItemID = CaseDiscuss.CaDisPlayClass
+		left join (select COUNT(FCaDisID) as CaCount,FCaDisID from CaseDiscuss
+		group by  FCaDisID) as Temp on Temp.FCaDisID = CaseDiscuss.CaDisID
+	where  UserType = 36 AND TecID = #{doctorFlow}
+		AND CaseDiscuss.FCaDisID IS NULL
+		AND CheckStatus = 0
+  </select>
+
+  <resultMap id="confirmActivityMap" type="hashmap">
+	<result column="CaDisID"  property="CaDisID" javaType="java.lang.String"/>
+	<result column="CaCount"  property="CaCount" javaType="java.lang.String"/>
+	<result column="FCaDisIDCount"  property="FCaDisIDCount" javaType="java.lang.String"/>
+	<result column="CaName"  property="CaName" javaType="java.lang.String"/>
+  </resultMap>
+
+  <select id="getNeedConfirmActives" resultMap="confirmActivityMap">
+	select CaDisID,isNull(CaCount,0) as CaCount,isNull(FCaDisIDCount,0) as FCaDisIDCount,CaName
+	from CaseDiscuss
+	left join (select COUNT(FCaDisID) as CaCount,FCaDisID from CaseDiscuss
+	group by  FCaDisID) as temp on Temp.FCaDisID = CaseDiscuss.CaDisID
+	left join (select Score,FCaDisID,COUNT(FCaDisID) as FCaDisIDCount
+	from CaseDiscuss
+	where FCaDisID is not null and CheckStatus != 6
+	group by Score,FCaDisID
+	having score > 0) as TempCount on TempCount.FCaDisID = CaseDiscuss.CaDisID
+	where  UserType = 36
+	AND TecID = #{userFlow} AND CaseDiscuss.FCaDisID IS NULL
+	and CheckStatus = 4
+	and FCaDisIDCount > 0
+  </select>
+
+  <resultMap id="confirmActivityUserMap" type="hashmap">
+	<result column="CaDisID"  property="CaDisID" javaType="java.lang.String"/>
+	<result column="UserID"  property="UserID" javaType="java.lang.String"/>
+	<result column="FCaDisID"  property="FCaDisID" javaType="java.lang.String"/>
+	<result column="TrueName"  property="TrueName" javaType="java.lang.String"/>
+	<result column="CheckStatus"  property="CheckStatus" javaType="java.lang.String"/>
+  </resultMap>
+
+  <select id="getNeedConfirmActiveUsers" resultMap="confirmActivityUserMap">
+	SELECT CaDisID,UserInfo.UserID,FCaDisID,CheckStatus,TrueName
+	,Isnull(Score,0) as Score
+	FROM CaseDiscuss
+	LEFT JOIN UserInfo ON UserInfo.UserID = CaseDiscuss.UserID
+	LEFT JOIN UserRole ON UserRole.UserID = UserInfo.UserID
+	LEFT JOIN Role ON Role.RoleID = UserRole.RoleID
+	WHERE FCaDisID = #{dataFlow} ORDER BY CaDisTime DESC
+  </select>
+
+	<resultMap id="DataAuditMap" type="hashmap">
+		<result column="DataTypeName"  property="dataTypeName" javaType="java.lang.String"/>
+		<result column="DataTypeId"  property="dataTypeId" javaType="java.lang.String"/>
+		<result column="UnCheck"  property="notAuditNum" javaType="java.lang.String"/>
+	</resultMap>
+  <select id="getDataAudit" resultMap="DataAuditMap">
+	  WITH NoCheckDynamicData1 as(select BHID,count(BHID) AS Finish from BigHistoryCase
+	  left join Rec_BigHistory on Rec_BigHistory.FromID = BigHistoryCase.BHID
+	  where cysecid = #{cySecId} AND userid = #{doctorFlow}  and  CheckStatus !=2
+	  GROUP BY BHID,TableID,CySecID,RequireNumber),
+	  CheckDynamicData1 as(select BHID,count(BHID) AS CheckCount from BigHistoryCase
+	  left join Rec_BigHistory on Rec_BigHistory.FromID = BigHistoryCase.BHID
+	  where cysecid = #{cySecId} AND userid = #{doctorFlow} and CheckStatus > 0
+	  GROUP BY BHID,TableID,CySecID,RequireNumber),
+	  NoCheckDynamicData2 as(select TableID,case FillType when '0' then sum(otherNum) else count(CaID) end AS Finish from CaseClass
+	  left join Rec_CaseClass on Rec_CaseClass.FromID = CaseClass.CaID
+	  where cysecid = #{cySecId} AND userid = #{doctorFlow}
+	  GROUP BY TableID,CySecID,CaHoldDegree,FillType),
+	  CheckDynamicData2 as(select TableID,case FillType when '0' then sum(otherNum) else count(CaID) end AS CheckCount from CaseClass
+	  left join Rec_CaseClass on Rec_CaseClass.FromID = CaseClass.CaID
+	  where cysecid = #{cySecId} AND userid = #{doctorFlow} and CheckStatus > ((case FillType when '0' then -1 else 0 end ))
+	  GROUP BY TableID,CySecID,CaHoldDegree,FillType),
+
+	  NoCheckDynamicData3 as(select TableID,case FillType when '0' then sum(otherNum) else count(OpID) end AS Finish from OperateSkill
+	  left join Rec_OperateSkill on Rec_OperateSkill.FromID = OperateSkill.OpID
+	  where cysecid = #{cySecId} AND userid = #{doctorFlow}
+	  GROUP BY TableID,CySecID,OpHoldDegree,FillType),
+	  CheckDynamicData3 as(select TableID,case FillType when '0' then sum(otherNum) else count(OpID) end AS CheckCount from OperateSkill
+	  left join Rec_OperateSkill on Rec_OperateSkill.FromID = OperateSkill.OpID
+	  where cysecid = #{cySecId} AND userid = #{doctorFlow} and CheckStatus > ((case FillType when '0' then -1 else 0 end ))
+	  GROUP BY TableID,CySecID,OpHoldDegree,FillType),
+
+	  NoCheckDynamicData4 as(select TableID,case FillType when '0' then sum(otherNum) else count(OpsID) end AS Finish from OPSSkill
+	  left join Rec_POSSkill on Rec_POSSkill.FromID = OPSSkill.OpsID
+	  where cysecid = #{cySecId} AND userid = #{doctorFlow}
+	  GROUP BY TableID,CySecID,OpsHoldDegree,FillType),
+	  CheckDynamicData4 as(select TableID, case FillType when '0' then sum(otherNum) else count(OpsID) end AS CheckCount from OPSSkill
+	  left join Rec_POSSkill on Rec_POSSkill.FromID = OPSSkill.OpsID
+	  where cysecid = #{cySecId} AND userid = #{doctorFlow} and CheckStatus > ((case FillType when '0' then -1 else 0 end ))
+	  GROUP BY TableID,CySecID,OpsHoldDegree,FillType),
+
+	  NoCheckDynamicData5 as(select TableID,count(ORID) AS Finish from OutpatientRecords
+	  left join Rec_Outpatient on Rec_Outpatient.FromID = OutpatientRecords.ORID
+	  where cysecid = #{cySecId} AND userid = #{doctorFlow}  and  CheckStatus != 2
+	  GROUP BY TableID,CySecID),
+	  CheckDynamicData5 as(select TableID,count(ORID) AS CheckCount from OutpatientRecords
+	  left join Rec_Outpatient on Rec_Outpatient.FromID = OutpatientRecords.ORID
+	  where cysecid = #{cySecId} AND userid = #{doctorFlow} and CheckStatus > 0
+	  GROUP BY TableID,CySecID)
+	  SELECT '大病历' as DataTypeName,'mr' as DataTypeId,isnull((isnull(Finish,0)-isnull(CheckCount,0)),0) AS UnCheck FROM NoCheckDynamicData1
+	  left join CheckDynamicData1 on CheckDynamicData1.BHID = NoCheckDynamicData1.BHID
+	  union
+	  SELECT '病种' as DataTypeName,'disease' as DataTypeId,isnull((isnull(Finish,0)-isnull(CheckCount,0)),0) AS UnCheck FROM  NoCheckDynamicData2
+	  left join CheckDynamicData2 on CheckDynamicData2.TableID = NoCheckDynamicData2.TableID
+	  union
+	  SELECT '操作技能' as DataTypeName,'skill' as DataTypeId,isnull((isnull(Finish,0)-isnull(CheckCount,0)),0) AS UnCheck FROM NoCheckDynamicData3
+	  left join CheckDynamicData3 on CheckDynamicData3.TableID = NoCheckDynamicData3.TableID
+	  union
+	  SELECT '手术' as DataTypeName,'operation' as DataTypeId,isnull((isnull(Finish,0)-isnull(CheckCount,0)),0) AS UnCheck FROM  NoCheckDynamicData4
+	  left join CheckDynamicData4 on CheckDynamicData4.TableID = NoCheckDynamicData4.TableID
+	  union
+	  SELECT '门诊病历' as DataTypeName,'disciple' as DataTypeId,isnull((isnull(Finish,0)-isnull(CheckCount,0)),0) AS UnCheck FROM  NoCheckDynamicData5
+	  left join CheckDynamicData5 on CheckDynamicData5.TableID = NoCheckDynamicData5.TableID
+
+  </select>
+
+  <update id="confirmActiveUsers" parameterType="map">
+  	update CaseDiscuss set checkStatus=6 where CaDisID = #{CaDisID}
+  </update>
+
+	<select id="readTheoryScore" parameterType="string" resultType="java.lang.Float">
+      select TestResult from T_DepartmentalExaminationResult where UCSID = #{doctorFlow} and IsTest=1
+  </select>
+
+	<resultMap id="getMrDatasMap" type="hashmap">
+		<result column="RecID"  property="RecID" javaType="java.lang.String"/>
+		<result column="CheckStatusName"  property="CheckStatusName" javaType="java.lang.String"/>
+		<result column="CheckStatus"  property="CheckStatus" javaType="java.lang.String"/>
+		<result column="FromID"  property="FromID" javaType="java.lang.String"/>
+		<result column="RecDate"  property="RecDate" javaType="java.lang.String"/>
+		<result column="DocCount"  property="DocCount" javaType="java.lang.String"/>
+		<result column="DocGRPID"  property="DocGRPID" javaType="java.lang.String"/>
+		<result column="Col_23_1"  property="Col231" javaType="java.lang.String"/>
+		<result column="Col_23_2"  property="Col232" javaType="java.lang.String"/>
+		<result column="Col_23_3"  property="Col233" javaType="java.lang.String"/>
+		<result column="Col_23_4"  property="Col234" javaType="java.lang.String"/>
+		<result column="Col_23_5"  property="Col235" javaType="java.lang.String"/>
+		<result column="Col_23_6"  property="Col236" javaType="java.lang.String"/>
+	</resultMap>
+
+	<select id="getMrDatas" resultMap="getMrDatasMap">
+
+		SELECT * FROM (
+		SELECT ROW_NUMBER() OVER (order by T.RecDate,T.RecID)AS Row, T.*
+		from (
+				SELECT RecID  , case CheckStatus when 0 then '未审核'
+				 when 1 then '通过'
+                                 when 2 then '否决'
+				                 when 3 then '退回修改'
+                                 end as CheckStatusName,CheckStatus,
+                                FromID, convert(varchar(100),RecDate,23) RecDate,DocCount, DocGRPID ,
+                                RecData1 as Col_23_1,RecData2 as Col_23_2,RecData3 as Col_23_3,RecData4 as Col_23_4,RecData5 as Col_23_5,RecData6 as Col_23_6
+                                FROM Rec_BigHistory
+                                LEFT JOIN BigHistoryCase ON BigHistoryCase.BHID = Rec_BigHistory.FromID
+                                WHERE (UserID = #{doctorFlow}) AND (CySecID = #{cySecId})
+                                <if test="schStatusId =='Entering'.toString()">
+									and CheckStatus =0
+								</if>
+                                <if test="schStatusId =='Exited'.toString()">
+									and CheckStatus in (0,1,2,3)
+								</if>
+
+		)as T
+		) TT
+		WHERE TT.Row between #{start} and #{end}
+		ORDER BY RecDate ,RecID
+	</select>
+	<select id="getAuditMrDatas" resultMap="getMrDatasMap">
+		SELECT * FROM (
+				SELECT RecID  , case CheckStatus when 0 then '未审核'
+				 when 1 then '通过'
+                                 when 2 then '否决'
+				                 when 3 then '退回修改'
+                                 end as CheckStatusName,CheckStatus,
+                                FromID, convert(varchar(100),RecDate,23) RecDate,DocCount, DocGRPID ,
+                                RecData1 as Col_23_1,RecData2 as Col_23_2,RecData3 as Col_23_3,RecData4 as Col_23_4,RecData5 as Col_23_5,RecData6 as Col_23_6
+                                FROM Rec_BigHistory
+                                LEFT JOIN BigHistoryCase ON BigHistoryCase.BHID = Rec_BigHistory.FromID
+                                WHERE (UserID = #{doctorFlow}) AND (CySecID = #{cySecId})
+									and CheckStatus =0
+		)as T
+		ORDER BY RecDate ,RecID
+	</select>
+	<select id="getMrFinishMap" resultType="java.util.HashMap">
+		WITH  DynamicData AS(select BHID,TableID,CySecID,RequireNumber from BigHistoryCase
+		left join Rec_BigHistory on Rec_BigHistory.FromID = BigHistoryCase.BHID
+		where cysecid = #{cySecId}
+		GROUP BY BHID,TableID,CySecID,RequireNumber),
+		NoCheckDynamicData as(select BHID,count(BHID) AS Finish from BigHistoryCase
+		left join Rec_BigHistory on Rec_BigHistory.FromID = BigHistoryCase.BHID
+		where cysecid = #{cySecId} AND userid =  #{doctorFlow}  and  CheckStatus <![CDATA[<>]]> 2
+		GROUP BY BHID,TableID,CySecID,RequireNumber)
+		SELECT DynamicData.BHID,TableID,CySecID,RequireNumber,isnull(Finish,0) as Finish FROM DynamicData
+		left join NoCheckDynamicData on NoCheckDynamicData.BHID = DynamicData.BHID
+
+	</select>
+	<resultMap id="getDiseaseDatasMap" type="hashmap">
+		<result column="RecID"  property="RecID" javaType="java.lang.String"/>
+		<result column="otherCaseClass"  property="otherCaseClass" javaType="java.lang.String"/>
+		<result column="CheckStatusName"  property="CheckStatusName" javaType="java.lang.String"/>
+		<result column="CheckStatus"  property="CheckStatus" javaType="java.lang.String"/>
+		<result column="FromID"  property="FromID" javaType="java.lang.String"/>
+		<result column="RecDate"  property="RecDate" javaType="java.lang.String"/>
+		<result column="DocCount"  property="DocCount" javaType="java.lang.String"/>
+		<result column="DocGRPID"  property="DocGRPID" javaType="java.lang.String"/>
+		<result column="Col_25_1"  property="Col251" javaType="java.lang.String"/>
+		<result column="Col_25_2"  property="Col252" javaType="java.lang.String"/>
+		<result column="Col_25_3"  property="Col253" javaType="java.lang.String"/>
+		<result column="Col_25_4"  property="Col254" javaType="java.lang.String"/>
+		<result column="Col_25_5"  property="Col255" javaType="java.lang.String"/>
+		<result column="Col_25_6"  property="Col256" javaType="java.lang.String"/>
+		<result column="Col_25_7"  property="Col257" javaType="java.lang.String"/>
+	</resultMap>
+
+	<select id="getDiseaseDatas" resultMap="getDiseaseDatasMap">
+		SELECT * FROM (
+		SELECT ROW_NUMBER() OVER (order by T.RecDate,T.RecID)AS Row, T.*
+		from (
+		SELECT RecID , case CheckStatus when 0 then '未审核'
+		when 1 then '通过' when 2 then '否决' when 3 then '退回修改'
+		end as CheckStatusName,CheckStatus,
+		FromID, convert(varchar(100),RecDate,23) RecDate,DocCount, DocGRPID ,
+		RecData1 as Col_25_1,RecData2 as Col_25_2,
+		RecData3 as Col_25_3,RecData4 as Col_25_4,
+		RecData5 as Col_25_5,RecData6 as Col_25_6,RecData7 as Col_25_7
+		FROM   Rec_CaseClass  WHERE (UserID = #{doctorFlow})
+		AND FromID in (select caid from caseclass where CySecID =#{cySecId})
+		<if test="schStatusId =='Entering'.toString()">
+					  	and CheckStatus =0
+		</if>
+        <if test="schStatusId =='Exited'.toString()">
+			and CheckStatus in (0,1,2,3)
+		</if>
+
+		)as T
+		) TT
+		WHERE TT.Row between #{start} and #{end}
+		ORDER BY RecDate ,RecID
+	</select>
+	<select id="getAuditDiseaseDatas" resultMap="getDiseaseDatasMap">
+		SELECT * FROM   (
+		SELECT RecID , case CheckStatus when 0 then '未审核'
+		when 1 then '通过' when 2 then '否决' when 3 then '退回修改'
+		end as CheckStatusName,CheckStatus,
+		FromID, convert(varchar(100),RecDate,23) RecDate,DocCount, DocGRPID ,
+		RecData1 as Col_25_1,RecData2 as Col_25_2,
+		RecData3 as Col_25_3,RecData4 as Col_25_4,
+		RecData5 as Col_25_5,RecData6 as Col_25_6,RecData7 as Col_25_7
+		FROM   Rec_CaseClass  WHERE (UserID = #{doctorFlow})
+		AND FromID in (select caid from caseclass where CySecID =#{cySecId})
+					  	and CheckStatus =0
+
+		)as T
+		ORDER BY RecDate ,RecID
+	</select>
+	<select id="getDiseaseFinishMap" resultType="java.util.HashMap">
+	WITH DynamicData AS(select sum(CaRequireNumber) as RequireNumber,cysecid from CaseClass
+  	where cysecid=#{cySecId}  GROUP BY cysecid),
+    NoCheckDynamicData as(select cysecid,case FillType when '0' then sum(otherNum) else count(CaID) end AS Finish from CaseClass
+    left join Rec_CaseClass on Rec_CaseClass.FromID = CaseClass.CaID
+    where cysecid = #{cySecId} AND userid = #{doctorFlow}
+    GROUP BY TableID,CySecID,CaHoldDegree,FillType)
+    SELECT DynamicData.cysecid,RequireNumber,Finish from DynamicData
+    left join NoCheckDynamicData on DynamicData.cysecid=NoCheckDynamicData.cysecid
+	</select>
+	<resultMap id="getSkillDatasMap" type="hashmap">
+		<result column="RecID"  property="RecID" javaType="java.lang.String"/>
+		<result column="otherSkill"  property="otherSkill" javaType="java.lang.String"/>
+		<result column="CheckStatusName"  property="CheckStatusName" javaType="java.lang.String"/>
+		<result column="CheckStatus"  property="CheckStatus" javaType="java.lang.String"/>
+		<result column="FromID"  property="FromID" javaType="java.lang.String"/>
+		<result column="RecDate"  property="RecDate" javaType="java.lang.String"/>
+		<result column="DocCount"  property="DocCount" javaType="java.lang.String"/>
+		<result column="DocGRPID"  property="DocGRPID" javaType="java.lang.String"/>
+		<result column="Col_26_1"  property="Col261" javaType="java.lang.String"/>
+		<result column="Col_26_2"  property="Col262" javaType="java.lang.String"/>
+		<result column="Col_26_3"  property="Col263" javaType="java.lang.String"/>
+		<result column="Col_26_4"  property="Col264" javaType="java.lang.String"/>
+		<result column="Col_26_5"  property="Col265" javaType="java.lang.String"/>
+		<result column="Col_26_6"  property="Col266" javaType="java.lang.String"/>
+		<result column="Col_26_7"  property="Col267" javaType="java.lang.String"/>
+	</resultMap>
+
+	<select id="getSkillDatas" resultMap="getSkillDatasMap">
+		SELECT * FROM (
+		SELECT ROW_NUMBER() OVER (order by T.RecDate,T.RecID)AS Row, T.*
+		from (
+			SELECT RecID, case CheckStatus when 0 then '未审核'
+			when 1 then '通过'
+			when 2 then '否决'
+			when 3 then '退回修改'
+			end as CheckStatusName,CheckStatus
+			FromID, convert(varchar(100),RecDate,23) RecDate,
+			DocCount, DocGRPID ,RecData1 as Col_26_1,
+			RecData2 as Col_26_2,RecData3 as Col_26_3,RecData4 as Col_26_4,RecData5 as Col_26_5,RecData6 as Col_26_6,RecData7 as Col_26_7
+			FROM Rec_OperateSkill
+			WHERE (UserID = #{doctorFlow}) AND (FromID in (select opid from OperateSkill where cysecid=#{cySecId} ))
+
+			<if test="schStatusId =='Entering'.toString()">
+				 and CheckStatus =0
+			</if>
+			<if test="schStatusId =='Exited'.toString()">
+				and CheckStatus in (0,1,2,3)
+			</if>
+
+		)as T
+		) TT
+		WHERE TT.Row between #{start} and #{end}
+		ORDER BY RecDate ,RecID
+	</select>
+	<select id="getAuditSkillDatas" resultMap="getSkillDatasMap">
+		SELECT * FROM  (
+			SELECT RecID, case CheckStatus when 0 then '未审核'
+			when 1 then '通过'
+			when 2 then '否决'
+			when 3 then '退回修改'
+			end as CheckStatusName,CheckStatus,
+			FromID, convert(varchar(100),RecDate,23) RecDate,
+			DocCount, DocGRPID ,RecData1 as Col_26_1,
+			RecData2 as Col_26_2,RecData3 as Col_26_3,RecData4 as Col_26_4,RecData5 as Col_26_5,RecData6 as Col_26_6,RecData7 as Col_26_7
+			FROM Rec_OperateSkill
+			WHERE (UserID = #{doctorFlow}) AND (FromID in (select opid from OperateSkill where cysecid=#{cySecId} ))
+				 and CheckStatus =0
+
+		)as T
+		ORDER BY RecDate ,RecID
+	</select>
+	<select id="getSkillFinishMap" resultType="java.util.HashMap">
+		WITH DynamicData AS(select sum(OpRequireNumber) as RequireNumber,cysecid from OperateSkill     where cysecid=#{cySecId}  GROUP BY cysecid),
+		NoCheckDynamicData as(select cysecid,case FillType when '0' then sum(otherNum) else count(OpID) end AS Finish from OperateSkill
+		left join Rec_OperateSkill on Rec_OperateSkill.FromID = OperateSkill.OpID
+		where cysecid = #{cySecId} AND userid = #{doctorFlow}
+		GROUP BY TableID,CySecID,OpHoldDegree,FillType)
+		SELECT DynamicData.cysecid,RequireNumber,Finish
+		from DynamicData left join NoCheckDynamicData on DynamicData.cysecid=NoCheckDynamicData.cysecid
+
+	</select>
+	<resultMap id="getOperationDatasMap" type="hashmap">
+		<result column="RecID"  property="RecID" javaType="java.lang.String"/>
+		<result column="otherPOSSkill"  property="otherPOSSkill" javaType="java.lang.String"/>
+		<result column="CheckStatusName"  property="CheckStatusName" javaType="java.lang.String"/>
+		<result column="CheckStatus"  property="CheckStatus" javaType="java.lang.String"/>
+		<result column="FromID"  property="FromID" javaType="java.lang.String"/>
+		<result column="RecDate"  property="RecDate" javaType="java.lang.String"/>
+		<result column="DocCount"  property="DocCount" javaType="java.lang.String"/>
+		<result column="DocGRPID"  property="DocGRPID" javaType="java.lang.String"/>
+		<result column="Col_27_1"  property="Col271" javaType="java.lang.String"/>
+		<result column="Col_27_2"  property="Col272" javaType="java.lang.String"/>
+		<result column="Col_27_3"  property="Col273" javaType="java.lang.String"/>
+		<result column="Col_27_4"  property="Col274" javaType="java.lang.String"/>
+		<result column="Col_27_5"  property="Col275" javaType="java.lang.String"/>
+		<result column="Col_27_6"  property="Col276" javaType="java.lang.String"/>
+		<result column="Col_27_7"  property="Col277" javaType="java.lang.String"/>
+	</resultMap>
+
+	<select id="getOperationDatas" resultMap="getOperationDatasMap">
+		SELECT * FROM (
+		SELECT ROW_NUMBER() OVER (order by T.RecDate ,T.RecID)AS Row, T.*
+		from (
+			SELECT RecID, case CheckStatus when 0 then '未审核'
+			when 1 then '通过'
+			when 2 then '否决'
+			when 3 then '退回修改'
+			end as CheckStatusName,CheckStatus,
+			FromID, convert(varchar(100),RecDate,23) RecDate,DocCount, DocGRPID ,RecData1 as Col_27_1,RecData2 as Col_27_2,RecData3 as Col_27_3,RecData4 as Col_27_4,RecData5 as Col_27_5,RecData6 as Col_27_6,RecData7 as Col_27_7
+			FROM Rec_POSSkill
+			WHERE (UserID = #{doctorFlow}) AND (FromID in (select opsid from OPSSkill where cysecid= #{cySecId}))
+
+			<if test="schStatusId =='Entering'.toString()">
+				 and CheckStatus =0
+			</if>
+			<if test="schStatusId =='Exited'.toString()">
+				and CheckStatus in (0,1,2,3)
+			</if>
+		)as T
+		) TT
+		WHERE TT.Row between #{start} and #{end}
+		ORDER BY RecDate ,RecID
+	</select>
+	<select id="getAuditOperationDatas" resultMap="getOperationDatasMap">
+		SELECT * FROM  (
+			SELECT RecID, case CheckStatus when 0 then '未审核'
+			when 1 then '通过'
+			when 2 then '否决'
+			when 3 then '退回修改'
+			end as CheckStatusName,CheckStatus,
+			FromID, convert(varchar(100),RecDate,23) RecDate,DocCount, DocGRPID ,RecData1 as Col_27_1,RecData2 as Col_27_2,RecData3 as Col_27_3,RecData4 as Col_27_4,RecData5 as Col_27_5,RecData6 as Col_27_6,RecData7 as Col_27_7
+			FROM Rec_POSSkill
+			WHERE (UserID = #{doctorFlow}) AND (FromID in (select opsid from OPSSkill where cysecid= #{cySecId}))
+
+				 and CheckStatus =0
+		)as T
+		ORDER BY RecDate ,RecID
+	</select>
+	<select id="getOperationFinishMap" resultType="java.util.HashMap">
+		WITH DynamicData AS(select sum(OpsRequireNumber) as RequireNumber,cysecid from OPSSkill     where cysecid=#{cySecId}  GROUP BY cysecid ),
+                    NoCheckDynamicData as(select cysecid,case FillType when '0' then sum(otherNum) else count(OpsID) end AS Finish from OPSSkill
+                    left join Rec_POSSkill on Rec_POSSkill.FromID = OPSSkill.OpsID
+                    where cysecid = #{cySecId} AND userid = #{doctorFlow}
+                    GROUP BY TableID,CySecID,OpsHoldDegree,FillType)
+                    SELECT DynamicData.cysecid,RequireNumber,Finish from DynamicData left join NoCheckDynamicData on DynamicData.cysecid=NoCheckDynamicData.cysecid
+
+	</select>
+	<resultMap id="getDiscipleDatasMap" type="hashmap">
+		<result column="RecID"  property="RecID" javaType="java.lang.String"/>
+		<result column="CheckStatusName"  property="CheckStatusName" javaType="java.lang.String"/>
+		<result column="CheckStatus"  property="CheckStatus" javaType="java.lang.String"/>
+		<result column="FromID"  property="FromID" javaType="java.lang.String"/>
+		<result column="RecDate"  property="RecDate" javaType="java.lang.String"/>
+		<result column="DocCount"  property="DocCount" javaType="java.lang.String"/>
+		<result column="DocGRPID"  property="DocGRPID" javaType="java.lang.String"/>
+		<result column="Col_32_1"  property="Col321" javaType="java.lang.String"/>
+		<result column="Col_32_2"  property="Col322" javaType="java.lang.String"/>
+		<result column="Col_32_3"  property="Col323" javaType="java.lang.String"/>
+		<result column="Col_32_4"  property="Col324" javaType="java.lang.String"/>
+		<result column="Col_32_5"  property="Col325" javaType="java.lang.String"/>
+		<result column="Col_32_6"  property="Col326" javaType="java.lang.String"/>
+		<result column="Col_32_7"  property="Col327" javaType="java.lang.String"/>
+	</resultMap>
+
+	<select id="getDiscipleDatas" resultMap="getDiscipleDatasMap">
+		SELECT * FROM (
+		SELECT ROW_NUMBER() OVER (order by T.RecDate,T.RecID)AS Row, T.*
+		from (
+			SELECT RecID , case CheckStatus when 0 then '未审核'
+			when 1 then '通过'
+			when 2 then '否决'
+			when 3 then '退回修改'
+			end as CheckStatusName,CheckStatus,
+			FromID, convert(varchar(100),RecDate,23) RecDate,DocCount,
+			DocGRPID ,RecData1 as Col_32_1,RecData2 as Col_32_2,
+			RecData3 as Col_32_3,RecData4 as Col_32_4
+			FROM Rec_Outpatient
+			LEFT JOIN OutpatientRecords ON OutpatientRecords.ORID = Rec_Outpatient.FromID
+			WHERE (UserID =  #{doctorFlow}) AND (CySecID =  #{cySecId})
+				 and CheckStatus =0
+
+		)as T
+		) TT
+		WHERE TT.Row between #{start} and #{end}
+		ORDER BY RecDate ,RecID
+	</select>
+	<select id="getAuditDiscipleDatas" resultMap="getDiscipleDatasMap">
+		SELECT * FROM  (
+			SELECT RecID , case CheckStatus when 0 then '未审核'
+			when 1 then '通过'
+			when 2 then '否决'
+			when 3 then '退回修改'
+			end as CheckStatusName,CheckStatus,
+			FromID, convert(varchar(100),RecDate,23) RecDate,DocCount,
+			DocGRPID ,RecData1 as Col_32_1,RecData2 as Col_32_2,
+			RecData3 as Col_32_3,RecData4 as Col_32_4
+			FROM Rec_Outpatient
+			LEFT JOIN OutpatientRecords ON OutpatientRecords.ORID = Rec_Outpatient.FromID
+			WHERE (UserID =  #{doctorFlow}) AND (CySecID =  #{cySecId})
+				 and CheckStatus =0
+
+		)as T
+		ORDER BY RecDate ,RecID
+	</select>
+	<select id="getDiscipleFinishMap" resultType="java.util.HashMap">
+		WITH DynamicData AS(select ORID,TableID,CySecID,RequireNumber from OutpatientRecords
+		left join Rec_Outpatient on Rec_Outpatient.FromID = OutpatientRecords.ORID
+		where cysecid = #{cySecId}
+		GROUP BY ORID,TableID,CySecID,RequireNumber),
+		NoCheckDynamicData as(select ORID,count(ORID) AS Finish from OutpatientRecords
+		left join Rec_Outpatient on Rec_Outpatient.FromID = OutpatientRecords.ORID
+		where cysecid = #{cySecId} AND userid = #{doctorFlow}
+		and  CheckStatus <![CDATA[<>]]>2
+		GROUP BY ORID,TableID,CySecID,RequireNumber)
+		SELECT DynamicData.ORID,TableID,CySecID,RequireNumber,isnull(Finish,0) as Finish  FROM DynamicData
+		left join NoCheckDynamicData on NoCheckDynamicData.ORID = DynamicData.ORID
+	</select>
+	<select id="getMrData" resultMap="getMrDatasMap">
+		SELECT RecID as OnlyRowIndex ,UserID,
+		CheckStatus,FromID,  convert(varchar(100),RecDate,23) RecDate,isnull(DocCount,0) as DocCount,
+		 isnull(DocGRPID,0) as DocGRPID ,RecData1 as Col_23_1,
+		 RecData2 as Col_23_2,RecData3 as Col_23_3,RecData4 as Col_23_4,
+		 RecData5 as Col_23_5,RecData6 as Col_23_6
+        FROM Rec_BigHistory  WHERE RecID = #{dataFlow}
+	</select>
+	<select id="getDiseaseData" resultMap="getDiseaseDatasMap">
+	SELECT RecID as OnlyRowIndex ,UserID, CheckStatus,FromID,otherCaseClass,  convert(varchar(100),RecDate,23) RecDate,
+	isnull(DocCount,0) as DocCount, isnull(DocGRPID,0) as DocGRPID,
+	otherNum,otherStatus ,RecData1 as Col_25_1,
+	RecData2 as Col_25_2,RecData3 as Col_25_3,
+	RecData4 as Col_25_4,RecData5 as Col_25_5,
+	RecData6 as Col_25_6,RecData7 as Col_25_7
+	FROM Rec_CaseClass WHERE RecID = #{dataFlow}
+	</select>
+	<select id="getSkillData" resultMap="getSkillDatasMap">
+		SELECT RecID as OnlyRowIndex ,UserID, CheckStatus,FromID,otherSkill,
+		 convert(varchar(100),RecDate,23) RecDate,isnull(DocCount,0) as DocCount, isnull(DocGRPID,0) as DocGRPID,
+		otherNum,otherStatus ,
+		RecData1 as Col_26_1,
+		RecData2 as Col_26_2,RecData3 as Col_26_3,
+		RecData4 as Col_26_4,RecData5 as Col_26_5,
+		RecData6 as Col_26_6,RecData7 as Col_26_7
+                                FROM Rec_OperateSkill
+                                WHERE RecID = #{dataFlow}
+
+	</select>
+	<select id="getOperationData" resultMap="getOperationDatasMap">
+SELECT RecID as OnlyRowIndex , UserID,CheckStatus,FromID,otherPOSSkill,  convert(varchar(100),RecDate,23) RecDate,isnull(DocCount,0) as DocCount, isnull(DocGRPID,0) as DocGRPID, otherPOSSkill,otherNum,otherStatus ,RecData1 as Col_27_1,RecData2 as Col_27_2,RecData3 as Col_27_3,RecData4 as Col_27_4,RecData5 as Col_27_5,RecData6 as Col_27_6,RecData7 as Col_27_7
+                     FROM Rec_POSSkill  WHERE RecID = #{dataFlow}
+
+</select>
+	<select id="getDiscipleData" resultMap="getDiscipleDatasMap">
+SELECT RecID as OnlyRowIndex ,UserID, CheckStatus,FromID, convert(varchar(100),RecDate,23) RecDate,isnull(DocCount,0) as DocCount,
+ isnull(DocGRPID,0) as DocGRPID,RecData1 as Col_32_1,RecData2 as Col_32_2,RecData3 as Col_32_3,RecData4 as Col_32_4
+ FROM Rec_Outpatient WHERE RecID = #{dataFlow}
+	</select>
+	<select id="getOutSkill" resultType="java.util.Map">
+		SELECT Skill_ID,Skill_PatientName,Skill_No,Skill_Time,Skill_Name,Skill_Score,Skill_UCSID,Skill_TFlow,Skill_AttachID
+		from Out_Skill  where Skill_UCSID=#{ucsid}
+	</select>
+	<select id="getOutPatient" resultType="java.util.Map">
+		SELECT Patient_ID,Patient_Name,Patient_Score,Patient_No,Patient_Remark,Patient_UCSID,Patient_Type,Patient_TecID,Patient_Time,Patient_AttachID
+		from Out_Patient  where Patient_UCSID=#{ucsid}
+	</select>
+	<select id="getOutSecBrief" resultType="java.util.Map">
+		select * from OutSecBrief where UCSID=#{ucsid}
+	</select>
+	<select id="getCycleInfo" resultType="java.util.Map">
+		SELECT  o.HosSecName ,u1.TrueName ,u1.StartYear ,i.HosQC AS HosName ,p.SpName ,  CONVERT(VARCHAR(10), RStartTime, 120) + ' - '+ CONVERT(VARCHAR(10), REndTime, 120) AS CycleDate ,
+             a.TrueName AS TeacherName,b.TrueName AS SecretaryName,u3.TrueName AS ChiefName
+         FROM UserRealCycleSec u
+         LEFT JOIN CycleSection c ON c.CySecID = u.RCySecID
+         LEFT JOIN HosCycleSection h ON h.HosCySecID = u.RHosCySecID
+         LEFT JOIN HosSection o ON o.HosSecID = h.HosSecID
+                LEFT JOIN Section s ON s.SecID = c.SectionID
+                LEFT JOIN HospitalInfo i ON i.HosID = o.HosID
+                LEFT JOIN cycleinfo c1 ON c1.cyid = c.cyid
+                LEFT JOIN UserInfo u1 ON u1.UserID = u.RUserID
+                JOIN Specialty p ON u1.SpecialtyID = p.SpID
+               LEFT JOIN dbo.OutSecBrief f ON u.RUCSID = f.UCSID
+                LEFT JOIN dbo.UserInfo a ON f.TecUserID = a.UserID
+                LEFT JOIN dbo.UserInfo b ON f.SecretaryID = b.UserID
+                LEFT JOIN dbo.UserInfo u3 ON f.ChiefUserID = u3.UserID
+                WHERE RUCSID=#{ucsid}
+	</select>
+	<select id="getSkillList" resultType="java.util.Map">
+		SELECT * FROM (
+		SELECT ROW_NUMBER() OVER (order by T.TDateTime)AS Row, T.*
+		from (
+			select TFlow Skill_TFlow,TName Skill_Name,TState,TDateTime
+			FROM TemplateAssessment  where TState = 1
+			<if test='skillName!=null and skillName!=""'>
+				and TName like '%${skillName}%'
+			</if>
+		)as T
+		) TT
+		WHERE TT.Row between #{start} and #{end}
+		ORDER BY TDateTime
+	</select>
+	<select id="getSkillItems" resultType="java.util.Map">
+		select TItemFlow,TFlow,TItemName,TItemScore,TItemState
+		FROM TemplateAssessmentItem  where  TItemState = 1
+
+		<if test="isMain=='Y'.toString()">
+			AND TFItemFlow IS NULL
+			AND TFlow=#{skillFlow}
+		</if>
+		<if test="isMain=='N'.toString()">
+			AND TFItemFlow =#{skillFlow}
+		</if>
+		ORDER BY TItemIndex
+	</select>
+	<select id="getSkillItemScores" resultType="java.util.Map">
+		select TItemFlow,Score from TemplateAssessmentItemScore  where  Skill_ID =#{skillId}
+	</select>
+	<select id="getSkill" resultType="java.util.Map">
+		select TFlow Skill_TFlow,TName Skill_Name,TState,TDateTime
+			FROM TemplateAssessment  where TState = 1
+			and TFlow=#{skillFlow}
+	</select>
+	<select id="getPatientItemScores" resultType="java.util.Map">
+		select PTFlow, Patient_ID, Score, ScoreIndex  FROM Out_PatientItemScore
+		where  Patient_ID = #{patient_id} order by ScoreIndex
+	</select>
+
+	<update id="auditMrData">
+		Update Rec_BigHistory set
+		<if test="isPass=='Y'.toString()">CheckStatus=1 </if>
+		<if test="isPass !='Y'.toString()">CheckStatus=3 </if>
+		where RecID=#{dataFlow}
+	</update>
+	<update id="auditDiseaseData">
+		Update Rec_CaseClass set
+		<if test="isPass=='Y'.toString()">CheckStatus=1 </if>
+		<if test="isPass !='Y'.toString()">CheckStatus=3 </if>
+		where RecID=#{dataFlow}
+	</update>
+	<update id="auditSkillData">
+		Update Rec_POSSkill set
+		<if test="isPass=='Y'.toString()">CheckStatus=1 </if>
+		<if test="isPass !='Y'.toString()">CheckStatus=3 </if>
+		where RecID=#{dataFlow}
+	</update>
+	<update id="auditOperationData">
+		Update Rec_OperateSkill set
+		<if test="isPass=='Y'.toString()">CheckStatus=1 </if>
+		<if test="isPass !='Y'.toString()">CheckStatus=3 </if>
+		where RecID=#{dataFlow}
+	</update>
+	<update id="auditDiscipleData">
+		Update Rec_Outpatient set
+		<if test="isPass=='Y'.toString()">CheckStatus=1 </if>
+		<if test="isPass !='Y'.toString()">CheckStatus=3 </if>
+		where RecID=#{dataFlow}
+
+	</update>
+	<update id="updateOutSkill">
+		update Out_Skill set Skill_PatientName=#{skill_patientName},Skill_No=#{skill_no}
+		,Skill_Score=#{skill_score},Skill_Time=#{skill_time}
+		 where Skill_ID=#{skill_id}
+	</update>
+	<update id="updateItemScore">
+		UPDATE TemplateAssessmentItemScore  SET Score = #{score}
+		WHERE Skill_ID=#{skill_id} AND TItemFlow=#{tItemFlow}
+	</update>
+	<update id="updateOutPatient">
+		update Out_Patient set Patient_Name=#{patient_name},Patient_Score=#{patient_score},Patient_No=#{patient_no},Patient_Remark=#{patient_remark}
+		 where Patient_ID=#{patient_id}
+	</update>
+	<update id="updatePatientItemScore">
+	UPDATE Out_PatientItemScore set Score=#{s} where Patient_ID=#{patient_id}
+	 and ScoreIndex=#{index}
+	</update>
+	<update id="updateOutSecBrief">
+		Update OutSecBrief Set TheoryScore = #{theoryScore}  where UCSID=#{ucsid}
+	</update>
+</mapper>

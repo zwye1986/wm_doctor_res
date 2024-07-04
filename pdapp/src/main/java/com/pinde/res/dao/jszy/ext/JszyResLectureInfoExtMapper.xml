@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.jszy.ext.JszyResLectureInfoExtMapper" >
+	<select id="searchLecturesList" resultMap="com.pinde.sci.dao.base.ResLectureInfoMapper.BaseResultMap">
+		SELECT LECTURE_FLOW, LECTURE_TEACHER_FLOW, LECTURE_TEACHER_NAME, ORG_FLOW, ORG_NAME
+	, LECTURE_TRAIN_DATE, LECTURE_START_TIME, LECTURE_END_TIME, LECTURE_CONTENT, LECTURE_TRAIN_PLACE
+	, LECTURE_DESC, LECTURE_EVA_PERIOD, LECTURE_UNIT_ID, LECTURE_UNIT_NAME, RECORD_STATUS
+	, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, LECTURE_TYPE_ID
+	, LECTURE_TYPE_NAME, LECTURE_CODE_URL
+		FROM PDSCI.RES_LECTURE_INFO
+		WHERE RECORD_STATUS = 'Y'
+			AND ORG_FLOW = #{orgFlow}
+		  and
+			(( LECTURE_TRAIN_DATE = to_char(sysdate,'yyyy-mm-dd')
+		  and lecture_end_time >= to_char(sysdate,'hh24:mi'))
+		  or
+			( LECTURE_TRAIN_DATE > to_char(sysdate,'yyyy-mm-dd')))
+		  <if test="roleId == 'Student'.toString()">
+		   and ( not exists (
+			  select 1 from RES_LECTURE_INFO_ROLE
+			  where record_status='Y'
+			  AND RES_LECTURE_INFO_ROLE.LECTURE_FLOW=RES_LECTURE_INFO.LECTURE_FLOW
+			  )
+			  <if test="roleFlow != null and roleFlow !=''">
+				  OR exists (
+				  select 1 from RES_LECTURE_INFO_ROLE
+				  where record_status='Y'
+				  AND RES_LECTURE_INFO_ROLE.LECTURE_FLOW=RES_LECTURE_INFO.LECTURE_FLOW
+				  and LECTURE_ROLE=#{roleFlow}
+				  )
+			  </if>
+			  )
+		  </if>
+		  <if test="roleId == 'Teacher'.toString() or roleId == 'Head'.toString()">
+			  <if test="roleFlow != null and roleFlow !=''">
+				  and exists (
+				  select 1 from RES_LECTURE_INFO_ROLE
+				  where record_status='Y'
+				  AND RES_LECTURE_INFO_ROLE.LECTURE_FLOW=RES_LECTURE_INFO.LECTURE_FLOW
+				  and LECTURE_ROLE=#{roleFlow}
+				  )
+			  </if>
+		  </if>
+		ORDER BY LECTURE_TRAIN_DATE ASC, LECTURE_START_TIME ASC
+	</select>
+	<resultMap id="historyLectureMap" type="java.util.HashMap" >
+		<result column="LECTURE_FLOW" property="lectureFlow" jdbcType="VARCHAR" />
+		<result column="LECTURE_TEACHER_FLOW" property="lectureTeacherFlow" jdbcType="VARCHAR" />
+		<result column="LECTURE_TEACHER_NAME" property="lectureTeacherName" jdbcType="VARCHAR" />
+		<result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+		<result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+		<result column="LECTURE_TRAIN_DATE" property="lectureTrainDate" jdbcType="VARCHAR" />
+		<result column="LECTURE_START_TIME" property="lectureStartTime" jdbcType="VARCHAR" />
+		<result column="LECTURE_END_TIME" property="lectureEndTime" jdbcType="VARCHAR" />
+		<result column="LECTURE_CONTENT" property="lectureContent" jdbcType="VARCHAR" />
+		<result column="LECTURE_TRAIN_PLACE" property="lectureTrainPlace" jdbcType="VARCHAR" />
+		<result column="LECTURE_DESC" property="lectureDesc" jdbcType="VARCHAR" />
+		<result column="LECTURE_EVA_PERIOD" property="lectureEvaPeriod" jdbcType="VARCHAR" />
+		<result column="LECTURE_UNIT_ID" property="lectureUnitId" jdbcType="VARCHAR" />
+		<result column="LECTURE_UNIT_NAME" property="lectureUnitName" jdbcType="VARCHAR" />
+		<result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+		<result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+		<result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+		<result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+		<result column="LECTURE_TYPE_ID" property="lectureTypeId" jdbcType="VARCHAR" />
+		<result column="LECTURE_TYPE_NAME" property="lectureTypeName" jdbcType="VARCHAR" />
+		<result column="LECTURE_CODE_URL" property="lectureCodeUrl" jdbcType="VARCHAR" />
+		<result column="LECTURE_DESCRIPTION" property="lectureDescription" jdbcType="VARCHAR" />
+		<result column="COURSEWARE_URL" property="coursewareUrl" jdbcType="VARCHAR" />
+		<result column="LECTURE_LEVEL_ID" property="lectureLevelId" jdbcType="VARCHAR" />
+		<result column="LECTURE_LEVEL_NAME" property="lectureLevelName" jdbcType="VARCHAR" />
+		<result column="IS_REGIST" property="isRegist" jdbcType="VARCHAR" />
+		<result column="IS_SCAN" property="isCan" jdbcType="VARCHAR" />
+		<result column="IS_SCAN2" property="isCan2" jdbcType="VARCHAR" />
+		<result column="START_TIME" property="startTime" jdbcType="VARCHAR" />
+		<result column="END_TIME" property="endTime" jdbcType="VARCHAR" />
+		<result column="EVA_END_TIME" property="evaEndTime" jdbcType="VARCHAR" />
+		<result column="NOW_TIME" property="nowTime" jdbcType="VARCHAR" />
+		<result column="IS_CLOSED" property="isClosed" jdbcType="VARCHAR" />
+		<result column="EVA_FLOW" property="evaFlow" jdbcType="VARCHAR" />
+
+	</resultMap>
+	<select id="getHistoryLecture" resultMap="historyLectureMap">
+		SELECT B.*,
+		ceil((To_date(B.EVA_END_TIMEE , 'YYYY-MM-DD HH24:MI:SS') - To_date(B.NOW_TIME , 'YYYY-MM-DD HH24:MI:SS')) * 24 * 60)
+		 AS ISCLOSED FROM (
+		SELECT DISTINCT T.LECTURE_FLOW,  T.LECTURE_TEACHER_FLOW,  T.LECTURE_TEACHER_NAME,  T.ORG_FLOW,  T.ORG_NAME
+	,  T.LECTURE_TRAIN_DATE,  T.LECTURE_START_TIME,  T.LECTURE_END_TIME,  T.LECTURE_CONTENT,  T.LECTURE_TRAIN_PLACE
+	,  T.LECTURE_DESC,  T.LECTURE_EVA_PERIOD,  T.LECTURE_UNIT_ID,  T.LECTURE_UNIT_NAME,  T.RECORD_STATUS
+	,  T.CREATE_TIME,  T.CREATE_USER_FLOW,  T.MODIFY_TIME,  T.MODIFY_USER_FLOW,  T.LECTURE_TYPE_ID
+	, T.LECTURE_TYPE_NAME,  T.LECTURE_CODE_URL,T.LECTURE_DESCRIPTION,T.COURSEWARE_URL,T.LECTURE_LEVEL_ID,T.LECTURE_LEVEL_NAME
+		,T.LECTURE_TRAIN_DATE||' '||T.LECTURE_START_TIME||':00' AS START_TIME
+		,T.LECTURE_TRAIN_DATE||' '||T.LECTURE_END_TIME||':00' AS END_TIME
+		,TO_DATE(T.LECTURE_TRAIN_DATE||' '||T.LECTURE_END_TIME||':00','YYYY-MM-DD HH24:MI:SS') END_DATE,
+		CASE
+		   WHEN T.LECTURE_UNIT_ID ='Hour' THEN TO_CHAR(TO_DATE(T.LECTURE_TRAIN_DATE||' '||T.LECTURE_END_TIME||':00','YYYY-MM-DD HH24:MI:SS')+numtodsinterval(T.LECTURE_EVA_PERIOD,'hour'),'YYYY-MM-DD HH24:MI:SS')
+		   WHEN T.LECTURE_UNIT_ID ='Day' THEN TO_CHAR(TO_DATE(T.LECTURE_TRAIN_DATE||' '||T.LECTURE_END_TIME||':00','YYYY-MM-DD HH24:MI:SS')+T.LECTURE_EVA_PERIOD,'YYYY-MM-DD HH24:MI:SS')
+		   WHEN T.LECTURE_UNIT_ID ='Week' THEN TO_CHAR(TO_DATE(T.LECTURE_TRAIN_DATE||' '||T.LECTURE_END_TIME||':00','YYYY-MM-DD HH24:MI:SS')+(T.LECTURE_EVA_PERIOD*7),'YYYY-MM-DD HH24:MI:SS')
+		   WHEN T.LECTURE_UNIT_ID ='Month' THEN TO_CHAR(add_months(TO_DATE(T.LECTURE_TRAIN_DATE||' '||T.LECTURE_END_TIME||':00','YYYY-MM-DD HH24:MI:SS'),T.LECTURE_EVA_PERIOD),'YYYY-MM-DD HH24:MI:SS')
+		   WHEN T.LECTURE_UNIT_ID ='Year' THEN TO_CHAR(add_months(TO_DATE(T.LECTURE_TRAIN_DATE||' '||T.LECTURE_END_TIME||':00','YYYY-MM-DD HH24:MI:SS'),T.LECTURE_EVA_PERIOD*12),'YYYY-MM-DD HH24:MI:SS')
+		   ELSE ''
+		END AS EVA_END_TIMEE,TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI')||':00' NOW_TIME
+		,REGIST.IS_SCAN,REGIST.IS_SCAN2,REGIST.IS_REGIST,(SELECT EVA.RECORD_FLOW FROM RES_LECTURE_EVA_DETAIL EVA WHERE EVA.RECORD_STATUS='Y'
+		AND EVA.LECTURE_FLOW=T.LECTURE_FLOW AND EVA.OPER_USER_FLOW=REGIST.OPER_USER_FLOW AND ROWNUM=1 ) AS EVA_FLOW
+		 FROM RES_LECTURE_INFO T
+		LEFT JOIN RES_LECTURE_SCAN_REGIST REGIST ON REGIST.RECORD_STATUS='Y' AND REGIST.OPER_USER_FLOW=#{userFlow}AND REGIST.LECTURE_FLOW=T.LECTURE_FLOW
+		WHERE T.RECORD_STATUS='Y'
+		AND (REGIST.IS_REGIST ='Y' OR REGIST.IS_REGIST IS NULL OR REGIST.IS_SCAN='Y')
+		AND (( LECTURE_TRAIN_DATE = to_char(sysdate,'yyyy-mm-dd')
+		  and lecture_end_time <![CDATA[<=]]> to_char(sysdate,'hh24:mi'))
+		  or
+			( LECTURE_TRAIN_DATE <![CDATA[<]]> to_char(sysdate,'yyyy-mm-dd')))
+		AND T.LECTURE_FLOW IN (SELECT DISTINCT T.LECTURE_FLOW FROM RES_LECTURE_SCAN_REGIST T WHERE RECORD_STATUS='Y' AND OPER_USER_FLOW=#{userFlow})
+		) B
+		ORDER BY B.START_TIME DESC
+	</select>
+	<select id="checkJoinList" resultMap="com.pinde.sci.dao.base.ResLectureInfoMapper.BaseResultMap">
+		SELECT *
+		FROM RES_LECTURE_INFO INFO
+		WHERE INFO.RECORD_STATUS='Y'
+		<if test="lectureFlow!=null and lectureFlow!=''">
+			AND INFO.LECTURE_FLOW!=#{lectureFlow}
+		</if>
+		AND   INFO.LECTURE_FLOW in (
+		select LECTURE_FLOW
+		FROM RES_LECTURE_SCAN_REGIST T
+		WHERE T.RECORD_STATUS = 'Y'
+		AND t.IS_REGIST ='Y'
+		and t.oper_user_flow=#{userFlow}
+		)
+		and exists (
+		select 1 from RES_LECTURE_INFO tai
+		where tai.LECTURE_FLOW=#{lectureFlow}
+		and (
+		(
+		(INFO.LECTURE_TRAIN_DATE||' '||INFO.LECTURE_START_TIME) <![CDATA[<=]]> (tai.LECTURE_TRAIN_DATE||' '||tai.LECTURE_START_TIME)
+		and (INFO.LECTURE_TRAIN_DATE||' '||INFO.LECTURE_END_TIME) >= (tai.LECTURE_TRAIN_DATE||' '||tai.LECTURE_START_TIME)
+		)
+		or
+		(
+		(INFO.LECTURE_TRAIN_DATE||' '||INFO.LECTURE_START_TIME) <![CDATA[<=]]> (tai.LECTURE_TRAIN_DATE||' '||tai.LECTURE_END_TIME)
+		and (INFO.LECTURE_TRAIN_DATE||' '||INFO.LECTURE_END_TIME) >= (tai.LECTURE_TRAIN_DATE||' '||tai.LECTURE_END_TIME)
+		)
+		or
+		(
+		(INFO.LECTURE_TRAIN_DATE||' '||INFO.LECTURE_START_TIME) <![CDATA[>=]]> (tai.LECTURE_TRAIN_DATE||' '||tai.LECTURE_START_TIME)
+		and (INFO.LECTURE_TRAIN_DATE||' '||INFO.LECTURE_END_TIME) <![CDATA[<=]]> (tai.LECTURE_TRAIN_DATE||' '||tai.LECTURE_END_TIME)
+		)
+		)
+		)
+	</select>
+</mapper>
