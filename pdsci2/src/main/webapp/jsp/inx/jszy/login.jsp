@@ -183,7 +183,7 @@ function hideThis(type){
     </div>
 </div>
 <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-		<jsp:include page="/jsp/service.jsp"></jsp:include>
+		<jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
 	</c:if>
 <div class="footer_box">
 	<a class="login_footer db">主管单位：江苏省中医药管理局 | 技术支持：南京品德网络信息技术有限公司</a>

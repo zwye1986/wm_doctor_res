@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>湖北省住院医师规范化培训公共服务平台</title>
-    <jsp:include page="/jsp/inx/portal/htmlhead_portal.jsp">
+    <jsp:include page="/jsp/inx/portal/htmlhead_portal.jsp" flush="true">
         <jsp:param name="basic" value="true"/>
         <jsp:param name="jbox" value="true"/>
         <jsp:param name="bootstrap" value="true"/>

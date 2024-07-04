@@ -87,7 +87,7 @@ function reloadVerifyCode() {
   </div>
 </div>
 
-<jsp:include page="/jsp/hbres/foot.jsp" />
+<jsp:include page="/jsp/hbres/foot.jsp"  flush="true"/>
 </div>
 </body>
 </html>

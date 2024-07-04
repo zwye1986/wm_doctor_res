@@ -203,7 +203,7 @@
         	</c:if>
         	<c:if test="${param.recTypeId==resRecTypeEnumAfterEvaluation.id}">
         		<c:if test="${not empty resRecList}">
-	        			<jsp:include page="/jsp/jsres/teacher/evaluation.jsp">
+	        			<jsp:include page="/jsp/jsres/teacher/evaluation.jsp" flush="true">
 	        				<jsp:param name="noHead" value="true"/>
 	        			</jsp:include>
 		        </c:if>

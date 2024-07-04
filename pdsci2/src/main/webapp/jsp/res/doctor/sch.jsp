@@ -428,7 +428,7 @@ function changeResult(doctorFlow){
 		});
 	</script>
 	   <div class="top-sx">
-		   <jsp:include page="/res/doc/newNoticeList">
+		   <jsp:include page="/res/doc/newNoticeList" flush="true">
 			   <jsp:param name="fromSch" value="Y"></jsp:param>
 			   <jsp:param name="isDoctor" value="Y"></jsp:param>
 		   </jsp:include>

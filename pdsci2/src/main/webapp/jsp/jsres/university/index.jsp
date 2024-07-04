@@ -322,7 +322,7 @@
        <h2 class="head_right">${sessionScope.currUser.orgName } &#12288; ${sessionScope.currUser.school }</h2>
        <div class="head_right">
 		   <!--        引入切换角色功能 -->
-		   <jsp:include page="/jsp/jsres/changeSchool.jsp"></jsp:include>
+		   <jsp:include page="/jsp/jsres/changeSchool.jsp" flush="true"></jsp:include>
         <a href="<s:url value='/jsres/manage/university'/>">首页</a>&#12288;
          <a href="<s:url value='/inx/jsres/logout'/>">退出</a>
        </div>
@@ -595,7 +595,7 @@
 </div>
 </div>
   <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-		<jsp:include page="/jsp/service.jsp"></jsp:include>
+		<jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
 	</c:if>
  <div class="foot">
    <div class="foot_inner">

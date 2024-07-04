@@ -19,7 +19,7 @@
 	}
 	.selected a{
 		padding: 0;
-		background: #459ae9;
+		background: none;
 	}
 	.btn{
 		height: 28px !important;

@@ -1,23 +1,3 @@
-<jsp:include page="/jsp/jsres/htmlhead-jsres.jsp">
-    <jsp:param name="basic" value="true"/>
-    <jsp:param name="jquery_form" value="true"/>
-    <jsp:param name="jquery_ui_combobox" value="false"/>
-    <jsp:param name="jquery_ui_sortable" value="false"/>
-    <jsp:param name="jquery_cxselect" value="true"/>
-    <jsp:param name="jquery_scrollTo" value="false"/>
-    <jsp:param name="jquery_jcallout" value="false"/>
-    <jsp:param name="jquery_validation" value="true"/>
-    <jsp:param name="jquery_datePicker" value="true"/>
-    <jsp:param name="jquery_fullcalendar" value="false"/>
-    <jsp:param name="jquery_fngantt" value="false"/>
-    <jsp:param name="jquery_fixedtableheader" value="true"/>
-    <jsp:param name="jquery_placeholder" value="true"/>
-    <jsp:param name="jquery_iealert" value="false"/>
-</jsp:include>
-<script type="text/javascript">
-
-</script>
-
 <div class="search_table" style="width: 100%;">
     <table border="0" cellpadding="0" cellspacing="0" class="grid">
         <colgroup>

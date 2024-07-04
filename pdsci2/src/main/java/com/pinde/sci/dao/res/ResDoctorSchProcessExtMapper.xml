@@ -3628,9 +3628,15 @@
 		<result column="DOCTOR_TYPE_ID" javaType="string" property="doctorTypeId"></result>
 		<result column="DOCTOR_TYPE_NAME" javaType="string" property="doctorTypeName"></result>
 	</resultMap>
+	<!-- sy:start_year, sm:start_month, ey:end_year, em:end_month，先算出来，给后面复用，不然后面for中要多次计算   -->
 	<select id="jsresSchDoctorSchProcessEval"  resultMap="processEvalMap">
 		select * from (
-		select p.PROCESS_FLOW,
+		select
+		to_number(substr(p.SCH_START_DATE, 1, 4)) sy,
+		    substr(p.SCH_START_DATE, 6, 2) sm,
+		    to_number(substr(p.SCH_END_DATE, 1, 4)) ey,
+		    substr(p.SCH_END_DATE, 6, 2) em,
+		p.PROCESS_FLOW,
 		p.USER_FLOW ,
 		DR.ORG_FLOW ,
 		DR.ORG_NAME ,
@@ -3767,6 +3773,22 @@
 			</if>
 			)
 		</if>
+		<if test="schMonthList != null and schMonthList.size() > 0">
+			<foreach collection="schMonthList" item="schMonth" open="and (" close=") > 0" separator=" + ">
+				(case
+				when a.sy = a.ey
+					and a.sm &lt;= #{schMonth}
+		  			and a.em >= #{schMonth}
+				    then 1
+				when a.sy + 1 = a.ey
+					AND (a.sm &lt;= a.em OR (a.em >= #{schMonth} OR a.sm &lt; #{schMonth}))
+					then 1
+				when a.sy + 1 &lt; a.ey
+				then 1
+				else 0
+				end)
+			</foreach>
+		</if>
 		ORDER BY A.SCH_START_DATE DESC
 	</select>
 	<resultMap type="HashMap" id="evalMap">
@@ -3786,7 +3808,10 @@
 		a.END_TIME,
 		eval.RECORD_FLOW,
 		eval.EVAL_SCORE,
-		eval.IS_FORM
+		eval.IS_FORM,
+		eval.attendance,
+		eval.leave,
+		eval.absenteeism
 		from
 		(
 		<if test="times!=null and times.size>0">

@@ -157,7 +157,7 @@ function setNQuintessence(questionFlow,obj){
 </script>
 </head>
 <body style="background:#f4f4f4;">
- <jsp:include page="/jsp/njmuedu/include/top.jsp"/>
+ <jsp:include page="/jsp/njmuedu/include/top.jsp" flush="true"/>
    
 <!--content-->
 <div class="register cbody clearfix">

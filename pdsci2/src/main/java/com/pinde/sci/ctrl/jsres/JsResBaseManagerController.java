@@ -70,6 +70,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -5473,13 +5474,14 @@ public class JsResBaseManagerController extends GeneralController {
 		if (currentPage == null) {
 			currentPage = 1;
 		}
-		if (StringUtil.isBlank(sysOrgExt.getSessionYear())) {
+		sysOrgExt.setSessionYear(DateUtil.getYear());
+		/*if (StringUtil.isBlank(sysOrgExt.getSessionYear())) {
 			if (DateUtil.getCurrDate().compareTo(DateUtil.getYear() + "-09-30") > 0) {
 				sysOrgExt.setSessionYear(DateUtil.getYear());
 			} else {
 				sysOrgExt.setSessionYear(String.valueOf(Integer.parseInt(DateUtil.getYear()) - 1));
 			}
-		}
+		}*/
 		model.addAttribute("sessionYear", sysOrgExt.getSessionYear());
 		List<SysOrgExt> sysOrgExtList = orgBiz.searchOrgListByParamNew(sysOrgExt);
 //		List<SysOrgExt> sysOrgExtList = orgBiz.searchOrgListByParam(sysOrgExt);
@@ -5898,15 +5900,32 @@ public class JsResBaseManagerController extends GeneralController {
 			doctorRecruitMap.put("trainYearList", Arrays.asList("OneYear", "TwoYear", "ThreeYear"));
 			doctorRecruitMap.put("docTypeList", Arrays.asList("Company", "CompanyEntrust", "Social"));
 			doctorRecruitMap.put("speIdList", speIdList);
+			doctorRecruitMap.put("orgGroup", "Y");
 			// 查医院全部在培人员，sql来自【学员信息查询】页面列表sql
 			List<Map<String, Object>> speTrainCountList = jsResDoctorRecruitExtMapper.countTrainingDoctor(doctorRecruitMap);
-			Map<String, Map<String, Object>> speTrainCountMap = speTrainCountList.stream().collect(Collectors.toMap(vo -> (String) vo.get("SPEID"), vo -> vo, (vo1, vo2) -> vo1));
-			speTrainCountMap.forEach((key, val) -> {
+			Map<String, List<Map<String, Object>>> speTrainCountMap = speTrainCountList.stream().collect(Collectors.groupingBy(vo -> (String)vo.get("SPEID")));
+
+			speTrainCountMap.forEach((key, vals) -> {
+				BigDecimal[] inHospitalDoctors = new BigDecimal[]{BigDecimal.ZERO};
 				ResOrgSepVO resOrgSepVO = speIdToOrgSpeVOMap.get(key);
-				if (null != resOrgSepVO) {
-					resOrgSepVO.setInHospitalDoctors(((BigDecimal) val.get("TRAININGCOUNT")).toPlainString());
+				if (null == resOrgSepVO) {
+					return;
 				}
+				vals.forEach(val -> {
+					if(!speIdToOrgSpeMap.containsKey(val.get("SPEID"))) {
+						return;
+					}
+					List<ResOrgSpe> resOrgSpeList = speIdToOrgSpeMap.get(val.get("SPEID"));
+					List<String> tempOrgFlowList = resOrgSpeList.stream().map(vo -> vo.getOrgFlow()).collect(Collectors.toList());
+					if(!tempOrgFlowList.contains(val.get("ORG_FLOW"))) {
+						return;
+					}
+
+					inHospitalDoctors[0] = inHospitalDoctors[0].add((BigDecimal) val.get("TRAININGCOUNT"));
+				});
+				resOrgSepVO.setInHospitalDoctors(inHospitalDoctors[0].toPlainString());
 			});
+
 
 			// 在培在校专硕医师
 			doctorRecruitMap = new HashMap<>();
@@ -5915,14 +5934,28 @@ public class JsResBaseManagerController extends GeneralController {
 			doctorRecruitMap.put("trainYearList", Arrays.asList("OneYear", "TwoYear", "ThreeYear"));
 			doctorRecruitMap.put("docTypeList", Arrays.asList("Graduate"));
 			doctorRecruitMap.put("speIdList", speIdList);
-			// 查医院全部在培人员，sql来自【学员信息查询】页面列表sql
+			doctorRecruitMap.put("orgGroup", "Y");
+			// 查医院全部在校专硕，sql来自【学员信息查询】页面列表sql
 			speTrainCountList = jsResDoctorRecruitExtMapper.countTrainingDoctor(doctorRecruitMap);
-			speTrainCountMap = speTrainCountList.stream().collect(Collectors.toMap(vo -> (String) vo.get("SPEID"), vo -> vo, (vo1, vo2) -> vo1));
-			speTrainCountMap.forEach((key, val) -> {
+			speTrainCountMap = speTrainCountList.stream().collect(Collectors.groupingBy(vo -> (String)vo.get("SPEID")));
+			speTrainCountMap.forEach((key, vals) -> {
+				BigDecimal[] inCollegeMasters = new BigDecimal[]{BigDecimal.ZERO};
 				ResOrgSepVO resOrgSepVO = speIdToOrgSpeVOMap.get(key);
-				if (null != resOrgSepVO) {
-					resOrgSepVO.setInCollegeMasters(((BigDecimal) val.get("TRAININGCOUNT")).toPlainString());
+				if (null == resOrgSepVO) {
+					return;
 				}
+				vals.forEach(val -> {
+					if (!speIdToOrgSpeMap.containsKey(val.get("SPEID"))) {
+						return;
+					}
+					List<ResOrgSpe> resOrgSpeList = speIdToOrgSpeMap.get(val.get("SPEID"));
+					List<String> tempOrgFlowList = resOrgSpeList.stream().map(vo -> vo.getOrgFlow()).collect(Collectors.toList());
+					if (!tempOrgFlowList.contains(val.get("ORG_FLOW"))) {
+						return;
+					}
+					inCollegeMasters[0] = inCollegeMasters[0].add((BigDecimal) val.get("TRAININGCOUNT"));
+				});
+				resOrgSepVO.setInCollegeMasters(inCollegeMasters[0].toPlainString());
 			});
 
 			// 在培总数
@@ -5953,20 +5986,45 @@ public class JsResBaseManagerController extends GeneralController {
 		param.put("doctorType", "zyys");
 		param.put("sessionNumber", sessionNumber);
 		param.put("speIdList", String.join(",", profDept));
+		param.put("orgGroup", "Y");
 		List<Map<String, Object>> zyysDoctorList = deptBasicInfoBiz.countDoctorNum(param);
+		Map<String, BigDecimal[]> speCountMap = new HashMap<>();
 		for (Map<String, Object> map : zyysDoctorList) {
 			ResOrgSepVO resOrgSepVO = speIdToOrgSpeVOMap.get(map.get("speId"));
-			if(resOrgSepVO != null) {
-				resOrgSepVO.setCurInHospitalDoctors(((BigDecimal)map.get("num")).toPlainString());
+			if(resOrgSepVO == null) {
+				continue;
 			}
+			if(!speIdToOrgSpeMap.containsKey((map.get("speId")))) {
+				continue;
+			}
+			List<ResOrgSpe> resOrgSpeList = speIdToOrgSpeMap.get((map.get("speId")));
+			List<String> tempOrgFlowList = resOrgSpeList.stream().map(vo -> vo.getOrgFlow()).collect(Collectors.toList());
+			if(!tempOrgFlowList.contains(map.get("orgFlow"))) {
+				continue;
+			}
+			BigDecimal[] curInHospitalDoctors = speCountMap.getOrDefault(map.get("speId"), new BigDecimal[]{BigDecimal.ZERO});
+			curInHospitalDoctors[0] = curInHospitalDoctors[0].add((BigDecimal)map.get("num"));
+			resOrgSepVO.setCurInHospitalDoctors(curInHospitalDoctors[0].toPlainString());
 		}
 		param.put("doctorType", "zxzs");
 		List<Map<String, Object>> zxzsDoctorList = deptBasicInfoBiz.countDoctorNum(param);
+		speCountMap = new HashMap<>();
 		for (Map<String, Object> map : zxzsDoctorList) {
 			ResOrgSepVO resOrgSepVO = speIdToOrgSpeVOMap.get(map.get("speId"));
-			if(resOrgSepVO != null) {
-				resOrgSepVO.setCurInCollegeMasters(((BigDecimal)map.get("num")).toPlainString());
+			if(resOrgSepVO == null) {
+				continue;
 			}
+			if(!speIdToOrgSpeMap.containsKey((map.get("speId")))) {
+				continue;
+			}
+			List<ResOrgSpe> resOrgSpeList = speIdToOrgSpeMap.get((map.get("speId")));
+			List<String> tempOrgFlowList = resOrgSpeList.stream().map(vo -> vo.getOrgFlow()).collect(Collectors.toList());
+			if(!tempOrgFlowList.contains(map.get("orgFlow"))) {
+				continue;
+			}
+			BigDecimal[] curInCollegeMasters = speCountMap.getOrDefault(map.get("speId"), new BigDecimal[]{BigDecimal.ZERO});
+			curInCollegeMasters[0] = curInCollegeMasters[0].add((BigDecimal)map.get("num"));
+			resOrgSepVO.setCurInCollegeMasters(curInCollegeMasters[0].toPlainString());
 		}
 
 		List<ResOrgSepVO> resList = new ArrayList<>(speIdToOrgSpeVOMap.values());
@@ -6004,6 +6062,7 @@ public class JsResBaseManagerController extends GeneralController {
 		orgSpeExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSpeTypeIdEqualTo(DictTypeEnum.DoctorTrainingSpe.getId())
 				.andSpeIdIn(speIdList).andOrgFlowIn(allOrgFlowList).andSessionYearEqualTo(sessionNumber).andStatusEqualTo("open"); // 只查开启的专业
 		List<ResOrgSpe> orgSpeList = speAssignBiz.findOrgSpeByExample(orgSpeExample);
+		Map<String, List<ResOrgSpe>> speIdToOrgSpeMap = orgSpeList.stream().collect(Collectors.groupingBy(vo -> vo.getSpeId()));
 		Map<String, ResOrgSepVO> orgToOrgSpeVOMap = new HashMap<>();
 		orgSpeList.forEach(val -> {
 			ResOrgSepVO resOrgSepVO = new ResOrgSepVO();
@@ -6032,6 +6091,14 @@ public class JsResBaseManagerController extends GeneralController {
 			List<Map<String, Object>> speTrainCountList = jsResDoctorRecruitExtMapper.countTrainingDoctor(doctorRecruitMap);
 			Map<String, Map<String, Object>> speTrainCountMap = speTrainCountList.stream().collect(Collectors.toMap(vo -> (String) vo.get("ORG_FLOW"), vo -> vo, (vo1, vo2) -> vo1));
 			speTrainCountMap.forEach((key, val) -> {
+				if(!speIdToOrgSpeMap.containsKey(val.get("SPEID"))) {
+					return;
+				}
+				List<ResOrgSpe> resOrgSpeList = speIdToOrgSpeMap.get(val.get("SPEID"));
+				List<String> tempOrgFlowList = resOrgSpeList.stream().map(vo -> vo.getOrgFlow()).collect(Collectors.toList());
+				if(!tempOrgFlowList.contains(val.get("ORG_FLOW"))) {
+					return;
+				}
 				ResOrgSepVO resOrgSepVO = orgToOrgSpeVOMap.get(key);
 				if (null != resOrgSepVO) {
 					resOrgSepVO.setInHospitalDoctors(((BigDecimal) val.get("TRAININGCOUNT")).toPlainString());
@@ -6048,8 +6115,17 @@ public class JsResBaseManagerController extends GeneralController {
 			doctorRecruitMap.put("orgGroup", "Y");
 			// 查医院全部在培人员，sql来自【学员信息查询】页面列表sql
 			speTrainCountList = jsResDoctorRecruitExtMapper.countTrainingDoctor(doctorRecruitMap);
-			speTrainCountMap = speTrainCountList.stream().collect(Collectors.toMap(vo -> (String) vo.get("SPEID"), vo -> vo, (vo1, vo2) -> vo1));
+			speTrainCountMap = speTrainCountList.stream().collect(Collectors.toMap(vo -> (String) vo.get("ORG_FLOW"), vo -> vo, (vo1, vo2) -> vo1));
 			speTrainCountMap.forEach((key, val) -> {
+				if(!speIdToOrgSpeMap.containsKey(val.get("SPEID"))) {
+					return;
+				}
+				List<ResOrgSpe> resOrgSpeList = speIdToOrgSpeMap.get(val.get("SPEID"));
+				List<String> tempOrgFlowList = resOrgSpeList.stream().map(vo -> vo.getOrgFlow()).collect(Collectors.toList());
+				if(!tempOrgFlowList.contains(val.get("ORG_FLOW"))) {
+					return;
+				}
+
 				ResOrgSepVO resOrgSepVO = orgToOrgSpeVOMap.get(key);
 				if (null != resOrgSepVO) {
 					resOrgSepVO.setInCollegeMasters(((BigDecimal) val.get("TRAININGCOUNT")).toPlainString());
@@ -6088,17 +6164,35 @@ public class JsResBaseManagerController extends GeneralController {
 		List<Map<String, Object>> zyysDoctorList = deptBasicInfoBiz.countDoctorNum(param);
 		for (Map<String, Object> map : zyysDoctorList) {
 			ResOrgSepVO resOrgSepVO = orgToOrgSpeVOMap.get(map.get("orgFlow"));
-			if(resOrgSepVO != null) {
-				resOrgSepVO.setCurInHospitalDoctors(((BigDecimal)map.get("num")).toPlainString());
+			if(resOrgSepVO == null) {
+				continue;
 			}
+			if(!speIdToOrgSpeMap.containsKey((map.get("speId")))) {
+				continue;
+			}
+			List<ResOrgSpe> resOrgSpeList = speIdToOrgSpeMap.get((map.get("speId")));
+			List<String> tempOrgFlowList = resOrgSpeList.stream().map(vo -> vo.getOrgFlow()).collect(Collectors.toList());
+			if(!tempOrgFlowList.contains(map.get("orgFlow"))) {
+				continue;
+			}
+			resOrgSepVO.setCurInHospitalDoctors(((BigDecimal)map.get("num")).toPlainString());
 		}
 		param.put("doctorType", "zxzs");
 		List<Map<String, Object>> zxzsDoctorList = deptBasicInfoBiz.countDoctorNum(param);
 		for (Map<String, Object> map : zxzsDoctorList) {
 			ResOrgSepVO resOrgSepVO = orgToOrgSpeVOMap.get(map.get("orgFlow"));
-			if(resOrgSepVO != null) {
-				resOrgSepVO.setCurInCollegeMasters(((BigDecimal)map.get("num")).toPlainString());
+			if(resOrgSepVO == null) {
+				continue;
 			}
+			if(!speIdToOrgSpeMap.containsKey((map.get("speId")))) {
+				continue;
+			}
+			List<ResOrgSpe> resOrgSpeList = speIdToOrgSpeMap.get((map.get("speId")));
+			List<String> tempOrgFlowList = resOrgSpeList.stream().map(vo -> vo.getOrgFlow()).collect(Collectors.toList());
+			if(!tempOrgFlowList.contains(map.get("orgFlow"))) {
+				continue;
+			}
+			resOrgSepVO.setCurInCollegeMasters(((BigDecimal)map.get("num")).toPlainString());
 		}
 
 		// 查一下sys_org表，把org_code添上
@@ -6117,19 +6211,37 @@ public class JsResBaseManagerController extends GeneralController {
 					ResOrgSepVO jointOrgVO = orgToOrgSpeVOMap.get(jointFlow);
 					if(null != jointOrgVO) {
 						// 顺便把baseCode添上
-						jointOrgVO.setBaseCode(orgToEntityMap.getOrDefault(jointOrgVO.getOrgFlow(), new SysOrg()).getBaseCode());
+						jointOrgVO.setBaseCode(orgToEntityMap.getOrDefault(jointOrgVO.getOrgFlow(), new SysOrg()).getOrgCode());
 						jointOrgList.add(jointOrgVO);
 					}
 				}
+				jointOrgList = jointOrgList.stream().sorted((vo1, vo2) -> {
+					if(StringUtils.isNotEmpty(vo1.getBaseCode()) && StringUtils.isNotEmpty(vo2.getBaseCode())) {
+						return Integer.compare(Integer.parseInt(vo1.getBaseCode()), Integer.parseInt(vo2.getBaseCode()));
+					}else if(StringUtils.isNotEmpty(vo1.getBaseCode())){
+						return -1;
+					}else if(StringUtils.isNotEmpty(vo2.getBaseCode())) {
+						return 1;
+					}else return 0;
+				}).collect(Collectors.toList());
 				mainOrgVO.setJointOrgList(jointOrgList);
 				// 顺便把baseCode添上
-				mainOrgVO.setBaseCode(orgToEntityMap.getOrDefault(mainOrgVO.getOrgFlow(), new SysOrg()).getBaseCode());
+				mainOrgVO.setBaseCode(orgToEntityMap.getOrDefault(mainOrgVO.getOrgFlow(), new SysOrg()).getOrgCode());
 				resList.add(mainOrgVO);
 			}
 
 		});
 
-		model.addAttribute("orgSpeList", resList);
+		List<ResOrgSepVO> orgSpeVOList = resList.stream().sorted((vo1, vo2) -> {
+			if(StringUtils.isNotEmpty(vo1.getBaseCode()) && StringUtils.isNotEmpty(vo2.getBaseCode())) {
+				return Integer.compare(Integer.parseInt(vo1.getBaseCode()), Integer.parseInt(vo2.getBaseCode()));
+			}else if(StringUtils.isNotEmpty(vo1.getBaseCode())){
+				return -1;
+			}else if(StringUtils.isNotEmpty(vo2.getBaseCode())) {
+				return 1;
+			}else return 0;
+		}).collect(Collectors.toList());
+		model.addAttribute("orgSpeList", orgSpeVOList);
 
 		logger.info("[JsResBaseManagerController.profBaseOneDialog] end");
 		return "/jsres/base/profBaseList/profBaseOneDialog";
@@ -6196,36 +6308,32 @@ public class JsResBaseManagerController extends GeneralController {
 				cell2.setCellValue(resOrgSpe.getSpeName());
 				cell2.setCellStyle(styleCenter);
 				HSSFCell cell3 = rowDepts.createCell(columnNum++);
-				cell3.setCellValue(resOrgSpe.getCurInHospitalDoctors());
+				cell3.setCellValue(StringUtil.defaultIfEmpty(resOrgSpe.getCurInHospitalDoctors(), "0"));
 				cell3.setCellStyle(styleCenter);
 				HSSFCell cell4 = rowDepts.createCell(columnNum++);
-				cell4.setCellValue(resOrgSpe.getCurInCollegeMasters());
+				cell4.setCellValue(StringUtil.defaultIfEmpty(resOrgSpe.getCurInCollegeMasters(), "0"));
 				cell4.setCellStyle(styleCenter);
 				if(curYear) {
 					HSSFCell cell61 = rowDepts.createCell(columnNum++);
-					cell61.setCellValue(resOrgSpe.getInHospitalDoctors());
+					cell61.setCellValue(StringUtil.defaultIfEmpty(resOrgSpe.getInHospitalDoctors(), "0"));
 					cell61.setCellStyle(styleCenter);
 					HSSFCell cell62 = rowDepts.createCell(columnNum++);
-					cell62.setCellValue(resOrgSpe.getInCollegeMasters());
+					cell62.setCellValue(StringUtil.defaultIfEmpty(resOrgSpe.getInCollegeMasters(), "0"));
 					cell62.setCellStyle(styleCenter);
 					HSSFCell cell6 = rowDepts.createCell(columnNum++);
-					cell6.setCellValue(resOrgSpe.getInTrains());
+					cell6.setCellValue(StringUtil.defaultIfEmpty(resOrgSpe.getInTrains(), "0"));
 					cell6.setCellStyle(styleCenter);
 					HSSFCell cell7 = rowDepts.createCell(columnNum++);
-					cell7.setCellValue(resOrgSpe.getBaseCapacity());
+					cell7.setCellValue(StringUtil.defaultIfEmpty(resOrgSpe.getBaseCapacity(), "0"));
 					cell7.setCellStyle(styleCenter);
 					HSSFCell cell8 = rowDepts.createCell(columnNum++);
-					cell8.setCellValue(resOrgSpe.getMinRecruitCapacity());
+					cell8.setCellValue(StringUtil.defaultIfEmpty(resOrgSpe.getMinRecruitCapacity(), "0"));
 					cell8.setCellStyle(styleCenter);
 					HSSFCell cell9 = rowDepts.createCell(columnNum++);
-					String trainingCapacityUsePer = null;
-					if(StringUtils.isNotEmpty(resOrgSpe.getTrainingCapacityUsePer())) {
-						trainingCapacityUsePer = resOrgSpe.getTrainingCapacityUsePer() + "%";
-					}
-					cell9.setCellValue(trainingCapacityUsePer);
+					cell9.setCellValue(StringUtil.defaultIfEmpty(resOrgSpe.getTrainingCapacityUsePer(), "0") + "%");
 					cell9.setCellStyle(styleCenter);
 					HSSFCell cell10 = rowDepts.createCell(columnNum++);
-					cell10.setCellValue(resOrgSpe.getOpenSpeBases());
+					cell10.setCellValue(StringUtil.defaultIfEmpty(resOrgSpe.getOpenSpeBases(), "0"));
 					cell10.setCellStyle(styleCenter);
 				}
 			}

@@ -28,4 +28,4 @@
 	</c:if>
 </c:if>
 
-<jsp:include page="/jsp/${jspPath}_${deptFormId}.jsp"></jsp:include>
+<jsp:include page="/jsp/${jspPath}_${deptFormId}.jsp" flush="true"></jsp:include>

@@ -226,7 +226,7 @@
 								<div class="title_tab">
 	   						 	</div>
 							</div>
-	        				<jsp:include page="/jsp/jsres/teacher/evaluation.jsp">
+	        				<jsp:include page="/jsp/jsres/teacher/evaluation.jsp" flush="true">
 	        					<jsp:param name="noHead" value="true"/>
 	        					<jsp:param name="recFlow" value="${rec.recFlow}"/>
 	        				</jsp:include>

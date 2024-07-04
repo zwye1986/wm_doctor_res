@@ -126,7 +126,7 @@ function toPage(page) {
 </script>
 </head>
 <body>
-<jsp:include page="/jsp/njmuedu/include/top.jsp"/>
+<jsp:include page="/jsp/njmuedu/include/top.jsp" flush="true"/>
 <!--content-->
 <div class="register cbody clearfix">
    <div class="menu-warp fl">

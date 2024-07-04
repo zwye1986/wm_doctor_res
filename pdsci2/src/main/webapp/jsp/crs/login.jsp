@@ -6,7 +6,7 @@
 </head>
 <body>
 <div data-role="page">
-	<jsp:include page="/jsp/common/page-common-mobile.jsp"></jsp:include>
+	<jsp:include page="/jsp/common/page-common-mobile.jsp" flush="true"></jsp:include>
 	<script>
 	function doLogin(){
 		var option = {

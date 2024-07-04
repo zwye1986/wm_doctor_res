@@ -43,7 +43,7 @@ function showEvaluate(obj, orgFlow, majorId, evaluate){
 			</div>
 			<!-- 报表开始 -->
 			<div style="text-align: center;">
-			<jsp:include page="survey/study_schedule_chart.jsp" ></jsp:include>
+			<jsp:include page="survey/study_schedule_chart.jsp"  flush="true"></jsp:include>
 			</div>
 			<!-- 报表结束 -->
 			<div class="module-tabs">
@@ -106,7 +106,7 @@ function showEvaluate(obj, orgFlow, majorId, evaluate){
 				</div>
 				<!-- 报表开始 -->
 				<div style="text-align: center;">
-					<jsp:include page="survey/question_chart.jsp" ></jsp:include>
+					<jsp:include page="survey/question_chart.jsp"  flush="true"></jsp:include>
 				</div>
 				<!-- 报表结束 -->
 				<div class="module-tabs">
@@ -171,7 +171,7 @@ function showEvaluate(obj, orgFlow, majorId, evaluate){
 					</div>
 				<!-- 报表开始 -->
 				<div style="text-align: center;">
-					<jsp:include page="survey/evaluate_chart.jsp" ></jsp:include>
+					<jsp:include page="survey/evaluate_chart.jsp"  flush="true"></jsp:include>
 				</div>
 				<!-- 报表结束 -->
 					<div class="module-tabs">

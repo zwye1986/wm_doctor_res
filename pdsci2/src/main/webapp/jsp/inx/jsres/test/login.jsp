@@ -138,7 +138,7 @@ function hideThis(type){
     </div>
 </div>
  <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-		<jsp:include page="/jsp/service.jsp"></jsp:include>
+		<jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
 	</c:if>
 <div class="footer_index">
 	<div align="center">

@@ -169,7 +169,7 @@ function hideThis(type){
     </div>
     <div class="notice_login">
         <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-            <jsp:include page="/jsp/service.jsp"></jsp:include>
+            <jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
         </c:if>
        <h1 class="index_title">系统公告<p>Announcement</p></h1>
         <%-- 临时处理 by ma --%>

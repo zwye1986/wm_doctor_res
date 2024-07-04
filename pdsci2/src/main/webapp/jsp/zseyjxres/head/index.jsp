@@ -61,7 +61,7 @@ function _recruitDoctor(status){
     <div style="overflow:auto;" id="indexBody">
         <div class="bd_bg">
             <div class="<%--yw--%>">
-                <jsp:include page="/jsp/zseyjxres/head_head.jsp"/>
+                <jsp:include page="/jsp/zseyjxres/head_head.jsp" flush="true"/>
                 <div class="body">
                     <div class="container">
                         <div class="content_side">
@@ -219,7 +219,7 @@ function _recruitDoctor(status){
                 </div>
             </div>
         </div>
-        <jsp:include page="/jsp/zseyjxres/foot.jsp" />
+        <jsp:include page="/jsp/zseyjxres/foot.jsp"  flush="true"/>
     </div>
 </body>
 </html>

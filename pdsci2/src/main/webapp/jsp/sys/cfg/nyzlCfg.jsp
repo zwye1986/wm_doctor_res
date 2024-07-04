@@ -20,7 +20,7 @@
         <form id="saveCfgForm" action="<s:url value="/sys/cfg/edit" />" method="post" >
             <div class="title1 clearfix">
                 <div><font color="red">&#12288;&#12288;所有参数保存后，需刷新内存才能生效!!!</font></div>
-                <jsp:include page="/jsp/sys/cfg/sysCfg.jsp"></jsp:include>
+                <jsp:include page="/jsp/sys/cfg/sysCfg.jsp" flush="true"></jsp:include>
                 <div class="button" >
                     <input type="button" class="search" onclick="save();" value="保&#12288;存">
                 </div>

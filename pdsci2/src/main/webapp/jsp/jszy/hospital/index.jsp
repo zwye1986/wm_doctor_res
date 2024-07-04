@@ -452,7 +452,7 @@ body{overflow:hidden;}
  </div>
  </div>
   <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-		<jsp:include page="/jsp/service.jsp"></jsp:include>
+		<jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
 	</c:if>
  
  

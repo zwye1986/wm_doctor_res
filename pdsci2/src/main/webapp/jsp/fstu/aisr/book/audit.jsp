@@ -41,7 +41,7 @@
 <div class="mainright">
     <div class="content">
         <div id="view" style="width: 900px;height: 100%"></div>
-        <jsp:include page="editBook.jsp">
+        <jsp:include page="editBook.jsp" flush="true">
             <jsp:param  name="editFlag" value="${GlobalConstant.FLAG_N}"/>
         </jsp:include>
         <h2>审核意见：</h2>

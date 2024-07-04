@@ -463,7 +463,7 @@ function showDetail(recordFlow,doctorFlow,typeId){
 		}
 	</script>
 	   <div class="top-sx">
-		   <jsp:include page="/res/doc/newNoticeList">
+		   <jsp:include page="/res/doc/newNoticeList" flush="true">
 			   <jsp:param name="fromSch" value="Y"></jsp:param>
 			   <jsp:param name="isDoctor" value="Y"></jsp:param>
 		   </jsp:include>
@@ -716,7 +716,7 @@ function showDetail(recordFlow,doctorFlow,typeId){
 </div>
 </div></div>
 <div style="display: none;" id="toDo">
-<jsp:include page="/jsp/res/doctor/createResultByStandardDept.jsp">
+<jsp:include page="/jsp/res/doctor/createResultByStandardDept.jsp" flush="true">
 	<jsp:param value="true" name="loadCss"/>
 	<jsp:param value="true" name="loadScript"/>
 	<jsp:param value="true" name="loadContent"/>

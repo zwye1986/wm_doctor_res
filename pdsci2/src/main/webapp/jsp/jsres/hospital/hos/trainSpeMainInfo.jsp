@@ -114,7 +114,7 @@
 		}
 		$(".minRecruitCapacityCount").text(minRecruitCapacityCount);
 
-		var capacityUsePercentCount = 0;
+		/*var capacityUsePercentCount = 0;
 		var capacityUsePercentTotal = 0;
 		if($(".capacityUsePercent") && $(".capacityUsePercent").length) {
 			$(".capacityUsePercent").each(function(i, item) {
@@ -127,7 +127,7 @@
 		}
 		if(capacityUsePercentTotal > 0) {
 			$(".capacityUsePercentCount").text(Math.round(capacityUsePercentCount / capacityUsePercentTotal).toFixed(1));
-		}
+		}*/
 
 		var zyysTotalCount = 0;
 		if($(".zyysTotal") && $(".zyysTotal").length) {
@@ -161,6 +161,10 @@
 			});
 		}
 		$(".zxzsTotalCount").text(zxzsTotalCount);
+
+		if(baseCapacityCount > 0) {
+			$(".capacityUsePercentCount").text(Math.round(trainingSumTotalCount * 100 / baseCapacityCount).toFixed(1));
+		}
 	}
 
 	function showSpe(speFlow, isJoin, ishos) {
@@ -414,19 +418,19 @@
 				<td><span class="zyys">${empty resultMap[zyys]? 0 :resultMap[zyys]}</span>人</td>
 				<td><span class="zxzs">${empty resultMap[zxzs]? 0 :resultMap[zxzs]}</span>人</td>
 				<c:if test="${sessionNumber eq pdfn:getCurrYear()}">
-					<td><span class="zyysTotal">${empty orgSpe.zyysTotal? '-' :orgSpe.zyysTotal}</span>人</td>
-					<td><span class="zxzsTotal">${empty orgSpe.zxzsTotal? '-' :orgSpe.zxzsTotal}</span>人</td>
-					<td><span class="trainingSumTotal">${empty orgSpe.trainingSumTotal? '-' :orgSpe.trainingSumTotal}</span>人</td>
+					<td><span class="zyysTotal">${empty orgSpe.zyysTotal? '0' :orgSpe.zyysTotal}</span>人</td>
+					<td><span class="zxzsTotal">${empty orgSpe.zxzsTotal? '0' :orgSpe.zxzsTotal}</span>人</td>
+					<td><span class="trainingSumTotal">${empty orgSpe.trainingSumTotal? '0' :orgSpe.trainingSumTotal}</span>人</td>
 					<td>
 						<c:if test="${ishos eq 'Y'}">
-							<span class="baseCapacity" id="baseCapacity${orgSpe.SPE_ID}">${empty orgSpe.BASE_CAPACITY? '-' :orgSpe.BASE_CAPACITY}</span>人
+							<span class="baseCapacity" id="baseCapacity${orgSpe.SPE_ID}">${empty orgSpe.BASE_CAPACITY? '0' :orgSpe.BASE_CAPACITY}</span>人
 						</c:if>
 						<c:if test="${ishos ne 'Y'}">
 							<span><input style="width: 60%; text-align: center" type="text" id='baseCapacity${orgSpe.SPE_ID}' class="input baseCapacity" value="${empty orgSpe.BASE_CAPACITY? '' :orgSpe.BASE_CAPACITY}" <c:if test="${orgSpe.STATUS ne 'open'}">disabled</c:if> readonly onclick="dialogBaseCapacity('${orgSpe.ORG_SPE_FLOW}', '${orgSpe.SPE_ID}')" /><span>人</span></span>
 						</c:if>
 					</td>
-					<td><span class="minRecruitCapacity">${empty orgSpe.minRecruitCapacity? '-' :orgSpe.minRecruitCapacity}</span>人</td>
-					<td><span class="capacityUsePercent">${empty orgSpe.capacityUsePercent? '-' :orgSpe.capacityUsePercent}</span>%</td>
+					<td><span class="minRecruitCapacity">${empty orgSpe.minRecruitCapacity? '' :orgSpe.minRecruitCapacity}</span>人</td>
+					<td><span class="capacityUsePercent">${empty orgSpe.capacityUsePercent? '0' :orgSpe.capacityUsePercent}</span>%</td>
 				</c:if>
 			</tr>
 		</c:forEach>

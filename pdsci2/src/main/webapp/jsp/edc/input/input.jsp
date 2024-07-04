@@ -557,7 +557,7 @@ function cosAll(){
 	 				<!-- 单次录入 -->
 	 			<c:if test="${sessionScope.projDescForm.elementMap[visitElement.elementCode].elementSerial eq GlobalConstant.FLAG_N}">
 		 			<td <c:if test="${!showEleName}">colspan="2"</c:if>>
-		 				<jsp:include page="input_single.jsp" flush="true"> 
+		 				<jsp:include page="input_single.jsp" flush="true">
 	 							<jsp:param name="commAttrCode" value="${commAttrCode }" />
 	 							<jsp:param name="elementCode" value="${visitElement.elementCode }" />
 	 							<jsp:param name="columnCount" value="${columnCount}" />
@@ -572,7 +572,7 @@ function cosAll(){
 	 				<c:choose>
 	 					<c:when test="${fn:length(sessionScope.projDescForm.visitElementAttributeMap[commAttrCode]) <=  sysCfgMap['edc_serial_attr_count'] }">
 			 				<td <c:if test="${!showEleName}">colspan="2"</c:if>>
-			 					<jsp:include page="input_serial.jsp" flush="true"> 
+			 					<jsp:include page="input_serial.jsp" flush="true">
 			 							<jsp:param name="commAttrCode" value="${commAttrCode }" />
 			 							<jsp:param name="elementCode" value="${visitElement.elementCode }" />
 			 							<jsp:param name="inputOperFlow" value="${inputOperFlow}" />
@@ -581,7 +581,7 @@ function cosAll(){
 		 				</c:when>
 		 				<c:otherwise>
 		 					<td <c:if test="${!showEleName}">colspan="2"</c:if>>
-			 					<jsp:include page="input_serial_vertical.jsp" flush="true"> 
+			 					<jsp:include page="input_serial_vertical.jsp" flush="true">
 			 							<jsp:param name="commAttrCode" value="${commAttrCode }" />
 			 							<jsp:param name="elementCode" value="${visitElement.elementCode }" />
 			 							<jsp:param name="columnCount" value="${columnCount}" />
@@ -603,7 +603,7 @@ function cosAll(){
 	 			<!-- 单次录入 -->
 	 			<c:if test="${sessionScope.projDescForm.elementMap[visitElement.elementCode].elementSerial eq GlobalConstant.FLAG_N}">
 		 			<td>
-		 				<jsp:include page="input_single.jsp" flush="true"> 
+		 				<jsp:include page="input_single.jsp" flush="true">
 	 							<jsp:param name="commAttrCode" value="${commAttrCode }" />
 	 							<jsp:param name="elementCode" value="${visitElement.elementCode }" />
 	 							<jsp:param name="columnCount" value="${columnCount}" />
@@ -617,7 +617,7 @@ function cosAll(){
 	 				<c:choose>
 	 					<c:when test="${fn:length(sessionScope.projDescForm.visitElementAttributeMap[commAttrCode]) <=  sysCfgMap['edc_serial_attr_count'] }">
 			 				<td>
-			 					<jsp:include page="input_serial.jsp" flush="true"> 
+			 					<jsp:include page="input_serial.jsp" flush="true">
 			 							<jsp:param name="commAttrCode" value="${commAttrCode }" />
 			 							<jsp:param name="elementCode" value="${visitElement.elementCode }" />
 			 							<jsp:param name="inputOperFlow" value="${inputOperFlow}" />
@@ -626,7 +626,7 @@ function cosAll(){
 		 				</c:when>
 		 				<c:otherwise>
 		 					<td>
-			 					<jsp:include page="input_serial_vertical.jsp" flush="true"> 
+			 					<jsp:include page="input_serial_vertical.jsp" flush="true">
 			 							<jsp:param name="commAttrCode" value="${commAttrCode }" />
 			 							<jsp:param name="elementCode" value="${visitElement.elementCode }" />
 			 							<jsp:param name="columnCount" value="${columnCount}" />

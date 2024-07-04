@@ -57,7 +57,7 @@ function checkRole(courseFlow){
 </script>
 </head>
 <body style="background:#f4f4f4;">
-<jsp:include page="/jsp/edu/include/top.jsp"/>
+<jsp:include page="/jsp/edu/include/top.jsp" flush="true"/>
 <!--content-->
 <div class="content cbody clearfix">
    <div class="menu-warp fl">
@@ -88,6 +88,6 @@ function checkRole(courseFlow){
     </div><!--right-->
 </div>
 <!--/content-->
-<jsp:include page="/jsp/edu/include/foot.jsp"/>
+<jsp:include page="/jsp/edu/include/foot.jsp" flush="true"/>
 </body>
 </html>

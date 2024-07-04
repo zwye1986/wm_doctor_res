@@ -44,7 +44,7 @@ function countDown(secs){
 </head>
 <body>
 	<div class="yw">
-    <jsp:include page="/jsp/hbres/head.jsp">
+    <jsp:include page="/jsp/hbres/head.jsp" flush="true">
          <jsp:param value="/inx/hbres" name="indexUrl"/>
          <jsp:param value="true" name="notShowAccount"/>
      </jsp:include>
@@ -107,8 +107,8 @@ function countDown(secs){
   </div>
 </div>
 <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-		<jsp:include page="/jsp/service.jsp"></jsp:include>
+		<jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
 	</c:if>
-<jsp:include page="/jsp/hbres/foot.jsp" />
+<jsp:include page="/jsp/hbres/foot.jsp"  flush="true"/>
 </body>
 </html>

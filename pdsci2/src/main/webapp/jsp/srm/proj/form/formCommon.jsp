@@ -164,55 +164,55 @@
 
             <c:if test='${proj.projTypeId eq "szwsj.qnkj"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/szwsj.qnkj/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/szwsj.qnkj/menu.jsp" flush="true"></jsp:include>
                 </c:if>
                 <c:if test='${param.recTypeId eq projRecTypeEnumContract.id}'>
-                    <jsp:include page="contract/szwsj.qnkj/menu.jsp"></jsp:include>
+                    <jsp:include page="contract/szwsj.qnkj/menu.jsp" flush="true"></jsp:include>
                 </c:if>
                 <c:if test='${param.recTypeId eq projRecTypeEnumChangeReport.id}'>
-                    <jsp:include page="change/product/menu.jsp"></jsp:include>
+                    <jsp:include page="change/product/menu.jsp" flush="true"></jsp:include>
                 </c:if>
                 <c:if test='${param.recTypeId eq projRecTypeEnumScheduleReport.id}'>
-                    <jsp:include page="schedule/product/menu.jsp"></jsp:include>
+                    <jsp:include page="schedule/product/menu.jsp" flush="true"></jsp:include>
                 </c:if>
                 <c:if test='${param.recTypeId eq projRecTypeEnumCompleteReport.id}'>
-                    <jsp:include page="complete/product/menu.jsp"></jsp:include>
+                    <jsp:include page="complete/product/menu.jsp" flush="true"></jsp:include>
                 </c:if>
                 <c:if test='${param.recTypeId eq projRecTypeEnumTerminateReport.id}'>
-                    <jsp:include page="terminate/product/menu.jsp"></jsp:include>
+                    <jsp:include page="terminate/product/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "szwsj.lczcbzzljs"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/szwsj.lczcbzzljs/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/szwsj.lczcbzzljs/menu.jsp" flush="true"></jsp:include>
                 </c:if>
                 <c:if test='${param.recTypeId eq projRecTypeEnumContract.id}'>
-                    <jsp:include page="contract/szwsj.lczcbzzljs/menu.jsp"></jsp:include>
+                    <jsp:include page="contract/szwsj.lczcbzzljs/menu.jsp" flush="true"></jsp:include>
                 </c:if>
                 <c:if test='${param.recTypeId eq projRecTypeEnumChangeReport.id}'>
-                    <jsp:include page="change/product/menu.jsp"></jsp:include>
+                    <jsp:include page="change/product/menu.jsp" flush="true"></jsp:include>
                 </c:if>
                 <c:if test='${param.recTypeId eq projRecTypeEnumScheduleReport.id}'>
-                    <jsp:include page="schedule/product/menu.jsp"></jsp:include>
+                    <jsp:include page="schedule/product/menu.jsp" flush="true"></jsp:include>
                 </c:if>
                 <c:if test='${param.recTypeId eq projRecTypeEnumCompleteReport.id}'>
-                    <jsp:include page="complete/product/menu.jsp"></jsp:include>
+                    <jsp:include page="complete/product/menu.jsp" flush="true"></jsp:include>
                 </c:if>
                 <c:if test='${param.recTypeId eq projRecTypeEnumTerminateReport.id}'>
-                    <jsp:include page="terminate/product/menu.jsp"></jsp:include>
+                    <jsp:include page="terminate/product/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "szwsj.yxxjs"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/szwsj.yxxjs/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/szwsj.yxxjs/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "szwsj.zjtd"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/szwsj.zjtd/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/szwsj.zjtd/menu.jsp" flush="true"></jsp:include>
                 </c:if>
                 <c:if test='${param.recTypeId eq projRecTypeEnumContract.id}'>
-                    <jsp:include page="contract/szwsj.zjtd/menu.jsp"></jsp:include>
+                    <jsp:include page="contract/szwsj.zjtd/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "wxwsj.zdxm"}'>
@@ -220,7 +220,7 @@
                     <jsp:include page="apply/wxwsj.zdxm/menu.jsp"></jsp:include>
                 </c:if>--%>
                 <c:if test='${param.recTypeId eq projRecTypeEnumContract.id}'>
-                   <jsp:include page="contract/wxwsj.zdxm/menu.jsp"></jsp:include>
+                   <jsp:include page="contract/wxwsj.zdxm/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "wxwsj.qnxm"}'>
@@ -228,7 +228,7 @@
                    <jsp:include page="apply/wxwsj.zdxm/menu.jsp"></jsp:include>
                </c:if>--%>
                 <c:if test='${param.recTypeId eq projRecTypeEnumContract.id}'>
-                    <jsp:include page="contract/wxwsj.zdxm/menu.jsp"></jsp:include>
+                    <jsp:include page="contract/wxwsj.zdxm/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "wxwsj.msxm"}'>
@@ -236,123 +236,123 @@
                    <jsp:include page="apply/wxwsj.zdxm/menu.jsp"></jsp:include>
                </c:if>--%>
                 <c:if test='${param.recTypeId eq projRecTypeEnumContract.id}'>
-                    <jsp:include page="contract/wxwsj.zdxm/menu.jsp"></jsp:include>
+                    <jsp:include page="contract/wxwsj.zdxm/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "jsswst.jcrc"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/jsswst.jcrc/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/jsswst.jcrc/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "jsswst.lcyx"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/jsswst.lcyx/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/jsswst.lcyx/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "jsswst.yxzdrc"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/jsswst.yxzdrc/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/jsswst.yxzdrc/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "jsswst.yxcx"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/jsswst.yxcx/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/jsswst.yxcx/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "jsswst.yxzdxk"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/jsswst.yxzdxk/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/jsswst.yxzdxk/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "jsswst.qnyxrc"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/jsswst.qnyxrc/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/jsswst.qnyxrc/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "wxwsj.kjcgtg"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/wxwsj.kjcgtg/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/wxwsj.kjcgtg/menu.jsp" flush="true"></jsp:include>
                 </c:if>
                 <c:if test='${param.recTypeId eq projRecTypeEnumContract.id}'>
-                    <jsp:include page="contract/wxwsj.kjcgtg/menu.jsp"></jsp:include>
+                    <jsp:include page="contract/wxwsj.kjcgtg/menu.jsp" flush="true"></jsp:include>
                 </c:if>
                 <c:if test='${param.recTypeId eq projRecTypeEnumScheduleReport.id}'>
-                    <jsp:include page="schedule/wxwsj.kjcgtg/menu.jsp"></jsp:include>
+                    <jsp:include page="schedule/wxwsj.kjcgtg/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "wxwsj.lcyxzx"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/wxwsj.lcyxzx/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/wxwsj.lcyxzx/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "wxwsj.qnyxrc"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/wxwsj.qnyxrc/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/wxwsj.qnyxrc/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
 
             <c:if test='${proj.projTypeId eq "wxwsj.yxjcrc"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/wxwsj.yxjcrc/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/wxwsj.yxjcrc/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "wxwsj.yxzdxk"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/wxwsj.yxzdxk/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/wxwsj.yxzdxk/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "wxwsj.yxljrc"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/wxwsj.yxljrc/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/wxwsj.yxljrc/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "wxwsj.yxzdrc"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/wxwsj.yxzdrc/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/wxwsj.yxzdrc/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "wxwsj.yxcxpt"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/wxwsj.yxcxpt/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/wxwsj.yxcxpt/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "jszyyj.zdxm"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/jszyyj.zyykjxm/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/jszyyj.zyykjxm/menu.jsp" flush="true"></jsp:include>
                 </c:if>
                 <c:if test='${param.recTypeId eq projRecTypeEnumContract.id}'>
-                    <jsp:include page="contract/jszyyj.zyykjxm/menu.jsp"></jsp:include>
+                    <jsp:include page="contract/jszyyj.zyykjxm/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "jszyyj.ybxm"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/jszyyj.zyykjxm/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/jszyyj.zyykjxm/menu.jsp" flush="true"></jsp:include>
                 </c:if>
                 <c:if test='${param.recTypeId eq projRecTypeEnumContract.id}'>
-                    <jsp:include page="contract/jszyyj.zyykjxm/menu.jsp"></jsp:include>
+                    <jsp:include page="contract/jszyyj.zyykjxm/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
 
             <c:if test='${proj.projTypeId eq "jsszyy.kyxm"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/jsszyy.kyxm/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/jsszyy.kyxm/menu.jsp" flush="true"></jsp:include>
                 </c:if>
                 <c:if test='${param.recTypeId eq projRecTypeEnumContract.id}'>
-                    <jsp:include page="contract/jsszyy.kyxm/menu.jsp"></jsp:include>
+                    <jsp:include page="contract/jsszyy.kyxm/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <c:if test='${proj.projTypeId eq "jsszyy.ywxm2"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/jsszyy.kyxm/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/jsszyy.kyxm/menu.jsp" flush="true"></jsp:include>
                 </c:if>
                 <c:if test='${param.recTypeId eq projRecTypeEnumContract.id}'>
-                    <jsp:include page="contract/jsszyy.kyxm/menu.jsp"></jsp:include>
+                    <jsp:include page="contract/jsszyy.kyxm/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
 
             <c:if test='${proj.projTypeId eq "jsswst.xjsyjj"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/jsswst.xjsyjj/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/jsswst.xjsyjj/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
 
@@ -400,7 +400,7 @@
             </c:if>
             <c:if test='${jsswstKykt eq "Y"}'>
                 <c:if test='${param.recTypeId eq projRecTypeEnumApply.id}'>
-                    <jsp:include page="apply/jsswst.kykt/menu.jsp"></jsp:include>
+                    <jsp:include page="apply/jsswst.kykt/menu.jsp" flush="true"></jsp:include>
                 </c:if>
             </c:if>
             <jsp:include page="/jsp/${jspPath}.jsp" flush="true"/>

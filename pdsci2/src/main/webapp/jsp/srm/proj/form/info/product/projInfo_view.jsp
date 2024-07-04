@@ -35,7 +35,7 @@ $('input').attr("readonly","readonly");
 <div id="main" style="width: 100%;">
 	<div class="mainright">
     	<div class="content">
-    		  <jsp:include page="projInfo.jsp">
+    		  <jsp:include page="projInfo.jsp" flush="true">
               	<jsp:param  name="view" value="${ GlobalConstant.FLAG_Y}"/>
               </jsp:include>
 		</div>

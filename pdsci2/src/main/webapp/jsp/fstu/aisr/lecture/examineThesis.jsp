@@ -42,7 +42,7 @@
 <div class="mainright">
     <div class="content">
         <div id="view" style="width: 900px;height: 100%">
-            <jsp:include page="editThesis.jsp">
+            <jsp:include page="editThesis.jsp" flush="true">
                 <jsp:param  name="editFlag" value="${GlobalConstant.FLAG_N}"/>
             </jsp:include>
         </div>

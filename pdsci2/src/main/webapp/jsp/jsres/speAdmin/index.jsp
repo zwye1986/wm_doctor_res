@@ -254,7 +254,7 @@
                     <div class="account">
                         <h2 class="head_right">${sessionScope.currUser.orgName }-${sessionScope.currUser.resTrainingSpeName}</h2>
                         <div class="head_right">
-                            <jsp:include page="/jsp/jsres/changeRole.jsp"></jsp:include>
+                            <jsp:include page="/jsp/jsres/changeRole.jsp" flush="true"></jsp:include>
                             <a onclick="shouye();">首页</a>&#12288;
                             <a href="<s:url value='/inx/jsres/logout'/>">退出</a>
                         </div>
@@ -319,7 +319,7 @@
             </div>
         </div>
         <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-            <jsp:include page="/jsp/service.jsp"></jsp:include>
+            <jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
         </c:if>
         <div class="foot">
             <div class="foot_inner">

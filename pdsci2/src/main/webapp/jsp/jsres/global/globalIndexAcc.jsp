@@ -1170,7 +1170,7 @@
                     <div class="account">
                         <h2 class="head_right">${sessionScope.currUser.orgName }</h2>
                         <div class="head_right">
-                            <jsp:include page="/jsp/jsres/changephyAss.jsp"></jsp:include>
+                            <jsp:include page="/jsp/jsres/changephyAss.jsp" flush="true"></jsp:include>
                             <a href="<s:url value='/jsres/manage/global'/>">首页</a>&#12288;
                             <c:if test="${f}">
                                 <a href="#" onclick="showSelect();">系统切换</a >&#12288;
@@ -1634,7 +1634,7 @@
         </div>
     </div>
     <c:if test="${applicationScope.sysCfgMap['online_service']=='Y'}">
-        <jsp:include page="/jsp/service.jsp"></jsp:include>
+        <jsp:include page="/jsp/service.jsp" flush="true"></jsp:include>
     </c:if>
     <div class="foot">
         <div class="foot_inner">

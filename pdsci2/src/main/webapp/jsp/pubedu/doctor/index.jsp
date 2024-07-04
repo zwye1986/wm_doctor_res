@@ -7,7 +7,7 @@
 </script>
 
 <body style="overflow: auto">
-<jsp:include page="doctorHead.jsp"/>
+<jsp:include page="doctorHead.jsp" flush="true"/>
     <div class="body">
         <div class="container" style="float: left">
             <div class="photo1">
