@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.GcpDrugStoreRecMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.GcpDrugStoreRec" >
+    <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+    <result column="PROJ_FLOW" property="projFlow" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="DURG_FLOW" property="durgFlow" jdbcType="VARCHAR" />
+    <result column="ORDINAL" property="ordinal" jdbcType="DECIMAL" />
+    <result column="DRUG_PACK" property="drugPack" jdbcType="VARCHAR" />
+    <result column="DRUG_GROUP" property="drugGroup" jdbcType="VARCHAR" />
+    <result column="DRUG_FACTOR_ID" property="drugFactorId" jdbcType="VARCHAR" />
+    <result column="DRUG_FACTOR_NAME" property="drugFactorName" jdbcType="VARCHAR" />
+    <result column="DRUG_STATUS_ID" property="drugStatusId" jdbcType="VARCHAR" />
+    <result column="DRUG_STATUS_NAME" property="drugStatusName" jdbcType="VARCHAR" />
+    <result column="ASSIGN_TIME" property="assignTime" jdbcType="VARCHAR" />
+    <result column="ASSIGN_USER_FLOW" property="assignUserFlow" jdbcType="VARCHAR" />
+    <result column="ASSIGN_USER_NAME" property="assignUserName" jdbcType="VARCHAR" />
+    <result column="ASSIGN_LABEL_ID" property="assignLabelId" jdbcType="VARCHAR" />
+    <result column="ASSIGN_LABEL_NAME" property="assignLabelName" jdbcType="VARCHAR" />
+    <result column="ASSIGN_TYPE_ID" property="assignTypeId" jdbcType="VARCHAR" />
+    <result column="ASSIGN_TYPE_NAME" property="assignTypeName" jdbcType="VARCHAR" />
+    <result column="ASSIGN_EMAIL" property="assignEmail" jdbcType="VARCHAR" />
+    <result column="SEND_USER_FLOW" property="sendUserFlow" jdbcType="VARCHAR" />
+    <result column="SEND_USER_NAME" property="sendUserName" jdbcType="VARCHAR" />
+    <result column="PATIENT_FLOW" property="patientFlow" jdbcType="VARCHAR" />
+    <result column="PATIENT_CODE" property="patientCode" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RECORD_FLOW, PROJ_FLOW, ORG_FLOW, DURG_FLOW, ORDINAL, DRUG_PACK, DRUG_GROUP, DRUG_FACTOR_ID, 
+    DRUG_FACTOR_NAME, DRUG_STATUS_ID, DRUG_STATUS_NAME, ASSIGN_TIME, ASSIGN_USER_FLOW, 
+    ASSIGN_USER_NAME, ASSIGN_LABEL_ID, ASSIGN_LABEL_NAME, ASSIGN_TYPE_ID, ASSIGN_TYPE_NAME, 
+    ASSIGN_EMAIL, SEND_USER_FLOW, SEND_USER_NAME, PATIENT_FLOW, PATIENT_CODE, RECORD_STATUS, 
+    CREATE_USER_FLOW, CREATE_TIME, MODIFY_USER_FLOW, MODIFY_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.GcpDrugStoreRecExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.GCP_DRUG_STORE_REC
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.GCP_DRUG_STORE_REC
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.GCP_DRUG_STORE_REC
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.GcpDrugStoreRecExample" >
+    delete from PDSCI.GCP_DRUG_STORE_REC
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.GcpDrugStoreRec" >
+    insert into PDSCI.GCP_DRUG_STORE_REC (RECORD_FLOW, PROJ_FLOW, ORG_FLOW, 
+      DURG_FLOW, ORDINAL, DRUG_PACK, 
+      DRUG_GROUP, DRUG_FACTOR_ID, DRUG_FACTOR_NAME, 
+      DRUG_STATUS_ID, DRUG_STATUS_NAME, ASSIGN_TIME, 
+      ASSIGN_USER_FLOW, ASSIGN_USER_NAME, ASSIGN_LABEL_ID, 
+      ASSIGN_LABEL_NAME, ASSIGN_TYPE_ID, ASSIGN_TYPE_NAME, 
+      ASSIGN_EMAIL, SEND_USER_FLOW, SEND_USER_NAME, 
+      PATIENT_FLOW, PATIENT_CODE, RECORD_STATUS, 
+      CREATE_USER_FLOW, CREATE_TIME, MODIFY_USER_FLOW, 
+      MODIFY_TIME)
+    values (#{recordFlow,jdbcType=VARCHAR}, #{projFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, 
+      #{durgFlow,jdbcType=VARCHAR}, #{ordinal,jdbcType=DECIMAL}, #{drugPack,jdbcType=VARCHAR}, 
+      #{drugGroup,jdbcType=VARCHAR}, #{drugFactorId,jdbcType=VARCHAR}, #{drugFactorName,jdbcType=VARCHAR}, 
+      #{drugStatusId,jdbcType=VARCHAR}, #{drugStatusName,jdbcType=VARCHAR}, #{assignTime,jdbcType=VARCHAR}, 
+      #{assignUserFlow,jdbcType=VARCHAR}, #{assignUserName,jdbcType=VARCHAR}, #{assignLabelId,jdbcType=VARCHAR}, 
+      #{assignLabelName,jdbcType=VARCHAR}, #{assignTypeId,jdbcType=VARCHAR}, #{assignTypeName,jdbcType=VARCHAR}, 
+      #{assignEmail,jdbcType=VARCHAR}, #{sendUserFlow,jdbcType=VARCHAR}, #{sendUserName,jdbcType=VARCHAR}, 
+      #{patientFlow,jdbcType=VARCHAR}, #{patientCode,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.GcpDrugStoreRec" >
+    insert into PDSCI.GCP_DRUG_STORE_REC
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        RECORD_FLOW,
+      </if>
+      <if test="projFlow != null" >
+        PROJ_FLOW,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="durgFlow != null" >
+        DURG_FLOW,
+      </if>
+      <if test="ordinal != null" >
+        ORDINAL,
+      </if>
+      <if test="drugPack != null" >
+        DRUG_PACK,
+      </if>
+      <if test="drugGroup != null" >
+        DRUG_GROUP,
+      </if>
+      <if test="drugFactorId != null" >
+        DRUG_FACTOR_ID,
+      </if>
+      <if test="drugFactorName != null" >
+        DRUG_FACTOR_NAME,
+      </if>
+      <if test="drugStatusId != null" >
+        DRUG_STATUS_ID,
+      </if>
+      <if test="drugStatusName != null" >
+        DRUG_STATUS_NAME,
+      </if>
+      <if test="assignTime != null" >
+        ASSIGN_TIME,
+      </if>
+      <if test="assignUserFlow != null" >
+        ASSIGN_USER_FLOW,
+      </if>
+      <if test="assignUserName != null" >
+        ASSIGN_USER_NAME,
+      </if>
+      <if test="assignLabelId != null" >
+        ASSIGN_LABEL_ID,
+      </if>
+      <if test="assignLabelName != null" >
+        ASSIGN_LABEL_NAME,
+      </if>
+      <if test="assignTypeId != null" >
+        ASSIGN_TYPE_ID,
+      </if>
+      <if test="assignTypeName != null" >
+        ASSIGN_TYPE_NAME,
+      </if>
+      <if test="assignEmail != null" >
+        ASSIGN_EMAIL,
+      </if>
+      <if test="sendUserFlow != null" >
+        SEND_USER_FLOW,
+      </if>
+      <if test="sendUserName != null" >
+        SEND_USER_NAME,
+      </if>
+      <if test="patientFlow != null" >
+        PATIENT_FLOW,
+      </if>
+      <if test="patientCode != null" >
+        PATIENT_CODE,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="projFlow != null" >
+        #{projFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="durgFlow != null" >
+        #{durgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="ordinal != null" >
+        #{ordinal,jdbcType=DECIMAL},
+      </if>
+      <if test="drugPack != null" >
+        #{drugPack,jdbcType=VARCHAR},
+      </if>
+      <if test="drugGroup != null" >
+        #{drugGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="drugFactorId != null" >
+        #{drugFactorId,jdbcType=VARCHAR},
+      </if>
+      <if test="drugFactorName != null" >
+        #{drugFactorName,jdbcType=VARCHAR},
+      </if>
+      <if test="drugStatusId != null" >
+        #{drugStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="drugStatusName != null" >
+        #{drugStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="assignTime != null" >
+        #{assignTime,jdbcType=VARCHAR},
+      </if>
+      <if test="assignUserFlow != null" >
+        #{assignUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="assignUserName != null" >
+        #{assignUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="assignLabelId != null" >
+        #{assignLabelId,jdbcType=VARCHAR},
+      </if>
+      <if test="assignLabelName != null" >
+        #{assignLabelName,jdbcType=VARCHAR},
+      </if>
+      <if test="assignTypeId != null" >
+        #{assignTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="assignTypeName != null" >
+        #{assignTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="assignEmail != null" >
+        #{assignEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUserFlow != null" >
+        #{sendUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUserName != null" >
+        #{sendUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="patientFlow != null" >
+        #{patientFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="patientCode != null" >
+        #{patientCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.GcpDrugStoreRecExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.GCP_DRUG_STORE_REC
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.GCP_DRUG_STORE_REC
+    <set >
+      <if test="record.recordFlow != null" >
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projFlow != null" >
+        PROJ_FLOW = #{record.projFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.durgFlow != null" >
+        DURG_FLOW = #{record.durgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ordinal != null" >
+        ORDINAL = #{record.ordinal,jdbcType=DECIMAL},
+      </if>
+      <if test="record.drugPack != null" >
+        DRUG_PACK = #{record.drugPack,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drugGroup != null" >
+        DRUG_GROUP = #{record.drugGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drugFactorId != null" >
+        DRUG_FACTOR_ID = #{record.drugFactorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drugFactorName != null" >
+        DRUG_FACTOR_NAME = #{record.drugFactorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drugStatusId != null" >
+        DRUG_STATUS_ID = #{record.drugStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drugStatusName != null" >
+        DRUG_STATUS_NAME = #{record.drugStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assignTime != null" >
+        ASSIGN_TIME = #{record.assignTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assignUserFlow != null" >
+        ASSIGN_USER_FLOW = #{record.assignUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assignUserName != null" >
+        ASSIGN_USER_NAME = #{record.assignUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assignLabelId != null" >
+        ASSIGN_LABEL_ID = #{record.assignLabelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assignLabelName != null" >
+        ASSIGN_LABEL_NAME = #{record.assignLabelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assignTypeId != null" >
+        ASSIGN_TYPE_ID = #{record.assignTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assignTypeName != null" >
+        ASSIGN_TYPE_NAME = #{record.assignTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assignEmail != null" >
+        ASSIGN_EMAIL = #{record.assignEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendUserFlow != null" >
+        SEND_USER_FLOW = #{record.sendUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendUserName != null" >
+        SEND_USER_NAME = #{record.sendUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.patientFlow != null" >
+        PATIENT_FLOW = #{record.patientFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.patientCode != null" >
+        PATIENT_CODE = #{record.patientCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.GCP_DRUG_STORE_REC
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      PROJ_FLOW = #{record.projFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      DURG_FLOW = #{record.durgFlow,jdbcType=VARCHAR},
+      ORDINAL = #{record.ordinal,jdbcType=DECIMAL},
+      DRUG_PACK = #{record.drugPack,jdbcType=VARCHAR},
+      DRUG_GROUP = #{record.drugGroup,jdbcType=VARCHAR},
+      DRUG_FACTOR_ID = #{record.drugFactorId,jdbcType=VARCHAR},
+      DRUG_FACTOR_NAME = #{record.drugFactorName,jdbcType=VARCHAR},
+      DRUG_STATUS_ID = #{record.drugStatusId,jdbcType=VARCHAR},
+      DRUG_STATUS_NAME = #{record.drugStatusName,jdbcType=VARCHAR},
+      ASSIGN_TIME = #{record.assignTime,jdbcType=VARCHAR},
+      ASSIGN_USER_FLOW = #{record.assignUserFlow,jdbcType=VARCHAR},
+      ASSIGN_USER_NAME = #{record.assignUserName,jdbcType=VARCHAR},
+      ASSIGN_LABEL_ID = #{record.assignLabelId,jdbcType=VARCHAR},
+      ASSIGN_LABEL_NAME = #{record.assignLabelName,jdbcType=VARCHAR},
+      ASSIGN_TYPE_ID = #{record.assignTypeId,jdbcType=VARCHAR},
+      ASSIGN_TYPE_NAME = #{record.assignTypeName,jdbcType=VARCHAR},
+      ASSIGN_EMAIL = #{record.assignEmail,jdbcType=VARCHAR},
+      SEND_USER_FLOW = #{record.sendUserFlow,jdbcType=VARCHAR},
+      SEND_USER_NAME = #{record.sendUserName,jdbcType=VARCHAR},
+      PATIENT_FLOW = #{record.patientFlow,jdbcType=VARCHAR},
+      PATIENT_CODE = #{record.patientCode,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.GcpDrugStoreRec" >
+    update PDSCI.GCP_DRUG_STORE_REC
+    <set >
+      <if test="projFlow != null" >
+        PROJ_FLOW = #{projFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="durgFlow != null" >
+        DURG_FLOW = #{durgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="ordinal != null" >
+        ORDINAL = #{ordinal,jdbcType=DECIMAL},
+      </if>
+      <if test="drugPack != null" >
+        DRUG_PACK = #{drugPack,jdbcType=VARCHAR},
+      </if>
+      <if test="drugGroup != null" >
+        DRUG_GROUP = #{drugGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="drugFactorId != null" >
+        DRUG_FACTOR_ID = #{drugFactorId,jdbcType=VARCHAR},
+      </if>
+      <if test="drugFactorName != null" >
+        DRUG_FACTOR_NAME = #{drugFactorName,jdbcType=VARCHAR},
+      </if>
+      <if test="drugStatusId != null" >
+        DRUG_STATUS_ID = #{drugStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="drugStatusName != null" >
+        DRUG_STATUS_NAME = #{drugStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="assignTime != null" >
+        ASSIGN_TIME = #{assignTime,jdbcType=VARCHAR},
+      </if>
+      <if test="assignUserFlow != null" >
+        ASSIGN_USER_FLOW = #{assignUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="assignUserName != null" >
+        ASSIGN_USER_NAME = #{assignUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="assignLabelId != null" >
+        ASSIGN_LABEL_ID = #{assignLabelId,jdbcType=VARCHAR},
+      </if>
+      <if test="assignLabelName != null" >
+        ASSIGN_LABEL_NAME = #{assignLabelName,jdbcType=VARCHAR},
+      </if>
+      <if test="assignTypeId != null" >
+        ASSIGN_TYPE_ID = #{assignTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="assignTypeName != null" >
+        ASSIGN_TYPE_NAME = #{assignTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="assignEmail != null" >
+        ASSIGN_EMAIL = #{assignEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUserFlow != null" >
+        SEND_USER_FLOW = #{sendUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUserName != null" >
+        SEND_USER_NAME = #{sendUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="patientFlow != null" >
+        PATIENT_FLOW = #{patientFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="patientCode != null" >
+        PATIENT_CODE = #{patientCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.GcpDrugStoreRec" >
+    update PDSCI.GCP_DRUG_STORE_REC
+    set PROJ_FLOW = #{projFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      DURG_FLOW = #{durgFlow,jdbcType=VARCHAR},
+      ORDINAL = #{ordinal,jdbcType=DECIMAL},
+      DRUG_PACK = #{drugPack,jdbcType=VARCHAR},
+      DRUG_GROUP = #{drugGroup,jdbcType=VARCHAR},
+      DRUG_FACTOR_ID = #{drugFactorId,jdbcType=VARCHAR},
+      DRUG_FACTOR_NAME = #{drugFactorName,jdbcType=VARCHAR},
+      DRUG_STATUS_ID = #{drugStatusId,jdbcType=VARCHAR},
+      DRUG_STATUS_NAME = #{drugStatusName,jdbcType=VARCHAR},
+      ASSIGN_TIME = #{assignTime,jdbcType=VARCHAR},
+      ASSIGN_USER_FLOW = #{assignUserFlow,jdbcType=VARCHAR},
+      ASSIGN_USER_NAME = #{assignUserName,jdbcType=VARCHAR},
+      ASSIGN_LABEL_ID = #{assignLabelId,jdbcType=VARCHAR},
+      ASSIGN_LABEL_NAME = #{assignLabelName,jdbcType=VARCHAR},
+      ASSIGN_TYPE_ID = #{assignTypeId,jdbcType=VARCHAR},
+      ASSIGN_TYPE_NAME = #{assignTypeName,jdbcType=VARCHAR},
+      ASSIGN_EMAIL = #{assignEmail,jdbcType=VARCHAR},
+      SEND_USER_FLOW = #{sendUserFlow,jdbcType=VARCHAR},
+      SEND_USER_NAME = #{sendUserName,jdbcType=VARCHAR},
+      PATIENT_FLOW = #{patientFlow,jdbcType=VARCHAR},
+      PATIENT_CODE = #{patientCode,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

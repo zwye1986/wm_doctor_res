@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.JsResSchExamScoreQueryMapper">
+
+    <resultMap id="userMap" type="java.util.HashMap" >
+        <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+        <result column="RECRUIT_FLOW" property="recruitFlow" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+        <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+        <result column="CAT_SPE_ID" property="catSpeId" jdbcType="VARCHAR" />
+        <result column="CAT_SPE_NAME" property="catSpeName" jdbcType="VARCHAR" />
+        <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
+        <result column="DOCTOR_TYPE_NAME" property="doctorTypeName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="userList" resultMap="userMap">
+        SELECT RD.DOCTOR_FLOW,
+                DR.RECRUIT_FLOW,
+                DR.ORG_NAME,
+                DR.ORG_FLOW,
+                SU.USER_NAME,
+                DR.SPE_ID,
+                DR.SPE_NAME,
+                DR.CAT_SPE_ID,
+                DR.CAT_SPE_NAME,
+                DR.SESSION_NUMBER,
+                rd.DOCTOR_TYPE_NAME
+        FROM res_doctor_recruit dr
+        LEFT JOIN RES_DOCTOR RD
+        ON DR.DOCTOR_FLOW = RD.DOCTOR_FLOW
+        INNER JOIN SYS_USER SU
+        ON RD.DOCTOR_FLOW = SU.USER_FLOW
+        WHERE RD.RECORD_STATUS = 'Y'
+        AND DR.RECORD_STATUS = 'Y'
+        AND SU.RECORD_STATUS = 'Y'
+        <if test="orgFlow!=null and orgFlow!=''">
+            AND DR.org_flow = #{orgFlow}
+        </if>
+        <if test="orgFlowList!=null and orgFlowList.size>0">
+            and DR.org_flow in
+            <foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="trainingTypeId!=null and trainingTypeId!=''">
+            and dr.CAT_SPE_ID = #{trainingTypeId}
+        </if>
+        <if test="trainingSpeId!=null and trainingSpeId!=''">
+            and dr.SPE_ID = #{trainingSpeId}
+        </if>
+        <if test="sessionNumber!=null and sessionNumber!=''">
+            and dr.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test="userName!=null and userName!=''">
+            <bind name="userName" value="'%'+userName+'%'"/>
+            and Su.USER_NAME like #{userName}
+        </if>
+        <if test="idNo!=null and idNo!=''">
+            <bind name="idNo" value="'%'+idNo+'%'"/>
+            and Su.ID_NO like #{idNo}
+        </if>
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and rd.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        order by
+            DR.CAT_SPE_ID,
+            DR.SPE_ID,
+            DR.SESSION_NUMBER
+    </select>
+    <select id="getDoctorArrangements" resultMap="com.pinde.sci.dao.base.SchExamDoctorArrangementMapper.BaseResultMap">
+        SELECT RECORD_FLOW,
+                ARRANGE_FLOW,
+                ASSESSMENT_YEAR,
+                DOCTOR_FLOW,
+                DOCTOR_NAME,
+                EXAM_SCORE,
+                EXAM_DOWLAND,
+                RECORD_STATUS,
+                CREATE_TIME,
+                CREATE_USER_FLOW,
+                MODIFY_TIME,
+                MODIFY_USER_FLOW,
+                ORG_FLOW,
+                ORG_NAME,
+                SESSION_NUMBER
+          FROM (
+                  SELECT ROW_NUMBER() OVER(PARTITION BY ARRANGE_FLOW, ASSESSMENT_YEAR, DOCTOR_FLOW, ORG_FLOW, SESSION_NUMBER ORDER BY TO_NUMBER(EXAM_SCORE) DESC) RN,
+                       SCH_EXAM_DOCTOR_ARRANGEMENT.*
+                  FROM SCH_EXAM_DOCTOR_ARRANGEMENT
+                  WHERE RECORD_STATUS='Y'
+                      AND org_flow = #{orgFlow}
+                        <if test="userFlows!=null and userFlows.size>0">
+                            and DOCTOR_FLOW in
+                            <foreach collection="userFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
+                        </if>
+                      AND EXAM_SCORE is not null
+                  )
+         WHERE RN = 1
+    </select>
+</mapper>

@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.QingpuDoctorKqMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.QingpuDoctorKq" >
+    <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
+    <result column="START_DATE" property="startDate" jdbcType="VARCHAR" />
+    <result column="END_DATE" property="endDate" jdbcType="VARCHAR" />
+    <result column="INTERVAL_DAYS" property="intervalDays" jdbcType="VARCHAR" />
+    <result column="SCH_DEPT_FLOW" property="schDeptFlow" jdbcType="VARCHAR" />
+    <result column="SCH_DEPT_NAME" property="schDeptName" jdbcType="VARCHAR" />
+    <result column="SCH_DEPT_START_DATE" property="schDeptStartDate" jdbcType="VARCHAR" />
+    <result column="SCH_DEPT_END_DATE" property="schDeptEndDate" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="QINGPU_KQ_TYPE_ID" property="qingpuKqTypeId" jdbcType="VARCHAR" />
+    <result column="QINGPU_KQ_TYPE_NAME" property="qingpuKqTypeName" jdbcType="VARCHAR" />
+    <result column="QINGPU_KQ_TYPE_DETAIL_ID" property="qingpuKqTypeDetailId" jdbcType="VARCHAR" />
+    <result column="QINGPU_KQ_TYPE_DETAIL_NAME" property="qingpuKqTypeDetailName" jdbcType="VARCHAR" />
+    <result column="SICK_LEAVE_TYPE_ID" property="sickLeaveTypeId" jdbcType="VARCHAR" />
+    <result column="SICK_LEAVE_TYPE_NAME" property="sickLeaveTypeName" jdbcType="VARCHAR" />
+    <result column="DOCTOR_REMARKS" property="doctorRemarks" jdbcType="VARCHAR" />
+    <result column="TEACHER_FLOW" property="teacherFlow" jdbcType="VARCHAR" />
+    <result column="TEACHER_NAME" property="teacherName" jdbcType="VARCHAR" />
+    <result column="HEAD_FLOW" property="headFlow" jdbcType="VARCHAR" />
+    <result column="HEAD_NAME" property="headName" jdbcType="VARCHAR" />
+    <result column="MANAGER_FLOW" property="managerFlow" jdbcType="VARCHAR" />
+    <result column="MANAGER_NAME" property="managerName" jdbcType="VARCHAR" />
+    <result column="TEACHER_AGREE_FLAG" property="teacherAgreeFlag" jdbcType="VARCHAR" />
+    <result column="HEAD_AGREE_FLAG" property="headAgreeFlag" jdbcType="VARCHAR" />
+    <result column="MANAGER_AGREE_FLAG" property="managerAgreeFlag" jdbcType="VARCHAR" />
+    <result column="TEACHER_AUDIT_INFO" property="teacherAuditInfo" jdbcType="VARCHAR" />
+    <result column="HEAD_AUDIT_INFO" property="headAuditInfo" jdbcType="VARCHAR" />
+    <result column="MANAGER_AUDIT_INFO" property="managerAuditInfo" jdbcType="VARCHAR" />
+    <result column="TEACHER_AUDIT_TIME" property="teacherAuditTime" jdbcType="VARCHAR" />
+    <result column="HEAD_AUDIT_TIME" property="headAuditTime" jdbcType="VARCHAR" />
+    <result column="MANAGER_AUDIT_TIME" property="managerAuditTime" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME, START_DATE, END_DATE, INTERVAL_DAYS, SCH_DEPT_FLOW, 
+    SCH_DEPT_NAME, SCH_DEPT_START_DATE, SCH_DEPT_END_DATE, ORG_FLOW, ORG_NAME, QINGPU_KQ_TYPE_ID, 
+    QINGPU_KQ_TYPE_NAME, QINGPU_KQ_TYPE_DETAIL_ID, QINGPU_KQ_TYPE_DETAIL_NAME, SICK_LEAVE_TYPE_ID, 
+    SICK_LEAVE_TYPE_NAME, DOCTOR_REMARKS, TEACHER_FLOW, TEACHER_NAME, HEAD_FLOW, HEAD_NAME, 
+    MANAGER_FLOW, MANAGER_NAME, TEACHER_AGREE_FLAG, HEAD_AGREE_FLAG, MANAGER_AGREE_FLAG, 
+    TEACHER_AUDIT_INFO, HEAD_AUDIT_INFO, MANAGER_AUDIT_INFO, TEACHER_AUDIT_TIME, HEAD_AUDIT_TIME, 
+    MANAGER_AUDIT_TIME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.QingpuDoctorKqExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.QINGPU_DOCTOR_KQ
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.QINGPU_DOCTOR_KQ
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.QINGPU_DOCTOR_KQ
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.QingpuDoctorKqExample" >
+    delete from PDSCI.QINGPU_DOCTOR_KQ
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.QingpuDoctorKq" >
+    insert into PDSCI.QINGPU_DOCTOR_KQ (RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME, 
+      START_DATE, END_DATE, INTERVAL_DAYS, 
+      SCH_DEPT_FLOW, SCH_DEPT_NAME, SCH_DEPT_START_DATE, 
+      SCH_DEPT_END_DATE, ORG_FLOW, ORG_NAME, 
+      QINGPU_KQ_TYPE_ID, QINGPU_KQ_TYPE_NAME, QINGPU_KQ_TYPE_DETAIL_ID, 
+      QINGPU_KQ_TYPE_DETAIL_NAME, SICK_LEAVE_TYPE_ID, 
+      SICK_LEAVE_TYPE_NAME, DOCTOR_REMARKS, TEACHER_FLOW, 
+      TEACHER_NAME, HEAD_FLOW, HEAD_NAME, 
+      MANAGER_FLOW, MANAGER_NAME, TEACHER_AGREE_FLAG, 
+      HEAD_AGREE_FLAG, MANAGER_AGREE_FLAG, TEACHER_AUDIT_INFO, 
+      HEAD_AUDIT_INFO, MANAGER_AUDIT_INFO, TEACHER_AUDIT_TIME, 
+      HEAD_AUDIT_TIME, MANAGER_AUDIT_TIME, RECORD_STATUS, 
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+      MODIFY_USER_FLOW)
+    values (#{recordFlow,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, 
+      #{startDate,jdbcType=VARCHAR}, #{endDate,jdbcType=VARCHAR}, #{intervalDays,jdbcType=VARCHAR}, 
+      #{schDeptFlow,jdbcType=VARCHAR}, #{schDeptName,jdbcType=VARCHAR}, #{schDeptStartDate,jdbcType=VARCHAR}, 
+      #{schDeptEndDate,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, 
+      #{qingpuKqTypeId,jdbcType=VARCHAR}, #{qingpuKqTypeName,jdbcType=VARCHAR}, #{qingpuKqTypeDetailId,jdbcType=VARCHAR}, 
+      #{qingpuKqTypeDetailName,jdbcType=VARCHAR}, #{sickLeaveTypeId,jdbcType=VARCHAR}, 
+      #{sickLeaveTypeName,jdbcType=VARCHAR}, #{doctorRemarks,jdbcType=VARCHAR}, #{teacherFlow,jdbcType=VARCHAR}, 
+      #{teacherName,jdbcType=VARCHAR}, #{headFlow,jdbcType=VARCHAR}, #{headName,jdbcType=VARCHAR}, 
+      #{managerFlow,jdbcType=VARCHAR}, #{managerName,jdbcType=VARCHAR}, #{teacherAgreeFlag,jdbcType=VARCHAR}, 
+      #{headAgreeFlag,jdbcType=VARCHAR}, #{managerAgreeFlag,jdbcType=VARCHAR}, #{teacherAuditInfo,jdbcType=VARCHAR}, 
+      #{headAuditInfo,jdbcType=VARCHAR}, #{managerAuditInfo,jdbcType=VARCHAR}, #{teacherAuditTime,jdbcType=VARCHAR}, 
+      #{headAuditTime,jdbcType=VARCHAR}, #{managerAuditTime,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
+      #{modifyUserFlow,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.QingpuDoctorKq" >
+    insert into PDSCI.QINGPU_DOCTOR_KQ
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        RECORD_FLOW,
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW,
+      </if>
+      <if test="doctorName != null" >
+        DOCTOR_NAME,
+      </if>
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
+      <if test="intervalDays != null" >
+        INTERVAL_DAYS,
+      </if>
+      <if test="schDeptFlow != null" >
+        SCH_DEPT_FLOW,
+      </if>
+      <if test="schDeptName != null" >
+        SCH_DEPT_NAME,
+      </if>
+      <if test="schDeptStartDate != null" >
+        SCH_DEPT_START_DATE,
+      </if>
+      <if test="schDeptEndDate != null" >
+        SCH_DEPT_END_DATE,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="qingpuKqTypeId != null" >
+        QINGPU_KQ_TYPE_ID,
+      </if>
+      <if test="qingpuKqTypeName != null" >
+        QINGPU_KQ_TYPE_NAME,
+      </if>
+      <if test="qingpuKqTypeDetailId != null" >
+        QINGPU_KQ_TYPE_DETAIL_ID,
+      </if>
+      <if test="qingpuKqTypeDetailName != null" >
+        QINGPU_KQ_TYPE_DETAIL_NAME,
+      </if>
+      <if test="sickLeaveTypeId != null" >
+        SICK_LEAVE_TYPE_ID,
+      </if>
+      <if test="sickLeaveTypeName != null" >
+        SICK_LEAVE_TYPE_NAME,
+      </if>
+      <if test="doctorRemarks != null" >
+        DOCTOR_REMARKS,
+      </if>
+      <if test="teacherFlow != null" >
+        TEACHER_FLOW,
+      </if>
+      <if test="teacherName != null" >
+        TEACHER_NAME,
+      </if>
+      <if test="headFlow != null" >
+        HEAD_FLOW,
+      </if>
+      <if test="headName != null" >
+        HEAD_NAME,
+      </if>
+      <if test="managerFlow != null" >
+        MANAGER_FLOW,
+      </if>
+      <if test="managerName != null" >
+        MANAGER_NAME,
+      </if>
+      <if test="teacherAgreeFlag != null" >
+        TEACHER_AGREE_FLAG,
+      </if>
+      <if test="headAgreeFlag != null" >
+        HEAD_AGREE_FLAG,
+      </if>
+      <if test="managerAgreeFlag != null" >
+        MANAGER_AGREE_FLAG,
+      </if>
+      <if test="teacherAuditInfo != null" >
+        TEACHER_AUDIT_INFO,
+      </if>
+      <if test="headAuditInfo != null" >
+        HEAD_AUDIT_INFO,
+      </if>
+      <if test="managerAuditInfo != null" >
+        MANAGER_AUDIT_INFO,
+      </if>
+      <if test="teacherAuditTime != null" >
+        TEACHER_AUDIT_TIME,
+      </if>
+      <if test="headAuditTime != null" >
+        HEAD_AUDIT_TIME,
+      </if>
+      <if test="managerAuditTime != null" >
+        MANAGER_AUDIT_TIME,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null" >
+        #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=VARCHAR},
+      </if>
+      <if test="intervalDays != null" >
+        #{intervalDays,jdbcType=VARCHAR},
+      </if>
+      <if test="schDeptFlow != null" >
+        #{schDeptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="schDeptName != null" >
+        #{schDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="schDeptStartDate != null" >
+        #{schDeptStartDate,jdbcType=VARCHAR},
+      </if>
+      <if test="schDeptEndDate != null" >
+        #{schDeptEndDate,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="qingpuKqTypeId != null" >
+        #{qingpuKqTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="qingpuKqTypeName != null" >
+        #{qingpuKqTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="qingpuKqTypeDetailId != null" >
+        #{qingpuKqTypeDetailId,jdbcType=VARCHAR},
+      </if>
+      <if test="qingpuKqTypeDetailName != null" >
+        #{qingpuKqTypeDetailName,jdbcType=VARCHAR},
+      </if>
+      <if test="sickLeaveTypeId != null" >
+        #{sickLeaveTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="sickLeaveTypeName != null" >
+        #{sickLeaveTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorRemarks != null" >
+        #{doctorRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherFlow != null" >
+        #{teacherFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null" >
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="headFlow != null" >
+        #{headFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="headName != null" >
+        #{headName,jdbcType=VARCHAR},
+      </if>
+      <if test="managerFlow != null" >
+        #{managerFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="managerName != null" >
+        #{managerName,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherAgreeFlag != null" >
+        #{teacherAgreeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="headAgreeFlag != null" >
+        #{headAgreeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="managerAgreeFlag != null" >
+        #{managerAgreeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherAuditInfo != null" >
+        #{teacherAuditInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="headAuditInfo != null" >
+        #{headAuditInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="managerAuditInfo != null" >
+        #{managerAuditInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherAuditTime != null" >
+        #{teacherAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="headAuditTime != null" >
+        #{headAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="managerAuditTime != null" >
+        #{managerAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.QingpuDoctorKqExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.QINGPU_DOCTOR_KQ
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.QINGPU_DOCTOR_KQ
+    <set >
+      <if test="record.recordFlow != null" >
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorFlow != null" >
+        DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorName != null" >
+        DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startDate != null" >
+        START_DATE = #{record.startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endDate != null" >
+        END_DATE = #{record.endDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.intervalDays != null" >
+        INTERVAL_DAYS = #{record.intervalDays,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schDeptFlow != null" >
+        SCH_DEPT_FLOW = #{record.schDeptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schDeptName != null" >
+        SCH_DEPT_NAME = #{record.schDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schDeptStartDate != null" >
+        SCH_DEPT_START_DATE = #{record.schDeptStartDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schDeptEndDate != null" >
+        SCH_DEPT_END_DATE = #{record.schDeptEndDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qingpuKqTypeId != null" >
+        QINGPU_KQ_TYPE_ID = #{record.qingpuKqTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qingpuKqTypeName != null" >
+        QINGPU_KQ_TYPE_NAME = #{record.qingpuKqTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qingpuKqTypeDetailId != null" >
+        QINGPU_KQ_TYPE_DETAIL_ID = #{record.qingpuKqTypeDetailId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qingpuKqTypeDetailName != null" >
+        QINGPU_KQ_TYPE_DETAIL_NAME = #{record.qingpuKqTypeDetailName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sickLeaveTypeId != null" >
+        SICK_LEAVE_TYPE_ID = #{record.sickLeaveTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sickLeaveTypeName != null" >
+        SICK_LEAVE_TYPE_NAME = #{record.sickLeaveTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorRemarks != null" >
+        DOCTOR_REMARKS = #{record.doctorRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherFlow != null" >
+        TEACHER_FLOW = #{record.teacherFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherName != null" >
+        TEACHER_NAME = #{record.teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headFlow != null" >
+        HEAD_FLOW = #{record.headFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headName != null" >
+        HEAD_NAME = #{record.headName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.managerFlow != null" >
+        MANAGER_FLOW = #{record.managerFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.managerName != null" >
+        MANAGER_NAME = #{record.managerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherAgreeFlag != null" >
+        TEACHER_AGREE_FLAG = #{record.teacherAgreeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headAgreeFlag != null" >
+        HEAD_AGREE_FLAG = #{record.headAgreeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.managerAgreeFlag != null" >
+        MANAGER_AGREE_FLAG = #{record.managerAgreeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherAuditInfo != null" >
+        TEACHER_AUDIT_INFO = #{record.teacherAuditInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headAuditInfo != null" >
+        HEAD_AUDIT_INFO = #{record.headAuditInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.managerAuditInfo != null" >
+        MANAGER_AUDIT_INFO = #{record.managerAuditInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherAuditTime != null" >
+        TEACHER_AUDIT_TIME = #{record.teacherAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headAuditTime != null" >
+        HEAD_AUDIT_TIME = #{record.headAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.managerAuditTime != null" >
+        MANAGER_AUDIT_TIME = #{record.managerAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.QINGPU_DOCTOR_KQ
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
+      START_DATE = #{record.startDate,jdbcType=VARCHAR},
+      END_DATE = #{record.endDate,jdbcType=VARCHAR},
+      INTERVAL_DAYS = #{record.intervalDays,jdbcType=VARCHAR},
+      SCH_DEPT_FLOW = #{record.schDeptFlow,jdbcType=VARCHAR},
+      SCH_DEPT_NAME = #{record.schDeptName,jdbcType=VARCHAR},
+      SCH_DEPT_START_DATE = #{record.schDeptStartDate,jdbcType=VARCHAR},
+      SCH_DEPT_END_DATE = #{record.schDeptEndDate,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      QINGPU_KQ_TYPE_ID = #{record.qingpuKqTypeId,jdbcType=VARCHAR},
+      QINGPU_KQ_TYPE_NAME = #{record.qingpuKqTypeName,jdbcType=VARCHAR},
+      QINGPU_KQ_TYPE_DETAIL_ID = #{record.qingpuKqTypeDetailId,jdbcType=VARCHAR},
+      QINGPU_KQ_TYPE_DETAIL_NAME = #{record.qingpuKqTypeDetailName,jdbcType=VARCHAR},
+      SICK_LEAVE_TYPE_ID = #{record.sickLeaveTypeId,jdbcType=VARCHAR},
+      SICK_LEAVE_TYPE_NAME = #{record.sickLeaveTypeName,jdbcType=VARCHAR},
+      DOCTOR_REMARKS = #{record.doctorRemarks,jdbcType=VARCHAR},
+      TEACHER_FLOW = #{record.teacherFlow,jdbcType=VARCHAR},
+      TEACHER_NAME = #{record.teacherName,jdbcType=VARCHAR},
+      HEAD_FLOW = #{record.headFlow,jdbcType=VARCHAR},
+      HEAD_NAME = #{record.headName,jdbcType=VARCHAR},
+      MANAGER_FLOW = #{record.managerFlow,jdbcType=VARCHAR},
+      MANAGER_NAME = #{record.managerName,jdbcType=VARCHAR},
+      TEACHER_AGREE_FLAG = #{record.teacherAgreeFlag,jdbcType=VARCHAR},
+      HEAD_AGREE_FLAG = #{record.headAgreeFlag,jdbcType=VARCHAR},
+      MANAGER_AGREE_FLAG = #{record.managerAgreeFlag,jdbcType=VARCHAR},
+      TEACHER_AUDIT_INFO = #{record.teacherAuditInfo,jdbcType=VARCHAR},
+      HEAD_AUDIT_INFO = #{record.headAuditInfo,jdbcType=VARCHAR},
+      MANAGER_AUDIT_INFO = #{record.managerAuditInfo,jdbcType=VARCHAR},
+      TEACHER_AUDIT_TIME = #{record.teacherAuditTime,jdbcType=VARCHAR},
+      HEAD_AUDIT_TIME = #{record.headAuditTime,jdbcType=VARCHAR},
+      MANAGER_AUDIT_TIME = #{record.managerAuditTime,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.QingpuDoctorKq" >
+    update PDSCI.QINGPU_DOCTOR_KQ
+    <set >
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null" >
+        DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        START_DATE = #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        END_DATE = #{endDate,jdbcType=VARCHAR},
+      </if>
+      <if test="intervalDays != null" >
+        INTERVAL_DAYS = #{intervalDays,jdbcType=VARCHAR},
+      </if>
+      <if test="schDeptFlow != null" >
+        SCH_DEPT_FLOW = #{schDeptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="schDeptName != null" >
+        SCH_DEPT_NAME = #{schDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="schDeptStartDate != null" >
+        SCH_DEPT_START_DATE = #{schDeptStartDate,jdbcType=VARCHAR},
+      </if>
+      <if test="schDeptEndDate != null" >
+        SCH_DEPT_END_DATE = #{schDeptEndDate,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="qingpuKqTypeId != null" >
+        QINGPU_KQ_TYPE_ID = #{qingpuKqTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="qingpuKqTypeName != null" >
+        QINGPU_KQ_TYPE_NAME = #{qingpuKqTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="qingpuKqTypeDetailId != null" >
+        QINGPU_KQ_TYPE_DETAIL_ID = #{qingpuKqTypeDetailId,jdbcType=VARCHAR},
+      </if>
+      <if test="qingpuKqTypeDetailName != null" >
+        QINGPU_KQ_TYPE_DETAIL_NAME = #{qingpuKqTypeDetailName,jdbcType=VARCHAR},
+      </if>
+      <if test="sickLeaveTypeId != null" >
+        SICK_LEAVE_TYPE_ID = #{sickLeaveTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="sickLeaveTypeName != null" >
+        SICK_LEAVE_TYPE_NAME = #{sickLeaveTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorRemarks != null" >
+        DOCTOR_REMARKS = #{doctorRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherFlow != null" >
+        TEACHER_FLOW = #{teacherFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherName != null" >
+        TEACHER_NAME = #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="headFlow != null" >
+        HEAD_FLOW = #{headFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="headName != null" >
+        HEAD_NAME = #{headName,jdbcType=VARCHAR},
+      </if>
+      <if test="managerFlow != null" >
+        MANAGER_FLOW = #{managerFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="managerName != null" >
+        MANAGER_NAME = #{managerName,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherAgreeFlag != null" >
+        TEACHER_AGREE_FLAG = #{teacherAgreeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="headAgreeFlag != null" >
+        HEAD_AGREE_FLAG = #{headAgreeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="managerAgreeFlag != null" >
+        MANAGER_AGREE_FLAG = #{managerAgreeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherAuditInfo != null" >
+        TEACHER_AUDIT_INFO = #{teacherAuditInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="headAuditInfo != null" >
+        HEAD_AUDIT_INFO = #{headAuditInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="managerAuditInfo != null" >
+        MANAGER_AUDIT_INFO = #{managerAuditInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherAuditTime != null" >
+        TEACHER_AUDIT_TIME = #{teacherAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="headAuditTime != null" >
+        HEAD_AUDIT_TIME = #{headAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="managerAuditTime != null" >
+        MANAGER_AUDIT_TIME = #{managerAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.QingpuDoctorKq" >
+    update PDSCI.QINGPU_DOCTOR_KQ
+    set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      START_DATE = #{startDate,jdbcType=VARCHAR},
+      END_DATE = #{endDate,jdbcType=VARCHAR},
+      INTERVAL_DAYS = #{intervalDays,jdbcType=VARCHAR},
+      SCH_DEPT_FLOW = #{schDeptFlow,jdbcType=VARCHAR},
+      SCH_DEPT_NAME = #{schDeptName,jdbcType=VARCHAR},
+      SCH_DEPT_START_DATE = #{schDeptStartDate,jdbcType=VARCHAR},
+      SCH_DEPT_END_DATE = #{schDeptEndDate,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      QINGPU_KQ_TYPE_ID = #{qingpuKqTypeId,jdbcType=VARCHAR},
+      QINGPU_KQ_TYPE_NAME = #{qingpuKqTypeName,jdbcType=VARCHAR},
+      QINGPU_KQ_TYPE_DETAIL_ID = #{qingpuKqTypeDetailId,jdbcType=VARCHAR},
+      QINGPU_KQ_TYPE_DETAIL_NAME = #{qingpuKqTypeDetailName,jdbcType=VARCHAR},
+      SICK_LEAVE_TYPE_ID = #{sickLeaveTypeId,jdbcType=VARCHAR},
+      SICK_LEAVE_TYPE_NAME = #{sickLeaveTypeName,jdbcType=VARCHAR},
+      DOCTOR_REMARKS = #{doctorRemarks,jdbcType=VARCHAR},
+      TEACHER_FLOW = #{teacherFlow,jdbcType=VARCHAR},
+      TEACHER_NAME = #{teacherName,jdbcType=VARCHAR},
+      HEAD_FLOW = #{headFlow,jdbcType=VARCHAR},
+      HEAD_NAME = #{headName,jdbcType=VARCHAR},
+      MANAGER_FLOW = #{managerFlow,jdbcType=VARCHAR},
+      MANAGER_NAME = #{managerName,jdbcType=VARCHAR},
+      TEACHER_AGREE_FLAG = #{teacherAgreeFlag,jdbcType=VARCHAR},
+      HEAD_AGREE_FLAG = #{headAgreeFlag,jdbcType=VARCHAR},
+      MANAGER_AGREE_FLAG = #{managerAgreeFlag,jdbcType=VARCHAR},
+      TEACHER_AUDIT_INFO = #{teacherAuditInfo,jdbcType=VARCHAR},
+      HEAD_AUDIT_INFO = #{headAuditInfo,jdbcType=VARCHAR},
+      MANAGER_AUDIT_INFO = #{managerAuditInfo,jdbcType=VARCHAR},
+      TEACHER_AUDIT_TIME = #{teacherAuditTime,jdbcType=VARCHAR},
+      HEAD_AUDIT_TIME = #{headAuditTime,jdbcType=VARCHAR},
+      MANAGER_AUDIT_TIME = #{managerAuditTime,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,875 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.TjDocinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.TjDocinfo" >
+    <id column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="DOCROLE" property="docrole" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="USER_PASSWORD" property="userPassword" jdbcType="VARCHAR" />
+    <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+    <result column="QUALIFIED_NO" property="qualifiedNo" jdbcType="VARCHAR" />
+    <result column="SPE_CODE" property="speCode" jdbcType="VARCHAR" />
+    <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+    <result column="TICKET_NUM" property="ticketNum" jdbcType="VARCHAR" />
+    <result column="USER_SEX" property="userSex" jdbcType="VARCHAR" />
+    <result column="DEGREE" property="degree" jdbcType="VARCHAR" />
+    <result column="BEF_ORG_NAME" property="befOrgName" jdbcType="VARCHAR" />
+    <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR" />
+    <result column="PHONE_PATH" property="phonePath" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="SITE_ONE" property="siteOne" jdbcType="VARCHAR" />
+    <result column="SITE_ONE_TIME" property="siteOneTime" jdbcType="VARCHAR" />
+    <result column="SITE_ONE_SCORE" property="siteOneScore" jdbcType="VARCHAR" />
+    <result column="SITE_ONE_STATE" property="siteOneState" jdbcType="VARCHAR" />
+    <result column="SITE_TWO" property="siteTwo" jdbcType="VARCHAR" />
+    <result column="SITE_TWO_TIME" property="siteTwoTime" jdbcType="VARCHAR" />
+    <result column="SITE_TWO_SCORE" property="siteTwoScore" jdbcType="VARCHAR" />
+    <result column="SITE_TWO_STATE" property="siteTwoState" jdbcType="VARCHAR" />
+    <result column="SITE_THREE" property="siteThree" jdbcType="VARCHAR" />
+    <result column="SITE_THREE_TIME" property="siteThreeTime" jdbcType="VARCHAR" />
+    <result column="SITE_THREE_SCORE" property="siteThreeScore" jdbcType="VARCHAR" />
+    <result column="SITE_THREE_STATE" property="siteThreeState" jdbcType="VARCHAR" />
+    <result column="TOTAL_SCORE_STATE" property="totalScoreState" jdbcType="VARCHAR" />
+    <result column="COMPLETE_NO" property="completeNo" jdbcType="VARCHAR" />
+    <result column="MEMO" property="memo" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="ORG_CODE2" property="orgCode2" jdbcType="VARCHAR" />
+    <result column="BEGINDATE" property="begindate" jdbcType="VARCHAR" />
+    <result column="ENDDATE" property="enddate" jdbcType="VARCHAR" />
+    <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="DECIMAL" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="EXAMTIME" property="examtime" jdbcType="VARCHAR" />
+    <result column="SITEPHONE" property="sitephone" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    USER_FLOW, ORG_FLOW, ORG_CODE, ORG_NAME, DOCROLE, USER_ID, USER_NAME, USER_PASSWORD, 
+    ID_NO, QUALIFIED_NO, SPE_CODE, SPE_NAME, TICKET_NUM, USER_SEX, DEGREE, BEF_ORG_NAME, 
+    USER_PHONE, PHONE_PATH, REMARK, SITE_ONE, SITE_ONE_TIME, SITE_ONE_SCORE, SITE_ONE_STATE, 
+    SITE_TWO, SITE_TWO_TIME, SITE_TWO_SCORE, SITE_TWO_STATE, SITE_THREE, SITE_THREE_TIME, 
+    SITE_THREE_SCORE, SITE_THREE_STATE, TOTAL_SCORE_STATE, COMPLETE_NO, MEMO, RECORD_STATUS, 
+    CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, ORG_CODE2, BEGINDATE, 
+    ENDDATE, SESSION_NUMBER, ADDRESS, EXAMTIME, SITEPHONE, TITLE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.TjDocinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.TJ_DOCINFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.TJ_DOCINFO
+    where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.TJ_DOCINFO
+    where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.TjDocinfoExample" >
+    delete from PDSCI.TJ_DOCINFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.TjDocinfo" >
+    insert into PDSCI.TJ_DOCINFO (USER_FLOW, ORG_FLOW, ORG_CODE, 
+      ORG_NAME, DOCROLE, USER_ID, 
+      USER_NAME, USER_PASSWORD, ID_NO, 
+      QUALIFIED_NO, SPE_CODE, SPE_NAME, 
+      TICKET_NUM, USER_SEX, DEGREE, 
+      BEF_ORG_NAME, USER_PHONE, PHONE_PATH, 
+      REMARK, SITE_ONE, SITE_ONE_TIME, 
+      SITE_ONE_SCORE, SITE_ONE_STATE, SITE_TWO, 
+      SITE_TWO_TIME, SITE_TWO_SCORE, SITE_TWO_STATE, 
+      SITE_THREE, SITE_THREE_TIME, SITE_THREE_SCORE, 
+      SITE_THREE_STATE, TOTAL_SCORE_STATE, COMPLETE_NO, 
+      MEMO, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+      ORG_CODE2, BEGINDATE, ENDDATE, 
+      SESSION_NUMBER, ADDRESS, EXAMTIME, 
+      SITEPHONE, TITLE)
+    values (#{userFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
+      #{orgName,jdbcType=VARCHAR}, #{docrole,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, 
+      #{qualifiedNo,jdbcType=VARCHAR}, #{speCode,jdbcType=VARCHAR}, #{speName,jdbcType=VARCHAR}, 
+      #{ticketNum,jdbcType=VARCHAR}, #{userSex,jdbcType=VARCHAR}, #{degree,jdbcType=VARCHAR}, 
+      #{befOrgName,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, #{phonePath,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{siteOne,jdbcType=VARCHAR}, #{siteOneTime,jdbcType=VARCHAR}, 
+      #{siteOneScore,jdbcType=VARCHAR}, #{siteOneState,jdbcType=VARCHAR}, #{siteTwo,jdbcType=VARCHAR}, 
+      #{siteTwoTime,jdbcType=VARCHAR}, #{siteTwoScore,jdbcType=VARCHAR}, #{siteTwoState,jdbcType=VARCHAR}, 
+      #{siteThree,jdbcType=VARCHAR}, #{siteThreeTime,jdbcType=VARCHAR}, #{siteThreeScore,jdbcType=VARCHAR}, 
+      #{siteThreeState,jdbcType=VARCHAR}, #{totalScoreState,jdbcType=VARCHAR}, #{completeNo,jdbcType=VARCHAR}, 
+      #{memo,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{orgCode2,jdbcType=VARCHAR}, #{begindate,jdbcType=VARCHAR}, #{enddate,jdbcType=VARCHAR}, 
+      #{sessionNumber,jdbcType=DECIMAL}, #{address,jdbcType=VARCHAR}, #{examtime,jdbcType=VARCHAR}, 
+      #{sitephone,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.TjDocinfo" >
+    insert into PDSCI.TJ_DOCINFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userFlow != null" >
+        USER_FLOW,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="orgCode != null" >
+        ORG_CODE,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="docrole != null" >
+        DOCROLE,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="userPassword != null" >
+        USER_PASSWORD,
+      </if>
+      <if test="idNo != null" >
+        ID_NO,
+      </if>
+      <if test="qualifiedNo != null" >
+        QUALIFIED_NO,
+      </if>
+      <if test="speCode != null" >
+        SPE_CODE,
+      </if>
+      <if test="speName != null" >
+        SPE_NAME,
+      </if>
+      <if test="ticketNum != null" >
+        TICKET_NUM,
+      </if>
+      <if test="userSex != null" >
+        USER_SEX,
+      </if>
+      <if test="degree != null" >
+        DEGREE,
+      </if>
+      <if test="befOrgName != null" >
+        BEF_ORG_NAME,
+      </if>
+      <if test="userPhone != null" >
+        USER_PHONE,
+      </if>
+      <if test="phonePath != null" >
+        PHONE_PATH,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="siteOne != null" >
+        SITE_ONE,
+      </if>
+      <if test="siteOneTime != null" >
+        SITE_ONE_TIME,
+      </if>
+      <if test="siteOneScore != null" >
+        SITE_ONE_SCORE,
+      </if>
+      <if test="siteOneState != null" >
+        SITE_ONE_STATE,
+      </if>
+      <if test="siteTwo != null" >
+        SITE_TWO,
+      </if>
+      <if test="siteTwoTime != null" >
+        SITE_TWO_TIME,
+      </if>
+      <if test="siteTwoScore != null" >
+        SITE_TWO_SCORE,
+      </if>
+      <if test="siteTwoState != null" >
+        SITE_TWO_STATE,
+      </if>
+      <if test="siteThree != null" >
+        SITE_THREE,
+      </if>
+      <if test="siteThreeTime != null" >
+        SITE_THREE_TIME,
+      </if>
+      <if test="siteThreeScore != null" >
+        SITE_THREE_SCORE,
+      </if>
+      <if test="siteThreeState != null" >
+        SITE_THREE_STATE,
+      </if>
+      <if test="totalScoreState != null" >
+        TOTAL_SCORE_STATE,
+      </if>
+      <if test="completeNo != null" >
+        COMPLETE_NO,
+      </if>
+      <if test="memo != null" >
+        MEMO,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="orgCode2 != null" >
+        ORG_CODE2,
+      </if>
+      <if test="begindate != null" >
+        BEGINDATE,
+      </if>
+      <if test="enddate != null" >
+        ENDDATE,
+      </if>
+      <if test="sessionNumber != null" >
+        SESSION_NUMBER,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="examtime != null" >
+        EXAMTIME,
+      </if>
+      <if test="sitephone != null" >
+        SITEPHONE,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userFlow != null" >
+        #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="docrole != null" >
+        #{docrole,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="qualifiedNo != null" >
+        #{qualifiedNo,jdbcType=VARCHAR},
+      </if>
+      <if test="speCode != null" >
+        #{speCode,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        #{speName,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketNum != null" >
+        #{ticketNum,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null" >
+        #{userSex,jdbcType=VARCHAR},
+      </if>
+      <if test="degree != null" >
+        #{degree,jdbcType=VARCHAR},
+      </if>
+      <if test="befOrgName != null" >
+        #{befOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="phonePath != null" >
+        #{phonePath,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="siteOne != null" >
+        #{siteOne,jdbcType=VARCHAR},
+      </if>
+      <if test="siteOneTime != null" >
+        #{siteOneTime,jdbcType=VARCHAR},
+      </if>
+      <if test="siteOneScore != null" >
+        #{siteOneScore,jdbcType=VARCHAR},
+      </if>
+      <if test="siteOneState != null" >
+        #{siteOneState,jdbcType=VARCHAR},
+      </if>
+      <if test="siteTwo != null" >
+        #{siteTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="siteTwoTime != null" >
+        #{siteTwoTime,jdbcType=VARCHAR},
+      </if>
+      <if test="siteTwoScore != null" >
+        #{siteTwoScore,jdbcType=VARCHAR},
+      </if>
+      <if test="siteTwoState != null" >
+        #{siteTwoState,jdbcType=VARCHAR},
+      </if>
+      <if test="siteThree != null" >
+        #{siteThree,jdbcType=VARCHAR},
+      </if>
+      <if test="siteThreeTime != null" >
+        #{siteThreeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="siteThreeScore != null" >
+        #{siteThreeScore,jdbcType=VARCHAR},
+      </if>
+      <if test="siteThreeState != null" >
+        #{siteThreeState,jdbcType=VARCHAR},
+      </if>
+      <if test="totalScoreState != null" >
+        #{totalScoreState,jdbcType=VARCHAR},
+      </if>
+      <if test="completeNo != null" >
+        #{completeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode2 != null" >
+        #{orgCode2,jdbcType=VARCHAR},
+      </if>
+      <if test="begindate != null" >
+        #{begindate,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null" >
+        #{enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionNumber != null" >
+        #{sessionNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="examtime != null" >
+        #{examtime,jdbcType=VARCHAR},
+      </if>
+      <if test="sitephone != null" >
+        #{sitephone,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.TjDocinfoExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.TJ_DOCINFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.TJ_DOCINFO
+    <set >
+      <if test="record.userFlow != null" >
+        USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgCode != null" >
+        ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docrole != null" >
+        DOCROLE = #{record.docrole,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPassword != null" >
+        USER_PASSWORD = #{record.userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idNo != null" >
+        ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualifiedNo != null" >
+        QUALIFIED_NO = #{record.qualifiedNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speCode != null" >
+        SPE_CODE = #{record.speCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speName != null" >
+        SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ticketNum != null" >
+        TICKET_NUM = #{record.ticketNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userSex != null" >
+        USER_SEX = #{record.userSex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.degree != null" >
+        DEGREE = #{record.degree,jdbcType=VARCHAR},
+      </if>
+      <if test="record.befOrgName != null" >
+        BEF_ORG_NAME = #{record.befOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPhone != null" >
+        USER_PHONE = #{record.userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phonePath != null" >
+        PHONE_PATH = #{record.phonePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteOne != null" >
+        SITE_ONE = #{record.siteOne,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteOneTime != null" >
+        SITE_ONE_TIME = #{record.siteOneTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteOneScore != null" >
+        SITE_ONE_SCORE = #{record.siteOneScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteOneState != null" >
+        SITE_ONE_STATE = #{record.siteOneState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteTwo != null" >
+        SITE_TWO = #{record.siteTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteTwoTime != null" >
+        SITE_TWO_TIME = #{record.siteTwoTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteTwoScore != null" >
+        SITE_TWO_SCORE = #{record.siteTwoScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteTwoState != null" >
+        SITE_TWO_STATE = #{record.siteTwoState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteThree != null" >
+        SITE_THREE = #{record.siteThree,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteThreeTime != null" >
+        SITE_THREE_TIME = #{record.siteThreeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteThreeScore != null" >
+        SITE_THREE_SCORE = #{record.siteThreeScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteThreeState != null" >
+        SITE_THREE_STATE = #{record.siteThreeState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalScoreState != null" >
+        TOTAL_SCORE_STATE = #{record.totalScoreState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.completeNo != null" >
+        COMPLETE_NO = #{record.completeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memo != null" >
+        MEMO = #{record.memo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgCode2 != null" >
+        ORG_CODE2 = #{record.orgCode2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.begindate != null" >
+        BEGINDATE = #{record.begindate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enddate != null" >
+        ENDDATE = #{record.enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionNumber != null" >
+        SESSION_NUMBER = #{record.sessionNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="record.address != null" >
+        ADDRESS = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examtime != null" >
+        EXAMTIME = #{record.examtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sitephone != null" >
+        SITEPHONE = #{record.sitephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        TITLE = #{record.title,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.TJ_DOCINFO
+    set USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      DOCROLE = #{record.docrole,jdbcType=VARCHAR},
+      USER_ID = #{record.userId,jdbcType=VARCHAR},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      USER_PASSWORD = #{record.userPassword,jdbcType=VARCHAR},
+      ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      QUALIFIED_NO = #{record.qualifiedNo,jdbcType=VARCHAR},
+      SPE_CODE = #{record.speCode,jdbcType=VARCHAR},
+      SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      TICKET_NUM = #{record.ticketNum,jdbcType=VARCHAR},
+      USER_SEX = #{record.userSex,jdbcType=VARCHAR},
+      DEGREE = #{record.degree,jdbcType=VARCHAR},
+      BEF_ORG_NAME = #{record.befOrgName,jdbcType=VARCHAR},
+      USER_PHONE = #{record.userPhone,jdbcType=VARCHAR},
+      PHONE_PATH = #{record.phonePath,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      SITE_ONE = #{record.siteOne,jdbcType=VARCHAR},
+      SITE_ONE_TIME = #{record.siteOneTime,jdbcType=VARCHAR},
+      SITE_ONE_SCORE = #{record.siteOneScore,jdbcType=VARCHAR},
+      SITE_ONE_STATE = #{record.siteOneState,jdbcType=VARCHAR},
+      SITE_TWO = #{record.siteTwo,jdbcType=VARCHAR},
+      SITE_TWO_TIME = #{record.siteTwoTime,jdbcType=VARCHAR},
+      SITE_TWO_SCORE = #{record.siteTwoScore,jdbcType=VARCHAR},
+      SITE_TWO_STATE = #{record.siteTwoState,jdbcType=VARCHAR},
+      SITE_THREE = #{record.siteThree,jdbcType=VARCHAR},
+      SITE_THREE_TIME = #{record.siteThreeTime,jdbcType=VARCHAR},
+      SITE_THREE_SCORE = #{record.siteThreeScore,jdbcType=VARCHAR},
+      SITE_THREE_STATE = #{record.siteThreeState,jdbcType=VARCHAR},
+      TOTAL_SCORE_STATE = #{record.totalScoreState,jdbcType=VARCHAR},
+      COMPLETE_NO = #{record.completeNo,jdbcType=VARCHAR},
+      MEMO = #{record.memo,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      ORG_CODE2 = #{record.orgCode2,jdbcType=VARCHAR},
+      BEGINDATE = #{record.begindate,jdbcType=VARCHAR},
+      ENDDATE = #{record.enddate,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{record.sessionNumber,jdbcType=DECIMAL},
+      ADDRESS = #{record.address,jdbcType=VARCHAR},
+      EXAMTIME = #{record.examtime,jdbcType=VARCHAR},
+      SITEPHONE = #{record.sitephone,jdbcType=VARCHAR},
+      TITLE = #{record.title,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.TjDocinfo" >
+    update PDSCI.TJ_DOCINFO
+    <set >
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="docrole != null" >
+        DOCROLE = #{docrole,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        USER_PASSWORD = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        ID_NO = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="qualifiedNo != null" >
+        QUALIFIED_NO = #{qualifiedNo,jdbcType=VARCHAR},
+      </if>
+      <if test="speCode != null" >
+        SPE_CODE = #{speCode,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        SPE_NAME = #{speName,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketNum != null" >
+        TICKET_NUM = #{ticketNum,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null" >
+        USER_SEX = #{userSex,jdbcType=VARCHAR},
+      </if>
+      <if test="degree != null" >
+        DEGREE = #{degree,jdbcType=VARCHAR},
+      </if>
+      <if test="befOrgName != null" >
+        BEF_ORG_NAME = #{befOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="phonePath != null" >
+        PHONE_PATH = #{phonePath,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="siteOne != null" >
+        SITE_ONE = #{siteOne,jdbcType=VARCHAR},
+      </if>
+      <if test="siteOneTime != null" >
+        SITE_ONE_TIME = #{siteOneTime,jdbcType=VARCHAR},
+      </if>
+      <if test="siteOneScore != null" >
+        SITE_ONE_SCORE = #{siteOneScore,jdbcType=VARCHAR},
+      </if>
+      <if test="siteOneState != null" >
+        SITE_ONE_STATE = #{siteOneState,jdbcType=VARCHAR},
+      </if>
+      <if test="siteTwo != null" >
+        SITE_TWO = #{siteTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="siteTwoTime != null" >
+        SITE_TWO_TIME = #{siteTwoTime,jdbcType=VARCHAR},
+      </if>
+      <if test="siteTwoScore != null" >
+        SITE_TWO_SCORE = #{siteTwoScore,jdbcType=VARCHAR},
+      </if>
+      <if test="siteTwoState != null" >
+        SITE_TWO_STATE = #{siteTwoState,jdbcType=VARCHAR},
+      </if>
+      <if test="siteThree != null" >
+        SITE_THREE = #{siteThree,jdbcType=VARCHAR},
+      </if>
+      <if test="siteThreeTime != null" >
+        SITE_THREE_TIME = #{siteThreeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="siteThreeScore != null" >
+        SITE_THREE_SCORE = #{siteThreeScore,jdbcType=VARCHAR},
+      </if>
+      <if test="siteThreeState != null" >
+        SITE_THREE_STATE = #{siteThreeState,jdbcType=VARCHAR},
+      </if>
+      <if test="totalScoreState != null" >
+        TOTAL_SCORE_STATE = #{totalScoreState,jdbcType=VARCHAR},
+      </if>
+      <if test="completeNo != null" >
+        COMPLETE_NO = #{completeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        MEMO = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode2 != null" >
+        ORG_CODE2 = #{orgCode2,jdbcType=VARCHAR},
+      </if>
+      <if test="begindate != null" >
+        BEGINDATE = #{begindate,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null" >
+        ENDDATE = #{enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionNumber != null" >
+        SESSION_NUMBER = #{sessionNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="examtime != null" >
+        EXAMTIME = #{examtime,jdbcType=VARCHAR},
+      </if>
+      <if test="sitephone != null" >
+        SITEPHONE = #{sitephone,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.TjDocinfo" >
+    update PDSCI.TJ_DOCINFO
+    set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      DOCROLE = #{docrole,jdbcType=VARCHAR},
+      USER_ID = #{userId,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      USER_PASSWORD = #{userPassword,jdbcType=VARCHAR},
+      ID_NO = #{idNo,jdbcType=VARCHAR},
+      QUALIFIED_NO = #{qualifiedNo,jdbcType=VARCHAR},
+      SPE_CODE = #{speCode,jdbcType=VARCHAR},
+      SPE_NAME = #{speName,jdbcType=VARCHAR},
+      TICKET_NUM = #{ticketNum,jdbcType=VARCHAR},
+      USER_SEX = #{userSex,jdbcType=VARCHAR},
+      DEGREE = #{degree,jdbcType=VARCHAR},
+      BEF_ORG_NAME = #{befOrgName,jdbcType=VARCHAR},
+      USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+      PHONE_PATH = #{phonePath,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      SITE_ONE = #{siteOne,jdbcType=VARCHAR},
+      SITE_ONE_TIME = #{siteOneTime,jdbcType=VARCHAR},
+      SITE_ONE_SCORE = #{siteOneScore,jdbcType=VARCHAR},
+      SITE_ONE_STATE = #{siteOneState,jdbcType=VARCHAR},
+      SITE_TWO = #{siteTwo,jdbcType=VARCHAR},
+      SITE_TWO_TIME = #{siteTwoTime,jdbcType=VARCHAR},
+      SITE_TWO_SCORE = #{siteTwoScore,jdbcType=VARCHAR},
+      SITE_TWO_STATE = #{siteTwoState,jdbcType=VARCHAR},
+      SITE_THREE = #{siteThree,jdbcType=VARCHAR},
+      SITE_THREE_TIME = #{siteThreeTime,jdbcType=VARCHAR},
+      SITE_THREE_SCORE = #{siteThreeScore,jdbcType=VARCHAR},
+      SITE_THREE_STATE = #{siteThreeState,jdbcType=VARCHAR},
+      TOTAL_SCORE_STATE = #{totalScoreState,jdbcType=VARCHAR},
+      COMPLETE_NO = #{completeNo,jdbcType=VARCHAR},
+      MEMO = #{memo,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      ORG_CODE2 = #{orgCode2,jdbcType=VARCHAR},
+      BEGINDATE = #{begindate,jdbcType=VARCHAR},
+      ENDDATE = #{enddate,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{sessionNumber,jdbcType=DECIMAL},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      EXAMTIME = #{examtime,jdbcType=VARCHAR},
+      SITEPHONE = #{sitephone,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR}
+    where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

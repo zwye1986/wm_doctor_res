@@ -1,0 +1,1357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.NydsOfficialDoctorMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.NydsOfficialDoctor" >
+    <id column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
+    <result column="SPELL_NAME" property="spellName" jdbcType="VARCHAR" />
+    <result column="BIRTH_DAY" property="birthDay" jdbcType="VARCHAR" />
+    <result column="HEAD_URL" property="headUrl" jdbcType="VARCHAR" />
+    <result column="MOBILE_PHONE" property="mobilePhone" jdbcType="VARCHAR" />
+    <result column="WORK_PHONE" property="workPhone" jdbcType="VARCHAR" />
+    <result column="EMAIL_NO" property="emailNo" jdbcType="VARCHAR" />
+    <result column="WORK_UNIT" property="workUnit" jdbcType="VARCHAR" />
+    <result column="TECHNICAL_TITLE_ID" property="technicalTitleId" jdbcType="VARCHAR" />
+    <result column="TECHNICAL_TITLE_NAME" property="technicalTitleName" jdbcType="VARCHAR" />
+    <result column="ACADEMIC_ACTIVITIES" property="academicActivities" jdbcType="VARCHAR" />
+    <result column="RESEARCH_DIRECTION" property="researchDirection" jdbcType="VARCHAR" />
+    <result column="ACADEMIC_MONOGRAPHS" property="academicMonographs" jdbcType="VARCHAR" />
+    <result column="AWARD_SITUATION" property="awardSituation" jdbcType="VARCHAR" />
+    <result column="RESEARCH_DESCRIBE" property="researchDescribe" jdbcType="VARCHAR" />
+    <result column="DOCTOR_TYPE_ID" property="doctorTypeId" jdbcType="VARCHAR" />
+    <result column="DOCTOR_TYPE_NAME" property="doctorTypeName" jdbcType="VARCHAR" />
+    <result column="FWH_ORG_FLOW" property="fwhOrgFlow" jdbcType="VARCHAR" />
+    <result column="FWH_ORG_NAME" property="fwhOrgName" jdbcType="VARCHAR" />
+    <result column="PYDW_ORG_FLOW" property="pydwOrgFlow" jdbcType="VARCHAR" />
+    <result column="PYDW_ORG_NAME" property="pydwOrgName" jdbcType="VARCHAR" />
+    <result column="RECRUIT_SPE_ID" property="recruitSpeId" jdbcType="VARCHAR" />
+    <result column="RECRUIT_SPE_NAME" property="recruitSpeName" jdbcType="VARCHAR" />
+    <result column="ZDYJS_MASTER_NUM" property="zdyjsMasterNum" jdbcType="VARCHAR" />
+    <result column="SBYJS_MASTER_NUM" property="sbyjsMasterNum" jdbcType="VARCHAR" />
+    <result column="ZDYJS_DOCTOR_NUM" property="zdyjsDoctorNum" jdbcType="VARCHAR" />
+    <result column="SBYJS_DOCTOR_NUM" property="sbyjsDoctorNum" jdbcType="VARCHAR" />
+    <result column="INSERVICE_DOCTOR_NUM" property="inserviceDoctorNum" jdbcType="VARCHAR" />
+    <result column="DECLARE_DOCTOR_NUM" property="declareDoctorNum" jdbcType="VARCHAR" />
+    <result column="PAPER_MASTER_RATE" property="paperMasterRate" jdbcType="VARCHAR" />
+    <result column="PAPER_DOCTOR_RATE" property="paperDoctorRate" jdbcType="VARCHAR" />
+    <result column="PYYJS_AWARD_DESCRIBE" property="pyyjsAwardDescribe" jdbcType="VARCHAR" />
+    <result column="PYYJS_OTHER_DESCRIBE" property="pyyjsOtherDescribe" jdbcType="VARCHAR" />
+    <result column="APPLY_FLAG" property="applyFlag" jdbcType="VARCHAR" />
+    <result column="APPLY_TIME" property="applyTime" jdbcType="VARCHAR" />
+    <result column="PYDW_USER_FLOW" property="pydwUserFlow" jdbcType="VARCHAR" />
+    <result column="PYDW_AUDIT_STATUS_ID" property="pydwAuditStatusId" jdbcType="VARCHAR" />
+    <result column="PYDW_AUDIT_STATUS_NAME" property="pydwAuditStatusName" jdbcType="VARCHAR" />
+    <result column="PYDW_AUDIT_TIME" property="pydwAuditTime" jdbcType="VARCHAR" />
+    <result column="PYDW_AUDIT_ADVICE" property="pydwAuditAdvice" jdbcType="VARCHAR" />
+    <result column="FWH_USER_FLOW" property="fwhUserFlow" jdbcType="VARCHAR" />
+    <result column="FWH_AUDIT_STATUS_ID" property="fwhAuditStatusId" jdbcType="VARCHAR" />
+    <result column="FWH_AUDIT_STATUS_NAME" property="fwhAuditStatusName" jdbcType="VARCHAR" />
+    <result column="FWH_AUDIT_TIME" property="fwhAuditTime" jdbcType="VARCHAR" />
+    <result column="FWH_AUDIT_ADVICE" property="fwhAuditAdvice" jdbcType="VARCHAR" />
+    <result column="XWK_USER_FLOW" property="xwkUserFlow" jdbcType="VARCHAR" />
+    <result column="XWK_AUDIT_STATUS_ID" property="xwkAuditStatusId" jdbcType="VARCHAR" />
+    <result column="XWK_AUDIT_STATUS_NAME" property="xwkAuditStatusName" jdbcType="VARCHAR" />
+    <result column="XWK_AUDIT_TIME" property="xwkAuditTime" jdbcType="VARCHAR" />
+    <result column="XWK_AUDIT_ADVICE" property="xwkAuditAdvice" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="SEX_ID" property="sexId" jdbcType="VARCHAR" />
+    <result column="SEX_NAME" property="sexName" jdbcType="VARCHAR" />
+    <result column="ZS_CATEGORY_ID" property="zsCategoryId" jdbcType="VARCHAR" />
+    <result column="ZS_CATEGORY_NAME" property="zsCategoryName" jdbcType="VARCHAR" />
+    <result column="ZS_SUBJECT_ID" property="zsSubjectId" jdbcType="VARCHAR" />
+    <result column="ZS_SUBJECT_NAME" property="zsSubjectName" jdbcType="VARCHAR" />
+    <result column="DEGREE_ID" property="degreeId" jdbcType="VARCHAR" />
+    <result column="DEGREE_NAME" property="degreeName" jdbcType="VARCHAR" />
+    <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+    <result column="STOP_RECRUIT" property="stopRecruit" jdbcType="VARCHAR" />
+    <result column="ONE_LEVEL_SUBJECT_ID" property="oneLevelSubjectId" jdbcType="VARCHAR" />
+    <result column="ONE_LEVEL_SUBJECT_NAME" property="oneLevelSubjectName" jdbcType="VARCHAR" />
+    <result column="TWO_LEVEL_SUBJECT_ID" property="twoLevelSubjectId" jdbcType="VARCHAR" />
+    <result column="TWO_LEVEL_SUBJECT_NAME" property="twoLevelSubjectName" jdbcType="VARCHAR" />
+    <result column="LAST_TYPE_ID" property="lastTypeId" jdbcType="VARCHAR" />
+    <result column="LAST_AUDIT_YEAR" property="lastAuditYear" jdbcType="VARCHAR" />
+    <result column="FIRST_PASS_FLAG" property="firstPassFlag" jdbcType="VARCHAR" />
+    <result column="INVALID_TIME" property="invalidTime" jdbcType="VARCHAR" />
+    <result column="SHOW_FLAG" property="showFlag" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_NO" property="certificateNo" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_URL" property="certificateUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    DOCTOR_FLOW, DOCTOR_NAME, SPELL_NAME, BIRTH_DAY, HEAD_URL, MOBILE_PHONE, WORK_PHONE, 
+    EMAIL_NO, WORK_UNIT, TECHNICAL_TITLE_ID, TECHNICAL_TITLE_NAME, ACADEMIC_ACTIVITIES, 
+    RESEARCH_DIRECTION, ACADEMIC_MONOGRAPHS, AWARD_SITUATION, RESEARCH_DESCRIBE, DOCTOR_TYPE_ID, 
+    DOCTOR_TYPE_NAME, FWH_ORG_FLOW, FWH_ORG_NAME, PYDW_ORG_FLOW, PYDW_ORG_NAME, RECRUIT_SPE_ID, 
+    RECRUIT_SPE_NAME, ZDYJS_MASTER_NUM, SBYJS_MASTER_NUM, ZDYJS_DOCTOR_NUM, SBYJS_DOCTOR_NUM, 
+    INSERVICE_DOCTOR_NUM, DECLARE_DOCTOR_NUM, PAPER_MASTER_RATE, PAPER_DOCTOR_RATE, PYYJS_AWARD_DESCRIBE, 
+    PYYJS_OTHER_DESCRIBE, APPLY_FLAG, APPLY_TIME, PYDW_USER_FLOW, PYDW_AUDIT_STATUS_ID, 
+    PYDW_AUDIT_STATUS_NAME, PYDW_AUDIT_TIME, PYDW_AUDIT_ADVICE, FWH_USER_FLOW, FWH_AUDIT_STATUS_ID, 
+    FWH_AUDIT_STATUS_NAME, FWH_AUDIT_TIME, FWH_AUDIT_ADVICE, XWK_USER_FLOW, XWK_AUDIT_STATUS_ID, 
+    XWK_AUDIT_STATUS_NAME, XWK_AUDIT_TIME, XWK_AUDIT_ADVICE, RECORD_STATUS, CREATE_TIME, 
+    CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, SEX_ID, SEX_NAME, ZS_CATEGORY_ID, 
+    ZS_CATEGORY_NAME, ZS_SUBJECT_ID, ZS_SUBJECT_NAME, DEGREE_ID, DEGREE_NAME, ID_NO, 
+    STOP_RECRUIT, ONE_LEVEL_SUBJECT_ID, ONE_LEVEL_SUBJECT_NAME, TWO_LEVEL_SUBJECT_ID, 
+    TWO_LEVEL_SUBJECT_NAME, LAST_TYPE_ID, LAST_AUDIT_YEAR, FIRST_PASS_FLAG, INVALID_TIME, 
+    SHOW_FLAG, CERTIFICATE_NO, CERTIFICATE_URL
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.NydsOfficialDoctorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.NYDS_OFFICIAL_DOCTOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.NYDS_OFFICIAL_DOCTOR
+    where DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.NYDS_OFFICIAL_DOCTOR
+    where DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.NydsOfficialDoctorExample" >
+    delete from PDSCI.NYDS_OFFICIAL_DOCTOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.NydsOfficialDoctor" >
+    insert into PDSCI.NYDS_OFFICIAL_DOCTOR (DOCTOR_FLOW, DOCTOR_NAME, SPELL_NAME, 
+      BIRTH_DAY, HEAD_URL, MOBILE_PHONE, 
+      WORK_PHONE, EMAIL_NO, WORK_UNIT, 
+      TECHNICAL_TITLE_ID, TECHNICAL_TITLE_NAME, ACADEMIC_ACTIVITIES, 
+      RESEARCH_DIRECTION, ACADEMIC_MONOGRAPHS, 
+      AWARD_SITUATION, RESEARCH_DESCRIBE, DOCTOR_TYPE_ID, 
+      DOCTOR_TYPE_NAME, FWH_ORG_FLOW, FWH_ORG_NAME, 
+      PYDW_ORG_FLOW, PYDW_ORG_NAME, RECRUIT_SPE_ID, 
+      RECRUIT_SPE_NAME, ZDYJS_MASTER_NUM, SBYJS_MASTER_NUM, 
+      ZDYJS_DOCTOR_NUM, SBYJS_DOCTOR_NUM, INSERVICE_DOCTOR_NUM, 
+      DECLARE_DOCTOR_NUM, PAPER_MASTER_RATE, PAPER_DOCTOR_RATE, 
+      PYYJS_AWARD_DESCRIBE, PYYJS_OTHER_DESCRIBE, 
+      APPLY_FLAG, APPLY_TIME, PYDW_USER_FLOW, 
+      PYDW_AUDIT_STATUS_ID, PYDW_AUDIT_STATUS_NAME, 
+      PYDW_AUDIT_TIME, PYDW_AUDIT_ADVICE, FWH_USER_FLOW, 
+      FWH_AUDIT_STATUS_ID, FWH_AUDIT_STATUS_NAME, FWH_AUDIT_TIME, 
+      FWH_AUDIT_ADVICE, XWK_USER_FLOW, XWK_AUDIT_STATUS_ID, 
+      XWK_AUDIT_STATUS_NAME, XWK_AUDIT_TIME, XWK_AUDIT_ADVICE, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW, SEX_ID, 
+      SEX_NAME, ZS_CATEGORY_ID, ZS_CATEGORY_NAME, 
+      ZS_SUBJECT_ID, ZS_SUBJECT_NAME, DEGREE_ID, 
+      DEGREE_NAME, ID_NO, STOP_RECRUIT, 
+      ONE_LEVEL_SUBJECT_ID, ONE_LEVEL_SUBJECT_NAME, 
+      TWO_LEVEL_SUBJECT_ID, TWO_LEVEL_SUBJECT_NAME, 
+      LAST_TYPE_ID, LAST_AUDIT_YEAR, FIRST_PASS_FLAG, 
+      INVALID_TIME, SHOW_FLAG, CERTIFICATE_NO, 
+      CERTIFICATE_URL)
+    values (#{doctorFlow,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, #{spellName,jdbcType=VARCHAR}, 
+      #{birthDay,jdbcType=VARCHAR}, #{headUrl,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR}, 
+      #{workPhone,jdbcType=VARCHAR}, #{emailNo,jdbcType=VARCHAR}, #{workUnit,jdbcType=VARCHAR}, 
+      #{technicalTitleId,jdbcType=VARCHAR}, #{technicalTitleName,jdbcType=VARCHAR}, #{academicActivities,jdbcType=VARCHAR}, 
+      #{researchDirection,jdbcType=VARCHAR}, #{academicMonographs,jdbcType=VARCHAR}, 
+      #{awardSituation,jdbcType=VARCHAR}, #{researchDescribe,jdbcType=VARCHAR}, #{doctorTypeId,jdbcType=VARCHAR}, 
+      #{doctorTypeName,jdbcType=VARCHAR}, #{fwhOrgFlow,jdbcType=VARCHAR}, #{fwhOrgName,jdbcType=VARCHAR}, 
+      #{pydwOrgFlow,jdbcType=VARCHAR}, #{pydwOrgName,jdbcType=VARCHAR}, #{recruitSpeId,jdbcType=VARCHAR}, 
+      #{recruitSpeName,jdbcType=VARCHAR}, #{zdyjsMasterNum,jdbcType=VARCHAR}, #{sbyjsMasterNum,jdbcType=VARCHAR}, 
+      #{zdyjsDoctorNum,jdbcType=VARCHAR}, #{sbyjsDoctorNum,jdbcType=VARCHAR}, #{inserviceDoctorNum,jdbcType=VARCHAR}, 
+      #{declareDoctorNum,jdbcType=VARCHAR}, #{paperMasterRate,jdbcType=VARCHAR}, #{paperDoctorRate,jdbcType=VARCHAR}, 
+      #{pyyjsAwardDescribe,jdbcType=VARCHAR}, #{pyyjsOtherDescribe,jdbcType=VARCHAR}, 
+      #{applyFlag,jdbcType=VARCHAR}, #{applyTime,jdbcType=VARCHAR}, #{pydwUserFlow,jdbcType=VARCHAR}, 
+      #{pydwAuditStatusId,jdbcType=VARCHAR}, #{pydwAuditStatusName,jdbcType=VARCHAR}, 
+      #{pydwAuditTime,jdbcType=VARCHAR}, #{pydwAuditAdvice,jdbcType=VARCHAR}, #{fwhUserFlow,jdbcType=VARCHAR}, 
+      #{fwhAuditStatusId,jdbcType=VARCHAR}, #{fwhAuditStatusName,jdbcType=VARCHAR}, #{fwhAuditTime,jdbcType=VARCHAR}, 
+      #{fwhAuditAdvice,jdbcType=VARCHAR}, #{xwkUserFlow,jdbcType=VARCHAR}, #{xwkAuditStatusId,jdbcType=VARCHAR}, 
+      #{xwkAuditStatusName,jdbcType=VARCHAR}, #{xwkAuditTime,jdbcType=VARCHAR}, #{xwkAuditAdvice,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{sexId,jdbcType=VARCHAR}, 
+      #{sexName,jdbcType=VARCHAR}, #{zsCategoryId,jdbcType=VARCHAR}, #{zsCategoryName,jdbcType=VARCHAR}, 
+      #{zsSubjectId,jdbcType=VARCHAR}, #{zsSubjectName,jdbcType=VARCHAR}, #{degreeId,jdbcType=VARCHAR}, 
+      #{degreeName,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, #{stopRecruit,jdbcType=VARCHAR}, 
+      #{oneLevelSubjectId,jdbcType=VARCHAR}, #{oneLevelSubjectName,jdbcType=VARCHAR}, 
+      #{twoLevelSubjectId,jdbcType=VARCHAR}, #{twoLevelSubjectName,jdbcType=VARCHAR}, 
+      #{lastTypeId,jdbcType=VARCHAR}, #{lastAuditYear,jdbcType=VARCHAR}, #{firstPassFlag,jdbcType=VARCHAR}, 
+      #{invalidTime,jdbcType=VARCHAR}, #{showFlag,jdbcType=VARCHAR}, #{certificateNo,jdbcType=VARCHAR}, 
+      #{certificateUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.NydsOfficialDoctor" >
+    insert into PDSCI.NYDS_OFFICIAL_DOCTOR
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW,
+      </if>
+      <if test="doctorName != null" >
+        DOCTOR_NAME,
+      </if>
+      <if test="spellName != null" >
+        SPELL_NAME,
+      </if>
+      <if test="birthDay != null" >
+        BIRTH_DAY,
+      </if>
+      <if test="headUrl != null" >
+        HEAD_URL,
+      </if>
+      <if test="mobilePhone != null" >
+        MOBILE_PHONE,
+      </if>
+      <if test="workPhone != null" >
+        WORK_PHONE,
+      </if>
+      <if test="emailNo != null" >
+        EMAIL_NO,
+      </if>
+      <if test="workUnit != null" >
+        WORK_UNIT,
+      </if>
+      <if test="technicalTitleId != null" >
+        TECHNICAL_TITLE_ID,
+      </if>
+      <if test="technicalTitleName != null" >
+        TECHNICAL_TITLE_NAME,
+      </if>
+      <if test="academicActivities != null" >
+        ACADEMIC_ACTIVITIES,
+      </if>
+      <if test="researchDirection != null" >
+        RESEARCH_DIRECTION,
+      </if>
+      <if test="academicMonographs != null" >
+        ACADEMIC_MONOGRAPHS,
+      </if>
+      <if test="awardSituation != null" >
+        AWARD_SITUATION,
+      </if>
+      <if test="researchDescribe != null" >
+        RESEARCH_DESCRIBE,
+      </if>
+      <if test="doctorTypeId != null" >
+        DOCTOR_TYPE_ID,
+      </if>
+      <if test="doctorTypeName != null" >
+        DOCTOR_TYPE_NAME,
+      </if>
+      <if test="fwhOrgFlow != null" >
+        FWH_ORG_FLOW,
+      </if>
+      <if test="fwhOrgName != null" >
+        FWH_ORG_NAME,
+      </if>
+      <if test="pydwOrgFlow != null" >
+        PYDW_ORG_FLOW,
+      </if>
+      <if test="pydwOrgName != null" >
+        PYDW_ORG_NAME,
+      </if>
+      <if test="recruitSpeId != null" >
+        RECRUIT_SPE_ID,
+      </if>
+      <if test="recruitSpeName != null" >
+        RECRUIT_SPE_NAME,
+      </if>
+      <if test="zdyjsMasterNum != null" >
+        ZDYJS_MASTER_NUM,
+      </if>
+      <if test="sbyjsMasterNum != null" >
+        SBYJS_MASTER_NUM,
+      </if>
+      <if test="zdyjsDoctorNum != null" >
+        ZDYJS_DOCTOR_NUM,
+      </if>
+      <if test="sbyjsDoctorNum != null" >
+        SBYJS_DOCTOR_NUM,
+      </if>
+      <if test="inserviceDoctorNum != null" >
+        INSERVICE_DOCTOR_NUM,
+      </if>
+      <if test="declareDoctorNum != null" >
+        DECLARE_DOCTOR_NUM,
+      </if>
+      <if test="paperMasterRate != null" >
+        PAPER_MASTER_RATE,
+      </if>
+      <if test="paperDoctorRate != null" >
+        PAPER_DOCTOR_RATE,
+      </if>
+      <if test="pyyjsAwardDescribe != null" >
+        PYYJS_AWARD_DESCRIBE,
+      </if>
+      <if test="pyyjsOtherDescribe != null" >
+        PYYJS_OTHER_DESCRIBE,
+      </if>
+      <if test="applyFlag != null" >
+        APPLY_FLAG,
+      </if>
+      <if test="applyTime != null" >
+        APPLY_TIME,
+      </if>
+      <if test="pydwUserFlow != null" >
+        PYDW_USER_FLOW,
+      </if>
+      <if test="pydwAuditStatusId != null" >
+        PYDW_AUDIT_STATUS_ID,
+      </if>
+      <if test="pydwAuditStatusName != null" >
+        PYDW_AUDIT_STATUS_NAME,
+      </if>
+      <if test="pydwAuditTime != null" >
+        PYDW_AUDIT_TIME,
+      </if>
+      <if test="pydwAuditAdvice != null" >
+        PYDW_AUDIT_ADVICE,
+      </if>
+      <if test="fwhUserFlow != null" >
+        FWH_USER_FLOW,
+      </if>
+      <if test="fwhAuditStatusId != null" >
+        FWH_AUDIT_STATUS_ID,
+      </if>
+      <if test="fwhAuditStatusName != null" >
+        FWH_AUDIT_STATUS_NAME,
+      </if>
+      <if test="fwhAuditTime != null" >
+        FWH_AUDIT_TIME,
+      </if>
+      <if test="fwhAuditAdvice != null" >
+        FWH_AUDIT_ADVICE,
+      </if>
+      <if test="xwkUserFlow != null" >
+        XWK_USER_FLOW,
+      </if>
+      <if test="xwkAuditStatusId != null" >
+        XWK_AUDIT_STATUS_ID,
+      </if>
+      <if test="xwkAuditStatusName != null" >
+        XWK_AUDIT_STATUS_NAME,
+      </if>
+      <if test="xwkAuditTime != null" >
+        XWK_AUDIT_TIME,
+      </if>
+      <if test="xwkAuditAdvice != null" >
+        XWK_AUDIT_ADVICE,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="sexId != null" >
+        SEX_ID,
+      </if>
+      <if test="sexName != null" >
+        SEX_NAME,
+      </if>
+      <if test="zsCategoryId != null" >
+        ZS_CATEGORY_ID,
+      </if>
+      <if test="zsCategoryName != null" >
+        ZS_CATEGORY_NAME,
+      </if>
+      <if test="zsSubjectId != null" >
+        ZS_SUBJECT_ID,
+      </if>
+      <if test="zsSubjectName != null" >
+        ZS_SUBJECT_NAME,
+      </if>
+      <if test="degreeId != null" >
+        DEGREE_ID,
+      </if>
+      <if test="degreeName != null" >
+        DEGREE_NAME,
+      </if>
+      <if test="idNo != null" >
+        ID_NO,
+      </if>
+      <if test="stopRecruit != null" >
+        STOP_RECRUIT,
+      </if>
+      <if test="oneLevelSubjectId != null" >
+        ONE_LEVEL_SUBJECT_ID,
+      </if>
+      <if test="oneLevelSubjectName != null" >
+        ONE_LEVEL_SUBJECT_NAME,
+      </if>
+      <if test="twoLevelSubjectId != null" >
+        TWO_LEVEL_SUBJECT_ID,
+      </if>
+      <if test="twoLevelSubjectName != null" >
+        TWO_LEVEL_SUBJECT_NAME,
+      </if>
+      <if test="lastTypeId != null" >
+        LAST_TYPE_ID,
+      </if>
+      <if test="lastAuditYear != null" >
+        LAST_AUDIT_YEAR,
+      </if>
+      <if test="firstPassFlag != null" >
+        FIRST_PASS_FLAG,
+      </if>
+      <if test="invalidTime != null" >
+        INVALID_TIME,
+      </if>
+      <if test="showFlag != null" >
+        SHOW_FLAG,
+      </if>
+      <if test="certificateNo != null" >
+        CERTIFICATE_NO,
+      </if>
+      <if test="certificateUrl != null" >
+        CERTIFICATE_URL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="doctorFlow != null" >
+        #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null" >
+        #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="spellName != null" >
+        #{spellName,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDay != null" >
+        #{birthDay,jdbcType=VARCHAR},
+      </if>
+      <if test="headUrl != null" >
+        #{headUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null" >
+        #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="workPhone != null" >
+        #{workPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="emailNo != null" >
+        #{emailNo,jdbcType=VARCHAR},
+      </if>
+      <if test="workUnit != null" >
+        #{workUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="technicalTitleId != null" >
+        #{technicalTitleId,jdbcType=VARCHAR},
+      </if>
+      <if test="technicalTitleName != null" >
+        #{technicalTitleName,jdbcType=VARCHAR},
+      </if>
+      <if test="academicActivities != null" >
+        #{academicActivities,jdbcType=VARCHAR},
+      </if>
+      <if test="researchDirection != null" >
+        #{researchDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="academicMonographs != null" >
+        #{academicMonographs,jdbcType=VARCHAR},
+      </if>
+      <if test="awardSituation != null" >
+        #{awardSituation,jdbcType=VARCHAR},
+      </if>
+      <if test="researchDescribe != null" >
+        #{researchDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTypeId != null" >
+        #{doctorTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTypeName != null" >
+        #{doctorTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhOrgFlow != null" >
+        #{fwhOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhOrgName != null" >
+        #{fwhOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwOrgFlow != null" >
+        #{pydwOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwOrgName != null" >
+        #{pydwOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitSpeId != null" >
+        #{recruitSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitSpeName != null" >
+        #{recruitSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="zdyjsMasterNum != null" >
+        #{zdyjsMasterNum,jdbcType=VARCHAR},
+      </if>
+      <if test="sbyjsMasterNum != null" >
+        #{sbyjsMasterNum,jdbcType=VARCHAR},
+      </if>
+      <if test="zdyjsDoctorNum != null" >
+        #{zdyjsDoctorNum,jdbcType=VARCHAR},
+      </if>
+      <if test="sbyjsDoctorNum != null" >
+        #{sbyjsDoctorNum,jdbcType=VARCHAR},
+      </if>
+      <if test="inserviceDoctorNum != null" >
+        #{inserviceDoctorNum,jdbcType=VARCHAR},
+      </if>
+      <if test="declareDoctorNum != null" >
+        #{declareDoctorNum,jdbcType=VARCHAR},
+      </if>
+      <if test="paperMasterRate != null" >
+        #{paperMasterRate,jdbcType=VARCHAR},
+      </if>
+      <if test="paperDoctorRate != null" >
+        #{paperDoctorRate,jdbcType=VARCHAR},
+      </if>
+      <if test="pyyjsAwardDescribe != null" >
+        #{pyyjsAwardDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="pyyjsOtherDescribe != null" >
+        #{pyyjsOtherDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="applyFlag != null" >
+        #{applyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null" >
+        #{applyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwUserFlow != null" >
+        #{pydwUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwAuditStatusId != null" >
+        #{pydwAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwAuditStatusName != null" >
+        #{pydwAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwAuditTime != null" >
+        #{pydwAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwAuditAdvice != null" >
+        #{pydwAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhUserFlow != null" >
+        #{fwhUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhAuditStatusId != null" >
+        #{fwhAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhAuditStatusName != null" >
+        #{fwhAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhAuditTime != null" >
+        #{fwhAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhAuditAdvice != null" >
+        #{fwhAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="xwkUserFlow != null" >
+        #{xwkUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="xwkAuditStatusId != null" >
+        #{xwkAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="xwkAuditStatusName != null" >
+        #{xwkAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="xwkAuditTime != null" >
+        #{xwkAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="xwkAuditAdvice != null" >
+        #{xwkAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="sexId != null" >
+        #{sexId,jdbcType=VARCHAR},
+      </if>
+      <if test="sexName != null" >
+        #{sexName,jdbcType=VARCHAR},
+      </if>
+      <if test="zsCategoryId != null" >
+        #{zsCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="zsCategoryName != null" >
+        #{zsCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="zsSubjectId != null" >
+        #{zsSubjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="zsSubjectName != null" >
+        #{zsSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeId != null" >
+        #{degreeId,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeName != null" >
+        #{degreeName,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="stopRecruit != null" >
+        #{stopRecruit,jdbcType=VARCHAR},
+      </if>
+      <if test="oneLevelSubjectId != null" >
+        #{oneLevelSubjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="oneLevelSubjectName != null" >
+        #{oneLevelSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="twoLevelSubjectId != null" >
+        #{twoLevelSubjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="twoLevelSubjectName != null" >
+        #{twoLevelSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastTypeId != null" >
+        #{lastTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="lastAuditYear != null" >
+        #{lastAuditYear,jdbcType=VARCHAR},
+      </if>
+      <if test="firstPassFlag != null" >
+        #{firstPassFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="invalidTime != null" >
+        #{invalidTime,jdbcType=VARCHAR},
+      </if>
+      <if test="showFlag != null" >
+        #{showFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNo != null" >
+        #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateUrl != null" >
+        #{certificateUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.NydsOfficialDoctorExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.NYDS_OFFICIAL_DOCTOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.NYDS_OFFICIAL_DOCTOR
+    <set >
+      <if test="record.doctorFlow != null" >
+        DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorName != null" >
+        DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spellName != null" >
+        SPELL_NAME = #{record.spellName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthDay != null" >
+        BIRTH_DAY = #{record.birthDay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headUrl != null" >
+        HEAD_URL = #{record.headUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobilePhone != null" >
+        MOBILE_PHONE = #{record.mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workPhone != null" >
+        WORK_PHONE = #{record.workPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailNo != null" >
+        EMAIL_NO = #{record.emailNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workUnit != null" >
+        WORK_UNIT = #{record.workUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.technicalTitleId != null" >
+        TECHNICAL_TITLE_ID = #{record.technicalTitleId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.technicalTitleName != null" >
+        TECHNICAL_TITLE_NAME = #{record.technicalTitleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.academicActivities != null" >
+        ACADEMIC_ACTIVITIES = #{record.academicActivities,jdbcType=VARCHAR},
+      </if>
+      <if test="record.researchDirection != null" >
+        RESEARCH_DIRECTION = #{record.researchDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="record.academicMonographs != null" >
+        ACADEMIC_MONOGRAPHS = #{record.academicMonographs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.awardSituation != null" >
+        AWARD_SITUATION = #{record.awardSituation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.researchDescribe != null" >
+        RESEARCH_DESCRIBE = #{record.researchDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorTypeId != null" >
+        DOCTOR_TYPE_ID = #{record.doctorTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorTypeName != null" >
+        DOCTOR_TYPE_NAME = #{record.doctorTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fwhOrgFlow != null" >
+        FWH_ORG_FLOW = #{record.fwhOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fwhOrgName != null" >
+        FWH_ORG_NAME = #{record.fwhOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pydwOrgFlow != null" >
+        PYDW_ORG_FLOW = #{record.pydwOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pydwOrgName != null" >
+        PYDW_ORG_NAME = #{record.pydwOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitSpeId != null" >
+        RECRUIT_SPE_ID = #{record.recruitSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitSpeName != null" >
+        RECRUIT_SPE_NAME = #{record.recruitSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zdyjsMasterNum != null" >
+        ZDYJS_MASTER_NUM = #{record.zdyjsMasterNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sbyjsMasterNum != null" >
+        SBYJS_MASTER_NUM = #{record.sbyjsMasterNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zdyjsDoctorNum != null" >
+        ZDYJS_DOCTOR_NUM = #{record.zdyjsDoctorNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sbyjsDoctorNum != null" >
+        SBYJS_DOCTOR_NUM = #{record.sbyjsDoctorNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inserviceDoctorNum != null" >
+        INSERVICE_DOCTOR_NUM = #{record.inserviceDoctorNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.declareDoctorNum != null" >
+        DECLARE_DOCTOR_NUM = #{record.declareDoctorNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paperMasterRate != null" >
+        PAPER_MASTER_RATE = #{record.paperMasterRate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paperDoctorRate != null" >
+        PAPER_DOCTOR_RATE = #{record.paperDoctorRate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pyyjsAwardDescribe != null" >
+        PYYJS_AWARD_DESCRIBE = #{record.pyyjsAwardDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pyyjsOtherDescribe != null" >
+        PYYJS_OTHER_DESCRIBE = #{record.pyyjsOtherDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyFlag != null" >
+        APPLY_FLAG = #{record.applyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyTime != null" >
+        APPLY_TIME = #{record.applyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pydwUserFlow != null" >
+        PYDW_USER_FLOW = #{record.pydwUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pydwAuditStatusId != null" >
+        PYDW_AUDIT_STATUS_ID = #{record.pydwAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pydwAuditStatusName != null" >
+        PYDW_AUDIT_STATUS_NAME = #{record.pydwAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pydwAuditTime != null" >
+        PYDW_AUDIT_TIME = #{record.pydwAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pydwAuditAdvice != null" >
+        PYDW_AUDIT_ADVICE = #{record.pydwAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fwhUserFlow != null" >
+        FWH_USER_FLOW = #{record.fwhUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fwhAuditStatusId != null" >
+        FWH_AUDIT_STATUS_ID = #{record.fwhAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fwhAuditStatusName != null" >
+        FWH_AUDIT_STATUS_NAME = #{record.fwhAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fwhAuditTime != null" >
+        FWH_AUDIT_TIME = #{record.fwhAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fwhAuditAdvice != null" >
+        FWH_AUDIT_ADVICE = #{record.fwhAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xwkUserFlow != null" >
+        XWK_USER_FLOW = #{record.xwkUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xwkAuditStatusId != null" >
+        XWK_AUDIT_STATUS_ID = #{record.xwkAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xwkAuditStatusName != null" >
+        XWK_AUDIT_STATUS_NAME = #{record.xwkAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xwkAuditTime != null" >
+        XWK_AUDIT_TIME = #{record.xwkAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xwkAuditAdvice != null" >
+        XWK_AUDIT_ADVICE = #{record.xwkAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sexId != null" >
+        SEX_ID = #{record.sexId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sexName != null" >
+        SEX_NAME = #{record.sexName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zsCategoryId != null" >
+        ZS_CATEGORY_ID = #{record.zsCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zsCategoryName != null" >
+        ZS_CATEGORY_NAME = #{record.zsCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zsSubjectId != null" >
+        ZS_SUBJECT_ID = #{record.zsSubjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zsSubjectName != null" >
+        ZS_SUBJECT_NAME = #{record.zsSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.degreeId != null" >
+        DEGREE_ID = #{record.degreeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.degreeName != null" >
+        DEGREE_NAME = #{record.degreeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idNo != null" >
+        ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stopRecruit != null" >
+        STOP_RECRUIT = #{record.stopRecruit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oneLevelSubjectId != null" >
+        ONE_LEVEL_SUBJECT_ID = #{record.oneLevelSubjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oneLevelSubjectName != null" >
+        ONE_LEVEL_SUBJECT_NAME = #{record.oneLevelSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.twoLevelSubjectId != null" >
+        TWO_LEVEL_SUBJECT_ID = #{record.twoLevelSubjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.twoLevelSubjectName != null" >
+        TWO_LEVEL_SUBJECT_NAME = #{record.twoLevelSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastTypeId != null" >
+        LAST_TYPE_ID = #{record.lastTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastAuditYear != null" >
+        LAST_AUDIT_YEAR = #{record.lastAuditYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstPassFlag != null" >
+        FIRST_PASS_FLAG = #{record.firstPassFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invalidTime != null" >
+        INVALID_TIME = #{record.invalidTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.showFlag != null" >
+        SHOW_FLAG = #{record.showFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateNo != null" >
+        CERTIFICATE_NO = #{record.certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateUrl != null" >
+        CERTIFICATE_URL = #{record.certificateUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.NYDS_OFFICIAL_DOCTOR
+    set DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
+      SPELL_NAME = #{record.spellName,jdbcType=VARCHAR},
+      BIRTH_DAY = #{record.birthDay,jdbcType=VARCHAR},
+      HEAD_URL = #{record.headUrl,jdbcType=VARCHAR},
+      MOBILE_PHONE = #{record.mobilePhone,jdbcType=VARCHAR},
+      WORK_PHONE = #{record.workPhone,jdbcType=VARCHAR},
+      EMAIL_NO = #{record.emailNo,jdbcType=VARCHAR},
+      WORK_UNIT = #{record.workUnit,jdbcType=VARCHAR},
+      TECHNICAL_TITLE_ID = #{record.technicalTitleId,jdbcType=VARCHAR},
+      TECHNICAL_TITLE_NAME = #{record.technicalTitleName,jdbcType=VARCHAR},
+      ACADEMIC_ACTIVITIES = #{record.academicActivities,jdbcType=VARCHAR},
+      RESEARCH_DIRECTION = #{record.researchDirection,jdbcType=VARCHAR},
+      ACADEMIC_MONOGRAPHS = #{record.academicMonographs,jdbcType=VARCHAR},
+      AWARD_SITUATION = #{record.awardSituation,jdbcType=VARCHAR},
+      RESEARCH_DESCRIBE = #{record.researchDescribe,jdbcType=VARCHAR},
+      DOCTOR_TYPE_ID = #{record.doctorTypeId,jdbcType=VARCHAR},
+      DOCTOR_TYPE_NAME = #{record.doctorTypeName,jdbcType=VARCHAR},
+      FWH_ORG_FLOW = #{record.fwhOrgFlow,jdbcType=VARCHAR},
+      FWH_ORG_NAME = #{record.fwhOrgName,jdbcType=VARCHAR},
+      PYDW_ORG_FLOW = #{record.pydwOrgFlow,jdbcType=VARCHAR},
+      PYDW_ORG_NAME = #{record.pydwOrgName,jdbcType=VARCHAR},
+      RECRUIT_SPE_ID = #{record.recruitSpeId,jdbcType=VARCHAR},
+      RECRUIT_SPE_NAME = #{record.recruitSpeName,jdbcType=VARCHAR},
+      ZDYJS_MASTER_NUM = #{record.zdyjsMasterNum,jdbcType=VARCHAR},
+      SBYJS_MASTER_NUM = #{record.sbyjsMasterNum,jdbcType=VARCHAR},
+      ZDYJS_DOCTOR_NUM = #{record.zdyjsDoctorNum,jdbcType=VARCHAR},
+      SBYJS_DOCTOR_NUM = #{record.sbyjsDoctorNum,jdbcType=VARCHAR},
+      INSERVICE_DOCTOR_NUM = #{record.inserviceDoctorNum,jdbcType=VARCHAR},
+      DECLARE_DOCTOR_NUM = #{record.declareDoctorNum,jdbcType=VARCHAR},
+      PAPER_MASTER_RATE = #{record.paperMasterRate,jdbcType=VARCHAR},
+      PAPER_DOCTOR_RATE = #{record.paperDoctorRate,jdbcType=VARCHAR},
+      PYYJS_AWARD_DESCRIBE = #{record.pyyjsAwardDescribe,jdbcType=VARCHAR},
+      PYYJS_OTHER_DESCRIBE = #{record.pyyjsOtherDescribe,jdbcType=VARCHAR},
+      APPLY_FLAG = #{record.applyFlag,jdbcType=VARCHAR},
+      APPLY_TIME = #{record.applyTime,jdbcType=VARCHAR},
+      PYDW_USER_FLOW = #{record.pydwUserFlow,jdbcType=VARCHAR},
+      PYDW_AUDIT_STATUS_ID = #{record.pydwAuditStatusId,jdbcType=VARCHAR},
+      PYDW_AUDIT_STATUS_NAME = #{record.pydwAuditStatusName,jdbcType=VARCHAR},
+      PYDW_AUDIT_TIME = #{record.pydwAuditTime,jdbcType=VARCHAR},
+      PYDW_AUDIT_ADVICE = #{record.pydwAuditAdvice,jdbcType=VARCHAR},
+      FWH_USER_FLOW = #{record.fwhUserFlow,jdbcType=VARCHAR},
+      FWH_AUDIT_STATUS_ID = #{record.fwhAuditStatusId,jdbcType=VARCHAR},
+      FWH_AUDIT_STATUS_NAME = #{record.fwhAuditStatusName,jdbcType=VARCHAR},
+      FWH_AUDIT_TIME = #{record.fwhAuditTime,jdbcType=VARCHAR},
+      FWH_AUDIT_ADVICE = #{record.fwhAuditAdvice,jdbcType=VARCHAR},
+      XWK_USER_FLOW = #{record.xwkUserFlow,jdbcType=VARCHAR},
+      XWK_AUDIT_STATUS_ID = #{record.xwkAuditStatusId,jdbcType=VARCHAR},
+      XWK_AUDIT_STATUS_NAME = #{record.xwkAuditStatusName,jdbcType=VARCHAR},
+      XWK_AUDIT_TIME = #{record.xwkAuditTime,jdbcType=VARCHAR},
+      XWK_AUDIT_ADVICE = #{record.xwkAuditAdvice,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      SEX_ID = #{record.sexId,jdbcType=VARCHAR},
+      SEX_NAME = #{record.sexName,jdbcType=VARCHAR},
+      ZS_CATEGORY_ID = #{record.zsCategoryId,jdbcType=VARCHAR},
+      ZS_CATEGORY_NAME = #{record.zsCategoryName,jdbcType=VARCHAR},
+      ZS_SUBJECT_ID = #{record.zsSubjectId,jdbcType=VARCHAR},
+      ZS_SUBJECT_NAME = #{record.zsSubjectName,jdbcType=VARCHAR},
+      DEGREE_ID = #{record.degreeId,jdbcType=VARCHAR},
+      DEGREE_NAME = #{record.degreeName,jdbcType=VARCHAR},
+      ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      STOP_RECRUIT = #{record.stopRecruit,jdbcType=VARCHAR},
+      ONE_LEVEL_SUBJECT_ID = #{record.oneLevelSubjectId,jdbcType=VARCHAR},
+      ONE_LEVEL_SUBJECT_NAME = #{record.oneLevelSubjectName,jdbcType=VARCHAR},
+      TWO_LEVEL_SUBJECT_ID = #{record.twoLevelSubjectId,jdbcType=VARCHAR},
+      TWO_LEVEL_SUBJECT_NAME = #{record.twoLevelSubjectName,jdbcType=VARCHAR},
+      LAST_TYPE_ID = #{record.lastTypeId,jdbcType=VARCHAR},
+      LAST_AUDIT_YEAR = #{record.lastAuditYear,jdbcType=VARCHAR},
+      FIRST_PASS_FLAG = #{record.firstPassFlag,jdbcType=VARCHAR},
+      INVALID_TIME = #{record.invalidTime,jdbcType=VARCHAR},
+      SHOW_FLAG = #{record.showFlag,jdbcType=VARCHAR},
+      CERTIFICATE_NO = #{record.certificateNo,jdbcType=VARCHAR},
+      CERTIFICATE_URL = #{record.certificateUrl,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.NydsOfficialDoctor" >
+    update PDSCI.NYDS_OFFICIAL_DOCTOR
+    <set >
+      <if test="doctorName != null" >
+        DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="spellName != null" >
+        SPELL_NAME = #{spellName,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDay != null" >
+        BIRTH_DAY = #{birthDay,jdbcType=VARCHAR},
+      </if>
+      <if test="headUrl != null" >
+        HEAD_URL = #{headUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null" >
+        MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="workPhone != null" >
+        WORK_PHONE = #{workPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="emailNo != null" >
+        EMAIL_NO = #{emailNo,jdbcType=VARCHAR},
+      </if>
+      <if test="workUnit != null" >
+        WORK_UNIT = #{workUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="technicalTitleId != null" >
+        TECHNICAL_TITLE_ID = #{technicalTitleId,jdbcType=VARCHAR},
+      </if>
+      <if test="technicalTitleName != null" >
+        TECHNICAL_TITLE_NAME = #{technicalTitleName,jdbcType=VARCHAR},
+      </if>
+      <if test="academicActivities != null" >
+        ACADEMIC_ACTIVITIES = #{academicActivities,jdbcType=VARCHAR},
+      </if>
+      <if test="researchDirection != null" >
+        RESEARCH_DIRECTION = #{researchDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="academicMonographs != null" >
+        ACADEMIC_MONOGRAPHS = #{academicMonographs,jdbcType=VARCHAR},
+      </if>
+      <if test="awardSituation != null" >
+        AWARD_SITUATION = #{awardSituation,jdbcType=VARCHAR},
+      </if>
+      <if test="researchDescribe != null" >
+        RESEARCH_DESCRIBE = #{researchDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTypeId != null" >
+        DOCTOR_TYPE_ID = #{doctorTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTypeName != null" >
+        DOCTOR_TYPE_NAME = #{doctorTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhOrgFlow != null" >
+        FWH_ORG_FLOW = #{fwhOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhOrgName != null" >
+        FWH_ORG_NAME = #{fwhOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwOrgFlow != null" >
+        PYDW_ORG_FLOW = #{pydwOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwOrgName != null" >
+        PYDW_ORG_NAME = #{pydwOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitSpeId != null" >
+        RECRUIT_SPE_ID = #{recruitSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitSpeName != null" >
+        RECRUIT_SPE_NAME = #{recruitSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="zdyjsMasterNum != null" >
+        ZDYJS_MASTER_NUM = #{zdyjsMasterNum,jdbcType=VARCHAR},
+      </if>
+      <if test="sbyjsMasterNum != null" >
+        SBYJS_MASTER_NUM = #{sbyjsMasterNum,jdbcType=VARCHAR},
+      </if>
+      <if test="zdyjsDoctorNum != null" >
+        ZDYJS_DOCTOR_NUM = #{zdyjsDoctorNum,jdbcType=VARCHAR},
+      </if>
+      <if test="sbyjsDoctorNum != null" >
+        SBYJS_DOCTOR_NUM = #{sbyjsDoctorNum,jdbcType=VARCHAR},
+      </if>
+      <if test="inserviceDoctorNum != null" >
+        INSERVICE_DOCTOR_NUM = #{inserviceDoctorNum,jdbcType=VARCHAR},
+      </if>
+      <if test="declareDoctorNum != null" >
+        DECLARE_DOCTOR_NUM = #{declareDoctorNum,jdbcType=VARCHAR},
+      </if>
+      <if test="paperMasterRate != null" >
+        PAPER_MASTER_RATE = #{paperMasterRate,jdbcType=VARCHAR},
+      </if>
+      <if test="paperDoctorRate != null" >
+        PAPER_DOCTOR_RATE = #{paperDoctorRate,jdbcType=VARCHAR},
+      </if>
+      <if test="pyyjsAwardDescribe != null" >
+        PYYJS_AWARD_DESCRIBE = #{pyyjsAwardDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="pyyjsOtherDescribe != null" >
+        PYYJS_OTHER_DESCRIBE = #{pyyjsOtherDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="applyFlag != null" >
+        APPLY_FLAG = #{applyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null" >
+        APPLY_TIME = #{applyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwUserFlow != null" >
+        PYDW_USER_FLOW = #{pydwUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwAuditStatusId != null" >
+        PYDW_AUDIT_STATUS_ID = #{pydwAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwAuditStatusName != null" >
+        PYDW_AUDIT_STATUS_NAME = #{pydwAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwAuditTime != null" >
+        PYDW_AUDIT_TIME = #{pydwAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwAuditAdvice != null" >
+        PYDW_AUDIT_ADVICE = #{pydwAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhUserFlow != null" >
+        FWH_USER_FLOW = #{fwhUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhAuditStatusId != null" >
+        FWH_AUDIT_STATUS_ID = #{fwhAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhAuditStatusName != null" >
+        FWH_AUDIT_STATUS_NAME = #{fwhAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhAuditTime != null" >
+        FWH_AUDIT_TIME = #{fwhAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhAuditAdvice != null" >
+        FWH_AUDIT_ADVICE = #{fwhAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="xwkUserFlow != null" >
+        XWK_USER_FLOW = #{xwkUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="xwkAuditStatusId != null" >
+        XWK_AUDIT_STATUS_ID = #{xwkAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="xwkAuditStatusName != null" >
+        XWK_AUDIT_STATUS_NAME = #{xwkAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="xwkAuditTime != null" >
+        XWK_AUDIT_TIME = #{xwkAuditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="xwkAuditAdvice != null" >
+        XWK_AUDIT_ADVICE = #{xwkAuditAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="sexId != null" >
+        SEX_ID = #{sexId,jdbcType=VARCHAR},
+      </if>
+      <if test="sexName != null" >
+        SEX_NAME = #{sexName,jdbcType=VARCHAR},
+      </if>
+      <if test="zsCategoryId != null" >
+        ZS_CATEGORY_ID = #{zsCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="zsCategoryName != null" >
+        ZS_CATEGORY_NAME = #{zsCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="zsSubjectId != null" >
+        ZS_SUBJECT_ID = #{zsSubjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="zsSubjectName != null" >
+        ZS_SUBJECT_NAME = #{zsSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeId != null" >
+        DEGREE_ID = #{degreeId,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeName != null" >
+        DEGREE_NAME = #{degreeName,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        ID_NO = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="stopRecruit != null" >
+        STOP_RECRUIT = #{stopRecruit,jdbcType=VARCHAR},
+      </if>
+      <if test="oneLevelSubjectId != null" >
+        ONE_LEVEL_SUBJECT_ID = #{oneLevelSubjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="oneLevelSubjectName != null" >
+        ONE_LEVEL_SUBJECT_NAME = #{oneLevelSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="twoLevelSubjectId != null" >
+        TWO_LEVEL_SUBJECT_ID = #{twoLevelSubjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="twoLevelSubjectName != null" >
+        TWO_LEVEL_SUBJECT_NAME = #{twoLevelSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastTypeId != null" >
+        LAST_TYPE_ID = #{lastTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="lastAuditYear != null" >
+        LAST_AUDIT_YEAR = #{lastAuditYear,jdbcType=VARCHAR},
+      </if>
+      <if test="firstPassFlag != null" >
+        FIRST_PASS_FLAG = #{firstPassFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="invalidTime != null" >
+        INVALID_TIME = #{invalidTime,jdbcType=VARCHAR},
+      </if>
+      <if test="showFlag != null" >
+        SHOW_FLAG = #{showFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNo != null" >
+        CERTIFICATE_NO = #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateUrl != null" >
+        CERTIFICATE_URL = #{certificateUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.NydsOfficialDoctor" >
+    update PDSCI.NYDS_OFFICIAL_DOCTOR
+    set DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      SPELL_NAME = #{spellName,jdbcType=VARCHAR},
+      BIRTH_DAY = #{birthDay,jdbcType=VARCHAR},
+      HEAD_URL = #{headUrl,jdbcType=VARCHAR},
+      MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      WORK_PHONE = #{workPhone,jdbcType=VARCHAR},
+      EMAIL_NO = #{emailNo,jdbcType=VARCHAR},
+      WORK_UNIT = #{workUnit,jdbcType=VARCHAR},
+      TECHNICAL_TITLE_ID = #{technicalTitleId,jdbcType=VARCHAR},
+      TECHNICAL_TITLE_NAME = #{technicalTitleName,jdbcType=VARCHAR},
+      ACADEMIC_ACTIVITIES = #{academicActivities,jdbcType=VARCHAR},
+      RESEARCH_DIRECTION = #{researchDirection,jdbcType=VARCHAR},
+      ACADEMIC_MONOGRAPHS = #{academicMonographs,jdbcType=VARCHAR},
+      AWARD_SITUATION = #{awardSituation,jdbcType=VARCHAR},
+      RESEARCH_DESCRIBE = #{researchDescribe,jdbcType=VARCHAR},
+      DOCTOR_TYPE_ID = #{doctorTypeId,jdbcType=VARCHAR},
+      DOCTOR_TYPE_NAME = #{doctorTypeName,jdbcType=VARCHAR},
+      FWH_ORG_FLOW = #{fwhOrgFlow,jdbcType=VARCHAR},
+      FWH_ORG_NAME = #{fwhOrgName,jdbcType=VARCHAR},
+      PYDW_ORG_FLOW = #{pydwOrgFlow,jdbcType=VARCHAR},
+      PYDW_ORG_NAME = #{pydwOrgName,jdbcType=VARCHAR},
+      RECRUIT_SPE_ID = #{recruitSpeId,jdbcType=VARCHAR},
+      RECRUIT_SPE_NAME = #{recruitSpeName,jdbcType=VARCHAR},
+      ZDYJS_MASTER_NUM = #{zdyjsMasterNum,jdbcType=VARCHAR},
+      SBYJS_MASTER_NUM = #{sbyjsMasterNum,jdbcType=VARCHAR},
+      ZDYJS_DOCTOR_NUM = #{zdyjsDoctorNum,jdbcType=VARCHAR},
+      SBYJS_DOCTOR_NUM = #{sbyjsDoctorNum,jdbcType=VARCHAR},
+      INSERVICE_DOCTOR_NUM = #{inserviceDoctorNum,jdbcType=VARCHAR},
+      DECLARE_DOCTOR_NUM = #{declareDoctorNum,jdbcType=VARCHAR},
+      PAPER_MASTER_RATE = #{paperMasterRate,jdbcType=VARCHAR},
+      PAPER_DOCTOR_RATE = #{paperDoctorRate,jdbcType=VARCHAR},
+      PYYJS_AWARD_DESCRIBE = #{pyyjsAwardDescribe,jdbcType=VARCHAR},
+      PYYJS_OTHER_DESCRIBE = #{pyyjsOtherDescribe,jdbcType=VARCHAR},
+      APPLY_FLAG = #{applyFlag,jdbcType=VARCHAR},
+      APPLY_TIME = #{applyTime,jdbcType=VARCHAR},
+      PYDW_USER_FLOW = #{pydwUserFlow,jdbcType=VARCHAR},
+      PYDW_AUDIT_STATUS_ID = #{pydwAuditStatusId,jdbcType=VARCHAR},
+      PYDW_AUDIT_STATUS_NAME = #{pydwAuditStatusName,jdbcType=VARCHAR},
+      PYDW_AUDIT_TIME = #{pydwAuditTime,jdbcType=VARCHAR},
+      PYDW_AUDIT_ADVICE = #{pydwAuditAdvice,jdbcType=VARCHAR},
+      FWH_USER_FLOW = #{fwhUserFlow,jdbcType=VARCHAR},
+      FWH_AUDIT_STATUS_ID = #{fwhAuditStatusId,jdbcType=VARCHAR},
+      FWH_AUDIT_STATUS_NAME = #{fwhAuditStatusName,jdbcType=VARCHAR},
+      FWH_AUDIT_TIME = #{fwhAuditTime,jdbcType=VARCHAR},
+      FWH_AUDIT_ADVICE = #{fwhAuditAdvice,jdbcType=VARCHAR},
+      XWK_USER_FLOW = #{xwkUserFlow,jdbcType=VARCHAR},
+      XWK_AUDIT_STATUS_ID = #{xwkAuditStatusId,jdbcType=VARCHAR},
+      XWK_AUDIT_STATUS_NAME = #{xwkAuditStatusName,jdbcType=VARCHAR},
+      XWK_AUDIT_TIME = #{xwkAuditTime,jdbcType=VARCHAR},
+      XWK_AUDIT_ADVICE = #{xwkAuditAdvice,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      SEX_ID = #{sexId,jdbcType=VARCHAR},
+      SEX_NAME = #{sexName,jdbcType=VARCHAR},
+      ZS_CATEGORY_ID = #{zsCategoryId,jdbcType=VARCHAR},
+      ZS_CATEGORY_NAME = #{zsCategoryName,jdbcType=VARCHAR},
+      ZS_SUBJECT_ID = #{zsSubjectId,jdbcType=VARCHAR},
+      ZS_SUBJECT_NAME = #{zsSubjectName,jdbcType=VARCHAR},
+      DEGREE_ID = #{degreeId,jdbcType=VARCHAR},
+      DEGREE_NAME = #{degreeName,jdbcType=VARCHAR},
+      ID_NO = #{idNo,jdbcType=VARCHAR},
+      STOP_RECRUIT = #{stopRecruit,jdbcType=VARCHAR},
+      ONE_LEVEL_SUBJECT_ID = #{oneLevelSubjectId,jdbcType=VARCHAR},
+      ONE_LEVEL_SUBJECT_NAME = #{oneLevelSubjectName,jdbcType=VARCHAR},
+      TWO_LEVEL_SUBJECT_ID = #{twoLevelSubjectId,jdbcType=VARCHAR},
+      TWO_LEVEL_SUBJECT_NAME = #{twoLevelSubjectName,jdbcType=VARCHAR},
+      LAST_TYPE_ID = #{lastTypeId,jdbcType=VARCHAR},
+      LAST_AUDIT_YEAR = #{lastAuditYear,jdbcType=VARCHAR},
+      FIRST_PASS_FLAG = #{firstPassFlag,jdbcType=VARCHAR},
+      INVALID_TIME = #{invalidTime,jdbcType=VARCHAR},
+      SHOW_FLAG = #{showFlag,jdbcType=VARCHAR},
+      CERTIFICATE_NO = #{certificateNo,jdbcType=VARCHAR},
+      CERTIFICATE_URL = #{certificateUrl,jdbcType=VARCHAR}
+    where DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

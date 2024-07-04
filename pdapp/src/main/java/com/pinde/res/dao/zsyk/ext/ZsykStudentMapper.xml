@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.res.dao.zsyk.ext.ZsykStudentMapper">
+    <!-- 轮转计划  -->
+    <resultMap id="schPlanMap" type="hashmap">
+        <result column="deptFlow"  property="deptFlow" javaType="java.lang.String"/>
+        <result column="deptOrder"  property="deptOrder" javaType="java.lang.String"/>
+        <result column="schDeptFlow"  property="schDeptFlow" javaType="java.lang.String"/>
+        <result column="schDeptName"  property="schDeptName" javaType="java.lang.String"/>
+        <result column="schStartDate"  property="schStartDate" javaType="java.lang.String"/>
+        <result column="schEndDate"  property="schEndDate" javaType="java.lang.String"/>
+        <result column="schEndDate"  property="schEndDate" javaType="java.lang.String"/>
+        <result column="startDate"  property="startDate" javaType="java.lang.String"/>
+        <result column="endDate"  property="endDate" javaType="java.lang.String"/>
+        <result column="schStatusId"  property="schStatusId" javaType="java.lang.String"/>
+        <result column="schScore"  property="schScore" javaType="java.lang.Integer"/>
+        <result column="progress"  property="progress" javaType="java.lang.Integer"/>
+        <result column="teacherFlow"  property="teacherFlow" javaType="java.lang.String"/>
+        <result column="teacherName"  property="teacherName" javaType="java.lang.String"/>
+        <result column="deptHeadFlow"  property="deptHeadFlow" javaType="java.lang.String"/>
+        <result column="deptHeadName"  property="deptHeadName" javaType="java.lang.String"/>
+        <result column="SpecialtyID"  property="SpecialtyID" javaType="java.lang.String"/>
+        <result column="SecID"  property="SecID" javaType="java.lang.String"/>
+    </resultMap>
+    <select id="selectSchPlan" resultMap="schPlanMap">
+        SELECT * FROM (
+        SELECT ROW_NUMBER() OVER (order by T.deptOrder)AS Row, T.*
+        from (
+        SELECT  HosSection.HosSecID as deptFlow,row_number() over(order by UserCycleSec.StartTime) as deptOrder,
+        UserCycleSec.UCSID as schDeptFlow ,HosSection.HosSecName as schDeptName,
+        convert(varchar(10),UserCycleSec.StartTime,120) as schStartDate,
+        convert(varchar(10),UserCycleSec.EndTime,120) as schEndDate,
+        isnull(convert(varchar(10),RStartTime,120),
+        convert(varchar(10),UserRealCycleSec.rstarttime,120)) as startDate,
+        isnull(convert(varchar(10),REndTime,120),
+        convert(varchar(10),UserRealCycleSec.rendtime,120)) as endDate,
+        case
+        when CheckStatus = 1 then 'Exited'
+        when rstarttime is null then 'NotEntered'
+        when rstarttime is not null then 'Entering'
+        end as schStatusId,
+        case
+        when CheckStatus = 1 then '已出科'
+        when rstarttime is null then '未入科'
+        when rstarttime is not null then '已入科'
+        end as schStatusDesc,
+        case UserInfo.UserType when 4 then
+        (Convert(decimal(10,2),ISNULL(cast(AssessmentMark as
+        float),0)*0.2))+(Convert(decimal(10,2),ISNULL(cast(Mini_TecScore as float)*100/9,0)*0.25))+
+        (Convert(decimal(10,2),ISNULL(cast(DOPS_TecScore as
+        float)*100/9,0)*0.25))+(Convert(decimal(10,2),ISNULL(cast(ExamInfoDF as float)*100/9,0)*0.3))
+        else
+        (Convert(decimal(10,2),ISNULL(cast(AssessmentMark as
+        float),0)*0.1))+(Convert(decimal(10,2),ISNULL(cast(Mini_TecScore as float)*100/9,0)*0.35))+
+        (Convert(decimal(10,2),ISNULL(cast(DOPS_TecScore as
+        float)*100/9,0)*0.25))+(Convert(decimal(10,2),ISNULL(cast(ExamInfoDF as float)*100/9,0)*0.3))
+        end as schScore,0 as progress,
+        TecUserInfo.userid as teacherFlow,TecUserInfo.truename as teacherName,
+        ManagerUserInfo.userid as deptHeadFlow,ManagerUserInfo.truename as deptHeadName
+        ,UserInfo.SpecialtyID,HosSection.SecID
+        FROM UserCycleSec
+        LEFT JOIN UserInfo ON UserInfo.UserID = UserCycleSec.UserID
+        LEFT JOIN HosCycleSection ON HosCycleSection.HosCySecID = UserCycleSec.HosCySecID
+        LEFT JOIN HosSection ON HosSection.HosSecID = HosCycleSection.HosSecID
+        LEFT JOIN UserRealCycleSec ON UserRealCycleSec.RUCSID = UserCycleSec.UCSID
+        left join OutSecBrief on OutSecBrief.ucsid = UserCycleSec.ucsid
+        left join UserRealTec on UserRealTec.UCSID =  UserCycleSec.UCSID
+        left join UserInfo as TecUserInfo on TecUserInfo.UserID = UserRealTec.UserTecID
+        left join UserSectionManager on UserSectionManager.UCSID = UserCycleSec.UCSID
+        left join UserInfo as ManagerUserInfo on ManagerUserInfo.UserID = UserSectionManager.SectionManagerID
+        LEFT JOIN CycleOutSectionRecord_NF ON CycleOutSectionRecord_NF.UCSID = UserCycleSec.UCSID
+        LEFT JOIN Out_DOPS ON Out_DOPS.DOPS_UCSID = UserCycleSec.UCSID
+        LEFT JOIN Out_Mini_CEX ON Out_Mini_CEX.Mini_UCSID = UserCycleSec.UCSID
+        LEFT JOIN ExamInfo on ExamInfo.UCSID = CycleOutSectionRecord_NF.UCSID And ExamInfoType = #{examStatusId}
+        where UserCycleSec.userid = #{userFlow}) as  T where schStatusId = #{schStatusId}
+        <if test='schDeptName!=null and schDeptName!=""'>
+            and schDeptName like '%${schDeptName}%'
+        </if>
+        ) TT
+        WHERE TT.Row between #{start} and #{end}
+        ORDER BY startDate
+    </select>
+    <!-- 入科教育  -->
+    <resultMap id="enteredDeptEduMap" type="hashmap">
+        <result column="ursdId"  property="ursdId" javaType="java.lang.String"/>
+        <result column="rsdId"  property="rsdId" javaType="java.lang.String"/>
+        <result column="tecName"  property="tecName" javaType="java.lang.String"/>
+        <result column="dateTime"  property="dateTime" javaType="java.lang.String"/>
+        <result column="userFlow"  property="userFlow" javaType="java.lang.String"/>
+        <result column="schDeptFlow"  property="schDeptFlow" javaType="java.lang.String"/>
+        <result column="state"  property="state" javaType="java.lang.String"/>
+    </resultMap>
+    <select id="selectEnteredDeptEdu" resultMap="enteredDeptEduMap">
+      select URSD_ID as ursdId , RSD_ID as rsdId ,TecName as tecName,
+      DateTime as dateTime , UserID as userFlow , UCSID as schDeptFlow,State as state
+      from S_UserReadSecDocument
+      where UCSID=#{schDeptFlow}
+  </select>
+
+    <insert id="insertEnteredDeptEdu">
+      insert into S_UserReadSecDocument(URSD_ID,RSD_ID,TecName,DateTime,UserID,UCSID)
+      values (#{ursdId} , #{rsdId},#{tecName},#{dateTime},#{userFlow},#{schDeptFlow})
+  </insert>
+
+    <insert id="updateEnteredDeptEdu">
+  		update S_UserReadSecDocument
+  		set TecName=#{tecName},DateTime=#{dateTime}
+  		where UCSID=#{schDeptFlow}
+  </insert>
+    <!-- 病种与操作  -->
+    <select id="selectStudyInfos" resultType="com.pinde.res.model.nfyy.mo.StudyInfo">
+      SELECT * FROM (
+      SELECT ROW_NUMBER() OVER (order by T.DateTime)AS Row, T.*
+          from (
+              SELECT  ID as dataFlow, NO as no, Rec_Trainee.Name as name,DateTime as dateTime
+              FROM  Rec_Trainee
+              left join (select COUNT(Name) AS DicCount,Name
+      FROM Rec_Trainee
+      WHERE (UCSID = #{schDeptFlow}) AND (DataType = 0)
+              group by Name) as Temp on Temp.Name  =  Rec_Trainee.Name
+      WHERE (UCSID = #{schDeptFlow}) AND (DataType = 0)
+          ) as  T ) TT
+      WHERE TT.Row  between  #{start} and #{end}
+      ORDER BY DateTime
+  </select>
+
+    <select id="selectStudyInfo" parameterType="string" resultType="com.pinde.res.model.nfyy.mo.StudyInfo">
+      SELECT  ID as dataFlow, NO as no, Rec_Trainee.Name as name , Study as study, Master as master, DateTime as dateTime
+      FROM  Rec_Trainee where ID = #{dataFlow}
+  </select>
+
+    <insert id="insertStudyInfo" parameterType="com.pinde.res.model.nfyy.mo.StudyInfo">
+      insert into Rec_Trainee(ID,NO,Name,Study,Master,InDateTime,DateTime,UserID,UCSID,DataType)
+      values (#{dataFlow} , #{no} , #{name} , #{study} , #{master} , getdate(),#{dateTime} , #{userFlow} , #{schDeptFlow} , 0)
+  </insert>
+
+    <update id="updateStudyInfo" parameterType="com.pinde.res.model.nfyy.mo.StudyInfo">
+      update Rec_Trainee set
+				NO=#{no},
+				Name=#{name},
+				Study=#{study},
+				Master=#{master},
+				DateTime=#{dateTime},
+				UserID=#{userFlow},
+				UCSID=#{schDeptFlow},
+				DataType=0
+				where ID=#{dataFlow}
+  </update>
+
+    <delete id="delStudyInfo" parameterType="string">
+      delete Rec_Trainee where ID = #{dataFlow}
+  </delete>
+
+    <select id="selectMedicalInfos" resultType="com.pinde.res.model.nfyy.mo.MedicalInfo">
+      SELECT * FROM (
+      SELECT ROW_NUMBER() OVER (order by T.InDateTime)AS Row, T.*
+          from (
+              SELECT  ID as dataFlow, NO, Rec_Trainee.Name,InDateTime
+              FROM  Rec_Trainee
+              left join (select COUNT(Name) AS DicCount,Name
+      FROM Rec_Trainee
+      WHERE (UCSID = #{schDeptFlow}) AND (DataType = 1)
+              group by Name) as Temp on Temp.Name  =  Rec_Trainee.Name
+      WHERE (UCSID = #{schDeptFlow}) AND (DataType = 1)
+          ) as  T ) TT
+      WHERE TT.Row  between  #{start} and #{end}
+      ORDER BY InDateTime
+  </select>
+
+    <select id="selectMedicalInfo" parameterType="string" resultType="com.pinde.res.model.nfyy.mo.MedicalInfo">
+      SELECT ID as dataFlow, NO, Rec_Trainee.Name as name, Study, Master, Patient, Diagnosis, TecName, InDateTime,
+      DateTime, UserID, UCSID, DataType
+      FROM  Rec_Trainee WHERE ID = #{dataFlow}
+  </select>
+
+    <insert id="insertMedicalInfo" parameterType="com.pinde.res.model.nfyy.mo.MedicalInfo">
+      insert into Rec_Trainee(ID,NO,Name,Study,Master,Patient,Diagnosis,TecName,InDateTime,DateTime,UserID,UCSID,DataType)
+      values (#{dataFlow} , #{no} , #{name} , #{study} , #{master} , #{patient} , #{diagnosis} , #{tecName} , getdate() , #{dateTime} , #{userFlow} , #{schDeptFlow} , 1)
+  </insert>
+
+    <update id="updateMedicalInfo" parameterType="com.pinde.res.model.nfyy.mo.MedicalInfo">
+      update Rec_Trainee set
+				NO=#{no},
+				Name=#{name},
+				Patient=#{patient},
+				Diagnosis=#{diagnosis},
+				TecName=#{tecName},
+				DateTime=#{dateTime},
+				UserID=#{userFlow},
+				UCSID=#{schDeptFlow},
+				DataType=1
+				where ID=#{dataFlow}
+  </update>
+
+    <delete id="delMedicalInfo" parameterType="string">
+      delete Rec_Trainee where ID = #{dataFlow}
+  </delete>
+
+    <select id="selectActivitys" parameterType="map" resultType="com.pinde.res.model.nfyy.mo.Activity">
+        SELECT * FROM (
+        SELECT ROW_NUMBER() OVER (order by T.time desc)AS Row, T.*
+        from (
+        select CaseDiscuss.CaDisID as dataFlow , CaseDiscuss.CaDisTime as time ,
+        CaseDiscuss.CaEndDisTime as endTime , CaseDiscuss.CaName as name,
+        case isnull(SCaseDiscuss.CaDisID,0)
+        when 0 THEN '未参加'
+        else '参加'
+        end
+        SCaDisID ,
+        isnull(SCaseDiscuss.Score,0) as score,
+        CaseDiscuss.CaDisMainSpeaker as mainSpeaker,
+        <if test='join=="NotEntered"'>
+            (
+            select top 1 RUCSID from UserRealCycleSec where RUserID = #{userFlow} order by RStartTime desc
+            ) as schDeptFlow
+        </if>
+        <if test='join!="NotEntered"'>
+            SCaseDiscuss.UCSID as schDeptFlow
+        </if>
+        from CaseDiscuss
+        left join CaseDiscussTec on CaseDiscussTec.CaDisID = CaseDiscuss.CaDisID
+        left join DicItem on DicItem.DicItemID = CaseDiscuss.CaDisPlayClass
+        left join CaseDiscuss as SCaseDiscuss on SCaseDiscuss.FCaDisID = CaseDiscuss.CaDisID and SCaseDiscuss.UserID = #{userFlow}
+        left join Attach on Attach.AttachGroupID = CaseDiscuss.AttachID
+        where CaseDiscuss.FCaDisID is null
+        AND CaseDiscuss.CheckStatus = 4
+        <if test='join=="NotEntered"'>
+            AND SCaseDiscuss.CaDisID is null
+        </if>
+        <!-- <if test='join=="Entered"'>
+        AND SCaseDiscuss.CaDisID is  not null
+        </if> -->
+        <if test='join=="Score"'>
+            AND SCaseDiscuss.Score>0
+        </if>
+        <if test='join=="NotScore"'>
+            AND SCaseDiscuss.Score=0
+        </if>
+        <if test='mainSpeaker!=null and mainSpeaker!=""'>
+            AND CaseDiscuss.CaDisMainSpeaker like '%${mainSpeaker}%'
+        </if>
+        ) as T
+        ) TT
+        WHERE TT.Row  between  #{start} and #{end}
+        ORDER BY time desc
+    </select>
+
+    <select id="selectActivity" parameterType="string" resultType="com.pinde.res.model.nfyy.mo.Activity">
+      select CaseDiscuss.CaDisID as dataFlow,
+      CaseDiscuss.CaDisMainSpeaker as mainSpeaker,
+      DicItem as item,
+      CaseDiscuss.CaDisContent as content,
+      CaseDiscuss.CaDisTime as time,
+      CaseDiscuss.CaEndDisTime as endTime,
+      CaseDiscuss.CaAddress as address,
+      CaseDiscuss.CaName as name,
+      CASE CaseDiscuss.CaDisMainSpeakerType
+      WHEN 0 THEN '带教老师'
+      WHEN 1 THEN '轮转学员'
+      WHEN 2 THEN '其他人员'
+      ELSE ''
+      END AS mainSpeakerType,
+      case isnull(SCaseDiscuss.CaDisID,0)
+      when 0  THEN '未参加' else '参加' end SCaDisID,
+      CaseDiscuss.CaDisPlayClass as playClass,
+      SCaseDiscuss.score as score,
+      SCaseDiscuss.ISMDMQ as mdmq , SCaseDiscuss.ISGFSL as gfsl , SCaseDiscuss.ISJXDW as jxdw, SCaseDiscuss.ISXGH as xgh
+      from CaseDiscuss
+      left join CaseDiscussTec on CaseDiscussTec.CaDisID = CaseDiscuss.CaDisID
+      left join DicItem on DicItem.DicItemID = CaseDiscuss.CaDisPlayClass
+      left join CaseDiscuss as SCaseDiscuss on SCaseDiscuss.FCaDisID = CaseDiscuss.CaDisID and SCaseDiscuss.UserID = #{userFlow}
+      where CaseDiscuss.CaDisID = #{dataFlow}
+  </select>
+
+    <select id="selectActivityByFlow" parameterType="string" resultType="com.pinde.res.model.nfyy.mo.Activity">
+        SELECT CaDisID as dataFlow , HosSecID as hosSecId , CySecID as cySecId , CaDisTime as time ,
+        CaDisContent as content , CaDisPlayClass as palyClass ,
+        CaDisPeriod as period , CaDisMainSpeaker as mainSpeaker ,
+        CheckStatus as checkStatus , CaDisDes as des , UserID as userFlow , DocGRPID as grpId ,
+        DocCount as count , CaName as name , CaAddress as address , CaPeople as people ,
+      UserType as userType , TecID as tecId , CaEndDisTime as endTime , CaDisMainSpeakerType as mainSpeakerType
+      FROM CaseDiscuss
+      WHERE CaDisID = #{dataFlow}
+  </select>
+
+    <insert id="insertActivity" parameterType="com.pinde.res.model.nfyy.mo.Activity">
+      insert into CaseDiscuss(
+      FCaDisID,HosSecID,CySecID,CaDisTime,CaDisContent,CaDisPlayClass,CaDisPeriod,CaDisMainSpeaker,CheckStatus,CaDisDes,UserID,DocGRPID,DocCount,CaName,CaAddress,CaPeople,UserType,TecID,CaEndDisTime,CaDisMainSpeakerType,UCSID,Score,ISMDMQ,ISGFSL,ISJXDW,ISXGH)
+        values (#{dataFlow} , #{hosSecId} , #{cySecId} , #{time} , #{content} , #{playClass} , #{period} ,
+        #{mainSpeaker} , #{checkStatus} ,
+        #{des} , #{userFlow} , #{grpId} , #{count} , #{name} , #{address} , #{people} , #{userType} , #{tecId} ,
+        #{endTime} , #{mainSpeakerType} , #{schDeptFlow} , 0 , 0 , 0 , 0 , 0)
+  </insert>
+
+    <update id="updateActivity" parameterType="com.pinde.res.model.nfyy.mo.Activity">
+      Update CaseDiscuss set Score=#{score},
+      ISMDMQ=#{mdmq},
+      ISGFSL=#{gfsl},
+      ISJXDW=#{jxdw},
+      ISXGH=#{xgh}
+      where CaDisID= (select CaDisID from CaseDiscuss where FCaDisID = #{dataFlow} and UserID = #{userFlow})
+  </update>
+
+    <select id="selectOutSecBrief" parameterType="string" resultType="com.pinde.res.model.nfyy.mo.Evaluation">
+        select
+      BriefRequrie as briefRequrie, SecAppraise , UserID as userFlow , CySecID , CheckStatus , UCSID as schDeptFlow, VerifyState
+      from OutSecBrief where UCSID = #{schDeptFlow}
+  </select>
+
+    <insert id="insertOutSecBrief" parameterType="com.pinde.res.model.nfyy.mo.Evaluation">
+      insert into OutSecBrief (BriefRequrie,SecAppraise,UserID,CySecID,CheckStatus,UCSID,VerifyState)
+      values(#{briefRequrie},#{secAppraise},#{userFlow},#{cySecId},#{checkStatus},#{schDeptFlow},0)
+  </insert>
+
+    <update id="updateOutSecBrief" parameterType="string">
+      update OutSecBrief
+      set BriefRequrie = #{briefRequrie}
+      where UCSID= #{schDeptFlow}
+  </update>
+
+    <resultMap id="examItemMap" type="hashmap">
+        <result column="examItemName"  property="examItemName" javaType="java.lang.String"/>
+        <result column="reqItemName"  property="reqItemName" javaType="java.lang.String"/>
+        <result column="reqItemMark"  property="reqItemMark" javaType="java.lang.String"/>
+        <result column="reqItemId"  property="reqItemId" javaType="java.lang.String"/>
+    </resultMap>
+
+    <select id="selectExamItem" parameterType="string" resultMap="examItemMap">
+      select
+      ExamItem.ExamItemName as examItemName,
+      RequestItem.ReqItemName as reqItemName,
+      RequestItem.ReqItemMark as reqItemMark,
+      RequestItem.ReqItemID as reqItemId
+      from RequestItem,ExamItem
+      where RequestItem.ExamItemID in (ExamItem.ExamItemID)
+      and ExamItem.ExamItemType = #{type}
+      order by ExamItem.ExamItemID,RequestItem.ReqItemID
+  </select>
+
+    <select id="getExamItemsByItemId" resultMap="examItemMap">
+        select
+        ExamItem.ExamItemName as examItemName,
+        RequestItem.ReqItemName as reqItemName,
+        RequestItem.ReqItemMark as reqItemMark,
+        RequestItem.ReqItemID as reqItemId
+        from RequestItem,ExamItem
+        where RequestItem.ExamItemID in (ExamItem.ExamItemID)
+        and ExamItem.ExamItemType = #{type}
+        and ExamItem.ExamItemID =#{itemId}
+        order by ExamItem.ExamItemID,RequestItem.ReqItemID
+    </select>
+    <select id="selectExamItemId" parameterType="string" resultType="string">
+        select ExamItemID
+        from ExamItem where ExamItemType = #{type}
+    </select>
+
+    <select id="selectExamItemByExamItemID" parameterType="string" resultMap="examItemMap">
+        select
+      ExamItem.ExamItemName as examItemName,
+      RequestItem.ReqItemName as reqItemName,
+      RequestItem.ReqItemMark as reqItemMark,
+      RequestItem.ReqItemID as reqItemId
+      from RequestItem
+	  inner join ExamItem on ExamItem.ExamItemID = RequestItem.ExamItemID
+      where RequestItem.ExamItemID = #{ExamItemID}
+      order by ExamItem.ExamItemID,RequestItem.ReqItemID
+    </select>
+
+    <resultMap id="examInfoMap" type="hashmap">
+        <result column="ExamInfoDF"  property="ExamInfoDF" javaType="java.lang.Integer"/>
+    </resultMap>
+
+    <select id="readExamInfo" resultMap="examInfoMap">
+        select ExamInfoDF from ExamInfo
+        where ExamInfoType = #{type} and UCSID = #{schDeptFlow}
+  </select>
+
+    <insert id="insertExamInfo" useGeneratedKeys="true" keyProperty="dataFlow">
+      INSERT  INTO ExamInfo
+      ( ExamInfoType ,UserID,SecID ,ExamInfoMC ,ExamInfoKHR ,ExamInfoKHSJ ,
+        ExamInfoDF ,KHRID ,UCSID)
+        VALUES
+      ( #{examInfoType} ,#{userId} , #{secId} , #{examInfoMC} , #{examInfoKHR} , getdate() ,
+        #{examInfoDF} ,#{userFlow} , #{schDeptFlow})
+  </insert>
+
+    <insert id="insertMark">
+        insert INTO Mark (ExamInfoID,ReqItemID,MarkDF,MarkKF)
+      values(#{examInfoId} , #{reqItemId} , #{markDF} , #{markKF})
+  </insert>
+
+    <resultMap id="markMap" type="hashmap">
+        <result column="markDF"  property="markDF" javaType="java.lang.String"/>
+        <result column="markKF"  property="markKF" javaType="java.lang.String"/>
+        <result column="reqItemId"  property="reqItemId" javaType="java.lang.String"/>
+    </resultMap>
+
+    <select id="selectMarksForDept" parameterType="string" resultMap="markMap">
+      SELECT m.MarkDF as markDF , m.MarkKF as markKF , m.ReqItemID as reqItemId
+      FROM ExamInfo ei
+      LEFT JOIN Mark m ON m.ExamInfoID=ei.ExamInfoID
+      LEFT JOIN HosSection hs ON hs.HosSecID=ei.SecID
+      LEFT JOIN UserInfo ui ON ui.UserID=ei.UserID
+      LEFT JOIN RequestItem ri ON ri.ReqItemID=m.ReqItemID
+      LEFT JOIN ExamItem ei2 ON ei2.ExamItemID=ri.ExamItemID
+      WHERE ei.KHRID = #{userFlow} and ei.ExamInfoType = 6 AND ei.SecID=#{secId}
+  </select>
+
+    <select id="selectMarksForTec" parameterType="string" resultMap="markMap">
+      SELECT m.MarkDF as markDF , m.MarkKF as markKF , m.ReqItemID as reqItemId
+      FROM ExamInfo ei
+      LEFT JOIN Mark m ON m.ExamInfoID=ei.ExamInfoID
+      LEFT JOIN HosSection hs ON hs.HosSecID=ei.SecID
+      LEFT JOIN UserInfo ui ON ui.UserID=ei.UserID
+      LEFT JOIN RequestItem ri ON ri.ReqItemID=m.ReqItemID
+      WHERE ui.UserID=#{tecId}  AND ei.KHRID=#{userFlow}
+  </select>
+
+    <update id="modOutDops" parameterType="map">
+        update Out_DOPS set
+  	  DOPS_State = 1,
+  	  DOPS_UserID = #{userFlow },
+      DOPS_StuScore=#{DOPS_StuScore}
+	where DOPS_UCSID=#{schDeptFlow}
+  </update>
+
+    <update id="modOutMiniCex" parameterType="map">
+        update Out_Mini_CEX set
+  	  Mini_State = 1,
+  	  Mini_UserID = #{userFlow },
+        Mini_StuScore = #{Mini_StuScore }
+    where Mini_UCSID = #{schDeptFlow}
+  </update>
+
+    <!-- 辅助sql -->
+    <select id="selectTecId" parameterType="string" resultType="string">
+      select UserTecID from UserRealTec where UCSID = #{schDeptFlow}
+  </select>
+
+    <select id="selectSecId" parameterType="string" resultType="string">
+      select HosSecID  from UserRealTec where UCSID = #{schDeptFlow}
+  </select>
+
+    <select id="selectCySecId" parameterType="string" resultType="string">
+      select HosCySecID from UserCycleSec where UCSID = #{schDeptFlow}
+  </select>
+
+    <select id="selectHosSecName" parameterType="string" resultType="string">
+        select HosSecName from UserCycleSec
+		left join HosCycleSection on HosCycleSection.HosCySecID = UserCycleSec.HosCySecID
+		left join HosSection on HosSection.HosSecID = HosCycleSection.HosSecID
+		where UCSID = #{schDeptFlow}
+  </select>
+
+    <select id="selectSecName" parameterType="string" resultType="string">
+        select SecName from UserCycleSec
+        left join CycleSection on CycleSection.CySecID = UserCycleSec.CySecID
+        left join Section on Section.SecID = CycleSection.SectionID
+        where UCSID = #{doctorFlow}
+    </select>
+
+    <select id="selectReadSecDocumet" parameterType="string" resultType="string">
+      SELECT ReadSecDocumentId
+        FROM S_ReadSecDocument
+      left join Attach on Attach.AttachGroupID = S_ReadSecDocument.AttachID
+        WHERE HosSecId = (select HosSecId from UserCycleSec left join
+      HosCycleSection on HosCycleSection.HosCySecID = UserCycleSec.HosCySecID
+      where UCSID = #{schDeptFlow}) and S_ReadSecDocument.usertype=${userType}
+  </select>
+
+    <resultMap id="itemMap" type="hashmap">
+        <result column="ExamItemID"  property="itemId" javaType="java.lang.String"/>
+        <result column="ExamItemName"  property="itemName" javaType="java.lang.String"/>
+    </resultMap>
+    <select id="selectExamItemByType"  resultMap="itemMap">
+        select ExamItemID,ExamItemName
+        from ExamItem where 1=1 and ExamItemType=#{type}
+    </select>
+    <resultMap id="PaperMap" type="hashmap">
+        <result column="Examination"  property="Examination" javaType="java.lang.String"/>
+    </resultMap>
+    <select id="getPaperByStandardDeptId" resultMap="PaperMap">
+        SELECT Examination FROM T_DepartmentalExamination
+        where SpecialtyID =#{specialtyID} and SectionID =#{secID} and UserType =#{examType}
+    </select>
+</mapper>

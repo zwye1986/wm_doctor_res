@@ -1,0 +1,29 @@
+<%@ page language="java" contentType="aplication/json; charset=UTF-8" pageEncoding="UTF-8"%>
+"action":{
+		"save":"保存", 
+		"del":"删除"
+	},
+	"inputs":[
+		{
+			"inputId":"activeDate",
+			"inputType":"date",
+			"label":"活动日期",
+			"required":true
+		},
+		{
+			"inputId":"activeTitle",
+			"inputType":"text",
+			"label":"讲座题目",
+			"required":true
+		}
+	],
+	"values":[
+		{
+			"inputId":"activeDate",
+			"value":"2015-02-15"
+		},
+		{
+			"inputId":"activeTitle",
+			"value":"肺脓肿与肺曲霉的鉴别"
+		}
+	]

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.IrbInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.IrbInfo" >
+    <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+    <result column="IRB_NAME" property="irbName" jdbcType="VARCHAR" />
+    <result column="IRB_SHORT_NAME" property="irbShortName" jdbcType="VARCHAR" />
+    <result column="MEETING_ADDRESS" property="meetingAddress" jdbcType="VARCHAR" />
+    <result column="CONTACT_USER" property="contactUser" jdbcType="VARCHAR" />
+    <result column="CONTACT_PHONE" property="contactPhone" jdbcType="VARCHAR" />
+    <result column="CONTACT_MOBILE" property="contactMobile" jdbcType="VARCHAR" />
+    <result column="CONTACT_EMAIL" property="contactEmail" jdbcType="VARCHAR" />
+    <result column="ORDINAL" property="ordinal" jdbcType="DECIMAL" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RECORD_FLOW, IRB_NAME, IRB_SHORT_NAME, MEETING_ADDRESS, CONTACT_USER, CONTACT_PHONE, 
+    CONTACT_MOBILE, CONTACT_EMAIL, ORDINAL, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+    MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.IrbInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.IRB_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.IRB_INFO
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.IRB_INFO
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.IrbInfoExample" >
+    delete from PDSCI.IRB_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.IrbInfo" >
+    insert into PDSCI.IRB_INFO (RECORD_FLOW, IRB_NAME, IRB_SHORT_NAME, 
+      MEETING_ADDRESS, CONTACT_USER, CONTACT_PHONE, 
+      CONTACT_MOBILE, CONTACT_EMAIL, ORDINAL, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW)
+    values (#{recordFlow,jdbcType=VARCHAR}, #{irbName,jdbcType=VARCHAR}, #{irbShortName,jdbcType=VARCHAR}, 
+      #{meetingAddress,jdbcType=VARCHAR}, #{contactUser,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR}, 
+      #{contactMobile,jdbcType=VARCHAR}, #{contactEmail,jdbcType=VARCHAR}, #{ordinal,jdbcType=DECIMAL}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.IrbInfo" >
+    insert into PDSCI.IRB_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        RECORD_FLOW,
+      </if>
+      <if test="irbName != null" >
+        IRB_NAME,
+      </if>
+      <if test="irbShortName != null" >
+        IRB_SHORT_NAME,
+      </if>
+      <if test="meetingAddress != null" >
+        MEETING_ADDRESS,
+      </if>
+      <if test="contactUser != null" >
+        CONTACT_USER,
+      </if>
+      <if test="contactPhone != null" >
+        CONTACT_PHONE,
+      </if>
+      <if test="contactMobile != null" >
+        CONTACT_MOBILE,
+      </if>
+      <if test="contactEmail != null" >
+        CONTACT_EMAIL,
+      </if>
+      <if test="ordinal != null" >
+        ORDINAL,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="irbName != null" >
+        #{irbName,jdbcType=VARCHAR},
+      </if>
+      <if test="irbShortName != null" >
+        #{irbShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingAddress != null" >
+        #{meetingAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="contactUser != null" >
+        #{contactUser,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null" >
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactMobile != null" >
+        #{contactMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="contactEmail != null" >
+        #{contactEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="ordinal != null" >
+        #{ordinal,jdbcType=DECIMAL},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.IrbInfoExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.IRB_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.IRB_INFO
+    <set >
+      <if test="record.recordFlow != null" >
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.irbName != null" >
+        IRB_NAME = #{record.irbName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.irbShortName != null" >
+        IRB_SHORT_NAME = #{record.irbShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meetingAddress != null" >
+        MEETING_ADDRESS = #{record.meetingAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactUser != null" >
+        CONTACT_USER = #{record.contactUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactPhone != null" >
+        CONTACT_PHONE = #{record.contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactMobile != null" >
+        CONTACT_MOBILE = #{record.contactMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactEmail != null" >
+        CONTACT_EMAIL = #{record.contactEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ordinal != null" >
+        ORDINAL = #{record.ordinal,jdbcType=DECIMAL},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.IRB_INFO
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      IRB_NAME = #{record.irbName,jdbcType=VARCHAR},
+      IRB_SHORT_NAME = #{record.irbShortName,jdbcType=VARCHAR},
+      MEETING_ADDRESS = #{record.meetingAddress,jdbcType=VARCHAR},
+      CONTACT_USER = #{record.contactUser,jdbcType=VARCHAR},
+      CONTACT_PHONE = #{record.contactPhone,jdbcType=VARCHAR},
+      CONTACT_MOBILE = #{record.contactMobile,jdbcType=VARCHAR},
+      CONTACT_EMAIL = #{record.contactEmail,jdbcType=VARCHAR},
+      ORDINAL = #{record.ordinal,jdbcType=DECIMAL},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.IrbInfo" >
+    update PDSCI.IRB_INFO
+    <set >
+      <if test="irbName != null" >
+        IRB_NAME = #{irbName,jdbcType=VARCHAR},
+      </if>
+      <if test="irbShortName != null" >
+        IRB_SHORT_NAME = #{irbShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingAddress != null" >
+        MEETING_ADDRESS = #{meetingAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="contactUser != null" >
+        CONTACT_USER = #{contactUser,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null" >
+        CONTACT_PHONE = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactMobile != null" >
+        CONTACT_MOBILE = #{contactMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="contactEmail != null" >
+        CONTACT_EMAIL = #{contactEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="ordinal != null" >
+        ORDINAL = #{ordinal,jdbcType=DECIMAL},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.IrbInfo" >
+    update PDSCI.IRB_INFO
+    set IRB_NAME = #{irbName,jdbcType=VARCHAR},
+      IRB_SHORT_NAME = #{irbShortName,jdbcType=VARCHAR},
+      MEETING_ADDRESS = #{meetingAddress,jdbcType=VARCHAR},
+      CONTACT_USER = #{contactUser,jdbcType=VARCHAR},
+      CONTACT_PHONE = #{contactPhone,jdbcType=VARCHAR},
+      CONTACT_MOBILE = #{contactMobile,jdbcType=VARCHAR},
+      CONTACT_EMAIL = #{contactEmail,jdbcType=VARCHAR},
+      ORDINAL = #{ordinal,jdbcType=DECIMAL},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

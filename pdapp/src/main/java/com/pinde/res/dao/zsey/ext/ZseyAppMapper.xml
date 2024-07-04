@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.zsey.ext.ZseyAppMapper" >
+	<resultMap type="HashMap" id="deptStudentsMap"  extends="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+		<result column="training_spe_name" javaType="string" property="trainingSpeName"/>
+		<result column="session_number" javaType="string" property="sessionNumber"/>
+		<result column="RING_PASS" property="ringPass" jdbcType="VARCHAR" />
+		<result column="RING_ID" property="ringId" jdbcType="VARCHAR" />
+		<result column="depart_Ment_Flow" property="departMentFlow" jdbcType="VARCHAR" />
+		<result column="depart_Ment_name" property="departMentName" jdbcType="VARCHAR" />
+		<result column="work_org_name2" property="workOrgName2" jdbcType="VARCHAR" />
+		<result column="doctor_type_id" property="doctorTypeId" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="getDeptStudents" resultMap="deptStudentsMap">
+		select su.*,rd.session_number,rd.training_spe_name,ring.RING_ID,ring.RING_PASS,
+		rd.depart_Ment_Flow,rd.depart_Ment_name,rd.work_org_name work_org_name2,rd.doctor_type_id
+		from sys_user su
+		left join res_doctor rd
+		on su.user_flow=rd.doctor_flow
+		left join RES_Ring_letter_user ring
+		on ring.record_status='Y' and su.user_flow=ring.user_flow
+		 where su.record_status = 'Y'
+		   and rd.record_status = 'Y'
+		   and su.user_flow != #{userFlow}
+			<if test="userName!=null and userName!=''">
+				<bind name="name" value="'%'+userName+'%'"/>
+				and su.USER_NAME like #{name}
+			</if>
+		   <if test="role!=null and role !=''">
+			   <if test="role=='Student'">
+				   and exists (select 1
+				   from res_doctor d
+				   where d.doctor_flow = #{userFlow}
+				   and d.depart_ment_flow = rd.depart_ment_flow)
+			   </if>
+			   <if test=" role=='Spe'">
+				   AND EXISTS(SELECT 1 FROM SYS_USER WHERE rd.TRAINING_SPE_ID=RES_TRAINING_SPE_ID AND USER_FLOW=#{userFlow} )
+			   </if>
+			   <if test="role=='Teacher'or role=='Head' or role=='Secretary'">
+				   and ( exists (select 1
+				   from sys_user_dept sud
+				   left join sys_dept d on sud.dept_flow=d.dept_flow
+				   where sud.record_status='Y'
+				   and d.record_status = 'Y'
+				   and sud.user_flow=#{userFlow}
+				   and d.dept_flow = rd.depart_ment_flow)
+				   or  exists (select 1
+					   from sys_user sud
+					   where sud.record_status='Y'
+					   and sud.user_flow=#{userFlow}
+					   and sud.dept_flow = rd.depart_ment_flow)
+				   )
+				   and su.user_flow= '${role}'
+			   </if>
+		   </if>
+		order by nlssort(user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+	<select id="absenceUserList" resultMap="deptStudentsMap">
+		select su.*,rd.session_number,rd.training_spe_name,ring.RING_ID,ring.RING_PASS,
+		rd.depart_Ment_Flow,rd.depart_Ment_name,rd.work_org_name work_org_name2,rd.doctor_type_id
+		from sys_user su
+		left join res_doctor rd
+		on su.user_flow=rd.doctor_flow
+		left join RES_Ring_letter_user ring
+		on ring.record_status='Y' and su.user_flow=ring.user_flow
+		 where su.record_status = 'Y'
+		   and rd.record_status = 'Y'
+		   and su.user_flow != #{userFlow}
+			<if test="userName!=null and userName!=''">
+				<bind name="name" value="'%'+userName+'%'"/>
+				and su.USER_NAME like #{name}
+			</if>
+		   <if test="role!=null and role !='' and (role=='Head'  or role=='Secretary')">
+				   and( ( exists (select 1
+				   from sys_user_dept sud
+				   left join sys_dept d on sud.dept_flow=d.dept_flow
+				   where sud.record_status='Y'
+				   and d.record_status = 'Y'
+				   and sud.user_flow=#{userFlow}
+				   and d.dept_flow = rd.depart_ment_flow)
+				   or  exists (select 1
+					   from sys_user sud
+					   where sud.record_status='Y'
+					   and sud.user_flow=#{userFlow}
+					   and sud.dept_flow = rd.depart_ment_flow)
+				   ) or
+			   exists(
+			   SELECT 1
+			   FROM pdsci.res_doctor_sch_process rdsp
+			   LEFT JOIN res_power_cfg rpc
+			   on 'res_doctor_web_' || rdsp.user_flow = rpc.cfg_code
+			   INNER JOIN pdsci.sch_arrange_result sar
+			   ON sar.record_status = 'Y'
+			   AND sar.result_flow = rdsp.sch_result_flow
+			   WHERE rdsp.record_status = 'Y'
+			   and (rdsp.sch_flag ='Y' or rdsp.is_current_flag='Y')
+			   and rdsp.user_flow=su.user_flow
+				   and ( exists (
+				   select 1
+				   from sys_user_dept sud
+				   left join sys_dept d on sud.dept_flow=d.dept_flow
+				   where sud.record_status='Y'
+				   and d.record_status = 'Y'
+				   and d.dept_flow = rdsp.dept_flow
+				   and d.dept_flow in (
+				   select sud.dept_flow from sys_user_dept sud
+				   left join sys_dept d on sud.dept_flow=d.dept_flow
+				   where sud.record_status='Y'
+				   and d.record_status = 'Y'
+				   and sud.user_flow=#{userFlow}
+				   union
+				   select dept_flow
+				   from sys_user sud
+				   where sud.record_status='Y'
+				   and sud.user_flow=#{userFlow}
+				   )
+				   )
+				   or
+				   rdsp.dept_flow in (
+				   select sud.dept_flow from sys_user_dept sud
+				   left join sys_dept d on sud.dept_flow=d.dept_flow
+				   where sud.record_status='Y'
+				   and d.record_status = 'Y'
+				   and sud.user_flow=#{userFlow}
+				   union
+				   select dept_flow
+				   from sys_user sud
+				   where sud.record_status='Y'
+				   and sud.user_flow=#{userFlow}
+				   )
+				   )
+			   ))
+		   </if>
+		   <if test="role!=null and role !='' and role=='Spe'">
+			   AND EXISTS(SELECT 1 FROM SYS_USER WHERE TRAINING_SPE_ID=RES_TRAINING_SPE_ID AND USER_FLOW=#{userFlow} )
+		   </if>
+		order by nlssort(user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+	<select id="getCycleStudents" resultMap="deptStudentsMap">
+		select su.*,rd.session_number,rd.training_spe_name,ring.RING_ID,ring.RING_PASS,rd.depart_Ment_Flow,rd.depart_Ment_name,
+		rd.work_org_name  work_org_name2,rd.doctor_type_id
+			from sys_user su
+			left join res_doctor rd
+			on su.user_flow=rd.doctor_flow
+			left join RES_Ring_letter_user ring
+			on ring.record_status='Y' and su.user_flow=ring.user_flow
+			where su.record_status='Y'
+			and rd.record_status='Y'
+			and su.user_flow != #{userFlow}
+			<if test="userName!=null and userName!=''">
+				<bind name="name" value="'%'+userName+'%'"/>
+				and su.USER_NAME like #{name}
+			</if>
+			and exists(
+				SELECT 1
+				FROM pdsci.res_doctor_sch_process rdsp
+				LEFT JOIN res_power_cfg rpc
+				on 'res_doctor_web_' || rdsp.user_flow = rpc.cfg_code
+				INNER JOIN pdsci.sch_arrange_result sar
+				ON sar.record_status = 'Y'
+				AND sar.result_flow = rdsp.sch_result_flow
+				WHERE rdsp.record_status = 'Y'
+				and (rdsp.sch_flag ='Y' or rdsp.is_current_flag='Y')
+				and rdsp.user_flow=su.user_flow
+				<if test='isPermitOpen != null and isPermitOpen!="" and isPermitOpen=="Y"'>
+					and rpc.record_status = 'Y'
+					and rpc.cfg_value = 'Y'
+					and (
+					(rpc.power_start_time between rdsp.sch_start_date and rdsp.sch_end_date )
+					or (rpc.power_end_time between rdsp.sch_start_date and rdsp.sch_end_date)
+					or (rdsp.sch_start_date >= rpc.power_start_time and rdsp.sch_end_date <![CDATA[ <= ]]>  rpc.power_end_time)
+					)
+				</if>
+				<if test="role=='Teacher'">
+					and rdsp.TEACHER_USER_FLOW = #{userFlow}
+				</if>
+				<if test="role=='head'  or role=='Secretary'">
+					and ( exists (
+						select 1
+						from sys_user_dept sud
+						left join sys_dept d on sud.dept_flow=d.dept_flow
+						where sud.record_status='Y'
+						and d.record_status = 'Y'
+						and d.dept_flow = rdsp.dept_flow
+						and d.dept_flow in (
+							select sud.dept_flow from sys_user_dept sud
+							left join sys_dept d on sud.dept_flow=d.dept_flow
+							where sud.record_status='Y'
+							and d.record_status = 'Y'
+							and sud.user_flow=#{userFlow}
+							union
+							select dept_flow
+							from sys_user sud
+							where sud.record_status='Y'
+							and sud.user_flow=#{userFlow}
+						)
+					)
+					or
+					rdsp.dept_flow in (
+							select sud.dept_flow from sys_user_dept sud
+							left join sys_dept d on sud.dept_flow=d.dept_flow
+							where sud.record_status='Y'
+							and d.record_status = 'Y'
+							and sud.user_flow=#{userFlow}
+							union
+							select dept_flow
+							from sys_user sud
+							where sud.record_status='Y'
+							and sud.user_flow=#{userFlow}
+						)
+					)
+				</if>
+				<if test=" role=='Spe'">
+					and ( exists (
+								select 1
+								from RES_TRAINING_SPE_DEPT d
+								where d.Training_Spe_Id IN ( SELECT RES_Training_Spe_Id FROM SYS_USER WHERE USER_FLOW=#{userFlow})
+								and d.record_status='Y'
+								and d.dept_flow = rdsp.dept_flow
+							)
+							or rdsp.dept_flow in (select D.DEPT_FLOW
+								from RES_TRAINING_SPE_DEPT d
+								where d.Training_Spe_Id IN ( SELECT RES_Training_Spe_Id FROM SYS_USER WHERE USER_FLOW=#{userFlow})
+								and d.record_status='Y'
+
+							)
+					)
+					and exists (
+						select 1 from sys_user_role role where role.record_status='Y'
+						and role.user_Flow=su.user_flow and role.role_flow=#{teacherRoleFlow}
+					)
+				</if>
+			)
+		   and su.user_flow not in (
+					select su.user_flow
+					from sys_user su
+					left join res_doctor rd
+					on su.user_flow = rd.doctor_flow
+					where su.record_status = 'Y'
+					and rd.record_status = 'Y'
+					and su.user_flow != #{userFlow}
+					<if test="role!=null and role !=''">
+						<if test="role=='Teacher'or role=='Head' or role=='Secretary'">
+							and ( exists (select 1
+							from sys_user_dept sud
+							left join sys_dept d on sud.dept_flow=d.dept_flow
+							where sud.record_status='Y'
+							and d.record_status = 'Y'
+							and sud.user_flow=#{userFlow}
+							and d.dept_flow = rd.depart_ment_flow)
+							or  exists (select 1
+							from sys_user sud
+							where sud.record_status='Y'
+							and sud.user_flow=#{userFlow}
+							and sud.dept_flow = rd.depart_ment_flow)
+							)
+						</if>
+						<if test=" role=='Spe'">
+							AND EXISTS(SELECT 1 FROM SYS_USER WHERE rd.TRAINING_SPE_ID=RES_TRAINING_SPE_ID AND USER_FLOW=#{userFlow} )
+						</if>
+					</if>
+			)
+		order by nlssort(user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+	<resultMap type="HashMap" id="deptTeachersMap" extends="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+		<result column="RING_PASS" property="ringPass" jdbcType="VARCHAR" />
+		<result column="RING_ID" property="ringId" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="getDeptTeachers" resultMap="deptTeachersMap">
+		select su.*,ring.RING_ID,ring.RING_PASS
+		from sys_user su
+		left join RES_Ring_letter_user ring
+		on ring.record_status='Y' and su.user_flow=ring.user_flow
+		where su.record_status = 'Y'
+		and su.user_flow != #{userFlow}
+		<if test="userName!=null and userName!=''">
+			<bind name="name" value="'%'+userName+'%'"/>
+			and su.USER_NAME like #{name}
+		</if>
+		<if test="role!=null and role !=''">
+			<if test=" role=='Spe'">
+				and ( exists (
+							select 1
+							from RES_TRAINING_SPE_DEPT d
+							where d.Training_Spe_Id IN ( SELECT RES_Training_Spe_Id FROM SYS_USER WHERE USER_FLOW=#{userFlow})
+							and d.record_status='Y'
+							and d.dept_flow = su.dept_flow
+						)
+						or exists (
+							select 1
+							from sys_user_dept sud
+							left join sys_dept d on sud.dept_flow=d.dept_flow
+							where sud.record_status='Y'
+							and d.record_status = 'Y'
+							and d.dept_flow = su.dept_flow
+							and d.dept_flow in (select D1.DEPT_FLOW
+								from RES_TRAINING_SPE_DEPT d1
+								where d1.Training_Spe_Id IN ( SELECT RES_Training_Spe_Id FROM SYS_USER WHERE USER_FLOW=#{userFlow})
+								and d1.record_status='Y'
+							)
+					)
+				)
+				and exists (
+					select 1 from sys_user_role role where role.record_status='Y'
+					and role.user_Flow=su.user_flow and role.role_flow=#{teacherRoleFlow}
+				)
+			</if>
+			<if test="role=='Student'">
+				and exists (
+					select 1
+					from res_doctor_sch_process d
+					where d.user_flow = #{userFlow}
+					and d.record_status='Y'
+					and d.teacher_user_flow = su.user_flow
+				)
+			</if>
+			<if test="role=='Teacher'or role=='Head'  or role=='Secretary'">
+				and ( exists (
+						select 1
+						from sys_user_dept sud
+						left join sys_dept d on sud.dept_flow=d.dept_flow
+						where sud.record_status='Y'
+						and d.record_status = 'Y'
+						and d.dept_flow = su.dept_flow
+						and d.dept_flow in (
+								select sud.dept_flow from sys_user_dept sud
+								left join sys_dept d on sud.dept_flow=d.dept_flow
+								where sud.record_status='Y'
+								and d.record_status = 'Y'
+								and sud.user_flow=#{userFlow}
+								union
+								select dept_flow
+								from sys_user sud
+								where sud.record_status='Y'
+								and sud.user_flow=#{userFlow}
+							)
+					)
+					or
+					su.dept_flow in (
+							select sud.dept_flow from sys_user_dept sud
+							left join sys_dept d on sud.dept_flow=d.dept_flow
+							where sud.record_status='Y'
+							and d.record_status = 'Y'
+							and sud.user_flow=#{userFlow}
+							union
+							select dept_flow
+							from sys_user sud
+							where sud.record_status='Y'
+							and sud.user_flow=#{userFlow}
+					)
+				)
+				and exists (
+				   select 1 from sys_user_role role where role.record_status='Y'
+				   and role.user_Flow=su.user_flow and role.role_flow=#{teacherRoleFlow}
+				)
+			</if>
+		</if>
+		order by nlssort(user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+	<select id="getDeptHeads" resultMap="deptTeachersMap">
+		select su.*,ring.RING_ID,ring.RING_PASS
+		from sys_user su
+		left join RES_Ring_letter_user ring
+		on ring.record_status='Y' and su.user_flow=ring.user_flow
+		where su.record_status = 'Y'
+		and su.user_flow != #{userFlow}
+		<if test="userName!=null and userName!=''">
+			<bind name="name" value="'%'+userName+'%'"/>
+			and su.USER_NAME like #{name}
+		</if>
+		<if test="role!=null and role !=''">
+			<if test=" role=='Spe'">
+				and ( exists (
+							select 1
+							from RES_TRAINING_SPE_DEPT d
+							where d.Training_Spe_Id IN ( SELECT RES_Training_Spe_Id FROM SYS_USER WHERE USER_FLOW=#{userFlow})
+								and d.record_status='Y'
+								and d.dept_flow = su.dept_flow
+							)
+							or exists (
+								select 1
+								from sys_user_dept sud
+								left join sys_dept d on sud.dept_flow=d.dept_flow
+								where sud.record_status='Y'
+								and d.record_status = 'Y'
+								and d.dept_flow = su.dept_flow
+								and d.dept_flow in (select D1.DEPT_FLOW
+									from RES_TRAINING_SPE_DEPT d1
+									where d1.Training_Spe_Id IN ( SELECT RES_Training_Spe_Id FROM SYS_USER WHERE USER_FLOW=#{userFlow})
+									and d1.record_status='Y'
+								)
+							)
+				)
+			</if>
+			<if test="role=='Student'">
+				and ( exists (
+						select 1
+						from res_doctor_sch_process d
+						where d.user_flow = #{userFlow}
+						and d.record_status='Y'
+						and d.dept_flow = su.dept_flow
+					)
+					or exists (
+						select 1
+						from sys_user_dept sud
+						left join sys_dept d on sud.dept_flow=d.dept_flow
+						where sud.record_status='Y'
+						and d.record_status = 'Y'
+						and d.dept_flow = su.dept_flow
+						and d.dept_flow in (select DEPART_MENT_FLOW from res_doctor where doctor_flow=#{userFlow})
+					)
+				)
+			</if>
+			<if test="role=='Teacher'or role=='Head' or role=='Secretary'">
+				and ( exists (
+						select 1
+						from sys_user_dept sud
+						left join sys_dept d on sud.dept_flow=d.dept_flow
+						where sud.record_status='Y'
+						and d.record_status = 'Y'
+						and d.dept_flow = su.dept_flow
+						and d.dept_flow in (
+								select sud.dept_flow from sys_user_dept sud
+								left join sys_dept d on sud.dept_flow=d.dept_flow
+								where sud.record_status='Y'
+								and d.record_status = 'Y'
+								and sud.user_flow=#{userFlow}
+								union
+								select dept_flow
+								from sys_user sud
+								where sud.record_status='Y'
+								and sud.user_flow=#{userFlow}
+							)
+					)
+					or
+					su.dept_flow in (
+							select sud.dept_flow from sys_user_dept sud
+							left join sys_dept d on sud.dept_flow=d.dept_flow
+							where sud.record_status='Y'
+							and d.record_status = 'Y'
+							and sud.user_flow=#{userFlow}
+							union
+							select dept_flow
+							from sys_user sud
+							where sud.record_status='Y'
+							and sud.user_flow=#{userFlow}
+					)
+				)
+			</if>
+			and exists (
+				select 1 from sys_user_role role where role.record_status='Y'
+				and role.user_Flow=su.user_flow and role.role_flow=#{headRoleFlow}
+			)
+		</if>
+		order by nlssort(user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+	<select id="getSpeUsers" resultMap="deptTeachersMap">
+		select su.*,ring.RING_ID,ring.RING_PASS
+		from sys_user su
+		left join RES_Ring_letter_user ring
+		on ring.record_status='Y' and su.user_flow=ring.user_flow
+		where su.record_status = 'Y'
+		and su.user_flow != #{userFlow}
+		<if test="userName!=null and userName!=''">
+			<bind name="name" value="'%'+userName+'%'"/>
+			and su.USER_NAME like #{name}
+		</if>
+		<if test="role!=null and role !=''">
+			<if test=" role=='Spe'">
+				and exists (
+					select 1 from sys_user_role role where role.record_status='Y'
+					and role.user_Flow=su.user_flow and role.role_flow=#{baseRoleFlow}
+				)
+			</if>
+			<if test="role=='Student'">
+				and ( exists (
+						select 1
+						from res_doctor d
+						where d.doctor_flow = #{userFlow}
+						and d.record_status='Y'
+						and d.Training_Spe_Id = su.res_Training_Spe_Id
+					)
+					or exists (
+						select 1
+						from res_doctor_sch_process sud
+						left join RES_TRAINING_SPE_DEPT d on sud.dept_flow=d.dept_flow
+						where sud.record_status='Y'
+						and d.record_status = 'Y'
+						and d.Training_Spe_Id = su.res_Training_Spe_Id
+						and sud.user_flow=#{userFlow}
+					)
+				)
+				and exists (
+					select 1 from sys_user_role role where role.record_status='Y'
+					and role.user_Flow=su.user_flow and role.role_flow=#{baseRoleFlow}
+				)
+			</if>
+			<if test="role=='Teacher'or role=='Head' or role=='Secretary'">
+				and ( exists (
+						select 1
+						from  RES_TRAINING_SPE_DEPT d
+						where d.record_status = 'Y'
+						and d.Training_Spe_Id = su.res_Training_Spe_Id
+						and d.dept_flow in (
+								select sud.dept_flow from sys_user_dept sud
+								left join sys_dept d on sud.dept_flow=d.dept_flow
+								where sud.record_status='Y'
+								and d.record_status = 'Y'
+								and sud.user_flow=#{userFlow}
+								union
+								select dept_flow
+								from sys_user sud
+								where sud.record_status='Y'
+								and sud.user_flow=#{userFlow}
+							)
+					)
+				)
+				and exists (
+				   select 1 from sys_user_role role where role.record_status='Y'
+				   and role.user_Flow=su.user_flow and role.role_flow=#{baseRoleFlow}
+				)
+			</if>
+		</if>
+		order by nlssort(user_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+	<select id="checkIsDeptStudent" resultType="int">
+		select count(1)
+		from sch_arrange_result
+		where 1=1 and result_flow=#{resultFlow}
+		and (exists(
+		select null
+		from SYS_USER_DEPT sud
+		where sud.RECORD_STATUS='Y'
+		and sud.USER_FLOW=#{userFlow}
+		and DEPT_FLOW=sud.DEPT_FLOW
+		)
+		<if test="deptFlow!=null and deptFlow!=''">
+			or DEPT_FLOW=#{deptFlow}
+		</if>
+		)
+	</select>
+</mapper>

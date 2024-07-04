@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.osca.ext.OscaDoctorScoreInfoMapper">
+    <select id="selectGradeList"  parameterType="java.util.Map" resultType="java.util.Map">
+        select oda.TICKET_NUMBER,
+        oda.DOCTOR_FLOW,
+        oda.DOCTOR_NAME,
+        rd.ORG_FLOW,
+        rd.ORG_NAME,
+        rd.WORK_ORG_ID,
+        rd.WORK_ORG_NAME,
+        oss.CLINICAL_FLOW,
+        rd.TRAINING_SPE_ID SPE_ID,
+        rd.TRAINING_SPE_NAME SPE_NAME,
+        oss.SUBJECT_FLOW,
+        oss.SUBJECT_NAME,
+        rd.TRAINING_TYPE_ID,
+        rd.TRAINING_TYPE_NAME,
+        a.STATION_FLOW,
+        a.STATION_NAME,
+        a.EXAM_SCORE,
+        oda.IS_PASS,
+        oda.IS_PASS_NAME
+        from OSCA_DOCTOR_ASSESSMENT oda
+        left join SYS_USER u on u.USER_FLOW=oda.DOCTOR_FLOW
+        left join RES_DOCTOR rd on rd.DOCTOR_FLOW = oda.DOCTOR_FLOW
+        left join OSCA_SKILLS_ASSESSMENT oss on oda.CLINICAL_FLOW = oss.CLINICAL_FLOW
+        left join (select osrd.CLINICAL_FLOW,osrd.DOCTOR_FLOW,wm_concat(osrd.STATION_FLOW) STATION_FLOW,wm_concat(osrd.STATION_NAME) STATION_NAME,wm_concat(nvl(osrd.EXAM_SCORE,'*')) EXAM_SCORE
+        from OSCA_SKILL_ROOM_DOC osrd where osrd.RECORD_STATUS = 'Y'
+        <if test='clinicalFlow!=null and clinicalFlow!=""'>
+            and osrd.CLINICAL_FLOW = #{clinicalFlow}
+        </if>
+        group by osrd.DOCTOR_FLOW,osrd.CLINICAL_FLOW) a on oda.DOCTOR_FLOW = a.DOCTOR_FLOW
+        left join (select osrd.DOCTOR_FLOW, sum(osrd.EXAM_SCORE) SCORESUM from OSCA_SKILL_ROOM_DOC osrd where osrd.RECORD_STATUS = 'Y'
+        <if test='clinicalFlow!=null and clinicalFlow!=""'>
+            and osrd.CLINICAL_FLOW = #{clinicalFlow}
+        </if>
+        group by osrd.DOCTOR_FLOW) c on c.DOCTOR_FLOW = oda.DOCTOR_FLOW
+        where oda.RECORD_STATUS='Y'
+        <if test='auditStatusId!=null and auditStatusId!=""'>
+            and oda.AUDIT_STATUS_ID = #{auditStatusId}
+        </if>
+        <if test='clinicalFlow!=null and clinicalFlow!=""'>
+            and oss.CLINICAL_FLOW = #{clinicalFlow}
+        </if>
+        <if test="clinicalFlows!=null and clinicalFlows.size>0">
+            and oss.CLINICAL_FLOW in
+            <foreach collection="clinicalFlows" open="(" separator="," close=")" item="item">#{item,jdbcType=VARCHAR}</foreach>
+        </if>
+        <if test='ticketNumber!=null and ticketNumber!=""'>
+            <bind name="name" value="'%'+ticketNumber+'%'"/>
+            and oda.TICKET_NUMBER like #{name}
+        </if>
+        <if test='gradeDoctorName!=null and gradeDoctorName!=""'>
+            <bind name="name" value="'%'+gradeDoctorName+'%'"/>
+            and oda.DOCTOR_NAME like #{name}
+        </if>
+        <if test='doctorFlow!=null and doctorFlow!=""'>
+            and oda.DOCTOR_FLOW = #{doctorFlow}
+        </if>
+        <if test='trainCategoryId!=null and trainCategoryId!=""'>
+            and rd.TRAINING_TYPE_ID = #{trainCategoryId}
+        </if>
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and oss.ORG_FLOW = #{orgFlow}
+        </if>
+        <if test='orgFlow2!=null and orgFlow2!=""'>
+            and oss.ORG_FLOW = #{orgFlow2}
+        </if>
+        <if test='orgName!=null and orgName!=""'>
+            <bind name="name" value="'%'+orgName+'%'"/>
+            and rd.ORG_NAME like #{name}
+        </if>
+        <if test='resultId!=null and resultId!=""'>
+            and oda.IS_PASS = #{resultId}
+        </if>
+        <if test='role =="city"'>
+            and(oss.IS_GRADE_RELEASED = 'S' or oss.IS_GRADE_RELEASED = 'C' or oss.IS_GRADE_RELEASED = 'Y')
+        </if>
+        <if test='order == "ASC"'>
+            order by nvl(c.SCORESUM,0) ASC,oda.TICKET_NUMBER
+        </if>
+        <if test='order == "DESC"'>
+            order by nvl(c.SCORESUM,0) DESC,oda.TICKET_NUMBER
+        </if>
+        <if test='order == ""or order==null or order=="undefined" '>
+            order by oda.TICKET_NUMBER
+        </if>
+    </select>
+
+    <select id="selectAllGradeList"  parameterType="java.util.Map" resultType="java.util.Map">
+        select oda.TICKET_NUMBER,
+        oda.DOCTOR_FLOW,
+        oda.DOCTOR_NAME,
+        rd.ORG_FLOW,
+        rd.ORG_NAME,
+        rd.WORK_ORG_ID,
+        rd.WORK_ORG_NAME,
+        oss.CLINICAL_FLOW,
+        oss.CLINICAL_NAME,
+        rd.TRAINING_SPE_ID SPE_ID,
+        rd.TRAINING_SPE_NAME SPE_NAME,
+        oss.SUBJECT_FLOW,
+        oss.SUBJECT_NAME,
+        rd.TRAINING_TYPE_ID,
+        rd.TRAINING_TYPE_NAME,
+        a.STATION_FLOW,
+        a.STATION_NAME,
+        a.EXAM_SCORE,
+        oda.IS_PASS,
+        oda.IS_PASS_NAME
+        from OSCA_DOCTOR_ASSESSMENT oda
+        left join SYS_USER u on u.USER_FLOW=oda.DOCTOR_FLOW
+        left join RES_DOCTOR rd on rd.DOCTOR_FLOW = oda.DOCTOR_FLOW
+        left join OSCA_SKILLS_ASSESSMENT oss on oda.CLINICAL_FLOW = oss.CLINICAL_FLOW
+        left join (select osrd.CLINICAL_FLOW,osrd.DOCTOR_FLOW,wm_concat(osrd.STATION_FLOW) STATION_FLOW,wm_concat(osrd.STATION_NAME) STATION_NAME,wm_concat(nvl(osrd.EXAM_SCORE,'*')) EXAM_SCORE
+        from OSCA_SKILL_ROOM_DOC osrd where osrd.RECORD_STATUS = 'Y'
+        group by osrd.DOCTOR_FLOW,osrd.CLINICAL_FLOW) a on oda.DOCTOR_FLOW = a.DOCTOR_FLOW and a.CLINICAL_FLOW=oda.clinical_flow
+        left join (select osrd.CLINICAL_FLOW,osrd.DOCTOR_FLOW, sum(osrd.EXAM_SCORE) SCORESUM from OSCA_SKILL_ROOM_DOC osrd where osrd.RECORD_STATUS = 'Y'
+        group by osrd.DOCTOR_FLOW,osrd.CLINICAL_FLOW) c on c.DOCTOR_FLOW = oda.DOCTOR_FLOW and c.CLINICAL_FLOW=oda.clinical_flow
+        where oda.RECORD_STATUS='Y'
+        and oss.RECORD_STATUS='Y'
+        and u.RECORD_STATUS='Y'
+        and rd.RECORD_STATUS='Y'
+        and oda.AUDIT_STATUS_ID ='Passed'
+        <if test='clinicalYear!=null and clinicalYear!=""'>
+            and oss.clinical_year=#{clinicalYear}
+        </if>
+        <if test='isLocal!=null and isLocal!=""'>
+            and oss.is_local=#{isLocal}
+        </if>
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and oss.ORG_FLOW = #{orgFlow}
+        </if>
+        <if test="orgFlowList!=null and orgFlowList.size>0">
+            and oss.ORG_FLOW in
+            <foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='role =="city"'>
+            and(oss.IS_GRADE_RELEASED = 'S' or oss.IS_GRADE_RELEASED = 'C' or oss.IS_GRADE_RELEASED = 'Y')
+        </if>
+        order by oss.CLINICAL_NAME,oda.TICKET_NUMBER
+    </select>
+
+    <select id="getSingleGrade"  parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT DISTINCT SU.USER_NAME,ODA.DOCTOR_FLOW, ODA.DOCTOR_NAME, OSA.SPE_ID,OSA.SPE_NAME OSA_NAME, RD.TRAINING_SPE_NAME AS SPE_NAME, RD.TRAINING_TYPE_ID
+        , RD.TRAINING_TYPE_NAME,OSA.CLINICAL_YEAR,ODA.IS_PASS,ODA.IS_PASS_NAME,ODA.CLINICAL_NAME,OSA.IS_LOCAL,OSA.CLINICAL_FLOW,OSA.IS_SHOW_FROOM,sum(doc.exam_score) ALL_SCORE,
+        oda.EXAM_START_TIME,ODA.EXAM_END_TIME
+        FROM OSCA_DOCTOR_ASSESSMENT oda
+        LEFT JOIN RES_DOCTOR rd ON rd.DOCTOR_FLOW = oda.DOCTOR_FLOW
+        LEFT JOIN SYS_USER SU ON RD.DOCTOR_FLOW=SU.USER_FLOW
+        LEFT JOIN OSCA_SKILLS_ASSESSMENT osa ON oda.CLINICAL_FLOW = osa.CLINICAL_FLOW
+        LEFT JOIN OSCA_SKILL_ROOM_DOC DOC
+        on doc.clinical_flow=oda.CLINICAL_FLOW
+        and oda.doctor_flow=doc.doctor_flow
+        and doc.record_status='Y'
+        WHERE oda.RECORD_STATUS = 'Y'
+        AND rd.RECORD_STATUS = 'Y'
+        AND osa.RECORD_STATUS = 'Y'
+        AND osa.IS_SHOW = 'Y'
+        <if test='doctorFlow!=null and doctorFlow!=""'>
+            and oda.doctor_Flow = #{doctorFlow}
+        </if>
+        <if test='auditStatusId!=null and auditStatusId!=""'>
+            and oda.AUDIT_STATUS_ID = #{auditStatusId}
+        </if>
+        <if test='signStatusId!=null and signStatusId!=""'>
+            and oda.SIGIN_STATUS_ID = #{signStatusId}
+        </if>
+        group by SU.USER_NAME,ODA.DOCTOR_FLOW, ODA.DOCTOR_NAME, OSA.SPE_ID,OSA.SPE_NAME , RD.TRAINING_SPE_NAME, RD.TRAINING_TYPE_ID
+        , RD.TRAINING_TYPE_NAME,OSA.CLINICAL_YEAR,ODA.IS_PASS,ODA.IS_PASS_NAME,ODA.CLINICAL_NAME,OSA.IS_LOCAL,OSA.CLINICAL_FLOW,OSA.IS_SHOW_FROOM,
+        oda.EXAM_START_TIME,ODA.EXAM_END_TIME
+        order by osa.SPE_ID
+    </select>
+</mapper>

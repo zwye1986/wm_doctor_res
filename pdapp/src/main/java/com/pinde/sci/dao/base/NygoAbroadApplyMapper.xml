@@ -1,0 +1,1731 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.NygoAbroadApplyMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.NygoAbroadApply" >
+    <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+    <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="STU_NO" property="stuNo" jdbcType="VARCHAR" />
+    <result column="SEX_ID" property="sexId" jdbcType="VARCHAR" />
+    <result column="SEX_NAME" property="sexName" jdbcType="VARCHAR" />
+    <result column="PERIOD" property="period" jdbcType="VARCHAR" />
+    <result column="MARITAL_NAME" property="maritalName" jdbcType="VARCHAR" />
+    <result column="BIRTH_DATE" property="birthDate" jdbcType="VARCHAR" />
+    <result column="MAJOR_ID" property="majorId" jdbcType="VARCHAR" />
+    <result column="MAJOR_NAME" property="majorName" jdbcType="VARCHAR" />
+    <result column="TUTOR_FLOW" property="tutorFlow" jdbcType="VARCHAR" />
+    <result column="TUTOR_NAME" property="tutorName" jdbcType="VARCHAR" />
+    <result column="PYDW_ORG_FLOW" property="pydwOrgFlow" jdbcType="VARCHAR" />
+    <result column="PYDW_ORG_NAME" property="pydwOrgName" jdbcType="VARCHAR" />
+    <result column="FWH_ORG_FLOW" property="fwhOrgFlow" jdbcType="VARCHAR" />
+    <result column="FWH_ORG_NAME" property="fwhOrgName" jdbcType="VARCHAR" />
+    <result column="SECURITY_NAME" property="securityName" jdbcType="VARCHAR" />
+    <result column="GO_ABROAD_ID" property="goAbroadId" jdbcType="VARCHAR" />
+    <result column="GO_ABROAD_NAME" property="goAbroadName" jdbcType="VARCHAR" />
+    <result column="STU_LEVEL_ID" property="stuLevelId" jdbcType="VARCHAR" />
+    <result column="STU_LEVEL_NAME" property="stuLevelName" jdbcType="VARCHAR" />
+    <result column="IN_SCHOOL_DATE" property="inSchoolDate" jdbcType="VARCHAR" />
+    <result column="TELPHONE" property="telphone" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="BEGIN_DATE" property="beginDate" jdbcType="VARCHAR" />
+    <result column="END_DATE" property="endDate" jdbcType="VARCHAR" />
+    <result column="DESTINATION_NAME" property="destinationName" jdbcType="VARCHAR" />
+    <result column="VISIT_COLLEGE_NAME" property="visitCollegeName" jdbcType="VARCHAR" />
+    <result column="SCHOOL_FEE" property="schoolFee" jdbcType="VARCHAR" />
+    <result column="SCHOOL_BUDGET_FEE" property="schoolBudgetFee" jdbcType="VARCHAR" />
+    <result column="TUTOR_FEE" property="tutorFee" jdbcType="VARCHAR" />
+    <result column="TUTOR_BUDGET_FEE" property="tutorBudgetFee" jdbcType="VARCHAR" />
+    <result column="OTHER_FEE" property="otherFee" jdbcType="VARCHAR" />
+    <result column="OTHER_BUDGET_FEE" property="otherBudgetFee" jdbcType="VARCHAR" />
+    <result column="APPLY_REASON" property="applyReason" jdbcType="VARCHAR" />
+    <result column="PROMISE_MEMO" property="promiseMemo" jdbcType="VARCHAR" />
+    <result column="OUT_TUTOR_ADVICE" property="outTutorAdvice" jdbcType="VARCHAR" />
+    <result column="TUTOR_AUDIT_DATE" property="tutorAuditDate" jdbcType="VARCHAR" />
+    <result column="POLITICAL_STATUS" property="politicalStatus" jdbcType="VARCHAR" />
+    <result column="POST_DESC" property="postDesc" jdbcType="VARCHAR" />
+    <result column="HEALTHY_SITUATION" property="healthySituation" jdbcType="VARCHAR" />
+    <result column="GO_ABROAD_DESC" property="goAbroadDesc" jdbcType="VARCHAR" />
+    <result column="INVITATION_URL" property="invitationUrl" jdbcType="VARCHAR" />
+    <result column="CHI_INVITATION_URL" property="chiInvitationUrl" jdbcType="VARCHAR" />
+    <result column="GJLF_NAME" property="gjlfName" jdbcType="VARCHAR" />
+    <result column="GJLF_STANDARD" property="gjlfStandard" jdbcType="VARCHAR" />
+    <result column="GJLF_DAY" property="gjlfDay" jdbcType="VARCHAR" />
+    <result column="GJLF_PEOPLE" property="gjlfPeople" jdbcType="VARCHAR" />
+    <result column="GJLF_SUBTOTAL" property="gjlfSubtotal" jdbcType="VARCHAR" />
+    <result column="GWCSJTF_NAME" property="gwcsjtfName" jdbcType="VARCHAR" />
+    <result column="GWCSJTF_STANDARD" property="gwcsjtfStandard" jdbcType="VARCHAR" />
+    <result column="GWCSJTF_DAY" property="gwcsjtfDay" jdbcType="VARCHAR" />
+    <result column="GWCSJTF_PEOPLE" property="gwcsjtfPeople" jdbcType="VARCHAR" />
+    <result column="GWCSJTF_SUBTOTAL" property="gwcsjtfSubtotal" jdbcType="VARCHAR" />
+    <result column="ZSF_NAME" property="zsfName" jdbcType="VARCHAR" />
+    <result column="ZSF_STANDARD" property="zsfStandard" jdbcType="VARCHAR" />
+    <result column="ZSF_DAY" property="zsfDay" jdbcType="VARCHAR" />
+    <result column="ZSF_PEOPLE" property="zsfPeople" jdbcType="VARCHAR" />
+    <result column="ZSF_SUBTOTAL" property="zsfSubtotal" jdbcType="VARCHAR" />
+    <result column="HSF_NAME" property="hsfName" jdbcType="VARCHAR" />
+    <result column="HSF_STANDARD" property="hsfStandard" jdbcType="VARCHAR" />
+    <result column="HSF_DAY" property="hsfDay" jdbcType="VARCHAR" />
+    <result column="HSF_PEOPLE" property="hsfPeople" jdbcType="VARCHAR" />
+    <result column="HSF_SUBTOTAL" property="hsfSubtotal" jdbcType="VARCHAR" />
+    <result column="GZF_NAME" property="gzfName" jdbcType="VARCHAR" />
+    <result column="GZF_STANDARD" property="gzfStandard" jdbcType="VARCHAR" />
+    <result column="GZF_DAY" property="gzfDay" jdbcType="VARCHAR" />
+    <result column="GZF_PEOPLE" property="gzfPeople" jdbcType="VARCHAR" />
+    <result column="GZF_SUBTOTAL" property="gzfSubtotal" jdbcType="VARCHAR" />
+    <result column="OTHER_NAME" property="otherName" jdbcType="VARCHAR" />
+    <result column="OTHER_STANDARD" property="otherStandard" jdbcType="VARCHAR" />
+    <result column="OTHER_DAY" property="otherDay" jdbcType="VARCHAR" />
+    <result column="OTHER_PEOPLE" property="otherPeople" jdbcType="VARCHAR" />
+    <result column="OTHER_SUBTOTAL" property="otherSubtotal" jdbcType="VARCHAR" />
+    <result column="FEE_DESC" property="feeDesc" jdbcType="VARCHAR" />
+    <result column="CSC_CERTIFICATE_NO" property="cscCertificateNo" jdbcType="VARCHAR" />
+    <result column="CULTURE_SUMMARY" property="cultureSummary" jdbcType="VARCHAR" />
+    <result column="BACK_TUTOR_ADVICE" property="backTutorAdvice" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="TUTOR_BACK_AUDIT_DATE" property="tutorBackAuditDate" jdbcType="VARCHAR" />
+    <result column="PROJ_CONTRACT_URL" property="projContractUrl" jdbcType="VARCHAR" />
+    <result column="PROJ_MONEY_URL" property="projMoneyUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.NygoAbroadApply" extends="BaseResultMap" >
+    <result column="FAMILY_MEMBER" property="familyMember" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RECORD_FLOW, USER_FLOW, USER_NAME, STU_NO, SEX_ID, SEX_NAME, PERIOD, MARITAL_NAME, 
+    BIRTH_DATE, MAJOR_ID, MAJOR_NAME, TUTOR_FLOW, TUTOR_NAME, PYDW_ORG_FLOW, PYDW_ORG_NAME, 
+    FWH_ORG_FLOW, FWH_ORG_NAME, SECURITY_NAME, GO_ABROAD_ID, GO_ABROAD_NAME, STU_LEVEL_ID, 
+    STU_LEVEL_NAME, IN_SCHOOL_DATE, TELPHONE, EMAIL, BEGIN_DATE, END_DATE, DESTINATION_NAME, 
+    VISIT_COLLEGE_NAME, SCHOOL_FEE, SCHOOL_BUDGET_FEE, TUTOR_FEE, TUTOR_BUDGET_FEE, OTHER_FEE, 
+    OTHER_BUDGET_FEE, APPLY_REASON, PROMISE_MEMO, OUT_TUTOR_ADVICE, TUTOR_AUDIT_DATE, 
+    POLITICAL_STATUS, POST_DESC, HEALTHY_SITUATION, GO_ABROAD_DESC, INVITATION_URL, CHI_INVITATION_URL, 
+    GJLF_NAME, GJLF_STANDARD, GJLF_DAY, GJLF_PEOPLE, GJLF_SUBTOTAL, GWCSJTF_NAME, GWCSJTF_STANDARD, 
+    GWCSJTF_DAY, GWCSJTF_PEOPLE, GWCSJTF_SUBTOTAL, ZSF_NAME, ZSF_STANDARD, ZSF_DAY, ZSF_PEOPLE, 
+    ZSF_SUBTOTAL, HSF_NAME, HSF_STANDARD, HSF_DAY, HSF_PEOPLE, HSF_SUBTOTAL, GZF_NAME, 
+    GZF_STANDARD, GZF_DAY, GZF_PEOPLE, GZF_SUBTOTAL, OTHER_NAME, OTHER_STANDARD, OTHER_DAY, 
+    OTHER_PEOPLE, OTHER_SUBTOTAL, FEE_DESC, CSC_CERTIFICATE_NO, CULTURE_SUMMARY, BACK_TUTOR_ADVICE, 
+    RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, TUTOR_BACK_AUDIT_DATE, 
+    PROJ_CONTRACT_URL, PROJ_MONEY_URL
+  </sql>
+  <sql id="Blob_Column_List" >
+    FAMILY_MEMBER
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.NygoAbroadApplyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.NYGO_ABROAD_APPLY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.NygoAbroadApplyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.NYGO_ABROAD_APPLY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.NYGO_ABROAD_APPLY
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.NYGO_ABROAD_APPLY
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.NygoAbroadApplyExample" >
+    delete from PDSCI.NYGO_ABROAD_APPLY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.NygoAbroadApply" >
+    insert into PDSCI.NYGO_ABROAD_APPLY (RECORD_FLOW, USER_FLOW, USER_NAME, 
+      STU_NO, SEX_ID, SEX_NAME, 
+      PERIOD, MARITAL_NAME, BIRTH_DATE, 
+      MAJOR_ID, MAJOR_NAME, TUTOR_FLOW, 
+      TUTOR_NAME, PYDW_ORG_FLOW, PYDW_ORG_NAME, 
+      FWH_ORG_FLOW, FWH_ORG_NAME, SECURITY_NAME, 
+      GO_ABROAD_ID, GO_ABROAD_NAME, STU_LEVEL_ID, 
+      STU_LEVEL_NAME, IN_SCHOOL_DATE, TELPHONE, 
+      EMAIL, BEGIN_DATE, END_DATE, 
+      DESTINATION_NAME, VISIT_COLLEGE_NAME, SCHOOL_FEE, 
+      SCHOOL_BUDGET_FEE, TUTOR_FEE, TUTOR_BUDGET_FEE, 
+      OTHER_FEE, OTHER_BUDGET_FEE, APPLY_REASON, 
+      PROMISE_MEMO, OUT_TUTOR_ADVICE, TUTOR_AUDIT_DATE, 
+      POLITICAL_STATUS, POST_DESC, HEALTHY_SITUATION, 
+      GO_ABROAD_DESC, INVITATION_URL, CHI_INVITATION_URL, 
+      GJLF_NAME, GJLF_STANDARD, GJLF_DAY, 
+      GJLF_PEOPLE, GJLF_SUBTOTAL, GWCSJTF_NAME, 
+      GWCSJTF_STANDARD, GWCSJTF_DAY, GWCSJTF_PEOPLE, 
+      GWCSJTF_SUBTOTAL, ZSF_NAME, ZSF_STANDARD, 
+      ZSF_DAY, ZSF_PEOPLE, ZSF_SUBTOTAL, 
+      HSF_NAME, HSF_STANDARD, HSF_DAY, 
+      HSF_PEOPLE, HSF_SUBTOTAL, GZF_NAME, 
+      GZF_STANDARD, GZF_DAY, GZF_PEOPLE, 
+      GZF_SUBTOTAL, OTHER_NAME, OTHER_STANDARD, 
+      OTHER_DAY, OTHER_PEOPLE, OTHER_SUBTOTAL, 
+      FEE_DESC, CSC_CERTIFICATE_NO, CULTURE_SUMMARY, 
+      BACK_TUTOR_ADVICE, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+      TUTOR_BACK_AUDIT_DATE, PROJ_CONTRACT_URL, PROJ_MONEY_URL, 
+      FAMILY_MEMBER)
+    values (#{recordFlow,jdbcType=VARCHAR}, #{userFlow,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{stuNo,jdbcType=VARCHAR}, #{sexId,jdbcType=VARCHAR}, #{sexName,jdbcType=VARCHAR}, 
+      #{period,jdbcType=VARCHAR}, #{maritalName,jdbcType=VARCHAR}, #{birthDate,jdbcType=VARCHAR}, 
+      #{majorId,jdbcType=VARCHAR}, #{majorName,jdbcType=VARCHAR}, #{tutorFlow,jdbcType=VARCHAR}, 
+      #{tutorName,jdbcType=VARCHAR}, #{pydwOrgFlow,jdbcType=VARCHAR}, #{pydwOrgName,jdbcType=VARCHAR}, 
+      #{fwhOrgFlow,jdbcType=VARCHAR}, #{fwhOrgName,jdbcType=VARCHAR}, #{securityName,jdbcType=VARCHAR}, 
+      #{goAbroadId,jdbcType=VARCHAR}, #{goAbroadName,jdbcType=VARCHAR}, #{stuLevelId,jdbcType=VARCHAR}, 
+      #{stuLevelName,jdbcType=VARCHAR}, #{inSchoolDate,jdbcType=VARCHAR}, #{telphone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{beginDate,jdbcType=VARCHAR}, #{endDate,jdbcType=VARCHAR}, 
+      #{destinationName,jdbcType=VARCHAR}, #{visitCollegeName,jdbcType=VARCHAR}, #{schoolFee,jdbcType=VARCHAR}, 
+      #{schoolBudgetFee,jdbcType=VARCHAR}, #{tutorFee,jdbcType=VARCHAR}, #{tutorBudgetFee,jdbcType=VARCHAR}, 
+      #{otherFee,jdbcType=VARCHAR}, #{otherBudgetFee,jdbcType=VARCHAR}, #{applyReason,jdbcType=VARCHAR}, 
+      #{promiseMemo,jdbcType=VARCHAR}, #{outTutorAdvice,jdbcType=VARCHAR}, #{tutorAuditDate,jdbcType=VARCHAR}, 
+      #{politicalStatus,jdbcType=VARCHAR}, #{postDesc,jdbcType=VARCHAR}, #{healthySituation,jdbcType=VARCHAR}, 
+      #{goAbroadDesc,jdbcType=VARCHAR}, #{invitationUrl,jdbcType=VARCHAR}, #{chiInvitationUrl,jdbcType=VARCHAR}, 
+      #{gjlfName,jdbcType=VARCHAR}, #{gjlfStandard,jdbcType=VARCHAR}, #{gjlfDay,jdbcType=VARCHAR}, 
+      #{gjlfPeople,jdbcType=VARCHAR}, #{gjlfSubtotal,jdbcType=VARCHAR}, #{gwcsjtfName,jdbcType=VARCHAR}, 
+      #{gwcsjtfStandard,jdbcType=VARCHAR}, #{gwcsjtfDay,jdbcType=VARCHAR}, #{gwcsjtfPeople,jdbcType=VARCHAR}, 
+      #{gwcsjtfSubtotal,jdbcType=VARCHAR}, #{zsfName,jdbcType=VARCHAR}, #{zsfStandard,jdbcType=VARCHAR}, 
+      #{zsfDay,jdbcType=VARCHAR}, #{zsfPeople,jdbcType=VARCHAR}, #{zsfSubtotal,jdbcType=VARCHAR}, 
+      #{hsfName,jdbcType=VARCHAR}, #{hsfStandard,jdbcType=VARCHAR}, #{hsfDay,jdbcType=VARCHAR}, 
+      #{hsfPeople,jdbcType=VARCHAR}, #{hsfSubtotal,jdbcType=VARCHAR}, #{gzfName,jdbcType=VARCHAR}, 
+      #{gzfStandard,jdbcType=VARCHAR}, #{gzfDay,jdbcType=VARCHAR}, #{gzfPeople,jdbcType=VARCHAR}, 
+      #{gzfSubtotal,jdbcType=VARCHAR}, #{otherName,jdbcType=VARCHAR}, #{otherStandard,jdbcType=VARCHAR}, 
+      #{otherDay,jdbcType=VARCHAR}, #{otherPeople,jdbcType=VARCHAR}, #{otherSubtotal,jdbcType=VARCHAR}, 
+      #{feeDesc,jdbcType=VARCHAR}, #{cscCertificateNo,jdbcType=VARCHAR}, #{cultureSummary,jdbcType=VARCHAR}, 
+      #{backTutorAdvice,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{tutorBackAuditDate,jdbcType=VARCHAR}, #{projContractUrl,jdbcType=VARCHAR}, #{projMoneyUrl,jdbcType=VARCHAR}, 
+      #{familyMember,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.NygoAbroadApply" >
+    insert into PDSCI.NYGO_ABROAD_APPLY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        RECORD_FLOW,
+      </if>
+      <if test="userFlow != null" >
+        USER_FLOW,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="stuNo != null" >
+        STU_NO,
+      </if>
+      <if test="sexId != null" >
+        SEX_ID,
+      </if>
+      <if test="sexName != null" >
+        SEX_NAME,
+      </if>
+      <if test="period != null" >
+        PERIOD,
+      </if>
+      <if test="maritalName != null" >
+        MARITAL_NAME,
+      </if>
+      <if test="birthDate != null" >
+        BIRTH_DATE,
+      </if>
+      <if test="majorId != null" >
+        MAJOR_ID,
+      </if>
+      <if test="majorName != null" >
+        MAJOR_NAME,
+      </if>
+      <if test="tutorFlow != null" >
+        TUTOR_FLOW,
+      </if>
+      <if test="tutorName != null" >
+        TUTOR_NAME,
+      </if>
+      <if test="pydwOrgFlow != null" >
+        PYDW_ORG_FLOW,
+      </if>
+      <if test="pydwOrgName != null" >
+        PYDW_ORG_NAME,
+      </if>
+      <if test="fwhOrgFlow != null" >
+        FWH_ORG_FLOW,
+      </if>
+      <if test="fwhOrgName != null" >
+        FWH_ORG_NAME,
+      </if>
+      <if test="securityName != null" >
+        SECURITY_NAME,
+      </if>
+      <if test="goAbroadId != null" >
+        GO_ABROAD_ID,
+      </if>
+      <if test="goAbroadName != null" >
+        GO_ABROAD_NAME,
+      </if>
+      <if test="stuLevelId != null" >
+        STU_LEVEL_ID,
+      </if>
+      <if test="stuLevelName != null" >
+        STU_LEVEL_NAME,
+      </if>
+      <if test="inSchoolDate != null" >
+        IN_SCHOOL_DATE,
+      </if>
+      <if test="telphone != null" >
+        TELPHONE,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="beginDate != null" >
+        BEGIN_DATE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
+      <if test="destinationName != null" >
+        DESTINATION_NAME,
+      </if>
+      <if test="visitCollegeName != null" >
+        VISIT_COLLEGE_NAME,
+      </if>
+      <if test="schoolFee != null" >
+        SCHOOL_FEE,
+      </if>
+      <if test="schoolBudgetFee != null" >
+        SCHOOL_BUDGET_FEE,
+      </if>
+      <if test="tutorFee != null" >
+        TUTOR_FEE,
+      </if>
+      <if test="tutorBudgetFee != null" >
+        TUTOR_BUDGET_FEE,
+      </if>
+      <if test="otherFee != null" >
+        OTHER_FEE,
+      </if>
+      <if test="otherBudgetFee != null" >
+        OTHER_BUDGET_FEE,
+      </if>
+      <if test="applyReason != null" >
+        APPLY_REASON,
+      </if>
+      <if test="promiseMemo != null" >
+        PROMISE_MEMO,
+      </if>
+      <if test="outTutorAdvice != null" >
+        OUT_TUTOR_ADVICE,
+      </if>
+      <if test="tutorAuditDate != null" >
+        TUTOR_AUDIT_DATE,
+      </if>
+      <if test="politicalStatus != null" >
+        POLITICAL_STATUS,
+      </if>
+      <if test="postDesc != null" >
+        POST_DESC,
+      </if>
+      <if test="healthySituation != null" >
+        HEALTHY_SITUATION,
+      </if>
+      <if test="goAbroadDesc != null" >
+        GO_ABROAD_DESC,
+      </if>
+      <if test="invitationUrl != null" >
+        INVITATION_URL,
+      </if>
+      <if test="chiInvitationUrl != null" >
+        CHI_INVITATION_URL,
+      </if>
+      <if test="gjlfName != null" >
+        GJLF_NAME,
+      </if>
+      <if test="gjlfStandard != null" >
+        GJLF_STANDARD,
+      </if>
+      <if test="gjlfDay != null" >
+        GJLF_DAY,
+      </if>
+      <if test="gjlfPeople != null" >
+        GJLF_PEOPLE,
+      </if>
+      <if test="gjlfSubtotal != null" >
+        GJLF_SUBTOTAL,
+      </if>
+      <if test="gwcsjtfName != null" >
+        GWCSJTF_NAME,
+      </if>
+      <if test="gwcsjtfStandard != null" >
+        GWCSJTF_STANDARD,
+      </if>
+      <if test="gwcsjtfDay != null" >
+        GWCSJTF_DAY,
+      </if>
+      <if test="gwcsjtfPeople != null" >
+        GWCSJTF_PEOPLE,
+      </if>
+      <if test="gwcsjtfSubtotal != null" >
+        GWCSJTF_SUBTOTAL,
+      </if>
+      <if test="zsfName != null" >
+        ZSF_NAME,
+      </if>
+      <if test="zsfStandard != null" >
+        ZSF_STANDARD,
+      </if>
+      <if test="zsfDay != null" >
+        ZSF_DAY,
+      </if>
+      <if test="zsfPeople != null" >
+        ZSF_PEOPLE,
+      </if>
+      <if test="zsfSubtotal != null" >
+        ZSF_SUBTOTAL,
+      </if>
+      <if test="hsfName != null" >
+        HSF_NAME,
+      </if>
+      <if test="hsfStandard != null" >
+        HSF_STANDARD,
+      </if>
+      <if test="hsfDay != null" >
+        HSF_DAY,
+      </if>
+      <if test="hsfPeople != null" >
+        HSF_PEOPLE,
+      </if>
+      <if test="hsfSubtotal != null" >
+        HSF_SUBTOTAL,
+      </if>
+      <if test="gzfName != null" >
+        GZF_NAME,
+      </if>
+      <if test="gzfStandard != null" >
+        GZF_STANDARD,
+      </if>
+      <if test="gzfDay != null" >
+        GZF_DAY,
+      </if>
+      <if test="gzfPeople != null" >
+        GZF_PEOPLE,
+      </if>
+      <if test="gzfSubtotal != null" >
+        GZF_SUBTOTAL,
+      </if>
+      <if test="otherName != null" >
+        OTHER_NAME,
+      </if>
+      <if test="otherStandard != null" >
+        OTHER_STANDARD,
+      </if>
+      <if test="otherDay != null" >
+        OTHER_DAY,
+      </if>
+      <if test="otherPeople != null" >
+        OTHER_PEOPLE,
+      </if>
+      <if test="otherSubtotal != null" >
+        OTHER_SUBTOTAL,
+      </if>
+      <if test="feeDesc != null" >
+        FEE_DESC,
+      </if>
+      <if test="cscCertificateNo != null" >
+        CSC_CERTIFICATE_NO,
+      </if>
+      <if test="cultureSummary != null" >
+        CULTURE_SUMMARY,
+      </if>
+      <if test="backTutorAdvice != null" >
+        BACK_TUTOR_ADVICE,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="tutorBackAuditDate != null" >
+        TUTOR_BACK_AUDIT_DATE,
+      </if>
+      <if test="projContractUrl != null" >
+        PROJ_CONTRACT_URL,
+      </if>
+      <if test="projMoneyUrl != null" >
+        PROJ_MONEY_URL,
+      </if>
+      <if test="familyMember != null" >
+        FAMILY_MEMBER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userFlow != null" >
+        #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="stuNo != null" >
+        #{stuNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sexId != null" >
+        #{sexId,jdbcType=VARCHAR},
+      </if>
+      <if test="sexName != null" >
+        #{sexName,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null" >
+        #{period,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalName != null" >
+        #{maritalName,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null" >
+        #{birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="majorId != null" >
+        #{majorId,jdbcType=VARCHAR},
+      </if>
+      <if test="majorName != null" >
+        #{majorName,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorFlow != null" >
+        #{tutorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorName != null" >
+        #{tutorName,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwOrgFlow != null" >
+        #{pydwOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwOrgName != null" >
+        #{pydwOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhOrgFlow != null" >
+        #{fwhOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhOrgName != null" >
+        #{fwhOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="securityName != null" >
+        #{securityName,jdbcType=VARCHAR},
+      </if>
+      <if test="goAbroadId != null" >
+        #{goAbroadId,jdbcType=VARCHAR},
+      </if>
+      <if test="goAbroadName != null" >
+        #{goAbroadName,jdbcType=VARCHAR},
+      </if>
+      <if test="stuLevelId != null" >
+        #{stuLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="stuLevelName != null" >
+        #{stuLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="inSchoolDate != null" >
+        #{inSchoolDate,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="beginDate != null" >
+        #{beginDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=VARCHAR},
+      </if>
+      <if test="destinationName != null" >
+        #{destinationName,jdbcType=VARCHAR},
+      </if>
+      <if test="visitCollegeName != null" >
+        #{visitCollegeName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolFee != null" >
+        #{schoolFee,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolBudgetFee != null" >
+        #{schoolBudgetFee,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorFee != null" >
+        #{tutorFee,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorBudgetFee != null" >
+        #{tutorBudgetFee,jdbcType=VARCHAR},
+      </if>
+      <if test="otherFee != null" >
+        #{otherFee,jdbcType=VARCHAR},
+      </if>
+      <if test="otherBudgetFee != null" >
+        #{otherBudgetFee,jdbcType=VARCHAR},
+      </if>
+      <if test="applyReason != null" >
+        #{applyReason,jdbcType=VARCHAR},
+      </if>
+      <if test="promiseMemo != null" >
+        #{promiseMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="outTutorAdvice != null" >
+        #{outTutorAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorAuditDate != null" >
+        #{tutorAuditDate,jdbcType=VARCHAR},
+      </if>
+      <if test="politicalStatus != null" >
+        #{politicalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="postDesc != null" >
+        #{postDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="healthySituation != null" >
+        #{healthySituation,jdbcType=VARCHAR},
+      </if>
+      <if test="goAbroadDesc != null" >
+        #{goAbroadDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="invitationUrl != null" >
+        #{invitationUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="chiInvitationUrl != null" >
+        #{chiInvitationUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="gjlfName != null" >
+        #{gjlfName,jdbcType=VARCHAR},
+      </if>
+      <if test="gjlfStandard != null" >
+        #{gjlfStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="gjlfDay != null" >
+        #{gjlfDay,jdbcType=VARCHAR},
+      </if>
+      <if test="gjlfPeople != null" >
+        #{gjlfPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="gjlfSubtotal != null" >
+        #{gjlfSubtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="gwcsjtfName != null" >
+        #{gwcsjtfName,jdbcType=VARCHAR},
+      </if>
+      <if test="gwcsjtfStandard != null" >
+        #{gwcsjtfStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="gwcsjtfDay != null" >
+        #{gwcsjtfDay,jdbcType=VARCHAR},
+      </if>
+      <if test="gwcsjtfPeople != null" >
+        #{gwcsjtfPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="gwcsjtfSubtotal != null" >
+        #{gwcsjtfSubtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="zsfName != null" >
+        #{zsfName,jdbcType=VARCHAR},
+      </if>
+      <if test="zsfStandard != null" >
+        #{zsfStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="zsfDay != null" >
+        #{zsfDay,jdbcType=VARCHAR},
+      </if>
+      <if test="zsfPeople != null" >
+        #{zsfPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="zsfSubtotal != null" >
+        #{zsfSubtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="hsfName != null" >
+        #{hsfName,jdbcType=VARCHAR},
+      </if>
+      <if test="hsfStandard != null" >
+        #{hsfStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="hsfDay != null" >
+        #{hsfDay,jdbcType=VARCHAR},
+      </if>
+      <if test="hsfPeople != null" >
+        #{hsfPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="hsfSubtotal != null" >
+        #{hsfSubtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="gzfName != null" >
+        #{gzfName,jdbcType=VARCHAR},
+      </if>
+      <if test="gzfStandard != null" >
+        #{gzfStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="gzfDay != null" >
+        #{gzfDay,jdbcType=VARCHAR},
+      </if>
+      <if test="gzfPeople != null" >
+        #{gzfPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="gzfSubtotal != null" >
+        #{gzfSubtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="otherName != null" >
+        #{otherName,jdbcType=VARCHAR},
+      </if>
+      <if test="otherStandard != null" >
+        #{otherStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="otherDay != null" >
+        #{otherDay,jdbcType=VARCHAR},
+      </if>
+      <if test="otherPeople != null" >
+        #{otherPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="otherSubtotal != null" >
+        #{otherSubtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="feeDesc != null" >
+        #{feeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="cscCertificateNo != null" >
+        #{cscCertificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cultureSummary != null" >
+        #{cultureSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="backTutorAdvice != null" >
+        #{backTutorAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorBackAuditDate != null" >
+        #{tutorBackAuditDate,jdbcType=VARCHAR},
+      </if>
+      <if test="projContractUrl != null" >
+        #{projContractUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="projMoneyUrl != null" >
+        #{projMoneyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="familyMember != null" >
+        #{familyMember,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.NygoAbroadApplyExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.NYGO_ABROAD_APPLY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.NYGO_ABROAD_APPLY
+    <set >
+      <if test="record.recordFlow != null" >
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userFlow != null" >
+        USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuNo != null" >
+        STU_NO = #{record.stuNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sexId != null" >
+        SEX_ID = #{record.sexId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sexName != null" >
+        SEX_NAME = #{record.sexName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.period != null" >
+        PERIOD = #{record.period,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maritalName != null" >
+        MARITAL_NAME = #{record.maritalName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthDate != null" >
+        BIRTH_DATE = #{record.birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.majorId != null" >
+        MAJOR_ID = #{record.majorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.majorName != null" >
+        MAJOR_NAME = #{record.majorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorFlow != null" >
+        TUTOR_FLOW = #{record.tutorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorName != null" >
+        TUTOR_NAME = #{record.tutorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pydwOrgFlow != null" >
+        PYDW_ORG_FLOW = #{record.pydwOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pydwOrgName != null" >
+        PYDW_ORG_NAME = #{record.pydwOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fwhOrgFlow != null" >
+        FWH_ORG_FLOW = #{record.fwhOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fwhOrgName != null" >
+        FWH_ORG_NAME = #{record.fwhOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.securityName != null" >
+        SECURITY_NAME = #{record.securityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goAbroadId != null" >
+        GO_ABROAD_ID = #{record.goAbroadId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goAbroadName != null" >
+        GO_ABROAD_NAME = #{record.goAbroadName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuLevelId != null" >
+        STU_LEVEL_ID = #{record.stuLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuLevelName != null" >
+        STU_LEVEL_NAME = #{record.stuLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inSchoolDate != null" >
+        IN_SCHOOL_DATE = #{record.inSchoolDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telphone != null" >
+        TELPHONE = #{record.telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.beginDate != null" >
+        BEGIN_DATE = #{record.beginDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endDate != null" >
+        END_DATE = #{record.endDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.destinationName != null" >
+        DESTINATION_NAME = #{record.destinationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visitCollegeName != null" >
+        VISIT_COLLEGE_NAME = #{record.visitCollegeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolFee != null" >
+        SCHOOL_FEE = #{record.schoolFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolBudgetFee != null" >
+        SCHOOL_BUDGET_FEE = #{record.schoolBudgetFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorFee != null" >
+        TUTOR_FEE = #{record.tutorFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorBudgetFee != null" >
+        TUTOR_BUDGET_FEE = #{record.tutorBudgetFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherFee != null" >
+        OTHER_FEE = #{record.otherFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherBudgetFee != null" >
+        OTHER_BUDGET_FEE = #{record.otherBudgetFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyReason != null" >
+        APPLY_REASON = #{record.applyReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.promiseMemo != null" >
+        PROMISE_MEMO = #{record.promiseMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outTutorAdvice != null" >
+        OUT_TUTOR_ADVICE = #{record.outTutorAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorAuditDate != null" >
+        TUTOR_AUDIT_DATE = #{record.tutorAuditDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.politicalStatus != null" >
+        POLITICAL_STATUS = #{record.politicalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postDesc != null" >
+        POST_DESC = #{record.postDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.healthySituation != null" >
+        HEALTHY_SITUATION = #{record.healthySituation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goAbroadDesc != null" >
+        GO_ABROAD_DESC = #{record.goAbroadDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invitationUrl != null" >
+        INVITATION_URL = #{record.invitationUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chiInvitationUrl != null" >
+        CHI_INVITATION_URL = #{record.chiInvitationUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gjlfName != null" >
+        GJLF_NAME = #{record.gjlfName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gjlfStandard != null" >
+        GJLF_STANDARD = #{record.gjlfStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gjlfDay != null" >
+        GJLF_DAY = #{record.gjlfDay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gjlfPeople != null" >
+        GJLF_PEOPLE = #{record.gjlfPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gjlfSubtotal != null" >
+        GJLF_SUBTOTAL = #{record.gjlfSubtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gwcsjtfName != null" >
+        GWCSJTF_NAME = #{record.gwcsjtfName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gwcsjtfStandard != null" >
+        GWCSJTF_STANDARD = #{record.gwcsjtfStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gwcsjtfDay != null" >
+        GWCSJTF_DAY = #{record.gwcsjtfDay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gwcsjtfPeople != null" >
+        GWCSJTF_PEOPLE = #{record.gwcsjtfPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gwcsjtfSubtotal != null" >
+        GWCSJTF_SUBTOTAL = #{record.gwcsjtfSubtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zsfName != null" >
+        ZSF_NAME = #{record.zsfName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zsfStandard != null" >
+        ZSF_STANDARD = #{record.zsfStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zsfDay != null" >
+        ZSF_DAY = #{record.zsfDay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zsfPeople != null" >
+        ZSF_PEOPLE = #{record.zsfPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zsfSubtotal != null" >
+        ZSF_SUBTOTAL = #{record.zsfSubtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hsfName != null" >
+        HSF_NAME = #{record.hsfName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hsfStandard != null" >
+        HSF_STANDARD = #{record.hsfStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hsfDay != null" >
+        HSF_DAY = #{record.hsfDay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hsfPeople != null" >
+        HSF_PEOPLE = #{record.hsfPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hsfSubtotal != null" >
+        HSF_SUBTOTAL = #{record.hsfSubtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gzfName != null" >
+        GZF_NAME = #{record.gzfName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gzfStandard != null" >
+        GZF_STANDARD = #{record.gzfStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gzfDay != null" >
+        GZF_DAY = #{record.gzfDay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gzfPeople != null" >
+        GZF_PEOPLE = #{record.gzfPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gzfSubtotal != null" >
+        GZF_SUBTOTAL = #{record.gzfSubtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherName != null" >
+        OTHER_NAME = #{record.otherName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherStandard != null" >
+        OTHER_STANDARD = #{record.otherStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherDay != null" >
+        OTHER_DAY = #{record.otherDay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherPeople != null" >
+        OTHER_PEOPLE = #{record.otherPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherSubtotal != null" >
+        OTHER_SUBTOTAL = #{record.otherSubtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feeDesc != null" >
+        FEE_DESC = #{record.feeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cscCertificateNo != null" >
+        CSC_CERTIFICATE_NO = #{record.cscCertificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cultureSummary != null" >
+        CULTURE_SUMMARY = #{record.cultureSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.backTutorAdvice != null" >
+        BACK_TUTOR_ADVICE = #{record.backTutorAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tutorBackAuditDate != null" >
+        TUTOR_BACK_AUDIT_DATE = #{record.tutorBackAuditDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projContractUrl != null" >
+        PROJ_CONTRACT_URL = #{record.projContractUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projMoneyUrl != null" >
+        PROJ_MONEY_URL = #{record.projMoneyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.familyMember != null" >
+        FAMILY_MEMBER = #{record.familyMember,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update PDSCI.NYGO_ABROAD_APPLY
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      STU_NO = #{record.stuNo,jdbcType=VARCHAR},
+      SEX_ID = #{record.sexId,jdbcType=VARCHAR},
+      SEX_NAME = #{record.sexName,jdbcType=VARCHAR},
+      PERIOD = #{record.period,jdbcType=VARCHAR},
+      MARITAL_NAME = #{record.maritalName,jdbcType=VARCHAR},
+      BIRTH_DATE = #{record.birthDate,jdbcType=VARCHAR},
+      MAJOR_ID = #{record.majorId,jdbcType=VARCHAR},
+      MAJOR_NAME = #{record.majorName,jdbcType=VARCHAR},
+      TUTOR_FLOW = #{record.tutorFlow,jdbcType=VARCHAR},
+      TUTOR_NAME = #{record.tutorName,jdbcType=VARCHAR},
+      PYDW_ORG_FLOW = #{record.pydwOrgFlow,jdbcType=VARCHAR},
+      PYDW_ORG_NAME = #{record.pydwOrgName,jdbcType=VARCHAR},
+      FWH_ORG_FLOW = #{record.fwhOrgFlow,jdbcType=VARCHAR},
+      FWH_ORG_NAME = #{record.fwhOrgName,jdbcType=VARCHAR},
+      SECURITY_NAME = #{record.securityName,jdbcType=VARCHAR},
+      GO_ABROAD_ID = #{record.goAbroadId,jdbcType=VARCHAR},
+      GO_ABROAD_NAME = #{record.goAbroadName,jdbcType=VARCHAR},
+      STU_LEVEL_ID = #{record.stuLevelId,jdbcType=VARCHAR},
+      STU_LEVEL_NAME = #{record.stuLevelName,jdbcType=VARCHAR},
+      IN_SCHOOL_DATE = #{record.inSchoolDate,jdbcType=VARCHAR},
+      TELPHONE = #{record.telphone,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      BEGIN_DATE = #{record.beginDate,jdbcType=VARCHAR},
+      END_DATE = #{record.endDate,jdbcType=VARCHAR},
+      DESTINATION_NAME = #{record.destinationName,jdbcType=VARCHAR},
+      VISIT_COLLEGE_NAME = #{record.visitCollegeName,jdbcType=VARCHAR},
+      SCHOOL_FEE = #{record.schoolFee,jdbcType=VARCHAR},
+      SCHOOL_BUDGET_FEE = #{record.schoolBudgetFee,jdbcType=VARCHAR},
+      TUTOR_FEE = #{record.tutorFee,jdbcType=VARCHAR},
+      TUTOR_BUDGET_FEE = #{record.tutorBudgetFee,jdbcType=VARCHAR},
+      OTHER_FEE = #{record.otherFee,jdbcType=VARCHAR},
+      OTHER_BUDGET_FEE = #{record.otherBudgetFee,jdbcType=VARCHAR},
+      APPLY_REASON = #{record.applyReason,jdbcType=VARCHAR},
+      PROMISE_MEMO = #{record.promiseMemo,jdbcType=VARCHAR},
+      OUT_TUTOR_ADVICE = #{record.outTutorAdvice,jdbcType=VARCHAR},
+      TUTOR_AUDIT_DATE = #{record.tutorAuditDate,jdbcType=VARCHAR},
+      POLITICAL_STATUS = #{record.politicalStatus,jdbcType=VARCHAR},
+      POST_DESC = #{record.postDesc,jdbcType=VARCHAR},
+      HEALTHY_SITUATION = #{record.healthySituation,jdbcType=VARCHAR},
+      GO_ABROAD_DESC = #{record.goAbroadDesc,jdbcType=VARCHAR},
+      INVITATION_URL = #{record.invitationUrl,jdbcType=VARCHAR},
+      CHI_INVITATION_URL = #{record.chiInvitationUrl,jdbcType=VARCHAR},
+      GJLF_NAME = #{record.gjlfName,jdbcType=VARCHAR},
+      GJLF_STANDARD = #{record.gjlfStandard,jdbcType=VARCHAR},
+      GJLF_DAY = #{record.gjlfDay,jdbcType=VARCHAR},
+      GJLF_PEOPLE = #{record.gjlfPeople,jdbcType=VARCHAR},
+      GJLF_SUBTOTAL = #{record.gjlfSubtotal,jdbcType=VARCHAR},
+      GWCSJTF_NAME = #{record.gwcsjtfName,jdbcType=VARCHAR},
+      GWCSJTF_STANDARD = #{record.gwcsjtfStandard,jdbcType=VARCHAR},
+      GWCSJTF_DAY = #{record.gwcsjtfDay,jdbcType=VARCHAR},
+      GWCSJTF_PEOPLE = #{record.gwcsjtfPeople,jdbcType=VARCHAR},
+      GWCSJTF_SUBTOTAL = #{record.gwcsjtfSubtotal,jdbcType=VARCHAR},
+      ZSF_NAME = #{record.zsfName,jdbcType=VARCHAR},
+      ZSF_STANDARD = #{record.zsfStandard,jdbcType=VARCHAR},
+      ZSF_DAY = #{record.zsfDay,jdbcType=VARCHAR},
+      ZSF_PEOPLE = #{record.zsfPeople,jdbcType=VARCHAR},
+      ZSF_SUBTOTAL = #{record.zsfSubtotal,jdbcType=VARCHAR},
+      HSF_NAME = #{record.hsfName,jdbcType=VARCHAR},
+      HSF_STANDARD = #{record.hsfStandard,jdbcType=VARCHAR},
+      HSF_DAY = #{record.hsfDay,jdbcType=VARCHAR},
+      HSF_PEOPLE = #{record.hsfPeople,jdbcType=VARCHAR},
+      HSF_SUBTOTAL = #{record.hsfSubtotal,jdbcType=VARCHAR},
+      GZF_NAME = #{record.gzfName,jdbcType=VARCHAR},
+      GZF_STANDARD = #{record.gzfStandard,jdbcType=VARCHAR},
+      GZF_DAY = #{record.gzfDay,jdbcType=VARCHAR},
+      GZF_PEOPLE = #{record.gzfPeople,jdbcType=VARCHAR},
+      GZF_SUBTOTAL = #{record.gzfSubtotal,jdbcType=VARCHAR},
+      OTHER_NAME = #{record.otherName,jdbcType=VARCHAR},
+      OTHER_STANDARD = #{record.otherStandard,jdbcType=VARCHAR},
+      OTHER_DAY = #{record.otherDay,jdbcType=VARCHAR},
+      OTHER_PEOPLE = #{record.otherPeople,jdbcType=VARCHAR},
+      OTHER_SUBTOTAL = #{record.otherSubtotal,jdbcType=VARCHAR},
+      FEE_DESC = #{record.feeDesc,jdbcType=VARCHAR},
+      CSC_CERTIFICATE_NO = #{record.cscCertificateNo,jdbcType=VARCHAR},
+      CULTURE_SUMMARY = #{record.cultureSummary,jdbcType=VARCHAR},
+      BACK_TUTOR_ADVICE = #{record.backTutorAdvice,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      TUTOR_BACK_AUDIT_DATE = #{record.tutorBackAuditDate,jdbcType=VARCHAR},
+      PROJ_CONTRACT_URL = #{record.projContractUrl,jdbcType=VARCHAR},
+      PROJ_MONEY_URL = #{record.projMoneyUrl,jdbcType=VARCHAR},
+      FAMILY_MEMBER = #{record.familyMember,jdbcType=CLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.NYGO_ABROAD_APPLY
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      STU_NO = #{record.stuNo,jdbcType=VARCHAR},
+      SEX_ID = #{record.sexId,jdbcType=VARCHAR},
+      SEX_NAME = #{record.sexName,jdbcType=VARCHAR},
+      PERIOD = #{record.period,jdbcType=VARCHAR},
+      MARITAL_NAME = #{record.maritalName,jdbcType=VARCHAR},
+      BIRTH_DATE = #{record.birthDate,jdbcType=VARCHAR},
+      MAJOR_ID = #{record.majorId,jdbcType=VARCHAR},
+      MAJOR_NAME = #{record.majorName,jdbcType=VARCHAR},
+      TUTOR_FLOW = #{record.tutorFlow,jdbcType=VARCHAR},
+      TUTOR_NAME = #{record.tutorName,jdbcType=VARCHAR},
+      PYDW_ORG_FLOW = #{record.pydwOrgFlow,jdbcType=VARCHAR},
+      PYDW_ORG_NAME = #{record.pydwOrgName,jdbcType=VARCHAR},
+      FWH_ORG_FLOW = #{record.fwhOrgFlow,jdbcType=VARCHAR},
+      FWH_ORG_NAME = #{record.fwhOrgName,jdbcType=VARCHAR},
+      SECURITY_NAME = #{record.securityName,jdbcType=VARCHAR},
+      GO_ABROAD_ID = #{record.goAbroadId,jdbcType=VARCHAR},
+      GO_ABROAD_NAME = #{record.goAbroadName,jdbcType=VARCHAR},
+      STU_LEVEL_ID = #{record.stuLevelId,jdbcType=VARCHAR},
+      STU_LEVEL_NAME = #{record.stuLevelName,jdbcType=VARCHAR},
+      IN_SCHOOL_DATE = #{record.inSchoolDate,jdbcType=VARCHAR},
+      TELPHONE = #{record.telphone,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      BEGIN_DATE = #{record.beginDate,jdbcType=VARCHAR},
+      END_DATE = #{record.endDate,jdbcType=VARCHAR},
+      DESTINATION_NAME = #{record.destinationName,jdbcType=VARCHAR},
+      VISIT_COLLEGE_NAME = #{record.visitCollegeName,jdbcType=VARCHAR},
+      SCHOOL_FEE = #{record.schoolFee,jdbcType=VARCHAR},
+      SCHOOL_BUDGET_FEE = #{record.schoolBudgetFee,jdbcType=VARCHAR},
+      TUTOR_FEE = #{record.tutorFee,jdbcType=VARCHAR},
+      TUTOR_BUDGET_FEE = #{record.tutorBudgetFee,jdbcType=VARCHAR},
+      OTHER_FEE = #{record.otherFee,jdbcType=VARCHAR},
+      OTHER_BUDGET_FEE = #{record.otherBudgetFee,jdbcType=VARCHAR},
+      APPLY_REASON = #{record.applyReason,jdbcType=VARCHAR},
+      PROMISE_MEMO = #{record.promiseMemo,jdbcType=VARCHAR},
+      OUT_TUTOR_ADVICE = #{record.outTutorAdvice,jdbcType=VARCHAR},
+      TUTOR_AUDIT_DATE = #{record.tutorAuditDate,jdbcType=VARCHAR},
+      POLITICAL_STATUS = #{record.politicalStatus,jdbcType=VARCHAR},
+      POST_DESC = #{record.postDesc,jdbcType=VARCHAR},
+      HEALTHY_SITUATION = #{record.healthySituation,jdbcType=VARCHAR},
+      GO_ABROAD_DESC = #{record.goAbroadDesc,jdbcType=VARCHAR},
+      INVITATION_URL = #{record.invitationUrl,jdbcType=VARCHAR},
+      CHI_INVITATION_URL = #{record.chiInvitationUrl,jdbcType=VARCHAR},
+      GJLF_NAME = #{record.gjlfName,jdbcType=VARCHAR},
+      GJLF_STANDARD = #{record.gjlfStandard,jdbcType=VARCHAR},
+      GJLF_DAY = #{record.gjlfDay,jdbcType=VARCHAR},
+      GJLF_PEOPLE = #{record.gjlfPeople,jdbcType=VARCHAR},
+      GJLF_SUBTOTAL = #{record.gjlfSubtotal,jdbcType=VARCHAR},
+      GWCSJTF_NAME = #{record.gwcsjtfName,jdbcType=VARCHAR},
+      GWCSJTF_STANDARD = #{record.gwcsjtfStandard,jdbcType=VARCHAR},
+      GWCSJTF_DAY = #{record.gwcsjtfDay,jdbcType=VARCHAR},
+      GWCSJTF_PEOPLE = #{record.gwcsjtfPeople,jdbcType=VARCHAR},
+      GWCSJTF_SUBTOTAL = #{record.gwcsjtfSubtotal,jdbcType=VARCHAR},
+      ZSF_NAME = #{record.zsfName,jdbcType=VARCHAR},
+      ZSF_STANDARD = #{record.zsfStandard,jdbcType=VARCHAR},
+      ZSF_DAY = #{record.zsfDay,jdbcType=VARCHAR},
+      ZSF_PEOPLE = #{record.zsfPeople,jdbcType=VARCHAR},
+      ZSF_SUBTOTAL = #{record.zsfSubtotal,jdbcType=VARCHAR},
+      HSF_NAME = #{record.hsfName,jdbcType=VARCHAR},
+      HSF_STANDARD = #{record.hsfStandard,jdbcType=VARCHAR},
+      HSF_DAY = #{record.hsfDay,jdbcType=VARCHAR},
+      HSF_PEOPLE = #{record.hsfPeople,jdbcType=VARCHAR},
+      HSF_SUBTOTAL = #{record.hsfSubtotal,jdbcType=VARCHAR},
+      GZF_NAME = #{record.gzfName,jdbcType=VARCHAR},
+      GZF_STANDARD = #{record.gzfStandard,jdbcType=VARCHAR},
+      GZF_DAY = #{record.gzfDay,jdbcType=VARCHAR},
+      GZF_PEOPLE = #{record.gzfPeople,jdbcType=VARCHAR},
+      GZF_SUBTOTAL = #{record.gzfSubtotal,jdbcType=VARCHAR},
+      OTHER_NAME = #{record.otherName,jdbcType=VARCHAR},
+      OTHER_STANDARD = #{record.otherStandard,jdbcType=VARCHAR},
+      OTHER_DAY = #{record.otherDay,jdbcType=VARCHAR},
+      OTHER_PEOPLE = #{record.otherPeople,jdbcType=VARCHAR},
+      OTHER_SUBTOTAL = #{record.otherSubtotal,jdbcType=VARCHAR},
+      FEE_DESC = #{record.feeDesc,jdbcType=VARCHAR},
+      CSC_CERTIFICATE_NO = #{record.cscCertificateNo,jdbcType=VARCHAR},
+      CULTURE_SUMMARY = #{record.cultureSummary,jdbcType=VARCHAR},
+      BACK_TUTOR_ADVICE = #{record.backTutorAdvice,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      TUTOR_BACK_AUDIT_DATE = #{record.tutorBackAuditDate,jdbcType=VARCHAR},
+      PROJ_CONTRACT_URL = #{record.projContractUrl,jdbcType=VARCHAR},
+      PROJ_MONEY_URL = #{record.projMoneyUrl,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.NygoAbroadApply" >
+    update PDSCI.NYGO_ABROAD_APPLY
+    <set >
+      <if test="userFlow != null" >
+        USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="stuNo != null" >
+        STU_NO = #{stuNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sexId != null" >
+        SEX_ID = #{sexId,jdbcType=VARCHAR},
+      </if>
+      <if test="sexName != null" >
+        SEX_NAME = #{sexName,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null" >
+        PERIOD = #{period,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalName != null" >
+        MARITAL_NAME = #{maritalName,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null" >
+        BIRTH_DATE = #{birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="majorId != null" >
+        MAJOR_ID = #{majorId,jdbcType=VARCHAR},
+      </if>
+      <if test="majorName != null" >
+        MAJOR_NAME = #{majorName,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorFlow != null" >
+        TUTOR_FLOW = #{tutorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorName != null" >
+        TUTOR_NAME = #{tutorName,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwOrgFlow != null" >
+        PYDW_ORG_FLOW = #{pydwOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="pydwOrgName != null" >
+        PYDW_ORG_NAME = #{pydwOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhOrgFlow != null" >
+        FWH_ORG_FLOW = #{fwhOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhOrgName != null" >
+        FWH_ORG_NAME = #{fwhOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="securityName != null" >
+        SECURITY_NAME = #{securityName,jdbcType=VARCHAR},
+      </if>
+      <if test="goAbroadId != null" >
+        GO_ABROAD_ID = #{goAbroadId,jdbcType=VARCHAR},
+      </if>
+      <if test="goAbroadName != null" >
+        GO_ABROAD_NAME = #{goAbroadName,jdbcType=VARCHAR},
+      </if>
+      <if test="stuLevelId != null" >
+        STU_LEVEL_ID = #{stuLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="stuLevelName != null" >
+        STU_LEVEL_NAME = #{stuLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="inSchoolDate != null" >
+        IN_SCHOOL_DATE = #{inSchoolDate,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        TELPHONE = #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="beginDate != null" >
+        BEGIN_DATE = #{beginDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        END_DATE = #{endDate,jdbcType=VARCHAR},
+      </if>
+      <if test="destinationName != null" >
+        DESTINATION_NAME = #{destinationName,jdbcType=VARCHAR},
+      </if>
+      <if test="visitCollegeName != null" >
+        VISIT_COLLEGE_NAME = #{visitCollegeName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolFee != null" >
+        SCHOOL_FEE = #{schoolFee,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolBudgetFee != null" >
+        SCHOOL_BUDGET_FEE = #{schoolBudgetFee,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorFee != null" >
+        TUTOR_FEE = #{tutorFee,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorBudgetFee != null" >
+        TUTOR_BUDGET_FEE = #{tutorBudgetFee,jdbcType=VARCHAR},
+      </if>
+      <if test="otherFee != null" >
+        OTHER_FEE = #{otherFee,jdbcType=VARCHAR},
+      </if>
+      <if test="otherBudgetFee != null" >
+        OTHER_BUDGET_FEE = #{otherBudgetFee,jdbcType=VARCHAR},
+      </if>
+      <if test="applyReason != null" >
+        APPLY_REASON = #{applyReason,jdbcType=VARCHAR},
+      </if>
+      <if test="promiseMemo != null" >
+        PROMISE_MEMO = #{promiseMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="outTutorAdvice != null" >
+        OUT_TUTOR_ADVICE = #{outTutorAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorAuditDate != null" >
+        TUTOR_AUDIT_DATE = #{tutorAuditDate,jdbcType=VARCHAR},
+      </if>
+      <if test="politicalStatus != null" >
+        POLITICAL_STATUS = #{politicalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="postDesc != null" >
+        POST_DESC = #{postDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="healthySituation != null" >
+        HEALTHY_SITUATION = #{healthySituation,jdbcType=VARCHAR},
+      </if>
+      <if test="goAbroadDesc != null" >
+        GO_ABROAD_DESC = #{goAbroadDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="invitationUrl != null" >
+        INVITATION_URL = #{invitationUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="chiInvitationUrl != null" >
+        CHI_INVITATION_URL = #{chiInvitationUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="gjlfName != null" >
+        GJLF_NAME = #{gjlfName,jdbcType=VARCHAR},
+      </if>
+      <if test="gjlfStandard != null" >
+        GJLF_STANDARD = #{gjlfStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="gjlfDay != null" >
+        GJLF_DAY = #{gjlfDay,jdbcType=VARCHAR},
+      </if>
+      <if test="gjlfPeople != null" >
+        GJLF_PEOPLE = #{gjlfPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="gjlfSubtotal != null" >
+        GJLF_SUBTOTAL = #{gjlfSubtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="gwcsjtfName != null" >
+        GWCSJTF_NAME = #{gwcsjtfName,jdbcType=VARCHAR},
+      </if>
+      <if test="gwcsjtfStandard != null" >
+        GWCSJTF_STANDARD = #{gwcsjtfStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="gwcsjtfDay != null" >
+        GWCSJTF_DAY = #{gwcsjtfDay,jdbcType=VARCHAR},
+      </if>
+      <if test="gwcsjtfPeople != null" >
+        GWCSJTF_PEOPLE = #{gwcsjtfPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="gwcsjtfSubtotal != null" >
+        GWCSJTF_SUBTOTAL = #{gwcsjtfSubtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="zsfName != null" >
+        ZSF_NAME = #{zsfName,jdbcType=VARCHAR},
+      </if>
+      <if test="zsfStandard != null" >
+        ZSF_STANDARD = #{zsfStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="zsfDay != null" >
+        ZSF_DAY = #{zsfDay,jdbcType=VARCHAR},
+      </if>
+      <if test="zsfPeople != null" >
+        ZSF_PEOPLE = #{zsfPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="zsfSubtotal != null" >
+        ZSF_SUBTOTAL = #{zsfSubtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="hsfName != null" >
+        HSF_NAME = #{hsfName,jdbcType=VARCHAR},
+      </if>
+      <if test="hsfStandard != null" >
+        HSF_STANDARD = #{hsfStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="hsfDay != null" >
+        HSF_DAY = #{hsfDay,jdbcType=VARCHAR},
+      </if>
+      <if test="hsfPeople != null" >
+        HSF_PEOPLE = #{hsfPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="hsfSubtotal != null" >
+        HSF_SUBTOTAL = #{hsfSubtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="gzfName != null" >
+        GZF_NAME = #{gzfName,jdbcType=VARCHAR},
+      </if>
+      <if test="gzfStandard != null" >
+        GZF_STANDARD = #{gzfStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="gzfDay != null" >
+        GZF_DAY = #{gzfDay,jdbcType=VARCHAR},
+      </if>
+      <if test="gzfPeople != null" >
+        GZF_PEOPLE = #{gzfPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="gzfSubtotal != null" >
+        GZF_SUBTOTAL = #{gzfSubtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="otherName != null" >
+        OTHER_NAME = #{otherName,jdbcType=VARCHAR},
+      </if>
+      <if test="otherStandard != null" >
+        OTHER_STANDARD = #{otherStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="otherDay != null" >
+        OTHER_DAY = #{otherDay,jdbcType=VARCHAR},
+      </if>
+      <if test="otherPeople != null" >
+        OTHER_PEOPLE = #{otherPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="otherSubtotal != null" >
+        OTHER_SUBTOTAL = #{otherSubtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="feeDesc != null" >
+        FEE_DESC = #{feeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="cscCertificateNo != null" >
+        CSC_CERTIFICATE_NO = #{cscCertificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cultureSummary != null" >
+        CULTURE_SUMMARY = #{cultureSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="backTutorAdvice != null" >
+        BACK_TUTOR_ADVICE = #{backTutorAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="tutorBackAuditDate != null" >
+        TUTOR_BACK_AUDIT_DATE = #{tutorBackAuditDate,jdbcType=VARCHAR},
+      </if>
+      <if test="projContractUrl != null" >
+        PROJ_CONTRACT_URL = #{projContractUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="projMoneyUrl != null" >
+        PROJ_MONEY_URL = #{projMoneyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="familyMember != null" >
+        FAMILY_MEMBER = #{familyMember,jdbcType=CLOB},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.NygoAbroadApply" >
+    update PDSCI.NYGO_ABROAD_APPLY
+    set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      STU_NO = #{stuNo,jdbcType=VARCHAR},
+      SEX_ID = #{sexId,jdbcType=VARCHAR},
+      SEX_NAME = #{sexName,jdbcType=VARCHAR},
+      PERIOD = #{period,jdbcType=VARCHAR},
+      MARITAL_NAME = #{maritalName,jdbcType=VARCHAR},
+      BIRTH_DATE = #{birthDate,jdbcType=VARCHAR},
+      MAJOR_ID = #{majorId,jdbcType=VARCHAR},
+      MAJOR_NAME = #{majorName,jdbcType=VARCHAR},
+      TUTOR_FLOW = #{tutorFlow,jdbcType=VARCHAR},
+      TUTOR_NAME = #{tutorName,jdbcType=VARCHAR},
+      PYDW_ORG_FLOW = #{pydwOrgFlow,jdbcType=VARCHAR},
+      PYDW_ORG_NAME = #{pydwOrgName,jdbcType=VARCHAR},
+      FWH_ORG_FLOW = #{fwhOrgFlow,jdbcType=VARCHAR},
+      FWH_ORG_NAME = #{fwhOrgName,jdbcType=VARCHAR},
+      SECURITY_NAME = #{securityName,jdbcType=VARCHAR},
+      GO_ABROAD_ID = #{goAbroadId,jdbcType=VARCHAR},
+      GO_ABROAD_NAME = #{goAbroadName,jdbcType=VARCHAR},
+      STU_LEVEL_ID = #{stuLevelId,jdbcType=VARCHAR},
+      STU_LEVEL_NAME = #{stuLevelName,jdbcType=VARCHAR},
+      IN_SCHOOL_DATE = #{inSchoolDate,jdbcType=VARCHAR},
+      TELPHONE = #{telphone,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      BEGIN_DATE = #{beginDate,jdbcType=VARCHAR},
+      END_DATE = #{endDate,jdbcType=VARCHAR},
+      DESTINATION_NAME = #{destinationName,jdbcType=VARCHAR},
+      VISIT_COLLEGE_NAME = #{visitCollegeName,jdbcType=VARCHAR},
+      SCHOOL_FEE = #{schoolFee,jdbcType=VARCHAR},
+      SCHOOL_BUDGET_FEE = #{schoolBudgetFee,jdbcType=VARCHAR},
+      TUTOR_FEE = #{tutorFee,jdbcType=VARCHAR},
+      TUTOR_BUDGET_FEE = #{tutorBudgetFee,jdbcType=VARCHAR},
+      OTHER_FEE = #{otherFee,jdbcType=VARCHAR},
+      OTHER_BUDGET_FEE = #{otherBudgetFee,jdbcType=VARCHAR},
+      APPLY_REASON = #{applyReason,jdbcType=VARCHAR},
+      PROMISE_MEMO = #{promiseMemo,jdbcType=VARCHAR},
+      OUT_TUTOR_ADVICE = #{outTutorAdvice,jdbcType=VARCHAR},
+      TUTOR_AUDIT_DATE = #{tutorAuditDate,jdbcType=VARCHAR},
+      POLITICAL_STATUS = #{politicalStatus,jdbcType=VARCHAR},
+      POST_DESC = #{postDesc,jdbcType=VARCHAR},
+      HEALTHY_SITUATION = #{healthySituation,jdbcType=VARCHAR},
+      GO_ABROAD_DESC = #{goAbroadDesc,jdbcType=VARCHAR},
+      INVITATION_URL = #{invitationUrl,jdbcType=VARCHAR},
+      CHI_INVITATION_URL = #{chiInvitationUrl,jdbcType=VARCHAR},
+      GJLF_NAME = #{gjlfName,jdbcType=VARCHAR},
+      GJLF_STANDARD = #{gjlfStandard,jdbcType=VARCHAR},
+      GJLF_DAY = #{gjlfDay,jdbcType=VARCHAR},
+      GJLF_PEOPLE = #{gjlfPeople,jdbcType=VARCHAR},
+      GJLF_SUBTOTAL = #{gjlfSubtotal,jdbcType=VARCHAR},
+      GWCSJTF_NAME = #{gwcsjtfName,jdbcType=VARCHAR},
+      GWCSJTF_STANDARD = #{gwcsjtfStandard,jdbcType=VARCHAR},
+      GWCSJTF_DAY = #{gwcsjtfDay,jdbcType=VARCHAR},
+      GWCSJTF_PEOPLE = #{gwcsjtfPeople,jdbcType=VARCHAR},
+      GWCSJTF_SUBTOTAL = #{gwcsjtfSubtotal,jdbcType=VARCHAR},
+      ZSF_NAME = #{zsfName,jdbcType=VARCHAR},
+      ZSF_STANDARD = #{zsfStandard,jdbcType=VARCHAR},
+      ZSF_DAY = #{zsfDay,jdbcType=VARCHAR},
+      ZSF_PEOPLE = #{zsfPeople,jdbcType=VARCHAR},
+      ZSF_SUBTOTAL = #{zsfSubtotal,jdbcType=VARCHAR},
+      HSF_NAME = #{hsfName,jdbcType=VARCHAR},
+      HSF_STANDARD = #{hsfStandard,jdbcType=VARCHAR},
+      HSF_DAY = #{hsfDay,jdbcType=VARCHAR},
+      HSF_PEOPLE = #{hsfPeople,jdbcType=VARCHAR},
+      HSF_SUBTOTAL = #{hsfSubtotal,jdbcType=VARCHAR},
+      GZF_NAME = #{gzfName,jdbcType=VARCHAR},
+      GZF_STANDARD = #{gzfStandard,jdbcType=VARCHAR},
+      GZF_DAY = #{gzfDay,jdbcType=VARCHAR},
+      GZF_PEOPLE = #{gzfPeople,jdbcType=VARCHAR},
+      GZF_SUBTOTAL = #{gzfSubtotal,jdbcType=VARCHAR},
+      OTHER_NAME = #{otherName,jdbcType=VARCHAR},
+      OTHER_STANDARD = #{otherStandard,jdbcType=VARCHAR},
+      OTHER_DAY = #{otherDay,jdbcType=VARCHAR},
+      OTHER_PEOPLE = #{otherPeople,jdbcType=VARCHAR},
+      OTHER_SUBTOTAL = #{otherSubtotal,jdbcType=VARCHAR},
+      FEE_DESC = #{feeDesc,jdbcType=VARCHAR},
+      CSC_CERTIFICATE_NO = #{cscCertificateNo,jdbcType=VARCHAR},
+      CULTURE_SUMMARY = #{cultureSummary,jdbcType=VARCHAR},
+      BACK_TUTOR_ADVICE = #{backTutorAdvice,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      TUTOR_BACK_AUDIT_DATE = #{tutorBackAuditDate,jdbcType=VARCHAR},
+      PROJ_CONTRACT_URL = #{projContractUrl,jdbcType=VARCHAR},
+      PROJ_MONEY_URL = #{projMoneyUrl,jdbcType=VARCHAR},
+      FAMILY_MEMBER = #{familyMember,jdbcType=CLOB}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.NygoAbroadApply" >
+    update PDSCI.NYGO_ABROAD_APPLY
+    set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      STU_NO = #{stuNo,jdbcType=VARCHAR},
+      SEX_ID = #{sexId,jdbcType=VARCHAR},
+      SEX_NAME = #{sexName,jdbcType=VARCHAR},
+      PERIOD = #{period,jdbcType=VARCHAR},
+      MARITAL_NAME = #{maritalName,jdbcType=VARCHAR},
+      BIRTH_DATE = #{birthDate,jdbcType=VARCHAR},
+      MAJOR_ID = #{majorId,jdbcType=VARCHAR},
+      MAJOR_NAME = #{majorName,jdbcType=VARCHAR},
+      TUTOR_FLOW = #{tutorFlow,jdbcType=VARCHAR},
+      TUTOR_NAME = #{tutorName,jdbcType=VARCHAR},
+      PYDW_ORG_FLOW = #{pydwOrgFlow,jdbcType=VARCHAR},
+      PYDW_ORG_NAME = #{pydwOrgName,jdbcType=VARCHAR},
+      FWH_ORG_FLOW = #{fwhOrgFlow,jdbcType=VARCHAR},
+      FWH_ORG_NAME = #{fwhOrgName,jdbcType=VARCHAR},
+      SECURITY_NAME = #{securityName,jdbcType=VARCHAR},
+      GO_ABROAD_ID = #{goAbroadId,jdbcType=VARCHAR},
+      GO_ABROAD_NAME = #{goAbroadName,jdbcType=VARCHAR},
+      STU_LEVEL_ID = #{stuLevelId,jdbcType=VARCHAR},
+      STU_LEVEL_NAME = #{stuLevelName,jdbcType=VARCHAR},
+      IN_SCHOOL_DATE = #{inSchoolDate,jdbcType=VARCHAR},
+      TELPHONE = #{telphone,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      BEGIN_DATE = #{beginDate,jdbcType=VARCHAR},
+      END_DATE = #{endDate,jdbcType=VARCHAR},
+      DESTINATION_NAME = #{destinationName,jdbcType=VARCHAR},
+      VISIT_COLLEGE_NAME = #{visitCollegeName,jdbcType=VARCHAR},
+      SCHOOL_FEE = #{schoolFee,jdbcType=VARCHAR},
+      SCHOOL_BUDGET_FEE = #{schoolBudgetFee,jdbcType=VARCHAR},
+      TUTOR_FEE = #{tutorFee,jdbcType=VARCHAR},
+      TUTOR_BUDGET_FEE = #{tutorBudgetFee,jdbcType=VARCHAR},
+      OTHER_FEE = #{otherFee,jdbcType=VARCHAR},
+      OTHER_BUDGET_FEE = #{otherBudgetFee,jdbcType=VARCHAR},
+      APPLY_REASON = #{applyReason,jdbcType=VARCHAR},
+      PROMISE_MEMO = #{promiseMemo,jdbcType=VARCHAR},
+      OUT_TUTOR_ADVICE = #{outTutorAdvice,jdbcType=VARCHAR},
+      TUTOR_AUDIT_DATE = #{tutorAuditDate,jdbcType=VARCHAR},
+      POLITICAL_STATUS = #{politicalStatus,jdbcType=VARCHAR},
+      POST_DESC = #{postDesc,jdbcType=VARCHAR},
+      HEALTHY_SITUATION = #{healthySituation,jdbcType=VARCHAR},
+      GO_ABROAD_DESC = #{goAbroadDesc,jdbcType=VARCHAR},
+      INVITATION_URL = #{invitationUrl,jdbcType=VARCHAR},
+      CHI_INVITATION_URL = #{chiInvitationUrl,jdbcType=VARCHAR},
+      GJLF_NAME = #{gjlfName,jdbcType=VARCHAR},
+      GJLF_STANDARD = #{gjlfStandard,jdbcType=VARCHAR},
+      GJLF_DAY = #{gjlfDay,jdbcType=VARCHAR},
+      GJLF_PEOPLE = #{gjlfPeople,jdbcType=VARCHAR},
+      GJLF_SUBTOTAL = #{gjlfSubtotal,jdbcType=VARCHAR},
+      GWCSJTF_NAME = #{gwcsjtfName,jdbcType=VARCHAR},
+      GWCSJTF_STANDARD = #{gwcsjtfStandard,jdbcType=VARCHAR},
+      GWCSJTF_DAY = #{gwcsjtfDay,jdbcType=VARCHAR},
+      GWCSJTF_PEOPLE = #{gwcsjtfPeople,jdbcType=VARCHAR},
+      GWCSJTF_SUBTOTAL = #{gwcsjtfSubtotal,jdbcType=VARCHAR},
+      ZSF_NAME = #{zsfName,jdbcType=VARCHAR},
+      ZSF_STANDARD = #{zsfStandard,jdbcType=VARCHAR},
+      ZSF_DAY = #{zsfDay,jdbcType=VARCHAR},
+      ZSF_PEOPLE = #{zsfPeople,jdbcType=VARCHAR},
+      ZSF_SUBTOTAL = #{zsfSubtotal,jdbcType=VARCHAR},
+      HSF_NAME = #{hsfName,jdbcType=VARCHAR},
+      HSF_STANDARD = #{hsfStandard,jdbcType=VARCHAR},
+      HSF_DAY = #{hsfDay,jdbcType=VARCHAR},
+      HSF_PEOPLE = #{hsfPeople,jdbcType=VARCHAR},
+      HSF_SUBTOTAL = #{hsfSubtotal,jdbcType=VARCHAR},
+      GZF_NAME = #{gzfName,jdbcType=VARCHAR},
+      GZF_STANDARD = #{gzfStandard,jdbcType=VARCHAR},
+      GZF_DAY = #{gzfDay,jdbcType=VARCHAR},
+      GZF_PEOPLE = #{gzfPeople,jdbcType=VARCHAR},
+      GZF_SUBTOTAL = #{gzfSubtotal,jdbcType=VARCHAR},
+      OTHER_NAME = #{otherName,jdbcType=VARCHAR},
+      OTHER_STANDARD = #{otherStandard,jdbcType=VARCHAR},
+      OTHER_DAY = #{otherDay,jdbcType=VARCHAR},
+      OTHER_PEOPLE = #{otherPeople,jdbcType=VARCHAR},
+      OTHER_SUBTOTAL = #{otherSubtotal,jdbcType=VARCHAR},
+      FEE_DESC = #{feeDesc,jdbcType=VARCHAR},
+      CSC_CERTIFICATE_NO = #{cscCertificateNo,jdbcType=VARCHAR},
+      CULTURE_SUMMARY = #{cultureSummary,jdbcType=VARCHAR},
+      BACK_TUTOR_ADVICE = #{backTutorAdvice,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      TUTOR_BACK_AUDIT_DATE = #{tutorBackAuditDate,jdbcType=VARCHAR},
+      PROJ_CONTRACT_URL = #{projContractUrl,jdbcType=VARCHAR},
+      PROJ_MONEY_URL = #{projMoneyUrl,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

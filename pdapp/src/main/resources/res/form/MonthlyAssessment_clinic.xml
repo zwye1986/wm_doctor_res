@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>	
+	<!-- 月度考核表 -->
+	<!-- 
+	{0}:表单所属机构(开关控制)
+	{1}:版本号
+ -->
+	<jsp path="res/form/{3}/{0}/monthlyAssessment_clinic_{1}"></jsp>
+		<jszy ver="1.0">
+			<page ver="1.0">
+				<item name="doctorName" remark="姓名" multiple="N"></item>
+				<item name="departmentName" remark="轮转科室" multiple="N"></item>
+				<item name="schTime" remark="轮转时间" multiple="N"></item>
+				<item name="teacherName" remark="指导老师" multiple="N"></item>
+				<item name="part00" remark="工作责任心、医德医风、团结协作、遵守制度" multiple="N"></item>
+				<item name="part01" remark="轮转时间" multiple="N"></item>
+				<item name="part02" remark="医技科室操作或门诊跟诊" multiple="N"></item>
+				<item name="part03" remark="门诊试诊或出具诊断报告" multiple="N"></item>
+				<item name="part04" remark="出科技能考核" multiple="N"></item>
+				<item name="part05" remark="出科理论考核" multiple="N"></item>
+				<item name="part06" remark="总得分" multiple="N"></item>
+				<item name="guideTeacher" remark="指导老师签名" multiple="N"></item>
+				<item name="branchDirector" remark="科主任签名" multiple="N"></item>
+				<item name="headFlow" remark="科主任" multiple="N"></item>
+				<item name="teaFlow" remark="带教老师" multiple="N"></item>
+			</page>
+		</jszy>
+	</jspForm>
+

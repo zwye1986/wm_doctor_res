@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.NyzlRecruitQuotaMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.NyzlRecruitQuota" >
+    <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+    <result column="RECRUIT_YEAR" property="recruitYear" jdbcType="VARCHAR" />
+    <result column="STU_SIGN" property="stuSign" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="TK_ACADEMIC_NUM" property="tkAcademicNum" jdbcType="VARCHAR" />
+    <result column="TK_SPECIAL_NUM" property="tkSpecialNum" jdbcType="VARCHAR" />
+    <result column="TMS_ACADEMIC_NUM" property="tmsAcademicNum" jdbcType="VARCHAR" />
+    <result column="TMS_SPECIAL_NUM" property="tmsSpecialNum" jdbcType="VARCHAR" />
+    <result column="PUBLISH_FLAG" property="publishFlag" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="PUBLISHER_NAME" property="publisherName" jdbcType="VARCHAR" />
+    <result column="FWH_FLOW" property="fwhFlow" jdbcType="VARCHAR" />
+    <result column="FWH_NAME" property="fwhName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RECORD_FLOW, RECRUIT_YEAR, STU_SIGN, ORG_FLOW, ORG_NAME, TK_ACADEMIC_NUM, TK_SPECIAL_NUM, 
+    TMS_ACADEMIC_NUM, TMS_SPECIAL_NUM, PUBLISH_FLAG, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+    MODIFY_TIME, MODIFY_USER_FLOW, PUBLISHER_NAME, FWH_FLOW, FWH_NAME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.NyzlRecruitQuotaExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.NYZL_RECRUIT_QUOTA
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.NYZL_RECRUIT_QUOTA
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.NYZL_RECRUIT_QUOTA
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.NyzlRecruitQuotaExample" >
+    delete from PDSCI.NYZL_RECRUIT_QUOTA
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.NyzlRecruitQuota" >
+    insert into PDSCI.NYZL_RECRUIT_QUOTA (RECORD_FLOW, RECRUIT_YEAR, STU_SIGN, 
+      ORG_FLOW, ORG_NAME, TK_ACADEMIC_NUM, 
+      TK_SPECIAL_NUM, TMS_ACADEMIC_NUM, TMS_SPECIAL_NUM, 
+      PUBLISH_FLAG, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+      PUBLISHER_NAME, FWH_FLOW, FWH_NAME
+      )
+    values (#{recordFlow,jdbcType=VARCHAR}, #{recruitYear,jdbcType=VARCHAR}, #{stuSign,jdbcType=VARCHAR}, 
+      #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{tkAcademicNum,jdbcType=VARCHAR}, 
+      #{tkSpecialNum,jdbcType=VARCHAR}, #{tmsAcademicNum,jdbcType=VARCHAR}, #{tmsSpecialNum,jdbcType=VARCHAR}, 
+      #{publishFlag,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{publisherName,jdbcType=VARCHAR}, #{fwhFlow,jdbcType=VARCHAR}, #{fwhName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.NyzlRecruitQuota" >
+    insert into PDSCI.NYZL_RECRUIT_QUOTA
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        RECORD_FLOW,
+      </if>
+      <if test="recruitYear != null" >
+        RECRUIT_YEAR,
+      </if>
+      <if test="stuSign != null" >
+        STU_SIGN,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="tkAcademicNum != null" >
+        TK_ACADEMIC_NUM,
+      </if>
+      <if test="tkSpecialNum != null" >
+        TK_SPECIAL_NUM,
+      </if>
+      <if test="tmsAcademicNum != null" >
+        TMS_ACADEMIC_NUM,
+      </if>
+      <if test="tmsSpecialNum != null" >
+        TMS_SPECIAL_NUM,
+      </if>
+      <if test="publishFlag != null" >
+        PUBLISH_FLAG,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="publisherName != null" >
+        PUBLISHER_NAME,
+      </if>
+      <if test="fwhFlow != null" >
+        FWH_FLOW,
+      </if>
+      <if test="fwhName != null" >
+        FWH_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordFlow != null" >
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitYear != null" >
+        #{recruitYear,jdbcType=VARCHAR},
+      </if>
+      <if test="stuSign != null" >
+        #{stuSign,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="tkAcademicNum != null" >
+        #{tkAcademicNum,jdbcType=VARCHAR},
+      </if>
+      <if test="tkSpecialNum != null" >
+        #{tkSpecialNum,jdbcType=VARCHAR},
+      </if>
+      <if test="tmsAcademicNum != null" >
+        #{tmsAcademicNum,jdbcType=VARCHAR},
+      </if>
+      <if test="tmsSpecialNum != null" >
+        #{tmsSpecialNum,jdbcType=VARCHAR},
+      </if>
+      <if test="publishFlag != null" >
+        #{publishFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="publisherName != null" >
+        #{publisherName,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhFlow != null" >
+        #{fwhFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhName != null" >
+        #{fwhName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.NyzlRecruitQuotaExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.NYZL_RECRUIT_QUOTA
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.NYZL_RECRUIT_QUOTA
+    <set >
+      <if test="record.recordFlow != null" >
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitYear != null" >
+        RECRUIT_YEAR = #{record.recruitYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuSign != null" >
+        STU_SIGN = #{record.stuSign,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tkAcademicNum != null" >
+        TK_ACADEMIC_NUM = #{record.tkAcademicNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tkSpecialNum != null" >
+        TK_SPECIAL_NUM = #{record.tkSpecialNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tmsAcademicNum != null" >
+        TMS_ACADEMIC_NUM = #{record.tmsAcademicNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tmsSpecialNum != null" >
+        TMS_SPECIAL_NUM = #{record.tmsSpecialNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publishFlag != null" >
+        PUBLISH_FLAG = #{record.publishFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publisherName != null" >
+        PUBLISHER_NAME = #{record.publisherName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fwhFlow != null" >
+        FWH_FLOW = #{record.fwhFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fwhName != null" >
+        FWH_NAME = #{record.fwhName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.NYZL_RECRUIT_QUOTA
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      RECRUIT_YEAR = #{record.recruitYear,jdbcType=VARCHAR},
+      STU_SIGN = #{record.stuSign,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      TK_ACADEMIC_NUM = #{record.tkAcademicNum,jdbcType=VARCHAR},
+      TK_SPECIAL_NUM = #{record.tkSpecialNum,jdbcType=VARCHAR},
+      TMS_ACADEMIC_NUM = #{record.tmsAcademicNum,jdbcType=VARCHAR},
+      TMS_SPECIAL_NUM = #{record.tmsSpecialNum,jdbcType=VARCHAR},
+      PUBLISH_FLAG = #{record.publishFlag,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      PUBLISHER_NAME = #{record.publisherName,jdbcType=VARCHAR},
+      FWH_FLOW = #{record.fwhFlow,jdbcType=VARCHAR},
+      FWH_NAME = #{record.fwhName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.NyzlRecruitQuota" >
+    update PDSCI.NYZL_RECRUIT_QUOTA
+    <set >
+      <if test="recruitYear != null" >
+        RECRUIT_YEAR = #{recruitYear,jdbcType=VARCHAR},
+      </if>
+      <if test="stuSign != null" >
+        STU_SIGN = #{stuSign,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="tkAcademicNum != null" >
+        TK_ACADEMIC_NUM = #{tkAcademicNum,jdbcType=VARCHAR},
+      </if>
+      <if test="tkSpecialNum != null" >
+        TK_SPECIAL_NUM = #{tkSpecialNum,jdbcType=VARCHAR},
+      </if>
+      <if test="tmsAcademicNum != null" >
+        TMS_ACADEMIC_NUM = #{tmsAcademicNum,jdbcType=VARCHAR},
+      </if>
+      <if test="tmsSpecialNum != null" >
+        TMS_SPECIAL_NUM = #{tmsSpecialNum,jdbcType=VARCHAR},
+      </if>
+      <if test="publishFlag != null" >
+        PUBLISH_FLAG = #{publishFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="publisherName != null" >
+        PUBLISHER_NAME = #{publisherName,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhFlow != null" >
+        FWH_FLOW = #{fwhFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="fwhName != null" >
+        FWH_NAME = #{fwhName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.NyzlRecruitQuota" >
+    update PDSCI.NYZL_RECRUIT_QUOTA
+    set RECRUIT_YEAR = #{recruitYear,jdbcType=VARCHAR},
+      STU_SIGN = #{stuSign,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      TK_ACADEMIC_NUM = #{tkAcademicNum,jdbcType=VARCHAR},
+      TK_SPECIAL_NUM = #{tkSpecialNum,jdbcType=VARCHAR},
+      TMS_ACADEMIC_NUM = #{tmsAcademicNum,jdbcType=VARCHAR},
+      TMS_SPECIAL_NUM = #{tmsSpecialNum,jdbcType=VARCHAR},
+      PUBLISH_FLAG = #{publishFlag,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      PUBLISHER_NAME = #{publisherName,jdbcType=VARCHAR},
+      FWH_FLOW = #{fwhFlow,jdbcType=VARCHAR},
+      FWH_NAME = #{fwhName,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

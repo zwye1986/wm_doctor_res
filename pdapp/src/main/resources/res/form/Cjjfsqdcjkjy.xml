@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+    <!-- 社区学习情况记录表单 -->
+    <!--
+    {0}:表单所属机构(开关控制)
+    {1}:版本号
+ -->
+    <jsp path="res/form/{3}/{0}/cjjfsqdcjkjy_{1}"/>
+    <shzs_qk_sqsj_cjjfsqdcjkjy ver="1.0">
+        <page  ver="1.0">
+            <item name="social_project" isView="0" remark="项目" multiple="N"/>
+            <item name="social_mainContext" isView="1" remark="主要内容" multiple="N"/>
+            <item name="social_remark" remark="备注" multiple="N"/>
+            <!--<item name="social_joinHomeVisitAndCommunitySurveyAndHealthEducation" remark="参加家访，社区调查，健康教育" multiple="N"/>-->
+        </page>
+    </shzs_qk_sqsj_cjjfsqdcjkjy>
+</jspForm>
+

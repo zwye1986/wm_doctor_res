@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.SysMonthlyReturnDelayInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysMonthlyReturnDelayInfo" >
+    <id column="SMRDI_FLOW" property="smrdiFlow" jdbcType="VARCHAR" />
+    <result column="DATE_MONTH" property="dateMonth" jdbcType="VARCHAR" />
+    <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
+    <result column="RECRUIT_FLOW" property="recruitFlow" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
+    <result column="DOCTOR_TYPE_ID" property="doctorTypeId" jdbcType="VARCHAR" />
+    <result column="DOCTOR_TYPE_NAME" property="doctorTypeName" jdbcType="VARCHAR" />
+    <result column="TRAINING_YEARS" property="trainingYears" jdbcType="VARCHAR" />
+    <result column="TRAINING_TYPE_ID" property="trainingTypeId" jdbcType="VARCHAR" />
+    <result column="TRAINING_TYPE_NAME" property="trainingTypeName" jdbcType="VARCHAR" />
+    <result column="TRAINING_SPE_ID" property="trainingSpeId" jdbcType="VARCHAR" />
+    <result column="TRAINING_SPE_NAME" property="trainingSpeName" jdbcType="VARCHAR" />
+    <result column="SECOND_SPE_ID" property="secondSpeId" jdbcType="VARCHAR" />
+    <result column="SECOND_SPE_NAME" property="secondSpeName" jdbcType="VARCHAR" />
+    <result column="GRADUATION_YEAR" property="graduationYear" jdbcType="VARCHAR" />
+    <result column="TYPE_ID" property="typeId" jdbcType="VARCHAR" />
+    <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+    <result column="POLICY_ID" property="policyId" jdbcType="VARCHAR" />
+    <result column="POLICY_NAME" property="policyName" jdbcType="VARCHAR" />
+    <result column="POLICY" property="policy" jdbcType="VARCHAR" />
+    <result column="REASON_ID" property="reasonId" jdbcType="VARCHAR" />
+    <result column="REASON_NAME" property="reasonName" jdbcType="VARCHAR" />
+    <result column="REASON" property="reason" jdbcType="VARCHAR" />
+    <result column="DISPOSITON" property="dispositon" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="DELAYREASON" property="delayreason" jdbcType="VARCHAR" />
+    <result column="POLICY_TIME" property="policyTime" jdbcType="VARCHAR" />
+    <result column="POLICY_USER_FLOW" property="policyUserFlow" jdbcType="VARCHAR" />
+    <result column="POLICY_USER_NAME" property="policyUserName" jdbcType="VARCHAR" />
+    <result column="AUDIT_TIME" property="auditTime" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS_ID" property="auditStatusId" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS_NAME" property="auditStatusName" jdbcType="VARCHAR" />
+    <result column="AUDIT_USER_FLOW" property="auditUserFlow" jdbcType="VARCHAR" />
+    <result column="AUDIT_USER_NAME" property="auditUserName" jdbcType="VARCHAR" />
+    <result column="AUDIT_OPINION" property="auditOpinion" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SMRDI_FLOW, DATE_MONTH, DOCTOR_FLOW, DOCTOR_NAME, RECRUIT_FLOW, ORG_FLOW, ORG_NAME, 
+    SESSION_NUMBER, DOCTOR_TYPE_ID, DOCTOR_TYPE_NAME, TRAINING_YEARS, TRAINING_TYPE_ID, 
+    TRAINING_TYPE_NAME, TRAINING_SPE_ID, TRAINING_SPE_NAME, SECOND_SPE_ID, SECOND_SPE_NAME, 
+    GRADUATION_YEAR, TYPE_ID, TYPE_NAME, POLICY_ID, POLICY_NAME, POLICY, REASON_ID, REASON_NAME, 
+    REASON, DISPOSITON, REMARK, DELAYREASON, POLICY_TIME, POLICY_USER_FLOW, POLICY_USER_NAME, 
+    AUDIT_TIME, AUDIT_STATUS_ID, AUDIT_STATUS_NAME, AUDIT_USER_FLOW, AUDIT_USER_NAME, 
+    AUDIT_OPINION, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysMonthlyReturnDelayInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+    where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+    where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysMonthlyReturnDelayInfoExample" >
+    delete from PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysMonthlyReturnDelayInfo" >
+    insert into PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO (SMRDI_FLOW, DATE_MONTH, DOCTOR_FLOW, 
+      DOCTOR_NAME, RECRUIT_FLOW, ORG_FLOW, 
+      ORG_NAME, SESSION_NUMBER, DOCTOR_TYPE_ID, 
+      DOCTOR_TYPE_NAME, TRAINING_YEARS, TRAINING_TYPE_ID, 
+      TRAINING_TYPE_NAME, TRAINING_SPE_ID, TRAINING_SPE_NAME, 
+      SECOND_SPE_ID, SECOND_SPE_NAME, GRADUATION_YEAR, 
+      TYPE_ID, TYPE_NAME, POLICY_ID, 
+      POLICY_NAME, POLICY, REASON_ID, 
+      REASON_NAME, REASON, DISPOSITON, 
+      REMARK, DELAYREASON, POLICY_TIME, 
+      POLICY_USER_FLOW, POLICY_USER_NAME, AUDIT_TIME, 
+      AUDIT_STATUS_ID, AUDIT_STATUS_NAME, AUDIT_USER_FLOW, 
+      AUDIT_USER_NAME, AUDIT_OPINION, RECORD_STATUS, 
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+      MODIFY_USER_FLOW)
+    values (#{smrdiFlow,jdbcType=VARCHAR}, #{dateMonth,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, 
+      #{doctorName,jdbcType=VARCHAR}, #{recruitFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, 
+      #{orgName,jdbcType=VARCHAR}, #{sessionNumber,jdbcType=VARCHAR}, #{doctorTypeId,jdbcType=VARCHAR}, 
+      #{doctorTypeName,jdbcType=VARCHAR}, #{trainingYears,jdbcType=VARCHAR}, #{trainingTypeId,jdbcType=VARCHAR}, 
+      #{trainingTypeName,jdbcType=VARCHAR}, #{trainingSpeId,jdbcType=VARCHAR}, #{trainingSpeName,jdbcType=VARCHAR}, 
+      #{secondSpeId,jdbcType=VARCHAR}, #{secondSpeName,jdbcType=VARCHAR}, #{graduationYear,jdbcType=VARCHAR}, 
+      #{typeId,jdbcType=VARCHAR}, #{typeName,jdbcType=VARCHAR}, #{policyId,jdbcType=VARCHAR}, 
+      #{policyName,jdbcType=VARCHAR}, #{policy,jdbcType=VARCHAR}, #{reasonId,jdbcType=VARCHAR}, 
+      #{reasonName,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR}, #{dispositon,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{delayreason,jdbcType=VARCHAR}, #{policyTime,jdbcType=VARCHAR}, 
+      #{policyUserFlow,jdbcType=VARCHAR}, #{policyUserName,jdbcType=VARCHAR}, #{auditTime,jdbcType=VARCHAR}, 
+      #{auditStatusId,jdbcType=VARCHAR}, #{auditStatusName,jdbcType=VARCHAR}, #{auditUserFlow,jdbcType=VARCHAR}, 
+      #{auditUserName,jdbcType=VARCHAR}, #{auditOpinion,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
+      #{modifyUserFlow,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysMonthlyReturnDelayInfo" >
+    insert into PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="smrdiFlow != null" >
+        SMRDI_FLOW,
+      </if>
+      <if test="dateMonth != null" >
+        DATE_MONTH,
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW,
+      </if>
+      <if test="doctorName != null" >
+        DOCTOR_NAME,
+      </if>
+      <if test="recruitFlow != null" >
+        RECRUIT_FLOW,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="sessionNumber != null" >
+        SESSION_NUMBER,
+      </if>
+      <if test="doctorTypeId != null" >
+        DOCTOR_TYPE_ID,
+      </if>
+      <if test="doctorTypeName != null" >
+        DOCTOR_TYPE_NAME,
+      </if>
+      <if test="trainingYears != null" >
+        TRAINING_YEARS,
+      </if>
+      <if test="trainingTypeId != null" >
+        TRAINING_TYPE_ID,
+      </if>
+      <if test="trainingTypeName != null" >
+        TRAINING_TYPE_NAME,
+      </if>
+      <if test="trainingSpeId != null" >
+        TRAINING_SPE_ID,
+      </if>
+      <if test="trainingSpeName != null" >
+        TRAINING_SPE_NAME,
+      </if>
+      <if test="secondSpeId != null" >
+        SECOND_SPE_ID,
+      </if>
+      <if test="secondSpeName != null" >
+        SECOND_SPE_NAME,
+      </if>
+      <if test="graduationYear != null" >
+        GRADUATION_YEAR,
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID,
+      </if>
+      <if test="typeName != null" >
+        TYPE_NAME,
+      </if>
+      <if test="policyId != null" >
+        POLICY_ID,
+      </if>
+      <if test="policyName != null" >
+        POLICY_NAME,
+      </if>
+      <if test="policy != null" >
+        POLICY,
+      </if>
+      <if test="reasonId != null" >
+        REASON_ID,
+      </if>
+      <if test="reasonName != null" >
+        REASON_NAME,
+      </if>
+      <if test="reason != null" >
+        REASON,
+      </if>
+      <if test="dispositon != null" >
+        DISPOSITON,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="delayreason != null" >
+        DELAYREASON,
+      </if>
+      <if test="policyTime != null" >
+        POLICY_TIME,
+      </if>
+      <if test="policyUserFlow != null" >
+        POLICY_USER_FLOW,
+      </if>
+      <if test="policyUserName != null" >
+        POLICY_USER_NAME,
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME,
+      </if>
+      <if test="auditStatusId != null" >
+        AUDIT_STATUS_ID,
+      </if>
+      <if test="auditStatusName != null" >
+        AUDIT_STATUS_NAME,
+      </if>
+      <if test="auditUserFlow != null" >
+        AUDIT_USER_FLOW,
+      </if>
+      <if test="auditUserName != null" >
+        AUDIT_USER_NAME,
+      </if>
+      <if test="auditOpinion != null" >
+        AUDIT_OPINION,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="smrdiFlow != null" >
+        #{smrdiFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="dateMonth != null" >
+        #{dateMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null" >
+        #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitFlow != null" >
+        #{recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionNumber != null" >
+        #{sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTypeId != null" >
+        #{doctorTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTypeName != null" >
+        #{doctorTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingYears != null" >
+        #{trainingYears,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingTypeId != null" >
+        #{trainingTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingTypeName != null" >
+        #{trainingTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingSpeId != null" >
+        #{trainingSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingSpeName != null" >
+        #{trainingSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="secondSpeId != null" >
+        #{secondSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="secondSpeName != null" >
+        #{secondSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationYear != null" >
+        #{graduationYear,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="policyId != null" >
+        #{policyId,jdbcType=VARCHAR},
+      </if>
+      <if test="policyName != null" >
+        #{policyName,jdbcType=VARCHAR},
+      </if>
+      <if test="policy != null" >
+        #{policy,jdbcType=VARCHAR},
+      </if>
+      <if test="reasonId != null" >
+        #{reasonId,jdbcType=VARCHAR},
+      </if>
+      <if test="reasonName != null" >
+        #{reasonName,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="dispositon != null" >
+        #{dispositon,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="delayreason != null" >
+        #{delayreason,jdbcType=VARCHAR},
+      </if>
+      <if test="policyTime != null" >
+        #{policyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="policyUserFlow != null" >
+        #{policyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="policyUserName != null" >
+        #{policyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusId != null" >
+        #{auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusName != null" >
+        #{auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserFlow != null" >
+        #{auditUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserName != null" >
+        #{auditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditOpinion != null" >
+        #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysMonthlyReturnDelayInfoExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+    <set >
+      <if test="record.smrdiFlow != null" >
+        SMRDI_FLOW = #{record.smrdiFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dateMonth != null" >
+        DATE_MONTH = #{record.dateMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorFlow != null" >
+        DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorName != null" >
+        DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitFlow != null" >
+        RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionNumber != null" >
+        SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorTypeId != null" >
+        DOCTOR_TYPE_ID = #{record.doctorTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorTypeName != null" >
+        DOCTOR_TYPE_NAME = #{record.doctorTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingYears != null" >
+        TRAINING_YEARS = #{record.trainingYears,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingTypeId != null" >
+        TRAINING_TYPE_ID = #{record.trainingTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingTypeName != null" >
+        TRAINING_TYPE_NAME = #{record.trainingTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingSpeId != null" >
+        TRAINING_SPE_ID = #{record.trainingSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingSpeName != null" >
+        TRAINING_SPE_NAME = #{record.trainingSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondSpeId != null" >
+        SECOND_SPE_ID = #{record.secondSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondSpeName != null" >
+        SECOND_SPE_NAME = #{record.secondSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationYear != null" >
+        GRADUATION_YEAR = #{record.graduationYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeId != null" >
+        TYPE_ID = #{record.typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeName != null" >
+        TYPE_NAME = #{record.typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.policyId != null" >
+        POLICY_ID = #{record.policyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.policyName != null" >
+        POLICY_NAME = #{record.policyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.policy != null" >
+        POLICY = #{record.policy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reasonId != null" >
+        REASON_ID = #{record.reasonId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reasonName != null" >
+        REASON_NAME = #{record.reasonName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reason != null" >
+        REASON = #{record.reason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dispositon != null" >
+        DISPOSITON = #{record.dispositon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.delayreason != null" >
+        DELAYREASON = #{record.delayreason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.policyTime != null" >
+        POLICY_TIME = #{record.policyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.policyUserFlow != null" >
+        POLICY_USER_FLOW = #{record.policyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.policyUserName != null" >
+        POLICY_USER_NAME = #{record.policyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditTime != null" >
+        AUDIT_TIME = #{record.auditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditStatusId != null" >
+        AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditStatusName != null" >
+        AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditUserFlow != null" >
+        AUDIT_USER_FLOW = #{record.auditUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditUserName != null" >
+        AUDIT_USER_NAME = #{record.auditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditOpinion != null" >
+        AUDIT_OPINION = #{record.auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+    set SMRDI_FLOW = #{record.smrdiFlow,jdbcType=VARCHAR},
+      DATE_MONTH = #{record.dateMonth,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
+      RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      DOCTOR_TYPE_ID = #{record.doctorTypeId,jdbcType=VARCHAR},
+      DOCTOR_TYPE_NAME = #{record.doctorTypeName,jdbcType=VARCHAR},
+      TRAINING_YEARS = #{record.trainingYears,jdbcType=VARCHAR},
+      TRAINING_TYPE_ID = #{record.trainingTypeId,jdbcType=VARCHAR},
+      TRAINING_TYPE_NAME = #{record.trainingTypeName,jdbcType=VARCHAR},
+      TRAINING_SPE_ID = #{record.trainingSpeId,jdbcType=VARCHAR},
+      TRAINING_SPE_NAME = #{record.trainingSpeName,jdbcType=VARCHAR},
+      SECOND_SPE_ID = #{record.secondSpeId,jdbcType=VARCHAR},
+      SECOND_SPE_NAME = #{record.secondSpeName,jdbcType=VARCHAR},
+      GRADUATION_YEAR = #{record.graduationYear,jdbcType=VARCHAR},
+      TYPE_ID = #{record.typeId,jdbcType=VARCHAR},
+      TYPE_NAME = #{record.typeName,jdbcType=VARCHAR},
+      POLICY_ID = #{record.policyId,jdbcType=VARCHAR},
+      POLICY_NAME = #{record.policyName,jdbcType=VARCHAR},
+      POLICY = #{record.policy,jdbcType=VARCHAR},
+      REASON_ID = #{record.reasonId,jdbcType=VARCHAR},
+      REASON_NAME = #{record.reasonName,jdbcType=VARCHAR},
+      REASON = #{record.reason,jdbcType=VARCHAR},
+      DISPOSITON = #{record.dispositon,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      DELAYREASON = #{record.delayreason,jdbcType=VARCHAR},
+      POLICY_TIME = #{record.policyTime,jdbcType=VARCHAR},
+      POLICY_USER_FLOW = #{record.policyUserFlow,jdbcType=VARCHAR},
+      POLICY_USER_NAME = #{record.policyUserName,jdbcType=VARCHAR},
+      AUDIT_TIME = #{record.auditTime,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      AUDIT_USER_FLOW = #{record.auditUserFlow,jdbcType=VARCHAR},
+      AUDIT_USER_NAME = #{record.auditUserName,jdbcType=VARCHAR},
+      AUDIT_OPINION = #{record.auditOpinion,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysMonthlyReturnDelayInfo" >
+    update PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+    <set >
+      <if test="dateMonth != null" >
+        DATE_MONTH = #{dateMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null" >
+        DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitFlow != null" >
+        RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionNumber != null" >
+        SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTypeId != null" >
+        DOCTOR_TYPE_ID = #{doctorTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTypeName != null" >
+        DOCTOR_TYPE_NAME = #{doctorTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingYears != null" >
+        TRAINING_YEARS = #{trainingYears,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingTypeId != null" >
+        TRAINING_TYPE_ID = #{trainingTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingTypeName != null" >
+        TRAINING_TYPE_NAME = #{trainingTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingSpeId != null" >
+        TRAINING_SPE_ID = #{trainingSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingSpeName != null" >
+        TRAINING_SPE_NAME = #{trainingSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="secondSpeId != null" >
+        SECOND_SPE_ID = #{secondSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="secondSpeName != null" >
+        SECOND_SPE_NAME = #{secondSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationYear != null" >
+        GRADUATION_YEAR = #{graduationYear,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID = #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="policyId != null" >
+        POLICY_ID = #{policyId,jdbcType=VARCHAR},
+      </if>
+      <if test="policyName != null" >
+        POLICY_NAME = #{policyName,jdbcType=VARCHAR},
+      </if>
+      <if test="policy != null" >
+        POLICY = #{policy,jdbcType=VARCHAR},
+      </if>
+      <if test="reasonId != null" >
+        REASON_ID = #{reasonId,jdbcType=VARCHAR},
+      </if>
+      <if test="reasonName != null" >
+        REASON_NAME = #{reasonName,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        REASON = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="dispositon != null" >
+        DISPOSITON = #{dispositon,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="delayreason != null" >
+        DELAYREASON = #{delayreason,jdbcType=VARCHAR},
+      </if>
+      <if test="policyTime != null" >
+        POLICY_TIME = #{policyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="policyUserFlow != null" >
+        POLICY_USER_FLOW = #{policyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="policyUserName != null" >
+        POLICY_USER_NAME = #{policyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME = #{auditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusId != null" >
+        AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusName != null" >
+        AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserFlow != null" >
+        AUDIT_USER_FLOW = #{auditUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserName != null" >
+        AUDIT_USER_NAME = #{auditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditOpinion != null" >
+        AUDIT_OPINION = #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysMonthlyReturnDelayInfo" >
+    update PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+    set DATE_MONTH = #{dateMonth,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      DOCTOR_TYPE_ID = #{doctorTypeId,jdbcType=VARCHAR},
+      DOCTOR_TYPE_NAME = #{doctorTypeName,jdbcType=VARCHAR},
+      TRAINING_YEARS = #{trainingYears,jdbcType=VARCHAR},
+      TRAINING_TYPE_ID = #{trainingTypeId,jdbcType=VARCHAR},
+      TRAINING_TYPE_NAME = #{trainingTypeName,jdbcType=VARCHAR},
+      TRAINING_SPE_ID = #{trainingSpeId,jdbcType=VARCHAR},
+      TRAINING_SPE_NAME = #{trainingSpeName,jdbcType=VARCHAR},
+      SECOND_SPE_ID = #{secondSpeId,jdbcType=VARCHAR},
+      SECOND_SPE_NAME = #{secondSpeName,jdbcType=VARCHAR},
+      GRADUATION_YEAR = #{graduationYear,jdbcType=VARCHAR},
+      TYPE_ID = #{typeId,jdbcType=VARCHAR},
+      TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      POLICY_ID = #{policyId,jdbcType=VARCHAR},
+      POLICY_NAME = #{policyName,jdbcType=VARCHAR},
+      POLICY = #{policy,jdbcType=VARCHAR},
+      REASON_ID = #{reasonId,jdbcType=VARCHAR},
+      REASON_NAME = #{reasonName,jdbcType=VARCHAR},
+      REASON = #{reason,jdbcType=VARCHAR},
+      DISPOSITON = #{dispositon,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      DELAYREASON = #{delayreason,jdbcType=VARCHAR},
+      POLICY_TIME = #{policyTime,jdbcType=VARCHAR},
+      POLICY_USER_FLOW = #{policyUserFlow,jdbcType=VARCHAR},
+      POLICY_USER_NAME = #{policyUserName,jdbcType=VARCHAR},
+      AUDIT_TIME = #{auditTime,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      AUDIT_USER_FLOW = #{auditUserFlow,jdbcType=VARCHAR},
+      AUDIT_USER_NAME = #{auditUserName,jdbcType=VARCHAR},
+      AUDIT_OPINION = #{auditOpinion,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

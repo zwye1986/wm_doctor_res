@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.jswjw.ext.SchRotationDeptExtMapper">
+	<resultMap id="deptMap" type="hashmap">
+		<result column="record_flow" property="recordFlow" javaType="java.lang.String" />
+		<result column="stage_name" property="stageName" javaType="java.lang.String" />
+		<result column="g_oradinal" property="gOradinal" javaType="java.lang.String" />
+		<result column="dept_name" property="deptName" javaType="java.lang.String" />
+		<result column="sch_month" property="schMonth" javaType="java.lang.String" />
+		<result column="is_required" property="isRequired" javaType="java.lang.String" />
+		<result column="real_month" property="realMonth" javaType="java.lang.String" />
+		<result column="dept_note" property="deptNote" javaType="java.lang.String" />
+		<result column="is_current" property="isCurrent" javaType="java.lang.String" />
+		<result column="RESULT_FLOW" property="resultFlow" javaType="java.lang.String" />
+	</resultMap>
+	<resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SchRotationDept">
+		<id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
+		<result column="ROTATION_FLOW" jdbcType="VARCHAR" property="rotationFlow" />
+		<result column="DEPT_FLOW" jdbcType="VARCHAR" property="deptFlow" />
+		<result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+		<result column="SCH_DEPT_FLOW" jdbcType="VARCHAR" property="schDeptFlow" />
+		<result column="SCH_DEPT_NAME" jdbcType="VARCHAR" property="schDeptName" />
+		<result column="SCH_MONTH" jdbcType="VARCHAR" property="schMonth" />
+		<result column="IS_REQUIRED" jdbcType="VARCHAR" property="isRequired" />
+		<result column="GROUP_FLOW" jdbcType="VARCHAR" property="groupFlow" />
+		<result column="DEPT_NOTE" jdbcType="VARCHAR" property="deptNote" />
+		<result column="ORDINAL" jdbcType="DECIMAL" property="ordinal" />
+		<result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
+		<result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+		<result column="CREATE_USER_FLOW" jdbcType="VARCHAR" property="createUserFlow" />
+		<result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime" />
+		<result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
+		<result column="ORG_FLOW" jdbcType="VARCHAR" property="orgFlow" />
+		<result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
+		<result column="STANDARD_DEPT_ID" jdbcType="VARCHAR" property="standardDeptId" />
+		<result column="STANDARD_DEPT_NAME" jdbcType="VARCHAR" property="standardDeptName" />
+		<result column="SESSION_NUMBER" jdbcType="VARCHAR" property="sessionNumber" />
+		<result column="PRACTIC_OR_THEORY" jdbcType="VARCHAR" property="practicOrTheory" />
+	</resultMap>
+	
+	<select id="searchSchRotationDept" resultMap="deptMap" parameterType="java.util.Map">
+		<!--select *FROM (-->
+		<!--select-->
+		<!--record_flow,-->
+		<!--(-->
+		<!--select-->
+		<!--sch_stage_name||group_name-->
+		<!--from-->
+		<!--sch_rotation_group-->
+		<!--where rotation_flow = srd.rotation_flow-->
+		<!--and record_status='Y'-->
+		<!--and srd.group_flow = group_flow-->
+		<!--) stage_name,-->
+		<!--(-->
+		<!--select-->
+		<!--ordinal-->
+		<!--from sch_rotation_group-->
+		<!--where rotation_flow = srd.rotation_flow-->
+		<!--and record_status='Y'-->
+		<!--and srd.group_flow=group_flow-->
+		<!--) g_oradinal,-->
+		<!--ordinal,-->
+		<!--standard_dept_name dept_name,-->
+		<!--<if test='isReduction!=null and isReduction=="Y"'>-->
+			<!--(-->
+			<!--select sch_month-->
+			<!--from sch_doctor_dept sdd-->
+			<!--where sdd.record_status='Y'-->
+			<!--and doctor_flow = #{doctorFlow}-->
+			<!--and sdd.rotation_flow = #{rotationFlow}-->
+			<!--and sdd.group_flow = srd.group_flow-->
+			<!--and sdd.standard_dept_id = srd.standard_dept_id-->
+			<!--and exists ( select null-->
+			<!--from res_doctor where doctor_flow=#{doctorFlow} and sdd.org_flow=org_flow-->
+			<!--)-->
+			<!--) sch_month,-->
+		<!--</if>-->
+		<!--<if test='isReduction==null or isReduction=="N"'>-->
+			<!--sch_month,-->
+		<!--</if>-->
+		<!--is_required,-->
+		<!--(select sum(to_date(sch_end_date,'yyyy-mm-dd')-to_date(sch_start_date,'yyyy-mm-dd')+1)-->
+		<!--from sch_arrange_result sar-->
+		<!--where record_status = 'Y'-->
+		<!--and sar.standard_group_flow = srd.group_flow-->
+		<!--and sar.standard_dept_id = srd.standard_dept_id-->
+		<!--and sar.doctor_flow = #{doctorFlow}-->
+		<!--) real_month,-->
+		<!--dept_note,-->
+		<!--(-->
+		<!--select 'Y'-->
+		<!--from sch_arrange_result sar-->
+		<!--where record_status = 'Y'-->
+		<!--and sar.standard_group_flow = srd.group_flow-->
+		<!--and sar.standard_dept_id = srd.standard_dept_id-->
+		<!--and sar.doctor_flow = #{doctorFlow}-->
+		<!--and sch_start_date <![CDATA[<]]>= to_char(sysdate,'yyyy-mm-dd')-->
+		<!--and sch_end_date >= to_char(sysdate,'yyyy-mm-dd')-->
+		<!--and rownum = 1-->
+
+		<!--) is_current,-->
+		<!--(-->
+		<!--select min(sch_start_date) mind-->
+		<!--from sch_arrange_result sar-->
+		<!--where record_status = 'Y'-->
+		<!--and sar.standard_group_flow = srd.group_flow-->
+		<!--and sar.standard_dept_id = srd.standard_dept_id-->
+		<!--and sar.doctor_flow = #{doctorFlow}-->
+		<!--) mind-->
+		<!--, (-->
+		<!--SELECT RESULT_FLOW-->
+		<!--FROM sch_arrange_result sar-->
+		<!--WHERE record_status = 'Y'-->
+		<!--AND sar.standard_group_flow = srd.group_flow-->
+		<!--AND sar.standard_dept_id = srd.standard_dept_id-->
+		<!--AND sar.doctor_flow = #{doctorFlow}-->
+		<!--and rownum = 1-->
+		<!--) AS RESULT_FLOW-->
+		<!--from sch_rotation_dept srd-->
+		<!--where ROTATION_FLOW=#{rotationFlow}-->
+		<!--and record_status='Y'-->
+		<!--and org_flow is null-->
+		<!--<if test='isReduction!=null and isReduction=="Y"'>-->
+			<!--and exists (-->
+			<!--select null-->
+			<!--from sch_doctor_dept sdd-->
+			<!--where sdd.record_status='Y'-->
+			<!--and doctor_flow = #{doctorFlow}-->
+			<!--and sdd.rotation_flow = #{rotationFlow}-->
+			<!--and sdd.group_flow = srd.group_flow-->
+			<!--and sdd.standard_dept_id = srd.standard_dept_id-->
+			<!--)-->
+		<!--</if>-->
+		<!--order by mind,to_number(g_oradinal),ordinal-->
+		<!--)-->
+		<!--order by is_current,mind,to_number(g_oradinal),ordinal-->
+
+		SELECT
+			RECORD_FLOW,
+			STAGE_NAME,
+			G_ORADINAL,
+			ORDINAL,
+			substr(DEPT_NAME,instr(DEPT_NAME,'.',-1)+1) as DEPT_NAME,
+			SCH_MONTH,
+			IS_REQUIRED,
+			NVL(REAL_MONTH, 0) AS REAL_MONTH,
+			DEPT_NOTE,
+			IS_CURRENT,
+			MIND,
+			RESULT_FLOW
+		FROM
+		(
+			SELECT
+				RECORD_FLOW,
+				G.STAGE_NAME,
+				G.G_ORADINAL,
+				ORDINAL,
+				STANDARD_DEPT_NAME AS DEPT_NAME,
+				<if test='isReduction!=null and isReduction=="Y"'>
+					(
+					SELECT SCH_MONTH
+					FROM SCH_DOCTOR_DEPT SDD
+					WHERE SDD.RECORD_STATUS='Y'
+					AND DOCTOR_FLOW = #{doctorFlow}
+					AND SDD.ROTATION_FLOW = #{rotationFlow}
+					AND SDD.GROUP_FLOW = SRD.GROUP_FLOW
+					AND SDD.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID
+					AND EXISTS ( SELECT NULL
+					FROM RES_DOCTOR WHERE DOCTOR_FLOW=#{doctorFlow} AND SDD.ORG_FLOW=ORG_FLOW
+					)
+					) SCH_MONTH,
+				</if>
+				<if test='isReduction==null or isReduction=="N"'>
+					SCH_MONTH,
+				</if>
+				IS_REQUIRED,
+				R.REAL_MONTH,
+				DEPT_NOTE,
+				(
+					SELECT
+						'Y'
+					FROM
+						SCH_ARRANGE_RESULT SAR
+					WHERE
+						RECORD_STATUS = 'Y'
+					AND SAR.STANDARD_GROUP_FLOW = SRD.GROUP_FLOW
+					AND SAR.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID
+					AND SAR.DOCTOR_FLOW = #{doctorFlow}
+					AND SCH_START_DATE <![CDATA[<]]>= TO_CHAR (SYSDATE, 'yyyy-mm-dd')
+					AND SCH_END_DATE >= TO_CHAR (SYSDATE, 'yyyy-mm-dd')
+					AND ROWNUM = 1
+				) AS IS_CURRENT,
+				R.MIND,
+				R.RESULT_FLOW
+			FROM
+				SCH_ROTATION_DEPT SRD
+			LEFT JOIN (
+				SELECT
+					STANDARD_GROUP_FLOW,
+					STANDARD_DEPT_ID,
+					SUM (
+						TO_DATE (SCH_END_DATE, 'yyyy-mm-dd') - TO_DATE (
+						SCH_START_DATE,
+						'yyyy-mm-dd'
+						) + 1
+					) AS REAL_MONTH,
+					MIN (SCH_START_DATE) AS MIND,
+					MIN (RESULT_FLOW) AS RESULT_FLOW
+				FROM
+					SCH_ARRANGE_RESULT
+				WHERE
+					RECORD_STATUS = 'Y'
+				AND DOCTOR_FLOW = #{doctorFlow}
+				GROUP BY
+					STANDARD_GROUP_FLOW,
+					STANDARD_DEPT_ID
+			) R ON R.STANDARD_GROUP_FLOW = SRD.GROUP_FLOW
+			AND R.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID,
+			(
+				SELECT
+					GROUP_FLOW,
+					SCH_STAGE_NAME || GROUP_NAME AS STAGE_NAME,
+					ORDINAL AS G_ORADINAL
+				FROM
+					SCH_ROTATION_GROUP
+				WHERE
+					RECORD_STATUS = 'Y'
+				AND ROTATION_FLOW = #{rotationFlow}
+			) G
+			WHERE
+				G.GROUP_FLOW = SRD.GROUP_FLOW
+			AND ROTATION_FLOW = #{rotationFlow}
+			AND RECORD_STATUS = 'Y'
+			AND ORG_FLOW IS NULL
+			<if test='isReduction!=null and isReduction=="Y"'>
+				AND EXISTS (
+					SELECT 1
+					FROM SCH_DOCTOR_DEPT SDD
+					WHERE SDD.RECORD_STATUS = 'Y'
+					AND DOCTOR_FLOW = #{doctorFlow}
+					AND SDD.ROTATION_FLOW = #{rotationFlow}
+					AND SDD.GROUP_FLOW = SRD.GROUP_FLOW
+					AND SDD.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID
+				)
+			</if>
+			ORDER BY
+				MIND,
+				TO_NUMBER (G_ORADINAL),
+				ORDINAL
+			)
+		ORDER BY
+			IS_CURRENT,
+			MIND,
+			TO_NUMBER (G_ORADINAL),
+			ORDINAL
+	</select>
+
+
+	<select id="searchSchRotationDeptCount" resultType="java.lang.Integer">
+		SELECT COUNT(0)
+		FROM (
+		SELECT
+		RECORD_FLOW,
+		STAGE_NAME,
+		G_ORADINAL,
+		ORDINAL,
+		substr(DEPT_NAME,instr(DEPT_NAME,'.',-1)+1) as DEPT_NAME,
+		SCH_MONTH,
+		IS_REQUIRED,
+		NVL(REAL_MONTH, 0) AS REAL_MONTH,
+		DEPT_NOTE,
+		IS_CURRENT,
+		MIND,
+		RESULT_FLOW
+		FROM
+		(
+		SELECT
+		RECORD_FLOW,
+		G.STAGE_NAME,
+		G.G_ORADINAL,
+		ORDINAL,
+		STANDARD_DEPT_NAME AS DEPT_NAME,
+		<if test='isReduction!=null and isReduction=="Y"'>(
+			SELECT SCH_MONTH
+			FROM SCH_DOCTOR_DEPT SDD
+			WHERE SDD.RECORD_STATUS='Y'
+			AND
+			DOCTOR_FLOW = #{doctorFlow}
+			AND SDD.ROTATION_FLOW = #{rotationFlow}
+			AND SDD.GROUP_FLOW = SRD.GROUP_FLOW
+			AND SDD.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID
+			AND EXISTS ( SELECT NULL
+			FROM RES_DOCTOR WHERE DOCTOR_FLOW=#{doctorFlow} AND SDD.ORG_FLOW=ORG_FLOW
+			)
+			) SCH_MONTH,
+		</if>
+		<if test='isReduction==null or isReduction=="N"'>SCH_MONTH,
+		</if>
+			IS_REQUIRED,
+			R.REAL_MONTH,
+			DEPT_NOTE,
+			(
+			SELECT
+			'Y'
+			FROM
+			SCH_ARRANGE_RESULT SAR
+			WHERE
+			RECORD_STATUS = 'Y'
+			AND SAR.STANDARD_GROUP_FLOW = SRD.GROUP_FLOW
+			AND SAR.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID
+			AND SAR.DOCTOR_FLOW = #{doctorFlow}
+			AND SCH_START_DATE <![CDATA[<]]>= TO_CHAR (SYSDATE, 'yyyy-mm-dd')
+			AND SCH_END_DATE >= TO_CHAR (SYSDATE, 'yyyy-mm-dd')
+			AND ROWNUM = 1
+			) AS IS_CURRENT,
+			R.MIND,
+			R.RESULT_FLOW
+			FROM
+			SCH_ROTATION_DEPT SRD
+			LEFT JOIN (
+			SELECT
+			STANDARD_GROUP_FLOW,
+			STANDARD_DEPT_ID,
+			SUM (
+			TO_DATE (SCH_END_DATE, 'yyyy-mm-dd') - TO_DATE (
+			SCH_START_DATE,
+			'yyyy-mm-dd'
+			) + 1
+			) AS REAL_MONTH,
+			MIN (SCH_START_DATE) AS MIND,
+			MIN (RESULT_FLOW) AS RESULT_FLOW
+			FROM
+			SCH_ARRANGE_RESULT
+			WHERE
+			RECORD_STATUS = 'Y'
+			AND DOCTOR_FLOW = #{doctorFlow}
+			GROUP BY
+			STANDARD_GROUP_FLOW,
+			STANDARD_DEPT_ID
+			) R ON R.STANDARD_GROUP_FLOW = SRD.GROUP_FLOW
+			AND R.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID,
+			(
+			SELECT
+			GROUP_FLOW,
+			SCH_STAGE_NAME || GROUP_NAME AS STAGE_NAME,
+			ORDINAL AS G_ORADINAL
+			FROM
+			SCH_ROTATION_GROUP
+			WHERE
+			RECORD_STATUS = 'Y'
+			AND ROTATION_FLOW = #{rotationFlow}
+			) G
+			WHERE
+			G.GROUP_FLOW = SRD.GROUP_FLOW
+			AND ROTATION_FLOW = #{rotationFlow}
+			AND RECORD_STATUS = 'Y'
+			AND ORG_FLOW IS NULL
+			<if test='isReduction!=null and isReduction=="Y"'>
+				AND EXISTS (
+				SELECT 1
+				FROM SCH_DOCTOR_DEPT SDD
+				WHERE SDD.RECORD_STATUS = 'Y'
+				AND DOCTOR_FLOW = #{doctorFlow}
+				AND SDD.ROTATION_FLOW = #{rotationFlow}
+				AND SDD.GROUP_FLOW = SRD.GROUP_FLOW
+				AND SDD.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID
+				)
+			</if>
+			ORDER BY
+			MIND,
+			TO_NUMBER (G_ORADINAL),
+			ORDINAL
+			)
+			ORDER BY
+			IS_CURRENT,
+			MIND,
+			TO_NUMBER (G_ORADINAL),
+			ORDINAL
+		) deptCount
+	</select>
+
+	<select id="searchRotationDeptName" parameterType="string" resultType="string">
+		select substr(STANDARD_DEPT_NAME,instr(STANDARD_DEPT_NAME,'.',-1)+1) as DEPT_NAME
+		from SCH_ROTATION_DEPT
+		where record_flow = #{deptFlow}
+	</select>
+
+
+	<select id="searchByDoctorAndRotationFlow" parameterType="string" resultType="string">
+		SELECT SUM(SCH_MONTH)
+		FROM SCH_ARRANGE_RESULT
+		WHERE DOCTOR_FLOW = #{doctorFlow}
+		AND ROTATION_FLOW = #{rotationFlow}
+		AND BASE_AUDIT IN ('Passed','user')
+		AND RECORD_STATUS = 'Y'
+	</select>
+
+	<!-- 查询学员减免信息数量 -->
+	<select id="countDoctorSchRotationDept" parameterType="String" resultType="int">
+		SELECT
+			COUNT(1)
+		FROM
+			SCH_DOCTOR_DEPT
+		WHERE
+			RECORD_STATUS = 'Y'
+		AND DOCTOR_FLOW = #{doctorFlow}
+		AND ROTATION_FLOW = #{rotationFlow}
+	</select>
+
+	<select id="selectByExampleTwo" parameterType="com.pinde.sci.model.mo.SchRotationDeptExample" resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		RECORD_FLOW,SCH_MONTH,GROUP_FLOW,STANDARD_DEPT_ID
+		from PDSCI.SCH_ROTATION_DEPT
+		<if test="_parameter != null">
+			<where>
+				<foreach collection="oredCriteria" item="criteria" separator="or">
+					<if test="criteria.valid">
+						<trim prefix="(" prefixOverrides="and" suffix=")">
+							<foreach collection="criteria.criteria" item="criterion">
+								<choose>
+									<when test="criterion.noValue">
+										and ${criterion.condition}
+									</when>
+									<when test="criterion.singleValue">
+										and ${criterion.condition} #{criterion.value}
+									</when>
+									<when test="criterion.betweenValue">
+										and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+									</when>
+									<when test="criterion.listValue">
+										and ${criterion.condition}
+										<foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+											#{listItem}
+										</foreach>
+									</when>
+								</choose>
+							</foreach>
+						</trim>
+					</if>
+				</foreach>
+			</where>
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+</mapper>

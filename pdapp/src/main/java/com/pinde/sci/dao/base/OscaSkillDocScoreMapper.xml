@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.OscaSkillDocScoreMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.OscaSkillDocScore" >
+    <id column="SCORE_FLOW" property="scoreFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
+    <result column="RECORD_YEAR" property="recordYear" jdbcType="CHAR" />
+    <result column="ROOM_RECORD_FLOW" property="roomRecordFlow" jdbcType="VARCHAR" />
+    <result column="ROOM_FLOW" property="roomFlow" jdbcType="VARCHAR" />
+    <result column="ROOM_NAME" property="roomName" jdbcType="VARCHAR" />
+    <result column="CLINICAL_FLOW" property="clinicalFlow" jdbcType="VARCHAR" />
+    <result column="CLINICAL_NAME" property="clinicalName" jdbcType="VARCHAR" />
+    <result column="STATION_FLOW" property="stationFlow" jdbcType="VARCHAR" />
+    <result column="STATION_NAME" property="stationName" jdbcType="VARCHAR" />
+    <result column="IS_HAVE_FROM" property="isHaveFrom" jdbcType="CHAR" />
+    <result column="FROM_FLOW" property="fromFlow" jdbcType="VARCHAR" />
+    <result column="FROM_NAME" property="fromName" jdbcType="VARCHAR" />
+    <result column="FROM_TYPE_ID" property="fromTypeId" jdbcType="CHAR" />
+    <result column="FROM_URL" property="fromUrl" jdbcType="VARCHAR" />
+    <result column="EXAM_SCORE" property="examScore" jdbcType="VARCHAR" />
+    <result column="STATUS_ID" property="statusId" jdbcType="VARCHAR" />
+    <result column="STATUS_NAME" property="statusName" jdbcType="VARCHAR" />
+    <result column="PARTNER_FLOW" property="partnerFlow" jdbcType="VARCHAR" />
+    <result column="PARTNER_NAME" property="partnerName" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="SIGIN_IMAGE" property="siginImage" jdbcType="VARCHAR" />
+    <result column="IS_REQUIRED" property="isRequired" jdbcType="VARCHAR" />
+    <result column="FROM_SCORE" property="fromScore" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.OscaSkillDocScore" extends="BaseResultMap" >
+    <result column="FROM_CONTENT" property="fromContent" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SCORE_FLOW, DOCTOR_FLOW, DOCTOR_NAME, RECORD_YEAR, ROOM_RECORD_FLOW, ROOM_FLOW, ROOM_NAME, 
+    CLINICAL_FLOW, CLINICAL_NAME, STATION_FLOW, STATION_NAME, IS_HAVE_FROM, FROM_FLOW, 
+    FROM_NAME, FROM_TYPE_ID, FROM_URL, EXAM_SCORE, STATUS_ID, STATUS_NAME, PARTNER_FLOW, 
+    PARTNER_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+    SIGIN_IMAGE, IS_REQUIRED, FROM_SCORE
+  </sql>
+  <sql id="Blob_Column_List" >
+    FROM_CONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.OscaSkillDocScoreExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.OSCA_SKILL_DOC_SCORE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.OscaSkillDocScoreExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.OSCA_SKILL_DOC_SCORE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.OSCA_SKILL_DOC_SCORE
+    where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.OSCA_SKILL_DOC_SCORE
+    where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.OscaSkillDocScoreExample" >
+    delete from PDSCI.OSCA_SKILL_DOC_SCORE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.OscaSkillDocScore" >
+    insert into PDSCI.OSCA_SKILL_DOC_SCORE (SCORE_FLOW, DOCTOR_FLOW, DOCTOR_NAME, 
+      RECORD_YEAR, ROOM_RECORD_FLOW, ROOM_FLOW, 
+      ROOM_NAME, CLINICAL_FLOW, CLINICAL_NAME, 
+      STATION_FLOW, STATION_NAME, IS_HAVE_FROM, 
+      FROM_FLOW, FROM_NAME, FROM_TYPE_ID, 
+      FROM_URL, EXAM_SCORE, STATUS_ID, 
+      STATUS_NAME, PARTNER_FLOW, PARTNER_NAME, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW, SIGIN_IMAGE, 
+      IS_REQUIRED, FROM_SCORE, FROM_CONTENT
+      )
+    values (#{scoreFlow,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, 
+      #{recordYear,jdbcType=CHAR}, #{roomRecordFlow,jdbcType=VARCHAR}, #{roomFlow,jdbcType=VARCHAR}, 
+      #{roomName,jdbcType=VARCHAR}, #{clinicalFlow,jdbcType=VARCHAR}, #{clinicalName,jdbcType=VARCHAR}, 
+      #{stationFlow,jdbcType=VARCHAR}, #{stationName,jdbcType=VARCHAR}, #{isHaveFrom,jdbcType=CHAR}, 
+      #{fromFlow,jdbcType=VARCHAR}, #{fromName,jdbcType=VARCHAR}, #{fromTypeId,jdbcType=CHAR}, 
+      #{fromUrl,jdbcType=VARCHAR}, #{examScore,jdbcType=VARCHAR}, #{statusId,jdbcType=VARCHAR}, 
+      #{statusName,jdbcType=VARCHAR}, #{partnerFlow,jdbcType=VARCHAR}, #{partnerName,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{siginImage,jdbcType=VARCHAR}, 
+      #{isRequired,jdbcType=VARCHAR}, #{fromScore,jdbcType=VARCHAR}, #{fromContent,jdbcType=CLOB}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.OscaSkillDocScore" >
+    insert into PDSCI.OSCA_SKILL_DOC_SCORE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scoreFlow != null" >
+        SCORE_FLOW,
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW,
+      </if>
+      <if test="doctorName != null" >
+        DOCTOR_NAME,
+      </if>
+      <if test="recordYear != null" >
+        RECORD_YEAR,
+      </if>
+      <if test="roomRecordFlow != null" >
+        ROOM_RECORD_FLOW,
+      </if>
+      <if test="roomFlow != null" >
+        ROOM_FLOW,
+      </if>
+      <if test="roomName != null" >
+        ROOM_NAME,
+      </if>
+      <if test="clinicalFlow != null" >
+        CLINICAL_FLOW,
+      </if>
+      <if test="clinicalName != null" >
+        CLINICAL_NAME,
+      </if>
+      <if test="stationFlow != null" >
+        STATION_FLOW,
+      </if>
+      <if test="stationName != null" >
+        STATION_NAME,
+      </if>
+      <if test="isHaveFrom != null" >
+        IS_HAVE_FROM,
+      </if>
+      <if test="fromFlow != null" >
+        FROM_FLOW,
+      </if>
+      <if test="fromName != null" >
+        FROM_NAME,
+      </if>
+      <if test="fromTypeId != null" >
+        FROM_TYPE_ID,
+      </if>
+      <if test="fromUrl != null" >
+        FROM_URL,
+      </if>
+      <if test="examScore != null" >
+        EXAM_SCORE,
+      </if>
+      <if test="statusId != null" >
+        STATUS_ID,
+      </if>
+      <if test="statusName != null" >
+        STATUS_NAME,
+      </if>
+      <if test="partnerFlow != null" >
+        PARTNER_FLOW,
+      </if>
+      <if test="partnerName != null" >
+        PARTNER_NAME,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="siginImage != null" >
+        SIGIN_IMAGE,
+      </if>
+      <if test="isRequired != null" >
+        IS_REQUIRED,
+      </if>
+      <if test="fromScore != null" >
+        FROM_SCORE,
+      </if>
+      <if test="fromContent != null" >
+        FROM_CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scoreFlow != null" >
+        #{scoreFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null" >
+        #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordYear != null" >
+        #{recordYear,jdbcType=CHAR},
+      </if>
+      <if test="roomRecordFlow != null" >
+        #{roomRecordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="roomFlow != null" >
+        #{roomFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="roomName != null" >
+        #{roomName,jdbcType=VARCHAR},
+      </if>
+      <if test="clinicalFlow != null" >
+        #{clinicalFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="clinicalName != null" >
+        #{clinicalName,jdbcType=VARCHAR},
+      </if>
+      <if test="stationFlow != null" >
+        #{stationFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="stationName != null" >
+        #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="isHaveFrom != null" >
+        #{isHaveFrom,jdbcType=CHAR},
+      </if>
+      <if test="fromFlow != null" >
+        #{fromFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="fromName != null" >
+        #{fromName,jdbcType=VARCHAR},
+      </if>
+      <if test="fromTypeId != null" >
+        #{fromTypeId,jdbcType=CHAR},
+      </if>
+      <if test="fromUrl != null" >
+        #{fromUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="examScore != null" >
+        #{examScore,jdbcType=VARCHAR},
+      </if>
+      <if test="statusId != null" >
+        #{statusId,jdbcType=VARCHAR},
+      </if>
+      <if test="statusName != null" >
+        #{statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerFlow != null" >
+        #{partnerFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerName != null" >
+        #{partnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="siginImage != null" >
+        #{siginImage,jdbcType=VARCHAR},
+      </if>
+      <if test="isRequired != null" >
+        #{isRequired,jdbcType=VARCHAR},
+      </if>
+      <if test="fromScore != null" >
+        #{fromScore,jdbcType=VARCHAR},
+      </if>
+      <if test="fromContent != null" >
+        #{fromContent,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.OscaSkillDocScoreExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.OSCA_SKILL_DOC_SCORE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.OSCA_SKILL_DOC_SCORE
+    <set >
+      <if test="record.scoreFlow != null" >
+        SCORE_FLOW = #{record.scoreFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorFlow != null" >
+        DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorName != null" >
+        DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordYear != null" >
+        RECORD_YEAR = #{record.recordYear,jdbcType=CHAR},
+      </if>
+      <if test="record.roomRecordFlow != null" >
+        ROOM_RECORD_FLOW = #{record.roomRecordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomFlow != null" >
+        ROOM_FLOW = #{record.roomFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomName != null" >
+        ROOM_NAME = #{record.roomName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clinicalFlow != null" >
+        CLINICAL_FLOW = #{record.clinicalFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clinicalName != null" >
+        CLINICAL_NAME = #{record.clinicalName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stationFlow != null" >
+        STATION_FLOW = #{record.stationFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stationName != null" >
+        STATION_NAME = #{record.stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isHaveFrom != null" >
+        IS_HAVE_FROM = #{record.isHaveFrom,jdbcType=CHAR},
+      </if>
+      <if test="record.fromFlow != null" >
+        FROM_FLOW = #{record.fromFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromName != null" >
+        FROM_NAME = #{record.fromName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromTypeId != null" >
+        FROM_TYPE_ID = #{record.fromTypeId,jdbcType=CHAR},
+      </if>
+      <if test="record.fromUrl != null" >
+        FROM_URL = #{record.fromUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examScore != null" >
+        EXAM_SCORE = #{record.examScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusId != null" >
+        STATUS_ID = #{record.statusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusName != null" >
+        STATUS_NAME = #{record.statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerFlow != null" >
+        PARTNER_FLOW = #{record.partnerFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerName != null" >
+        PARTNER_NAME = #{record.partnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siginImage != null" >
+        SIGIN_IMAGE = #{record.siginImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isRequired != null" >
+        IS_REQUIRED = #{record.isRequired,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromScore != null" >
+        FROM_SCORE = #{record.fromScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromContent != null" >
+        FROM_CONTENT = #{record.fromContent,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update PDSCI.OSCA_SKILL_DOC_SCORE
+    set SCORE_FLOW = #{record.scoreFlow,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
+      RECORD_YEAR = #{record.recordYear,jdbcType=CHAR},
+      ROOM_RECORD_FLOW = #{record.roomRecordFlow,jdbcType=VARCHAR},
+      ROOM_FLOW = #{record.roomFlow,jdbcType=VARCHAR},
+      ROOM_NAME = #{record.roomName,jdbcType=VARCHAR},
+      CLINICAL_FLOW = #{record.clinicalFlow,jdbcType=VARCHAR},
+      CLINICAL_NAME = #{record.clinicalName,jdbcType=VARCHAR},
+      STATION_FLOW = #{record.stationFlow,jdbcType=VARCHAR},
+      STATION_NAME = #{record.stationName,jdbcType=VARCHAR},
+      IS_HAVE_FROM = #{record.isHaveFrom,jdbcType=CHAR},
+      FROM_FLOW = #{record.fromFlow,jdbcType=VARCHAR},
+      FROM_NAME = #{record.fromName,jdbcType=VARCHAR},
+      FROM_TYPE_ID = #{record.fromTypeId,jdbcType=CHAR},
+      FROM_URL = #{record.fromUrl,jdbcType=VARCHAR},
+      EXAM_SCORE = #{record.examScore,jdbcType=VARCHAR},
+      STATUS_ID = #{record.statusId,jdbcType=VARCHAR},
+      STATUS_NAME = #{record.statusName,jdbcType=VARCHAR},
+      PARTNER_FLOW = #{record.partnerFlow,jdbcType=VARCHAR},
+      PARTNER_NAME = #{record.partnerName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      SIGIN_IMAGE = #{record.siginImage,jdbcType=VARCHAR},
+      IS_REQUIRED = #{record.isRequired,jdbcType=VARCHAR},
+      FROM_SCORE = #{record.fromScore,jdbcType=VARCHAR},
+      FROM_CONTENT = #{record.fromContent,jdbcType=CLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.OSCA_SKILL_DOC_SCORE
+    set SCORE_FLOW = #{record.scoreFlow,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
+      RECORD_YEAR = #{record.recordYear,jdbcType=CHAR},
+      ROOM_RECORD_FLOW = #{record.roomRecordFlow,jdbcType=VARCHAR},
+      ROOM_FLOW = #{record.roomFlow,jdbcType=VARCHAR},
+      ROOM_NAME = #{record.roomName,jdbcType=VARCHAR},
+      CLINICAL_FLOW = #{record.clinicalFlow,jdbcType=VARCHAR},
+      CLINICAL_NAME = #{record.clinicalName,jdbcType=VARCHAR},
+      STATION_FLOW = #{record.stationFlow,jdbcType=VARCHAR},
+      STATION_NAME = #{record.stationName,jdbcType=VARCHAR},
+      IS_HAVE_FROM = #{record.isHaveFrom,jdbcType=CHAR},
+      FROM_FLOW = #{record.fromFlow,jdbcType=VARCHAR},
+      FROM_NAME = #{record.fromName,jdbcType=VARCHAR},
+      FROM_TYPE_ID = #{record.fromTypeId,jdbcType=CHAR},
+      FROM_URL = #{record.fromUrl,jdbcType=VARCHAR},
+      EXAM_SCORE = #{record.examScore,jdbcType=VARCHAR},
+      STATUS_ID = #{record.statusId,jdbcType=VARCHAR},
+      STATUS_NAME = #{record.statusName,jdbcType=VARCHAR},
+      PARTNER_FLOW = #{record.partnerFlow,jdbcType=VARCHAR},
+      PARTNER_NAME = #{record.partnerName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      SIGIN_IMAGE = #{record.siginImage,jdbcType=VARCHAR},
+      IS_REQUIRED = #{record.isRequired,jdbcType=VARCHAR},
+      FROM_SCORE = #{record.fromScore,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.OscaSkillDocScore" >
+    update PDSCI.OSCA_SKILL_DOC_SCORE
+    <set >
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null" >
+        DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordYear != null" >
+        RECORD_YEAR = #{recordYear,jdbcType=CHAR},
+      </if>
+      <if test="roomRecordFlow != null" >
+        ROOM_RECORD_FLOW = #{roomRecordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="roomFlow != null" >
+        ROOM_FLOW = #{roomFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="roomName != null" >
+        ROOM_NAME = #{roomName,jdbcType=VARCHAR},
+      </if>
+      <if test="clinicalFlow != null" >
+        CLINICAL_FLOW = #{clinicalFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="clinicalName != null" >
+        CLINICAL_NAME = #{clinicalName,jdbcType=VARCHAR},
+      </if>
+      <if test="stationFlow != null" >
+        STATION_FLOW = #{stationFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="stationName != null" >
+        STATION_NAME = #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="isHaveFrom != null" >
+        IS_HAVE_FROM = #{isHaveFrom,jdbcType=CHAR},
+      </if>
+      <if test="fromFlow != null" >
+        FROM_FLOW = #{fromFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="fromName != null" >
+        FROM_NAME = #{fromName,jdbcType=VARCHAR},
+      </if>
+      <if test="fromTypeId != null" >
+        FROM_TYPE_ID = #{fromTypeId,jdbcType=CHAR},
+      </if>
+      <if test="fromUrl != null" >
+        FROM_URL = #{fromUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="examScore != null" >
+        EXAM_SCORE = #{examScore,jdbcType=VARCHAR},
+      </if>
+      <if test="statusId != null" >
+        STATUS_ID = #{statusId,jdbcType=VARCHAR},
+      </if>
+      <if test="statusName != null" >
+        STATUS_NAME = #{statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerFlow != null" >
+        PARTNER_FLOW = #{partnerFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerName != null" >
+        PARTNER_NAME = #{partnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="siginImage != null" >
+        SIGIN_IMAGE = #{siginImage,jdbcType=VARCHAR},
+      </if>
+      <if test="isRequired != null" >
+        IS_REQUIRED = #{isRequired,jdbcType=VARCHAR},
+      </if>
+      <if test="fromScore != null" >
+        FROM_SCORE = #{fromScore,jdbcType=VARCHAR},
+      </if>
+      <if test="fromContent != null" >
+        FROM_CONTENT = #{fromContent,jdbcType=CLOB},
+      </if>
+    </set>
+    where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.OscaSkillDocScore" >
+    update PDSCI.OSCA_SKILL_DOC_SCORE
+    set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      RECORD_YEAR = #{recordYear,jdbcType=CHAR},
+      ROOM_RECORD_FLOW = #{roomRecordFlow,jdbcType=VARCHAR},
+      ROOM_FLOW = #{roomFlow,jdbcType=VARCHAR},
+      ROOM_NAME = #{roomName,jdbcType=VARCHAR},
+      CLINICAL_FLOW = #{clinicalFlow,jdbcType=VARCHAR},
+      CLINICAL_NAME = #{clinicalName,jdbcType=VARCHAR},
+      STATION_FLOW = #{stationFlow,jdbcType=VARCHAR},
+      STATION_NAME = #{stationName,jdbcType=VARCHAR},
+      IS_HAVE_FROM = #{isHaveFrom,jdbcType=CHAR},
+      FROM_FLOW = #{fromFlow,jdbcType=VARCHAR},
+      FROM_NAME = #{fromName,jdbcType=VARCHAR},
+      FROM_TYPE_ID = #{fromTypeId,jdbcType=CHAR},
+      FROM_URL = #{fromUrl,jdbcType=VARCHAR},
+      EXAM_SCORE = #{examScore,jdbcType=VARCHAR},
+      STATUS_ID = #{statusId,jdbcType=VARCHAR},
+      STATUS_NAME = #{statusName,jdbcType=VARCHAR},
+      PARTNER_FLOW = #{partnerFlow,jdbcType=VARCHAR},
+      PARTNER_NAME = #{partnerName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      SIGIN_IMAGE = #{siginImage,jdbcType=VARCHAR},
+      IS_REQUIRED = #{isRequired,jdbcType=VARCHAR},
+      FROM_SCORE = #{fromScore,jdbcType=VARCHAR},
+      FROM_CONTENT = #{fromContent,jdbcType=CLOB}
+    where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.OscaSkillDocScore" >
+    update PDSCI.OSCA_SKILL_DOC_SCORE
+    set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      RECORD_YEAR = #{recordYear,jdbcType=CHAR},
+      ROOM_RECORD_FLOW = #{roomRecordFlow,jdbcType=VARCHAR},
+      ROOM_FLOW = #{roomFlow,jdbcType=VARCHAR},
+      ROOM_NAME = #{roomName,jdbcType=VARCHAR},
+      CLINICAL_FLOW = #{clinicalFlow,jdbcType=VARCHAR},
+      CLINICAL_NAME = #{clinicalName,jdbcType=VARCHAR},
+      STATION_FLOW = #{stationFlow,jdbcType=VARCHAR},
+      STATION_NAME = #{stationName,jdbcType=VARCHAR},
+      IS_HAVE_FROM = #{isHaveFrom,jdbcType=CHAR},
+      FROM_FLOW = #{fromFlow,jdbcType=VARCHAR},
+      FROM_NAME = #{fromName,jdbcType=VARCHAR},
+      FROM_TYPE_ID = #{fromTypeId,jdbcType=CHAR},
+      FROM_URL = #{fromUrl,jdbcType=VARCHAR},
+      EXAM_SCORE = #{examScore,jdbcType=VARCHAR},
+      STATUS_ID = #{statusId,jdbcType=VARCHAR},
+      STATUS_NAME = #{statusName,jdbcType=VARCHAR},
+      PARTNER_FLOW = #{partnerFlow,jdbcType=VARCHAR},
+      PARTNER_NAME = #{partnerName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      SIGIN_IMAGE = #{siginImage,jdbcType=VARCHAR},
+      IS_REQUIRED = #{isRequired,jdbcType=VARCHAR},
+      FROM_SCORE = #{fromScore,jdbcType=VARCHAR}
+    where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

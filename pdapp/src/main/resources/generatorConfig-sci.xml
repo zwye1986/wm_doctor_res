@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<classPathEntry location="D:\Repositories\ojdbc6.jar" />
+	<context id="pdappContext">
+
+		<commentGenerator >
+			<property name="suppressAllComments" value="true"/><!-- 是否取消注释 -->
+			<property name="suppressDate" value="true" /> <!-- 是否生成注释代时间戳-->
+		</commentGenerator>
+		<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+			connectionURL="jdbc:oracle:thin:@192.168.2.11:1521:orcl" userId="pdsci"
+			password="123456" />
+		<javaModelGenerator targetPackage="com.pinde.sci.model.mo"
+			targetProject="E:\\Workspace\\Workspace6\\pdapp\\src\\">
+			<property name="rootClass" value="com.pinde.core.model.MybatisObject"/>	
+		</javaModelGenerator>
+		<sqlMapGenerator targetPackage="com.pinde.sci.dao.base"
+			targetProject="E:\\Workspace\\Workspace6\\pdapp\\src\\" />
+		<javaClientGenerator targetPackage="com.pinde.sci.dao.base"
+			targetProject="E:\\Workspace\\Workspace6\\pdapp\\src\\" type="XMLMAPPER" />
+			               
+		<table schema="pdsci" tableName="SYS_USER"></table>
+	</context>
+</generatorConfiguration>

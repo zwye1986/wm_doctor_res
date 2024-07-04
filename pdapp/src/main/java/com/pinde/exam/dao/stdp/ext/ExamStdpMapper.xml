@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.exam.dao.stdp.ext.ExamStdpMapper">
+	<resultMap id="userMap" type="hashmap">
+		<result column="userFlow"  property="userFlow" javaType="java.lang.String"/>
+		<result column="userCode"  property="userCode" javaType="java.lang.String"/>
+		<result column="password"  property="password" javaType="java.lang.String"/>
+		<result column="userName"  property="userName" javaType="java.lang.String"/>
+		<result column="userSex"  property="userSex" javaType="java.lang.String"/>
+		<result column="userMail"  property="userMail" javaType="java.lang.String"/>
+		<result column="roleName"  property="roleName" javaType="java.lang.String"/>
+	</resultMap>
+   	
+	<select id="login" parameterType="string" resultMap="userMap">
+		SELECT 
+			Tbluser.Userid as userFlow,
+			Tbluser.Username as userCode,
+			Tbluser.Userpwd as password,
+	      	Tbluser.Realname as userName,
+		  	(SELECT sexname from Tblsex where sexid=Tbluser.Usersex) as userSex,
+	      	Tbluser.email as userMail,
+	      	(SELECT RoleName from TblRole where RoleNo=Tbluser.RoleNo) as roleName
+		FROM Tbluser  
+		WHERE Tbluser.UserName = #{userCode}
+		AND Tbluser.Userstatus=1 and Tbluser.RoleNo='970F546C-47D4-40B7-AF53-10C6B0F05CFE'
+	</select>
+	
+	<resultMap id="infoMap" type="hashmap">
+		<result column="infoFlow"  property="infoFlow" javaType="java.lang.Integer"/>
+		<result column="title"  property="title" javaType="java.lang.String"/>
+		<result column="content"  property="content" javaType="java.lang.String"/>
+		<result column="date"  property="date" javaType="java.lang.String"/>
+	</resultMap>
+   	
+	<select id="infoList" parameterType="string" resultMap="infoMap">
+		SELECT * FROM ( 
+			SELECT ROW_NUMBER() OVER (order by T.date DESC) AS ROW, T.*  
+			FROM (
+					SELECT 
+						TblNotify.id as infoFlow,
+						TblNotify.No_Title as title,
+						TblNotify.No_Content as content,
+				      	convert(varchar(10),TblNotify.No_Date,120) as date
+					FROM TblNotify  
+				) AS T 
+			) AS TT
+		WHERE TT.ROW BETWEEN ${start} AND ${end}
+		ORDER BY date DESC
+	</select>
+	
+	<resultMap id="examInfoMap" type="hashmap">
+		<result column="examFlow"  property="examFlow" javaType="java.lang.Integer"/>
+		<result column="examName"  property="examName" javaType="java.lang.String"/>
+		<result column="ROW"  property="order" javaType="java.lang.Integer"/>
+		<result column="questionCount"  property="questionCount" javaType="java.lang.String"/>
+		<result column="totalScore"  property="totalScore" javaType="java.lang.String"/>
+		<result column="passScore"  property="passScore" javaType="java.lang.String"/>
+		<result column="answerTime"  property="answerTime" javaType="java.lang.String"/>
+		<result column="startDate"  property="startDate" javaType="java.lang.String"/>
+		<result column="endDate"  property="endDate" javaType="java.lang.String"/>
+	</resultMap>
+   	
+	<select id="examList" parameterType="string" resultMap="examInfoMap">
+	<![CDATA[
+		SELECT * FROM ( 
+			SELECT ROW_NUMBER() OVER (order by T.createTime DESC) AS ROW, T.*  
+			FROM (
+					SELECT 
+						Tblexamsolu.Examsoluid as examFlow,
+						Tblexamsolu.Examsoluname as examName,
+						Tblexamsolu.Examsolunum as questionCount,
+				      	Tblexamsolu.Sumscore as totalScore,
+				      	Tblexamsolu.Examsolupass as passScore,
+				      	Tblexamsolu.Examsolutimes as answerTime,
+				      	convert(varchar(10),Tblexamsolu.startDate,120) as startDate,
+				      	convert(varchar(10),Tblexamsolu.endDate,120) as endDate,
+				      	convert(varchar(10),Tblexamsolu.Examsolubulidtime,120) as createTime
+					FROM Tblexamsolu  
+					WHERE Isstop=1 AND isIPValidate=0 AND Examsoluclass=${examType}
+					AND getdate() >= startDate AND endDate >= getdate()
+				) AS T 
+			) AS TT
+		WHERE TT.ROW BETWEEN ${start} AND ${end}
+		ORDER BY createTime DESC
+	]]>
+	</select>
+	
+	<select id="examInfo" parameterType="string" resultMap="examInfoMap">
+		SELECT 
+			Tblexamsolu.Examsoluid as examFlow,
+			Tblexamsolu.Examsoluname as examName,
+			Tblexamsolu.Examsolunum as questionCount,
+	      	Tblexamsolu.Sumscore as totalScore,
+	      	Tblexamsolu.Examsolupass as passScore,
+	      	Tblexamsolu.Examsolutimes as answerTime,
+	      	convert(varchar(10),Tblexamsolu.startDate,120) as startDate,
+	      	convert(varchar(10),Tblexamsolu.endDate,120) as endDate,
+	      	convert(varchar(10),Tblexamsolu.Examsolubulidtime,120) as createTime
+		FROM Tblexamsolu where Examsoluid = ${examFlow}
+	</select>
+	
+	<resultMap id="examDetailMap" type="hashmap">
+		<result column="subjectId"  property="subjectId" javaType="java.lang.String"/>
+		<result column="questionTypeId"  property="questionTypeId" javaType="java.lang.String"/>
+		<result column="typeNum"  property="typeNum" javaType="java.lang.String"/>
+		<result column="eachScore"  property="eachScore" javaType="java.lang.String"/>
+		<result column="questionFlows"  property="questionFlows" javaType="java.lang.String"/>
+		<result column="diffId"  property="diffId" javaType="java.lang.String"/>
+	</resultMap>
+   	
+	<select id="examDetails" parameterType="string" resultMap="examDetailMap">
+		SELECT 
+			Subjectid as subjectId,
+			Typeid as questionTypeId,
+			Selnum as typeNum,
+			Everyscore as eachScore,
+			Examid as questionFlows,
+			diffID as diffId
+		FROM Tblsolumx  
+		WHERE Tblsolumx.Soluid = #{examFlow}
+		ORDER BY Typeid
+	</select>
+	
+	<insert id="addAnswerInfo" useGeneratedKeys="true" keyProperty="answerFlow">
+		INSERT INTO [Tblexamresults]
+           ([Userid]
+           ,[Soluid]
+           ,[Soluscore]
+           ,[Examtime]
+           ,[Wordurl]
+           ,[SoluName]
+           ,[addscore]
+           ,[ExamScore]
+           ,[ExamPassScore]
+           ,[ISSubmit]
+           ,[CountDown])
+     VALUES
+           (${userFlow}
+			,${examFlow}
+			,0
+			,getdate()
+			,null
+			,#{SoluName}
+			,0
+			,#{ExamScore}
+			,#{ExamPassScore}
+			,0
+			,#{CountDown})
+	</insert>
+	
+	<update id="endExam">
+		update [Tblexamresults] set ISSubmit = 1 where [Resultsid] = ${answerFlow}
+	</update>
+	
+	<resultMap id="answerInfoMap" type="hashmap">
+		<result column="score"  property="score" javaType="java.lang.String"/>
+		<result column="timeCount"  property="timeCount" javaType="java.lang.String"/>
+	</resultMap>
+   	
+	<select id="answerInfo" parameterType="string" resultMap="answerInfoMap">
+		SELECT 
+			Soluscore as score,
+			CountDown as timeCount
+		FROM Tblexamresults  
+		WHERE Tblexamresults.ResultsID = #{answerFlow}
+	</select>
+	
+	<insert id="addAnswerDetail">
+		INSERT INTO [TblExamSubmitBak]
+           ([UserID]
+           ,[Examsoluid]
+           ,[ExamID]
+           ,[ExamTrue]
+           ,[UserAnswer]
+           ,[ExamSubID]
+           ,[examMark]
+           ,[ResultsID]
+           ,[index])
+     VALUES
+           (${userFlow}
+           ,${examFlow}
+           ,#{questionFlow}
+           ,#{ExamTrue}
+           ,null
+           ,#{ExamSubID}
+           ,0.0
+           ,#{answerFlow}
+           ,#{index})
+	</insert>
+	
+	<resultMap id="answerDetailMap" type="hashmap">
+		<result column="questionFlow"  property="questionFlow" javaType="java.lang.String"/>
+		<result column="detailFlow"  property="detailFlow" javaType="java.lang.String"/>
+		<result column="rightAnswer"  property="rightAnswer" javaType="java.lang.String"/>
+		<result column="userAnswer"  property="userAnswer" javaType="java.lang.String"/>
+	</resultMap>
+   	
+	<select id="answerDetails" parameterType="string" resultMap="answerDetailMap">
+		SELECT 
+			ExamID as questionFlow,
+			ExamSubID as detailFlow,
+			ExamTrue as rightAnswer,
+			UserAnswer as userAnswer
+		FROM TblExamSubmitBak  
+		WHERE TblExamSubmitBak.ResultsID = #{answerFlow}
+		ORDER BY SubmitID
+	</select>
+	
+	<resultMap id="questionInfoMap" type="hashmap">
+		<result column="questionTypeId"  property="questionTypeId" javaType="java.lang.String"/>
+		<result column="content"  property="content" javaType="java.lang.String"/>
+		<result column="examAnswer"  property="examAnswer" javaType="java.lang.String"/>
+		<result column="rightAnswer"  property="rightAnswer" javaType="java.lang.String"/>
+	</resultMap>
+   	
+	<select id="questionInfo" parameterType="string" resultMap="questionInfoMap">
+		SELECT 
+			Examtype as questionTypeId,
+			Examcontent1 as content,
+			Examsolu as examAnswer,
+			Truesolu as rightAnswer
+		FROM Tblexam  
+		WHERE Tblexam.ExamNo = #{questionFlow}
+	</select>
+	
+	<resultMap id="questionDetailMap" type="hashmap">
+		<result column="detailFlow"  property="detailFlow" javaType="java.lang.String"/>
+		<result column="content"  property="content" javaType="java.lang.String"/>
+		<result column="examAnswer"  property="examAnswer" javaType="java.lang.String"/>
+		<result column="rightAnswer"  property="rightAnswer" javaType="java.lang.String"/>
+	</resultMap>
+   	
+	<select id="questionDetails" parameterType="string" resultMap="questionDetailMap">
+		SELECT 
+			ExamsubID as detailFlow,
+			ExamContent as content,
+			ExamSolu as examAnswer,
+			TureSolu as rightAnswer
+		FROM TblExamSub  
+		WHERE TblExamSub.ExamID = #{questionFlow}
+	</select>
+
+</mapper>

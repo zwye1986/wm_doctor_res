@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.SrmAchReseachrepMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SrmAchReseachrep" >
+    <id column="RESEACHREP_FLOW" property="reseachrepFlow" jdbcType="VARCHAR" />
+    <result column="REP_TITLE" property="repTitle" jdbcType="VARCHAR" />
+    <result column="BELONG_ORG_ID" property="belongOrgId" jdbcType="VARCHAR" />
+    <result column="BELONG_ORG_NAME" property="belongOrgName" jdbcType="VARCHAR" />
+    <result column="SUBMIT_ORG" property="submitOrg" jdbcType="VARCHAR" />
+    <result column="SUBMIT_DATE" property="submitDate" jdbcType="VARCHAR" />
+    <result column="ACCEPT_FLAG" property="acceptFlag" jdbcType="VARCHAR" />
+    <result column="SUBJECT_TYPE_ID" property="subjectTypeId" jdbcType="VARCHAR" />
+    <result column="SUBJECT_TYPE_NAME" property="subjectTypeName" jdbcType="VARCHAR" />
+    <result column="ACCEPT_OBJECT_ID" property="acceptObjectId" jdbcType="VARCHAR" />
+    <result column="ACCEPT_OBJECT_NAME" property="acceptObjectName" jdbcType="VARCHAR" />
+    <result column="PROJ_SOURCE_ID" property="projSourceId" jdbcType="VARCHAR" />
+    <result column="PROJ_SOURCE_NAME" property="projSourceName" jdbcType="VARCHAR" />
+    <result column="REP_WORD_COUNT" property="repWordCount" jdbcType="VARCHAR" />
+    <result column="APPLY_USER_FLOW" property="applyUserFlow" jdbcType="VARCHAR" />
+    <result column="APPLY_USER_NAME" property="applyUserName" jdbcType="VARCHAR" />
+    <result column="APPLY_ORG_FLOW" property="applyOrgFlow" jdbcType="VARCHAR" />
+    <result column="APPLY_ORG_NAME" property="applyOrgName" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="OPER_STATUS_ID" property="operStatusId" jdbcType="VARCHAR" />
+    <result column="OPER_STATUS_NAME" property="operStatusName" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RESEACHREP_FLOW, REP_TITLE, BELONG_ORG_ID, BELONG_ORG_NAME, SUBMIT_ORG, SUBMIT_DATE, 
+    ACCEPT_FLAG, SUBJECT_TYPE_ID, SUBJECT_TYPE_NAME, ACCEPT_OBJECT_ID, ACCEPT_OBJECT_NAME, 
+    PROJ_SOURCE_ID, PROJ_SOURCE_NAME, REP_WORD_COUNT, APPLY_USER_FLOW, APPLY_USER_NAME, 
+    APPLY_ORG_FLOW, APPLY_ORG_NAME, REMARK, OPER_STATUS_ID, OPER_STATUS_NAME, RECORD_STATUS, 
+    CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, DEPT_FLOW, DEPT_NAME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SrmAchReseachrepExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.SRM_ACH_RESEACHREP
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.SRM_ACH_RESEACHREP
+    where RESEACHREP_FLOW = #{reseachrepFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.SRM_ACH_RESEACHREP
+    where RESEACHREP_FLOW = #{reseachrepFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SrmAchReseachrepExample" >
+    delete from PDSCI.SRM_ACH_RESEACHREP
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.SrmAchReseachrep" >
+    insert into PDSCI.SRM_ACH_RESEACHREP (RESEACHREP_FLOW, REP_TITLE, BELONG_ORG_ID, 
+      BELONG_ORG_NAME, SUBMIT_ORG, SUBMIT_DATE, 
+      ACCEPT_FLAG, SUBJECT_TYPE_ID, SUBJECT_TYPE_NAME, 
+      ACCEPT_OBJECT_ID, ACCEPT_OBJECT_NAME, PROJ_SOURCE_ID, 
+      PROJ_SOURCE_NAME, REP_WORD_COUNT, APPLY_USER_FLOW, 
+      APPLY_USER_NAME, APPLY_ORG_FLOW, APPLY_ORG_NAME, 
+      REMARK, OPER_STATUS_ID, OPER_STATUS_NAME, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW, DEPT_FLOW, 
+      DEPT_NAME)
+    values (#{reseachrepFlow,jdbcType=VARCHAR}, #{repTitle,jdbcType=VARCHAR}, #{belongOrgId,jdbcType=VARCHAR}, 
+      #{belongOrgName,jdbcType=VARCHAR}, #{submitOrg,jdbcType=VARCHAR}, #{submitDate,jdbcType=VARCHAR}, 
+      #{acceptFlag,jdbcType=VARCHAR}, #{subjectTypeId,jdbcType=VARCHAR}, #{subjectTypeName,jdbcType=VARCHAR}, 
+      #{acceptObjectId,jdbcType=VARCHAR}, #{acceptObjectName,jdbcType=VARCHAR}, #{projSourceId,jdbcType=VARCHAR}, 
+      #{projSourceName,jdbcType=VARCHAR}, #{repWordCount,jdbcType=VARCHAR}, #{applyUserFlow,jdbcType=VARCHAR}, 
+      #{applyUserName,jdbcType=VARCHAR}, #{applyOrgFlow,jdbcType=VARCHAR}, #{applyOrgName,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{operStatusId,jdbcType=VARCHAR}, #{operStatusName,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{deptFlow,jdbcType=VARCHAR}, 
+      #{deptName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SrmAchReseachrep" >
+    insert into PDSCI.SRM_ACH_RESEACHREP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="reseachrepFlow != null" >
+        RESEACHREP_FLOW,
+      </if>
+      <if test="repTitle != null" >
+        REP_TITLE,
+      </if>
+      <if test="belongOrgId != null" >
+        BELONG_ORG_ID,
+      </if>
+      <if test="belongOrgName != null" >
+        BELONG_ORG_NAME,
+      </if>
+      <if test="submitOrg != null" >
+        SUBMIT_ORG,
+      </if>
+      <if test="submitDate != null" >
+        SUBMIT_DATE,
+      </if>
+      <if test="acceptFlag != null" >
+        ACCEPT_FLAG,
+      </if>
+      <if test="subjectTypeId != null" >
+        SUBJECT_TYPE_ID,
+      </if>
+      <if test="subjectTypeName != null" >
+        SUBJECT_TYPE_NAME,
+      </if>
+      <if test="acceptObjectId != null" >
+        ACCEPT_OBJECT_ID,
+      </if>
+      <if test="acceptObjectName != null" >
+        ACCEPT_OBJECT_NAME,
+      </if>
+      <if test="projSourceId != null" >
+        PROJ_SOURCE_ID,
+      </if>
+      <if test="projSourceName != null" >
+        PROJ_SOURCE_NAME,
+      </if>
+      <if test="repWordCount != null" >
+        REP_WORD_COUNT,
+      </if>
+      <if test="applyUserFlow != null" >
+        APPLY_USER_FLOW,
+      </if>
+      <if test="applyUserName != null" >
+        APPLY_USER_NAME,
+      </if>
+      <if test="applyOrgFlow != null" >
+        APPLY_ORG_FLOW,
+      </if>
+      <if test="applyOrgName != null" >
+        APPLY_ORG_NAME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="operStatusId != null" >
+        OPER_STATUS_ID,
+      </if>
+      <if test="operStatusName != null" >
+        OPER_STATUS_NAME,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="deptFlow != null" >
+        DEPT_FLOW,
+      </if>
+      <if test="deptName != null" >
+        DEPT_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="reseachrepFlow != null" >
+        #{reseachrepFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="repTitle != null" >
+        #{repTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="belongOrgId != null" >
+        #{belongOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="belongOrgName != null" >
+        #{belongOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="submitOrg != null" >
+        #{submitOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="submitDate != null" >
+        #{submitDate,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptFlag != null" >
+        #{acceptFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectTypeId != null" >
+        #{subjectTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectTypeName != null" >
+        #{subjectTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptObjectId != null" >
+        #{acceptObjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptObjectName != null" >
+        #{acceptObjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projSourceId != null" >
+        #{projSourceId,jdbcType=VARCHAR},
+      </if>
+      <if test="projSourceName != null" >
+        #{projSourceName,jdbcType=VARCHAR},
+      </if>
+      <if test="repWordCount != null" >
+        #{repWordCount,jdbcType=VARCHAR},
+      </if>
+      <if test="applyUserFlow != null" >
+        #{applyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="applyUserName != null" >
+        #{applyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyOrgFlow != null" >
+        #{applyOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="applyOrgName != null" >
+        #{applyOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operStatusId != null" >
+        #{operStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="operStatusName != null" >
+        #{operStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="deptFlow != null" >
+        #{deptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null" >
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SrmAchReseachrepExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.SRM_ACH_RESEACHREP
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.SRM_ACH_RESEACHREP
+    <set >
+      <if test="record.reseachrepFlow != null" >
+        RESEACHREP_FLOW = #{record.reseachrepFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repTitle != null" >
+        REP_TITLE = #{record.repTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.belongOrgId != null" >
+        BELONG_ORG_ID = #{record.belongOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.belongOrgName != null" >
+        BELONG_ORG_NAME = #{record.belongOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submitOrg != null" >
+        SUBMIT_ORG = #{record.submitOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submitDate != null" >
+        SUBMIT_DATE = #{record.submitDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acceptFlag != null" >
+        ACCEPT_FLAG = #{record.acceptFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectTypeId != null" >
+        SUBJECT_TYPE_ID = #{record.subjectTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectTypeName != null" >
+        SUBJECT_TYPE_NAME = #{record.subjectTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acceptObjectId != null" >
+        ACCEPT_OBJECT_ID = #{record.acceptObjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acceptObjectName != null" >
+        ACCEPT_OBJECT_NAME = #{record.acceptObjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projSourceId != null" >
+        PROJ_SOURCE_ID = #{record.projSourceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projSourceName != null" >
+        PROJ_SOURCE_NAME = #{record.projSourceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repWordCount != null" >
+        REP_WORD_COUNT = #{record.repWordCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyUserFlow != null" >
+        APPLY_USER_FLOW = #{record.applyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyUserName != null" >
+        APPLY_USER_NAME = #{record.applyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyOrgFlow != null" >
+        APPLY_ORG_FLOW = #{record.applyOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyOrgName != null" >
+        APPLY_ORG_NAME = #{record.applyOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operStatusId != null" >
+        OPER_STATUS_ID = #{record.operStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operStatusName != null" >
+        OPER_STATUS_NAME = #{record.operStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptFlow != null" >
+        DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptName != null" >
+        DEPT_NAME = #{record.deptName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.SRM_ACH_RESEACHREP
+    set RESEACHREP_FLOW = #{record.reseachrepFlow,jdbcType=VARCHAR},
+      REP_TITLE = #{record.repTitle,jdbcType=VARCHAR},
+      BELONG_ORG_ID = #{record.belongOrgId,jdbcType=VARCHAR},
+      BELONG_ORG_NAME = #{record.belongOrgName,jdbcType=VARCHAR},
+      SUBMIT_ORG = #{record.submitOrg,jdbcType=VARCHAR},
+      SUBMIT_DATE = #{record.submitDate,jdbcType=VARCHAR},
+      ACCEPT_FLAG = #{record.acceptFlag,jdbcType=VARCHAR},
+      SUBJECT_TYPE_ID = #{record.subjectTypeId,jdbcType=VARCHAR},
+      SUBJECT_TYPE_NAME = #{record.subjectTypeName,jdbcType=VARCHAR},
+      ACCEPT_OBJECT_ID = #{record.acceptObjectId,jdbcType=VARCHAR},
+      ACCEPT_OBJECT_NAME = #{record.acceptObjectName,jdbcType=VARCHAR},
+      PROJ_SOURCE_ID = #{record.projSourceId,jdbcType=VARCHAR},
+      PROJ_SOURCE_NAME = #{record.projSourceName,jdbcType=VARCHAR},
+      REP_WORD_COUNT = #{record.repWordCount,jdbcType=VARCHAR},
+      APPLY_USER_FLOW = #{record.applyUserFlow,jdbcType=VARCHAR},
+      APPLY_USER_NAME = #{record.applyUserName,jdbcType=VARCHAR},
+      APPLY_ORG_FLOW = #{record.applyOrgFlow,jdbcType=VARCHAR},
+      APPLY_ORG_NAME = #{record.applyOrgName,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      OPER_STATUS_ID = #{record.operStatusId,jdbcType=VARCHAR},
+      OPER_STATUS_NAME = #{record.operStatusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
+      DEPT_NAME = #{record.deptName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SrmAchReseachrep" >
+    update PDSCI.SRM_ACH_RESEACHREP
+    <set >
+      <if test="repTitle != null" >
+        REP_TITLE = #{repTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="belongOrgId != null" >
+        BELONG_ORG_ID = #{belongOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="belongOrgName != null" >
+        BELONG_ORG_NAME = #{belongOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="submitOrg != null" >
+        SUBMIT_ORG = #{submitOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="submitDate != null" >
+        SUBMIT_DATE = #{submitDate,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptFlag != null" >
+        ACCEPT_FLAG = #{acceptFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectTypeId != null" >
+        SUBJECT_TYPE_ID = #{subjectTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectTypeName != null" >
+        SUBJECT_TYPE_NAME = #{subjectTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptObjectId != null" >
+        ACCEPT_OBJECT_ID = #{acceptObjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptObjectName != null" >
+        ACCEPT_OBJECT_NAME = #{acceptObjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projSourceId != null" >
+        PROJ_SOURCE_ID = #{projSourceId,jdbcType=VARCHAR},
+      </if>
+      <if test="projSourceName != null" >
+        PROJ_SOURCE_NAME = #{projSourceName,jdbcType=VARCHAR},
+      </if>
+      <if test="repWordCount != null" >
+        REP_WORD_COUNT = #{repWordCount,jdbcType=VARCHAR},
+      </if>
+      <if test="applyUserFlow != null" >
+        APPLY_USER_FLOW = #{applyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="applyUserName != null" >
+        APPLY_USER_NAME = #{applyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyOrgFlow != null" >
+        APPLY_ORG_FLOW = #{applyOrgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="applyOrgName != null" >
+        APPLY_ORG_NAME = #{applyOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operStatusId != null" >
+        OPER_STATUS_ID = #{operStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="operStatusName != null" >
+        OPER_STATUS_NAME = #{operStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="deptFlow != null" >
+        DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null" >
+        DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RESEACHREP_FLOW = #{reseachrepFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SrmAchReseachrep" >
+    update PDSCI.SRM_ACH_RESEACHREP
+    set REP_TITLE = #{repTitle,jdbcType=VARCHAR},
+      BELONG_ORG_ID = #{belongOrgId,jdbcType=VARCHAR},
+      BELONG_ORG_NAME = #{belongOrgName,jdbcType=VARCHAR},
+      SUBMIT_ORG = #{submitOrg,jdbcType=VARCHAR},
+      SUBMIT_DATE = #{submitDate,jdbcType=VARCHAR},
+      ACCEPT_FLAG = #{acceptFlag,jdbcType=VARCHAR},
+      SUBJECT_TYPE_ID = #{subjectTypeId,jdbcType=VARCHAR},
+      SUBJECT_TYPE_NAME = #{subjectTypeName,jdbcType=VARCHAR},
+      ACCEPT_OBJECT_ID = #{acceptObjectId,jdbcType=VARCHAR},
+      ACCEPT_OBJECT_NAME = #{acceptObjectName,jdbcType=VARCHAR},
+      PROJ_SOURCE_ID = #{projSourceId,jdbcType=VARCHAR},
+      PROJ_SOURCE_NAME = #{projSourceName,jdbcType=VARCHAR},
+      REP_WORD_COUNT = #{repWordCount,jdbcType=VARCHAR},
+      APPLY_USER_FLOW = #{applyUserFlow,jdbcType=VARCHAR},
+      APPLY_USER_NAME = #{applyUserName,jdbcType=VARCHAR},
+      APPLY_ORG_FLOW = #{applyOrgFlow,jdbcType=VARCHAR},
+      APPLY_ORG_NAME = #{applyOrgName,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      OPER_STATUS_ID = #{operStatusId,jdbcType=VARCHAR},
+      OPER_STATUS_NAME = #{operStatusName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
+      DEPT_NAME = #{deptName,jdbcType=VARCHAR}
+    where RESEACHREP_FLOW = #{reseachrepFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

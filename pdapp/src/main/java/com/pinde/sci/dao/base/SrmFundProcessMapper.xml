@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.SrmFundProcessMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SrmFundProcess" >
+    <id column="FUND_PROCESS_FLOW" property="fundProcessFlow" jdbcType="VARCHAR" />
+    <result column="FUND_FLOW" property="fundFlow" jdbcType="VARCHAR" />
+    <result column="FUND_DETAIL_FLOW" property="fundDetailFlow" jdbcType="VARCHAR" />
+    <result column="OPERATE_USER_FLOW" property="operateUserFlow" jdbcType="VARCHAR" />
+    <result column="OPERATE_USER_NAME" property="operateUserName" jdbcType="VARCHAR" />
+    <result column="OPERATE_TIME" property="operateTime" jdbcType="VARCHAR" />
+    <result column="OPER_STATUS_ID" property="operStatusId" jdbcType="VARCHAR" />
+    <result column="OPER_STATUS_NAME" property="operStatusName" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    FUND_PROCESS_FLOW, FUND_FLOW, FUND_DETAIL_FLOW, OPERATE_USER_FLOW, OPERATE_USER_NAME, 
+    OPERATE_TIME, OPER_STATUS_ID, OPER_STATUS_NAME, CONTENT, REMARK, RECORD_STATUS, CREATE_TIME, 
+    CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SrmFundProcessExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.SRM_FUND_PROCESS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.SRM_FUND_PROCESS
+    where FUND_PROCESS_FLOW = #{fundProcessFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.SRM_FUND_PROCESS
+    where FUND_PROCESS_FLOW = #{fundProcessFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SrmFundProcessExample" >
+    delete from PDSCI.SRM_FUND_PROCESS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.SrmFundProcess" >
+    insert into PDSCI.SRM_FUND_PROCESS (FUND_PROCESS_FLOW, FUND_FLOW, FUND_DETAIL_FLOW, 
+      OPERATE_USER_FLOW, OPERATE_USER_NAME, OPERATE_TIME, 
+      OPER_STATUS_ID, OPER_STATUS_NAME, CONTENT, 
+      REMARK, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+      )
+    values (#{fundProcessFlow,jdbcType=VARCHAR}, #{fundFlow,jdbcType=VARCHAR}, #{fundDetailFlow,jdbcType=VARCHAR}, 
+      #{operateUserFlow,jdbcType=VARCHAR}, #{operateUserName,jdbcType=VARCHAR}, #{operateTime,jdbcType=VARCHAR}, 
+      #{operStatusId,jdbcType=VARCHAR}, #{operStatusName,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SrmFundProcess" >
+    insert into PDSCI.SRM_FUND_PROCESS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fundProcessFlow != null" >
+        FUND_PROCESS_FLOW,
+      </if>
+      <if test="fundFlow != null" >
+        FUND_FLOW,
+      </if>
+      <if test="fundDetailFlow != null" >
+        FUND_DETAIL_FLOW,
+      </if>
+      <if test="operateUserFlow != null" >
+        OPERATE_USER_FLOW,
+      </if>
+      <if test="operateUserName != null" >
+        OPERATE_USER_NAME,
+      </if>
+      <if test="operateTime != null" >
+        OPERATE_TIME,
+      </if>
+      <if test="operStatusId != null" >
+        OPER_STATUS_ID,
+      </if>
+      <if test="operStatusName != null" >
+        OPER_STATUS_NAME,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fundProcessFlow != null" >
+        #{fundProcessFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="fundFlow != null" >
+        #{fundFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="fundDetailFlow != null" >
+        #{fundDetailFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="operateUserFlow != null" >
+        #{operateUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="operateUserName != null" >
+        #{operateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="operStatusId != null" >
+        #{operStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="operStatusName != null" >
+        #{operStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SrmFundProcessExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.SRM_FUND_PROCESS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.SRM_FUND_PROCESS
+    <set >
+      <if test="record.fundProcessFlow != null" >
+        FUND_PROCESS_FLOW = #{record.fundProcessFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fundFlow != null" >
+        FUND_FLOW = #{record.fundFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fundDetailFlow != null" >
+        FUND_DETAIL_FLOW = #{record.fundDetailFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operateUserFlow != null" >
+        OPERATE_USER_FLOW = #{record.operateUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operateUserName != null" >
+        OPERATE_USER_NAME = #{record.operateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operateTime != null" >
+        OPERATE_TIME = #{record.operateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operStatusId != null" >
+        OPER_STATUS_ID = #{record.operStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operStatusName != null" >
+        OPER_STATUS_NAME = #{record.operStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        CONTENT = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.SRM_FUND_PROCESS
+    set FUND_PROCESS_FLOW = #{record.fundProcessFlow,jdbcType=VARCHAR},
+      FUND_FLOW = #{record.fundFlow,jdbcType=VARCHAR},
+      FUND_DETAIL_FLOW = #{record.fundDetailFlow,jdbcType=VARCHAR},
+      OPERATE_USER_FLOW = #{record.operateUserFlow,jdbcType=VARCHAR},
+      OPERATE_USER_NAME = #{record.operateUserName,jdbcType=VARCHAR},
+      OPERATE_TIME = #{record.operateTime,jdbcType=VARCHAR},
+      OPER_STATUS_ID = #{record.operStatusId,jdbcType=VARCHAR},
+      OPER_STATUS_NAME = #{record.operStatusName,jdbcType=VARCHAR},
+      CONTENT = #{record.content,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SrmFundProcess" >
+    update PDSCI.SRM_FUND_PROCESS
+    <set >
+      <if test="fundFlow != null" >
+        FUND_FLOW = #{fundFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="fundDetailFlow != null" >
+        FUND_DETAIL_FLOW = #{fundDetailFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="operateUserFlow != null" >
+        OPERATE_USER_FLOW = #{operateUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="operateUserName != null" >
+        OPERATE_USER_NAME = #{operateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        OPERATE_TIME = #{operateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="operStatusId != null" >
+        OPER_STATUS_ID = #{operStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="operStatusName != null" >
+        OPER_STATUS_NAME = #{operStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FUND_PROCESS_FLOW = #{fundProcessFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SrmFundProcess" >
+    update PDSCI.SRM_FUND_PROCESS
+    set FUND_FLOW = #{fundFlow,jdbcType=VARCHAR},
+      FUND_DETAIL_FLOW = #{fundDetailFlow,jdbcType=VARCHAR},
+      OPERATE_USER_FLOW = #{operateUserFlow,jdbcType=VARCHAR},
+      OPERATE_USER_NAME = #{operateUserName,jdbcType=VARCHAR},
+      OPERATE_TIME = #{operateTime,jdbcType=VARCHAR},
+      OPER_STATUS_ID = #{operStatusId,jdbcType=VARCHAR},
+      OPER_STATUS_NAME = #{operStatusName,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where FUND_PROCESS_FLOW = #{fundProcessFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

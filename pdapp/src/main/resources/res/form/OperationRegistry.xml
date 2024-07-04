@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>	
+	<!-- 大病历登记表单 -->
+	<!-- 
+	{0}:表单所属机构(开关控制)
+	{1}:版本号
+ -->
+	<jsp path="res/form/{3}/{0}/operation_{1}"></jsp>
+	<product ver="1.0">
+		<page  ver="1.0">
+			<item name="operationName" isView="0" remark="手术名称" multiple="N"></item>
+			<item name="specificName" remark="具体名称" multiple="N"></item>
+			<item name="operationDate" remark="手术日期" multiple="N"></item>
+			<item name="operateTime" remark="操作时机" multiple="N"></item>
+			<item name="patientName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="caseNo" isView="0" remark="病历号" multiple="N"></item>
+			<item name="objective" remark="目的" multiple="N"></item>
+			<item name="aroundDiagnosis" remark="术前术后诊断" multiple="N"></item>
+			<item name="operationProcedure" remark="手术过程" multiple="N"></item>
+			<item name="masterStep" remark="掌握情况" multiple="N"></item>
+			<item name="anesthesiaMethod" remark="麻醉方法" multiple="N"></item>
+			<item name="operate" remark="术中操作" multiple="N"></item>
+			<item name="special" remark="特殊情况" multiple="N"></item>
+			<item name="operatePost" remark="术中职务" multiple="N"></item>
+			<item name="diagnosisType" remark="诊断类型" multiple="N"></item>
+			<item name="remark" remark="备注" multiple="N"></item>
+			<item name="record" remark="记录" multiple="N"></item>
+			<item name="file" remark="附件" multiple="N"></item>
+		</page>
+	</product>
+	<njykdxsxs ver="1.0">
+		<page  ver="1.0">
+			<item name="operationName" isView="0" remark="手术名称" multiple="N"></item>
+			<item name="specificName" remark="具体名称" multiple="N"></item>
+			<item name="operationDate" remark="手术日期" multiple="N"></item>
+			<item name="operateTime" remark="操作时机" multiple="N"></item>
+			<item name="patientName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="caseNo" isView="0" remark="病历号" multiple="N"></item>
+			<item name="objective" remark="目的" multiple="N"></item>
+			<item name="aroundDiagnosis" remark="术前术后诊断" multiple="N"></item>
+			<item name="operationProcedure" remark="手术过程" multiple="N"></item>
+			<item name="masterStep" remark="掌握情况" multiple="N"></item>
+			<item name="anesthesiaMethod" remark="麻醉方法" multiple="N"></item>
+			<item name="operate" remark="术中操作" multiple="N"></item>
+			<item name="special" remark="特殊情况" multiple="N"></item>
+			<item name="operatePost" remark="术中职务" multiple="N"></item>
+			<item name="diagnosisType" remark="诊断类型" multiple="N"></item>
+			<item name="remark" remark="备注" multiple="N"></item>
+			<item name="record" remark="记录" multiple="N"></item>
+			<item name="file" remark="附件" multiple="N"></item>
+		</page>
+	</njykdxsxs>
+	<nfykdxpt>
+		<page ver="1.0">
+			<item name="operationName" isView="0" remark="手术名称" multiple="N"></item>
+			<item name="id" isView="0" remark="ID号" multiple="N"></item>
+			<item name="patientName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="hospitaNumber" remark="住院号" multiple="N"></item>
+			<item name="admissionDate" remark="入院日期" multiple="N"></item>
+			<item name="mainDiagnosis" remark="主要诊断" multiple="N"></item>
+			<item name="operatorIdentity" remark="操作人身份" multiple="N"></item>
+		</page>
+	</nfykdxpt>
+	<jsst ver="2.0">
+		<page ver="1.0">
+			<item name="operation_operName" isView="0" remark="手术名称" multiple="N"></item>
+			<item name="operation_pName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="operation_operDate" isView="0" remark="手术日期" multiple="N"></item>
+			<item name="operation_mrNo" remark="病历号" multiple="N"></item>
+			<item name="operation_operRole" remark="术中职务" multiple="N"></item>
+			<item name="operation_memo" remark="备注" multiple="N"></item>
+		</page>
+		<page ver="2.0">
+			<item name="operation_operName" isView="2" remark="手术名称" multiple="N"></item>
+			<item name="operation_pName" isView="1" remark="病人姓名" multiple="N"></item>
+			<item name="operation_operDate" isView="3" remark="手术日期" multiple="N"></item>
+			<item name="operation_mrNo" isView="0" remark="病历号" multiple="N"></item>
+			<item name="operation_operRole" isView="4" select="Y" remark="术中职务" multiple="N"></item>
+			<item name="operation_memo" isView="5" remark="备注" multiple="N"></item>
+		</page>
+	</jsst>
+	<sczyfy ver="1.0">
+		<page ver="1.0">
+			<item name="operation_operName" isView="0" remark="手术名称" multiple="N"></item>
+			<item name="operation_pName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="operation_operDate" isView="0" remark="手术日期" multiple="N"></item>
+			<item name="operation_mrNo" remark="病历号" multiple="N"></item>
+			<item name="operation_operRole" select="Y" remark="术中职务" multiple="N"></item>
+			<item name="operation_memo" remark="备注" multiple="N"></item>
+		</page>
+	</sczyfy>
+	<hbszyysgfhpxglpt ver="1.0">
+		<page ver="1.0">
+			<item name="operation_operName" isView="2" remark="手术名称" multiple="N"></item>
+			<item name="operation_pName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="operation_operDate" isView="1" remark="手术日期" multiple="N"></item>
+			<item name="operation_mrNo" remark="病历号" multiple="N"></item>
+			<item name="operation_operRole" select="Y" remark="术中职务" multiple="N"></item>
+			<item name="operation_memo" remark="备注" multiple="N"></item>
+		</page>
+	</hbszyysgfhpxglpt>
+	<dgdhyy ver="1.0">
+		<page ver="1.0">
+			<item name="operation_operName" isView="2" remark="手术名称" multiple="N"></item>
+			<item name="operation_pName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="operation_operDate" isView="1" remark="手术日期" multiple="N"></item>
+			<item name="operation_mrNo" remark="病历号" multiple="N"></item>
+			<item name="operation_operRole" select="Y" remark="术中职务" multiple="N"></item>
+			<item name="operation_memo" remark="备注" multiple="N"></item>
+		</page>
+	</dgdhyy>
+	<zsey ver="1.0">
+		<page ver="1.0">
+			<item name="operation_operName" isView="2" remark="手术名称" multiple="N"></item>
+			<item name="operation_pName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="operation_operDate" isView="1" remark="手术日期" multiple="N"></item>
+			<item name="operation_mrNo" remark="病历号" multiple="N"></item>
+			<item name="operation_operRole" select="Y" remark="术中职务" multiple="N"></item>
+			<item name="operation_memo" remark="备注" multiple="N"></item>
+		</page>
+	</zsey>
+	<shdfyy ver="1.0">
+		<page ver="1.0">
+			<item name="disease_diagName" isView="0" remark="手术名称" multiple="N"></item>
+			<item name="operMethod" isView="1" remark="术式" multiple="N"></item>
+			<item name="operDate" isView="2" remark="手术日期" multiple="N"></item>
+			<item name="patientName" isView="3" remark="病人姓名" multiple="N"></item>
+			<item name="cardNo" isView="4" remark="病历号" multiple="N"></item>
+			<item name="operResult" select="Y" remark="手术结果" multiple="N"></item>
+		</page>
+	</shdfyy>
+	<shfx ver="1.0">
+		<page ver="1.0">
+			<item name="operation_operName" isView="2" remark="手术名称" multiple="N"></item>
+			<item name="operation_pName" isView="0" remark="病人姓名" multiple="N"></item>
+			<item name="operation_operDate" isView="1" remark="手术日期" multiple="N"></item>
+			<item name="operation_mrNo" remark="病历号" multiple="N"></item>
+			<item name="operation_operRole" select="Y" remark="术中职务" multiple="N"></item>
+			<item name="operation_memo" remark="备注" multiple="N"></item>
+		</page>
+	</shfx>
+</jspForm>
+

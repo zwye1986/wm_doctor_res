@@ -1,0 +1,32 @@
+package com.pinde.res.biz.stdp;
+
+import com.pinde.sci.model.mo.ResPaper;
+import com.pinde.sci.model.mo.TestPaper;
+
+
+public interface ResPaperBiz {
+	/**
+	 * 根据方案和规则获取一张试卷
+	 * @param speId
+	 * @param standardDeptId
+	 * @return
+	 */
+	ResPaper getPaperByRotationAndDept(String speId, String standardDeptId);
+
+	/**
+	 * 根据标准科室获取一张试卷
+	 * @param standardDeptId
+	 * @return
+	 */
+	ResPaper getPaperByStandardDeptId(String standardDeptId);
+
+	/**
+	 * 获取一张标准试卷
+	 * @param paperFlow
+	 * @return
+	 */
+	TestPaper readTestPaper(String paperFlow);
+	ResPaper getPaperByOrgStandardDeptId(String orgName, String standardDeptId);
+
+	ResPaper getPaperBySpeId(String speId);
+}

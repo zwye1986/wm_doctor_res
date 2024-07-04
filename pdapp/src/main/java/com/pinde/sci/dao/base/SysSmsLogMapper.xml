@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.SysSmsLogMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysSmsLog" >
+    <id column="SMS_LOG_FLOW" property="smsLogFlow" jdbcType="VARCHAR" />
+    <result column="SMS_USER_NAME" property="smsUserName" jdbcType="VARCHAR" />
+    <result column="SMS_SEND_TIME" property="smsSendTime" jdbcType="VARCHAR" />
+    <result column="SMS_MOBILE" property="smsMobile" jdbcType="VARCHAR" />
+    <result column="SMS_CONTENT" property="smsContent" jdbcType="VARCHAR" />
+    <result column="SMS_RECEIVER_COUNT" property="smsReceiverCount" jdbcType="DECIMAL" />
+    <result column="SMS_TEMP_FLOW" property="smsTempFlow" jdbcType="VARCHAR" />
+    <result column="TEMP_ID" property="tempId" jdbcType="DECIMAL" />
+    <result column="STATUS_CODE" property="statusCode" jdbcType="VARCHAR" />
+    <result column="STATUS_NAME" property="statusName" jdbcType="VARCHAR" />
+    <result column="SMS_RESPONSE_MSG" property="smsResponseMsg" jdbcType="VARCHAR" />
+    <result column="REL_ID" property="relId" jdbcType="VARCHAR" />
+    <result column="REL_TYPE" property="relType" jdbcType="CHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SMS_LOG_FLOW, SMS_USER_NAME, SMS_SEND_TIME, SMS_MOBILE, SMS_CONTENT, SMS_RECEIVER_COUNT, 
+    SMS_TEMP_FLOW, TEMP_ID, STATUS_CODE, STATUS_NAME, SMS_RESPONSE_MSG, REL_ID, REL_TYPE, 
+    REMARK, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysSmsLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.SYS_SMS_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.SYS_SMS_LOG
+    where SMS_LOG_FLOW = #{smsLogFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.SYS_SMS_LOG
+    where SMS_LOG_FLOW = #{smsLogFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysSmsLogExample" >
+    delete from PDSCI.SYS_SMS_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysSmsLog" >
+    insert into PDSCI.SYS_SMS_LOG (SMS_LOG_FLOW, SMS_USER_NAME, SMS_SEND_TIME, 
+      SMS_MOBILE, SMS_CONTENT, SMS_RECEIVER_COUNT, 
+      SMS_TEMP_FLOW, TEMP_ID, STATUS_CODE, 
+      STATUS_NAME, SMS_RESPONSE_MSG, REL_ID, 
+      REL_TYPE, REMARK, RECORD_STATUS, 
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+      MODIFY_USER_FLOW)
+    values (#{smsLogFlow,jdbcType=VARCHAR}, #{smsUserName,jdbcType=VARCHAR}, #{smsSendTime,jdbcType=VARCHAR}, 
+      #{smsMobile,jdbcType=VARCHAR}, #{smsContent,jdbcType=VARCHAR}, #{smsReceiverCount,jdbcType=DECIMAL}, 
+      #{smsTempFlow,jdbcType=VARCHAR}, #{tempId,jdbcType=DECIMAL}, #{statusCode,jdbcType=VARCHAR}, 
+      #{statusName,jdbcType=VARCHAR}, #{smsResponseMsg,jdbcType=VARCHAR}, #{relId,jdbcType=VARCHAR}, 
+      #{relType,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
+      #{modifyUserFlow,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysSmsLog" >
+    insert into PDSCI.SYS_SMS_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="smsLogFlow != null" >
+        SMS_LOG_FLOW,
+      </if>
+      <if test="smsUserName != null" >
+        SMS_USER_NAME,
+      </if>
+      <if test="smsSendTime != null" >
+        SMS_SEND_TIME,
+      </if>
+      <if test="smsMobile != null" >
+        SMS_MOBILE,
+      </if>
+      <if test="smsContent != null" >
+        SMS_CONTENT,
+      </if>
+      <if test="smsReceiverCount != null" >
+        SMS_RECEIVER_COUNT,
+      </if>
+      <if test="smsTempFlow != null" >
+        SMS_TEMP_FLOW,
+      </if>
+      <if test="tempId != null" >
+        TEMP_ID,
+      </if>
+      <if test="statusCode != null" >
+        STATUS_CODE,
+      </if>
+      <if test="statusName != null" >
+        STATUS_NAME,
+      </if>
+      <if test="smsResponseMsg != null" >
+        SMS_RESPONSE_MSG,
+      </if>
+      <if test="relId != null" >
+        REL_ID,
+      </if>
+      <if test="relType != null" >
+        REL_TYPE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="smsLogFlow != null" >
+        #{smsLogFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="smsUserName != null" >
+        #{smsUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="smsSendTime != null" >
+        #{smsSendTime,jdbcType=VARCHAR},
+      </if>
+      <if test="smsMobile != null" >
+        #{smsMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="smsContent != null" >
+        #{smsContent,jdbcType=VARCHAR},
+      </if>
+      <if test="smsReceiverCount != null" >
+        #{smsReceiverCount,jdbcType=DECIMAL},
+      </if>
+      <if test="smsTempFlow != null" >
+        #{smsTempFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="tempId != null" >
+        #{tempId,jdbcType=DECIMAL},
+      </if>
+      <if test="statusCode != null" >
+        #{statusCode,jdbcType=VARCHAR},
+      </if>
+      <if test="statusName != null" >
+        #{statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="smsResponseMsg != null" >
+        #{smsResponseMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="relId != null" >
+        #{relId,jdbcType=VARCHAR},
+      </if>
+      <if test="relType != null" >
+        #{relType,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysSmsLogExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.SYS_SMS_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.SYS_SMS_LOG
+    <set >
+      <if test="record.smsLogFlow != null" >
+        SMS_LOG_FLOW = #{record.smsLogFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smsUserName != null" >
+        SMS_USER_NAME = #{record.smsUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smsSendTime != null" >
+        SMS_SEND_TIME = #{record.smsSendTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smsMobile != null" >
+        SMS_MOBILE = #{record.smsMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smsContent != null" >
+        SMS_CONTENT = #{record.smsContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smsReceiverCount != null" >
+        SMS_RECEIVER_COUNT = #{record.smsReceiverCount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.smsTempFlow != null" >
+        SMS_TEMP_FLOW = #{record.smsTempFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tempId != null" >
+        TEMP_ID = #{record.tempId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.statusCode != null" >
+        STATUS_CODE = #{record.statusCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusName != null" >
+        STATUS_NAME = #{record.statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smsResponseMsg != null" >
+        SMS_RESPONSE_MSG = #{record.smsResponseMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relId != null" >
+        REL_ID = #{record.relId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relType != null" >
+        REL_TYPE = #{record.relType,jdbcType=CHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.SYS_SMS_LOG
+    set SMS_LOG_FLOW = #{record.smsLogFlow,jdbcType=VARCHAR},
+      SMS_USER_NAME = #{record.smsUserName,jdbcType=VARCHAR},
+      SMS_SEND_TIME = #{record.smsSendTime,jdbcType=VARCHAR},
+      SMS_MOBILE = #{record.smsMobile,jdbcType=VARCHAR},
+      SMS_CONTENT = #{record.smsContent,jdbcType=VARCHAR},
+      SMS_RECEIVER_COUNT = #{record.smsReceiverCount,jdbcType=DECIMAL},
+      SMS_TEMP_FLOW = #{record.smsTempFlow,jdbcType=VARCHAR},
+      TEMP_ID = #{record.tempId,jdbcType=DECIMAL},
+      STATUS_CODE = #{record.statusCode,jdbcType=VARCHAR},
+      STATUS_NAME = #{record.statusName,jdbcType=VARCHAR},
+      SMS_RESPONSE_MSG = #{record.smsResponseMsg,jdbcType=VARCHAR},
+      REL_ID = #{record.relId,jdbcType=VARCHAR},
+      REL_TYPE = #{record.relType,jdbcType=CHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysSmsLog" >
+    update PDSCI.SYS_SMS_LOG
+    <set >
+      <if test="smsUserName != null" >
+        SMS_USER_NAME = #{smsUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="smsSendTime != null" >
+        SMS_SEND_TIME = #{smsSendTime,jdbcType=VARCHAR},
+      </if>
+      <if test="smsMobile != null" >
+        SMS_MOBILE = #{smsMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="smsContent != null" >
+        SMS_CONTENT = #{smsContent,jdbcType=VARCHAR},
+      </if>
+      <if test="smsReceiverCount != null" >
+        SMS_RECEIVER_COUNT = #{smsReceiverCount,jdbcType=DECIMAL},
+      </if>
+      <if test="smsTempFlow != null" >
+        SMS_TEMP_FLOW = #{smsTempFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="tempId != null" >
+        TEMP_ID = #{tempId,jdbcType=DECIMAL},
+      </if>
+      <if test="statusCode != null" >
+        STATUS_CODE = #{statusCode,jdbcType=VARCHAR},
+      </if>
+      <if test="statusName != null" >
+        STATUS_NAME = #{statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="smsResponseMsg != null" >
+        SMS_RESPONSE_MSG = #{smsResponseMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="relId != null" >
+        REL_ID = #{relId,jdbcType=VARCHAR},
+      </if>
+      <if test="relType != null" >
+        REL_TYPE = #{relType,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SMS_LOG_FLOW = #{smsLogFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysSmsLog" >
+    update PDSCI.SYS_SMS_LOG
+    set SMS_USER_NAME = #{smsUserName,jdbcType=VARCHAR},
+      SMS_SEND_TIME = #{smsSendTime,jdbcType=VARCHAR},
+      SMS_MOBILE = #{smsMobile,jdbcType=VARCHAR},
+      SMS_CONTENT = #{smsContent,jdbcType=VARCHAR},
+      SMS_RECEIVER_COUNT = #{smsReceiverCount,jdbcType=DECIMAL},
+      SMS_TEMP_FLOW = #{smsTempFlow,jdbcType=VARCHAR},
+      TEMP_ID = #{tempId,jdbcType=DECIMAL},
+      STATUS_CODE = #{statusCode,jdbcType=VARCHAR},
+      STATUS_NAME = #{statusName,jdbcType=VARCHAR},
+      SMS_RESPONSE_MSG = #{smsResponseMsg,jdbcType=VARCHAR},
+      REL_ID = #{relId,jdbcType=VARCHAR},
+      REL_TYPE = #{relType,jdbcType=CHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where SMS_LOG_FLOW = #{smsLogFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

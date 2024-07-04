@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>	
+	<!-- 迷你临床演练评估 -->
+	<!-- 
+	{0}:表单所属机构(开关控制)
+	{1}:版本号
+ -->
+	<jsp path="res/form/{0}/workingAttitude_{1}"></jsp>
+	<product ver="1.0">
+		<page  ver="1.0">
+			<item name="basicCheckBranch" remark="坚持四项基本原则，遵纪守法" multiple="N"></item>
+			<item name="basicSelfratingBranch" remark="坚持四项基本原则，遵纪守法(自评)" multiple="N"></item>
+			<item name="disciplineCheckBranch" remark="组织纪律性" multiple="N"></item>
+			<item name="disciplineSelfratingBranch" remark="组织纪律性(自评)" multiple="N"></item>
+			<item name="uniteCheckBranch" remark="团结协作" multiple="N"></item>
+			<item name="uniteSelfratingBranch" remark="团结协作（自评）" multiple="N"></item>
+			<item name="assessmentPlace" remark="政治活动和社会活动" multiple="N"></item>
+			<item name="patientName" remark="政治活动和社会活动（自评）" multiple="N"></item>
+			<item name="attendanceCheckBranch" remark="履行本岗位职责,出勤率" multiple="N"></item>
+			<item name="attendanceSelfratingBranch" remark="履行本岗位职责,出勤率（自评）" multiple="N"></item>
+			<item name="attitudeCheckBranch" remark="职业道德和服务态度" multiple="N"></item>
+			<item name="attitudeSelfratingBranch" remark="职业道德和服务态度（自评）" multiple="N"></item>
+			<item name="technologyCheckBranch" remark="技术操作规程" multiple="N"></item>
+			<item name="technologySelfratingBranch" remark="技术操作规程（自评）" multiple="N"></item>
+			<item name="studyCheckBranch" remark="业务活动和学习" multiple="N"></item>
+			<item name="studySelfratingBranch" remark="业务活动和学习（自评）" multiple="N"></item>
+			<item name="checkBranchThetotalscore" remark="计" multiple="N"></item>
+			<item name="selfratingBranchThetotalscore" remark="计（自评）" multiple="N"></item>
+			<item name="accident" remark="医疗事故" multiple="N"></item>
+			<item name="error" remark="医疗差错" multiple="N"></item>
+			<item name="wrong" remark="工作错误" multiple="N"></item>
+		</page>
+	</product>
+	<nfykdxpt ver="1.0">
+		<page ver="1.0">
+			
+		</page>
+	</nfykdxpt>
+	<shetyy ver="1.0">
+		<page ver="1.0">
+			<item name="basicCheckBranch" remark="坚持四项基本原则，遵纪守法" multiple="N"></item>
+			<item name="basicSelfratingBranch" remark="坚持四项基本原则，遵纪守法(自评)" multiple="N"></item>
+			<item name="disciplineCheckBranch" remark="组织纪律性" multiple="N"></item>
+			<item name="disciplineSelfratingBranch" remark="组织纪律性(自评)" multiple="N"></item>
+			<item name="uniteCheckBranch" remark="团结协作" multiple="N"></item>
+			<item name="uniteSelfratingBranch" remark="团结协作（自评）" multiple="N"></item>
+			<item name="assessmentPlace" remark="政治活动和社会活动" multiple="N"></item>
+			<item name="patientName" remark="政治活动和社会活动（自评）" multiple="N"></item>
+			<item name="attendanceCheckBranch" remark="履行本岗位职责,出勤率" multiple="N"></item>
+			<item name="attendanceSelfratingBranch" remark="履行本岗位职责,出勤率（自评）" multiple="N"></item>
+			<item name="attitudeCheckBranch" remark="职业道德和服务态度" multiple="N"></item>
+			<item name="attitudeSelfratingBranch" remark="职业道德和服务态度（自评）" multiple="N"></item>
+			<item name="technologyCheckBranch" remark="技术操作规程" multiple="N"></item>
+			<item name="technologySelfratingBranch" remark="技术操作规程（自评）" multiple="N"></item>
+			<item name="studyCheckBranch" remark="业务活动和学习" multiple="N"></item>
+			<item name="studySelfratingBranch" remark="业务活动和学习（自评）" multiple="N"></item>
+			<item name="checkBranchThetotalscore" remark="计" multiple="N"></item>
+			<item name="selfratingBranchThetotalscore" remark="计（自评）" multiple="N"></item>
+			<item name="accident" remark="医疗事故" multiple="N"></item>
+			<item name="error" remark="医疗差错" multiple="N"></item>
+			<item name="wrong" remark="工作错误" multiple="N"></item>
+		</page>
+	</shetyy>
+</jspForm>
+

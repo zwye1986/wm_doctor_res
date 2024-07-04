@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+    <!-- 社区学习情况记录表单 -->
+    <!--
+    {0}:表单所属机构(开关控制)
+    {1}:版本号
+ -->
+    <jsp path="res/form/{3}/{0}/qtdj_{1}"/>
+    <shzs_qk_sqsj_qtdj ver="1.0">
+        <page  ver="1.0">
+            <item name="social_time" isView="2" remark="时间" multiple="N"/>
+            <item name="social_teachObject" isView="0" remark="带教对象" multiple="N"/>
+            <item name="social_peopleNumber" isView="1" remark="人数" multiple="N"/>
+            <item name="social_teachContent" remark="教学内容" multiple="N"/>
+            <!--<item name="social_otherRegistray" isView="0" remark="其他登记" multiple="N"/>-->
+        </page>
+    </shzs_qk_sqsj_qtdj>
+</jspForm>
+

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+    <!-- 社区学习情况记录表单 -->
+    <!--
+    {0}:表单所属机构(开关控制)
+    {1}:版本号
+ -->
+    <jsp path="res/form/{3}/{0}/communityLearning_{1}"/>
+    <jszy ver="1.0">
+        <page ver="1.0">
+            <item name="communityDate" isView="0" remark="日期" multiple="N"/>
+            <item name="theme" isView="0" remark="主题" multiple="N"/>
+            <item name="activities" isView="0" select="Y" remark="活动形式" multiple="N"/>
+            <item name="hours" remark="学时" multiple="N"/>
+            <item name="speaker" isView="0"  remark="主讲人" multiple="N"/>
+            <item name="remarks" remark="备注" multiple="N"/>
+        </page>
+    </jszy>
+</jspForm>
+

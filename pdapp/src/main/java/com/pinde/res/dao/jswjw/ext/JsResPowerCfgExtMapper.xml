@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.jswjw.ext.JsResPowerCfgExtMapper">
+    <resultMap id="userMap" type="map">
+        <result column="CFG_CODE" property="cfgCode" jdbcType="VARCHAR"/>
+        <result column="CFG_VALUE" property="cfgValue" jdbcType="VARCHAR"/>
+        <result column="CFG_DESC" property="cfgDesc" jdbcType="VARCHAR"/>
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR"/>
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR"/>
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR"/>
+        <result column="POWER_START_TIME" property="powerStartTime" jdbcType="VARCHAR"/>
+        <result column="POWER_END_TIME" property="powerEndTime" jdbcType="VARCHAR"/>
+        <result column="CHECK_STATUS_ID" property="checkStatusId" jdbcType="VARCHAR"/>
+        <result column="CHECK_STATUS_NAME" property="checkStatusName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="cfgMap" type="com.pinde.sci.model.mo.JsresPowerCfg">
+        <result column="CFG_CODE" property="cfgCode" jdbcType="VARCHAR"/>
+        <result column="CFG_VALUE" property="cfgValue" jdbcType="VARCHAR"/>
+        <result column="CFG_DESC" property="cfgDesc" jdbcType="VARCHAR"/>
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR"/>
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR"/>
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR"/>
+        <result column="POWER_START_TIME" property="powerStartTime" jdbcType="VARCHAR"/>
+        <result column="POWER_END_TIME" property="powerEndTime" jdbcType="VARCHAR"/>
+        <result column="CHECK_STATUS_ID" property="checkStatusId" jdbcType="VARCHAR"/>
+        <result column="CHECK_STATUS_NAME" property="checkStatusName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="selectPowerCfg" parameterType="map" resultMap="userMap">
+		SELECT CFG_CODE, CFG_VALUE, CFG_DESC, RECORD_STATUS, CREATE_TIME,CREATE_USER_FLOW, MODIFY_TIME,
+				MODIFY_USER_FLOW, POWER_START_TIME, POWER_END_TIME, CHECK_STATUS_ID, CHECK_STATUS_NAME
+		FROM PDSCI.JSRES_POWER_CFG
+		WHERE CFG_CODE = #{app}
+		and CFG_VALUE='Y'
+	</select>
+    <select id="searchPowerCfg" resultMap="cfgMap">
+        SELECT CFG_CODE, CFG_VALUE, CFG_DESC, RECORD_STATUS, CREATE_TIME,CREATE_USER_FLOW, MODIFY_TIME,
+        MODIFY_USER_FLOW, POWER_START_TIME, POWER_END_TIME, CHECK_STATUS_ID, CHECK_STATUS_NAME
+        FROM PDSCI.JSRES_POWER_CFG
+        WHERE RECORD_STATUS = 'Y'
+        <if test="codes!=null and codes.size>0">
+            AND CFG_CODE IN
+            <foreach collection="codes" open="(" separator="," close=")" item="item">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+</mapper>

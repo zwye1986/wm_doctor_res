@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+	<!-- 外语、教学与科研要求登记表单 -->
+	<!--
+	{0}:表单所属机构(开关控制)
+	{1}:版本号
+ -->
+	<jsp path="res/form/{3}/{0}/other_{1}"/>
+	<shzs_qk_ykqtczbldj_ty ver="1.0">
+		<page  ver="1.0">
+			<item name="research_content" isView="0" remark="培养内容" multiple="N"/>
+			<item name="research_num" isView="1" remark="学习数量" multiple="N"/>
+			<item name="imageList" isView="2" remark="附件图片" multiple="Y"/>
+		</page>
+	</shzs_qk_ykqtczbldj_ty>
+	
+</jspForm>
+

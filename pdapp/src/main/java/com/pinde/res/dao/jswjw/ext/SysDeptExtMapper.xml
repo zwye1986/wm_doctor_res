@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.jswjw.ext.SysDeptExtMapper" >
+	<select id="getExtDept" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+		select *
+		from pdsci.sys_dept sd
+		inner join pdsci.sch_dept_external_rel sder
+		on sd.dept_flow = sder.dept_flow
+		where sd.record_status = 'Y'
+		and sder.record_status = 'Y'
+		and sder.rel_org_flow = #{orgFlow}
+		order by nlssort(sder.org_name,'NLS_SORT=SCHINESE_PINYIN_M')
+	</select>
+	
+	<select id="getBaseAndExtDept" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+		select DISTINCT sd.* from pdsci.sys_dept sd
+		left join pdsci.sch_dept_external_rel sder
+		on sd.dept_flow = sder.dept_flow
+		and sder.record_status = 'Y'
+		where sd.record_status = 'Y'
+		and (sd.org_flow = #{orgFlow} or sder.rel_org_flow = #{orgFlow})
+		<if test='deptName!=null and deptName!=""'>
+			and (sd.dept_name like '%${deptName}%' or sder.rel_org_name like '%${deptName}%')
+		</if>
+		order by sd.dept_code
+	</select>
+	<select id="getHeadDeptList" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+		select distinct sd.* from sys_dept sd
+		inner join SYS_USER_DEPT sud
+		on sd.DEPT_FLOW=sud.DEPT_FLOW
+		where sd.record_status='Y'
+		and sud.RECORD_STATUS='Y'
+		and ( sud.USER_FLOW=#{userFlow}
+			<if test="deptFlow!=null and deptFlow!=''">
+				or  sd.DEPT_FLOW=#{deptFlow}
+			</if>
+		)
+		order by sd.dept_code
+	</select>
+	<select id="getSpeDeptList" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+		select distinct sd.* from sys_dept sd
+		where sd.record_status='Y'
+		and sd.dept_flow in (select D.DEPT_FLOW
+			from RES_TRAINING_SPE_DEPT d
+			where d.Training_Spe_Id IN ( SELECT RES_Training_Spe_Id FROM SYS_USER WHERE USER_FLOW=#{userFlow})
+			and d.record_status='Y'
+		)
+		order by sd.dept_code
+	</select>
+	<select id="getErrorSchDepts" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+		select DISTINCT sd.* from pdsci.sys_dept sd
+		where sd.org_flow=#{orgFlow} and
+			exists(
+				select null
+				from RES_DOCTOR_SCH_PROCESS rdsp
+				where rdsp.RECORD_STATUS='Y'
+				and rdsp.SCH_END_DATE <![CDATA[<=]]>to_char(sysdate,'yyyy-MM-dd')
+				and not exists(
+					select 1 from res_sch_process_express e
+					where e.process_flow=rdsp.process_flow
+					and e.record_status='Y' and e.rec_type_id='AfterEvaluation' and (MANAGER_AUDIT_USER_FLOW is null or MANAGER_AUDIT_USER_FLOW is not null and head_audit_status_id is not null)
+				)
+				and rdsp.dept_flow=sd.dept_flow
+			)
+			and record_status='Y'
+		order by sd.dept_code
+	</select>
+</mapper>

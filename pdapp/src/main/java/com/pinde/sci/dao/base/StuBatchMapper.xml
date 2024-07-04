@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.sci.dao.base.StuBatchMapper">
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.StuBatch">
+    <id column="BATCH_FLOW" jdbcType="VARCHAR" property="batchFlow" />
+    <result column="BATCH_NO" jdbcType="VARCHAR" property="batchNo" />
+    <result column="BATCH_REG_DATE" jdbcType="VARCHAR" property="batchRegDate" />
+    <result column="MONTH_FEE" jdbcType="DECIMAL" property="monthFee" />
+    <result column="IS_DEFAULT" jdbcType="VARCHAR" property="isDefault" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_USER_FLOW" jdbcType="VARCHAR" property="createUserFlow" />
+    <result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime" />
+    <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
+    <result column="BATCH_DATE" jdbcType="VARCHAR" property="batchDate" />
+    <result column="BATCH_STATUS" jdbcType="VARCHAR" property="batchStatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    BATCH_FLOW, BATCH_NO, BATCH_REG_DATE, MONTH_FEE, IS_DEFAULT, CREATE_TIME, CREATE_USER_FLOW, 
+    MODIFY_TIME, MODIFY_USER_FLOW, BATCH_DATE, BATCH_STATUS
+  </sql>
+  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.StuBatchExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.STU_BATCH
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PDSCI.STU_BATCH
+    where BATCH_FLOW = #{batchFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PDSCI.STU_BATCH
+    where BATCH_FLOW = #{batchFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.StuBatchExample">
+    delete from PDSCI.STU_BATCH
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.StuBatch">
+    insert into PDSCI.STU_BATCH (BATCH_FLOW, BATCH_NO, BATCH_REG_DATE, 
+      MONTH_FEE, IS_DEFAULT, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+      BATCH_DATE, BATCH_STATUS)
+    values (#{batchFlow,jdbcType=VARCHAR}, #{batchNo,jdbcType=VARCHAR}, #{batchRegDate,jdbcType=VARCHAR}, 
+      #{monthFee,jdbcType=DECIMAL}, #{isDefault,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{batchDate,jdbcType=VARCHAR}, #{batchStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.StuBatch">
+    insert into PDSCI.STU_BATCH
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="batchFlow != null">
+        BATCH_FLOW,
+      </if>
+      <if test="batchNo != null">
+        BATCH_NO,
+      </if>
+      <if test="batchRegDate != null">
+        BATCH_REG_DATE,
+      </if>
+      <if test="monthFee != null">
+        MONTH_FEE,
+      </if>
+      <if test="isDefault != null">
+        IS_DEFAULT,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="batchDate != null">
+        BATCH_DATE,
+      </if>
+      <if test="batchStatus != null">
+        BATCH_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="batchFlow != null">
+        #{batchFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="batchRegDate != null">
+        #{batchRegDate,jdbcType=VARCHAR},
+      </if>
+      <if test="monthFee != null">
+        #{monthFee,jdbcType=DECIMAL},
+      </if>
+      <if test="isDefault != null">
+        #{isDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="batchDate != null">
+        #{batchDate,jdbcType=VARCHAR},
+      </if>
+      <if test="batchStatus != null">
+        #{batchStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.StuBatchExample" resultType="java.lang.Integer">
+    select count(*) from PDSCI.STU_BATCH
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update PDSCI.STU_BATCH
+    <set>
+      <if test="record.batchFlow != null">
+        BATCH_FLOW = #{record.batchFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.batchNo != null">
+        BATCH_NO = #{record.batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.batchRegDate != null">
+        BATCH_REG_DATE = #{record.batchRegDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.monthFee != null">
+        MONTH_FEE = #{record.monthFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isDefault != null">
+        IS_DEFAULT = #{record.isDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null">
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null">
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.batchDate != null">
+        BATCH_DATE = #{record.batchDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.batchStatus != null">
+        BATCH_STATUS = #{record.batchStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update PDSCI.STU_BATCH
+    set BATCH_FLOW = #{record.batchFlow,jdbcType=VARCHAR},
+      BATCH_NO = #{record.batchNo,jdbcType=VARCHAR},
+      BATCH_REG_DATE = #{record.batchRegDate,jdbcType=VARCHAR},
+      MONTH_FEE = #{record.monthFee,jdbcType=DECIMAL},
+      IS_DEFAULT = #{record.isDefault,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      BATCH_DATE = #{record.batchDate,jdbcType=VARCHAR},
+      BATCH_STATUS = #{record.batchStatus,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.StuBatch">
+    update PDSCI.STU_BATCH
+    <set>
+      <if test="batchNo != null">
+        BATCH_NO = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="batchRegDate != null">
+        BATCH_REG_DATE = #{batchRegDate,jdbcType=VARCHAR},
+      </if>
+      <if test="monthFee != null">
+        MONTH_FEE = #{monthFee,jdbcType=DECIMAL},
+      </if>
+      <if test="isDefault != null">
+        IS_DEFAULT = #{isDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="batchDate != null">
+        BATCH_DATE = #{batchDate,jdbcType=VARCHAR},
+      </if>
+      <if test="batchStatus != null">
+        BATCH_STATUS = #{batchStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BATCH_FLOW = #{batchFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.StuBatch">
+    update PDSCI.STU_BATCH
+    set BATCH_NO = #{batchNo,jdbcType=VARCHAR},
+      BATCH_REG_DATE = #{batchRegDate,jdbcType=VARCHAR},
+      MONTH_FEE = #{monthFee,jdbcType=DECIMAL},
+      IS_DEFAULT = #{isDefault,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      BATCH_DATE = #{batchDate,jdbcType=VARCHAR},
+      BATCH_STATUS = #{batchStatus,jdbcType=VARCHAR}
+    where BATCH_FLOW = #{batchFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

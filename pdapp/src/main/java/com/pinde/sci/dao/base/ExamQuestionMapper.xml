@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.base.ExamQuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ExamQuestion" >
+    <id column="QUESTION_FLOW" property="questionFlow" jdbcType="VARCHAR" />
+    <result column="QUESTION_TYPE_ID" property="questionTypeId" jdbcType="VARCHAR" />
+    <result column="QUESTION_TYPE_NAME" property="questionTypeName" jdbcType="VARCHAR" />
+    <result column="QUESTION_CODE" property="questionCode" jdbcType="VARCHAR" />
+    <result column="CREATE_SUBJECT_FLOW" property="createSubjectFlow" jdbcType="VARCHAR" />
+    <result column="CREATE_SUBJECT_NAME" property="createSubjectName" jdbcType="VARCHAR" />
+    <result column="CREATE_BOOK_FLOW" property="createBookFlow" jdbcType="VARCHAR" />
+    <result column="CREATE_BOOK_NAME" property="createBookName" jdbcType="VARCHAR" />
+    <result column="MEMO" property="memo" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ExamQuestionWithBLOBs" extends="BaseResultMap" >
+    <result column="QUESTION_CONTENT" property="questionContent" jdbcType="CLOB" />
+    <result column="QUESTION_ANSWER" property="questionAnswer" jdbcType="CLOB" />
+    <result column="RIGHT_ANSWER" property="rightAnswer" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    QUESTION_FLOW, QUESTION_TYPE_ID, QUESTION_TYPE_NAME, QUESTION_CODE, CREATE_SUBJECT_FLOW, 
+    CREATE_SUBJECT_NAME, CREATE_BOOK_FLOW, CREATE_BOOK_NAME, MEMO, RECORD_STATUS, CREATE_TIME, 
+    CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <sql id="Blob_Column_List" >
+    QUESTION_CONTENT, QUESTION_ANSWER, RIGHT_ANSWER
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.ExamQuestionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.EXAM_QUESTION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ExamQuestionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PDSCI.EXAM_QUESTION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.EXAM_QUESTION
+    where QUESTION_FLOW = #{questionFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PDSCI.EXAM_QUESTION
+    where QUESTION_FLOW = #{questionFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ExamQuestionExample" >
+    delete from PDSCI.EXAM_QUESTION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.sci.model.mo.ExamQuestionWithBLOBs" >
+    <selectKey resultType="java.lang.String" keyProperty="questionFlow" order="BEFORE" >
+      select SEQ_EXAM_QUESTION_FLOW.nextval from dual
+    </selectKey>
+    insert into PDSCI.EXAM_QUESTION (QUESTION_FLOW, QUESTION_TYPE_ID, QUESTION_TYPE_NAME, 
+      QUESTION_CODE, CREATE_SUBJECT_FLOW, CREATE_SUBJECT_NAME, 
+      CREATE_BOOK_FLOW, CREATE_BOOK_NAME, MEMO, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW, QUESTION_CONTENT, 
+      QUESTION_ANSWER, RIGHT_ANSWER)
+    values (#{questionFlow,jdbcType=VARCHAR}, #{questionTypeId,jdbcType=VARCHAR}, #{questionTypeName,jdbcType=VARCHAR}, 
+      #{questionCode,jdbcType=VARCHAR}, #{createSubjectFlow,jdbcType=VARCHAR}, #{createSubjectName,jdbcType=VARCHAR}, 
+      #{createBookFlow,jdbcType=VARCHAR}, #{createBookName,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{questionContent,jdbcType=CLOB}, 
+      #{questionAnswer,jdbcType=CLOB}, #{rightAnswer,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ExamQuestionWithBLOBs" >
+    <selectKey resultType="java.lang.String" keyProperty="questionFlow" order="BEFORE" >
+      select SEQ_EXAM_QUESTION_FLOW.nextval from dual
+    </selectKey>
+    insert into PDSCI.EXAM_QUESTION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      QUESTION_FLOW,
+      <if test="questionTypeId != null" >
+        QUESTION_TYPE_ID,
+      </if>
+      <if test="questionTypeName != null" >
+        QUESTION_TYPE_NAME,
+      </if>
+      <if test="questionCode != null" >
+        QUESTION_CODE,
+      </if>
+      <if test="createSubjectFlow != null" >
+        CREATE_SUBJECT_FLOW,
+      </if>
+      <if test="createSubjectName != null" >
+        CREATE_SUBJECT_NAME,
+      </if>
+      <if test="createBookFlow != null" >
+        CREATE_BOOK_FLOW,
+      </if>
+      <if test="createBookName != null" >
+        CREATE_BOOK_NAME,
+      </if>
+      <if test="memo != null" >
+        MEMO,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="questionContent != null" >
+        QUESTION_CONTENT,
+      </if>
+      <if test="questionAnswer != null" >
+        QUESTION_ANSWER,
+      </if>
+      <if test="rightAnswer != null" >
+        RIGHT_ANSWER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{questionFlow,jdbcType=VARCHAR},
+      <if test="questionTypeId != null" >
+        #{questionTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="questionTypeName != null" >
+        #{questionTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="questionCode != null" >
+        #{questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createSubjectFlow != null" >
+        #{createSubjectFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="createSubjectName != null" >
+        #{createSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="createBookFlow != null" >
+        #{createBookFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="createBookName != null" >
+        #{createBookName,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="questionContent != null" >
+        #{questionContent,jdbcType=CLOB},
+      </if>
+      <if test="questionAnswer != null" >
+        #{questionAnswer,jdbcType=CLOB},
+      </if>
+      <if test="rightAnswer != null" >
+        #{rightAnswer,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ExamQuestionExample" resultType="java.lang.Integer" >
+    select count(*) from PDSCI.EXAM_QUESTION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PDSCI.EXAM_QUESTION
+    <set >
+      <if test="record.questionFlow != null" >
+        QUESTION_FLOW = #{record.questionFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionTypeId != null" >
+        QUESTION_TYPE_ID = #{record.questionTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionTypeName != null" >
+        QUESTION_TYPE_NAME = #{record.questionTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionCode != null" >
+        QUESTION_CODE = #{record.questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createSubjectFlow != null" >
+        CREATE_SUBJECT_FLOW = #{record.createSubjectFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createSubjectName != null" >
+        CREATE_SUBJECT_NAME = #{record.createSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createBookFlow != null" >
+        CREATE_BOOK_FLOW = #{record.createBookFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createBookName != null" >
+        CREATE_BOOK_NAME = #{record.createBookName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memo != null" >
+        MEMO = #{record.memo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionContent != null" >
+        QUESTION_CONTENT = #{record.questionContent,jdbcType=CLOB},
+      </if>
+      <if test="record.questionAnswer != null" >
+        QUESTION_ANSWER = #{record.questionAnswer,jdbcType=CLOB},
+      </if>
+      <if test="record.rightAnswer != null" >
+        RIGHT_ANSWER = #{record.rightAnswer,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update PDSCI.EXAM_QUESTION
+    set QUESTION_FLOW = #{record.questionFlow,jdbcType=VARCHAR},
+      QUESTION_TYPE_ID = #{record.questionTypeId,jdbcType=VARCHAR},
+      QUESTION_TYPE_NAME = #{record.questionTypeName,jdbcType=VARCHAR},
+      QUESTION_CODE = #{record.questionCode,jdbcType=VARCHAR},
+      CREATE_SUBJECT_FLOW = #{record.createSubjectFlow,jdbcType=VARCHAR},
+      CREATE_SUBJECT_NAME = #{record.createSubjectName,jdbcType=VARCHAR},
+      CREATE_BOOK_FLOW = #{record.createBookFlow,jdbcType=VARCHAR},
+      CREATE_BOOK_NAME = #{record.createBookName,jdbcType=VARCHAR},
+      MEMO = #{record.memo,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      QUESTION_CONTENT = #{record.questionContent,jdbcType=CLOB},
+      QUESTION_ANSWER = #{record.questionAnswer,jdbcType=CLOB},
+      RIGHT_ANSWER = #{record.rightAnswer,jdbcType=CLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PDSCI.EXAM_QUESTION
+    set QUESTION_FLOW = #{record.questionFlow,jdbcType=VARCHAR},
+      QUESTION_TYPE_ID = #{record.questionTypeId,jdbcType=VARCHAR},
+      QUESTION_TYPE_NAME = #{record.questionTypeName,jdbcType=VARCHAR},
+      QUESTION_CODE = #{record.questionCode,jdbcType=VARCHAR},
+      CREATE_SUBJECT_FLOW = #{record.createSubjectFlow,jdbcType=VARCHAR},
+      CREATE_SUBJECT_NAME = #{record.createSubjectName,jdbcType=VARCHAR},
+      CREATE_BOOK_FLOW = #{record.createBookFlow,jdbcType=VARCHAR},
+      CREATE_BOOK_NAME = #{record.createBookName,jdbcType=VARCHAR},
+      MEMO = #{record.memo,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ExamQuestionWithBLOBs" >
+    update PDSCI.EXAM_QUESTION
+    <set >
+      <if test="questionTypeId != null" >
+        QUESTION_TYPE_ID = #{questionTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="questionTypeName != null" >
+        QUESTION_TYPE_NAME = #{questionTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="questionCode != null" >
+        QUESTION_CODE = #{questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createSubjectFlow != null" >
+        CREATE_SUBJECT_FLOW = #{createSubjectFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="createSubjectName != null" >
+        CREATE_SUBJECT_NAME = #{createSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="createBookFlow != null" >
+        CREATE_BOOK_FLOW = #{createBookFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="createBookName != null" >
+        CREATE_BOOK_NAME = #{createBookName,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        MEMO = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="questionContent != null" >
+        QUESTION_CONTENT = #{questionContent,jdbcType=CLOB},
+      </if>
+      <if test="questionAnswer != null" >
+        QUESTION_ANSWER = #{questionAnswer,jdbcType=CLOB},
+      </if>
+      <if test="rightAnswer != null" >
+        RIGHT_ANSWER = #{rightAnswer,jdbcType=CLOB},
+      </if>
+    </set>
+    where QUESTION_FLOW = #{questionFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ExamQuestionWithBLOBs" >
+    update PDSCI.EXAM_QUESTION
+    set QUESTION_TYPE_ID = #{questionTypeId,jdbcType=VARCHAR},
+      QUESTION_TYPE_NAME = #{questionTypeName,jdbcType=VARCHAR},
+      QUESTION_CODE = #{questionCode,jdbcType=VARCHAR},
+      CREATE_SUBJECT_FLOW = #{createSubjectFlow,jdbcType=VARCHAR},
+      CREATE_SUBJECT_NAME = #{createSubjectName,jdbcType=VARCHAR},
+      CREATE_BOOK_FLOW = #{createBookFlow,jdbcType=VARCHAR},
+      CREATE_BOOK_NAME = #{createBookName,jdbcType=VARCHAR},
+      MEMO = #{memo,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      QUESTION_CONTENT = #{questionContent,jdbcType=CLOB},
+      QUESTION_ANSWER = #{questionAnswer,jdbcType=CLOB},
+      RIGHT_ANSWER = #{rightAnswer,jdbcType=CLOB}
+    where QUESTION_FLOW = #{questionFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ExamQuestion" >
+    update PDSCI.EXAM_QUESTION
+    set QUESTION_TYPE_ID = #{questionTypeId,jdbcType=VARCHAR},
+      QUESTION_TYPE_NAME = #{questionTypeName,jdbcType=VARCHAR},
+      QUESTION_CODE = #{questionCode,jdbcType=VARCHAR},
+      CREATE_SUBJECT_FLOW = #{createSubjectFlow,jdbcType=VARCHAR},
+      CREATE_SUBJECT_NAME = #{createSubjectName,jdbcType=VARCHAR},
+      CREATE_BOOK_FLOW = #{createBookFlow,jdbcType=VARCHAR},
+      CREATE_BOOK_NAME = #{createBookName,jdbcType=VARCHAR},
+      MEMO = #{memo,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where QUESTION_FLOW = #{questionFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

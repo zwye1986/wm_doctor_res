@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+    <!-- 社区学习情况记录表单 -->
+    <!--
+    {0}:表单所属机构(开关控制)
+    {1}:版本号
+ -->
+    <jsp path="res/form/{3}/{0}/glmzbrhsjbzdj_{1}"/>
+    <shzs_qk_sqsj_glmzbrhsjbzdj ver="1.0">
+        <page  ver="1.0">
+            <item name="social_pName" isView="0" remark="病人姓名" multiple="N"/>
+            <item name="social_diseaseNameOrHealthProblem" isView="1" remark="疾病名称或健康问题" multiple="N"/>
+            <item name="social_remark" remark="备注" multiple="N"/>
+            <!--<item name="social_managingOutpatientAndDiseaseRegistray" remark="管理门诊病人和所见病种登记" multiple="N"/>-->
+        </page>
+    </shzs_qk_sqsj_glmzbrhsjbzdj>
+</jspForm>
+

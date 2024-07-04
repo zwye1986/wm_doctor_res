@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.res.dao.hbres.ext.SchDeptExtMapper">
+
+	<select id="getUserListBySchDept" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+		select *
+		from sys_user su
+		inner join sys_user_role sur
+		on sur.user_flow = su.user_flow
+		where su.record_status = 'Y'
+		and sur.record_status = 'Y'
+		and sur.role_flow = #{roleFlow}
+		<if test="userName !=null and userName !=''">
+			and su.user_name like '%${userName}%'
+		</if>
+		and (
+		  exists(
+			select null
+			from sys_user_dept sud
+			where sud.dept_flow = (select sd.dept_flow from sch_dept sd where sd.record_status = 'Y' and sd.sch_dept_flow = #{schDeptFlow})
+			and sud.user_flow = su.user_flow
+			and sud.record_status='Y'
+		  )
+		  or su.dept_flow = (select sd.dept_flow from sch_dept sd where sd.record_status = 'Y' and sd.sch_dept_flow = #{schDeptFlow})
+		)
+	</select>
+	<resultMap id="deptMap" type="hashmap">
+		<result column="record_flow" property="recordFlow" javaType="java.lang.String" />
+		<result column="stage_name" property="stageName" javaType="java.lang.String" />
+		<result column="g_oradinal" property="gOradinal" javaType="java.lang.String" />
+		<result column="dept_name" property="deptName" javaType="java.lang.String" />
+		<result column="sch_month" property="schMonth" javaType="java.lang.String" />
+		<result column="is_required" property="isRequired" javaType="java.lang.String" />
+		<result column="real_month" property="realMonth" javaType="java.lang.String" />
+		<result column="dept_note" property="deptNote" javaType="java.lang.String" />
+		<result column="is_current" property="isCurrent" javaType="java.lang.String" />
+	</resultMap>
+
+	<select id="searchSchRotationDept" resultMap="deptMap" parameterType="java.util.Map">
+		select
+			record_flow,
+			(
+				select sch_stage_name||group_name
+				from sch_rotation_group
+				where rotation_flow = srd.rotation_flow
+					and record_status='Y'
+					and srd.group_flow = group_flow
+			) stage_name,
+			(
+				select ordinal
+				from sch_rotation_group
+				where rotation_flow = srd.rotation_flow
+					and record_status='Y'
+					and srd.group_flow=group_flow
+			) g_oradinal,
+			ordinal,
+			standard_dept_name dept_name,
+			<if test='isReduction!=null and isReduction=="Y"'>
+				(
+					select sch_month
+					from sch_doctor_dept sdd
+					where sdd.record_status='Y'
+						and doctor_flow = #{doctorFlow}
+						and sdd.rotation_flow = #{rotationFlow}
+						and sdd.group_flow = srd.group_flow
+						and sdd.standard_dept_id = srd.standard_dept_id
+						and exists ( select null
+							from res_doctor where doctor_flow=#{doctorFlow} and sdd.org_flow=org_flow
+							)
+				) sch_month,
+			</if>
+			<if test='isReduction==null or isReduction=="N"'>
+				sch_month,
+			</if>
+			is_required,
+			(select sum(to_date(sch_end_date,'yyyy-mm-dd')-to_date(sch_start_date,'yyyy-mm-dd'))
+				from sch_arrange_result sar
+				where record_status = 'Y'
+					and sar.standard_group_flow = srd.group_flow
+					and sar.standard_dept_id = srd.standard_dept_id
+					and sar.doctor_flow = #{doctorFlow}
+			) real_month,
+			dept_note,
+			(
+				select 'Y'
+				from sch_arrange_result sar
+				where record_status = 'Y'
+					and sar.standard_group_flow = srd.group_flow
+					and sar.standard_dept_id = srd.standard_dept_id
+					and sar.doctor_flow = #{doctorFlow}
+					and sch_start_date <![CDATA[<]]>= to_char(sysdate,'yyyy-mm-dd')
+					and sch_end_date >= to_char(sysdate,'yyyy-mm-dd')
+					and rownum = 1
+			) is_current,
+			(
+				select min(sch_start_date) mind
+					from sch_arrange_result sar
+					where record_status = 'Y'
+						and sar.standard_group_flow = srd.group_flow
+						and sar.standard_dept_id = srd.standard_dept_id
+						and sar.doctor_flow = #{doctorFlow}
+			) mind
+			from sch_rotation_dept srd
+				where ROTATION_FLOW=#{rotationFlow}
+					and record_status='Y'
+					and org_flow is null
+			<if test='isReduction!=null and isReduction=="Y"'>
+				and exists (
+					select null
+					from sch_doctor_dept sdd
+					where sdd.record_status='Y'
+					and doctor_flow = #{doctorFlow}
+					and sdd.rotation_flow = #{rotationFlow}
+					and sdd.group_flow = srd.group_flow
+					and sdd.standard_dept_id = srd.standard_dept_id
+				)
+			</if>
+			order by mind,to_number(g_oradinal),ordinal
+	</select>
+	<select id="searchrotationDept" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap">
+		SELECT *
+		FROM PDSCI.SCH_DEPT
+		WHERE RECORD_STATUS = 'Y'
+		AND SCH_DEPT_FLOW IN (
+		SELECT DISTINCT SCH_DEPT_FLOW
+		FROM PDSCI.SCH_ARRANGE_RESULT
+		WHERE RECORD_STATUS = 'Y'
+		<if test='userFlow!=null and userFlow!=""'>
+			AND DOCTOR_FLOW = #{userFlow}
+		</if>
+		)
+	</select>
+
+	<select id="searchRelByStandard" resultMap="com.pinde.sci.dao.base.SchDeptRelMapper.BaseResultMap" >
+		select DISTINCT dept.sch_dept_flow,dept.sch_dept_name,dept.create_time
+		from Sch_Dept_Rel rel
+		join sch_dept dept
+		on rel.sch_dept_flow=dept.sch_dept_flow
+		where rel.record_status='Y'
+		and dept.record_status='Y'
+		and dept.org_flow=#{orgFlow}
+		and rel.standard_dept_id=#{standardDeptId}
+		<if test='deptName!=null and deptName!=""'>
+			AND dept.Dept_name like '%${deptName}%'
+		</if>
+		order by dept.create_time
+	</select>
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+	<!-- 大病历登记表单 -->
+	<!--
+	{0}:表单所属机构(开关控制)
+	{1}:版本号
+ -->
+	<jsp path="res/form/{3}/{0}/other_{1}"/>
+	<shzs_qk_ykqtczbldj_ty ver="1.0">
+		<page  ver="1.0">
+			<item name="other_patientName" isView="1" remark="病人姓名" multiple="N"/>
+			<item name="other_anamnesisNumbers" isView="0" remark="病历号" multiple="N"/>
+			<item name="other_diseaseName" isView="2" remark="疾病名称" multiple="N"/>
+			<item name="other_attendingPhysician" isView="3" remark="主治医师" multiple="N"/>
+		</page>
+	</shzs_qk_ykqtczbldj_ty>
+	
+</jspForm>
+
