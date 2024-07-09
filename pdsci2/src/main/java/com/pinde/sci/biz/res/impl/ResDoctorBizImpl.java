@@ -147,6 +147,10 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 	private SchDoctorSelectDeptMapper doctorSelectDeptMapper;
 	@Autowired
 	private IResTestConfigBiz resTestConfigBiz;
+	@Autowired
+	private JsresGraduationApplyMapper applyMapper;
+	@Autowired
+	private JsresExamSignupMapper signupMapper;
 
 	private static final String EXT_INFO_ROOT = "extInfo";
 	private static final String EXT_INFO_ELE = "extInfoForm";
@@ -2089,6 +2093,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 	@Override
 	public ExcelUtile  importCourseFromExcel(MultipartFile file,String scoreYear) {
 		List<ResTestConfig> resTestConfigs = resTestConfigBiz.findAllEffective();
+		List<ResScore> resScoreList = new ArrayList<>();
 		InputStream is = null;
 		try {
 			is = file.getInputStream();
@@ -2098,52 +2103,55 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			//map中的keys  个数与execl中表头字段数量一致
 			final String[] keys = {
 					"testId",
+					"userName",
+					"idKind",
 					"idNo",
-					"theoryScore",
-					"sessionNumber"
+					"doctorType",
+					"sessionNumber",
+					"realScore",
+					"theoryScore"
 			};
 			final String a = scoreYear;
-			return ExcelUtile.importDataExcel(HashMap.class, 1, wb, keys, new IExcelUtil<HashMap>() {
+			ExcelUtile excelUtile = ExcelUtile.importDataExcel(HashMap.class, 1, wb, keys, new IExcelUtil<HashMap>() {
 				@Override
 				public void operExcelData(ExcelUtile eu) {
-					List<Map<String,Object>> datas=eu.getExcelDatas();
+					List<Map<String, Object>> datas = eu.getExcelDatas();
 					int count = 0;
-					String code="0";
-					List<ResScore> list=new ArrayList<ResScore>();
-					for(int i=0;i<datas.size();i++)
-					{
-						Map<String, Object> data=datas.get(i);
+					String code = "0";
+					List<ResScore> list = new ArrayList<ResScore>();
+					for (int i = 0; i < datas.size(); i++) {
+						Map<String, Object> data = datas.get(i);
 						ResDoctor resDoctor = new ResDoctor();//学生
-						ResScore resScore=new ResScore();//成绩
-						SysUser sysUser=new SysUser();
+						ResScore resScore = new ResScore();//成绩
+						SysUser sysUser = new SysUser();
 						String score;//成绩
-						String scoreYear=a;
+						String scoreYear = a;
 						resDoctor.setSessionNumber(scoreYear);
 						for (String key : data.keySet()) {
-							Map<String,Object> map=new HashMap<String, Object>();
-							String value=(String) data.get(key);
-							if("idNo".equals(key))
-							{
+							Map<String, Object> map = new HashMap<String, Object>();
+							String value = (String) data.get(key);
+							if ("idNo".equals(key)) {
 								sysUser.setIdNo(value);
-							}else if("theoryScore".equals(key))
-							{
-								if("合格".equals(value)){
+							} else if ("theoryScore".equals(key)) {
+								if ("合格".equals(value)) {
 									resScore.setTheoryScore(BigDecimal.valueOf(Double.valueOf(1)));
-								}else if("不合格".equals(value)){
+								} else if ("不合格".equals(value)) {
 									resScore.setTheoryScore(BigDecimal.valueOf(Double.valueOf(0)));
-								}else if("缺考".equals(value)){
+								} else if ("缺考".equals(value)) {
 									resScore.setTheoryScore(BigDecimal.valueOf(Double.valueOf(2)));
 								}
-							}else if("testId".equals(key)){
+							} else if ("testId".equals(key)) {
 								resScore.setTestId(value);
-							}else if("sessionNumber".equals(key)){
+							} else if ("sessionNumber".equals(key)) {
 								resScore.setSessionNumber(value);
+							} else if ("realScore".equals(key)) {
+								resScore.setRealScore(value);
 							}
 						}
 
 						//根据学生身份证号
 						//sysUser.setCretTypeId(CertificateTypeEnum.Shenfenzheng.getId());
-						sysUser=userBiz.findByIdNo(sysUser.getIdNo());
+						sysUser = userBiz.findByIdNo(sysUser.getIdNo());
 						resDoctor.setDoctorFlow(sysUser.getUserFlow());
 
 						ResDoctorRecruitExample example = new ResDoctorRecruitExample();
@@ -2156,52 +2164,48 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						resScore.setScorePhaseName(scoreYear);//年份或阶段name
 						resScore.setScoreTypeId(ResScoreTypeEnum.TheoryScore.getId());
 						resScore.setScoreTypeName(ResScoreTypeEnum.TheoryScore.getName());
-						count+=save(resScore);
+						resScoreList.add(resScore);
+						count++;
 					}
-					eu.put("code",code);
-					eu.put("count",count);
+					eu.put("code", code);
+					eu.put("count", count);
 				}
 
 
 				@Override
-				public String checkExcelData(HashMap data,ExcelUtile eu) {
-					String sheetName=(String)eu.get("SheetName");
-					if(sheetName==null||!"TheoryScore".equals(sheetName))
-					{
+				public String checkExcelData(HashMap data, ExcelUtile eu) {
+					String sheetName = (String) eu.get("SheetName");
+					if (sheetName == null || !"TheoryScore".equals(sheetName)) {
 						eu.put("count", 0);
 						eu.put("code", "1");
 						eu.put("msg", "请使用系统提供的理论成绩模板！！");
 						return ExcelUtile.RETURN;
 					}
-					SysUser sysUser=new SysUser();
+					SysUser sysUser = new SysUser();
 					String sessionNumber = "";
-					int rowNum= (Integer) eu.get(ExcelUtile.CURRENT_ROW);
+					int rowNum = (Integer) eu.get(ExcelUtile.CURRENT_ROW);
 					for (Object key1 : data.keySet()) {
-						String key=(String) key1;
-						Map<String,Object> map=new HashMap<String, Object>();
-						String value=(String) data.get(key);
-						if("idNo".equals(key))
-						{
-							if(StringUtil.isBlank(value)) {
+						String key = (String) key1;
+						Map<String, Object> map = new HashMap<String, Object>();
+						String value = (String) data.get(key);
+						if ("idNo".equals(key)) {
+							if (StringUtil.isBlank(value)) {
 								eu.put("count", 0);
 								eu.put("code", "1");
 								eu.put("msg", "导入文件第" + (rowNum + 1) + "行身份证号为空，请确认后提交！！");
 								return ExcelUtile.RETURN;
 							}
 							sysUser.setIdNo(value);
-						}else
-						if("theoryScore".equals(key))
-						{
-							if(StringUtil.isBlank(value)) {
+						} else if ("theoryScore".equals(key)) {
+							if (StringUtil.isBlank(value)) {
 								eu.put("count", 0);
 								eu.put("code", "1");
-								eu.put("msg", "导入文件第" + (rowNum + 1) + "行成绩为空，请确认后提交！！");
+								eu.put("msg", "导入文件第" + (rowNum + 1) + "行成绩是否合格为空，请确认后提交！！");
 								return ExcelUtile.RETURN;
 							}
-							if(!StringUtil.isBlank(value)) {
-								String flay=checkTheroyScore(value,"成绩",rowNum,eu);
-								if(null!=flay)
-								{
+							if (!StringUtil.isBlank(value)) {
+								String flay = checkTheroyScore(value, "成绩", rowNum, eu);
+								if (null != flay) {
 									return ExcelUtile.RETURN;
 								}
 							}
@@ -2236,17 +2240,54 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 								return ExcelUtile.RETURN;
 							}
 							sessionNumber = value;
+						} else if ("userName".equals(key)) {
+							if (StringUtil.isBlank(value)) {
+								eu.put("count", 0);
+								eu.put("code", "1");
+								eu.put("msg", "导入文件第" + (rowNum + 1) + "行学员姓名为空，请确认后提交！！");
+								return ExcelUtile.RETURN;
+							}
+							sysUser.setUserName(value);
+						} else if ("idKind".equals(key)) {
+							if (StringUtil.isBlank(value)) {
+								eu.put("count", 0);
+								eu.put("code", "1");
+								eu.put("msg", "导入文件第" + (rowNum + 1) + "行证件类型为空，请确认后提交！！");
+								return ExcelUtile.RETURN;
+							}
+							sysUser.setCretTypeName(value);
+						} else if ("doctorType".equals(key)) {
+							if (StringUtil.isBlank(value)) {
+								eu.put("count", 0);
+								eu.put("code", "1");
+								eu.put("msg", "导入文件第" + (rowNum + 1) + "行培训类别为空，请确认后提交！！");
+								return ExcelUtile.RETURN;
+							}
+							sysUser.setTrainingTypeName(value);
+						} else if ("realScore".equals(key)) {
+							if (StringUtil.isBlank(value)) {
+								eu.put("count", 0);
+								eu.put("code", "1");
+								eu.put("msg", "导入文件第" + (rowNum + 1) + "行成绩为空，请确认后提交！！");
+								return ExcelUtile.RETURN;
+							}
 						}
 					}
 					//校验学生是否存在
-					String flay=checkUser(sysUser,rowNum,eu,sessionNumber);
-					if(null!=flay)
-					{
+					String flay = checkUser(sysUser, rowNum, eu, sessionNumber, a);
+					if (null != flay) {
 						return ExcelUtile.RETURN;
 					}
 					return null;
 				}
 			});
+			String code= (String) excelUtile.get("code");
+			if ("0".equals(code)) {
+				for (ResScore resScore : resScoreList) {
+					save(resScore);
+				}
+			}
+			return excelUtile;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -2259,7 +2300,10 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 		return null;
 	}
 
-	private String checkUser(SysUser sysUser,int rowNum, ExcelUtile eu,String sessionNumber) {
+	private String checkUser(SysUser sysUser,int rowNum, ExcelUtile eu,String sessionNumber, String scoreYear) {
+		String cretTypeName = sysUser.getCretTypeName();
+		String userName = sysUser.getUserName();
+		String trainingTypeName = sysUser.getTrainingTypeName();
 		//根据学生身份证号
 		//sysUser.setCretTypeId(CertificateTypeEnum.Shenfenzheng.getId());
 		sysUser=userBiz.findByIdNo(sysUser.getIdNo());
@@ -2267,7 +2311,25 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 		{
 			eu.put("count",0);
 			eu.put("code","1");
-			eu.put("msg","导入文件第"+(rowNum+1)+"行,身份证号所属学生不存在，请确认后提交！！");
+			eu.put("msg","导入文件第"+(rowNum+1)+"行,证件号所属学生不存在，请确认后提交！！");
+			return ExcelUtile.RETURN;
+		}
+		if (!cretTypeName.equals(sysUser.getCretTypeName())) {
+			eu.put("count",0);
+			eu.put("code","1");
+			eu.put("msg","导入文件第"+(rowNum+1)+"行,证件类型与所属学生存储的证件类型不符合，请确认后提交！！");
+			return ExcelUtile.RETURN;
+		}
+		if (!userName.equals(sysUser.getUserName())) {
+			eu.put("count",0);
+			eu.put("code","1");
+			eu.put("msg","导入文件第"+(rowNum+1)+"行,姓名与证件号所属学生不符合，请确认后提交！！");
+			return ExcelUtile.RETURN;
+		}
+		if (!trainingTypeName.equals(sysUser.getTrainingTypeName())) {
+			eu.put("count",0);
+			eu.put("code","1");
+			eu.put("msg","导入文件第"+(rowNum+1)+"行,培训类别与证件号所属学生不符合，请确认后提交！！");
 			return ExcelUtile.RETURN;
 		}
 		ResDoctor resDoctor=searchByUserFlow(sysUser.getUserFlow());
@@ -2300,6 +2362,23 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 				eu.put("msg", "导入文件第" + (rowNum + 1) + "行,该学员培训数据出现异常，请确认后提交！！");
 				return ExcelUtile.RETURN;
 			}
+
+			if (StringUtil.isNotBlank(scoreYear)) {
+				JsresGraduationApplyExample applyExample = new JsresGraduationApplyExample();
+				applyExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andApplyYearEqualTo(scoreYear).andRecruitFlowEqualTo(resDoctorRecruits.get(0).getRecruitFlow()).andAuditStatusIdEqualTo("GlobalPassed");
+				List<JsresGraduationApply> applyList = applyMapper.selectByExample(applyExample);
+
+				JsresExamSignupExample signupExample = new JsresExamSignupExample();
+				signupExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andSignupYearEqualTo(scoreYear).andDoctorFlowEqualTo(sysUser.getUserFlow()).andAuditStatusIdEqualTo("GlobalPassed");
+				List<JsresExamSignup> signupList = signupMapper.selectByExample(signupExample);
+
+				if (CollectionUtils.isEmpty(applyList) && CollectionUtils.isEmpty(signupList)) {
+					eu.put("count", 0);
+					eu.put("code", "1");
+					eu.put("msg", "导入文件第" + (rowNum + 1) + "行,该学员没有被审核通过的考试申请，请确认后提交！！");
+					return ExcelUtile.RETURN;
+				}
+			}
 		}
 		return  null;
 	}
@@ -2313,6 +2392,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 	@Override
 	public ExcelUtile  importSkillScoreFromExcel(MultipartFile file,String scoreYear) {
 		List<ResTestConfig> resTestConfigs = resTestConfigBiz.findAllEffective();
+		List<ResScore> resScoreList = new ArrayList<>();
 		InputStream is = null;
 		try {
 			is = file.getInputStream();
@@ -2322,20 +2402,23 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			//map中的keys  个数与execl中表头字段数量一致
 			final String[] keys = {
 					"testId",
+					"userName",
+					"idKind",
 					"idNo",
-					"skillScore",
-					"sessionNumber"
+					"doctorType",
+					"sessionNumber",
+					"realScore",
+					"theoryScore"
 			};
 			final String a = scoreYear;
-			return  ExcelUtile.importDataExcel(HashMap.class, 1, wb, keys, new IExcelUtil<HashMap>() {
+			ExcelUtile excelUtile = ExcelUtile.importDataExcel(HashMap.class, 1, wb, keys, new IExcelUtil<HashMap>() {
 				@Override
 				public void operExcelData(ExcelUtile eu) {
 					List<Map<String,Object>> datas=eu.getExcelDatas();
 					int count = 0;
 					String code="0";
 					List<ResScore> list=new ArrayList<ResScore>();
-					for(int i=0;i<datas.size();i++)
-					{
+					for(int i=0;i<datas.size();i++) {
 						Map<String, Object> data=datas.get(i);
 						ResDoctor resDoctor = new ResDoctor();//学生
 						ResScore resScore=new ResScore();//成绩
@@ -2348,13 +2431,10 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 							if("idNo".equals(key))
 							{
 								sysUser.setIdNo(value);
-							}else
-							if("skillScore".equals(key)){
-								if("合格".equals(value))
-								{
+							}else if("skillScore".equals(key)){
+								if("合格".equals(value)) {
 									resScore.setSkillScore(BigDecimal.valueOf(Double.valueOf(GlobalConstant.PASS)));
-								}else if("不合格".equals(value))
-								{
+								}else if("不合格".equals(value)) {
 									resScore.setSkillScore(BigDecimal.valueOf(Double.valueOf(GlobalConstant.UNPASS)));
 								}else if("缺考".equals(value)){
 									resScore.setSkillScore(BigDecimal.valueOf(Double.valueOf(2)));
@@ -2388,7 +2468,8 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 							e.printStackTrace();
 						}
 						resScore.setExtScore(extScore);*/
-						count+=save(resScore);
+						resScoreList.add(resScore);
+						count++;
 						//list.add(resScore);
 					}
 					//saveBylist(list);
@@ -2459,10 +2540,41 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 								return ExcelUtile.RETURN;
 							}
 							sessionNumber = value;
+						} else if ("userName".equals(key)) {
+							if (StringUtil.isBlank(value)) {
+								eu.put("count", 0);
+								eu.put("code", "1");
+								eu.put("msg", "导入文件第" + (rowNum + 1) + "行学员姓名为空，请确认后提交！！");
+								return ExcelUtile.RETURN;
+							}
+							sysUser.setUserName(value);
+						} else if ("idKind".equals(key)) {
+							if (StringUtil.isBlank(value)) {
+								eu.put("count", 0);
+								eu.put("code", "1");
+								eu.put("msg", "导入文件第" + (rowNum + 1) + "行证件类型为空，请确认后提交！！");
+								return ExcelUtile.RETURN;
+							}
+							sysUser.setCretTypeName(value);
+						} else if ("doctorType".equals(key)) {
+							if (StringUtil.isBlank(value)) {
+								eu.put("count", 0);
+								eu.put("code", "1");
+								eu.put("msg", "导入文件第" + (rowNum + 1) + "行培训类别为空，请确认后提交！！");
+								return ExcelUtile.RETURN;
+							}
+							sysUser.setTrainingTypeName(value);
+						} else if ("realScore".equals(key)) {
+							if (StringUtil.isBlank(value)) {
+								eu.put("count", 0);
+								eu.put("code", "1");
+								eu.put("msg", "导入文件第" + (rowNum + 1) + "行成绩为空，请确认后提交！！");
+								return ExcelUtile.RETURN;
+							}
 						}
 					}
 					//校验学生是否存在
-					String flay=checkUser(sysUser,rowNum,eu,sessionNumber);
+					String flay=checkUser(sysUser,rowNum,eu,sessionNumber, a);
 					if(null!=flay)
 					{
 						return ExcelUtile.RETURN;
@@ -2470,6 +2582,13 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 					return null;
 				}
 			});
+			String code= (String) excelUtile.get("code");
+			if ("0".equals(code)) {
+				for (ResScore resScore : resScoreList) {
+					save(resScore);
+				}
+			}
+			return excelUtile;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -2705,7 +2824,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 					}
 
 					//校验学生是否存在
-					String flay=checkUser(sysUser,rowNum,eu,"");
+					String flay=checkUser(sysUser,rowNum,eu,"","");
 					if(null!=flay)
 					{
 						return ExcelUtile.RETURN;
@@ -4262,10 +4381,12 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 				if (CertificateTypeEnum.Shenfenzheng.getId().equals(cretTypeId)) {
 					CretType = "居民身份证";
 					area="中国大陆";
-				}else if (CertificateTypeEnum.Junguanzheng.getId().equals(cretTypeId)) {
-					CretType = "军队证件";
-					area="中国大陆";
-				}else if (CertificateTypeEnum.Passport.getId().equals(cretTypeId)) {
+				}
+//				else if (CertificateTypeEnum.Junguanzheng.getId().equals(cretTypeId)) {
+//					CretType = "军队证件";
+//					area="中国大陆";
+//				}
+				else if (CertificateTypeEnum.Passport.getId().equals(cretTypeId)) {
 					CretType = "护照";
 					area="";
 				}else if (CertificateTypeEnum.HongKongMacao.getId().equals(cretTypeId)) {

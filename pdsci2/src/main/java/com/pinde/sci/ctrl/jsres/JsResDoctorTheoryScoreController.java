@@ -544,6 +544,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
             for(JsResDoctorRecruitExt doctorRecruitExt:doctorList){
                 String doctorName = doctorRecruitExt.getSysUser().getUserName();
                 String idNo = doctorRecruitExt.getSysUser().getIdNo();
+                String cretTypeName = doctorRecruitExt.getSysUser().getCretTypeName();
                 String orgName = doctorRecruitExt.getOrgName();
                 String sessionNumber = doctorRecruitExt.getSessionNumber();
                 String catSpeName = doctorRecruitExt.getCatSpeName();
@@ -558,6 +559,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
                     year1 = doctorRecruitExt.getResScore().getScorePhaseId();
                     year2 = doctorRecruitExt.getResScore().getScorePhaseName();
                 }
+                String realScore = doctorRecruitExt.getResScore().getRealScore();
                 String theoryScore = null==doctorRecruitExt.getResScore().getTheoryScore()?"":doctorRecruitExt.getResScore().getTheoryScore()+"";
                 if("1".equals(theoryScore)){
                     theoryScore="合格";
@@ -634,6 +636,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
                 }
                 Map<String,Object> resultMap = new HashMap<>();
                 resultMap.put("doctorName",doctorName);
+                resultMap.put("cretTypeName",cretTypeName);
                 resultMap.put("idNo",idNo);
                 resultMap.put("orgName",orgName);
                 resultMap.put("sessionNumber",sessionNumber);
@@ -647,22 +650,24 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
                 resultMap.put("year2",year2);
                 resultMap.put("theoryScore",theoryScore);
                 resultMap.put("isPass",isPass);
+                resultMap.put("realScore",realScore);
                 resultMapList.add(resultMap);
             }
         }
         String fileName = "理论成绩信息汇总表.xls";
         String titles[] = {
+                "theoryTestId:考试编号",
                 "doctorName:姓名",
+                "cretTypeName:证件类型",
                 "idNo:证件号码",
                 "orgName:培训基地",
                 "placeName:地市",
                 "sessionNumber:年级",
                 "graduationYear:结业年份",
                 "catSpeName:培训类别",
-                "changeSpeName:报考专业",
                 "speName:培训专业",
-                "theoryScore:理论成绩",
-                "theoryTestId:考试编号"
+                "realScore:理论成绩",
+                "theoryScore:是否合格"
         };
         fileName = URLEncoder.encode(fileName, "UTF-8");
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
@@ -1015,6 +1020,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
             for (JsResDoctorRecruitExt doctorRecruitExt : doctorList) {
                 String doctorName = doctorRecruitExt.getSysUser().getUserName();
                 String idNo = doctorRecruitExt.getSysUser().getIdNo();
+                String cretTypeName = doctorRecruitExt.getSysUser().getCretTypeName();
                 String orgName = doctorRecruitExt.getOrgName();
                 String sessionNumber = doctorRecruitExt.getSessionNumber();
                 String catSpeName = doctorRecruitExt.getCatSpeName();
@@ -1023,6 +1029,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
                 String changeSpeName = doctorRecruitExt.getChangeSpeName();
                 String skillTestId = doctorRecruitExt.getSkillTestId();
                 String extGraduationYear = doctorRecruitExt.getGraduationYear();
+                String realScore = doctorRecruitExt.getResScore().getRealScore();
                 String skillScore = null == doctorRecruitExt.getResScore().getSkillScore() ? "" : doctorRecruitExt.getResScore().getSkillScore() + "";
                 if ("1".equals(skillScore)) {
                     skillScore = "合格";
@@ -1092,6 +1099,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
                 }
                 Map<String, Object> resultMap = new HashMap<>();
                 resultMap.put("doctorName", doctorName);
+                resultMap.put("cretTypeName",cretTypeName);
                 resultMap.put("idNo", idNo);
                 resultMap.put("orgName", orgName);
                 resultMap.put("sessionNumber", sessionNumber);
@@ -1103,22 +1111,24 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
                 resultMap.put("speName", speName);
                 resultMap.put("skillScore", skillScore);
                 resultMap.put("isPass", isPass);
+                resultMap.put("realScore", realScore);
                 resultMapList.add(resultMap);
             }
         }
         String fileName = "技能成绩信息汇总表.xls";
         String titles[] = {
+                "skillTestId:考试编号",
                 "doctorName:姓名",
+                "cretTypeName:证件类型",
                 "idNo:证件号码",
                 "orgName:培训基地",
                 "placeName:地市",
                 "sessionNumber:年级",
                 "graduationYear:结业年份",
                 "catSpeName:培训类别",
-                "changeSpeName:报考专业",
                 "speName:培训专业",
-                "skillScore:技能成绩",
-                "skillTestId:考试编号"
+                "realScore:技能成绩",
+                "skillScore:是否合格"
         };
         fileName = URLEncoder.encode(fileName, "UTF-8");
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");

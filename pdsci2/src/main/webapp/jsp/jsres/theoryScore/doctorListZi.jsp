@@ -11,13 +11,12 @@ $(document).ready(function(){
     <div class="search_table" style="padding:0;width: 95%;margin: 5px auto;">
         <table border="0" cellpadding="0" cellspacing="0" class="grid">
         	<colgroup>
-						<col width="9%"/>
-						<col width="9%"/>
 						<col width="12%"/>
-						<col width="9%"/>
-						<col width="9%"/>
+						<col width="12%"/>
+						<col width="15%"/>
+						<col width="10%"/>
+						<col width="11%"/>
 						<col width="10%" />
-						<col width="12%"/>
 						<col width="12%"/>
 						<col width="9%"/>
 						<col width="9%"/>
@@ -29,7 +28,6 @@ $(document).ready(function(){
 				<th>年级</th>
 				<th>地市</th>
 				<th>培训类别</th>
-				<th>国家基地</th>
 				<th>培训基地</th>
 				<th>培训专业</th>
 				<th>是否合格</th>
@@ -58,7 +56,6 @@ $(document).ready(function(){
 	                <td>${doctor.sessionNumber}</td>
 	                <td>${doctor.placeName}</td>
 	                <td>${doctor.catSpeName}</td>
-					<td>${doctor.countryOrgName}</td>
 	                <td>${doctor.orgName}</td>
 	                <td>${doctor.speName}</td>
 					 <td >

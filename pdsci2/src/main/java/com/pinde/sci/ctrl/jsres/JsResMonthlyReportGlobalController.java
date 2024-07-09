@@ -1072,10 +1072,12 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					if (CertificateTypeEnum.Shenfenzheng.getId().equals(sysUser.getCretTypeId())) {
 						CretType = "居民身份证";
 						area = "中国大陆";
-					} else if (CertificateTypeEnum.Junguanzheng.getId().equals(sysUser.getCretTypeId())) {
-						CretType = "军队证件";
-						area = "中国大陆";
-					} else if (CertificateTypeEnum.Passport.getId().equals(sysUser.getCretTypeId())) {
+					}
+//					else if (CertificateTypeEnum.Junguanzheng.getId().equals(sysUser.getCretTypeId())) {
+//						CretType = "军队证件";
+//						area = "中国大陆";
+//					}
+					else if (CertificateTypeEnum.Passport.getId().equals(sysUser.getCretTypeId())) {
 						CretType = "护照";
 						area = "";
 					} else if (CertificateTypeEnum.HongKongMacao.getId().equals(cretTypeId)) {
@@ -1357,10 +1359,12 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					if (CertificateTypeEnum.Shenfenzheng.getId().equals(sysUser.getCretTypeId())) {
 						CretType = "居民身份证";
 						area = "中国大陆";
-					} else if (CertificateTypeEnum.Junguanzheng.getId().equals(sysUser.getCretTypeId())) {
-						CretType = "军队证件";
-						area = "中国大陆";
-					} else if (CertificateTypeEnum.Passport.getId().equals(sysUser.getCretTypeId())) {
+					}
+//					else if (CertificateTypeEnum.Junguanzheng.getId().equals(sysUser.getCretTypeId())) {
+//						CretType = "军队证件";
+//						area = "中国大陆";
+//					}
+					else if (CertificateTypeEnum.Passport.getId().equals(sysUser.getCretTypeId())) {
 						CretType = "护照";
 						area = "";
 					} else if (CertificateTypeEnum.HongKongMacao.getId().equals(cretTypeId)) {
@@ -1644,10 +1648,12 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					if (CertificateTypeEnum.Shenfenzheng.getId().equals(sysUser.getCretTypeId())) {
 						CretType = "居民身份证";
 						area = "中国大陆";
-					} else if (CertificateTypeEnum.Junguanzheng.getId().equals(sysUser.getCretTypeId())) {
-						CretType = "军队证件";
-						area = "中国大陆";
-					} else if (CertificateTypeEnum.Passport.getId().equals(sysUser.getCretTypeId())) {
+					}
+//					else if (CertificateTypeEnum.Junguanzheng.getId().equals(sysUser.getCretTypeId())) {
+//						CretType = "军队证件";
+//						area = "中国大陆";
+//					}
+					else if (CertificateTypeEnum.Passport.getId().equals(sysUser.getCretTypeId())) {
 						CretType = "护照";
 						area = "";
 					} else if (CertificateTypeEnum.HongKongMacao.getId().equals(cretTypeId)) {
@@ -1927,10 +1933,12 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					if (CertificateTypeEnum.Shenfenzheng.getId().equals(sysUser.getCretTypeId())) {
 						CretType = "居民身份证";
 						area="中国大陆";
-					}else if (CertificateTypeEnum.Junguanzheng.getId().equals(sysUser.getCretTypeId())) {
-						CretType = "军队证件";
-						area="中国大陆";
-					}else if (CertificateTypeEnum.Passport.getId().equals(sysUser.getCretTypeId())) {
+					}
+//					else if (CertificateTypeEnum.Junguanzheng.getId().equals(sysUser.getCretTypeId())) {
+//						CretType = "军队证件";
+//						area="中国大陆";
+//					}
+					else if (CertificateTypeEnum.Passport.getId().equals(sysUser.getCretTypeId())) {
 						CretType = "护照";
 						area="";
 					}else if (CertificateTypeEnum.HongKongMacao.getId().equals(cretTypeId)) {
@@ -2215,10 +2223,12 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					if (CertificateTypeEnum.Shenfenzheng.getId().equals(sysUser.getCretTypeId())) {
 						CretType = "居民身份证";
 						area = "中国大陆";
-					} else if (CertificateTypeEnum.Junguanzheng.getId().equals(sysUser.getCretTypeId())) {
-						CretType = "军队证件";
-						area = "中国大陆";
-					} else if (CertificateTypeEnum.Passport.getId().equals(sysUser.getCretTypeId())) {
+					}
+//					else if (CertificateTypeEnum.Junguanzheng.getId().equals(sysUser.getCretTypeId())) {
+//						CretType = "军队证件";
+//						area = "中国大陆";
+//					}
+					else if (CertificateTypeEnum.Passport.getId().equals(sysUser.getCretTypeId())) {
 						CretType = "护照";
 						area = "";
 					}else if (CertificateTypeEnum.HongKongMacao.getId().equals(cretTypeId)) {
