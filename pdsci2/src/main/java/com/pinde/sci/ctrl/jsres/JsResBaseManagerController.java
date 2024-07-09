@@ -46,6 +46,7 @@ import com.pinde.sci.model.vo.SysDeptVO;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.CellRangeAddress;
 import org.apache.poi.ss.usermodel.Font;
@@ -5476,14 +5477,10 @@ public class JsResBaseManagerController extends GeneralController {
 		if (currentPage == null) {
 			currentPage = 1;
 		}
-		sysOrgExt.setSessionYear(DateUtil.getYear());
-		/*if (StringUtil.isBlank(sysOrgExt.getSessionYear())) {
-			if (DateUtil.getCurrDate().compareTo(DateUtil.getYear() + "-09-30") > 0) {
-				sysOrgExt.setSessionYear(DateUtil.getYear());
-			} else {
-				sysOrgExt.setSessionYear(String.valueOf(Integer.parseInt(DateUtil.getYear()) - 1));
-			}
-		}*/
+
+		if (StringUtil.isBlank(sysOrgExt.getSessionYear())) {
+			sysOrgExt.setSessionYear(DateUtil.getYear());
+		}
 		model.addAttribute("sessionYear", sysOrgExt.getSessionYear());
 		List<SysOrgExt> sysOrgExtList = orgBiz.searchOrgListByParamNew(sysOrgExt);
 //		List<SysOrgExt> sysOrgExtList = orgBiz.searchOrgListByParam(sysOrgExt);
@@ -6214,6 +6211,7 @@ public class JsResBaseManagerController extends GeneralController {
 					if(null != jointOrgVO) {
 						// 顺便把baseCode添上
 						jointOrgVO.setBaseCode(orgToEntityMap.getOrDefault(jointOrgVO.getOrgFlow(), new SysOrg()).getOrgCode());
+						jointOrgVO.setOrgName(orgToEntityMap.getOrDefault(jointOrgVO.getOrgFlow(), new SysOrg()).getOrgName());
 						jointOrgList.add(jointOrgVO);
 					}
 				}
@@ -6229,6 +6227,7 @@ public class JsResBaseManagerController extends GeneralController {
 				mainOrgVO.setJointOrgList(jointOrgList);
 				// 顺便把baseCode添上
 				mainOrgVO.setBaseCode(orgToEntityMap.getOrDefault(mainOrgVO.getOrgFlow(), new SysOrg()).getOrgCode());
+				mainOrgVO.setOrgName(orgToEntityMap.getOrDefault(mainOrgVO.getOrgFlow(), new SysOrg()).getOrgName());
 				resList.add(mainOrgVO);
 			}
 
@@ -6236,7 +6235,10 @@ public class JsResBaseManagerController extends GeneralController {
 
 		List<ResOrgSepVO> orgSpeVOList = resList.stream().sorted((vo1, vo2) -> {
 			if(StringUtils.isNotEmpty(vo1.getBaseCode()) && StringUtils.isNotEmpty(vo2.getBaseCode())) {
-				return Integer.compare(Integer.parseInt(vo1.getBaseCode()), Integer.parseInt(vo2.getBaseCode()));
+				if(NumberUtils.isDigits(vo1.getBaseCode()) && NumberUtils.isDigits(vo2.getBaseCode())) {
+					return Integer.compare(Integer.parseInt(vo1.getBaseCode()), Integer.parseInt(vo2.getBaseCode()));
+				}
+				return vo1.getBaseCode().compareTo(vo2.getBaseCode());
 			}else if(StringUtils.isNotEmpty(vo1.getBaseCode())){
 				return -1;
 			}else if(StringUtils.isNotEmpty(vo2.getBaseCode())) {

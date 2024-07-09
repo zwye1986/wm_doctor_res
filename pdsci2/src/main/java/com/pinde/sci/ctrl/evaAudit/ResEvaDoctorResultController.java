@@ -156,7 +156,14 @@ public class ResEvaDoctorResultController extends GeneralController {
             List<ResAssessCfg> resAssessCfgList = assessCfgBiz.selectByExampleWithBLOBs(search);
             model.addAttribute("formCount",resAssessCfgList.size());
             if (resAssessCfgList != null && resAssessCfgList.size() > 0) {
+                // 优先取百分制的那一条，没有就取第一条
                 assessCfg = resAssessCfgList.get(0);
+                for (ResAssessCfg resAssessCfg : resAssessCfgList) {
+                    if("Percentile".equals(resAssessCfg.getAssessTypeId())) {
+                        assessCfg = resAssessCfg;
+                        break;
+                    }
+                }
             }
 
         }
