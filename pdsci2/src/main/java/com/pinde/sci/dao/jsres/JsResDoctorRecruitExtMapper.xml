@@ -1176,7 +1176,7 @@
 		order by  org.org_code desc,u.user_code
 	</select>
 	<select id="searchJsDoctorSkillScoreExtList"  parameterType="java.util.Map" resultMap="DoctorScoreRecruit">
-		select score.score_flow,score.theory_score,score.skill_score,score.ext_score,score.test_id AS SKILL_TEST_ID,u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL
+		select score.score_flow,score.theory_score,score.skill_score,score.ext_score,score.real_score,score.test_id AS SKILL_TEST_ID,u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL,u.cret_type_name
 		, u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
 		ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName,
 		dr.RECRUIT_FLOW,
@@ -1269,8 +1269,8 @@
 		dr.JOINT_ORG_FLOW,
 		dr.AUDITION_STATUS_NAME,
 		dr.WORK_UNIT_CODE
-		, CASE WHEN ORG.ORG_LEVEL_ID = 'CountryOrg' THEN (SELECT DISTINCT ORG_NAME FROM RES_JOINT_ORG WHERE ORG_FLOW = ORG.ORG_FLOW AND RECORD_STATUS = 'Y')
-		ELSE (SELECT ORG_NAME FROM RES_JOINT_ORG WHERE JOINT_ORG_FLOW = ORG.ORG_FLOW AND  RECORD_STATUS = 'Y') END COUNTRY_ORG_NAME
+		, CASE WHEN ORG.ORG_LEVEL_ID = 'CountryOrg' THEN (SELECT DISTINCT ORG_NAME FROM RES_JOINT_ORG WHERE ORG_FLOW = ORG.ORG_FLOW AND RECORD_STATUS = 'Y' and session_number = ed.session_number)
+		ELSE (SELECT ORG_NAME FROM RES_JOINT_ORG WHERE JOINT_ORG_FLOW = ORG.ORG_FLOW AND  RECORD_STATUS = 'Y' and session_number = ed.session_number) END COUNTRY_ORG_NAME
 		from pdsci.res_score score
 		left join  pdsci.SYS_USER u
 		on score.DOCTOR_FLOW =  u.USER_FLOW
@@ -1383,7 +1383,7 @@
 	</select>
 
 	<select id="searchJsDoctorTheoryScoreExtList"  parameterType="java.util.Map" resultMap="DoctorScoreRecruit">
-		select score.score_flow,score.theory_score,score.skill_score,score.ext_score,score.test_id AS THEORY_TEST_ID,u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL
+		select score.score_flow,score.theory_score,score.skill_score,score.ext_score,score.real_score,score.test_id AS THEORY_TEST_ID,u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL,u.cret_type_name
 		, u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
 		ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName,
 		dr.RECRUIT_FLOW,
@@ -1476,8 +1476,8 @@
 		dr.JOINT_ORG_FLOW,
 		dr.AUDITION_STATUS_NAME,
 		dr.WORK_UNIT_CODE
-		, CASE WHEN ORG.ORG_LEVEL_ID = 'CountryOrg' THEN (SELECT DISTINCT ORG_NAME FROM RES_JOINT_ORG WHERE ORG_FLOW = ORG.ORG_FLOW AND RECORD_STATUS = 'Y')
-		ELSE (SELECT ORG_NAME FROM RES_JOINT_ORG WHERE JOINT_ORG_FLOW = ORG.ORG_FLOW AND  RECORD_STATUS = 'Y') END COUNTRY_ORG_NAME
+		, CASE WHEN ORG.ORG_LEVEL_ID = 'CountryOrg' THEN (SELECT DISTINCT ORG_NAME FROM RES_JOINT_ORG WHERE ORG_FLOW = ORG.ORG_FLOW AND RECORD_STATUS = 'Y' and session_number = ed.session_number)
+		ELSE (SELECT ORG_NAME FROM RES_JOINT_ORG WHERE JOINT_ORG_FLOW = ORG.ORG_FLOW AND  RECORD_STATUS = 'Y' and session_number = ed.session_number) END COUNTRY_ORG_NAME
 		from pdsci.res_score score
 		left join  pdsci.SYS_USER u
 		on score.DOCTOR_FLOW =  u.USER_FLOW

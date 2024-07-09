@@ -2155,76 +2155,6 @@ public class ResScoreExample {
             return (Criteria) this;
         }
 
-        public Criteria andSessionNumberIsNull() {
-            addCriterion("SESSION_NUMBER is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSessionNumberIsNotNull() {
-            addCriterion("SESSION_NUMBER is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSessionNumberEqualTo(String value) {
-            addCriterion("SESSION_NUMBER =", value, "sessionNumber");
-            return (Criteria) this;
-        }
-
-        public Criteria andSessionNumberNotEqualTo(String value) {
-            addCriterion("SESSION_NUMBER <>", value, "sessionNumber");
-            return (Criteria) this;
-        }
-
-        public Criteria andSessionNumberGreaterThan(String value) {
-            addCriterion("SESSION_NUMBER >", value, "sessionNumber");
-            return (Criteria) this;
-        }
-
-        public Criteria andSessionNumberGreaterThanOrEqualTo(String value) {
-            addCriterion("SESSION_NUMBER >=", value, "sessionNumber");
-            return (Criteria) this;
-        }
-
-        public Criteria andSessionNumberLessThan(String value) {
-            addCriterion("SESSION_NUMBER <", value, "sessionNumber");
-            return (Criteria) this;
-        }
-
-        public Criteria andSessionNumberLessThanOrEqualTo(String value) {
-            addCriterion("SESSION_NUMBER <=", value, "sessionNumber");
-            return (Criteria) this;
-        }
-
-        public Criteria andSessionNumberLike(String value) {
-            addCriterion("SESSION_NUMBER like", value, "sessionNumber");
-            return (Criteria) this;
-        }
-
-        public Criteria andSessionNumberNotLike(String value) {
-            addCriterion("SESSION_NUMBER not like", value, "sessionNumber");
-            return (Criteria) this;
-        }
-
-        public Criteria andSessionNumberIn(List<String> values) {
-            addCriterion("SESSION_NUMBER in", values, "sessionNumber");
-            return (Criteria) this;
-        }
-
-        public Criteria andSessionNumberNotIn(List<String> values) {
-            addCriterion("SESSION_NUMBER not in", values, "sessionNumber");
-            return (Criteria) this;
-        }
-
-        public Criteria andSessionNumberBetween(String value1, String value2) {
-            addCriterion("SESSION_NUMBER between", value1, value2, "sessionNumber");
-            return (Criteria) this;
-        }
-
-        public Criteria andSessionNumberNotBetween(String value1, String value2) {
-            addCriterion("SESSION_NUMBER not between", value1, value2, "sessionNumber");
-            return (Criteria) this;
-        }
-
         public Criteria andIsAffirmIdIsNull() {
             addCriterion("IS_AFFIRM_ID is null");
             return (Criteria) this;
@@ -2362,6 +2292,146 @@ public class ResScoreExample {
 
         public Criteria andIsAffirmNameNotBetween(String value1, String value2) {
             addCriterion("IS_AFFIRM_NAME not between", value1, value2, "isAffirmName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberIsNull() {
+            addCriterion("SESSION_NUMBER is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberIsNotNull() {
+            addCriterion("SESSION_NUMBER is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberEqualTo(String value) {
+            addCriterion("SESSION_NUMBER =", value, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberNotEqualTo(String value) {
+            addCriterion("SESSION_NUMBER <>", value, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberGreaterThan(String value) {
+            addCriterion("SESSION_NUMBER >", value, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberGreaterThanOrEqualTo(String value) {
+            addCriterion("SESSION_NUMBER >=", value, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberLessThan(String value) {
+            addCriterion("SESSION_NUMBER <", value, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberLessThanOrEqualTo(String value) {
+            addCriterion("SESSION_NUMBER <=", value, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberLike(String value) {
+            addCriterion("SESSION_NUMBER like", value, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberNotLike(String value) {
+            addCriterion("SESSION_NUMBER not like", value, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberIn(List<String> values) {
+            addCriterion("SESSION_NUMBER in", values, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberNotIn(List<String> values) {
+            addCriterion("SESSION_NUMBER not in", values, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberBetween(String value1, String value2) {
+            addCriterion("SESSION_NUMBER between", value1, value2, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberNotBetween(String value1, String value2) {
+            addCriterion("SESSION_NUMBER not between", value1, value2, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealScoreIsNull() {
+            addCriterion("REAL_SCORE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealScoreIsNotNull() {
+            addCriterion("REAL_SCORE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealScoreEqualTo(String value) {
+            addCriterion("REAL_SCORE =", value, "realScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealScoreNotEqualTo(String value) {
+            addCriterion("REAL_SCORE <>", value, "realScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealScoreGreaterThan(String value) {
+            addCriterion("REAL_SCORE >", value, "realScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealScoreGreaterThanOrEqualTo(String value) {
+            addCriterion("REAL_SCORE >=", value, "realScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealScoreLessThan(String value) {
+            addCriterion("REAL_SCORE <", value, "realScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealScoreLessThanOrEqualTo(String value) {
+            addCriterion("REAL_SCORE <=", value, "realScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealScoreLike(String value) {
+            addCriterion("REAL_SCORE like", value, "realScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealScoreNotLike(String value) {
+            addCriterion("REAL_SCORE not like", value, "realScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealScoreIn(List<String> values) {
+            addCriterion("REAL_SCORE in", values, "realScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealScoreNotIn(List<String> values) {
+            addCriterion("REAL_SCORE not in", values, "realScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealScoreBetween(String value1, String value2) {
+            addCriterion("REAL_SCORE between", value1, value2, "realScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealScoreNotBetween(String value1, String value2) {
+            addCriterion("REAL_SCORE not between", value1, value2, "realScore");
             return (Criteria) this;
         }
     }

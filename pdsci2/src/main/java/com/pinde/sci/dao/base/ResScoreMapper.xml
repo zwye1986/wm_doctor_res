@@ -32,9 +32,10 @@
     <result column="RECRUIT_FLOW" property="recruitFlow" jdbcType="VARCHAR" />
     <result column="IS_SEND" property="isSend" jdbcType="VARCHAR" />
     <result column="TEST_ID" property="testId" jdbcType="VARCHAR" />
-    <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
     <result column="IS_AFFIRM_ID" property="isAffirmId" jdbcType="VARCHAR" />
     <result column="IS_AFFIRM_NAME" property="isAffirmName" jdbcType="VARCHAR" />
+    <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
+    <result column="REAL_SCORE" property="realScore" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ResScore" extends="BaseResultMap" >
     <result column="EXT_SCORE" property="extScore" jdbcType="CLOB" />
@@ -102,8 +103,8 @@
     SCH_DEPT_FLOW, SCH_DEPT_NAME, SCORE_PHASE_ID, SCORE_PHASE_NAME, THEORY_SCORE, SKILL_SCORE, 
     SCH_RESULT_ID, SCH_RESULT_NAME, SCORE_RESULT_ID, SCORE_RESULT_NAME, AUDIT_STATUS_ID, 
     AUDIT_STATUS_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
-    PAPER_FLOW, MAR_SCORE, JUN_SCORE, OCT_SCORE, RECRUIT_FLOW, IS_SEND, TEST_ID, SESSION_NUMBER, 
-    IS_AFFIRM_ID, IS_AFFIRM_NAME
+    PAPER_FLOW, MAR_SCORE, JUN_SCORE, OCT_SCORE, RECRUIT_FLOW, IS_SEND, TEST_ID, IS_AFFIRM_ID, 
+    IS_AFFIRM_NAME, SESSION_NUMBER, REAL_SCORE
   </sql>
   <sql id="Blob_Column_List" >
     EXT_SCORE
@@ -113,37 +114,9 @@
     <if test="distinct" >
       distinct
     </if>
-    TEST_ID,
-    IS_SEND,
-    RECRUIT_FLOW,
-    OCT_SCORE,
-    JUN_SCORE,
-    MAR_SCORE,
-    PAPER_FLOW,
-    EXT_SCORE,
-    MODIFY_USER_FLOW,
-    MODIFY_TIME,
-    CREATE_USER_FLOW,
-    CREATE_TIME,
-    RECORD_STATUS,
-    AUDIT_STATUS_NAME,
-    AUDIT_STATUS_ID,
-    SCORE_RESULT_NAME,
-    SCORE_RESULT_ID,
-    SCH_RESULT_NAME,
-    SCH_RESULT_ID,
-    SKILL_SCORE,
-    THEORY_SCORE,
-    SCORE_PHASE_NAME,
-    SCORE_PHASE_ID,
-    SCH_DEPT_NAME,
-    SCH_DEPT_FLOW,
-    PROCESS_FLOW,
-    RESULT_FLOW,
-    SCORE_TYPE_NAME,
-    SCORE_TYPE_ID,
-    DOCTOR_FLOW,
-    SCORE_FLOW
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from PDSCI.RES_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -195,8 +168,8 @@
       MODIFY_TIME, MODIFY_USER_FLOW, PAPER_FLOW, 
       MAR_SCORE, JUN_SCORE, OCT_SCORE, 
       RECRUIT_FLOW, IS_SEND, TEST_ID, 
-      SESSION_NUMBER, IS_AFFIRM_ID, IS_AFFIRM_NAME, 
-      EXT_SCORE)
+      IS_AFFIRM_ID, IS_AFFIRM_NAME, SESSION_NUMBER, 
+      REAL_SCORE, EXT_SCORE)
     values (#{scoreFlow,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, #{scoreTypeId,jdbcType=VARCHAR}, 
       #{scoreTypeName,jdbcType=VARCHAR}, #{resultFlow,jdbcType=VARCHAR}, #{processFlow,jdbcType=VARCHAR}, 
       #{schDeptFlow,jdbcType=VARCHAR}, #{schDeptName,jdbcType=VARCHAR}, #{scorePhaseId,jdbcType=VARCHAR}, 
@@ -207,8 +180,8 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{paperFlow,jdbcType=VARCHAR}, 
       #{marScore,jdbcType=DECIMAL}, #{junScore,jdbcType=DECIMAL}, #{octScore,jdbcType=DECIMAL}, 
       #{recruitFlow,jdbcType=VARCHAR}, #{isSend,jdbcType=VARCHAR}, #{testId,jdbcType=VARCHAR}, 
-      #{sessionNumber,jdbcType=VARCHAR}, #{isAffirmId,jdbcType=VARCHAR}, #{isAffirmName,jdbcType=VARCHAR}, 
-      #{extScore,jdbcType=CLOB})
+      #{isAffirmId,jdbcType=VARCHAR}, #{isAffirmName,jdbcType=VARCHAR}, #{sessionNumber,jdbcType=VARCHAR}, 
+      #{realScore,jdbcType=VARCHAR}, #{extScore,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResScore" >
     insert into PDSCI.RES_SCORE
@@ -303,14 +276,17 @@
       <if test="testId != null" >
         TEST_ID,
       </if>
-      <if test="sessionNumber != null" >
-        SESSION_NUMBER,
-      </if>
       <if test="isAffirmId != null" >
         IS_AFFIRM_ID,
       </if>
       <if test="isAffirmName != null" >
         IS_AFFIRM_NAME,
+      </if>
+      <if test="sessionNumber != null" >
+        SESSION_NUMBER,
+      </if>
+      <if test="realScore != null" >
+        REAL_SCORE,
       </if>
       <if test="extScore != null" >
         EXT_SCORE,
@@ -407,14 +383,17 @@
       <if test="testId != null" >
         #{testId,jdbcType=VARCHAR},
       </if>
-      <if test="sessionNumber != null" >
-        #{sessionNumber,jdbcType=VARCHAR},
-      </if>
       <if test="isAffirmId != null" >
         #{isAffirmId,jdbcType=VARCHAR},
       </if>
       <if test="isAffirmName != null" >
         #{isAffirmName,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionNumber != null" >
+        #{sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="realScore != null" >
+        #{realScore,jdbcType=VARCHAR},
       </if>
       <if test="extScore != null" >
         #{extScore,jdbcType=CLOB},
@@ -520,14 +499,17 @@
       <if test="record.testId != null" >
         TEST_ID = #{record.testId,jdbcType=VARCHAR},
       </if>
-      <if test="record.sessionNumber != null" >
-        SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
-      </if>
       <if test="record.isAffirmId != null" >
         IS_AFFIRM_ID = #{record.isAffirmId,jdbcType=VARCHAR},
       </if>
       <if test="record.isAffirmName != null" >
         IS_AFFIRM_NAME = #{record.isAffirmName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionNumber != null" >
+        SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realScore != null" >
+        REAL_SCORE = #{record.realScore,jdbcType=VARCHAR},
       </if>
       <if test="record.extScore != null" >
         EXT_SCORE = #{record.extScore,jdbcType=CLOB},
@@ -569,9 +551,10 @@
       RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
       IS_SEND = #{record.isSend,jdbcType=VARCHAR},
       TEST_ID = #{record.testId,jdbcType=VARCHAR},
-      SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
       IS_AFFIRM_ID = #{record.isAffirmId,jdbcType=VARCHAR},
       IS_AFFIRM_NAME = #{record.isAffirmName,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      REAL_SCORE = #{record.realScore,jdbcType=VARCHAR},
       EXT_SCORE = #{record.extScore,jdbcType=CLOB}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -609,9 +592,10 @@
       RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
       IS_SEND = #{record.isSend,jdbcType=VARCHAR},
       TEST_ID = #{record.testId,jdbcType=VARCHAR},
-      SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
       IS_AFFIRM_ID = #{record.isAffirmId,jdbcType=VARCHAR},
-      IS_AFFIRM_NAME = #{record.isAffirmName,jdbcType=VARCHAR}
+      IS_AFFIRM_NAME = #{record.isAffirmName,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      REAL_SCORE = #{record.realScore,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -706,14 +690,17 @@
       <if test="testId != null" >
         TEST_ID = #{testId,jdbcType=VARCHAR},
       </if>
-      <if test="sessionNumber != null" >
-        SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
-      </if>
       <if test="isAffirmId != null" >
         IS_AFFIRM_ID = #{isAffirmId,jdbcType=VARCHAR},
       </if>
       <if test="isAffirmName != null" >
         IS_AFFIRM_NAME = #{isAffirmName,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionNumber != null" >
+        SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="realScore != null" >
+        REAL_SCORE = #{realScore,jdbcType=VARCHAR},
       </if>
       <if test="extScore != null" >
         EXT_SCORE = #{extScore,jdbcType=CLOB},
@@ -752,9 +739,10 @@
       RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
       IS_SEND = #{isSend,jdbcType=VARCHAR},
       TEST_ID = #{testId,jdbcType=VARCHAR},
-      SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
       IS_AFFIRM_ID = #{isAffirmId,jdbcType=VARCHAR},
       IS_AFFIRM_NAME = #{isAffirmName,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      REAL_SCORE = #{realScore,jdbcType=VARCHAR},
       EXT_SCORE = #{extScore,jdbcType=CLOB}
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </update>
@@ -789,9 +777,10 @@
       RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
       IS_SEND = #{isSend,jdbcType=VARCHAR},
       TEST_ID = #{testId,jdbcType=VARCHAR},
-      SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
       IS_AFFIRM_ID = #{isAffirmId,jdbcType=VARCHAR},
-      IS_AFFIRM_NAME = #{isAffirmName,jdbcType=VARCHAR}
+      IS_AFFIRM_NAME = #{isAffirmName,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      REAL_SCORE = #{realScore,jdbcType=VARCHAR}
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </update>
 </mapper>

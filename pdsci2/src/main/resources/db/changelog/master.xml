@@ -17,7 +17,8 @@
         </sql>
     </changeSet>-->
     <!-- 按年份引changelog，分文件夹，防止时间久了一长串文件，sql文件也按年份分文件夹存 -->
-    <include file="classpath:db/changelog/2024/*.xml" relativeToChangelogFile="false"></include>
+<!--    <include file="classpath:db/changelog/2024/*.xml" relativeToChangelogFile="false"></include>-->
+    <include file="classpath:db/changelog/2024/xyh-res_score-0705.xml" relativeToChangelogFile="false"></include>
 
 </databaseChangeLog>
 
