@@ -438,7 +438,7 @@
 						</td>
 					</tr>
 					<tr>
-						<th>级别</th>
+						<th>级别：</th>
 						<td>
 							<select style="width:207px;" class='select' name="basicInfo.levelRank">
 								<option value="">请选择</option>

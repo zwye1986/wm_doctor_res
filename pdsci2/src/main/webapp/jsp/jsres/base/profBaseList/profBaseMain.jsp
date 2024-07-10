@@ -269,7 +269,7 @@
                 </div>
                 <div class="search-div">
                     &#12288;<input type="button" class="btn_green" onclick="searchProfBaseList()" value="查&#12288;询" />
-                    &#12288;<input type="button" class="btn_green" onclick="resetProfBaseList()" value="重&#12288;置" />
+                    &#12288;<input type="button" class="btn_grey" onclick="resetProfBaseList()" value="重&#12288;置" />
                     &#12288;<input type="button" class="btn_green" onclick="exportProfBaseList()" value="导&#12288;出" />
                 </div>
                 <div class="clearfix"></div>
