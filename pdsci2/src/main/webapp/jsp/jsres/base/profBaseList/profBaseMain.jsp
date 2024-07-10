@@ -17,6 +17,10 @@
         padding: 0;
         background: none;
     }
+    .dropdown-menu > .active > a,.dropdown-menu > .active > a:hover{
+        background-color: inherit;
+        color: inherit;
+    }
     .btn{
         /*height: 28px !important;*/
         border: 1px solid #e7e7eb;

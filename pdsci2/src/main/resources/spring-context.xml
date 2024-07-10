@@ -34,16 +34,16 @@
     </bean>
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
         <property name="properties" ref="configProperties" />
-    </bean>    
+    </bean>
     
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 	<!-- 引入mybatis配置文件 -->
 	<import resource="classpath:/spring-mybatis.xml" />	
     <!-- 扫描文件（自动将biz层注入） -->
-    <context:component-scan base-package="com.pinde.*.biz"/>
+    <!--<context:component-scan base-package="com.pinde.*.biz"/>
     <context:component-scan base-package="com.pinde.*.job"/>
     <context:component-scan base-package="com.pinde.*.webservice"/>
-    <context:component-scan base-package="com.pinde.*.ctrl"/>
+    <context:component-scan base-package="com.pinde.*.ctrl"/>-->
 
     <!-- spring context -->
     <bean id="springUtil" class="com.pinde.core.util.ApplicationContextRegister" />
@@ -57,9 +57,23 @@
 		<property name="maxUploadSize" value="10737418240" />
    </bean>
    
-   <!-- 调度注解支持 -->
-   <task:executor id="executor" keep-alive="3600" pool-size="100-200" queue-capacity="500" rejection-policy="CALLER_RUNS" />
+<!--    调度注解支持-->
+   <!--<task:executor id="executor" keep-alive="3600" pool-size="100-200" queue-capacity="500" rejection-policy="CALLER_RUNS" />
    <task:scheduler id="scheduler" pool-size="1000" />  
-   <task:annotation-driven executor="executor" scheduler="scheduler" proxy-target-class="true"/>
+   <task:annotation-driven executor="executor" scheduler="scheduler" proxy-target-class="true"/>-->
+
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="queueCapacity" value="500"/>
+        <property name="keepAliveSeconds" value="3600" />
+        <property name="corePoolSize" value="100" />
+        <property name="maxPoolSize" value="200" />
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy"/>
+        </property>
+    </bean>
+
+    <bean id="TaskScheduler" class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
+        <property name="poolSize" value="1000" />
+    </bean>
       
 </beans>

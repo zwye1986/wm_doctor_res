@@ -8972,14 +8972,14 @@ public class JsResManageController extends GeneralController {
 	}
 
 	@RequestMapping(value = "/doctorNumSearch")
-	public String doctorNumSearch(String cityId, String orgLevel, String orgFlow, String trainTypeId, String sessionNumber, String datas[], Model model) {
+	public String doctorNumSearch(String cityId, String orgLevel, String orgFlow, String trainTypeId, String sessionNumber, String datas[], String[] docType, Model model) {
 
 		List<String> orgFlowList = new ArrayList<String>();
 		List<String> docTypeList = new ArrayList<String>();
 		List<SysOrg> orgs = new ArrayList<>();
 		ResDoctor doctor = new ResDoctor();
-		if (datas != null && datas.length > 0) {
-			for (String s : datas) {
+		if (docType != null && docType.length > 0) {
+			for (String s : docType) {
 				docTypeList.add(s);
 			}
 		}
