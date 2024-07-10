@@ -27,13 +27,13 @@
                 </td>
                 <td>
                     <c:if test="${dept.recordStatus == GlobalConstant.RECORD_STATUS_Y }">
-                        <a onclick="editDept('${dept.deptFlow}');" class="btn">编辑</a>
-                        <a onclick="editSave('toggleStatus', {recordStatus: 'N'});" class="btn">停用</a>
+                        <a onclick="editDept('${dept.deptFlow}');" class="btn" style="margin: 3px">编辑</a>
+                        <a onclick="editSave('toggleStatus', {recordStatus: 'N'});" class="btn" style="margin: 3px">停用</a>
                     </c:if>
                     <c:if test="${dept.recordStatus == GlobalConstant.RECORD_STATUS_N }">
-                        <a onclick="editSave('toggleStatus', {recordStatus: 'Y'});" class="btn">启用</a>
+                        <a onclick="editSave('toggleStatus', {recordStatus: 'Y'});" class="btn" style="margin: 3px">启用</a>
                     </c:if>
-                    <a onclick="baseDeptDelete();" class="btn">删除</a>
+                    <a onclick="baseDeptDelete();" class="btn" style="margin: 3px">删除</a>
                 </td>
             </tr>
         </c:forEach>
