@@ -7,11 +7,11 @@
 
     <!--<includeAll path="db/changelog/" relativeToChangelogFile="false"/>-->
 
-    <!--<changeSet id="20240703-01" author="zxr">
-        <sqlFile path="db/sql/2024/table_ddl_test0703.sql"/>
+    <changeSet id="20240710-01-zxr" author="zxr">
+        <sqlFile path="db/sql/2024/table_07_ddl.sql"/>
     </changeSet>
 
-    <changeSet id="20240703-02" author="zxr">
+    <!--<changeSet id="20240703-02" author="zxr">
         <sql>
             insert into pdsci.test_liquibase(id, name) values (lower(sys_guid()), 'first record');
         </sql>

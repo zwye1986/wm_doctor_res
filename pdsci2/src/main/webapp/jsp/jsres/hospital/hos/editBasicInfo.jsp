@@ -438,7 +438,7 @@
 						</td>
 					</tr>
 					<tr>
-						<th>等级等次</th>
+						<th>级别：</th>
 						<td>
 							<select style="width:207px;" class='select' name="basicInfo.levelRank">
 								<option value="">请选择</option>
@@ -505,13 +505,13 @@
 						<td><input type="text" name="sysOrg.creditCode"  class='input' style="width: 197px;margin-left: 2px;"  value="${sysOrg.creditCode}"/></td>
 					</tr>
 					<tr>
-						<th>职业许可证：</th>
+						<th>执业许可证：</th>
 						<td>
 							<span id="professionLicenceUrlSpan" style="display:${!empty basicInfo.professionLicenceUrl?'':'none'} ">
 								&nbsp; <a href="${sysCfgMap['upload_base_url']}/${basicInfo.professionLicenceUrl}" target="_blank">查看图片</a>&nbsp;
 							</span>
 							<c:if test="${resBase.baseStatusId eq baseStatusEnumNotSubmit.id or resBase.baseStatusId eq baseStatusEnumNotPassed.id or empty resBase.baseStatusId  }">
-								<a id="professionLicenceUrl" href="javascript:uploadFile('professionLicenceUrl','职业许可证图片');" style="margin-left: 2px">${empty basicInfo.professionLicenceUrl?'':'重新'}上传</a>&nbsp;
+								<a id="professionLicenceUrl" href="javascript:uploadFile('professionLicenceUrl','执业许可证图片');" style="margin-left: 2px">${empty basicInfo.professionLicenceUrl?'':'重新'}上传</a>&nbsp;
 								<a id="professionLicenceUrlDel" href="javascript:delFile('professionLicenceUrl');" style="${empty basicInfo.professionLicenceUrl?'display:none':''}">删除</a>
 								<input type="hidden" id="professionLicenceUrlValue"  name="basicInfo.professionLicenceUrl" value="${basicInfo.professionLicenceUrl}" />
 							</c:if>

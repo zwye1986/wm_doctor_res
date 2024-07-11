@@ -12,7 +12,23 @@ public class UserInfoExtForm implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -7127481617315482792L;
-	
+
+	// 这几个字段没地方好加，加在这吧
+	/**
+	 * 培训开始年月
+	 */
+	private String trainYearMonth;
+
+	/**
+	 * 培训年限（年）
+	 */
+	private String trainYears;
+
+	/**
+	 * 计划培训结束年月
+	 */
+	private String trainEndYearMonth;
+
 	private SysUser sysUser;
 	private ResDoctor doctor;
 	private UserResumeExtInfoForm userResumeExt;
@@ -41,5 +57,28 @@ public class UserInfoExtForm implements Serializable{
 	public void setUserResumeExt(UserResumeExtInfoForm userResumeExt) {
 		this.userResumeExt = userResumeExt;
 	}
-	
+
+	public String getTrainYearMonth() {
+		return trainYearMonth;
+	}
+
+	public void setTrainYearMonth(String trainYearMonth) {
+		this.trainYearMonth = trainYearMonth;
+	}
+
+	public String getTrainYears() {
+		return trainYears;
+	}
+
+	public void setTrainYears(String trainYears) {
+		this.trainYears = trainYears;
+	}
+
+	public String getTrainEndYearMonth() {
+		return trainEndYearMonth;
+	}
+
+	public void setTrainEndYearMonth(String trainEndYearMonth) {
+		this.trainEndYearMonth = trainEndYearMonth;
+	}
 }
