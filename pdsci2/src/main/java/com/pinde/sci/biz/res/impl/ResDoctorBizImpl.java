@@ -2157,7 +2157,9 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 							ResDoctorRecruitExample example = new ResDoctorRecruitExample();
 							example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(sysUser.getUserFlow()).andSessionNumberEqualTo(resScore.getSessionNumber());
 							List<ResDoctorRecruit> resDoctorRecruits = doctorRecruitMapper.selectByExample(example);
-							resScore.setRecruitFlow(resDoctorRecruits.get(0).getRecruitFlow());
+							if (CollectionUtils.isNotEmpty(resDoctorRecruits)) {
+								resScore.setRecruitFlow(resDoctorRecruits.get(0).getRecruitFlow());
+							}
 
 							resScore.setDoctorFlow(resDoctor.getDoctorFlow());//医师流水号
 							resScore.setScorePhaseId(scoreYear);//年份或阶段id
@@ -2421,18 +2423,22 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						//根据学生身份证号
 						//sysUser.setCretTypeId(CertificateTypeEnum.Shenfenzheng.getId());
 						sysUser=userBiz.findByIdNo(sysUser.getIdNo());
-						resDoctor.setDoctorFlow(sysUser.getUserFlow());
+						if (sysUser != null) {
+							resDoctor.setDoctorFlow(sysUser.getUserFlow());
 
-						ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-						example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(sysUser.getUserFlow()).andSessionNumberEqualTo(resScore.getSessionNumber());
-						List<ResDoctorRecruit> resDoctorRecruits = doctorRecruitMapper.selectByExample(example);
-						resScore.setRecruitFlow(resDoctorRecruits.get(0).getRecruitFlow());
+							ResDoctorRecruitExample example = new ResDoctorRecruitExample();
+							example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(sysUser.getUserFlow()).andSessionNumberEqualTo(resScore.getSessionNumber());
+							List<ResDoctorRecruit> resDoctorRecruits = doctorRecruitMapper.selectByExample(example);
+							if (CollectionUtils.isNotEmpty(resDoctorRecruits)) {
+								resScore.setRecruitFlow(resDoctorRecruits.get(0).getRecruitFlow());
+							}
 
-						resScore.setDoctorFlow(resDoctor.getDoctorFlow());//医师流水号
-						resScore.setScorePhaseId(scoreYear);//年份或阶段id
-						resScore.setScorePhaseName(scoreYear);//年份或阶段name
-						resScore.setScoreTypeId(ResScoreTypeEnum.SkillScore.getId());
-						resScore.setScoreTypeName(ResScoreTypeEnum.SkillScore.getName());
+							resScore.setDoctorFlow(resDoctor.getDoctorFlow());//医师流水号
+							resScore.setScorePhaseId(scoreYear);//年份或阶段id
+							resScore.setScorePhaseName(scoreYear);//年份或阶段name
+							resScore.setScoreTypeId(ResScoreTypeEnum.SkillScore.getId());
+							resScore.setScoreTypeName(ResScoreTypeEnum.SkillScore.getName());
+						}
 						//处理各个站的成绩
 						/*String extScore= null;
 						try {
