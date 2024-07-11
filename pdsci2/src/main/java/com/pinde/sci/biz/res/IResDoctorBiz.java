@@ -238,8 +238,8 @@ public interface IResDoctorBiz {
 	 */
 	ExtInfoForm parseExtInfoXml(String extInfoXml);
 
-	Map<String,Object>  importCourseFromExcel(MultipartFile file,String scoreYear);
-	Map<String,Object>  importSkillScoreFromExcel(MultipartFile file,String scoreYear);
+	Map<String,Object>  importCourseFromExcel(MultipartFile file, String year, String scoreYear);
+	Map<String,Object>  importSkillScoreFromExcel(MultipartFile file, String year, String scoreYear);
 	Map<String,Object>  importPublicScoreFromExcel(MultipartFile file);
 	int batchApplyAudit(String[] datas,String roleFlag,String applyType,String reason,String doctorStatusId);
 

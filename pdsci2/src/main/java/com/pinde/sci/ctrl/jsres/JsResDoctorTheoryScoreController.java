@@ -599,10 +599,10 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
                     skillList=skillListByYear;
                 }
                 Map<String,Map<String,String>> extScoreMap=new HashMap<String,Map<String,String>>();
-                for(int i=0;i<skillList.size();i++)
+                for(int i=0;i<theoryList.size();i++)
                 {
                     Map<String,String> extScore=new HashMap<String,String>();
-                    ResScore resScore=skillList.get(i);
+                    ResScore resScore=theoryList.get(i);
                     String content = null==resScore ? "":resScore.getExtScore();
                     if(StringUtil.isNotBlank(content)) {
                         Document doc = DocumentHelper.parseText(content);
@@ -621,14 +621,14 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
                     }
                     extScoreMap.put(resScore.getScoreFlow(),extScore);
                 }
-                for(ResScore score:skillList){
+                for(ResScore score:theoryList){
                     Map<String,String> extScore = extScoreMap.get(score.getScoreFlow());
 //                    isPass = score.getSkillScore().intValue()==(GlobalConstant.PASS)?"是":(score.getSkillScore().intValue()==(GlobalConstant.UNPASS)?"否":"");
-                    if(score.getSkillScore().intValue()==GlobalConstant.PASS){
+                    if(score.getTheoryScore().intValue()==GlobalConstant.PASS){
                         isPass="合格";
-                    }else if(score.getSkillScore().intValue()==GlobalConstant.UNPASS){
+                    }else if(score.getTheoryScore().intValue()==GlobalConstant.UNPASS){
                         isPass="不合格";
-                    }else if(score.getSkillScore().intValue()==2){
+                    }else if(score.getTheoryScore().intValue()==2){
                         isPass="缺考";
                     }else{
                         isPass="";
@@ -1311,12 +1311,13 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
      *
      */
     @RequestMapping(value="/importSchoolRoll")
-    public String importSchoolRoll(){
-
+    public String importSchoolRoll(String trainingTypeId, Model model){
+        model.addAttribute("trainingTypeId", trainingTypeId);
         return "jsres/theoryScore/importSchoolRoll";
     }
     @RequestMapping(value="/importSkillScore")
-    public String importSkillScore(){
+    public String importSkillScore(String trainingTypeId, Model model){
+        model.addAttribute("trainingTypeId", trainingTypeId);
         return "jsres/skillScore/importSchoolRoll";
     }
     @RequestMapping(value="/importPublicScore")
@@ -1328,14 +1329,14 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
      */
     @RequestMapping(value="/importSchoolRollFromExcel")
     @ResponseBody
-    public String importSchoolRollFromExcel(MultipartFile file,String scoreYear){
+    public String importSchoolRollFromExcel(MultipartFile file,String scoreYear, String trainingTypeId){
         if(StringUtil.isBlank(scoreYear))
         {
             return SCOREYEAR_NOT_FIND;
         }
         if(file.getSize() > 0){
             try{
-                ExcelUtile result = (ExcelUtile) resDoctorBiz.importCourseFromExcel(file,scoreYear);
+                ExcelUtile result = (ExcelUtile) resDoctorBiz.importCourseFromExcel(file,scoreYear, trainingTypeId);
                 if(null!=result)
                 {
                     String code= (String) result.get("code");
@@ -1343,7 +1344,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
                     String msg= (String) result.get("msg");
                     if("1".equals(code))
                     {
-                        return GlobalConstant.UPLOAD_FAIL+msg;
+                        return GlobalConstant.UPLOAD_FAIL + "</br>" + msg;
                     }else{
                         if(GlobalConstant.ZERO_LINE != count){
                             return GlobalConstant.UPLOAD_SUCCESSED + "导入"+count+"条记录！";
@@ -1367,14 +1368,14 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
      */
     @RequestMapping(value="/importSkillScoreFromExcel")
     @ResponseBody
-    public String importSkillScoreFromExcel(MultipartFile file,String scoreYear){
+    public String importSkillScoreFromExcel(MultipartFile file,String scoreYear, String trainingTypeId){
         if(StringUtil.isBlank(scoreYear))
         {
             return SCOREYEAR_NOT_FIND;
         }
         if(file.getSize() > 0){
             try{
-                ExcelUtile result = (ExcelUtile) resDoctorBiz.importSkillScoreFromExcel(file,scoreYear);
+                ExcelUtile result = (ExcelUtile) resDoctorBiz.importSkillScoreFromExcel(file,scoreYear,trainingTypeId);
                 if(null!=result)
                 {
                     String code= (String) result.get("code");
@@ -1382,7 +1383,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
                     String msg= (String) result.get("msg");
                     if("1".equals(code))
                     {
-                        return GlobalConstant.UPLOAD_FAIL+msg;
+                        return GlobalConstant.UPLOAD_FAIL + "</br>" + msg;
                     }else{
                         if(GlobalConstant.ZERO_LINE != count){
                             return GlobalConstant.UPLOAD_SUCCESSED + "导入"+count+"条记录！";

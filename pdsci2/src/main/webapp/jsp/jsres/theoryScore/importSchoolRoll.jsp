@@ -57,7 +57,25 @@ function daoRu(){
 		function(resp){
 			top.jboxEndLoading();
 			endloadIng();
-			top.jboxInfo(resp);
+			var d = top.dialog({
+				id: "artInfo",
+				fixed: true,
+				width: 450,
+				title: '提示',
+				cancelValue: '关闭',
+				content: resp,
+				backdropOpacity: 0.1,
+				button: [
+					{
+						value: '确定',
+						callback: function () {
+							d.close().remove();
+						},
+						autofocus: true
+					}
+				]
+			});
+			d.show();
 			if(resp.substring(0,5)=="${GlobalConstant.UPLOAD_SUCCESSED}"){
 				window.parent.toPage(1);
 				top.jboxClose();
@@ -103,6 +121,7 @@ function checkFile(file){
 <body>
 <input type="hidden" id="checkFileFlag" name="checkFileFlag"/>
 <form id="excelForm" method="post" enctype="multipart/form-data">
+	<input type="hidden" id="trainingTypeId" name="trainingTypeId" value="${trainingTypeId}"/>
 	<table class="grid" style="width: 100%;">
 		<tr>
 			<th style="text-align: right;">成绩所属年份</th>

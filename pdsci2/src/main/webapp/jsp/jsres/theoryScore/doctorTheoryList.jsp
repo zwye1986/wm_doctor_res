@@ -142,7 +142,8 @@
         jboxPostLoad("doctorListZi", "<s:url value='/jsres/doctorTheoryScore/doctorTheoryListSun'/>?" + data + "&roleFlag=${roleFlag}", $("#searchForm").serialize(), false);
     }
     function importExcel() {
-        var url = "<s:url value='/jsres/doctorTheoryScore/importSchoolRoll'/>";
+        var trainingTypeId = $("#trainingTypeId").val();
+        var url = "<s:url value='/jsres/doctorTheoryScore/importSchoolRoll?trainingTypeId='/>" + trainingTypeId;
         jboxOpen(url, "导入理论成绩", 800, 300);
     }
     function exportExcel(){

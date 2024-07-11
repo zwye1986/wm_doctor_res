@@ -41,7 +41,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
@@ -1026,7 +1025,7 @@ public class JszyDoctorTheoryScoreController extends GeneralController {
         }
         if(file.getSize() > 0){
             try{
-                ExcelUtile result = (ExcelUtile) resDoctorBiz.importCourseFromExcel(file,scoreYear);
+                ExcelUtile result = (ExcelUtile) resDoctorBiz.importCourseFromExcel(file, scoreYear, scoreYear);
                 if(null!=result)
                 {
                     String code= (String) result.get("code");
@@ -1065,7 +1064,7 @@ public class JszyDoctorTheoryScoreController extends GeneralController {
         }
         if(file.getSize() > 0){
             try{
-                ExcelUtile result = (ExcelUtile) resDoctorBiz.importSkillScoreFromExcel(file,scoreYear);
+                ExcelUtile result = (ExcelUtile) resDoctorBiz.importSkillScoreFromExcel(file, scoreYear, scoreYear);
                 if(null!=result)
                 {
                     String code= (String) result.get("code");

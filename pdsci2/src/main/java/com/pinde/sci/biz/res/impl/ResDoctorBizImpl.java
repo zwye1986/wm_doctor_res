@@ -22,7 +22,6 @@ import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.JsResDoctorExtMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
-import com.pinde.sci.dao.res.ResRecExtMapper;
 import com.pinde.sci.enums.jsres.CertificateStatusEnum;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
 import com.pinde.sci.enums.pub.UserNationEnum;
@@ -2091,9 +2090,10 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 		}
 	}
 	@Override
-	public ExcelUtile  importCourseFromExcel(MultipartFile file,String scoreYear) {
+	public ExcelUtile  importCourseFromExcel(MultipartFile file, String scoreYear, String trainingTypeId) {
 		List<ResTestConfig> resTestConfigs = resTestConfigBiz.findAllEffective();
 		List<ResScore> resScoreList = new ArrayList<>();
+		final String[] msg = {""};
 		InputStream is = null;
 		try {
 			is = file.getInputStream();
@@ -2152,18 +2152,19 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						//根据学生身份证号
 						//sysUser.setCretTypeId(CertificateTypeEnum.Shenfenzheng.getId());
 						sysUser = userBiz.findByIdNo(sysUser.getIdNo());
-						resDoctor.setDoctorFlow(sysUser.getUserFlow());
+						if (sysUser != null) {
+							resDoctor.setDoctorFlow(sysUser.getUserFlow());
+							ResDoctorRecruitExample example = new ResDoctorRecruitExample();
+							example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(sysUser.getUserFlow()).andSessionNumberEqualTo(resScore.getSessionNumber());
+							List<ResDoctorRecruit> resDoctorRecruits = doctorRecruitMapper.selectByExample(example);
+							resScore.setRecruitFlow(resDoctorRecruits.get(0).getRecruitFlow());
 
-						ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-						example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(sysUser.getUserFlow()).andSessionNumberEqualTo(resScore.getSessionNumber());
-						List<ResDoctorRecruit> resDoctorRecruits = doctorRecruitMapper.selectByExample(example);
-						resScore.setRecruitFlow(resDoctorRecruits.get(0).getRecruitFlow());
-
-						resScore.setDoctorFlow(resDoctor.getDoctorFlow());//医师流水号
-						resScore.setScorePhaseId(scoreYear);//年份或阶段id
-						resScore.setScorePhaseName(scoreYear);//年份或阶段name
-						resScore.setScoreTypeId(ResScoreTypeEnum.TheoryScore.getId());
-						resScore.setScoreTypeName(ResScoreTypeEnum.TheoryScore.getName());
+							resScore.setDoctorFlow(resDoctor.getDoctorFlow());//医师流水号
+							resScore.setScorePhaseId(scoreYear);//年份或阶段id
+							resScore.setScorePhaseName(scoreYear);//年份或阶段name
+							resScore.setScoreTypeId(ResScoreTypeEnum.TheoryScore.getId());
+							resScore.setScoreTypeName(ResScoreTypeEnum.TheoryScore.getName());
+						}
 						resScoreList.add(resScore);
 						count++;
 					}
@@ -2190,18 +2191,14 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						String value = (String) data.get(key);
 						if ("idNo".equals(key)) {
 							if (StringUtil.isBlank(value)) {
-								eu.put("count", 0);
-								eu.put("code", "1");
-								eu.put("msg", "导入文件第" + (rowNum + 1) + "行身份证号为空，请确认后提交！！");
-								return ExcelUtile.RETURN;
+								msg[0] += "导入文件第" + (rowNum + 1) + "行身份证号为空，请确认后提交！！</br>";
+								return null;
 							}
 							sysUser.setIdNo(value);
 						} else if ("theoryScore".equals(key)) {
 							if (StringUtil.isBlank(value)) {
-								eu.put("count", 0);
-								eu.put("code", "1");
-								eu.put("msg", "导入文件第" + (rowNum + 1) + "行成绩是否合格为空，请确认后提交！！");
-								return ExcelUtile.RETURN;
+								msg[0] += "导入文件第" + (rowNum + 1) + "行成绩是否合格为空，请确认后提交！！</br>";
+								return null;
 							}
 							if (!StringUtil.isBlank(value)) {
 								String flay = checkTheroyScore(value, "成绩", rowNum, eu);
@@ -2211,76 +2208,65 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 							}
 						} else if ("testId".equals(key)) {
 							if (StringUtil.isBlank(value)) {
-								eu.put("count", 0);
-								eu.put("code", "1");
-								eu.put("msg", "导入文件第" + (rowNum + 1) + "行考试编号为空，请确认后提交！！");
-								return ExcelUtile.RETURN;
+								msg[0] += "导入文件第" + (rowNum + 1) + "行考试编号为空，请确认后提交！！</br>";
+								return null;
 							} else {
 								if (resTestConfigs != null && resTestConfigs.size() > 0) {
 									//判断导入的考试编号在系统中存不存在
 									List<ResTestConfig> resTestConfigList = resTestConfigs.stream().filter(resTestConfig -> value.equals(resTestConfig.getTestId())).collect(Collectors.toList());
 									if (resTestConfigList == null || resTestConfigList.size() == 0) {
-										eu.put("count", 0);
-										eu.put("code", "1");
-										eu.put("msg", "导入文件第" + (rowNum + 1) + "行考试编号在系统中不存在");
-										return ExcelUtile.RETURN;
+										msg[0] += "导入文件第" + (rowNum + 1) + "行考试编号在系统中不存在！！</br>";
+										return null;
 									}
 								} else {
-									eu.put("count", 0);
-									eu.put("code", "1");
-									eu.put("msg", "当前没有任何考试");
-									return ExcelUtile.RETURN;
+									msg[0] += "当前没有任何考试！！</br>";
+									return null;
 								}
 							}
 						} else if ("sessionNumber".equals(key)) {
 							if (StringUtil.isBlank(value)) {
-								eu.put("count", 0);
-								eu.put("code", "1");
-								eu.put("msg", "导入文件第" + (rowNum + 1) + "行学员届别为空，请确认后提交！！");
-								return ExcelUtile.RETURN;
+								msg[0] += "导入文件第" + (rowNum + 1) + "行学员届别为空，请确认后提交！！</br>";
+								return null;
 							}
 							sessionNumber = value;
 						} else if ("userName".equals(key)) {
 							if (StringUtil.isBlank(value)) {
-								eu.put("count", 0);
-								eu.put("code", "1");
-								eu.put("msg", "导入文件第" + (rowNum + 1) + "行学员姓名为空，请确认后提交！！");
-								return ExcelUtile.RETURN;
+								msg[0] += "导入文件第" + (rowNum + 1) + "行学员姓名为空，请确认后提交！！</br>";
+								return null;
 							}
 							sysUser.setUserName(value);
 						} else if ("idKind".equals(key)) {
 							if (StringUtil.isBlank(value)) {
-								eu.put("count", 0);
-								eu.put("code", "1");
-								eu.put("msg", "导入文件第" + (rowNum + 1) + "行证件类型为空，请确认后提交！！");
-								return ExcelUtile.RETURN;
+								msg[0] += "导入文件第" + (rowNum + 1) + "行证件类型为空，请确认后提交！！</br>";
+								return null;
 							}
 							sysUser.setCretTypeName(value);
 						} else if ("doctorType".equals(key)) {
 							if (StringUtil.isBlank(value)) {
-								eu.put("count", 0);
-								eu.put("code", "1");
-								eu.put("msg", "导入文件第" + (rowNum + 1) + "行培训类别为空，请确认后提交！！");
-								return ExcelUtile.RETURN;
+								msg[0] += "导入文件第" + (rowNum + 1) + "行培训类别为空，请确认后提交！！</br>";
+								return null;
 							}
 							sysUser.setTrainingTypeName(value);
 						} else if ("realScore".equals(key)) {
 							if (StringUtil.isBlank(value)) {
-								eu.put("count", 0);
-								eu.put("code", "1");
-								eu.put("msg", "导入文件第" + (rowNum + 1) + "行成绩为空，请确认后提交！！");
-								return ExcelUtile.RETURN;
+								msg[0] += "导入文件第" + (rowNum + 1) + "行成绩为空，请确认后提交！！</br>";
+								return null;
 							}
 						}
 					}
 					//校验学生是否存在
-					String flay = checkUser(sysUser, rowNum, eu, sessionNumber, a);
+					String flay = checkUser(sysUser, rowNum, eu, sessionNumber, a, trainingTypeId, msg);
 					if (null != flay) {
 						return ExcelUtile.RETURN;
 					}
 					return null;
 				}
 			});
+			if (StringUtil.isNotBlank(msg[0])) {
+				excelUtile.put("code", "1");
+				excelUtile.put("count", 0);
+				excelUtile.put("msg", msg[0]);
+			}
 			String code= (String) excelUtile.get("code");
 			if ("0".equals(code)) {
 				for (ResScore resScore : resScoreList) {
@@ -2300,7 +2286,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 		return null;
 	}
 
-	private String checkUser(SysUser sysUser,int rowNum, ExcelUtile eu,String sessionNumber, String scoreYear) {
+	private String checkUser(SysUser sysUser, int rowNum, ExcelUtile eu, String sessionNumber, String scoreYear, String trainingTypeId, String[] msg) {
 		String cretTypeName = sysUser.getCretTypeName();
 		String userName = sysUser.getUserName();
 		String trainingTypeName = sysUser.getTrainingTypeName();
@@ -2309,58 +2295,46 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 		sysUser=userBiz.findByIdNo(sysUser.getIdNo());
 		if(null==sysUser)
 		{
-			eu.put("count",0);
-			eu.put("code","1");
-			eu.put("msg","导入文件第"+(rowNum+1)+"行,证件号所属学生不存在，请确认后提交！！");
-			return ExcelUtile.RETURN;
+			msg[0] += "导入文件第"+(rowNum+1)+"行,证件号所属学生不存在，请确认后提交！！</br>";
+			return null;
 		}
 		if (!cretTypeName.equals(sysUser.getCretTypeName())) {
-			eu.put("count",0);
-			eu.put("code","1");
-			eu.put("msg","导入文件第"+(rowNum+1)+"行,证件类型与所属学生存储的证件类型不符合，请确认后提交！！");
-			return ExcelUtile.RETURN;
+			msg[0] += "导入文件第"+(rowNum+1)+"行,证件类型与所属学生存储的证件类型不符合，请确认后提交！！</br>";
+			return null;
 		}
 		if (!userName.equals(sysUser.getUserName())) {
-			eu.put("count",0);
-			eu.put("code","1");
-			eu.put("msg","导入文件第"+(rowNum+1)+"行,姓名与证件号所属学生不符合，请确认后提交！！");
-			return ExcelUtile.RETURN;
+			msg[0] += "导入文件第"+(rowNum+1)+"行,姓名与证件号所属学生不符合，请确认后提交！！</br>";
+			return null;
 		}
 		if (!trainingTypeName.equals(sysUser.getTrainingTypeName())) {
-			eu.put("count",0);
-			eu.put("code","1");
-			eu.put("msg","导入文件第"+(rowNum+1)+"行,培训类别与证件号所属学生不符合，请确认后提交！！");
-			return ExcelUtile.RETURN;
+			msg[0] += "导入文件第"+(rowNum+1)+"行,培训类别与证件号所属学生不符合，请确认后提交！！</br>";
+			return null;
+		}
+		if (!trainingTypeId.equals(sysUser.getTrainingTypeId())) {
+			msg[0] += "导入文件第"+(rowNum+1)+"行,培训类别与证件号所属学生不符合，请确认后提交！！</br>";
+			return null;
 		}
 		ResDoctor resDoctor=searchByUserFlow(sysUser.getUserFlow());
 		if(null==resDoctor)
 		{
-			eu.put("count",0);
-			eu.put("code","1");
-			eu.put("msg","导入文件第"+(rowNum+1)+"行,身份证号所属学生医师信息不存在，请确认后提交！！");
-			return ExcelUtile.RETURN;
+			msg[0] += "导入文件第"+(rowNum+1)+"行,身份证号所属学生医师信息不存在，请确认后提交！！</br>";
+			return null;
 		}
 		if(StringUtil.isBlank(resDoctor.getOrgFlow())){
-			eu.put("count",0);
-			eu.put("code","1");
-			eu.put("msg","导入文件第"+(rowNum+1)+"行,身份证号所属学生暂未参加培训，请确认后提交！！");
-			return ExcelUtile.RETURN;
+			msg[0] += "导入文件第"+(rowNum+1)+"行,身份证号所属学生暂未参加培训，请确认后提交！！</br>";
+			return null;
 		}
 		if (StringUtil.isNotBlank(sessionNumber)) {
 			ResDoctorRecruitExample example = new ResDoctorRecruitExample();
 			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(sysUser.getUserFlow()).andSessionNumberEqualTo(sessionNumber);
 			List<ResDoctorRecruit> resDoctorRecruits = doctorRecruitMapper.selectByExample(example);
 			if (resDoctorRecruits.size() == 0) {
-				eu.put("count", 0);
-				eu.put("code", "1");
-				eu.put("msg", "导入文件第" + (rowNum + 1) + "行,该学员在当前届别下没有培训记录，请确认后提交！！");
-				return ExcelUtile.RETURN;
+				msg[0] += "导入文件第" + (rowNum + 1) + "行,该学员在当前届别下没有培训记录，请确认后提交！！</br>";
+				return null;
 			}
 			if (resDoctorRecruits.size() != 0 && resDoctorRecruits.size() != 1) {
-				eu.put("count", 0);
-				eu.put("code", "1");
-				eu.put("msg", "导入文件第" + (rowNum + 1) + "行,该学员培训数据出现异常，请确认后提交！！");
-				return ExcelUtile.RETURN;
+				msg[0] += "导入文件第" + (rowNum + 1) + "行,该学员培训数据出现异常，请确认后提交！！</br>";
+				return null;
 			}
 
 			if (StringUtil.isNotBlank(scoreYear)) {
@@ -2373,10 +2347,8 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 				List<JsresExamSignup> signupList = signupMapper.selectByExample(signupExample);
 
 				if (CollectionUtils.isEmpty(applyList) && CollectionUtils.isEmpty(signupList)) {
-					eu.put("count", 0);
-					eu.put("code", "1");
-					eu.put("msg", "导入文件第" + (rowNum + 1) + "行,该学员没有被审核通过的考试申请，请确认后提交！！");
-					return ExcelUtile.RETURN;
+					msg[0] += "导入文件第" + (rowNum + 1) + "行,该学员没有被审核通过的考试申请，请确认后提交！！</br>";
+					return null;
 				}
 			}
 		}
@@ -2390,9 +2362,10 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 	 * @return
 	 */
 	@Override
-	public ExcelUtile  importSkillScoreFromExcel(MultipartFile file,String scoreYear) {
+	public ExcelUtile  importSkillScoreFromExcel(MultipartFile file, String scoreYear, String trainingTypeId) {
 		List<ResTestConfig> resTestConfigs = resTestConfigBiz.findAllEffective();
 		List<ResScore> resScoreList = new ArrayList<>();
+		final String[] msg = {""};
 		InputStream is = null;
 		try {
 			is = file.getInputStream();
@@ -2408,7 +2381,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 					"doctorType",
 					"sessionNumber",
 					"realScore",
-					"theoryScore"
+					"skillScore"
 			};
 			final String a = scoreYear;
 			ExcelUtile excelUtile = ExcelUtile.importDataExcel(HashMap.class, 1, wb, keys, new IExcelUtil<HashMap>() {
@@ -2496,85 +2469,65 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						if("idNo".equals(key))
 						{
 							if(StringUtil.isBlank(value)) {
-								eu.put("count", 0);
-								eu.put("code", "1");
-								eu.put("msg", "导入文件第" + (rowNum + 1) + "行身份证号为空，请确认后提交！！");
-								return ExcelUtile.RETURN;
+								msg[0] += "导入文件第" + (rowNum + 1) + "行身份证号为空，请确认后提交！！</br>";
+								return null;
 							}
 							sysUser.setIdNo(value);
 						} else if ("skillScore".equals(key)) {
 							if (StringUtil.isBlank(value)) {
-								eu.put("count", 0);
-								eu.put("code", "1");
-								eu.put("msg", "导入文件第" + (rowNum + 1) + "行成绩为空，请确认后提交！！");
-								return ExcelUtile.RETURN;
+								msg[0] += "导入文件第" + (rowNum + 1) + "行成绩为空，请确认后提交！！</br>";
+								return null;
 							}
 						}else if("testId".equals(key)){
 							if(StringUtil.isBlank(value)){
-								eu.put("count", 0);
-								eu.put("code", "1");
-								eu.put("msg", "导入文件第" + (rowNum + 1) + "行考试编号为空，请确认后提交！！");
-								return ExcelUtile.RETURN;
+								msg[0] += "导入文件第" + (rowNum + 1) + "行考试编号为空，请确认后提交！！</br>";
+								return null;
 							} else {
 								if (resTestConfigs != null && resTestConfigs.size() > 0) {
 									//判断导入的考试编号在系统中存不存在
 									List<ResTestConfig> resTestConfigList = resTestConfigs.stream().filter(resTestConfig -> value.equals(resTestConfig.getTestId())).collect(Collectors.toList());
 									if (resTestConfigList == null || resTestConfigList.size() == 0) {
-										eu.put("count", 0);
-										eu.put("code", "1");
-										eu.put("msg", "导入文件第" + (rowNum + 1) + "行考试编号在系统中不存在");
-										return ExcelUtile.RETURN;
+										msg[0] += "导入文件第" + (rowNum + 1) + "行考试编号在系统中不存在！！</br>";
+										return null;
 									}
 								} else {
-									eu.put("count", 0);
-									eu.put("code", "1");
-									eu.put("msg", "当前没有任何考试");
-									return ExcelUtile.RETURN;
+									msg[0] += "当前没有任何考试！！</br>";
+									return null;
 								}
 							}
 						} else if ("sessionNumber".equals(key)) {
 							if (StringUtil.isBlank(value)) {
-								eu.put("count", 0);
-								eu.put("code", "1");
-								eu.put("msg", "导入文件第" + (rowNum + 1) + "行学员届别为空，请确认后提交！！");
-								return ExcelUtile.RETURN;
+								msg[0] += "导入文件第" + (rowNum + 1) + "行学员届别为空，请确认后提交！！</br>";
+								return null;
 							}
 							sessionNumber = value;
 						} else if ("userName".equals(key)) {
 							if (StringUtil.isBlank(value)) {
-								eu.put("count", 0);
-								eu.put("code", "1");
-								eu.put("msg", "导入文件第" + (rowNum + 1) + "行学员姓名为空，请确认后提交！！");
-								return ExcelUtile.RETURN;
+								msg[0] += "导入文件第" + (rowNum + 1) + "行学员姓名为空，请确认后提交！！</br>";
+								return null;
 							}
 							sysUser.setUserName(value);
 						} else if ("idKind".equals(key)) {
 							if (StringUtil.isBlank(value)) {
-								eu.put("count", 0);
-								eu.put("code", "1");
-								eu.put("msg", "导入文件第" + (rowNum + 1) + "行证件类型为空，请确认后提交！！");
-								return ExcelUtile.RETURN;
+								msg[0] += "导入文件第" + (rowNum + 1) + "行证件类型为空，请确认后提交！！</br>";
+								return null;
 							}
 							sysUser.setCretTypeName(value);
 						} else if ("doctorType".equals(key)) {
 							if (StringUtil.isBlank(value)) {
-								eu.put("count", 0);
-								eu.put("code", "1");
-								eu.put("msg", "导入文件第" + (rowNum + 1) + "行培训类别为空，请确认后提交！！");
-								return ExcelUtile.RETURN;
+								msg[0] += "导入文件第" + (rowNum + 1) + "行培训类别为空，请确认后提交！！</br>";
+								return null;
 							}
 							sysUser.setTrainingTypeName(value);
 						} else if ("realScore".equals(key)) {
 							if (StringUtil.isBlank(value)) {
-								eu.put("count", 0);
-								eu.put("code", "1");
-								eu.put("msg", "导入文件第" + (rowNum + 1) + "行成绩为空，请确认后提交！！");
-								return ExcelUtile.RETURN;
+								msg[0] += "导入文件第" + (rowNum + 1) + "行成绩为空，请确认后提交！！</br>";
+								return null;
 							}
 						}
 					}
 					//校验学生是否存在
-					String flay=checkUser(sysUser,rowNum,eu,sessionNumber, a);
+					String flay=checkUser(sysUser,rowNum,eu, sessionNumber, a, trainingTypeId, msg);
 					if(null!=flay)
 					{
 						return ExcelUtile.RETURN;
@@ -2582,6 +2535,11 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 					return null;
 				}
 			});
+			if (StringUtil.isNotBlank(msg[0])) {
+				excelUtile.put("code", "1");
+				excelUtile.put("count", 0);
+				excelUtile.put("msg", msg[0]);
+			}
 			String code= (String) excelUtile.get("code");
 			if ("0".equals(code)) {
 				for (ResScore resScore : resScoreList) {
@@ -2609,6 +2567,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 	@Override
 	public ExcelUtile  importPublicScoreFromExcel(MultipartFile file) {
 		InputStream is = null;
+		final String[] msg = {""};
 		try {
 			is = file.getInputStream();
 			byte[] fileData = new byte[(int) file.getSize()];
@@ -2824,7 +2783,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 					}
 
 					//校验学生是否存在
-					String flay=checkUser(sysUser,rowNum,eu,"","");
+					String flay=checkUser(sysUser,rowNum,eu, sessionNumber, "","", msg);
 					if(null!=flay)
 					{
 						return ExcelUtile.RETURN;

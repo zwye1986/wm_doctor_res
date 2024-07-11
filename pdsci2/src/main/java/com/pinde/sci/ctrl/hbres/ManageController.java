@@ -35,7 +35,6 @@ import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.DateCfgMsg;
-import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.model.res.ResDoctorRecruitExt;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -1158,7 +1157,7 @@ public class ManageController extends GeneralController {
 		}
 		if(file.getSize() > 0){
 			try{
-				ExcelUtile result = (ExcelUtile) resDoctorBiz.importCourseFromExcel(file,scoreYear);
+				ExcelUtile result = (ExcelUtile) resDoctorBiz.importCourseFromExcel(file, scoreYear, scoreYear);
 				if(null!=result)
 				{
 					String code= (String) result.get("code");
@@ -1433,7 +1432,7 @@ public class ManageController extends GeneralController {
 		}
 		if(file.getSize() > 0){
 			try{
-				ExcelUtile result = (ExcelUtile) resDoctorBiz.importSkillScoreFromExcel(file,scoreYear);
+				ExcelUtile result = (ExcelUtile) resDoctorBiz.importSkillScoreFromExcel(file, scoreYear, scoreYear);
 				if(null!=result)
 				{
 					String code= (String) result.get("code");
