@@ -2812,9 +2812,9 @@ public class JsResDoctorController extends GeneralController {
                 "doctor.trainingSpeName:培训专业",
                 "recruit.recruitDate:参训时间",
                 "trainYearMonth:培训开始年月",
-                "trainYears:培训年限（年）",
-                "trainEndYearMonth:计划培训结束年月",
                 "recruit.trainYear:计划参训时限",
+                "trainYears:培训年限",
+                "trainEndYearMonth:计划培训结束年月",
         };
         List<String> docTypeList = new ArrayList<String>();
         SysOrg org = new SysOrg();
