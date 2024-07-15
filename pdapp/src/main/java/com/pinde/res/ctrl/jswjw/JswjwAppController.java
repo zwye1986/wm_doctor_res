@@ -269,7 +269,7 @@ public class JswjwAppController {
         } else {
             application.setAttribute("onlineCountNum", (Integer) application.getAttribute("onlineCountNum") + 1);
         }
-        return getUserInfo(userinfo, model, userPasswd, uuid);
+        return getUserInfo(userinfo, model, userPasswd, uuid, request);
     }
 
     /**
@@ -6924,7 +6924,7 @@ public class JswjwAppController {
         return list;
     }
 
-    private String getUserInfo(SysUser userinfo, Model model, String userPasswd, String uuid) throws ParseException {
+    private String getUserInfo(SysUser userinfo, Model model, String userPasswd, String uuid, HttpServletRequest request) throws ParseException {
         //是否招录
         String isRecruit = "N";
         //超级密码
@@ -7558,6 +7558,9 @@ public class JswjwAppController {
         log.setModifyUserFlow(userinfo.getUserFlow());
         log.setRecordStatus("Y");
         logMapper.insert(log);
+
+        request.getSession().setAttribute(GlobalConstant.CURR_USER, userinfo);
+
         return "res/jswjw/login";
     }
 
