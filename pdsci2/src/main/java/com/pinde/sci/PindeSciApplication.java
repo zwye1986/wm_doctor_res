@@ -25,7 +25,7 @@ import javax.sql.DataSource;
 @ImportResource({"classpath:spring-context.xml"/*,"classpath:spring-mvc.xml","classpath:spring-mybatis.xml"*/})
 //@MapperScan({"com.pinde.sci.dao.**"})
 @Configuration
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 3600)
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 3600, redisNamespace = "jsres-pdsci")
 public class PindeSciApplication extends SpringBootServletInitializer {
     private static Logger logger = LoggerFactory.getLogger(PindeSciApplication.class);
 
