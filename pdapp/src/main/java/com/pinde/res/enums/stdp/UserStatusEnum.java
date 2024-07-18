@@ -6,7 +6,8 @@ import com.pinde.core.util.EnumUtil;
 public enum UserStatusEnum implements GeneralEnum<String> {
 	Added("Added","新增"),
 	Reged("Reged","待审核"),
-	Locked("Locked","锁定"),
+	Locked("Locked", "停用"),
+	SysLocked("SysLocked", "锁定"),
 	Activated("Activated","已激活"),
 	Lifted("Lifted", "解除使用"),
 	;

@@ -6968,8 +6968,8 @@ public class JswjwAppController {
                     String appLoginErrorCountNew = appLoginErrorCount + 1 + "";
                     userinfo.setAppLoginErrorCount(appLoginErrorCountNew);
                     if ("3".equals(appLoginErrorCountNew)) {
-                        userinfo.setStatusId(UserStatusEnum.Locked.getId());
-                        userinfo.setStatusDesc(UserStatusEnum.Locked.getName());
+                        userinfo.setStatusId(UserStatusEnum.SysLocked.getId());
+                        userinfo.setStatusDesc(UserStatusEnum.SysLocked.getName());
                     }
                     jswjwBiz.updateUser(userinfo);
                 }
@@ -6996,6 +6996,11 @@ public class JswjwAppController {
         }
         String userStatus = userinfo.getStatusId();
         if (UserStatusEnum.Locked.getId().equals(userStatus)) {
+            model.addAttribute("resultId", "30197");
+            model.addAttribute("resultType", "该用户已被停用，请联系培训基地进行启用");
+            return "res/jswjw/login";
+        }
+        if (UserStatusEnum.SysLocked.getId().equals(userStatus)) {
             model.addAttribute("resultId", "30197");
             model.addAttribute("resultType", "该用户已被锁定，请联系培训基地进行解锁");
             return "res/jswjw/login";
@@ -7202,8 +7207,8 @@ public class JswjwAppController {
                             List<SysLog> logList = jswjwBiz.searchSysLog(sysLog);   //规定时间内app登录日志
                             if (null==logList || logList.size()==0){    //没有登录日志
                                 // 锁定账号
-                                userinfo.setStatusId("Locked");
-                                userinfo.setStatusDesc("锁定");
+                                userinfo.setStatusId("SysLocked");
+                                userinfo.setStatusDesc("系统锁定");
                                 userinfo.setModifyTime(DateUtil.getCurrDateTime());
                                 userinfo.setModifyUserFlow(userinfo.getOrgFlow());
                                 jswjwBiz.saveUserInfo(userinfo);
@@ -7216,8 +7221,8 @@ public class JswjwAppController {
                                 List<ResRec> recList = jswjwBiz.searchByDoctorFlow(userFlow, DateUtil.getAppointDate2(new Date(),Integer.parseInt("-"+lockDay)));
                                 if (null==recList || recList.size()==0) { //没有填写或修改轮转数据
                                     // 锁定账号
-                                    userinfo.setStatusId("Locked");
-                                    userinfo.setStatusDesc("锁定");
+                                    userinfo.setStatusId("SysLocked");
+                                    userinfo.setStatusDesc("系统锁定");
                                     userinfo.setModifyTime(DateUtil.getCurrDateTime());
                                     userinfo.setModifyUserFlow(userinfo.getOrgFlow());
                                     jswjwBiz.saveUserInfo(userinfo);
