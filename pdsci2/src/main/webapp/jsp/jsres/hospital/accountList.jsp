@@ -27,6 +27,7 @@
 <c:if test="${maintenance ne 'Y'}"> <%--客服（运维角色）只能查看——--%>
 			<th>手机解绑</th>
 			<th>账号解锁</th>
+			<th>操作</th>
 </c:if>
 		</tr>
 		<c:forEach items="${doctorExtList}" var="doctorExt">
@@ -47,8 +48,9 @@
 				</td>
 				<td style="text-align: center;padding: 0px;">
 					<c:choose>
-						<c:when test="${'Locked' eq  doctorExt.sysUser.statusId}"> <font style="color: red">已锁定</font></c:when>
-						<c:otherwise><font style="color: #44b549">未锁定</font></c:otherwise>
+						<c:when test="${'Locked' eq  doctorExt.sysUser.statusId}"> <font style="color: red">已停用</font></c:when>
+						<c:when test="${'SysLocked' eq  doctorExt.sysUser.statusId}"> <font style="color: red">已锁定</font></c:when>
+						<c:otherwise><font style="color: #44b549">已激活</font></c:otherwise>
 					</c:choose>
 				</td>
 				<c:if test="${maintenance ne 'Y'}"> <%--客服（运维角色）只能查看——--%>
@@ -62,10 +64,20 @@
 				</td>
 				<td style="text-align: center;padding: 0px;">
 					<c:choose>
-						<c:when test="${'Locked' eq  doctorExt.sysUser.statusId}">
-							<a style="color: blue;cursor: pointer; " onclick="activate('${doctorExt.sysUser.userFlow}');">解锁</a>
+						<c:when test="${'SysLocked' eq  doctorExt.sysUser.statusId}">
+							<a style="color: blue;cursor: pointer; " onclick="unLock('${doctorExt.sysUser.userFlow}');">解锁</a>
 						</c:when>
 						<c:otherwise><font style="color: #8a8a8a">解锁</font></c:otherwise>
+					</c:choose>
+				</td>
+				<td style="text-align: center;padding: 0px;">
+					<c:choose>
+						<c:when test="${'Locked' eq  doctorExt.sysUser.statusId}">
+							<a style="color: blue;cursor: pointer; " onclick="activate('${doctorExt.sysUser.userFlow}');">启用</a>
+						</c:when>
+						<c:otherwise>
+							<a style="color: blue;cursor: pointer; " onclick="stop('${doctorExt.sysUser.userFlow}');">停用</a>
+						</c:otherwise>
 					</c:choose>
 				</td>
 				</c:if>

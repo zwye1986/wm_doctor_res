@@ -99,6 +99,11 @@ public class InxRecruitController extends GeneralController{
 				return "recruit/inx/login";
 			}
 			if(UserStatusEnum.Locked.getId().equals(user.getStatusId())){
+				loginErrorMessage = "用户已被停用";
+				model.addAttribute("loginErrorMessage" , loginErrorMessage);
+				return "recruit/inx/login";
+			}
+			if(UserStatusEnum.SysLocked.getId().equals(user.getStatusId())){
 				loginErrorMessage = "用户已被锁定";
 				model.addAttribute("loginErrorMessage" , loginErrorMessage);
 				return "recruit/inx/login";

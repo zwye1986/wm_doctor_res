@@ -193,6 +193,15 @@
     }
 
     function activate(userFlow) {
+        jboxConfirm("确认不停用，恢复启用该用户吗？", function () {
+            var url = "<s:url value='/sys/user/activate?userFlow='/>" + userFlow;
+            jboxGet(url, null, function () {
+                search();
+            });
+        });
+    }
+
+    function unlock(userFlow) {
         jboxConfirm("确认解锁该用户吗？", function () {
             var url = "<s:url value='/sys/user/activate?userFlow='/>" + userFlow;
             jboxGet(url, null, function () {
@@ -253,6 +262,7 @@
                     <option value="" >全部</option>
                     <option value="${userStatusEnumActivated.id }" <c:if test='${param.statusId==userStatusEnumActivated.id or empty param.statusId}'>selected</c:if>>${userStatusEnumActivated.name}</option>
                     <option value="${userStatusEnumLocked.id }" <c:if test='${param.statusId==userStatusEnumLocked.id}'>selected</c:if>>${userStatusEnumLocked.name}</option>
+                    <option value="${userStatusEnumSysLocked.id }" <c:if test='${param.statusId==userStatusEnumSysLocked.id}'>selected</c:if>>${userStatusEnumSysLocked.name}</option>
                 </select>
             </div>
             <div style="float: left; margin-bottom: 18px">
