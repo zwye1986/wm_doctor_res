@@ -526,9 +526,6 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 //				}
 //			}
 		}
-		if(OrgLevelEnum.CountryOrg.getId().equals(orgLevel)){
-			jointOrgFlowList = null;
-		}
 		if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 			orgLevel="";
 		}
@@ -3424,13 +3421,13 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 	}
 
 	@RequestMapping(value="/exportForDetail")
-	public void exportForDetail(String roleFlag, HttpServletResponse response,
-								 String orgCityId, String orgLevel,HttpServletRequest request,
+	public void exportForDetail(String roleFlag,HttpServletRequest request,
+								 String orgCityId, String orgLevel, HttpServletResponse response,
 								 String orgFlow, String trainingTypeId,
 								 String trainingSpeId, String sessionNumber,
 								 String graduationYear, String idNo,String doctorStatusId,
-								 String userName, String workOrgName,
-								 String[] datas, String[] yearDatas,String jointOrgFlag,String joinOrgFlow)throws Exception{
+								 String userName, String workOrgName,String[] datas, String[] yearDatas,
+								 String jointOrgFlag,String joinOrgFlow)throws Exception{
 
 		SysUser sysuser=GlobalContext.getCurrentUser();
 		SysOrg sysOrg=orgBiz.readSysOrg(sysuser.getOrgFlow());
