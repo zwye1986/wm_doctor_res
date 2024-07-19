@@ -1,0 +1,28 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="xyh-rotation_cfg-table-240715" author="xyh">
+        <sql>
+            CREATE TABLE "PDSCI"."RES_ORG_ROTATION_CFG" (
+            "ROTATION_CFG_FLOW" VARCHAR2(50 BYTE) PRIMARY KEY NOT NULL ENABLE,
+            "ORG_FLOW" VARCHAR2(50 BYTE) NOT NULL,
+            "ORG_NAME" VARCHAR2(50 BYTE) NOT NULL,
+            "SPE_ID" VARCHAR2(50 BYTE),
+            "SPE_NAME" VARCHAR2(50 BYTE),
+            "ROTATION_FLOW" VARCHAR2(150 BYTE),
+            "ROTATION_NAME" VARCHAR2(250 BYTE),
+            "SESSION_YEAR" VARCHAR2(20 BYTE),
+            "RECORD_STATUS" VARCHAR2(2 BYTE),
+            "CREATE_TIME" VARCHAR2(20 BYTE),
+            "CREATE_USER_FLOW" VARCHAR2(50 BYTE),
+            "MODIFY_TIME" VARCHAR2(20 BYTE),
+            "MODIFY_USER_FLOW" VARCHAR2(50 BYTE));
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
+

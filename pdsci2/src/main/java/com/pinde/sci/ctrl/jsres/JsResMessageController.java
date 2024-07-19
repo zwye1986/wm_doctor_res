@@ -42,6 +42,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/jsres/message")
@@ -681,36 +682,36 @@ public class JsResMessageController extends GeneralController {
         //confirmFlag字段 当学员确认报到 置为Y 表示学员已报到
         docRecWithBLOBs.setConfirmFlag("Y");
 
-        //查询专业轮转方案 设置学员轮转方案
-        String catSpeId = recruit.getCatSpeId();
-        SchRotation rotation = new SchRotation();
-        // 此处不能直接使用住院医师类型，助理全科无法查到培训方案
-        rotation.setDoctorCategoryId(RecDocCategoryEnum.Doctor.getId());
-        if(RecDocCategoryEnum.AssiGeneral.getId().equals(catSpeId)){
-            rotation.setDoctorCategoryId(catSpeId);
-        }
-        String speId = recruit.getSpeId();
-        rotation.setSpeId(speId);
-        rotation.setPublishFlag(GlobalConstant.RECORD_STATUS_Y);
-        List<SchRotation> rotationList = schRotationtBiz.searchOrgStandardRotation(rotation);
-        if(null != rotationList && rotationList.size()>0){
-            // 判断如果是全科 使用2020年新培训方案 需求1453
-            if("50".equals(speId)){
-                for (SchRotation schRotation: rotationList ) {
-                    if(schRotation.getRotationName().contains("2020西医助理")){
-                        docRecWithBLOBs.setRotationFlow(schRotation.getRotationFlow());
-                        docRecWithBLOBs.setRotationName(schRotation.getRotationName());
-                        break;
-                    }
-                }
-                if (StringUtil.isBlank(docRecWithBLOBs.getRotationFlow())) {
-                    return "助理全科暂停使用旧方案，请维护助理全科专业2020西医助理全科培训方案"; // 需求1453
-                }
-            }else{
-                docRecWithBLOBs.setRotationFlow(rotationList.get(0).getRotationFlow());
-                docRecWithBLOBs.setRotationName(rotationList.get(0).getRotationName());
-            }
-        }
+//        //查询专业轮转方案 设置学员轮转方案
+//        String catSpeId = recruit.getCatSpeId();
+//        SchRotation rotation = new SchRotation();
+//        // 此处不能直接使用住院医师类型，助理全科无法查到培训方案
+//        rotation.setDoctorCategoryId(RecDocCategoryEnum.Doctor.getId());
+//        if(RecDocCategoryEnum.AssiGeneral.getId().equals(catSpeId)){
+//            rotation.setDoctorCategoryId(catSpeId);
+//        }
+//        String speId = recruit.getSpeId();
+//        rotation.setSpeId(speId);
+//        rotation.setPublishFlag(GlobalConstant.RECORD_STATUS_Y);
+//        List<SchRotation> rotationList = schRotationtBiz.searchOrgStandardRotation(rotation);
+//        if(null != rotationList && rotationList.size()>0){
+//            // 判断如果是全科 使用2020年新培训方案 需求1453
+//            if("50".equals(speId)){
+//                for (SchRotation schRotation: rotationList ) {
+//                    if(schRotation.getRotationName().contains("2020西医助理")){
+//                        docRecWithBLOBs.setRotationFlow(schRotation.getRotationFlow());
+//                        docRecWithBLOBs.setRotationName(schRotation.getRotationName());
+//                        break;
+//                    }
+//                }
+//                if (StringUtil.isBlank(docRecWithBLOBs.getRotationFlow())) {
+//                    return "助理全科暂停使用旧方案，请维护助理全科专业2020西医助理全科培训方案"; // 需求1453
+//                }
+//            }else{
+//                docRecWithBLOBs.setRotationFlow(rotationList.get(0).getRotationFlow());
+//                docRecWithBLOBs.setRotationName(rotationList.get(0).getRotationName());
+//            }
+//        }
         docRecWithBLOBs.setCurrDegreeCategoryId(recruit.getCurrDegreeCategoryId());
         docRecWithBLOBs.setRecruitDate(recruit.getRecruitDate());
         docRecWithBLOBs.setSessionNumber(recruit.getSessionNumber());
@@ -1430,4 +1431,118 @@ public class JsResMessageController extends GeneralController {
         return "jsres/message/doctorRegisterInfoPrint";
     }
 
+    /**
+     * 基地配置轮转方案
+     * @return
+     */
+    @RequestMapping("/rotationCfg")
+    public String rotationCfg(Model model,String sessionNumber, String speId) {
+
+        if (StringUtil.isBlank(sessionNumber)) {
+            sessionNumber = DateUtil.getYear();
+        }
+        model.addAttribute("sessionNumber", sessionNumber);
+        model.addAttribute("speId", speId);
+
+        SysUser currentUser = GlobalContext.getCurrentUser();
+        assert currentUser != null;
+        String orgFlow = currentUser.getOrgFlow();
+        List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(DictTypeEnum.DoctorTrainingSpe.getId());
+
+        List<HashMap<String, Object>> resultList = new ArrayList<>();
+        if (StringUtil.isNotBlank(speId)) {
+            getRotationCfgResultMap(sessionNumber, speId, orgFlow, resultList);
+        } else {
+            for (SysDict sysDict : sysDictList) {
+                getRotationCfgResultMap(sessionNumber, sysDict.getDictId(), orgFlow, resultList);
+            }
+        }
+
+        model.addAttribute("resultList", resultList);
+
+        return "jsres/cfg/rotationCfg/rotationCfg";
+    }
+
+    private void getRotationCfgResultMap(String sessionNumber, String speId, String orgFlow, List<HashMap<String, Object>> resultList) {
+        HashMap<String, Object> map = new HashMap<>();
+        String speName = DictTypeEnum.DoctorTrainingSpe.getDictNameById(speId);
+        ResOrgRotationCfg rotationCfg = schRotationtBiz.getRotationCfg(orgFlow, speId, sessionNumber);
+        List<SchRotation> rotationList = getRotationList(speId);
+        if (CollectionUtils.isNotEmpty(rotationList)) {
+            for (SchRotation schRotation : rotationList) {
+                // 初始化为N，表示均未配置
+                schRotation.setRecordStatus(GlobalConstant.FLAG_N);
+                if (rotationCfg != null && schRotation.getRotationFlow().equals(rotationCfg.getRotationFlow())) {
+                    // 借用recordStatus置Y表示已配置
+                    schRotation.setRecordStatus(GlobalConstant.FLAG_Y);
+                }
+            }
+        }
+        map.put("speId", speId);
+        map.put("speName", speName);
+        map.put("rotationCfg", rotationCfg);
+        map.put("rotationList", rotationList);
+        resultList.add(map);
+    }
+
+    private List<SchRotation> getRotationList(String speId) {
+        SchRotation rotation = new SchRotation();
+        rotation.setDoctorCategoryId(RecDocCategoryEnum.Doctor.getId());
+        rotation.setSpeId(speId);
+        rotation.setPublishFlag(GlobalConstant.RECORD_STATUS_Y);
+        List<SchRotation> rotationList = schRotationtBiz.searchOrgStandardRotation(rotation);
+        List<String> versions = rotationList.stream().map(SchRotation::getRotationVersion).sorted((o1, o2) -> o2.hashCode() - o1.hashCode()).collect(Collectors.toList());
+        for (int i = 0; i < rotationList.size(); i++) {
+            if (!rotationList.get(i).getRotationVersion().equals(versions.get(0))) {
+                rotationList.remove(i);
+                i--;
+            }
+        }
+        return rotationList;
+    }
+
+    @RequestMapping("/saveRotationCfg")
+    @ResponseBody
+    public String saveRotationCfg(String sessionNumber, String speId, String rotationFlow) {
+        SchRotation schRotation = schRotationtBiz.readSchRotation(rotationFlow);
+
+        SysUser currentUser = GlobalContext.getCurrentUser();
+        assert currentUser != null;
+        String orgFlow = currentUser.getOrgFlow();
+
+        ResOrgRotationCfg rotationCfg = schRotationtBiz.getRotationCfg(orgFlow, speId, sessionNumber);
+
+        // 验证该专业是否已有审核通过的学员，若已存在审核通过的学员，则无法修改
+        if (StringUtil.isNotBlank(rotationCfg.getRotationCfgFlow()) && !rotationCfg.getRotationFlow().equals(rotationFlow)) {
+            ResDoctorRecruit resDoctorRecruit = new ResDoctorRecruit();
+            resDoctorRecruit.setOrgFlow(orgFlow);
+            resDoctorRecruit.setSpeId(speId);
+            resDoctorRecruit.setAuditStatusId("WaitGlobalPass,Passed");
+            resDoctorRecruit.setSessionNumber(sessionNumber);
+            List<ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.readDoctorRecruits(resDoctorRecruit);
+            if (CollectionUtils.isNotEmpty(recruitList)) {
+                return GlobalConstant.HAVE_AUDIT_PASS_STUDENT;
+            }
+        }
+
+        SysOrg sysOrg = orgBiz.readSysOrg(orgFlow);
+        if (StringUtil.isNotBlank(rotationCfg.getRotationCfgFlow())) {
+            rotationCfg.setRotationFlow(rotationFlow);
+            rotationCfg.setRotationName(schRotation.getRotationName());
+        } else {
+            rotationCfg.setRotationFlow(rotationFlow);
+            rotationCfg.setRotationName(schRotation.getRotationName());
+            rotationCfg.setOrgFlow(orgFlow);
+            rotationCfg.setOrgName(sysOrg.getOrgName());
+            rotationCfg.setSessionYear(sessionNumber);
+            rotationCfg.setSpeId(speId);
+            rotationCfg.setSpeName(DictTypeEnum.DoctorTrainingSpe.getDictNameById(speId));
+            rotationCfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        }
+        int i = schRotationtBiz.saveRotationCfg(rotationCfg);
+        if (i == 1) {
+            return GlobalConstant.SAVE_SUCCESSED;
+        }
+        return GlobalConstant.SAVE_FAIL;
+    }
 }

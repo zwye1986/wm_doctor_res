@@ -77,4 +77,8 @@ public interface ISchRotationBiz {
 	SchRotation getRotationByRecruitNew(ResDoctorRecruit recruit);
 
 	SchRotation searchDoctorBySpeId(String speId);
+
+    ResOrgRotationCfg getRotationCfg(String orgFlow, String speId, String sessionNumber);
+
+    int saveRotationCfg(ResOrgRotationCfg rotationCfg);
 }

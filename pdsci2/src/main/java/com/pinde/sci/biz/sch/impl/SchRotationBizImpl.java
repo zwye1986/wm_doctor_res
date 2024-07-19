@@ -66,6 +66,8 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 	private IResDoctorBiz doctorBiz;
 	@Autowired
 	private IUserBiz userBiz;
+	@Autowired
+	private ResOrgRotationCfgMapper rotationCfgMapper;
 
 
 	@Override
@@ -726,7 +728,9 @@ public class SchRotationBizImpl implements ISchRotationBiz {
                             }
                         }
                     } else {
-                        rotation = list.get(0);
+//                        rotation = list.get(0);
+						ResOrgRotationCfg rotationCfg = getRotationCfg(doctor.getOrgFlow(), speId, doctor.getSessionNumber());
+						rotation = readSchRotation(rotationCfg.getRotationFlow());
                     }
 				}
 			}
@@ -892,5 +896,29 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 			return list.get(0);
 		}
 		return null;
+	}
+
+	@Override
+	public ResOrgRotationCfg getRotationCfg(String orgFlow, String speId, String sessionNumber) {
+		ResOrgRotationCfgExample example = new ResOrgRotationCfgExample();
+		example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andSpeIdEqualTo(speId).andSessionYearEqualTo(sessionNumber);
+		List<ResOrgRotationCfg> rotationCfgList = rotationCfgMapper.selectByExample(example);
+		if (CollectionUtils.isNotEmpty(rotationCfgList)) {
+			return rotationCfgList.get(0);
+		}
+		return new ResOrgRotationCfg();
+	}
+
+	@Override
+	public int saveRotationCfg(ResOrgRotationCfg rotationCfg) {
+
+		if (StringUtil.isNotBlank(rotationCfg.getRotationCfgFlow())) {
+			GeneralMethod.setRecordInfo(rotationCfg, false);
+			return rotationCfgMapper.updateByPrimaryKeySelective(rotationCfg);
+		} else {
+			rotationCfg.setRotationCfgFlow(PkUtil.getUUID());
+			GeneralMethod.setRecordInfo(rotationCfg, true);
+			return rotationCfgMapper.insert(rotationCfg);
+		}
 	}
 }
