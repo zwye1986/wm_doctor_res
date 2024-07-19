@@ -6307,8 +6307,8 @@ public class JswjwWxController extends GeneralController {
                         String appLoginErrorCountNew = appLoginErrorCount + 1 + "";
                         userinfo.setAppLoginErrorCount(appLoginErrorCountNew);
                         if ("3".equals(appLoginErrorCountNew)) {
-                            userinfo.setStatusId(UserStatusEnum.Locked.getId());
-                            userinfo.setStatusDesc(UserStatusEnum.Locked.getName());
+                            userinfo.setStatusId(UserStatusEnum.SysLocked.getId());
+                            userinfo.setStatusDesc(UserStatusEnum.SysLocked.getName());
                         }
                         jswjwBiz.updateUser(userinfo);
                     }
@@ -6336,8 +6336,11 @@ public class JswjwWxController extends GeneralController {
             userFlag = true;
         }
         String userStatus = userinfo.getStatusId();
-        if (UserStatusEnum.Locked.getId().equals(userStatus)) {
+        if (UserStatusEnum.SysLocked.getId().equals(userStatus)) {
             return ResultDataThrow("该用户已被锁定，请联系培训基地进行解锁");
+        }
+        if (UserStatusEnum.Locked.getId().equals(userStatus)) {
+            return ResultDataThrow("该用户已被停用，请联系培训基地进行启用");
         }
         if (UserStatusEnum.Lifted.getId().equals(userStatus)) {
             return ResultDataThrow("你暂无权限使用,请联系培训基地管理员！");
