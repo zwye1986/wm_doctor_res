@@ -37,11 +37,11 @@
 	}
 	function delExamInfo(examFlow)
 	{
-		debugger;
+
 		var url = '<s:url value="/res/njExam/delExamInfo"/>?examFlow='+examFlow;
 		jboxConfirm("确认删除？" , function(){
 			jboxGet(url , null , function(resp){
-				debugger;
+
 				jboxTip(resp);
 				if(resp=="${GlobalConstant.DELETE_SUCCESSED}")
 				{

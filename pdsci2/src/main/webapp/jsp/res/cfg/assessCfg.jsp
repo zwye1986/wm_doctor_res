@@ -160,7 +160,7 @@ function save(){
 		return false;
 	}
 	var datas = [];
-	debugger;
+
 	$.each(trs, function(i,n){
 		var titleId = $(n).find("input[name='titleId']").val();
 		var type = $(n).find("input[name='type']").val();
@@ -176,7 +176,7 @@ function save(){
 		};
 		datas.push(data);
 	});
-	debugger;
+
 	var cfgFlow = $("input[name='cfgFlow']").val();
 	var requestData = {"itemFormList":datas, "cfgFlow":cfgFlow};
 	var url = "<s:url value='/res/cfg/saveAssessItemList'/>";
@@ -196,7 +196,7 @@ function closeAssessCfg() {
 }
 
 function changeStyle(obj,stylename){
-	debugger;
+
 	$scoreTd = $(obj).parent().parent().prev();
 	$score = $scoreTd.children();
 	$name = $scoreTd.prev().children();

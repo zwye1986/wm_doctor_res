@@ -279,7 +279,7 @@
         formdate = formdate.replaceAll(",", "formCo");
         var formdate = decodeURIComponent(formdate, true);
         console.log(formdate);
-        debugger;
+
         jboxPost("<s:url value='/jsres/doctor/checkDoctorAuth'/>?doctorFlow=" + doctorFlow + "&roleFlag=" + roleFlag, null,
             function (resp) {
                 if (resp == "${GlobalConstant.FLAG_Y}") {

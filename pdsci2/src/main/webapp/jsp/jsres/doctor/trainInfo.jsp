@@ -467,7 +467,7 @@
 		$("#CXfile").click();
 	}
 	function checkCXFile(obj){
-        debugger;
+
 		var id = obj.id;
 		$.ajaxFileUpload({
 			url:"<s:url value='/res/rec/resRecImg'/>",

@@ -68,7 +68,7 @@
                 data = RSAUtils.encryptedString(key, encodeURI(param));
             }
             var url = "<s:url value='/inx/jsres/checkVerifyCodeNew'/>";
-            debugger;
+
             jboxPost(url, {
                     data:data
                 },

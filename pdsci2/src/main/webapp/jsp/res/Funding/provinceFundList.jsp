@@ -35,7 +35,7 @@
         jboxOpen(url, title+"经费上报记录", 800, 500);
     }
     function toPage(page) {
-        debugger;
+
         if (page) {
             $("#currentPage").val(page);
         }

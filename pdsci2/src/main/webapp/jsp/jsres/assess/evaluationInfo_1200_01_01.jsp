@@ -134,7 +134,7 @@
 		}
 
 		function saveSelect(expl, itemId, itemName) {
-			debugger;
+
 			var url = "<s:url value='/jsres/supervisio/savScheduleHaveAndNo'/>";
 			var data = {
 				"itemId": itemId,
@@ -203,7 +203,7 @@
 			};
 			top.jboxPost(url, data, function (resp) {
 				if (resp == "${GlobalConstant.OPERATE_SUCCESSED}") {
-					debugger;
+
 					window.parent.frames["jbox-message-iframe"].$("#scoreInfo11")[0].value = selfOneScore;
 					window.parent.frames["jbox-message-iframe"].$("#scoreInfo21")[0].value = selfTwoScore;
 					var scoreOneAll = 0;

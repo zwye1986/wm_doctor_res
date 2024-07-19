@@ -207,7 +207,7 @@
 		showJointOrg(flow);
 	}
 	function exportExcel(){
-		debugger;
+
 		var url = "<s:url value='/jsres/doctorActivityStatistics/exportList'/>?roleFlag=${param.roleFlag}&baseFlag=${param.baseFlag}";
 		jboxTip("导出中…………");
 		jboxSubmit($("#searchForm"), url, null, null, false);

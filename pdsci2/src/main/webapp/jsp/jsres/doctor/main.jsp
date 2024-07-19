@@ -30,6 +30,7 @@
     }
 
     function editDoctorRecruit(){
+
         var doctorFlow = $("#doctorFlow").val();
         if(doctorFlow == ""){
             jboxTip("请先完善基本信息！");

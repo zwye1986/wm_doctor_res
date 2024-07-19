@@ -545,8 +545,8 @@ public class InxJsResController extends GeneralController {
                         String loginErrorCountNew = loginErrorCount + 1 + "";
                         user.setLoginErrorCount(loginErrorCountNew);
                         if ("10".equals(loginErrorCountNew)) {
-                            user.setStatusId(UserStatusEnum.Locked.getId());
-                            user.setStatusDesc(UserStatusEnum.Locked.getName());
+                            user.setStatusId(UserStatusEnum.SysLocked.getId());
+                            user.setStatusDesc(UserStatusEnum.SysLocked.getName());
                         }
                         userBiz.updateUser(user);
                     }
@@ -575,6 +575,10 @@ public class InxJsResController extends GeneralController {
                 return loginErrorMessage;
             }
             if (UserStatusEnum.Locked.getId().equals(user.getStatusId())) {
+                loginErrorMessage = "用户已停用";
+                return loginErrorMessage;
+            }
+            if (UserStatusEnum.SysLocked.getId().equals(user.getStatusId())) {
                 loginErrorMessage = "用户已锁定";
                 return loginErrorMessage;
             }
@@ -609,8 +613,8 @@ public class InxJsResController extends GeneralController {
                         String loginErrorCountNew = loginErrorCount + 1 + "";
                         userNew.setLoginErrorCount(loginErrorCountNew);
                         if ("10".equals(loginErrorCountNew)) {
-                            userNew.setStatusId(UserStatusEnum.Locked.getId());
-                            userNew.setStatusDesc(UserStatusEnum.Locked.getName());
+                            userNew.setStatusId(UserStatusEnum.SysLocked.getId());
+                            userNew.setStatusDesc(UserStatusEnum.SysLocked.getName());
                         }
                         userBiz.updateUser(userNew);
                     }
@@ -639,6 +643,10 @@ public class InxJsResController extends GeneralController {
                 return loginErrorMessage;
             }
             if (UserStatusEnum.Locked.getId().equals(userNew.getStatusId())) {
+                loginErrorMessage = "用户已停用";
+                return loginErrorMessage;
+            }
+            if (UserStatusEnum.SysLocked.getId().equals(userNew.getStatusId())) {
                 loginErrorMessage = "用户已锁定";
                 return loginErrorMessage;
             }
@@ -733,8 +741,8 @@ public class InxJsResController extends GeneralController {
                         String loginErrorCountNew = loginErrorCount + 1 + "";
                         user.setLoginErrorCount(loginErrorCountNew);
                         if ("10".equals(loginErrorCountNew)) {
-                            user.setStatusId(UserStatusEnum.Locked.getId());
-                            user.setStatusDesc(UserStatusEnum.Locked.getName());
+                            user.setStatusId(UserStatusEnum.SysLocked.getId());
+                            user.setStatusDesc(UserStatusEnum.SysLocked.getName());
                         }
                         userBiz.updateUser(user);
                     }
@@ -763,6 +771,10 @@ public class InxJsResController extends GeneralController {
                 return loginErrorMessage;
             }
             if (UserStatusEnum.Locked.getId().equals(user.getStatusId())) {
+                loginErrorMessage = "用户已停用";
+                return loginErrorMessage;
+            }
+            if (UserStatusEnum.SysLocked.getId().equals(user.getStatusId())) {
                 loginErrorMessage = "用户已锁定";
                 return loginErrorMessage;
             }
@@ -797,8 +809,8 @@ public class InxJsResController extends GeneralController {
                         String loginErrorCountNew = loginErrorCount + 1 + "";
                         userNew.setLoginErrorCount(loginErrorCountNew);
                         if ("10".equals(loginErrorCountNew)) {
-                            userNew.setStatusId(UserStatusEnum.Locked.getId());
-                            userNew.setStatusDesc(UserStatusEnum.Locked.getName());
+                            userNew.setStatusId(UserStatusEnum.SysLocked.getId());
+                            userNew.setStatusDesc(UserStatusEnum.SysLocked.getName());
                         }
                         userBiz.updateUser(userNew);
                     }
@@ -827,6 +839,10 @@ public class InxJsResController extends GeneralController {
                 return loginErrorMessage;
             }
             if (UserStatusEnum.Locked.getId().equals(userNew.getStatusId())) {
+                loginErrorMessage = "用户已停用";
+                return loginErrorMessage;
+            }
+            if (UserStatusEnum.SysLocked.getId().equals(userNew.getStatusId())) {
                 loginErrorMessage = "用户已锁定";
                 return loginErrorMessage;
             }
@@ -2088,6 +2104,11 @@ public class InxJsResController extends GeneralController {
             return "/inx/jsres/login";
         }
         if (UserStatusEnum.Locked.getId().equals(user.getStatusId())) {
+            loginErrorMessage = "用户已停用";
+            model.addAttribute("loginErrorMessage", loginErrorMessage);
+            return "/inx/jsres/login";
+        }
+        if (UserStatusEnum.SysLocked.getId().equals(user.getStatusId())) {
             loginErrorMessage = "用户已锁定";
             model.addAttribute("loginErrorMessage", loginErrorMessage);
             return "/inx/jsres/login";
