@@ -33,7 +33,7 @@
         var countdown = 60;
 
         function register() {
-            debugger;
+
             $("#verifyCodeErr").html("");
             $(".userPhoneErr").text("");
             $("#errorMsg").text("");
@@ -71,7 +71,7 @@
             jboxPost(url, {data:data},
                 function (resp) {
                     if (resp == "${GlobalConstant.VERIFT_CODE_RIGHT}") {
-                        debugger;
+
                         var userPhone = $("#userPhone").val();
                         var verifyCode = $("#verifyCode").val();
                         var url = "<s:url value='/inx/jsres/setPasswd'/>";
@@ -82,7 +82,7 @@
                         document.passwdForm.submit();
                         <%--window.location.href = "<s:url value='/inx/jsres/setPasswd'/>?userPhone=" + $("#userPhone").val();--%>
                     } else {
-                        debugger;
+
                         jboxTip(resp);
                     }
                 },
@@ -90,7 +90,7 @@
         }
 
         function checkPhone(obj) {
-            debugger;
+
             if (!$("#registerForm").validationEngine("validate")) {
                 return false;
             }

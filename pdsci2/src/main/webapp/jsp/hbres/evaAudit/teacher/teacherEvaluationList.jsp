@@ -81,7 +81,7 @@
         }
 
         function grade(recTypeName, recTypeId, recFlow, processFlow, schResultFlow, schDeptFlow, rotationFlow, doctorFlow) {
-            debugger;
+
             jboxOpen("<s:url value='/res/teacherEvaDoctor/grade'/>?roleFlag=${roleFlag}&processFlow=" + processFlow + "&resultFlow=" + schResultFlow + "&schDeptFlow=" + schDeptFlow + "&rotationFlow=" +
                 rotationFlow + "&recTypeId=" + recTypeId + "&recFlow=" + recFlow+ "&doctorFlow=" + doctorFlow,
                 '带教评估学员', 1200, 800);

@@ -33,7 +33,7 @@
         });
     }
     function save() {
-        debugger;
+
         if(false==$("#saveCfgForm").validationEngine("validate")){
             return ;
         }

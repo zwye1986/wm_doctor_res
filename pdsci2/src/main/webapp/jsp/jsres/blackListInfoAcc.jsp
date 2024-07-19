@@ -134,7 +134,7 @@
     }
     //添加黑名单
     function addBlackList(roleFlag) {
-        debugger;
+
         var url = "<s:url value='/jsres/blackList/addBlackList'/>?roleFlag="+roleFlag;
         var iframe ="<iframe name='jbox-message-iframe' id='jbox-message-iframe' width='500px' height='450px' marginheight='0' marginwidth='0' frameborder='0' scrolling='auto' src='"+url+"'></iframe>";
         jboxMessager(iframe,'黑名单添加',500,450,null,false);

@@ -12,7 +12,7 @@
 <script type="text/javascript">
 function checkFile(file){
 	var filePath = file.value;
-	debugger;
+
 	var types = "jpeg,jpg".split(",");
 	var regStr = "/";
 	for(var i = 0 ;i<types.length;i++){
@@ -26,7 +26,7 @@ function checkFile(file){
 	}
 	regStr = regStr+'/i';
 	regStr = eval(regStr);
-	debugger;
+
 	if($.trim(filePath)!="" && !regStr.test(filePath)){
 		file.value = "";
 		jboxTip("请上传jpg/jpeg格式的图片");

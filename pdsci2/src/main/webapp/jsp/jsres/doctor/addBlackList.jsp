@@ -33,7 +33,7 @@
 		}
 
 		function uploadFile() {
-			debugger;
+
 			jboxOpen("<s:url value='/jsres/blackList/uploadFile'/>?roleFlag=local", "附件上传",500, 170);
 		}
 		function delFile() {

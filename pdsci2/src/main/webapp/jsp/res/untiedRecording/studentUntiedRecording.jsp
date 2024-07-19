@@ -118,7 +118,7 @@
             if(false==$("#addForm").validationEngine("validate")){
                 return false;
             }
-            debugger;
+
             var description = $("#untiedDescription").val();
             var PicPathValue = $("#noticePicPathValue").val();
             if( description== "" && PicPathValue == ""){

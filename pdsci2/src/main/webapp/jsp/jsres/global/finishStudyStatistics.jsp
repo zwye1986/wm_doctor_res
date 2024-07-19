@@ -690,7 +690,7 @@
         var isJointOrgIn = $("#isJointOrgIn").val();
         var speId = $("#speId").val();
         var doctorType = $("#doctorType").val();
-        debugger;
+
         var scoreType = $("#scoreType").val();
         var sortBy = $("#sortBy").val();
         var url = "<s:url value='/jsres/graduation/finishStudyReport'/>?catSpeId=DoctorTrainingSpe";

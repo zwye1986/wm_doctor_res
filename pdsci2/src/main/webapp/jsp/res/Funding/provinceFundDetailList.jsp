@@ -51,7 +51,7 @@
                 sumMoney += Number(value) * 10000;
             });
             sumMoney = sumMoney.toFixed(0);
-            debugger;
+
             var money = (Number(${provinceFund.amountOfMoney}) * 10000).toFixed(0);
             if(Number(money) != Number(sumMoney)){
                 jboxTip("资金来源合计与上报金额 ${provinceFund.amountOfMoney}(万元)不一致！");

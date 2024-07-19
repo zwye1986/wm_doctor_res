@@ -71,7 +71,7 @@
         })
         function save() {
             jboxStartLoading();
-            debugger;
+
             if (false == $("#editForm").validationEngine("validate")) {
                 jboxEndLoading();
                 return false;

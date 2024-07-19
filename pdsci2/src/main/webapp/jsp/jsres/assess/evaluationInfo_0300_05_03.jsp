@@ -157,7 +157,7 @@
                 };
                 top.jboxPost(url, data, function (resp) {
                     if (resp == "${GlobalConstant.OPERATE_SUCCESSED}") {
-                        debugger;
+
                         var itemName2;
                         if (itemName.startsWith("d")) {
                             itemName2 = "k" + itemName.substring(1);

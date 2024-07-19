@@ -68,7 +68,7 @@
 	}
 
 	function changeTrainSpes(t){
-		debugger;
+
 		//清空原来专业！！！
 		var sessionNumber=$("#sessionNumber").val();
 		var trainCategoryid=$("#trainingTypeId").val();

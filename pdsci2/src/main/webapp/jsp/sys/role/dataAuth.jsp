@@ -39,7 +39,7 @@
         }
 
         $(document).ready(function () {
-            debugger;
+
             <c:forEach items="${sysDicts}" var="dict">
             <c:forEach items="${schools}" var="data">
             if ("${data.trim()}" == "${dict.dictName}") {

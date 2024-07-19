@@ -12,7 +12,7 @@
 <link rel="stylesheet" type="text/css" href="<s:url value='/css/skin/LightBlue/basic.css'/>?v=${applicationScope.sysCfgMap['sys_version']}"></link>
 <script type="text/javascript">
 	function modPasswd() {
-	    debugger;
+
 		if(false==$("#modPasswdForm").validationEngine("validate")){
 			return ;
 		}

@@ -404,7 +404,7 @@ function changeOrgFlow(obj){
 	 }
  }
  function changeDerateBox(obj){
-     debugger;
+
      console.log(obj);
      if(obj.checked){
          $("#3").attr("checked", false);
