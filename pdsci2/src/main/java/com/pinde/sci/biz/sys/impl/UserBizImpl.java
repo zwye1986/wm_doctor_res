@@ -79,12 +79,8 @@ public class UserBizImpl implements IUserBiz {
 	private IMsgBiz msgBiz;
 	@Autowired
 	private SysUserDeptMapper userDeptMapper;
-	//	@Autowired
-//	private INjmuEduUserBiz njmueduUserBiz;
 	@Autowired
 	private IDeptBiz deptBiz;
-//	@Autowired
-//	private IResEduStudentCourseBiz studentCourseBiz;
 	@Autowired
 	private IResDoctorBiz doctorBiz;
 	@Autowired
