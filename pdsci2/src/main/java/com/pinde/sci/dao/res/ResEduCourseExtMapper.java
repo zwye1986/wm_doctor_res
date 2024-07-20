@@ -157,14 +157,6 @@ public interface ResEduCourseExtMapper {
     List<EduCourse> searchCourseByCondition(Map<String, Object> paramMap);
 
     /**
-     * 教师授课信息
-     *
-     * @param paramMap
-     * @return
-     */
-//    List<EduCourseExt> searchTeacherChapterInfo(Map<String, Object> paramMap);
-
-    /**
      * 获取学生所有已获得学分的课程
      *
      * @param userFlow
@@ -179,14 +171,6 @@ public interface ResEduCourseExtMapper {
      * @return
      */
     List<EduCourse> selectAddCoursesPersonal(Map<String, Object> paramMap);
-
-    /**
-     * 查询学生可以发现的选修课
-     *
-     * @param paramMap
-     * @return
-     */
-//    List<EduCourseExt> selectFindCoursesPersonal(Map<String, Object> paramMap);
 
     List<EduStudentCourseForm> searchCourse(Map<String, Object> paramMap);
 

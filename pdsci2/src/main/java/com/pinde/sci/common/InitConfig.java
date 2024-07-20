@@ -17,7 +17,7 @@ import com.pinde.sci.common.util.RegionUtil;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
-import com.pinde.sci.webservice.InitWebService;
+//import com.pinde.sci.webservice.InitWebService;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -778,7 +778,7 @@ public class InitConfig implements ServletContextListener {
 		//加载江苏西医各个基地首页
 		_loadJsresLogin(context);
 		//加载webservice
-		SpringUtil.getBean(InitWebService.class).loadWebservice();
+//		SpringUtil.getBean(InitWebService.class).loadWebservice();
 
 		_loadSysFile();
 
