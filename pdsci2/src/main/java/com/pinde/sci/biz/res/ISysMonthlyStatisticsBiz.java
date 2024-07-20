@@ -4,7 +4,6 @@ import com.pinde.sci.model.mo.SysMonthlyAppStatistics;
 import com.pinde.sci.model.mo.SysMonthlyStatistics;
 
 import java.util.List;
-import java.util.Map;
 
 public interface ISysMonthlyStatisticsBiz {
     //根据条件查询报表数据

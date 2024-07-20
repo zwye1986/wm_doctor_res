@@ -4,7 +4,6 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
-import com.pinde.sci.biz.srm.IExpertBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
@@ -13,7 +12,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysRoleMapper;
 import com.pinde.sci.dao.base.SysUserRoleMapper;
 import com.pinde.sci.dao.jsres.SysRoleExtMapper;
-import com.pinde.sci.enums.srm.RegPageEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.SysUserRoleExample.Criteria;
 import org.apache.commons.collections.CollectionUtils;
@@ -36,8 +34,6 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 	private SysRoleMapper sysRoleMapper;
 	@Autowired
 	private SysUserRoleMapper sysUserRoleMapper;
-	@Autowired
-	private IExpertBiz expertBiz;
 	@Autowired
 	private SysRoleMapper roleMapper;
 	@Autowired
@@ -94,32 +90,7 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 		return roleExtMapper.getByUserFlow(paramMap);
 	}
 
-	/**
-	 * 处理科研专家角色
-	 * @param userFlow
-	 * @param roleFlows
-	 */
-	private void saveSrmExpertRole(String userFlow , String[] roleFlows){
-		boolean expertFlag = false;
-		if(roleFlows!=null && roleFlows.length>0){
-			for(String rolwf : roleFlows){
-				SysRole sysRole = InitConfig.getSysRole(rolwf);
-				if(sysRole!=null && RegPageEnum.ExpertRegPage.getId().equals(sysRole.getRegPageId())){
-					expertFlag = true;
-					break;
-				}
-			}
-		}
 
-		SrmExpert expert = new SrmExpert();
-		expert.setUserFlow(userFlow);
-		if(expertFlag){
-			expert.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		}else{
-			expert.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
-		}
-		this.expertBiz.addOrModifyExpertByUserFlow(expert);
-	}
 
 	@Override
 	public void saveAllot(String userFlow,String orgFlow,String workStationId, String[] roleFlows) {
@@ -167,12 +138,6 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 					}
 				}
 			}
-		}
-
-		//处理科研专家角色
-		String wsid = (String)GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
-		if(GlobalConstant.SRM_WS_ID.equals(wsid)){
-		    saveSrmExpertRole(userFlow , roleFlows);
 		}
 
 	}

@@ -3,8 +3,6 @@ package com.pinde.sci.biz.jszy;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
 import com.pinde.sci.model.mo.*;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;

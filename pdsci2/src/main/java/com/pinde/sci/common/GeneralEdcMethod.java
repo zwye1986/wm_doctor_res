@@ -9,8 +9,6 @@ import com.pinde.sci.enums.irb.IrbStageEnum;
 import com.pinde.sci.enums.irb.IrbTypeEnum;
 import com.pinde.sci.enums.pub.ProjOrgTypeEnum;
 import com.pinde.sci.enums.pub.UserSexEnum;
-import com.pinde.sci.model.edc.EdcDesignForm;
-import com.pinde.sci.model.edc.RandomFactor;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -45,14 +43,6 @@ public class GeneralEdcMethod {
         return "";
     }
 
-    public static boolean isSingleInput(EdcProjParam projParam) {
-        if (ProjInputTypeEnum.Single.getId().equals(projParam.getInputTypeId())) {        //单份录入
-            return true;
-        } else if (ProjInputTypeEnum.Double.getId().equals(projParam.getInputTypeId())) {     //双份录入
-            return false;
-        }
-        return false;
-    }
 
     public static String getVisitData(String attrCode, Map<String, EdcPatientVisitData> valueMap, String userFlow, EdcPatientVisit visit) {
         if (valueMap == null || !valueMap.containsKey(attrCode) || visit == null) {
@@ -96,26 +86,6 @@ public class GeneralEdcMethod {
         }
         return "";
     }
-
-    public static String getAttrValue(EdcDesignForm designParam, String attrCode, String attrValue) {
-        if (designParam == null || !designParam.getAttrCodeValueMap().containsKey(attrCode) || StringUtil.isBlank(attrValue)) {
-            return attrValue;
-        } else {
-            String result = "";
-            for (String code : StringUtil.split(attrValue, ",")) {
-                String value = StringUtil.toHtml(designParam.getAttrCodeValueMap().get(attrCode).get(code));
-                if (StringUtil.isNotBlank(result)) {
-                    result += ",";
-                }
-                result += value;
-            }
-            if (StringUtil.isBlank(result)) {
-                return attrValue;
-            }
-            return result;
-        }
-    }
-
     public static List<PubProjOrg> filterProjOrg(List<PubProjOrg> projOrgList) {
         List<PubProjOrg> result = new ArrayList<PubProjOrg>();
         if (projOrgList != null && projOrgList.size() > 0) {
@@ -162,31 +132,6 @@ public class GeneralEdcMethod {
         return "";
     }
 
-    public static List<RandomFactor> getRandomFactor(String factorParam) {
-        List<RandomFactor> factors = new ArrayList<RandomFactor>();
-        if (StringUtil.isNotBlank(factorParam)) {
-            try {
-                Document document = DocumentHelper.parseText(factorParam);
-                Element rootElement = document.getRootElement();
-                List<Element> layerElements = rootElement.selectNodes("layer");
-                for (Element layerEle : layerElements) {
-                    RandomFactor factor = new RandomFactor();
-                    factor.setIndex(layerEle.attributeValue("index"));
-                    factor.setWeight(layerEle.attributeValue("weight"));
-                    Map<String, String> itemMap = new TreeMap<String, String>();
-                    List<Element> itemElements = layerEle.selectNodes("./item");
-                    for (Element itemEle : itemElements) {
-                        itemMap.put(itemEle.attributeValue("code"), itemEle.getText());
-                    }
-                    factor.setItemMap(itemMap);
-                    factors.add(factor);
-                }
-            } catch (DocumentException e) {
-                e.printStackTrace();
-            }
-        }
-        return factors;
-    }
 
     public static String getProcessClass(String currIrbStageId, String irbStageId) {
         if (IrbStageEnum.Apply.getId().equals(irbStageId)) {
@@ -245,95 +190,5 @@ public class GeneralEdcMethod {
         return -1;
     }
 
-    public static String getCondition(String attrCode, String commAttrCode, String commNormalValueKey, String sexId) {
-        String condition = "";
-        if (StringUtil.isNotBlank(attrCode)) {
-            EdcDesignForm designForm = (EdcDesignForm) GlobalContext.getSession().getAttribute(GlobalConstant.PROJ_DESC_FORM);
-            EdcAttribute attr = designForm.getAttrMap().get(attrCode);
-            if (attr != null) {
-                String dataType = attr.getDataTypeId();
-                if (AttrDataTypeEnum.Integer.getId().equals(dataType)) {
-                    condition += "custom[integer],";
-                }
-                if (AttrDataTypeEnum.Float.getId().equals(dataType)) {
-                    condition += "custom[number],";
-                }
-                if (StringUtil.isNotBlank(attr.getDataLength())) {
-                    condition += "maxSize[" + attr.getDataLength() + "],";
-                }
-                List<EdcVisitAttrCode> attrCodeList = designForm.getVisitAttrCodeMap().get(commAttrCode + "_" + attrCode);
-                if (!GlobalConstant.DEFAULT_ATTR_UNIT_VAR_NAME.equals(attr.getAttrVarName()) &&
-                        attrCodeList != null && attrCodeList.size() > 0) {
-                    condition += "funcCall[checkCode],";
-                }
-                if (GlobalConstant.DEFAULT_ATTR_VALUE_VAR_NAME.equals(attr.getAttrVarName())) {
-                    Map<String, EdcNormalValue> normalValueMap = designForm.getNormalValueMap().get(commNormalValueKey);
-                    if (normalValueMap != null) {
-                        String min = "";
-                        String max = "";
-                        EdcNormalValue normalValue = normalValueMap.get(UserSexEnum.Unknown.getId());
-                        if (normalValue == null) {
-                            normalValue = normalValueMap.get(sexId);
-                        }
-                        if (normalValue != null) {
-                            min = normalValue.getLowerValue();
-                            max = normalValue.getUpperValue();
-                            condition += "min[" + min + "], max[" + max + "]";
-                        }
-                    }
-                }
-            }
-        }
-        return condition;
-    }
 
-    public static String getCodeTitle(String attrCode, String commAttrCode) {
-        StringBuilder codeTitle = new StringBuilder();
-        if (StringUtil.isNotBlank(attrCode)) {
-            EdcDesignForm designForm = (EdcDesignForm) GlobalContext.getSession().getAttribute(GlobalConstant.PROJ_DESC_FORM);
-            EdcAttribute attr = designForm.getAttrMap().get(attrCode);
-            if (attr != null) {
-                if (!GlobalConstant.DEFAULT_ATTR_UNIT_VAR_NAME.equals(attr.getAttrVarName())) {
-                    List<EdcVisitAttrCode> attrCodeList = designForm.getVisitAttrCodeMap().get(commAttrCode + "_" + attrCode);
-                    if (attrCodeList != null && attrCodeList.size() > 0) {
-                        for (EdcVisitAttrCode code : attrCodeList) {
-                            EdcAttrCode edcAttrCode = designForm.getCodeMap().get(code.getCodeFlow());
-                            if (edcAttrCode != null) {
-                                codeTitle.append(edcAttrCode.getCodeValue() + "&#12288;" + edcAttrCode.getCodeName() + "</br>");
-                            }
-                        }
-                        if (codeTitle.length() > 0) {
-                            codeTitle.deleteCharAt(codeTitle.length() - 1);    //去掉选项最后的</br>
-                        }
-                    }
-                }
-            }
-        }
-        return codeTitle.toString();
-    }
-
-    public static String getCodeValues(String attrCode, String commAttrCode) {
-        StringBuilder codeValues = new StringBuilder();
-        if (StringUtil.isNotBlank(attrCode)) {
-            EdcDesignForm designForm = (EdcDesignForm) GlobalContext.getSession().getAttribute(GlobalConstant.PROJ_DESC_FORM);
-            EdcAttribute attr = designForm.getAttrMap().get(attrCode);
-            if (attr != null) {
-                if (!GlobalConstant.DEFAULT_ATTR_UNIT_VAR_NAME.equals(attr.getAttrVarName())) {
-                    List<EdcVisitAttrCode> attrCodeList = designForm.getVisitAttrCodeMap().get(commAttrCode + "_" + attrCode);
-                    if (attrCodeList != null && attrCodeList.size() > 0) {
-                        for (EdcVisitAttrCode code : attrCodeList) {
-                            EdcAttrCode edcAttrCode = designForm.getCodeMap().get(code.getCodeFlow());
-                            if (edcAttrCode != null) {
-                                codeValues.append(edcAttrCode.getCodeValue() + ",");
-                            }
-                        }
-                        if (codeValues.length() > 0) {
-                            codeValues.deleteCharAt(codeValues.length() - 1);    //去掉选项最后的逗号
-                        }
-                    }
-                }
-            }
-        }
-        return codeValues.toString();
-    }
 }

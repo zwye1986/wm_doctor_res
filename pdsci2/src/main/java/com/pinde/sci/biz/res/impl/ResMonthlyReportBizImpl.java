@@ -2,7 +2,6 @@ package com.pinde.sci.biz.res.impl;
 
 
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.jsres.IJsResMonthlyReportBiz;
 import com.pinde.sci.biz.res.IResMonthlyReportBiz;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.*;

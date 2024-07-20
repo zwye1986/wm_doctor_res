@@ -23,7 +23,6 @@ import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
 import com.pinde.sci.dao.sys.SysDeptExtMapper;
 import com.pinde.sci.dao.sys.SysUserExtMapper;
-import com.pinde.sci.enums.jsres.TrainCategoryEnum;
 import com.pinde.sci.enums.res.RecDocCategoryEnum;
 import com.pinde.sci.enums.res.ResRecTypeEnum;
 import com.pinde.sci.enums.sch.SchArrangeStatusEnum;

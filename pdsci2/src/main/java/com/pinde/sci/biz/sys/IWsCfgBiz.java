@@ -1,11 +1,8 @@
 package com.pinde.sci.biz.sys;
 
-import com.pinde.sci.model.mo.SysCfg;
 import com.pinde.sci.model.mo.SysWsConfig;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 public interface IWsCfgBiz {
 

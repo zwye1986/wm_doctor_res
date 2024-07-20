@@ -1,8 +1,10 @@
 package com.pinde.sci.biz.sys;
 
 import com.pinde.sci.model.jsres.ActivityCfgExt;
-import com.pinde.sci.model.mo.*;
-import org.apache.ibatis.annotations.Param;
+import com.pinde.sci.model.mo.ActivityAuditCfg;
+import com.pinde.sci.model.mo.SysCfg;
+import com.pinde.sci.model.mo.SysRole;
+import com.pinde.sci.model.mo.SysRoleAuthGx;
 
 import java.util.List;
 import java.util.Map;

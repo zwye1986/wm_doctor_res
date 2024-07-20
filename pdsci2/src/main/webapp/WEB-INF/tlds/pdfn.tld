@@ -430,24 +430,8 @@
         <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
         <function-signature>java.util.List filterProjOrg(java.util.List)</function-signature>
     </function>
-    <function>
-        <description></description>
-        <name>getCondition</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.lang.String getCondition(java.lang.String,java.lang.String,java.lang.String,java.lang.String) </function-signature>
-    </function>
-    <function>
-        <description></description>
-        <name>getCodeTitle</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.lang.String getCodeTitle(java.lang.String,java.lang.String) </function-signature>
-    </function>
-    <function>
-        <description></description>
-        <name>getCodeValues</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.lang.String getCodeValues(java.lang.String,java.lang.String) </function-signature>
-    </function>
+
+
     <function>
         <description></description>
         <name>getProcessClass</name>

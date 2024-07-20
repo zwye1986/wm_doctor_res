@@ -1,8 +1,5 @@
 package com.pinde.sci.biz.jszy;
 
-import com.pinde.sci.model.mo.JsresRecruitDocInfo;
-import com.pinde.sci.model.mo.JsresRecruitInfo;
-
 import java.util.List;
 import java.util.Map;
 

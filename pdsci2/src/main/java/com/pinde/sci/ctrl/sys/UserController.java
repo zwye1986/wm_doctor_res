@@ -9,7 +9,6 @@ import com.pinde.sci.biz.pub.IMsgBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sys.*;
-import com.pinde.sci.biz.xjgl.IXjEduUserBiz;
 import com.pinde.sci.common.*;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.common.util.RSAUtils;
@@ -68,8 +67,6 @@ public class UserController extends GeneralController{
 	private IDeptBiz deptBiz;
 	@Autowired
 	private IMsgBiz msgBiz;
-	@Autowired
-	private IXjEduUserBiz eduUserBiz;
 	@Autowired
 	private IResDoctorBiz doctorBiz;
 	@Autowired
@@ -789,21 +786,6 @@ public class UserController extends GeneralController{
 			setSessionAttribute(GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(currUser));
 		}
 		return GlobalConstant.SAVE_SUCCESSED;
-	}
-
-	@RequestMapping(value="/delete",method=RequestMethod.GET)
-	public @ResponseBody String delete(SysUser user,String wsid){
-		if(StringUtil.isNotBlank(wsid))
-		{
-			if(wsid.equals(GlobalConstant.CMIS_WS_ID) || wsid.equals("gycmis")){
-				EduUser eduUser=eduUserBiz.findByFlow(user.getUserFlow());
-				if(eduUser!=null)
-					return "当前学生存在学籍信息，不允许删除！！";
-			}
-		}
-		user.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
-		userBiz.saveUser(user);
-		return GlobalConstant.DELETE_SUCCESSED;
 	}
 
 	@RequestMapping(value="/allotRole",method=RequestMethod.GET)

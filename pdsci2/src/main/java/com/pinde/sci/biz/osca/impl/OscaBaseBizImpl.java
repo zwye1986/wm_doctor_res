@@ -18,7 +18,6 @@ import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.osca.OscaCheckInfoExtMapper;
 import com.pinde.sci.dao.osca.OscaSkillsAssessmentExtMapper;
-import com.pinde.sci.dao.base.OscaSkillsAssessmentMapper;
 import com.pinde.sci.dao.sys.SysUserExtMapper;
 import com.pinde.sci.enums.osca.*;
 import com.pinde.sci.enums.pub.UserSexEnum;
