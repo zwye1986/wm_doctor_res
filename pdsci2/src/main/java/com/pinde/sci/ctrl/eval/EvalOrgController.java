@@ -10,7 +10,10 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ExpertOrg;
+import com.pinde.sci.model.mo.ExpertOrgSpe;
+import com.pinde.sci.model.mo.ResOrgSpe;
+import com.pinde.sci.model.mo.SysOrg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/eval/evalOrg")

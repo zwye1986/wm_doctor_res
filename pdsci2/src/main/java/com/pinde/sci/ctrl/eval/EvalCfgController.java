@@ -6,15 +6,11 @@ import com.pinde.sci.biz.eval.IEvalCfgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.eval.ActionTypeEnum;
-import com.pinde.sci.enums.pub.UserSexEnum;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.ExpertEvalCfg;
 import com.pinde.sci.model.mo.SysDict;
-import com.pinde.sci.model.mo.SysUser;
-import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.util.*;
 

@@ -1,11 +1,9 @@
 package com.pinde.sci.ctrl.jsres;
 
 
-
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.jsres.IJsResSupervisioBiz;
 import com.pinde.sci.biz.jsres.IJsResUserBlackBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
@@ -22,7 +20,9 @@ import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 

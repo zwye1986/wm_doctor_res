@@ -3,12 +3,10 @@ package com.pinde.sci.dao.base;
 import com.pinde.sci.model.jsres.ParticipateInfoExt;
 import com.pinde.sci.model.mo.ResLectureInfo;
 import com.pinde.sci.model.mo.ResLectureInfoExample;
+import org.apache.ibatis.annotations.Param;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
 
 public interface ResLectureInfoMapper {
     int countByExample(ResLectureInfoExample example);

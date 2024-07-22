@@ -1,7 +1,6 @@
 package com.pinde.sci.ctrl.osca;
 
 
-import com.alibaba.fastjson.JSON;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -19,22 +18,16 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.osca.OscaSkillsAssessmentExtMapper;
 import com.pinde.sci.enums.jsres.JsResAsseAuditListEnum;
-import com.pinde.sci.enums.osca.AssessmentProEnum;
 import com.pinde.sci.enums.osca.AuditStatusEnum;
 import com.pinde.sci.enums.osca.DoctorScoreEnum;
 import com.pinde.sci.enums.osca.SignStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaSkillsAssessmentExt;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.ibatis.annotations.Lang;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;

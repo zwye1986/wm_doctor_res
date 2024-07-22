@@ -3,7 +3,6 @@ package com.pinde.sci.biz.jsres.impl;
 import com.pinde.sci.biz.jsres.IJsresDoctorWorkTmpBiz;
 import com.pinde.sci.dao.jsres.JsresDoctorWorkTmp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 

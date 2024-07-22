@@ -1,11 +1,9 @@
 package com.pinde.sci.model.osca;
 
-import com.pinde.sci.model.mo.OscaTeaInfo;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.SysUser;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Administrator

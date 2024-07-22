@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.SysMonthlyBlacklistInfo;
 import com.pinde.sci.model.mo.SysMonthlyBlacklistInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysMonthlyBlacklistInfoMapper {
     int countByExample(SysMonthlyBlacklistInfoExample example);

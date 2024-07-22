@@ -6,7 +6,6 @@ import com.pinde.sci.biz.recruit.IRecruitExamRoomInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.RecruitExamRoomInfoMapper;
-import com.pinde.sci.model.mo.RecruitExamInfo;
 import com.pinde.sci.model.mo.RecruitExamRoomInfo;
 import com.pinde.sci.model.mo.RecruitExamRoomInfoExample;
 import org.springframework.beans.factory.annotation.Autowired;

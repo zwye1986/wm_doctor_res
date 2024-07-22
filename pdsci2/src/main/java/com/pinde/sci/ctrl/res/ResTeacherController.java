@@ -1,6 +1,5 @@
 package com.pinde.sci.ctrl.res;
 
-import com.alibaba.fastjson.JSON;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.pub.IFileBiz;
@@ -20,10 +19,8 @@ import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.form.sch.SchGradeFrom;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.*;
-import com.pinde.sci.model.res.ResDoctorExt;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -43,7 +40,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;

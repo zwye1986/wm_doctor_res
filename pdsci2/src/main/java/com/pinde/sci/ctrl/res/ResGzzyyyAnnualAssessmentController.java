@@ -1,7 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
 import com.pinde.core.page.PageHelper;
-import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IGzzyyyAssessmentBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;

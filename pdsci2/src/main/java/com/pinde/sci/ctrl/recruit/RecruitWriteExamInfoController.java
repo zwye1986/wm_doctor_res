@@ -1,6 +1,5 @@
 package com.pinde.sci.ctrl.recruit;
 
-import com.pinde.core.util.DateUtil;
 import com.pinde.sci.biz.recruit.IRecruitExamMainBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInterviewInfoBiz;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RequestMapping("/recruit/writeExamInfo")

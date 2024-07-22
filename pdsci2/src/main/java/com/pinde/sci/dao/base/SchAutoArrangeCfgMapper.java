@@ -2,10 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.SchAutoArrangeCfg;
 import com.pinde.sci.model.mo.SchAutoArrangeCfgExample;
-import java.util.List;
-
-import com.pinde.sci.model.mo.SchRotation;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SchAutoArrangeCfgMapper {
     int countByExample(SchAutoArrangeCfgExample example);

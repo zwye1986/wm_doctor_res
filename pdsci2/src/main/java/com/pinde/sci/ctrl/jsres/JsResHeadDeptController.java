@@ -31,8 +31,6 @@ import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.vo.ResDeptRelStdDeptVO;
-import org.apache.commons.collections4.CollectionUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;

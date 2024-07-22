@@ -5,7 +5,6 @@ import com.pinde.sci.model.jsres.ResBaseExt;
 import com.pinde.sci.model.mo.ResBase;
 import com.pinde.sci.model.mo.ResOrgSpe;
 import com.pinde.sci.model.mo.ResPassScoreCfg;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBException;

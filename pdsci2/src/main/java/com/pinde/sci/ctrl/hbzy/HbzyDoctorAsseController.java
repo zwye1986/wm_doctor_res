@@ -2,8 +2,10 @@ package com.pinde.sci.ctrl.hbzy;
 
 
 import com.pinde.core.util.DateUtil;
-import com.pinde.sci.biz.jsres.*;
 import com.pinde.sci.biz.hbzy.IJszyGraduationApplyBiz;
+import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
+import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
+import com.pinde.sci.biz.jsres.ISchRotationDeptAfterBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.*;
@@ -24,7 +26,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/hbzy/asse")

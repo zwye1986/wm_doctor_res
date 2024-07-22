@@ -28,7 +28,6 @@ import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.mo.*;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;

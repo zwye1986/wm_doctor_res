@@ -1,11 +1,6 @@
 package com.pinde.sci.common;
 
-import com.pinde.core.config.Menu;
-import com.pinde.core.config.MenuSet;
-import com.pinde.core.config.Module;
-import com.pinde.core.config.WorkStation;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.model.mo.SysRole;
 import com.pinde.sci.model.mo.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

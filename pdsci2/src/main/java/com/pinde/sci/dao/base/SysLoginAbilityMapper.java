@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.SysLoginAbility;
 import com.pinde.sci.model.mo.SysLoginAbilityExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysLoginAbilityMapper {
     int countByExample(SysLoginAbilityExample example);

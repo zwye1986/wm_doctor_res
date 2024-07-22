@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.JxTuitionManagement;
 import com.pinde.sci.model.mo.JxTuitionManagementExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface JxTuitionManagementMapper {
     int countByExample(JxTuitionManagementExample example);

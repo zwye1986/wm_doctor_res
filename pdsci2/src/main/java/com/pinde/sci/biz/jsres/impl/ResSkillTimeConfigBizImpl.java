@@ -9,17 +9,13 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.dao.base.JsresExamSignupMapper;
 import com.pinde.sci.dao.base.ResDoctorSkillMapper;
 import com.pinde.sci.dao.base.ResSkillTimeConfigMapper;
-import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -31,9 +27,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service

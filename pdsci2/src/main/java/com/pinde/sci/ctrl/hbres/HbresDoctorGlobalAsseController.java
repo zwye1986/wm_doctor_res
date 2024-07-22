@@ -9,7 +9,7 @@ import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
-import com.pinde.sci.biz.res.*;
+import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;

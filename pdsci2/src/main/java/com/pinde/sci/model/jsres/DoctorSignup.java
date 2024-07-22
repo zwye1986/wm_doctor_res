@@ -2,8 +2,6 @@ package com.pinde.sci.model.jsres;
 
 import com.pinde.core.model.MybatisObject;
 
-import java.math.BigDecimal;
-
 public class DoctorSignup extends MybatisObject {
     private String recordFlow;
 

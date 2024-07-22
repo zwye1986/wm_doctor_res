@@ -1,12 +1,7 @@
 package com.pinde.sci.biz.jsres;
 
 import com.pinde.sci.model.mo.JsresUserBalcklist;
-import com.pinde.sci.model.mo.JsresUserBalcklistExample;
-import com.pinde.sci.model.mo.ResRec;
-import com.pinde.sci.model.mo.SysDept;
 import org.dom4j.DocumentException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

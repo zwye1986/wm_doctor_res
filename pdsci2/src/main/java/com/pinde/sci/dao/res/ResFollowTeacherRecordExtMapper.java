@@ -1,9 +1,6 @@
 package com.pinde.sci.dao.res;
 
-import com.pinde.sci.model.jsres.JsResAttendanceExt;
-import com.pinde.sci.model.mo.ResStudentDiscipleTeacher;
 import com.pinde.sci.model.res.ResDoctorExt;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Map;

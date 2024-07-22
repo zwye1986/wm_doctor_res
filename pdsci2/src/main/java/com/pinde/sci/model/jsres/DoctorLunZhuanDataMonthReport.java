@@ -1,7 +1,5 @@
 package com.pinde.sci.model.jsres;
 
-import java.util.List;
-
 /**
  *  @author: yuh
  *  @Date: 2020/3/4 16:32

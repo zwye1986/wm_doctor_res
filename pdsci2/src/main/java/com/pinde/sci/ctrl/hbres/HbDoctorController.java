@@ -75,8 +75,8 @@ import java.awt.*;
 import java.io.File;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/hbres/singup")

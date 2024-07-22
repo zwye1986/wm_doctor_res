@@ -1,15 +1,9 @@
 package com.pinde.sci.common;
 
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URLDecoder;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by www.0001.Ga on 2017-05-09.

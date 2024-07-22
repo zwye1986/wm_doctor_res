@@ -1,23 +1,13 @@
 package com.pinde.sci.util.jsres;
 
-import com.alibaba.fastjson.JSON;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.common.InitConfig;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class JsresUtil {
 

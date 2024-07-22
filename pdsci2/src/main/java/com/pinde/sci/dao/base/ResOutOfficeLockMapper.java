@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResOutOfficeLock;
 import com.pinde.sci.model.mo.ResOutOfficeLockExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResOutOfficeLockMapper {
     int countByExample(ResOutOfficeLockExample example);

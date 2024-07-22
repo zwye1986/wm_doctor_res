@@ -13,7 +13,10 @@ import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.enums.pub.UserStatusEnum;
 import com.pinde.sci.enums.sys.OperTypeEnum;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.SysLog;
+import com.pinde.sci.model.mo.SysLoginAbility;
+import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.sci.model.mo.SysUser;
 import com.wf.captcha.ArithmeticCaptcha;
 import com.wf.captcha.utils.CaptchaUtil;
 import nl.captcha.Captcha;
@@ -39,8 +42,8 @@ import java.awt.*;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 @Controller
 public class LoginController extends GeneralController {

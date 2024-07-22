@@ -1,9 +1,6 @@
 package com.pinde.sci.form.sch;
 
-import com.pinde.sci.model.mo.SchRotationDept;
-
 import java.io.Serializable;
-import java.util.List;
 
 public class SelectDept implements Serializable{
 

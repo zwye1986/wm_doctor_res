@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.SysMonthlyNotUseappInfo;
 import com.pinde.sci.model.mo.SysMonthlyNotUseappInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysMonthlyNotUseappInfoMapper {
     int countByExample(SysMonthlyNotUseappInfoExample example);

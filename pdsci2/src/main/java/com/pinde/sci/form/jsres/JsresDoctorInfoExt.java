@@ -1,7 +1,6 @@
 package com.pinde.sci.form.jsres;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class JsresDoctorInfoExt implements Serializable {
 

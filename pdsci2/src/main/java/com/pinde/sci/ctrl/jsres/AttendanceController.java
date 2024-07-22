@@ -19,7 +19,6 @@ import com.pinde.sci.dao.base.ResDoctorKqMapper;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
 import com.pinde.sci.enums.res.ResDoctorKqStatusEnum;
 import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.res.ResOrgAddressForm;
 import com.pinde.sci.form.res.TimeSetFrom;
 import com.pinde.sci.model.mo.*;

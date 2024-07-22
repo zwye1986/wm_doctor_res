@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.LcjnCourseTime;
 import com.pinde.sci.model.mo.LcjnCourseTimeExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface LcjnCourseTimeMapper {
     int countByExample(LcjnCourseTimeExample example);

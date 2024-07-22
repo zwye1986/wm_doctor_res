@@ -2,7 +2,6 @@ package com.pinde.sci.ctrl.jsres;
 
 
 import com.pinde.core.page.PageHelper;
-import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResActivityBiz;
@@ -15,19 +14,17 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.sch.ActivityTypeEnum;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.SysDept;
+import com.pinde.sci.model.mo.SysUser;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.IOException;
 import java.util.*;
 
 /**

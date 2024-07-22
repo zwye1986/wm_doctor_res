@@ -10,7 +10,9 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.SchDept;
+import com.pinde.sci.model.mo.SchDeptRel;
+import com.pinde.sci.model.mo.SchExternalDept;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/sch/external")

@@ -1,6 +1,8 @@
 package com.pinde.sci.model.jszy;
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResDoctorRecruit;
+import com.pinde.sci.model.mo.SysUser;
 
 /**
  * Created by www.0001.Ga on 2017-05-24.

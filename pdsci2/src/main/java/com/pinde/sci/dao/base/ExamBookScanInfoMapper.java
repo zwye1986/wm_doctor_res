@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ExamBookScanInfo;
 import com.pinde.sci.model.mo.ExamBookScanInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ExamBookScanInfoMapper {
     int countByExample(ExamBookScanInfoExample example);

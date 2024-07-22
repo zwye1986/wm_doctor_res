@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.PubImportRecord;
 import com.pinde.sci.model.mo.PubImportRecordExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface PubImportRecordMapper {
     int countByExample(PubImportRecordExample example);

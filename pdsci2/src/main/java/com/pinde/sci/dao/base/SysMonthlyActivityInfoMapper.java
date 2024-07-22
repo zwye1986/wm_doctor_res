@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.SysMonthlyActivityInfo;
 import com.pinde.sci.model.mo.SysMonthlyActivityInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysMonthlyActivityInfoMapper {
     int countByExample(SysMonthlyActivityInfoExample example);

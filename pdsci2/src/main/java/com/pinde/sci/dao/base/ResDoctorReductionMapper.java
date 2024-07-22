@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResDoctorReduction;
 import com.pinde.sci.model.mo.ResDoctorReductionExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResDoctorReductionMapper {
     int countByExample(ResDoctorReductionExample example);

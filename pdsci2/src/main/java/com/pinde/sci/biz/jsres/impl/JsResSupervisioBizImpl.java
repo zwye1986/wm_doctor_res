@@ -4,8 +4,6 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.PojoUtils;
 import com.pinde.sci.biz.jsres.IJsResSupervisioBiz;
-import com.pinde.sci.biz.pub.IFileBiz;
-import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
@@ -13,9 +11,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.JsresSupervisioSubjectExtMapper;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
-import org.apache.tools.ant.types.resources.comparators.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 @Service

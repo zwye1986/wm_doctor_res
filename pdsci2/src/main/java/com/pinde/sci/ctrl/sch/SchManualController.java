@@ -9,7 +9,7 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.SysCfg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

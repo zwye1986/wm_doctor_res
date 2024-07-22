@@ -1,19 +1,16 @@
 package com.pinde.sci.ctrl.sys;
 
 
-import com.pinde.core.pdf.utils.StringUtils;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.portal.IPortalColumnManageBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IRoleBiz;
-import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.sys.RoleLevelEnum;
 import com.pinde.sci.model.mo.*;
-import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 @Controller  

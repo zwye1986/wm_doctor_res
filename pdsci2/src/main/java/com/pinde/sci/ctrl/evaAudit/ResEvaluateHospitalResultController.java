@@ -10,19 +10,19 @@ import com.pinde.sci.biz.res.IResRecBiz;
 import com.pinde.sci.biz.res.IResTrainingSpeDeptBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
-import com.pinde.sci.biz.sys.IRoleBiz;
-import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.pub.NurseStatusEnum;
 import com.pinde.sci.enums.res.ResAssessTypeEnum;
 import com.pinde.sci.enums.res.ResRecTypeEnum;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.hbres.teacherRec;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResAssessCfg;
+import com.pinde.sci.model.mo.SysDept;
+import com.pinde.sci.model.mo.SysUser;
+import com.pinde.sci.model.mo.SysUserDept;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,9 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/res/evaluateHospitalResult")

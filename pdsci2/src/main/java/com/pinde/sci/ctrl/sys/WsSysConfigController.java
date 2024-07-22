@@ -4,7 +4,10 @@ import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.IWsCfgBiz;
-import com.pinde.sci.common.*;
+import com.pinde.sci.common.GeneralController;
+import com.pinde.sci.common.GlobalConstant;
+import com.pinde.sci.common.GlobalContext;
+import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysWsConfigMapper;
 import com.pinde.sci.model.mo.SysWsConfig;
 import com.pinde.sci.model.mo.SysWsConfigExample;
@@ -13,10 +16,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.List;
 
 @Controller
 @RequestMapping("/sys/wsCfg")

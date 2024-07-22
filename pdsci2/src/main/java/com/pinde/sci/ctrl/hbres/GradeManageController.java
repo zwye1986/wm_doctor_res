@@ -18,7 +18,6 @@ import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.hbres.ResDoctorTrainingSpeForm;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.*;
-import com.pinde.sci.model.res.ResDoctorExt;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

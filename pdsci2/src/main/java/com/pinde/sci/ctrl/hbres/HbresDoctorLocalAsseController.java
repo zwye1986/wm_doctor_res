@@ -3,13 +3,11 @@ package com.pinde.sci.ctrl.hbres;
 
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.hbres.IHbResGraduationApplyBiz;
 import com.pinde.sci.biz.jsres.IJsResBaseBiz;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
-import com.pinde.sci.biz.jsres.IJsResGraduationApplyBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sys.IDictBiz;
@@ -19,15 +17,13 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.enums.jsres.*;
-import com.pinde.sci.enums.res.AfterRecTypeEnum;
-import com.pinde.sci.enums.res.ResScoreTypeEnum;
+import com.pinde.sci.enums.jsres.JsResAuditStatusEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
-import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
-import org.dom4j.*;
+import com.pinde.sci.model.mo.JsresGraduationAttachment;
+import com.pinde.sci.model.mo.ResJointOrg;
+import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.sci.model.mo.SysUser;
+import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,14 +31,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.net.URLEncoder;
-import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/hbres/asseLocal")

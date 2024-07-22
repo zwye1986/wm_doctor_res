@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ScresGraduationApply;
 import com.pinde.sci.model.mo.ScresGraduationApplyExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ScresGraduationApplyMapper {
     int countByExample(ScresGraduationApplyExample example);

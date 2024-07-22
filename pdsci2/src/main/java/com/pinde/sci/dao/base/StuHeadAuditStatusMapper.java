@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.StuHeadAuditStatus;
 import com.pinde.sci.model.mo.StuHeadAuditStatusExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface StuHeadAuditStatusMapper {
     int countByExample(StuHeadAuditStatusExample example);

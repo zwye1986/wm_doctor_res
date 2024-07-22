@@ -2,7 +2,6 @@ package com.pinde.sci.ctrl.jsres;
 
 
 import com.pinde.core.page.PageHelper;
-import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
@@ -18,7 +17,6 @@ import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysCfgMapper;
 import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
@@ -27,7 +25,6 @@ import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
-import com.pinde.sci.model.jsres.JsRecruitDocInfoExt;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -39,13 +36,11 @@ import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;

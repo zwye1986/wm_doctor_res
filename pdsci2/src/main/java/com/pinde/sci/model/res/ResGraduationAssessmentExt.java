@@ -1,6 +1,5 @@
 package com.pinde.sci.model.res;
 
-import com.pinde.sci.model.mo.ResGraduationAssessment;
 import com.pinde.sci.model.mo.ResGraduationAssessmentWithBLOBs;
 
 public class ResGraduationAssessmentExt extends ResGraduationAssessmentWithBLOBs {
