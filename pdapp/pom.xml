@@ -1136,12 +1136,6 @@
             <scope>system</scope>
             <systemPath>${lib.dir}/zxing-javase-3.1.0.jar</systemPath>
         </dependency>
-
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>3.7.0</version>
-        </dependency>
     </dependencies>
 
     <build>
