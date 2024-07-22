@@ -193,7 +193,7 @@ public class JswjwWxController extends GeneralController {
                 return ResultDataThrow("获取accessToken失败");
             }
             access_token = accessToken.getString("access_token");
-            jedis.setex("access_token", 60 * 60L, access_token);
+            jedis.setex("access_token", 60 * 60, access_token);
         }
         // 释放对象池
         jedis.close();
@@ -314,7 +314,7 @@ public class JswjwWxController extends GeneralController {
                 return ResultDataThrow("获取accessToken失败");
             }
             access_token = accessToken.getString("access_token");
-            jedis.setex("access_token", 60 * 60L, access_token);
+            jedis.setex("access_token", 60 * 60, access_token);
         }
         // 释放对象池
         jedis.close();
