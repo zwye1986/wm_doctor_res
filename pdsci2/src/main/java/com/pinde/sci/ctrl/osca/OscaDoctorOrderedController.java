@@ -24,7 +24,7 @@ import com.pinde.sci.enums.osca.DoctorScoreEnum;
 import com.pinde.sci.enums.osca.SignStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaSkillsAssessmentExt;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -27,7 +27,7 @@ import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.*;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.util.jsres.ResultUtil;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

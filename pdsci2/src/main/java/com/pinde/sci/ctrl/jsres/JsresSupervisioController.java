@@ -28,7 +28,7 @@ import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.sys.SysOrgExt;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;

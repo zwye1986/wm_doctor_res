@@ -18,7 +18,7 @@ import com.pinde.sci.enums.pub.UserSexEnum;
 import com.pinde.sci.enums.res.DiscipleStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.springframework.beans.factory.annotation.Autowired;

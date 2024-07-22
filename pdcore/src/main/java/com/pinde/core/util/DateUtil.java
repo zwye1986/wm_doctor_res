@@ -1,8 +1,8 @@
 package com.pinde.core.util;
 
-import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.commons.lang.time.DateUtils;
-import org.apache.commons.lang.time.FastDateFormat;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -112,8 +112,6 @@ public class DateUtil {
 //	}
 	/**
 	 *取得当前系统时间：具体格式为yyyyMMddHHmmss
-	 * @param pattern
-	 * @return
 	 */
 	public static String getCurrDateTime2() {
 		return DateFormatUtils.format(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss");
@@ -121,8 +119,6 @@ public class DateUtil {
 
 	/**
 	 *取得当前系统时间：具体格式为yyyyMMddHHmmss
-	 * @param pattern
-	 * @return
 	 */
 	public static String getCurrDateTime() {
 		return DateFormatUtils.format(System.currentTimeMillis(),"yyyyMMddHHmmss");
@@ -130,8 +126,6 @@ public class DateUtil {
 	
 	/**
 	 *取得当前系统时间：具体格式为yyyyMMddHHmmssSSS
-	 * @param pattern
-	 * @return
 	 */
 	public static String getCurrentTime() {
 		return DateFormatUtils.format(System.currentTimeMillis(),"yyyyMMddHHmmssSSS");
@@ -139,8 +133,6 @@ public class DateUtil {
 	
 	/**
 	 *取得当前系统时间：具体格式为yyyyMMddHHmmss
-	 * @param pattern
-	 * @return
 	 */
 	public static String getCurrDateTime(String ftm) {
 		return DateFormatUtils.format(System.currentTimeMillis(),ftm);
@@ -148,8 +140,6 @@ public class DateUtil {
 
 	/**
 	 *取得当前日期 ：具体格式为yyyy-MM-dd
-	 * @param pattern
-	 * @return
 	 */
 	public static String getCurrDate() {
 		return DateFormatUtils.format(System.currentTimeMillis(),"yyyy-MM-dd");
@@ -247,8 +237,6 @@ public class DateUtil {
 	}
 	/**
 	 *取得当前日期 ：具体格式为yyyyMMdd
-	 * @param pattern
-	 * @return
 	 */
 	public static String getCurrDate2() {
 		return DateFormatUtils.format(System.currentTimeMillis(),"yyyyMMdd");
@@ -256,8 +244,6 @@ public class DateUtil {
 	
 	/**
 	 *取得当前时间：具体格式为HHmmss
-	 * @param pattern
-	 * @return
 	 */
 	public static String getCurrTime() {
 		return DateFormatUtils.format(System.currentTimeMillis(),"HHmmss");
@@ -584,7 +570,7 @@ public class DateUtil {
 		}
 	}
 	/**
-	 * @param endDate  String 格式yyyy-mm
+	 * @param startYear  String 格式yyyy-mm
 	 * @param step 天数 只能为整数
 	 * @return String yyyy-MM
 	 * */

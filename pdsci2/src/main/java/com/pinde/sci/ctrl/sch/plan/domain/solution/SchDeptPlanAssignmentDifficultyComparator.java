@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.sch.plan.domain.solution;
 
 import com.pinde.sci.ctrl.sch.plan.domain.SchDeptPlanAssignment;
-import org.apache.commons.lang.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.CompareToBuilder;
 
 import java.util.Comparator;
 

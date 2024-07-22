@@ -140,8 +140,27 @@
         </dependency>
         <!-- 添加jstl标签库依赖模块 -->
         <dependency>
-            <groupId>javax.servlet</groupId>
+            <groupId>javax.servlet.jsp.jstl</groupId>
             <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.jtds</groupId>
+            <artifactId>jtds</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.15.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
         </dependency>
 
         <dependency>
@@ -160,11 +179,11 @@
     <!-- 多项目（子父项目）中方便依赖管理，保证版本一致，父项目中使用，声明依赖，但不引用，子项目中可以不加版本，使用父项目中配置 -->
     <dependencyManagement>
         <dependencies>
-            <dependency>
+            <!--<dependency>
                 <groupId>org.apache.ant</groupId>
                 <artifactId>ant</artifactId>
                 <version>1.8.4</version>
-            </dependency>
+            </dependency>-->
 
             <dependency>
                 <groupId>org.springframework.session</groupId>
@@ -184,8 +203,8 @@
     <!-- 构建设置 -->
     <!-- 包括project build、profile build -->
     <build>
-        <resources>
-            <!-- 打jar包时放开 -->
+        <!--<resources>
+            &lt;!&ndash; 打jar包时放开 &ndash;&gt;
             <resource>
                 <directory>${basedir}/pdlib</directory>
                 <targetPath>BOOT-INF/lib</targetPath>
@@ -193,7 +212,7 @@
                     <include>*.jar</include>
                 </includes>
             </resource>
-        </resources>
+        </resources>-->
         <!-- 过滤资源信息 -->
         <filters>
             <!--<filter>myproject.properties</filter>-->
