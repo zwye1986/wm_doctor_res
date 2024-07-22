@@ -377,13 +377,6 @@
         <function-signature>boolean canShowByVersion(java.lang.String) </function-signature>
     </function>
 
-	<!-- for srm user-->
-    <function>
-        <description></description>
-        <name>showIcn</name>
-        <function-class>com.pinde.sci.common.GeneralSrmMethod</function-class>
-        <function-signature>java.util.Map showIcn(java.util.List) </function-signature>
-    </function>
 
     <!-- for res use-->
     <function>
@@ -394,22 +387,6 @@
     </function>
 
 
-    <function>
-        <description></description>
-        <name>getSinglePic</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.lang.String getSinglePic(java.lang.String  ) </function-signature>
-    </function>
-
-
-
-	<!-- for erp use-->
-    <function>
-        <description></description>
-        <name>getVisibleByWorkStatusId</name>
-        <function-class>com.pinde.sci.common.GeneralErpMethod</function-class>
-        <function-signature>boolean getVisibleByWorkStatusId(java.lang.String, java.lang.String)</function-signature>
-    </function>
 
 	<!-- for exam use-->
 	<function>

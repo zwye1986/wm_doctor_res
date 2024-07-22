@@ -20,19 +20,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/inx/nzyres")
 public class InxNzyResController extends GeneralController{
-
-	@Autowired
-	private IInxBiz inxBiz;
-	@Autowired
-	private IUserRoleBiz userRoleBiz;
-	@Autowired
-	private IRoleBiz roleBiz;
-	@Autowired
-	private IUserBiz userBiz;
 	@Autowired
 	private INoticeBiz noticeBiz;
-	@Autowired
-	private SysLogMapper logMapper;
 	
 	/**
 	 * 显示登陆界面

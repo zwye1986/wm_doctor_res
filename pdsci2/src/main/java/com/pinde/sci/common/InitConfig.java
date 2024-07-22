@@ -43,20 +43,6 @@ public class InitConfig implements ServletContextListener {
 	//public static ProjPage projApplyPage;
 	//科研
 	public static Map<String, Map<String, String>> configMap;
-	public static Map<String, PageGroup> projInfoPageMap;//项目申请
-	public static Map<String, PageGroup> projApplyPageMap;//申报书
-	public static Map<String, PageGroup> projSetUpPageMap;//申报书
-	public static Map<String, PageGroup> projContractPageMap;//合同
-	public static Map<String, PageGroup> projSchdulePageMap;//季报
-	public static Map<String, PageGroup> projCompletePageMap;//项目验收
-	public static Map<String, PageGroup> projDelayPageMap;//延期申请
-	public static Map<String, PageGroup> projChangePageMap;//变更申请
-	public static Map<String, PageGroup> projTerminatePageMap;//终止申请
-	public static Map<String, PageGroup> projAidPageMap;//项目信息补填
-	//伦理
-	public static IrbFormRequestUtil formRequestUtil;
-	public static IrbFormRequestUtil gcpFormRequestUtil;
-	public static Map<String, IrbInfo> irbInfoMap;
 	//住院医师
 	public static IrbFormRequestUtil resFormRequestUtil;
 	//系统
@@ -66,7 +52,7 @@ public class InitConfig implements ServletContextListener {
 	private static Map<String,MenuSet> menuSetMap;
 	private static Map<String,Map<String,String>> sysDictNameMap;
 	private static Map<String, SysRole> sysRoleMap;
-	private static Map<String,List<SysRole>> sysRoleWsMap ;
+	private static Map<String,List<SysRole>> sysRoleWsMap = new HashMap<>();
 	private static Map<String,SysOrg> sysOrgMap ;
 	private static Map<String,SysOrg> sysOrgNameMap ;
 	private static List<SysOrg> sysOrgList ;

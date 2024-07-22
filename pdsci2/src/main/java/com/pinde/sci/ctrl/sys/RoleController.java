@@ -110,15 +110,6 @@ public class RoleController extends GeneralController{
 			sysRole.setParentRoleName(parentRoleName);
 		}
 		sysRole.setRoleLevelName(RoleLevelEnum.getNameById(sysRole.getRoleLevelId()));
-//		if(StringUtil.isNotBlank(sysRole.getRegPageId())){
-//			if(GlobalConstant.EDU_WS_ID.equals(getSessionAttribute(GlobalConstant.CURRENT_WS_ID))){
-//				sysRole.setRegPageName(UserPageEnum.getNameById(sysRole.getRegPageId()));
-//			}else if (GlobalConstant.NJMUEDU_WS_ID.equals(getSessionAttribute(GlobalConstant.CURRENT_WS_ID))){
-//				sysRole.setRegPageName(NjmuUserPageEnum.getNameById(sysRole.getRegPageId()));
-//			}else {
-//				sysRole.setRegPageName(RegPageEnum.getNameById(sysRole.getRegPageId()));
-//			}
-//		}
 		if(GlobalConstant.FLAG_N.equals(sysRole.getAllowRegFlag())){
 			sysRole.setRegPageId("");
 			sysRole.setRegPageName("");

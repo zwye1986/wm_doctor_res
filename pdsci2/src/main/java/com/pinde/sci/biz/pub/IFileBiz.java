@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.pub;
 
 import com.pinde.sci.model.mo.PubFile;
-import com.pinde.sci.model.mo.SrmAchFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,8 +20,6 @@ public interface IFileBiz {
 	public void down(PubFile doc,final HttpServletResponse response) throws Exception;
 
 	public void downPubFile(PubFile doc,final HttpServletResponse response) throws Exception;
-	
-	public void down(SrmAchFile doc,final HttpServletResponse response) throws Exception;
 
 	public void addFile(PubFile file);
 	
