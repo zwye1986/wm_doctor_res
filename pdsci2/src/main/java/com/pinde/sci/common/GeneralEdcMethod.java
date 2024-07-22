@@ -24,58 +24,6 @@ import java.util.TreeMap;
  * Created by Administrator on 2016/3/10 0010.
  */
 public class GeneralEdcMethod {
-    public static String getInputStatusPic(String inputType, EdcPatientVisit visit) {
-        if (visit == null) {
-            return "";
-        }
-        String skinPath = InitConfig.getSysCfg("sys_skin");
-        if (ProjInputTypeEnum.Single.getId().equals(inputType)) {
-            if (EdcInputStatusEnum.Save.getId().equals(visit.getInputOperStatusId())) {
-                return "/css/skin/" + skinPath + "/images/shu.gif";
-            } else if (EdcInputStatusEnum.Checked.getId().equals(visit.getInputOperStatusId())) {
-                return "/css/skin/" + skinPath + "/images/gou2.gif";
-            }
-        } else {
-            if (EdcInputStatusEnum.Checked.getId().equals(visit.getInputOperStatusId())) {
-                return "/css/skin/" + skinPath + "/images/gou2.gif";
-            }
-        }
-        return "";
-    }
-
-
-    public static String getVisitData(String attrCode, Map<String, EdcPatientVisitData> valueMap, String userFlow, EdcPatientVisit visit) {
-        if (valueMap == null || !valueMap.containsKey(attrCode) || visit == null) {
-            return "";
-        }
-        if (EdcInputStatusEnum.Checked.getId().equals(visit.getInputOperStatusId())) {
-            return valueMap.get(attrCode).getAttrValue();
-        }
-        if (userFlow.equals(visit.getInputOper1Flow())) {
-            return valueMap.get(attrCode).getAttrValue1();
-        } else if (userFlow.equals(visit.getInputOper2Flow())) {     //双份录入
-            return valueMap.get(attrCode).getAttrValue2();
-        }
-        return "";
-    }
-
-    public static boolean isRandom(EdcProjParam projParam) {
-        if (projParam == null) {
-            return false;
-        }
-        //单份录入
-        return GlobalConstant.FLAG_Y.equals(projParam.getIsRandom());
-    }
-
-    public static boolean isBlind(EdcProjParam projParam) {
-        if (projParam == null) {
-            return false;
-        }
-        if (projParam.getBlindTypeId() == null) {
-            return false;
-        }
-        return projParam.getBlindTypeId().equals(EdcBlindTypeEnum.Blind.getId());
-    }
 
     public static String getSinglePic(String status) {
         String skinPath = InitConfig.getSysCfg("sys_skin");

@@ -31,82 +31,17 @@ import java.util.Map;
 @Controller
 @RequestMapping("/res/docTwo")
 public class ResDocTwoController extends GeneralController {
-	public static final String RotationCfg = "rotationCfg";
 	public static final String SchRotation = "schRotation";
 	public static final String SchRotationDept = "schRotationDept";
 	public static final String SchRotationDeptReq = "schRotationDeptReq";
-	public static final String SchRotationDeptGroup = "schRotationDeptGroup";
-	public static final String Dict = "dict";
-	private static Logger logger = LoggerFactory.getLogger(ResDocTwoController.class);
-
-	@Autowired
-	private IResGradeBiz resGradeBiz;
-	@Autowired
-	private ISchRotationBiz schRotationtBiz;
-	@Autowired
-	private ISchDeptRelBiz schDeptRelBiz;
-	@Autowired
-	private IDeptBiz deptBiz;
 	@Autowired
 	private IResDoctorBiz resDoctorBiz;
 	@Autowired
-	private IUserBiz userBiz;
-	@Autowired
-	private IResEnterOpenCfgBiz enterOpenCfgBiz;
-	@Autowired
-	private IResPowerCfgBiz resPowerCfgBiz;
-	@Autowired
-	private ISchArrangeResultBiz schArrangeResultBiz;
-	@Autowired
 	private IResDoctorProcessBiz resDoctorProcessBiz;
-	@Autowired
-	private IResRecBiz resRecBiz;
-	@Autowired
-	private IResDoctorBiz doctorBiz;
-	@Autowired
-	private ISchArrangePeriodRelBiz schArrangePeriodRelBiz;
-	@Autowired
-	private ISchRotationDeptBiz rotationDeptBiz;
-	@Autowired
-	private ISchDeptBiz schDeptBiz;
-	@Autowired
-	private INoticeBiz noticeBiz;
-	@Autowired
-	private IOrgBiz orgBiz;
-	@Autowired
-	private ISchRotationGroupBiz schRotationtGroupBiz;
-	@Autowired
-	private ISchDoctorDeptBiz schDoctorDeptBiz;
-	@Autowired
-	private ISchRotationDeptBiz schRotationDeptBiz;
 	@Autowired
 	private ISchDoctorAbsenceBiz schDoctorAbsenceBiz;
 	@Autowired
-	private IUserRoleBiz userRoleBiz;
-	@Autowired
-	private ISchDeptExternalRelBiz deptExtRelBiz;
-	@Autowired
 	private IFileBiz fileBiz;
-	@Autowired
-	private ITestResultBiz resultBiz;
-	@Autowired
-	private ISchArrangeBiz arrangeBiz;
-	@Autowired
-	private IDictBiz dictBiz;
-	@Autowired
-	private IResEduCourseBiz eduCourseBiz;
-	@Autowired
-	private IResLectureEvaDetailBiz resLectureEvaDetailBiz;
-    @Autowired
-    private IDiscipleBiz discipleBiz;
-	@Autowired
-	private IPubUserResumeBiz userResumeBiz;
-	@Autowired
-	private IResDoctorDelayTeturnBiz resDoctorDelayTeturnBiz;
-	@Autowired
-	private IResDoctorRecruitBiz doctorRecruitBiz;
-	@Autowired
-	private IResJointOrgBiz jointOrgBiz;
 	/**
 	 * 请假记录
 	 * @param model

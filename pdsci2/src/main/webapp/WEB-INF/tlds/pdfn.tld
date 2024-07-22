@@ -393,57 +393,15 @@
         <function-signature>com.pinde.sci.enums.res.RegistryTypeEnum getRegistryTypeEnumById(java.lang.String) </function-signature>
     </function>
 
-    <!-- for edc use-->
-    <function>
-        <description></description>
-        <name>getInputStatusPic</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.lang.String getInputStatusPic(java.lang.String  ,  com.pinde.sci.model.mo.EdcPatientVisit ) </function-signature>
-    </function>
+
     <function>
         <description></description>
         <name>getSinglePic</name>
         <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
         <function-signature>java.lang.String getSinglePic(java.lang.String  ) </function-signature>
     </function>
-    <function>
-        <description></description>
-        <name>getVisitData</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.lang.String getVisitData(java.lang.String,java.util.Map,java.lang.String,  com.pinde.sci.model.mo.EdcPatientVisit ) </function-signature>
-    </function>
-    <function>
-        <description></description>
-        <name>getAttrValue</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.lang.String getAttrValue(com.pinde.sci.model.edc.EdcDesignForm ,java.lang.String,java.lang.String ) </function-signature>
-    </function>
-    <function>
-        <description></description>
-        <name>getIrbTypeNameById</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.lang.String getIrbTypeNameById(java.lang.String)</function-signature>
-    </function>
-    <function>
-        <description></description>
-        <name>filterProjOrg</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.util.List filterProjOrg(java.util.List)</function-signature>
-    </function>
 
 
-    <function>
-        <description></description>
-        <name>getProcessClass</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.lang.String getProcessClass(java.lang.String,java.lang.String) </function-signature>
-    </function>
-	<function>
-		<description></description>
-		<name>getIrbStageOrdinal</name>
-		<function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-		<function-signature>java.lang.Integer getIrbStageOrdinal(java.lang.String) </function-signature>
-	</function>
 
 	<!-- for erp use-->
     <function>
