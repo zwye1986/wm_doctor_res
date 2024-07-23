@@ -7585,7 +7585,7 @@ public class JswjwAppController {
         log.setRecordStatus("Y");
         logMapper.insert(log);
 
-        request.getSession().setAttribute(GlobalConstant.CURR_USER, userinfo);
+//        request.getSession().setAttribute(GlobalConstant.CURR_USER, userinfo);
 
         return "res/jswjw/login";
     }
