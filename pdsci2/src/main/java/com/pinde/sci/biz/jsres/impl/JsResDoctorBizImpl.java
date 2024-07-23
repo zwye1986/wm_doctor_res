@@ -3914,10 +3914,10 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 				String hospitalAttrName="";
 				String workOrg = (String)doctorInfoExts.get(i).getWorkOrgName();
 				if (ResDocTypeEnum.Company.getId().equals(doctorInfoExts.get(i).getDoctorTypeId())) {
-					ResBase resBase = resBaseMapper.selectByPrimaryKey((String)doctorInfoExts.get(i).getInfoOrgFlow());
-					if (resBase != null && jointFlag.equals("是")) {
-						property = resBase.getBaseGradeName();
-					}
+//					ResBase resBase = resBaseMapper.selectByPrimaryKey((String)doctorInfoExts.get(i).getInfoOrgFlow());
+//					if (resBase != null && jointFlag.equals("是")) {
+//						property = resBase.getBaseGradeName();
+//					}
 					if (StringUtil.isBlank(userResumeExt.getMedicalHeaithOrgId()) || !"1".equals(userResumeExt.getMedicalHeaithOrgId())) {
 						userResumeExt.setHospitalAttrName("");
 						userResumeExt.setHospitalCategoryName("");
