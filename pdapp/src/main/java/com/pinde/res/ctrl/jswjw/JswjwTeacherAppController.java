@@ -21,7 +21,7 @@ import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.sci.dao.base.JsresPowerCfgMapper;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.util.PasswordHelper;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

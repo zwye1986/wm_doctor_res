@@ -13,7 +13,7 @@ import com.pinde.res.enums.hbres.ResRecTypeEnum;
 import com.pinde.res.enums.stdp.RecStatusEnum;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;

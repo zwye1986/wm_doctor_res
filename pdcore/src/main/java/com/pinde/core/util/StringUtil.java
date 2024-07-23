@@ -1,10 +1,10 @@
 package com.pinde.core.util;
 
 import com.alibaba.fastjson.JSON;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -98,7 +98,7 @@ public class StringUtil {
 	}
 	//only for web jsp use
 	public static String toHtml(String str){
-		return defaultString(StringEscapeUtils.escapeHtml(str));
+		return defaultString(StringEscapeUtils.escapeHtml3(str));
 	}
 	
 	public static String transferredXml(String strSource, String strFrom, String strTo) {

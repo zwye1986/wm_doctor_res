@@ -33,7 +33,7 @@ import com.pinde.sci.util.PicZoom;
 import com.pinde.sci.util.WeixinQiYeUtil;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -5264,25 +5264,6 @@ public class JswjwBizImpl implements IJswjwBiz {
                         titleList.add(fromTitle);
                     }
                 }
-//				if(titleList.size()>0)
-//				{
-//
-//					Collections.sort(titleList,new Comparator<FromTitle>(){
-//						@Override
-//						public int compare(FromTitle f1,FromTitle f2) {
-//							String order1=f1.getOrderNum();
-//							String order2=f2.getOrderNum();
-//							if(order1==null){
-//								return -1;
-//							}else if(order2==null){
-//								return 1;
-//							}else if(order1!=null && order2!=null){
-//								return order1.compareTo(order2);
-//							}
-//							return 0;
-//						}
-//					});
-//				}
                 return titleList;
             } catch (DocumentException e) {
                 //

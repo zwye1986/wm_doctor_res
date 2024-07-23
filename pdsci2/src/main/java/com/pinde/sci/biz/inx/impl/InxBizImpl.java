@@ -21,7 +21,7 @@ import com.pinde.sci.enums.osca.AuditStatusEnum;
 import com.pinde.sci.enums.pub.UserStatusEnum;
 import com.pinde.sci.enums.sys.RoleLevelEnum;
 import com.pinde.sci.model.mo.*;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

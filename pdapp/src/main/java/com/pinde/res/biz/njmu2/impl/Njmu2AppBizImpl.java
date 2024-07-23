@@ -17,7 +17,7 @@ import com.pinde.res.enums.njmu2.RegistryTypeEnum;
 import com.pinde.res.dao.jswjw.ext.SchArrangeResultExtMapper;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;

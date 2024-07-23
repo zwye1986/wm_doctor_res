@@ -1,9 +1,9 @@
 package com.pinde.sci.common.util;
 
 import com.pinde.core.util.StringUtil;
-import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.commons.lang.time.DateUtils;
-import org.apache.commons.lang.time.FastDateFormat;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.math.BigDecimal;
 import java.text.ParseException;

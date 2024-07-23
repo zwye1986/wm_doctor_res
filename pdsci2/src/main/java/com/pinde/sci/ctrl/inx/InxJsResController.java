@@ -28,7 +28,7 @@ import com.pinde.sci.model.jsres.ResultVo;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.util.jsres.ResultUtil;
 import com.wf.captcha.utils.CaptchaUtil;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.util.encoders.Hex;
 import org.springframework.beans.factory.annotation.Autowired;

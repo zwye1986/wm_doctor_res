@@ -43,7 +43,7 @@ import com.pinde.sci.model.sys.SysOrgExt;
 import com.pinde.sci.model.vo.ResDeptRelStdDeptVO;
 import com.pinde.sci.model.vo.ResOrgSepVO;
 import com.pinde.sci.model.vo.SysDeptVO;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;

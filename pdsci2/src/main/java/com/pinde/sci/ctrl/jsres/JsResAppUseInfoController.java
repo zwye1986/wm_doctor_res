@@ -23,7 +23,7 @@ import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.ResJointOrg;
 import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.mo.SysUser;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

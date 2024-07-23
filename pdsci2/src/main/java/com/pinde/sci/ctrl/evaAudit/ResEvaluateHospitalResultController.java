@@ -23,7 +23,7 @@ import com.pinde.sci.model.mo.ResAssessCfg;
 import com.pinde.sci.model.mo.SysDept;
 import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.mo.SysUserDept;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

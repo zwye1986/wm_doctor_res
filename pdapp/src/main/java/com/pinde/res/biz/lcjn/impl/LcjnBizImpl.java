@@ -2,50 +2,22 @@ package com.pinde.res.biz.lcjn.impl;
 
 
 import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.res.biz.jswjw.IJswjwBiz;
 import com.pinde.res.biz.lcjn.ILcjnBiz;
-import com.pinde.res.ctrl.jswjw.ImageFileForm;
 import com.pinde.res.dao.jswjw.ext.*;
 import com.pinde.res.dao.lcjn.ext.LcjnCourseInfoExtMapper;
-import com.pinde.res.dao.stdp.ext.StdpResDoctorExtMapper;
-import com.pinde.res.enums.jswjw.BaseStatusEnum;
-import com.pinde.res.enums.jswjw.TrainYearEnum;
-import com.pinde.res.enums.stdp.RecStatusEnum;
-import com.pinde.res.enums.stdp.RegistryTypeEnum;
-import com.pinde.res.enums.stdp.ResRecTypeEnum;
-import com.pinde.res.model.lcjn.mo.JsonData;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.mo.SysUserExample.Criteria;
 import com.pinde.sci.util.PasswordHelper;
-import com.pinde.sci.util.PicZoom;
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
-import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.misc.BASE64Decoder;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 @Service
 @Transactional(rollbackFor=Exception.class)
@@ -488,112 +460,6 @@ public class LcjnBizImpl implements ILcjnBiz{
 			d.setModifyUserFlow(userFlow);
 			d.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
 			return teaEvaluateDetailMapper.insertSelective(d);
-		}
-	}
-
-	@Override
-	public int saveEvalData(JsonData data, String userFlow, String courseFlow) {
-		LcjnCourseInfo info=getLcjnCourseInfoByFlow(courseFlow);
-		SysUser user=readUserByFlow(userFlow);
-		//课程评价
-		LcjnCourseEvaluate evaluate=getCourseEvaluate(userFlow,courseFlow);
-		if(evaluate==null)
-			evaluate=new LcjnCourseEvaluate();
-		String evaluateFlow=evaluate.getEvaluateFlow();
-		if(StringUtil.isBlank(evaluateFlow))
-		{
-			evaluateFlow=PkUtil.getUUID();
-		}
-		evaluate.setEvaluateFlow(evaluateFlow);
-		evaluate.setDoctorFlow(userFlow);
-		evaluate.setDoctorName(user.getUserName());
-		evaluate.setCourseFlow(courseFlow);
-		evaluate.setCourseName(info.getCourseName());
-		evaluate.setEvalContent(data.getCourse().getEvalContent());
-		addCourseEval(evaluate);
-		//课程评价详情
-		List<JsonData.CourseBean.CourseEvaListBean> courseEvaList=data.getCourse().getCourseEvaList();
-		if(courseEvaList!=null)
-		{
-			for(JsonData.CourseBean.CourseEvaListBean b:courseEvaList)
-			{
-				LcjnCourseEvaluateDetail d=getCourseEvaluateDetailByFlow(evaluateFlow,b.getDictId());
-				if(d==null)
-					d=new LcjnCourseEvaluateDetail();
-				d.setEvaluateFlow(evaluateFlow);
-				d.setDictId(b.getDictId());
-				d.setDictName(b.getDictName());
-				d.setEvalScore(b.getEvalScore());
-				saveCourseEvalDetail(d,userFlow);
-			}
-		}
-		//教师评价
-		List<JsonData.TeasBean> teasBeanList=data.getTeas();
-		if(teasBeanList!=null)
-		{
-			for(JsonData.TeasBean tea:teasBeanList)
-			{
-				//教师评价
-				String teaFlow=tea.getUserFlow();
-				LcjnTeaEvaluate teaEvaluate=getTeaEvalByFlow(userFlow,teaFlow,courseFlow);
-				if(teaEvaluate==null)
-					teaEvaluate=new LcjnTeaEvaluate();
-
-				String teaEvaluateFlow=teaEvaluate.getTeaEvaluateFlow();
-				if(StringUtil.isBlank(teaEvaluateFlow))
-				{
-					teaEvaluateFlow=PkUtil.getUUID();
-				}
-				teaEvaluate.setTeaEvaluateFlow(teaEvaluateFlow);
-				teaEvaluate.setDoctorFlow(userFlow);
-				teaEvaluate.setDoctorName(user.getUserName());
-				teaEvaluate.setUserFlow(teaFlow);
-				teaEvaluate.setUserName(tea.getUserName());
-				teaEvaluate.setEvalContent(tea.getEvalContent());
-				teaEvaluate.setCourseFlow(courseFlow);
-				teaEvaluate.setCourseName(info.getCourseName());
-				addTeacherEvl(teaEvaluate);
-				//评价详情
-				List<JsonData.TeasBean.TeacherEvaListBean> teacherEvaListBeanList=tea.getTeacherEvaList();
-				if(teacherEvaListBeanList!=null)
-				{
-					for(JsonData.TeasBean.TeacherEvaListBean b:teacherEvaListBeanList)
-					{
-						LcjnTeaEvaluateDetail d=getTeaEvaluateDetailByFlow(teaEvaluateFlow,b.getDictId());
-						if(d==null)
-							d=new LcjnTeaEvaluateDetail();
-						d.setTeaEvaluateFlow(teaEvaluateFlow);
-						d.setDictId(b.getDictId());
-						d.setDictName(b.getDictName());
-						d.setEvalScore(b.getEvalScore());
-						saveTeaEvalDetail(d,userFlow);
-					}
-				}
-			}
-		}
-		return 1;
-	}
-
-	@Override
-	public int checkThisTimeIsInTrain(String nowTime, String courseFlow) {
-		return courseInfoExtMapper.checkThisTimeIsInTrain(nowTime,courseFlow);
-	}
-
-	@Override
-	public int saveSigin(LcjnDoctorSigin d) {
-		String userFlow=d.getDoctorFlow();
-		if(StringUtil.isNotBlank(d.getRecordFlow())){
-			d.setModifyTime(DateUtil.getCurrDateTime());
-			d.setModifyUserFlow(userFlow);
-			return siginMapper.updateByPrimaryKeySelective(d);
-		}else {
-			d.setRecordFlow(PkUtil.getUUID());
-			d.setCreateTime(DateUtil.getCurrDateTime());
-			d.setCreateUserFlow(userFlow);
-			d.setModifyTime(DateUtil.getCurrDateTime());
-			d.setModifyUserFlow(userFlow);
-			d.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-			return siginMapper.insertSelective(d);
 		}
 	}
 

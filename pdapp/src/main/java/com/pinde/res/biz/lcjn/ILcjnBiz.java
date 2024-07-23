@@ -1,10 +1,7 @@
 package com.pinde.res.biz.lcjn;
 
-import com.pinde.res.ctrl.jswjw.ImageFileForm;
-import com.pinde.res.model.lcjn.mo.JsonData;
 import com.pinde.sci.model.mo.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -85,11 +82,5 @@ public interface ILcjnBiz {
 	LcjnTeaEvaluateDetail getTeaEvaluateDetailByFlow(String teaEvaluateFlow, String dictId);
 
 	int saveTeaEvalDetail(LcjnTeaEvaluateDetail d, String userFlow);
-
-	int saveEvalData(JsonData data, String userFlow, String courseFlow);
-
-	int checkThisTimeIsInTrain(String nowTime,String courseFlow);
-
-	int saveSigin(LcjnDoctorSigin sigin);
 }
   

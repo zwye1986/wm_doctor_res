@@ -22,7 +22,7 @@ import com.pinde.res.enums.ezhupei.SigninTypeEnum;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.SysUserExample.Criteria;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

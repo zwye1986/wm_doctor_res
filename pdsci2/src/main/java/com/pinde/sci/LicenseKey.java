@@ -3,7 +3,7 @@ package com.pinde.sci;
 import com.pinde.core.util.DateUtil;
 import com.pinde.lic.hardware.MechineInfo;
 import com.verhas.licensor.License;
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.io.InputStream;
 
