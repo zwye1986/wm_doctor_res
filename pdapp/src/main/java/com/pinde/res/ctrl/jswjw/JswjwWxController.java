@@ -2402,69 +2402,70 @@ public class JswjwWxController extends GeneralController {
             }
             resultMap.put("tipContent", "学员需每" + msgMonth + "个月至少填写一次培训数据，否则将无法继续使用APP。");
         }
-        //消息提醒
-        int noticesCount = jswjwStudentBiz.countResErrorNotices(userFlow, NoticeStatusEnum.NoRead.getId());
-        resultMap.put("noticeCount", String.valueOf(noticesCount));
         ResDoctor doctor = (ResDoctor) doctorInfoMap.get("doctor");
-        String trainingYears = doctor.getTrainingYears();
-        //提醒所有学员（除2020级学员，2021级减免学员，2022级减免2年学员）需要在 2023 年7月1日前设置完最少一年的轮转记录,否则将无法填写轮转数据,添加轮转记录
-        boolean flag=true;
-        int years=3;
-        //查看学员的减免年份
-        if (null == trainingYears || StringUtil.isEmpty(trainingYears)){
-            years=3;
-        }else if (trainingYears.equals("ThreeYear")){
-            years=3;
-        } else if (trainingYears.equals("TwoYear")){
-            years=2;
-        } else if (trainingYears.equals("OneYear")){
-            years=1;
-        }
-        if (Integer.parseInt(doctor.getSessionNumber())<=2020){
-            flag=false;
-        }else if (doctor.getSessionNumber().equals("2020")){
-            flag=false;
-        }else if (doctor.getSessionNumber().equals("2021") && years >=1){
-            flag=false;
-        }else if (doctor.getSessionNumber().equals("2022") && years==2){
-            flag=false;
-        }else if (Integer.parseInt(doctor.getSessionNumber())<=2021 && doctor.getTrainingTypeId().equals("AssiGeneral")){
-            flag=false; //21年和21年之前的助理全科都不提示
-        }
-        String nowDate = DateUtil.getCurrDate();
-        if (nowDate.compareTo("2023-07-01")<0 && flag==true){
-            //根据基地参数配置（轮转计划排版设置）提示不同信息
-            //设置为不开启时，学员APP端不弹出任何提示
-            List<String> codes = new ArrayList<>();
-            String code1 = "jsres_"+doctor.getOrgFlow()+"_org_process_scheduling_N";
-            String code2 = "jsres_"+doctor.getOrgFlow()+"_org_process_scheduling_org";
-            String code3 = "jsres_"+doctor.getOrgFlow()+"_org_process_scheduling_user";
-            codes.add(code1);
-            codes.add(code2);
-            codes.add(code3);
-            List<JsresPowerCfg> cfgs = powerCfgExtMapper.searchPowerCfg(codes);
-            // 组装成map
-            Map<String, String> codeMap = cfgs.stream().collect(Collectors.toMap(JsresPowerCfg::getCfgCode, JsresPowerCfg::getCfgValue));
-            if (codeMap != null) {
-                boolean code2Flag = "Y".equals(codeMap.get(code2));
-                boolean code3Flag = "Y".equals(codeMap.get(code3));
-                //设置为基地配置时
-                if (code2Flag) {
-                    resultMap.put("tipFlag", GlobalConstant.FLAG_Y);
-                    resultMap.put("tipContent", "您好，请联系基地管理员提前导入最少一年的科室轮转计划，如未导入轮转记录，后续将无法填写轮转数据；");
-                }
-                //设置为学员自行配置时
-                if (code3Flag) {
-                    resultMap.put("tipFlag", GlobalConstant.FLAG_Y);
-                    resultMap.put("tipContent", "您好！请预先填写完未来最少一年的科室轮转记录，如未添加轮转记录，将无法填写轮转数据");
-                }
-                //设置为基地配置和学员自行配置都勾选时
-                if (code2Flag && code3Flag) {
-                    resultMap.put("tipFlag", GlobalConstant.FLAG_Y);
-                    resultMap.put("tipContent", "您好！请预先填写完未来最少一年的科室轮转记录，如未添加轮转记录，将无法填写轮转数据");
-                }
-            }
-        }
+//        //消息提醒
+//        int noticesCount = jswjwStudentBiz.countResErrorNotices(userFlow, NoticeStatusEnum.NoRead.getId());
+//        resultMap.put("noticeCount", String.valueOf(noticesCount));
+//
+//        String trainingYears = doctor.getTrainingYears();
+//        //提醒所有学员（除2020级学员，2021级减免学员，2022级减免2年学员）需要在 2023 年7月1日前设置完最少一年的轮转记录,否则将无法填写轮转数据,添加轮转记录
+//        boolean flag=true;
+//        int years=3;
+//        //查看学员的减免年份
+//        if (null == trainingYears || StringUtil.isEmpty(trainingYears)){
+//            years=3;
+//        }else if (trainingYears.equals("ThreeYear")){
+//            years=3;
+//        } else if (trainingYears.equals("TwoYear")){
+//            years=2;
+//        } else if (trainingYears.equals("OneYear")){
+//            years=1;
+//        }
+//        if (Integer.parseInt(doctor.getSessionNumber())<=2020){
+//            flag=false;
+//        }else if (doctor.getSessionNumber().equals("2020")){
+//            flag=false;
+//        }else if (doctor.getSessionNumber().equals("2021") && years >=1){
+//            flag=false;
+//        }else if (doctor.getSessionNumber().equals("2022") && years==2){
+//            flag=false;
+//        }else if (Integer.parseInt(doctor.getSessionNumber())<=2021 && doctor.getTrainingTypeId().equals("AssiGeneral")){
+//            flag=false; //21年和21年之前的助理全科都不提示
+//        }
+//        String nowDate = DateUtil.getCurrDate();
+//        if (nowDate.compareTo("2023-07-01")<0 && flag==true){
+//            //根据基地参数配置（轮转计划排版设置）提示不同信息
+//            //设置为不开启时，学员APP端不弹出任何提示
+//            List<String> codes = new ArrayList<>();
+//            String code1 = "jsres_"+doctor.getOrgFlow()+"_org_process_scheduling_N";
+//            String code2 = "jsres_"+doctor.getOrgFlow()+"_org_process_scheduling_org";
+//            String code3 = "jsres_"+doctor.getOrgFlow()+"_org_process_scheduling_user";
+//            codes.add(code1);
+//            codes.add(code2);
+//            codes.add(code3);
+//            List<JsresPowerCfg> cfgs = powerCfgExtMapper.searchPowerCfg(codes);
+//            // 组装成map
+//            Map<String, String> codeMap = cfgs.stream().collect(Collectors.toMap(JsresPowerCfg::getCfgCode, JsresPowerCfg::getCfgValue));
+//            if (codeMap != null) {
+//                boolean code2Flag = "Y".equals(codeMap.get(code2));
+//                boolean code3Flag = "Y".equals(codeMap.get(code3));
+//                //设置为基地配置时
+//                if (code2Flag) {
+//                    resultMap.put("tipFlag", GlobalConstant.FLAG_Y);
+//                    resultMap.put("tipContent", "您好，请联系基地管理员提前导入最少一年的科室轮转计划，如未导入轮转记录，后续将无法填写轮转数据；");
+//                }
+//                //设置为学员自行配置时
+//                if (code3Flag) {
+//                    resultMap.put("tipFlag", GlobalConstant.FLAG_Y);
+//                    resultMap.put("tipContent", "您好！请预先填写完未来最少一年的科室轮转记录，如未添加轮转记录，将无法填写轮转数据");
+//                }
+//                //设置为基地配置和学员自行配置都勾选时
+//                if (code2Flag && code3Flag) {
+//                    resultMap.put("tipFlag", GlobalConstant.FLAG_Y);
+//                    resultMap.put("tipContent", "您好！请预先填写完未来最少一年的科室轮转记录，如未添加轮转记录，将无法填写轮转数据");
+//                }
+//            }
+//        }
         String orgFlow = "";
 
         if (StringUtil.isNotBlank(doctor.getSecondOrgFlow())) {
