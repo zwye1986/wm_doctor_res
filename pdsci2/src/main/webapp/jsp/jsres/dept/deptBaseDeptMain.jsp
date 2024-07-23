@@ -171,19 +171,19 @@
             <input id="orgName" type="hidden" name="orgName" value="${sessionScope.currUser.orgName}"/>
             <table class="searchTable">
                 <tr>
-                    <td class="td_left">
+                    <td class="td_left" style="width: 6em">
                         科室代码：
                     </td>
                     <td>
                         <input type="text" name="deptCode" id="deptCode" value="" class="input"/>
                     </td>
-                    <td class="td_left">
+                    <td class="td_left" style="width: 6em">
                         科室名称：
                     </td>
                     <td>
                         <input type="text" name="deptNameFuzzy" id="deptNameFuzzy" value="" class="input"/>
                     </td>
-                    <td class="td_left">关联标准科室：</td>
+                    <td class="td_left" style="width: 8em">关联标准科室：</td>
                     <td>
                         <select name="relStdDeptFlag" class="select" style="width: 127px;" id="relStdDeptFlag">
                             <option value="">全部</option>
@@ -192,9 +192,9 @@
                         </select>
                     </td>
                     <td colspan="3">
-                        <input type="button" class="btn_green" onclick="toPage(1)" value="搜索">
-                        <input type="button" class="btn_green" onclick="searchReset()" value="重置">
-                        <input type="button" class="btn_green" onclick="deptAdd()" value="新增">
+                        <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
+                        <input type="button" class="btn_grey" onclick="searchReset()" value="重&#12288;置">
+                        <input type="button" class="btn_green" onclick="deptAdd()" value="新&#12288;增">
                     </td>
                 </tr>
             </table>

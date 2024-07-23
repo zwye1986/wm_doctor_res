@@ -64,7 +64,7 @@
             title='是否确认？';
              url = "<s:url value='/jsres/phyAss/operateUser?recordFlowsStr='/>" + recordFlowsStr+"&type="+type;
         }
-        debugger;
+
         var userStatus = $("#userStatus1").val();
         var planFlow = $("#planFlow1").val();
         var type = $("#type1").val();

@@ -128,9 +128,14 @@ public class JswjwTeacherAppController{
 			
 			//验证用户是否锁定,锁定用户不能登录
 			String userStatus = userinfo.getStatusId();
-			if(UserStatusEnum.Locked.getId().equals(userStatus)){
+			if(UserStatusEnum.SysLocked.getId().equals(userStatus)){
 				model.addAttribute("resultId", "3010105");
 				model.addAttribute("resultType", "该用户已被锁定");
+				return "res/jswjw/teacher/login";
+			}
+			if(UserStatusEnum.Locked.getId().equals(userStatus)){
+				model.addAttribute("resultId", "3010105");
+				model.addAttribute("resultType", "该用户已被停用");
 				return "res/jswjw/teacher/login";
 			}
 			

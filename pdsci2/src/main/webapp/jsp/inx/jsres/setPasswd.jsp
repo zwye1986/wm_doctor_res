@@ -22,7 +22,7 @@
         };
 
         function registerNew() {
-            debugger;
+
             if (false == $("#modPasswdForm").validationEngine("validate")) {
                 return;
             }

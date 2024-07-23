@@ -684,7 +684,7 @@ public class ResExamCfgController extends GeneralController {
         }
         if(file.getSize() > 0){
             try{
-                ExcelUtile result = (ExcelUtile) doctorBiz.importSkillScoreFromExcel(file,scoreYear);
+                ExcelUtile result = (ExcelUtile) doctorBiz.importSkillScoreFromExcel(file, scoreYear, scoreYear);
                 if(null!=result)
                 {
                     String code= (String) result.get("code");

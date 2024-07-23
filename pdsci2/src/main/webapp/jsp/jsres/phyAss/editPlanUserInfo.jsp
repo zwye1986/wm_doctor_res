@@ -74,7 +74,7 @@
         $("#sexName").val(sexName);
         var url = "<s:url value='/jsres/phyAss/savePlanUserInfo '/>";
         jboxSubmit($('#editForm'),url,function(resp) {
-            debugger;
+
             if(resp == '${GlobalConstant.SAVE_SUCCESSED}'){
                 window.parent.toPage(1);
                 jboxTip("${GlobalConstant.SAVE_SUCCESSED}");

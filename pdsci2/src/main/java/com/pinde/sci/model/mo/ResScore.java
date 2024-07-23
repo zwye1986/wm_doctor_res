@@ -64,11 +64,13 @@ public class ResScore extends MybatisObject {
 
     private String testId;
 
-    private String sessionNumber;
-
     private String isAffirmId;
 
     private String isAffirmName;
+
+    private String sessionNumber;
+
+    private String realScore;
 
     private String extScore;
 
@@ -312,14 +314,6 @@ public class ResScore extends MybatisObject {
         this.testId = testId;
     }
 
-    public String getSessionNumber() {
-        return sessionNumber;
-    }
-
-    public void setSessionNumber(String sessionNumber) {
-        this.sessionNumber = sessionNumber;
-    }
-
     public String getIsAffirmId() {
         return isAffirmId;
     }
@@ -334,6 +328,22 @@ public class ResScore extends MybatisObject {
 
     public void setIsAffirmName(String isAffirmName) {
         this.isAffirmName = isAffirmName;
+    }
+
+    public String getSessionNumber() {
+        return sessionNumber;
+    }
+
+    public void setSessionNumber(String sessionNumber) {
+        this.sessionNumber = sessionNumber;
+    }
+
+    public String getRealScore() {
+        return realScore;
+    }
+
+    public void setRealScore(String realScore) {
+        this.realScore = realScore;
     }
 
     public String getExtScore() {

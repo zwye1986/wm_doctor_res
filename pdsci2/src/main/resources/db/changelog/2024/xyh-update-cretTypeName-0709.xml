@@ -1,0 +1,21 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="xyh-id_card-240709" author="xyh">
+        <sql>
+            update sys_user set cret_type_name = '居民身份证' where cret_type_name = '身份证';
+        </sql>
+    </changeSet>
+
+    <changeSet id="xyh-passport-240709" author="xyh">
+        <sql>
+            update sys_user set cret_type_name = '台湾居民来往大陆通行证' where cret_type_name = '台湾居民来往内地通行证';
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
+

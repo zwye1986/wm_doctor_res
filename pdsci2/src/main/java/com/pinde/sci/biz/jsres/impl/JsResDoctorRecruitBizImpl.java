@@ -58,10 +58,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -1249,7 +1246,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			criteria.andConfirmFlagEqualTo(recruit.getConfirmFlag());
 		}
 		if (StringUtil.isNotBlank(recruit.getAuditStatusId())) {
-			criteria.andAuditStatusIdEqualTo(recruit.getAuditStatusId());
+			criteria.andAuditStatusIdIn(Arrays.asList(recruit.getAuditStatusId().split(",")));
 		}
 		if (StringUtil.isNotBlank(recruit.getSessionNumber())) {
 			criteria.andSessionNumberEqualTo(recruit.getSessionNumber());
@@ -2632,10 +2629,12 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				if (CertificateTypeEnum.Shenfenzheng.getId().equals(sysUser.getCretTypeId())) {
 					CretType = "居民身份证";
 					area="中国大陆";
-				}else if (CertificateTypeEnum.Junguanzheng.getId().equals(sysUser.getCretTypeId())) {
-					CretType = "军队证件";
-					area="中国大陆";
-				}else if (CertificateTypeEnum.Passport.getId().equals(sysUser.getCretTypeId())) {
+				}
+//				else if (CertificateTypeEnum.Junguanzheng.getId().equals(sysUser.getCretTypeId())) {
+//					CretType = "军队证件";
+//					area="中国大陆";
+//				}
+				else if (CertificateTypeEnum.Passport.getId().equals(sysUser.getCretTypeId())) {
 					CretType = "护照";
 					area="";
 				}else if (CertificateTypeEnum.HongKongMacao.getId().equals(cretTypeId)) {

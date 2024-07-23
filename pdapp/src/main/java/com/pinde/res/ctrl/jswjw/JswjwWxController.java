@@ -193,7 +193,7 @@ public class JswjwWxController extends GeneralController {
                 return ResultDataThrow("获取accessToken失败");
             }
             access_token = accessToken.getString("access_token");
-            jedis.setex("access_token", 60 * 60L, access_token);
+            jedis.setex("access_token", 60 * 60, access_token);
         }
         // 释放对象池
         jedis.close();
@@ -314,7 +314,7 @@ public class JswjwWxController extends GeneralController {
                 return ResultDataThrow("获取accessToken失败");
             }
             access_token = accessToken.getString("access_token");
-            jedis.setex("access_token", 60 * 60L, access_token);
+            jedis.setex("access_token", 60 * 60, access_token);
         }
         // 释放对象池
         jedis.close();
@@ -1805,6 +1805,17 @@ public class JswjwWxController extends GeneralController {
         List<SchArrangeResult> results = jswjwBiz.checkResultDate(userFlow, startDate, endDate, subDeptFlow, doctor.getRotationFlow());
         if (results != null && !results.isEmpty()) {
             return ResultDataThrow("轮转时间与其他科室重叠");
+        }
+
+        if (StringUtil.isNotBlank(subDeptFlow)) {
+            SchArrangeResult schArrangeResult = jswjwBiz.readSchArrangeResult(subDeptFlow);
+            ResDoctorSchProcess process = jswjwBiz.readSchProcessByResultFlow(schArrangeResult.getResultFlow());
+            ResSchProcessExpress rec = expressBiz.getExpressByRecType(process.getProcessFlow(), "AfterEvaluation");
+            if (rec != null && StringUtil.isNotBlank(rec.getManagerAuditUserFlow()) && StringUtil.isNotBlank(rec.getHeadAuditStatusId()) && rec.getHeadAuditStatusId().equals(RecStatusEnum.HeadAuditY.getId())) {
+                if (!process.getTeacherUserFlow().equals(teacherFlow)) {
+                    return ResultDataThrow("您已在该轮转科室完成出科，不可再修改您的带教老师！");
+                }
+            }
         }
 
         // 获取当前入科时间填写系统限制 add shengl
@@ -6297,8 +6308,8 @@ public class JswjwWxController extends GeneralController {
                         String appLoginErrorCountNew = appLoginErrorCount + 1 + "";
                         userinfo.setAppLoginErrorCount(appLoginErrorCountNew);
                         if ("3".equals(appLoginErrorCountNew)) {
-                            userinfo.setStatusId(UserStatusEnum.Locked.getId());
-                            userinfo.setStatusDesc(UserStatusEnum.Locked.getName());
+                            userinfo.setStatusId(UserStatusEnum.SysLocked.getId());
+                            userinfo.setStatusDesc(UserStatusEnum.SysLocked.getName());
                         }
                         jswjwBiz.updateUser(userinfo);
                     }
@@ -6326,8 +6337,11 @@ public class JswjwWxController extends GeneralController {
             userFlag = true;
         }
         String userStatus = userinfo.getStatusId();
-        if (UserStatusEnum.Locked.getId().equals(userStatus)) {
+        if (UserStatusEnum.SysLocked.getId().equals(userStatus)) {
             return ResultDataThrow("该用户已被锁定，请联系培训基地进行解锁");
+        }
+        if (UserStatusEnum.Locked.getId().equals(userStatus)) {
+            return ResultDataThrow("该用户已被停用，请联系培训基地进行启用");
         }
         if (UserStatusEnum.Lifted.getId().equals(userStatus)) {
             return ResultDataThrow("你暂无权限使用,请联系培训基地管理员！");

@@ -33,7 +33,7 @@
         var countdown = 60;
 
         function register() {
-            debugger;
+
             $("#verifyCodeErr").html("");
             $(".userPhoneErr").text("");
             $("#errorMsg").text("");
@@ -71,7 +71,7 @@
             jboxPost(url, {data:data},
                 function (resp) {
                     if (resp == "${GlobalConstant.VERIFT_CODE_RIGHT}") {
-                        debugger;
+
                         var userPhone = $("#userPhone").val();
                         var verifyCode = $("#verifyCode").val();
                         var url = "<s:url value='/inx/jsres/setPasswd'/>";
@@ -82,7 +82,7 @@
                         document.passwdForm.submit();
                         <%--window.location.href = "<s:url value='/inx/jsres/setPasswd'/>?userPhone=" + $("#userPhone").val();--%>
                     } else {
-                        debugger;
+
                         jboxTip(resp);
                     }
                 },
@@ -90,7 +90,7 @@
         }
 
         function checkPhone(obj) {
-            debugger;
+
             if (!$("#registerForm").validationEngine("validate")) {
                 return false;
             }
@@ -197,17 +197,17 @@
                     return false;
                 }
                 data = {idNo: $("#idNo").val()};
-            } else if (zjlx == "香港特区护照/身份证明") {
+            } else if (zjlx == "港澳居民来往内地通行证") {
                 data = {idNo: $("#xghzval").val()};
-            } else if (zjlx == "澳门特区护照/身份证明") {
+            } else if (zjlx == "台湾居民居住证") {
                 data = {idNo: $("#amhzval").val()};
             } else if (zjlx == "台湾居民来往大陆通行证") {
                 data = {idNo: $("#twdltxzval").val()};
-            } else if (zjlx == "境外永久居住证") {
+            } else if (zjlx == "外国人永久居留证") {
                 data = {idNo: $("#jwyjjzzval").val()};
-            } else if (zjlx == "护照") {
+            } else if (zjlx == "外籍护照") {
                 data = {idNo: $("#hzval").val()};
-            } else if (zjlx == "港澳台居民居住证") {
+            } else if (zjlx == "港澳居民居住证") {
                 data = {idNo: $("#gatjzzval").val()};
             }
 
@@ -242,7 +242,7 @@
                 $("#jwyjjzzval").val("");
                 $("#hzval").val("");
                 $("#gatjzzval").val("");
-            } else if (zjlx == "香港特区护照/身份证明") {
+            } else if (zjlx == "港澳居民来往内地通行证") {
                 $("#sfz").hide();
                 $("#xgtqhz").show();
                 $("#amtqhz").hide();
@@ -256,7 +256,7 @@
                 $("#jwyjjzzval").val("");
                 $("#hzval").val("");
                 $("#gatjzzval").val("");
-            } else if (zjlx == "澳门特区护照/身份证明") {
+            } else if (zjlx == "台湾居民居住证") {
                 $("#sfz").hide();
                 $("#xgtqhz").hide();
                 $("#amtqhz").show();
@@ -284,7 +284,7 @@
                 $("#jwyjjzzval").val("");
                 $("#hzval").val("");
                 $("#gatjzzval").val("");
-            } else if (zjlx == "境外永久居住证") {
+            } else if (zjlx == "外国人永久居留证") {
                 $("#sfz").hide();
                 $("#xgtqhz").hide();
                 $("#amtqhz").hide();
@@ -298,7 +298,7 @@
                 $("#twdltxzval").val("");
                 $("#hzval").val("");
                 $("#gatjzzval").val("");
-            } else if (zjlx == "护照") {
+            } else if (zjlx == "外籍护照") {
                 $("#sfz").hide();
                 $("#xgtqhz").hide();
                 $("#amtqhz").hide();
@@ -312,7 +312,7 @@
                 $("#twdltxzval").val("");
                 $("#jwyjjzzval").val("");
                 $("#gatjzzval").val("");
-            } else if (zjlx == "港澳台居民居住证") {
+            } else if (zjlx == "港澳居民居住证") {
                 $("#sfz").hide();
                 $("#xgtqhz").hide();
                 $("#amtqhz").hide();
@@ -348,75 +348,75 @@
                     <form id="registerForm" action="<s:url value='/inx/jsres/saveRegister'/>" method="post">
                         <div class="cont_body" style="padding-top: 3%">
                             <div class="form_item" style="margin-right: 106px;margin-bottom: 20px;">
-                                <label for="userPhone">
+                                <label for="userPhone" style="width: 180px">
                                     <span style="color: red;">*</span> 证件类型：</label>
                                 <select name="zjlxId" id="zjlxId" class="validate txt cont_input" onchange="bindOpt()">
                                     <option value="居民身份证">居民身份证</option>
-                                    <option value="香港特区护照/身份证明">香港特区护照/身份证明</option>
-                                    <option value="澳门特区护照/身份证明">澳门特区护照/身份证明</option>
+                                    <option value="港澳居民来往内地通行证">港澳居民来往内地通行证</option>
+                                    <option value="台湾居民居住证">台湾居民居住证</option>
                                     <option value="台湾居民来往大陆通行证">台湾居民来往大陆通行证</option>
-                                    <option value="境外永久居住证">境外永久居住证</option>
-                                    <option value="护照">护照</option>
-                                    <option value="港澳台居民居住证">港澳台居民居住证</option>
+                                    <option value="外国人永久居留证">外国人永久居留证</option>
+                                    <option value="外籍护照">外籍护照</option>
+                                    <option value="港澳居民居住证">港澳居民居住证</option>
                                 </select>
                             </div>
                             <div class="form_item" style="margin-right: 106px;margin-bottom: 20px;" id="sfz">
-                                <label for="userPhone">
-                                    <span style="color: red;">*</span> 身份证：</label>
+                                <label for="userPhone" style="width: 180px">
+                                    <span style="color: red;">*</span> 居民身份证：</label>
                                 <input type="text" name="idNo" id="idNo"
                                        onblur="checkIdCard()" class="validate[required] txt cont_input"
                                        value=""/>
                             </div>
                             <div class="form_item" style="margin-right: 106px;margin-bottom: 20px;display: none"
                                  id="xgtqhz">
-                                <label for="userPhone">
-                                    <span style="color: red;">*</span> 香港特区护照：</label>
+                                <label for="userPhone" style="width: 180px">
+                                    <span style="color: red;">*</span> 港澳居民来往内地通行证：</label>
                                 <input type="text" name="xghzval" id="xghzval"
                                        onblur="checkIdCard()" class="validate[required] txt cont_input"
                                        value=""/>
                             </div>
                             <div class="form_item" style="margin-right: 106px;margin-bottom: 20px;display: none"
                                  id="amtqhz">
-                                <label for="userPhone">
-                                    <span style="color: red;">*</span> 澳门特区护照：</label>
+                                <label for="userPhone" style="width: 180px">
+                                    <span style="color: red;">*</span> 台湾居民居住证：</label>
                                 <input type="text" name="amhzval" id="amhzval"
                                        onblur="checkIdCard()" class="validate[required] txt cont_input"
                                        value=""/>
                             </div>
                             <div class="form_item" style="margin-right: 106px;margin-bottom: 20px;display: none"
                                  id="twdltxz">
-                                <label for="userPhone">
-                                    <span style="color: red;">*</span> 台湾大陆通行证：</label>
+                                <label for="userPhone" style="width: 180px">
+                                    <span style="color: red;">*</span> 台湾居民来往大陆通行证：</label>
                                 <input type="text" name="twdltxzval" id="twdltxzval"
                                        onblur="checkIdCard()" class="validate[required] txt cont_input"
                                        value=""/>
                             </div>
                             <div class="form_item" style="margin-right: 106px;margin-bottom: 20px;display: none"
                                  id="jwyjjzz">
-                                <label for="userPhone">
-                                    <span style="color: red;">*</span> 境外永久居住证：</label>
+                                <label for="userPhone" style="width: 180px">
+                                    <span style="color: red;">*</span> 外国人永久居留证：</label>
                                 <input type="text" name="jwyjjzzval" id="jwyjjzzval"
                                        onblur="checkIdCard()" class="validate[required] txt cont_input"
                                        value=""/>
                             </div>
                             <div class="form_item" style="margin-right: 106px;margin-bottom: 20px;display: none"
                                  id="hz">
-                                <label for="userPhone">
-                                    <span style="color: red;">*</span> 护照：</label>
+                                <label for="userPhone" style="width: 180px">
+                                    <span style="color: red;">*</span> 外籍护照：</label>
                                 <input type="text" name="hzval" id="hzval"
                                        onblur="checkIdCard()" class="validate[required] txt cont_input"
                                        value=""/>
                             </div>
                             <div class="form_item" style="margin-right: 106px;margin-bottom: 20px;display: none"
                                  id="gatjmjzz">
-                                <label for="userPhone">
-                                    <span style="color: red;">*</span> 港澳台居民居住证：</label>
+                                <label for="userPhone" style="width: 180px">
+                                    <span style="color: red;">*</span> 港澳居民居住证：</label>
                                 <input type="text" name="gatjzzval" id="gatjzzval"
                                        onblur="checkIdCard()" class="validate[required] txt cont_input"
                                        value=""/>
                             </div>
                             <div class="form_item" style="margin-right: 106px;margin-bottom: 20px;">
-                                <label for="userPhone">
+                                <label for="userPhone" style="width: 180px">
                                     <span style="color: red;">*</span> 手机号码：</label>
                                 <input type="text" name="userPhone" id="userPhone"
                                        onkeydown="clearUselessInfo()"
@@ -425,7 +425,7 @@
                                 <span style="color:red" class="userPhoneErr"></span>
                             </div>
                             <div class="form_item" style="margin-right: 106px;margin-bottom: 20px;">
-                                <label for="verifyCode"><span style="color: red;">*</span> 验证码：</label>
+                                <label for="verifyCode" style="width: 180px"><span style="color: red;">*</span> 验证码：</label>
                                 <input type="text" id="yzm" name="yzm"
                                        class="validate[required] txt cont_input" value="" placeholder="请输入验证码"/>
                                 <img id="verifyImage" src="<s:url value='/captcha'/>"
@@ -433,7 +433,7 @@
                                      onclick="reloadVerifyCode();" title="点击更换验证码" alt="看不清，换一张"/>
                             </div>
                             <div class="form_item" style="margin-bottom: 20px;">
-                                <label for="verifyCode"><span style="color: red;">*</span> 短信验证码：</label>
+                                <label for="verifyCode" style="width: 180px"><span style="color: red;">*</span> 短信验证码：</label>
                                 <input id="verifyCode" name="verifyCode" type="text" style="margin-left: 3px;"
                                        class="validate txt cont_input"/>
                                 <input type="button" id="sendcode" onclick="checkPhone(this)" class="btn_blue yzmBtn"

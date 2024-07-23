@@ -91,6 +91,14 @@
                         <a href="javascript:editUser('${sysUser.userFlow}');" class="btn" style="padding: 0px 10px;">编辑</a>
                         <a href="javascript:resetPasswd('${sysUser.userFlow}');" class="btn" style="padding: 0px 10px;">重置密码</a>
                         <a href="javascript:lock('${sysUser.userFlow}');" class="btn" style="padding: 0px 10px;">停用</a>
+                        <a style="pointer-events: none; color: #8a8a8a; padding: 0px 10px;" class="btn" style="padding: 0px 10px;">解锁</a>
+                    </c:if>
+
+                    <c:if test="${sysUser.statusId==userStatusEnumSysLocked.id}">
+                        <a href="javascript:editUser('${sysUser.userFlow}');" class="btn" style="padding: 0px 10px;">编辑</a>
+                        <a href="javascript:resetPasswd('${sysUser.userFlow}');" class="btn" style="padding: 0px 10px;">重置密码</a>
+                        <a href="javascript:lock('${sysUser.userFlow}');" class="btn" style="padding: 0px 10px;">停用</a>
+                        <a href="javascript:unlock('${sysUser.userFlow}');" class="btn" style="padding: 0px 10px;">解锁</a>
                     </c:if>
 
                     <c:if test="${sysUser.statusId==userStatusEnumLocked.id}">

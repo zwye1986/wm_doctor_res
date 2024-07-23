@@ -860,7 +860,7 @@ public class UserController extends GeneralController{
 	@RequestMapping(value="/activate",method=RequestMethod.GET)
 	public @ResponseBody String activate(SysUser user){
 		this.userBiz.activateUser(user);
-		return GlobalConstant.UnLOCK_SUCCESSED;
+		return GlobalConstant.OPERATE_SUCCESSED;
 	}
 
 	@RequestMapping(value="/batchUnlock",method=RequestMethod.GET)
@@ -904,7 +904,7 @@ public class UserController extends GeneralController{
 		user.setStatusId(UserStatusEnum.Locked.getId());
 		user.setStatusDesc(UserStatusEnum.Locked.getName());
 		userBiz.saveUser(user);
-		return GlobalConstant.LOCK_SUCCESSED;
+		return GlobalConstant.STOP_USE_SUCCESSED;
 	}
 
 	@RequestMapping(value={"/modPasswd"})

@@ -688,6 +688,11 @@
             jboxLoad("content", url, true);
         }
 
+        function baseInfoTeacher() {
+            var url = "<s:url value='/jsres/manage/baseInfoTeacher'/>";
+            jboxLoad("content", url, true);
+        }
+
         function searchChangeSpe() {
             var url = "<s:url value='/jsres/manage/searchChangeSpe'/>?viewFlag=Y";
             jboxLoad("content", url, true);
@@ -1136,6 +1141,7 @@
                             </dt>
                             <dd class="menu_item"><a onclick="hsxxgl();">护士信息管理</a></dd>
                             <dd class="menu_item"><a onclick="professionalBaseManagerList();">专业基地管理</a></dd>
+                            <dd class="menu_item"><a href="javascript:baseInfoTeacher();">师资管理</a></dd>
 <%--                            <dd class="menu_item"><a onclick="djxxgl();">带教信息管理</a></dd>--%>
                         </dl>
                         <dl class="menu">

@@ -372,7 +372,7 @@
         formdate = formdate.replaceAll(",", "formCo");
         var formdate = decodeURIComponent(formdate, true);
         console.log(formdate);
-        debugger;
+
         jboxPost("<s:url value='/jsres/doctor/checkDoctorAuth'/>?doctorFlow=" + doctorFlow + "&roleFlag=" + roleFlag, null,
             function (resp) {
                 if (resp == "${GlobalConstant.FLAG_Y}") {
@@ -753,7 +753,6 @@
                     <td class="td_left">培训类别：</td>
                     <td>
                         <select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')">
-                            <option value="">请选择</option>
                             <option value="DoctorTrainingSpe" <c:if test="${param.trainingTypeId=='DoctorTrainingSpe'}">selected="selected"</c:if>>住院医师</option>
                             <option value="AssiGeneral" <c:if test="${param.trainingTypeId=='AssiGeneral'}">selected="selected"</c:if>>助理全科</option>
                             <%--<option value="">请选择</option>

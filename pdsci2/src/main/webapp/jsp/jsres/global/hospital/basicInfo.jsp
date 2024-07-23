@@ -59,7 +59,7 @@ function auditStatus(baseFlow,status){
 		       <td colspan="3">${sysOrg.orgAddress}</td>
 		     </tr>
 		     <tr>
-		       <th>职业许可证:</th>
+		       <th>执业许可证:</th>
 		       <td>
 		       		<span  style="display:${!empty basicInfo.professionLicenceUrl?'':'none'} ">
 		              	    [<a href="${sysCfgMap['upload_base_url']}/${basicInfo.professionLicenceUrl}" target="_blank">查看图片</a>]&#12288;

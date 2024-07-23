@@ -165,6 +165,10 @@ public class LoginController extends GeneralController {
 		//root用户不判断是否锁定
 		if(!GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())){
 			if(UserStatusEnum.Locked.getId().equals(user.getStatusId())){
+				model.addAttribute("loginErrorMessage",SpringUtil.getMessage("userCode.stoped"));
+				return errorLoginPage;
+			}
+			if(UserStatusEnum.SysLocked.getId().equals(user.getStatusId())){
 				model.addAttribute("loginErrorMessage",SpringUtil.getMessage("userCode.locked"));
 				return errorLoginPage;
 			}

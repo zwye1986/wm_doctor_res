@@ -416,7 +416,7 @@ public enum DictTypeEnum implements GeneralEnum<String> {
 	DigestiveDiseasesType("DigestiveDiseasesType","消化疾病类型","portals"),
 	CourseType("CourseType","课程类型","study"),
 	CatSpeType("CatSpeType","培训类型","study",2),
-	OrgLevelRank("OrgLevelRank","等级等次","ws",2),
+	OrgLevelRank("OrgLevelRank","级别","ws"),
 			;
 
 	public static Map<String,String> sysDictIdMap ;

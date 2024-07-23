@@ -1025,7 +1025,7 @@ public class HbzyDoctorTheoryScoreController extends GeneralController {
         }
         if(file.getSize() > 0){
             try{
-                ExcelUtile result = (ExcelUtile) resDoctorBiz.importCourseFromExcel(file,scoreYear);
+                ExcelUtile result = (ExcelUtile) resDoctorBiz.importCourseFromExcel(file, scoreYear, scoreYear);
                 if(null!=result)
                 {
                     String code= (String) result.get("code");
@@ -1064,7 +1064,7 @@ public class HbzyDoctorTheoryScoreController extends GeneralController {
         }
         if(file.getSize() > 0){
             try{
-                ExcelUtile result = (ExcelUtile) resDoctorBiz.importSkillScoreFromExcel(file,scoreYear);
+                ExcelUtile result = (ExcelUtile) resDoctorBiz.importSkillScoreFromExcel(file, scoreYear, scoreYear);
                 if(null!=result)
                 {
                     String code= (String) result.get("code");

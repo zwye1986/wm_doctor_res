@@ -520,6 +520,15 @@
             }, null, false);
         }
 
+        function configRotation() {
+            var url = "<s:url value='/jsres/message/rotationCfg'/>";
+            jboxStartLoading();
+            jboxPost(url, null, function (resp) {
+                $("#content").html(resp);
+                jboxEndLoading();
+            }, null, false);
+        }
+
         function lecturesNew(data) {
             var url = "<s:url value='/res/manager/lectureView'/>?roleId=local";
             jboxStartLoading();
@@ -1246,6 +1255,7 @@
                             <c:if test="${pdfn:jsresPowerCfgMap(key) eq GlobalConstant.RECORD_STATUS_Y}">
                                 <dd class="menu_item"><a onclick="guides()">住培指南管理</a></dd>
                             </c:if>
+                            <dd class="menu_item"><a onclick="configRotation()">轮转方案配置</a></dd>
                         </dl>
                         <dl class="menu">
                             <dt class="menu_title">

@@ -40,6 +40,7 @@ import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.util.jsres.ResultUtil;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.docx4j.openpackaging.io.SaveToZipFile;
@@ -2810,7 +2811,10 @@ public class JsResDoctorController extends GeneralController {
                 "doctor.orgName:培训基地（若在协同单位，需注明）",
                 "doctor.trainingSpeName:培训专业",
                 "recruit.recruitDate:参训时间",
+                "trainYearMonth:培训开始年月",
                 "recruit.trainYear:计划参训时限",
+                "trainYears:培训年限",
+                "trainEndYearMonth:计划培训结束年月",
         };
         List<String> docTypeList = new ArrayList<String>();
         SysOrg org = new SysOrg();
@@ -2976,9 +2980,31 @@ public class JsResDoctorController extends GeneralController {
                 userInfoExtForm.setDoctor(d.getResDoctor());
                 ResDoctorRecruit recruit3 = d;
                 userInfoExtForm.setRecruit(recruit3);
+
+                // 计算一下 trainYearMonth，trainYears，trainEndYearMonth
+                if(StringUtils.isNotEmpty(recruit3.getRecruitDate())) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat ymSdf = new SimpleDateFormat("yyyy-MM");
+                    Date recruitDate = sdf.parse(recruit3.getRecruitDate());
+                    userInfoExtForm.setTrainYearMonth(ymSdf.format(recruitDate));
+                    if(StringUtils.isNotEmpty(recruit3.getTrainYear())) {
+                        Integer years = JsResTrainYearEnum.getYearsById(recruit3.getTrainYear());
+                        if(years != null) {
+                            userInfoExtForm.setTrainYears(years.toString());
+                            // trainEndYearMonth 是 trainYearMonth + trainYears - 一个月
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(recruitDate);
+                            calendar.add(Calendar.YEAR, years);
+                            calendar.add(Calendar.MONTH, -1);
+                            userInfoExtForm.setTrainEndYearMonth(ymSdf.format(calendar.getTime()));
+                        }
+                    }
+                }
+
                 if (StringUtil.isNotBlank(d.getTrainYear())) {
                     d.setTrainYear(JsResTrainYearEnum.getNameById(d.getTrainYear()));
                 }
+
                 userExtForms.add(userInfoExtForm);
             }
         }

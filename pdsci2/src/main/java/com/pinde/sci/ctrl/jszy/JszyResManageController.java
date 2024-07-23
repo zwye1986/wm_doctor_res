@@ -2211,7 +2211,7 @@ public class JszyResManageController extends GeneralController {
 	public String checkStatus(String doctorFlow){
 		SysUser user = userBiz.readSysUser(doctorFlow);
 		String flag = GlobalConstant.FLAG_Y;
-		if(UserStatusEnum.Locked.getId().equals(user.getStatusId())){
+		if(UserStatusEnum.Locked.getId().equals(user.getStatusId()) || UserStatusEnum.SysLocked.getId().equals(user.getStatusId())){
 			flag= GlobalConstant.FLAG_N;
 		}
 		return flag;

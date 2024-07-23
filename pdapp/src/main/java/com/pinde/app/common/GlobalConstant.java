@@ -79,4 +79,9 @@ public class GlobalConstant {
 	public static final String USER_LIST_SPELOCALSECRETARY = "speAdminSecretary";
 	public static final String USER_LIST_CHARGE = "charge";
 	public static final String USER_LIST_GLOBAL = "global";
+
+	/**
+	 * 当前登陆用户
+	 */
+	public static final String CURR_USER = "currUser";
 }

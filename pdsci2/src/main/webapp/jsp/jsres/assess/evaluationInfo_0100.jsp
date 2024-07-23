@@ -369,7 +369,7 @@
 
         //窗口加载后
         $(function () {
-            debugger;
+
             //为了显示存在问题详情
             $("#speContentInput").val("${subjectUser.speContent}");
             //获取所有input标签
@@ -391,7 +391,7 @@
 
             //为每个input赋值
             <c:forEach items="${ownerScoreList}" var="item" varStatus="status" >
-            debugger;
+
             //获得值
             for (var i = 0; i < itemIdList.length; i++) {
                 if (itemIdList[i].getAttribute("itemId") == "${item.itemId}" && itemIdList[i].getAttribute("name") == "self") {

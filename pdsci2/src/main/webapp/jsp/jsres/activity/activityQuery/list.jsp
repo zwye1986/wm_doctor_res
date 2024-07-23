@@ -118,7 +118,7 @@ function showInfo2(activityFlow,roleFlag,obj) {
 }
 function effectiveInfo(activityFlow,roleFlag,isEffective,flag,_this){
  	var __this = _this
-	debugger;
+
 		var msg="";
 		if(isEffective=="Y")
 		{
@@ -153,7 +153,7 @@ function effectiveInfo(activityFlow,roleFlag,isEffective,flag,_this){
 
 function effectiveInfo2(activityFlow,roleFlag,isEffective,flag,_this,currentPage){
 	var __this = _this
-	debugger;
+
 	var msg="";
 	isEffective="N";
 	msg="确定不认可此活动信息？若确认，将不统计该活动信息";

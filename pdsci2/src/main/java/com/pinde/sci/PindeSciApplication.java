@@ -15,15 +15,17 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 import javax.sql.DataSource;
 
 @SpringBootApplication(exclude = { FreeMarkerAutoConfiguration.class, MustacheAutoConfiguration.class })
-//@ComponentScan(basePackages = {"com.pinde"})
-//@PropertySource(value = {"classpath:jdbc.properties", "classpath:log4j.properties", "classpath:pdsci.properties", "classpath:sso.properties"}, ignoreResourceNotFound = true)
+//@ComponentScan(basePackages = {"com.pinde.sci"})
+@PropertySource(value = {"classpath:jdbc.properties", "classpath:pdsci.properties"/*, "classpath:log4j.properties", "classpath:sso.properties"*/}, ignoreResourceNotFound = true)
 @ImportResource({"classpath:spring-context.xml"/*,"classpath:spring-mvc.xml","classpath:spring-mybatis.xml"*/})
 //@MapperScan({"com.pinde.sci.dao.**"})
 @Configuration
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 3600, redisNamespace = "jsres-pdsci")
 public class PindeSciApplication extends SpringBootServletInitializer {
     private static Logger logger = LoggerFactory.getLogger(PindeSciApplication.class);
 
