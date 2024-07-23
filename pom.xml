@@ -131,6 +131,22 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-bean-validators</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+
     </dependencies>
     <!-- 多项目（子父项目）中方便依赖管理，保证版本一致，父项目中使用，声明依赖，但不引用，子项目中可以不加版本，使用父项目中配置 -->
     <dependencyManagement>

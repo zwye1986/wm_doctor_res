@@ -132,7 +132,8 @@
     function search() {
         <%--var url = "<s:url value='/jsres/manage/changeBase'/>";--%>
         var url = "<s:url value='/jsres/manage/changeBaseListAcc'/>";
-        jboxPostLoad("div_table2", url, $("#inForm").serialize(), true);
+        var param = $("#inForm").serialize()+"&trainingTypeId=DoctorTrainingSpe";
+        jboxPostLoad("div_table2", url, param, true);
 
     }
     function toPage(page) {

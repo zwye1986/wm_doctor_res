@@ -5510,7 +5510,7 @@ public class JsResManageController extends GeneralController {
 				doctor.setSessionNumber("");
 			}
 		}
-		doctor.setTrainingTypeId("DoctorTrainingSpe");
+//		doctor.setTrainingTypeId("DoctorTrainingSpe");
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<JsResDoctorOrgHistoryExt> historyExts = jsDocOrgHistoryBiz.seearchInfoByFlow1(orgHistory, changeStatusIdList, docTypeList, doctor, orgFlowList, sessionNumbers);
 		model.addAttribute("historyExts2", historyExts);
@@ -5591,7 +5591,7 @@ public class JsResManageController extends GeneralController {
 				doctor.setSessionNumber("");
 			}
 		}
-		doctor.setTrainingTypeId("AssiGeneral");
+//		doctor.setTrainingTypeId("AssiGeneral");
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<JsResDoctorOrgHistoryExt> historyExts = jsDocOrgHistoryBiz.seearchInfoByFlow1(orgHistory, changeStatusIdList, docTypeList, doctor, orgFlowList, sessionNumbers);
 		model.addAttribute("historyExts2", historyExts);
