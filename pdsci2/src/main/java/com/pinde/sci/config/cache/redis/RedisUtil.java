@@ -1,4 +1,4 @@
-package com.pinde.core.cache.redis;
+package com.pinde.sci.config.cache.redis;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
