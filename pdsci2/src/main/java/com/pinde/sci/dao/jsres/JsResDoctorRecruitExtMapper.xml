@@ -1389,7 +1389,7 @@
 		dr.RECRUIT_FLOW,
 		dr.DOCTOR_FLOW,
 		dr.ORG_FLOW,
-		u.ORG_NAME,
+		org.ORG_NAME,
 		dr.SPE_ID,
 		dr.SPE_NAME,
 		dr.SWAP_FLAG,
