@@ -345,7 +345,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 					recruitWithBLOBs.setOrgAudit(ResBaseStatusEnum.NotPassed.getId());
 					recruitWithBLOBs.setAuditStatusId(ResBaseStatusEnum.NotPassed.getId());
 					recruitWithBLOBs.setAuditStatusName(ResBaseStatusEnum.NotPassed.getName());
-					recruitWithBLOBs.setReviewFlag(ResBaseStatusEnum.NotPassed.getName());
+					recruitWithBLOBs.setReviewFlag(ResBaseStatusEnum.NotPassed.getId());
 				}
 			} else {
 				if (ResBaseStatusEnum.Passed.getId().equals(recruitWithBLOBs.getDoctorStatusId())) {
@@ -360,7 +360,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 					recruitWithBLOBs.setOrgAudit(ResBaseStatusEnum.NotPassed.getId());
 					recruitWithBLOBs.setAuditStatusId(ResBaseStatusEnum.NotPassed.getId());
 					recruitWithBLOBs.setAuditStatusName(ResBaseStatusEnum.NotPassed.getName());
-					recruitWithBLOBs.setReviewFlag(ResBaseStatusEnum.NotPassed.getName());
+					recruitWithBLOBs.setReviewFlag(ResBaseStatusEnum.NotPassed.getId());
 				}
 			}
 			ResDoctor resDoctor = resDoctorBiz.findByFlow(recruitWithBLOBs.getDoctorFlow());

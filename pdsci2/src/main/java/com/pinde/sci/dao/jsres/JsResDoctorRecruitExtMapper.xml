@@ -2222,6 +2222,7 @@
 		dr.ORG_NAME,
 		dr.joint_org_audit,
 		dr.IS_RETRAIN,
+		dr.REVIEW_FLAG,
 		u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL
 		, u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
 		ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName,ed.doctor_type_name,ed.doctor_type_id
