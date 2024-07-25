@@ -42,6 +42,11 @@
         });
 
         function getRotationCfgList() {
+            var sessionYear = $("#sessionNumber").val();
+            if (sessionYear < "2024") {
+                jboxTip("2024级以前的学员无需配置轮转方案，请重新选择年级进行配置！");
+                return;
+            }
             var url = "<s:url value='/jsres/message/rotationCfg'/>";
             jboxStartLoading();
             jboxPost(url, $("#searchForm").serialize(), function (resp) {
@@ -79,7 +84,7 @@
             <form id="searchForm" class="search_form" action="" method="post">
                 <div class="flex">
                     <div class="searchCss formItem">
-                        <label>&#12288;年级：</label>
+                        <label>&#12288;年&#12288;&#12288;级：</label>
                         <input type="text" id="sessionNumber" name="sessionNumber" value="${sessionNumber}" class="input" readonly="readonly" style="width: 128px;margin: 0px 4px;"/>
                     </div>
                     <div class="searchCss formItem">
