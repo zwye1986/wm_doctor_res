@@ -79,7 +79,7 @@
             <form id="searchForm" class="search_form" action="" method="post">
                 <div class="flex">
                     <div class="searchCss formItem">
-                        <label>&#12288;结业年份：</label>
+                        <label>&#12288;年级：</label>
                         <input type="text" id="sessionNumber" name="sessionNumber" value="${sessionNumber}" class="input" readonly="readonly" style="width: 128px;margin: 0px 4px;"/>
                     </div>
                     <div class="searchCss formItem">
