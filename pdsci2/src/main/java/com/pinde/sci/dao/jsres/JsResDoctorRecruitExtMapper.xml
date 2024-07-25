@@ -2290,7 +2290,7 @@
 				and dr.SESSION_NUMBER = #{resDoctorRecruit.sessionNumber}
 			</if>
 			<if test="resDoctorRecruit.reviewFlag!=null and resDoctorRecruit.reviewFlag!=''">
-				and dr.DOCTOR_STATUS_ID = #{resDoctorRecruit.reviewFlag}
+				and dr.REVIEW_FLAG = #{resDoctorRecruit.reviewFlag}
 			</if>
 			<if test="resDoctorRecruit.isRetrain!=null and resDoctorRecruit.isRetrain!=''">
 				and dr.IS_RETRAIN = #{resDoctorRecruit.isRetrain}
