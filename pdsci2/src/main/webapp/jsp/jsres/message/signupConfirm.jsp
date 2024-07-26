@@ -130,6 +130,22 @@ function changeTrainSpes(){
     return false;
 }
 
+//显示隐藏
+let flag = false;
+function showOrHide(){
+
+	if(flag){
+		document.getElementById("hideForm").style.display='none';
+		$("#open").text("展开")
+		flag = false;
+	}else {
+		document.getElementById("hideForm").style.display='flex';
+		$("#open").text("收起")
+		flag = true;
+	}
+
+}
+
 function getCityArea(){
 	var url = '<s:url value="/js/provCityAreaJson.min.json"/>';
 	var provIds = "320000";
@@ -208,7 +224,7 @@ function exportForDetail(){
 				<input type="text" name="idNo" value="${param.idNo}" class="input"/>
 			</div>
 		</div>
-		<div style="display: flex;justify-content: flex-start; column-gap: 56px;margin-top: 15px">
+		<div id = "hideForm" style="display: none;justify-content: flex-start; column-gap: 56px;margin-top: 15px">
 			<div>
 				<label class="from_label">状态：</label>
 				<select name="reviewFlag" class="select" style="width: 161px;">
@@ -260,6 +276,7 @@ function exportForDetail(){
 		<div style="margin-top: 5px;margin-bottom: 15px">
 			<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
 			<input class="btn_green" type="button" value="导&#12288;出" onclick="exportForDetail();"/>
+			<a style="color: #54B2E5;float: right" onclick="showOrHide()" id="open">展开</a>
 		</div>
 
 

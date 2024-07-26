@@ -208,6 +208,23 @@
         jboxEndLoading();
     }
 
+
+    //显示隐藏
+    let flag = false;
+    function showOrHide(){
+
+        if(flag){
+            document.getElementById("hideForm").style.display='none';
+            $("#open").text("展开")
+            flag = false;
+        }else {
+            document.getElementById("hideForm").style.display='flex';
+            $("#open").text("收起")
+            flag = true;
+        }
+
+    }
+
     $(document).ready(function(){
         $(":radio[name='sortType']").click(function () {
             toPage(1)
@@ -219,59 +236,123 @@
         <form id="searchForm" action="<s:url value='/jsres/hospital/getAchievementList'/>" method="post">
             <input id="currentPage" type="hidden" name="currentPage"/>
             <input id="auditStatusId" type="hidden" name="auditStatusId" value ="Passed"/>
-            <table class="searchTable">
-                <tr>
-                    <td class="td_left">培训类别：</td>
-                    <td>
-                        <select name="catSpeId" id="catSpeId" class="select" onchange="changeTrainSpes(this.value)">
-                            <option value="DoctorTrainingSpe">住院医师</option>
-                        <%--   <option value="">请选择</option>
-                            <c:forEach items="${trainCategoryEnumList}" var="trainCategory">
-                                <c:if test="${trainCategory.id ne 'WMFirst' and trainCategory.id ne 'WMSecond'}">
-                                    <option name="${trainCategory.id}"  value="${trainCategory.id}" <c:if test="${param.catSpeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>
-                                </c:if>
-                            </c:forEach>--%>
-                        </select>
-                    </td>
-                    <td class="td_left">培训专业：</td>
-                    <td>
-                        <select name="speId" id="speId" class="select">
-                            <option value="">全部</option>
-                        </select>
-                    </td>
-                    <td class="td_left">年&#12288;&#12288;级：</td>
-                    <td><input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input indexNum" readonly="readonly"/></td>
-                    <td class="td_left">姓&#12288;&#12288;名：</td>
-                    <td><input type="text" name="userName" value="${param.userName}" class="input"/></td>
-                </tr>
-                <tr>
-                    <td class="td_left">证&ensp;件&ensp;号：</td>
-                    <td><input type="text" name="idNo" value="${param.idNo}" class="input"/></td>
-                    <td class="td_left">审核状态：</td>
-                    <td >
-                        <select name="examStatusId" class="select">
-                            <option value="">全部</option>
-                            <option value="Auditing" ${param.examStatusId eq 'Auditing'?'selected':''}>待审核</option>
-                            <option value="Passed" ${param.examStatusId eq 'Passed'?'selected':''}>审核通过</option>
-                            <option value="NotPassed" ${param.examStatusId eq 'NotPassed'?'selected':''}>审核不通过</option>
-                        </select>
-                    </td>
-                    <td class="td_left">人员类型：</td>
-                    <td colspan="3">
-                        <c:forEach items="${jsResDocTypeEnumList}" var="type">
-                            <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
-                        </c:forEach>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="8">
-                        <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
-                        <input class="btn_green" type="button" value="一键审核" onclick="batchAuditOpt()"/>
-                        <input class="btn_green" type="button" value="成绩导入" onclick="impExamResult()"/>
-                        <input class="btn_green" type="button" value="成绩导出" onclick="exportForDetail();"/>
-                    </td>
-                </tr>
-            </table>
+
+
+            <div style="display: flex;justify-content: space-between; margin-top: 15px">
+                <div>
+                    <label class="from_label">培训类别：</label>
+                    <select style="width: 161px" name="catSpeId" id="catSpeId" class="select" onchange="changeTrainSpes(this.value)">
+                                <option value="DoctorTrainingSpe">住院医师</option>
+                            <%--   <option value="">请选择</option>
+                                <c:forEach items="${trainCategoryEnumList}" var="trainCategory">
+                                    <c:if test="${trainCategory.id ne 'WMFirst' and trainCategory.id ne 'WMSecond'}">
+                                        <option name="${trainCategory.id}"  value="${trainCategory.id}" <c:if test="${param.catSpeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>
+                                    </c:if>
+                                </c:forEach>--%>
+                    </select>
+                </div>
+                <div>
+                    <label class="from_label">培训专业：</label>
+                    <select style="width: 161px" name="speId" id="speId" class="select">
+                        <option value="">全部</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="from_label">年级：</label>
+                    <input style="width: 161px" type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input indexNum" readonly="readonly"/>
+                </div>
+
+                <div>
+                    <label class="from_label">姓名：</label>
+                    <input style="width: 161px" type="text" name="userName" value="${param.userName}" class="input"/>
+                </div>
+
+                <div>
+                    <label class="from_label">证件号：</label>
+                    <input style="width: 161px" type="text" name="idNo" value="${param.idNo}" class="input"/>
+                </div>
+            </div>
+             <div id="hideForm" style="display: none;justify-content: flex-start; column-gap: 65px;  margin-top: 15px">
+                <div>
+                    <label class="from_label">审核状态：</label>
+                    <select style="width: 161px" name="examStatusId" class="select">
+                        <option value="">全部</option>
+                        <option value="Auditing" ${param.examStatusId eq 'Auditing'?'selected':''}>待审核</option>
+                        <option value="Passed" ${param.examStatusId eq 'Passed'?'selected':''}>审核通过</option>
+                        <option value="NotPassed" ${param.examStatusId eq 'NotPassed'?'selected':''}>审核不通过</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="from_label">人员类型：</label>
+                    <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                        <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
+                    </c:forEach>
+                </div>
+            </div>
+
+            <div style="margin-top: 15px;margin-bottom: 15px">
+                <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
+                <input class="btn_green" type="button" value="一键审核" onclick="batchAuditOpt()"/>
+                <input class="btn_green" type="button" value="成绩导入" onclick="impExamResult()"/>
+                <input class="btn_green" type="button" value="成绩导出" onclick="exportForDetail();"/>
+                <a style="color: #54B2E5;float: right" onclick="showOrHide()" id="open">展开</a>
+            </div>
+
+
+
+<%--            <table class="searchTable">--%>
+<%--                <tr>--%>
+<%--                    <td class="td_left">培训类别：</td>--%>
+<%--                    <td>--%>
+<%--                        <select name="catSpeId" id="catSpeId" class="select" onchange="changeTrainSpes(this.value)">--%>
+<%--                            <option value="DoctorTrainingSpe">住院医师</option>--%>
+<%--                        &lt;%&ndash;   <option value="">请选择</option>--%>
+<%--                            <c:forEach items="${trainCategoryEnumList}" var="trainCategory">--%>
+<%--                                <c:if test="${trainCategory.id ne 'WMFirst' and trainCategory.id ne 'WMSecond'}">--%>
+<%--                                    <option name="${trainCategory.id}"  value="${trainCategory.id}" <c:if test="${param.catSpeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>--%>
+<%--                                </c:if>--%>
+<%--                            </c:forEach>&ndash;%&gt;--%>
+<%--                        </select>--%>
+<%--                    </td>--%>
+<%--                    <td class="td_left">培训专业：</td>--%>
+<%--                    <td>--%>
+<%--                        <select name="speId" id="speId" class="select">--%>
+<%--                            <option value="">全部</option>--%>
+<%--                        </select>--%>
+<%--                    </td>--%>
+<%--                    <td class="td_left">年&#12288;&#12288;级：</td>--%>
+<%--                    <td><input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input indexNum" readonly="readonly"/></td>--%>
+<%--                    <td class="td_left">姓&#12288;&#12288;名：</td>--%>
+<%--                    <td><input type="text" name="userName" value="${param.userName}" class="input"/></td>--%>
+<%--                </tr>--%>
+<%--                <tr>--%>
+<%--                    <td class="td_left">证&ensp;件&ensp;号：</td>--%>
+<%--                    <td><input type="text" name="idNo" value="${param.idNo}" class="input"/></td>--%>
+<%--                    <td class="td_left">审核状态：</td>--%>
+<%--                    <td >--%>
+<%--                        <select name="examStatusId" class="select">--%>
+<%--                            <option value="">全部</option>--%>
+<%--                            <option value="Auditing" ${param.examStatusId eq 'Auditing'?'selected':''}>待审核</option>--%>
+<%--                            <option value="Passed" ${param.examStatusId eq 'Passed'?'selected':''}>审核通过</option>--%>
+<%--                            <option value="NotPassed" ${param.examStatusId eq 'NotPassed'?'selected':''}>审核不通过</option>--%>
+<%--                        </select>--%>
+<%--                    </td>--%>
+<%--                    <td class="td_left">人员类型：</td>--%>
+<%--                    <td colspan="3">--%>
+<%--                        <c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+<%--                            <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>--%>
+<%--                        </c:forEach>--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--                <tr>--%>
+<%--                    <td colspan="8">--%>
+<%--                        <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>--%>
+<%--                        <input class="btn_green" type="button" value="一键审核" onclick="batchAuditOpt()"/>--%>
+<%--                        <input class="btn_green" type="button" value="成绩导入" onclick="impExamResult()"/>--%>
+<%--                        <input class="btn_green" type="button" value="成绩导出" onclick="exportForDetail();"/>--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--            </table>--%>
         </form>
     </div>
     <div id="contentDiv">

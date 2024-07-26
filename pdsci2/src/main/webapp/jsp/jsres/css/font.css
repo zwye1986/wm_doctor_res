@@ -284,7 +284,7 @@ textarea{ width:100%; height:150px;padding:0; resize:none; outline:none;text-ind
 .grid th,.grid td{ line-height:26px; height:40px; padding:0 5px;}
 .grid td{border-bottom:1px solid #e7e7eb;}
 .grid td a{color:#54B2E5;}
-.grid td a:hover{text-decoration:underline;}
+/*.grid td a:hover{opacity: 1;transition: all 0.1s ease 0.5s;visibility: visible;}*/
 
 /*安全中心*/
 .safe_item{ padding:15px 30px; border-bottom:1px solid #e7e7eb;float:left; display:block; width:auto; width:931px;}
@@ -552,5 +552,7 @@ textarea{ width:100%; height:150px;padding:0; resize:none; outline:none;text-ind
 	font-size: 14px;
 	font-style: normal;
 	font-weight: 400;
-	margin: auto;
+	margin-top: auto;
+	margin-bottom: auto;
+	/*margin: auto;*/
 }

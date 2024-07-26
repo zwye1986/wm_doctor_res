@@ -132,6 +132,23 @@
     })(jQuery);
 
 
+     //显示隐藏
+    let flag = false;
+    function showOrHide(){
+
+        if(flag){
+            document.getElementById("hideForm").style.display='none';
+            $("#open").text("展开")
+            flag = false;
+        }else {
+            document.getElementById("hideForm").style.display='inline-block';
+            $("#open").text("收起")
+            flag = true;
+        }
+
+    }
+
+
     //页面加载完成时调用
     $(function(){
         $("#orgSel").likeSearchInit({});
@@ -184,7 +201,7 @@
 
         </div>
 
-        <div style="margin-top: 15px">
+        <div id = "hideForm" style="margin-top: 15px; display: none; justify-content: flex-start" >
             <label class="from_label">科室：</label>
             <input type="hidden" id="deptFlow" name="deptFlow" value="${user.deptFlow}">
             <input id="orgSel" class="toggleView input" type="text" style="width: 151px;/* background-image: url(<s:url value='/jsp/res/images/reorder_w.png'/>);*/ background-repeat: no-repeat;background-position: 127px -4px;" name="deptName" placeholder="请选择科室"
@@ -201,6 +218,7 @@
         <div style="margin-top: 15px;margin-bottom: 15px">
             <input class="btn_green" type="button"  value="查&#12288;询" onclick="toPage(1);"/>
             <input class="btn_green" type="button"  value="导&#12288;出" onclick="exportHospitalSubject();"/>
+            <a style="color: #54B2E5;float: right" onclick="showOrHide()" id="open">展开</a>
         </div>
 
 <%--        <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">--%>

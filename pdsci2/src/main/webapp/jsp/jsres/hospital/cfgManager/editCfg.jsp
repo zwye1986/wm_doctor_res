@@ -351,7 +351,7 @@
                     </tr>
                     </thead>
                     <tr>
-                        <td style="text-align: center;">是否由科主任审核学员技能出科成绩：</td>
+                        <td style="text-align: center;">是否由科主任/教学主任/教学秘书审核学员技能出科成绩：</td>
                         <td style="text-align: left;padding-left: 5px" width="200px">
                             <c:set value="jsres_${sessionScope.currUser.orgFlow }_org_cksh" var="key"/>
                             <input type="hidden" name="cfgCode" value="${key}">
