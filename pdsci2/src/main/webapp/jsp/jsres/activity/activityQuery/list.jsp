@@ -408,7 +408,7 @@ function lookSearchFile(activityFlow,role) {
 					</c:if>
                     <%--签到人数--%>
                      <td>
-						 <font style="font-size: 17px;color: darkviolet">${b.scanNum}</font>
+						 <font style="font-size: 17px">${b.scanNum}</font>
 					 </td>
 					<%--教学活动审核状态--%>
 					 <c:if test="${param.roleFlag ne 'doctor'}">

@@ -147,51 +147,93 @@ $(function(){
 	<div class="div_search" style="padding-left: 40px;">
 				 <form id="searchForm" action="<s:url value="/res/ProfessionalBase/professionalBaseManagerList" />" method="post">
 					 <input id="currentPage" type="hidden" name="currentPage" value=""/>
-					 <table style="width: 100%;">
-						 <tr>
-							 <td style="text-align: right">专业基地：</td>
-							 <td>
-								 <input id="orgSel" class="toggleView input" type="text" name="resTrainingSpeName" value="${param.resTrainingSpeName}" autocomplete="off"/>
-								 <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:35px;left:100px;text-align: left;">
-									 <div id="boxHome" style="max-height: 250px;overflow: auto;border: 1px #ccc solid;background-color: white;min-width: 220px;border-top: none;position: relative;display: none;">
-										 <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="spe">
-											 <c:if test="${spe.dictId ne '50'}">
-												 <p class="item" flow="${spe.dictId}" value="${spe.dictName}" style="height: 25px;padding-left: 10px;">${spe.dictName}</p>
-											 </c:if>
-										 </c:forEach>
-									 </div>
+
+					 <div style="display: flex;justify-content: flex-start; column-gap: 52px;margin-top: 15px">
+						 <div>
+							 <label class="from_label">专业基地：</label>
+							 <input id="orgSel" class="toggleView input" type="text" name="resTrainingSpeName" value="${param.resTrainingSpeName}" autocomplete="off"/>
+							 <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:35px;left:100px;text-align: left;">
+								 <div id="boxHome" style="max-height: 250px;overflow: auto;border: 1px #ccc solid;background-color: white;min-width: 220px;border-top: none;position: relative;display: none;">
+									 <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="spe">
+										 <c:if test="${spe.dictId ne '50'}">
+											 <p class="item" flow="${spe.dictId}" value="${spe.dictName}" style="height: 25px;padding-left: 10px;">${spe.dictName}</p>
+										 </c:if>
+									 </c:forEach>
 								 </div>
-							 </td>
-							 <td style="text-align: right">负&ensp;责&ensp;人：</td>
-							 <td>
-								 <input type="text" name="userName" value="${param.userName}"  class="input"/>
-							 </td>
-							 <td style="text-align: right">用户状态：</td>
-							 <td>
-								 <input id="all" name="statusId" type="radio" value="" onclick="searchUser();"
-										<c:if test='${empty param.statusId}'>checked="checked"</c:if>>
-								 <label for="all">全部</label>&#12288;
-								 <input id="${userStatusEnumActivated.id}" name="statusId" type="radio" value="${userStatusEnumActivated.id}" onclick="searchUser();"
-										<c:if test='${param.statusId==userStatusEnumActivated.id}'>checked="checked"</c:if>>
-								 <label for="${userStatusEnumActivated.id }">${userStatusEnumActivated.name}</label>&#12288;
-								 <input id="${userStatusEnumLocked.id}" name="statusId" type="radio" value="${userStatusEnumLocked.id}" onclick="searchUser();"
-										<c:if test='${param.statusId==userStatusEnumLocked.id}'>checked="checked"</c:if>>
-								 <label for="${userStatusEnumLocked.id }">${userStatusEnumLocked.name}</label>
-							 </td>
-						 </tr>
-						 <tr>
-							 <td style="text-align: right">登&ensp;录&ensp;名：</td>
-							 <td>
-								 <input type="text" name="userCode" value="${param.userCode}" class="input"/>
-							 </td>
-							 <td colspan="4">
-								 <input type="button" class="btn_green" onclick="searchUser();" value="查&#12288;询">
-								 <input type="button" class="btn_green" onclick="addUser();" value="新&#12288;增">
-								 <input type="button" class="btn_green" onclick="deptCfg();" value="科室配置">
-								 <input type="button" class="btn_green" onclick="exportExl();" value="导&#12288;出">
-							 </td>
-						 </tr>
-					 </table>
+							 </div>
+						 </div>
+						 <div>
+							 <label class="from_label">负责人：</label>
+							 <input type="text" name="userName" value="${param.userName}"  class="input"/>
+						 </div>
+						 <div>
+							 <label class="from_label">登录名：</label>
+							 <input type="text" name="userCode" value="${param.userCode}" class="input"/>
+						 </div>
+						 <div>
+							 <label class="from_label">用户状态：</label>
+							 <input id="all" name="statusId" type="radio" value="" onclick="searchUser();"
+									<c:if test='${empty param.statusId}'>checked="checked"</c:if>>
+							 <label for="all">全部</label>&#12288;
+							 <input id="${userStatusEnumActivated.id}" name="statusId" type="radio" value="${userStatusEnumActivated.id}" onclick="searchUser();"
+									<c:if test='${param.statusId==userStatusEnumActivated.id}'>checked="checked"</c:if>>
+							 <label for="${userStatusEnumActivated.id }">${userStatusEnumActivated.name}</label>&#12288;
+							 <input id="${userStatusEnumLocked.id}" name="statusId" type="radio" value="${userStatusEnumLocked.id}" onclick="searchUser();"
+									<c:if test='${param.statusId==userStatusEnumLocked.id}'>checked="checked"</c:if>>
+							 <label for="${userStatusEnumLocked.id }">${userStatusEnumLocked.name}</label>
+						 </div>
+					 </div>
+					 <div style="margin-top: 15px;margin-bottom: 15px">
+						 <input type="button" class="btn_green" onclick="searchUser();" value="查&#12288;询">
+						 <input type="button" class="btn_green" onclick="addUser();" value="新&#12288;增">
+						 <input type="button" class="btn_green" onclick="deptCfg();" value="科室配置">
+						 <input type="button" class="btn_green" onclick="exportExl();" value="导&#12288;出">
+					 </div>
+<%--					 <table style="width: 100%;">--%>
+<%--						 <tr>--%>
+<%--							 <td style="text-align: right">专业基地：</td>--%>
+<%--							 <td>--%>
+<%--								 <input id="orgSel" class="toggleView input" type="text" name="resTrainingSpeName" value="${param.resTrainingSpeName}" autocomplete="off"/>--%>
+<%--								 <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:35px;left:100px;text-align: left;">--%>
+<%--									 <div id="boxHome" style="max-height: 250px;overflow: auto;border: 1px #ccc solid;background-color: white;min-width: 220px;border-top: none;position: relative;display: none;">--%>
+<%--										 <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="spe">--%>
+<%--											 <c:if test="${spe.dictId ne '50'}">--%>
+<%--												 <p class="item" flow="${spe.dictId}" value="${spe.dictName}" style="height: 25px;padding-left: 10px;">${spe.dictName}</p>--%>
+<%--											 </c:if>--%>
+<%--										 </c:forEach>--%>
+<%--									 </div>--%>
+<%--								 </div>--%>
+<%--							 </td>--%>
+<%--							 <td style="text-align: right">负&ensp;责&ensp;人：</td>--%>
+<%--							 <td>--%>
+<%--								 <input type="text" name="userName" value="${param.userName}"  class="input"/>--%>
+<%--							 </td>--%>
+<%--							 <td style="text-align: right">用户状态：</td>--%>
+<%--							 <td>--%>
+<%--								 <input id="all" name="statusId" type="radio" value="" onclick="searchUser();"--%>
+<%--										<c:if test='${empty param.statusId}'>checked="checked"</c:if>>--%>
+<%--								 <label for="all">全部</label>&#12288;--%>
+<%--								 <input id="${userStatusEnumActivated.id}" name="statusId" type="radio" value="${userStatusEnumActivated.id}" onclick="searchUser();"--%>
+<%--										<c:if test='${param.statusId==userStatusEnumActivated.id}'>checked="checked"</c:if>>--%>
+<%--								 <label for="${userStatusEnumActivated.id }">${userStatusEnumActivated.name}</label>&#12288;--%>
+<%--								 <input id="${userStatusEnumLocked.id}" name="statusId" type="radio" value="${userStatusEnumLocked.id}" onclick="searchUser();"--%>
+<%--										<c:if test='${param.statusId==userStatusEnumLocked.id}'>checked="checked"</c:if>>--%>
+<%--								 <label for="${userStatusEnumLocked.id }">${userStatusEnumLocked.name}</label>--%>
+<%--							 </td>--%>
+<%--						 </tr>--%>
+<%--						 <tr>--%>
+<%--							 <td style="text-align: right">登&ensp;录&ensp;名：</td>--%>
+<%--							 <td>--%>
+<%--								 <input type="text" name="userCode" value="${param.userCode}" class="input"/>--%>
+<%--							 </td>--%>
+<%--							 <td colspan="4">--%>
+<%--								 <input type="button" class="btn_green" onclick="searchUser();" value="查&#12288;询">--%>
+<%--								 <input type="button" class="btn_green" onclick="addUser();" value="新&#12288;增">--%>
+<%--								 <input type="button" class="btn_green" onclick="deptCfg();" value="科室配置">--%>
+<%--								 <input type="button" class="btn_green" onclick="exportExl();" value="导&#12288;出">--%>
+<%--							 </td>--%>
+<%--						 </tr>--%>
+<%--					 </table>--%>
 				</form>
 			</div>
 	<div class="div_search" style="padding-left: 40px;">
@@ -215,14 +257,14 @@ $(function(){
 				<td>${user.postName}</td>
 				<td>${user.resTrainingSpeName}</td>
 				<td>${user.statusDesc}</td>
-				<td>
+				<td style="text-align: left;padding-left: 20px;">
 					<c:if test="${user.statusId==userStatusEnumActivated.id}">
-						[<a href="javascript:edit('${user.userFlow}');" >编辑</a>] |
-						[<a href="javascript:resetPasswd('${user.userFlow}');" >重置密码</a>] |
-						[<a href="javascript:lock('${user.userFlow}');" >停用</a>]
+						<a href="javascript:edit('${user.userFlow}');" >编辑</a>
+						<a href="javascript:resetPasswd('${user.userFlow}');" >重置密码</a>
+						<a href="javascript:lock('${user.userFlow}');" >停用</a>
 					</c:if>
 					<c:if test="${user.statusId==userStatusEnumLocked.id}">
-						[<a href="javascript:activate('${user.userFlow}');" >启用</a>]
+						<a href="javascript:activate('${user.userFlow}');" >启用</a>
 					</c:if>
 				</td>
 			</tr>

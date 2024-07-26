@@ -175,91 +175,182 @@ function exportForDetail(){
 	<div class="div_search">
 	<form id="searchForm">
 		<input id="currentPage" type="hidden" name="currentPage"/>
-		<table class="searchTable">
-			<tr>
-				<td class="td_left">培训类别：</td>
-				<td>
-					<select name="catSpeId" id="catSpeId" class="select" onchange="changeTrainSpes(this.value)">
-						<%--<option value="">请选择</option>--%>
-						<option value="DoctorTrainingSpe">住院医师</option>
-						<%--<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
-							<c:if test="${trainCategory.id ne 'WMFirst' and trainCategory.id ne 'WMSecond'}">
-								<option name="${trainCategory.id}"  value="${trainCategory.id}" <c:if test="${param.catSpeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>
-							</c:if>
-						</c:forEach>--%>
-					</select>
-				</td>
-				<td class="td_left">报考专业：</td>
-				<td>
-					<select name="speId" id="speId" class="select">
-						<option value="">全部</option>
-					</select>
-				</td>
-				<td class="td_left">年&#12288;&#12288;级：</td>
-				<td><input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input indexNum" readonly="readonly"/></td>
-				<td class="td_left">姓&#12288;&#12288;名：</td>
-				<td><input type="text" name="userName" value="${param.userName}" class="input"/></td>
-			</tr>
-			<tr>
-				<td class="td_left">证&ensp;件&ensp;号：</td>
-				<td ><input type="text" name="idNo" value="${param.idNo}" class="input"/></td>
-				<td class="td_left">状&#12288;&#12288;态：</td>
-				<td>
-					<select name="reviewFlag" class="select">
-						<option value="">请选择</option>
-						<%--<c:forEach items="${jsResDoctorAuditStatusEnumList}" var="auditStatusEnum">--%>
-							<%--<c:if test="${auditStatusEnum.id ne 'NotSubmit'}">--%>
-								<%--<option name="${auditStatusEnum.id}" value="${auditStatusEnum.id}"--%>
-										<%--<c:if test="${param.doctorStatusId==auditStatusEnum.id || auditStatusEnum.id == 'Auditing'}">selected="selected"</c:if>>${auditStatusEnum.name}</option>--%>
-							<%--</c:if>--%>
-						<%--</c:forEach>--%>
-						<c:if test="${isJointOrg eq 'Y'}">
-							<option name="Auditing" value="Auditing" selected="selected">待审核</option>
-						</c:if>
-						<c:if test="${isJointOrg eq 'N'}">
-							<option name="OrgAuditing" value="OrgAuditing" selected="selected">待审核</option>
-						</c:if>
-						<option name="Passed" value="Passed" <c:if test="${param.doctorStatusId eq 'Passed'}">selected="selected"</c:if>>审核通过</option>
-						<option name="NotPassed" value="NotPassed" <c:if test="${param.doctorStatusId eq 'NotPassed'}">selected="selected"</c:if>>审核不通过</option>
-						<c:if test="${isJointOrg eq 'Y'}">
-							<option name="OrgAuditing" value="OrgAuditing" <c:if test="${param.doctorStatusId eq 'OrgAuditing'}">selected="selected"</c:if>>待主基地审核</option>
-						</c:if>
-					</select>
-				</td>
-				<td class="td_left">人员类型：</td>
-				<td colspan="3">
-					<c:forEach items="${jsResDocTypeEnumList}" var="type">
-						<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
-					</c:forEach>
-				</td>
-			</tr>
-			<tr>
-				<td class="td_left">是否重培：</td>
-				<td>
-					<select name="isRetrain" class="select">
-						<option value="">请选择</option>
-						<option name="${param.isRetrain}" value="Y"
-								<c:if test="${param.isRetrain == 'Y'}">selected="selected"</c:if>>是</option>
-						<option name="${auditStatusEnum.id}" value="N"
-								<c:if test="${param.isRetrain == 'N'}">selected="selected"</c:if>>否</option>
-					</select>
-				</td>
-				<td colspan="8">
 
-				</td>
-			</tr>
-			<tr>
-				<td colspan="8">
-					<c:if test="${sysCfgMap['jsres_is_hospital_audit'] eq 'N' or empty sysCfgMap['jsres_local_sessionNumber']}">
-						<font class="red">（当前时间无法审核医师培训信息！）</font>
+		<div style="display: flex;justify-content: space-between; column-gap: 56px;margin-top: 15px">
+			<div>
+				<label class="from_label">培训类别：</label>
+				<select name="catSpeId" id="catSpeId" class="select" style="width: 161px" onchange="changeTrainSpes(this.value)">
+<%--					<option value="">请选择</option>--%>
+					<option value="DoctorTrainingSpe">住院医师</option>
+					<%--<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
+						<c:if test="${trainCategory.id ne 'WMFirst' and trainCategory.id ne 'WMSecond'}">
+							<option name="${trainCategory.id}"  value="${trainCategory.id}" <c:if test="${param.catSpeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>
+						</c:if>
+					</c:forEach>--%>
+				</select>
+			</div>
+			<div>
+				<label class="from_label">报考专业：</label>
+				<select name="speId" id="speId" class="select" style="width: 161px">
+					<option value="">全部</option>
+				</select>
+			</div>
+			<div>
+				<label class="from_label">年级：</label>
+				<input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input indexNum" readonly="readonly"/>
+			</div>
+			<div>
+				<label class="from_label">姓名：</label>
+				<input type="text" name="userName" value="${param.userName}" class="input"/>
+			</div>
+			<div>
+				<label class="from_label">证件号：</label>
+				<input type="text" name="idNo" value="${param.idNo}" class="input"/>
+			</div>
+		</div>
+		<div style="display: flex;justify-content: flex-start; column-gap: 56px;margin-top: 15px">
+			<div>
+				<label class="from_label">状态：</label>
+				<select name="reviewFlag" class="select" style="width: 161px;">
+					<option value="">请选择</option>
+					<%--<c:forEach items="${jsResDoctorAuditStatusEnumList}" var="auditStatusEnum">--%>
+						<%--<c:if test="${auditStatusEnum.id ne 'NotSubmit'}">--%>
+							<%--<option name="${auditStatusEnum.id}" value="${auditStatusEnum.id}"--%>
+									<%--<c:if test="${param.doctorStatusId==auditStatusEnum.id || auditStatusEnum.id == 'Auditing'}">selected="selected"</c:if>>${auditStatusEnum.name}</option>--%>
+						<%--</c:if>--%>
+					<%--</c:forEach>--%>
+					<c:if test="${isJointOrg eq 'Y'}">
+						<option name="Auditing" value="Auditing" selected="selected">待审核</option>
 					</c:if>
-					<c:if test="${sysCfgMap['jsres_is_hospital_audit'] eq 'Y' and not empty sysCfgMap['jsres_local_sessionNumber']}"><font class="red">（当前时间只能审核${sysCfgMap['jsres_local_sessionNumber']}届医师培训信息！）</font></c:if>
+					<c:if test="${isJointOrg eq 'N'}">
+						<option name="OrgAuditing" value="OrgAuditing" selected="selected">待审核</option>
+					</c:if>
+					<option name="Passed" value="Passed" <c:if test="${param.doctorStatusId eq 'Passed'}">selected="selected"</c:if>>审核通过</option>
+					<option name="NotPassed" value="NotPassed" <c:if test="${param.doctorStatusId eq 'NotPassed'}">selected="selected"</c:if>>审核不通过</option>
+					<c:if test="${isJointOrg eq 'Y'}">
+						<option name="OrgAuditing" value="OrgAuditing" <c:if test="${param.doctorStatusId eq 'OrgAuditing'}">selected="selected"</c:if>>待主基地审核</option>
+					</c:if>
+				</select>
+			</div>
+			<div>
+				<label class="from_label">是否重培：</label>
+				<select name="isRetrain" class="select" style="width: 161px;">
+					<option value="">请选择</option>
+					<option name="${param.isRetrain}" value="Y"
+							<c:if test="${param.isRetrain == 'Y'}">selected="selected"</c:if>>是</option>
+					<option name="${auditStatusEnum.id}" value="N"
+							<c:if test="${param.isRetrain == 'N'}">selected="selected"</c:if>>否</option>
+				</select>
+			</div>
+			<div>
+				<label class="from_label">人员类型：</label>
+				<c:forEach items="${jsResDocTypeEnumList}" var="type">
+					<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
+				</c:forEach>
+			</div>
+		</div>
 
-					<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
-					<input class="btn_green" type="button" value="导&#12288;出" onclick="exportForDetail();"/>
-				</td>
-			</tr>
-		</table>
+		<div style="margin-top: 15px;margin-bottom: 5px">
+			<c:if test="${sysCfgMap['jsres_is_hospital_audit'] eq 'N' or empty sysCfgMap['jsres_local_sessionNumber']}">
+				<font class="red">（当前时间无法审核医师培训信息！）</font>
+			</c:if>
+			<c:if test="${sysCfgMap['jsres_is_hospital_audit'] eq 'Y' and not empty sysCfgMap['jsres_local_sessionNumber']}"><font class="red">（当前时间只能审核${sysCfgMap['jsres_local_sessionNumber']}届医师培训信息！）</font></c:if>
+
+		</div>
+		<div style="margin-top: 5px;margin-bottom: 15px">
+			<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
+			<input class="btn_green" type="button" value="导&#12288;出" onclick="exportForDetail();"/>
+		</div>
+
+
+
+
+
+<%--		<table class="searchTable">--%>
+<%--			<tr>--%>
+<%--				<td class="td_left">培训类别：</td>--%>
+<%--				<td>--%>
+<%--					<select name="catSpeId" id="catSpeId" class="select" onchange="changeTrainSpes(this.value)">--%>
+<%--						&lt;%&ndash;<option value="">请选择</option>&ndash;%&gt;--%>
+<%--						<option value="DoctorTrainingSpe">住院医师</option>--%>
+<%--						&lt;%&ndash;<c:forEach items="${trainCategoryEnumList}" var="trainCategory">--%>
+<%--							<c:if test="${trainCategory.id ne 'WMFirst' and trainCategory.id ne 'WMSecond'}">--%>
+<%--								<option name="${trainCategory.id}"  value="${trainCategory.id}" <c:if test="${param.catSpeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>--%>
+<%--							</c:if>--%>
+<%--						</c:forEach>&ndash;%&gt;--%>
+<%--					</select>--%>
+<%--				</td>--%>
+<%--				<td class="td_left">报考专业：</td>--%>
+<%--				<td>--%>
+<%--					<select name="speId" id="speId" class="select">--%>
+<%--						<option value="">全部</option>--%>
+<%--					</select>--%>
+<%--				</td>--%>
+<%--				<td class="td_left">年&#12288;&#12288;级：</td>--%>
+<%--				<td><input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input indexNum" readonly="readonly"/></td>--%>
+<%--				<td class="td_left">姓&#12288;&#12288;名：</td>--%>
+<%--				<td><input type="text" name="userName" value="${param.userName}" class="input"/></td>--%>
+<%--			</tr>--%>
+<%--			<tr>--%>
+<%--				<td class="td_left">证&ensp;件&ensp;号：</td>--%>
+<%--				<td ><input type="text" name="idNo" value="${param.idNo}" class="input"/></td>--%>
+<%--				<td class="td_left">状&#12288;&#12288;态：</td>--%>
+<%--				<td>--%>
+<%--					<select name="reviewFlag" class="select">--%>
+<%--						<option value="">请选择</option>--%>
+<%--						&lt;%&ndash;<c:forEach items="${jsResDoctorAuditStatusEnumList}" var="auditStatusEnum">&ndash;%&gt;--%>
+<%--							&lt;%&ndash;<c:if test="${auditStatusEnum.id ne 'NotSubmit'}">&ndash;%&gt;--%>
+<%--								&lt;%&ndash;<option name="${auditStatusEnum.id}" value="${auditStatusEnum.id}"&ndash;%&gt;--%>
+<%--										&lt;%&ndash;<c:if test="${param.doctorStatusId==auditStatusEnum.id || auditStatusEnum.id == 'Auditing'}">selected="selected"</c:if>>${auditStatusEnum.name}</option>&ndash;%&gt;--%>
+<%--							&lt;%&ndash;</c:if>&ndash;%&gt;--%>
+<%--						&lt;%&ndash;</c:forEach>&ndash;%&gt;--%>
+<%--						<c:if test="${isJointOrg eq 'Y'}">--%>
+<%--							<option name="Auditing" value="Auditing" selected="selected">待审核</option>--%>
+<%--						</c:if>--%>
+<%--						<c:if test="${isJointOrg eq 'N'}">--%>
+<%--							<option name="OrgAuditing" value="OrgAuditing" selected="selected">待审核</option>--%>
+<%--						</c:if>--%>
+<%--						<option name="Passed" value="Passed" <c:if test="${param.doctorStatusId eq 'Passed'}">selected="selected"</c:if>>审核通过</option>--%>
+<%--						<option name="NotPassed" value="NotPassed" <c:if test="${param.doctorStatusId eq 'NotPassed'}">selected="selected"</c:if>>审核不通过</option>--%>
+<%--						<c:if test="${isJointOrg eq 'Y'}">--%>
+<%--							<option name="OrgAuditing" value="OrgAuditing" <c:if test="${param.doctorStatusId eq 'OrgAuditing'}">selected="selected"</c:if>>待主基地审核</option>--%>
+<%--						</c:if>--%>
+<%--					</select>--%>
+<%--				</td>--%>
+<%--				<td class="td_left">人员类型：</td>--%>
+<%--				<td colspan="3">--%>
+<%--					<c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+<%--						<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>--%>
+<%--					</c:forEach>--%>
+<%--				</td>--%>
+<%--			</tr>--%>
+<%--			<tr>--%>
+<%--				<td class="td_left">是否重培：</td>--%>
+<%--				<td>--%>
+<%--					<select name="isRetrain" class="select">--%>
+<%--						<option value="">请选择</option>--%>
+<%--						<option name="${param.isRetrain}" value="Y"--%>
+<%--								<c:if test="${param.isRetrain == 'Y'}">selected="selected"</c:if>>是</option>--%>
+<%--						<option name="${auditStatusEnum.id}" value="N"--%>
+<%--								<c:if test="${param.isRetrain == 'N'}">selected="selected"</c:if>>否</option>--%>
+<%--					</select>--%>
+<%--				</td>--%>
+<%--				<td colspan="8">--%>
+
+<%--				</td>--%>
+<%--			</tr>--%>
+<%--			<tr>--%>
+<%--				<td colspan="8">--%>
+<%--					<c:if test="${sysCfgMap['jsres_is_hospital_audit'] eq 'N' or empty sysCfgMap['jsres_local_sessionNumber']}">--%>
+<%--						<font class="red">（当前时间无法审核医师培训信息！）</font>--%>
+<%--					</c:if>--%>
+<%--					<c:if test="${sysCfgMap['jsres_is_hospital_audit'] eq 'Y' and not empty sysCfgMap['jsres_local_sessionNumber']}"><font class="red">（当前时间只能审核${sysCfgMap['jsres_local_sessionNumber']}届医师培训信息！）</font></c:if>--%>
+
+<%--					<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>--%>
+<%--					<input class="btn_green" type="button" value="导&#12288;出" onclick="exportForDetail();"/>--%>
+<%--				</td>--%>
+<%--			</tr>--%>
+<%--		</table>--%>
 	</form>
     </div>
     <div id="contentDiv">

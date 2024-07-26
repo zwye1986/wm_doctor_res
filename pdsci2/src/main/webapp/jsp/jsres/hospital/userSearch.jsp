@@ -9,10 +9,10 @@
         background-color: #eee;
     }
 
-    .input{
-        margin: 0 12px 0 4px;
-        width: 176px;
-    }
+    /*.input{*/
+    /*    margin: 0 12px 0 4px;*/
+    /*    width: 161px;*/
+    /*}*/
 
     .btn-group.bootstrap-select {
         margin: 0 12px 0 4px !important;
@@ -53,7 +53,7 @@
         float: none;
     }
     .div_search{
-        line-height: 30px;
+        line-height: 35px;
     }
     .clearfix {
         clear: both;
@@ -215,82 +215,126 @@
     <div class="div_search">
         <form id="searchForm" action="<s:url value="/jsres/manage/teacherList" />" method="post">
             <input type="hidden" name="currentPage" id="currentPage" value="${param.currentPage}">
-            <div style="float: left; margin-bottom: 18px">
-                <label class="td_left">科室名称</label>
-                <div style="display: inline-block">
-                    <input type="text" id="ksmc" name="deptName" value="${param.deptName}" class=" input" autocomplete="off"/>
-                    <input id="ksmcFlow" name="deptFlow" value="${param.deptFlow}" hidden="hidden"/>
-                    <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; left:0px; top:30px;">
-                        <div class="boxHome ksmc" id="ksmcSel"
-                             style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
-                            <c:forEach items="${sysDeptList}" var="dept">
-                                <p class="item ksmc" flow="${dept.deptFlow}" value="${dept.deptName}"
-                                   style="line-height: 25px; padding:0px 0;cursor: default;width: 100% ">${dept.deptName}</p>
-                            </c:forEach>
+
+            <div style="display: flex;justify-content: flex-start; column-gap: 56px;margin-top: 15px">
+                <div>
+                    <label class="from_label">科室名称：</label>
+                    <div style="display: inline-block">
+                        <input type="text" id="ksmc" name="deptName" value="${param.deptName}" class=" input" autocomplete="off"/>
+                        <input id="ksmcFlow" name="deptFlow" value="${param.deptFlow}" hidden="hidden"/>
+                        <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; left:0px; top:30px;">
+                            <div class="boxHome ksmc" id="ksmcSel"
+                                 style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
+                                <c:forEach items="${sysDeptList}" var="dept">
+                                    <p class="item ksmc" flow="${dept.deptFlow}" value="${dept.deptName}"
+                                       style="line-height: 25px; padding:0px 0;cursor: default;width: 100% ">${dept.deptName}</p>
+                                </c:forEach>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div>
+                    <label class="from_label">姓 名：</label>
+                    <input type="text" name="userName" value="${param.userName}" class="input" />
+                </div>
+                <div>
+                    <label class="from_label">用户名：</label>
+                    <input type="text" name="userCode" value="${param.userCode}" class="input"  />
+                </div>
+                <div>
+                    <label class="from_label">手机号：</label>
+                    <input type="text" name="userPhone" value="${param.userPhone}"  class="input"  />
+                </div>
+                <div>
+                    <label class="from_label">证书编号：</label>
+                    <input type="text" name="certificateId" value="${param.certificateId}"  class="input" />
+                </div>
+
             </div>
-            <div style="float: left; margin-bottom: 18px">
-                <label class="td_left">姓名</label>
-                <input type="text" name="userName" value="${param.userName}" class="input" />
+            <div style="margin-top: 15px;margin-bottom: 15px">
+                <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
+                <input type="button" class="btn_green" onclick="editUser('')" value="新&#12288;增">
+                <input type="button" class="btn_green" onclick="importUsers()" value="导&#12288;入">
+                <input type="button" class="btn_green" onclick="exportUser()" value="导&#12288;出">
             </div>
-            <div style="float: left; margin-bottom: 18px">
-                <label class="td_left">用户名</label>
-                <input type="text" name="userCode" value="${param.userCode}" class="input"  />
-            </div>
-            <div style="float: left; margin-bottom: 18px">
-                <label class="td_left">手机号</label>
-                <input type="text" name="userPhone" value="${param.userPhone}"  class="input"  />
-            </div>
-            <div style="float: left; margin-bottom: 18px">
-                <label class="td_left">证书编号</label>
-                <input type="text" name="certificateId" value="${param.certificateId}"  class="input" />
-            </div>
-            <div style="float: left; margin-bottom: 18px">
-                <label class="td_left">用户状态</label>
-                <select name="statusId" class="selectpicker" id="statusId">
-                    <option value="" >全部</option>
-                    <option value="${userStatusEnumActivated.id }" <c:if test='${param.statusId==userStatusEnumActivated.id or empty param.statusId}'>selected</c:if>>${userStatusEnumActivated.name}</option>
-                    <option value="${userStatusEnumLocked.id }" <c:if test='${param.statusId==userStatusEnumLocked.id}'>selected</c:if>>${userStatusEnumLocked.name}</option>
-                </select>
-            </div>
-            <div style="float: left; margin-bottom: 18px">
-                <label class="td_left">角色</label>
-                <select multiple class="selectpicker" name="userRoleList" id="userRoleList" title="请选择角色">
-                    <c:if test="${!empty applicationScope.sysCfgMap['res_teacher_role_flow']}">
-                        <option selected value="${applicationScope.sysCfgMap['res_teacher_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teacher_role_flow']]?sysRoleMap[sysCfgMap['res_teacher_role_flow']].roleName:'带教老师'}</option>
-                    </c:if>
-                    <c:if test="${!empty applicationScope.sysCfgMap['res_head_role_flow']}">
-                        <option selected value="${applicationScope.sysCfgMap['res_head_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_head_role_flow']]?sysRoleMap[sysCfgMap['res_head_role_flow']].roleName:'科主任'}</option>
-                    </c:if>
-                    <c:if test="${!empty applicationScope.sysCfgMap['res_secretary_role_flow']}">
-                        <option selected value="${applicationScope.sysCfgMap['res_secretary_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_secretary_role_flow']]?sysRoleMap[sysCfgMap['res_secretary_role_flow']].roleName:'科秘'}</option>
-                    </c:if>
-                    <c:if test="${!empty applicationScope.sysCfgMap['res_teaching_head_role_flow']}">
-                        <option selected value="${applicationScope.sysCfgMap['res_teaching_head_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teaching_head_role_flow']]?sysRoleMap[sysCfgMap['res_teaching_head_role_flow']].roleName:'教学主任'}</option>
-                    </c:if>
-                    <c:if test="${!empty applicationScope.sysCfgMap['res_teaching_secretary_role_flow']}">
-                        <option selected value="${applicationScope.sysCfgMap['res_teaching_secretary_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teaching_secretary_role_flow']]?sysRoleMap[sysCfgMap['res_teaching_secretary_role_flow']].roleName:'教学秘书'}</option>
-                    </c:if>
-                    <c:if test="${!empty applicationScope.sysCfgMap['res_hospitalLeader_role_flow']}">
-                        <option selected value="${applicationScope.sysCfgMap['res_hospitalLeader_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_hospitalLeader_role_flow']]?sysRoleMap[sysCfgMap['res_hospitalLeader_role_flow']].roleName:'评分专家'}</option>
-                    </c:if>
-                </select>
-            </div>
-            <div style="float: left; margin-bottom: 18px">
-                <c:if test="${ applicationScope.sysCfgMap['sys_user_dept_flag']==GlobalConstant.FLAG_Y }">
-                    <input name="moreDept" type="checkbox" value="${GlobalConstant.FLAG_Y}" class="" <c:if test='${param.moreDept eq GlobalConstant.FLAG_Y}'>checked="checked"</c:if>>
-                    <label style="display: inline-block;margin-left: 8px;margin-right: 12px">多科室</label>
-                </c:if>
-            </div>
-            <div style="float: left;margin-bottom: 18px">
-                <input type="button" class="btn_green" onclick="toPage(1)" value="查询">
-                <input type="button" class="btn_green" onclick="editUser('')" value="新增">
-                <input type="button" class="btn_green" onclick="importUsers()" value="导入">
-                <input type="button" class="btn_green" onclick="exportUser()" value="导出">
-            </div>
-            <div class="clearfix"></div>
+
+
+<%--            <div style="float: left; margin-bottom: 18px">--%>
+<%--                <label class="td_left">科室名称</label>--%>
+<%--                <div style="display: inline-block">--%>
+<%--                    <input type="text" id="ksmc" name="deptName" value="${param.deptName}" class=" input" autocomplete="off"/>--%>
+<%--                    <input id="ksmcFlow" name="deptFlow" value="${param.deptFlow}" hidden="hidden"/>--%>
+<%--                    <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; left:0px; top:30px;">--%>
+<%--                        <div class="boxHome ksmc" id="ksmcSel"--%>
+<%--                             style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">--%>
+<%--                            <c:forEach items="${sysDeptList}" var="dept">--%>
+<%--                                <p class="item ksmc" flow="${dept.deptFlow}" value="${dept.deptName}"--%>
+<%--                                   style="line-height: 25px; padding:0px 0;cursor: default;width: 100% ">${dept.deptName}</p>--%>
+<%--                            </c:forEach>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <div style="float: left; margin-bottom: 18px">--%>
+<%--                <label class="td_left">姓名</label>--%>
+<%--                <input type="text" name="userName" value="${param.userName}" class="input" />--%>
+<%--            </div>--%>
+<%--            <div style="float: left; margin-bottom: 18px">--%>
+<%--                <label class="td_left">用户名</label>--%>
+<%--                <input type="text" name="userCode" value="${param.userCode}" class="input"  />--%>
+<%--            </div>--%>
+<%--            <div style="float: left; margin-bottom: 18px">--%>
+<%--                <label class="td_left">手机号</label>--%>
+<%--                <input type="text" name="userPhone" value="${param.userPhone}"  class="input"  />--%>
+<%--            </div>--%>
+<%--            <div style="float: left; margin-bottom: 18px">--%>
+<%--                <label class="td_left">证书编号</label>--%>
+<%--                <input type="text" name="certificateId" value="${param.certificateId}"  class="input" />--%>
+<%--            </div>--%>
+<%--            <div style="float: left; margin-bottom: 18px">--%>
+<%--                <label class="td_left">用户状态</label>--%>
+<%--                <select name="statusId" class="selectpicker" id="statusId">--%>
+<%--                    <option value="" >全部</option>--%>
+<%--                    <option value="${userStatusEnumActivated.id }" <c:if test='${param.statusId==userStatusEnumActivated.id or empty param.statusId}'>selected</c:if>>${userStatusEnumActivated.name}</option>--%>
+<%--                    <option value="${userStatusEnumLocked.id }" <c:if test='${param.statusId==userStatusEnumLocked.id}'>selected</c:if>>${userStatusEnumLocked.name}</option>--%>
+<%--                </select>--%>
+<%--            </div>--%>
+<%--            <div style="float: left; margin-bottom: 18px">--%>
+<%--                <label class="td_left">角色</label>--%>
+<%--                <select multiple class="selectpicker" name="userRoleList" id="userRoleList" title="请选择角色">--%>
+<%--                    <c:if test="${!empty applicationScope.sysCfgMap['res_teacher_role_flow']}">--%>
+<%--                        <option selected value="${applicationScope.sysCfgMap['res_teacher_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teacher_role_flow']]?sysRoleMap[sysCfgMap['res_teacher_role_flow']].roleName:'带教老师'}</option>--%>
+<%--                    </c:if>--%>
+<%--                    <c:if test="${!empty applicationScope.sysCfgMap['res_head_role_flow']}">--%>
+<%--                        <option selected value="${applicationScope.sysCfgMap['res_head_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_head_role_flow']]?sysRoleMap[sysCfgMap['res_head_role_flow']].roleName:'科主任'}</option>--%>
+<%--                    </c:if>--%>
+<%--                    <c:if test="${!empty applicationScope.sysCfgMap['res_secretary_role_flow']}">--%>
+<%--                        <option selected value="${applicationScope.sysCfgMap['res_secretary_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_secretary_role_flow']]?sysRoleMap[sysCfgMap['res_secretary_role_flow']].roleName:'科秘'}</option>--%>
+<%--                    </c:if>--%>
+<%--                    <c:if test="${!empty applicationScope.sysCfgMap['res_teaching_head_role_flow']}">--%>
+<%--                        <option selected value="${applicationScope.sysCfgMap['res_teaching_head_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teaching_head_role_flow']]?sysRoleMap[sysCfgMap['res_teaching_head_role_flow']].roleName:'教学主任'}</option>--%>
+<%--                    </c:if>--%>
+<%--                    <c:if test="${!empty applicationScope.sysCfgMap['res_teaching_secretary_role_flow']}">--%>
+<%--                        <option selected value="${applicationScope.sysCfgMap['res_teaching_secretary_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teaching_secretary_role_flow']]?sysRoleMap[sysCfgMap['res_teaching_secretary_role_flow']].roleName:'教学秘书'}</option>--%>
+<%--                    </c:if>--%>
+<%--                    <c:if test="${!empty applicationScope.sysCfgMap['res_hospitalLeader_role_flow']}">--%>
+<%--                        <option selected value="${applicationScope.sysCfgMap['res_hospitalLeader_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_hospitalLeader_role_flow']]?sysRoleMap[sysCfgMap['res_hospitalLeader_role_flow']].roleName:'评分专家'}</option>--%>
+<%--                    </c:if>--%>
+<%--                </select>--%>
+<%--            </div>--%>
+<%--            <div style="float: left; margin-bottom: 18px">--%>
+<%--                <c:if test="${ applicationScope.sysCfgMap['sys_user_dept_flag']==GlobalConstant.FLAG_Y }">--%>
+<%--                    <input name="moreDept" type="checkbox" value="${GlobalConstant.FLAG_Y}" class="" <c:if test='${param.moreDept eq GlobalConstant.FLAG_Y}'>checked="checked"</c:if>>--%>
+<%--                    <label style="display: inline-block;margin-left: 8px;margin-right: 12px">多科室</label>--%>
+<%--                </c:if>--%>
+<%--            </div>--%>
+<%--            <div style="float: left;margin-bottom: 18px">--%>
+<%--                <input type="button" class="btn_green" onclick="toPage(1)" value="查询">--%>
+<%--                <input type="button" class="btn_green" onclick="editUser('')" value="新增">--%>
+<%--                <input type="button" class="btn_green" onclick="importUsers()" value="导入">--%>
+<%--                <input type="button" class="btn_green" onclick="exportUser()" value="导出">--%>
+<%--            </div>--%>
+<%--            <div class="clearfix"></div>--%>
         </form>
     </div>
 

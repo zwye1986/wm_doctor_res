@@ -55,10 +55,10 @@
             minViewMode: 2,
             format: 'yyyy'
         });
-        $('select[name=speId]').UCFormSelect();
-        $(".UCSelect").css("width","107px");
-        $(".SelectVal").css("width","170px");
-        $(".SelectBox").css("width","159%");
+        // $('select[name=speId]').UCFormSelect();
+        // $(".UCSelect").css("width","107px");
+        // $(".SelectVal").css("width","170px");
+        // $(".SelectBox").css("width","159%");
 
         toPage();
     });
@@ -140,87 +140,147 @@
 <div class="main_hd">
     <h2 class="underline">督导管理 — 评审项目配置</h2>
 </div>
-<div class="div_search" style="width: 95%;line-height:normal;">
+<div class="div_search" >
     <form id="searchForm">
         <input type="hidden" id="currentPage" name="currentPage"/>
-        <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
-            <tr>
-                <td class="td_left">
-                    <nobr style="font-size: 14px">活动名称：</nobr>
-                </td>
-                <td>
-                    <input id="trainOrg" class="toggleView input" type="text" autocomplete="off" name="activityName"
-                           style="margin-left: 0px;width: 164px" placeholder="请输入活动名称"/>
-                    <input type="hidden" name="orgFlow" id="orgFlow">
-                </td>
-                <td class="td_left">
-                    <nobr style="font-size: 14px">活&nbsp;&nbsp;动&nbsp;&nbsp;形&nbsp;&nbsp;式&nbsp;：</nobr>
-                </td>
-                <td>
-                    <select name="inspectionType" id="inspectionType" class="select" style="width: 170px;">
-                        <option value="">全部</option>
-                        <c:forEach items="${activityTypeEnumList}" var="dict">
-                            <option value="${dict.id}" <c:if test="${param.speId eq dict.id}">selected</c:if>>${dict.name}</option>
-                        </c:forEach>
-                    </select>
-                </td>
-                <td class="td_left">
-                    <nobr style="font-size: 14px">主&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;讲&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人：</nobr>
-                </td>
-                <td>
-                    <input id="teachName" class="toggleView input" type="text" autocomplete="off" name="teachName"
-                               style="margin-left: 0px;width: 164px" placeholder="请输入主讲人"/>
-                </td>
-            </tr>
-            <tr>
 
-                <td class="td_left">
-                    <nobr style="font-size: 14px">科&#12288;&#12288;室：</nobr>
-                </td>
-                <td>
-                    <input type="hidden" id="deptFlow" name="deptFlow" value="${user.deptFlow}">
-                    <input id="orgSel" class="toggleView input" type="text" style="width: 165px;margin-left: 0px;background-image: url(<s:url value='/jsp/res/images/reorder_w.png'/>);background-repeat: no-repeat;background-position: 127px -4px;" name="deptName" placeholder="请选择科室"
-                           value="${user.deptName}" autocomplete="off" title="${param.deptName}" onmouseover="this.title = this.value"/>
-                    <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:35px;left:0px;">
-                        <div id="boxHome" style="max-height: 250px;overflow: auto;border: 1px #ccc solid;background-color: white;min-width: 170px;border-top: none;position: relative;display: none;">
-                            <c:forEach items="${deptList}" var="dept">
-                                <p class="item" flow="${dept.deptFlow}" value="${dept.deptName}" onclick="toDeptFlow('${dept.deptFlow}');" style="height: 30px;padding-left: 10px;text-align: left;">${dept.deptName}</p>
-                            </c:forEach>
-                        </div>
-                    </div>
-                </td>
+        <div style="display: flex;justify-content: space-between; margin-top: 15px">
+            <div>
+                <label class="from_label">活动名称：</label>
+                <input id="trainOrg" class="toggleView input" type="text" autocomplete="off" name="activityName"
+                       style="width: 151px" placeholder="请输入活动名称"/>
+                <input type="hidden" name="orgFlow" id="orgFlow">
+            </div>
+            <div>
+                <label class="from_label">活动形式：</label>
+                <select name="inspectionType" id="inspectionType" class="select" style="width: 161px;">
+                    <option value="">全部</option>
+                    <c:forEach items="${activityTypeEnumList}" var="dict">
+                        <option value="${dict.id}" <c:if test="${param.speId eq dict.id}">selected</c:if>>${dict.name}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div>
+                <label class="from_label">主讲人：</label>
+                <input id="teachName" class="toggleView input" type="text" autocomplete="off" name="teachName"
+                       style="width: 151px" placeholder="请输入主讲人"/>
+            </div>
 
-                <td class="td_left">
-                    <nobr style="font-size: 14px">活动开始时间：</nobr>
-                </td>
-                <td>
-                    <input name="activityStartTime" id="activityStartTime" style="margin-left: 0px;width: 165px;" placeholder="请选择活动开始时间"
-                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})"
-                           onchange="checkJointLocalStart()" value=""
-                           class="input">
-                </td>
+            <div>
+                <label class="from_label">活动开始时间：</label>
+                <input name="activityStartTime" id="activityStartTime" style="width: 151px;" placeholder="请选择活动开始时间"
+                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})"
+                   onchange="checkJointLocalStart()" value=""
+                   class="input"/>
+            </div>
 
-                <td class="td_left">
-                    <nobr style="font-size: 14px">活动结束时间：</nobr>
-                </td>
-                <td>
-                    <input name="activityEndTime" id="activityEndTime" style="margin-left: 0px;width: 165px;" placeholder="请选择活动结束时间"
-                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})"
-                           onchange="checkJointLocalStart()" value=""
-                           class="input">
-                </td>
-    <%--            <td><input class="btn_green" type="button"  style="margin-right: -17px" value="查&#12288;询" onclick="toPage(1);"/>&#12288;</td>
-               &lt;%&ndash; <td><input class="btn_green" type="button"  style="margin-left: 35px;" value="新&#12288;增" onclick="addHospitalSubject();"/>&#12288;</td>&ndash;%&gt;
-                <td><input class="btn_green" type="button"  style="margin-left: 35px;" value="导&#12288;出" onclick="exportHospitalSubject();"/>&#12288;</td>--%>
-            </tr>
-            <tr>
-                <td><input class="btn_green" type="button"  style="margin-right: -17px" value="查&#12288;询" onclick="toPage(1);"/>&#12288;</td>
-                <td><input class="btn_green" type="button"  style="margin-left: 35px;" value="导&#12288;出" onclick="exportHospitalSubject();"/>&#12288;</td>
-            </tr>
-        </table>
+            <div>
+                <label class="from_label">活动结束时间：</label>
+                <input name="activityEndTime" id="activityEndTime" style="width: 151px;" placeholder="请选择活动结束时间"
+                       onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})"
+                       onchange="checkJointLocalStart()" value=""
+                       class="input"/>
+            </div>
+
+        </div>
+
+        <div style="margin-top: 15px">
+            <label class="from_label">科室：</label>
+            <input type="hidden" id="deptFlow" name="deptFlow" value="${user.deptFlow}">
+            <input id="orgSel" class="toggleView input" type="text" style="width: 151px;/* background-image: url(<s:url value='/jsp/res/images/reorder_w.png'/>);*/ background-repeat: no-repeat;background-position: 127px -4px;" name="deptName" placeholder="请选择科室"
+                   value="${user.deptName}" autocomplete="off" title="${param.deptName}" onmouseover="this.title = this.value"/>
+            <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:35px;left:0px;">
+                <div id="boxHome" style="max-height: 250px;overflow: auto;border: 1px #ccc solid;background-color: white;margin-left: 46px; min-width: 159px;border-top: none;position: relative;display: none;">
+                    <c:forEach items="${deptList}" var="dept">
+                        <p class="item" flow="${dept.deptFlow}" value="${dept.deptName}" onclick="toDeptFlow('${dept.deptFlow}');" style="height: 30px;padding-left: 10px;text-align: left;">${dept.deptName}</p>
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 15px;margin-bottom: 15px">
+            <input class="btn_green" type="button"  value="查&#12288;询" onclick="toPage(1);"/>
+            <input class="btn_green" type="button"  value="导&#12288;出" onclick="exportHospitalSubject();"/>
+        </div>
+
+<%--        <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">--%>
+<%--            <tr>--%>
+<%--                <td class="td_left">--%>
+<%--                    <nobr style="font-size: 14px">活动名称：</nobr>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <input id="trainOrg" class="toggleView input" type="text" autocomplete="off" name="activityName"--%>
+<%--                           style="margin-left: 0px;width: 164px" placeholder="请输入活动名称"/>--%>
+<%--                    <input type="hidden" name="orgFlow" id="orgFlow">--%>
+<%--                </td>--%>
+<%--                <td class="td_left">--%>
+<%--                    <nobr style="font-size: 14px">活&nbsp;&nbsp;动&nbsp;&nbsp;形&nbsp;&nbsp;式&nbsp;：</nobr>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <select name="inspectionType" id="inspectionType" class="select" style="width: 170px;">--%>
+<%--                        <option value="">全部</option>--%>
+<%--                        <c:forEach items="${activityTypeEnumList}" var="dict">--%>
+<%--                            <option value="${dict.id}" <c:if test="${param.speId eq dict.id}">selected</c:if>>${dict.name}</option>--%>
+<%--                        </c:forEach>--%>
+<%--                    </select>--%>
+<%--                </td>--%>
+<%--                <td class="td_left">--%>
+<%--                    <nobr style="font-size: 14px">主&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;讲&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人：</nobr>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <input id="teachName" class="toggleView input" type="text" autocomplete="off" name="teachName"--%>
+<%--                               style="margin-left: 0px;width: 164px" placeholder="请输入主讲人"/>--%>
+<%--                </td>--%>
+<%--            </tr>--%>
+<%--            <tr>--%>
+
+<%--                <td class="td_left">--%>
+<%--                    <nobr style="font-size: 14px">科&#12288;&#12288;室：</nobr>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <input type="hidden" id="deptFlow" name="deptFlow" value="${user.deptFlow}">--%>
+<%--                    <input id="orgSel" class="toggleView input" type="text" style="width: 165px;margin-left: 0px;background-image: url(<s:url value='/jsp/res/images/reorder_w.png'/>);background-repeat: no-repeat;background-position: 127px -4px;" name="deptName" placeholder="请选择科室"--%>
+<%--                           value="${user.deptName}" autocomplete="off" title="${param.deptName}" onmouseover="this.title = this.value"/>--%>
+<%--                    <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:35px;left:0px;">--%>
+<%--                        <div id="boxHome" style="max-height: 250px;overflow: auto;border: 1px #ccc solid;background-color: white;min-width: 170px;border-top: none;position: relative;display: none;">--%>
+<%--                            <c:forEach items="${deptList}" var="dept">--%>
+<%--                                <p class="item" flow="${dept.deptFlow}" value="${dept.deptName}" onclick="toDeptFlow('${dept.deptFlow}');" style="height: 30px;padding-left: 10px;text-align: left;">${dept.deptName}</p>--%>
+<%--                            </c:forEach>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </td>--%>
+
+<%--                <td class="td_left">--%>
+<%--                    <nobr style="font-size: 14px">活动开始时间：</nobr>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <input name="activityStartTime" id="activityStartTime" style="margin-left: 0px;width: 165px;" placeholder="请选择活动开始时间"--%>
+<%--                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})"--%>
+<%--                           onchange="checkJointLocalStart()" value=""--%>
+<%--                           class="input">--%>
+<%--                </td>--%>
+
+<%--                <td class="td_left">--%>
+<%--                    <nobr style="font-size: 14px">活动结束时间：</nobr>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <input name="activityEndTime" id="activityEndTime" style="margin-left: 0px;width: 165px;" placeholder="请选择活动结束时间"--%>
+<%--                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})"--%>
+<%--                           onchange="checkJointLocalStart()" value=""--%>
+<%--                           class="input">--%>
+<%--                </td>--%>
+<%--    &lt;%&ndash;            <td><input class="btn_green" type="button"  style="margin-right: -17px" value="查&#12288;询" onclick="toPage(1);"/>&#12288;</td>--%>
+<%--               &lt;%&ndash; <td><input class="btn_green" type="button"  style="margin-left: 35px;" value="新&#12288;增" onclick="addHospitalSubject();"/>&#12288;</td>&ndash;%&gt;--%>
+<%--                <td><input class="btn_green" type="button"  style="margin-left: 35px;" value="导&#12288;出" onclick="exportHospitalSubject();"/>&#12288;</td>&ndash;%&gt;--%>
+<%--            </tr>--%>
+<%--            <tr>--%>
+<%--                <td><input class="btn_green" type="button"  style="margin-right: -17px" value="查&#12288;询" onclick="toPage(1);"/>&#12288;</td>--%>
+<%--                <td><input class="btn_green" type="button"  style="margin-left: 35px;" value="导&#12288;出" onclick="exportHospitalSubject();"/>&#12288;</td>--%>
+<%--            </tr>--%>
+<%--        </table>--%>
 
     </form>
 </div>
-<div id="doctorListZi" style="width: 95%">
+<div id="doctorListZi">
 
 </div>

@@ -11,7 +11,7 @@ function teacherManage(){
 </script>
 
 <div class="main_hd">
-	<h2>师资管理</h2>
+	<h2 class="underline" >师资管理</h2>
 </div>
 
 <div class="main_bd" id="div_table_0" >

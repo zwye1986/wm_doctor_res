@@ -93,10 +93,13 @@
         }
     }
 
-    function showSessionNumber(flag) {
-        if(flag == "Y"){
+    function showSessionNumber(flag,show) {
+        if(flag === "Y"){
             $("#sessionNumberList").show();
             $("#sessionDetail").show();
+            if(show){
+                addCkxzConfg();
+            }
         }else {
             $("#sessionNumberList").hide();
             $("#sessionDetail").hide();
@@ -402,11 +405,13 @@
                             <c:set value="jsres_${sessionScope.currUser.orgFlow }_org_ckxz" var="key"/>
                             <input type="hidden" name="cfgCode" value="${key}">
                             &nbsp;
-                            <input type="radio" id="${key}_y" name="${key}" value="Y" onclick="showSessionNumber('Y')"
+                            <input type="radio" id="${key}_y" name="${key}" value="Y"
+                                   <c:if test="${empty orgCkxzList}">onclick="showSessionNumber('Y',true)"</c:if>
+                                   <c:if test="${not empty orgCkxzList}">onclick="showSessionNumber('Y',false)"</c:if>
                                    <c:if test="${pdfn:jsresPowerCfgMap(key) eq 'Y'}">checked</c:if>/>
                                 <label for="${key}_y">是</label>&#12288;
                             <input type="radio" id="${key}_n" name="${key}" value="N" onclick="showSessionNumber('N')"
-                                   <c:if test="${empty pdfn:jsresPowerCfgMap(key) or pdfn:jsresPowerCfgMap(key) eq 'N'}">checked</c:if>/>
+                                   <c:if test="${empty pdfn:jsresPowerCfgMap(key) or pdfn:jsresPowerCfgMap(key) eq 'N' or empty orgCkxzList}">checked</c:if>/>
                                 <label for="${key}_n">否</label>
                             <input type="hidden" name="${key}_ws_id" value="res">
                             <input type="hidden" name="${key}_desc" value="是否限制学员出科后，才可添加轮转科室">

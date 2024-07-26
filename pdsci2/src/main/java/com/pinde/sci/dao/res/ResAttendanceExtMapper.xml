@@ -817,6 +817,14 @@
         <if test='deptFlow != null and deptFlow!=""' >
             and b.sch_dept_flow =#{deptFlow}
         </if>
+
+        <if test='kqType != null and kqType!="" and  kqType== "Y"' >
+            and  ja.ATTENDANCE_FLOW is not null
+        </if>
+        <if test='kqType != null and kqType!="" and  kqType== "N"' >
+            and  ja.ATTENDANCE_FLOW is null
+        </if>
+
         <if test='statueId != null and statueId!=""' >
             and ja.ATTEND_STATUS=#{statueId}
         </if>

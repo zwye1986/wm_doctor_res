@@ -62,7 +62,7 @@
     }
 </script>
 <c:if test="${empty list}">
-    <div class="search_table" style="width: 100%;padding: 0 20px">
+    <div class="search_table" >
         <table border="0" cellpadding="0" cellspacing="0" class="grid">
             <tr>
                 <th>活动名称</th>
@@ -81,7 +81,7 @@
     </div>
 </c:if>
 <c:if test="${not empty list}">
-    <div class="search_table" style="width: 100%;padding: 0 20px">
+    <div class="search_table" >
         <table border="0" cellpadding="0" cellspacing="0" class="grid">
             <tr>
                 <th width="15%">活动名称</th>
@@ -134,10 +134,10 @@
 
                     <td>
                         <c:if test="${empty s.startTime}">
-                            <input class="btn_green" type="button" value="评审配置" onclick="editSubject('${s.subjectFlow}');"/>
+                            <a  value="评审配置" onclick="editSubject('${s.subjectFlow}');">评审配置</a>
                         </c:if>
                         <c:if test="${not empty s.startTime}">
-                            <input class="btn_green" type="button" style="background-color: #a8a8a8" value="评审配置"/>
+                            <a  style="background-color: #a8a8a8" value="评审配置">评审配置</a>
                         </c:if>
                     </td>
 
@@ -149,7 +149,7 @@
     </div>
 </c:if>
 </div>
-<div class="page" style="text-align: center">
+<div class="page" style="text-align: right">
     <c:set var="pageView" value="${pdfn:getPageView(list)}" scope="request"></c:set>
     <pd:pagination-jsres toPage="toPage"/>
 </div>

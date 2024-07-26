@@ -83,7 +83,7 @@
 		<span style="margin-left: 2%;font-weight: bold;color: red;font-size: 14px">初始密码：Njpd@2022!!!</span>
 	</div>
 
-	<div class="main_bd clearfix" style="width: 100%;padding: 0 20px">
+	<div class="main_bd clearfix" style="padding: 0 30px">
 		<table id="dataTable" border="0" cellpadding="0" cellspacing="0" class="grid" >
 			<thead>
 			<tr>
@@ -117,8 +117,8 @@
 						</td>
 					</c:if>
 					<td style="width: 200px;">
-						<a class="btn_green" style="color: white" href="javascript:void(0);" onclick="editSupervisioUser('edit','${s.userFlow}');">编辑</a>
-						<a class="btn_green" style="color: white" href="javascript:void(0);" onclick="delSupervisioUser('${s.userFlow}');">删除</a>
+						<a  style="margin-right: 10px" href="javascript:void(0);" onclick="editSupervisioUser('edit','${s.userFlow}');">编辑</a>
+						<a  href="javascript:void(0);" onclick="delSupervisioUser('${s.userFlow}');">删除</a>
 					</td>
 				</tr>
 			</c:forEach>
@@ -127,7 +127,7 @@
 	</div>
 </c:if>
 
-<div class="page" style="text-align: center">
+<div class="page" style="text-align: right">
 	<c:set var="pageView" value="${pdfn:getPageView(list)}" scope="request"></c:set>
 	<pd:pagination-jsres toPage="toPage"/>
 </div>

@@ -162,42 +162,74 @@
             <input id="roleFlow" type="hidden" name="roleFlow" value="${sysRole.roleFlow}"/>
             <input type="hidden" name="orgFlow" value="${sessionScope.currUser.orgFlow}"/>
             <input id="currentPage" type="hidden" name="currentPage" value=""/>
-            <table>
-                <tr>
-                    <td>
-                        科&#12288;&#12288;室：
-                        <select name="deptFlow" class="select" style="width: 134px">
+                <div style="display: flex;justify-content: flex-start; column-gap: 56px;margin-top: 15px">
+                    <div>
+                        <label class="from_label">科室：</label>
+                        <select name="deptFlow" class="select" style="width: 161px">
                             <option value="">全部</option>
                             <c:forEach items="${depts}" var="dept">
                                 <option value="${dept.deptFlow}"
                                         <c:if test="${param.deptFlow eq dept.deptFlow}">selected</c:if>>${dept.deptName}</option>
                             </c:forEach>
                         </select>
-                        姓&#12288;&#12288;名：
+                    </div>
+                    <div>
+                        <label class="from_label">姓名：</label>
                         <input type="text" name="userName" value="${param.userName}" class="input"
-                               style="width: 128px;"/>
-                        联系方式：
+                               style="width: 155px;"/>
+                    </div>
+                    <div>
+                        <label class="from_label">联系方式：</label>
                         <input type="text" name="userPhone" value="${param.userPhone}" class="input"
-                               style="width: 128px;"/>
-                        状&#12288;&#12288;态：
-                        <select name="statusId" class="select" style="width: 134px">
+                               style="width: 155px;"/>
+                    </div>
+                    <div>
+                        <label class="from_label">状态：</label>
+                        <select name="statusId" class="select" style="width: 161px">
                             <option value="">全部</option>
                             <c:forEach items="${nurseStatusEnums}" var="nurseStatusEnum">
                                 <option value="${nurseStatusEnum.id}"
                                         <c:if test="${param.statusId eq nurseStatusEnum.id}">selected</c:if>>${nurseStatusEnum.name}</option>
                             </c:forEach>
                         </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input class="btn_green" type="button" onclick="searchUser()" value="查&#12288;询"/>&#12288;
-                        <input class="btn_green" type="button" onclick="add()" value="新&#12288;增"/>&#12288;
-                        <input class="btn_green" type="button" onclick="importUsers()" value="导&#12288;入"/>&#12288;
-                        <input type="button" class="btn_green" onclick="exportUser();" value="导&#12288;出">
-                    </td>
-                </tr>
-            </table>
+                    </div>
+                </div>
+                <div style="margin-top: 15px;margin-bottom: 15px">
+                    <input class="btn_green" type="button" onclick="searchUser()" value="查&#12288;询"/>
+                    <input class="btn_green" type="button" onclick="add()" value="新&#12288;增"/>
+                    <input class="btn_green" type="button" onclick="importUsers()" value="导&#12288;入"/>
+                    <input type="button" class="btn_green" onclick="exportUser();" value="导&#12288;出">
+                </div>
+<%--                        科&#12288;&#12288;室：--%>
+<%--                        <select name="deptFlow" class="select" style="width: 134px">--%>
+<%--                            <option value="">全部</option>--%>
+<%--                            <c:forEach items="${depts}" var="dept">--%>
+<%--                                <option value="${dept.deptFlow}"--%>
+<%--                                        <c:if test="${param.deptFlow eq dept.deptFlow}">selected</c:if>>${dept.deptName}</option>--%>
+<%--                            </c:forEach>--%>
+<%--                        </select>--%>
+<%--                        姓&#12288;&#12288;名：--%>
+<%--                        <input type="text" name="userName" value="${param.userName}" class="input"--%>
+<%--                               style="width: 128px;"/>--%>
+<%--                        联系方式：--%>
+<%--                        <input type="text" name="userPhone" value="${param.userPhone}" class="input"--%>
+<%--                               style="width: 128px;"/>--%>
+<%--                        状&#12288;&#12288;态：--%>
+<%--                        <select name="statusId" class="select" style="width: 134px">--%>
+<%--                            <option value="">全部</option>--%>
+<%--                            <c:forEach items="${nurseStatusEnums}" var="nurseStatusEnum">--%>
+<%--                                <option value="${nurseStatusEnum.id}"--%>
+<%--                                        <c:if test="${param.statusId eq nurseStatusEnum.id}">selected</c:if>>${nurseStatusEnum.name}</option>--%>
+<%--                            </c:forEach>--%>
+<%--                        </select>--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--                <tr>--%>
+<%--                    <td style="text-align: left">--%>
+
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--            </table>--%>
         </form>
     </div>
     <div class="search_table">
@@ -225,14 +257,14 @@
                     <td>${sysUser.userName}</td>
                     <td>${sysUser.userPhone}</td>
                     <td>${sysUser.statusDesc}</td>
-                    <td style="text-align: left;padding-left: 5px;">
+                    <td style="text-align: left;padding-left: 10px;">
                         <c:if test="${sysUser.statusId==userStatusEnumActivated.id}">
-                            [<a href="javascript:edit('${sysUser.userFlow}');" >编辑</a>] |
-                            [<a href="javascript:lock('${sysUser.userFlow}');" >锁定</a>] |
-                            [<a href="javascript:resetPasswd('${sysUser.userFlow}');" >重置密码</a>]
+                            <a href="javascript:edit('${sysUser.userFlow}');" >编辑</a>
+                            <a href="javascript:lock('${sysUser.userFlow}');" >锁定</a>
+                            <a href="javascript:resetPasswd('${sysUser.userFlow}');" >重置密码</a>
                         </c:if>
                         <c:if test="${sysUser.statusId==userStatusEnumLocked.id}">
-                            [<a href="javascript:activate('${sysUser.userFlow}');" >解锁</a>]
+                            <a href="javascript:activate('${sysUser.userFlow}');" >解锁</a>
                         </c:if>
                        <%-- <c:if test="${GlobalConstant.FLAG_Y eq applicationScope.sysCfgMap['sys_user_delete_flag']}">
                             | [<a href="javascript:deleteUser('${sysUser.userFlow}');" >删除</a>]

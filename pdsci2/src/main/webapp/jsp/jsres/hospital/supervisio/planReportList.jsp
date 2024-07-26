@@ -89,7 +89,8 @@
     </div>
 </c:if>
 <c:if test="${not empty list}">
-    <div class="main_bd clearfix" style="width: 100%;padding: 0px 20px">
+    <div class="main_bd" style="width: 100%;">
+        <div class="div_search">
         <table id="dataTable" border="0" cellpadding="0" cellspacing="0" class="grid">
             <thead>
             <tr>
@@ -108,17 +109,18 @@
                     <td>${s.orgName}</td>
                     <td>${s.subjectYear}</td>
                     <td>
-                        <a class="btn_blue" style="width: 56px;color: white;margin-top: -1px" href="javascript:void(0);"
+                        <a  style="width: 56px;margin-top: -1px" href="javascript:void(0);"
                            onclick="setFeedback('${s.subjectActivitiFlows}','major','${s.devTime}','${s.devTimeClose}');">自评反馈</a>
                     </td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
+        </div>
     </div>
 </c:if>
 
-<div class="page" style="text-align: center">
+<div class="page" style="text-align: right">
     <c:set var="pageView" value="${pdfn:getPageView(list)}" scope="request"></c:set>
     <pd:pagination-jsres toPage="toPage"/>
 </div>

@@ -82,40 +82,66 @@
 <div class="main_hd">
     <h2 class="underline">专业基地自评</h2>
 </div>
-<div class="div_search" style="width: 95%;line-height:normal;">
+<div class="div_search">
     <form id="searchForm">
         <input type="hidden" id="currentPage" name="currentPage"/>
-        <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
-            <tr>
-                <td class="td_left">
-                    <nobr>自评年份：</nobr>
-                </td>
-                <td>
-                    <input class="input" name="sessionNumber" id="sessionNumber" type="text" style="width: 120px;"
-                           value="${param.sessionNumber==null?pdfn:getCurrYear():param.sessionNumber}"/>
-                </td>
 
-                <td class="td_left">
-                    <nobr>专业：</nobr>
-                </td>
-                <td>
-                    <select name="speId" id="speId" class="select" style="margin-left:5px;width: 160px;">
-                        <option value="">全部</option>
-                        <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
-                            <option value="${dict.dictId}" ${param.speId eq dict.dictId?'selected':''}
-                                    <c:if test="${'50' eq dict.dictId}">style="display: none" </c:if>
-                            >${dict.dictName}</option>
-                        </c:forEach>
-                    </select>
-                </td>
+        <div style="display: flex;justify-content: flex-start; column-gap: 56px;margin-top: 15px">
+            <div>
+                <label class="from_label">自评年份：</label>
+                <input class="input" name="sessionNumber" id="sessionNumber" type="text" style="width: 161px;"
+                       value="${param.sessionNumber==null?pdfn:getCurrYear():param.sessionNumber}"/>
+            </div>
+            <div>
+                <label class="from_label">专业：</label>
+                <select name="speId" id="speId" class="select" style="margin-left:5px;width: 160px;">
+                    <option value="">全部</option>
+                    <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
+                        <option value="${dict.dictId}" ${param.speId eq dict.dictId?'selected':''}
+                                <c:if test="${'50' eq dict.dictId}">style="display: none" </c:if>
+                        >${dict.dictName}</option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
+        <div style="margin-top: 15px;margin-bottom: 15px">
+            <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
+        </div>
 
-                <td colspan="2">
-                    <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>&#12288;
-                </td>
-            </tr>
-        </table>
+
+
+
+<%--        <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">--%>
+<%--            <tr>--%>
+<%--                <td class="td_left">--%>
+<%--                    <nobr>自评年份：</nobr>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <input class="input" name="sessionNumber" id="sessionNumber" type="text" style="width: 161px;"--%>
+<%--                           value="${param.sessionNumber==null?pdfn:getCurrYear():param.sessionNumber}"/>--%>
+<%--                </td>--%>
+
+<%--                <td class="td_left">--%>
+<%--                    <nobr>专业：</nobr>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <select name="speId" id="speId" class="select" style="margin-left:5px;width: 160px;">--%>
+<%--                        <option value="">全部</option>--%>
+<%--                        <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">--%>
+<%--                            <option value="${dict.dictId}" ${param.speId eq dict.dictId?'selected':''}--%>
+<%--                                    <c:if test="${'50' eq dict.dictId}">style="display: none" </c:if>--%>
+<%--                            >${dict.dictName}</option>--%>
+<%--                        </c:forEach>--%>
+<%--                    </select>--%>
+<%--                </td>--%>
+
+<%--                <td colspan="2">--%>
+<%--                    <input class="btn_green" style="float: right" type="button" value="查&#12288;询" onclick="toPage(1);"/>--%>
+<%--                </td>--%>
+<%--            </tr>--%>
+<%--        </table>--%>
     </form>
 </div>
-<div id="doctorListZi" style="width: 95%">
+<div id="doctorListZi" >
 
 </div>
