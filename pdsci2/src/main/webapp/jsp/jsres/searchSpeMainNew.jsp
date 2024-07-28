@@ -310,26 +310,24 @@
                     <table class="searchTable">
                         <tr>
                             <td class="td_left">地&#12288;&#12288;市：</td>
-                            <td>
+                            <td class="td_right">
                                 <select id="cityId2" name="cityId" class="select" onchange="changeOrg(this)" ></select>
                             </td>
                             <td class="td_left">培训基地：</td>
-                            <td>
+                            <td class="td_right">
                                 <input id="trainOrg"  class="toggleView input" type="text"  autocomplete="off" style="margin-left: 0px;width: 134px"  />
                                 <input type="hidden" name="orgFlow" id="orgFlow" value="${param.orgFlow}">
                             </td>
                             <td class="td_left">姓&#12288;&#12288;名：</td>
-                            <td>
+                            <td class="td_right">
                                 <input type="text" name="doctorName" value="${param.doctorName}" class="input"/>
                             </td>
                             <td class="td_left">届&#12288;&#12288;别：</td>
-                            <td>
+                            <td class="td_right">
                                 <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input"   readonly="readonly" />
                             </td>
-                        </tr>
-                        <tr>
                             <td class="td_left"> 是否通过：</td>
-                            <td>
+                            <td class="td_right">
                                 <select name="passFlag" class="select">
                                     <option value="">请选择</option>
                                     <option value="BaseWaitingAudit"
@@ -349,8 +347,10 @@
                                     </option>
                                 </select>
                             </td>
+                        </tr>
+                        <tr>
                             <td class="td_left">学员状态：</td>
-                            <td>
+                            <td class="td_right">
                                 <select name="doctorStatusId" class="select" style="width: 140px">
                                     <option value="">全部</option>
                                     <option value="20" ${param.doctorStatusId eq '20'?'selected':''}>在培</option>
@@ -383,26 +383,24 @@
                     <table class="searchTable">
                         <tr>
                             <td class="td_left">地&#12288;&#12288;市：</td>
-                            <td>
+                            <td class="td_right">
                                 <select id="cityId2" name="cityId" class="select" onchange="changeOrg(this)" style="width: 134px"></select>
                             </td>
                             <td class="td_left">培训基地：</td>
-                            <td>
+                            <td class="td_right">
                                 <input id="trainOrg"  class="toggleView input" type="text" autocomplete="off" style="margin-left: 0px;width: 134px"  />
                                 <input type="hidden" name="orgFlow" id="orgFlow" value="${param.orgFlow}">
                             </td>
                             <td class="td_left">姓&#12288;&#12288;名：</td>
-                            <td>
+                            <td class="td_right">
                                 <input type="text" name="doctorName" value="${param.doctorName}" class="input"/>
                             </td>
                             <td class="td_left">届&#12288;&#12288;别：</td>
-                            <td>
+                            <td class="td_right">
                                 <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input"   readonly="readonly" />
                             </td>
-                        </tr>
-                        <tr>
                             <td class="td_left">学员状态：</td>
-                            <td>
+                            <td class="td_right">
                                 <select name="doctorStatusId" class="select" style="width: 134px">
                                     <option value="">全部</option>
                                     <option value="20" ${param.doctorStatusId eq '20'?'selected':''}>在培</option>
@@ -410,6 +408,9 @@
                                     <option value="21" ${param.doctorStatusId eq '21'?'selected':''}>结业</option>
                                 </select>
                             </td>
+                        </tr>
+                        <tr>
+
                             <td class="td_left">人员类型：</td>
                             <td colspan="3">
                                 <c:forEach items="${jsResDocTypeEnumList}" var="type">
@@ -436,11 +437,11 @@
                 <table class="searchTable">
                     <tr>
                         <td class="td_left">姓&#12288;&#12288;名：</td>
-                        <td>
+                        <td class="td_right">
                             <input type="text" name="doctorName" value="${param.doctorName}" class="input"/>
                         </td>
                         <td class="td_left">年&#12288;&#12288;级：</td>
-                        <td>
+                        <td class="td_right">
                             <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input"   readonly="readonly" />
                         </td>
                         <td class="td_left">人员类型：</td>
@@ -461,15 +462,15 @@
                 <table class="searchTable">
                     <tr>
                         <td class="td_left">姓&#12288;&#12288;名：</td>
-                        <td>
+                        <td class="td_right">
                             <input type="text" name="doctorName" value="${param.doctorName}" class="input"/>
                         </td>
                         <td class="td_left">年&#12288;&#12288;级：</td>
-                        <td>
+                        <td class="td_right">
                             <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input"   readonly="readonly" />
                         </td>
                         <td class="td_left">是否通过：</td>
-                        <td>
+                        <td class="td_right">
                             <select name="passFlag" class="select">
                                 <option value="">请选择</option>
                                 <option value="BaseWaitingAudit"
@@ -489,11 +490,9 @@
                                 </option>
                             </select>
                         </td>
-                    </tr>
-                    <tr>
                         <c:if test="${JointOrgCount ne '0'}">
                             <td class="td_left">培训基地：</td>
-                            <td>
+                            <td class="td_right">
                                 <select class="select" name="orgFlow0" style="width: 133px;" onchange="searchDeptList(this.value)">
                                     <option value="all" <c:if test="${orgFlow eq 'all'}">selected="selected"</c:if>>全部</option>
                                     <c:forEach items="${orgList}" var="org">
@@ -502,15 +501,30 @@
                                 </select>
                             </td>
                         </c:if>
+                    </tr>
+                    <tr>
+<%--                        <c:if test="${JointOrgCount ne '0'}">--%>
+<%--                            <td class="td_left">培训基地：</td>--%>
+<%--                            <td class="td_right">--%>
+<%--                                <select class="select" name="orgFlow0" style="width: 133px;" onchange="searchDeptList(this.value)">--%>
+<%--                                    <option value="all" <c:if test="${orgFlow eq 'all'}">selected="selected"</c:if>>全部</option>--%>
+<%--                                    <c:forEach items="${orgList}" var="org">--%>
+<%--                                        <option value="${org.orgFlow}" <c:if test="${orgFlow == org.orgFlow}">selected="selected"</c:if>>${org.orgName}</option>--%>
+<%--                                    </c:forEach>--%>
+<%--                                </select>--%>
+<%--                            </td>--%>
+<%--                        </c:if>--%>
                         <td class="td_left">人员类型：</td>
                         <td colspan="3">
                             <c:forEach items="${jsResDocTypeEnumList}" var="type">
                                 <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
                             </c:forEach>
-                            <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
                         </td>
                     </tr>
                 </table>
+                <div style="margin-bottom: 15px">
+                    <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
+                </div>
             </c:if>
         </c:if>
             <c:if test="${GlobalConstant.USER_LIST_CHARGE eq sessionScope.userListScope}">

@@ -18,7 +18,8 @@ function responsibleTeacherCfg(doctorFlow) {
 <style>
 	.searchTable .td_left {
 		word-wrap: break-word;
-		width: 6em;
+		/*width: 6em;*/
+		width: auto;
 		height: auto;
 		line-height: auto;
 		text-align: left;

@@ -77,7 +77,7 @@
                 <table class="searchTable">
                     <tr>
                         <td class="td_left">培训专业：</td>
-                        <td>
+                        <td class="td_right">
                             <select name="trainingSpeId" id="trainingSpeId" class="select" style="width:107px;">
                                 <option value="">请选择</option>
                                 <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
@@ -88,12 +88,12 @@
                             </select>
                         </td>
                         <td class="td_left">姓&#12288;&#12288;名：</td>
-                        <td>
+                        <td class="td_right">
                             <input type="text" name="doctorName" value="${param.doctorName}" class="input"
                                    style="width: 100px;"/>&#12288;
                         </td>
                         <td class="td_left">证件号码：</td>
-                        <td>
+                        <td class="td_right">
                             <input type="text" id="idNo" name="idNo" value="${param.idNo}"
                                    class="input" style="width: 100px;margin-left: 0px"/>
                         </td>
@@ -111,7 +111,7 @@
                 <table class="searchTable">
                     <tr>
                         <td class="td_left">培训专业：</td>
-                        <td>
+                        <td class="td_right" >
                             <select name="trainingSpeId" id="trainingSpeId" class="select" style="width:107px;">
                                 <option value="">请选择</option>
                                 <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
@@ -123,17 +123,17 @@
                             </select>
                         </td>
                         <td class="td_left">姓&#12288;&#12288;名：</td>
-                        <td>
+                        <td class="td_right">
                             <input type="text" name="doctorName" value="${param.doctorName}" class="input"
                                    style="width: 100px;"/>&#12288;
                         </td>
                         <td class="td_left">证件号码：</td>
-                        <td>
+                        <td class="td_right">
                             <input type="text" id="idNo" name="idNo" value="${param.idNo}"
                                    class="input" style="width: 100px;margin-left: 0px"/>
                         </td>
                         <td class="td_left">审核状态：</td>
-                        <td>
+                        <td class="td_right">
                             <select name="statusFlag" id="statusFlag" class="select" style="width: 107px;">
                                 <option value="all">全部</option>
                                 <option value="pass"

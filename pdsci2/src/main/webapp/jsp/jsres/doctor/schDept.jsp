@@ -137,11 +137,11 @@
 			<table class="searchTable">
 				<tr>
 					<td class="td_left ">开始日期：</td>
-					<td><input type="text" id="startDate" name="startDate" value="${empty param.startDate?startDate:param.startDate}"  class="validate[required] input" readonly="readonly" /></td>
+					<td class="td_right"><input type="text" id="startDate" name="startDate" value="${empty param.startDate?startDate:param.startDate}"  class="validate[required] input" readonly="readonly" /></td>
 					<td class="td_left ">结束日期：</td>
-					<td><input type="text" id="endDate" name="endDate" value="${empty param.endDate?endDate:param.endDate}"  class="validate[required] input" readonly="readonly" /></td>
+					<td class="td_right"><input type="text" id="endDate" name="endDate" value="${empty param.endDate?endDate:param.endDate}"  class="validate[required] input" readonly="readonly" /></td>
 					<td class="td_left ">科&#12288;&#12288;室：</td>
-					<td>
+					<td class="td_right">
 						<select  name="schDeptFlow"  class="select">
 							<option></option>
 							<c:forEach items="${allDeptList}" var="schDept">
@@ -150,7 +150,7 @@
 						</select>
 					</td>
 					<td class="td_left ">年&#12288;&#12288;级：</td>
-					<td><input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input"  readonly="readonly" /></td>
+					<td class="td_right"><input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input"  readonly="readonly" /></td>
 				</tr>
 				<tr>
 					<td class="td_left ">人员类型：</td>
@@ -167,14 +167,17 @@
 							<input type="checkbox" id="viewBox" name="viewName" value="${GlobalConstant.FLAG_Y}" <c:if test="${GlobalConstant.FLAG_Y eq param.viewName}">checked</c:if> onchange="changeView();"/>
 								查看医师姓名
 						</label>
-						<input type="button" class="btn_green" value="查&#12288;询" onclick="search(1);"/>
-						<input type="button" class="btn_green" value="导&#12288;出" onclick="exportDoctor();"/>
+
 					</td>
 				</tr>
 			</table>
+				<div style="margin-bottom: 15px">
+					<input type="button" class="btn_green" value="查&#12288;询" onclick="search(1);"/>
+					<input type="button" class="btn_green" value="导&#12288;出" onclick="exportDoctor();"/>
+				</div>
 			</form>
 		</div>
-		<div style="width:965px;">
+		<div style="width:100%;">
 			<div id="tableContext" style="width:100%;overflow: auto;" onscroll="tableFixed(this);">
 				<%--<div id="dateFixed" style="height: 0px;overflow: visible;position: relative;">--%>
 					<%--<table class="grid"style="width:0px;">--%>
@@ -214,7 +217,7 @@
 						</tr>
 					</table>
 				</div>
-				<table class="grid" style="width:0px;">
+				<table class="grid" >
 					<tr>
 						<th style="width: 300px;min-width: 300px;">
 							轮转科室

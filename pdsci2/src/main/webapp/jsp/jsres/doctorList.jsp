@@ -591,7 +591,7 @@ function showSelection(flag) {
 					<table class="searchTable">
 						<tr>
 							<td class="td_left">培训基地：</td>
-							<td>
+							<td class="td_right">
 								<c:set var="orgName" value=""/>
 								<c:forEach items="${orgs}" var="org">
 									<c:if test="${param.orgFlow==org.orgFlow }">
@@ -612,7 +612,7 @@ function showSelection(flag) {
 								</div>
 							</td>
 							<td class="td_left">培训类别：</td>
-							<td>
+							<td class="td_right">
 								<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')">
 									<option value="">请选择</option>
 									<option value="DoctorTrainingSpe" <c:if test="${param.trainingTypeId=='DoctorTrainingSpe'}">selected="selected"</c:if>>住院医师</option>
@@ -624,20 +624,18 @@ function showSelection(flag) {
 								</select>
 							</td>
 							<td class="td_left">培训专业：</td>
-							<td>
+							<td class="td_right">
 								<select name="trainingSpeId" id="trainingSpeId"class="select" >
 									<option value="">全部</option>
 								</select>
 							</td>
 
 							<td  class="td_left">年&#12288;&#12288;级：</td>
-							<td>
+							<td class="td_right">
 								<input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input" readonly="readonly"/>
 							</td>
-						</tr>
-						<tr>
 							<td class="td_left">姓&#12288;&#12288;名：</td>
-							<td>
+							<td >
 								<c:if test="${isBack eq 'Y'}">
 									<input type="text" name="userName" value="${userName}" class="input" />
 								</c:if>
@@ -645,8 +643,11 @@ function showSelection(flag) {
 									<input type="text" name="userName" value="${param.userName}" class="input" />
 								</c:if>
 							</td>
+						</tr>
+						<tr>
+
 							<td class="td_left">培训年限：</td>
-							<td >
+							<td class="td_right">
 								<c:forEach items="${jsResTrainYearEnumList}" var="dict">
 									<label><input type="checkbox" id="year${dict.id}" value="${dict.id}"class="docTrainYear" name="yearDatas"/>${dict.name}&nbsp;</label>
 								</c:forEach>
@@ -660,8 +661,8 @@ function showSelection(flag) {
 							</td>
 						</tr>
 						<tr id="1" hidden>
-							<td class="td_left">是否为应&#12288;届&#12288;&#12288;生：</td>
-							<td>
+							<td class="td_left">是否为应届生：</td>
+							<td class="td_right">
 								<select  class="select" name="isYearGraduate">
 									<option value="">请选择</option>
 									<option  <c:if test="${param.isYearGraduate eq GlobalConstant.FLAG_Y}">selected="selected"</c:if> value="${GlobalConstant.FLAG_Y}">是</option>
@@ -669,7 +670,7 @@ function showSelection(flag) {
 								</select>
 							</td>
 							<td class="td_left">学员状态：</td>
-							<td>
+							<td class="td_right">
 								<select name="doctorStatusId" class="select" onchange="showIsPostpone(this);" >
 									<option value="">全部</option>
 									<c:forEach var="dict" items="${dictTypeEnumDoctorStatusList}">
@@ -678,20 +679,15 @@ function showSelection(flag) {
 								</select>
 							</td>
 							<td class="td_left">证&ensp;件&ensp;号：</td>
-							<td>
+							<td class="td_right">
 								<input type="text" name="idNo" value="${param.idNo}" class="input" />
 							</td>
-							<td class="td_left">结业考核&#12288;年&#12288;&#12288;份：</td>
-							<td>
+							<td class="td_left">结业考核年份：</td>
+							<td class="td_right">
 								<input type="text" id="graduationYear" name="graduationYear"value="${param.graduationYear}" class="input" readonly="readonly"/>
 							</td>
-
-						</tr>
-
-						<tr id="2" hidden>
-
 							<td class="td_left">是否重培：</td>
-							<td>
+							<td >
 								<select name="isRetrain" class="select">
 									<option value="">请选择</option>
 									<option name="${param.isRetrain}" value="Y"
@@ -701,9 +697,12 @@ function showSelection(flag) {
 								</select>
 							</td>
 
+						</tr>
+
+						<tr id="2" hidden>
 
 							<td class="td_left" id="isPostpone1" style="display: none">是否延期：</td>
-							<td id="isPostpone2" style="display: none">
+							<td class="td_right" id="isPostpone2" style="display: none">
 								<select class="select" id="isPostpone3" name="isPostpone">
 									<option value="">请选择</option>
 									<option
@@ -718,7 +717,7 @@ function showSelection(flag) {
 							</td>
 							<td style="display: none" class="td_left workOrgName">
 								派送学校：
-							</td>
+							</td >
 							<td style="display: none" class="workOrgName">
 								<select name="workOrgName" id="workOrgName" class="select workOrgName" disabled="disabled">
 									<option value="">请选择</option>
@@ -763,7 +762,7 @@ function showSelection(flag) {
 				<table class="searchTable">
 					<tr>
 						<td class="td_left">培训类别：</td>
-						<td>
+						<td class="td_right">
 							<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')"">
 								<option value="">请选择</option>
 								<option value="DoctorTrainingSpe" <c:if test="${param.trainingTypeId=='DoctorTrainingSpe'}">selected="selected"</c:if>>住院医师</option>
@@ -771,28 +770,28 @@ function showSelection(flag) {
 							</select>
 						</td>
 						<td class="td_left">培训专业：</td>
-						<td>
+						<td class="td_right">
 							<select name="trainingSpeId" id="trainingSpeId"class="select" >
 								<option value="">全部</option>
 							</select>
 						</td>
 						<td class="td_left">年&#12288;&#12288;级：</td>
-						<td>
+						<td class="td_right">
 							<input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input" readonly="readonly"/>
 						</td>
-						<td class="td_left">结业考核&#12288;年&#12288;&#12288;份：</td>
-						<td>
+						<td class="td_left">结业考核年份：</td>
+						<td class="td_right">
 							<input type="text" id="graduationYear" name="graduationYear"value="${param.graduationYear}" class="input" readonly="readonly"/>
+						</td>
+						<td  class="td_left">证&ensp;件&ensp;号：</td>
+						<td class="td_right">
+							<input type="text" name="idNo" value="${param.idNo}" class="input" />
 						</td>
 					</tr>
 					<tr>
-						<td  class="td_left">证&ensp;件&ensp;号：</td>
-						<td>
-							<input type="text" name="idNo" value="${param.idNo}" class="input" />
-						</td>
 
 						<td class="td_left">学员状态：</td>
-						<td>
+						<td class="td_right">
 							<select name="doctorStatusId" class="select" >
 								<option value="">全部</option>
 								<c:forEach var="dict" items="${dictTypeEnumDoctorStatusList}">
@@ -801,7 +800,7 @@ function showSelection(flag) {
 							</select>
 						</td>
 						<td class="td_left">姓&#12288;&#12288;名：</td>
-						<td>
+						<td class="td_right">
 							<c:if test="${isBack eq 'Y'}">
 								<input type="text" name="userName" value="${userName}" class="input" />
 							</c:if>
@@ -809,8 +808,8 @@ function showSelection(flag) {
 								<input type="text" name="userName" value="${param.userName}" class="input" />
 							</c:if>
 						</td>
-						<td  class="td_left">是否为应&#12288;届&#12288;&#12288;生：</td>
-						<td>
+						<td  class="td_left">是否为应届生：</td>
+						<td class="td_right">
 							<select  class="select" name="isYearGraduate">
 								<option value="">请选择</option>
 								<option  <c:if test="${param.isYearGraduate eq GlobalConstant.FLAG_Y}">selected="selected"</c:if> value="${GlobalConstant.FLAG_Y}">是</option>
@@ -827,7 +826,7 @@ function showSelection(flag) {
 							</c:forEach>
 						</td>
 						<td class="td_left">培训年限：</td>
-						<td>
+						<td class="td_right">
 							<c:forEach items="${jsResTrainYearEnumList}" var="dict">
 								<label><input type="checkbox" id="year${dict.id}" value="${dict.id}"class="docTrainYear" name="yearDatas"/>${dict.name}&nbsp;</label>
 							</c:forEach>
@@ -843,7 +842,7 @@ function showSelection(flag) {
 					<table class="searchTable">
 						<tr>
 							<td class="td_left">基地类型：</td>
-							<td>
+							<td class="td_right">
 								<select name="orgLevel" id="orgLevelId" class="select" onchange="chanegOrgLevel(this);">
 									<option value="">请选择</option>
 									<c:forEach items="${orgLevelEnumList}" var="level">
@@ -854,7 +853,7 @@ function showSelection(flag) {
 								</select>
 							</td>
 							<td class="td_left">培训基地：</td>
-							<td>
+							<td class="td_right">
 								<c:set var="orgName" value=""/>
 								<c:forEach items="${orgs}" var="org">
 									<c:if test="${param.orgFlow==org.orgFlow }">
@@ -877,7 +876,7 @@ function showSelection(flag) {
 								</div>
 							</td>
 							<td class="td_left">培训类别：</td>
-							<td>
+							<td class="td_right">
 								<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')">
 									<option value="">请选择</option>
 									<option value="DoctorTrainingSpe" <c:if test="${param.trainingTypeId=='DoctorTrainingSpe'}">selected="selected"</c:if>>住院医师</option>
@@ -885,7 +884,7 @@ function showSelection(flag) {
 								</select>
 							</td>
 							<td class="td_left">培训专业：</td>
-							<td>
+							<td class="td_right">
 								<select name="trainingSpeId" id="trainingSpeId"class="select" >
 									<option value="">全部</option>
 								</select>
@@ -893,19 +892,19 @@ function showSelection(flag) {
 						</tr>
 						<tr>
 							<td class="td_left">年&#12288;&#12288;级：</td>
-							<td>
+							<td class="td_right">
 								<input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input" readonly="readonly"/>
-							</td>
-							<td class="td_left">结业考核&#12288;年&#12288;&#12288;份：</td>
-							<td>
+							</td >
+							<td class="td_left">结业考核年份：</td>
+							<td class="td_right">
 								<input type="text" id="graduationYear" name="graduationYear"value="${param.graduationYear}" class="input" readonly="readonly"/>
 							</td>
 							<td  class="td_left">证&ensp;件&ensp;号：</td>
-							<td>
+							<td  class="td_right">
 								<input type="text" name="idNo" value="${param.idNo}" class="input" />
 							</td>
-							<td  class="td_left">是否为应&#12288;届&#12288;&#12288;生：</td>
-							<td>
+							<td  class="td_left">是否为应届生：</td>
+							<td class="td_right">
 								<select  class="select" name="isYearGraduate">
 									<option value="">请选择</option>
 									<option  <c:if test="${param.isYearGraduate eq GlobalConstant.FLAG_Y}">selected="selected"</c:if> value="${GlobalConstant.FLAG_Y}">是</option>
@@ -915,7 +914,7 @@ function showSelection(flag) {
 						</tr>
 						<tr>
 							<td class="td_left">姓&#12288;&#12288;名：</td>
-							<td>
+							<td class="td_right">
 								<c:if test="${isBack eq 'Y'}">
 									<input type="text" name="userName" value="${userName}" class="input" />
 								</c:if>
@@ -924,7 +923,7 @@ function showSelection(flag) {
 								</c:if>
 							</td>
 							<td class="td_left">学员状态：</td>
-							<td>
+							<td class="td_right">
 								<select name="doctorStatusId" class="select" onchange="showIsPostpone(this);">
 									<option value="">全部</option>
 									<c:forEach var="dict" items="${dictTypeEnumDoctorStatusList}">
@@ -943,7 +942,7 @@ function showSelection(flag) {
 						<tr>
                             <c:if test="${sessionScope.userListScope ne GlobalConstant.USER_LIST_CHARGE}">
                                 <td class="td_left">地&#12288;&#12288;市：</td>
-                                <td>
+                                <td class="td_right">
                                     <div id="native">
                                         <select class="notBlank province inputText" data-value="320000" style="display: none" ></select>
                                         <select id="orgCityId" name="orgCityId" class="notBlank city select" data-value="${orgCityId}"
@@ -976,7 +975,7 @@ function showSelection(flag) {
 							</td>
 								<%--<c:if test="${sessionScope.userListScope ne GlobalConstant.USER_LIST_GLOBAL}">--%>
 							<td class="td_left">培训年限：</td>
-							<td>
+							<td class="td_right">
 								<c:forEach items="${jsResTrainYearEnumList}" var="dict">
 									<label><input type="checkbox" id="year${dict.id}" value="${dict.id}"class="docTrainYear" name="yearDatas"/>${dict.name}&nbsp;</label>
 								</c:forEach>

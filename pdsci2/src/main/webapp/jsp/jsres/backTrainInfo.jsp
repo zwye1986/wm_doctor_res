@@ -212,16 +212,16 @@
                     <%--</td>--%>
                     <tr>
                         <td class="td_left">学员姓名：</td>
-                        <td>
+                        <td class="td_right">
                             <input type="text"  name="doctorName" value="${param.doctorName}" class="input" style="width: 100px;margin-left: 0px"/>
                         </td>
                         <td class="td_left">年&#12288;&#12288;级：</td>
-                        <td>
+                        <td class="td_right">
                             <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}"
                                    class="input" readonly="readonly" style="width: 100px;margin-left: 0px"/>
                         </td>
-                        <td class="td_left">退培主要&#12288;原&#12288;&#12288;因：</td>
-                        <td>
+                        <td class="td_left">退培主要原因：</td>
+                        <td class="td_right">
                             <select class="select" id="reasonId" name="reasonId" style="width: 108px;"  onchange="changeReason(this);">
                                 <option value="">请选择</option>
                                 <option value="1" <c:if test="${param.reasonId eq 1}">selected="selected"</c:if>>辞职</option>
@@ -230,21 +230,21 @@
                             </select>
                         </td>
                         <td class="td_left">退培类型：</td>
-                        <td>
+                        <td class="td_right">
                             <select class="select" id="policyId" name="policyId" style="width: 108px;" >
                                 <option value="">请选择</option>
                                 <option value="1" <c:if test="${param.policyId eq 1}">selected="selected"</c:if>>协议退培</option>
                                 <option value="2" <c:if test="${param.policyId eq 2}">selected="selected"</c:if>>违约退培</option>
                             </select>
                         </td>
-                    </tr>
-                    <tr>
                         <td class="td_left">培训专业：</td>
-                        <td>
+                        <td >
                             <input type="text" value="${param.trainingSpeName}" class="input" name="trainingSpeName" style="width: 100px;margin-left: 0px"/>
                         </td>
-                        <td class="td_left">省厅审核&#12288;结&#12288;&#12288;果：</td>
-                        <td>
+                    </tr>
+                    <tr>
+                        <td class="td_left">省厅审核结果：</td>
+                        <td class="td_right">
                             <select class="select" id="auditStatusId" name="auditStatusId" style="width: 108px;">
                                 <option value="">请选择</option>
                                 <option value="1"
@@ -261,6 +261,45 @@
                                         <c:if test="${param.auditStatusId eq '2'}">selected="selected"</c:if>>${jsResAuditStatusEnumWaitChargePassed.name}</option>
                             </select>
                         </td>
+
+
+                        <c:if test="${GlobalConstant.USER_LIST_LOCAL eq  sessionScope.userListScope}">
+                            <c:if test="${JointOrgCount ne '0'}">
+                                <td class="td_left">培训基地：</td>
+                                <td class="td_right">
+                                    <select class="select" name="orgFlow0" style="width: 120px;margin-left: -4px;" onchange="searchDeptList(this.value)">
+                                        <option value="all" <c:if test="${orgFlow eq 'all'}">selected="selected"</c:if>>全部</option>
+                                        <c:forEach items="${orgList}" var="org">
+                                            <option value="${org.orgFlow}" <c:if test="${orgFlow == org.orgFlow}">selected="selected"</c:if>>${org.orgName}</option>
+                                        </c:forEach>
+                                    </select>
+                                </td>
+                            </c:if>
+                        </c:if>
+
+                        <c:if test="${GlobalConstant.USER_LIST_LOCAL != sessionScope.userListScope}">
+                            <td class="td_left">培训基地：</td>
+
+                            <td class="td_right">
+                                <input id="trainOrg" oncontextmenu="return false" name="orgName" value="${param.orgName}"
+                                       class="toggleView input" type="text" autocomplete="off" style="margin-left: 0px;width: 120px"
+                                       onkeydown="changeStatus();" onkeyup="changeStatus();"/>
+                                <div id="pDiv"
+                                     style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:30px;">
+                                    <div class="boxHome trainOrg" id="trainOrgSel"
+                                         style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;top: -5px;left:80px;">
+                                        <c:forEach items="${orgs}" var="org">
+                                            <p class="item trainOrg allOrg orgs" flow="${org.orgFlow}" value="${org.orgName}"
+                                               style="line-height: 20px; padding:10px 0;cursor: default;width: 200px ;height: 10px"
+                                               <c:if test="${sessionScope.currUser.orgFlow==org.orgFlow }">style="display: none;"</c:if>
+                                            >${org.orgName}</p>
+                                        </c:forEach>
+                                    </div>
+                                    <input type="text" name="orgFlow" id="orgFlow" value="${param.orgFlow}" style="display: none;"/>
+                                </div>
+                            </td>
+                        </c:if>
+
                         <td class="td_left">人员类型：</td>
                         <td colspan="3">
                             <c:forEach items="${jsResDocTypeEnumList}" var="type">
@@ -270,35 +309,35 @@
                     </tr>
                         <tr>
                             <td colspan="8">
-                            <c:if test="${GlobalConstant.USER_LIST_LOCAL eq  sessionScope.userListScope}">
-                                <c:if test="${JointOrgCount ne '0'}">培训基地：
-                                    <select class="select" name="orgFlow0" style="width: 120px;margin-left: -4px;" onchange="searchDeptList(this.value)">
-                                        <option value="all" <c:if test="${orgFlow eq 'all'}">selected="selected"</c:if>>全部</option>
-                                        <c:forEach items="${orgList}" var="org">
-                                            <option value="${org.orgFlow}" <c:if test="${orgFlow == org.orgFlow}">selected="selected"</c:if>>${org.orgName}</option>
-                                        </c:forEach>
-                                    </select>&#12288;
-                                </c:if>
-                            </c:if>
-                            <c:if test="${GlobalConstant.USER_LIST_LOCAL != sessionScope.userListScope}">
-                                培训基地：
-                                    <input id="trainOrg" oncontextmenu="return false" name="orgName" value="${param.orgName}"
-                                           class="toggleView input" type="text" autocomplete="off" style="margin-left: 0px;width: 120px"
-                                           onkeydown="changeStatus();" onkeyup="changeStatus();"/>
-                                    <div id="pDiv"
-                                         style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:30px;">
-                                        <div class="boxHome trainOrg" id="trainOrgSel"
-                                             style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;top: -5px;left:80px;">
-                                            <c:forEach items="${orgs}" var="org">
-                                                <p class="item trainOrg allOrg orgs" flow="${org.orgFlow}" value="${org.orgName}"
-                                                   style="line-height: 20px; padding:10px 0;cursor: default;width: 200px ;height: 10px"
-                                                   <c:if test="${sessionScope.currUser.orgFlow==org.orgFlow }">style="display: none;"</c:if>
-                                                >${org.orgName}</p>
-                                            </c:forEach>
-                                        </div>
-                                        <input type="text" name="orgFlow" id="orgFlow" value="${param.orgFlow}" style="display: none;"/>
-                                    </div>
-                            </c:if>
+<%--                            <c:if test="${GlobalConstant.USER_LIST_LOCAL eq  sessionScope.userListScope}">--%>
+<%--                                <c:if test="${JointOrgCount ne '0'}">培训基地：--%>
+<%--                                    <select class="select" name="orgFlow0" style="width: 120px;margin-left: -4px;" onchange="searchDeptList(this.value)">--%>
+<%--                                        <option value="all" <c:if test="${orgFlow eq 'all'}">selected="selected"</c:if>>全部</option>--%>
+<%--                                        <c:forEach items="${orgList}" var="org">--%>
+<%--                                            <option value="${org.orgFlow}" <c:if test="${orgFlow == org.orgFlow}">selected="selected"</c:if>>${org.orgName}</option>--%>
+<%--                                        </c:forEach>--%>
+<%--                                    </select>&#12288;--%>
+<%--                                </c:if>--%>
+<%--                            </c:if>--%>
+<%--                            <c:if test="${GlobalConstant.USER_LIST_LOCAL != sessionScope.userListScope}">--%>
+<%--                                培训基地：--%>
+<%--                                    <input id="trainOrg" oncontextmenu="return false" name="orgName" value="${param.orgName}"--%>
+<%--                                           class="toggleView input" type="text" autocomplete="off" style="margin-left: 0px;width: 120px"--%>
+<%--                                           onkeydown="changeStatus();" onkeyup="changeStatus();"/>--%>
+<%--                                    <div id="pDiv"--%>
+<%--                                         style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:30px;">--%>
+<%--                                        <div class="boxHome trainOrg" id="trainOrgSel"--%>
+<%--                                             style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;top: -5px;left:80px;">--%>
+<%--                                            <c:forEach items="${orgs}" var="org">--%>
+<%--                                                <p class="item trainOrg allOrg orgs" flow="${org.orgFlow}" value="${org.orgName}"--%>
+<%--                                                   style="line-height: 20px; padding:10px 0;cursor: default;width: 200px ;height: 10px"--%>
+<%--                                                   <c:if test="${sessionScope.currUser.orgFlow==org.orgFlow }">style="display: none;"</c:if>--%>
+<%--                                                >${org.orgName}</p>--%>
+<%--                                            </c:forEach>--%>
+<%--                                        </div>--%>
+<%--                                        <input type="text" name="orgFlow" id="orgFlow" value="${param.orgFlow}" style="display: none;"/>--%>
+<%--                                    </div>--%>
+<%--                            </c:if>--%>
                                 <input class="btn_green" type="button" onclick="searchRecInfo()" value="查&#12288;询"/>&#12288;
                                 <c:if test="${GlobalConstant.USER_LIST_GLOBAL eq sessionScope.userListScope}">
                                     <input class="btn_green" type="button" value="导&#12288;出" onclick="exportExcel();"/>
