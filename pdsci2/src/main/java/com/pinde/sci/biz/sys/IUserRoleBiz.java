@@ -67,4 +67,6 @@ public interface IUserRoleBiz {
 	boolean userExistRole(SysUser sysUser,SysRole sysRole);
 
     SysRole getByRoleName(String roleName);
+
+	void batchUpdateUserRoles(String userFlow, String wsId, List<String> userRoles, List<String> roleRanges);
 }

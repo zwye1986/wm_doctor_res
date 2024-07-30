@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 //import com.pinde.sci.biz.srm.IExpertBiz;
 //import com.pinde.sci.enums.srm.RegPageEnum;
@@ -398,5 +399,59 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 			return roleList.get(0);
 		}
 		return null;
+	}
+
+	/**
+	 * 范围更新，范围内的，先删后改，范围外的不变
+	 * @param userFlow
+	 * @param wsId
+	 * @param userRoles
+	 */
+	@Override
+	public void batchUpdateUserRoles(String userFlow, String wsId, List<String> userRoles, List<String> roleRanges) {
+		List<SysUserRole> currUserRoles = getByUserFlowAndWsid(userFlow, wsId);
+		currUserRoles= currUserRoles.stream().filter(vo -> roleRanges.contains(vo.getRoleFlow())).collect(Collectors.toList());
+		Map<String, SysUserRole> flowToUserRoleMap = currUserRoles.stream().collect(Collectors.toMap(vo -> vo.getUserFlow() + vo.getRoleFlow(), vo -> vo, (vo1, vo2) -> vo1));
+		// 将原来的失效掉
+		currUserRoles.stream().forEach(vo -> vo.setRecordStatus(GlobalConstant.RECORD_STATUS_N));
+		// 使用新的role
+		List<SysUserRole> updateUserRoleList = new ArrayList<>();
+		List<SysUserRole> insertUserRoleList = new ArrayList<>();
+		for (String userRole : userRoles) {
+			SysUserRole sysUserRole = null;
+			if(flowToUserRoleMap.get(userFlow + userRole) != null) {
+				sysUserRole = flowToUserRoleMap.get(userFlow + userRole);
+				sysUserRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+				GeneralMethod.setRecordInfo(sysUserRole, false);
+				updateUserRoleList.add(sysUserRole); // 已存在，本次更新
+			}else {
+				sysUserRole = new SysUserRole();
+				GeneralMethod.setRecordInfo(sysUserRole, true);
+				sysUserRole.setUserFlow(userFlow);
+				sysUserRole.setRoleFlow(userRole);
+				sysUserRole.setWsId(wsId);
+				sysUserRole.setRecordFlow(PkUtil.getUUID());
+				sysUserRole.setAuthTime(DateUtil.getCurrDate());
+				sysUserRole.setAuthUserFlow(GlobalContext.getCurrentUser().getUserFlow());
+				sysUserRole.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
+				insertUserRoleList.add(sysUserRole); // 不存在，本次新增
+			}
+		}
+
+		for (SysUserRole currUserRole : currUserRoles) {
+			if(!userRoles.contains(currUserRole.getRoleFlow())) {
+				GeneralMethod.setRecordInfo(currUserRole, false);
+				updateUserRoleList.add(currUserRole); // 已存在，本次不涉及，删除
+			}
+		}
+
+		if(CollectionUtils.isNotEmpty(updateUserRoleList)) {
+			sysUserRoleMapper.batchUpdateSelective(updateUserRoleList);
+		}
+
+		if(CollectionUtils.isNotEmpty(insertUserRoleList)) {
+			sysUserRoleMapper.batchInsert(insertUserRoleList);
+		}
+
 	}
 }

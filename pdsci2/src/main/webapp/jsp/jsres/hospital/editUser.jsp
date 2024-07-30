@@ -2,12 +2,68 @@
 <html>
 <head>
 	<jsp:include page="/jsp/jsres/htmlhead-jsres.jsp">
-		<jsp:param name="basic" value="true" />
+		<jsp:param name="basic_bootstrap" value="true" />
 		<jsp:param name="jbox" value="true" />
 		<jsp:param name="font" value="true" />
 		<jsp:param name="jquery_datePicker" value="true"/>
 		<jsp:param name="jquery_validation" value="true" />
+		<jsp:param name="bootstrapSelect" value="true"/>
 	</jsp:include>
+	<style>
+		.input{
+			margin: 0 12px 0 4px;
+			width: 176px;
+		}
+
+		.btn-group.bootstrap-select {
+			margin: 0 12px 0 4px !important;
+			width: 182px !important;
+			height: 30px;
+		}
+
+		.text{
+			margin-left: 0;
+			width: auto;
+			height: auto;
+			line-height: inherit;
+			color: black;
+		}
+		.selected a{
+			padding: 0;
+			background: white !important;
+		}
+		.base_info td a{
+			color: black !important;
+		}
+		.btn{
+			height: 30px !important;
+			border: 1px solid #e7e7eb
+		}
+		.body{
+			width: 90%;
+			margin-left: auto;
+			margin-right: auto;
+			padding: 0 0 88px;
+		}
+		.container{
+			padding-left: 0;
+			padding-right: 0;
+		}
+		.btn-default{
+			background-color: #fff;
+		}
+		.div_search span{
+			font-weight: inherit;
+			float: none;
+		}
+		.div_search{
+			line-height: 30px;
+		}
+		.clearfix {
+			clear: both;
+			height: 0;
+		}
+	</style>
 	<script type="text/javascript">
 		function saveUser() {
 			if(false==$("#editForm").validationEngine("validate")){
@@ -37,6 +93,11 @@
 
 		$(document).ready(function(){
 			$('#userBirthday').datepicker().on('changeDate',function(d){
+			});
+
+			$("#userRoleList").selectpicker({
+				deselectAllText: "全不选",
+				selectAllText: "全选"
 			});
 		});
 
@@ -91,7 +152,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>手机号：</th>
+					<th>手机号码：</th>
 					<td>
 						<c:choose>
 							<c:when test="${sessionScope.userListScope eq GlobalConstant.USER_LIST_PERSONAL && GlobalConstant.FLAG_N eq sysCfgMap['user_edit_phone']}">
@@ -103,7 +164,7 @@
 							</c:otherwise>
 						</c:choose>
 					</td>
-					<th>电子邮箱：</th>
+					<th>邮箱地址：</th>
 					<td>
 						<c:choose>
 							<c:when test="${sessionScope.userListScope eq GlobalConstant.USER_LIST_PERSONAL && GlobalConstant.FLAG_N eq sysCfgMap['user_edit_mail']}">
@@ -215,6 +276,31 @@
 							<option value="院级" <c:if test="${sysUser.teacherLevel eq '院级'}">selected="selected"</c:if>>院级</option>
 							<option value="省级" <c:if test="${sysUser.teacherLevel eq '省级'}">selected="selected"</c:if>>省级</option>
 							<option value="国家级" <c:if test="${sysUser.teacherLevel eq '国家级'}">selected="selected"</c:if>>国家级</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>角色：</th>
+					<td>
+						<select multiple class="selectpicker" name="userRoleList" id="userRoleList" title="请选择角色" data-actions-box="true">
+							<c:if test="${!empty applicationScope.sysCfgMap['res_teacher_role_flow']}">
+								<option <c:if test="${pdfn:contain(applicationScope.sysCfgMap['res_teacher_role_flow'], roleFlowList)}">selected</c:if> value="${applicationScope.sysCfgMap['res_teacher_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teacher_role_flow']]?sysRoleMap[sysCfgMap['res_teacher_role_flow']].roleName:'带教老师'}</option>
+							</c:if>
+							<c:if test="${!empty applicationScope.sysCfgMap['res_head_role_flow']}">
+								<option <c:if test="${pdfn:contain(applicationScope.sysCfgMap['res_head_role_flow'], roleFlowList)}">selected</c:if> value="${applicationScope.sysCfgMap['res_head_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_head_role_flow']]?sysRoleMap[sysCfgMap['res_head_role_flow']].roleName:'科主任'}</option>
+							</c:if>
+							<c:if test="${!empty applicationScope.sysCfgMap['res_secretary_role_flow']}">
+								<option <c:if test="${pdfn:contain(applicationScope.sysCfgMap['res_secretary_role_flow'], roleFlowList)}">selected</c:if> value="${applicationScope.sysCfgMap['res_secretary_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_secretary_role_flow']]?sysRoleMap[sysCfgMap['res_secretary_role_flow']].roleName:'科秘'}</option>
+							</c:if>
+							<c:if test="${!empty applicationScope.sysCfgMap['res_teaching_head_role_flow']}">
+								<option <c:if test="${pdfn:contain(applicationScope.sysCfgMap['res_teaching_head_role_flow'], roleFlowList)}">selected</c:if> value="${applicationScope.sysCfgMap['res_teaching_head_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teaching_head_role_flow']]?sysRoleMap[sysCfgMap['res_teaching_head_role_flow']].roleName:'教学主任'}</option>
+							</c:if>
+							<c:if test="${!empty applicationScope.sysCfgMap['res_teaching_secretary_role_flow']}">
+								<option <c:if test="${pdfn:contain(applicationScope.sysCfgMap['res_teaching_secretary_role_flow'], roleFlowList)}">selected</c:if> value="${applicationScope.sysCfgMap['res_teaching_secretary_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teaching_secretary_role_flow']]?sysRoleMap[sysCfgMap['res_teaching_secretary_role_flow']].roleName:'教学秘书'}</option>
+							</c:if>
+							<c:if test="${!empty applicationScope.sysCfgMap['res_hospitalLeader_role_flow']}">
+								<option <c:if test="${pdfn:contain(applicationScope.sysCfgMap['res_hospitalLeader_role_flow'], roleFlowList)}">selected</c:if> value="${applicationScope.sysCfgMap['res_hospitalLeader_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_hospitalLeader_role_flow']]?sysRoleMap[sysCfgMap['res_hospitalLeader_role_flow']].roleName:'评分专家'}</option>
+							</c:if>
 						</select>
 					</td>
 				</tr>
