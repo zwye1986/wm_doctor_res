@@ -7,6 +7,26 @@
     <jsp:param name="jquery_validation" value="true"/>
 </jsp:include>
 
+
+<style>
+.searchTable .td_left{
+	width: auto;
+	min-width: 60px;
+	word-wrap:break-word;
+	/*width:6em;*/
+	height: auto;
+	line-height: auto;
+	/*text-align: right;*/
+}
+
+.searchTable .td_right{
+	width: 200px;
+	text-align:left;
+}
+
+
+</style>
+
 <html>
 <head>
     <script type="text/javascript">
@@ -63,15 +83,15 @@
     <div class="div_search">
         <form id="searchForm">
             <input id="currentPage" type="hidden" name="currentPage"/>
-            <table class="searchTable" style="float: inside">
+            <table class="searchTable" style="margin-top: 10px; float: inside">
                 <tr>
                     <td class="td_left">姓&#12288;&#12288;名：</td>
-                    <td >
-                        <input type="text" name="doctorName" value="${param.doctorName}" class="input" style="width: 120px"/>
+                    <td class="td_right">
+                        <input type="text" name="doctorName" value="${param.doctorName}" class="input" />
                     </td>
                     <td class="td_left">&#12288;请假类型：</td>
-                    <td >
-                        <select name="typeId" id="typeId" class="select" style="width: 120px">
+                    <td class="td_right">
+                        <select name="typeId" id="typeId" class="select" >
                             <option value="">请选择</option>
                             <c:forEach items="${dictTypeEnumLeaveTypeList}" var="leaveType">
                                 <option value="${leaveType.dictId}" <c:if test="${param.typeId==leaveType.dictId}">selected="selected"</c:if> >${leaveType.dictName}</option>
@@ -79,8 +99,8 @@
                         </select>
                     </td>
                     <td class="td_left">&#12288;请假状态：</td>
-                    <td >
-                        <select name="auditStatusId" id="auditStatusId" class="select" style="width: 150px" >
+                    <td class="td_right">
+                        <select name="auditStatusId" id="auditStatusId" class="select"  >
                             <option value="" >请选择</option>
                             <option value="Auditing" <c:if test="${'Auditing' eq param.auditStatusId}">selected="selected"</c:if>>请假待审核</option>
                             <option value="ManagerPass" <c:if test="${'ManagerPass' eq param.auditStatusId}">selected="selected"</c:if>>请假审核通过</option>
@@ -93,12 +113,14 @@
 <%--                            <option value="N" <c:if test="${'N' eq param.auditStatusId}">selected="selected"</c:if>>审核不通过</option>--%>
                         </select>
                     </td>
-                    <td colspan="2">
-                        &#12288;<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage('1');"/>
-                        &#12288;<input class="btn_green" type="button" value="导&#12288;出" onclick="exportExcel();"/>
-                    </td>
                 </tr>
             </table>
+
+            <div style="margin-top: 15px;margin-bottom: 15px">
+                <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage('1');"/>
+                <input class="btn_green" type="button" value="导&#12288;出" onclick="exportExcel();"/>
+            </div>
+
         </form>
         <%--<form id="searchForm" action="" method="post">
             <input id="currentPage" type="hidden" name="currentPage" value="${param.currentPage}"/>

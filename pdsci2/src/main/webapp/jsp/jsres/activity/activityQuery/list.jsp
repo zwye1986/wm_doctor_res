@@ -490,7 +490,7 @@ function lookSearchFile(activityFlow,role) {
 							</c:if>
 							<img class="img" style="cursor:pointer" onclick="signUrl('${b.activityFlow}')" title="二维码" src="<s:url value='/jsp/jsres/activity/img/code.png'/>"></a>
 						</c:if>
-						<a style="cursor:pointer" onclick="delActivity('${b.activityFlow}','${currentPage}','${b.scanNum}')" title="删除" >删除</a>&nbsp
+						<a style="cursor:pointer" onclick="delActivity('${b.activityFlow}','${currentPage}','${b.scanNum}')" >删除</a>&nbsp
 						<c:if test="${param.roleFlag eq 'local' and b.IS_EFFECTIVE eq 'Y'}">
 						<a style="cursor:pointer" class='${b.activityFlow}' onclick="showInfo('${b.activityFlow}','${param.roleFlag}')">查看</a>&nbsp
 						<font style="color: red" >认可</font>

@@ -238,43 +238,43 @@
 				<c:when test="${sessionScope.userListScope == GlobalConstant.USER_LIST_BASE}">
 					<table style="width:100%">
 						<tr>
-							<td style="text-align: right">培训类别：</td>
-							<td>
-								<select name="trainingTypeId" id="trainingTypeId" class="select" style="width: 136px"  onchange="changeTrainSpes('1')">
+							<td class="td_left">培训类别：</td>
+							<td class="td_right">
+								<select name="trainingTypeId" id="trainingTypeId" class="select"   onchange="changeTrainSpes('1')">
 									<option value="">请选择</option>
 									<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
 										<option value="${trainCategory.id}">${trainCategory.name}</option>
 									</c:forEach>
 								</select>
 							</td>
-							<td style="text-align: right">培训专业：</td>
-							<td>
-								<select name="trainingSpeId" id="trainingSpeId" style="width: 136px" class="select" >
+							<td class="td_left">培训专业：</td>
+							<td class="td_right">
+								<select name="trainingSpeId" id="trainingSpeId"  class="select" >
 									<option value="">全部</option>
 								</select>
 							</td>
-							<td style="text-align: right">年&#12288;&#12288;级：</td>
-							<td>
+							<td class="td_left">年&#12288;&#12288;级：</td>
+							<td class="td_right">
 <%--								<input type="text" id="sessionNumber" name="sessionNumber"value="${pdfn:getCurrYearByMonth()}"   readonly="readonly" onClick="WdatePicker({dateFmt:'yyyy'})" style="width: 130px;margin-left: 0px;" class="input" />--%>
 								<input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input indexNum" readonly="readonly"/>
 							</td>
-							<td style="text-align: right">姓&#12288;&#12288;名：</td>
-							<td><input type="text" name="userName" class="input"  style="width: 130px;margin-left: 0px;"/></td>
+							<td class="td_left">姓&#12288;&#12288;名：</td>
+							<td class="td_right"><input type="text" name="userName" class="input"  /></td>
 						</tr>
 						<tr>
-							<td style="text-align: right">证&nbsp;件&nbsp;号：</td>
-							<td><input type="text" name="idNo" value="${param.idNo}" class="input" style="width: 130px;margin-left: 0px;"/></td>
-							<td  style="text-align: right">
+							<td class="td_left">证&nbsp;件&nbsp;号：</td>
+							<td class="td_right"><input type="text" name="idNo" value="${param.idNo}" class="input" /></td>
+							<td class="td_left">
 								开始时间：
 							</td>
-							<td>
-								<input type="text" id="startDate" name="startTime" style="width: 130px;margin-left: 0px;" value="" class="input"  readonly="readonly" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 00:00:00'})">
+							<td class="td_right">
+								<input type="text" id="startDate" name="startTime"  value="" class="input"  readonly="readonly" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 00:00:00'})">
 							</td>
-							<td  style="text-align: right">
+							<td class="td_left">
 								结束时间：
 							</td>
-							<td>
-								<input type="text" id="endDate" name="endTime" style="width: 130px;margin-left: 0px;" value="" class="input"  readonly="readonly" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 23:59:59'})">
+							<td class="td_right">
+								<input type="text" id="endDate" name="endTime"  value="" class="input"  readonly="readonly" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 23:59:59'})">
 							</td>
 						</tr>
 						<tr>
@@ -297,9 +297,9 @@
 				<c:otherwise>
 					<table style="width:100%">
 						<tr>
-							<td style="text-align: right">培训基地：</td>
-							<td>
-								<input id="trainOrg" oncontextmenu="return false"  class="toggleView input" type="text" autocomplete="off" value="${currentOrg.orgName}" style="margin-left: 0px;width: 130px"  onkeydown="changeStatus();" onkeyup="changeStatus();" />
+							<td class="td_left">培训基地：</td>
+							<td class="td_right">
+								<input id="trainOrg" oncontextmenu="return false"  class="toggleView input" type="text" autocomplete="off" value="${currentOrg.orgName}"   onkeydown="changeStatus();" onkeyup="changeStatus();" />
 								<div id="pDiv" style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:30px;">
 									<div class="boxHome trainOrg" id="trainOrgSel" style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 140px;border-top: none;position: relative;display:none;">
 										<c:forEach items="${orgs}" var="org">
@@ -312,9 +312,9 @@
 								</div>
 							</td>
 
-							<td style="text-align: right">培训类别：</td>
-							<td>
-								<select name="trainingTypeId" id="trainingTypeId" class="select" style="width: 136px"  onchange="changeTrainSpes('1')">
+							<td class="td_left">培训类别：</td>
+							<td class="td_right">
+								<select name="trainingTypeId" id="trainingTypeId" class="select"   onchange="changeTrainSpes('1')">
 									<option value="DoctorTrainingSpe">住院医师</option>
 								<%--	<option value="">请选择</option>
 									<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
@@ -322,55 +322,55 @@
 									</c:forEach>--%>
 								</select>
 							</td>
-							<td style="text-align: right">培训专业：</td>
-							<td>
-								<select name="trainingSpeId" id="trainingSpeId" style="width: 136px" class="select" >
+							<td class="td_left">培训专业：</td>
+							<td class="td_right">
+								<select name="trainingSpeId" id="trainingSpeId"  class="select" >
 									<option value="">全部</option>
 								</select>
 							</td>
-							<td style="text-align: right">年&#12288;&#12288;级：</td>
-							<td>
+							<td class="td_left">年&#12288;&#12288;级：</td>
+							<td class="td_right">
 <%--								<input type="text" id="sessionNumber" name="sessionNumber"value="${pdfn:getCurrYearByMonth()}"   readonly="readonly" onClick="WdatePicker({dateFmt:'yyyy'})" style="width: 130px;margin-left: 0px;" class="input" />--%>
 								<input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input indexNum" readonly="readonly"/>
 							</td>
+							<td class="td_left">姓&#12288;&#12288;名：</td>
+							<td class="td_right"><input type="text" name="userName" class="input"  /></td>
 						</tr>
 						<tr>
-							<td style="text-align: right">姓&#12288;&#12288;名：</td>
-							<td><input type="text" name="userName" class="input"  style="width: 130px;margin-left: 0px;"/></td>
-							<td style="text-align: right">证&nbsp;件&nbsp;号：</td>
-							<td><input type="text" name="idNo" value="${param.idNo}" class="input" style="width: 130px;margin-left: 0px;"/></td>
-							<td  style="text-align: right">
+							<td class="td_left">证&nbsp;件&nbsp;号：</td>
+							<td class="td_right"><input type="text" name="idNo" value="${param.idNo}" class="input" /></td>
+							<td class="td_left">
 								开始时间：
 							</td>
-							<td>
-								<input type="text" id="startDate" name="startTime" style="width: 130px;margin-left: 0px;" value="" class="input"  readonly="readonly" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 00:00:00'})">
+							<td class="td_right">
+								<input type="text" id="startDate" name="startTime"  value="" class="input"  readonly="readonly" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 00:00:00'})">
 							</td>
-							<td  style="text-align: right">
+							<td class="td_left">
 								结束时间：
 							</td>
-							<td>
-								<input type="text" id="endDate" name="endTime" style="width: 130px;margin-left: 0px;" value="" class="input"  readonly="readonly" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 23:59:59'})">
+							<td class="td_right">
+								<input type="text" id="endDate" name="endTime"  value="" class="input"  readonly="readonly" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 23:59:59'})">
 							</td>
-						</tr>
-						<tr>
-							<td style="text-align: right">培训年份：</td>
-							<td>
-								<select name="trainingYear" id="trainingYear" style="width: 136px" class="select" >
+							<td class="td_left">培训年份：</td>
+							<td class="td_right">
+								<select name="trainingYear" id="trainingYear"  class="select" >
 									<option value="">全部</option>
 									<option value="OneYear">一年</option>
 									<option value="TwoYear">两年</option>
 									<option value="ThreeYear">三年</option>
 								</select>
 							</td>
-							<td style="text-align: right">学员状态：</td>
-							<td>
-								<select name="studentStatus" id="studentStatus" style="width: 136px" class="select" >
+							<td class="td_left">学员状态：</td>
+							<td class="td_right">
+								<select name="studentStatus" id="studentStatus"  class="select" >
 									<option value="">全部</option>
 									<option value="20">在培</option>
 									<option value="21">结业</option>
 								</select>
 							</td>
-							<td style="text-align: right">人员类型：</td>
+						</tr>
+						<tr>
+							<td class="td_left">人员类型：</td>
 							<td colspan="3">
 								<c:forEach items="${jsResDocTypeEnumList}" var="type">
 									<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" checked/>${type.name}&nbsp;</label>

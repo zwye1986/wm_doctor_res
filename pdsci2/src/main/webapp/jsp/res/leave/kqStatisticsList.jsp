@@ -6,6 +6,24 @@
     <jsp:param name="jquery_form" value="true"/>
 </jsp:include>
 
+<style>
+
+.searchTable .td_left{
+	width: auto;
+	min-width: 60px;
+	word-wrap:break-word;
+	/*width:6em;*/
+	height: auto;
+	line-height: auto;
+	/*text-align: right;*/
+}
+
+.searchTable .td_right{
+	width: 200px;
+	text-align:left;
+}
+
+</style>
 <html>
 <head>
     <script type="text/javascript">
@@ -47,12 +65,12 @@
             <table class="searchTable">
                 <tr>
                     <td class="td_left">学员姓名：</td>
-                    <td ><input type="text" name="doctorName" value="${param.doctorName}" class="input"/></td>
+                    <td class="td_right"><input type="text" name="doctorName" value="${param.doctorName}" class="input"/></td>
                     <td class="td_left">请假时间：</td>
-                    <td colspan="3">
-                        <input type="text" id="startDate" name="startDate" value="${param.startDate}" class="input datepicker" readonly="readonly" style="width: 120px;" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" />
+                    <td style="width: 380px">
+                        <input type="text" id="startDate" name="startDate" value="${param.startDate}" class="input datepicker" readonly="readonly" style="width: 90px;" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" />
                         ~
-                        <input type="text" id="endDate" name="endDate" value="${param.endDate}" class="input datepicker" readonly="readonly" style="width: 120px;" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})"/>
+                        <input type="text" id="endDate" name="endDate" value="${param.endDate}" class="input datepicker" readonly="readonly" style="width: 90px;" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})"/>
                     </td>
                     <td colspan="2">
                         <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage('1');"/>

@@ -266,7 +266,7 @@
                                               class="docType"/>${type.name}&nbsp;</label>
                             </c:forEach>
                         </td>
-                        <td>&#12288;
+                        <td>
                             <input type="checkbox" name="onlyProblem" value="${GlobalConstant.FLAG_Y}" <c:if test="${GlobalConstant.FLAG_Y eq param.onlyProblem}"> checked="checked"</c:if>/> &nbsp;仅问题数据
                         </td>
                     </tr>

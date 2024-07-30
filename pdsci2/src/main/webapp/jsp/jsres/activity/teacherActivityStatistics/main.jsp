@@ -97,13 +97,13 @@ function exportReport() {
 					<td class="td_left">
 						开始时间：
 					</td>
-					<td>
+					<td class="td_right">
 						<input type="text" id="startDate" name="startTime" value="" class="input"  readonly="readonly" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 00:00:00'})">
 					</td>
 					<td class="td_left">
 						结束时间：
 					</td>
-					<td>
+					<td class="td_right">
 						<input type="text" id="endDate" name="endTime" value="" class="input"  readonly="readonly" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 23:59:59'})">
 					</td>
 					<td class="td_left">
@@ -117,7 +117,7 @@ function exportReport() {
 <%--							</c:forEach>--%>
 <%--						</select>--%>
 <%--					</td>--%>
-					<td><input type="text" id="ksmc" name="deptName" value="${param.deptName}" class="select" autocomplete="off"/>
+					<td class="td_right"><input type="text" id="ksmc" name="deptName" value="${param.deptName}" class="select" autocomplete="off"/>
 						<div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; left:0px; top:30px;">
 							<div class="boxHome ksmc" id="ksmcSel" style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
 								<c:forEach items="${depts}" var="dept" >
@@ -129,15 +129,15 @@ function exportReport() {
 					<td class="td_left">
 						主&nbsp;讲&nbsp;人：
 					</td>
-					<td>
+					<td class="td_right">
 						<input type="text" name="userName" value="" class="input" />
 					</td>
 				</tr>
 				<tr>
 					<td id="func" colspan="4">
-						&nbsp;<input class="btn_green" style="margin-left: 0px;" type="button" value="查&#12288;询" onclick="toPage(1);"/>&nbsp;
-						<input class="btn_green" style="margin-left: 0px;" type="button" value="导&#12288;出" onclick="exportExcel();"/>&nbsp;
-						<input class="btn_green" style="margin-left: 0px;" type="button" value="师资活动评价表" onclick="exportReport();"/>&nbsp;
+						<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
+						<input class="btn_green" type="button" value="导&#12288;出" onclick="exportExcel();"/>
+						<input class="btn_green" type="button" value="师资活动评价表" onclick="exportReport();"/>
 					</td>
 				</tr>
 			</table>

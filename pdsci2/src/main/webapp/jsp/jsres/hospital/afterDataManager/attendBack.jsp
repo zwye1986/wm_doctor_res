@@ -31,7 +31,11 @@
 		width:5em;
 		height: auto;
 		line-height: auto;
-		text-align: right;
+		/*text-align: right;*/
+	}
+	 .searchTable .td_right{
+		width: 228px;
+		text-align:left;
 	}
 </style>
 <script type="text/javascript">
@@ -121,22 +125,23 @@
 	<h2 class="underline">退回日常考勤</h2>
 </div>
 <div>
-	<div class="div_search" style="width: 95%;line-height:normal;">
+	<div class="div_search" style="line-height:normal;">
 	<form id="searchForm">
 		<input type="hidden" id="currentPage" name="currentPage"/>
 		<table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
 			<tr>
 				<td class="td_left">学员帐号：</td>
+				<td class="td_right">
+					<input type="text" id="userCode" name="userCode" value="${param.userCode}" class="input" />
+				</td>
+
+				<td class="td_left">考勤区间：</td>
 				<td colspan="2">
-					<input type="text" id="userCode" name="userCode" value="${param.userCode}" class="input" style="width: 300px;margin-left: 0px;"/>
+					<input type="text" id="startDate" name="startDate"  class="input" readonly="readonly" style="width: 90px;"/>
+					~<input type="text" id="endDate" name="endDate"  class="input" readonly="readonly" style="width: 90px;"/>
 				</td>
 			</tr>
 			<tr>
-				<td class="td_left">考勤区间：</td>
-				<td colspan="2">
-					<input type="text" id="startDate" name="startDate"  class="input" readonly="readonly" style="width: 100px;margin-left: 0px"/>
-					~<input type="text" id="endDate" name="endDate"  class="input" readonly="readonly" style="width: 100px;margin-left: 0px"/>
-				</td>
 				<td colspan="8" style="text-align: left;">
 					<input class="btn_green" type="button" value="查&#12288;询" onclick="search();"/>
 					<input class="btn_green" type="button" value="一键退回" onclick="attendBackList();"/>
@@ -160,7 +165,7 @@
 		</table>
 	</form>
 </div>
-<div id="doctorListZi" style="width: 95%">
+<div id="doctorListZi" >
 
 </div>
 <div style="display: none;">
