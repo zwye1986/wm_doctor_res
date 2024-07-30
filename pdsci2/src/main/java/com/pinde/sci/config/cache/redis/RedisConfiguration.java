@@ -1,7 +1,6 @@
-package com.pinde.core.cache.redis;
+package com.pinde.sci.config.cache.redis;
 
 import org.apache.commons.lang3.StringUtils;
-import org.aspectj.lang.annotation.After;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.ClusterServersConfig;
@@ -20,7 +19,6 @@ import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import java.time.Duration;
 import java.util.Objects;
 
 /**

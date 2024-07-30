@@ -2418,6 +2418,8 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 								resScore.setTestId(value);
 							}else if("sessionNumber".equals(key)){
 								resScore.setSessionNumber(value);
+							} else if ("realScore".equals(key)) {
+								resScore.setRealScore(value);
 							}
 						}
 						//根据学生身份证号

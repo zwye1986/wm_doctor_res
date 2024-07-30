@@ -16,13 +16,28 @@ function toPage(page){
 }
 
 function activate(userFlow){
-    jboxConfirm("确认解锁该用户吗？",function () {
+    jboxConfirm("确认恢复启用该用户吗？",function () {
         var url = "<s:url value='/sys/user/activate?userFlow='/>"+userFlow;
         jboxGet(url,null,function(){
             search();
         });
     });
 }
+
+function unLock(userFlow){
+	jboxConfirm("确认解锁该用户吗？",function () {
+		var url = "<s:url value='/sys/user/activate?userFlow='/>"+userFlow;
+		jboxGet(url,null,function(){
+			search();
+		});
+	});
+}
+
+function stop(userFlow) {
+	var url = "<s:url value='/jsres/manage/reasonForLockUser?userFlow='/>" + userFlow;
+	jboxOpen(url, "停用用户", 500, 200);
+}
+
 function search(){
 	var url ="<s:url value='/jsres/doctor/accountList'/>?baseFlag=${param.baseFlag}";
 	jboxPostLoad("contentDiv", url, $("#searchForm").serialize(), true);
@@ -195,7 +210,7 @@ function batchUnlock(){
 						<c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="spe">
 							<option value="${spe.dictId}"
 									<c:if test="${param.trainingSpeId eq spe.dictId}">selected</c:if> >${spe.dictName}
-							</option>
+							</option>activate
 						</c:forEach>
 					</select>
 				</td>--%>
@@ -203,8 +218,9 @@ function batchUnlock(){
 				<td>
 					<select name="lockStatus" id="lockStatus" class="select" style="width:107px;" >
 						<option value="">全部</option>
-						<option value="Locked"  >已锁定</option>
 						<option value="Activated">已激活</option>
+						<option value="SysLocked">已锁定</option>
+						<option value="Locked">已停用</option>
 					</select>&#12288;
 				</td>
 

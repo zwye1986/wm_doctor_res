@@ -161,7 +161,7 @@
         }
     }
     function changeAllSessionBox() {
-        debugger;
+
         if ($(".sessionNumber:checked").length == $(".sessionNumber").length) {
             $("#sessionAll").attr("checked", "checked");
         } else {

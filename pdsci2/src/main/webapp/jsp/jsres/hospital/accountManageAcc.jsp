@@ -49,6 +49,15 @@ function unLock(userFlow){
 }
 --%>
 
+function unLock(userFlow){
+	jboxConfirm("确认解锁该用户吗？",function () {
+		var url = "<s:url value='/sys/user/activate?userFlow='/>"+userFlow;
+		jboxGet(url,null,function(){
+			search();
+		});
+	});
+}
+
 function resetPasswd(userFlow){
 	var title = "确认将该用户的密码重置为:${pdfn:getInitPass()} 吗？";
 	jboxConfirm(title, function () {

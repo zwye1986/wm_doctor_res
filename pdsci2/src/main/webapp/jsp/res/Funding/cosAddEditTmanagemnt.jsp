@@ -114,7 +114,7 @@
             }
             var amountOfExpen =  $("#amountOfExpenses").val(); // 上报金额
             var amountOfIncome =  $("#amountOfIncome").val(); // 合计金额
-            debugger;
+
             if(Number(amountOfExpen)  <  Number(amountOfIncome))
             {
                 jboxTip("上报金额不能小于具体拨付用途合计总金额！");

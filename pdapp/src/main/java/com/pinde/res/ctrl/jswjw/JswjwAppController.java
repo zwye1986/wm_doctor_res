@@ -1406,6 +1406,8 @@ public class JswjwAppController {
         }
         model.addAttribute("ckxz", ckxz);
 
+        String cksh = jswjwBiz.getJsResCfgCode("jsres_" + doctor.getOrgFlow() + "_org_cksh");
+
         SchRotationDept rotationDept = jswjwBiz.readSchRotationDept(deptFlow);
         model.addAttribute("rotationDept", rotationDept);
         if (true) {
@@ -1417,8 +1419,14 @@ public class JswjwAppController {
                 //判断是否已经出科 借用recordStatus字段
                 ResSchProcessExpress rec = expressBiz.getExpressByRecType(process.getProcessFlow(), "AfterEvaluation");
                 if(null != rec){
-                    if (StringUtil.isNotBlank(rec.getManagerAuditUserFlow()) && StringUtil.isNotBlank(rec.getHeadAuditStatusId())) {
-                        process.setRecordStatus("Y");
+                    if (StringUtil.isNotBlank(cksh) && cksh.equals(GlobalConstant.FLAG_Y)) {
+                        if (StringUtil.isNotBlank(rec.getManagerAuditUserFlow()) && StringUtil.isNotBlank(rec.getHeadAuditStatusId())) {
+                            process.setRecordStatus("Y");
+                        }
+                    } else {
+                        if (StringUtil.isNotBlank(rec.getAuditStatusId()) && rec.getAuditStatusId().equals("TeacherAuditY")) {
+                            process.setRecordStatus("Y");
+                        }
                     }
                 }
                 processMap.put(process.getSchResultFlow(), process);
@@ -2015,15 +2023,28 @@ public class JswjwAppController {
             }
         }
 
+        String cksh = jswjwBiz.getJsResCfgCode("jsres_" + doctor.getOrgFlow() + "_org_cksh");
         if (StringUtil.isNotBlank(subDeptFlow)) {
             SchArrangeResult schArrangeResult = jswjwBiz.readSchArrangeResult(subDeptFlow);
             ResDoctorSchProcess process = jswjwBiz.readSchProcessByResultFlow(schArrangeResult.getResultFlow());
             ResSchProcessExpress rec = expressBiz.getExpressByRecType(process.getProcessFlow(), "AfterEvaluation");
-            if (rec != null && StringUtil.isNotBlank(rec.getManagerAuditUserFlow()) && StringUtil.isNotBlank(rec.getHeadAuditStatusId()) && rec.getHeadAuditStatusId().equals(RecStatusEnum.HeadAuditY.getId())) {
-                if (!process.getTeacherUserFlow().equals(teacherFlow)) {
-                    model.addAttribute("resultId", "30509");
-                    model.addAttribute("resultType", "您已在该轮转科室完成出科，不可再修改您的带教老师！");
-                    return "res/jswjw/addSubDept";
+            if (rec != null) {
+                if (StringUtil.isNotBlank(cksh) && cksh.equals(GlobalConstant.FLAG_Y)) {
+                    if (StringUtil.isNotBlank(rec.getManagerAuditUserFlow()) && StringUtil.isNotBlank(rec.getHeadAuditStatusId()) && rec.getHeadAuditStatusId().equals(RecStatusEnum.HeadAuditY.getId())) {
+                        if (!process.getTeacherUserFlow().equals(teacherFlow)) {
+                            model.addAttribute("resultId", "30509");
+                            model.addAttribute("resultType", "您已在该轮转科室完成出科，不可再修改您的带教老师！");
+                            return "res/jswjw/addSubDept";
+                        }
+                    }
+                } else {
+                    if (StringUtil.isNotBlank(rec.getAuditStatusId()) && rec.getAuditStatusId().equals("TeacherAuditY")) {
+                        if (!process.getTeacherUserFlow().equals(teacherFlow)) {
+                            model.addAttribute("resultId", "30509");
+                            model.addAttribute("resultType", "您已在该轮转科室完成出科，不可再修改您的带教老师！");
+                            return "res/jswjw/addSubDept";
+                        }
+                    }
                 }
             }
         }
@@ -6968,8 +6989,8 @@ public class JswjwAppController {
                     String appLoginErrorCountNew = appLoginErrorCount + 1 + "";
                     userinfo.setAppLoginErrorCount(appLoginErrorCountNew);
                     if ("3".equals(appLoginErrorCountNew)) {
-                        userinfo.setStatusId(UserStatusEnum.Locked.getId());
-                        userinfo.setStatusDesc(UserStatusEnum.Locked.getName());
+                        userinfo.setStatusId(UserStatusEnum.SysLocked.getId());
+                        userinfo.setStatusDesc(UserStatusEnum.SysLocked.getName());
                     }
                     jswjwBiz.updateUser(userinfo);
                 }
@@ -6996,6 +7017,11 @@ public class JswjwAppController {
         }
         String userStatus = userinfo.getStatusId();
         if (UserStatusEnum.Locked.getId().equals(userStatus)) {
+            model.addAttribute("resultId", "30197");
+            model.addAttribute("resultType", "该用户已被停用，请联系培训基地进行启用");
+            return "res/jswjw/login";
+        }
+        if (UserStatusEnum.SysLocked.getId().equals(userStatus)) {
             model.addAttribute("resultId", "30197");
             model.addAttribute("resultType", "该用户已被锁定，请联系培训基地进行解锁");
             return "res/jswjw/login";
@@ -7202,8 +7228,8 @@ public class JswjwAppController {
                             List<SysLog> logList = jswjwBiz.searchSysLog(sysLog);   //规定时间内app登录日志
                             if (null==logList || logList.size()==0){    //没有登录日志
                                 // 锁定账号
-                                userinfo.setStatusId("Locked");
-                                userinfo.setStatusDesc("锁定");
+                                userinfo.setStatusId("SysLocked");
+                                userinfo.setStatusDesc("系统锁定");
                                 userinfo.setModifyTime(DateUtil.getCurrDateTime());
                                 userinfo.setModifyUserFlow(userinfo.getOrgFlow());
                                 jswjwBiz.saveUserInfo(userinfo);
@@ -7216,8 +7242,8 @@ public class JswjwAppController {
                                 List<ResRec> recList = jswjwBiz.searchByDoctorFlow(userFlow, DateUtil.getAppointDate2(new Date(),Integer.parseInt("-"+lockDay)));
                                 if (null==recList || recList.size()==0) { //没有填写或修改轮转数据
                                     // 锁定账号
-                                    userinfo.setStatusId("Locked");
-                                    userinfo.setStatusDesc("锁定");
+                                    userinfo.setStatusId("SysLocked");
+                                    userinfo.setStatusDesc("系统锁定");
                                     userinfo.setModifyTime(DateUtil.getCurrDateTime());
                                     userinfo.setModifyUserFlow(userinfo.getOrgFlow());
                                     jswjwBiz.saveUserInfo(userinfo);
@@ -7559,7 +7585,7 @@ public class JswjwAppController {
         log.setRecordStatus("Y");
         logMapper.insert(log);
 
-        request.getSession().setAttribute(GlobalConstant.CURR_USER, userinfo);
+//        request.getSession().setAttribute(GlobalConstant.CURR_USER, userinfo);
 
         return "res/jswjw/login";
     }

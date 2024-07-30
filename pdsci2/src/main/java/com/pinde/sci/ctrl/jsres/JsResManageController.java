@@ -186,6 +186,8 @@ public class JsResManageController extends GeneralController {
 	private SysCfgMapper sysCfgMapper;
 	@Autowired
 	private ResTeacherTrainingMapper resTeacherTrainingMapper;
+	@Autowired
+	private ISchRotationBiz schRotationtBiz;
 
 	/**
 	 * 管理员主界面
@@ -4068,6 +4070,17 @@ public class JsResManageController extends GeneralController {
 				} else {
 					if ("Passed".equals(recruitWithBLOBs.getAuditStatusId())) {
 //						recruitWithBLOBs.setAuditStatusId("Passed");
+						// 判断该基地该专业是否已配置轮转方案，未配置则无法审核
+						ResOrgRotationCfg rotationCfg = schRotationtBiz.getRotationCfg(recruit.getOrgFlow(), recruit.getSpeId(), recruit.getSessionNumber());
+						if (StringUtil.isBlank(rotationCfg.getRotationCfgFlow())) {
+							return GlobalConstant.HAVE_NO_ROTATION_CFG;
+						}
+
+						// 设置学员轮转方案改到此处进行
+						SchRotation schRotation = schRotationtBiz.readSchRotation(rotationCfg.getRotationFlow());
+						recruitWithBLOBs.setRotationFlow(schRotation.getRotationFlow());
+						recruitWithBLOBs.setRotationName(schRotation.getRotationName());
+
 						recruitWithBLOBs.setAuditStatusId("WaitGlobalPass");
 						recruitWithBLOBs.setAuditStatusName("待省厅审核");
 						recruitWithBLOBs.setOrgAudit("Passed");
@@ -5497,7 +5510,7 @@ public class JsResManageController extends GeneralController {
 				doctor.setSessionNumber("");
 			}
 		}
-		doctor.setTrainingTypeId("DoctorTrainingSpe");
+//		doctor.setTrainingTypeId("DoctorTrainingSpe");
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<JsResDoctorOrgHistoryExt> historyExts = jsDocOrgHistoryBiz.seearchInfoByFlow1(orgHistory, changeStatusIdList, docTypeList, doctor, orgFlowList, sessionNumbers);
 		model.addAttribute("historyExts2", historyExts);
@@ -5578,7 +5591,7 @@ public class JsResManageController extends GeneralController {
 				doctor.setSessionNumber("");
 			}
 		}
-		doctor.setTrainingTypeId("AssiGeneral");
+//		doctor.setTrainingTypeId("AssiGeneral");
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<JsResDoctorOrgHistoryExt> historyExts = jsDocOrgHistoryBiz.seearchInfoByFlow1(orgHistory, changeStatusIdList, docTypeList, doctor, orgFlowList, sessionNumbers);
 		model.addAttribute("historyExts2", historyExts);
@@ -8553,7 +8566,7 @@ public class JsResManageController extends GeneralController {
 	public String checkStatus(String doctorFlow) {
 		SysUser user = userBiz.readSysUser(doctorFlow);
 		String flag = GlobalConstant.FLAG_Y;
-		if (UserStatusEnum.Locked.getId().equals(user.getStatusId())) {
+		if (UserStatusEnum.Locked.getId().equals(user.getStatusId()) || UserStatusEnum.SysLocked.getId().equals(user.getStatusId())) {
 			flag = GlobalConstant.FLAG_N;
 		}
 		return flag;

@@ -599,6 +599,10 @@ public class GlobalConstant {
 
     public static final String PHOTO_ALREADY = "当天数据已经备份，请勿重新操作！";
 
+    public static final String HAVE_AUDIT_PASS_STUDENT = "该专业已有审核通过的学员，不可再修改轮转方案！";
+
+    public static final String HAVE_NO_ROTATION_CFG = "请对本年度轮转方案进行配置后，审核学员信息！";
+
     /**
      * 一次处理一类全部的记录或数据
      */

@@ -1389,7 +1389,7 @@
 		dr.RECRUIT_FLOW,
 		dr.DOCTOR_FLOW,
 		dr.ORG_FLOW,
-		u.ORG_NAME,
+		org.ORG_NAME,
 		dr.SPE_ID,
 		dr.SPE_NAME,
 		dr.SWAP_FLAG,
@@ -2222,6 +2222,7 @@
 		dr.ORG_NAME,
 		dr.joint_org_audit,
 		dr.IS_RETRAIN,
+		dr.REVIEW_FLAG,
 		u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL
 		, u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
 		ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName,ed.doctor_type_name,ed.doctor_type_id
@@ -2290,7 +2291,7 @@
 				and dr.SESSION_NUMBER = #{resDoctorRecruit.sessionNumber}
 			</if>
 			<if test="resDoctorRecruit.reviewFlag!=null and resDoctorRecruit.reviewFlag!=''">
-				and dr.DOCTOR_STATUS_ID = #{resDoctorRecruit.reviewFlag}
+				and dr.REVIEW_FLAG = #{resDoctorRecruit.reviewFlag}
 			</if>
 			<if test="resDoctorRecruit.isRetrain!=null and resDoctorRecruit.isRetrain!=''">
 				and dr.IS_RETRAIN = #{resDoctorRecruit.isRetrain}

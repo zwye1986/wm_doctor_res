@@ -106,7 +106,7 @@
         }
         $("#currentPage").val(page);
         jboxStartLoading();
-        debugger;
+
 
         jboxPostLoad("doctorListZi","<s:url value='/jsres/doctorRecruit/doctorTrendListSun'/>?"+data+"&roleFlag=${roleFlag}&baseFlag=${baseFlag}&orgCityId=${param.orgCityId}",$("#searchForm").serialize(),false);
     }
@@ -224,7 +224,7 @@
             jboxTip("请选择培训年限！");
             return false;
         }
-        debugger;
+
         var url = "<s:url value='/jsres/doctor/exportDoctor'/>?"+data+"&sessionNumber="+sessionNumber+"&baseFlag=${baseFlag}";
         jboxTip("导出中…………");
         jboxSubmit($("#searchForm"), url, null, null, false);

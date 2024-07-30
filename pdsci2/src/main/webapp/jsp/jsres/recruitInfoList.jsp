@@ -54,7 +54,8 @@
 										<c:if test="${isJointOrg eq 'Y' and recruit.doctorStatusId eq 'Auditing'}">
 											<a class="btn" onclick="auditRecruitInfo('${recruit.recruitFlow}','${recruit.doctorFlow}','${recruit.sysUser.userName}');">审核</a>
 										</c:if>
-										<c:if test="${isJointOrg eq 'N' and recruit.doctorStatusId eq 'OrgAuditing'}">
+<%--										// 不论是否选择协同基地培训，主基地均可审核--%>
+										<c:if test="${isJointOrg eq 'N' and (recruit.doctorStatusId eq 'OrgAuditing' || recruit.doctorStatusId eq 'Auditing')}">
 											<a class="btn" onclick="auditRecruitInfo('${recruit.recruitFlow}','${recruit.doctorFlow}','${recruit.sysUser.userName}');">审核</a>
 										</c:if>
 										<a class="btn" onclick="auditRecruit('${recruit.recruitFlow}','${recruit.doctorFlow}','view');">查看</a>

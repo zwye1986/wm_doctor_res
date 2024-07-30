@@ -58,10 +58,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -348,7 +345,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 					recruitWithBLOBs.setOrgAudit(ResBaseStatusEnum.NotPassed.getId());
 					recruitWithBLOBs.setAuditStatusId(ResBaseStatusEnum.NotPassed.getId());
 					recruitWithBLOBs.setAuditStatusName(ResBaseStatusEnum.NotPassed.getName());
-					recruitWithBLOBs.setReviewFlag(ResBaseStatusEnum.NotPassed.getName());
+					recruitWithBLOBs.setReviewFlag(ResBaseStatusEnum.NotPassed.getId());
 				}
 			} else {
 				if (ResBaseStatusEnum.Passed.getId().equals(recruitWithBLOBs.getDoctorStatusId())) {
@@ -363,7 +360,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 					recruitWithBLOBs.setOrgAudit(ResBaseStatusEnum.NotPassed.getId());
 					recruitWithBLOBs.setAuditStatusId(ResBaseStatusEnum.NotPassed.getId());
 					recruitWithBLOBs.setAuditStatusName(ResBaseStatusEnum.NotPassed.getName());
-					recruitWithBLOBs.setReviewFlag(ResBaseStatusEnum.NotPassed.getName());
+					recruitWithBLOBs.setReviewFlag(ResBaseStatusEnum.NotPassed.getId());
 				}
 			}
 			ResDoctor resDoctor = resDoctorBiz.findByFlow(recruitWithBLOBs.getDoctorFlow());
@@ -1249,7 +1246,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			criteria.andConfirmFlagEqualTo(recruit.getConfirmFlag());
 		}
 		if (StringUtil.isNotBlank(recruit.getAuditStatusId())) {
-			criteria.andAuditStatusIdEqualTo(recruit.getAuditStatusId());
+			criteria.andAuditStatusIdIn(Arrays.asList(recruit.getAuditStatusId().split(",")));
 		}
 		if (StringUtil.isNotBlank(recruit.getSessionNumber())) {
 			criteria.andSessionNumberEqualTo(recruit.getSessionNumber());
