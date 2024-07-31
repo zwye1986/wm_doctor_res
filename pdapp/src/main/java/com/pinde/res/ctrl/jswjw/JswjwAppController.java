@@ -2027,7 +2027,11 @@ public class JswjwAppController {
         if (StringUtil.isNotBlank(subDeptFlow)) {
             SchArrangeResult schArrangeResult = jswjwBiz.readSchArrangeResult(subDeptFlow);
             ResDoctorSchProcess process = jswjwBiz.readSchProcessByResultFlow(schArrangeResult.getResultFlow());
-            ResSchProcessExpress rec = expressBiz.getExpressByRecType(process.getProcessFlow(), "AfterEvaluation");
+            ResSchProcessExpress rec = null;
+            if (process != null) {
+                rec = expressBiz.getExpressByRecType(process.getProcessFlow(), "AfterEvaluation");
+            }
+
             if (rec != null) {
                 if (StringUtil.isNotBlank(cksh) && cksh.equals(GlobalConstant.FLAG_Y)) {
                     if (StringUtil.isNotBlank(rec.getManagerAuditUserFlow()) && StringUtil.isNotBlank(rec.getHeadAuditStatusId()) && rec.getHeadAuditStatusId().equals(RecStatusEnum.HeadAuditY.getId())) {
