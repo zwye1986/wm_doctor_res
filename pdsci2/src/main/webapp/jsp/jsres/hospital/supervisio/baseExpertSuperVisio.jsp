@@ -192,9 +192,16 @@
             <div class="form_item">
                 <div class="from_label" >自评得分：</div>
                 <div class="form_content">
-                    <input type="text" id="minBaseScore" name="minBaseScore" class="input" style="width: 70px;" value=""> ~ <input type="text" id="maxbaseScore" name="maxbaseScore" class="input" style="width: 70px;" value="">
+                    <input type="text" id="minBaseScore" name="minBaseScore" class="input" style="width: 62px;" value=""> ~ <input type="text" id="maxbaseScore" name="maxbaseScore" class="input" style="width: 62px;" value="">
                 </div>
             </div>
+
+            <div class="form_item" style="text-align: right">
+                    <a style="color: #54B2E5;margin-right: 15px" onclick="showOrHide()" id="open">展开</a>
+                    <input class="btn_green" type="button" onclick="toPage(1);"  value="查&#12288;询" />
+                </div>
+            </div>
+
             <div class="form_item">
                 <div class="from_label" >专&#12288;业：</div>
                 <div class="form_content">
@@ -247,10 +254,7 @@
             </div>
         </div>
 
-        <div style="margin-top: 15px;margin-bottom: 15px">
-            <input class="btn_green" type="button" onclick="toPage(1);"  value="查&#12288;询" />
-            <a style="color: #54B2E5;float: right" onclick="showOrHide()" id="open">展开</a>
-        </div>
+
 
 
 
