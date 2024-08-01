@@ -254,7 +254,7 @@
                 <input type="text" name="userCode" value="${param.userCode}" class="input"  />
             </div>
             <div style="float: left; margin-bottom: 18px">
-                <label class="td_left">手机号</label>
+                <label class="td_left">手机号码</label>
                 <input type="text" name="userPhone" value="${param.userPhone}"  class="input"  />
             </div>
             <div style="float: left; margin-bottom: 18px">
