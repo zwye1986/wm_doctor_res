@@ -54,13 +54,35 @@ function auditEduUser(userFlow){
     jboxOpen("<s:url value='/edu/user/auditUI?userFlow='/>"+userFlow ,"用户注册审核" ,  800 , 600);
 }
 function activate(userFlow){
-	jboxConfirm("确认解锁该用户吗？",function () {
+	jboxConfirm("确认恢复启用该用户吗？",function () {
 		var url = "<s:url value='/sys/user/activate?userFlow='/>"+userFlow;
 		jboxGet(url,null,function(){
 			searchUser();			
 		});
 	});
 }
+
+function unLock(userFlow){
+	jboxConfirm("确认解锁该用户吗？",function () {
+		var url = "<s:url value='/sys/user/activate?userFlow='/>"+userFlow;
+		jboxGet(url,null,function(){
+			searchUser();
+		});
+	});
+}
+
+function stop(userFlow) {
+	<%--var url = "<s:url value='/sys/user/reasonForLockUser?userFlow='/>" + userFlow;--%>
+	<%--jboxOpen(url, "停用用户", 500, 200);--%>
+
+	jboxConfirm("确认停用该用户吗？",function () {
+		var url = "<s:url value='/sys/user/lockUser?userFlow='/>"+userFlow;
+		jboxPost(url,null,function(){
+			searchUser();
+		});
+	});
+}
+
 function lock(userFlow){
 	jboxConfirm("确认锁定该用户吗？锁定后该用户将不能登录系统！",function () {
 		var url = "<s:url value='/sys/user/lock?userFlow='/>"+userFlow;
@@ -215,7 +237,7 @@ function setPwd(orgFlow){
 							 <label class="qlable">手&nbsp;&nbsp;机&nbsp;&nbsp;号：</label>
 							 <input type="text" name="userPhone" value="${param.userPhone}" class="qtext"/>
 						 </div>
-						 <div class="inputDiv" style="min-width:300px;max-width:300px;margin-left:-10px;">
+						 <div class="inputDiv" style="min-width:344px;max-width:400px;margin-left:-10px;">
 							 <label class="qlable">用户状态：</label>
 							 <input id="all" name="statusId" type="radio" value="" onclick="searchUser();" <c:if test='${empty param.statusId}'>checked="checked"</c:if>>
 							 <label for="all">全部</label>&#12288;
@@ -231,6 +253,8 @@ function setPwd(orgFlow){
 							 <label for="${userStatusEnumActivated.id }">${userStatusEnumActivated.name}</label>&#12288;
 							 <input id="${userStatusEnumLocked.id}" name="statusId" type="radio" value="${userStatusEnumLocked.id}" onclick="searchUser();" <c:if test='${param.statusId==userStatusEnumLocked.id}'>checked="checked"</c:if>>
 							 <label for="${userStatusEnumLocked.id }">${userStatusEnumLocked.name}</label>&#12288;
+							 <input id="${userStatusEnumSysLocked.id}" name="statusId" type="radio" value="${userStatusEnumSysLocked.id}" onclick="searchUser();" <c:if test='${param.statusId==userStatusEnumSysLocked.id}'>checked="checked"</c:if>>
+							 <label for="${userStatusEnumSysLocked.id }">${userStatusEnumSysLocked.name}</label>&#12288;
 							 <input id="currentPage" type="hidden" name="currentPage" value=""/>
 						 </div>
 						 <c:if test="${sessionScope.userListScope eq GlobalConstant.USER_LIST_LOCAL }">
@@ -286,12 +310,12 @@ function setPwd(orgFlow){
 					</c:if>
 					<th width="140px">身份证</th>
 					<th width="60px">手机</th>
-					<th width="150px">邮件</th>
+					<th width="120px">邮件</th>
 					<th width="120px">角色</th>
 					<c:if test="${applicationScope.sysCfgMap['sys_weixin_qiye_flag']==GlobalConstant.FLAG_Y}">
 					<th width="60px">微信状态</th>
 					</c:if>
-					<th width="180px" >操作</th>
+					<th width="275px" >操作</th>
 				</tr>
 					<c:set var="userNum" value="0"></c:set>
 					<c:forEach items="${sysUserList}" var="sysUser">
@@ -345,7 +369,7 @@ function setPwd(orgFlow){
 							[<a href="javascript:edit('${sysUser.userFlow}');" >编辑</a>] |
 							[<a href="javascript:allotRole('${sysUser.userFlow}');" >分配角色</a>] |
 							[<a href="javascript:resetPasswd('${sysUser.userFlow}');" >重置密码</a>] |
-							[<a href="javascript:lock('${sysUser.userFlow}');" >锁定</a>]
+<%--							[<a href="javascript:stop('${sysUser.userFlow}');" >停用</a>] |--%>
 							<c:if test="${sessionScope.currWsId eq GlobalConstant.RES_WS_ID && isDoctor}">
 		<%-- 						| [<a href="javascript:editDoc('${resDoctorMap[sysUser.userFlow].doctorFlow}','${sysUser.userFlow}');" >学员信息</a>] --%>
 							</c:if>
@@ -362,9 +386,30 @@ function setPwd(orgFlow){
 								[<a href="<s:url value='/sys/user/view'/>?userFlow=${sysUser.userFlow}&editFlag=${GlobalConstant.FLAG_Y}" >履历维护</a>]
 							</c:if>
 
-							<c:if test="${sysUser.statusId==userStatusEnumLocked.id}">
-							[<a href="javascript:activate('${sysUser.userFlow}');" >解锁</a>]
-							</c:if>
+<%--							<c:if test="${sysUser.statusId==userStatusEnumLocked.id}">--%>
+<%--							[<a href="javascript:activate('${sysUser.userFlow}');" >启用</a>]--%>
+<%--							</c:if>--%>
+
+							<c:choose>
+								<c:when test="${userStatusEnumLocked.id eq  sysUser.statusId}">
+									[<a style="color: blue;cursor: pointer; " onclick="activate('${sysUser.userFlow}');">启用</a>]
+								</c:when>
+								<c:otherwise>
+									[<a style="color: blue;cursor: pointer; " onclick="stop('${sysUser.userFlow}');">停用</a>] |
+								</c:otherwise>
+							</c:choose>
+
+							<c:choose>
+								<c:when test="${userStatusEnumSysLocked.id eq  sysUser.statusId}">
+									[<a style="color: blue;cursor: pointer; " onclick="unLock('${sysUser.userFlow}');">解锁</a>]
+								</c:when>
+								<c:when test="${userStatusEnumLocked.id eq  sysUser.statusId}">
+								</c:when>
+								<c:otherwise>
+										<font style="color: #8a8a8a">[解锁]</font>
+								</c:otherwise>
+							</c:choose>
+
 							<c:if test="${GlobalConstant.FLAG_Y eq applicationScope.sysCfgMap['sys_user_delete_flag']}">
 							 | [<a href="javascript:deleteUser('${sysUser.userFlow}');" >删除</a>]
 							 </c:if>
