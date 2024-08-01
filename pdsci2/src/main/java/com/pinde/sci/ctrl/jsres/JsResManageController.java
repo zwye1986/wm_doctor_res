@@ -41,6 +41,7 @@ import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -88,6 +89,9 @@ public class JsResManageController extends GeneralController {
 	final static String Ssczzd = "14"; final static String Yxzdbgsxzd = "15"; final static String Lcwxyd = "16";
 	final static String Ryjy = "17"; final static String Rzyjdjy = "18"; final static String Cjbg = "19";
 	final static String Bgdfx = "20";final static String Jxsj = "21";final static String Sjys = "22";
+
+	private List<String> acceptedRoleNameList = Arrays.asList("带教老师", "科主任", "科秘", "教学主任", "教学秘书", "督导-评分专家");
+
 	@Autowired
 	private SysLogMapper logMapper;
 	@Autowired
@@ -6611,11 +6615,18 @@ public class JsResManageController extends GeneralController {
 		SysUser loginUser=GlobalContext.getCurrentUser();
 		if (file.getSize() > 0) {
 			try {
-				int result = importTeachingFromExcel(file,loginUser);
-				if (GlobalConstant.ZERO_LINE != result) {
-					return GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
+				Pair<Integer, List<String>> result = importTeachingFromExcel(file,loginUser);
+				List<String> errorMsg = result.getRight();
+				Integer count = result.getLeft();
+				if (CollectionUtils.isEmpty(errorMsg)) {
+					return GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
 				} else {
-					return GlobalConstant.UPLOAD_FAIL;
+					StringBuilder sb = new StringBuilder();
+					for (String msg : errorMsg) {
+						sb.append(msg).append(System.lineSeparator());
+					}
+					sb.append("其余"+count+"用户信息正常导入系统");
+					return sb.toString();
 				}
 			} catch (RuntimeException re) {
 				re.printStackTrace();
@@ -6625,7 +6636,7 @@ public class JsResManageController extends GeneralController {
 		return GlobalConstant.UPLOAD_FAIL;
 	}
 
-	public int importTeachingFromExcel(MultipartFile file,SysUser user) {
+	public Pair<Integer, List<String>> importTeachingFromExcel(MultipartFile file, SysUser user) {
 		InputStream is = null;
 		try {
 			is =  file.getInputStream();
@@ -6644,10 +6655,10 @@ public class JsResManageController extends GeneralController {
 		}
 	}
 
-	private int parseExcelAndAudit(Workbook wb,SysUser user){
-
-		int count = 0;
+	private Pair<Integer, List<String>> parseExcelAndAudit(Workbook wb,SysUser user){
+		List<String> errorMsg = new ArrayList<>();
 		int sheetNum = wb.getNumberOfSheets();
+		int count = 0;
 		if(sheetNum>0){
 			List<String> colnames = new ArrayList<String>();
 			Sheet sheet;
@@ -6666,7 +6677,11 @@ public class JsResManageController extends GeneralController {
 				title = titleR.getCell(i).getStringCellValue();
 				colnames.add(title);
 			}
+
+			int row = -1;
+			loop:
 			for(int i = 1;i <= row_num; i++){
+				row++;
 				Row r =  sheet.getRow(i);
 				SysUser sysUser = new SysUser();
 				String userName;
@@ -6685,6 +6700,10 @@ public class JsResManageController extends GeneralController {
 						}
 					}
 					if("姓名".equals(colnames.get(j))){
+						if(StringUtil.isEmpty(value)) {
+							errorMsg.add("第"+(row+2)+"行姓名未填写，导入失败");
+							continue loop;
+						}
 						userName = value;
 						sysUser.setUserName(userName);
 					}else if("联系方式".equals(colnames.get(j))){
@@ -6695,21 +6714,32 @@ public class JsResManageController extends GeneralController {
 						for (String deptName : mulDeptName) {
 							SysDept sysDept = deptBiz.readSysDeptByName(GlobalContext.getCurrentUser().getOrgFlow(),deptName);
 							if (sysDept == null) {
-								throw new RuntimeException("导入失败！第"+ (count+2) +"行，【"+deptName+"科室】不属于该机构！");
+								errorMsg.add("导入失败！第"+ (row+2) +"行，【"+deptName+"科室】不属于该机构！");
+								continue loop;
 							}
 							if (sysDept != null) {
 								allDeptFlows.add(sysDept.getDeptFlow());
 							}
 						}
 					}else if("登录名".equals(colnames.get(j))){
+						if(StringUtil.isEmpty(value)) {
+							errorMsg.add("第"+(row+2)+"行登录名未填写，导入失败");
+							continue loop;
+						}
 						userCode = value;
 						sysUser.setUserCode(userCode);
 					} else if("角色".equals(colnames.get(j))){
 						String[] mulRoleName = value.split(";");
 						for (String roleName : mulRoleName) {
+							if(!acceptedRoleNameList.contains(roleName)) {
+								errorMsg.add("导入失败！第"+ (row+2) +"行，【"+roleName+"角色】不在允许的角色范围内！");
+								continue loop;
+							}
+
 							SysRole sysRole = userRoleBiz.getByRoleName(roleName);
 							if (sysRole == null) {
-								throw new RuntimeException("导入失败！第"+ (count+2) +"行，【"+roleName+"角色】不属于该机构！");
+								errorMsg.add("导入失败！第"+ (row+2) +"行，【"+roleName+"角色】不属于该机构！");
+								continue loop;
 							}
 							if (sysRole != null) {
 								allRoleFlows.add(sysRole.getRoleFlow());
@@ -6723,7 +6753,8 @@ public class JsResManageController extends GeneralController {
 					example.createCriteria().andOrgFlowEqualTo(user.getOrgFlow()).andUserCodeEqualTo(sysUser.getUserCode()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
 					List<SysUser> sysUserList = sysUserMapper.selectByExample(example);
 					if(sysUserList != null && !sysUserList.isEmpty()){
-						throw new RuntimeException("导入失败！第"+(count+2) +"行，当前系统已存在登录名为"+sysUser.getUserCode()+"的用户");
+						errorMsg.add("导入失败！第"+(row+2) +"行，当前系统已存在登录名为"+sysUser.getUserCode()+"的用户");
+						continue;
 					}
 				}
 
@@ -6764,10 +6795,11 @@ public class JsResManageController extends GeneralController {
 					userRoleBiz.saveSysUserRole(sysUser.getUserFlow(), roleFlow, GlobalConstant.RES_WS_ID);
 				}
 
-				count ++;
+				count++;
 			}
 		}
-		return count;
+
+		return Pair.of(count, errorMsg);
 	}
 
 	private Workbook createCommonWorkbook(InputStream inS) throws IOException, InvalidFormatException {
@@ -7054,6 +7086,10 @@ public class JsResManageController extends GeneralController {
 		if (StringUtil.isNotBlank(userFlow)) {
 			SysUser sysUser = userBiz.readSysUser(userFlow);
 			model.addAttribute("sysUser", sysUser);
+
+			List<SysUserRole> userRoleList = userRoleBiz.getByUserFlowAndWsid(userFlow, GlobalConstant.RES_WS_ID);
+			List<String> roleFlowList = userRoleList.stream().map(vo -> vo.getRoleFlow()).collect(Collectors.toList());
+			model.addAttribute("roleFlowList", roleFlowList);
 		}
 		List<SysUserDept> userDepts = userBiz.searchUserDeptByUser(userFlow);
 		if (userDepts != null && !userDepts.isEmpty()) {
