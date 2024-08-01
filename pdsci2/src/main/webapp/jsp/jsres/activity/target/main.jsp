@@ -52,15 +52,15 @@ function add(targetFlow)
 					<td class="td_left">
 						评价指标：
 					</td>
-					<td>
+					<td class="td_right">
 						<input type="text" name="targetName" value="" class="input" />
 					</td>
 					<td class="td_left">
 						活动形式：
 					</td>
-					<td>
+					<td class="td_right">
 						<select id="activityTypeId" name="activityTypeId" class="select"
-								style="width: 125%;margin: 0 5px;">
+								>
 							<option value=""></option>
 							<c:forEach items="${activityTypeEnumList}" var="activityType">
 								<option value="${activityType.id}" ${target.activityTypeId eq activityType.id ? 'selected' : ''}>${activityType.name}</option>
@@ -68,8 +68,8 @@ function add(targetFlow)
 						</select>
 					</td>
 					<td id="func" style="" colspan="6">
-						&nbsp;<input class="btn_green" style="margin-left: 50px;" type="button" value="查&#12288;询" onclick="toPage(1);"/>&nbsp;
-						<input class="btn_green" style="margin-left: 0px;" type="button" value="新&#12288;增" onclick="add('');"/>&nbsp;
+						&nbsp;<input class="btn_green"  type="button" value="查&#12288;询" onclick="toPage(1);"/>&nbsp;
+						<input class="btn_green"  type="button" value="新&#12288;增" onclick="add('');"/>&nbsp;
 					</td>
 				</tr>
 			</table>

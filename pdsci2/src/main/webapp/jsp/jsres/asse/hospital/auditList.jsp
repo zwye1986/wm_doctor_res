@@ -143,7 +143,7 @@
 </div>
 
 <c:if test="${empty list}">
-	<div class="search_table" style="padding: 0px 0px;margin-left: 30px">
+	<div class="search_table" >
 		<table border="0" cellpadding="0" cellspacing="0" class="grid">
 			<tr>
 				<c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristWait2'}">

@@ -32,11 +32,11 @@
 }
 
 .searchTable .input{
-	width:151px !important;
+	max-width:151px !important;
 	margin-left: 0px
 }
 .searchTable .select{
-	width:161px !important;
+	max-width:161px !important;
 	margin-left: 0px
 }
 /*.searchTable .btn_green,.btn_grey{*/

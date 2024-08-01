@@ -28,11 +28,15 @@
 	}
 	.searchTable .td_left{
 		word-wrap:break-word;
-		width:6em;
+		/*width:6em;*/
 		height: auto;
 		line-height: auto;
-		text-align: right;
+		/*text-align: right;*/
 	}
+	.searchTable .td_right{
+        width: 220px;
+        text-align:left;
+    }
 </style>
 <script type="text/javascript" src="<s:url value='/js/jquery-select/js/jquery.select.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <script type="text/javascript">
@@ -122,7 +126,7 @@
 		<%--<h2 class="underline">考核资格查询</h2>--%>
 	<%--</c:if>--%>
 <%--</div>--%>
-<div class="div_search" style="width: 95%;line-height:normal;">
+<div class="div_search" style="line-height:normal;">
 	<form id="searchForm">
 		<input type="hidden" id="currentPage" name="currentPage"/>
 		<input type="hidden" id="orgTypeFlag" value="${param.orgLevel}"/>
@@ -139,8 +143,8 @@
 		<table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
 			<tr>
 				<td class="td_left ">培训基地：</td>
-				<td>
-					<select name="joinOrgFlow" id="joinOrgFlow" class="select " style="width: 106px">
+				<td class="td_right">
+					<select name="joinOrgFlow" id="joinOrgFlow" class="select " >
 						<option value="">全部</option>
 						<c:forEach items="${orgs}" var="org">
 							<option value="${org.orgFlow}">${org.orgName}</option>
@@ -148,17 +152,17 @@
 					</select>
 				</td>
 				<td class="td_left">姓&#12288;&#12288;名：</td>
-				<td>
-					<input type="text" name="userName" value="${param.userName}" class="input" style="width: 100px;margin-left: 0px;"/>
+				<td class="td_right">
+					<input type="text" name="userName" value="${param.userName}" class="input" />
 				</td>
 				<td class="td_left">结业年份：</td>
-				<td>
-					<input type="text" id="graduationYear" name="graduationYear"value="${param.graduationYear}" class="input" readonly="readonly" style="width: 100px;margin-left: 0px"/>
+				<td class="td_right">
+					<input type="text" id="graduationYear" name="graduationYear"value="${param.graduationYear}" class="input" readonly="readonly" />
 				</td>
 				<td class="td_left">培训类别：</td>
-				<td>
+				<td class="td_right">
 					<%--<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" style="width:107px;">--%>
-					<select name="trainingTypeId" id="trainingTypeId" class="select" style="width:107px;">
+					<select name="trainingTypeId" id="trainingTypeId" class="select" >
 						<option value="">请选择</option>
 						<c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristList'}">
 							<option value="DoctorTrainingSpe" selected="selected">住院医师</option>
@@ -173,11 +177,9 @@
 						<%--</c:forEach>--%>
 					</select>
 				</td>
-			</tr>
-			<tr>
 				<td class="td_left">培训专业：</td>
-				<td>
-					<select name="trainingSpeId" id="trainingSpeId" class="select" style="width: 106px;">
+				<td >
+					<select name="trainingSpeId" id="trainingSpeId" class="select" >
 						<option value="">全部</option>
 						<c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristList'}">
 							<c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
@@ -195,21 +197,23 @@
 						</c:if>
 					</select>
 				</td>
+			</tr>
+			<tr>
 				<td class="td_left">年&#12288;&#12288;级：</td>
-				<td>
-					<input type="text" id="sessionNumber" name="sessionNumber"  class="input" readonly="readonly" style="width: 100px;margin-left: 0px"/>
+				<td class="td_right">
+					<input type="text" id="sessionNumber" name="sessionNumber"  class="input" readonly="readonly" />
 				</td>
 				<td class="td_left">审核状态：</td>
 				<c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristWait2'}">
-					<td>
-						<select name="auditStatusId" id="auditStatusId" class="select" style="width:107px;">
+					<td class="td_right">
+						<select name="auditStatusId" id="auditStatusId" class="select" >
 							<option value="Auditing" selected>待基地审核</option>
 						</select>
 					</td>
 				</c:if>
 				<c:if test="${param.tabTag ne 'FristWait' and param.tabTag ne 'FristWait2'}">
-					<td>
-						<select name="auditStatusId" id="auditStatusId" class="select"  style="width:107px;">
+					<td class="td_right">
+						<select name="auditStatusId" id="auditStatusId" class="select"  >
 							<option value="">请选择</option>
 							<c:forEach items="${jsResAsseAuditListEnumList}" var="type">
 								<c:if test="${type.id ne 'Auditing'}">
@@ -230,36 +234,27 @@
 					</td>
 				</c:if>
 				<td class="td_left">证&nbsp;件&nbsp;号：</td>
-				<td>
-					<input type="text" name="idNo" value="${param.idNo}" class="input" style="width: 100px;margin-left: 0px;"/>
+				<td class="td_right">
+					<input type="text" name="idNo" value="${param.idNo}" class="input" />
 				</td>
-			</tr>
-			<tr>
 				<td class="td_left">申请年份：</td>
-				<td>
-					<input type="text" id="applyYear" name="applyYear" class="input" readonly="readonly" value="${pdfn:getCurrYear()}" style="width: 100px;margin-left: 0px"/>
+				<td class="td_right">
+					<input type="text" id="applyYear" name="applyYear" class="input" readonly="readonly" value="${pdfn:getCurrYear()}" />
 				</td>
 				<td class="td_left">考试编号：</td>
-				<td>
-					<select name="testId"  class="select" style="width: 106px;">
+				<td >
+					<select name="testId"  class="select" >
 						<option value="">全部</option>
 						<c:forEach items="${resTestConfigs}" var="resTest">
 							<option value="${resTest.testId}" ${param.testId eq resTest.testId?'selected':''}>${resTest.testId}</option>
 						</c:forEach>
 					</select>
 				</td>
-				<td class="td_left">人员类型：</td>
-				<td colspan="3" >
-					<c:forEach items="${jsResDocTypeEnumList}" var="type">
-						<label><input type="checkbox" id="${type.id}"value="${type.id}" checked class="docType" name="datas" />${type.name}&nbsp;</label>
-					</c:forEach>
-				</td>
 			</tr>
 			<tr>
-				<td colspan="2" ><label><input type="checkbox" value="Y" name="isNotMatch" />培训专业与执业范围不匹配</label></td>
 				<td class="td_left">是否延期：</td>
-				<td>
-					<select class="select" name="isPostpone" style="width: 106px;">
+				<td class="td_right">
+					<select class="select" name="isPostpone" >
 						<option value="" >请选择</option>
 						<option
 								<c:if test="${param.isPostpone eq GlobalConstant.FLAG_Y}">selected="selected"</c:if>
@@ -271,15 +266,26 @@
 						</option>
 					</select>
 				</td>
-				<td colspan="99" style="text-align: right;padding-right: 120px">
+
+				<td class="td_left">人员类型：</td>
+				<td colspan="3" >
+					<c:forEach items="${jsResDocTypeEnumList}" var="type">
+						<label><input type="checkbox" id="${type.id}"value="${type.id}" checked class="docType" name="datas" />${type.name}&nbsp;</label>
+					</c:forEach>
+				</td>
+
+				<td colspan="2" ><label><input type="checkbox" value="Y" name="isNotMatch" />&#12288;培训专业与执业范围不匹配</label></td>
+			</tr>
+			<tr>
+				<td colspan="99">
 					<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>
-					&#12288;<input class="btn_green" type="button" value="导&#12288;出" onclick="exportInfo();"/>
+					<input class="btn_green" type="button" value="导&#12288;出" onclick="exportInfo();"/>
 				</td>
 			</tr>
 		</table>
 	</form>
 </div>
-<div id="doctorListZi" style="width: 95%;margin: 0px auto;">
+<div id="doctorListZi" >
 </div>
 <div style="display: none;">
 	<select id="WMFirst_select">

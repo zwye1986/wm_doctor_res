@@ -42,6 +42,37 @@
         line-height: auto;
         text-align: right;
     }
+
+
+    .form_search {
+
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 15px;
+
+        .form_item {
+
+            width: 280px;
+            display: flex;
+
+            .from_label {
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                margin-top: auto;
+                margin-bottom: auto;
+                text-align: right;
+                width: 90px;
+            }
+
+            .form_content {
+
+                display: inline-block;
+            }
+
+        }
+    }
+
     /*.SelectVal{*/
     /*    width: 238px;*/
     /*}*/
@@ -120,50 +151,61 @@
     <form id="searchForm">
         <input type="hidden" id="currentPage" name="currentPage"/>
 
-        <div style="display: flex;justify-content: space-between;margin-top: 15px">
-            <div>
-                <label class="from_label">基地名称：</label>
-                <select name="orgFlow" class="select" style="width: 161px;" >
-                    <c:if test="${roleFlag eq 'local'}">
-                        <option value="${orgFlow}">${orgName}</option>
-                    </c:if>
-                    <c:if test="${roleFlag eq  GlobalConstant.USER_LIST_GLOBAL}">
-                        <c:forEach items="${orgs}" var="org">
-                            <option value="${org.orgFlow}" <c:if test="${orgFlow eq org.orgFlow}">selected</c:if>>${org.orgName}</option>
-                        </c:forEach>
-                    </c:if>
-                </select>
-            </div>
-            <div>
-                <label class="from_label">基地排序：</label>
-                <select name="orgPaiXu" class="select" style="width: 161px;">
-                    <option value="">默认</option>
-                    <option value="">升序</option>
-                    <option value="desc">降序</option>
-                </select>
-            </div>
-            <div>
-                <label class="from_label">督导情况：</label>
-                <select name="manageAllSub" class="select" style="width: 161px;">
-                    <option value="">全部</option>
-                    <option value="Y">已完成</option>
-                    <option value="N">未完成</option>
-                    <option value="W">无计划</option>
-                </select>
-            </div>
-            <div>
-                <label class="from_label">自评得分：</label>
-                <input type="text" id="minBaseScore" name="minBaseScore" class="input" style="width: 80px;" value=""> ~ <input type="text" id="maxbaseScore" name="maxbaseScore" class="input" style="width: 80px;" value="">&#12288;分
-            </div>
-            <div>
-                <label class="from_label">专&#12288;业：</label>
-                <select name="speId" class="select" id="" style="width: 161px;" >
-                    <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
-                        <c:if test="${'3500' ne dict.dictId and '3700' ne dict.dictId}">
-                            <option value="${dict.dictId}" <c:if test="${param.speId eq dict.dictId}">selected</c:if>>${dict.dictName}</option>
+        <div class="form_search">
+            <div class="form_item">
+                <div class="from_label" >基地名称：</div>
+                <div class="form_content">
+                    <select name="orgFlow" class="select" style="max-width: 161px;" >
+                        <c:if test="${roleFlag eq 'local'}">
+                            <option value="${orgFlow}">${orgName}</option>
                         </c:if>
-                    </c:forEach>
-                </select>
+                        <c:if test="${roleFlag eq  GlobalConstant.USER_LIST_GLOBAL}">
+                            <c:forEach items="${orgs}" var="org">
+                                <option value="${org.orgFlow}" <c:if test="${orgFlow eq org.orgFlow}">selected</c:if>>${org.orgName}</option>
+                            </c:forEach>
+                        </c:if>
+                    </select>
+                </div>
+
+            </div>
+            <div class="form_item">
+                <div class="from_label" >基地排序：</div>
+                <div class="form_content">
+                    <select name="orgPaiXu" class="select" style="width: 161px;">
+                        <option value="">默认</option>
+                        <option value="">升序</option>
+                        <option value="desc">降序</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form_item">
+                <div class="from_label" >督导情况：</div>
+                <div class="form_content">
+                    <select name="manageAllSub" class="select" style="width: 161px;">
+                        <option value="">全部</option>
+                        <option value="Y">已完成</option>
+                        <option value="N">未完成</option>
+                        <option value="W">无计划</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form_item">
+                <div class="from_label" >自评得分：</div>
+                <div class="form_content">
+                    <input type="text" id="minBaseScore" name="minBaseScore" class="input" style="width: 70px;" value=""> ~ <input type="text" id="maxbaseScore" name="maxbaseScore" class="input" style="width: 70px;" value="">
+                </div>
+            </div>
+            <div class="form_item">
+                <div class="from_label" >专&#12288;业：</div>
+                <div class="form_content">
+                    <select name="speId" class="select"   >
+                        <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
+                            <c:if test="${'3500' ne dict.dictId and '3700' ne dict.dictId}">
+                                <option value="${dict.dictId}" <c:if test="${param.speId eq dict.dictId}">selected</c:if>>${dict.dictName}</option>
+                            </c:if>
+                        </c:forEach>
+                    </select>
+                </div>
             </div>
         </div>
 

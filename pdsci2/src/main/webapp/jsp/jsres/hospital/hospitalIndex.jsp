@@ -1150,7 +1150,7 @@
                     <div class="content_side">
                         <input type="hidden" id="orgFlow3" value='${orgFlow}'/>
                         <dl class="menu menu_first">
-                            <a class="side-button" href="#" onclick="showSelectMenu();">切<br/>换<br/>新<br/>版<br/>菜<br/>单</a>
+<%--                            <a class="side-button" href="#" onclick="showSelectMenu();">切<br/>换<br/>新<br/>版<br/>菜<br/>单</a>--%>
 
                             <dt class="menu_title">
                                 <i class="icon_menu menu_function"></i>基地管理
