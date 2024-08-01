@@ -495,7 +495,7 @@ public class JsResBaseManagerController extends GeneralController {
 				mav.setViewName("jsres/city/hospital/" + baseInfoName.substring(0, 1).toLowerCase() + baseInfoName.substring(1, baseInfoName.length()));
 			}
 		} else {//无记录
-			mav.addObject("sysOrg", new SysOrg());
+//			mav.addObject("sysOrg", new SysOrg());
 			if (GlobalConstant.BASIC_MAIN_ALL.equals(baseInfoName)) {
 				mav.setViewName("jsres/hospital/hos/editBasicInfoMainDuplicate");
 			} else if ("Y".equals(baseInfoMain)) {
