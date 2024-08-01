@@ -235,7 +235,7 @@ public class JsResTeacherController extends GeneralController{
 	@RequestMapping(value="attendanceSearch/{roleId}")
 	public String attendanceSearch(Model model, Integer currentPage, @PathVariable String roleId, HttpServletRequest request,
 								   String schStartDate, String schEndDate, String deptFlow, String teacherName, String statueId,
-								   String studentName, String searchType, String orgFlow, String datas[], String baseFlag){
+								   String studentName, String searchType, String kqType,  String orgFlow, String datas[], String baseFlag){
 		//查询本基地的协同基地
 		List<SysOrg> orgList=new ArrayList<>();
 		SysOrg doctorOrg=new SysOrg();
@@ -311,6 +311,7 @@ public class JsResTeacherController extends GeneralController{
 		}
 		beMap.put("docTypeList",docTypeList);
 		beMap.put("baseFlag", baseFlag);
+		beMap.put("kqType", kqType);
 		if (GlobalConstant.USER_LIST_SPELOCAL.equals(roleId) || GlobalConstant.USER_LIST_SPELOCALSECRETARY.equals(roleId)) {
 			String trainingSpeId = GlobalContext.getCurrentUser().getResTrainingSpeId();
 			beMap.put("trainingSpeId", trainingSpeId);
@@ -393,6 +394,7 @@ public class JsResTeacherController extends GeneralController{
 		model.addAttribute("schEndDate",schEndDate);
 		model.addAttribute("schStartDate",schStartDate);
 		model.addAttribute("orgList",orgList);
+		model.addAttribute("kqType", kqType);
 		return "jsres/teacher/attendanceSearch";
 	}
 

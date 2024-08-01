@@ -780,6 +780,13 @@
         left join sys_user su on su.user_flow=b.user_flow and su.record_status='Y'
         left join JSRES_ATTENDANCE ja on ja.doctor_flow = b.user_flow and ja.record_status='Y'and ja.attend_date=a.date_day
         left join res_doctor rd on su.user_flow=rd.doctor_flow
+        <if test='kqType != null and kqType!="" and  kqType== "Y"' >
+            LEFT JOIN (
+            SELECT ATTEND_DATE , ATTENDANCE_FLOW
+            FROM JSRES_ATTENDANCE_DETAIL
+            GROUP BY ATTEND_DATE ,ATTENDANCE_FLOW
+            ) d ON ja.ATTEND_DATE = d.ATTEND_DATE and ja.ATTENDANCE_FLOW = d.ATTENDANCE_FLOW
+        </if>
         where su.record_status='Y'
         and rd.record_status='Y'
         <if test='studentName != null and studentName!=""' >
@@ -817,6 +824,18 @@
         <if test='deptFlow != null and deptFlow!=""' >
             and b.sch_dept_flow =#{deptFlow}
         </if>
+
+        <if test='kqType != null and kqType!="" and  kqType== "Y"' >
+            and  ja.ATTENDANCE_FLOW is not null
+            AND ja.ATTEND_STATUS = '1'
+            AND to_date( d.ATTEND_DATE, 'yyyy-mm-dd' ) <![CDATA[ >= ]]> to_date( #{schStartDate}, 'yyyy-mm-dd' )
+            AND to_date( d.ATTEND_DATE, 'yyyy-mm-dd' )  <![CDATA[ <= ]]> to_date( #{schEndDate}, 'yyyy-mm-dd' )
+        </if>
+        <if test='kqType != null and kqType!="" and  kqType== "N"' >
+            and  ja.ATTENDANCE_FLOW is null
+        </if>
+
+
         <if test='statueId != null and statueId!=""' >
             and ja.ATTEND_STATUS=#{statueId}
         </if>

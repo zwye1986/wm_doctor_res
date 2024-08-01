@@ -335,11 +335,11 @@ public class JsResActivityQueryController extends GeneralController {
 			TeachingActivityInfo info=activityBiz.readActivityInfo(activityFlow);
 			if(info==null)
 				return "活动信息不存在，请刷新列表页面！";
-			List<Map<String,Object>>  results=activityBiz.readActivityResults(activityFlow);
-			if(results!=null&&results.size()>0)
-			{
-				return "此活动已有学员扫码，无法删除！";
-			}
+//			List<Map<String,Object>>  results=activityBiz.readActivityResults(activityFlow);
+//			if(results!=null&&results.size()>0)
+//			{
+//				return "此活动已有学员扫码，无法删除！";
+//			}
 			info.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
 			int c=activityBiz.saveActivity(info);
 			if(c==0)

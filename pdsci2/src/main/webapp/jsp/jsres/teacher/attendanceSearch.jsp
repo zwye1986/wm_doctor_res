@@ -341,7 +341,18 @@
                                 <label><input type="checkbox" id="${type.id}" value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
                             </c:forEach>
                         </td>
-                        <td colspan="9">
+                        <td style="width: 110px">是否有考勤记录：</td>
+                        <td colspan="3">
+                            <select class="select" id="kqType" name="kqType" style="width: 100px;margin-left: 0px">
+                                <option value="" <c:if test='${kqType eq ""}'>selected="selected"</c:if>>全部
+                                </option>
+                                <option value="Y" <c:if test='${kqType eq "Y"}'>selected="selected"</c:if>>是
+                                </option>
+                                <option value="N" <c:if test='${kqType eq "N"}'>selected="selected"</c:if>>否
+                                </option>
+                            </select>
+                        </td>
+                        <td colspan="6">
                             <input type="button" class="btn_green" onclick="searchAtendanceByitems();"  value="查&#12288;询"/>
                             &#12288;<input type="button" class="btn_green" onclick="exportAttendance();" value="导&#12288;出"/>
                         </td>
