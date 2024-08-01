@@ -82,7 +82,7 @@
             showCkshDetail(flag);
         }*/
     });
-    
+
     function tableShow(flag) {
         if(flag == "Y"){
             $("#detailList").show();
@@ -93,10 +93,13 @@
         }
     }
 
-    function showSessionNumber(flag) {
-        if(flag == "Y"){
+    function showSessionNumber(flag,show) {
+        if(flag === "Y"){
             $("#sessionNumberList").show();
             $("#sessionDetail").show();
+            if(show){
+                addCkxzConfg();
+            }
         }else {
             $("#sessionNumberList").hide();
             $("#sessionDetail").hide();
@@ -112,7 +115,7 @@
             $("#ckshList").hide();
         }
     }*/
-    
+
     function addDetailConfg() {
         var url = "<s:url value ='/jsres/cfgManager/addDetailConfg'/>";
         jboxOpen(url, "新增轮转科室出科限制配置", 500, 400);
@@ -122,7 +125,7 @@
         var url = "<s:url value ='/jsres/cfgManager/addCkxzConfg'/>";
         jboxOpen(url, "新增学员轮转年级、年份配置", 500, 340);
     }
-    
+
     function editDeptConfig(cfgFlow) {
         var url = "<s:url value ='/jsres/cfgManager/editDetailConfg'/>?cfgFlow="+cfgFlow;
         jboxOpen(url, "编辑轮转科室出科限制配置", 500, 340);
@@ -142,7 +145,7 @@
             },null,false);
         });
     }
-    
+
     function delDeptConfig(cfgFlow) {
         jboxConfirm("删除后配置为通用配置，确认删除?",function () {
             var url = "<s:url value='/jsres/cfgManager/delDeptConfig'/>?cfgFlow="+cfgFlow;
@@ -348,7 +351,7 @@
                     </tr>
                     </thead>
                     <tr>
-                        <td style="text-align: center;">是否由科主任审核学员技能出科成绩：</td>
+                        <td style="text-align: center;">是否由科主任/教学主任/教学秘书审核学员技能出科成绩：</td>
                         <td style="text-align: left;padding-left: 5px" width="200px">
                             <c:set value="jsres_${sessionScope.currUser.orgFlow }_org_cksh" var="key"/>
                             <input type="hidden" name="cfgCode" value="${key}">
@@ -402,11 +405,13 @@
                             <c:set value="jsres_${sessionScope.currUser.orgFlow }_org_ckxz" var="key"/>
                             <input type="hidden" name="cfgCode" value="${key}">
                             &nbsp;
-                            <input type="radio" id="${key}_y" name="${key}" value="Y" onclick="showSessionNumber('Y')"
+                            <input type="radio" id="${key}_y" name="${key}" value="Y"
+                                   <c:if test="${empty orgCkxzList}">onclick="showSessionNumber('Y',true)"</c:if>
+                                   <c:if test="${not empty orgCkxzList}">onclick="showSessionNumber('Y',false)"</c:if>
                                    <c:if test="${pdfn:jsresPowerCfgMap(key) eq 'Y'}">checked</c:if>/>
                                 <label for="${key}_y">是</label>&#12288;
                             <input type="radio" id="${key}_n" name="${key}" value="N" onclick="showSessionNumber('N')"
-                                   <c:if test="${empty pdfn:jsresPowerCfgMap(key) or pdfn:jsresPowerCfgMap(key) eq 'N'}">checked</c:if>/>
+                                   <c:if test="${empty pdfn:jsresPowerCfgMap(key) or pdfn:jsresPowerCfgMap(key) eq 'N' or empty orgCkxzList}">checked</c:if>/>
                                 <label for="${key}_n">否</label>
                             <input type="hidden" name="${key}_ws_id" value="res">
                             <input type="hidden" name="${key}_desc" value="是否限制学员出科后，才可添加轮转科室">
