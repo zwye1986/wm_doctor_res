@@ -6,8 +6,9 @@
 *.iml
 out
 gen
-./pdsci2/target
-./pdapp/target
+/pdsci2/target
+/pdapp/target
+/pdcore/target
 *.license.key
 /hs_err_pid65744.log
 /hs_err_pid68128.log

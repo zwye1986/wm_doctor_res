@@ -27,4 +27,8 @@ public interface SysUserRoleMapper {
     int updateByPrimaryKeySelective(SysUserRole record);
 
     int updateByPrimaryKey(SysUserRole record);
+
+    int batchInsert(@Param("userRoleList") List<SysUserRole> userRoleList);
+
+    void batchUpdateSelective(@Param("userRoleList") List<SysUserRole> userRoleList);
 }

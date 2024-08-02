@@ -165,8 +165,19 @@ function effectiveInfo2(activityFlow,roleFlag,isEffective,flag,_this,currentPage
 	jboxOpen("<s:url value='/jsres/activityQuery/effectiveActivityInfo'/>?activityFlow=" + activityFlow + "&isEffective="+isEffective  + "&currentPage="+currentPage,'不认可此活动',500,270,false);
 }
 
-function delActivity(activityFlow,currentPage){
-	jboxConfirm("确认删除？", function(){
+
+
+function delActivity(activityFlow,currentPage,scanNum){
+
+	let msg;
+
+	if(scanNum==='0'){
+		msg = "确认删除";
+	}else {
+		msg = "该活动已有签到人员，是否删除";
+	}
+
+	jboxConfirm(msg, function(){
 		var url = "<s:url value='/jsres/activityQuery/delActivity'/>?activityFlow=" + activityFlow+"&currentPage="+currentPage;
 		jboxGet(url, null, function(resp){
 			if(resp == '${GlobalConstant.DELETE_SUCCESSED}'){
@@ -476,11 +487,16 @@ function lookSearchFile(activityFlow,role) {
 
 							<c:if test="${(fn:length(resultMap[b.activityFlow])+0)<=0 }">
 								<c:if test="${(param.roleFlag eq 'teach' && pdfn:jsresPowerCfgMap(key1) eq 'Y') || (param.roleFlag eq 'head' && pdfn:jsresPowerCfgMap(key3) eq 'Y') || (param.roleFlag eq 'secretary' && pdfn:jsresPowerCfgMap(key2) eq 'Y')}">
-									<img class="img" style="cursor:pointer" onclick="delActivity('${b.activityFlow}','${currentPage}')" title="删除" src="<s:url value='/jsp/jsres/activity/img/del.png'/>"></a>
+<%--									<img class="img" style="cursor:pointer" onclick="delActivity('${b.activityFlow}','${currentPage}')" title="删除" src="<s:url value='/jsp/jsres/activity/img/del.png'/>"></a>--%>
 								</c:if>
 							</c:if>
 							<img class="img" style="cursor:pointer" onclick="signUrl('${b.activityFlow}')" title="二维码" src="<s:url value='/jsp/jsres/activity/img/code.png'/>"></a>
 						</c:if>
+
+						<c:if test="${param.roleFlag eq 'local'}">
+							<a style="cursor:pointer" onclick="delActivity('${b.activityFlow}','${currentPage}','${b.scanNum}')" >删除</a>
+						</c:if>
+
 						<c:if test="${param.roleFlag eq 'local' and b.IS_EFFECTIVE eq 'Y'}">
 						<a style="cursor:pointer" class='${b.activityFlow}' onclick="showInfo('${b.activityFlow}','${param.roleFlag}')">查看</a>&nbsp<font style="color: red" >认可</font>
 								<a style="cursor:pointer"  onclick="effectiveInfo2('${b.activityFlow}','${param.roleFlag}','N','${b.IS_EFFECTIVE}',this,'${currentPage}')" id="brk" class="brk" style="display: ${activity.isEffective eq 'N'?'none':''}" >不认可</a>

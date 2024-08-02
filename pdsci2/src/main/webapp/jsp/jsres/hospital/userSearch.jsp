@@ -109,7 +109,12 @@
     })(jQuery);
 
     $(document).ready(function () {
-        $("#statusId,#userRoleList").selectpicker({});
+        $("#statusId").selectpicker({});
+        $("#userRoleList").selectpicker({
+            deselectAllText: "全不选",
+            selectAllText: "全选"
+        });
+
         search();
         $("#ksmc").likeSearchInit({
             clickActive: function (flow) {
@@ -231,7 +236,7 @@
                     <input id="ksmcFlow" name="deptFlow" value="${param.deptFlow}" hidden="hidden"/>
                     <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; left:0px; top:30px;">
                         <div class="boxHome ksmc" id="ksmcSel"
-                             style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
+                             style="z-index: 9999; max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
                             <c:forEach items="${sysDeptList}" var="dept">
                                 <p class="item ksmc" flow="${dept.deptFlow}" value="${dept.deptName}"
                                    style="line-height: 25px; padding:0px 0;cursor: default;width: 100% ">${dept.deptName}</p>
@@ -249,7 +254,7 @@
                 <input type="text" name="userCode" value="${param.userCode}" class="input"  />
             </div>
             <div style="float: left; margin-bottom: 18px">
-                <label class="td_left">手机号</label>
+                <label class="td_left">手机号码</label>
                 <input type="text" name="userPhone" value="${param.userPhone}"  class="input"  />
             </div>
             <div style="float: left; margin-bottom: 18px">
@@ -267,24 +272,24 @@
             </div>
             <div style="float: left; margin-bottom: 18px">
                 <label class="td_left">角色</label>
-                <select multiple class="selectpicker" name="userRoleList" id="userRoleList" title="请选择角色">
+                <select multiple class="selectpicker" name="userRoleList" id="userRoleList" title="请选择角色" data-actions-box="true">
                     <c:if test="${!empty applicationScope.sysCfgMap['res_teacher_role_flow']}">
-                        <option selected value="${applicationScope.sysCfgMap['res_teacher_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teacher_role_flow']]?sysRoleMap[sysCfgMap['res_teacher_role_flow']].roleName:'带教老师'}</option>
+                        <option value="${applicationScope.sysCfgMap['res_teacher_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teacher_role_flow']]?sysRoleMap[sysCfgMap['res_teacher_role_flow']].roleName:'带教老师'}</option>
                     </c:if>
                     <c:if test="${!empty applicationScope.sysCfgMap['res_head_role_flow']}">
-                        <option selected value="${applicationScope.sysCfgMap['res_head_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_head_role_flow']]?sysRoleMap[sysCfgMap['res_head_role_flow']].roleName:'科主任'}</option>
+                        <option value="${applicationScope.sysCfgMap['res_head_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_head_role_flow']]?sysRoleMap[sysCfgMap['res_head_role_flow']].roleName:'科主任'}</option>
                     </c:if>
                     <c:if test="${!empty applicationScope.sysCfgMap['res_secretary_role_flow']}">
-                        <option selected value="${applicationScope.sysCfgMap['res_secretary_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_secretary_role_flow']]?sysRoleMap[sysCfgMap['res_secretary_role_flow']].roleName:'科秘'}</option>
+                        <option value="${applicationScope.sysCfgMap['res_secretary_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_secretary_role_flow']]?sysRoleMap[sysCfgMap['res_secretary_role_flow']].roleName:'科秘'}</option>
                     </c:if>
                     <c:if test="${!empty applicationScope.sysCfgMap['res_teaching_head_role_flow']}">
-                        <option selected value="${applicationScope.sysCfgMap['res_teaching_head_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teaching_head_role_flow']]?sysRoleMap[sysCfgMap['res_teaching_head_role_flow']].roleName:'教学主任'}</option>
+                        <option value="${applicationScope.sysCfgMap['res_teaching_head_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teaching_head_role_flow']]?sysRoleMap[sysCfgMap['res_teaching_head_role_flow']].roleName:'教学主任'}</option>
                     </c:if>
                     <c:if test="${!empty applicationScope.sysCfgMap['res_teaching_secretary_role_flow']}">
-                        <option selected value="${applicationScope.sysCfgMap['res_teaching_secretary_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teaching_secretary_role_flow']]?sysRoleMap[sysCfgMap['res_teaching_secretary_role_flow']].roleName:'教学秘书'}</option>
+                        <option value="${applicationScope.sysCfgMap['res_teaching_secretary_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teaching_secretary_role_flow']]?sysRoleMap[sysCfgMap['res_teaching_secretary_role_flow']].roleName:'教学秘书'}</option>
                     </c:if>
                     <c:if test="${!empty applicationScope.sysCfgMap['res_hospitalLeader_role_flow']}">
-                        <option selected value="${applicationScope.sysCfgMap['res_hospitalLeader_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_hospitalLeader_role_flow']]?sysRoleMap[sysCfgMap['res_hospitalLeader_role_flow']].roleName:'评分专家'}</option>
+                        <option value="${applicationScope.sysCfgMap['res_hospitalLeader_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_hospitalLeader_role_flow']]?sysRoleMap[sysCfgMap['res_hospitalLeader_role_flow']].roleName:'评分专家'}</option>
                     </c:if>
                 </select>
             </div>
