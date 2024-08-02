@@ -434,7 +434,7 @@ function doctorback(){
 	}
 
     function getProcess(rotationFlow){
-        jboxLoad("content","<s:url value='/jsres/doctor/trainRegister?roleFlag=doctor'/>?roleFlag=doctor&rotationFlow="+rotationFlow,true);
+        jboxLoad("content","<s:url value='/jsres/doctor/trainRegister?roleFlag=doctor'/>&rotationFlow="+rotationFlow,true);
     }
 </script>
 <script type="text/javascript">
@@ -474,7 +474,7 @@ function doctorback(){
 		<ul>
 			<c:forEach items="${recruitList}" var="recruit">
 				<%--<input type="hidden" class="${recruit.catSpeId}" value="${recruit.speId}"/>--%>
-				<li <c:if test="${rotationFlow eq recruit.rotationFlow}">class="tab_select"</c:if> id="li_${recruit.rotationFlow}" onclick="getProcess('${recruit.rotationFlow}');"><a>${recruit.speName}</a></li>
+				<li <c:if test="${rotationFlow eq recruit.rotationFlow}">class="tab_select"</c:if> id="li_${recruit.rotationFlow}" onclick="getProcess('${recruit.rotationFlow}');"><a>${recruit.speName}（${recruit.sessionNumber}级）</a></li>
 			</c:forEach>
 		</ul>
 	</div>
