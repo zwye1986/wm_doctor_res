@@ -1,0 +1,44 @@
+@charset "utf-8";
+
+.form_search {
+
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 15px;
+
+    .form_item {
+
+        width: 300px;
+        display: flex;
+        padding: 5px 0;
+        margin-left: -30px;
+
+        .form_label {
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            margin-top: auto;
+            margin-bottom: auto;
+            text-align: right;
+            width: 100px;
+        }
+
+        .form_content {
+            margin: auto 0;
+        }
+
+    }
+
+    .form_item_hide {
+        display: none;
+    }
+
+    .searchTable .input{
+        max-width:151px !important;
+        margin-left: 0px
+    }
+    .searchTable .select{
+        max-width:161px !important;
+        margin-left: 0px
+    }
+}
