@@ -50,6 +50,7 @@
 <script type="text/javascript" src="<s:url value='/js/itemSelect/itemSelect2.js'/>"></script>
 <link href="<s:url value='/css/UCFORM.css'/>" rel="stylesheet" type="text/css">
 <script src="<s:url value='/js/jQuery.UCSelect.js'/>" type="text/javascript"></script>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script type="text/javascript">
     $(document).ready(function () {
         // $('select[name=trainingSpeId]').UCFormSelect();
@@ -165,48 +166,97 @@
     <form id="searchForm">
         <input type="hidden" id="currentPage" name="currentPage"/>
 
-        <div style="display: flex;justify-content: flex-start; column-gap: 56px;margin-top: 15px">
-            <div>
-                <label class="from_label">专家姓名：</label>
-                <input type="text" name="userName" value="${param.userName}" class="input" placeholder="请输入专家姓名"
-                       style="width: 161px;"/>
+
+        <div class="form_search">
+
+            <div class="form_item">
+                <div class="form_label">专家姓名：</div>
+                <div>
+                    <input type="text" name="userName" value="${param.userName}" class="input" placeholder="请输入专家姓名"
+                        />
+                </div>
             </div>
-            <div>
-                <label class="from_label">专业：</label>
-                <select name="trainingSpeId" class="select" id="trainingSpeId" style="width: 161px;" >
-                    <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
-                        <c:if test="${'3500' ne dict.dictId and '3700' ne dict.dictId}">
-                            <option value="${dict.dictId}" <c:if test="${param.speId eq dict.dictId}">selected</c:if>>${dict.dictName}</option>
-                        </c:if>
-                    </c:forEach>
-                </select>
-            </div>
-            <div>
-                <label class="from_label">科室：</label>
-                <input type="hidden" id="deptFlow" name="deptFlow" value="${user.deptFlow}">
-                <input id="orgSel" class="toggleView input" type="text" style="width: 161px;margin-left: 5px;background-image: url(<s:url value='/jsp/res/images/reorder_w.png'/>);background-repeat: no-repeat;background-position: 179px -4px;" name="deptName"
-                       value="${user.deptName}" autocomplete="off" title="${param.deptName}"  placeholder="请选择科室"
-                       onmouseover="this.title = this.value"/>
-                <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:35px;left:5px;">
-                    <div id="boxHome" style="max-height: 250px; margin-left: 45px;overflow: auto;border: 1px #ccc solid;background-color: white;min-width: 169px;border-top: none;position: relative;display: none;">
-                        <c:forEach items="${deptList}" var="dept">
-                            <p class="item" flow="${dept.deptFlow}" value="${dept.deptName}" onclick="toDeptFlow('${dept.deptFlow}');" style="height: 30px;padding-left: 10px;text-align: left;">${dept.deptName}</p>
+            <div class="form_item">
+                <div class="form_label">专业：</div>
+                <div>
+                    <select name="trainingSpeId" class="select" id="trainingSpeId" >
+                        <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
+                            <c:if test="${'3500' ne dict.dictId and '3700' ne dict.dictId}">
+                                <option value="${dict.dictId}" <c:if test="${param.speId eq dict.dictId}">selected</c:if>>${dict.dictName}</option>
+                            </c:if>
                         </c:forEach>
+                    </select>
+                </div>
+            </div>
+            <div class="form_item">
+                <div class="form_label">科室：</div>
+                <div class="form_content">
+                    <input type="hidden" id="deptFlow" name="deptFlow" value="${user.deptFlow}">
+                    <input id="orgSel" class="toggleView input" type="text" style="margin-left: 5px;background-image: url(<s:url value='/jsp/res/images/reorder_w.png'/>);background-repeat: no-repeat;background-position: 179px -4px;" name="deptName"
+                           value="${user.deptName}" autocomplete="off" title="${param.deptName}"  placeholder="请选择科室"
+                           onmouseover="this.title = this.value"/>
+                    <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:35px;left:5px;">
+                        <div id="boxHome" style="max-height: 250px; margin-left: 45px;overflow: auto;border: 1px #ccc solid;background-color: white;min-width: 169px;border-top: none;position: relative;display: none;">
+                            <c:forEach items="${deptList}" var="dept">
+                                <p class="item" flow="${dept.deptFlow}" value="${dept.deptName}" onclick="toDeptFlow('${dept.deptFlow}');" style="height: 30px;padding-left: 10px;text-align: left;">${dept.deptName}</p>
+                            </c:forEach>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div>
-                <label class="from_label">手机号码：</label>
-                <input type="text" name="userPhone" value="${param.userName}" class="input" placeholder="请输入手机号码"
-                       style="width: 161px;margin-left: 0px;"/>
+            <div class="form_item">
+                <div class="form_label">手机号码：</div>
+                <div class="form_content" >
+                    <input type="text" name="userPhone" value="${param.userName}" class="input" placeholder="请输入手机号码"
+                        />
+                </div>
             </div>
         </div>
+
         <div style="margin-top: 15px;margin-bottom: 15px">
             <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
             <input class="btn_green" type="button" value="新&#12288;增" onclick="editHospitalLeader('add','');"/>
             <input class="btn_green" type="button" value="导&#12288;入" onclick="importExcelUser();"/>
             <input class="btn_green" type="button" value="导&#12288;出" onclick="exportSupervisioUser();"/>
         </div>
+
+<%--        <div style="display: flex;justify-content: flex-start; column-gap: 56px;margin-top: 15px">--%>
+<%--            <div>--%>
+<%--                <label class="form_label">专家姓名：</label>--%>
+<%--                <input type="text" name="userName" value="${param.userName}" class="input" placeholder="请输入专家姓名"--%>
+<%--                       style="width: 161px;"/>--%>
+<%--            </div>--%>
+<%--            <div>--%>
+<%--                <label class="form_label">专业：</label>--%>
+<%--                <select name="trainingSpeId" class="select" id="trainingSpeId" style="width: 161px;" >--%>
+<%--                    <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">--%>
+<%--                        <c:if test="${'3500' ne dict.dictId and '3700' ne dict.dictId}">--%>
+<%--                            <option value="${dict.dictId}" <c:if test="${param.speId eq dict.dictId}">selected</c:if>>${dict.dictName}</option>--%>
+<%--                        </c:if>--%>
+<%--                    </c:forEach>--%>
+<%--                </select>--%>
+<%--            </div>--%>
+<%--            <div>--%>
+<%--                <label class="form_label">科室：</label>--%>
+<%--                <input type="hidden" id="deptFlow" name="deptFlow" value="${user.deptFlow}">--%>
+<%--                <input id="orgSel" class="toggleView input" type="text" style="width: 161px;margin-left: 5px;background-image: url(<s:url value='/jsp/res/images/reorder_w.png'/>);background-repeat: no-repeat;background-position: 179px -4px;" name="deptName"--%>
+<%--                       value="${user.deptName}" autocomplete="off" title="${param.deptName}"  placeholder="请选择科室"--%>
+<%--                       onmouseover="this.title = this.value"/>--%>
+<%--                <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:35px;left:5px;">--%>
+<%--                    <div id="boxHome" style="max-height: 250px; margin-left: 45px;overflow: auto;border: 1px #ccc solid;background-color: white;min-width: 169px;border-top: none;position: relative;display: none;">--%>
+<%--                        <c:forEach items="${deptList}" var="dept">--%>
+<%--                            <p class="item" flow="${dept.deptFlow}" value="${dept.deptName}" onclick="toDeptFlow('${dept.deptFlow}');" style="height: 30px;padding-left: 10px;text-align: left;">${dept.deptName}</p>--%>
+<%--                        </c:forEach>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <div>--%>
+<%--                <label class="form_label">手机号码：</label>--%>
+<%--                <input type="text" name="userPhone" value="${param.userName}" class="input" placeholder="请输入手机号码"--%>
+<%--                       style="width: 161px;margin-left: 0px;"/>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+
 
 
 

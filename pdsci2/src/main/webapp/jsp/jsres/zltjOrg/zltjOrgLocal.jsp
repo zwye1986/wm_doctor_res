@@ -15,6 +15,7 @@
 	<jsp:param name="jquery_placeholder" value="true"/>
 	<jsp:param name="jquery_iealert" value="false"/>
 </jsp:include>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script src="<s:url value='/js/yearSelect/checkYear.js'/>" type="text/javascript"></script>
 <style type="text/css">
 	.indexNum + div{
@@ -234,23 +235,23 @@ function orgStatus(){
 		}
 	}
 }
+   //显示隐藏
+    let flag = false;
+    function showOrHide(){
 
-//显示隐藏
-let flag = false;
-function showOrHide(){
+        if(flag){
+            $(`.form_item_hide`).hide();
+            // document.getElementById("hideForm").style.display='none';
+            $("#open").text("展开")
+            flag = false;
+        }else {
+            $(`.form_item_hide`).css('display','flex');
+            // document.getElementById("hideForm").style.display='flex';
+            $("#open").text("收起")
+            flag = true;
+        }
 
-
-	if(flag){
-		document.getElementById("hideForm").style.display='none';
-		$("#open").text("展开")
-		flag = false;
-	}else {
-		document.getElementById("hideForm").style.display='flex';
-		$("#open").text("收起")
-		flag = true;
-	}
-
-}
+    }
 
 function changeOrgFlow(obj){
 	var items = $("#pDiv").find("p."+$(obj).attr("id")+".item[value='"+$(obj).val()+"']");
@@ -276,152 +277,162 @@ function tabClick(tag,type){
 		<input type="hidden" id="orgCityFlag" value="${orgCityId}"/>
 
 
-		<div style="display: flex;justify-content: space-between; margin-top: 15px">
+		 <div class="form_search">
 
-			<div>
-				<label class="from_label">年级：</label>
-				<input type="text" id="sessionNumber" name="sessionNumber" value="${pdfn:getCurrYear()}" class="input indexNum" readonly="readonly"/>
+			 <div class="form_item">
+				<div class="form_label">年&#12288;&#12288;级：</div>
+				<div class="form_content" >
+					<input type="text" id="sessionNumber" name="sessionNumber" value="${pdfn:getCurrYear()}" class="input indexNum" readonly="readonly"/>
+				</div>
 			</div>
-			<div>
-				<label class="from_label">培训类别：</label>
-				<select style="width: 161px" name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" >
-					<option value="DoctorTrainingSpe">住院医师</option>
-					<%--<option value="">请选择</option>
-					<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
-						<option value="${trainCategory.id}" <c:if test="${trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>
-					</c:forEach>--%>
-				</select>
+			<div class="form_item">
+				<div class="form_label">培训类别：</div>
+				<div class="form_content">
+					<select  name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" >
+						<option value="DoctorTrainingSpe">住院医师</option>
+						<%--<option value="">请选择</option>
+						<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
+							<option value="${trainCategory.id}" <c:if test="${trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>
+						</c:forEach>--%>
+					</select>
+				</div>
+
 			</div>
 
-			<div>
-				<label class="from_label">培训专业：</label>
-				<select name="trainingSpeId" id="trainingSpeId"class="select" >
-					<option value="">全部</option>
-				</select>
+			<div class="form_item">
+				<div class="form_label">培训专业：</div>
+				<div class="form_content">
+					<select name="trainingSpeId" id="trainingSpeId"class="select" >
+						<option value="">全部</option>
+					</select>
+				</div>
 			</div>
 
 			<c:if test="${fn:length(orgs)!=1}">
-			<div style="display: flex">
-				<label class="from_label">培训基地：</label>
-				<input id="trainOrg" oncontextmenu="return false"  class="toggleView input" type="text" value="${org.orgName}"  autocomplete="off" onkeydown="changeStatus();" onkeyup="changeStatus();" />
-					<div id="pDiv" style="width: 0px;height: 0px;overflow: visible;float: left; position:relative;left :0px;top:30px;z-index:9999;">
-						<div class="boxHome trainOrg" id="trainOrgSel" style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
-							<c:forEach items="${orgs}" var="org">
-								<c:if test="${org.recordStatus eq 'Y'}">
-									<p class="item trainOrg allOrg orgs" flow="${org.orgFlow}" value="${org.orgName}"
-									   <c:if test="${empty org.orgLevelId}">type="allOrg"</c:if>
-									   <c:if test="${!empty org.orgLevelId }">type="${org.orgLevelId}"</c:if>
-									   orgCityId="${org.orgCityId}"
-									   style="line-height: 20px; padding:10px 0;cursor: default; "
-									   <c:if test="${sessionScope.currUser.orgFlow==org.orgFlow }">style="display: none;"</c:if>
-									>${org.orgName}</p>
-								</c:if>
-							</c:forEach>
+			<div class="form_item form_item_hide">
+				<div class="form_label">培训基地：</div>
+				<div class="form_content">
+					<input id="trainOrg" oncontextmenu="return false"  class="toggleView input" type="text" value="${org.orgName}"  autocomplete="off" onkeydown="changeStatus();" onkeyup="changeStatus();" />
+						<div id="pDiv" style="width: 0px;height: 0px;overflow: visible;float: left; position:relative;left :0px;top:30px;z-index:9999;">
+							<div class="boxHome trainOrg" id="trainOrgSel" style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
+								<c:forEach items="${orgs}" var="org">
+									<c:if test="${org.recordStatus eq 'Y'}">
+										<p class="item trainOrg allOrg orgs" flow="${org.orgFlow}" value="${org.orgName}"
+										   <c:if test="${empty org.orgLevelId}">type="allOrg"</c:if>
+										   <c:if test="${!empty org.orgLevelId }">type="${org.orgLevelId}"</c:if>
+										   orgCityId="${org.orgCityId}"
+										   style="line-height: 20px; padding:10px 0;cursor: default; "
+										   <c:if test="${sessionScope.currUser.orgFlow==org.orgFlow }">style="display: none;"</c:if>
+										>${org.orgName}</p>
+									</c:if>
+								</c:forEach>
+							</div>
+							<input type="text" name="orgFlow" id="orgFlow" value="${org.orgFlow}" style="display: none;"/>
 						</div>
-						<input type="text" name="orgFlow" id="orgFlow" value="${org.orgFlow}" style="display: none;"/>
 					</div>
 				</div>
 			</c:if>
-			<div>
-				<label class="from_label">学员状态：</label>
-				<select style="width: 161px" name="statusId" class="select">
-					<option value="">全部</option>
-					<option value="20" ${param.statusId eq '20'?'selected':''}>在培</option>
-					<option value="22" ${param.statusId eq '22'?'selected':''}>已考核待结业</option>
-					<option value="21" ${param.statusId eq '21'?'selected':''}>结业</option>
-				</select>
+			<div class="form_item form_item_hide">
+				<div class="form_label">学员状态：</div>
+				<div class="form_content">
+					<select  name="statusId" class="select">
+						<option value="">全部</option>
+						<option value="20" ${param.statusId eq '20'?'selected':''}>在培</option>
+						<option value="22" ${param.statusId eq '22'?'selected':''}>已考核待结业</option>
+						<option value="21" ${param.statusId eq '21'?'selected':''}>结业</option>
+					</select>
+				</div>
 			</div>
-		</div>
-		<div id="hideForm" style="display: none;justify-content: flex-start; column-gap: 65px;  margin-top: 15px">
-			<div>
-				<label class="from_label">人员类型：</label>
-				<c:forEach items="${jsResDocTypeEnumList}" var="type">
-					<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" checked/>${type.name}&nbsp;</label>
-				</c:forEach>
+
+			<div class="form_item form_item_hide" style="width: 400px">
+				<div class="form_label">人员类型：</div>
+				<div class="form_content">
+					<c:forEach items="${jsResDocTypeEnumList}" var="type">
+						<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" checked/>${type.name}&nbsp;</label>
+					</c:forEach>
+				</div>
 			</div>
-		</div>
+
+			<a style="color: #54B2E5;margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
+
+		 </div>
+
+
+
+
+
+<%--		<div style="display: flex;justify-content: space-between; margin-top: 15px">--%>
+
+<%--			<div>--%>
+<%--				<label class="form_label">年级：</label>--%>
+<%--				<input type="text" id="sessionNumber" name="sessionNumber" value="${pdfn:getCurrYear()}" class="input indexNum" readonly="readonly"/>--%>
+<%--			</div>--%>
+<%--			<div>--%>
+<%--				<label class="form_label">培训类别：</label>--%>
+<%--				<select style="width: 161px" name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" >--%>
+<%--					<option value="DoctorTrainingSpe">住院医师</option>--%>
+<%--					&lt;%&ndash;<option value="">请选择</option>--%>
+<%--					<c:forEach items="${trainCategoryEnumList}" var="trainCategory">--%>
+<%--						<option value="${trainCategory.id}" <c:if test="${trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>--%>
+<%--					</c:forEach>&ndash;%&gt;--%>
+<%--				</select>--%>
+<%--			</div>--%>
+
+<%--			<div>--%>
+<%--				<label class="form_label">培训专业：</label>--%>
+<%--				<select name="trainingSpeId" id="trainingSpeId"class="select" >--%>
+<%--					<option value="">全部</option>--%>
+<%--				</select>--%>
+<%--			</div>--%>
+
+<%--			<c:if test="${fn:length(orgs)!=1}">--%>
+<%--			<div style="display: flex">--%>
+<%--				<label class="form_label">培训基地：</label>--%>
+<%--				<input id="trainOrg" oncontextmenu="return false"  class="toggleView input" type="text" value="${org.orgName}"  autocomplete="off" onkeydown="changeStatus();" onkeyup="changeStatus();" />--%>
+<%--					<div id="pDiv" style="width: 0px;height: 0px;overflow: visible;float: left; position:relative;left :0px;top:30px;z-index:9999;">--%>
+<%--						<div class="boxHome trainOrg" id="trainOrgSel" style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">--%>
+<%--							<c:forEach items="${orgs}" var="org">--%>
+<%--								<c:if test="${org.recordStatus eq 'Y'}">--%>
+<%--									<p class="item trainOrg allOrg orgs" flow="${org.orgFlow}" value="${org.orgName}"--%>
+<%--									   <c:if test="${empty org.orgLevelId}">type="allOrg"</c:if>--%>
+<%--									   <c:if test="${!empty org.orgLevelId }">type="${org.orgLevelId}"</c:if>--%>
+<%--									   orgCityId="${org.orgCityId}"--%>
+<%--									   style="line-height: 20px; padding:10px 0;cursor: default; "--%>
+<%--									   <c:if test="${sessionScope.currUser.orgFlow==org.orgFlow }">style="display: none;"</c:if>--%>
+<%--									>${org.orgName}</p>--%>
+<%--								</c:if>--%>
+<%--							</c:forEach>--%>
+<%--						</div>--%>
+<%--						<input type="text" name="orgFlow" id="orgFlow" value="${org.orgFlow}" style="display: none;"/>--%>
+<%--					</div>--%>
+<%--				</div>--%>
+<%--			</c:if>--%>
+<%--			<div>--%>
+<%--				<label class="form_label">学员状态：</label>--%>
+<%--				<select style="width: 161px" name="statusId" class="select">--%>
+<%--					<option value="">全部</option>--%>
+<%--					<option value="20" ${param.statusId eq '20'?'selected':''}>在培</option>--%>
+<%--					<option value="22" ${param.statusId eq '22'?'selected':''}>已考核待结业</option>--%>
+<%--					<option value="21" ${param.statusId eq '21'?'selected':''}>结业</option>--%>
+<%--				</select>--%>
+<%--			</div>--%>
+<%--		</div>--%>
+<%--		<div id="hideForm" style="display: none;justify-content: flex-start; column-gap: 65px;  margin-top: 15px">--%>
+<%--			<div>--%>
+<%--				<label class="form_label">人员类型：</label>--%>
+<%--				<c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+<%--					<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" checked/>${type.name}&nbsp;</label>--%>
+<%--				</c:forEach>--%>
+<%--			</div>--%>
+<%--		</div>--%>
 
 		<div style="margin-top: 15px;margin-bottom: 15px">
 			<input class="btn_green" style="margin-left: 0px;" type="button" value="查&#12288;询" onclick="toPage();"/>&nbsp;
 			<input class="btn_green" style="margin-left: 0px;" type="button" value="导&#12288;出" onclick="exportInfo('${param.tabId}');"/>&nbsp;
-			<a style="color: #54B2E5;float: right" onclick="showOrHide()" id="open">展开</a>
 		</div>
 
 
 
-<%--		<table class="searchTable">--%>
-<%--				<tr>--%>
-<%--					<td class="td_left">年&#12288;&#12288;级：</td>--%>
-<%--					<td>--%>
-<%--						<input type="text" id="sessionNumber" name="sessionNumber" value="${pdfn:getCurrYear()}" class="input indexNum" readonly="readonly"/>--%>
-<%--					</td>--%>
-<%--					<td class="td_left">培训类别：</td>--%>
-<%--					<td>--%>
-<%--						<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" >--%>
-<%--							<option value="DoctorTrainingSpe">住院医师</option>--%>
-<%--							&lt;%&ndash;<option value="">请选择</option>--%>
-<%--							<c:forEach items="${trainCategoryEnumList}" var="trainCategory">--%>
-<%--								<option value="${trainCategory.id}" <c:if test="${trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>--%>
-<%--							</c:forEach>&ndash;%&gt;--%>
-<%--						</select>--%>
-<%--					</td>--%>
-<%--					<td class="td_left">培训专业：</td>--%>
-<%--					<td>--%>
-<%--						<select name="trainingSpeId" id="trainingSpeId"class="select" >--%>
-<%--							<option value="">全部</option>--%>
-<%--						</select>--%>
-<%--					</td>--%>
-<%--					<c:if test="${fn:length(orgs)!=1}">--%>
-<%--					<td class="td_left">培训基地：</td>--%>
-<%--					<td>--%>
-<%--						<input id="trainOrg" oncontextmenu="return false"  class="toggleView input" type="text" value="${org.orgName}"  autocomplete="off" onkeydown="changeStatus();" onkeyup="changeStatus();" />--%>
-<%--						<div id="pDiv" style="width: 0px;height: 0px;overflow: visible;float: left; position:relative;left :0px;top:30px;z-index:9999;">--%>
-<%--							<div class="boxHome trainOrg" id="trainOrgSel" style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">--%>
-<%--								<c:forEach items="${orgs}" var="org">--%>
-<%--									<c:if test="${org.recordStatus eq 'Y'}">--%>
-<%--										<p class="item trainOrg allOrg orgs" flow="${org.orgFlow}" value="${org.orgName}"--%>
-<%--										   <c:if test="${empty org.orgLevelId}">type="allOrg"</c:if>--%>
-<%--										   <c:if test="${!empty org.orgLevelId }">type="${org.orgLevelId}"</c:if>--%>
-<%--										   orgCityId="${org.orgCityId}"--%>
-<%--										   style="line-height: 20px; padding:10px 0;cursor: default; "--%>
-<%--										   <c:if test="${sessionScope.currUser.orgFlow==org.orgFlow }">style="display: none;"</c:if>--%>
-<%--										>${org.orgName}</p>--%>
-<%--									</c:if>--%>
-<%--								</c:forEach>--%>
-<%--							</div>--%>
-<%--							<input type="text" name="orgFlow" id="orgFlow" value="${org.orgFlow}" style="display: none;"/>--%>
-<%--						</div>--%>
-<%--					</td>--%>
-<%--					</c:if>--%>
-<%--					<c:if test="${fn:length(orgs)==1}">--%>
-<%--						<td class="td_left"></td>--%>
-<%--						<td></td>--%>
-<%--					</c:if>--%>
-<%--				</tr>--%>
-<%--			<tr>--%>
-<%--				<td class="td_left">学员状态：</td>--%>
-<%--				<td>--%>
-<%--					<select name="statusId" class="select">--%>
-<%--						<option value="">全部</option>--%>
-<%--						<option value="20" ${param.statusId eq '20'?'selected':''}>在培</option>--%>
-<%--						<option value="22" ${param.statusId eq '22'?'selected':''}>已考核待结业</option>--%>
-<%--						<option value="21" ${param.statusId eq '21'?'selected':''}>结业</option>--%>
-<%--					</select>--%>
-<%--				</td>--%>
-<%--				<td class="td_left">人员类型：</td>--%>
-<%--				<td colspan="3">--%>
-<%--					<c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
-<%--						<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" checked/>${type.name}&nbsp;</label>--%>
-<%--					</c:forEach>--%>
-<%--				</td>--%>
-<%--				&lt;%&ndash;</tr>&ndash;%&gt;--%>
-<%--			&lt;%&ndash;<tr>&ndash;%&gt;--%>
-<%--				<td id="func" colspan="6">--%>
-<%--					<input class="btn_green" style="margin-left: 0px;" type="button" value="查&#12288;询" onclick="toPage();"/>&nbsp;--%>
-<%--					<input class="btn_green" style="margin-left: 0px;" type="button" value="导&#12288;出" onclick="exportInfo('${param.tabId}');"/>&nbsp;--%>
-<%--				</td>--%>
-<%--			</tr>--%>
-<%--			</table>--%>
 	</form>
     </div>
    <div id="doctorListZi">

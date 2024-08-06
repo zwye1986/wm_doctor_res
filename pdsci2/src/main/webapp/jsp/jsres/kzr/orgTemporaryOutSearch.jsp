@@ -87,15 +87,15 @@
             <input type="hidden" name="roleId" value="${roleId}">
             <div>
                 <c:if test="${roleId ne 'user'}">
-                <label class="from_label" >姓名：</label>
+                <label class="form_label" >姓名：</label>
                 <input type="text" name="doctorName" class="input"  value="${param.doctorName}">
-                <label style="margin-left: 15px" class="from_label" >人员类型：</label>
+                <label style="margin-left: 15px" class="form_label" >人员类型：</label>
                 <c:forEach items="${jsResDocTypeEnumList}" var="type">
                     <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
                 </c:forEach>
                 </c:if>
 
-                <label style="margin-left: 15px" class="from_label">审核状态：</label>
+                <label style="margin-left: 15px" class="form_label">审核状态：</label>
                 <select name="temporaryAuditStatusId" class="select">
                     <option value="">请选择</option>
                     <option value="Auditing" <c:if test="${param.temporaryAuditStatusId eq 'Auditing'}">selected</c:if>>待审核</option>

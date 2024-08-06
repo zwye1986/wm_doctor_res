@@ -15,6 +15,7 @@
 	<jsp:param name="jquery_placeholder" value="true"/>
 	<jsp:param name="jquery_iealert" value="false"/>
 </jsp:include>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <style type="text/css">
 .boxHome .item:HOVER{background-color: #eee;}
 .cur{color:red;}
@@ -525,6 +526,23 @@ function changeOrgFlow(obj){
 			jboxPostLoad("content","<s:url value='/jsres/doctorRecruit/provinceDoctorList'/>?roleFlag="+roleFlag,$("#searchForm").serialize(),false);
 		}
 	}
+	  //显示隐藏
+    let flag = false;
+    function showOrHide(){
+
+        if(flag){
+            $(`.form_item_hide`).hide();
+            // document.getElementById("hideForm").style.display='none';
+            $("#open").text("展开")
+            flag = false;
+        }else {
+            $(`.form_item_hide`).css('display','flex');
+            // document.getElementById("hideForm").style.display='flex';
+            $("#open").text("收起")
+            flag = true;
+        }
+
+    }
 
 function showSelection(flag) {
 	if (flag) {
@@ -588,10 +606,31 @@ function showSelection(flag) {
 		<c:choose>
 			<%--基地的查询条件--%>
 			<c:when test="${sessionScope.userListScope == GlobalConstant.USER_LIST_LOCAL}">
-					<table class="searchTable">
-						<tr>
-							<td class="td_left">培训基地：</td>
-							<td class="td_right">
+
+					<div class="form_search">
+
+
+						<div class="form_item">
+							<div  class="form_label">年&#12288;&#12288;级：</div>
+							<div class="form_content">
+								<input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input" readonly="readonly"/>
+							</div>
+						</div>
+						<div class="form_item">
+							<div class="form_label">姓&#12288;&#12288;名：</div>
+							<div class="form_content">
+								<c:if test="${isBack eq 'Y'}">
+									<input type="text" name="userName" value="${userName}" class="input" />
+								</c:if>
+								<c:if test="${isBack ne 'Y'}">
+									<input type="text" name="userName" value="${param.userName}" class="input" />
+								</c:if>
+							</div>
+						</div>
+
+						<div class="form_item">
+							<div class="form_label">培训基地：</div>
+							<div class="form_content">
 								<c:set var="orgName" value=""/>
 								<c:forEach items="${orgs}" var="org">
 									<c:if test="${param.orgFlow==org.orgFlow }">
@@ -610,9 +649,11 @@ function showSelection(flag) {
 									</div>
 									<input type="text" name="orgFlow" id="orgFlow" value="${param.orgFlow}" style="display: none;"/>
 								</div>
-							</td>
-							<td class="td_left">培训类别：</td>
-							<td class="td_right">
+							</div>
+						</div>
+						<div class="form_item">
+							<div class="form_label">培训类别：</div>
+							<div class="form_content">
 								<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')">
 									<option value="">请选择</option>
 									<option value="DoctorTrainingSpe" <c:if test="${param.trainingTypeId=='DoctorTrainingSpe'}">selected="selected"</c:if>>住院医师</option>
@@ -622,72 +663,58 @@ function showSelection(flag) {
 										<option value="${trainCategory.id}" <c:if test="${param.trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>
 									</c:forEach>--%>
 								</select>
-							</td>
-							<td class="td_left">培训专业：</td>
-							<td class="td_right">
+							</div>
+						</div>
+						<div class="form_item form_item_hide" >
+							<div class="form_label">培训专业：</div>
+							<div class="form_content">
 								<select name="trainingSpeId" id="trainingSpeId"class="select" >
 									<option value="">全部</option>
 								</select>
-							</td>
+							</div>
+						</div>
 
-							<td  class="td_left">年&#12288;&#12288;级：</td>
-							<td class="td_right">
-								<input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input" readonly="readonly"/>
-							</td>
-							<td class="td_left">姓&#12288;&#12288;名：</td>
-							<td >
-								<c:if test="${isBack eq 'Y'}">
-									<input type="text" name="userName" value="${userName}" class="input" />
-								</c:if>
-								<c:if test="${isBack ne 'Y'}">
-									<input type="text" name="userName" value="${param.userName}" class="input" />
-								</c:if>
-							</td>
-						</tr>
-						<tr>
-
-							<td class="td_left">培训年限：</td>
-							<td class="td_right">
-								<c:forEach items="${jsResTrainYearEnumList}" var="dict">
-									<label><input type="checkbox" id="year${dict.id}" value="${dict.id}"class="docTrainYear" name="yearDatas"/>${dict.name}&nbsp;</label>
-								</c:forEach>
-							</td>
-							<td class="td_left">人员类型：</td>
-							<td colspan="3">
-								<c:forEach items="${jsResDocTypeEnumList}" var="type">
-									<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeCheckBox(this);"/>${type.name}&nbsp;</label>
-									<c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>
-								</c:forEach>
-							</td>
-						</tr>
-						<tr id="1" hidden>
-							<td class="td_left">是否为应届生：</td>
-							<td class="td_right">
-								<select  class="select" name="isYearGraduate">
-									<option value="">请选择</option>
-									<option  <c:if test="${param.isYearGraduate eq GlobalConstant.FLAG_Y}">selected="selected"</c:if> value="${GlobalConstant.FLAG_Y}">是</option>
-									<option <c:if test="${param.isYearGraduate eq GlobalConstant.FLAG_N}">selected="selected"</c:if>  value="${GlobalConstant.FLAG_N}">否</option>
-								</select>
-							</td>
-							<td class="td_left">学员状态：</td>
-							<td class="td_right">
+						<div class="form_item form_item_hide">
+							<div class="form_label">学员状态：</div>
+							<div class="form_content">
 								<select name="doctorStatusId" class="select" onchange="showIsPostpone(this);" >
 									<option value="">全部</option>
 									<c:forEach var="dict" items="${dictTypeEnumDoctorStatusList}">
 										<option value="${dict.dictId}" <c:if test="${param.doctorStatusId eq dict.dictId}">selected</c:if>>${dict.dictName}</option>
 									</c:forEach>
 								</select>
-							</td>
-							<td class="td_left">证&ensp;件&ensp;号：</td>
-							<td class="td_right">
+							</div>
+						</div>
+
+						<div class="form_item form_item_hide">
+							<div class="form_label">是否为应届生：</div>
+							<div class="form_content">
+								<select  class="select" name="isYearGraduate">
+									<option value="">请选择</option>
+									<option  <c:if test="${param.isYearGraduate eq GlobalConstant.FLAG_Y}">selected="selected"</c:if> value="${GlobalConstant.FLAG_Y}">是</option>
+									<option <c:if test="${param.isYearGraduate eq GlobalConstant.FLAG_N}">selected="selected"</c:if>  value="${GlobalConstant.FLAG_N}">否</option>
+								</select>
+							</div>
+
+						</div>
+
+						<div class="form_item form_item_hide">
+							<div class="form_label">证&ensp;件&ensp;号：</div>
+							<div class="form_content">
 								<input type="text" name="idNo" value="${param.idNo}" class="input" />
-							</td>
-							<td class="td_left">结业考核年份：</td>
-							<td class="td_right">
+							</div>
+						</div>
+
+						<div class="form_item form_item_hide">
+							<div class="form_label">结业考核年份：</div>
+							<div class="form_content">
 								<input type="text" id="graduationYear" name="graduationYear"value="${param.graduationYear}" class="input" readonly="readonly"/>
-							</td>
-							<td class="td_left">是否重培：</td>
-							<td >
+							</div>
+						</div>
+
+						<div class="form_item form_item_hide">
+							<div class="form_label">是否重培：</div>
+							<div class="form_content">
 								<select name="isRetrain" class="select">
 									<option value="">请选择</option>
 									<option name="${param.isRetrain}" value="Y"
@@ -695,14 +722,12 @@ function showSelection(flag) {
 									<option name="${auditStatusEnum.id}" value="N"
 											<c:if test="${param.isRetrain eq 'N'}">selected="selected"</c:if>>否</option>
 								</select>
-							</td>
+							</div>
+						</div>
 
-						</tr>
-
-						<tr id="2" hidden>
-
-							<td class="td_left" id="isPostpone1" style="display: none">是否延期：</td>
-							<td class="td_right" id="isPostpone2" style="display: none">
+						<div class="form_item" style="display: none">
+							<div class="form_label" id="isPostpone1" style="display: none">是否延期：</div>
+							<div class="form_content" id="isPostpone2" style="display: none">
 								<select class="select" id="isPostpone3" name="isPostpone">
 									<option value="">请选择</option>
 									<option
@@ -714,48 +739,116 @@ function showSelection(flag) {
 											value="${GlobalConstant.FLAG_N}">否
 									</option>
 								</select>
-							</td>
-							<td style="display: none" class="td_left workOrgName">
+							</div>
+						</div>
+
+						<div class="form_item workOrgName " style="display: none">
+							<div style="display: none" class="form_label workOrgName">
 								派送学校：
-							</td >
-							<td style="display: none" class="workOrgName">
+							</div >
+							<div style="display: none" class="form_content workOrgName">
 								<select name="workOrgName" id="workOrgName" class="select workOrgName" disabled="disabled">
 									<option value="">请选择</option>
 									<c:forEach items="${dictTypeEnumSendSchoolList}" var="dict">
 										<option value="${dict.dictName}" <c:if test="${param.dictName==dict.dictName}">selected="selected"</c:if>>${dict.dictName}</option>
 									</c:forEach>
 								</select>
-							</td>
-							<td style="display: none" class="td_left showWorkOrg">
-								派送单位：
-							</td>
-							<td style="display: none" class="showWorkOrg">
-								<input type="text" name="workOrgName" value="${param.workOrgName}" class="input showWorkOrg" disabled="disabled"/>
-							</td>
-						</tr>
+							</div>
+						</div>
 
-						<tr id="show1">
-							<td colspan="8">
-								<input class="btn_green" type="button" value="导&#12288;出" onclick="exportExcel();"/>
-								<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>
-								<span style="margin-right: 690px; margin-top: 10px"><img class="icon" title="展开查询条件" onclick="showSelection(true)" src="<s:url value='/img/select.png'/>"/></span>
-							<%--	<input class="btn_green" type="button" value="国家医师协会名册" onclick="exportForDetail();"/>
-								<input class="btn_green" type="button" value="在培学员花名册" onclick="exTrainingDocPdf();"/>
-								<input class="btn_green" type="button" value="在培助理全科花名册" onclick="exZLTrainingDocPdf();"/>
-								<input class="btn_green" type="button" value="导出2018国家信息" onclick="exportExcelMessage();"/>
-								<c:if test="${not empty sysCfgMap['res_responsible_teacher_role_flow']}">
-									<input type="button" class="btn_green" value="导入责任导师" onclick="importResponsible();"/>
-								</c:if>--%>
-							</td>
-						</tr>
-						<tr id="show2" hidden>
-							<td colspan="8">
-								<input class="btn_green" type="button" value="导&#12288;出" onclick="exportExcel();"/>
-								<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>
-								<span style="margin-right: 690px; margin-top: 10px"><img class="icon" title="收起查询条件" onclick="showSelection(false)" src="<s:url value='/img/select.png'/>"/></span>
-							</td>
-						</tr>
-					</table>
+						<div class="form_item showWorkOrg" style="display: none">
+							<div style="display: none" class="form_label ">
+								派送单位：
+							</div>
+							<div style="display: none" class="form_content">
+								<input type="text" name="workOrgName" value="${param.workOrgName}" class="input showWorkOrg" disabled="disabled"/>
+							</div>
+						</div>
+
+
+						<div class="form_item form_item_hide">
+							<div class="form_label">培训年限：</div>
+							<div class="form_content">
+								<c:forEach items="${jsResTrainYearEnumList}" var="dict">
+									<label><input type="checkbox" id="year${dict.id}" value="${dict.id}"class="docTrainYear" name="yearDatas"/>${dict.name}&nbsp;</label>
+								</c:forEach>
+							</div>
+						</div>
+
+						<div class="form_item form_item_hide" style="width:400px ;">
+							<div class="form_label">人员类型：</div>
+							<div class="form_content">
+								<c:forEach items="${jsResDocTypeEnumList}" var="type">
+									<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeCheckBox(this);"/>${type.name}&nbsp;</label>
+									<c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>
+								</c:forEach>
+							</div>
+						</div>
+
+						<a style="color: #54B2E5; margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
+
+					</div>
+
+					<div style="margin-top: 15px;margin-bottom: 15px">
+						<input class="btn_green" type="button" value="导&#12288;出" onclick="exportExcel();"/>
+						<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>
+<%--						<span style="margin-right: 690px; margin-top: 10px"><img class="icon" title="展开查询条件" onclick="showSelection(true)" src="<s:url value='/img/select.png'/>"/></span>--%>
+					</div>
+
+
+
+<%--					<table class="searchTable">--%>
+<%--						<tr>--%>
+
+
+
+
+
+
+<%--						</tr>--%>
+<%--						<tr>--%>
+
+
+
+<%--						</tr>--%>
+<%--						<tr id="1" hidden>--%>
+
+
+
+
+
+
+<%--						</tr>--%>
+
+<%--						<tr id="2" hidden>--%>
+
+
+
+
+<%--						</tr>--%>
+
+<%--						<tr id="show1">--%>
+<%--							<td colspan="8">--%>
+<%--								<input class="btn_green" type="button" value="导&#12288;出" onclick="exportExcel();"/>--%>
+<%--								<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>--%>
+<%--								<span style="margin-right: 690px; margin-top: 10px"><img class="icon" title="展开查询条件" onclick="showSelection(true)" src="<s:url value='/img/select.png'/>"/></span>--%>
+<%--							&lt;%&ndash;	<input class="btn_green" type="button" value="国家医师协会名册" onclick="exportForDetail();"/>--%>
+<%--								<input class="btn_green" type="button" value="在培学员花名册" onclick="exTrainingDocPdf();"/>--%>
+<%--								<input class="btn_green" type="button" value="在培助理全科花名册" onclick="exZLTrainingDocPdf();"/>--%>
+<%--								<input class="btn_green" type="button" value="导出2018国家信息" onclick="exportExcelMessage();"/>--%>
+<%--								<c:if test="${not empty sysCfgMap['res_responsible_teacher_role_flow']}">--%>
+<%--									<input type="button" class="btn_green" value="导入责任导师" onclick="importResponsible();"/>--%>
+<%--								</c:if>&ndash;%&gt;--%>
+<%--							</td>--%>
+<%--						</tr>--%>
+<%--						<tr id="show2" hidden>--%>
+<%--							<td colspan="8">--%>
+<%--								<input class="btn_green" type="button" value="导&#12288;出" onclick="exportExcel();"/>--%>
+<%--								<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>--%>
+<%--								<span style="margin-right: 690px; margin-top: 10px"><img class="icon" title="收起查询条件" onclick="showSelection(false)" src="<s:url value='/img/select.png'/>"/></span>--%>
+<%--							</td>--%>
+<%--						</tr>--%>
+<%--					</table>--%>
 			</c:when>
 			<%--西医需求查询条件--%>
 			<c:when test="${sessionScope.userListScope == GlobalConstant.USER_LIST_BASE}">

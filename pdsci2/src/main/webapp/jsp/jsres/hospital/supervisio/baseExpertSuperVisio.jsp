@@ -44,35 +44,6 @@
     }
 
 
-    .form_search {
-
-        display: flex;
-        flex-wrap: wrap;
-        margin-top: 15px;
-
-        .form_item {
-
-            width: 280px;
-            display: flex;
-
-            .from_label {
-                font-size: 14px;
-                font-style: normal;
-                font-weight: 400;
-                margin-top: auto;
-                margin-bottom: auto;
-                text-align: right;
-                width: 90px;
-            }
-
-            .form_content {
-
-                display: inline-block;
-            }
-
-        }
-    }
-
     /*.SelectVal{*/
     /*    width: 238px;*/
     /*}*/
@@ -87,6 +58,7 @@
 <script type="text/javascript"
         src="<s:url value='/js/jquery-select/js/jquery.select.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <link href="<s:url value='/css/UCFORM.css'/>" rel="stylesheet" type="text/css">
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script src="<s:url value='/js/jQuery.UCSelect.js'/>" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -129,11 +101,13 @@
     function showOrHide(){
 
         if(flag){
-            document.getElementById("hideForm").style.display='none';
+            $(`.form_item_hide`).hide();
+            // document.getElementById("hideForm").style.display='none';
             $("#open").text("展开")
             flag = false;
         }else {
-            document.getElementById("hideForm").style.display='flex';
+            $(`.form_item_hide`).css('display','flex');
+            // document.getElementById("hideForm").style.display='flex';
             $("#open").text("收起")
             flag = true;
         }
@@ -153,7 +127,7 @@
 
         <div class="form_search">
             <div class="form_item">
-                <div class="from_label" >基地名称：</div>
+                <div class="form_label" >基地名称：</div>
                 <div class="form_content">
                     <select name="orgFlow" class="select" style="max-width: 161px;" >
                         <c:if test="${roleFlag eq 'local'}">
@@ -169,7 +143,7 @@
 
             </div>
             <div class="form_item">
-                <div class="from_label" >基地排序：</div>
+                <div class="form_label" >基地排序：</div>
                 <div class="form_content">
                     <select name="orgPaiXu" class="select" style="width: 161px;">
                         <option value="">默认</option>
@@ -179,7 +153,7 @@
                 </div>
             </div>
             <div class="form_item">
-                <div class="from_label" >督导情况：</div>
+                <div class="form_label" >督导情况：</div>
                 <div class="form_content">
                     <select name="manageAllSub" class="select" style="width: 161px;">
                         <option value="">全部</option>
@@ -190,20 +164,14 @@
                 </div>
             </div>
             <div class="form_item">
-                <div class="from_label" >自评得分：</div>
+                <div class="form_label" >自评得分：</div>
                 <div class="form_content">
                     <input type="text" id="minBaseScore" name="minBaseScore" class="input" style="width: 62px;" value=""> ~ <input type="text" id="maxbaseScore" name="maxbaseScore" class="input" style="width: 62px;" value="">
                 </div>
             </div>
 
-            <div class="form_item" style="text-align: right">
-                    <a style="color: #54B2E5;margin-right: 15px" onclick="showOrHide()" id="open">展开</a>
-                    <input class="btn_green" type="button" onclick="toPage(1);"  value="查&#12288;询" />
-                </div>
-            </div>
-
-            <div class="form_item">
-                <div class="from_label" >专&#12288;业：</div>
+            <div  class="form_item form_item_hide">
+                <div class="form_label" >专&#12288;业：</div>
                 <div class="form_content">
                     <select name="speId" class="select"   >
                         <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
@@ -214,45 +182,69 @@
                     </select>
                 </div>
             </div>
+
+            <div  class="form_item form_item_hide">
+                <div class="form_label">自评排序：</div>
+                <div class="form_content">
+                    <select name="zipx" class="select" style="width: 161px;">
+                        <option value="">默认</option>
+                        <option value="asc">升序</option>
+                        <option value="desc">降序</option>
+                    </select>
+                </div>
+            </div>
+
+            <div  class="form_item form_item_hide">
+                <div class="form_label">督导结果：</div>
+                <div class="form_content">
+                    <select name="supervisioResults" class="select" style="width: 161px;">
+                        <option value="">全部</option>
+                        <option value="qualified">合格</option>
+                        <option value="basically">基本合格</option>
+                        <option value="yellowCard">限时整改</option>
+                        <option value="redCard">不合格</option>
+                    </select>
+                </div>
+            </div>
+
+            <div  class="form_item form_item_hide">
+                <div class="form_label">督导年份：</div>
+                <div class="form_content">
+                    <input class="input" name="subjectYear" id="subjectYear" style="width: 151px;"
+                           value="${pdfn:getCurrYear()}"/>
+                </div>
+            </div>
+
+            <div  class="form_item form_item_hide">
+                <div class="form_label">督导得分：</div>
+                <div class="form_content">
+                    <input name="minManageScore" id="minManageScore" type="text" class="input" style="width: 62px;" value="">~<input id="maxManageScore" name="maxManageScore" type="text" class="input" style="width: 62px;" value="">
+                </div>
+
+            </div>
+
+            <div  class="form_item form_item_hide">
+                <div class="form_label">自评情况：</div>
+                <div class="form_content">
+                    <select name="zipx" class="select" style="width: 161px;">
+                        <option value="">默认</option>
+                        <option value="asc">升序</option>
+                        <option value="desc">降序</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form_item" style="text-align: right">
+                <div class="form_label">
+                    <a style="color: #54B2E5;margin-right: 15px" onclick="showOrHide()" id="open">展开</a>
+                </div>
+                <div class="form_content">
+                    <input class="btn_green" type="button" onclick="toPage(1);"  value="查&#12288;询" />
+                </div>
+            </div>
+
         </div>
 
-        <div id="hideForm" style="display: none;justify-content: space-between;margin-top: 15px">
-            <div>
-                <label class="from_label">自评排序：</label>
-                <select name="zipx" class="select" style="width: 161px;">
-                    <option value="">默认</option>
-                    <option value="asc">升序</option>
-                    <option value="desc">降序</option>
-                </select>
-            </div>
-            <div>
-                <label class="from_label">督导结果：</label>
-                <select name="supervisioResults" class="select" style="width: 161px;">
-                    <option value="">全部</option>
-                    <option value="qualified">合格</option>
-                    <option value="basically">基本合格</option>
-                    <option value="yellowCard">限时整改</option>
-                    <option value="redCard">不合格</option>
-                </select>
-            </div>
-            <div>
-                <label class="from_label">督导年份：</label>
-                <input class="input" name="subjectYear" id="subjectYear" style="width: 151px;"
-                       value="${pdfn:getCurrYear()}"/>
-            </div>
-            <div>
-                <label class="from_label">督导得分：</label>
-                <input name="minManageScore" id="minManageScore" type="text" class="input" style="width: 80px;" value="">~<input id="maxManageScore" name="maxManageScore" type="text" class="input" style="width: 80px;" value="">&#12288;分
-            </div>
-            <div>
-                <label class="from_label">自评情况：</label>
-                <select name="zipx" class="select" style="width: 161px;">
-                    <option value="">默认</option>
-                    <option value="asc">升序</option>
-                    <option value="desc">降序</option>
-                </select>
-            </div>
-        </div>
 
 
 

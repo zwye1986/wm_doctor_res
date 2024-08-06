@@ -46,7 +46,7 @@
     <div class="div_search">
         <form style="margin-top: 15px" id="searchForm">
             <input type="hidden" name="currentPage" id="currentPage"/>
-            <label class="from_label">标题：</label>
+            <label class="form_label">标题：</label>
             <input type="text" class="input" name="messageTitle" value="${param.messageTitle}" style="width:161px;"/>
 <%--            &#12288;--%>
 <%--            <input class="btn_green" type="button" onclick="toPage(1)" value="查&#12288;询"/>--%>

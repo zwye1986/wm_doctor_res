@@ -94,7 +94,7 @@
 
         <div style="display: flex;justify-content: flex-start; column-gap: 56px;margin-top: 15px">
             <div>
-                <label class="from_label">基地名称：</label>
+                <label class="form_label">基地名称：</label>
                 <c:if test="${GlobalConstant.USER_LIST_LOCAL eq roleFlag}">
                     <select name="orgFlow" class="select" style="width: 161px;">
                         <c:forEach items="${orgs}" var="org">
@@ -105,12 +105,12 @@
                 </c:if>
             </div>
             <div>
-                <label class="from_label">基地代码：</label>
+                <label class="form_label">基地代码：</label>
                 <input type="text" name="baseCode" value="${param.baseCode}" class="input"
                        style="width: 161px;margin-left: 0px;"/>
             </div>
             <div>
-                <label class="from_label">检查年份：</label>
+                <label class="form_label">检查年份：</label>
                 <input class="input" name="subjectYear" id="subjectYear" style="width: 161px;margin-left: 0px;"
                        value="${param.subjectYear==null?currentTime:param.subjectYear}"/>
             </div>

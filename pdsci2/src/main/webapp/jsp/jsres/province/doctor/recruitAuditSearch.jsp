@@ -5,6 +5,7 @@
 	<jsp:param name="jquery_cxselect" value="true"/>
 	<jsp:param name="jquery_form" value="true"/>
 </jsp:include>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script src="<s:url value='/js/yearSelect/checkYear.js'/>" type="text/javascript"></script>
 <style type="text/css">
 	.indexNum + div{
@@ -127,22 +128,23 @@ function exportForDetail(){
 	jboxEndLoading();
 }
 
-//显示隐藏
-let flag = false;
-function showOrHide(){
+  //显示隐藏
+    let flag = false;
+    function showOrHide(){
 
+        if(flag){
+            $(`.form_item_hide`).hide();
+            // document.getElementById("hideForm").style.display='none';
+            $("#open").text("展开")
+            flag = false;
+        }else {
+            $(`.form_item_hide`).css('display','flex');
+            // document.getElementById("hideForm").style.display='flex';
+            $("#open").text("收起")
+            flag = true;
+        }
 
-	if(flag){
-		document.getElementById("hideForm").style.display='none';
-		$("#open").text("展开")
-		flag = false;
-	}else {
-		document.getElementById("hideForm").style.display='flex';
-		$("#open").text("收起")
-		flag = true;
-	}
-
-}
+    }
 
 
 function exportRecruitList(){
@@ -164,84 +166,102 @@ function exportRecruitList(){
 		<input id="roleFlag" type="hidden" name="roleFlag" value="${roleFlag}"/>
 
 
-
-		<div style="display: flex;justify-content: space-between; margin-top: 15px">
-			<div>
-				<label class="from_label">培训类别：</label>
-				<select style="width: 161px" name="catSpeId" id="catSpeId" class="select" onchange="changeTrainSpes(this.value)">
-					<option value="DoctorTrainingSpe">住院医师</option>
-					<%--<option value="">请选择</option>
-					<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
-						<c:if test="${trainCategory.id ne 'WMFirst' and trainCategory.id ne 'WMSecond'}">
-							<option name="${trainCategory.id}"  value="${trainCategory.id}" <c:if test="${param.catSpeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>
-						</c:if>
-					</c:forEach>--%>
-				</select>
-			</div>
-			<div>
-				<label class="from_label">年级：</label>
-				<input style="width: 161px" type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input indexNum" readonly="readonly"/>
-			</div>
-
-			<div>
-				<label class="from_label">姓名：</label>
-				<input style="width: 161px" type="text" name="userName" value="${param.userName}" class="input"/>
-			</div>
-
-			<div>
-				<label class="from_label">证件号：</label>
-				<input style="width: 161px" type="text" name="idNo" value="${param.idNo}" class="input"/>
-			</div>
-
-			<div>
-				<label class="from_label">培训专业：</label>
-				<select style="width: 161px" name="speId" id="speId" class="select">
-					<option value="">全部</option>
-				</select>
-			</div>
-		</div>
-		<div id="hideForm" style="display: none;justify-content: flex-start; column-gap: 65px;  margin-top: 15px">
-			<div>
-				<label class="from_label">状态：</label>
-				<c:if test="${isJointOrg eq 'Y'}">
-					<select name="jointOrgAudit" class="select" style="width: 161px">
-						<option value="">请选择</option>
-						<option value="Auditing" selected="selected">待审核</option>
-						<option value="Passed" <c:if test="${param.jointOrgAudit eq 'Passed'}">selected="selected"</c:if>>审核通过</option>
-						<option value="UnPassed" <c:if test="${param.jointOrgAudit eq 'UnPassed'}">selected="selected"</c:if>>审核不通过</option>
-						<option value="OrgAudit" <c:if test="${param.jointOrgAudit eq 'OrgAudit'}">selected="selected"</c:if>>待主基地审核</option>
+		 <div class="form_search">
+			 <div class="form_item">
+				<div class="form_label">培训类别：</div>
+				 <div class="form_content">
+					 <select name="catSpeId" id="catSpeId" class="select" onchange="changeTrainSpes(this.value)">
+						<option value="DoctorTrainingSpe">住院医师</option>
+						<%--<option value="">请选择</option>
+						<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
+							<c:if test="${trainCategory.id ne 'WMFirst' and trainCategory.id ne 'WMSecond'}">
+								<option name="${trainCategory.id}"  value="${trainCategory.id}" <c:if test="${param.catSpeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>
+							</c:if>
+						</c:forEach>--%>
 					</select>
-				</c:if>
-				<c:if test="${isJointOrg eq 'N'}">
-					<select name="orgAudit" class="select" style="width: 161px">
-						<option value="">请选择</option>
-						<option value="Auditing" selected="selected">待审核</option>
-						<option value="Passed" <c:if test="${param.orgAudit eq 'Passed'}">selected="selected"</c:if>>审核通过</option>
-						<option value="UnPassed" <c:if test="${param.orgAudit eq 'UnPassed'}">selected="selected"</c:if>>审核不通过</option>
+				 </div>
+			 </div>
+			 <div class="form_item">
+				<div class="form_label">年级：</div>
+				<div class="form_content">
+					<input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input indexNum" readonly="readonly"/>
+				</div>
+			 </div>
+
+			 <div class="form_item">
+				<div class="form_label">姓名：</div>
+				<div class="form_content">
+					<input type="text" name="userName" value="${param.userName}" class="input"/>
+				</div>
+			 </div>
+
+			 <div class="form_item">
+				<div class="form_label">证件号：</div>
+				<div class="form_content">
+					<input type="text" name="idNo" value="${param.idNo}" class="input"/>
+				</div>
+			 </div>
+
+			 <div class="form_item form_item_hide">
+				<div class="form_label">培训专业：</div>
+				<div class="form_content">
+					<select name="speId" id="speId" class="select">
+						<option value="">全部</option>
 					</select>
-				</c:if>
+				</div>
+			 </div>
+
+			 <div class="form_item form_item_hide">
+				<div class="form_label">状态：</div>
+				<div class="form_content">
+					<c:if test="${isJointOrg eq 'Y'}">
+						<select name="jointOrgAudit" class="select">
+							<option value="">请选择</option>
+							<option value="Auditing" selected="selected">待审核</option>
+							<option value="Passed" <c:if test="${param.jointOrgAudit eq 'Passed'}">selected="selected"</c:if>>审核通过</option>
+							<option value="UnPassed" <c:if test="${param.jointOrgAudit eq 'UnPassed'}">selected="selected"</c:if>>审核不通过</option>
+							<option value="OrgAudit" <c:if test="${param.jointOrgAudit eq 'OrgAudit'}">selected="selected"</c:if>>待主基地审核</option>
+						</select>
+					</c:if>
+					<c:if test="${isJointOrg eq 'N'}">
+						<select name="orgAudit" class="select">
+							<option value="">请选择</option>
+							<option value="Auditing" selected="selected">待审核</option>
+							<option value="Passed" <c:if test="${param.orgAudit eq 'Passed'}">selected="selected"</c:if>>审核通过</option>
+							<option value="UnPassed" <c:if test="${param.orgAudit eq 'UnPassed'}">selected="selected"</c:if>>审核不通过</option>
+						</select>
+					</c:if>
+				</div>
+			 </div>
+			 <div class="form_item form_item_hide">
+				<div class="form_label">招录途径：</div>
+				<div class="form_content">
+					<select name="signupWay" class="select">
+						<option value="">请选择</option>
+						<option value="DoctorSend" <c:if test="${param.signupWay eq 'DoctorSend'}">selected="selected"</c:if>>报送</option>
+						<option value="DoctorSignup" <c:if test="${param.signupWay eq 'DoctorSignup'}">selected="selected"</c:if>>招录</option>
+					</select>
+				</div>
 			</div>
-			<div>
-				<label class="from_label">招录途径：</label>
-				<select name="signupWay" class="select" style="width: 161px">
-					<option value="">请选择</option>
-					<option value="DoctorSend" <c:if test="${param.signupWay eq 'DoctorSend'}">selected="selected"</c:if>>报送</option>
-					<option value="DoctorSignup" <c:if test="${param.signupWay eq 'DoctorSignup'}">selected="selected"</c:if>>招录</option>
-				</select>
+			<div class="form_item form_item_hide" style="width: 400px">
+				<div class="form_label">人员类型：</div>
+				<div class="form_content">
+					<c:forEach items="${jsResDocTypeEnumList}" var="type">
+						<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
+					</c:forEach>
+				</div>
 			</div>
-			<div>
-				<label class="from_label">人员类型：</label>
-				<c:forEach items="${jsResDocTypeEnumList}" var="type">
-					<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
-				</c:forEach>
-			</div>
-		</div>
+
+			<a style="color: #54B2E5; margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
+
+		 </div>
+
+
 
 		<div style="margin-top: 15px;margin-bottom: 15px">
 			<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
 			<%--<input class="btn_green" type="button" value="国家医师协会名册" onclick="exportForDetail();"/>--%>
 			<input class="btn_green" type="button" value="导&#12288;出" onclick="exportRecruitList();"/>
-			<a style="color: #54B2E5;float: right" onclick="showOrHide()" id="open">展开</a>
 		</div>
 
 		<div style="margin-bottom: 15px" >

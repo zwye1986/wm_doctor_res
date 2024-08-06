@@ -46,6 +46,7 @@
 <script type="text/javascript"
         src="<s:url value='/js/jquery-select/js/jquery.select.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <link href="<s:url value='/css/UCFORM.css'/>" rel="stylesheet" type="text/css">
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script src="<s:url value='/js/jQuery.UCSelect.js'/>" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -135,52 +136,71 @@
     <form id="searchForm">
         <input type="hidden" id="currentPage" name="currentPage"/>
 
-        <div style="display: flex;justify-content: space-between; margin-top: 15px">
-            <div>
-                <label class="from_label">活动名称：</label>
-                <input id="trainOrg" class="toggleView input" type="text" autocomplete="off" name="activityName" placeholder="请输入活动名称"
-                       style="margin-left: 0px;width: 164px"/>
-                <input type="hidden" name="orgFlow" id="orgFlow">
+         <div class="form_search">
+
+            <div class="form_item">
+                <div class="form_label">活动名称：</div>
+                <div class="form_content">
+                    <input id="trainOrg" class="toggleView input" type="text" autocomplete="off" name="activityName" placeholder="请输入活动名称"
+                           />
+                    <input type="hidden" name="orgFlow" id="orgFlow">
+                </div>
             </div>
-            <div>
-                <label class="from_label">活动形式：</label>
-                <select name="inspectionType" id="inspectionType" class="select" style="width: 170px;">
-                    <option value="">全部</option>
-                    <c:forEach items="${activityTypeEnumList}" var="dict">
-                        <option value="${dict.id}" <c:if test="${param.speId eq dict.id}">selected</c:if>>${dict.name}</option>
-                    </c:forEach>
-                </select>
-            </div>
-            <div>
-                <label class="from_label">科室：</label>
-                <input type="hidden" id="deptFlow" name="deptFlow" value="${user.deptFlow}">
-                <input id="orgSel" class="toggleView input" type="text" style="width: 165px;margin-left: 0px;/*background-image: url(<s:url value='/jsp/res/images/reorder_w.png'/>);*/background-repeat: no-repeat;background-position: 127px -4px;" name="deptName" placeholder="请选择科室"
-                       value="${user.deptName}" autocomplete="off" title="${param.deptName}" onmouseover="this.title = this.value"/>
-                <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:35px;left:0px;">
-                    <div id="boxHome" style="max-height: 250px; margin-left: 45px; overflow: auto;border: 1px #ccc solid;background-color: white;min-width: 172px;border-top: none;position: relative;display: none;">
-                        <c:forEach items="${deptList}" var="dept">
-                            <p class="item" flow="${dept.deptFlow}" value="${dept.deptName}" onclick="toDeptFlow('${dept.deptFlow}');" style="height: 30px;padding-left: 10px;text-align: left;">${dept.deptName}</p>
+            <div class="form_item">
+                <div class="form_label">活动形式：</div>
+                <div class="form_content" >
+                    <select name="inspectionType" id="inspectionType" class="select" >
+                        <option value="">全部</option>
+                        <c:forEach items="${activityTypeEnumList}" var="dict">
+                            <option value="${dict.id}" <c:if test="${param.speId eq dict.id}">selected</c:if>>${dict.name}</option>
                         </c:forEach>
+                    </select>
+                </div>
+
+            </div>
+            <div class="form_item">
+                <div class="form_label" style="width: auto">评审开始时间：</div>
+                <div class="form_content" >
+                    <input name="startTime" id="startTime"  placeholder="请选择开始时间"
+                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})"
+                           onchange="checkJointLocalStart()" value="" class="input">
+                </div>
+            </div>
+            <div class="form_item">
+                <div class="form_label" style="width: auto">评审结束时间：</div>
+                <div class="form_content">
+                    <input name="endTime" id="endTime"  placeholder="请选择结束时间"
+                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})"
+                           onchange="checkJointLocalStart()" value="" class="input">
+                </div>
+            </div>
+
+            <div class="form_item ">
+                <div class="form_label">科&#12288;&#12288;室：</div>
+                <div class="form_content">
+                    <input type="hidden" id="deptFlow" name="deptFlow" value="${user.deptFlow}">
+                    <input id="orgSel" class="toggleView input" type="text" style="margin-left: 0px;/*background-image: url(<s:url value='/jsp/res/images/reorder_w.png'/>);*/background-repeat: no-repeat;background-position: 127px -4px;" name="deptName" placeholder="请选择科室"
+                           value="${user.deptName}" autocomplete="off" title="${param.deptName}" onmouseover="this.title = this.value"/>
+                    <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:35px;left:0px;">
+                        <div id="boxHome" style="max-height: 250px; margin-left: 45px; overflow: auto;border: 1px #ccc solid;background-color: white;min-width: 172px;border-top: none;position: relative;display: none;">
+                            <c:forEach items="${deptList}" var="dept">
+                                <p class="item" flow="${dept.deptFlow}" value="${dept.deptName}" onclick="toDeptFlow('${dept.deptFlow}');" style="height: 30px;padding-left: 10px;text-align: left;">${dept.deptName}</p>
+                            </c:forEach>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div>
-                <label class="from_label">评审开始时间：</label>
-                <input name="startTime" id="startTime" style="margin-left: 0px;width: 165px;" placeholder="请选择开始时间"
-                       onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})"
-                       onchange="checkJointLocalStart()" value="" class="input">
+
+            <div class="form_item" style="text-align: right ; margin-left: 0px" >
+                <div class="form_content" >
+                    <input class="btn_green" type="button"  value="查&#12288;询" onclick="toPage(1);"/>
+                    <input class="btn_green" type="button"  value="导&#12288;出" onclick="exportHospitalStatistics();"/>
+                </div>
             </div>
-            <div>
-                <label class="from_label">评审结束时间：</label>
-                <input name="endTime" id="endTime" style="margin-left: 0px;width: 165px;" placeholder="请选择结束时间"
-                       onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})"
-                       onchange="checkJointLocalStart()" value="" class="input">
-            </div>
+
+
         </div>
-        <div style="margin-top: 15px;margin-bottom: 15px">
-            <input class="btn_green" type="button"  value="查&#12288;询" onclick="toPage(1);"/>
-            <input class="btn_green" type="button"  value="导&#12288;出" onclick="exportHospitalStatistics();"/>
-        </div>
+
 
 
 

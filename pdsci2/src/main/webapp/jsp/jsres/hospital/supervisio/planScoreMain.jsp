@@ -43,6 +43,7 @@
         text-align: right;
     }
 </style>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script type="text/javascript"
         src="<s:url value='/js/jquery-select/js/jquery.select.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <script type="text/javascript">
@@ -84,6 +85,27 @@
     function trainOrgHidden() {
         $("#trainOrg-suggest").css({"display": "none"})
     }
+
+     //显示隐藏
+    let flag = false;
+    function showOrHide(){
+
+        if(flag){
+            $(`.form_item_hide`).hide();
+            // document.getElementById("hideForm").style.display='none';
+            $("#open").text("展开")
+            flag = false;
+        }else {
+            $(`.form_item_hide`).css('display','flex');
+            // document.getElementById("hideForm").style.display='flex';
+            $("#open").text("收起")
+            flag = true;
+        }
+
+    }
+
+
+
 </script>
 <div class="main_hd">
     <h2 class="underline"><c:if test="${GlobalConstant.USER_LIST_LOCAL ne roleFlag}">专业自评</c:if><c:if test="${GlobalConstant.USER_LIST_LOCAL eq roleFlag}">基地自评</c:if></h2>
@@ -92,10 +114,21 @@
     <form id="searchForm">
         <input type="hidden" id="currentPage" name="currentPage"/>
 
-        <div style="display: flex;justify-content: flex-start; column-gap: 61px;margin-top: 15px">
-            <div>
-                <label class="from_label">专业：</label>
-                <select name="speId" id="speId" class="select" style="width: 161px;">
+
+        <div class="form_search">
+
+            <div class="form_item" >
+                <div class="form_label">检查年份：</div>
+                <div class="form_content" >
+                    <input class="input" name="subjectYear" id="subjectYear"
+                           value="${param.subjectYear==null?currentTime:param.subjectYear}"/>
+                </div>
+            </div>
+
+            <div class="form_item">
+                <div class="form_label">专&#12288;&#12288;业：</div>
+                <div class="form_content">
+                    <select name="speId" id="speId" class="select" >
                     <option value="">全部</option>
                     <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
                         <option value="${dict.dictId}" ${param.speId eq dict.dictId?'selected':''}
@@ -105,49 +138,59 @@
                         >${dict.dictName}</option>
                     </c:forEach>
                 </select>
+                </div>
             </div>
-            <div>
-                <label class="from_label">督导结果：</label>
-                <select name="supervisionResults" id="supervisionResults" class="select" style="width: 161px;">
-                    <option value="">全部</option>
-                    <option value="qualified">合格</option>
-                    <option value="basically">基本合格</option>
-                    <option value="yellowCard">限时整改</option>
-                    <option value="redCard">撤销资格</option>
-                </select>
-            </div>
-            <div>
-                <label class="from_label">检查年份：</label>
-                <input class="input" name="subjectYear" id="subjectYear"
-                       value="${param.subjectYear==null?currentTime:param.subjectYear}"/>
+            <div class="form_item">
+                <div class="form_label">督导结果：</div>
+                <div class="form_content" >
+                    <select name="supervisionResults" id="supervisionResults" class="select" >
+                        <option value="">全部</option>
+                        <option value="qualified">合格</option>
+                        <option value="basically">基本合格</option>
+                        <option value="yellowCard">限时整改</option>
+                        <option value="redCard">撤销资格</option>
+                    </select>
+                </div>
             </div>
             <c:if test="${suAoth ne 'Y' and roleFlag ne 'baseExpert'}">
-                <div>
-                    <label class="from_label">基地名称：</label>
+                <div class="form_item">
+                    <div class="form_label">基地名称：</div>
                     <c:if test="${GlobalConstant.USER_LIST_LOCAL eq roleFlag}">
-                        <select name="orgFlow" class="select" style="width: 161px;">
-                            <c:forEach items="${orgs}" var="org">
-                                <option value="${org.orgFlow}" ${orgFlow eq org.orgFlow?'selected':''}
-                                >${org.orgName}</option>
-                            </c:forEach>
-                        </select>
+                        <div class="form_content" >
+                            <select name="orgFlow" class="select" >
+                                <c:forEach items="${orgs}" var="org">
+                                    <option value="${org.orgFlow}" ${orgFlow eq org.orgFlow?'selected':''}
+                                    >${org.orgName}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
                     </c:if>
                     <c:if test="${GlobalConstant.USER_LIST_LOCAL ne roleFlag}">
+                        <div class="form_content">
                             <input id="trainOrg" class="toggleView input" type="text" autocomplete="off"
-                                   style="width: 161px" onblur="trainOrgHidden()"/>
+                                   onblur="trainOrgHidden()"/>
                             <input type="hidden" name="orgFlow" id="orgFlow">
+                        </div>
                     </c:if>
                 </div>
-                <div>
-                    <label class="from_label">基地代码：</label>
-                    <input type="text" name="baseCode" value="${param.baseCode}" class="input"
+                <div class="form_item form_item_hide">
+                    <div class="form_label">基地代码：</div>
+                    <div class="form_content">
+                        <input type="text" name="baseCode" value="${param.baseCode}" class="input"
                            />
+                    </div>
                 </div>
             </c:if>
 
-        </div>
-        <div style="margin-top: 15px;margin-bottom: 15px">
-            <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
+            <div class="form_item" style="text-align: right">
+                <div class="form_label">
+                    <a style="color: #54B2E5;margin-right: 15px" onclick="showOrHide()" id="open">展开</a>
+                </div>
+                <div class="form_content">
+                    <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
+                </div>
+            </div>
+
         </div>
 
 

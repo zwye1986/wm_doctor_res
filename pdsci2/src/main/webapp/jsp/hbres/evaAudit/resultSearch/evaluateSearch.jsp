@@ -1,4 +1,5 @@
 <link rel="stylesheet" type="text/css" href="<s:url value='/jsp/jsres/css/exam.css'/>?v=${applicationScope.sysCfgMap['sys_version']}"/>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script type="text/javascript">
     function gradeSearch(page) {
         jboxStartLoading();
@@ -136,6 +137,25 @@
         }
     });
 
+    //显示隐藏
+    let flag = false;
+    function showOrHide(){
+
+        if(flag){
+            $(`.form_item_hide`).hide();
+            // document.getElementById("hideForm").style.display='none';
+            $("#open").text("展开")
+            flag = false;
+        }else {
+            $(`.form_item_hide`).css('display','flex');
+            // document.getElementById("hideForm").style.display='flex';
+            $("#open").text("收起")
+            flag = true;
+        }
+
+    }
+
+
     function grade(recFlow) {
         jboxOpen("<s:url value='/res/evaDoctorResult/patientMainInfo'/>?recFlow=" + recFlow,
             '病人评价详情', 1200, 660);
@@ -152,218 +172,362 @@
                         <input type="hidden" id="trainingTypeId" name="trainingTypeId" value="${param.trainingTypeId}">
                         <input type="hidden" id="role" name="role" value="${role}">
                         <c:if test="${param.gradeRole eq 'doctor' or empty param.gradeRole}">
-                            <div style="display: flex;justify-content: space-between; column-gap: 56px;margin-top: 15px">
-                                <div>
-                                    <label class="from_label">姓名：</label>
-                                    <input type="text" name="userName" value="${param.userName}" class="input" style="width:161px"/>
+
+                            <div class="form_search">
+                                <div class="form_item">
+                                    <div class="form_label">姓&#12288;&#12288;名：</div>
+                                    <div class="form_content" >
+                                        <input type="text" name="userName" value="${param.userName}" class="input" />
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="from_label">培训专业：</label>
-                                    <select name="trainingSpeId" class="select" style="width: 161px;">
-                                        <option  value="">全部</option>
-                                        <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
-                                            <option value="${dict.dictId}" ${param.trainingSpeId eq dict.dictId?'selected':''}>${dict.dictName}</option>
-                                        </c:forEach>
-                                    </select>
+                                <div class="form_item">
+                                    <div class="form_label">培训专业：</div>
+                                    <div class="form_content" >
+                                        <select name="trainingSpeId" class="select" style="width: 161px;">
+                                            <option  value="">全部</option>
+                                            <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
+                                                <option value="${dict.dictId}" ${param.trainingSpeId eq dict.dictId?'selected':''}>${dict.dictName}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="from_label">年级：</label>
-                                    <input style="width: 161px;" type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" onclick="WdatePicker({dateFmt:'yyyy'})" readonly="readonly" class="input"/>
+
+                                <div class="form_item">
+                                    <div class="form_label">开始时间：</div>
+                                    <div class="form_content" >
+                                        <input name="startTime" id="startTime" style="width: 161px;" placeholder="请选择开始时间"
+                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
+                                               onchange="checkStart()" value="${param.startTime}" class="input">
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="from_label">开始时间：</label>
-                                    <input name="startTime" id="startTime" style="width: 161px;" placeholder="请选择开始时间"
-                                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
-                                           onchange="checkStart()" value="${param.startTime}" class="input">
+                                <div class="form_item">
+                                    <div class="form_label">结束时间：</div>
+                                    <div class="form_content">
+                                        <input name="endTime" id="endTime" style="width: 161px;" placeholder="请选择结束时间"
+                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
+                                               onchange="checkStart()" value="${param.endTime}" class="input">
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="from_label">结束时间：</label>
-                                    <input name="endTime" id="endTime" style="width: 161px;" placeholder="请选择结束时间"
-                                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
-                                           onchange="checkStart()" value="${param.endTime}" class="input">
+
+                                <div class="form_item form_item_hide">
+                                    <div class="form_label">年&#12288;&#12288;级：</div>
+                                    <div class="form_content">
+                                        <input style="width: 161px;" type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" onclick="WdatePicker({dateFmt:'yyyy'})" readonly="readonly" class="input"/>
+                                    </div>
+                                </div>
+
+                                <div class="form_item form_item_hide">
+                                    <div class="form_label">得分区间：</div>
+                                    <div class="form_content">
+                                        <input type="text" id="startScore" name="startScore" value="${param.startScore}" class="input" style="width: 66px;"/>~<input type="text" id="endScore" name="endScore" value="${param.endScore}"class="input" style="width: 66px;"/>
+                                    </div>
+                                </div>
+                                <div class="form_item form_item_hide">
+                                    <div class="form_label">人员类型：</div>
+                                    <div class="form_content" >
+                                        <select name="studentType" class="select" >
+                                            <option  value="">全部</option>
+                                            <c:forEach items="${dictTypeEnumDoctorTypeList}" var="dict">
+                                                <option value="${dict.dictId}" ${param.studentType eq dict.dictId?'selected':''}>${dict.dictName}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form_item" style="text-align: right">
+                                    <div class="form_label " style="width: auto">
+                                        <a style="color: #54B2E5;margin-right: 15px ;margin-left: 20px" onclick="showOrHide()" id="open">展开</a>
+                                    </div>
+                                    <div class="form_content">
+                                        <input type="button" class="btn_green" value="查&#12288;询" onclick="gradeSearch()">
+                                        <c:if test="${'360teacher' ne param.gradeRole and '360doctor' ne param.gradeRole and  'ManageDoctorAssess360' ne param.gradeRole}">
+                                            <input  type="button" class="btn_green" value="导&#12288;出" onclick="exportEval();"/>
+                                        </c:if>
+                                    </div>
                                 </div>
                             </div>
-                            <div style="display: flex;justify-content: flex-start; column-gap: 56px;margin-top: 15px">
-                                <div>
-                                    <label class="from_label">得分区间：</label>
-                                    <input type="text" id="startScore" name="startScore" value="${param.startScore}" class="input" style="width: 75px;"/>~<input type="text" id="endScore" name="endScore" value="${param.endScore}"class="input" style="width: 75px;"/>
-                                </div>
-                                <div>
-                                    <label class="from_label">人员类型：</label>
-                                    <select name="studentType" class="select" style="width: 176px;">
-                                        <option  value="">全部</option>
-                                        <c:forEach items="${dictTypeEnumDoctorTypeList}" var="dict">
-                                            <option value="${dict.dictId}" ${param.studentType eq dict.dictId?'selected':''}>${dict.dictName}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                            </div>
+
                         </c:if>
 
 
                         <c:if test="${param.gradeRole eq 'teacher'}">
-                            <div style="display: flex;justify-content: space-between; column-gap: 56px;margin-top: 15px">
-                                <div>
-                                    <label class="from_label">姓名：</label>
-                                    <input type="text" name="userName" value="${param.userName}" class="input" style="width:161px"/>
+
+                            <div class="form_search">
+                                <div class="form_item">
+                                    <div class="form_label">姓&#12288;&#12288;名：</div>
+                                    <div class="form_content" >
+                                        <input type="text" name="userName" value="${param.userName}" class="input" />
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="from_label">科室：</label>
-                                    <select name="deptFlow" class="select" style="width: 182px;margin-right: 20px;    margin-left: 5px;">
-                                        <option value=""></option>
-                                        <c:forEach items="${depts}" var="dept">
-                                            <option value="${dept.deptFlow}" <c:if test="${param.deptFlow eq dept.deptFlow}">selected</c:if>>${dept.deptName}</option>
-                                        </c:forEach>
-                                    </select>
+
+                                <div class="form_item">
+                                    <div class="form_label">科&#12288;&#12288;室：</div>
+                                    <div class="form_content">
+                                        <select name="deptFlow" class="select" style="width: 182px;margin-right: 20px;    margin-left: 5px;">
+                                            <option value=""></option>
+                                            <c:forEach items="${depts}" var="dept">
+                                                <option value="${dept.deptFlow}" <c:if test="${param.deptFlow eq dept.deptFlow}">selected</c:if>>${dept.deptName}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="from_label">年份：</label>
-                                    <input style="width: 161px;" type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" onclick="WdatePicker({dateFmt:'yyyy'})" readonly="readonly" class="input"/>
+
+
+                                <div class="form_item">
+                                    <div class="form_label">开始时间：</div>
+                                    <div class="form_content" >
+                                        <input name="startTime" id="startTime" style="width: 161px;" placeholder="请选择开始时间"
+                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
+                                               onchange="checkStart()" value="${param.startTime}" class="input">
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="from_label">开始时间：</label>
-                                    <input name="startTime" id="startTime" style="width: 161px;" placeholder="请选择开始时间"
-                                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
-                                           onchange="checkStart()" value="${param.startTime}" class="input">
+                                <div class="form_item">
+                                    <div class="form_label">结束时间：</div>
+                                    <div class="form_content">
+                                        <input name="endTime" id="endTime" style="width: 161px;" placeholder="请选择结束时间"
+                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
+                                               onchange="checkStart()" value="${param.endTime}" class="input">
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="from_label">结束时间：</label>
-                                    <input name="endTime" id="endTime" style="width: 161px;" placeholder="请选择结束时间"
-                                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
-                                           onchange="checkStart()" value="${param.endTime}" class="input">
+
+                                <div class="form_item form_item_hide">
+                                    <div class="form_label">年&#12288;&#12288;级：</div>
+                                    <div class="form_content">
+                                        <input  type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" onclick="WdatePicker({dateFmt:'yyyy'})" readonly="readonly" class="input"/>
+                                    </div>
+                                </div>
+
+                                <div class="form_item form_item_hide">
+                                    <div class="form_label">得分区间：</div>
+                                    <div class="form_content">
+                                        <input type="text" id="startScore" name="startScore" value="${param.startScore}" class="input" style="width: 66px;"/>~<input type="text" id="endScore" name="endScore" value="${param.endScore}"class="input" style="width: 66px;"/>
+                                    </div>
+                                </div>
+
+                                <div class="form_item" style="text-align: right">
+                                    <div class="form_label " style="width: auto">
+                                        <a style="color: #54B2E5;margin-right: 15px ;margin-left: 20px" onclick="showOrHide()" id="open">展开</a>
+                                    </div>
+                                    <div class="form_content">
+                                        <input type="button" class="btn_green" value="查&#12288;询" onclick="gradeSearch()">
+                                        <c:if test="${'360teacher' ne param.gradeRole and '360doctor' ne param.gradeRole and  'ManageDoctorAssess360' ne param.gradeRole}">
+                                            <input  type="button" class="btn_green" value="导&#12288;出" onclick="exportEval();"/>
+                                        </c:if>
+                                    </div>
                                 </div>
                             </div>
-                            <div style="display: flex;justify-content: flex-start; column-gap: 56px;margin-top: 15px">
-                                <div>
-                                    <label class="from_label">得分区间：</label>
-                                    <input type="text" id="startScore" name="startScore" value="${param.startScore}" class="input" style="width: 75px;"/>~<input type="text" id="endScore" name="endScore" value="${param.endScore}"class="input" style="width: 75px;"/>
-                                </div>
-                            </div>
+
                         </c:if>
 
                         <c:if test="${param.gradeRole eq 'head'}">
-                            <div style="display: flex;justify-content: space-between; margin-top: 15px">
-                                <div>
-                                    <label class="from_label">科室：</label>
-                                    <select name="deptFlow" class="select" style="width: 182px;margin-right: 20px;    margin-left: 5px;">
-                                        <option value=""></option>
-                                        <c:forEach items="${depts}" var="dept">
-                                            <option value="${dept.deptFlow}" <c:if test="${param.deptFlow eq dept.deptFlow}">selected</c:if>>${dept.deptName}</option>
-                                        </c:forEach>
-                                    </select>
+
+
+                            <div class="form_search">
+
+                                <div class="form_item">
+                                    <div class="form_label">科&#12288;&#12288;室：</div>
+                                    <div class="form_content">
+                                        <select name="deptFlow" class="select" style="width: 182px;margin-right: 20px;    margin-left: 5px;">
+                                            <option value=""></option>
+                                            <c:forEach items="${depts}" var="dept">
+                                                <option value="${dept.deptFlow}" <c:if test="${param.deptFlow eq dept.deptFlow}">selected</c:if>>${dept.deptName}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="from_label">年份：</label>
-                                    <input style="width: 161px;" type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" onclick="WdatePicker({dateFmt:'yyyy'})" readonly="readonly" class="input"/>
+
+                                <div class="form_item ">
+                                    <div class="form_label">年&#12288;&#12288;份：</div>
+                                    <div class="form_content">
+                                        <input  type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" onclick="WdatePicker({dateFmt:'yyyy'})" readonly="readonly" class="input"/>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="from_label">开始时间：</label>
-                                    <input name="startTime" id="startTime" style="width: 161px;" placeholder="请选择开始时间"
-                                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
-                                           onchange="checkStart()" value="${param.startTime}" class="input">
+
+
+                                <div class="form_item">
+                                    <div class="form_label">开始时间：</div>
+                                    <div class="form_content" >
+                                        <input name="startTime" id="startTime" style="width: 161px;" placeholder="请选择开始时间"
+                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
+                                               onchange="checkStart()" value="${param.startTime}" class="input">
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="from_label">结束时间：</label>
-                                    <input name="endTime" id="endTime" style="width: 161px;" placeholder="请选择结束时间"
-                                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
-                                           onchange="checkStart()" value="${param.endTime}" class="input">
+                                <div class="form_item">
+                                    <div class="form_label">结束时间：</div>
+                                    <div class="form_content">
+                                        <input name="endTime" id="endTime" style="width: 161px;" placeholder="请选择结束时间"
+                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
+                                               onchange="checkStart()" value="${param.endTime}" class="input">
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="from_label">得分区间：</label>
-                                    <input type="text" id="startScore" name="startScore" value="${param.startScore}" class="input" style="width: 75px;"/>~<input type="text" id="endScore" name="endScore" value="${param.endScore}"class="input" style="width: 75px;"/>
+
+                                <div class="form_item form_item_hide">
+                                    <div class="form_label">得分区间：</div>
+                                    <div class="form_content">
+                                        <input type="text" id="startScore" name="startScore" value="${param.startScore}" class="input" style="width: 66px;"/>~<input type="text" id="endScore" name="endScore" value="${param.endScore}"class="input" style="width: 66px;"/>
+                                    </div>
+                                </div>
+
+                                <div class="form_item" style="text-align: right">
+                                    <div class="form_label " style="width: auto">
+                                        <a style="color: #54B2E5;margin-right: 15px ;margin-left: 20px" onclick="showOrHide()" id="open">展开</a>
+                                    </div>
+                                    <div class="form_content">
+                                        <input type="button" class="btn_green" value="查&#12288;询" onclick="gradeSearch()">
+                                        <c:if test="${'360teacher' ne param.gradeRole and '360doctor' ne param.gradeRole and  'ManageDoctorAssess360' ne param.gradeRole}">
+                                            <input  type="button" class="btn_green" value="导&#12288;出" onclick="exportEval();"/>
+                                        </c:if>
+                                    </div>
                                 </div>
                             </div>
+
                         </c:if>
                         <c:if test="${param.gradeRole eq 'nurse'}">
-                            <div style="display: flex;justify-content: space-between; column-gap: 56px;margin-top: 15px">
-                                <div>
-                                    <label class="from_label">姓名：</label>
-                                    <input type="text" name="userName" value="${param.userName}" class="input" style="width:161px"/>
+
+                            <div class="form_search">
+
+                                <div class="form_item">
+                                    <div class="form_label">姓&#12288;&#12288;名：</div>
+                                    <div class="form_content">
+                                        <input type="text" name="userName" value="${param.userName}" class="input" style="width:161px"/>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="from_label">科室：</label>
-                                    <select name="deptFlow" class="select" style="width: 182px;margin-right: 20px;    margin-left: 5px;">
-                                        <option value=""></option>
-                                        <c:forEach items="${depts}" var="dept">
-                                            <option value="${dept.deptFlow}" <c:if test="${param.deptFlow eq dept.deptFlow}">selected</c:if>>${dept.deptName}</option>
-                                        </c:forEach>
-                                    </select>
+
+
+
+                                <div class="form_item ">
+                                    <div class="form_label">年&#12288;&#12288;份：</div>
+                                    <div class="form_content">
+                                        <input  type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" onclick="WdatePicker({dateFmt:'yyyy'})" readonly="readonly" class="input"/>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="from_label">年份：</label>
-                                    <input style="width: 161px;" type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" onclick="WdatePicker({dateFmt:'yyyy'})" readonly="readonly" class="input"/>
+
+                                <div class="form_item">
+                                    <div class="form_label">开始时间：</div>
+                                    <div class="form_content" >
+                                        <input name="startTime" id="startTime" style="width: 161px;" placeholder="请选择开始时间"
+                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
+                                               onchange="checkStart()" value="${param.startTime}" class="input">
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="from_label">开始时间：</label>
-                                    <input name="startTime" id="startTime" style="width: 161px;" placeholder="请选择开始时间"
-                                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
-                                           onchange="checkStart()" value="${param.startTime}" class="input">
+                                <div class="form_item">
+                                    <div class="form_label">结束时间：</div>
+                                    <div class="form_content">
+                                        <input name="endTime" id="endTime" style="width: 161px;" placeholder="请选择结束时间"
+                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
+                                               onchange="checkStart()" value="${param.endTime}" class="input">
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="from_label">结束时间：</label>
-                                    <input name="endTime" id="endTime" style="width: 161px;" placeholder="请选择结束时间"
-                                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
-                                           onchange="checkStart()" value="${param.endTime}" class="input">
+
+                                 <div class="form_item form_item_hide">
+                                    <div class="form_label">科&#12288;&#12288;室：</div>
+                                    <div class="form_content">
+                                        <select name="deptFlow" class="select" style="width: 182px;margin-right: 20px;    margin-left: 5px;">
+                                            <option value=""></option>
+                                            <c:forEach items="${depts}" var="dept">
+                                                <option value="${dept.deptFlow}" <c:if test="${param.deptFlow eq dept.deptFlow}">selected</c:if>>${dept.deptName}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form_item form_item_hide">
+                                    <div class="form_label">得分区间：</div>
+                                    <div class="form_content">
+                                        <input type="text" id="startScore" name="startScore" value="${param.startScore}" class="input" style="width: 66px;"/>~<input type="text" id="endScore" name="endScore" value="${param.endScore}"class="input" style="width: 66px;"/>
+                                    </div>
+                                </div>
+
+                                <div class="form_item" style="text-align: right">
+                                    <div class="form_label " style="width: auto">
+                                        <a style="color: #54B2E5;margin-right: 15px;margin-left: 20px" onclick="showOrHide()" id="open">展开</a>
+                                    </div>
+                                    <div class="form_content">
+                                        <input type="button" class="btn_green" value="查&#12288;询" onclick="gradeSearch()">
+                                        <c:if test="${'360teacher' ne param.gradeRole and '360doctor' ne param.gradeRole and  'ManageDoctorAssess360' ne param.gradeRole}">
+                                            <input  type="button" class="btn_green" value="导&#12288;出" onclick="exportEval();"/>
+                                        </c:if>
+                                    </div>
                                 </div>
                             </div>
-                            <div style="display: flex;justify-content: flex-start; column-gap: 56px;margin-top: 15px">
-                                <div>
-                                    <label class="from_label">得分区间：</label>
-                                    <input type="text" id="startScore" name="startScore" value="${param.startScore}" class="input" style="width: 75px;"/>~<input type="text" id="endScore" name="endScore" value="${param.endScore}"class="input" style="width: 75px;"/>
-                                </div>
-                            </div>
+
                         </c:if>
                         <c:if test="${param.gradeRole eq 'patient'}">
-                        <div style="display: flex;justify-content: space-between; column-gap: 56px;margin-top: 15px">
-                            <div>
-                                <label class="from_label">姓名：</label>
-                                <input type="text" name="doctorName" value="${param.userName}" class="input" style="width:161px"/>
-                            </div>
-                            <div>
-                                <label class="from_label">培训专业：</label>
-                                <select name="trainingSpeId" class="select">
-                                    <option value="">全部</option>
-                                    <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="training">
-                                        <option value="${training.dictId}"
-                                                <c:if test="${param.trainingSpeId eq training.dictId}">selected</c:if>>${training.dictName}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="from_label">培训科室：</label>
-                                <select name="deptFlow" class="select" style="width: 150px;">
-                                    <option value="">全部</option>
-                                    <c:forEach items="${deptList}" var="dept">
-                                        <option value="${dept.deptFlow}"
-                                                <c:if test="${deptFlow eq dept.deptFlow}">selected</c:if>>${dept.deptName}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="from_label">评价人名称：</label>
-                                <input type="text" name="patientName" value="${param.patientName}" class="input"
-                                       style="width: 161px;"/>
-                            </div>
 
-                            <div>
-                                <label class="from_label">年级：</label>
-                                <input style="width: 161px;" type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" onclick="WdatePicker({dateFmt:'yyyy'})" readonly="readonly" class="input"/>
-                            </div>
 
-                            <div>
-                                <label class="from_label">人员类型：</label>
-                                <c:forEach items="${jsResDocTypeEnumList}" var="type">
-                                    <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="docType" onclick="changeCheckBox(this);"/>${type.name}&nbsp;</label>
-                                </c:forEach>
+                            <div class="form_search">
+                                <div class="form_item">
+                                    <div class="form_label">姓&#12288;&#12288;名：</div>
+                                    <div class="form_content" >
+                                        <input type="text" name="userName" value="${param.userName}" class="input" />
+                                    </div>
+                                </div>
+                                <div class="form_item">
+                                    <div class="form_label">培训专业：</div>
+                                    <div class="form_content" >
+                                        <select name="trainingSpeId" class="select" style="width: 161px;">
+                                            <option  value="">全部</option>
+                                            <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
+                                                <option value="${dict.dictId}" ${param.trainingSpeId eq dict.dictId?'selected':''}>${dict.dictName}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form_item">
+                                    <div class="form_label">培训科室：</div>
+                                    <div class="form_content" >
+                                        <select name="deptFlow" class="select" style="width: 150px;">
+                                        <option value="">全部</option>
+                                        <c:forEach items="${deptList}" var="dept">
+                                            <option value="${dept.deptFlow}"
+                                                    <c:if test="${deptFlow eq dept.deptFlow}">selected</c:if>>${dept.deptName}</option>
+                                        </c:forEach>
+                                    </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="form_item">
+                                    <div class="form_label">评价人名称：</div>
+                                    <div class="form_content">
+                                        <input type="text" name="patientName" value="${param.patientName}" class="input"
+                                               />
+                                    </div>
+                                </div>
+
+                                <div class="form_item">
+                                    <div class="form_label">年&#12288;&#12288;级：</div>
+                                    <div class="form_content">
+                                        <input  type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" onclick="WdatePicker({dateFmt:'yyyy'})" readonly="readonly" class="input"/>
+                                    </div>
+                                </div>
+
+                                <div class="form_item">
+                                    <div class="form_label">人员类型：</div>
+                                    <div class="form_content">
+                                        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                            <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="docType" onclick="changeCheckBox(this);"/>${type.name}&nbsp;</label>
+                                        </c:forEach>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="form_item" style="text-align: right">
+                                    <div class="form_label " style="width: auto">
+                                        <a style="color: #54B2E5;margin-right: 15px;margin-left: 20px" onclick="showOrHide()" id="open">展开</a>
+                                    </div>
+                                    <div class="form_content">
+                                        <input type="button" class="btn_green" value="查&#12288;询" onclick="gradeSearch()">
+                                        <c:if test="${'360teacher' ne param.gradeRole and '360doctor' ne param.gradeRole and  'ManageDoctorAssess360' ne param.gradeRole}">
+                                            <input  type="button" class="btn_green" value="导&#12288;出" onclick="exportEval();"/>
+                                        </c:if>
+                                    </div>
+                                </div>
                             </div>
                         </c:if>
 
-                        <div style="margin-top: 15px;margin-bottom: 15px">
-                            <input type="button" class="btn_green" value="查&#12288;询" onclick="gradeSearch()">
-                            <c:if test="${'360teacher' ne param.gradeRole and '360doctor' ne param.gradeRole and  'ManageDoctorAssess360' ne param.gradeRole}">
-                                <input  type="button" class="btn_green" value="导&#12288;出" onclick="exportEval();"/>
-                            </c:if>
-                        </div>
 
 
 

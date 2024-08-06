@@ -22,6 +22,7 @@
 <style type="text/css">
 	#boxHome .item:HOVER{background-color: #eee;}
 </style>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 function addUser() {
 	jboxOpen("<s:url value='/sys/user/editProfessionalBaseManagerNew'/>","新增用户信息", 900, 350);
@@ -148,39 +149,47 @@ $(function(){
 				 <form id="searchForm" action="<s:url value="/res/ProfessionalBase/professionalBaseManagerList" />" method="post">
 					 <input id="currentPage" type="hidden" name="currentPage" value=""/>
 
-					 <div style="display: flex;justify-content: flex-start; column-gap: 52px;margin-top: 15px">
-						 <div>
-							 <label class="from_label">专业基地：</label>
-							 <input id="orgSel" class="toggleView input" type="text" name="resTrainingSpeName" value="${param.resTrainingSpeName}" autocomplete="off"/>
-							 <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:35px;left:100px;text-align: left;">
-								 <div id="boxHome" style="max-height: 250px;overflow: auto;border: 1px #ccc solid;background-color: white;min-width: 220px;border-top: none;position: relative;display: none;">
-									 <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="spe">
-										 <c:if test="${spe.dictId ne '50'}">
-											 <p class="item" flow="${spe.dictId}" value="${spe.dictName}" style="height: 25px;padding-left: 10px;">${spe.dictName}</p>
-										 </c:if>
-									 </c:forEach>
+					 <div class="form_search">
+						 <div class="form_item">
+							 <div class="form_label">专业基地：</div>
+							 <div class="form_content">
+								 <input id="orgSel" class="toggleView input" type="text" name="resTrainingSpeName" value="${param.resTrainingSpeName}" autocomplete="off"/>
+								 <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:35px;left:100px;text-align: left;">
+									 <div id="boxHome" style="max-height: 250px;overflow: auto;border: 1px #ccc solid;background-color: white;min-width: 220px;border-top: none;position: relative;display: none;">
+										 <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="spe">
+											 <c:if test="${spe.dictId ne '50'}">
+												 <p class="item" flow="${spe.dictId}" value="${spe.dictName}" style="height: 25px;padding-left: 10px;">${spe.dictName}</p>
+											 </c:if>
+										 </c:forEach>
+									 </div>
 								 </div>
 							 </div>
 						 </div>
-						 <div>
-							 <label class="from_label">负责人：</label>
-							 <input type="text" name="userName" value="${param.userName}"  class="input"/>
+						 <div class="form_item">
+							 <div class="form_label">负责人：</div>
+							 <div class="form_content">
+								 <input type="text" name="userName" value="${param.userName}"  class="input"/>
+							 </div>
 						 </div>
-						 <div>
-							 <label class="from_label">登录名：</label>
-							 <input type="text" name="userCode" value="${param.userCode}" class="input"/>
+						 <div class="form_item">
+							 <div class="form_label">登录名：</div>
+							 <div class="form_content">
+								 <input type="text" name="userCode" value="${param.userCode}" class="input"/>
+							 </div>
 						 </div>
-						 <div>
-							 <label class="from_label">用户状态：</label>
-							 <input id="all" name="statusId" type="radio" value="" onclick="searchUser();"
-									<c:if test='${empty param.statusId}'>checked="checked"</c:if>>
-							 <label for="all">全部</label>&#12288;
-							 <input id="${userStatusEnumActivated.id}" name="statusId" type="radio" value="${userStatusEnumActivated.id}" onclick="searchUser();"
-									<c:if test='${param.statusId==userStatusEnumActivated.id}'>checked="checked"</c:if>>
-							 <label for="${userStatusEnumActivated.id }">${userStatusEnumActivated.name}</label>&#12288;
-							 <input id="${userStatusEnumLocked.id}" name="statusId" type="radio" value="${userStatusEnumLocked.id}" onclick="searchUser();"
-									<c:if test='${param.statusId==userStatusEnumLocked.id}'>checked="checked"</c:if>>
-							 <label for="${userStatusEnumLocked.id }">${userStatusEnumLocked.name}</label>
+						 <div class="form_item">
+							 <div class="form_label">用户状态：</div>
+							 <div class="form_content" style="margin: auto">
+								 <input id="all" name="statusId" type="radio" value="" onclick="searchUser();"
+										<c:if test='${empty param.statusId}'>checked="checked"</c:if>>
+								 <label for="all">全部</label>&#12288;
+								 <input id="${userStatusEnumActivated.id}" name="statusId" type="radio" value="${userStatusEnumActivated.id}" onclick="searchUser();"
+										<c:if test='${param.statusId==userStatusEnumActivated.id}'>checked="checked"</c:if>>
+								 <label for="${userStatusEnumActivated.id }">${userStatusEnumActivated.name}</label>&#12288;
+								 <input id="${userStatusEnumLocked.id}" name="statusId" type="radio" value="${userStatusEnumLocked.id}" onclick="searchUser();"
+										<c:if test='${param.statusId==userStatusEnumLocked.id}'>checked="checked"</c:if>>
+								 <label for="${userStatusEnumLocked.id }">${userStatusEnumLocked.name}</label>
+							 </div>
 						 </div>
 					 </div>
 					 <div style="margin-top: 15px;margin-bottom: 15px">

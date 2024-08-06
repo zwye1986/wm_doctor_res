@@ -20,6 +20,7 @@
         background-color: #eee;
     }
 </style>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script type="text/javascript">
     function add() {
         jboxOpen("<s:url value='/res/nurse/edit'/>", "新增护士信息", 600, 300);
@@ -162,38 +163,46 @@
             <input id="roleFlow" type="hidden" name="roleFlow" value="${sysRole.roleFlow}"/>
             <input type="hidden" name="orgFlow" value="${sessionScope.currUser.orgFlow}"/>
             <input id="currentPage" type="hidden" name="currentPage" value=""/>
-                <div style="display: flex;justify-content: flex-start; column-gap: 56px;margin-top: 15px">
-                    <div>
-                        <label class="from_label">科室：</label>
-                        <select name="deptFlow" class="select" style="width: 161px">
-                            <option value="">全部</option>
-                            <c:forEach items="${depts}" var="dept">
-                                <option value="${dept.deptFlow}"
-                                        <c:if test="${param.deptFlow eq dept.deptFlow}">selected</c:if>>${dept.deptName}</option>
-                            </c:forEach>
-                        </select>
+
+                <div class="form_search">
+                    <div class="form_item">
+                        <div class="form_label">科&#12288;&#12288;室：</div>
+                        <div class="form_content">
+                            <select name="deptFlow" class="select" >
+                                <option value="">全部</option>
+                                <c:forEach items="${depts}" var="dept">
+                                    <option value="${dept.deptFlow}"
+                                            <c:if test="${param.deptFlow eq dept.deptFlow}">selected</c:if>>${dept.deptName}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
                     </div>
-                    <div>
-                        <label class="from_label">姓名：</label>
-                        <input type="text" name="userName" value="${param.userName}" class="input"
-                               style="width: 155px;"/>
+                    <div class="form_item">
+                        <div class="form_label">姓&#12288;&#12288;名：</div>
+                        <div class="form_content">
+                            <input type="text" name="userName" value="${param.userName}" class="input"/>
+                        </div>
                     </div>
-                    <div>
-                        <label class="from_label">联系方式：</label>
-                        <input type="text" name="userPhone" value="${param.userPhone}" class="input"
-                               style="width: 155px;"/>
+                    <div class="form_item">
+                        <div class="form_label">联系方式：</div>
+                        <div class="form_content">
+                            <input type="text" name="userPhone" value="${param.userPhone}" class="input"/>
+                        </div>
                     </div>
-                    <div>
-                        <label class="from_label">状态：</label>
-                        <select name="statusId" class="select" style="width: 161px">
-                            <option value="">全部</option>
-                            <c:forEach items="${nurseStatusEnums}" var="nurseStatusEnum">
-                                <option value="${nurseStatusEnum.id}"
-                                        <c:if test="${param.statusId eq nurseStatusEnum.id}">selected</c:if>>${nurseStatusEnum.name}</option>
-                            </c:forEach>
-                        </select>
+                    <div class="form_item">
+                        <div class="form_label">状&#12288;&#12288;态：</div>
+                        <div class="form_content">
+                            <select name="statusId" class="select" style="width: 161px">
+                                <option value="">全部</option>
+                                <c:forEach items="${nurseStatusEnums}" var="nurseStatusEnum">
+                                    <option value="${nurseStatusEnum.id}"
+                                            <c:if test="${param.statusId eq nurseStatusEnum.id}">selected</c:if>>${nurseStatusEnum.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
                     </div>
                 </div>
+
                 <div style="margin-top: 15px;margin-bottom: 15px">
                     <input class="btn_green" type="button" onclick="searchUser()" value="查&#12288;询"/>
                     <input class="btn_green" type="button" onclick="add()" value="新&#12288;增"/>

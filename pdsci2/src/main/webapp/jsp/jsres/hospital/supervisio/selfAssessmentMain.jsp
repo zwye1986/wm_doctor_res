@@ -88,12 +88,12 @@
 
         <div style="display: flex;justify-content: flex-start; column-gap: 56px;margin-top: 15px">
             <div>
-                <label class="from_label">自评年份：</label>
+                <label class="form_label">自评年份：</label>
                 <input class="input" name="sessionNumber" id="sessionNumber" type="text" style="width: 161px;"
                        value="${param.sessionNumber==null?pdfn:getCurrYear():param.sessionNumber}"/>
             </div>
             <div>
-                <label class="from_label">专业：</label>
+                <label class="form_label">专业：</label>
                 <select name="speId" id="speId" class="select" style="margin-left:5px;width: 160px;">
                     <option value="">全部</option>
                     <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">

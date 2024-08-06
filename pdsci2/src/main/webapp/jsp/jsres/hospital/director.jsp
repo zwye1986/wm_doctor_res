@@ -32,7 +32,7 @@
     <div class="div_search">
         <form id="searchForm">
             <input id="currentPage" type="hidden" name="currentPage" value=""/>
-            <label class="from_label" >指南标题(关键字)</label>
+            <label class="form_label" >指南标题(关键字)</label>
             <input style="margin-left: 10px" class="input" name="resNoticeTitle" value="${param.resNoticeTitle}" type="text"/>
 
             <div style="margin-top: 15px;margin-bottom: 15px">

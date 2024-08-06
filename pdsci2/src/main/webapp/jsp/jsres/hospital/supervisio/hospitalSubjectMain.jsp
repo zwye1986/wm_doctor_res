@@ -46,6 +46,7 @@
 <script type="text/javascript"
         src="<s:url value='/js/jquery-select/js/jquery.select.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <link href="<s:url value='/css/UCFORM.css'/>" rel="stylesheet" type="text/css">
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script src="<s:url value='/js/jQuery.UCSelect.js'/>" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -137,16 +138,19 @@
     function showOrHide(){
 
         if(flag){
-            document.getElementById("hideForm").style.display='none';
+            $(`.form_item_hide`).hide();
+            // document.getElementById("hideForm").style.display='none';
             $("#open").text("展开")
             flag = false;
         }else {
-            document.getElementById("hideForm").style.display='inline-block';
+            $(`.form_item_hide`).css('display','flex');
+            // document.getElementById("hideForm").style.display='flex';
             $("#open").text("收起")
             flag = true;
         }
 
     }
+
 
 
     //页面加载完成时调用
@@ -161,64 +165,84 @@
     <form id="searchForm">
         <input type="hidden" id="currentPage" name="currentPage"/>
 
-        <div style="display: flex;justify-content: space-between; margin-top: 15px">
-            <div>
-                <label class="from_label">活动名称：</label>
-                <input id="trainOrg" class="toggleView input" type="text" autocomplete="off" name="activityName"
-                       style="width: 151px" placeholder="请输入活动名称"/>
-                <input type="hidden" name="orgFlow" id="orgFlow">
+
+        <div class="form_search">
+            <div class="form_item">
+                <div class="form_label">活动名称：</div>
+                <div class="form_content">
+                    <input id="trainOrg" class="toggleView input" type="text" autocomplete="off" name="activityName"
+                           style="width: 151px" placeholder="请输入活动名称"/>
+                    <input type="hidden" name="orgFlow" id="orgFlow">
+                </div>
             </div>
-            <div>
-                <label class="from_label">活动形式：</label>
-                <select name="inspectionType" id="inspectionType" class="select" style="width: 161px;">
-                    <option value="">全部</option>
-                    <c:forEach items="${activityTypeEnumList}" var="dict">
-                        <option value="${dict.id}" <c:if test="${param.speId eq dict.id}">selected</c:if>>${dict.name}</option>
-                    </c:forEach>
-                </select>
-            </div>
-            <div>
-                <label class="from_label">主讲人：</label>
-                <input id="teachName" class="toggleView input" type="text" autocomplete="off" name="teachName"
-                       style="width: 151px" placeholder="请输入主讲人"/>
+            <div class="form_item">
+                <div class="form_label">活动形式：</div>
+                <div class="form_content" >
+                    <select name="inspectionType" id="inspectionType" class="select" style="width: 161px;">
+                        <option value="">全部</option>
+                        <c:forEach items="${activityTypeEnumList}" var="dict">
+                            <option value="${dict.id}" <c:if test="${param.speId eq dict.id}">selected</c:if>>${dict.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
             </div>
 
-            <div>
-                <label class="from_label">活动开始时间：</label>
-                <input name="activityStartTime" id="activityStartTime" style="width: 151px;" placeholder="请选择活动开始时间"
-                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})"
-                   onchange="checkJointLocalStart()" value=""
-                   class="input"/>
-            </div>
 
-            <div>
-                <label class="from_label">活动结束时间：</label>
-                <input name="activityEndTime" id="activityEndTime" style="width: 151px;" placeholder="请选择活动结束时间"
+            <div class="form_item">
+                <div class="form_label" style="width: auto">活动开始时间：</div>
+                <div class="form_content" >
+                    <input name="activityStartTime" id="activityStartTime" style="width: 151px;" placeholder="请选择活动开始时间"
                        onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})"
                        onchange="checkJointLocalStart()" value=""
                        class="input"/>
-            </div>
-
-        </div>
-
-        <div id = "hideForm" style="margin-top: 15px; display: none; justify-content: flex-start" >
-            <label class="from_label">科室：</label>
-            <input type="hidden" id="deptFlow" name="deptFlow" value="${user.deptFlow}">
-            <input id="orgSel" class="toggleView input" type="text" style="width: 151px;/* background-image: url(<s:url value='/jsp/res/images/reorder_w.png'/>);*/ background-repeat: no-repeat;background-position: 127px -4px;" name="deptName" placeholder="请选择科室"
-                   value="${user.deptName}" autocomplete="off" title="${param.deptName}" onmouseover="this.title = this.value"/>
-            <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:35px;left:0px;">
-                <div id="boxHome" style="max-height: 250px;overflow: auto;border: 1px #ccc solid;background-color: white;margin-left: 46px; min-width: 159px;border-top: none;position: relative;display: none;">
-                    <c:forEach items="${deptList}" var="dept">
-                        <p class="item" flow="${dept.deptFlow}" value="${dept.deptName}" onclick="toDeptFlow('${dept.deptFlow}');" style="height: 30px;padding-left: 10px;text-align: left;">${dept.deptName}</p>
-                    </c:forEach>
                 </div>
             </div>
-        </div>
 
-        <div style="margin-top: 15px;margin-bottom: 15px">
-            <input class="btn_green" type="button"  value="查&#12288;询" onclick="toPage(1);"/>
-            <input class="btn_green" type="button"  value="导&#12288;出" onclick="exportHospitalSubject();"/>
-            <a style="color: #54B2E5;float: right" onclick="showOrHide()" id="open">展开</a>
+            <div class="form_item">
+                <div class="form_label" style="width: auto">活动结束时间：</div>
+                <div class="form_content" >
+                    <input name="activityEndTime" id="activityEndTime" style="width: 151px;" placeholder="请选择活动结束时间"
+                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})"
+                           onchange="checkJointLocalStart()" value=""
+                           class="input"/>
+                </div>
+            </div>
+
+            <div class="form_item form_item_hide">
+                <div class="form_label">主讲人：</div>
+                <div class="form_content" >
+                    <input id="teachName" class="toggleView input" type="text" autocomplete="off" name="teachName"
+                         style="width: 151px" placeholder="请输入主讲人"/>
+                </div>
+            </div>
+
+            <div class="form_item form_item_hide">
+                <div class="form_label">科&#12288;&#12288;室：</div>
+                <div class="form_content" >
+                    <input type="hidden" id="deptFlow" name="deptFlow" value="${user.deptFlow}">
+                    <input id="orgSel" class="toggleView input" type="text" style="width: 151px;/* background-image: url(<s:url value='/jsp/res/images/reorder_w.png'/>);*/ background-repeat: no-repeat;background-position: 127px -4px;" name="deptName" placeholder="请选择科室"
+                           value="${user.deptName}" autocomplete="off" title="${param.deptName}" onmouseover="this.title = this.value"/>
+                    <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:35px;left:0px;">
+                        <div id="boxHome" style="max-height: 250px;overflow: auto;border: 1px #ccc solid;background-color: white;margin-left: 46px; min-width: 159px;border-top: none;position: relative;display: none;">
+                            <c:forEach items="${deptList}" var="dept">
+                                <p class="item" flow="${dept.deptFlow}" value="${dept.deptName}" onclick="toDeptFlow('${dept.deptFlow}');" style="height: 30px;padding-left: 10px;text-align: left;">${dept.deptName}</p>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form_item" style="text-align: right">
+                <div class="form_label " style="width: auto;margin-left: 20px">
+                    <a style="color: #54B2E5;margin-right: 15px" onclick="showOrHide()" id="open">展开</a>
+                </div>
+                <div class="form_content">
+                   <input class="btn_green" type="button"  value="查&#12288;询" onclick="toPage(1);"/>
+                   <input class="btn_green" type="button"  value="导&#12288;出" onclick="exportHospitalSubject();"/>
+                </div>
+            </div>
+
         </div>
 
 <%--        <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">--%>

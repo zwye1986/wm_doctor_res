@@ -3,6 +3,7 @@
     <jsp:param name="bootstrapSelect" value="true"/>
 </jsp:include>
 <link rel="stylesheet" type="text/css" href="<s:url value='/jsp/jsres/css/exam.css'/>?v=${applicationScope.sysCfgMap['sys_version']}"></link>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="<s:url value='/js/itemSelect/itemSelect.js'/>"></script>
 <style type="text/css">
     .boxHome .item:HOVER {
@@ -59,6 +60,19 @@
         clear: both;
         height: 0;
     }
+    .bootstrap-select>.dropdown-toggle {
+        width: 161px;
+        padding-right: 25px;
+        /*border: 1px;*/
+        border: 1px solid #e7e7eb;
+    }
+    .btn-group.bootstrap-select {
+        margin: 0 !IMPORTANT;
+        width: 182px !important;
+        height: 30px;
+    }
+
+
 </style>
 <script type="text/javascript">
     (function ($) {
@@ -224,47 +238,63 @@
     <div class="div_search">
         <form id="searchForm" action="<s:url value="/jsres/manage/teacherList" />" method="post">
             <input type="hidden" name="currentPage" id="currentPage" value="${param.currentPage}">
-            <div style="float: left; margin-bottom: 18px">
-                <label class="td_left">科室名称</label>
-                <div style="display: inline-block">
-                    <input type="text" id="ksmc" name="deptName" value="${param.deptName}" class=" input" autocomplete="off"/>
-                    <input id="ksmcFlow" name="deptFlow" value="${param.deptFlow}" hidden="hidden"/>
-                    <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; left:0px; top:30px;">
-                        <div class="boxHome ksmc" id="ksmcSel"
-                             style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
-                            <c:forEach items="${sysDeptList}" var="dept">
-                                <p class="item ksmc" flow="${dept.deptFlow}" value="${dept.deptName}"
-                                   style="line-height: 25px; padding:0px 0;cursor: default;width: 100% ">${dept.deptName}</p>
-                            </c:forEach>
+
+
+             <div class="form_search">
+                 <div class="form_item">
+                    <div class="form_label">科室名称：</div>
+                    <div class="form_content">
+                        <input type="text" id="ksmc" name="deptName" value="${param.deptName}" class=" input" autocomplete="off"/>
+                        <input id="ksmcFlow" name="deptFlow" value="${param.deptFlow}" hidden="hidden"/>
+                        <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; left:0px; top:30px;">
+                            <div class="boxHome ksmc" id="ksmcSel"
+                                 style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
+                                <c:forEach items="${sysDeptList}" var="dept">
+                                    <p class="item ksmc" flow="${dept.deptFlow}" value="${dept.deptName}"
+                                       style="line-height: 25px; padding:0px 0;cursor: default;width: 100% ">${dept.deptName}</p>
+                                </c:forEach>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div style="float: left; margin-bottom: 18px">
-                <label class="td_left">姓名</label>
-                <input type="text" name="userName" value="${param.userName}" class="input" />
-            </div>
-            <div style="float: left; margin-bottom: 18px">
-                <label class="td_left">用户名</label>
-                <input type="text" name="userCode" value="${param.userCode}" class="input"  />
-            </div>
-            <div style="float: left; margin-bottom: 18px">
-                <label class="td_left">手机号</label>
-                <input type="text" name="userPhone" value="${param.userPhone}"  class="input"  />
-            </div>
-            <div style="float: left; margin-bottom: 18px">
-                <label class="td_left">证书编号</label>
-                <input type="text" name="certificateId" value="${param.certificateId}"  class="input" />
-            </div>
-            <div style="float: left; margin-bottom: 18px">
-                <label class="td_left">用户状态</label>
-                <select name="statusId" class="selectpicker" id="statusId">
-                    <option value="" >全部</option>
-                    <option value="${userStatusEnumActivated.id }" <c:if test='${param.statusId==userStatusEnumActivated.id or empty param.statusId}'>selected</c:if>>${userStatusEnumActivated.name}</option>
-                    <option value="${userStatusEnumLocked.id }" <c:if test='${param.statusId==userStatusEnumLocked.id}'>selected</c:if>>${userStatusEnumLocked.name}</option>
-                    <option value="${userStatusEnumSysLocked.id }" <c:if test='${param.statusId==userStatusEnumSysLocked.id}'>selected</c:if>>${userStatusEnumSysLocked.name}</option>
-                </select>
-            </div>
+                <div class="form_item">
+                    <div class="form_label">姓名：</div>
+                    <div class="form_content">
+                        <input type="text" name="userName" value="${param.userName}" class="input" />
+                    </div>
+                </div>
+                <div class="form_item">
+                    <div class="form_label">用户名：</div>
+                    <div class="form_content">
+                        <input type="text" name="userCode" value="${param.userCode}" class="input"  />
+                    </div>
+                </div>
+                <div class="form_item">
+                    <div class="form_label">手机号：</div>
+                    <div class="form_content">
+                        <input type="text" name="userPhone" value="${param.userPhone}"  class="input"  />
+                    </div>
+                </div>
+                <div class="form_item">
+                    <div class="form_label">证书编号：</div>
+                    <div class="form_content">
+                        <input type="text" name="certificateId" value="${param.certificateId}"  class="input" />
+                    </div>
+                </div>
+                <div class="form_item">
+                    <div class="form_label">用户状态：</div>
+                    <div class="form_content">
+                        <select name="statusId" class="selectpicker" id="statusId">
+                            <option value="" >全部</option>
+                            <option value="${userStatusEnumActivated.id }" <c:if test='${param.statusId==userStatusEnumActivated.id or empty param.statusId}'>selected</c:if>>${userStatusEnumActivated.name}</option>
+                            <option value="${userStatusEnumLocked.id }" <c:if test='${param.statusId==userStatusEnumLocked.id}'>selected</c:if>>${userStatusEnumLocked.name}</option>
+                            <option value="${userStatusEnumSysLocked.id }" <c:if test='${param.statusId==userStatusEnumSysLocked.id}'>selected</c:if>>${userStatusEnumSysLocked.name}</option>
+                        </select>
+                    </div>
+                </div>
+             </div>
+
+
             <div style="margin-top: 15px;margin-bottom: 15px">
                 <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
                 <input type="button" class="btn_green" onclick="editUser('')" value="新&#12288;增">

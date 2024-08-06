@@ -92,14 +92,14 @@
 
             <div style="display: flex;justify-content: flex-start; column-gap: 52px;margin-top: 15px">
                 <div>
-                    <label class="from_label">讲座日期：<input style="width: 100px;" type="text" name="lectureTrainStartDate" value="${param.lectureTrainStartDate}"
+                    <label class="form_label">讲座日期：<input style="width: 100px;" type="text" name="lectureTrainStartDate" value="${param.lectureTrainStartDate}"
                      id="lectureTrainStartDate" class="input"
                      readonly="readonly">至<input type="text" name="lectureTrainEndDate" value="${param.lectureTrainEndDate}"
                                                  style="width: 100px;" id="lectureTrainEndDate" class="input"
                                                  readonly="readonly"></label>
                 </div>
                 <div>
-                    <label class="from_label">讲座类型：<select name="lectureTypeId" class="select"onchange="search()" >
+                    <label class="form_label">讲座类型：<select name="lectureTypeId" class="select"onchange="search()" >
                         <option value="">全部</option>
                         <c:forEach items="${dictTypeEnumLectureTypeList}" var="dict">
                             <option value="${dict.dictId}"
@@ -108,10 +108,10 @@
                     </select></label>
                 </div>
                 <div>
-                    <label class="from_label">讲座标题：<input type="text" name="lectureContent"class="input" value="${param.lectureContent}" onchange="search();"/></label>
+                    <label class="form_label">讲座标题：<input type="text" name="lectureContent"class="input" value="${param.lectureContent}" onchange="search();"/></label>
                 </div>
                 <div>
-                    <label class="from_label">主讲人：<input type="text" name="lectureTeacherName"class="input" value="${param.lectureTeacherName}" onchange="search();"/></label>
+                    <label class="form_label">主讲人：<input type="text" name="lectureTeacherName"class="input" value="${param.lectureTeacherName}" onchange="search();"/></label>
                 </div>
             </div>
 
