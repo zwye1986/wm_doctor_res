@@ -235,7 +235,7 @@ public class JsResTeacherController extends GeneralController{
 	@RequestMapping(value="attendanceSearch/{roleId}")
 	public String attendanceSearch(Model model, Integer currentPage, @PathVariable String roleId, HttpServletRequest request,
 								   String schStartDate, String schEndDate, String deptFlow, String teacherName, String statueId,
-								   String studentName, String searchType, String kqType, String orgFlow, String datas[], String baseFlag){
+								   String studentName, String searchType, String kqType,  String orgFlow, String datas[], String baseFlag){
 		//查询本基地的协同基地
 		List<SysOrg> orgList=new ArrayList<>();
 		SysOrg doctorOrg=new SysOrg();

@@ -29,6 +29,8 @@ import nl.captcha.gimpy.DropShadowGimpyRenderer;
 import nl.captcha.text.producer.DefaultTextProducer;
 import nl.captcha.text.renderer.DefaultWordRenderer;
 import nl.captcha.text.renderer.WordRenderer;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.util.encoders.Hex;
 import org.docx4j.docProps.variantTypes.Array;
 import org.dom4j.DocumentException;
@@ -50,6 +52,7 @@ import java.net.URLEncoder;
 import java.security.interfaces.RSAPublicKey;
 import java.util.List;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/sys/user")
@@ -710,9 +713,24 @@ public class UserController extends GeneralController{
      * @return
      */
 	@RequestMapping(value={"/save4jsresteacher"},method=RequestMethod.POST)
-	public @ResponseBody String save4jsresteacher(SysUser user,String[] mulDeptFlow,String roleFlow){
+	public @ResponseBody String save4jsresteacher(SysUser user,String[] mulDeptFlow,String roleFlow, String[] userRoleList){
 		//新增用户是判断
 		if(StringUtil.isBlank(user.getUserFlow())){
+			// 判断用户phone是否存在
+			if(StringUtils.isNotEmpty(user.getUserPhone())) {
+				SysUser oldUser = userBiz.findByUserPhone(user.getUserPhone());
+				if(oldUser!=null){
+					//已结业的学员可用作师资账号
+					ResDoctor resDoctor = doctorBiz.readDoctor(oldUser.getUserFlow());
+					if(null == resDoctor || !"21".equals(resDoctor.getDoctorStatusId())){
+						return GlobalConstant.USER_PHONE_REPETE;
+					}
+					oldUser.setRecordStatus("N");
+					oldUser.setUserPhone(oldUser.getUserPhone() + "_x"); // 因为手机号不允许重复，这里把手机号做个标记
+					userBiz.edit(oldUser);
+				}
+			}
+
 			//判断用户id是否重复
 			SysUser old = userBiz.findByUserCode(user.getUserCode());
 			if(old!=null){
@@ -727,6 +745,14 @@ public class UserController extends GeneralController{
 			}
 
 		}else{
+			// 判断用户phone是否重复
+			if(StringUtils.isNotEmpty(user.getUserPhone())) {
+				SysUser oldUser = userBiz.findByUserPhoneNotSelf(user.getUserFlow(), user.getUserPhone());
+				if(oldUser!=null){
+					return GlobalConstant.USER_PHONE_REPETE;
+				}
+			}
+
 			String userFlow = user.getUserFlow();
 			//判断用户id是否重复
 			SysUser old = userBiz.findByUserCodeNotSelf(userFlow,user.getUserCode());
@@ -768,6 +794,38 @@ public class UserController extends GeneralController{
 		}else {
 			userBiz.disUserDept(user);
 		}
+		// 处理多角色选择
+		List<String> allUserRoles = new ArrayList<>();
+		if(userRoleList != null && userRoleList.length > 0) {
+			allUserRoles.addAll(Arrays.asList(userRoleList));
+		}
+		List<String> roleRangeList = new ArrayList<>();
+		String roleFlowRange = InitConfig.getSysCfg("res_teacher_role_flow");
+		if(StringUtils.isNotEmpty(roleFlowRange)) {
+			roleRangeList.add(roleFlowRange);
+		}
+		roleFlowRange = InitConfig.getSysCfg("res_head_role_flow");
+		if(StringUtils.isNotEmpty(roleFlowRange)) {
+			roleRangeList.add(roleFlowRange);
+		}
+		roleFlowRange = InitConfig.getSysCfg("res_secretary_role_flow");
+		if(StringUtils.isNotEmpty(roleFlowRange)) {
+			roleRangeList.add(roleFlowRange);
+		}
+		roleFlowRange = InitConfig.getSysCfg("res_teaching_head_role_flow");
+		if(StringUtils.isNotEmpty(roleFlowRange)) {
+			roleRangeList.add(roleFlowRange);
+		}
+		roleFlowRange = InitConfig.getSysCfg("res_teaching_secretary_role_flow");
+		if(StringUtils.isNotEmpty(roleFlowRange)) {
+			roleRangeList.add(roleFlowRange);
+		}
+		roleFlowRange = InitConfig.getSysCfg("res_hospitalLeader_role_flow");
+		if(StringUtils.isNotEmpty(roleFlowRange)) {
+			roleRangeList.add(roleFlowRange);
+		}
+		userRoleBiz.batchUpdateUserRoles(user.getUserFlow(), GlobalConstant.RES_WS_ID, allUserRoles, roleRangeList);
+
 		//打开app权限
 		String cfgCode = "jsres_teacher_app_login_"+user.getUserFlow();
 		String cfgValue = "Y";
@@ -787,6 +845,11 @@ public class UserController extends GeneralController{
 			setSessionAttribute(GlobalConstant.CURRENT_USER_NAME, user.getUserName());
 
 			setSessionAttribute(GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(currUser));
+
+			List<SysUserRole> currUserRoleList = userRoleBiz.getByUserFlowAndWsid(user.getUserFlow(), GlobalContext.getCurrentWsId());
+			List<String> currRoleFlowList = currUserRoleList.stream().map(vo -> vo.getRoleFlow()).collect(Collectors.toList());
+			setSessionAttribute(GlobalConstant.CURRENT_ROLE_LIST, currRoleFlowList);
+			setSessionAttribute(GlobalConstant.CURRENT_ROLE_LIST_BACKUP, currRoleFlowList);
 		}
 		return GlobalConstant.SAVE_SUCCESSED;
 	}

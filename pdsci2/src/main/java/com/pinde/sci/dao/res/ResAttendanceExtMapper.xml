@@ -835,6 +835,7 @@
             and  ja.ATTENDANCE_FLOW is null
         </if>
 
+
         <if test='statueId != null and statueId!=""' >
             and ja.ATTEND_STATUS=#{statueId}
         </if>

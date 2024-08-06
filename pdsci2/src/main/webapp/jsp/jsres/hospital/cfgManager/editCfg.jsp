@@ -82,7 +82,7 @@
             showCkshDetail(flag);
         }*/
     });
-    
+
     function tableShow(flag) {
         if(flag == "Y"){
             $("#detailList").show();
@@ -115,7 +115,7 @@
             $("#ckshList").hide();
         }
     }*/
-    
+
     function addDetailConfg() {
         var url = "<s:url value ='/jsres/cfgManager/addDetailConfg'/>";
         jboxOpen(url, "新增轮转科室出科限制配置", 500, 400);
@@ -125,7 +125,7 @@
         var url = "<s:url value ='/jsres/cfgManager/addCkxzConfg'/>";
         jboxOpen(url, "新增学员轮转年级、年份配置", 500, 340);
     }
-    
+
     function editDeptConfig(cfgFlow) {
         var url = "<s:url value ='/jsres/cfgManager/editDetailConfg'/>?cfgFlow="+cfgFlow;
         jboxOpen(url, "编辑轮转科室出科限制配置", 500, 340);
@@ -145,7 +145,7 @@
             },null,false);
         });
     }
-    
+
     function delDeptConfig(cfgFlow) {
         jboxConfirm("删除后配置为通用配置，确认删除?",function () {
             var url = "<s:url value='/jsres/cfgManager/delDeptConfig'/>?cfgFlow="+cfgFlow;

@@ -9,7 +9,7 @@
             <th width="12%">科室名称</th>
             <%--<th width="8%">证书编号</th>--%>
             <th width="8%">师资级别</th>
-            <th width="9%">手机号</th>
+            <th width="9%">手机号码</th>
             <th width="10%">角色</th>
             <th width="20%">操作</th>
         </tr>

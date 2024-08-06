@@ -53,6 +53,8 @@ function importUsers(){
 					window.parent.search();
 					jboxClose();
 				},2000);
+			}else{
+				jboxEndLoading();
 			}
 		},
 		null,false);
