@@ -89,6 +89,20 @@
             return content;
         }
 
+        function compare() {
+            return function (a, b) {
+                var value1 = a.standardDeptCode;
+                var value2 = b.standardDeptCode;
+                if(value1 > value2){
+                    return 1;
+                }else if(value1 < value2){
+                    return -1;
+                }else{
+                    return 0;
+                }
+            }
+        }
+
         function buildRotationTable(treeFlowMap) {
             var rotationForceData = []
             var rotationOptionData= [];
@@ -100,6 +114,10 @@
                     rotationOptionData.push(oneData);
                 }
             }
+
+            // 按code排个序
+            rotationForceData.sort(compare());
+            rotationOptionData.sort(compare());
 
             var html = '';
             for(var i = 0; i < rotationForceData.length; i++) {

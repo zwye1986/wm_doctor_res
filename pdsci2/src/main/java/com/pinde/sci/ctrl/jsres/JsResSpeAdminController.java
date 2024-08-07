@@ -1173,8 +1173,8 @@ public class JsResSpeAdminController extends GeneralController{
 					});
 				}
 
-				List<ResSpeBaseStdDeptVO> requiredList = resSpeBaseStdDeptVOList.stream().filter(vo -> "1".equals(vo.getRotationRequireStatus())).collect(Collectors.toList());
-				List<ResSpeBaseStdDeptVO> notRequiredList = resSpeBaseStdDeptVOList.stream().filter(vo -> "2".equals(vo.getRotationRequireStatus())).collect(Collectors.toList());
+				List<ResSpeBaseStdDeptVO> requiredList = resSpeBaseStdDeptVOList.stream().filter(vo -> "1".equals(vo.getRotationRequireStatus())).sorted(Comparator.comparing(ResSpeBaseStdDeptVO::getStandardDeptCode)).collect(Collectors.toList());
+				List<ResSpeBaseStdDeptVO> notRequiredList = resSpeBaseStdDeptVOList.stream().filter(vo -> "2".equals(vo.getRotationRequireStatus())).sorted(Comparator.comparing(ResSpeBaseStdDeptVO::getStandardDeptCode)).collect(Collectors.toList());
 
 
 				/*List<Map<String,String>> requiredList = deptCfgBiz.searchByLastRotationBySpe(orgFlow,speFlow,"Y");	//轮转科室

@@ -100,7 +100,19 @@ public class JsResDeptManagementController {
             }
         }
 
+        // 按code排个序
+        sortAllLevel(res);
+
         return res;
+    }
+
+    private void sortAllLevel(List<ResStandardDeptVO> res) {
+        Collections.sort(res, Comparator.comparing(ResStandardDept::getStandardDeptCode));
+        for (ResStandardDeptVO vo : res) {
+            if(CollectionUtils.isNotEmpty(vo.getSubStandardDeptList())) {
+                sortAllLevel(vo.getSubStandardDeptList());
+            }
+        }
     }
 
     @RequestMapping("deptSpeBaseMain")
