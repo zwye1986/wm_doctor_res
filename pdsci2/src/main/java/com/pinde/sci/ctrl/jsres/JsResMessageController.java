@@ -17,6 +17,7 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
+import com.pinde.sci.common.InitResConfig;
 import com.pinde.sci.dao.base.SysCfgMapper;
 import com.pinde.sci.enums.jsres.*;
 import com.pinde.sci.enums.res.RecDocCategoryEnum;
@@ -29,6 +30,8 @@ import com.pinde.sci.model.mo.*;
 import com.pinde.sci.util.jsres.ResultUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.dom4j.DocumentException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,6 +50,8 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/jsres/message")
 public class JsResMessageController extends GeneralController {
+
+    private final static Logger logger = LoggerFactory.getLogger(InitResConfig.class);
 
     @Autowired
     private IResScoreBiz resScoreBiz;
@@ -1164,6 +1169,7 @@ public class JsResMessageController extends GeneralController {
                 }
             }
         }
+        logger.debug("docRecWithBLOBs:" + JSON.toJSONString(docRecWithBLOBs));
         int result = jsResDoctorRecruitBiz.saveDoctorRecruit(docRecWithBLOBs);
         if(GlobalConstant.ZERO_LINE != result){
             return docRecWithBLOBs.getRecruitFlow();
