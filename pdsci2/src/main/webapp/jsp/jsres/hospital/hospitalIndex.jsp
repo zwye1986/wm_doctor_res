@@ -1549,9 +1549,9 @@
                                                     <tr>
                                                         <td align="left">
                                                             <p style="width:100%">
-                                                                <span style="float: left;font-weight: 900;width:33%">培训类别：</span>
-                                                                <span style="float: left;width:33%;text-align:center;">住院医师<br/>${doctorCountExtMap[key]["DoctorTrainingSpe"]}人</span>
-                                                                <span style="float: left;width:33%;text-align:center;">助理全科<br/>${doctorCountExtMap[key]["AssiGeneral"]}人</span>
+                                                                <span style="float: left;font-weight: 900;width:30%">培训类别：</span>
+                                                                <span style="float: left;width:35%;text-align:center;">住院医师<br/>${doctorCountExtMap[key]["DoctorTrainingSpe"]}人</span>
+                                                                <span style="float: left;width:35%;text-align:center;">助理全科<br/>${doctorCountExtMap[key]["AssiGeneral"]}人</span>
                                                             </p>
                                                         </td>
                                                     </tr>

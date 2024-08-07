@@ -24,6 +24,11 @@ function responsibleTeacherCfg(doctorFlow) {
 		line-height: auto;
 		text-align: left;
 	}
+
+	.btn {
+		padding: 0 6px !important;
+	}
+
 </style>
     <div class="search_table">
         <table border="0" cellpadding="0" cellspacing="0" class="grid">
@@ -35,11 +40,11 @@ function responsibleTeacherCfg(doctorFlow) {
 				<col width="12%" />
 				<col width="9%" />
 				<col width="9%" />
-				<%--<col width="10%" />--%>
+				<col width="9%" />
 				<c:if test="${not empty sessionScope.userListScope  && sessionScope.userListScope eq 'university'}">
 					<col width="15%" />
 				</c:if>
-				<col width="20%" />
+				<col style="min-width: 220px" />
 	        	</colgroup>
             <tr>
                 <th>姓名</th>
@@ -143,13 +148,13 @@ function responsibleTeacherCfg(doctorFlow) {
 						<c:if test="${sessionScope.userListScope == GlobalConstant.USER_LIST_GLOBAL}">
 							<div style="width: 100%;float:left;">
 								<span>
-									<a class="btn show" onclick="doctorPassedList('${doctor.doctorFlow}','${doctor.recruitFlow}');">详&#12288;&#12288;情
+									<a class="btn show" onclick="doctorPassedList('${doctor.doctorFlow}','${doctor.recruitFlow}');">详情
 									<c:if test="${sessionScope.userListScope == GlobalConstant.USER_LIST_GLOBAL}">
-										<a class="btn"  onclick="updateDoctorTrend('${doctor.recruitFlow}','${doctor.doctorFlow}');">更&#12288;&#12288;新</a>
+										<a class="btn"  onclick="updateDoctorTrend('${doctor.recruitFlow}','${doctor.doctorFlow}');">更新</a>
 									</c:if>
 									</a>
 									<c:if test="${sessionScope.userListScope == GlobalConstant.USER_LIST_LOCAL && doctor.orgFlow eq mainOrgFlow}" >
-										<a class="btn" onclick="doctorInfo('${doctor.doctorFlow}');">编&#12288;&#12288;辑</a>
+										<a class="btn" onclick="doctorInfo('${doctor.doctorFlow}');">编辑</a>
 									</c:if>
 									<!-- 培训基地 -->
 
@@ -160,13 +165,13 @@ function responsibleTeacherCfg(doctorFlow) {
 						<c:if test="${sessionScope.userListScope == GlobalConstant.USER_LIST_LOCAL}">
 							<div style="width: 100%;float:left;">
 								<span>
-									<a class="btn show" onclick="doctorPassedList('${doctor.doctorFlow}','${doctor.recruitFlow}');">详&#12288;&#12288;情
+									<a class="btn show" onclick="doctorPassedList('${doctor.doctorFlow}','${doctor.recruitFlow}');">详情
 									<c:if test="${sessionScope.userListScope == GlobalConstant.USER_LIST_LOCAL}">
-										<a  class="btn" onclick="updateDoctorTrend('${doctor.recruitFlow}','${doctor.doctorFlow}');">更&#12288;&#12288;新</a>
+										<a  class="btn" onclick="updateDoctorTrend('${doctor.recruitFlow}','${doctor.doctorFlow}');">更新</a>
 									</c:if>
 									</a>
 									<c:if test="${sessionScope.userListScope == GlobalConstant.USER_LIST_LOCAL && doctor.orgFlow eq mainOrgFlow}" >
-										<a class="btn" onclick="doctorInfo('${doctor.doctorFlow}');">编&#12288;&#12288;辑</a>
+										<a class="btn" onclick="doctorInfo('${doctor.doctorFlow}');">编辑</a>
 									</c:if>
 									<!-- 培训基地 -->
 
