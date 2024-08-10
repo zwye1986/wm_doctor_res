@@ -326,8 +326,6 @@
                     <input type="radio" name="sortType" value="Total"  id="radioAll" <c:if test="${param.sortType eq 'Total'}">checked</c:if> /><label style="margin: auto 0" for="radioAll">按总成绩</label>&#12288;
                 </div>
 
-                <a style="color: #54B2E5; margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
-
 
             </div>
 
@@ -394,6 +392,8 @@
                 <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
                 <input class="btn_green" type="button" value="一键审核" onclick="batchAuditOpt()"/>
                 <input class="btn_green" type="button" value="导&#12288;出" onclick="exportForDetail();"/>
+
+                <a style="color: #54B2E5; margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
             </div>
 
 

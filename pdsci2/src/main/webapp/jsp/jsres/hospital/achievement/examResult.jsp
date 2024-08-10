@@ -307,7 +307,7 @@ function showOrHide(){
 
                 </div>
 
-                <a style="color: #54B2E5; margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
+
             </div>
 
 
@@ -369,6 +369,8 @@ function showOrHide(){
                 <input class="btn_green" type="button" value="一键审核" onclick="batchAuditOpt()"/>
                 <input class="btn_green" type="button" value="成绩导入" onclick="impExamResult()"/>
                 <input class="btn_green" type="button" value="成绩导出" onclick="exportForDetail();"/>
+
+                <a style="color: #54B2E5; margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
 
             </div>
 

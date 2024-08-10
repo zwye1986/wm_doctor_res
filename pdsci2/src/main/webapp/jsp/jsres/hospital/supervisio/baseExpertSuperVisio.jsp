@@ -218,7 +218,7 @@
             <div  class="form_item form_item_hide">
                 <div class="form_label">督导得分：</div>
                 <div class="form_content">
-                    <input name="minManageScore" id="minManageScore" type="text" class="input" style="width: 62px;" value="">~<input id="maxManageScore" name="maxManageScore" type="text" class="input" style="width: 62px;" value="">
+                    <input name="minManageScore" id="minManageScore" type="text" class="input" style="width: 62px;" value=""> ~ <input id="maxManageScore" name="maxManageScore" type="text" class="input" style="width: 62px;" value="">
                 </div>
 
             </div>
@@ -236,7 +236,7 @@
 
             <div class="form_item" style="text-align: right">
                 <div class="form_label">
-                    <a style="color: #54B2E5;margin-right: 15px" onclick="showOrHide()" id="open">展开</a>
+                    <a style="color: #54B2E5;margin-right: 15px ; font-size: 14px" onclick="showOrHide()" id="open">展开</a>
                 </div>
                 <div class="form_content">
                     <input class="btn_green" type="button" onclick="toPage(1);"  value="查&#12288;询" />
