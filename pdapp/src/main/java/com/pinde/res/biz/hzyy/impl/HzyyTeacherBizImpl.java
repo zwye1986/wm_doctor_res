@@ -1,5 +1,6 @@
 package com.pinde.res.biz.hzyy.impl;
 
+import com.pinde.core.commom.enums.DeptStatusEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -9,7 +10,6 @@ import com.pinde.res.biz.hzyy.IHzyyTeacherBiz;
 import com.pinde.res.ctrl.upload.FileForm;
 import com.pinde.res.dao.hzyy.ext.HzyyStudentMapper;
 import com.pinde.res.dao.hzyy.ext.HzyyTeacherMapper;
-import com.pinde.res.enums.nfyy.DeptStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

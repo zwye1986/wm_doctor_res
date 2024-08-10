@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.commom.enums.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.res.biz.common.IResPowerCfgBiz;
@@ -12,10 +13,6 @@ import com.pinde.res.biz.jszy.IJszyAppBiz;
 import com.pinde.res.biz.jszy.IJszyResLiveTrainingBiz;
 import com.pinde.res.biz.jszy.IJszyStudentBiz;
 import com.pinde.res.biz.stdp.*;
-import com.pinde.res.enums.jszy.*;
-import com.pinde.res.enums.stdp.ResScoreTypeEnum;
-import com.pinde.res.enums.stdp.ResultEnum;
-import com.pinde.res.enums.stdp.UserSexEnum;
 import com.pinde.res.model.jszy.mo.AnnualAssessmentExt;
 import com.pinde.res.model.jszy.mo.ResGraduationAssessmentExt;
 import com.pinde.res.model.jszy.mo.UploadFileForm;
@@ -141,10 +138,6 @@ public class JszyStudentController {
             deptName = searchMap.get("deptName");
         }
 
-//		if(StringUtil.isBlank(statusId)){
-//			statusId = DeptStatusEnum.Entering.getId();
-//		}
-
         //组织查询条件
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("doctorFlow", userFlow);
@@ -182,17 +175,8 @@ public class JszyStudentController {
                 String endDate = (String) map.get("schEndDate");
                 //轮转中，结束时间为当前时间
                 String rotationStatus = (String) map.get("rotationStatus");
-//				if(RotationStatusEnum.Rounding.getId().equals(rotationStatus)) {
-//					endDate = DateUtil.getCurrDate();
-//					map.put("endDate",endDate);
-//				}
                 BigDecimal realMonth = BigDecimal.valueOf(0);
                 if (StringUtil.isNotBlank(startDate)) {
-                    //如果还未出科则没有实际出科时间便取当前时间
-//					if(!StringUtil.isNotBlank(endDate)){
-//						endDate = DateUtil.getCurrDate();
-//						map.put("endDate",endDate);
-//					}
                     //计算实际入科时间和实际结束时间之间的天数
                     long realDays = DateUtil.signDaysBetweenTowDate(endDate, startDate)+1;
                     if (realDays != 0) {
@@ -662,7 +646,7 @@ public class JszyStudentController {
 
                 BigDecimal realMonth = BigDecimal.valueOf(0);
                 if (StringUtil.isNotBlank(startDate)) {
-                    if (com.pinde.res.enums.jszy.SchUnitEnum.Week.getId().equals(unit)) {
+                    if (SchUnitEnum.Week.getId().equals(unit)) {
                         //如果是周按7天算/没配置或者选择月按30天
                         step = 7;
                         long realDays = DateUtil.signDaysBetweenTowDate(endDate,startDate)+1;
@@ -1028,19 +1012,19 @@ public class JszyStudentController {
                 String period = bean.get("lectureEvaPeriod");
                 String startDate = date.substring(0, 4) + date.substring(5, 7) + date.substring(8, 10) + time.substring(0, 2) + time.substring(3, 5) + "00";
                 int step = 0;
-                if (com.pinde.res.enums.jszy.SchUnitEnum.Hour.getId().equals(unitID)) {
+                if (SchUnitEnum.Hour.getId().equals(unitID)) {
                     step = Integer.parseInt(period);
                 }
-                if (com.pinde.res.enums.jszy.SchUnitEnum.Day.getId().equals(unitID)) {
+                if (SchUnitEnum.Day.getId().equals(unitID)) {
                     step = Integer.parseInt(period) * 24;
                 }
-                if (com.pinde.res.enums.jszy.SchUnitEnum.Week.getId().equals(unitID)) {
+                if (SchUnitEnum.Week.getId().equals(unitID)) {
                     step = Integer.parseInt(period) * 24 * 7;
                 }
-                if (com.pinde.res.enums.jszy.SchUnitEnum.Month.getId().equals(unitID)) {
+                if (SchUnitEnum.Month.getId().equals(unitID)) {
                     step = Integer.parseInt(period) * 24 * 30;
                 }
-                if (com.pinde.res.enums.jszy.SchUnitEnum.Year.getId().equals(unitID)) {
+                if (SchUnitEnum.Year.getId().equals(unitID)) {
                     step = Integer.parseInt(period) * 24 * 365;
                 }
                 String endDate = DateUtil.addHour(startDate, step);
@@ -2105,7 +2089,7 @@ public class JszyStudentController {
                 return "res/jszy/disciple/success";
             }
             model.addAttribute("userFlow", userFlow);
-            model.addAttribute("noteTypeId",NoteTypeEnum.FollowTeacherRecord.getId());
+            model.addAttribute("noteTypeId", NoteTypeEnum.FollowTeacherRecord.getId());
 
             return "redirect:/res/jszy/student/reFreshComMap";
         }else {

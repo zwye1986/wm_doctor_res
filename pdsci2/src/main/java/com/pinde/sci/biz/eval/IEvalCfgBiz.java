@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.eval;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.sci.model.mo.ExpertEvalCfg;
 import com.pinde.sci.model.mo.ExpertEvalResult;
-import com.pinde.sci.model.mo.SysDict;
 
 import java.util.List;
 import java.util.Map;

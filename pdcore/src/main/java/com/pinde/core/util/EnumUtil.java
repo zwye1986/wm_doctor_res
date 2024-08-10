@@ -1,6 +1,6 @@
 package com.pinde.core.util;
 
-import com.pinde.core.commom.GeneralEnum;
+import com.pinde.core.commom.enums.GeneralEnum;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;

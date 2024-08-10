@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.sch;
 
-import com.pinde.sci.model.mo.SysDict;
+import com.pinde.core.entyties.SysDict;
 
 public interface SchRotationExtendMapper {
     java.util.List<SysDict> selectDictDoctorTrainingSpe();

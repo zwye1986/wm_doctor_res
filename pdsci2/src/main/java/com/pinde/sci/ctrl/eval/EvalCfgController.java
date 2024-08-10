@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.eval;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.eval.IEvalCfgBiz;
@@ -10,7 +11,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.eval.ActionTypeEnum;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.ExpertEvalCfg;
-import com.pinde.sci.model.mo.SysDict;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

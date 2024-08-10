@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.Page;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;

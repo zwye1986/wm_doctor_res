@@ -3,7 +3,9 @@ package com.pinde.res.ctrl.hbres;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.commom.GeneralEnum;
+import com.pinde.core.commom.enums.GeneralEnum;
+import com.pinde.core.commom.enums.ResAssessTypeEnum;
+import com.pinde.core.commom.enums.ResRecTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -12,11 +14,7 @@ import com.pinde.res.biz.hbres.IHbresAppBiz;
 import com.pinde.res.biz.hbres.IHbresStudentBiz;
 import com.pinde.res.biz.hbres.IHbresTeacherBiz;
 import com.pinde.res.biz.stdp.*;
-import com.pinde.res.ctrl.hbres.ActivityImageFileForm;
-import com.pinde.res.enums.hbres.ResAssessTypeEnum;
-import com.pinde.res.enums.hbres.ResRecTypeEnum;
-import com.pinde.res.enums.stdp.ActivityTypeEnum;
-import com.pinde.res.enums.stdp.RegistryTypeEnum;
+import com.pinde.core.commom.enums.RegistryTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.DocumentException;
 import org.slf4j.Logger;
@@ -332,22 +330,6 @@ public class HbresTeacherController {
                     j++;
                     resRecCountMap.put(k2, j);
                 }
-//                if (ResRecTypeEnum.AfterEvaluation.getId().equals(resRec.getRecTypeId())) {
-//                    String dopsKey = map.get("processFlow") + "AfterEvaluation";
-//                    resRecMap.put(dopsKey, resRec);
-//                }
-//                if (ResRecTypeEnum.DOPS.getId().equals(resRec.getRecTypeId())) {
-//                    String dopsKey = map.get("processFlow") + "DOPS";
-//                    resRecMap.put(dopsKey, resRec);
-//                }
-//                if (ResRecTypeEnum.AfterSummary.getId().equals(resRec.getRecTypeId())) {
-//                    String dopsKey = map.get("processFlow") + "AfterSummary";
-//                    resRecMap.put(dopsKey, resRec);
-//                }
-//                if (ResRecTypeEnum.Mini_CEX.getId().equals(resRec.getRecTypeId())) {
-//                    String miniKey = map.get("processFlow") + "Mini_CEX";
-//                    resRecMap.put(miniKey, resRec);
-//                }
             }
             List<String> recTypeIds=new ArrayList<>();
             recTypeIds.add(ResRecTypeEnum.DOPS.getId());

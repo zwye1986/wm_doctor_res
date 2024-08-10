@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ExamResults;
 import com.pinde.sci.model.mo.ExamResultsExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ExamResultsMapper {
     int countByExample(ExamResultsExample example);

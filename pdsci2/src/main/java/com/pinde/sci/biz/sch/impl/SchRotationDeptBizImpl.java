@@ -2,6 +2,7 @@ package com.pinde.sci.biz.sch.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.EnumUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;

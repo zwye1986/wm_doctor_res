@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.commom.enums.OrgTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.INjResExamBiz;
@@ -10,7 +11,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.dao.base.SysOrgMapper;
 import com.pinde.sci.dao.jsres.SysUserJsresMapper;
-import com.pinde.sci.enums.gcp.GcpFundScaleEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.NjDocinfoExt;
 import org.apache.commons.collections4.CollectionUtils;
@@ -79,7 +79,7 @@ public class ResNjExamPrintController extends GeneralController{
         if(docinfo.getDocrole().equals("4")){//市级
             SysOrgExample sysOrgExample = new SysOrgExample();
             sysOrgExample.createCriteria().andOrgCityIdEqualTo(docinfo.getCityCode()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-                    .andOrgTypeIdEqualTo(GcpFundScaleEnum.Hospital.getId());
+                    .andOrgTypeIdEqualTo(OrgTypeEnum.Hospital.getId());
             List<SysOrg> sysOrgs = orgMapper.selectByExample(sysOrgExample);
             if(CollectionUtils.isEmpty(sysOrgs)){
                 model.addAttribute("extList",new ArrayList<>());

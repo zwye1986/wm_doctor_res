@@ -4,6 +4,7 @@ package com.pinde.res.ctrl.hbres;
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalConstant;
 import com.pinde.app.common.PasswordUtil;
+import com.pinde.core.commom.enums.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -13,13 +14,6 @@ import com.pinde.res.biz.hbres.IHbresAppBiz;
 import com.pinde.res.biz.hbres.IHbresStudentBiz;
 import com.pinde.res.biz.hbres.IHbresTeacherBiz;
 import com.pinde.res.biz.stdp.*;
-import com.pinde.res.enums.hbres.ResAssessTypeEnum;
-import com.pinde.res.enums.hbres.ResRecTypeEnum;
-import com.pinde.res.enums.hbres.SchUnitEnum;
-import com.pinde.res.enums.hbres.SigninTypeEnum;
-import com.pinde.res.enums.stdp.RegistryTypeEnum;
-import com.pinde.res.enums.stdp.ResultEnum;
-import com.pinde.res.enums.stdp.UserStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.util.PasswordHelper;
 import org.slf4j.Logger;
@@ -388,11 +382,6 @@ public class HbresAppController{
 
 				//将该用户的培训年限id转换为name
 				String trainingYears = doctor.getTrainingYears();
-//				if(StringUtil.isNotBlank(trainingYears)){
-//					trainingYears = TrainYearEnum.getNameById(trainingYears);
-//					doctor.setTrainingYears(trainingYears);
-//				}
-
 				model.addAttribute("doctor", doctor);
 
 				//出科考核对接判断

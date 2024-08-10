@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.sys;
 
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.portal.IPortalColumnManageBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
@@ -10,7 +11,10 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.sys.RoleLevelEnum;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.PortalColumn;
+import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.sci.model.mo.SysRole;
+import com.pinde.sci.model.mo.SysRoleAuthGx;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

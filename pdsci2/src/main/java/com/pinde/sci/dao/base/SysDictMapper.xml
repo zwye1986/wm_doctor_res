@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SysDictMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysDict" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.entyties.SysDict" >
     <id column="DICT_FLOW" property="dictFlow" jdbcType="VARCHAR" />
     <result column="DICT_TYPE_ID" property="dictTypeId" jdbcType="VARCHAR" />
     <result column="DICT_TYPE_NAME" property="dictTypeName" jdbcType="VARCHAR" />
@@ -118,7 +118,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysDict" >
+  <insert id="insert" parameterType="com.pinde.core.entyties.SysDict" >
     insert into PDSCI.SYS_DICT (DICT_FLOW, DICT_TYPE_ID, DICT_TYPE_NAME, 
       DICT_ID, DICT_NAME, DICT_DESC, 
       ORDINAL, RECORD_STATUS, CREATE_TIME, 
@@ -132,7 +132,7 @@
       #{dictIssys,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, 
       #{dictNameEn,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysDict" >
+  <insert id="insertSelective" parameterType="com.pinde.core.entyties.SysDict" >
     insert into PDSCI.SYS_DICT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="dictFlow != null" >
@@ -319,7 +319,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysDict" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.entyties.SysDict" >
     update PDSCI.SYS_DICT
     <set >
       <if test="dictTypeId != null" >
@@ -370,7 +370,7 @@
     </set>
     where DICT_FLOW = #{dictFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysDict" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.entyties.SysDict" >
     update PDSCI.SYS_DICT
     set DICT_TYPE_ID = #{dictTypeId,jdbcType=VARCHAR},
       DICT_TYPE_NAME = #{dictTypeName,jdbcType=VARCHAR},

@@ -2,7 +2,6 @@ package com.pinde.sci.biz.sch.impl;
 
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.core.util.XmlUtil;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResRotationOrgBiz;
 import com.pinde.sci.biz.sch.*;
@@ -11,7 +10,6 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.ctrl.res.ResDocController;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sch.SchRotationExtMapper;
 import com.pinde.sci.enums.res.RecDocCategoryEnum;
@@ -21,13 +19,9 @@ import com.pinde.sci.enums.sch.SchStageEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.SchRotationExample.Criteria;
 import org.apache.commons.collections4.CollectionUtils;
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -564,132 +558,6 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
 				.andRotationNameEqualTo(rotationName);
 		return rotationMapper.selectByExample(example);
-	}
-	@Override
-	public Map<String, Object> importRoationFromExcel(MultipartFile file) {
-		Map<String,Object> map=new HashMap<String, Object>();
-		try{
-			int rotationUpdateNumber=0;
-			int rotationInsertNumber=0;
-			int rotationDeptUpdateNumber=0;
-			int rotationDeptInsertNumber=0;
-			int rotationDeptGroupUpdateNumber=0;
-			int rotationDeptGroupInsertNumber=0;
-			int rotationDeptReqUpdateNumber=0;
-			int rotationDeptReqInsertNumber=0;
-			int dictDoctorTrainingSpeUpdateNumber=0;
-			int dictDoctorTrainingSpeInsertNumber=0;
-			int dictStandardDeptUpdateNumber=0;
-			int dictStandardDeptInsertNumber=0;
-			SAXReader reader = new SAXReader();
-			Document document = reader.read(file.getInputStream());
-			Element element=document.getRootElement();
-			List<Element> elementList=element.elements();
-			if (elementList!=null&&!elementList.isEmpty()) {
-				for (Element e : elementList) {
-					String name=e.getName();
-					List<Element> elements=e.elements();
-					Element listElement=null;
-					if (elements!=null && !elements.isEmpty()) {
-						listElement=elements.get(0);
-					}
-					if (listElement!=null) {
-						if (ResDocController.SchRotation.equals(name)) {
-							List<SchRotation> rotationList=XmlUtil.unmarshallerToT(listElement.asXML());
-							if (rotationList!=null && !rotationList.isEmpty()) {
-								for (SchRotation schRotation : rotationList) {
-									schRotation.setPublishFlag(GlobalConstant.FLAG_N);
-									int result=rotationMapper.updateByPrimaryKeySelective(schRotation);
-									rotationUpdateNumber+=result;
-									if (result==GlobalConstant.ZERO_LINE) {
-										rotationInsertNumber++;
-										rotationMapper.insertSelective(schRotation);
-									}
-								}
-							}
-						}else if(ResDocController.SchRotationDept.equals(name)){
-							List<SchRotationDept> rotationDeptList=XmlUtil.unmarshallerToT(listElement.asXML());
-							if (rotationDeptList!=null && !rotationDeptList.isEmpty()) {
-								for (SchRotationDept schRotatDeption : rotationDeptList) {
-									int result=schRotationDeptMapper.updateByPrimaryKeySelective(schRotatDeption);
-									rotationDeptUpdateNumber+=result;
-									if (result==GlobalConstant.ZERO_LINE) {
-										rotationDeptInsertNumber++;
-										schRotationDeptMapper.insertSelective(schRotatDeption);
-									}
-								}
-							}
-						}else if(ResDocController.SchRotationDeptGroup.equals(name)){
-							List<SchRotationGroup> SchRotationGroupList=XmlUtil.unmarshallerToT(listElement.asXML());
-							if (SchRotationGroupList!=null && !SchRotationGroupList.isEmpty()) {
-								for (SchRotationGroup SchRotationGroup : SchRotationGroupList) {
-									int result=rotationGroupMapper.updateByPrimaryKeySelective(SchRotationGroup);
-									rotationDeptGroupUpdateNumber+=result;
-									if (result==GlobalConstant.ZERO_LINE) {
-										rotationDeptGroupInsertNumber++;
-										rotationGroupMapper.insertSelective(SchRotationGroup);
-									}
-								}
-							}
-						}else if(ResDocController.SchRotationDeptReq.equals(name)){
-							List<SchRotationDeptReq> rotationDeptReqList=XmlUtil.unmarshallerToT(listElement.asXML());
-							if (rotationDeptReqList!=null && !rotationDeptReqList.isEmpty()) {
-								for (SchRotationDeptReq schRotatDeptReqion : rotationDeptReqList) {
-									int result=schRotationDeptReqMapper.updateByPrimaryKeySelective(schRotatDeptReqion);
-									rotationDeptReqUpdateNumber+=result;
-									if (result==GlobalConstant.ZERO_LINE) {
-										rotationDeptReqInsertNumber++;
-										schRotationDeptReqMapper.insertSelective(schRotatDeptReqion);
-									}
-								}
-							}
-						}else if(ResDocController.Dict.equals(name)){
-							for (Element dicte : elements) {
-								List<Element> dictElementList=dicte.elements();
-								Element dictElement=null;
-								if (dictElementList!=null && !dictElementList.isEmpty()) {
-									dictElement=dictElementList.get(0);
-								}
-								if (dictElement!=null) {
-									List<SysDict> dictList=XmlUtil.unmarshallerToT(dictElement.asXML());
-									for (SysDict sysDict : dictList) {
-										int result=sysDictMapper.updateByPrimaryKeySelective(sysDict);
-										if (sysDict.getDictTypeId().equals("DoctorTrainingSpe")) {
-											dictDoctorTrainingSpeUpdateNumber+=result;
-										}else if(sysDict.getDictTypeId().equals("StandardDept")){
-											dictStandardDeptUpdateNumber+=result;
-										}
-										if (result==GlobalConstant.ZERO_LINE) {
-											sysDictMapper.insertSelective(sysDict);
-											if (sysDict.getDictTypeId().equals("DoctorTrainingSpe")) {
-												dictDoctorTrainingSpeInsertNumber++;
-											}else if(sysDict.getDictTypeId().equals("StandardDept")){
-												dictStandardDeptInsertNumber++;
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			map.put("rotationUpdateNumber", rotationUpdateNumber);
-			map.put("rotationInsertNumber", rotationInsertNumber);
-			map.put("rotationDeptUpdateNumber", rotationDeptUpdateNumber);
-			map.put("rotationDeptInsertNumber", rotationDeptInsertNumber);
-			map.put("rotationDeptGroupUpdateNumber", rotationDeptGroupUpdateNumber);
-			map.put("rotationDeptGroupInsertNumber", rotationDeptGroupInsertNumber);
-			map.put("rotationDeptReqUpdateNumber", rotationDeptReqUpdateNumber);
-			map.put("rotationDeptReqInsertNumber", rotationDeptReqInsertNumber);
-			map.put("dictDoctorTrainingSpeUpdateNumber", dictDoctorTrainingSpeUpdateNumber);
-			map.put("dictDoctorTrainingSpeInsertNumber", dictDoctorTrainingSpeInsertNumber);
-			map.put("dictStandardDeptUpdateNumber", dictStandardDeptUpdateNumber);
-			map.put("dictStandardDeptInsertNumber", dictStandardDeptInsertNumber);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return map;
 	}
 
 	/**

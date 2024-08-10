@@ -1,7 +1,7 @@
 package com.pinde.sci.enums.nyzl;
 
 
-import com.pinde.core.commom.GeneralEnum;
+import com.pinde.core.commom.enums.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
 public enum NyzlStuSignEnum implements GeneralEnum<String> {

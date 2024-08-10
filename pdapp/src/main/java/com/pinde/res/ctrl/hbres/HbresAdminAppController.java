@@ -1,5 +1,6 @@
 package com.pinde.res.ctrl.hbres;
 
+import com.pinde.core.commom.enums.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -7,8 +8,6 @@ import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.hbres.IResInprocessInfoBiz;
 import com.pinde.res.biz.jswjw.*;
 import com.pinde.res.biz.stdp.IResSchProcessExpressBiz;
-import com.pinde.res.enums.jswjw.*;
-import com.pinde.res.enums.stdp.ResRecTypeEnum;
 import com.pinde.res.model.jswjw.mo.JsResDoctorOrgHistoryExt;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.DocumentException;

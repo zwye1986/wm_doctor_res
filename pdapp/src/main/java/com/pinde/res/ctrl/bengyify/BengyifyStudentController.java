@@ -10,7 +10,7 @@ import com.pinde.res.biz.bengyify.IBengyifyDoctorBiz;
 import com.pinde.res.biz.bengyify.IBengyifyStudentBiz;
 import com.pinde.res.biz.bengyify.IBengyifyTeacherBiz;
 import com.pinde.res.dao.bengyify.ext.BengyifyStudentMapper;
-import com.pinde.res.enums.bengyify.DeptStatusEnum;
+import com.pinde.core.commom.enums.DeptStatusEnum;
 import com.pinde.res.model.bengyify.mo.Activity;
 import com.pinde.res.model.bengyify.mo.Evaluation;
 import com.pinde.res.model.bengyify.mo.MedicalInfo;

@@ -2,6 +2,7 @@ package com.pinde.res.ctrl.jswjw;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.*;
+import com.pinde.core.commom.enums.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.res.biz.common.impl.DictBizImpl;
@@ -13,14 +14,9 @@ import com.pinde.res.biz.stdp.*;
 import com.pinde.res.dao.jswjw.ext.JsResPowerCfgExtMapper;
 import com.pinde.res.dao.jswjw.ext.JsResUserBalckListExtMapper;
 import com.pinde.res.dao.jswjw.ext.TempMapper;
-import com.pinde.res.enums.ezhupei.AfterRecTypeEnum;
-import com.pinde.res.enums.jswjw.SchUnitEnum;
-import com.pinde.res.enums.jswjw.TrainYearEnum;
-import com.pinde.res.enums.jswjw.*;
-import com.pinde.res.enums.jszy.JszyTrainCategoryEnum;
+import com.pinde.core.commom.enums.JszyTrainCategoryEnum;
 import com.pinde.res.enums.lcjn.DictTypeEnum;
 import com.pinde.res.enums.osca.*;
-import com.pinde.res.enums.stdp.*;
 import com.pinde.res.model.jswjw.mo.*;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
@@ -7349,79 +7345,18 @@ public class JswjwAppController {
                         }
 
                         if (doctor != null) {
-                            //判断基地是否是镇江地区的
-//                    SysOrg org = jswjwBiz.getOrg(doctor.getOrgFlow());
-//                    if (org != null) {
-//                        String cityId = org.getOrgCityId();
-//                        if (StringUtil.isNotBlank(cityId) && cityId.equals("321100")) {
-//                            model.addAttribute("isZJ", "Y");
-//                        }
-//                    }
-
-//						InputStream inputStream = PasswordUtil.class.getClassLoader().getResourceAsStream("cfg.properties");
-//						Properties prop = new Properties();
-//						try {
-//							prop.load(inputStream);
-//						} catch (IOException e) {
-//							logger.error(e.getMessage());
-//						}
-//						//未付费的学员除省人民外，其他人在配置时间内不得登录app
-//						if(!jssrmOrgFlow.equals(doctor.getOrgFlow())&&!"Y".equals(isChargeOrg)){
-//							String nowTime=DateUtil.transDateTime(DateUtil.getCurrentTime().substring(8,14), "HHmmss","HH:mm");
-//							String areaTime=prop.getProperty("login_area_time");
-//							if(StringUtil.isNotBlank(areaTime))
-//							{
-//								String[] areaTimes=areaTime.split(",");
-//								for(String time:areaTimes)
-//								{
-//									String startTime=time.split("-")[0];
-//									String endTime=time.split("-")[1];
-//									if(nowTime.compareTo(startTime)>=0&&nowTime.compareTo(endTime)<=0)
-//									{
-//										model.addAttribute("resultId", "30197");
-//										model.addAttribute("resultType", "各位学员，由于目前大量学员通过APP补填培训数据，影响培训基地审查效率。现将对部分学员APP应用进行错时访问限制，具体限制如下：学员报名期间，" +
-//												"每天上午8:00至11:30和下午14:00至17:00部分学员无法访问APP进行数据填写，其他时间段正常访问。" +
-//												"对此带来不便，敬请谅解！平台运维服务电话：4009996635/025-68581990/025-68581998!");
-//										return "res/jswjw/login";
-//									}
-//								}
-//							}
-//						}
-
                             if (!isAudited) {
                                 model.addAttribute("resultId", "30197");
                                 model.addAttribute("resultType", "请先等待培训信息审核通过!");
                                 return "res/jswjw/login";
                             }
-//						String isPassNotRecruit= prop.getProperty("isPassNotRecruit");
-//						if("Y".equals(isPassNotRecruit))
-//						{
-//							ResDoctorRecruit recruit=jswjwBiz.getNewRecruit(doctor.getDoctorFlow());
-//							if(!DateUtil.getYear().equals(recruit.getGraduationYear()))
-//							{
-//								model.addAttribute("resultId", "30197");
-//								model.addAttribute("resultType", "各位学员，由于目前大量学员通过APP补填培训数据，影响培训基地审查效率。现将对部分学员APP应用进行错时访问限制，具体限制如下：学员报名期间，" +
-//										"每天上午8:00至11:30和下午14:00至17:00部分学员无法访问APP进行数据填写，其他时间段正常访问。" +
-//										"对此带来不便，敬请谅解！平台运维服务电话：4009996635/025-68581990/025-68581998!");
-//								return "res/jswjw/login";
-//							}
-//						}
                             //学员app登录权限审核通过
                             String isAppStatus = jswjwBiz.getJsResCfgCheckByCode("jsres_doctor_app_login_" + userFlow);
                             if (!BaseStatusEnum.Passed.getId().equals(isAppStatus)) {
                                 model.addAttribute("resultId", "3010111");
                                 model.addAttribute("resultType", "你暂无权限使用,请联系培训基地管理员或学校培养部门！");
                                 return "res/jswjw/login";
-                            }/*
-                    if (!(GlobalConstant.FLAG_Y.equals(isAppFlag) && "Passed".equals(doctor.getCheckStatusId()))) {
-                        f = false;
-                    }
-                    if (!f) {
-                        model.addAttribute("resultId", "3010111");
-                        model.addAttribute("resultType", "你暂无权限使用,请联系培训基地管理员或学校培养部门！");
-                        return "res/jswjw/login";
-                    }*/
-//						List<ResRec> resRecList = jswjwBiz.searchByUserFlowAndTypeId(userinfo.getUserFlow(), ResRecTypeEnum.DoctorAuth.getId());
+                            }
                             int authCount = jswjwBiz.getDoctorAuth(userinfo.getUserFlow());
                             if (authCount > 0) {
                                 model.addAttribute("authFlag", "Y");
@@ -7432,7 +7367,6 @@ public class JswjwAppController {
                                 return "res/jswjw/login";
                             }
                             if (StringUtil.isNotBlank(doctor.getTrainingSpeId())) {
-//                        SchRotation rotation = null;
                                 String trainingType = doctor.getTrainingTypeId();
                                 //住院医师缩减调整
                                 boolean isReduction = false;
@@ -7443,26 +7377,13 @@ public class JswjwAppController {
                                     isReduction = isReduction && "2015".compareTo(sessionNumber) <= 0;
                                     isReduction = isReduction && (TrainYearEnum.OneYear.getId().equals(trainingYears) || TrainYearEnum.TwoYear.getId().equals(trainingYears));
 
-//                            trainingType = RecDocCategoryEnum.Doctor.getId();
                                 }
-                                // 助理全科单独处理
-//                        if(TrainCategoryEnum.AssiGeneral.getId().equals(trainingType) && "50".equals(doctor.getTrainingSpeId())){
-//                            rotation = jswjwBiz.searchAssiGeneralRoattion(trainingType, doctor.getTrainingSpeId(),doctor.getSessionNumber());
-//                        }else if (doctor.getSessionNumber().compareTo("2019") < 0) {
-//                            rotation = jswjwBiz.searchRoattionNew(trainingType, doctor.getTrainingSpeId());
-//                        } else {
-//                            //默认赋值学员方案
-//                            rotation = jswjwBiz.searchRoattion(trainingType, doctor.getTrainingSpeId());
-//                        }
 
                                 if (StringUtil.isBlank(doctor.getRotationFlow())) {
                                     model.addAttribute("resultId", "30195");
                                     model.addAttribute("resultType", "轮转方案未设置,请联系管理员!");
                                     return "res/jswjw/login";
                                 } else {
-//                            doctor.setRotationFlow(rotation.getRotationFlow());
-//                            doctor.setRotationName(rotation.getRotationName());
-//                            jswjwBiz.modifyDoctor(doctor);
 
                                     if (isReduction) {
 //                                Map<String, SchDoctorDept> doctorDeptMap = jswjwBiz.getReductionDeptMap(doctor.getDoctorFlow(), rotation.getRotationFlow());

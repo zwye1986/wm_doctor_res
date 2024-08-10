@@ -1,13 +1,13 @@
 package com.pinde.res.biz.sctcm120.impl;
 
 import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.commom.enums.ResRecTypeEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.sctcm120.ISctcm120KzrBiz;
 import com.pinde.res.dao.jswjw.ext.ResDoctorSchProcessExtMapper;
 import com.pinde.res.dao.jswjw.ext.SysUserExtMapper;
-import com.pinde.res.enums.sctcm120.ResRecTypeEnum;
-import com.pinde.res.enums.stdp.RecStatusEnum;
+import com.pinde.core.commom.enums.RecStatusEnum;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.*;
@@ -88,7 +88,7 @@ public class Sctcm120KzrBizImpl implements ISctcm120KzrBiz {
 			try {
 				Document document = DocumentHelper.parseText(content);
 				Element rootElement = document.getRootElement();
-				Element afterEvaluation = rootElement.element(GlobalConstant.RES_ROLE_SCOPE_MANAGER+ResRecTypeEnum.AfterEvaluation.getId());
+				Element afterEvaluation = rootElement.element(GlobalConstant.RES_ROLE_SCOPE_MANAGER+ ResRecTypeEnum.AfterEvaluation.getId());
 				if(afterEvaluation==null){
 					afterEvaluation = rootElement.element(GlobalConstant.RES_ROLE_SCOPE_HEAD+ResRecTypeEnum.AfterEvaluation.getId());
 				}

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.util.StringUtil;
-import com.pinde.res.enums.stdp.ResultEnum;
+import com.pinde.core.commom.enums.ResultEnum;
 
 @Controller
 @RequestMapping("/res/stdp")

@@ -4,6 +4,7 @@ package com.pinde.res.ctrl.jszy;
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalConstant;
 import com.pinde.app.common.PasswordUtil;
+import com.pinde.core.commom.enums.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -17,12 +18,6 @@ import com.pinde.res.biz.jszy.IJszyStudentBiz;
 import com.pinde.res.biz.jszy.IJszyTeacherBiz;
 import com.pinde.res.biz.sctcm120.ISctcm120AppBiz;
 import com.pinde.res.biz.stdp.*;
-import com.pinde.res.enums.jswjw.RecDocCategoryEnum;
-import com.pinde.res.enums.jszy.*;
-import com.pinde.res.enums.stdp.RecStatusEnum;
-import com.pinde.res.enums.stdp.ResScoreTypeEnum;
-import com.pinde.res.enums.stdp.ResultEnum;
-import com.pinde.res.enums.stdp.UserStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.util.PasswordHelper;
 import org.dom4j.DocumentException;
@@ -2697,19 +2692,19 @@ public class JszyAppController{
 				String period = bean.get("lectureEvaPeriod");
 				String startDate = date.substring(0,4)+date.substring(5,7)+date.substring(8,10)+time.substring(0,2)+time.substring(3,5)+"00";
 				int step = 0;
-				if(com.pinde.res.enums.jszy.SchUnitEnum.Hour.getId().equals(unitID)){
+				if(SchUnitEnum.Hour.getId().equals(unitID)){
 					step = Integer.parseInt(period);
 				}
-				if(com.pinde.res.enums.jszy.SchUnitEnum.Day.getId().equals(unitID)){
+				if(SchUnitEnum.Day.getId().equals(unitID)){
 					step = Integer.parseInt(period)*24;
 				}
-				if(com.pinde.res.enums.jszy.SchUnitEnum.Week.getId().equals(unitID)){
+				if(SchUnitEnum.Week.getId().equals(unitID)){
 					step = Integer.parseInt(period)*24*7;
 				}
-				if(com.pinde.res.enums.jszy.SchUnitEnum.Month.getId().equals(unitID)){
+				if(SchUnitEnum.Month.getId().equals(unitID)){
 					step = Integer.parseInt(period)*24*30;
 				}
-				if(com.pinde.res.enums.jszy.SchUnitEnum.Year.getId().equals(unitID)){
+				if(SchUnitEnum.Year.getId().equals(unitID)){
 					step = Integer.parseInt(period)*24*365;
 				}
 				String endDate = DateUtil.addHour(startDate,step);

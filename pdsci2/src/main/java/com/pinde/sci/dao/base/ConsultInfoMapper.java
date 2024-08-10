@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ConsultInfo;
 import com.pinde.sci.model.mo.ConsultInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ConsultInfoMapper {
     int countByExample(ConsultInfoExample example);

@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.sys.impl;
 
-import com.pinde.core.commom.GeneralEnum;
+import com.pinde.core.commom.enums.GeneralEnum;
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.pub.IMsgBiz;
 import com.pinde.sci.biz.res.IDiscipleBiz;

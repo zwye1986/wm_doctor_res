@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -30,7 +29,6 @@ import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.njmu2.INjmu2AppBiz;
 import com.pinde.res.biz.njmu2.INjmu2TeacherBiz;
-import com.pinde.res.enums.stdp.ResultEnum;
 
 @Controller
 @RequestMapping("/res/njmu2/teacher")

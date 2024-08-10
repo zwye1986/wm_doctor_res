@@ -4,10 +4,12 @@ package com.pinde.res.biz.jszy.impl;
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalConstant;
 import com.pinde.app.common.GlobalUtil;
+import com.pinde.core.commom.enums.ResAssessTypeEnum;
+import com.pinde.core.commom.enums.ResRecTypeEnum;
+import com.pinde.core.commom.enums.SigninTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
-import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.common.IResPowerCfgBiz;
 import com.pinde.res.biz.jszy.IJszyAppBiz;
@@ -21,9 +23,6 @@ import com.pinde.res.dao.jszy.ext.JszyResLectureInfoExtMapper;
 import com.pinde.res.dao.jszy.ext.JszySchDeptExtMapper;
 import com.pinde.res.dao.stdp.ext.StdpResRecExtMapper;
 import com.pinde.res.dao.stdp.ext.StdpSchArrangeResultExtMapper;
-import com.pinde.res.enums.jszy.ResAssessTypeEnum;
-import com.pinde.res.enums.jszy.ResRecTypeEnum;
-import com.pinde.res.enums.jszy.SigninTypeEnum;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.SysUserExample.Criteria;
@@ -1523,8 +1522,8 @@ public class JszyAppBizImpl implements IJszyAppBiz {
 	@Override
 	public List<DeptTeacherGradeInfo> searchAllGrade(String userFlow) {
 		List<String> recTypes = new ArrayList<String>();
-		recTypes.add(com.pinde.res.enums.stdp.ResRecTypeEnum.TeacherGrade.getId());
-		recTypes.add(com.pinde.res.enums.stdp.ResRecTypeEnum.DeptGrade.getId());
+		recTypes.add(com.pinde.core.commom.enums.ResRecTypeEnum.TeacherGrade.getId());
+		recTypes.add(com.pinde.core.commom.enums.ResRecTypeEnum.DeptGrade.getId());
 		DeptTeacherGradeInfoExample example = new DeptTeacherGradeInfoExample();
 		example.createCriteria().andOperUserFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
 				.andRecTypeIdIn(recTypes);

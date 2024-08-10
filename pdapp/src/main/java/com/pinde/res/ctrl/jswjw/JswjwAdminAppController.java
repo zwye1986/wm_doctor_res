@@ -1,23 +1,14 @@
 package com.pinde.res.ctrl.jswjw;
 
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.commom.enums.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.hbres.IResInprocessInfoBiz;
 import com.pinde.res.biz.jswjw.*;
-import com.pinde.res.biz.stdp.IResGradeBiz;
 import com.pinde.res.biz.stdp.IResSchProcessExpressBiz;
-import com.pinde.res.enums.hbres.ResAssessScoreTypeEnum;
-import com.pinde.res.enums.jswjw.*;
-import com.pinde.res.enums.stdp.RegistryTypeEnum;
-import com.pinde.res.enums.stdp.ResAssessTypeEnum;
-import com.pinde.res.enums.stdp.ResRecTypeEnum;
-import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.res.model.jswjw.mo.JsResDoctorOrgHistoryExt;
-import com.pinde.res.model.jswjw.mo.ResAssessCfgItemForm;
-import com.pinde.res.model.jswjw.mo.ResAssessCfgTitleForm;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.*;
 import org.slf4j.Logger;
@@ -28,15 +19,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller

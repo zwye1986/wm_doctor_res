@@ -1,6 +1,6 @@
 package com.pinde.app.common;
 
-import com.pinde.core.commom.GeneralEnum;
+import com.pinde.core.commom.enums.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
@@ -8,7 +8,7 @@ import com.pinde.core.util.XmlParse;
 import com.pinde.res.biz.stdp.ICfgBiz;
 import com.pinde.res.biz.stdp.IResGradeBiz;
 import com.pinde.res.dao.stdp.ext.CustomExtMapper;
-import com.pinde.res.enums.stdp.ResRecTypeEnum;
+import com.pinde.core.commom.enums.ResRecTypeEnum;
 import com.pinde.sci.model.mo.DeptTeacherGradeInfo;
 import org.dom4j.Element;
 
@@ -177,11 +177,7 @@ public class GlobalUtil {
         itemIdAttrCfg.add(ResRecTypeEnum.OperationRegistry.getId()+"operation_operName");
         itemIdAttrCfg.add(ResRecTypeEnum.SkillRegistry.getId()+"skill_operName");
 
-        sumItemMap = new HashMap<String, List<String>>();
-//		List<String> nodeNames = new ArrayList<String>();
-//		nodeNames.add("theoryTest");
-//		nodeNames.add("skillTest");
-//		sumItemMap.put(ResRecTypeEnum.AfterSummary.getId(),nodeNames);
+        sumItemMap = new HashMap();
     }
 
     public static Map<String,String> localCfgMap;
@@ -388,7 +384,7 @@ public class GlobalUtil {
     /**
      * 获取表单信息
      * @param recForm 使用的表单 (如:product、sczyfy...)
-     * @param recTypeId 登记类型ID  (ResRecTypeEnum.id  如：CaseRegistry...)
+     * @param recTypeId 登记类型ID
      * @param ver 使用的版本号
      * @return
      */

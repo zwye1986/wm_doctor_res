@@ -25,19 +25,6 @@ import java.util.List;
 public class SchController extends GeneralController{   
 	
 	private static Logger logger = LoggerFactory.getLogger(SchController.class);
-	
-	@Autowired
-	private ISchDoctorBiz schDoctortBiz;
-	@Autowired
-	private ISchRotationBiz schRotationtBiz;
-	@Autowired
-	private ISchRotationDeptBiz schRotationtDeptBiz;
-	@Autowired
-	private ISchRotationGroupBiz schRotationtGroupBiz;
-	@Autowired
-	private ISchDeptBiz schDeptBiz;
-	@Autowired
-	private ISchDoctorDeptBiz schDoctorDeptBiz;
 	@Autowired
 	private ISchArrangeBiz arrangeBiz;
 	
