@@ -105,7 +105,7 @@
             <systemPath>${lib.dir}/combinatoricslib-2.1.jar</systemPath>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>commons-beanutils-1.7.0</groupId>
             <artifactId>commons-beanutils-1.7.0</artifactId>
             <version>1.0</version>
@@ -224,7 +224,7 @@
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${lib.dir}/dom4j-1.6.1.jar</systemPath>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>druid-1.0.9</groupId>
@@ -433,14 +433,6 @@
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${lib.dir}/jsoup-1.9.2.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>jstl-1.2</groupId>
-            <artifactId>jstl-1.2</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/jstl-1.2.jar</systemPath>
         </dependency>
 
         <dependency>
