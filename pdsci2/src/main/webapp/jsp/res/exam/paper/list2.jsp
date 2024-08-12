@@ -34,7 +34,7 @@
     .grid th{ background:#f4f5f9; color:#222222;border-bottom:1px solid #e7e7eb;}
     .grid th,.grid td{ line-height:26px; height:40px; padding:0 5px;}
     .grid td{border:1px solid #e7e7eb;}
-    .grid td a{color:#459ae9;}
+    .grid td a{color:#3AA8E3;}
     .grid td a:hover{text-decoration:underline;}
 </style>
 </head>

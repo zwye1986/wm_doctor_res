@@ -33,7 +33,10 @@
         width: 5em;
         height: auto;
         line-height: auto;
-        text-align: right;
+    }
+    .searchTable .td_right{
+        width: 200px;
+        text-align:left;
     }
 </style>
 <script type="text/javascript"
@@ -71,7 +74,7 @@
 <div class="main_hd">
     <h2 class="underline">排班管理 — 排班安排</h2>
 </div>
-<div class="div_search" style="width: 95%;line-height:normal;">
+<div class="div_search" style="line-height:normal;">
     <form id="searchForm">
         <input type="hidden" id="currentPage" name="currentPage"/>
         <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
@@ -79,8 +82,8 @@
                 <td class="td_left">
                     <nobr>专&#12288;&#12288;业：</nobr>
                 </td>
-                <td>
-                    <select name="speId" id="speId" class="select" style="width: 181px;">
+                <td class="td_right">
+                    <select name="speId" id="speId" class="select" >
                         <option value="">全部</option>
                         <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
                             <option value="${dict.dictId}" ${param.speId eq dict.dictId?'selected':''}
@@ -93,8 +96,8 @@
                 <td class="td_left">
                     <nobr>轮转科室：</nobr>
                 </td>
-                <td>
-                    <select name="schDeptFlow" id="schDeptFlow" class="select" style="width: 181px;">
+                <td class="td_right">
+                    <select name="schDeptFlow" id="schDeptFlow" class="select" >
                         <option value="">全部</option>
                         <c:forEach items="${deptList}" var="d">
                             <option value="${d.deptFlow}" ${deptFlow eq d.deptFlow?'selected':''}>${d.deptName}</option>
@@ -104,30 +107,31 @@
                 <td class="td_left">
                     <nobr>姓&#12288;&#12288;名：</nobr>
                 </td>
-                <td>
-                    <input class="input" name="userName" style="width: 100px;margin-left: 0px;" value=""/>
+                <td class="td_right">
+                    <input class="input" name="userName"  value=""/>
                 </td>
-            </tr>
-            <tr>
+
                 <td class="td_left">
                     <nobr>开始时间：</nobr>
                 </td>
-                <td>
-                    <input name="schStartDate" id="schStartDate" style="margin-left: 0px;width: 175px;" placeholder="请选择开始时间"
+                <td class="td_right">
+                    <input name="schStartDate" id="schStartDate"  placeholder="请选择开始时间"
                            onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" onchange="checkTime();" value="" class="input">
                 </td>
                 <td class="td_left">
                     <nobr>结束时间：</nobr>
                 </td>
-                <td>
-                    <input name="schEndDate" id="schEndDate" style="margin-left: 0px;width: 175px;" placeholder="请选择开始时间"
+                <td class="td_right">
+                    <input name="schEndDate" id="schEndDate"  placeholder="请选择开始时间"
                            onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" onchange="checkTime();" value="" class="input">
                 </td>
+            </tr>
+            <tr>
                 <td>
                     <nobr>年&#12288;&#12288;份：</nobr>
                 </td>
-                <td>
-                    <input class="input" name="sessionNumber" id="sessionNumber" readonly="readonly" style="width: 100px;margin-left: 0px;"  value="${param.sessionNumber}"/>
+                <td class="td_right">
+                    <input class="input" name="sessionNumber" id="sessionNumber" readonly="readonly"  value="${param.sessionNumber}"/>
                 </td>
             </tr>
             <tr>
@@ -152,6 +156,6 @@
 
     </form>
 </div>
-<div id="doctorListZi" style="width: 95%">
+<div id="doctorListZi" style="padding: 0 30px;">
 
 </div>

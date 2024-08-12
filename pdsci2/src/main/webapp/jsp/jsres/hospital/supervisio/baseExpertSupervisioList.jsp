@@ -27,7 +27,7 @@
 </script>
 
 <c:if test="${empty list}">
-    <div class="search_table" style="width: 100%;padding: 0px 20px">
+    <div class="search_table" style="width: 100%;">
         <table border="0" cellpadding="0" cellspacing="0" class="grid">
             <tr>
                 <th>基地代码</th>
@@ -47,7 +47,8 @@
     </div>
 </c:if>
 <c:if test="${not empty list}">
-    <div class="main_bd clearfix" style="width: 100%;padding: 0px 20px">
+    <div class="main_bd clearfix" style="width: 100%;">
+        <div class="search_table">
         <table id="dataTable" border="0" cellpadding="0" cellspacing="0" class="grid">
             <thead>
             <tr>
@@ -105,10 +106,11 @@
             </c:forEach>
             </tbody>
         </table>
+        </div>
     </div>
 </c:if>
 
-<div class="page" style="text-align: center">
+<div class="page" style="text-align: right">
     <c:set var="pageView" value="${pdfn:getPageView(list)}" scope="request"></c:set>
     <pd:pagination-jsres toPage="toPage"/>
 </div>

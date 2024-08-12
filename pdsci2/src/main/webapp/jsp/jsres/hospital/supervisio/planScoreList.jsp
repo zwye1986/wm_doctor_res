@@ -140,7 +140,7 @@
 </script>
 
 <c:if test="${empty list}">
-    <div class="search_table" style="width: 100%;padding: 0px 20px">
+    <div class="search_table" style="width: 100%;">
         <table border="0" cellpadding="0" cellspacing="0" class="grid">
             <tr>
                 <th >基地代码</th>
@@ -157,7 +157,8 @@
     </div>
 </c:if>
 <c:if test="${not empty list}">
-    <div class="main_bd clearfix" style="width: 100%;padding: 0px 20px">
+    <div class="main_bd clearfix" style="width: 100%;">
+        <div class="div_search">
         <table id="dataTable" border="0" cellpadding="0" cellspacing="0" class="grid">
             <thead>
             <tr>
@@ -226,41 +227,42 @@
                     <td>
                         <c:if test="${roleFlag eq 'local' }">
                             <c:if test="${roleFlag eq 'local' }">
-                                <a class="btn_blue" style="width: 56px;color:white;margin-top: 4px" href="javascript:void(0);" onclick="setFeedback('${s.subjectFlow}','spe','Y','${s.speName}','${s.devTime}','${s.devTimeClose}','Y');">查看</a>
+                                <a  style="width: 56px;margin-top: 4px" href="javascript:void(0);" onclick="setFeedback('${s.subjectFlow}','spe','Y','${s.speName}','${s.devTime}','${s.devTimeClose}','Y');">查看</a>
                             </c:if>
                         </c:if>
                         <c:if test="${roleFlag eq 'baseExpert' || roleFlag eq 'expertLeader'}">
-                            <a class="btn_blue" style="width: 56px;color: white;" href="javascript:void(0);" onclick="setFeedback('${s.subjectFlow}','spe','','${s.speName}','${s.devTime}','${s.devTimeClose}','N');">自评反馈</a>
+                            <a  style="width: 56px;" href="javascript:void(0);" onclick="setFeedback('${s.subjectFlow}','spe','','${s.speName}','${s.devTime}','${s.devTimeClose}','N');">自评反馈</a>
                         </c:if>
                     </td>
                     <td>
-                        <a class="btn_blue" style="color: white" href="javascript:void(0);" onclick="showRecords('${s.subjectFlow}','${roleFlag}');">查看</a>
+                        <a  href="javascript:void(0);" onclick="showRecords('${s.subjectFlow}','${roleFlag}');">查看</a>
                     </td>
 
                     <td>
                             <%-- 基地可以评分和查看--%>
                         <c:if test="${roleFlag eq 'local' || roleFlag eq 'baseExpert' }">
-                            <a class="btn_blue" href="javascript:void(0);" style="width: 56px;margin-right: -100px;margin-top: -30px;color: white"
+                            <a href="javascript:void(0);" style="width: 56px;margin-right: -100px;margin-top: -30px;"
                                onclick="baseScore('${s.speId}','${s.orgFlow}','${userFlow}','${s.subjectFlow}','${s.devTime}','${s.devTimeClose}','${s.subjectYear}','${s.subjectActivitiFlows}');">自评</a>
-                            <a class="btn_blue" style="width: 56px;margin-top: 33px;color: white" href="javascript:void(0);" onclick="showPlanInfo('${s.speId}','${s.subjectFlow}','${roleFlag}');">查看评分</a>
+                            <a style="width: 56px;margin-top: 33px;" href="javascript:void(0);" onclick="showPlanInfo('${s.speId}','${s.subjectFlow}','${roleFlag}');">查看评分</a>
                         </c:if>
                             <%--专业专家：根据当前时间和项目评分的关闭时间判断是评分还是查看评分--%>
                         <c:if test="${(roleFlag ne 'baseExpert' || roleFlag eq 'expertLeader' || roleFlag eq 'management')&& s.closedTime>dateNow && (roleFlag ne 'local') }">
-                            <a class="btn_blue" href="javascript:void(0);"style="color: white"
+                            <a href="javascript:void(0);"
                                onclick="goScore('${s.speId}','${s.orgFlow}','${userFlow}','${s.subjectFlow}','${s.openTime}','${s.closedTime}','${s.subjectYear}','${s.subjectActivitiFlows}');">评分</a>
                         </c:if>
                         <c:if test="${(roleFlag eq 'expertLeader' || roleFlag eq 'management')&& (s.closedTime<dateNow)}">
-                            <a class="btn_blue" style="width: 56px;color: white" href="javascript:void(0);" onclick="showPlanInfo('${s.speId}','${s.subjectFlow}','${roleFlag}','${s.subjectActivitiFlows}');">查看评分</a>
+                            <a style="width: 56px;" href="javascript:void(0);" onclick="showPlanInfo('${s.speId}','${s.subjectFlow}','${roleFlag}','${s.subjectActivitiFlows}');">查看评分</a>
                         </c:if>
                     </td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
+        </div>
     </div>
 </c:if>
 
-<div class="page" style="text-align: center">
+<div class="page" style="text-align: right">
     <c:set var="pageView" value="${pdfn:getPageView(list)}" scope="request"></c:set>
     <pd:pagination-jsres toPage="toPage"/>
 </div>

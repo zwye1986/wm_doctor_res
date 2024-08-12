@@ -36,10 +36,15 @@
 
     .searchTable .td_left {
         word-wrap: break-word;
-        width: 5em;
+        /*width: 5em;*/
         height: auto;
         line-height: auto;
-        text-align: right;
+        /*text-align: right;*/
+    }
+
+    .searchTable .td_right{
+        width: 220px;
+        text-align:left;
     }
 </style>
 <script type="text/javascript">
@@ -235,15 +240,15 @@
 </div>
 
 <div class="main_bd" id="div_table_0">
-    <div class="div_search" style="width: 95%;line-height:normal;">
+    <div class="div_search" style="line-height:40px;">
         <form id="searchForm">
             <input type="hidden" id="currentPage" name="currentPage" value="${param.currentPage}">
             <input type="hidden" id="orgTypeFlag" value=""/>
             <input type="hidden" id="roleId" name="roleId" value="${param.roleId}"/>
-            <table class="searchTable" style="width:100%;border-collapse:separate; border-spacing:0px 10px;">
+            <table class="searchTable" style="border-collapse:separate; border-spacing:0px 10px;">
                     <tr>
                         <td class="td_left">培训基地：</td>
-                        <td>
+                        <td class="td_right">
                             <c:set var="orgName" value=""/>
                             <c:forEach items="${orgs}" var="org">
                                 <c:if test="${param.orgFlow==org.orgFlow }">
@@ -252,7 +257,7 @@
                             </c:forEach>
                             <input id="trainOrg" oncontextmenu="return false" class="toggleView input" type="text"
                                    value="${orgName}" autocomplete="off" onkeydown="changeStatus();"
-                                   onkeyup="changeStatus();" style="width: 100px;"/>
+                                   onkeyup="changeStatus();" />
                             <div id="pDiv"
                                  style="width: 0px;height: 0px;overflow: visible;float: left; position:relative;left :0px;top:30px;">
                                 <div class="boxHome trainOrg" id="trainOrgSel"
@@ -274,13 +279,13 @@
                             </div>
                         </td>
                         <td class="td_left">年&#12288;&#12288;级：</td>
-                        <td>
+                        <td class="td_right">
                             <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}"
-                                   readonly="readonly" class="input" style="width: 100px;"/>
+                                   readonly="readonly" class="input" />
                         </td>
                         <td class="td_left">培训类别：</td>
-                        <td>
-                            <select name="trainingTypeId" id="trainingTypeId" class="select" style="width: 107px;"
+                        <td class="td_right">
+                            <select name="trainingTypeId" id="trainingTypeId" class="select"
                                     onchange="changeTrainSpes('1')">
                                 <option value="DoctorTrainingSpe">住院医师</option>
                                 <%--<option value="">请选择</option>
@@ -291,18 +296,19 @@
                             </select>
                         </td>
                         <td class="td_left">培训专业：</td>
-                        <td>
-                            <select name="trainingSpeId" id="trainingSpeId" class="select" style="width: 107px;">
+                        <td class="td_right">
+                            <select name="trainingSpeId" id="trainingSpeId" class="select" >
                                 <option value="">全部</option>
                             </select>
                         </td>
+
+                        <td class="td_left">姓&#12288;&#12288;名：</td>
+                        <td >
+                            <input type="text" name="userName" class="input" value="${param.userName}"
+                                   />
+                        </td>
                     </tr>
                     <tr>
-                        <td class="td_left">姓&#12288;&#12288;名：</td>
-                        <td>
-                            <input type="text" name="userName" class="input" value="${param.userName}"
-                                   style="width: 100px;"/>
-                        </td>
                         <td class="td_left">人员类型：</td>
                         <td colspan="3">
                             <c:forEach items="${jsResDocTypeEnumList}" var="type">
@@ -311,6 +317,9 @@
                                 <c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>
                             </c:forEach>
                         </td>
+
+                    </tr>
+                    <tr>
                         <td colspan="2">
                             <input class="btn_green" style="margin-left: 0px;" type="button" value="查&#12288;询"
                                    onclick="toPage();"/>&#12288;

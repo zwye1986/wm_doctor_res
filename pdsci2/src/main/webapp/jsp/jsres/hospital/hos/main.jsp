@@ -81,7 +81,7 @@ function commuHospital(){
 		<input type="hidden" id="resBase" value="${resBase.orgFlow}"/>
 	</form>
 	<c:if test="${GlobalConstant.FLAG_Y != param.viewFlag}">
-	    <h2>基地信息管理</h2>
+	    <h2 class="underline">基地信息管理</h2>
     </c:if>
 </div>
 <div class="main_bd" id="div_table_0" >

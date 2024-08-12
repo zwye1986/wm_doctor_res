@@ -239,9 +239,9 @@
 			<table style="width:100%">
 				<tr>
 					<c:if test="${'1' eq hasJointOrg}">
-						<td style="text-align: right">培训基地：</td>
-						<td>
-							<input id="trainOrg" oncontextmenu="return false"  class="toggleView input" type="text" autocomplete="off" style="margin-left: 0px;width: 130px"  onkeydown="changeStatus();" onkeyup="changeStatus();" />
+						<td class="td_left">培训基地：</td>
+						<td class="td_right">
+							<input id="trainOrg" oncontextmenu="return false"  class="toggleView input" type="text" autocomplete="off"  onkeydown="changeStatus();" onkeyup="changeStatus();" />
 							<div id="pDiv" style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:30px;">
 								<div class="boxHome trainOrg" id="trainOrgSel" style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 140px;border-top: none;position: relative;display:none;">
 									<c:forEach items="${orgs}" var="org">
@@ -254,9 +254,9 @@
 							</div>
 						</td>
 					</c:if>
-					<td style="text-align: right">排&#12288;&#12288;序：</td>
-					<td>
-						<select name="sort"  style="width: 136px" class="select" >
+					<td class="td_left">排&#12288;&#12288;序：</td>
+					<td class="td_right">
+						<select name="sort"   class="select" >
 							<option value="">全部</option>
 							<option value="completeBidesc">完成比例从高到低</option>
 							<option value="completeBiasc">完成比例从低到高</option>
@@ -264,7 +264,23 @@
 							<option value="auditBiasc">审核比例从低到高</option>
 						</select>
 					</td>
-					<td style="text-align: right">人员类型：</td>
+
+					<td class="td_left">培训类别：</td>
+					<td class="td_right">
+						<select name="trainingTypeId" id="trainingTypeId" class="select"   onchange="changeTrainSpes('1')">
+<%--							<option value="">请选择</option>--%>
+							<option value="DoctorTrainingSpe" <c:if test="${param.trainingTypeId=='DoctorTrainingSpe'}">selected="selected"</c:if>>住院医师</option>
+							<option value="AssiGeneral" <c:if test="${param.trainingTypeId=='AssiGeneral'}">selected="selected"</c:if>>助理全科</option>
+						</select>
+					</td>
+					<td class="td_left">培训专业：</td>
+					<td class="td_right">
+						<select name="trainingSpeId" id="trainingSpeId" class="select" >
+							<option value="">全部</option>
+						</select>
+					</td>
+
+					<td class="td_left">人员类型：</td>
 					<td colspan="3">
 						<c:forEach items="${jsResDocTypeEnumList}" var="type">
 							<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" checked/>${type.name}&nbsp;</label>
@@ -276,34 +292,21 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="text-align: right">培训类别：</td>
-					<td>
-						<select name="trainingTypeId" id="trainingTypeId" class="select" style="width: 136px"  onchange="changeTrainSpes('1')">
-<%--							<option value="">请选择</option>--%>
-							<option value="DoctorTrainingSpe" <c:if test="${param.trainingTypeId=='DoctorTrainingSpe'}">selected="selected"</c:if>>住院医师</option>
-							<option value="AssiGeneral" <c:if test="${param.trainingTypeId=='AssiGeneral'}">selected="selected"</c:if>>助理全科</option>
-						</select>
+					<td class="td_left">年&#12288;&#12288;级：</td>
+					<td class="td_right">
+						<input type="text" id="sessionNumber" name="sessionNumber"value="${pdfn:getCurrYearByMonth()}"   class="input" readonly="readonly"/>
 					</td>
-					<td style="text-align: right">培训专业：</td>
-					<td>
-						<select name="trainingSpeId" id="trainingSpeId" style="width: 136px" class="select" >
-							<option value="">全部</option>
-						</select>
-					</td>
-					<td style="text-align: right">年&#12288;&#12288;级：</td>
-					<td>
-						<input type="text" id="sessionNumber" name="sessionNumber"value="${pdfn:getCurrYearByMonth()}"  style="width: 130px;margin-left: 0px;" class="input" readonly="readonly"/>
+					<td class="td_left">姓&#12288;&#12288;名：</td>
+					<td class="td_right"><input type="text" name="userName" class="input" /></td>
+					<td class="td_left">证&nbsp;件&nbsp;号：</td>
+					<td class="td_right"><input type="text" name="idNo" value="${param.idNo}" class="input" /></td>
+					<td class="td_left">结业考核年份：</td>
+					<td class="td_right">
+						<input type="text" id="graduationYear" name="graduationYear" class="input" readonly="readonly"  />&#12288;
 					</td>
 				</tr>
 				<tr>
-					<td style="text-align: right">姓&#12288;&#12288;名：</td>
-					<td><input type="text" name="userName" class="input"  style="width: 130px;margin-left: 0px;"/></td>
-					<td style="text-align: right">证&nbsp;件&nbsp;号：</td>
-					<td><input type="text" name="idNo" value="${param.idNo}" class="input" style="width: 130px;margin-left: 0px;"/></td>
-					<td style="text-align: right">结业考核年份：</td>
-					<td>
-						<input type="text" id="graduationYear" name="graduationYear" class="input" readonly="readonly"  style="width: 130px;margin-left: 0px;"/>&#12288;
-					</td>
+
 					<td></td>
 					<td><input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/></td>
 					<td><input class="btn_green" type="button" value="导&#12288;出" onclick="daochu();"/></td>

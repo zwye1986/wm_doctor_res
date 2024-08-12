@@ -15,8 +15,9 @@ border-radius: 3px;
 -moz-border-radius: 3px;
 -webkit-border-radius: 3px;
 font-size: 14px;
-border-width: 1px;
-border-style: solid;
+border: 0;
+/*border-width: 1px;*/
+/*border-style: solid;*/
 cursor: pointer;
 }
 .blue-btn{ background:#44b549; border: 1px solid #3ea543; color:#fff;}

@@ -82,7 +82,7 @@
 <%--<div class="main_hd">
     <h2 class="underline">医院基地自评</h2>
 </div>--%>
-<div class="div_search" style="width: 95%;line-height:normal;">
+<div class="div_search" >
     <form id="searchForm">
         <input type="hidden" id="currentPage" name="currentPage"/>
         <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
@@ -95,12 +95,12 @@
                            value="${param.sessionNumber==null?pdfn:getCurrYear():param.sessionNumber}"/>
                 </td>
                 <td colspan="2">
-                    <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>&#12288;
+                    <input class="btn_green" style=" margin-right: 0px !important;float: right" type="button" value="查&#12288;询" onclick="toPage(1);"/>
                 </td>
             </tr>
         </table>
     </form>
 </div>
-<div id="doctorListZi" style="width: 95%">
+<div id="doctorListZi">
 
 </div>

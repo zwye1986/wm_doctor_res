@@ -89,29 +89,57 @@
     <div class="div_search">
         <form id="searchForm">
             <input id="currentPage" type="hidden" name="currentPage" value=""/>
-            讲座日期：<input type="text" name="lectureTrainStartDate" value="${param.lectureTrainStartDate}"
-                        style="width: 100px;" id="lectureTrainStartDate" class="input"
-                         readonly="readonly">至<input type="text" name="lectureTrainEndDate" value="${param.lectureTrainEndDate}"
-                                                     style="width: 100px;" id="lectureTrainEndDate" class="input"
-                                                     readonly="readonly">
-            讲座类型：<select name="lectureTypeId" class="select"onchange="search()" style="width: 100px">
-            <option value="">全部</option>
-            <c:forEach items="${dictTypeEnumLectureTypeList}" var="dict">
-                <option value="${dict.dictId}"
-                        <c:if test="${dict.dictId eq param.lectureTypeId}">selected</c:if>> ${dict.dictName}</option>
-            </c:forEach>
-        </select>
-            &nbsp;讲座标题：<input type="text" name="lectureContent"class="input" value="${param.lectureContent}" onchange="search();"
-                        style="width: 100px;">
-            主讲人：<input type="text" name="lectureTeacherName"class="input" value="${param.lectureTeacherName}" onchange="search();"
-                       style="width: 100px;">
-            &nbsp;
-            &#12288;
-            <input type="button" class="btn_green" value="查&#12288;询" onclick="search()">
-            <input type="button" class="btn_green" value="新&#12288;增" onclick="detail('')">
-            <c:if test="${sessionScope.userListScope == GlobalConstant.USER_LIST_LOCAL}">
-                <input type="button" class="btn_green" value="导&#12288;出" onclick="exportExcel()">
-            </c:if>
+
+            <div style="display: flex;justify-content: flex-start; column-gap: 52px;margin-top: 15px">
+                <div>
+                    <label class="form_label">讲座日期：<input style="width: 100px;" type="text" name="lectureTrainStartDate" value="${param.lectureTrainStartDate}"
+                     id="lectureTrainStartDate" class="input"
+                     readonly="readonly">至<input type="text" name="lectureTrainEndDate" value="${param.lectureTrainEndDate}"
+                                                 style="width: 100px;" id="lectureTrainEndDate" class="input"
+                                                 readonly="readonly"></label>
+                </div>
+                <div>
+                    <label class="form_label">讲座类型：<select name="lectureTypeId" class="select"onchange="search()" >
+                        <option value="">全部</option>
+                        <c:forEach items="${dictTypeEnumLectureTypeList}" var="dict">
+                            <option value="${dict.dictId}"
+                                    <c:if test="${dict.dictId eq param.lectureTypeId}">selected</c:if>> ${dict.dictName}</option>
+                        </c:forEach>
+                    </select></label>
+                </div>
+                <div>
+                    <label class="form_label">讲座标题：<input type="text" name="lectureContent"class="input" value="${param.lectureContent}" onchange="search();"/></label>
+                </div>
+                <div>
+                    <label class="form_label">主讲人：<input type="text" name="lectureTeacherName"class="input" value="${param.lectureTeacherName}" onchange="search();"/></label>
+                </div>
+            </div>
+
+<%--            讲座日期：<input type="text" name="lectureTrainStartDate" value="${param.lectureTrainStartDate}"--%>
+<%--                        style="width: 100px;" id="lectureTrainStartDate" class="input"--%>
+<%--                         readonly="readonly">至<input type="text" name="lectureTrainEndDate" value="${param.lectureTrainEndDate}"--%>
+<%--                                                     style="width: 100px;" id="lectureTrainEndDate" class="input"--%>
+<%--                                                     readonly="readonly">--%>
+<%--            讲座类型：<select name="lectureTypeId" class="select"onchange="search()" style="width: 100px">--%>
+<%--            <option value="">全部</option>--%>
+<%--            <c:forEach items="${dictTypeEnumLectureTypeList}" var="dict">--%>
+<%--                <option value="${dict.dictId}"--%>
+<%--                        <c:if test="${dict.dictId eq param.lectureTypeId}">selected</c:if>> ${dict.dictName}</option>--%>
+<%--            </c:forEach>--%>
+<%--        </select>--%>
+<%--            &nbsp;讲座标题：<input type="text" name="lectureContent"class="input" value="${param.lectureContent}" onchange="search();"--%>
+<%--                        style="width: 100px;">--%>
+<%--            主讲人：<input type="text" name="lectureTeacherName"class="input" value="${param.lectureTeacherName}" onchange="search();"--%>
+<%--                       style="width: 100px;">--%>
+<%--            &nbsp;--%>
+
+            <div style="margin-top: 15px;margin-bottom: 15px">
+                <input type="button" class="btn_green" value="查&#12288;询" onclick="search()">
+                <input type="button" class="btn_green" value="新&#12288;增" onclick="detail('')">
+                <c:if test="${sessionScope.userListScope == GlobalConstant.USER_LIST_LOCAL}">
+                    <input type="button" class="btn_green" value="导&#12288;出" onclick="exportExcel()">
+                </c:if>
+            </div>
         </form>
 
 
@@ -126,8 +154,8 @@
                 <th style="width: 20%;">讲座标题</th>
                 <th style="width: 10%;">讲座地点</th>
                 <th style="width: 10%;">主讲人</th>
-                <th style="width: 15%;">评价视图</th>
-                <th style="width: 10%;">操作</th>
+                <th style="width: 13%;">评价视图</th>
+                <th style="width: 12%;">操作</th>
             </tr>
             <c:forEach items="${lectureInfos}" var="lecture" varStatus="s">
                 <tr>

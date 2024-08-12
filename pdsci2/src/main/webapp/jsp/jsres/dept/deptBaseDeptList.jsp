@@ -17,8 +17,8 @@
                 <td>${dept.standardDeptName}</td>
                 <td>
                     <c:if test="${dept.recordStatus == GlobalConstant.RECORD_STATUS_Y }">
-                        <c:if test="${empty dept.standardDeptFlow}"><a onclick="relStdDept('${dept.deptFlow}');" class="btn">未关联</a></c:if>
-                        <c:if test="${not empty dept.standardDeptFlow}"><a onclick="relStdDept('${dept.deptFlow}');" class="btn">已关联</a></c:if>
+                        <c:if test="${empty dept.standardDeptFlow}"><a onclick="relStdDept('${dept.deptFlow}');" >未关联</a></c:if>
+                        <c:if test="${not empty dept.standardDeptFlow}"><a onclick="relStdDept('${dept.deptFlow}');">已关联</a></c:if>
                     </c:if>
                     <c:if test="${dept.recordStatus == GlobalConstant.RECORD_STATUS_N }">
                         <c:if test="${empty dept.standardDeptFlow}">未关联</c:if>
@@ -27,13 +27,13 @@
                 </td>
                 <td>
                     <c:if test="${dept.recordStatus == GlobalConstant.RECORD_STATUS_Y }">
-                        <a onclick="editDept('${dept.deptFlow}');" class="btn" style="margin: 3px">编辑</a>
-                        <a onclick="editSave('toggleStatus', {recordStatus: 'N'});" class="btn" style="margin: 3px">停用</a>
+                        <a onclick="editDept('${dept.deptFlow}');"  style="margin: 10px">编辑</a>
+                        <a onclick="editSave('toggleStatus', {recordStatus: 'N'});"  style="margin: 10px">停用</a>
                     </c:if>
                     <c:if test="${dept.recordStatus == GlobalConstant.RECORD_STATUS_N }">
-                        <a onclick="editSave('toggleStatus', {recordStatus: 'Y'});" class="btn" style="margin: 3px">启用</a>
+                        <a onclick="editSave('toggleStatus', {recordStatus: 'Y'});"  style="margin: 10px">启用</a>
                     </c:if>
-                    <a onclick="baseDeptDelete();" class="btn" style="margin: 3px">删除</a>
+                    <a onclick="baseDeptDelete();"  style="margin: 10px">删除</a>
                 </td>
             </tr>
         </c:forEach>

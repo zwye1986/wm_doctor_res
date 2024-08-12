@@ -139,10 +139,10 @@
                 <form id="searchForm">
                     <input type="hidden" name="orgFlow" value="${orgFlow}">
                     <input type="hidden" name="ishos" value="${ishos}">
-                    <input type="button" class="btn_green"  value="编辑" onclick="editCoopBase()" />
+                    <input type="button" class="btn_green"  value="编&#12288;辑" onclick="editCoopBase()" />
                     &nbsp;&nbsp;
                     <label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">年份：</label>
-                    <input class="input" name="sessionNumber" id="sessionNumber" style="width: 100px;height: 29px;padding: 0px;"
+                    <input class="input" name="sessionNumber" id="sessionNumber" style="width: 161px;height: 30px;padding: 0px; padding-left: 4px"
                            value="${empty param.sessionNumber?pdfn:getCurrYear():param.sessionNumber}"/>
                 </form>
             </div>

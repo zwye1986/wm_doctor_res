@@ -163,19 +163,19 @@ function selTag(tag,type,flag){
 					<td class="td_left">
 						活动名称：
 					</td>
-					<td>
+					<td class="td_right">
 						<input type="text" name="activityName" value="" class="input" />
 					</td>
 					<td class="td_left">
 						主&nbsp;讲&nbsp;人：
 					</td>
-					<td>
+					<td class="td_right">
 						<input type="text" name="userName" value="" class="input" />
 					</td>
 					<td class="td_left">
 						活动形式：
 					</td>
-					<td>
+					<td class="td_right">
 						<select name="activityTypeId" class="select">
 							<option value="">全部</option>
 							<c:forEach items="${activityTypeEnumList}" var="a">
@@ -185,7 +185,7 @@ function selTag(tag,type,flag){
 					</td>
 					<td class="td_left">
 						科&#12288;&#12288;室：
-					</td>
+					</td >
 <%--					<td>--%>
 <%--						<c:if test="${'university' eq roleFlag}">--%>
 <%--							<input type="text" name="deptName" value="" class="input" />--%>
@@ -199,7 +199,7 @@ function selTag(tag,type,flag){
 <%--							</select>--%>
 <%--						</c:if>--%>
 <%--					</td>--%>
-					<td><input type="text" id="ksmc" name="deptName" value="${param.deptName}" class="select" autocomplete="off"/>
+					<td class="td_right"><input type="text" id="ksmc" name="deptName" value="${param.deptName}" class="select" autocomplete="off"/>
 						<div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; left:0px; top:30px;">
 							<div class="boxHome ksmc" id="ksmcSel" style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
 								<c:forEach items="${depts}" var="dept" >
@@ -208,23 +208,23 @@ function selTag(tag,type,flag){
 							</div>
 						</div>
 					</td>
-				</tr>
-				<tr>
 					<td class="td_left">
 						开始时间：
 					</td>
-					<td>
+					<td class="td_right">
                         <input type="text" id="startDate" name="startTime" value="" class="input"  readonly="readonly" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 00:00:00'})">
 					</td>
+				</tr>
+				<tr>
 					<td class="td_left">
 						结束时间：
 					</td>
-					<td>
+					<td class="td_right">
                         <input type="text" id="endDate" name="endTime" value="" class="input"  readonly="readonly" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 23:59:59'})">
 					</td>
 					<c:if test="${param.roleFlag eq 'local'}">
 						<td class="td_left"> 是否有效： </td>
-						<td>
+						<td class="td_right">
 							<select name="isEffective" class="select">
 								<option value="">全部</option>
 								<option value="1">有效</option>
@@ -235,7 +235,7 @@ function selTag(tag,type,flag){
 					<td class="td_left">
 						审核状态：
 					</td>
-					<td>
+					<td class="td_right">
 						<select name="activityStatus" class="select">
 							<option value="">全部</option>
 							<option value="audit">待审核</option>
@@ -244,19 +244,19 @@ function selTag(tag,type,flag){
 							<option value="over">已过期</option>
 						</select>
 					</td>
-				</tr>
-				<tr>
 					<td colspan="2">
 						是否上传活动图片：
-					</td>
-					<td colspan="6">
 						<select name="isUploadImg" class="select">
 							<option value="">全部</option>
 							<option value="Y">是</option>
 							<option value="N">否</option>
 						</select>
 					</td>
+<%--					<td colspan="6">--%>
+<%--						--%>
+<%--					</td>--%>
 				</tr>
+
 				<tr>
 <%--					<c:choose>--%>
 <%--						<c:when test="${param.roleFlag eq 'teach'or param.roleFlag eq 'head'or param.roleFlag eq 'secretary'}">--%>

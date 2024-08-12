@@ -111,7 +111,7 @@ loginbtn
 	top:50%;
 	margin-left:-400px;
 	margin-top:-85px;
-	
+
 } */
 /*-------------------------------login--end-------------------------------------*/
 
@@ -123,10 +123,10 @@ loginbtn
 .btn:hover{background-color: #e6e7ec;}
 .btn_red{background-color: #f24d4d;color: #fff; border:none;}
 .btn_red:hover{background-color: #d43d3d;}
-.btn_green{background-color: #44b549;color: #fff;border:none;}
-.btn_green:hover{background-color: #2f9833;}
-.btn_blue{background-color: #017bce;color: #fff;border:none;}
-.btn_blue:hover{background-color: #0097fe;}
+.btn_green{background-color: #54B2E5;color: #fff;border:none;margin-right: 15px;}
+.btn_green:hover{background-color: #54B2E5;}
+.btn_blue{background-color: #54B2E5;color: #fff;border:none;}
+.btn_blue:hover{background-color: #54B2E5;}
 .btn_grey{background:#eee;border: 1px solid #ddd;color: #222;}
 .btn_grey:hover{background:#ddd;}
 
@@ -157,7 +157,7 @@ textarea{ width:100%; height:150px;padding:0; resize:none; outline:none;text-ind
 /*body*/
 .bd_bg{background-image:url(../images/bg.jpg); background-repeat:repeat-x; background-position:top; background-color:#f2f2f2;min-width: 1200px;}
 .yw{ background:url(../images/yw.png) no-repeat top;}
-.body{width:1200px;margin-left:auto;margin-right:auto;padding:0 0 88px;}
+.body{width:90%;margin-left:auto;margin-right:auto;padding:0 0 88px;}
 .container{border:1px solid #d9dadc;background-color: #fff;min-height:700px;overflow:hidden;height:auto;}
 
 /*side*/
@@ -169,8 +169,8 @@ textarea{ width:100%; height:150px;padding:0; resize:none; outline:none;text-ind
 .menu_item{line-height:34px;}
 .menu_item a {display: block;padding: 0 0 0 58px;width: auto;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;word-wrap: normal;color: #222;}
 .menu_item:hover{background-color:#f4f5f9;}
-.menu_item:selected{background-color:#44b549;color:#fff;}
-.menu_item a.select{background-color:#44b549;color:#fff;}
+.menu_item:selected{background-color:#54B2E5;color:#fff;}
+.menu_item a.select{background-color:#54B2E5;color:#fff;}
 .menu_function{background:url(../images/icon_menu_function.png) no-repeat;}
 .menu_management{background:url(../images/icon_menu_management.png) no-repeat;}
 .menu_ad{background:url(../images/icon_menu_ad.png) no-repeat;}
@@ -189,7 +189,7 @@ textarea{ width:100%; height:150px;padding:0; resize:none; outline:none;text-ind
 }
 
 /*content-main*/
-.col_main{display: table-cell;width:991px;zoom:1; *width:auto; height:auto;}
+.col_main{display: table-cell;zoom:1; *width:auto; height:auto;}
 .content_main{padding:30px 16px;vertical-align:top;word-wrap: break-word;word-break: break-all;}
 
 /*index_show*/
@@ -255,15 +255,15 @@ textarea{ width:100%; height:150px;padding:0; resize:none; outline:none;text-ind
 .title_tab ul{ display:inline-block; line-height:40px;}
 .title_tab ul li{ float:left;}
 .title_tab ul li a{ padding:0 30px; color:#222;}
-.tab_select{ border-bottom:3px solid #44b549;}
+.tab_select{ border-bottom:3px solid #54B2E5;}
 .tab:hover{ border-bottom:3px solid #a0a3ab;}
 .div_table{ padding:20px 40px 0;margin-bottom: 10px;}
 .div_table h4{display:block;border-left:4px solid #44b549;font-size: 15px;font-weight: 400;font-style: normal;padding: 0 7px; margin-top:5px; margin-bottom:10px;}
 .div_table p{height:45px; line-height:45px; display:table;}
-.search_table{padding:0 40px;margin-bottom: 10px;}
+.search_table{padding:0 30px;margin-bottom: 10px;}
 .search_table span{font-weight:normal; font-size:14px; display:inline-block;}
 .search_table em{display: inline-block;font-weight: 400;font-style: normal;vertical-align: middle;color: #d5d5d5;margin-top: -0.4em;margin-right:8px;}
-.div_search{padding:10px 40px;}
+.div_search{padding:10px 30px;}
 .tip_right{margin-right:40px;}
 .tip_right strong{font-size: 20px;color: #017bce;font-weight: blod;padding: 0 5px;}
 .cz{background:#f4f5f9; color:#222222;border-top:1px solid #e7e7eb;border-left:1px solid #e7e7eb;border-right:1px solid #e7e7eb;}
@@ -495,7 +495,7 @@ em{ font-style:normal;}
 .tagContent li{
 	padding-top:10px;
 	padding-left:20px;
-	color:#666;   
+	color:#666;
 }
 
 /*安全中心--修改手机样式--开始*/
@@ -626,7 +626,7 @@ margin-top: 10px;
 
 /*title*/
 .index_title{ text-align:center; font-size:32px; color:#4b4b4b;}
-.index_title p{font-size:16px;}	
+.index_title p{font-size:16px;}
 
 /*系统公告*/
 .notice_login{min-width:1024px; margin:0 auto; margin-top:50px;}

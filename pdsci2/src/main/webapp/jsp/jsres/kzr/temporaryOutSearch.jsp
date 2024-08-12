@@ -83,25 +83,31 @@
 <div class="main_bd" id="div_table_0">
     <div class="div_search">
         <form id="searchForm" action="<s:url value='/jsres/teacher/temporaryOutSearch'/>" method="post">
-            <input id="currentPage" type="hidden" name="currentPage" value=""/>
-            <input type="hidden" name="roleId" value="${roleId}">
-            <c:if test="${roleId ne 'user'}">
-                姓名：<input type="text" name="doctorName" class="input" style="width: 100px;" value="${param.doctorName}">
-                &#12288;人员类型：
-                <c:forEach items="${jsResDocTypeEnumList}" var="type">
-                    <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
-                </c:forEach>
-            </c:if>
-            &#12288;审核状态：
-            <select name="temporaryAuditStatusId" class="select">
-                <option value="">请选择</option>
-                <option value="Auditing" <c:if test="${param.temporaryAuditStatusId eq 'Auditing'}">selected</c:if>>待审核</option>
-                <option value="Passed" <c:if test="${param.temporaryAuditStatusId eq 'Passed'}">selected</c:if>>审核通过</option>
-                <option value="NotPassed" <c:if test="${param.temporaryAuditStatusId eq 'NotPassed'}">selected</c:if>>审核不通过</option>
-            </select>
-            &#12288;
-            <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
-            <input class="btn_green" type="button" value="导&#12288;出" onclick="exportExpert();"/>
+            <div>
+                <input id="currentPage" type="hidden" name="currentPage" value=""/>
+                <input type="hidden" name="roleId" value="${roleId}">
+                <c:if test="${roleId ne 'user'}">
+                    <label class="form_label"> 姓名：</label>
+                   <input type="text" name="doctorName" class="input" style="width: 100px;" value="${param.doctorName}">
+                    &#12288;人员类型：
+                    <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                        <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
+                    </c:forEach>
+                </c:if>
+                <label class="form_label" >审核状态：</label>
+                <select name="temporaryAuditStatusId" class="select">
+                    <option value="">请选择</option>
+                    <option value="Auditing" <c:if test="${param.temporaryAuditStatusId eq 'Auditing'}">selected</c:if>>待审核</option>
+                    <option value="Passed" <c:if test="${param.temporaryAuditStatusId eq 'Passed'}">selected</c:if>>审核通过</option>
+                    <option value="NotPassed" <c:if test="${param.temporaryAuditStatusId eq 'NotPassed'}">selected</c:if>>审核不通过</option>
+                </select>
+            </div>
+
+            <div style="margin-top: 15px;margin-bottom: 15px">
+                <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
+                <input class="btn_green" type="button" value="导&#12288;出" onclick="exportExpert();"/>
+            </div>
+
         </form>
     </div>
     <div class="search_table">

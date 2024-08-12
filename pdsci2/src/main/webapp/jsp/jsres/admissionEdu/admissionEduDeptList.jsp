@@ -49,7 +49,7 @@
                         </c:if>
                     </td>
                     <td>
-                        <input type="button" value="编&#12288;辑" class="btn_green" onclick="edit('${info.deptFlow}');"/>
+                        <a value="编辑"  onclick="edit('${info.deptFlow}');">编辑</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -60,7 +60,7 @@
             </c:if>
         </table>
     </div>
-    <div class="page" style="padding-right: 40px;">
+    <div class="page" style="padding-right: 30px;">
         <c:set var="pageView" value="${pdfn:getPageView(infos)}" scope="request"></c:set>
         <pd:pagination-jsres toPage="toPage"/>
     </div>

@@ -1,6 +1,7 @@
 <jsp:include page="/jsp/jsres/htmlhead-jsres.jsp">
     <jsp:param name="queryFont" value="true"/>
 </jsp:include>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 
     /**
@@ -176,40 +177,54 @@
     <div class="div_search">
         <form id="outForm">
             <input type="hidden" name="currentPage" id="currentPage"/>
-            <table class="searchTable">
-                <tr>
-                    <td class="td_left">姓&#12288;&#12288;名：</td>
-                    <td>
+
+
+            <div class="form_search">
+
+                <div class="form_item">
+                    <div class="form_label">姓&#12288;&#12288;名：</div>
+                    <div class="form_content">
                         <input type="text" name="doctorName" value="${param.doctorName}" class="input"/>
-                    </td>
-                    <td class="td_left">年&#12288;&#12288;级：</td>
-                    <td>
+                    </div>
+                </div>
+
+                <div class="form_item">
+                    <div class="form_label">年&#12288;&#12288;级：</div>
+                    <div class="form_content">
                         <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input"   readonly="readonly" />
-                    </td>
-                    <td class="td_left">人员类型：</td>
-                    <td colspan="3">
-                        <c:forEach items="${jsResDocTypeEnumList}" var="type">
-                            <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
-                        </c:forEach>
-                    </td>
-                </tr>
-                <tr>
-                    <c:if test="${JointOrgCount ne '0'}">
-                        <td class="td_left">培训基地：</td>
-                        <td>
-                            <select class="select" name="orgFlow0" style="width: 125px;" onchange="searchDeptList(this.value)">
+                    </div>
+                </div>
+
+
+                 <c:if test="${JointOrgCount ne '0'}">
+                    <div class="form_item">
+                        <div class="form_label">培训基地：</div>
+                        <div class="form_content">
+                            <select class="select" name="orgFlow0"  onchange="searchDeptList(this.value)">
                                 <option value="all" <c:if test="${orgFlow eq 'all'}">selected="selected"</c:if>>全部</option>
                                 <c:forEach items="${orgList}" var="org">
                                     <option value="${org.orgFlow}" <c:if test="${orgFlow == org.orgFlow}">selected="selected"</c:if>>${org.orgName}</option>
                                 </c:forEach>
                             </select>&#12288;
-                        </td>
-                    </c:if>
-                    <td colspan="2">
-                        <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
-                    </td>
-                </tr>
-            </table>
+                        </div>
+                    </div>
+                 </c:if>
+
+                 <div class="form_item" style="width:400px ;">
+                     <div class="form_label">人员类型：</div>
+                    <div class="form_content">
+                        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                            <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
+                        </c:forEach>
+                    </div>
+                 </div>
+
+            </div>
+
+            <div style="margin-top: 15px;margin-bottom: 15px">
+                 <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
+             </div>
+
         </form>
     </div>
     <div class="search_table">

@@ -32,11 +32,15 @@
     <div class="div_search">
         <form id="searchForm">
             <input id="currentPage" type="hidden" name="currentPage" value=""/>
-            <input class="input" name="resNoticeTitle" value="${param.resNoticeTitle}" type="text"/>&nbsp;指南标题(关键字)&#12288;&#12288;
-            <input type="button" class="btn_green" value="查&#12288;询" onclick="search();"/>
-            <c:if test="${'manager'eq roleFlag or 'global'eq roleFlag}">
-                &#12288;<input type="button" class="btn_green" value="新&#12288;增" onclick="edit('','${roleFlag}')">
-            </c:if>
+            <label class="form_label" >指南标题(关键字)</label>
+            <input style="margin-left: 10px" class="input" name="resNoticeTitle" value="${param.resNoticeTitle}" type="text"/>
+
+            <div style="margin-top: 15px;margin-bottom: 15px">
+                <input type="button" class="btn_green" value="查&#12288;询" onclick="search();"/>
+                <c:if test="${'manager'eq roleFlag or 'global'eq roleFlag}">
+                    <input type="button" class="btn_green" value="新&#12288;增" onclick="edit('','${roleFlag}')">
+                </c:if>
+            </div>
         </form>
     </div>
     <div class="search_table">

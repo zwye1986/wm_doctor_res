@@ -20,14 +20,15 @@
 
 <div class="div_search" style="box-sizing: border-box;line-height:normal;">
     <form id="searchForm">
-        <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
+        <table class="searchTable" style="border-collapse:separate; border-spacing:0px 10px;">
             <tr>
-                <td>时间：
+                <td class="td_left">时间：</td>
+                <td class="td_right">
                     <input type="text" name="searchTime" id="ym" class="input" onchange="datechange(this)"  value="${searchTime}"
                            onClick="WdatePicker({dateFmt:'yyyy-MM',isShowClear:false,onpicked:function(dp){$dp.$('ym').blur();}})" readonly="readonly"/>
                 </td>
-                <td>
-                    科室名称：
+                <td class="td_left">科室名称：</td>
+                <td class="td_right">
                     <select name="deptFlow" class="select" style="width: 150px;">
                         <option value="">请选择</option>
                         <c:forEach items="${deptList}" var="dept">

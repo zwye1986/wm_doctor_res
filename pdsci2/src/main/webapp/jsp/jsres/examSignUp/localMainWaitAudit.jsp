@@ -39,17 +39,22 @@
         line-height: 40px;
     }
 
-    .searchTable .select {
-        padding: 4px 2px;
-        box-sizing: content-box;
-    }
+    /*.searchTable .select {*/
+    /*    padding: 4px 2px;*/
+    /*    box-sizing: content-box;*/
+    /*}*/
 
     .searchTable .td_left {
         word-wrap: break-word;
-        width: 6em;
+        /*width: 6em;*/
         height: auto;
         line-height: auto;
-        text-align: right;
+        /*text-align: right;*/
+    }
+
+    .searchTable .td_right{
+        width: 220px;
+        text-align:left;
     }
 
     .input {
@@ -185,7 +190,7 @@
 <div class="main_hd">
 <%--    <h2 class="underline">补考审核</h2>--%>
 </div>
-<div class="div_search" style="padding: 10px 40px;line-height: 35px;">
+<div class="div_search" >
     <form id="searchForm">
         <input type="hidden" id="currentPage" name="currentPage"/>
         <input type="hidden" id="orgTypeFlag" value="${param.orgLevel}"/>
@@ -201,8 +206,8 @@
         <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
             <tr>
                 <td class="td_left ">培训基地：</td>
-                <td>
-                    <select name="joinOrgFlow" id="joinOrgFlow" class="select " style="width: 106px">
+                <td class="td_right">
+                    <select name="joinOrgFlow" id="joinOrgFlow" class="select " >
                         <option value="">全部</option>
                         <c:forEach items="${orgs}" var="org">
                             <option value="${org.orgFlow}">${org.orgName}</option>
@@ -210,8 +215,8 @@
                     </select>
                 </td>
                 <td class="td_left">审核状态：</td>
-                <td>
-                    <select name="auditStatusId" id="auditStatusId" class="select" style="width:107px;">
+                <td class="td_right">
+                    <select name="auditStatusId" id="auditStatusId" class="select" >
                         <option value="">请选择</option>
                         <option value="Auditing" selected>待基地审核</option>
                         <%--<c:forEach items="${jsResAsseAuditListEnumList}" var="type">--%>
@@ -229,17 +234,17 @@
                     </select>
                 </td>
                 <td class="td_left">补考类型：</td>
-                <td>
-                    <select name="signUpTypeId" class="select" style="width:107px;">
+                <td class="td_right">
+                    <select name="signUpTypeId" class="select" >
                         <option value="">请选择</option>
                         <option value="Skill">技能补考</option>
                         <option value="Theory">理论补考</option>
                     </select>
                 </td>
                 <td class="td_left">培训类别：</td>
-                <td>
+                <td class="td_right">
                     <%--<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" style="width:107px;">--%>
-                    <select name="trainingTypeId" id="trainingTypeId" class="select" style="width:107px;">
+                    <select name="trainingTypeId" id="trainingTypeId" class="select" >
                         <option value="">请选择</option>
                         <c:if test="${param.tabTag eq 'SecondWait'}">
                             <option value="DoctorTrainingSpe" selected="selected">住院医师</option>
@@ -254,11 +259,9 @@
                         <%--</c:forEach>--%>
                     </select>
                 </td>
-            </tr>
-            <tr>
                 <td class="td_left">培训专业：</td>
-                <td>
-                    <select name="trainingSpeId" id="trainingSpeId" class="select" style="width: 106px;">
+                <td class="td_right">
+                    <select name="trainingSpeId" id="trainingSpeId" class="select" >
                         <option value="">全部</option>
                         <c:if test="${param.tabTag eq 'SecondWait'}">
                             <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
@@ -276,49 +279,42 @@
                         </c:if>
                     </select>
                 </td>
-                <td class="td_left">结业年份：</td>
-                <td>
-                    <input type="text" id="signupYear" name="signupYear" class="input" readonly="readonly"
-                           value="${pdfn:getCurrYear()}" style="width: 108px;margin-left: 0px"/>
-                </td>
-                <td class="td_left">年&#12288;&#12288;级：</td>
-                <td>
-                    <input type="text" id="sessionNumber" name="sessionNumber" class="input" readonly="readonly"
-                           style="width: 108px;margin-left: 0px"/>
-                </td>
-                <td class="td_left">姓&#12288;&#12288;名：</td>
-                <td>
-                    <input type="text" name="userName" value="${param.userName}" class="input"
-                           style="width: 108px;margin-left: 0px;"/>
-                </td>
             </tr>
             <tr>
-                <td class="td_left">证&nbsp;件&nbsp;号&nbsp;：</td>
-                <td>
+                <td class="td_left">结业年份：</td>
+                <td class="td_right">
+                    <input type="text" id="signupYear" name="signupYear" class="input" readonly="readonly"
+                           value="${pdfn:getCurrYear()}" />
+                </td>
+                <td class="td_left">年&#12288;&#12288;级：</td>
+                <td class="td_right">
+                    <input type="text" id="sessionNumber" name="sessionNumber" class="input" readonly="readonly"
+                           />
+                </td>
+                <td class="td_left">姓&#12288;&#12288;名：</td>
+                <td class="td_right">
+                    <input type="text" name="userName" value="${param.userName}" class="input"
+                           />
+                </td>
+                 <td class="td_left">证&nbsp;件&nbsp;号&nbsp;：</td>
+                <td class="td_right">
                     <input type="text" name="idNo" value="${param.idNo}" class="input"
-                           style="width: 108px;margin-left: 0px;"/>
+                           />
                 </td>
                 <td class="td_left">考试编号：</td>
-                <td>
-                    <select name="testId" class="select" style="width: 106px;">
+                <td class="td_right">
+                    <select name="testId" class="select" >
                         <option value="">全部</option>
                         <c:forEach items="${resTestConfigs}" var="resTest">
                             <option value="${resTest.testId}" ${param.testId eq resTest.testId?'selected':''}>${resTest.testId}</option>
                         </c:forEach>
                     </select>
                 </td>
-                <td class="td_left">人员类型：</td>
-                <td colspan="3">
-                    <c:forEach items="${jsResDocTypeEnumList}" var="type">
-                        <label><input type="checkbox" id="${type.id}" value="${type.id}" checked class="docType"
-                                      name="datas"/>${type.name}&nbsp;</label>
-                    </c:forEach>
-                </td>
             </tr>
             <tr>
                 <td class="td_left">是否延期：</td>
-                <td>
-                    <select class="select" name="isPostpone" style="width: 106px;">
+                <td class="td_right">
+                    <select class="select" name="isPostpone" >
                         <option value="">请选择</option>
                         <option
                                 <c:if test="${param.isPostpone eq GlobalConstant.FLAG_Y}">selected="selected"</c:if>
@@ -330,6 +326,15 @@
                         </option>
                     </select>
                 </td>
+                <td class="td_left">人员类型：</td>
+                <td colspan="3">
+                    <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                        <label><input type="checkbox" id="${type.id}" value="${type.id}" checked class="docType"
+                                      name="datas"/>${type.name}&nbsp;</label>
+                    </c:forEach>
+                </td>
+            </tr>
+            <tr>
                 <td colspan="2" >
                     <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>&#12288;
                     <input class="btn_green" type="button" value="导&#12288;出" onclick="exportInfo();"/>
@@ -338,7 +343,7 @@
         </table>
     </form>
 </div>
-<div id="doctorListZi" style="padding: 10px 54px 10px 40px;box-sizing: border-box;width: 990px;">
+<div id="doctorListZi" >
 </div>
 <div style="display: none;">
     <select id="WMFirst_select">

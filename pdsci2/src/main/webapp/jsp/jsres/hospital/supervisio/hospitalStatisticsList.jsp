@@ -38,7 +38,7 @@
     }
 </script>
 <c:if test="${empty list}">
-    <div class="search_table" style="width: 100%;padding: 0 20px">
+    <div class="search_table">
         <table border="0" cellpadding="0" cellspacing="0" class="grid">
             <tr>
                 <th>专业基地</th>
@@ -65,7 +65,7 @@
     </div>
 </c:if>
 <c:if test="${not empty list}">
-    <div class="search_table" style="width: 100%;padding: 0 20px">
+    <div class="search_table" >
         <table border="0" cellpadding="0" cellspacing="0" class="grid">
             <tr>
                 <th width="7%">专业基地</th>
@@ -115,7 +115,7 @@
                         </c:if>
                     </td>
                     <td>
-                        <a class="btn_green" style="color: white" href="javascript:void(0);"
+                        <a href="javascript:void(0);"
                            onclick="hospitalShowPlanInfo('${s.subjectFlow}','${s.leaderOneName}','${s.leaderTwoName}');">查看评分</a>
                     </td>
                 </tr>
@@ -124,7 +124,7 @@
     </div>
 </c:if>
 </div>
-<div class="page" style="text-align: center">
+<div class="page" style="text-align: right">
     <c:set var="pageView" value="${pdfn:getPageView(list)}" scope="request"></c:set>
     <pd:pagination-jsres toPage="toPage"/>
 </div>
