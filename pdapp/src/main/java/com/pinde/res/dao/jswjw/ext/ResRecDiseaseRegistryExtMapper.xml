@@ -1502,7 +1502,7 @@
 		union all
 		select REC_FLOW,
 			   '' ACTIVITY_NAME,
-			   '' SPEAKER_FLOW,
+			   to_nchar('') SPEAKER_NAME,
 			   '' SPEAKER_NAME,
 			   '' ACTIVITY_TYPE_ID,
 			   '' ACTIVITY_TYPE_NAME,

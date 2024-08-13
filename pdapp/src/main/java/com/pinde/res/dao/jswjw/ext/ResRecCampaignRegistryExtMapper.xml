@@ -1503,7 +1503,7 @@
 		select REC_FLOW,
 			   '' ACTIVITY_NAME,
 			   '' SPEAKER_FLOW,
-			   '' SPEAKER_NAME,
+			   to_nchar('') SPEAKER_NAME,
 			   '' ACTIVITY_TYPE_ID,
 			   '' ACTIVITY_TYPE_NAME,
 			   '' START_TIME,

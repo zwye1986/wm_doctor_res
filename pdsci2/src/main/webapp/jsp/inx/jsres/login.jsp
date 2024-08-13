@@ -263,13 +263,12 @@
 	  <div class="fl">${pdfn:getCurrDate() }&nbsp;&nbsp;<font id="weekDateSpan"></font></div>
 	  <div class="code fr">
 	     <div class="android" onmouseover="showQr('android');" onmouseout="hideThis('android')"></div>
-	     <div class="iphone" onmouseover="showQr('iphone');" onmouseout="hideThis('iphone')"></div>
-	     <font class="fr">轮转手册登记请下载客户端</font>
+	     <%--<div class="iphone" onmouseover="showQr('iphone');" onmouseout="hideThis('iphone')"></div>--%>
 	      <img class="Q_hand fr" src="<s:url value='/jsp/jsres/images/Q_hand.png'/>"/>
 	      <div class="QR_android QR" style="display: none;"><img class="QR_code"
                                                                  src="<s:url value='/jsp/jsres/images/jsQrcode.jpg'/>"/></div>
-	      <div class="QR_iphone QR" style="display: none;"><img class="QR_code"
-                                                                src="<s:url value='/jsp/jsres/images/jsapp.jpg'/>"/></div>
+	      <%--<div class="QR_iphone QR" style="display: none;"><img class="QR_code"
+                                                                src="<s:url value='/jsp/jsres/images/jsapp.jpg'/>"/></div>--%>
 	  </div>
 	</span>
 </div>
