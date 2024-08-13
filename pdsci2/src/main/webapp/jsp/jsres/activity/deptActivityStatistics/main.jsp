@@ -98,19 +98,19 @@
 					<td class="td_left">
 						开始时间：
 					</td>
-					<td>
+					<td class="td_right">
 						<input type="text" id="startDate" name="startTime" value="" class="input"  readonly="readonly" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 00:00:00'})">
 					</td>
 					<td class="td_left">
 						结束时间：
 					</td>
-					<td>
+					<td class="td_right">
 						<input type="text" id="endDate" name="endTime" value="" class="input"  readonly="readonly" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate:'%y-%M-%d 23:59:59'})">
 					</td>
 					<td class="td_left">
 						科&#12288;&#12288;室：
 					</td>
-					<td>
+					<td class="td_right">
 <%--						<select name="deptFlow" class="select">--%>
 <%--							<option value="">全部</option>--%>
 <%--							<c:forEach items="${depts}" var="dept">--%>
@@ -130,18 +130,19 @@
 							</div>
 						</div>
 					</td>
-				</tr>
-				<tr>
 					<td class="td_left">
 						不包含0：
 					</td>
-					<td>
+					<td class="td_right">
 						<input type="checkbox" name="notNull" value="Y">
 					</td>
+				</tr>
+				<tr>
+
 
 					<td  id="func" colspan="4">
-						&nbsp;<input class="btn_green" style="margin-left: 30px;" type="button" value="查&#12288;询" onclick="toPage(1);"/>&nbsp;
-						<input class="btn_green" style="margin-left: 0px;" type="button" value="导&#12288;出" onclick="exportExcel();"/>&nbsp;
+						<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>&nbsp;
+						<input class="btn_green" type="button" value="导&#12288;出" onclick="exportExcel();"/>&nbsp;
 					</td>
 				</tr>
 			</table>

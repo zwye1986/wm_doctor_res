@@ -113,42 +113,76 @@ function searchReset() {
 	<div class="div_search">
 	<form id="searchForm" action="<s:url value="/sys/dept/list/${sessionScope.deptListScope}" />" method="post" >
 		<input id="currentPage" type="hidden" name="currentPage" value="${param.currentPage}"/>
-		<table class="searchTable">
-			<tr>
-				<td class="td_left">
-					科室代码：
-				</td>
-				<td>
-					<input type="text" name="deptCode" id="deptCode" value="${param.deptCode}" class="input"/>
-				</td>
-				<td class="td_left">
-					科室名称：
-				</td>
-				<td><input type="text" id="ksmc" name="deptName" id="deptName" value="${param.deptName}" class="input" autocomplete="off"/>
-					<div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; left:0px; top:30px;">
-						<div class="boxHome ksmc" id="ksmcSel" style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
-							<c:forEach items="${sysDeptList}" var="dept" >
-								<p  class="item ksmc" flow="${dept.deptFlow}" value="${dept.deptName}" style="line-height: 25px; padding:0px 0;cursor: default;width: 100% ">${dept.deptName}</p>
-							</c:forEach>
-						</div>
+
+		<div style="display: flex;justify-content: flex-start; column-gap: 52px;margin-top: 15px">
+			<div>
+				科室代码：
+				<input type="text" name="deptCode" id="deptCode" value="${param.deptCode}" class="input"/>
+			</div>
+			<div>
+				科室名称：
+				<input type="text" id="ksmc" name="deptName" id="deptName" value="${param.deptName}" class="input" autocomplete="off"/>
+				<div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; left:0px; top:30px;">
+					<div class="boxHome ksmc" id="ksmcSel" style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
+						<c:forEach items="${sysDeptList}" var="dept" >
+							<p  class="item ksmc" flow="${dept.deptFlow}" value="${dept.deptName}" style="line-height: 25px; padding:0px 0;cursor: default;width: 100% ">${dept.deptName}</p>
+						</c:forEach>
 					</div>
-				</td>
-				<td class="td_left">出科考关联：</td>
-				<td>
-					<select name="isUnion" class="select" style="width: 127px;" id="isUnion">
-						<option value=""></option>
-						<option value="Y">已关联</option>
-						<option value="N">未关联</option>
-					</select>
-				</td>
-				<td colspan="4">
-					<input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
-					<input type="button" class="btn_grey" onclick="searchReset()" value="重&#12288;置">
-					<input type="button" class="btn_green" onclick="edit()" value="新&#12288;增">
-					<input type="button" class="btn_green" onclick="exportDept()" value="导&#12288;出">
-				</td>
-			</tr>
-		</table>
+				</div>
+			</div>
+			<div>
+				出科考关联：
+				<select name="isUnion" class="select" style="width: 161px;" id="isUnion">
+					<option value=""></option>
+					<option value="Y">已关联</option>
+					<option value="N">未关联</option>
+				</select>
+			</div>
+		</div>
+		<div style="margin-top: 15px;margin-bottom: 15px">
+			<input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
+			<input type="button" class="btn_grey" onclick="searchReset()" value="重&#12288;置">
+			<input type="button" class="btn_green" onclick="edit()" value="新&#12288;增">
+			<input type="button" class="btn_green" onclick="exportDept()" value="导&#12288;出">
+		</div>
+
+
+<%--		<table class="searchTable">--%>
+<%--			<tr>--%>
+<%--				<td class="td_left">--%>
+<%--					科室代码：--%>
+<%--				</td>--%>
+<%--				<td>--%>
+<%--					<input type="text" name="deptCode" id="deptCode" value="${param.deptCode}" class="input"/>--%>
+<%--				</td>--%>
+<%--				<td class="td_left">--%>
+<%--					科室名称：--%>
+<%--				</td>--%>
+<%--				<td><input type="text" id="ksmc" name="deptName" id="deptName" value="${param.deptName}" class="input" autocomplete="off"/>--%>
+<%--					<div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; left:0px; top:30px;">--%>
+<%--						<div class="boxHome ksmc" id="ksmcSel" style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">--%>
+<%--							<c:forEach items="${sysDeptList}" var="dept" >--%>
+<%--								<p  class="item ksmc" flow="${dept.deptFlow}" value="${dept.deptName}" style="line-height: 25px; padding:0px 0;cursor: default;width: 100% ">${dept.deptName}</p>--%>
+<%--							</c:forEach>--%>
+<%--						</div>--%>
+<%--					</div>--%>
+<%--				</td>--%>
+<%--				<td class="td_left">出科考关联：</td>--%>
+<%--				<td>--%>
+<%--					<select name="isUnion" class="select" style="width: 127px;" id="isUnion">--%>
+<%--						<option value=""></option>--%>
+<%--						<option value="Y">已关联</option>--%>
+<%--						<option value="N">未关联</option>--%>
+<%--					</select>--%>
+<%--				</td>--%>
+<%--				<td colspan="4">--%>
+<%--					<input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">--%>
+<%--					<input type="button" class="btn_grey" onclick="searchReset()" value="重&#12288;置">--%>
+<%--					<input type="button" class="btn_green" onclick="edit()" value="新&#12288;增">--%>
+<%--					<input type="button" class="btn_green" onclick="exportDept()" value="导&#12288;出">--%>
+<%--				</td>--%>
+<%--			</tr>--%>
+<%--		</table>--%>
 
 	</form>
     </div>

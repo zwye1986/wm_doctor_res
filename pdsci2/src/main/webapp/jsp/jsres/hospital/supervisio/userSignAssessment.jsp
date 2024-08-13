@@ -45,7 +45,8 @@
 	}
 
 </script>
-<div class="main_bd clearfix" style="width: 95%;margin-left: 20px">
+<div class="main_bd clearfix">
+	<div class="search_table">
 	<table id="dataTable" border="0" cellpadding="0" cellspacing="0" class="grid" style="margin-top: 30px" >
 		<thead>
 		<tr>
@@ -72,11 +73,12 @@
 				</td>
 			</c:if>
 			<td>
-				<a class="btn_blue" style="width: 60px;background-color: #017bce;color:white;" href="javascript:void(0);" onclick="setUserSign('${user.userFlow}');">${empty user.userSignUrl?'':'重新'}上传</a>
+				<a style="width: 60px;" href="javascript:void(0);" onclick="setUserSign('${user.userFlow}');">${empty user.userSignUrl?'':'重新'}上传</a>
 			</td>
 		</tr>
 		</tbody>
 	</table>
+	</div>
 </div>
 
 

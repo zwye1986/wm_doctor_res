@@ -85,23 +85,30 @@
         <form id="searchForm" action="<s:url value='/res/manager/temporaryOutSearch'/>" method="post">
             <input id="currentPage" type="hidden" name="currentPage" value=""/>
             <input type="hidden" name="roleId" value="${roleId}">
-            <c:if test="${roleId ne 'user'}">
-                姓名：<input type="text" name="doctorName" class="input" style="width: 100px;" value="${param.doctorName}">
-                &#12288;人员类型：
+            <div>
+                <c:if test="${roleId ne 'user'}">
+                <label class="form_label" >姓名：</label>
+                <input type="text" name="doctorName" class="input"  value="${param.doctorName}">
+                <label style="margin-left: 15px" class="form_label" >人员类型：</label>
                 <c:forEach items="${jsResDocTypeEnumList}" var="type">
                     <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
                 </c:forEach>
-            </c:if>
-            &#12288;审核状态：
-            <select name="temporaryAuditStatusId" class="select">
-                <option value="">请选择</option>
-                <option value="Auditing" <c:if test="${param.temporaryAuditStatusId eq 'Auditing'}">selected</c:if>>待审核</option>
-                <option value="Passed" <c:if test="${param.temporaryAuditStatusId eq 'Passed'}">selected</c:if>>审核通过</option>
-                <option value="NotPassed" <c:if test="${param.temporaryAuditStatusId eq 'NotPassed'}">selected</c:if>>审核不通过</option>
-            </select>
-            &#12288;
-            <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
-            <input class="btn_green" type="button" value="导&#12288;出" onclick="exportExpert();"/>
+                </c:if>
+
+                <label style="margin-left: 15px" class="form_label">审核状态：</label>
+                <select name="temporaryAuditStatusId" class="select">
+                    <option value="">请选择</option>
+                    <option value="Auditing" <c:if test="${param.temporaryAuditStatusId eq 'Auditing'}">selected</c:if>>待审核</option>
+                    <option value="Passed" <c:if test="${param.temporaryAuditStatusId eq 'Passed'}">selected</c:if>>审核通过</option>
+                    <option value="NotPassed" <c:if test="${param.temporaryAuditStatusId eq 'NotPassed'}">selected</c:if>>审核不通过</option>
+                </select>
+            </div>
+
+
+            <div style="margin-bottom: 15px;margin-top: 15px">
+                <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
+                <input class="btn_green" type="button" value="导&#12288;出" onclick="exportExpert();"/>
+            </div>
         </form>
     </div>
     <div class="search_table">

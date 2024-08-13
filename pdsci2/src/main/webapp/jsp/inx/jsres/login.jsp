@@ -163,6 +163,15 @@
             if ($("#userPasswd").val() == "") {
                 $(".log_tips").html("密码不能为空!");
                 return false;
+            } else {
+                let reg = /^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?!([^(0-9a-zA-Z)])+$).{6,}$/;
+
+                if (!reg.test($("#userPasswd").val())) {
+                    // $(".log_tips").html("密码应包含数字，大小写字母，特殊符号!");
+                    $(".log_tips").html("密码格式有误!");
+                    return false;
+                }
+
             }
             if ($("#verifyCode").val() == "") {
                 $(".log_tips").html("验证码不能为空!");
@@ -285,7 +294,7 @@
                             <input type="text" id="placepwd" class="text" style="display: none;"
                                    placeholder="密&nbsp;&nbsp;码" value=""/>
                             <input type="password" id="userPasswd" name="userPasswd" class="text" value=""
-                                   placeholder="密&nbsp;&nbsp;码"/>
+                                   placeholder="密&nbsp;&nbsp;码" onpaste="return false" ondragenter="return false"  />
                         </div>
                         <div class="verifyCode" style="margin-bottom: 0px;">
                             <input id="verifyCode" style="margin-left: 50px;width: 240px;" name="verifyCode" type="text"

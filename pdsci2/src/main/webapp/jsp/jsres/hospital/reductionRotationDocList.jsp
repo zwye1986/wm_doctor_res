@@ -51,15 +51,15 @@ function setType(flag){
 			<table class="searchTable">
 				<tr>
 					<td class="td_left">姓&#12288;&#12288;名：</td>
-					<td>
+					<td class="td_right">
 						<input type="text" name="doctorName" value="${param.doctorName}" class="input"/>
 					</td>
 					<td class="td_left">年&#12288;&#12288;级：</td>
-					<td>
+					<td class="td_right">
 						<input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" readonly class="input"/>
 					</td>
 					<td class="td_left">调整状态：</td>
-					<td>
+					<td class="td_right">
 						<select class="select" name="status" >
 							<option></option>
 							<option value="Y" <c:if test="${param.status eq 'Y'}">selected</c:if>>已调整</option>

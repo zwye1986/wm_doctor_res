@@ -28,14 +28,18 @@
             height: auto;
             line-height: auto;
             text-align: left;
-            max-width: 150px;;
+            /*max-width: 150px;;*/
         }
         .searchTable .td_left{
             word-wrap:break-word;
-            width:5em;
+            /*width:5em;*/
             height: auto;
             line-height: auto;
-            text-align: right;
+            /*text-align: right;*/
+        }
+        .searchTable .td_right{
+            width: 228px;
+            text-align:left;
         }
     </style>
     <script type="text/javascript">
@@ -246,18 +250,18 @@
                 <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
                     <tr>
 
-                        <td class="td_left" style="width: 70px">学生姓名：</td>
-                        <td>
-                            <input type="text" name="studentName" class="input" value="${param.studentName}"  style="width: 100px;margin-left: 0px"/>
+                        <td class="td_left" >学生姓名：</td>
+                        <td class="td_right">
+                            <input type="text" name="studentName" class="input" value="${param.studentName}"  />
                         </td>
-                        <td class="td_left"  style="width: 70px">年&#12288;&#12288;级：</td>
-                        <td>
-                            <input type="text" id="sessionNumber" name="sessionNumber"  value="${param.sessionNumber}" class="input" readonly="readonly"style="width: 100px;margin-left: 0px"/>
+                        <td class="td_left"  >年&#12288;&#12288;级：</td>
+                        <td class="td_right">
+                            <input type="text" id="sessionNumber" name="sessionNumber"  value="${param.sessionNumber}" class="input" readonly="readonly"/>
                         </td>
                         <c:if test="${JointOrgCount ne '0'}">
-                            <td class="td_left"  style="width: 70px">培训基地：</td>
-                            <td>
-                                <select class="select" id="orgFlow" name="orgFlow" style="width: 106px;" onchange="searchDeptList(this.value)">
+                            <td class="td_left" >培训基地：</td>
+                            <td class="td_right">
+                                <select class="select" id="orgFlow" name="orgFlow"  onchange="searchDeptList(this.value)">
                                     <option value="" <c:if test="${empty param.orgFlow}">selected="selected"</c:if>>全部</option>
                                     <c:forEach items="${orgList}" var="org">
                                         <option value="${org.orgFlow}" <c:if test="${param.orgFlow == org.orgFlow}">selected="selected"</c:if>>${org.orgName}</option>
@@ -265,9 +269,9 @@
                                 </select>
                             </td>
                         </c:if>
-                        <td class="td_left" style="width: 70px">科&#12288;&#12288;室：</td>
-                        <td>
-                            <select class="select" id="deptFlow" name="deptFlow" style="width: 106px;">
+                        <td class="td_left" >科&#12288;&#12288;室：</td>
+                        <td class="td_right">
+                            <select class="select" id="deptFlow" name="deptFlow" >
                                 <option value="">全部</option>
 
                                 <c:forEach items="${deptList}" var="dept" varStatus="num">
@@ -279,15 +283,15 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="td_left" style="width: 70px">考勤时间：</td>
+                        <td class="td_left" >考勤时间：</td>
                         <td colspan="3">
                             <input type="text" id="startDate" name="schStartDate" value="${schStartDate}"
                                    class="input datepicker" onchange="setDateTime('schStartDate',this.value);"
-                                   readonly="readonly" style="width: 90px;"/>
+                                   readonly="readonly" style="width: 80px;"/>
                             ~
                             <input type="text" id="endDate" name="schEndDate" value="${schEndDate}"
                                    class="input datepicker" onchange="setDateTime('schEndDate',this.value);"
-                                   readonly="readonly" style="width: 90px;"/>
+                                   readonly="readonly" style="width: 80px;"/>
                         </td>
                         <c:choose>
                             <c:when test="${sessionScope.userListScope == GlobalConstant.USER_LIST_BASE}">
@@ -332,12 +336,12 @@
                 <tr>
 
                     <td class="td_left">学生姓名：</td>
-                    <td>
-                        <input type="text" name="studentName" class="input" value="${param.studentName}"  style="width: 100px;margin-left: 0px"/>
+                    <td class="td_right">
+                        <input type="text" name="studentName" class="input" value="${param.studentName}"  />
                     </td>
                     <td class="td_left">培训类别：</td>
-                    <td>
-                        <select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" style="width: 106px;">
+                    <td class="td_right">
+                        <select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" >
                             <option value="DoctorTrainingSpe">住院医师</option>
                            <%-- <option value="">全部</option>
                             <c:forEach items="${trainCategoryEnumList}" var="trainCategory">
@@ -346,32 +350,18 @@
                         </select>
                     </td>
                     <td class="td_left">培训专业：</td>
-                    <td>
-                        <select name="trainingSpeId" id="trainingSpeId" class="select"  style="width: 106px;">
+                    <td class="td_right">
+                        <select name="trainingSpeId" id="trainingSpeId" class="select"  >
                             <option value="">全部</option>
                         </select>
                     </td>
                     <td class="td_left">年&#12288;&#12288;级：</td>
-                    <td>
-                        <input type="text" id="sessionNumber" name="sessionNumber"  value="${param.sessionNumber}" class="input" readonly="readonly"style="width: 100px;margin-left: 0px"/>
+                    <td class="td_right">
+                        <input type="text" id="sessionNumber" name="sessionNumber"  value="${param.sessionNumber}" class="input" readonly="readonly"/>
                     </td>
-                </tr>
-                <tr>
-
-                    <c:if test="${JointOrgCount ne '0'}">
-                        <td class="td_left">培训基地：</td>
-                        <td>
-                            <select class="select" id="orgFlow" name="orgFlow" style="width: 106px;" onchange="searchDeptList(this.value)">
-                                <option value="" <c:if test="${empty param.orgFlow}">selected="selected"</c:if>>全部</option>
-                                <c:forEach items="${orgList}" var="org">
-                                    <option value="${org.orgFlow}" <c:if test="${param.orgFlow == org.orgFlow}">selected="selected"</c:if>>${org.orgName}</option>
-                                </c:forEach>
-                            </select>
-                        </td>
-                    </c:if>
                     <td class="td_left">科&#12288;&#12288;室：</td>
-                    <td>
-                    <select class="select" id="deptFlow" name="deptFlow" style="width: 106px;">
+                    <td >
+                    <select class="select" id="deptFlow" name="deptFlow" >
                         <option value="">全部</option>
 
                             <c:forEach items="${deptList}" var="dept" varStatus="num">
@@ -381,6 +371,39 @@
 
                     </select>
                     </td>
+                </tr>
+                <tr>
+
+                    <c:if test="${JointOrgCount ne '0'}">
+                        <td class="td_left">培训基地：</td>
+                        <td class="td_right">
+                            <select class="select" id="orgFlow" name="orgFlow"  onchange="searchDeptList(this.value)">
+                                <option value="" <c:if test="${empty param.orgFlow}">selected="selected"</c:if>>全部</option>
+                                <c:forEach items="${orgList}" var="org">
+                                    <option value="${org.orgFlow}" <c:if test="${param.orgFlow == org.orgFlow}">selected="selected"</c:if>>${org.orgName}</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                    </c:if>
+
+                    <c:choose>
+                        <c:when test="${sessionScope.userListScope == GlobalConstant.USER_LIST_BASE}">
+                            <td class="td_left">人员类型：</td>
+                            <td colspan="3">
+                                <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                    <label><input type="checkbox" id="${type.id}" value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
+                                </c:forEach>
+                            </td>
+                        </c:when>
+                        <c:otherwise>
+                            <td class="td_left">人员类型：</td>
+                            <td colspan="3">
+                                <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                    <label><input type="checkbox" id="${type.id}" value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
+                                </c:forEach>
+                            </td>
+                        </c:otherwise>
+                    </c:choose>
                     <td class="td_left">考勤时间：</td>
                     <td colspan="3">
                         <input type="text" id="startDate" name="schStartDate" value="${schStartDate}"
@@ -395,23 +418,11 @@
                 <tr>
                 <c:choose>
                     <c:when test="${sessionScope.userListScope == GlobalConstant.USER_LIST_BASE}">
-                        <td class="td_left">人员类型：</td>
-                        <td colspan="3">
-                            <c:forEach items="${jsResDocTypeEnumList}" var="type">
-                                <label><input type="checkbox" id="${type.id}" value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
-                            </c:forEach>
-                        </td>
                         <td colspan="4">
                             <input type="button" class="btn_green" onclick="toPage(1);" value="查&#12288;询"/>
                         </td>
                     </c:when>
                     <c:otherwise>
-                        <td class="td_left">人员类型：</td>
-                        <td colspan="3">
-                            <c:forEach items="${jsResDocTypeEnumList}" var="type">
-                                <label><input type="checkbox" id="${type.id}" value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
-                            </c:forEach>
-                        </td>
                         <td colspan="4">
                             <input type="button" class="btn_green" onclick="toPage(1);"
                                    value="查&#12288;询"/>

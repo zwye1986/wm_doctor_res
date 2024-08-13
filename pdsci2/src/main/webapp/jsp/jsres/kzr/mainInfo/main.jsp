@@ -115,11 +115,11 @@ function showTab(deptFlow){
                 <a style="color: #000000;font: 15px 'Microsoft Yahei';font-weight: 400;">培训情况</a>
             </li>
         </ul>
-        <div style="width: 185px; float: right;<c:if test="${empty userDeptList or userDeptList.size() <= 1}">display: none;</c:if>">
+        <div style="margin-right: 5px; float: right;<c:if test="${empty userDeptList or userDeptList.size() <= 1}">display: none;</c:if>">
             <span style="color: #000000;font: 14px 'Microsoft Yahei';font-weight: 400;">切换科室：</span>
             <select id="deptFlow" class="select" style="color: #000000;font: 14px 'Microsoft Yahei';font-weight: 400;" onchange="showTab(this.value);">
                 <c:forEach var="dept" items="${userDeptList}">
-                    <option value="${dept.deptFlow}" ${deptFlow == dept.deptFlow ? 'selected' : ''}>${dept.deptName}</option>
+                    <option style="text-align: center;" value="${dept.deptFlow}" ${deptFlow == dept.deptFlow ? 'selected' : ''}>${dept.deptName}</option>
                 </c:forEach>
             </select>
         </div>

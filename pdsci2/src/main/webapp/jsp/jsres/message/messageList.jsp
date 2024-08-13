@@ -44,14 +44,22 @@
 </div>
 <div class="main_bd">
     <div class="div_search">
-        <form id="searchForm">
+        <form style="margin-top: 15px" id="searchForm">
             <input type="hidden" name="currentPage" id="currentPage"/>
-            标题：
-            <input type="text" class="input" name="messageTitle" value="${param.messageTitle}" style="width:100px;"/>&#12288;
-            &#12288;
-            <input class="btn_green" type="button" onclick="toPage(1)" value="查&#12288;询"/>
-            &#12288;
-            <input class="btn_green" type="button" onclick="edit('')" value="新&#12288;增"/>
+            <label class="form_label">标题：</label>
+            <input type="text" class="input" name="messageTitle" value="${param.messageTitle}" style="width:161px;"/>
+<%--            &#12288;--%>
+<%--            <input class="btn_green" type="button" onclick="toPage(1)" value="查&#12288;询"/>--%>
+<%--            &#12288;--%>
+<%--            <input class="btn_green" type="button" onclick="edit('')" value="新&#12288;增"/>--%>
+
+
+            <div style="margin-top: 15px;margin-bottom: 15px">
+                <input class="btn_green" type="button" onclick="toPage(1)" value="查&#12288;询"/>
+                &#12288;
+                <input class="btn_green" type="button" onclick="edit('')" value="新&#12288;增"/>
+            </div>
+
         </form>
     </div>
     <div  class="search_table">
@@ -72,9 +80,9 @@
                     <td style="text-align: left;">${list.messageTitle}</td>
                     <td>${pdfn:transDate(list.modifyTime)}</td>
                     <td>
-                        <a href="javascript:edit('${list.messageFlow}');" style="color: gray;">编辑</a> |
-                        <a href="<s:url value='/inx/jsres/messageView'/>?messageFlow=${list.messageFlow}" target="_blank" style="color: gray;">查看</a> |
-                        <a onclick="delMessage('${list.messageFlow}');" style="color: gray;">删除</a>
+                        <a href="javascript:edit('${list.messageFlow}');" >编辑</a>
+                        <a style="margin-left: 5px" href="<s:url value='/inx/jsres/messageView'/>?messageFlow=${list.messageFlow}" target="_blank" >查看</a>
+                        <a style="margin-left: 5px" onclick="delMessage('${list.messageFlow}');" >删除</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -87,7 +95,7 @@
         </table>
     </div>
 
-    <div class="page" style="padding-right: 40px;">
+    <div class="page" style="text-align: right">
         <c:set var="pageView" value="${pdfn:getPageView(messageList)}" scope="request"></c:set>
         <pd:pagination-jsres toPage="toPage"/>
     </div>

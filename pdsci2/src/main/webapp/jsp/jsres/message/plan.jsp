@@ -55,7 +55,7 @@
 		</h2>
 	</div>
   	<div class="main_bd" id="div_table_0">
-		<div class="div_search" style="padding: 0px 40px;">
+		<div class="div_search" style="padding: 0px 30px;">
 			<form id="searchForm" method="post">
 				<table style="border-collapse:separate; border-spacing:0px 20px;">
 					<tr>
@@ -131,7 +131,7 @@
 				</tr>
           	</table>
         </div>
-	  	<div class="page" style="text-align: center;">
+	  	<div class="page" style="text-align: right;">
 		  	<input id="currentPage" type="hidden" name="currentPage" value=""/>
 		  	<c:set var="pageView" value="${pdfn:getPageView(resultMapList)}" scope="request"></c:set>
 		  	<pd:pagination-jsres toPage="toPage"/>

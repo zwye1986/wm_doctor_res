@@ -171,21 +171,36 @@
                         <td class="td_left">
                             <nobr>原培训年级：</nobr>
                         </td>
-                        <td>
+                        <td class="td_right">
                             <input type="text" id="sessionNumber" name="sessionNumber" value=""
                                    class="input" readonly="readonly" style="width: 135px;margin-left: -30px"/>
                         </td>
                         <td class="td_left">
                             <nobr style="margin-left: 25px">&#12288;培训专业：</nobr>
                         </td>
-                        <td>
+                        <td class="td_right">
                             <input type="text" value="${param.trainingSpeName}" class="input" name="trainingSpeName" style="width: 160px;margin-left: -41px"/>
                         </td>
+
+                        <td class="td_left">
+                            <nobr>姓&#12288;&#12288;&#12288;名：</nobr>
+                        </td>
+                        <td class="td_right">
+                            <input type="text" value="${param.userName}" class="input" name="userName" style="width: 135px; margin-left: -30px" />
+                        </td>
+
+                        <td class="td_left">
+                            <nobr style="margin-left: 26px;">证件号：</nobr>
+                        </td>
+                        <td class="td_right">
+                            <input type="text" value="${param.idNo}" class="input" name="idNo" style="width: 160px;margin-left: -41px" />
+                        </td>
+
                         <c:if test="${JointOrgCount ne '0'}">
                             <td class="td_left">
                                 <nobr style="margin-right: -39px;margin-left: 34px">培训基地：</nobr>
                             </td>
-                            <td>
+                            <td class="td_right">
                                 <select class="select" name="orgFlow0" style="width: 170px;margin-left: 17px;margin-right: -32px;" onchange="searchDeptList(this.value)">
                                     <option value="all" <c:if test="${orgFlow eq 'all'}">selected="selected"</c:if>>全部</option>
                                     <c:forEach items="${orgList}" var="org">
@@ -196,23 +211,10 @@
                         </c:if>
                     </tr>
                     <tr>
-                        <td class="td_left">
-                            <nobr>姓&#12288;&#12288;&#12288;名：</nobr>
-                        </td>
-                        <td>
-                            <input type="text" value="${param.userName}" class="input" name="userName" style="width: 135px; margin-left: -30px" />
-                        </td>
-                        <td class="td_left">
-                            <nobr style="margin-left: 26px;">证件号：</nobr>
-                        </td>
-                        <td>
-                            <input type="text" value="${param.idNo}" class="input" name="idNo" style="width: 160px;margin-left: -41px" />
-                        </td>
-
                         <td colspan="6">
-                            <input class="btn_green" type="button" onclick="search()" style="margin-left: 35px;margin-right: -8px" value="查&#12288;询"/>&#12288;
+                            <input class="btn_green" type="button" onclick="search()"  value="查&#12288;询"/>&#12288;
                             <c:if test="${GlobalConstant.USER_LIST_LOCAL eq sessionScope.userListScope || GlobalConstant.USER_LIST_CHARGE eq sessionScope.userListScope}">
-                                <input class="btn_green" type="button" style="margin-right: -41px;margin-left: 21px;" onclick="addBlackList('local')" value="新&#12288;增"/>
+                                <input class="btn_green" type="button"  onclick="addBlackList('local')" value="新&#12288;增"/>
                             </c:if>
                         </td>
                     </tr>
@@ -303,7 +305,7 @@
             </c:if>
         </table>
     </div>
-    <div class="page" style="padding-right: 40px;">
+    <div class="page" style="padding-right: 30px;">
         <c:set var="pageView" value="${pdfn:getPageView(blackLists)}" scope="request"></c:set>
         <pd:pagination-jsres toPage="toPage"/>
     </div>

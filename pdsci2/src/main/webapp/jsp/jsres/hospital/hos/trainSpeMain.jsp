@@ -38,6 +38,21 @@
 	.btn-default{
 		background-color: #fff;
 	}
+	.btn-group > .btn:first-child {
+		margin-left: 0;
+		border: 1px solid #e7e7eb;
+		text-align: left;
+		height: 30px !important;
+		padding-left: 4px;
+		/* width: max-content; */
+	}
+	.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+		width: 150px;
+	}
+	.bootstrap-select.btn-group .dropdown-menu li a {
+		cursor: pointer;
+		padding-left: 0px;
+	}
 </style>
 <script type="text/javascript">
 	var curSessionNumber = '${sessionNumber}';
@@ -99,14 +114,14 @@
 <body>
 <div class="div_table">
 	<div>
-		<div style="width: 4px;height: 20px;background-color: #44b549"></div>
+		<div style="width: 4px;height: 20px;background-color: #54B2E5"></div>
 		<div style="margin-left: 12px;margin-top: -20px;color: #000000; font: 15px 'Microsoft Yahei'; font-weight: 500;">专业基地</div>
 	</div>
-	<div style="margin: -25px 10px 20px 0px; text-align: right;">
+	<div style="margin: -25px 0px 20px 0px; text-align: right;">
 		<form id="searchForm">
 			<input type="hidden" name="orgFlow" value="${orgFlow}">
 			<input type="hidden" name="ishos" value="${ishos}">
-			<div id="speOptDiv" style="display:${empty resJointOrgList ? 'none' : 'inline-block'};">
+			<div id="speOptDiv" style="display:${empty resJointOrgList ? 'none' : 'inline-block'};margin-right: 15px">
 				<label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">主协基地选择：</label>
 				<select name="speOpt" id="speOpt" class="show-menu-arrow" multiple title="请至少选择一项">
 					<c:if test='${not empty resJointOrgList}'>
@@ -118,16 +133,16 @@
 				</select>
 			</div>
 			<label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">年份：</label>
-			<input class="input" name="sessionNumber" id="sessionNumber" style="width: 100px;height: 29px;padding: 0px;"<%-- onchange="getInfo()"--%>
+			<input class="input" name="sessionNumber" id="sessionNumber" style="width: 150px;margin-right: 15px"<%-- onchange="getInfo()"--%>
 				   value="${param.sessionNumber==null?pdfn:getCurrYear():param.sessionNumber}"/>
 			<label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">专业：</label>
-			<select name="speId" id="speId" class="select" style="width: 100px;">
+			<select name="speId" id="speId" class="select" style="width: 161px;">
 				<option value="">全部</option>
 				<c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
 					<option value="${dict.dictId}" ${param.speId eq dict.dictId?'selected':''}>${dict.dictName}</option>
 				</c:forEach>
 			</select>
-			<input type="button" class="btn btn_green" onclick="getInfo()" value="查询" />
+			<input type="button" class="btn btn_green" style="margin-right: 0px !important;margin-left: 15px" onclick="getInfo()" value="查&#12288;询" />
 		</form>
 	</div>
 

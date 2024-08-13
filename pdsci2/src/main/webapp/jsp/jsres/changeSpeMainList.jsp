@@ -220,7 +220,7 @@
 
 </script>
 <div class="main_bd">
-    <div class="search_table">
+<%--    <div class="search_table">--%>
         <table border="0" cellpadding="0" cellspacing="0" class="grid">
             <colgroup>
                 <col width="7%"/>
@@ -305,8 +305,8 @@
             </c:if>
             </tbody>
         </table>
-    </div>
-    <div class="page" style="padding-right: 40px;">
+<%--    </div>--%>
+    <div class="page" style="padding-right: 0px;">
         <c:set var="pageView" value="${pdfn:getPageView(historyExts)}" scope="request"></c:set>
         <pd:pagination-jsres toPage="toPage"/>
     </div>

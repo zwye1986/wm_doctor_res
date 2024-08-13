@@ -15,6 +15,20 @@
     .cur {
         color: red
     }
+
+    .searchTable .td_left{
+	width: 82px;
+	word-wrap:break-word;
+	/*width:6em;*/
+	height: auto;
+	line-height: auto;
+	/*text-align: right;*/
+    }
+
+    .searchTable .td_right{
+        width: 220px;
+        text-align:left;
+    }
 </style>
 <script type="text/javascript">
     (function ($) {
@@ -165,28 +179,33 @@
                 <table class="searchTable">
                     <tr>
                     <c:if test="${GlobalConstant.USER_LIST_LOCAL eq  sessionScope.userListScope}">
-                        <td colspan="2">
+<%--                        <td colspan="2">--%>
+                        <c:if test="${JointOrgCount ne '0'}">
+                        <td class="td_left">
                                 <%--<c:if test="${countryOrgFlag eq 'Y'}">--%>
                                 <%--<input type="checkbox" id="jointOrg" name="jointOrg"--%>
                                 <%--<c:if test="${param.jointOrg eq 'checked'}">checked="checked"</c:if> /><label--%>
                                 <%--for="jointOrg">协同基地</label>&#12288;--%>
                                 <%--</c:if>--%>
-                            <c:if test="${JointOrgCount ne '0'}">
+
                                 培训基地：
-                                <select class="select" name="orgFlow0" style="width: 125px;" onchange="searchDeptList(this.value)">
+                        </td>
+                        <td class="td_right">
+                                <select class="select" name="orgFlow0" onchange="searchDeptList(this.value)">
                                     <option value="all" <c:if test="${orgFlow eq 'all'}">selected="selected"</c:if>>全部</option>
                                     <c:forEach items="${orgList}" var="org">
                                         <option value="${org.orgFlow}" <c:if test="${orgFlow == org.orgFlow}">selected="selected"</c:if>>${org.orgName}</option>
                                     </c:forEach>
                                 </select>&#12288;
-                            </c:if>
+
                         </td>
+                        </c:if>
                     </c:if>
                     <c:if test="${GlobalConstant.USER_LIST_LOCAL != sessionScope.userListScope}">
                         <td class="td_left">培训基地：</td>
-                        <td>
+                        <td class="td_right">
                             <input id="trainOrg" oncontextmenu="return false" name="orgName" value="${param.orgName}"
-                                   class="toggleView input" type="text" autocomplete="off" style="margin-left: 0px;width: 120px"
+                                   class="toggleView input" type="text" autocomplete="off" style="margin-left: 0px;"
                                    onkeydown="changeStatus();" onkeyup="changeStatus();"/>
                             <div id="pDiv"
                                  style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:30px;">
@@ -204,17 +223,14 @@
                         </td>
                     </c:if>
                         <td class="td_left">学员姓名:</td>
-                        <td>
-                            <input type="text"  name="doctorName" value="${param.doctorName}" class="input"   />&#12288;
+                        <td class="td_right">
+                            <input type="text"  name="doctorName" value="${param.doctorName}" class="input"  />
                         </td>
                         <td class="td_left">人员类型:</td>
                         <td colspan="3">
                             <c:forEach items="${jsResDocTypeEnumList}" var="type">
                                 <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
                             </c:forEach>&#12288;
-                        <c:if test="${JointOrgCount eq '0' ||GlobalConstant.USER_LIST_LOCAL ==  sessionScope.userListScope}">
-                            <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
-                        </c:if>
                         </td>
                     </tr>
                     <c:if test="${GlobalConstant.USER_LIST_LOCAL !=  sessionScope.userListScope}">
@@ -233,6 +249,12 @@
                         </tr>
                     </c:if>
                 </table>
+
+                <div style="margin-bottom: 15px;margin-top: 15px">
+                    <c:if test="${JointOrgCount eq '0' ||GlobalConstant.USER_LIST_LOCAL ==  sessionScope.userListScope}">
+                        <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
+                    </c:if>
+                </div>
             </c:if>
         </form>
     </div>
@@ -292,7 +314,7 @@
             </c:if>
         </table>
     </div>
-    <div class="page" style="padding-right: 40px;">
+    <div class="page" style="padding-right: 0px;">
         <c:set var="pageView" value="${pdfn:getPageView(resRecList)}" scope="request"></c:set>
         <pd:pagination-jsres toPage="toPage"/>
     </div>

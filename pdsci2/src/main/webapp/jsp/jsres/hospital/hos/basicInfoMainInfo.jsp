@@ -78,7 +78,7 @@
     }
 
     .div_table {
-        padding: 10px 30px 0;
+        padding: 5px 30px 0;
         margin-bottom: 0px;
     }
 

@@ -31,7 +31,7 @@
 
 </script>
 <c:if test="${empty list}">
-    <div class="search_table" style="width: 100%;padding: 0 20px">
+    <div class="search_table" >
         <table class="grid" >
             <tr>
                 <th width="12%">姓名</th>
@@ -49,7 +49,7 @@
 </c:if>
 <c:if test="${not empty list}">
     <div class="main_bd clearfix">
-        <table class="grid" style="width: auto;margin-left: 42px" id="dataTable">
+        <table class="grid" id="dataTable">
             <thead>
                 <th width="12%">姓名</th>
                 <th width="12%">人员类型</th>
@@ -82,7 +82,7 @@
     </div>
 </c:if>
 </div>
-<div class="page" style="text-align: center">
+<div class="page" style="text-align: right">
     <c:set var="pageView" value="${pdfn:getPageView(list)}" scope="request"></c:set>
     <pd:pagination-jsres toPage="toPage"/>
 </div>

@@ -1150,7 +1150,7 @@
                     <div class="content_side">
                         <input type="hidden" id="orgFlow3" value='${orgFlow}'/>
                         <dl class="menu menu_first">
-                            <a class="side-button" href="#" onclick="showSelectMenu();">切<br/>换<br/>新<br/>版<br/>菜<br/>单</a>
+<%--                            <a class="side-button" href="#" onclick="showSelectMenu();">切<br/>换<br/>新<br/>版<br/>菜<br/>单</a>--%>
 
                             <dt class="menu_title">
                                 <i class="icon_menu menu_function"></i>基地管理
@@ -1549,9 +1549,9 @@
                                                     <tr>
                                                         <td align="left">
                                                             <p style="width:100%">
-                                                                <span style="float: left;font-weight: 900;width:33%">培训类别：</span>
-                                                                <span style="float: left;width:33%;text-align:center;">住院医师<br/>${doctorCountExtMap[key]["DoctorTrainingSpe"]}人</span>
-                                                                <span style="float: left;width:33%;text-align:center;">助理全科<br/>${doctorCountExtMap[key]["AssiGeneral"]}人</span>
+                                                                <span style="float: left;font-weight: 900;width:30%">培训类别：</span>
+                                                                <span style="float: left;width:35%;text-align:center;">住院医师<br/>${doctorCountExtMap[key]["DoctorTrainingSpe"]}人</span>
+                                                                <span style="float: left;width:35%;text-align:center;">助理全科<br/>${doctorCountExtMap[key]["AssiGeneral"]}人</span>
                                                             </p>
                                                         </td>
                                                     </tr>

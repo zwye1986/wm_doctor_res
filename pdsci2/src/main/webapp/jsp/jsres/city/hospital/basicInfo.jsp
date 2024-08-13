@@ -73,7 +73,7 @@
             <div style="width: 4px;height: 20px;background-color: #44b549"></div>
             <div style="margin-left: 12px;margin-top: -20px;color: #000000; font: 15px 'Microsoft Yahei'; font-weight: 500;">基地信息</div>
         </div>--%>
-    <div style="margin: 0 30px 20px 0px; text-align: right;">
+    <div style="margin: 30px 30px 20px 0px; text-align: right;">
         <form id="searchForm">
             <input type="hidden" name="orgFlow" value="${orgFlow}">
             <input type="hidden" name="ishos" value="${ishos}">
@@ -92,7 +92,7 @@
                        value="${sessionNumber}"/>
             </c:if>
             <c:if test="${empty ishos}">
-                <input class="input" name="sessionNumber" id="sessionNumber" style="width: 100px;height: 29px;padding: 0px;"
+                <input class="input" name="sessionNumber" id="sessionNumber" style="width: 161px;height: 30px;padding: 0px;padding-left: 4px;"
                        value="${empty param.sessionNumber?pdfn:getCurrYear():param.sessionNumber}"/>
             </c:if>
         </form>

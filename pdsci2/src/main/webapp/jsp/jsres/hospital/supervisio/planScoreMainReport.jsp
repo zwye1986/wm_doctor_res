@@ -91,43 +91,74 @@
 <div class="div_search" style="width: 95%;line-height:normal;">
     <form id="searchForm">
         <input type="hidden" id="currentPage" name="currentPage"/>
-        <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
-                <tr>
-                    <td class="td_left">
-                        <nobr>基地名称：</nobr>
-                    </td>
-                    <c:if test="${GlobalConstant.USER_LIST_LOCAL eq roleFlag}">
-                        <td>
-                            <select name="orgFlow" class="select" style="width: 181px;">
-                                <c:forEach items="${orgs}" var="org">
-                                    <option value="${org.orgFlow}" ${orgFlow eq org.orgFlow?'selected':''}
-                                    >${org.orgName}</option>
-                                </c:forEach>
-                            </select>
-                        </td>
-                    </c:if>
-                    <td class="td_left">
-                        <nobr>基地代码：</nobr>
-                    </td>
-                    <td>
-                        <input type="text" name="baseCode" value="${param.baseCode}" class="input"
-                               style="width: 164px;margin-left: 0px;"/>
-                    </td>
-                    <td class="td_left">
-                        <nobr>检查年份：</nobr>
-                    </td>
-                    <td>
-                        <input class="input" name="subjectYear" id="subjectYear" style="width: 100px;margin-left: 0px;"
-                            value="${param.subjectYear==null?currentTime:param.subjectYear}"/>
-                    </td>
 
-                    <td>
-                        <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>&#12288;
-                    </td>
-                </tr>
-        </table>
+        <div style="display: flex;justify-content: flex-start; column-gap: 56px;margin-top: 15px">
+            <div>
+                <label class="form_label">基地名称：</label>
+                <c:if test="${GlobalConstant.USER_LIST_LOCAL eq roleFlag}">
+                    <select name="orgFlow" class="select" style="width: 161px;">
+                        <c:forEach items="${orgs}" var="org">
+                            <option value="${org.orgFlow}" ${orgFlow eq org.orgFlow?'selected':''}
+                            >${org.orgName}</option>
+                        </c:forEach>
+                    </select>
+                </c:if>
+            </div>
+            <div>
+                <label class="form_label">基地代码：</label>
+                <input type="text" name="baseCode" value="${param.baseCode}" class="input"
+                       style="width: 161px;margin-left: 0px;"/>
+            </div>
+            <div>
+                <label class="form_label">检查年份：</label>
+                <input class="input" name="subjectYear" id="subjectYear" style="width: 161px;margin-left: 0px;"
+                       value="${param.subjectYear==null?currentTime:param.subjectYear}"/>
+            </div>
+
+        </div>
+        <div style="margin-top: 15px;margin-bottom: 15px">
+            <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
+        </div>
+
+
+
+<%--        <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">--%>
+<%--                <tr>--%>
+<%--                    <td class="td_left">--%>
+<%--                        <nobr>基地名称：</nobr>--%>
+<%--                    </td>--%>
+<%--                    <c:if test="${GlobalConstant.USER_LIST_LOCAL eq roleFlag}">--%>
+<%--                        <td>--%>
+<%--                            <select name="orgFlow" class="select" style="width: 181px;">--%>
+<%--                                <c:forEach items="${orgs}" var="org">--%>
+<%--                                    <option value="${org.orgFlow}" ${orgFlow eq org.orgFlow?'selected':''}--%>
+<%--                                    >${org.orgName}</option>--%>
+<%--                                </c:forEach>--%>
+<%--                            </select>--%>
+<%--                        </td>--%>
+<%--                    </c:if>--%>
+<%--                    <td class="td_left">--%>
+<%--                        <nobr>基地代码：</nobr>--%>
+<%--                    </td>--%>
+<%--                    <td>--%>
+<%--                        <input type="text" name="baseCode" value="${param.baseCode}" class="input"--%>
+<%--                               style="width: 164px;margin-left: 0px;"/>--%>
+<%--                    </td>--%>
+<%--                    <td class="td_left">--%>
+<%--                        <nobr>检查年份：</nobr>--%>
+<%--                    </td>--%>
+<%--                    <td>--%>
+<%--                        <input class="input" name="subjectYear" id="subjectYear" style="width: 100px;margin-left: 0px;"--%>
+<%--                            value="${param.subjectYear==null?currentTime:param.subjectYear}"/>--%>
+<%--                    </td>--%>
+
+<%--                    <td>--%>
+<%--                        <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>&#12288;--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--        </table>--%>
     </form>
 </div>
-<div id="doctorListZi" style="width: 95%">
+<div id="doctorListZi" style="width: 100%">
 
 </div>

@@ -102,7 +102,7 @@
                     </c:if>
 
                     <c:if test="${sysUser.statusId==userStatusEnumLocked.id}">
-                        <a href="javascript:activate('${sysUser.userFlow}');" class="btn">启用</a>
+                        <a href="javascript:activate('${sysUser.userFlow}');" class="btn" style="padding: 0px 10px;">启用</a>
                     </c:if>
                 </td>
             </tr>

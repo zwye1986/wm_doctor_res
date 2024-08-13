@@ -217,7 +217,7 @@
 				<input type="hidden" name="configFlow" value="${evalConfig.configFlow}"/>
 				<input type="hidden" name="id"/>
 				<input type="hidden" name="orderNum" id="orderNum"/>
-				<input class="btn_green" type="button" style="margin:5px 10px 0px 40px;float:left;" id="addTitleButton" value="添加考评项目" onclick="addFromTitle();"/>
+				<input class="btn_green" type="button"  id="addTitleButton" value="添加考评项目" onclick="addFromTitle();"/>
 				<div id="titleParam" style="display:none;float:left;margin:5px 10px 0px 40px;">
 					评分项目：<input type="text" name="name" id="name" class="input validate[required]" />
 					&#12288;<input class="btn_green" type="button" id="saveTitleButton" value="保&#12288;存" onclick="saveFromTitle('','');"/>
@@ -225,7 +225,7 @@
 				</div>
 			</form>
 		</div>
-		<div class="search_table" style="padding-top: 40px;">
+		<div class="search_table" style="padding-top: 15px;">
 			<form id="cfgForm" >
 				<input type="hidden" name="configFlow" value="${evalConfig.configFlow}"/>
 				<!-- 标题 -->

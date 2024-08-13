@@ -55,11 +55,13 @@
                 <tr>
                     <td colspan="3" style="text-align: right;border-top: 0;">
                         <c:if test="${empty trainingOpinion.opinionReplyContent}">
-                            <img src="<s:url value='/jsp/jsres/images/hf.png'/>"
-                                 onclick="reply('${trainingOpinion.trainingOpinionFlow}')" style="cursor: pointer;"/>
+                        <a onclick="reply('${trainingOpinion.trainingOpinionFlow}')" style="cursor: pointer;" >回复 </a>
+<%--                            <img src="<s:url value='/jsp/jsres/images/hf.png'/>"--%>
+<%--                                 onclick="reply('${trainingOpinion.trainingOpinionFlow}')" style="cursor: pointer;"/>--%>
                         </c:if>
                         <c:if test="${!empty trainingOpinion.opinionReplyContent}">
-                            <img src="<s:url value='/jsp/jsres/images/hf-h.png'/>"/>
+                        <lable >回复</lable>
+<%--                            <img src="<s:url value='/jsp/jsres/images/hf-h.png'/>"/>--%>
                         </c:if>
                     </td>
                 </tr>

@@ -28,9 +28,9 @@
 	}
 	.searchTable .td_left{
 		word-wrap:break-word;
-		width:5em;
+		/*width:5em;*/
 		height: auto;
-		text-align: right;
+		/*text-align: right;*/
 	}
 	.text{
 		margin-left: 0;
@@ -211,18 +211,27 @@
 <%--<div class="main_hd">--%>
 	<%--<h2  class="underline" >学员考评查询</h2>--%>
 <%--</div>--%>
-<div class="div_search" style="width: 95%;line-height:normal;">
+<div class="div_search" >
 	<form id="searchForm">
 		<input type="hidden" id="currentPage" name="currentPage"/>
 		<table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
 			<tr>
 				<td class="td_left">培训基地：</td>
-				<td>
+				<td class="td_right">
 					<input id="trainOrg"  class="toggleView input" type="text"  autocomplete="off"  />
 					<input type="hidden" name="orgFlow" id="orgFlow">
 				</td>
+				<td class="td_left">年&#12288;&#12288;级：</td>
+				<td class="td_right">
+					<input type="text" id="sessionNumber" name="sessionNumber" class="input" readonly="readonly" />
+				</td>
+				<td class="td_left">培训专业：</td>
+				<td class="td_right"><select name="trainingSpeId" id="trainingSpeId"class="select" >
+					<option value="">全部</option>
+				</select>
+				</td>
 				<td class="td_left">培训类别：</td>
-				<td><select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" >
+				<td class="td_right"><select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" >
 					<option value="DoctorTrainingSpe">住院医师</option>
 				<%--	<option value="">请选择</option>
 					<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
@@ -230,32 +239,23 @@
 					</c:forEach>--%>
 				</select>
 				</td>
-				<td class="td_left">培训专业：</td>
-				<td><select name="trainingSpeId" id="trainingSpeId"class="select" >
-					<option value="">全部</option>
-				</select>
-				</td>
-				<td class="td_left">年&#12288;&#12288;级：</td>
-				<td>
-					<input type="text" id="sessionNumber" name="sessionNumber" class="input" readonly="readonly" />
+				<td class="td_left">结业考核年份：</td>
+				<td >
+					<input type="text" id="graduationYear" name="graduationYear"value="${param.graduationYear}" class="input" readonly="readonly" />
 				</td>
 			</tr>
 			<tr>
-				<td class="td_left">结业考核&#12288;年&#12288;&#12288;份：</td>
-				<td>
-					<input type="text" id="graduationYear" name="graduationYear"value="${param.graduationYear}" class="input" readonly="readonly" />
-				</td>
 				<td class="td_left">姓&#12288;&#12288;名：</td>
-				<td>
+				<td class="td_right">
 					<input type="text" name="userName" value="${param.userName}" class="input"/>
 				</td>
-				<td class="td_left">证&nbsp;件&nbsp;号&nbsp;：</td>
-				<td>
+				<td class="td_left">证件号：</td>
+				<td class="td_right">
 					<input type="text" name="idNo" value="${param.idNo}" class="input"/>
 				</td>
 
 				<td class="td_left">学员状态：</td>
-				<td>
+				<td class="td_right">
 					<select name="doctorStatusId" class="select" >
 						<option value="">全部</option>
 						<c:forEach var="dict" items="${dictTypeEnumDoctorStatusList}">
@@ -263,13 +263,13 @@
 						</c:forEach>
 					</select>
 				</td>
-			</tr>
-			<tr>
 				<td class="td_left">轮转月份：</td>
-				<td>
+				<td class="td_right">
 					<select name="schMonths" id="schMonths" class="show-menu-arrow" multiple title="请选择" data-actions-box="true">
 					</select>
 				</td>
+			</tr>
+			<tr>
 				<td class="td_left">人员类型：</td>
 				<td colspan="5">
 					<c:forEach items="${jsResDocTypeEnumList}" var="type">
@@ -282,7 +282,7 @@
 		</table>
 	</form>
 </div>
-<div id="doctorListZi" style="width: 95%">
+<div id="doctorListZi" >
 </div>
 <div style="display: none;">
 	<select id="WMFirst_select">
