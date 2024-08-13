@@ -273,6 +273,7 @@
 	  <div class="code fr">
 	     <div class="android" onmouseover="showQr('android');" onmouseout="hideThis('android')"></div>
 	     <%--<div class="iphone" onmouseover="showQr('iphone');" onmouseout="hideThis('iphone')"></div>--%>
+          <font class="fr">轮转手册登记请关注微信公众号</font>
 	      <img class="Q_hand fr" src="<s:url value='/jsp/jsres/images/Q_hand.png'/>"/>
 	      <div class="QR_android QR" style="display: none;"><img class="QR_code"
                                                                  src="<s:url value='/jsp/jsres/images/jsQrcode.jpg'/>"/></div>
