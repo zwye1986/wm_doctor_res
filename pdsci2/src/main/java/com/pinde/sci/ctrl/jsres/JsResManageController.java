@@ -599,6 +599,9 @@ public class JsResManageController extends GeneralController {
 			if (null != powerCfg && powerCfg.getCfgValue().equals("Y")){
 				model.addAttribute("hospitalSupervisor","Y");
 			}
+			if (GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_ROLE_NAME).equals("医院秘书")) {
+				return "jsres/hospital/hospitalSecretaryIndex";
+			}
 			if("Y".equals(more)){
 				return "jsres/hospital/hospitalIndexNew";
 			}
@@ -16436,8 +16439,14 @@ public class JsResManageController extends GeneralController {
 			model.addAttribute("hospitalSupervisor","Y");
 		}
 		if (type.equals("phy")){	//住院医师
+			if (GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_ROLE_NAME).equals("医院秘书")) {
+				return "jsres/hospital/hospitalSecretaryIndex";
+			}
 			return "jsres/hospital/hospitalIndex";
 		}else if (type.equals("acc")){	//助理全科
+			if (GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_ROLE_NAME).equals("医院秘书")) {
+				return "jsres/hospital/hospitalSecretaryIndexAcc";
+			}
 			return "jsres/hospital/hospitalIndexAcc";
 		}
 		return "/inx/jsres/login";
