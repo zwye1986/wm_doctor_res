@@ -1361,6 +1361,8 @@ public class InxJsResController extends GeneralController {
                 return "/jsres/manage/charge";
             } else if (roleFlow.equals(InitConfig.getSysCfg("res_admin_role_flow"))) {//医院管理员
                 return "/jsres/manage/local";
+            } else if (roleFlow.equals(InitConfig.getSysCfg("res_hospital_secretary_role_flow"))) {//医院秘书
+                return "/jsres/manage/local";
             } else if (roleFlow.equals(InitConfig.getSysCfg("res_head_role_flow"))) {//科主任
                 return "/jsres/kzr/index";
             } else if (roleFlow.equals(InitConfig.getSysCfg("res_teaching_head_role_flow"))) {//教学主任

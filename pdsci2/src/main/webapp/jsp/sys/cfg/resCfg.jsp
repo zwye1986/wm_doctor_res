@@ -227,6 +227,23 @@ function compareDate(id) {
 							</td>
 						</tr>
 						<tr>
+							<td style="text-align: right" width="100px">医院秘书角色：</td>
+							<td style="text-align: left;padding-left: 5px" width="200px">
+									<input type="hidden" name="cfgCode" value="res_hospital_secretary_role_flow">
+									<select name="res_hospital_secretary_role_flow" class="xlselect">
+										<option></option>
+										<c:forEach items="${applicationScope.sysRoleWsMap['res'] }" var="role">
+										<c:if test="${GlobalConstant.RECORD_STATUS_Y eq role.recordStatus}">
+											<option value="${role.roleFlow }" <c:if test="${sysCfgMap['res_hospital_secretary_role_flow'] ==role.roleFlow }">selected</c:if>>${role.roleName }</option>
+										</c:if>
+										</c:forEach>
+									</select>
+
+									<input type="hidden" name="res_hospital_secretary_role_flow_ws_id"  value="res">
+								<input type="hidden" name="res_hospital_secretary_role_flow_desc"  value="医院秘书角色">
+							</td>
+						</tr>
+						<tr>
 							<td style="text-align: right" width="100px">医院管理员(四川中医审核)：</td>
 							<td style="text-align: left;padding-left: 5px" width="200px">
 								<input type="hidden" name="cfgCode" value="res_admin_graduation_only">
