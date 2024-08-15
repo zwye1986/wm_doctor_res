@@ -19,8 +19,8 @@
         $(".tab_select").click();
     });
     function reductionManage(operType){
-        <%--var url = "<s:url value='/jsres/reduction/reductionManage?statusFlag=all&roleId=${roleId}'/>" + "&operType=" + operType;--%>
-        var url = "<s:url value='/jsres/reduction/reductionManageAcc?statusFlag=all&roleId=${roleId}'/>" + "&operType=" + operType;
+        var url = "<s:url value='/jsres/reduction/reductionManage?statusFlag=all&roleId=${roleId}'/>" + "&operType=" + operType;
+        <%--var url = "<s:url value='/jsres/reduction/reductionManageAcc?statusFlag=all&roleId=${roleId}'/>" + "&operType=" + operType;--%>
         jboxLoad("div_table", url, true);
     }
 </script>

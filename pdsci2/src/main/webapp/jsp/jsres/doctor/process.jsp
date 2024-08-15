@@ -433,8 +433,8 @@ function doctorback(){
 		jboxOpen(url, "填写数据导入",500,300);
 	}
 
-    function getProcess(rotationFlow, doctorFlow){
-        jboxLoad("content","<s:url value='/jsres/doctor/trainRegister?roleFlag=doctor'/>&rotationFlow="+rotationFlow + "&doctorFlow=" + doctorFlow,true);
+    function getProcess(rotationFlow, doctorFlow, hideApprove, roleFlag){
+        jboxLoad("content","<s:url value='/jsres/doctor/trainRegister'/>?rotationFlow="+rotationFlow + "&doctorFlow=" + doctorFlow + "&hideApprove=" + hideApprove + "&roleFlag=" + roleFlag,true);
     }
 </script>
 <script type="text/javascript">
@@ -474,7 +474,7 @@ function doctorback(){
 		<ul>
 			<c:forEach items="${recruitList}" var="recruit">
 				<%--<input type="hidden" class="${recruit.catSpeId}" value="${recruit.speId}"/>--%>
-				<li <c:if test="${rotationFlow eq recruit.rotationFlow}">class="tab_select"</c:if> id="li_${recruit.rotationFlow}" onclick="getProcess('${recruit.rotationFlow}', '${recruit.doctorFlow}');"><a>${recruit.speName}（${recruit.sessionNumber}级）</a></li>
+				<li <c:if test="${rotationFlow eq recruit.rotationFlow}">class="tab_select"</c:if> id="li_${recruit.rotationFlow}" onclick="getProcess('${recruit.rotationFlow}', '${recruit.doctorFlow}', '${hideApprove}', '${roleFlag}');"><a>${recruit.speName}（${recruit.sessionNumber}级）</a></li>
 			</c:forEach>
 		</ul>
 	</div>
