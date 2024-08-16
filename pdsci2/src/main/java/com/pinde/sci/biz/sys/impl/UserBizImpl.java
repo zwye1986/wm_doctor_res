@@ -1074,8 +1074,6 @@ public class UserBizImpl implements IUserBiz {
 		user.setUserPasswd(PkUtil.getUUID());
 		user.setStatusId(UserStatusEnum.Added.getId());
 		user.setStatusDesc(UserStatusEnum.Added.getName());
-		user.setTrainingTypeId(TrainCategoryEnum.DoctorTrainingSpe.getId());
-		user.setTrainingTypeName(TrainCategoryEnum.DoctorTrainingSpe.getName());
 		GeneralMethod.setRecordInfo(user, true);
 		return sysUserMapper.insert(user);
 	}

@@ -200,6 +200,7 @@ public class InitConfig implements ServletContextListener {
 		String businessAuthority = prop.getProperty("business");//商务角色
 		String testAuthority = prop.getProperty("test");//外省基地管理员角色
 		String adminAccessAuthority = prop.getProperty("admin");//医院管理员//免费医院管理员
+		String hospitalSecretaryAccessAuthority = prop.getProperty("hospitalSecretary");//医院秘书
 		String speAdminAccessAuthority = prop.getProperty("speAdmin");//专业基地管理员
 		String speAdminSecretaryAccessAuthority = prop.getProperty("speAdminSecretary");//专业基地管理员
 		String globalAccessAuthority = prop.getProperty("global");//省级部门
@@ -259,6 +260,9 @@ public class InitConfig implements ServletContextListener {
 		if (StringUtil.isNotBlank(adminAccessAuthority)) {
 			allMenus.addAll(Arrays.asList(adminAccessAuthority.split(",")));
 		}
+		if (StringUtil.isNotBlank(hospitalSecretaryAccessAuthority)) {
+			allMenus.addAll(Arrays.asList(hospitalSecretaryAccessAuthority.split(",")));
+		}
 		if (StringUtil.isNotBlank(speAdminAccessAuthority)) {
 			allMenus.addAll(Arrays.asList(speAdminAccessAuthority.split(",")));
 		}
@@ -305,6 +309,7 @@ public class InitConfig implements ServletContextListener {
 		context.setAttribute("businessAuthority", businessAuthority);
 		context.setAttribute("testAuthority", testAuthority);
 		context.setAttribute("adminAccessAuthority", adminAccessAuthority);
+		context.setAttribute("hospitalSecretaryAccessAuthority", hospitalSecretaryAccessAuthority);
 		context.setAttribute("speAdminAccessAuthority", speAdminAccessAuthority);
 		context.setAttribute("speAdminSecretaryAccessAuthority", speAdminSecretaryAccessAuthority);
 		context.setAttribute("globalAccessAuthority", globalAccessAuthority);

@@ -99,6 +99,7 @@ public class UserInterceptor implements HandlerInterceptor {
 		String maintenanceAuthority = (String) request.getServletContext().getAttribute("maintenanceAuthority");//运维角色
 		String testAuthority = (String) request.getServletContext().getAttribute("testAuthority");//外省基地管理员角色
 		String adminAccessAuthority = (String) request.getServletContext().getAttribute("adminAccessAuthority");//医院管理员//免费医院管理员
+		String hospitalSecretaryAccessAuthority = (String) request.getServletContext().getAttribute("hospitalSecretaryAccessAuthority");//医院管理员//免费医院管理员
 		String speAdminAccessAuthority = (String) request.getServletContext().getAttribute("speAdminAccessAuthority");//专业基地管理员
 		String speAdminSecretaryAccessAuthority = (String) request.getServletContext().getAttribute("speAdminSecretaryAccessAuthority");//专业基地秘书
 		String chargeAccessAuthority = (String) request.getServletContext().getAttribute("chargeAccessAuthority");//主管部门（市局）
@@ -125,6 +126,10 @@ public class UserInterceptor implements HandlerInterceptor {
 					} else if (roleFlow.equals(InitConfig.getSysCfg("res_admin_role_flow"))) {//医院管理员
 						if (StringUtil.isNotBlank(adminAccessAuthority)) {
 							myMenus.addAll(Arrays.asList(adminAccessAuthority.split(",")));
+						}
+					} else if (roleFlow.equals(InitConfig.getSysCfg("res_hospital_secretary_role_flow"))) {//医院秘书
+						if (StringUtil.isNotBlank(hospitalSecretaryAccessAuthority)) {
+							myMenus.addAll(Arrays.asList(hospitalSecretaryAccessAuthority.split(",")));
 						}
 					} else if (roleFlow.equals(InitConfig.getSysCfg("res_professionalBase_admin_role_flow"))) {//专业基地管理员
 						if (StringUtil.isNotBlank(speAdminAccessAuthority)) {

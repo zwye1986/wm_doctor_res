@@ -38,6 +38,7 @@ import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.vo.ResSpeBaseStdDeptVO;
 import com.pinde.sci.model.vo.ResStandardDeptVO;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -1154,27 +1155,28 @@ public class JsResSpeAdminController extends GeneralController{
 		if (GlobalConstant.ROTATING_DEPARTMENTS.equals(baseInfoName)) {	//轮转科室
 			SchRotation schRotation = schRotationtBiz.searchDoctorBySpeId(speFlow);
 			if (null!=schRotation){ // 有轮转方案的，下面的重写
-				ResSpeBaseStdDeptVO speBaseStdDeptVO = new ResSpeBaseStdDeptVO();
-				speBaseStdDeptVO.setSpeBaseId(speFlow);
-				List<ResSpeBaseStdDeptVO> resSpeBaseStdDeptVOList = deptManagementBiz.searchSpeBaseStdDept(speBaseStdDeptVO);
+				if(StringUtils.isNotEmpty(speFlow)) {
+					ResSpeBaseStdDeptVO speBaseStdDeptVO = new ResSpeBaseStdDeptVO();
+					speBaseStdDeptVO.setSpeBaseId(speFlow);
+					List<ResSpeBaseStdDeptVO> resSpeBaseStdDeptVOList = deptManagementBiz.searchSpeBaseStdDept(speBaseStdDeptVO);
 
-				if(CollectionUtils.isNotEmpty(resSpeBaseStdDeptVOList)) {
-					List<String> stdDeptFlowList = resSpeBaseStdDeptVOList.stream().map(vo -> vo.getStandardDeptFlow()).collect(Collectors.toList());
-					ResStandardDeptVO standardDeptVO = new ResStandardDeptVO();
-					standardDeptVO.setStandardDeptFlowList(stdDeptFlowList);
-					List<ResStandardDeptVO> resStandardDeptVOList = deptManagementBiz.searchStandardDept(standardDeptVO);
-					Map<String, ResStandardDeptVO> stdDeptFlowToEntityMap = resStandardDeptVOList.stream().collect(Collectors.toMap(vo -> vo.getStandardDeptFlow(), vo -> vo));
-					resSpeBaseStdDeptVOList.forEach(vo -> {
-						ResStandardDeptVO tempVO = stdDeptFlowToEntityMap.get(vo.getStandardDeptFlow());
-						if(tempVO != null) {
-							vo.setStandardDeptName(tempVO.getStandardDeptName());
-							vo.setStandardDeptCode(tempVO.getStandardDeptCode());
-						}
-					});
-				}
+					if (CollectionUtils.isNotEmpty(resSpeBaseStdDeptVOList)) {
+						List<String> stdDeptFlowList = resSpeBaseStdDeptVOList.stream().map(vo -> vo.getStandardDeptFlow()).collect(Collectors.toList());
+						ResStandardDeptVO standardDeptVO = new ResStandardDeptVO();
+						standardDeptVO.setStandardDeptFlowList(stdDeptFlowList);
+						List<ResStandardDeptVO> resStandardDeptVOList = deptManagementBiz.searchStandardDept(standardDeptVO);
+						Map<String, ResStandardDeptVO> stdDeptFlowToEntityMap = resStandardDeptVOList.stream().collect(Collectors.toMap(vo -> vo.getStandardDeptFlow(), vo -> vo));
+						resSpeBaseStdDeptVOList.forEach(vo -> {
+							ResStandardDeptVO tempVO = stdDeptFlowToEntityMap.get(vo.getStandardDeptFlow());
+							if (tempVO != null) {
+								vo.setStandardDeptName(tempVO.getStandardDeptName());
+								vo.setStandardDeptCode(tempVO.getStandardDeptCode());
+							}
+						});
+					}
 
-				List<ResSpeBaseStdDeptVO> requiredList = resSpeBaseStdDeptVOList.stream().filter(vo -> "1".equals(vo.getRotationRequireStatus())).collect(Collectors.toList());
-				List<ResSpeBaseStdDeptVO> notRequiredList = resSpeBaseStdDeptVOList.stream().filter(vo -> "2".equals(vo.getRotationRequireStatus())).collect(Collectors.toList());
+					List<ResSpeBaseStdDeptVO> requiredList = resSpeBaseStdDeptVOList.stream().filter(vo -> "1".equals(vo.getRotationRequireStatus())).sorted(Comparator.comparing(ResSpeBaseStdDeptVO::getStandardDeptCode)).collect(Collectors.toList());
+					List<ResSpeBaseStdDeptVO> notRequiredList = resSpeBaseStdDeptVOList.stream().filter(vo -> "2".equals(vo.getRotationRequireStatus())).sorted(Comparator.comparing(ResSpeBaseStdDeptVO::getStandardDeptCode)).collect(Collectors.toList());
 
 
 				/*List<Map<String,String>> requiredList = deptCfgBiz.searchByLastRotationBySpe(orgFlow,speFlow,"Y");	//轮转科室
@@ -1213,8 +1215,9 @@ public class JsResSpeAdminController extends GeneralController{
 				mav.addObject("requiredList", standardDeptCfgRequiredList);
 				mav.addObject("notRequiredList", standardDeptCfgNotRequiredList);*/
 
-				mav.addObject("requiredList", requiredList);
-				mav.addObject("notRequiredList", notRequiredList);
+					mav.addObject("requiredList", requiredList);
+					mav.addObject("notRequiredList", notRequiredList);
+				}
 			}
 			mav.setViewName("jsres/speAdmin/speInfo/"+baseInfoName.substring(0,1).toLowerCase()+baseInfoName.substring(1));
 			return mav;
