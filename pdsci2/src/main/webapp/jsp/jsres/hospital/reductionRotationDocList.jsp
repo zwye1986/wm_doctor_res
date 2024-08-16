@@ -2,6 +2,7 @@
 	<jsp:param name="queryFont" value="true"/>
 	<jsp:param name="jquery_datePicker" value="true"/>
 </jsp:include>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 function toPage(page){
 	$("#currentPage").val(page || 1);
@@ -48,25 +49,35 @@ function setType(flag){
 		<form id="searchFormReduction">
 			<input type="hidden" id="currentPage" name="currentPage" value="${param.currentPage}">
 			<input type="hidden" id="degreeType" name="degreeType" value="${param.degreeType}">
-			<table class="searchTable">
-				<tr>
-					<td class="td_left">姓&#12288;&#12288;名：</td>
-					<td class="td_right">
+
+			<div class="form_search">
+				<div class="form_item">
+					<div class="form_label">姓&#12288;&#12288;名：</div>
+					<div class="form_content" >
 						<input type="text" name="doctorName" value="${param.doctorName}" class="input"/>
-					</td>
-					<td class="td_left">年&#12288;&#12288;级：</td>
-					<td class="td_right">
+					</div>
+				</div>
+
+				<div class="form_item">
+					<div class="form_label">年&#12288;&#12288;级：</div>
+					<div class="form_content" >
 						<input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" readonly class="input"/>
-					</td>
-					<td class="td_left">调整状态：</td>
-					<td class="td_right">
+					</div>
+				</div>
+
+				<div class="form_item">
+					<div class="form_label">调整状态：</div>
+					<div class="form_content" >
 						<select class="select" name="status" >
 							<option></option>
 							<option value="Y" <c:if test="${param.status eq 'Y'}">selected</c:if>>已调整</option>
 							<option value="N" <c:if test="${param.status eq 'N'}">selected</c:if>>未调整</option>
 						</select>
-					</td>
-					<td class="td_left" style="width:131px;">
+					</div>
+				</div>
+
+				<div class="form_item" style="margin-left: 15px">
+					<div class="form_content" >
 						<label>
 							<input
 									id="viewJoint"
@@ -77,14 +88,15 @@ function setType(flag){
 							/>
 							显示协同机构
 						</label>
-					</td>
-				</tr>
-				<tr>
-					<td class="td_left" colspan="7">
-						<input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
-					</td>
-				</tr>
-			</table>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="form_btn" >
+				<input class="btn_green" type="button" onclick="search()"  value="查&#12288;询"/>
+			</div>
+
 		</form>
 	</div>
     <div class="search_table">

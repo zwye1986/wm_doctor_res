@@ -847,9 +847,9 @@ function exportForDetail(){
 
 
 		<div style="margin-top: 15px;margin-bottom: 15px">
-			<a style="color: #54B2E5; margin: auto 20px auto 0;" onclick="showOrHide()" id="open">展开</a>
 			<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>&ensp;
 			<input class="btn_green" style="margin-left: 0px;" type="button" value="导&#12288;出" onclick="exportForDetail();"/>
+			<a style="color: #54B2E5; margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
 		</div>
 
 

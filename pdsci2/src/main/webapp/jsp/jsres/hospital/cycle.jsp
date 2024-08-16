@@ -8,6 +8,7 @@
     <jsp:param name="jquery_form" value="true"/>
 </jsp:include>
 <script type="text/javascript" src="<s:url value='/js/Scoll/Scorll2.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <style type="text/css">
     .boxHome .item:HOVER {
         background-color: #eee;
@@ -130,11 +131,12 @@
         <form id="searchForm">
             <input type="hidden" id="currentPage" name="currentPage" value="${param.currentPage}">
             <c:if test="${isQuality ne 'Y'}">
-                <table class="searchTable">
-                    <tr>
-                        <td class="td_left">培训类别：</td>
-                        <td class="td_right">
-                            <select name="trainingTypeId" id="trainingTypeId" class="select"  onchange="changeTrainSpes()" >
+
+            <div class="form_search">
+                <div class="form_item">
+                    <div class="form_label">培训类别：</div>
+                    <div class="form_content" >
+                        <select name="trainingTypeId" id="trainingTypeId" class="select"  onchange="changeTrainSpes()" >
                                 <option value="DoctorTrainingSpe">住院医师</option>
                                <%-- <option value="">请选择</option>
                                 <c:forEach items="${trainCategoryEnumList}" var="trainCategory">
@@ -145,133 +147,188 @@
                                     </option>
                                 </c:forEach>--%>
                             </select>
-                        </td>
-                        <td class="td_left">培训专业：</td>
-                        <td class="td_right">
-                            <select name="trainingSpeId" id="trainingSpeId" class="select" >
-                                <option value="">全部</option>
+                    </div>
+			    </div>
+
+			    <div class="form_item">
+                    <div class="form_label">培训专业：</div>
+                    <div class="form_content" >
+                        <select name="trainingSpeId" id="trainingSpeId" class="select" >
+                            <option value="">全部</option>
 <%--                                <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="spe">--%>
 <%--                                    <option value="${spe.dictId}"--%>
 <%--                                            <c:if test="${param.trainingSpeId eq spe.dictId}">selected</c:if>--%>
 <%--                                    >${spe.dictName}</option>--%>
 <%--                                </c:forEach>--%>
-                            </select>
-                        </td>
-                        <td class="td_left">年&#12288;级：</td>
-                        <td class="td_right">
-                            <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}"
-                                   readonly="readonly" class="input" />
-                        </td>
-                        <td class="td_left">培训年限：</td>
-                        <td class="td_right">
-                            <select name="trainingYears" class="select" >
-                                <option value="">全部</option>
-                                <option value="OneYear" <c:if test="${param.trainingYears eq 'OneYear'}">selected</c:if>>一年</option>
-                                <option value="TwoYear" <c:if test="${param.trainingYears eq 'TwoYear'}">selected</c:if>>两年</option>
-                                <option value="ThreeYear" <c:if test="${param.trainingYears eq 'ThreeYear'}">selected</c:if>>三年</option>
-                            </select>
-                        </td>
-                        <td class="td_left">结业年份：</td>
-                        <td class="td_right">
-                            <input type="text" id="graduationTime" name="graduationTime" value="${param.graduationTime}"
-                                   readonly="readonly" class="input" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="td_left">姓&#12288;名：</td>
-                        <td class="td_right">
-                            <input type="text" name="userName" class="input" value="${param.userName}" />
-                        </td>
-                        <td class="td_left">证件号码：</td>
-                        <td class="td_right">
-                            <input type="text" name="idNo" value="${param.idNo}" class="input" />
-                        </td>
-                        <td class="td_left">开始日期：</td>
-                        <td class="td_right">
-                            <input  name="startDate" id="startDate" type="text" readonly="readonly"
-                                   value="${empty param.startDate?startDate:param.startDate}" class="input"/>
-                        </td>
-                        <td class="td_left">结束日期：</td>
-                        <td class="td_right">
-                            <input  name="endDate" id="endDate" type="text" readonly="readonly"
-                                   value="${empty param.endDate?endDate:param.endDate}" class="input"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">人员类型：
-                            <c:forEach items="${jsResDocTypeEnumList}" var="type">
-                                <label><input type="checkbox" name="docTypes" id="${type.id}" value="${type.id}"
-                                              class="docType"/>${type.name}&nbsp;</label>
-                            </c:forEach>
-                        </td>
-                        <td>&#12288;
-                            <input type="checkbox" name="onlyProblem" value="${GlobalConstant.FLAG_Y}" <c:if test="${GlobalConstant.FLAG_Y eq param.onlyProblem}"> checked="checked"</c:if>/> &nbsp;仅问题数据
-                        </td>
-                    </tr>
-                </table>
+                        </select>
+                    </div>
+			    </div>
 
-                <div style="margin-bottom: 15px">
+			    <div class="form_item">
+                    <div class="form_label">年&#12288;&#12288;级：</div>
+                    <div class="form_content" >
+                        <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}"
+                                   readonly="readonly" class="input" />
+                    </div>
+			    </div>
+
+			    <div class="form_item">
+                    <div class="form_label">培训年限：</div>
+                    <div class="form_content" >
+                        <select name="trainingYears" class="select" >
+                            <option value="">全部</option>
+                            <option value="OneYear" <c:if test="${param.trainingYears eq 'OneYear'}">selected</c:if>>一年</option>
+                            <option value="TwoYear" <c:if test="${param.trainingYears eq 'TwoYear'}">selected</c:if>>两年</option>
+                            <option value="ThreeYear" <c:if test="${param.trainingYears eq 'ThreeYear'}">selected</c:if>>三年</option>
+                        </select>
+                    </div>
+			    </div>
+
+			    <div class="form_item">
+                    <div class="form_label">结业年份：</div>
+                    <div class="form_content" >
+                        <input type="text" id="graduationTime" name="graduationTime" value="${param.graduationTime}"
+                                   readonly="readonly" class="input" />
+                    </div>
+			    </div>
+
+			    <div class="form_item">
+                    <div class="form_label">姓&#12288;&#12288;名：</div>
+                    <div class="form_content" >
+                        <input type="text" name="userName" class="input" value="${param.userName}" />
+                    </div>
+			    </div>
+
+			    <div class="form_item">
+                    <div class="form_label">证件号码：</div>
+                    <div class="form_content" >
+                        <input type="text" name="idNo" value="${param.idNo}" class="input" />
+                    </div>
+			    </div>
+
+			    <div class="form_item">
+                    <div class="form_label">开始日期：</div>
+                    <div class="form_content" >
+                        <input  name="startDate" id="startDate" type="text" readonly="readonly"
+                                   value="${empty param.startDate?startDate:param.startDate}" class="input"/>
+                    </div>
+			    </div>
+
+			    <div class="form_item">
+                    <div class="form_label">结束日期：</div>
+                    <div class="form_content" >
+                        <input  name="endDate" id="endDate" type="text" readonly="readonly"
+                                   value="${empty param.endDate?endDate:param.endDate}" class="input"/>
+                    </div>
+			    </div>
+
+			    <div class="form_item" style="width: 400px">
+                    <div class="form_label">人员类型：</div>
+                    <div class="form_content" >
+                        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                            <label><input type="checkbox" name="docTypes" id="${type.id}" value="${type.id}"
+                                          class="docType"/>${type.name}&nbsp;</label>
+                        </c:forEach>
+                    </div>
+			    </div>
+
+			    <div class="form_item">
+                    <div class="form_label"></div>
+                    <div class="form_content" >
+                       <input type="checkbox" name="onlyProblem" value="${GlobalConstant.FLAG_Y}" <c:if test="${GlobalConstant.FLAG_Y eq param.onlyProblem}"> checked="checked"</c:if>/> &nbsp;仅问题数据
+                    </div>
+			    </div>
+
+            </div>
+
+                <div class="form_btn">
                     <input class="btn_green" type="button" value="查&#12288;询" onclick="search(1);"/>
                     <input type="button" class="btn_green" value="导&#12288;出" onclick="exportExcelForDoctor();"/>
                 </div>
             </c:if>
             <c:if test="${isQuality eq 'Y'}">
-                <table class="searchTable">
-                    <tr>
-                        <td class="td_left">姓&#12288;名：</td>
-                        <td class="td_right">
-                            <input type="text" name="userName" class="input" value="${param.userName}" />
-                        </td>
-                        <td class="td_left">年&#12288;级：</td>
-                        <td class="td_right">
-                            <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}"
-                                   readonly="readonly" class="input" />
-                        </td>
-                        <td class="td_left">培训年限：</td>
-                        <td class="td_right">
-                            <select name="trainingYears" class="select" >
-                                <option value="">全部</option>
-                                <option value="OneYear" <c:if test="${param.trainingYears eq 'OneYear'}">selected</c:if>>一年</option>
-                                <option value="TwoYear" <c:if test="${param.trainingYears eq 'TwoYear'}">selected</c:if>>两年</option>
-                                <option value="ThreeYear" <c:if test="${param.trainingYears eq 'ThreeYear'}">selected</c:if>>三年</option>
-                            </select>
-                        </td>
-                        <td class="td_left">结业考核年份：</td>
-                        <td class="td_right">
-                            <input type="text" id="graduationTime" name="graduationTime" value="${param.graduationTime}"
-                                   readonly="readonly" class="input" />
-                        </td>
-                        <td class="td_left">证件号码：</td>
-                        <td class="td_right">
-                            <input type="text" name="idNo" value="${param.idNo}" class="input" />
-                        </td>
 
-                    </tr>
-                    <tr>
-                        <td class="td_left">开始日期：</td>
-                        <td class="td_right">
-                            <input name="startDate" id="startDate" type="text" readonly="readonly"
+            <div class="form_search">
+                <div class="form_item">
+                    <div class="form_label">姓&#12288;&#12288;名：</div>
+                    <div class="form_content" >
+                        <input type="text" name="userName" class="input" value="${param.userName}" />
+                    </div>
+			    </div>
+
+			    <div class="form_item">
+                    <div class="form_label">年&#12288;&#12288;级：</div>
+                    <div class="form_content" >
+                         <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}"
+                                   readonly="readonly" class="input" />
+                    </div>
+			    </div>
+
+			    <div class="form_item">
+                    <div class="form_label">培训年限：</div>
+                    <div class="form_content" >
+                        <select name="trainingYears" class="select" >
+                            <option value="">全部</option>
+                            <option value="OneYear" <c:if test="${param.trainingYears eq 'OneYear'}">selected</c:if>>一年</option>
+                            <option value="TwoYear" <c:if test="${param.trainingYears eq 'TwoYear'}">selected</c:if>>两年</option>
+                            <option value="ThreeYear" <c:if test="${param.trainingYears eq 'ThreeYear'}">selected</c:if>>三年</option>
+                        </select>
+                    </div>
+			    </div>
+
+
+			     <div class="form_item">
+                    <div class="form_label">结业考核年份：</div>
+                    <div class="form_content" >
+                         <input type="text" id="graduationTime" name="graduationTime" value="${param.graduationTime}"
+                                   readonly="readonly" class="input" />
+                    </div>
+			    </div>
+
+			    <div class="form_item">
+                    <div class="form_label">证件号码：</div>
+                    <div class="form_content" >
+                         <input type="text" name="idNo" value="${param.idNo}" class="input" />
+                    </div>
+			    </div>
+
+
+			    <div class="form_item">
+                    <div class="form_label">开始日期：</div>
+                    <div class="form_content" >
+                         <input name="startDate" id="startDate" type="text" readonly="readonly"
                                    value="${empty param.startDate?startDate:param.startDate}" class="input"/>
-                        </td>
-                        <td class="td_left">结束日期：</td>
-                        <td class="td_right">
-                            <input  name="endDate" id="endDate" type="text" readonly="readonly"
+                    </div>
+			    </div>
+
+			    <div class="form_item">
+                    <div class="form_label">结束日期：</div>
+                    <div class="form_content" >
+                         <input  name="endDate" id="endDate" type="text" readonly="readonly"
                                    value="${empty param.endDate?endDate:param.endDate}" class="input"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">人员类型：
-                            <c:forEach items="${jsResDocTypeEnumList}" var="type">
-                                <label><input type="checkbox" name="docTypes" id="${type.id}" value="${type.id}"
-                                              class="docType"/>${type.name}&nbsp;</label>
-                            </c:forEach>
-                        </td>
-                        <td>
-                            <input type="checkbox" name="onlyProblem" value="${GlobalConstant.FLAG_Y}" <c:if test="${GlobalConstant.FLAG_Y eq param.onlyProblem}"> checked="checked"</c:if>/> &nbsp;仅问题数据
-                        </td>
-                    </tr>
-                </table>
-                <div>
+                    </div>
+			    </div>
+
+			    <div class="form_item">
+                    <div class="form_label">人员类型：</div>
+                    <div class="form_content" >
+                        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                            <label><input type="checkbox" name="docTypes" id="${type.id}" value="${type.id}"
+                                          class="docType"/>${type.name}&nbsp;</label>
+                        </c:forEach>
+                    </div>
+			    </div>
+
+			    <div class="form_item">
+                    <div class="form_label"></div>
+                    <div class="form_content" >
+                        <input type="checkbox" name="onlyProblem" value="${GlobalConstant.FLAG_Y}" <c:if test="${GlobalConstant.FLAG_Y eq param.onlyProblem}"> checked="checked"</c:if>/> &nbsp;仅问题数据
+                    </div>
+			    </div>
+
+			</div>
+
+                <div class="form_btn">
                     <input class="btn_green" type="button" value="查&#12288;询" onclick="search(1);"/>
                     <input type="button" class="btn_green" value="导&#12288;出" onclick="exportExcelForDoctor();"/>
                 </div>
