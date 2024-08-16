@@ -16,6 +16,7 @@
     <jsp:param name="jquery_iealert" value="false"/>
 </jsp:include>
 <html>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <head>
     <style type="text/css">
         .boxHome .item:HOVER{background-color: #eee;}
@@ -325,8 +326,10 @@
                             </div>
                         </c:otherwise>
                     </c:choose>
+                    
+				</div>
 
-                    <c:choose>
+				<c:choose>
                         <c:when test="${sessionScope.userListScope == GlobalConstant.USER_LIST_BASE}">
                             <div class="form_btn">
                                 <input type="button" class="btn_green" onclick="toPage(1);" value="查&#12288;询"/>
@@ -340,8 +343,6 @@
                             </div>
                         </c:otherwise>
                     </c:choose>
-
-				</div>
 
 <%--                <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">--%>
 <%--                    <tr>--%>
@@ -502,7 +503,7 @@
 
                     <c:choose>
                         <c:when test="${sessionScope.userListScope == GlobalConstant.USER_LIST_BASE}">
-                            <div class="form_item">
+                            <div class="form_item" style="width: 400px">
                                 <div class="form_label">人员类型：</div>
                                 <div class="form_content">
                                     <c:forEach items="${jsResDocTypeEnumList}" var="type">
@@ -512,7 +513,7 @@
                             </div>
                         </c:when>
                         <c:otherwise>
-                            <div class="form_item">
+                            <div class="form_item" style="width: 400px">
                                 <div class="form_label">人员类型：</div>
                                 <div class="form_content">
                                     <c:forEach items="${jsResDocTypeEnumList}" var="type">
@@ -537,7 +538,11 @@
                                readonly="readonly" style="width: 72px;"/>
                         </div>
                     </div>
-                    <c:choose>
+
+
+                </div>
+
+                <c:choose>
                         <c:when test="${sessionScope.userListScope == GlobalConstant.USER_LIST_BASE}">
                             <div class="form_btn">
                                 <input type="button" class="btn_green" onclick="toPage(1);" value="查&#12288;询"/>
@@ -554,8 +559,6 @@
 
                         </c:otherwise>
                     </c:choose>
-
-                </div>
 
 
 <%--            <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">--%>
