@@ -14,6 +14,7 @@
 <style type="text/css">
 	table.basic th,table.basic td{text-align: center;padding: 0;}
 </style>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 	function toPage(page) {
 		search(page);
@@ -134,44 +135,65 @@
 		<div class="div_search" style="padding: 0px;margin-bottom: 10px;">
 			<form id="searchForm">
 				<input type="hidden" id="currentPage" name="currentPage" value="${param.currentPage}"/>
-			<table class="searchTable">
-				<tr>
-					<td class="td_left ">开始日期：</td>
-					<td class="td_right"><input type="text" id="startDate" name="startDate" value="${empty param.startDate?startDate:param.startDate}"  class="validate[required] input" readonly="readonly" /></td>
-					<td class="td_left ">结束日期：</td>
-					<td class="td_right"><input type="text" id="endDate" name="endDate" value="${empty param.endDate?endDate:param.endDate}"  class="validate[required] input" readonly="readonly" /></td>
-					<td class="td_left ">科&#12288;&#12288;室：</td>
-					<td class="td_right">
-						<select  name="schDeptFlow"  class="select">
+
+				<div class="form_search">
+					<div class="form_item">
+						<div class="form_label">开始日期：</div>
+						<div class="form_content" >
+							<input type="text" id="startDate" name="startDate" value="${empty param.startDate?startDate:param.startDate}"  class="validate[required] input" readonly="readonly" />
+						</div>
+					</div>
+
+					<div class="form_item">
+						<div class="form_label">结束日期：</div>
+						<div class="form_content" >
+							<input type="text" id="endDate" name="endDate" value="${empty param.endDate?endDate:param.endDate}"  class="validate[required] input" readonly="readonly" />
+						</div>
+					</div>
+
+					<div class="form_item">
+						<div class="form_label">科&#12288;&#12288;室：</div>
+						<div class="form_content" >
+							<select  name="schDeptFlow"  class="select">
 							<option></option>
 							<c:forEach items="${allDeptList}" var="schDept">
 								<option value="${schDept.deptFlow}" ${param.schDeptFlow eq schDept.deptFlow?'selected':''}>${schDept.deptName}</option>
 							</c:forEach>
 						</select>
-					</td>
-					<td class="td_left ">年&#12288;&#12288;级：</td>
-					<td class="td_right"><input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input"  readonly="readonly" /></td>
-				</tr>
-				<tr>
-					<td class="td_left ">人员类型：</td>
-					<td colspan="3">
-						<c:forEach items="${jsResDocTypeEnumList}" var="type">
+						</div>
+					</div>
+
+					<div class="form_item">
+						<div class="form_label">年&#12288;&#12288;级：</div>
+						<div class="form_content" >
+							<input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input"  readonly="readonly" />
+						</div>
+					</div>
+
+					<div class="form_item" style="width: 400px">
+						<div class="form_label">人员类型：</div>
+						<div class="form_content" >
+							<c:forEach items="${jsResDocTypeEnumList}" var="type">
 							<label><input type="checkbox" id="${type.id}" value="${type.id}"
 										  class="docType"/>${type.name}&nbsp;
 							</label>
 							<c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>
-						</c:forEach>
-					</td>
-					<td colspan="4">
-						&#12288;<label>
-							<input type="checkbox" id="viewBox" name="viewName" value="${GlobalConstant.FLAG_Y}" <c:if test="${GlobalConstant.FLAG_Y eq param.viewName}">checked</c:if> onchange="changeView();"/>
-								查看医师姓名
-						</label>
+							</c:forEach>
+						</div>
+					</div>
 
-					</td>
-				</tr>
-			</table>
-				<div style="margin-bottom: 15px">
+					<div class="form_item">
+						<div class="form_label"></div>
+						<div class="form_content" >
+							<label>
+								<input type="checkbox" id="viewBox" name="viewName" value="${GlobalConstant.FLAG_Y}" <c:if test="${GlobalConstant.FLAG_Y eq param.viewName}">checked</c:if> onchange="changeView();"/>
+								查看医师姓名
+							</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="form_btn">
 					<input type="button" class="btn_green" value="查&#12288;询" onclick="search(1);"/>
 					<input type="button" class="btn_green" value="导&#12288;出" onclick="exportDoctor();"/>
 				</div>

@@ -39,6 +39,7 @@
         text-align:left;
     }
 </style>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script type="text/javascript"
         src="<s:url value='/js/jquery-select/js/jquery.select.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <script type="text/javascript">
@@ -77,12 +78,11 @@
 <div class="div_search" style="line-height:normal;">
     <form id="searchForm">
         <input type="hidden" id="currentPage" name="currentPage"/>
-        <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
-            <tr>
-                <td class="td_left">
-                    <nobr>专&#12288;&#12288;业：</nobr>
-                </td>
-                <td class="td_right">
+
+        <div class="form_search">
+            <div class="form_item">
+                <div class="form_label">专&#12288;&#12288;业：</div>
+                <div class="form_content">
                     <select name="speId" id="speId" class="select" >
                         <option value="">全部</option>
                         <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
@@ -92,67 +92,135 @@
                             >${dict.dictName}</option>
                         </c:forEach>
                     </select>
-                </td>
-                <td class="td_left">
-                    <nobr>轮转科室：</nobr>
-                </td>
-                <td class="td_right">
+                </div>
+            </div>
+
+            <div class="form_item">
+                <div class="form_label">轮转科室：</div>
+                <div class="form_content">
                     <select name="schDeptFlow" id="schDeptFlow" class="select" >
                         <option value="">全部</option>
                         <c:forEach items="${deptList}" var="d">
                             <option value="${d.deptFlow}" ${deptFlow eq d.deptFlow?'selected':''}>${d.deptName}</option>
                         </c:forEach>
                     </select>
-                </td>
-                <td class="td_left">
-                    <nobr>姓&#12288;&#12288;名：</nobr>
-                </td>
-                <td class="td_right">
-                    <input class="input" name="userName"  value=""/>
-                </td>
+                </div>
+            </div>
 
-                <td class="td_left">
-                    <nobr>开始时间：</nobr>
-                </td>
-                <td class="td_right">
+            <div class="form_item">
+                <div class="form_label">姓&#12288;&#12288;名：</div>
+                <div class="form_content">
+                   <input class="input" name="userName"  value=""/>
+                </div>
+            </div>
+
+            <div class="form_item">
+                <div class="form_label">开始时间：</div>
+                <div class="form_content">
                     <input name="schStartDate" id="schStartDate"  placeholder="请选择开始时间"
                            onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" onchange="checkTime();" value="" class="input">
-                </td>
-                <td class="td_left">
-                    <nobr>结束时间：</nobr>
-                </td>
-                <td class="td_right">
-                    <input name="schEndDate" id="schEndDate"  placeholder="请选择开始时间"
-                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" onchange="checkTime();" value="" class="input">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <nobr>年&#12288;&#12288;份：</nobr>
-                </td>
-                <td class="td_right">
-                    <input class="input" name="sessionNumber" id="sessionNumber" readonly="readonly"  value="${param.sessionNumber}"/>
-                </td>
-            </tr>
-            <tr>
-           <%--     <td class="td_left">
-                    <nobr>状&#12288;&#12288;态：</nobr>
-                </td>
-                <td>
-                    <select name="baseAudit" class="select" style="width: 180px;">
-                        <option value="">请选择</option>
-                        <option value="Passing">待审核</option>
-                        <option value="Passed">审核通过</option>
-                        <option value="UnPassed">审核不通过</option>
-                    </select>
-                </td>--%>
+                </div>
+            </div>
 
-                <td colspan="6">
-                    <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>&#12288;
-                    <input class="btn_green" type="button" value="导&#12288;入" onclick="toImport();"/>&#12288;
-                </td>
-            </tr>
-        </table>
+            <div class="form_item">
+                <div class="form_label">结束时间：</div>
+                <div class="form_content">
+                    <input name="schEndDate" id="schEndDate"  placeholder="请选择结束时间"
+                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" onchange="checkTime();" value="" class="input">
+                </div>
+            </div>
+
+            <div class="form_item">
+                <div class="form_label">年&#12288;&#12288;份：</div>
+                <div class="form_content">
+                    <input class="input" name="sessionNumber" id="sessionNumber" readonly="readonly"  value="${param.sessionNumber}"/>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form_btn" >
+            <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
+            <input class="btn_green" type="button" value="导&#12288;入" onclick="toImport();"/>
+        </div>
+
+
+<%--        <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">--%>
+<%--            <tr>--%>
+<%--                <td class="td_left">--%>
+<%--                    <nobr>专&#12288;&#12288;业：</nobr>--%>
+<%--                </td>--%>
+<%--                <td class="td_right">--%>
+<%--                    <select name="speId" id="speId" class="select" >--%>
+<%--                        <option value="">全部</option>--%>
+<%--                        <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">--%>
+<%--                            <option value="${dict.dictId}" ${param.speId eq dict.dictId?'selected':''}--%>
+<%--                                    <c:if test="${'3500' eq dict.dictId}">style="display: none" </c:if>--%>
+<%--                                    <c:if test="${'3700' eq dict.dictId}">style="display: none" </c:if>--%>
+<%--                            >${dict.dictName}</option>--%>
+<%--                        </c:forEach>--%>
+<%--                    </select>--%>
+<%--                </td>--%>
+<%--                <td class="td_left">--%>
+<%--                    <nobr>轮转科室：</nobr>--%>
+<%--                </td>--%>
+<%--                <td class="td_right">--%>
+<%--                    <select name="schDeptFlow" id="schDeptFlow" class="select" >--%>
+<%--                        <option value="">全部</option>--%>
+<%--                        <c:forEach items="${deptList}" var="d">--%>
+<%--                            <option value="${d.deptFlow}" ${deptFlow eq d.deptFlow?'selected':''}>${d.deptName}</option>--%>
+<%--                        </c:forEach>--%>
+<%--                    </select>--%>
+<%--                </td>--%>
+<%--                <td class="td_left">--%>
+<%--                    <nobr>姓&#12288;&#12288;名：</nobr>--%>
+<%--                </td>--%>
+<%--                <td class="td_right">--%>
+<%--                    <input class="input" name="userName"  value=""/>--%>
+<%--                </td>--%>
+
+<%--                <td class="td_left">--%>
+<%--                    <nobr>开始时间：</nobr>--%>
+<%--                </td>--%>
+<%--                <td class="td_right">--%>
+<%--                    <input name="schStartDate" id="schStartDate"  placeholder="请选择开始时间"--%>
+<%--                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" onchange="checkTime();" value="" class="input">--%>
+<%--                </td>--%>
+<%--                <td class="td_left">--%>
+<%--                    <nobr>结束时间：</nobr>--%>
+<%--                </td>--%>
+<%--                <td class="td_right">--%>
+<%--                    <input name="schEndDate" id="schEndDate"  placeholder="请选择开始时间"--%>
+<%--                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" onchange="checkTime();" value="" class="input">--%>
+<%--                </td>--%>
+<%--            </tr>--%>
+<%--            <tr>--%>
+<%--                <td>--%>
+<%--                    <nobr>年&#12288;&#12288;份：</nobr>--%>
+<%--                </td>--%>
+<%--                <td class="td_right">--%>
+<%--                    <input class="input" name="sessionNumber" id="sessionNumber" readonly="readonly"  value="${param.sessionNumber}"/>--%>
+<%--                </td>--%>
+<%--            </tr>--%>
+<%--            <tr>--%>
+<%--           &lt;%&ndash;     <td class="td_left">--%>
+<%--                    <nobr>状&#12288;&#12288;态：</nobr>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <select name="baseAudit" class="select" style="width: 180px;">--%>
+<%--                        <option value="">请选择</option>--%>
+<%--                        <option value="Passing">待审核</option>--%>
+<%--                        <option value="Passed">审核通过</option>--%>
+<%--                        <option value="UnPassed">审核不通过</option>--%>
+<%--                    </select>--%>
+<%--                </td>&ndash;%&gt;--%>
+
+<%--                <td colspan="6">--%>
+<%--                    <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>&#12288;--%>
+<%--                    <input class="btn_green" type="button" value="导&#12288;入" onclick="toImport();"/>&#12288;--%>
+<%--                </td>--%>
+<%--            </tr>--%>
+<%--        </table>--%>
 
     </form>
 </div>

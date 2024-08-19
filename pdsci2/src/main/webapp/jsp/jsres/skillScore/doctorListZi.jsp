@@ -7,7 +7,7 @@ $(document).ready(function(){
 	);
 });
 </script>
-    <div class="search_table" style="padding: 0;width: 95%;margin: 5px auto;">
+    <div class="search_table" >
         <table border="0" cellpadding="0" cellspacing="0" class="grid">
 			<colgroup>
 				<col width="12%"/>

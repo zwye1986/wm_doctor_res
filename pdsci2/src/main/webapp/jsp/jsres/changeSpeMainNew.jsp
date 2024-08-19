@@ -392,155 +392,157 @@
 
 
                     <div class="form_search">
-                        
-                    </div>
+                        <div class="form_item">
+                            <div class="form_label">地&#12288;&#12288;市：</div>
+                            <div class="form_content">
+                                <select id="cityId2" name="cityId" class="select" onchange="changeOrg(this)" ></select>
+                            </div>
+                        </div>
 
-
-                    <table class="searchTable">
-                        <tr>
-                            <td class="td_left">地&#12288;&#12288;市：</td>
-                            <td class="td_right">
-                                <select id="cityId2" name="cityId" class="select" onchange="changeOrg(this)" style="width: 134px"></select>
-                            </td>
-                            <td class="td_left">培训基地：</td>
-                            <td class="td_right">
-                                <input id="trainOrg"  class="toggleView input" type="text" autocomplete="off" style="margin-left: 0px;width: 134px"  />
+                        <div class="form_item">
+                            <div class="form_label">培训基地：</div>
+                            <div class="form_content">
+                                <input id="trainOrg"  class="toggleView input" type="text" autocomplete="off"  />
                                 <input type="hidden" name="orgFlow" id="orgFlow" value="${param.orgFlow}">
-                            </td>
-                            <td class="td_left">姓&#12288;&#12288;名：</td>
-                            <td class="td_right">
+                            </div>
+                        </div>
+
+                        <div class="form_item">
+                            <div class="form_label">姓&#12288;&#12288;名：</div>
+                            <div class="form_content">
                                 <input type="text" name="doctorName" value="${param.doctorName}" class="input"/>
-                            </td>
-                            <td class="td_left">届&#12288;&#12288;别：</td>
-                            <td class="td_right">
+                            </div>
+                        </div>
+
+                        <div class="form_item">
+                            <div class="form_label">届&#12288;&#12288;别：</div>
+                            <div class="form_content">
                                 <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input"   readonly="readonly" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="td_left">学员状态：</td>
-                            <td class="td_right">
-                                <select name="doctorStatusId" class="select" style="width: 134px">
+                            </div>
+                        </div>
+
+                         <div class="form_item">
+                            <div class="form_label">学员状态：</div>
+                            <div class="form_content">
+                                <select name="doctorStatusId" class="select" >
                                     <option value="">全部</option>
                                     <option value="20" ${param.doctorStatusId eq '20'?'selected':''}>在培</option>
                                     <option value="22" ${param.doctorStatusId eq '22'?'selected':''}>已考核待结业</option>
                                     <option value="21" ${param.doctorStatusId eq '21'?'selected':''}>结业</option>
                                 </select>
-                            </td>
-                            <td class="td_left">人员类型：</td>
-                            <td colspan="3">
+                            </div>
+                        </div>
+
+                        <div class="form_item">
+                            <div class="form_label">人员类型：</div>
+                            <div class="form_content">
                                 <c:forEach items="${jsResDocTypeEnumList}" var="type">
                                     <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
                                 </c:forEach>
-                            </td>
-                            <td id='jointOrg' colspan="2">
+                            </div>
+                        </div>
+
+                         <div class="form_item">
+                            <div class="form_content">
                                 <label style="cursor: pointer;"><input type="checkbox" id="jointOrgFlag"
                                                                        <c:if test="${param.jointOrgFlag eq GlobalConstant.FLAG_Y}">checked="checked"</c:if>
                                                                        name="jointOrgFlag" value="${GlobalConstant.FLAG_Y}"/>&nbsp;显示协同基地</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
-                            </td>
-                        </tr>
-                    </table>
+                            </div>
+                        </div>
+
+
+                        <div class="form_item">
+                             <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
+                        </div>
+
+                    </div>
+
+
                 </c:if>
             </c:if>
             <c:if test="${GlobalConstant.USER_LIST_LOCAL eq sessionScope.userListScope}">
 
             <c:if test="${param.viewFlag ne GlobalConstant.FLAG_Y}">
-                <table class="searchTable">
-                    <tr>
-                        <td class="td_left">姓&#12288;&#12288;名：</td>
-                        <td class="td_right">
+
+                <div class="form_search">
+                    <div class="form_item">
+                        <div class="form_label">姓&#12288;&#12288;名：</div>
+                        <div class="form_content">
                             <input type="text" name="doctorName" value="${param.doctorName}" class="input"/>
-                        </td>
-                        <td class="td_left">年&#12288;&#12288;级：</td>
-                        <td class="td_right">
+                        </div>
+                    </div>
+
+                    <div class="form_item">
+                        <div class="form_label">年&#12288;&#12288;级：</div>
+                        <div class="form_content">
                             <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input"   readonly="readonly" />
-                        </td>
-                        <td class="td_left">人员类型：</td>
-                        <td colspan="3">
+                        </div>
+                    </div>
+
+
+                    <div class="form_item" style="width: 400px">
+                        <div class="form_label">人员类型：</div>
+                        <div class="form_content" >
                             <c:forEach items="${jsResDocTypeEnumList}" var="type">
                                 <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
                             </c:forEach>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="8">
-                            <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
-                        </td>
-                    </tr>
-                </table>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div style="margin-top: 15px;margin-bottom: 15px">
+                     <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
+                </div>
+
+
+
+<%--                <table class="searchTable">--%>
+<%--                    <tr>--%>
+<%--                        <td class="td_left">姓&#12288;&#12288;名：</td>--%>
+<%--                        <td class="td_right">--%>
+<%--                            <input type="text" name="doctorName" value="${param.doctorName}" class="input"/>--%>
+<%--                        </td>--%>
+<%--                        <td class="td_left">年&#12288;&#12288;级：</td>--%>
+<%--                        <td class="td_right">--%>
+<%--                            <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input"   readonly="readonly" />--%>
+<%--                        </td>--%>
+<%--                        <td class="td_left">人员类型：</td>--%>
+<%--                        <td colspan="3">--%>
+<%--                            <c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+<%--                                <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>--%>
+<%--                            </c:forEach>--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
+<%--                    <tr>--%>
+<%--                        <td colspan="8">--%>
+<%--                            <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
+<%--                </table>--%>
             </c:if>
             <c:if test="${param.viewFlag eq GlobalConstant.FLAG_Y}">
-                <table class="searchTable">
-                    <tr>
-                        <td class="td_left">姓&#12288;&#12288;名：</td>
-                        <td class="td_right" >
-                            <input type="text" name="doctorName" value="${param.doctorName}" class="input"/>
-                        </td>
-                        <td class="td_left">年&#12288;&#12288;级：</td>
-                        <td class="td_right">
-                            <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input"   readonly="readonly" />
-                        </td>
-                        <td class="td_left">是否通过：</td>
-                        <td class="td_right">
-                            <select name="passFlag" class="select">
-                                <option value="">请选择</option>
-                                <option value="${GlobalConstant.FLAG_Y}"
-                                        <c:if test="${param.passFlag eq GlobalConstant.FLAG_Y }">selected="selected"</c:if>>是
-                                </option>
-                                <option value="${GlobalConstant.FLAG_N }"
-                                        <c:if test="${param.passFlag eq GlobalConstant.FLAG_N  }">selected="selected"</c:if>>否
-                                </option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <c:if test="${JointOrgCount ne '0'}">
-                            <td class="td_left">培训基地：</td>
-                            <td class="td_right">
-                                <select class="select" name="orgFlow0" style="width: 133px;" onchange="searchDeptList(this.value)">
-                                    <option value="all" <c:if test="${orgFlow eq 'all'}">selected="selected"</c:if>>全部</option>
-                                    <c:forEach items="${orgList}" var="org">
-                                        <option value="${org.orgFlow}" <c:if test="${orgFlow == org.orgFlow}">selected="selected"</c:if>>${org.orgName}</option>
-                                    </c:forEach>
-                                </select>
-                            </td>
-                        </c:if>
-                        <td class="td_left">人员类型：</td>
-                        <td colspan="3">
-                            <c:forEach items="${jsResDocTypeEnumList}" var="type">
-                                <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
-                            </c:forEach>
-                            <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
-                        </td>
-                    </tr>
-                </table>
-            </c:if>
-        </c:if>
-            <c:if test="${GlobalConstant.USER_LIST_CHARGE eq sessionScope.userListScope}">
-            <table class="searchTable">
-                <tr>
-                    <td class="td_left">姓&#12288;&#12288;名：</td>
-                    <td class="td_right">
+
+
+            <div class="form_search">
+                <div class="form_item">
+                    <div class="form_label">姓&#12288;&#12288;名：</div>
+                    <div class="form_content">
                         <input type="text" name="doctorName" value="${param.doctorName}" class="input"/>
-                    </td>
-                    <td class="td_left">年&#12288;&#12288;级：</td>
-                    <td class="td_right">
+                    </div>
+                </div>
+
+                <div class="form_item">
+                    <div class="form_label">年&#12288;&#12288;级：</div>
+                    <div class="form_content">
                         <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input"   readonly="readonly" />
-                    </td>
-                    <td class="td_left">人员类型：</td>
-                    <td colspan="3">
-                        <c:forEach items="${jsResDocTypeEnumList}" var="type">
-                            <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
-                        </c:forEach>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="td_left"> 是否通过：</td>
-                    <td class="td_right">
+                    </div>
+                </div>
+
+                <div class="form_item">
+                    <div class="form_label">是否通过：</div>
+                    <div class="form_content">
                         <select name="passFlag" class="select">
                             <option value="">请选择</option>
                             <option value="${GlobalConstant.FLAG_Y}"
@@ -550,9 +552,133 @@
                                     <c:if test="${param.passFlag eq GlobalConstant.FLAG_N  }">selected="selected"</c:if>>否
                             </option>
                         </select>
-                    </td>
-                    <td class="td_left">培训基地：</td>
-                    <td class="td_right">
+                    </div>
+                </div>
+
+
+                <c:if test="${JointOrgCount ne '0'}">
+
+                    <div class="form_item">
+                        <div class="form_label">培训基地：</div>
+                        <div class="form_content">
+                            <select class="select" name="orgFlow0" style="width: 133px;" onchange="searchDeptList(this.value)">
+                                <option value="all" <c:if test="${orgFlow eq 'all'}">selected="selected"</c:if>>全部</option>
+                                <c:forEach items="${orgList}" var="org">
+                                    <option value="${org.orgFlow}" <c:if test="${orgFlow == org.orgFlow}">selected="selected"</c:if>>${org.orgName}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+
+                </c:if>
+
+                <div class="form_item">
+                    <div class="form_label">人员类型：</div>
+                    <div class="form_content">
+                    <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
+                            </c:forEach>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="margin-top: 15px;margin-bottom: 15px">
+                <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
+            </div>
+
+
+
+<%--                <table class="searchTable">--%>
+<%--                    <tr>--%>
+<%--                        <td class="td_left">姓&#12288;&#12288;名：</td>--%>
+<%--                        <td class="td_right" >--%>
+<%--                            <input type="text" name="doctorName" value="${param.doctorName}" class="input"/>--%>
+<%--                        </td>--%>
+<%--                        <td class="td_left">年&#12288;&#12288;级：</td>--%>
+<%--                        <td class="td_right">--%>
+<%--                            <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input"   readonly="readonly" />--%>
+<%--                        </td>--%>
+<%--                        <td class="td_left">是否通过：</td>--%>
+<%--                        <td class="td_right">--%>
+<%--                            <select name="passFlag" class="select">--%>
+<%--                                <option value="">请选择</option>--%>
+<%--                                <option value="${GlobalConstant.FLAG_Y}"--%>
+<%--                                        <c:if test="${param.passFlag eq GlobalConstant.FLAG_Y }">selected="selected"</c:if>>是--%>
+<%--                                </option>--%>
+<%--                                <option value="${GlobalConstant.FLAG_N }"--%>
+<%--                                        <c:if test="${param.passFlag eq GlobalConstant.FLAG_N  }">selected="selected"</c:if>>否--%>
+<%--                                </option>--%>
+<%--                            </select>--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
+<%--                    <tr>--%>
+<%--                        <c:if test="${JointOrgCount ne '0'}">--%>
+<%--                            <td class="td_left">培训基地：</td>--%>
+<%--                            <td class="td_right">--%>
+<%--                                <select class="select" name="orgFlow0" style="width: 133px;" onchange="searchDeptList(this.value)">--%>
+<%--                                    <option value="all" <c:if test="${orgFlow eq 'all'}">selected="selected"</c:if>>全部</option>--%>
+<%--                                    <c:forEach items="${orgList}" var="org">--%>
+<%--                                        <option value="${org.orgFlow}" <c:if test="${orgFlow == org.orgFlow}">selected="selected"</c:if>>${org.orgName}</option>--%>
+<%--                                    </c:forEach>--%>
+<%--                                </select>--%>
+<%--                            </td>--%>
+<%--                        </c:if>--%>
+<%--                        <td class="td_left">人员类型：</td>--%>
+<%--                        <td colspan="3">--%>
+<%--                            <c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+<%--                                <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>--%>
+<%--                            </c:forEach>--%>
+<%--                            <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
+<%--                </table>--%>
+            </c:if>
+        </c:if>
+            <c:if test="${GlobalConstant.USER_LIST_CHARGE eq sessionScope.userListScope}">
+
+            <div class="form_search">
+                <div class="form_item">
+                    <div class="form_label">姓&#12288;&#12288;名：</div>
+                    <div class="form_content">
+                        <input type="text" name="doctorName" value="${param.doctorName}" class="input"/>
+                    </div>
+                </div>
+
+                <div class="form_item">
+                    <div class="form_label">年&#12288;&#12288;级：</div>
+                    <div class="form_content">
+                        <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input"   readonly="readonly" />
+                    </div>
+                </div>
+
+                <div class="form_item" style="width: 400px;">
+                    <div class="form_label">人员类型：</div>
+                    <div class="form_content">
+                        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                            <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
+                        </c:forEach>
+                    </div>
+                </div>
+
+                <div class="form_item">
+                    <div class="form_label">是否通过：</div>
+                    <div class="form_content">
+                        <select name="passFlag" class="select">
+                            <option value="">请选择</option>
+                            <option value="${GlobalConstant.FLAG_Y}"
+                                    <c:if test="${param.passFlag eq GlobalConstant.FLAG_Y }">selected="selected"</c:if>>是
+                            </option>
+                            <option value="${GlobalConstant.FLAG_N }"
+                                    <c:if test="${param.passFlag eq GlobalConstant.FLAG_N  }">selected="selected"</c:if>>否
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form_item">
+                    <div class="form_label">培训基地：</div>
+                    <div class="form_content">
                         <input id="trainOrg" oncontextmenu="return false" name="orgName" value="${param.orgName}"
                                class="toggleView input" type="text" autocomplete="off"
                                onkeydown="changeStatus();" onkeyup="changeStatus();"/>
@@ -568,12 +694,69 @@
                             </div>
                             <input type="text" name="orgFlow" id="orgFlow" value="${param.orgFlow}" style="display: none;"/>
                         </div>
-                    </td>
-                    <td colspan="2">
-                        <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
-                    </td>
-                </tr>
-            </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="margin-top: 15px;margin-bottom: 15px">
+                <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
+            </div>
+
+
+<%--            <table class="searchTable">--%>
+<%--                <tr>--%>
+<%--                    <td class="td_left">姓&#12288;&#12288;名：</td>--%>
+<%--                    <td class="td_right">--%>
+<%--                        <input type="text" name="doctorName" value="${param.doctorName}" class="input"/>--%>
+<%--                    </td>--%>
+<%--                    <td class="td_left">年&#12288;&#12288;级：</td>--%>
+<%--                    <td class="td_right">--%>
+<%--                        <input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input"   readonly="readonly" />--%>
+<%--                    </td>--%>
+<%--                    <td class="td_left">人员类型：</td>--%>
+<%--                    <td colspan="3">--%>
+<%--                        <c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+<%--                            <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>--%>
+<%--                        </c:forEach>--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--                <tr>--%>
+<%--                    <td class="td_left"> 是否通过：</td>--%>
+<%--                    <td class="td_right">--%>
+<%--                        <select name="passFlag" class="select">--%>
+<%--                            <option value="">请选择</option>--%>
+<%--                            <option value="${GlobalConstant.FLAG_Y}"--%>
+<%--                                    <c:if test="${param.passFlag eq GlobalConstant.FLAG_Y }">selected="selected"</c:if>>是--%>
+<%--                            </option>--%>
+<%--                            <option value="${GlobalConstant.FLAG_N }"--%>
+<%--                                    <c:if test="${param.passFlag eq GlobalConstant.FLAG_N  }">selected="selected"</c:if>>否--%>
+<%--                            </option>--%>
+<%--                        </select>--%>
+<%--                    </td>--%>
+<%--                    <td class="td_left">培训基地：</td>--%>
+<%--                    <td class="td_right">--%>
+<%--                        <input id="trainOrg" oncontextmenu="return false" name="orgName" value="${param.orgName}"--%>
+<%--                               class="toggleView input" type="text" autocomplete="off"--%>
+<%--                               onkeydown="changeStatus();" onkeyup="changeStatus();"/>--%>
+<%--                        <div id="pDiv" style="width: 0px;height: 0px;overflow: visible;float: left; position:relative;left: 0px; top:30px;">--%>
+<%--                            <div class="boxHome trainOrg" id="trainOrgSel"--%>
+<%--                                 style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">--%>
+<%--                                <c:forEach items="${orgs}" var="org">--%>
+<%--                                    <p class="item trainOrg allOrg orgs" flow="${org.orgFlow}" value="${org.orgName}"--%>
+<%--                                       style="line-height: 20px; padding:10px 0;cursor: default;width: 200px ;height: 10px"--%>
+<%--                                       <c:if test="${sessionScope.currUser.orgFlow==org.orgFlow }">style="display: none;"</c:if>--%>
+<%--                                    >${org.orgName}</p>--%>
+<%--                                </c:forEach>--%>
+<%--                            </div>--%>
+<%--                            <input type="text" name="orgFlow" id="orgFlow" value="${param.orgFlow}" style="display: none;"/>--%>
+<%--                        </div>--%>
+<%--                    </td>--%>
+<%--                    <td colspan="2">--%>
+<%--                        <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--            </table>--%>
         </c:if>
         </form>
     </div>

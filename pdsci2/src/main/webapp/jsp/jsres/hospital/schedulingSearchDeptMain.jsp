@@ -6,6 +6,7 @@
     <jsp:param name="jquery_cxselect" value="true"/>
     <jsp:param name="jquery_form" value="true"/>
 </jsp:include>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script src="<s:url value='/js/yearSelect/checkYear.js'/>" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -20,28 +21,57 @@
 
 <div class="div_search" style="box-sizing: border-box;line-height:normal;">
     <form id="searchForm">
-        <table class="searchTable" style="border-collapse:separate; border-spacing:0px 10px;">
-            <tr>
-                <td class="td_left">时间：</td>
-                <td class="td_right">
+
+        <div class="form_search">
+            <div class="form_item">
+                <div class="form_label">时&#12288;&#12288;间：</div>
+                <div class="form_content">
                     <input type="text" name="searchTime" id="ym" class="input" onchange="datechange(this)"  value="${searchTime}"
                            onClick="WdatePicker({dateFmt:'yyyy-MM',isShowClear:false,onpicked:function(dp){$dp.$('ym').blur();}})" readonly="readonly"/>
-                </td>
-                <td class="td_left">科室名称：</td>
-                <td class="td_right">
-                    <select name="deptFlow" class="select" style="width: 150px;">
+                </div>
+            </div>
+
+            <div class="form_item">
+                <div class="form_label">科室名称：</div>
+                <div class="form_content">
+                    <select name="deptFlow" class="select" >
                         <option value="">请选择</option>
                         <c:forEach items="${deptList}" var="dept">
                             <option value="${dept.deptFlow }" ${dept.deptFlow eq param.deptFlow?'selected':'' }>${dept.deptName }</option>
                         </c:forEach>
-                </select>
-                </td>
-                <td>
-                    <input type="button" class="btn_green" onclick="searchResult();" value="查询"/>
-                </td>
-            </tr>
+                    </select>
+                </div>
+            </div>
 
-        </table>
+        </div>
+
+        <div class="form_btn">
+            <input type="button" class="btn_green" onclick="searchResult();" value="查询"/>
+        </div>
+
+
+<%--        <table class="searchTable" style="border-collapse:separate; border-spacing:0px 10px;">--%>
+<%--            <tr>--%>
+<%--                <td class="td_left">时间：</td>--%>
+<%--                <td class="td_right">--%>
+<%--                    <input type="text" name="searchTime" id="ym" class="input" onchange="datechange(this)"  value="${searchTime}"--%>
+<%--                           onClick="WdatePicker({dateFmt:'yyyy-MM',isShowClear:false,onpicked:function(dp){$dp.$('ym').blur();}})" readonly="readonly"/>--%>
+<%--                </td>--%>
+<%--                <td class="td_left">科室名称：</td>--%>
+<%--                <td class="td_right">--%>
+<%--                    <select name="deptFlow" class="select" style="width: 150px;">--%>
+<%--                        <option value="">请选择</option>--%>
+<%--                        <c:forEach items="${deptList}" var="dept">--%>
+<%--                            <option value="${dept.deptFlow }" ${dept.deptFlow eq param.deptFlow?'selected':'' }>${dept.deptName }</option>--%>
+<%--                        </c:forEach>--%>
+<%--                </select>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <input type="button" class="btn_green" onclick="searchResult();" value="查询"/>--%>
+<%--                </td>--%>
+<%--            </tr>--%>
+
+<%--        </table>--%>
     </form>
 </div>
 <div class="main_bd" id="div_table_0" >

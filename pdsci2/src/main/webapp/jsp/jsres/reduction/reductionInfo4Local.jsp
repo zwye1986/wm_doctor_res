@@ -10,6 +10,7 @@
 </jsp:include>
 <style type="text/css">
 </style>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sessionNumber').datepicker({
@@ -74,62 +75,105 @@
             <input type="hidden" name="operType" id="operType" value="${operType}"/>
             <input type="hidden" name="roleId" id="roleId" value="${roleId}"/>
             <c:if test="${operType eq 'isCheck'}">
-                <table class="searchTable">
-                    <tr>
-                        <td class="td_left">培训专业：</td>
-                        <td>
-                            <select name="trainingSpeId" id="trainingSpeId" class="select" style="width:107px;">
+
+                <div class="form_search">
+                    <div class="form_item">
+                        <div class="form_label">培训专业：</div>
+                        <div class="form_content">
+                            <select name="trainingSpeId" id="trainingSpeId" class="select">
                                 <option value="">请选择</option>
                                 <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
                                     <option value="${dict.dictId}" ${param.trainingSpeId eq dict.dictId?'selected':''}>${dict.dictName}</option>
                                 </c:forEach>
                             </select>
-                        </td>
-                        <td class="td_left">姓&#12288;&#12288;名：</td>
-                        <td>
-                            <input type="text" name="doctorName" value="${param.doctorName}" class="input"
-                                   style="width: 100px;"/>&#12288;
-                        </td>
-                        <td class="td_left">证件号码：</td>
-                        <td>
-                            <input type="text" id="idNo" name="idNo" value="${param.idNo}"
-                                   class="input" style="width: 100px;margin-left: 0px"/>
-                        </td>
+                        </div>
+                    </div>
+                    <div class="form_item">
+                        <div class="form_label">姓&#12288;&#12288;名：</div>
+                        <div class="form_content">
+                            <input type="text" name="doctorName" value="${param.doctorName}" class="input"/>
+                        </div>
+                    </div>
 
-                    </tr>
-                    <tr>
-                        <td colspan="6">
-                            <input class="btn_green" type="button" onclick="searchIn()" value="查&#12288;询"/>
-                            <input class="btn_green" type="button" value="批量审核" onclick="auditDoctorList();"/>
-                        </td>
-                    </tr>
-                </table>
+                    <div class="form_item">
+                        <div class="form_label">证件号码：</div>
+                        <div class="form_content">
+                            <input type="text" id="idNo" name="idNo" value="${param.idNo}"
+                                   class="input"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form_btn">
+                    <input class="btn_green" type="button" onclick="searchIn()" value="查&#12288;询"/>
+                    <input class="btn_green" type="button" value="批量审核" onclick="auditDoctorList();"/>
+                </div>
+
+
+                <%--                <table class="searchTable">--%>
+                <%--                    <tr>--%>
+                <%--                        <td class="td_left">培训专业：</td>--%>
+                <%--                        <td>--%>
+                <%--                            <select name="trainingSpeId" id="trainingSpeId" class="select" style="width:107px;">--%>
+                <%--                                <option value="">请选择</option>--%>
+                <%--                                <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">--%>
+                <%--                                    <option value="${dict.dictId}" ${param.trainingSpeId eq dict.dictId?'selected':''}>${dict.dictName}</option>--%>
+                <%--                                </c:forEach>--%>
+                <%--                            </select>--%>
+                <%--                        </td>--%>
+                <%--                        <td class="td_left">姓&#12288;&#12288;名：</td>--%>
+                <%--                        <td>--%>
+                <%--                            <input type="text" name="doctorName" value="${param.doctorName}" class="input"--%>
+                <%--                                   style="width: 100px;"/>&#12288;--%>
+                <%--                        </td>--%>
+                <%--                        <td class="td_left">证件号码：</td>--%>
+                <%--                        <td>--%>
+                <%--                            <input type="text" id="idNo" name="idNo" value="${param.idNo}"--%>
+                <%--                                   class="input" style="width: 100px;margin-left: 0px"/>--%>
+                <%--                        </td>--%>
+
+                <%--                    </tr>--%>
+                <%--                    <tr>--%>
+                <%--                        <td colspan="6">--%>
+                <%--                            <input class="btn_green" type="button" onclick="searchIn()" value="查&#12288;询"/>--%>
+                <%--                            <input class="btn_green" type="button" value="批量审核" onclick="auditDoctorList();"/>--%>
+                <%--                        </td>--%>
+                <%--                    </tr>--%>
+                <%--                </table>--%>
             </c:if>
             <c:if test="${operType eq 'isQuery'}">
-                <table class="searchTable">
-                    <tr>
-                        <td class="td_left">培训专业：</td>
-                        <td>
-                            <select name="trainingSpeId" id="trainingSpeId" class="select" style="width:107px;">
+
+                <div class="form_search">
+                    <div class="form_item">
+                        <div class="form_label">培训专业：</div>
+                        <div class="form_content">
+                            <select name="trainingSpeId" id="trainingSpeId" class="select">
                                 <option value="">请选择</option>
                                 <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
                                     <option value="${dict.dictId}" ${param.trainingSpeId eq dict.dictId?'selected':''}>${dict.dictName}</option>
                                 </c:forEach>
                             </select>
-                        </td>
-                        <td class="td_left">姓&#12288;&#12288;名：</td>
-                        <td>
-                            <input type="text" name="doctorName" value="${param.doctorName}" class="input"
-                                   style="width: 100px;"/>&#12288;
-                        </td>
-                        <td class="td_left">证件号码：</td>
-                        <td>
+                        </div>
+                    </div>
+                    <div class="form_item">
+                        <div class="form_label">姓&#12288;&#12288;名：</div>
+                        <div class="form_content">
+                            <input type="text" name="doctorName" value="${param.doctorName}" class="input"/>
+                        </div>
+                    </div>
+
+                    <div class="form_item">
+                        <div class="form_label">证件号码：</div>
+                        <div class="form_content">
                             <input type="text" id="idNo" name="idNo" value="${param.idNo}"
-                                   class="input" style="width: 100px;margin-left: 0px"/>
-                        </td>
-                        <td class="td_left">审核状态：</td>
-                        <td>
-                            <select name="statusFlag" id="statusFlag" class="select" style="width: 107px;">
+                                   class="input"/>
+                        </div>
+                    </div>
+
+                    <div class="form_item">
+                        <div class="form_label">审核状态：</div>
+                        <div class="form_content">
+                            <select name="statusFlag" id="statusFlag" class="select">
                                 <option value="all">全部</option>
                                 <option value="pass"
                                         <c:if test="${param.statusFlag=='pass'}">selected="selected"</c:if>>省厅审核通过
@@ -138,14 +182,56 @@
                                         <c:if test="${param.statusFlag=='notPass'}">selected="selected"</c:if>>省厅审核不通过
                                 </option>
                             </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            <input class="btn_green" type="button" onclick="searchIn()" value="查&#12288;询"/>
-                        </td>
-                    </tr>
-                </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form_btn">
+                    <input class="btn_green" type="button" onclick="searchIn()" value="查&#12288;询"/>
+                </div>
+
+
+                <%--                <table class="searchTable">--%>
+                <%--                    <tr>--%>
+                <%--                        <td class="td_left">培训专业：</td>--%>
+                <%--                        <td>--%>
+                <%--                            <select name="trainingSpeId" id="trainingSpeId" class="select" style="width:107px;">--%>
+                <%--                                <option value="">请选择</option>--%>
+                <%--                                <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">--%>
+                <%--                                    <option value="${dict.dictId}" ${param.trainingSpeId eq dict.dictId?'selected':''}>${dict.dictName}</option>--%>
+                <%--                                </c:forEach>--%>
+                <%--                            </select>--%>
+                <%--                        </td>--%>
+                <%--                        <td class="td_left">姓&#12288;&#12288;名：</td>--%>
+                <%--                        <td>--%>
+                <%--                            <input type="text" name="doctorName" value="${param.doctorName}" class="input"--%>
+                <%--                                   style="width: 100px;"/>&#12288;--%>
+                <%--                        </td>--%>
+                <%--                        <td class="td_left">证件号码：</td>--%>
+                <%--                        <td>--%>
+                <%--                            <input type="text" id="idNo" name="idNo" value="${param.idNo}"--%>
+                <%--                                   class="input" style="width: 100px;margin-left: 0px"/>--%>
+                <%--                        </td>--%>
+                <%--                        <td class="td_left">审核状态：</td>--%>
+                <%--                        <td>--%>
+                <%--                            <select name="statusFlag" id="statusFlag" class="select" style="width: 107px;">--%>
+                <%--                                <option value="all">全部</option>--%>
+                <%--                                <option value="pass"--%>
+                <%--                                        <c:if test="${param.statusFlag=='pass'}">selected="selected"</c:if>>省厅审核通过--%>
+                <%--                                </option>--%>
+                <%--                                <option value="notPass"--%>
+                <%--                                        <c:if test="${param.statusFlag=='notPass'}">selected="selected"</c:if>>省厅审核不通过--%>
+                <%--                                </option>--%>
+                <%--                            </select>--%>
+                <%--                        </td>--%>
+                <%--                    </tr>--%>
+                <%--                    <tr>--%>
+                <%--                        <td colspan="4">--%>
+                <%--                            <input class="btn_green" type="button" onclick="searchIn()" value="查&#12288;询"/>--%>
+                <%--                        </td>--%>
+                <%--                    </tr>--%>
+                <%--                </table>--%>
             </c:if>
         </form>
     </div>
@@ -249,7 +335,7 @@
                 </c:if>
                 </tbody>
             </table>
-
+            
         </div>
         <div class="page" style="padding-right: 40px;">
             <c:set var="pageView" value="${pdfn:getPageView(resDoctorReductions)}" scope="request"></c:set>

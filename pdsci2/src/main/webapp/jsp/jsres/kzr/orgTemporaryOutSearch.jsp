@@ -85,15 +85,10 @@
         <form id="searchForm" action="<s:url value='/res/manager/temporaryOutSearch'/>" method="post">
             <input id="currentPage" type="hidden" name="currentPage" value=""/>
             <input type="hidden" name="roleId" value="${roleId}">
-            <div>
+            <div style="margin-top: 15px">
                 <c:if test="${roleId ne 'user'}">
                 <label class="form_label" >姓名：</label>
                 <input type="text" name="doctorName" class="input"  value="${param.doctorName}">
-                <label style="margin-left: 15px" class="form_label" >人员类型：</label>
-                <c:forEach items="${jsResDocTypeEnumList}" var="type">
-                    <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
-                </c:forEach>
-                </c:if>
 
                 <label style="margin-left: 15px" class="form_label">审核状态：</label>
                 <select name="temporaryAuditStatusId" class="select">
@@ -102,6 +97,13 @@
                     <option value="Passed" <c:if test="${param.temporaryAuditStatusId eq 'Passed'}">selected</c:if>>审核通过</option>
                     <option value="NotPassed" <c:if test="${param.temporaryAuditStatusId eq 'NotPassed'}">selected</c:if>>审核不通过</option>
                 </select>
+
+                <label style="margin-left: 15px" class="form_label" >人员类型：</label>
+                <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                    <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
+                </c:forEach>
+                </c:if>
+
             </div>
 
 

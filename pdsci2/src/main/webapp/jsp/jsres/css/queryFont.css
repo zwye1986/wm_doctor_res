@@ -17,13 +17,13 @@
 	line-height: 40px;
 }
 .searchTable .td_left{
-	width: auto;
+	/*width: auto;*/
 	min-width: 60px;
 	word-wrap:break-word;
-	/*width:6em;*/
+	width:6em;
 	height: auto;
 	line-height: auto;
-	/*text-align: right;*/
+	text-align: right;
 }
 
 .searchTable .td_right{

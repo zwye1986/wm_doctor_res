@@ -785,13 +785,13 @@ function showSelection(flag) {
 							</div>
 						</div>
 
-						<a style="color: #54B2E5; margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
-
 					</div>
 
 					<div style="margin-top: 15px;margin-bottom: 15px">
 						<input class="btn_green" type="button" value="导&#12288;出" onclick="exportExcel();"/>
 						<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>
+
+						<a style="color: #54B2E5; margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
 <%--						<span style="margin-right: 690px; margin-top: 10px"><img class="icon" title="展开查询条件" onclick="showSelection(true)" src="<s:url value='/img/select.png'/>"/></span>--%>
 					</div>
 
