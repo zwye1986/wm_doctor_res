@@ -1968,6 +1968,7 @@ public class InxJsResController extends GeneralController {
         String currDateTime = DateUtil.getCurrDateTime2();
         String verifyCodeTime = sysUser.getVerifyCodeTime();
         long betweenTowDate = DateUtil.signSecondsBetweenTowDate(currDateTime, verifyCodeTime);
+        sysUser = userBiz.readSysUser(sysUser.getUserFlow());
         String userVerifyCode = sysUser.getVerifyCode();
         if (verifyCode.equals(userVerifyCode)) {
             if (betweenTowDate > 300) {
