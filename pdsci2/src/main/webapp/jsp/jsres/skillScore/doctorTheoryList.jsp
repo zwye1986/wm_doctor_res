@@ -36,14 +36,17 @@
     .search_form > .flex {
         flex-wrap: wrap;
     }
-    .formItem{
+
+    .formItem {
         width: 233px;
     }
-    .search_form > .flex .searchCss .formItem1{
+
+    .search_form > .flex .searchCss .formItem1 {
         float: initial;
         width: 482px;
         justify-content: start;
     }
+
     .search_form > .flex .searchCss {
         display: flex;
         justify-content: space-between;
@@ -63,7 +66,9 @@
     }
 
 </style>
-<script type="text/javascript" src="<s:url value='/js/jquery-select/js/jquery.select.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
+<script type="text/javascript"
+        src="<s:url value='/js/jquery-select/js/jquery.select.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#sessionNumber').datepicker({
@@ -99,9 +104,10 @@
         initOrg2();
         toPage(1);
     });
+
     function toPage(page) {
 
-        if(!$("#scoreYear").val()){
+        if (!$("#scoreYear").val()) {
             jboxTip("成绩年份必填！");
             return false;
         }
@@ -121,6 +127,7 @@
         jboxStartLoading();
         jboxPostLoad("doctorListZi", "<s:url value='/jsres/doctorTheoryScore/doctorSkillListSun'/>?" + data + "&roleFlag=${roleFlag}", $("#searchForm").serialize(), false);
     }
+
     function importExcel() {
         var trainingTypeId = $("#trainingTypeId").val();
         var url = "<s:url value='/jsres/doctorTheoryScore/importSkillScore?trainingTypeId='/>" + trainingTypeId;
@@ -128,24 +135,25 @@
     }
 
 
-    function changeTrainSpes(){
-        var trainCategoryid=$("#trainingTypeId").val();
-        if(trainCategoryid =="${dictTypeEnumDoctorTrainingSpe.id}"){
+    function changeTrainSpes() {
+        var trainCategoryid = $("#trainingTypeId").val();
+        if (trainCategoryid == "${dictTypeEnumDoctorTrainingSpe.id}") {
             $("#derateFlagLabel").show();
-        }else{
-            $("#derateFlag").attr("checked",false);
+        } else {
+            $("#derateFlag").attr("checked", false);
             $("#derateFlagLabel").hide();
         }
-        if(trainCategoryid==""){
+        if (trainCategoryid == "") {
             $("select[name=trainingSpeId] option[value != '']").remove();
             return false;
         }
         $("select[name=trainingSpeId] option[value != '']").remove();
-        $("#"+trainCategoryid+"_select").find("option").each(function(){
+        $("#" + trainCategoryid + "_select").find("option").each(function () {
             $(this).clone().appendTo($("#trainingSpeId"));
         });
         return false;
     }
+
     /*function changeTrainSpes() {
         //清空原来专业！！！
         var sessionNumber = $("#sessionNumber").val();
@@ -202,7 +210,7 @@
                 var boxHome = $("#" + spaceId + "Sel");
                 boxHome.show();
                 var pDiv = $(boxHome).parent();
-               // $(pDiv).css("left", $(this).offset().left - $(this).prev().prev().prev().offset().left);
+                // $(pDiv).css("left", $(this).offset().left - $(this).prev().prev().prev().offset().left);
                 var w = $(this).css("marginTop").replace("px", "");
                 w = w - 0 + $(this).outerHeight() + 6 + "px";
                 //$(pDiv).css("top", w);
@@ -266,6 +274,7 @@
             });
         }
     });
+
     function showJointOrg(orgFlow) {
         if ($("#" + orgFlow).length) {
             $("#jointOrg").show();
@@ -275,6 +284,7 @@
         $("#jointOrgFlag").removeAttr("checked");
 
     }
+
     function changeStatus() {
         $("select[name=trainingSpeId] option[value != '']").remove();
         $("select[name=trainingTypeId] option[value = '']").attr('selected', 'selected');
@@ -284,6 +294,7 @@
             $("#orgFlow").val("");
         }
     }
+
     function chanegOrgLevel(obj) {
         $("#jointOrgFlag").removeAttr("checked");
         $("#orgTypeFlag").val($(obj).val());
@@ -301,7 +312,8 @@
             }
         }
     }
-    function exportExcel(){
+
+    function exportExcel() {
         var data = "";
         <c:forEach items="${jsResDocTypeEnumList}" var="type">
         if ($("#" + "${type.id}").attr("checked")) {
@@ -316,15 +328,16 @@
         }
         var url = "<s:url value='/jsres/doctorTheoryScore/doctorSkillListSunExport'/>?" + data + "&roleFlag=${roleFlag}";
         jboxTip("导出中…………");
-        jboxExp($("#searchForm"),url);
+        jboxExp($("#searchForm"), url);
     }
+
     /**
      * 删除
      * @param doctorFlow
      * @param roleFlag
      * @constructor
      */
-    function deleteSkillScore(scoreFlow, roleFlag,page) {
+    function deleteSkillScore(scoreFlow, roleFlag, page) {
         jboxConfirm("确认删除？", function () {
             jboxPost("<s:url value='/jsres/doctorTheoryScore/deleteSkillScore'/>?scoreFlow=" + scoreFlow + "&roleFlag=" + roleFlag, null, function (resp) {
                 if (resp == "${GlobalConstant.FLAG_Y}") {
@@ -336,6 +349,7 @@
             }, null, false);
         });
     }
+
     //var map=new Map();
     //map.put("firstStationScore","第一站");
     //map.put("secondStationScore","第二站");
@@ -378,6 +392,7 @@
             }
         }, null, false);
     }
+
     function saveScore2(scoreFlow, k, obj, stationName, roleFlag) {
         //k 是表示为第几站
         var score = obj.value;
@@ -393,6 +408,7 @@
             }
         }, null, false);
     }
+
     function saveIsPassScore(scoreFlow, k, obj, stationName, roleFlag) {
         //k 是表示为第几站
         var score = obj.value;
@@ -451,12 +467,14 @@
         tr.find("td[class='all']").html(all);
 
     }
+
     function changeOrgFlow(obj) {
         var items = $("#pDiv").find("p." + $(obj).attr("id") + ".item[value='" + $(obj).val() + "']");
         var flow = $(items).attr("flow") || '';
         $("#orgFlow").val(flow);
         showJointOrg(flow);
     }
+
     var allOrgs = [];
     var allOrgs2 = [];
 
@@ -525,164 +543,347 @@
         $.selectSuggest('trainOrg2', datas2, itemSelectFuntion, "orgFlow2", true);
     }
 
-    function getCityArea(){
+    function getCityArea() {
         var url = '<s:url value="/js/provCityAreaJson.min.json"/>';
         var provIds = "320000";
-        jboxGet(url,null, function(json) {
+        jboxGet(url, null, function (json) {
             // 提示：如果服务器不支持 .json 类型文件，请将文件改为 .js 文件
-            var newJsonData=new Array();
-            var j=0;
-            var html ="<option value=''></option>";
-            for(var i=0;i<json.length;i++){
-                if(provIds==json[i].v){
-                    var citys=json[i].s;
-                    for(var k=0;k<citys.length;k++){
-                        var city=citys[k];
-                        html+="<option value='"+city.v+"'>"+city.n+"</option>";
+            var newJsonData = new Array();
+            var j = 0;
+            var html = "<option value=''></option>";
+            for (var i = 0; i < json.length; i++) {
+                if (provIds == json[i].v) {
+                    var citys = json[i].s;
+                    for (var k = 0; k < citys.length; k++) {
+                        var city = citys[k];
+                        html += "<option value='" + city.v + "'>" + city.n + "</option>";
                     }
                 }
             }
             $("#cityId2").html(html);
-        },null,false);
+        }, null, false);
     }
+
+    //显示隐藏
+    let flag = false;
+    function showOrHide(){
+
+        if(flag){
+            $(`.form_item_hide`).hide();
+            // document.getElementById("hideForm").style.display='none';
+            $("#open").text("展开")
+            flag = false;
+        }else {
+            $(`.form_item_hide`).css('display','flex');
+            // document.getElementById("hideForm").style.display='flex';
+            $("#open").text("收起")
+            flag = true;
+        }
+
+    }
+
 </script>
 <div class="main_bd" id="div_table_0">
-    <div class="div_search" style="padding: 24px 40px 6px 16px;">
+    <div class="div_search" >
         <form id="searchForm" class="search_form">
-            <div class="flex">
-            <input type="hidden" id="currentPage" name="currentPage"/>
-            <input type="hidden" id="orgTypeFlag" value="${param.orgLevel}"/>
+                <input type="hidden" id="currentPage" name="currentPage"/>
+                <input type="hidden" id="orgTypeFlag" value="${param.orgLevel}"/>
 
+                <div class="form_search">
                     <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">
-                    <div class="searchCss formItem">
-                        <label>&#12288;&#12288;地&#12288;&#12288;市：</label>
-                        <select id="cityId2" name="orgCityId" class="select" onchange="changeOrg(this)" style="    width: 128px;"></select>
-                    </div>
-                    </c:if>
-                    <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL || roleFlag eq GlobalConstant.USER_LIST_CHARGE}">
-                        <div class="searchCss formItem">
-                            <label>&#12288;&#12288;国家基地：</label>
-                            <input id="trainOrg2" class="toggleView input" type="text" autocomplete="off"
-                                   style="margin-left: 0px;width: 128px"/>
-                            <input type="hidden" name="orgFlow2" id="orgFlow2">
+                        <div class="form_item">
+                            <div class="form_label">地&#12288;&#12288;市：</div>
+                            <div class="form_content">
+                                <select id="cityId2" name="orgCityId" class="select"
+                                        onchange="changeOrg(this)"></select>
+                            </div>
                         </div>
                     </c:if>
                     <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL || roleFlag eq GlobalConstant.USER_LIST_CHARGE}">
-                    <div class="searchCss formItem">
-                        <label>&#12288;&#12288;培训基地：</label>
-                        <input id="trainOrg"  class="toggleView input" type="text"  autocomplete="off" style="margin-left: 0px;    width: 128px"  />
-                        <input type="hidden" name="orgFlow" id="orgFlow">
-                    </div>
-                        </c:if>
-                    <div class="searchCss formItem">
-                        &#12288;&#12288;培训类别：
-                        <%--<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes()" style="    width: 128px;">--%>
-                        <select name="trainingTypeId" id="trainingTypeId" class="select" style="    width: 128px;">
-                            <%--<option value="">请选择</option>--%>
-                            <c:if test="${param.catSpeId eq 'DoctorTrainingSpe'}">
-                                <option value="DoctorTrainingSpe" selected="selected">住院医师</option>
-                              <%--  <option value="WMFirst" <c:if test="${param.trainingTypeId eq 'WMFirst'}">selected="selected"</c:if>>一阶段</option>
-                                <option value="WMSecond" <c:if test="${param.trainingTypeId eq 'WMSecond'}">selected="selected"</c:if>>二阶段</option>--%>
-                            </c:if>
-                            <c:if test="${param.catSpeId eq 'AssiGeneral'}">
-                                <option value="AssiGeneral" selected="selected">助理全科</option>
-                            </c:if>
-                            <%--<c:forEach items="${trainCategoryEnumList}" var="trainCategory">--%>
+                        <div class="form_item">
+                            <div class="form_label">国家基地：</div>
+                            <div class="form_content">
+                                <input id="trainOrg2" class="toggleView input" type="text" autocomplete="off"/>
+                                <input type="hidden" name="orgFlow2" id="orgFlow2">
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL || roleFlag eq GlobalConstant.USER_LIST_CHARGE}">
+                        <div class="form_item">
+                            <div class="form_label">培训基地：</div>
+                            <div class="form_content">
+                                <input id="trainOrg" class="toggleView input" type="text" autocomplete="off"/>
+                                <input type="hidden" name="orgFlow" id="orgFlow">
+                            </div>
+                        </div>
+                    </c:if>
+
+                    <div class="form_item">
+                        <div class="form_label">培训类别：</div>
+                        <div class="form_content">
+                            <%--<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes()" style="    width: 128px;">--%>
+                            <select name="trainingTypeId" id="trainingTypeId" class="select" >
+                                <%--<option value="">请选择</option>--%>
+                                <c:if test="${param.catSpeId eq 'DoctorTrainingSpe'}">
+                                    <option value="DoctorTrainingSpe" selected="selected">住院医师</option>
+                                    <%--  <option value="WMFirst" <c:if test="${param.trainingTypeId eq 'WMFirst'}">selected="selected"</c:if>>一阶段</option>
+                                      <option value="WMSecond" <c:if test="${param.trainingTypeId eq 'WMSecond'}">selected="selected"</c:if>>二阶段</option>--%>
+                                </c:if>
+                                <c:if test="${param.catSpeId eq 'AssiGeneral'}">
+                                    <option value="AssiGeneral" selected="selected">助理全科</option>
+                                </c:if>
+                                <%--<c:forEach items="${trainCategoryEnumList}" var="trainCategory">--%>
                                 <%--<option value="${trainCategory.id}" <c:if test="${param.trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>--%>
-                            <%--</c:forEach>--%>
-                        </select>
+                                <%--</c:forEach>--%>
+                            </select>
+                        </div>
                     </div>
-                    <div class="searchCss formItem">
-                        &#12288;&#12288;培训专业：
-                        <select name="trainingSpeId" id="trainingSpeId" class="select" style="    width: 128px;">
-                            <option value="">全部</option>
-                            <c:if test="${param.catSpeId eq 'DoctorTrainingSpe'}">
-                                <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
-                                    <c:if test="${empty speIds or (pdfn:contain(dict.dictId, speIds))}">
-                                        <option <c:if test="${param.trainingSpeId eq dict.dictId}">selected="selected"</c:if> value="${dict.dictId}">${dict.dictName}</option>
-                                    </c:if>
-                                </c:forEach>
-                            </c:if>
-                            <c:if test="${param.catSpeId eq 'AssiGeneral'}">
-                                <c:forEach items="${dictTypeEnumAssiGeneralList}" var="dict">
-                                    <c:if test="${empty speIds or (pdfn:contain(dict.dictId, speIds))}">
-                                        <option <c:if test="${param.trainingSpeId eq dict.dictId}">selected="selected"</c:if> value="${dict.dictId}">${dict.dictName}</option>
-                                    </c:if>
-                                </c:forEach>
-                            </c:if>
-                        </select>
+
+
+                    <div class="form_item">
+                        <div class="form_label">培训专业：</div>
+                        <div class="form_content">
+                            <select name="trainingSpeId" id="trainingSpeId" class="select">
+                                <option value="">全部</option>
+                                <c:if test="${param.catSpeId eq 'DoctorTrainingSpe'}">
+                                    <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
+                                        <c:if test="${empty speIds or (pdfn:contain(dict.dictId, speIds))}">
+                                            <option
+                                                    <c:if test="${param.trainingSpeId eq dict.dictId}">selected="selected"</c:if>
+                                                    value="${dict.dictId}">${dict.dictName}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </c:if>
+                                <c:if test="${param.catSpeId eq 'AssiGeneral'}">
+                                    <c:forEach items="${dictTypeEnumAssiGeneralList}" var="dict">
+                                        <c:if test="${empty speIds or (pdfn:contain(dict.dictId, speIds))}">
+                                            <option
+                                                    <c:if test="${param.trainingSpeId eq dict.dictId}">selected="selected"</c:if>
+                                                    value="${dict.dictId}">${dict.dictName}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </c:if>
+                            </select>
+                        </div>
+
                     </div>
-                    <div class="searchCss formItem">
-                        &#12288; &#12288;结业年份：
-                        <input type="text" id="graduationYear" name="graduationYear" value="${param.graduationYear}"
-                               class="input" readonly="readonly" style="    width: 128px;margin-left: 0px"/>
+
+                    <div class="form_item">
+                        <div class="form_label">结业年份：</div>
+                        <div class="form_content">
+                            <input type="text" id="graduationYear" name="graduationYear" value="${param.graduationYear}"
+                               class="input" readonly="readonly" />
+                        </div>
                     </div>
-                    <div class="searchCss formItem">
-                        &#12288;&#12288;姓&#12288;&#12288;名：<input type="text" name="userName" value="${param.userName}"
-                                                                  class="input"
-                                                                  style="    width: 128px;"/>
+                    <div class="form_item">
+                        <div class="form_label">姓&#12288;&#12288;名：</div>
+                        <div class="form_content">
+                            <input type="text" name="userName" value="${param.userName}" class="input"/>
+                        </div>
                     </div>
-                    <div class="searchCss formItem">
-                        &#12288;&#12288;证&nbsp;件&nbsp;号&nbsp;：<input type="text" name="idNo" value="${param.idNo}" class="input"
-                                                                     style="    width: 128px;"/>
+                    <div class="form_item form_item_hide">
+                        <div class="form_label">证&nbsp;件&nbsp;号&nbsp;：</div>
+                        <div class="form_content">
+                            <input type="text" name="idNo" value="${param.idNo}" class="input"/>
+                        </div>
                     </div>
-                    <div class="searchCss formItem">
-                        &#12288;&#12288;成绩年份：
-                        <input type="text" id="scoreYear" name="scoreYear" value="${empty lastYear ? pdfn:getCurrYear():lastYear}"
-                               class="input" readonly="readonly" style="    width: 128px;margin-left: 0px"/>
+                    <div class="form_item form_item_hide">
+                        <div class="form_label">成绩年份：</div>
+                        <div class="form_content">
+                            <input type="text" id="scoreYear" name="scoreYear"
+                               value="${empty lastYear ? pdfn:getCurrYear():lastYear}"
+                               class="input" readonly="readonly" />
+                        </div>
                     </div>
-                    <div class="searchCss formItem">
-                        &#12288;&#12288;是否合格：
-                        <select id="orgLevel" class="select" name="isHege" style="    width: 128px">
-                            <option value="">请选择</option>
-                            <option value="Y">是</option>
-                            <option value="N">否</option>
-        <%--                    <option value="2">缺考</option>--%>
-                        </select>
+                    <div class="form_item form_item_hide">
+                        <div class="form_label">是否合格：</div>
+                        <div class="form_content">
+                            <select id="orgLevel" class="select" name="isHege" >
+                                <option value="">请选择</option>
+                                <option value="Y">是</option>
+                                <option value="N">否</option>
+                                <%--                    <option value="2">缺考</option>--%>
+                            </select>
+                        </div>
                     </div>
-                    <div class="searchCss formItem">
-                            &#12288;&#12288;考试编号：
-                            <select name="testId"  class="select" style="    width: 128px;">
+                    <div class="form_item form_item_hide">
+                        <div class="form_label">考试编号：</div>
+                        <div class="form_content">
+                            <select name="testId" class="select" >
                                 <option value="">全部</option>
                                 <c:forEach items="${resTestConfigs}" var="resTest">
                                     <option value="${resTest.testId}" ${param.testId eq resTest.testId?'selected':''}>${resTest.testId}</option>
                                 </c:forEach>
                             </select>
                         </div>
-                    <div class="searchCss formItem1">
-                            &#12288;&#12288;人员类型：
+                    </div>
+                    <div class="form_item form_item_hide" style="width: 400px">
+                        <div class="form_label">人员类型：</div>
+                        <div class="form_content">
                             <c:forEach items="${jsResDocTypeEnumList}" var="type">
-                                <label><input type="checkbox" id="${type.id}" value="${type.id}" class="docType"/>${type.name}&nbsp;
+                                <label><input type="checkbox" id="${type.id}" value="${type.id}"
+                                              class="docType"/>${type.name}&nbsp;
                                 </label>
                                 <c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>
                             </c:forEach>
                         </div>
+                    </div>
 
-                <div style="margin: 4px 0px;">
-                    &#12288;&#12288;<input class="btn_green"  type="button" value="查&#12288;询" onclick="toPage();"/>&#12288;
-                <c:if test="${maintenance ne 'Y'}"> <%--客服（运维角色）只能查看——--%>
-                    <c:if test="${roleFlag eq GlobalConstant.USER_LIST_CHARGE || roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">
-                        <input class="btn_green" type="button" value="导入成绩" onclick="importExcel();"/>
-                    </c:if>
-                </c:if>
-                    <c:if test="${roleFlag eq GlobalConstant.USER_LIST_LOCAL || roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">
-                        <input class="btn_green" type="button" value="导出成绩" onclick="exportExcel();" />
-                    </c:if>
+
                 </div>
 
-                <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">
+                <div class="form_btn">
+                    <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>&#12288;
+                    <c:if test="${maintenance ne 'Y'}"> <%--客服（运维角色）只能查看——--%>
+                        <c:if test="${roleFlag eq GlobalConstant.USER_LIST_CHARGE || roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">
+                            <input class="btn_green" type="button" value="导入成绩" onclick="importExcel();"/>
+                        </c:if>
+                    </c:if>
+                    <c:if test="${roleFlag eq GlobalConstant.USER_LIST_LOCAL || roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">
+                        <input class="btn_green" type="button" value="导出成绩" onclick="exportExcel();"/>
+                    </c:if>
 
-                </c:if>
+                    <a style="color: #54B2E5; margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
+                </div>
 
-            </div>
+
+<%--                <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">--%>
+<%--                    <div class="searchCss formItem">--%>
+<%--                        <label>&#12288;&#12288;地&#12288;&#12288;市：</label>--%>
+<%--                        <select id="cityId2" name="orgCityId" class="select" onchange="changeOrg(this)"--%>
+<%--                                style="    width: 128px;"></select>--%>
+<%--                    </div>--%>
+<%--                </c:if>--%>
+<%--                <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL || roleFlag eq GlobalConstant.USER_LIST_CHARGE}">--%>
+<%--                    <div class="searchCss formItem">--%>
+<%--                        <label>&#12288;&#12288;国家基地：</label>--%>
+<%--                        <input id="trainOrg2" class="toggleView input" type="text" autocomplete="off"--%>
+<%--                               style="margin-left: 0px;width: 128px"/>--%>
+<%--                        <input type="hidden" name="orgFlow2" id="orgFlow2">--%>
+<%--                    </div>--%>
+<%--                </c:if>--%>
+<%--                <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL || roleFlag eq GlobalConstant.USER_LIST_CHARGE}">--%>
+<%--                    <div class="searchCss formItem">--%>
+<%--                        <label>&#12288;&#12288;培训基地：</label>--%>
+<%--                        <input id="trainOrg" class="toggleView input" type="text" autocomplete="off"--%>
+<%--                               style="margin-left: 0px;    width: 128px"/>--%>
+<%--                        <input type="hidden" name="orgFlow" id="orgFlow">--%>
+<%--                    </div>--%>
+<%--                </c:if>--%>
+<%--                <div class="searchCss formItem">--%>
+<%--                    &#12288;&#12288;培训类别：--%>
+<%--                    &lt;%&ndash;<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes()" style="    width: 128px;">&ndash;%&gt;--%>
+<%--                    <select name="trainingTypeId" id="trainingTypeId" class="select" style="    width: 128px;">--%>
+<%--                        &lt;%&ndash;<option value="">请选择</option>&ndash;%&gt;--%>
+<%--                        <c:if test="${param.catSpeId eq 'DoctorTrainingSpe'}">--%>
+<%--                            <option value="DoctorTrainingSpe" selected="selected">住院医师</option>--%>
+<%--                            &lt;%&ndash;  <option value="WMFirst" <c:if test="${param.trainingTypeId eq 'WMFirst'}">selected="selected"</c:if>>一阶段</option>--%>
+<%--                              <option value="WMSecond" <c:if test="${param.trainingTypeId eq 'WMSecond'}">selected="selected"</c:if>>二阶段</option>&ndash;%&gt;--%>
+<%--                        </c:if>--%>
+<%--                        <c:if test="${param.catSpeId eq 'AssiGeneral'}">--%>
+<%--                            <option value="AssiGeneral" selected="selected">助理全科</option>--%>
+<%--                        </c:if>--%>
+<%--                        &lt;%&ndash;<c:forEach items="${trainCategoryEnumList}" var="trainCategory">&ndash;%&gt;--%>
+<%--                        &lt;%&ndash;<option value="${trainCategory.id}" <c:if test="${param.trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>&ndash;%&gt;--%>
+<%--                        &lt;%&ndash;</c:forEach>&ndash;%&gt;--%>
+<%--                    </select>--%>
+<%--                </div>--%>
+<%--                <div class="searchCss formItem">--%>
+<%--                    &#12288;&#12288;培训专业：--%>
+<%--                    <select name="trainingSpeId" id="trainingSpeId" class="select" style="    width: 128px;">--%>
+<%--                        <option value="">全部</option>--%>
+<%--                        <c:if test="${param.catSpeId eq 'DoctorTrainingSpe'}">--%>
+<%--                            <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">--%>
+<%--                                <c:if test="${empty speIds or (pdfn:contain(dict.dictId, speIds))}">--%>
+<%--                                    <option--%>
+<%--                                            <c:if test="${param.trainingSpeId eq dict.dictId}">selected="selected"</c:if>--%>
+<%--                                            value="${dict.dictId}">${dict.dictName}</option>--%>
+<%--                                </c:if>--%>
+<%--                            </c:forEach>--%>
+<%--                        </c:if>--%>
+<%--                        <c:if test="${param.catSpeId eq 'AssiGeneral'}">--%>
+<%--                            <c:forEach items="${dictTypeEnumAssiGeneralList}" var="dict">--%>
+<%--                                <c:if test="${empty speIds or (pdfn:contain(dict.dictId, speIds))}">--%>
+<%--                                    <option--%>
+<%--                                            <c:if test="${param.trainingSpeId eq dict.dictId}">selected="selected"</c:if>--%>
+<%--                                            value="${dict.dictId}">${dict.dictName}</option>--%>
+<%--                                </c:if>--%>
+<%--                            </c:forEach>--%>
+<%--                        </c:if>--%>
+<%--                    </select>--%>
+<%--                </div>--%>
+<%--                <div class="searchCss formItem">--%>
+<%--                    &#12288; &#12288;结业年份：--%>
+<%--                    <input type="text" id="graduationYear" name="graduationYear" value="${param.graduationYear}"--%>
+<%--                           class="input" readonly="readonly" style="    width: 128px;margin-left: 0px"/>--%>
+<%--                </div>--%>
+<%--                <div class="searchCss formItem">--%>
+<%--                    &#12288;&#12288;姓&#12288;&#12288;名：<input type="text" name="userName" value="${param.userName}"--%>
+<%--                                                                class="input"--%>
+<%--                                                                style="    width: 128px;"/>--%>
+<%--                </div>--%>
+<%--                <div class="searchCss formItem">--%>
+<%--                    &#12288;&#12288;证&nbsp;件&nbsp;号&nbsp;：<input type="text" name="idNo" value="${param.idNo}"--%>
+<%--                                                                    class="input"--%>
+<%--                                                                    style="    width: 128px;"/>--%>
+<%--                </div>--%>
+<%--                <div class="searchCss formItem">--%>
+<%--                    &#12288;&#12288;成绩年份：--%>
+<%--                    <input type="text" id="scoreYear" name="scoreYear"--%>
+<%--                           value="${empty lastYear ? pdfn:getCurrYear():lastYear}"--%>
+<%--                           class="input" readonly="readonly" style="    width: 128px;margin-left: 0px"/>--%>
+<%--                </div>--%>
+<%--                <div class="searchCss formItem">--%>
+<%--                    &#12288;&#12288;是否合格：--%>
+<%--                    <select id="orgLevel" class="select" name="isHege" style="    width: 128px">--%>
+<%--                        <option value="">请选择</option>--%>
+<%--                        <option value="Y">是</option>--%>
+<%--                        <option value="N">否</option>--%>
+<%--                        &lt;%&ndash;                    <option value="2">缺考</option>&ndash;%&gt;--%>
+<%--                    </select>--%>
+<%--                </div>--%>
+<%--                <div class="searchCss formItem">--%>
+<%--                    &#12288;&#12288;考试编号：--%>
+<%--                    <select name="testId" class="select" style="    width: 128px;">--%>
+<%--                        <option value="">全部</option>--%>
+<%--                        <c:forEach items="${resTestConfigs}" var="resTest">--%>
+<%--                            <option value="${resTest.testId}" ${param.testId eq resTest.testId?'selected':''}>${resTest.testId}</option>--%>
+<%--                        </c:forEach>--%>
+<%--                    </select>--%>
+<%--                </div>--%>
+<%--                <div class="searchCss formItem1">--%>
+<%--                    &#12288;&#12288;人员类型：--%>
+<%--                    <c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+<%--                        <label><input type="checkbox" id="${type.id}" value="${type.id}" class="docType"/>${type.name}&nbsp;--%>
+<%--                        </label>--%>
+<%--                        <c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>--%>
+<%--                    </c:forEach>--%>
+<%--                </div>--%>
+
+<%--                <div style="margin: 4px 0px;">--%>
+<%--                    &#12288;&#12288;<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>&#12288;--%>
+<%--                    <c:if test="${maintenance ne 'Y'}"> &lt;%&ndash;客服（运维角色）只能查看——&ndash;%&gt;--%>
+<%--                        <c:if test="${roleFlag eq GlobalConstant.USER_LIST_CHARGE || roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">--%>
+<%--                            <input class="btn_green" type="button" value="导入成绩" onclick="importExcel();"/>--%>
+<%--                        </c:if>--%>
+<%--                    </c:if>--%>
+<%--                    <c:if test="${roleFlag eq GlobalConstant.USER_LIST_LOCAL || roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">--%>
+<%--                        <input class="btn_green" type="button" value="导出成绩" onclick="exportExcel();"/>--%>
+<%--                    </c:if>--%>
+<%--                </div>--%>
+
+<%--                <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">--%>
+
+<%--                </c:if>--%>
+
         </form>
     </div>
     <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">
-        <div id="doctorListZi" style="margin-top: 0px;margin-bottom: 20px;">
+        <div id="doctorListZi" >
         </div>
     </c:if>
     <c:if test="${roleFlag ne GlobalConstant.USER_LIST_GLOBAL}">
-        <div id="doctorListZi" style="margin-bottom: 20px;width: 100%;padding: 10px 40px;box-sizing: border-box;">
+        <div id="doctorListZi" >
         </div>
     </c:if>
 </div>

@@ -176,7 +176,7 @@
             <input id="currentPage" type="hidden" name="currentPage" value=""/>
             <c:if test="${param.seeFlag != GlobalConstant.FLAG_Y}">
 
-                <table class="searchTable">
+                <table class="searchTable" style="margin-top: 15px">
                     <tr>
                     <c:if test="${GlobalConstant.USER_LIST_LOCAL eq  sessionScope.userListScope}">
 <%--                        <td colspan="2">--%>

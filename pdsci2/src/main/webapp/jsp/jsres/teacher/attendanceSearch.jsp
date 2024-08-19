@@ -341,10 +341,10 @@
                     <div class="form_label">考勤时间：</div>
                     <div class="form_content">
                         <input type="text" id="startDate" name="schStartDate" value="${schStartDate}"
-                               class="input datepicker" readonly="readonly" style="width: 72px;"/>
+                               class="input datepicker" readonly="readonly" style="width: 80px;"/>
                         ~
                         <input type="text" id="endDate" name="schEndDate" value="${schEndDate}"
-                               class="input datepicker" readonly="readonly" style="width: 72px;"/>
+                               class="input datepicker" readonly="readonly" style="width: 80px;"/>
                     </div>
                 </div>
 

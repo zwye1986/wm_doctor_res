@@ -158,6 +158,8 @@ function selTag(tag,type,flag){
 		<input type="hidden" id="currentPage" name="currentPage"/>
 		<input type="hidden" id="orderByClo" name="orderByClo">
 		<input type="hidden" id="orderByFall" name="orderByFall">
+		
+
 			<table class="searchTable">
 				<tr>
 					<td class="td_left">

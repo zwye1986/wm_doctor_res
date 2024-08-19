@@ -55,7 +55,7 @@
 
 </script>
 <c:if test="${empty doctorList}">
-    <div class="search_table" style="width: 95%;">
+    <div class="search_table" >
         <table border="0" cellpadding="0" cellspacing="0" class="grid">
             <tr>
                 <th>结业确认<th>
