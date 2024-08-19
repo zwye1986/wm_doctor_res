@@ -56,6 +56,7 @@
         margin-bottom: 14px;
     }
 </style>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="<s:url value='/js/jquery-select/js/jquery.select.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <script src="<s:url value='/js/yearSelect/checkYear.js'/>" type="text/javascript"></script>
 <script type="text/javascript">
@@ -418,102 +419,225 @@
             $("#cityId2").html(html);
         },null,false);
     }
+
+    //显示隐藏
+    let flag = false;
+    function showOrHide(){
+
+        if(flag){
+            $(`.form_item_hide`).hide();
+            // document.getElementById("hideForm").style.display='none';
+            $("#open").text("展开")
+            flag = false;
+        }else {
+            $(`.form_item_hide`).css('display','flex');
+            // document.getElementById("hideForm").style.display='flex';
+            $("#open").text("收起")
+            flag = true;
+        }
+
+    }
 </script>
 <div class="main_bd" id="div_table_0">
-    <div class="div_search" style="padding: 24px 40px 6px 16px;">
+    <div class="div_search" >
         <form id="searchForm" class="search_form" >
-            <div class="flex">
             <input type="hidden" id="currentPage" name="currentPage"/>
             <input type="hidden" id="orgTypeFlag" value="${param.orgLevel}"/>
-            <div class="flex1">
-                <div class="searchCss">
-                    <label>&#12288;&#12288;培训基地：</label>
-                    <input id="trainOrg"  class="toggleView input" type="text"  autocomplete="off" style="margin-left: 0px;width: 128px"  />
-                    <input type="hidden" name="orgFlow" id="orgFlow">
-                </div>
-                <div class="searchCss">
-                    <label class="lb_text">&#12288;&#12288;&#12288;培训类别：</label>
 
-                    <select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes()" style="width:128px;">
-                        <%--<option value="">请选择</option>--%>
-                            <c:if test="${param.catSpeId eq 'DoctorTrainingSpe'}">
-                                <option value="DoctorTrainingSpe" selected="selected">住院医师</option>
-                                <option value="WMFirst" <c:if test="${param.trainingTypeId eq 'WMFirst'}">selected="selected"</c:if>>一阶段</option>
-                                <option value="WMSecond" <c:if test="${param.trainingTypeId eq 'WMSecond'}">selected="selected"</c:if>>二阶段</option>
-                            </c:if>
-                            <c:if test="${param.catSpeId eq 'AssiGeneral'}">
-                                <option value="AssiGeneral" selected="selected">助理全科</option>
-                            </c:if>
-                        <%--<c:forEach items="${trainCategoryEnumList}" var="trainCategory">--%>
-                            <%--<option value="${trainCategory.id}"--%>
-                                    <%--<c:if test="${param.trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>--%>
-                            <%--</c:forEach>--%>
-                    </select>
-                </div>
-                <div class="searchCss">
-                <label class="lb_text">&#12288;&#12288;&#12288;培训专业：</label>
+            <div class="form_search">
 
-                <select name="trainingSpeId" id="trainingSpeId" class="select" style="width: 128px;">
-                    <option value="">全部</option>
-                </select>
+
+                <div class="form_item">
+                    <div class="form_label">姓&#12288;&#12288;名：</div>
+                    <div class="form_content">
+                        <input type="text" name="userName" value="${param.userName}" class="input"/>
+                    </div>
+                </div>
+
+
+                <div class="form_item ">
+                    <div class="form_label">证&nbsp;件&nbsp;号&nbsp;：</div>
+                    <div class="form_content">
+                        <input type="text" name="idNo" value="${param.idNo}" class="input"/>
+                    </div>
+                </div>
+
+                <div class="form_item">
+                    <div class="form_label">培训基地：</div>
+                    <div class="form_content">
+                        <input id="trainOrg"  class="toggleView input" type="text"  autocomplete="off"   />
+                        <input type="hidden" name="orgFlow" id="orgFlow">
+                    </div>
+                </div>
+
+                <div class="form_item ">
+                    <div class="form_label">培训类别：</div>
+                    <div class="form_content">
+                        <select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes()" >
+                            <%--<option value="">请选择</option>--%>
+                                <c:if test="${param.catSpeId eq 'DoctorTrainingSpe'}">
+                                    <option value="DoctorTrainingSpe" selected="selected">住院医师</option>
+                                    <option value="WMFirst" <c:if test="${param.trainingTypeId eq 'WMFirst'}">selected="selected"</c:if>>一阶段</option>
+                                    <option value="WMSecond" <c:if test="${param.trainingTypeId eq 'WMSecond'}">selected="selected"</c:if>>二阶段</option>
+                                </c:if>
+                                <c:if test="${param.catSpeId eq 'AssiGeneral'}">
+                                    <option value="AssiGeneral" selected="selected">助理全科</option>
+                                </c:if>
+                            <%--<c:forEach items="${trainCategoryEnumList}" var="trainCategory">--%>
+                                <%--<option value="${trainCategory.id}"--%>
+                                        <%--<c:if test="${param.trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>--%>
+                                <%--</c:forEach>--%>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form_item form_item_hide">
+                    <div class="form_label">培训专业：</div>
+                    <div class="form_content">
+                        <select name="trainingSpeId" id="trainingSpeId" class="select" >
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form_item form_item_hide">
+                    <div class="form_label">结业年份：</div>
+                    <div class="form_content">
+                        <input type="text" id="graduationYear" name="graduationYear" value="${param.graduationYear}"
+                           class="input" readonly="readonly" />
+                    </div>
+                </div>
+
+
+
+                 <div class="form_item form_item_hide" style="width: 400px">
+                    <div class="form_label">人员类型：</div>
+                    <div class="form_content">
+                        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                            <label><input type="checkbox" id="${type.id}" value="${type.id}" class="docType"/>${type.name}&nbsp;
+                            </label>
+                            <c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>
+                        </c:forEach>
+                    </div>
+                </div>
+
+
             </div>
-                <div class="searchCss">
-                    <label class="lb_text">&#12288;&#12288;结业年份：</label>
-                    <input type="text" id="graduationYear" name="graduationYear" value="${param.graduationYear}"
-                           class="input" readonly="readonly" style="width: 128px;"/>
-                </div>
-                <div class="searchCss">
-                    <label class="lb_text">&#12288;&#12288;姓&#12288;&#12288;名：</label>
-                    <input type="text" name="userName" value="${param.userName}" class="input"
-                           style="width: 128px;margin-left: 0px"/>
-                </div>
-                <div class="searchCss">
-                    <label class="lb_text" style="margin-left: 2px;">&#12288;&#12288;&#12288;证&nbsp;件&nbsp;号&nbsp;：</label>
-                    <input type="text" name="idNo" value="${param.idNo}" class="input"
-                           style="width: 128px;"/>
-                </div>
-            </div>
-            <div class="flex1" style="justify-content: initial;">
-                <div class="searchCss">
-                    <label class="lb_text">&#12288;&#12288;人员类型：</label>
-                    <c:forEach items="${jsResDocTypeEnumList}" var="type">
-                        <label><input type="checkbox" id="${type.id}" value="${type.id}" class="docType"/>${type.name}&nbsp;
-                        </label>
-                        <c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>
-                    </c:forEach>
-                </div>
-            </div>
-            <div style="margin: 4px 0px;">
-            <input class="btn_green" style="margin-left: 24px;" type="button" value="查&#12288;询" onclick="toPage();"/>
-            <c:if test="${maintenance ne 'Y'}"> <%--客服（运维角色）只能查看——--%>
-                <c:if test="${applicationScope.sysCfgMap['import_public_grade'] eq 'st' }">
-                    <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">
-                        <input class="btn_green" style="margin-left: 20px;" type="button" value="导入成绩" onclick="importExcel();"/>
+
+            <div class="form_btn">
+                <input class="btn_green"  type="button" value="查&#12288;询" onclick="toPage();"/>
+                <c:if test="${maintenance ne 'Y'}"> <%--客服（运维角色）只能查看——--%>
+                    <c:if test="${applicationScope.sysCfgMap['import_public_grade'] eq 'st' }">
+                        <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">
+                            <input class="btn_green"  type="button" value="导入成绩" onclick="importExcel();"/>
+                        </c:if>
+                    </c:if>
+                    <c:if test="${applicationScope.sysCfgMap['import_public_grade'] eq 'sj' }">
+                        <c:if test="${roleFlag eq GlobalConstant.USER_LIST_CHARGE}">
+                            <input class="btn_green"  type="button" value="导入成绩" onclick="importExcel();"/>
+                        </c:if>
+                    </c:if>
+                    <c:if test="${applicationScope.sysCfgMap['import_public_grade'] eq 'stAndsj' || empty  applicationScope.sysCfgMap['import_public_grade'] }">
+                        <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL || roleFlag eq GlobalConstant.USER_LIST_CHARGE}">
+                            <input class="btn_green"  type="button" value="导入成绩" onclick="importExcel();"/>
+                        </c:if>
                     </c:if>
                 </c:if>
-                <c:if test="${applicationScope.sysCfgMap['import_public_grade'] eq 'sj' }">
-                    <c:if test="${roleFlag eq GlobalConstant.USER_LIST_CHARGE}">
-                        <input class="btn_green" style="margin-left: 20px;" type="button" value="导入成绩" onclick="importExcel();"/>
-                    </c:if>
-                </c:if>
-                <c:if test="${applicationScope.sysCfgMap['import_public_grade'] eq 'stAndsj' || empty  applicationScope.sysCfgMap['import_public_grade'] }">
-                    <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL || roleFlag eq GlobalConstant.USER_LIST_CHARGE}">
-                        <input class="btn_green" style="margin-left: 20px;" type="button" value="导入成绩" onclick="importExcel();"/>
-                    </c:if>
-                </c:if>
-            </c:if>
 
+                <a style="color: #54B2E5; margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
             </div>
-            </div>
+
+
+
+<%--            <div class="flex1">--%>
+<%--                <div class="searchCss">--%>
+<%--                    <label>&#12288;&#12288;培训基地：</label>--%>
+<%--                    <input id="trainOrg"  class="toggleView input" type="text"  autocomplete="off" style="margin-left: 0px;width: 128px"  />--%>
+<%--                    <input type="hidden" name="orgFlow" id="orgFlow">--%>
+<%--                </div>--%>
+<%--                <div class="searchCss">--%>
+<%--                    <label class="lb_text">&#12288;&#12288;&#12288;培训类别：</label>--%>
+
+<%--                    <select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes()" style="width:128px;">--%>
+<%--                        &lt;%&ndash;<option value="">请选择</option>&ndash;%&gt;--%>
+<%--                            <c:if test="${param.catSpeId eq 'DoctorTrainingSpe'}">--%>
+<%--                                <option value="DoctorTrainingSpe" selected="selected">住院医师</option>--%>
+<%--                                <option value="WMFirst" <c:if test="${param.trainingTypeId eq 'WMFirst'}">selected="selected"</c:if>>一阶段</option>--%>
+<%--                                <option value="WMSecond" <c:if test="${param.trainingTypeId eq 'WMSecond'}">selected="selected"</c:if>>二阶段</option>--%>
+<%--                            </c:if>--%>
+<%--                            <c:if test="${param.catSpeId eq 'AssiGeneral'}">--%>
+<%--                                <option value="AssiGeneral" selected="selected">助理全科</option>--%>
+<%--                            </c:if>--%>
+<%--                        &lt;%&ndash;<c:forEach items="${trainCategoryEnumList}" var="trainCategory">&ndash;%&gt;--%>
+<%--                            &lt;%&ndash;<option value="${trainCategory.id}"&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;<c:if test="${param.trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>&ndash;%&gt;--%>
+<%--                            &lt;%&ndash;</c:forEach>&ndash;%&gt;--%>
+<%--                    </select>--%>
+<%--                </div>--%>
+<%--                <div class="searchCss">--%>
+<%--                <label class="lb_text">&#12288;&#12288;&#12288;培训专业：</label>--%>
+
+<%--                <select name="trainingSpeId" id="trainingSpeId" class="select" style="width: 128px;">--%>
+<%--                    <option value="">全部</option>--%>
+<%--                </select>--%>
+<%--            </div>--%>
+<%--                <div class="searchCss">--%>
+<%--                    <label class="lb_text">&#12288;&#12288;结业年份：</label>--%>
+<%--                    <input type="text" id="graduationYear" name="graduationYear" value="${param.graduationYear}"--%>
+<%--                           class="input" readonly="readonly" style="width: 128px;"/>--%>
+<%--                </div>--%>
+<%--                <div class="searchCss">--%>
+<%--                    <label class="lb_text">&#12288;&#12288;姓&#12288;&#12288;名：</label>--%>
+<%--                    <input type="text" name="userName" value="${param.userName}" class="input"--%>
+<%--                           style="width: 128px;margin-left: 0px"/>--%>
+<%--                </div>--%>
+<%--                <div class="searchCss">--%>
+<%--                    <label class="lb_text" style="margin-left: 2px;">&#12288;&#12288;&#12288;证&nbsp;件&nbsp;号&nbsp;：</label>--%>
+<%--                    <input type="text" name="idNo" value="${param.idNo}" class="input"--%>
+<%--                           style="width: 128px;"/>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <div class="flex1" style="justify-content: initial;">--%>
+<%--                <div class="searchCss">--%>
+<%--                    <label class="lb_text">&#12288;&#12288;人员类型：</label>--%>
+<%--                    <c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+<%--                        <label><input type="checkbox" id="${type.id}" value="${type.id}" class="docType"/>${type.name}&nbsp;--%>
+<%--                        </label>--%>
+<%--                        <c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>--%>
+<%--                    </c:forEach>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <div style="margin: 4px 0px;">--%>
+<%--            <input class="btn_green" style="margin-left: 24px;" type="button" value="查&#12288;询" onclick="toPage();"/>--%>
+<%--            <c:if test="${maintenance ne 'Y'}"> &lt;%&ndash;客服（运维角色）只能查看——&ndash;%&gt;--%>
+<%--                <c:if test="${applicationScope.sysCfgMap['import_public_grade'] eq 'st' }">--%>
+<%--                    <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">--%>
+<%--                        <input class="btn_green" style="margin-left: 20px;" type="button" value="导入成绩" onclick="importExcel();"/>--%>
+<%--                    </c:if>--%>
+<%--                </c:if>--%>
+<%--                <c:if test="${applicationScope.sysCfgMap['import_public_grade'] eq 'sj' }">--%>
+<%--                    <c:if test="${roleFlag eq GlobalConstant.USER_LIST_CHARGE}">--%>
+<%--                        <input class="btn_green" style="margin-left: 20px;" type="button" value="导入成绩" onclick="importExcel();"/>--%>
+<%--                    </c:if>--%>
+<%--                </c:if>--%>
+<%--                <c:if test="${applicationScope.sysCfgMap['import_public_grade'] eq 'stAndsj' || empty  applicationScope.sysCfgMap['import_public_grade'] }">--%>
+<%--                    <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL || roleFlag eq GlobalConstant.USER_LIST_CHARGE}">--%>
+<%--                        <input class="btn_green" style="margin-left: 20px;" type="button" value="导入成绩" onclick="importExcel();"/>--%>
+<%--                    </c:if>--%>
+<%--                </c:if>--%>
+<%--            </c:if>--%>
+
+<%--            </div>--%>
+<%--            </div>--%>
 
         </form>
     </div>
     <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">
-        <div id="doctorListZi" style="margin-top: 0px;margin-bottom: 20px;">
+        <div id="doctorListZi" >
         </div>
     </c:if>
     <c:if test="${roleFlag ne GlobalConstant.USER_LIST_GLOBAL}">
-        <div id="doctorListZi" style="margin-bottom: 20px;width: 100%;padding: 10px 40px;box-sizing: border-box;">
+        <div id="doctorListZi" >
         </div>
     </c:if>
 </div>

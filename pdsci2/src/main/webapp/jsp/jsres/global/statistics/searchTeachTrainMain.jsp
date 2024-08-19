@@ -95,6 +95,24 @@
         },null,false);
     }
 
+    //显示隐藏
+    let flag = false;
+    function showOrHide(){
+
+        if(flag){
+            $(`.form_item_hide`).hide();
+            // document.getElementById("hideForm").style.display='none';
+            $("#open").text("展开")
+            flag = false;
+        }else {
+            $(`.form_item_hide`).css('display','flex');
+            // document.getElementById("hideForm").style.display='flex';
+            $("#open").text("收起")
+            flag = true;
+        }
+
+    }
+
 </script>
 <div class="main_hd">
     <h2 class="underline">师资信息管理</h2>
@@ -151,7 +169,7 @@
                     </div>
                 </div>
 
-                <div class="form_item">
+                <div class="form_item form_item_hide">
                     <div class="form_label" >技术职称：</div>
                     <div class="form_content">
                         <input type="text" value="${param.technicalTitle}" class="input" name="technicalTitle"
@@ -159,7 +177,7 @@
                     </div>
                 </div>
 
-                 <div class="form_item">
+                 <div class="form_item form_item_hide">
                     <div class="form_label" >培训年份：</div>
                     <div class="form_content">
                         <input type="text" value="${param.trainingYear}" class="input" name="trainingYear" id="trainingYear"
@@ -168,7 +186,7 @@
                 </div>
 
 
-                <div class="form_item">
+                <div class="form_item form_item_hide">
                     <div class="form_label" >科&#12288;&#12288;室：</div>
                     <div class="form_content">
                          <select class="select" id="deptFlow" name="deptFlow" >
@@ -178,7 +196,7 @@
 
 
 
-                <div class="form_item">
+                <div class="form_item form_item_hide">
                     <div class="form_label" >专&#12288;&#12288;业：</div>
                     <div class="form_content">
                          <select class="select" name="speId" >
@@ -195,6 +213,8 @@
                 <input class="btn_green" type="button" onclick="toPage(1);" value="查&#12288;询"/>
                 <input class="btn_green" type="button" onclick="addTeacherTrain('${sessionScope.userListScope}')" value="新&#12288;增"/>
                 <input class="btn_green" type="button" value="导&#12288;入" onclick="importExcel('${param.roleFlag}');"/>
+
+                <a style="color: #54B2E5; margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
             </div>
 
 

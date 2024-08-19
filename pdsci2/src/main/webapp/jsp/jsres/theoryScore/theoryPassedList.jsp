@@ -471,8 +471,48 @@
 
                 <div class="form_search">
 
+                    <div class="form_item">
+                        <div class="form_label">姓&#12288;&#12288;名：</div>
+                        <div class="form_content">
+                            <input type="text" name="userName" value="${param.userName}"
+                                   class="input"/>
+                        </div>
+                    </div>
+
+
+                    <div class="form_item ">
+                        <div class="form_label">证&nbsp;件&nbsp;号&nbsp;：</div>
+                        <div class="form_content">
+                            <input type="text" name="userName" value="${param.userName}"
+                                   class="input"/>
+                        </div>
+                    </div>
+
+                    <div class="form_item ">
+                        <div class="form_label">合格批次：</div>
+                        <div class="form_content">
+                            <select name="testId" class="select">
+                                <option value="">全部</option>
+                                <c:forEach items="${resTestConfigs}" var="resTest">
+                                    <option value="${resTest.testId}" ${param.testId eq resTest.testId?'selected':''}>${resTest.testId}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form_item ">
+                        <div class="form_label">含&nbsp;补&nbsp;考&nbsp;：</div>
+                        <div class="form_content">
+                            <select name="isMakeUp" class="select">
+                                <option value="Y">是</option>
+                                <option value="N">否</option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">
-                        <div class="form_item">
+                        <div class="form_item form_item_hide">
                             <div class="form_label">地&#12288;&#12288;市：</div>
                             <div class="form_content">
                                 <select id="cityId2" name="orgCityId" class="select" onchange="changeOrg(this)"
@@ -482,7 +522,7 @@
                     </c:if>
 
                     <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL || roleFlag eq GlobalConstant.USER_LIST_CHARGE}">
-                        <div class="form_item">
+                        <div class="form_item form_item_hide">
                             <div class="form_label">国家基地：</div>
                             <div class="form_content">
                                 <input id="trainOrg2" class="toggleView input" type="text" autocomplete="off"
@@ -494,7 +534,7 @@
 
 
                     <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL || roleFlag eq GlobalConstant.USER_LIST_CHARGE}">
-                        <div class="form_item">
+                        <div class="form_item form_item_hide">
                             <div class="form_label">培训基地：</div>
                             <div class="form_content">
                                 <input id="trainOrg" class="toggleView input" type="text" autocomplete="off"
@@ -504,7 +544,7 @@
                         </div>
                     </c:if>
 
-                    <div class="form_item">
+                    <div class="form_item form_item_hide">
                         <div class="form_label">培训类别：</div>
                         <div class="form_content">
                             <select name="trainingTypeId" id="trainingTypeId" class="select">
@@ -524,7 +564,7 @@
                         </div>
                     </div>
 
-                    <div class="form_item">
+                    <div class="form_item form_item_hide">
                         <div class="form_label">培训专业：</div>
                         <div class="form_content">
                             <select name="trainingSpeId" id="trainingSpeId" class="select">
@@ -551,54 +591,13 @@
                         </div>
                     </div>
 
-                    <div class="form_item">
+                    <div class="form_item form_item_hide">
                         <div class="form_label">结业年份：</div>
                         <div class="form_content">
                             <input type="text" id="graduationYear" name="graduationYear"
                                    value="${empty param.graduationYear?year:param.graduationYear}"
                                    class="input" readonly="readonly"
                                    onchange="changeSelectYear();"/>
-                        </div>
-                    </div>
-
-
-                    <div class="form_item">
-                        <div class="form_label">姓&#12288;&#12288;名：</div>
-                        <div class="form_content">
-                            <input type="text" name="userName" value="${param.userName}"
-                                   class="input"/>
-                        </div>
-                    </div>
-
-
-                    <div class="form_item form_item_hide">
-                        <div class="form_label">证&nbsp;件&nbsp;号&nbsp;：</div>
-                        <div class="form_content">
-                            <input type="text" name="userName" value="${param.userName}"
-                                   class="input"/>
-                        </div>
-                    </div>
-
-                    <div class="form_item form_item_hide">
-                        <div class="form_label">合格批次：</div>
-                        <div class="form_content">
-                            <select name="testId" class="select">
-                                <option value="">全部</option>
-                                <c:forEach items="${resTestConfigs}" var="resTest">
-                                    <option value="${resTest.testId}" ${param.testId eq resTest.testId?'selected':''}>${resTest.testId}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                    </div>
-
-
-                    <div class="form_item form_item_hide">
-                        <div class="form_label">含&nbsp;补&nbsp;考&nbsp;：</div>
-                        <div class="form_content">
-                            <select name="isMakeUp" class="select">
-                                <option value="Y">是</option>
-                                <option value="N">否</option>
-                            </select>
                         </div>
                     </div>
 

@@ -590,8 +590,40 @@
                 <input type="hidden" id="orgTypeFlag" value="${param.orgLevel}"/>
 
                 <div class="form_search">
+
+
+                    <div class="form_item">
+                        <div class="form_label">结业年份：</div>
+                        <div class="form_content">
+                            <input type="text" id="graduationYear" name="graduationYear" value="${param.graduationYear}"
+                               class="input" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="form_item">
+                        <div class="form_label">姓&#12288;&#12288;名：</div>
+                        <div class="form_content">
+                            <input type="text" name="userName" value="${param.userName}" class="input"/>
+                        </div>
+                    </div>
+                    <div class="form_item ">
+                        <div class="form_label">证&nbsp;件&nbsp;号&nbsp;：</div>
+                        <div class="form_content">
+                            <input type="text" name="idNo" value="${param.idNo}" class="input"/>
+                        </div>
+                    </div>
+
+                    <div class="form_item ">
+                        <div class="form_label">成绩年份：</div>
+                        <div class="form_content">
+                            <input type="text" id="scoreYear" name="scoreYear"
+                               value="${empty lastYear ? pdfn:getCurrYear():lastYear}"
+                               class="input" readonly="readonly" />
+                        </div>
+                    </div>
+
+
                     <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">
-                        <div class="form_item">
+                        <div class="form_item form_item_hide">
                             <div class="form_label">地&#12288;&#12288;市：</div>
                             <div class="form_content">
                                 <select id="cityId2" name="orgCityId" class="select"
@@ -600,7 +632,7 @@
                         </div>
                     </c:if>
                     <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL || roleFlag eq GlobalConstant.USER_LIST_CHARGE}">
-                        <div class="form_item">
+                        <div class="form_item form_item_hide">
                             <div class="form_label">国家基地：</div>
                             <div class="form_content">
                                 <input id="trainOrg2" class="toggleView input" type="text" autocomplete="off"/>
@@ -609,7 +641,7 @@
                         </div>
                     </c:if>
                     <c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL || roleFlag eq GlobalConstant.USER_LIST_CHARGE}">
-                        <div class="form_item">
+                        <div class="form_item form_item_hide">
                             <div class="form_label">培训基地：</div>
                             <div class="form_content">
                                 <input id="trainOrg" class="toggleView input" type="text" autocomplete="off"/>
@@ -618,7 +650,7 @@
                         </div>
                     </c:if>
 
-                    <div class="form_item">
+                    <div class="form_item form_item_hide">
                         <div class="form_label">培训类别：</div>
                         <div class="form_content">
                             <%--<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes()" style="    width: 128px;">--%>
@@ -640,7 +672,7 @@
                     </div>
 
 
-                    <div class="form_item">
+                    <div class="form_item form_item_hide">
                         <div class="form_label">培训专业：</div>
                         <div class="form_content">
                             <select name="trainingSpeId" id="trainingSpeId" class="select">
@@ -668,33 +700,7 @@
 
                     </div>
 
-                    <div class="form_item">
-                        <div class="form_label">结业年份：</div>
-                        <div class="form_content">
-                            <input type="text" id="graduationYear" name="graduationYear" value="${param.graduationYear}"
-                               class="input" readonly="readonly" />
-                        </div>
-                    </div>
-                    <div class="form_item">
-                        <div class="form_label">姓&#12288;&#12288;名：</div>
-                        <div class="form_content">
-                            <input type="text" name="userName" value="${param.userName}" class="input"/>
-                        </div>
-                    </div>
-                    <div class="form_item form_item_hide">
-                        <div class="form_label">证&nbsp;件&nbsp;号&nbsp;：</div>
-                        <div class="form_content">
-                            <input type="text" name="idNo" value="${param.idNo}" class="input"/>
-                        </div>
-                    </div>
-                    <div class="form_item form_item_hide">
-                        <div class="form_label">成绩年份：</div>
-                        <div class="form_content">
-                            <input type="text" id="scoreYear" name="scoreYear"
-                               value="${empty lastYear ? pdfn:getCurrYear():lastYear}"
-                               class="input" readonly="readonly" />
-                        </div>
-                    </div>
+
                     <div class="form_item form_item_hide">
                         <div class="form_label">是否合格：</div>
                         <div class="form_content">
@@ -733,7 +739,7 @@
                 </div>
 
                 <div class="form_btn">
-                    <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>&#12288;
+                    <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>
                     <c:if test="${maintenance ne 'Y'}"> <%--客服（运维角色）只能查看——--%>
                         <c:if test="${roleFlag eq GlobalConstant.USER_LIST_CHARGE || roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">
                             <input class="btn_green" type="button" value="导入成绩" onclick="importExcel();"/>
