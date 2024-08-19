@@ -34,7 +34,7 @@
 </script>
 
 <div class="main_bd">
-    <div class="search_table">
+<%--    <div class="search_table">--%>
         <table border="0" cellpadding="0" cellspacing="0" class="grid">
             <tr>
                 <%--                <th width="8%">证书编号</th>--%>
@@ -48,7 +48,7 @@
                 <th width="5%">年份</th>
                 <th width="14%">证书附件</th>
                 <th width="14%">成果附件</th>
-                <th width="18%">操作</th>
+                <th width="20%">操作</th>
             </tr>
             <c:forEach items="${teacherTrainingList }" var="teacher" varStatus="status">
                 <tr>
@@ -113,8 +113,8 @@
                     </c:if>
 
                     <td>
-                        <a class="btn" onclick="editInfo('${teacher.recordFlow}','${roleFlag}');">编辑</a>
-                        <a class="btn" onclick="deleteInfo('${teacher.recordFlow}');">删除</a>
+                        <a onclick="editInfo('${teacher.recordFlow}','${roleFlag}');">编辑</a>
+                        <a style="margin-left: 10px" onclick="deleteInfo('${teacher.recordFlow}');">删除</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -124,7 +124,7 @@
                 </tr>
             </c:if>
         </table>
-    </div>
+<%--    </div>--%>
     <div class="page" style="padding-right: 40px;">
         <c:set var="pageView" value="${pdfn:getPageView(teacherTrainingList)}" scope="request"></c:set>
         <pd:pagination-jsres toPage="toPage"/>

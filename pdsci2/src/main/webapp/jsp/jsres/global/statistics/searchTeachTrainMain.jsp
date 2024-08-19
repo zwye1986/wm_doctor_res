@@ -15,6 +15,7 @@
         color: red
     }
 </style>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script type="text/javascript">
     $(document).ready(function () {
         $('#trainingYear').datepicker({
@@ -94,6 +95,24 @@
         },null,false);
     }
 
+    //显示隐藏
+    let flag = false;
+    function showOrHide(){
+
+        if(flag){
+            $(`.form_item_hide`).hide();
+            // document.getElementById("hideForm").style.display='none';
+            $("#open").text("展开")
+            flag = false;
+        }else {
+            $(`.form_item_hide`).css('display','flex');
+            // document.getElementById("hideForm").style.display='flex';
+            $("#open").text("收起")
+            flag = true;
+        }
+
+    }
+
 </script>
 <div class="main_hd">
     <h2 class="underline">师资信息管理</h2>
@@ -104,22 +123,41 @@
             <input type="hidden" id="sexName" name="sexName" value="${param.sexName }">
             <input type="hidden" id="roleFlag" name="roleFlag" value="${roleFlag }">
             <input type="hidden" id="currentPage" name="currentPage" value="${param.currentPage }">
-            <table>
-                <tr>
-                    <td>
-                        <label id="train">培训基地：</label>
-                        <select class="select" id="orgFlow" name="orgFlow" style="width: 106px;margin-right: 21px" onchange="searchDeptList(this.value)">
+
+            <div class="form_search">
+                <div class="form_item">
+                    <div class="form_label"  id="train">培训基地：</div>
+                    <div class="form_content">
+                        <select class="select" id="orgFlow" name="orgFlow"  onchange="searchDeptList(this.value)">
                             <option value="" <c:if test="${empty param.orgFlow}">selected="selected"</c:if>>全部</option>
                             <c:forEach items="${orgs}" var="org">
                                 <option value="${org.orgFlow}" <c:if test="${param.orgFlow == org.orgFlow}">selected="selected"</c:if>>${org.orgName}</option>
                             </c:forEach>
                         </select>
-                        证书编号：<input type="text" value="${param.certificateNo}" class="input" name="certificateNo"
-                                    style="width: 100px;"/>
-                        &#12288;姓&#12288;&#12288;名：<input type="text" value="${param.doctorName}" class="input" name="doctorName"
-                                                  style="width: 100px;"/>
-                        &#12288;性&#12288;&#12288;别：&nbsp;
-                        <select class="select" name="sexId" style="width: 100px" onchange="changeSex(this.value);">
+                    </div>
+                </div>
+
+
+                <div class="form_item">
+                    <div class="form_label" >证书编号：</div>
+                    <div class="form_content">
+                        <input type="text" value="${param.certificateNo}" class="input" name="certificateNo"
+                                    />
+                    </div>
+                </div>
+
+                <div class="form_item">
+                    <div class="form_label" >姓&#12288;&#12288;名：</div>
+                    <div class="form_content">
+                        <input type="text" value="${param.doctorName}" class="input" name="doctorName"
+                                                  />
+                    </div>
+                </div>
+
+                <div class="form_item">
+                    <div class="form_label" >性&#12288;&#12288;别：</div>
+                    <div class="form_content">
+                        <select class="select" name="sexId"  onchange="changeSex(this.value);">
                             <option value="">请选择</option>
                             <c:forEach items="${userSexEnumList }" var="sex">
                                 <option value="${sex.id }"
@@ -128,38 +166,114 @@
                                 >${sex.name}</option>
                             </c:forEach>
                         </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        技术职称：<input type="text" value="${param.technicalTitle}" class="input" name="technicalTitle"
-                                    style="width: 100px;margin-right: 9px; margin-left: 3px"/>
-                        &#12288;培训年份：<input type="text" value="${param.trainingYear}" class="input" name="trainingYear" id="trainingYear"
-                                            style="width: 101px;"/>
-                        &#12288;科&#12288;&#12288;室：&nbsp;
-                        <select class="select" id="deptFlow" name="deptFlow" style="width: 106px;margin-left: -3px;margin-right: 5px">
+                    </div>
+                </div>
 
+                <div class="form_item form_item_hide">
+                    <div class="form_label" >技术职称：</div>
+                    <div class="form_content">
+                        <input type="text" value="${param.technicalTitle}" class="input" name="technicalTitle"
+                                    />
+                    </div>
+                </div>
+
+                 <div class="form_item form_item_hide">
+                    <div class="form_label" >培训年份：</div>
+                    <div class="form_content">
+                        <input type="text" value="${param.trainingYear}" class="input" name="trainingYear" id="trainingYear"
+                                            />
+                    </div>
+                </div>
+
+
+                <div class="form_item form_item_hide">
+                    <div class="form_label" >科&#12288;&#12288;室：</div>
+                    <div class="form_content">
+                         <select class="select" id="deptFlow" name="deptFlow" >
                         </select>
-                        &#12288;专&#12288;&#12288;业：&nbsp;
-                        <select class="select" name="speId" style="width: 100px">
+                    </div>
+                </div>
+
+
+
+                <div class="form_item form_item_hide">
+                    <div class="form_label" >专&#12288;&#12288;业：</div>
+                    <div class="form_content">
+                         <select class="select" name="speId" >
                             <option value="">请选择</option>
                             <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
                                 <option <c:if test="${param.speId eq dict.dictId}">selected="selected"</c:if> value="${dict.dictId}">${dict.dictName}</option>
                             </c:forEach>
                         </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input class="btn_green" type="button" onclick="toPage(1);" value="查&#12288;询"/>&#12288;
-                        <input class="btn_green" type="button" onclick="addTeacherTrain('${sessionScope.userListScope}')" value="新&#12288;增"/>&#12288;
-                        <input class="btn_green" type="button" value="导&#12288;入" onclick="importExcel('${param.roleFlag}');"/>&#12288;
-                    </td>
-                </tr>
-            </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form_btn">
+                <input class="btn_green" type="button" onclick="toPage(1);" value="查&#12288;询"/>
+                <input class="btn_green" type="button" onclick="addTeacherTrain('${sessionScope.userListScope}')" value="新&#12288;增"/>
+                <input class="btn_green" type="button" value="导&#12288;入" onclick="importExcel('${param.roleFlag}');"/>
+
+                <a style="color: #54B2E5; margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
+            </div>
+
+
+<%--            <table>--%>
+<%--                <tr>--%>
+<%--                    <td>--%>
+<%--                        <label id="train">培训基地：</label>--%>
+<%--                        <select class="select" id="orgFlow" name="orgFlow" style="width: 106px;margin-right: 21px" onchange="searchDeptList(this.value)">--%>
+<%--                            <option value="" <c:if test="${empty param.orgFlow}">selected="selected"</c:if>>全部</option>--%>
+<%--                            <c:forEach items="${orgs}" var="org">--%>
+<%--                                <option value="${org.orgFlow}" <c:if test="${param.orgFlow == org.orgFlow}">selected="selected"</c:if>>${org.orgName}</option>--%>
+<%--                            </c:forEach>--%>
+<%--                        </select>--%>
+<%--                        证书编号：<input type="text" value="${param.certificateNo}" class="input" name="certificateNo"--%>
+<%--                                    style="width: 100px;"/>--%>
+<%--                        &#12288;姓&#12288;&#12288;名：<input type="text" value="${param.doctorName}" class="input" name="doctorName"--%>
+<%--                                                  style="width: 100px;"/>--%>
+<%--                        &#12288;性&#12288;&#12288;别：&nbsp;--%>
+<%--                        <select class="select" name="sexId" style="width: 100px" onchange="changeSex(this.value);">--%>
+<%--                            <option value="">请选择</option>--%>
+<%--                            <c:forEach items="${userSexEnumList }" var="sex">--%>
+<%--                                <option value="${sex.id }"--%>
+<%--                                        <c:if test="${sex.id eq userSexEnumUnknown.id}">style="display: none;"</c:if>--%>
+<%--                                        <c:if test="${param.sexId eq sex.id}">selected="selected "</c:if>--%>
+<%--                                >${sex.name}</option>--%>
+<%--                            </c:forEach>--%>
+<%--                        </select>--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--                <tr>--%>
+<%--                    <td>--%>
+<%--                        技术职称：<input type="text" value="${param.technicalTitle}" class="input" name="technicalTitle"--%>
+<%--                                    style="width: 100px;margin-right: 9px; margin-left: 3px"/>--%>
+<%--                        &#12288;培训年份：<input type="text" value="${param.trainingYear}" class="input" name="trainingYear" id="trainingYear"--%>
+<%--                                            style="width: 101px;"/>--%>
+<%--                        &#12288;科&#12288;&#12288;室：&nbsp;--%>
+<%--                        <select class="select" id="deptFlow" name="deptFlow" style="width: 106px;margin-left: -3px;margin-right: 5px">--%>
+
+<%--                        </select>--%>
+<%--                        &#12288;专&#12288;&#12288;业：&nbsp;--%>
+<%--                        <select class="select" name="speId" style="width: 100px">--%>
+<%--                            <option value="">请选择</option>--%>
+<%--                            <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">--%>
+<%--                                <option <c:if test="${param.speId eq dict.dictId}">selected="selected"</c:if> value="${dict.dictId}">${dict.dictName}</option>--%>
+<%--                            </c:forEach>--%>
+<%--                        </select>--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--                <tr>--%>
+<%--                    <td>--%>
+<%--                        <input class="btn_green" type="button" onclick="toPage(1);" value="查&#12288;询"/>&#12288;--%>
+<%--                        <input class="btn_green" type="button" onclick="addTeacherTrain('${sessionScope.userListScope}')" value="新&#12288;增"/>&#12288;--%>
+<%--                        <input class="btn_green" type="button" value="导&#12288;入" onclick="importExcel('${param.roleFlag}');"/>&#12288;--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--            </table>--%>
         </form>
     </div>
-    <div class="search_table" id="contentDiv" style="padding: 0 10px;">
+    <div class="search_table" id="contentDiv" >
 
     </div>
 </div>

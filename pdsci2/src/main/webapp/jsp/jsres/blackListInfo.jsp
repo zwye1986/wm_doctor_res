@@ -9,6 +9,7 @@
     <jsp:param name="jquery_scrollTo" value="false"/>
     <jsp:param name="jquery_datePicker" value="true"/>
 </jsp:include>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script type="text/javascript"
         src="<s:url value='/js/ajaxfileupload.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <style type="text/css">
@@ -166,59 +167,118 @@
         <form id="searchForm">
             <input type="hidden" name="currentPage" id="currentPage" value=""/>
             <c:if test="${GlobalConstant.USER_LIST_PERSONAL != sessionScope.userListScope and param.seeFlag !=GlobalConstant.FLAG_Y }">
-                <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
-                    <tr>
-                        <td class="td_left">
-                            <nobr>原培训年级：</nobr>
-                        </td>
-                        <td class="td_right">
+
+                <div class="form_search">
+
+                    <div class="form_item">
+                        <div class="form_label">培训专业：</div>
+                        <div class="form_content">
+                            <input type="text" value="${param.trainingSpeName}" class="input" name="trainingSpeName" />
+                        </div>
+                    </div>
+
+                    <div class="form_item">
+                        <div class="form_label">原培训年级：</div>
+                        <div class="form_content">
                             <input type="text" id="sessionNumber" name="sessionNumber" value=""
-                                   class="input" readonly="readonly" style="width: 135px;margin-left: -30px"/>
-                        </td>
-                        <td class="td_left">
-                            <nobr style="margin-left: 25px">&#12288;培训专业：</nobr>
-                        </td>
-                        <td class="td_right">
-                            <input type="text" value="${param.trainingSpeName}" class="input" name="trainingSpeName" style="width: 160px;margin-left: -41px"/>
-                        </td>
+                                   class="input" readonly="readonly"/>
+                        </div>
+                    </div>
 
-                        <td class="td_left">
-                            <nobr>姓&#12288;&#12288;&#12288;名：</nobr>
-                        </td>
-                        <td class="td_right">
-                            <input type="text" value="${param.userName}" class="input" name="userName" style="width: 135px; margin-left: -30px" />
-                        </td>
+                    
+                    <div class="form_item">
+                        <div class="form_label">姓&#12288;&#12288;名：</div>
+                        <div class="form_content">
+                            <input type="text" value="${param.userName}" class="input" name="userName"  />
+                        </div>
+                    </div>
 
-                        <td class="td_left">
-                            <nobr style="margin-left: 26px;">证件号：</nobr>
-                        </td>
-                        <td class="td_right">
-                            <input type="text" value="${param.idNo}" class="input" name="idNo" style="width: 160px;margin-left: -41px" />
-                        </td>
+                    <div class="form_item">
+                        <div class="form_label">证件号：</div>
+                        <div class="form_content">
+                            <input type="text" value="${param.idNo}" class="input" name="idNo"  />
+                        </div>
+                    </div>
 
-                        <c:if test="${JointOrgCount ne '0'}">
-                            <td class="td_left">
-                                <nobr style="margin-right: -39px;margin-left: 34px">培训基地：</nobr>
-                            </td>
-                            <td class="td_right">
-                                <select class="select" name="orgFlow0" style="width: 170px;margin-left: 17px;margin-right: -32px;" onchange="searchDeptList(this.value)">
-                                    <option value="all" <c:if test="${orgFlow eq 'all'}">selected="selected"</c:if>>全部</option>
-                                    <c:forEach items="${orgList}" var="org">
-                                        <option value="${org.orgFlow}" <c:if test="${orgFlow == org.orgFlow}">selected="selected"</c:if>>${org.orgName}</option>
-                                    </c:forEach>
-                                </select>
-                            </td>
-                        </c:if>
-                    </tr>
-                    <tr>
-                        <td colspan="6">
-                            <input class="btn_green" type="button" onclick="search()"  value="查&#12288;询"/>&#12288;
-                            <c:if test="${GlobalConstant.USER_LIST_LOCAL eq sessionScope.userListScope || GlobalConstant.USER_LIST_CHARGE eq sessionScope.userListScope}">
-                                <input class="btn_green" type="button"  onclick="addBlackList('local')" value="新&#12288;增"/>
-                            </c:if>
-                        </td>
-                    </tr>
-                </table>
+                    <c:if test="${JointOrgCount ne '0'}">
+
+                    <div class="form_item">
+                        <div class="form_label">培训基地：</div>
+                        <div class="form_content">
+                            <select class="select" name="orgFlow0"  onchange="searchDeptList(this.value)">
+                                <option value="all" <c:if test="${orgFlow eq 'all'}">selected="selected"</c:if>>全部</option>
+                                <c:forEach items="${orgList}" var="org">
+                                    <option value="${org.orgFlow}" <c:if test="${orgFlow == org.orgFlow}">selected="selected"</c:if>>${org.orgName}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+
+                    </c:if>
+
+                </div>
+
+                <div class="form_btn" >
+                    <input class="btn_green" type="button" onclick="search()"  value="查&#12288;询"/>&#12288;
+                    <c:if test="${GlobalConstant.USER_LIST_LOCAL eq sessionScope.userListScope || GlobalConstant.USER_LIST_CHARGE eq sessionScope.userListScope}">
+                        <input class="btn_green" type="button"  onclick="addBlackList('local')" value="新&#12288;增"/>
+                    </c:if>
+                </div>
+
+
+<%--                <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">--%>
+<%--                    <tr>--%>
+<%--                        <td class="td_left">--%>
+<%--                            <nobr>原培训年级：</nobr>--%>
+<%--                        </td>--%>
+<%--                        <td class="td_right">--%>
+<%--                            <input type="text" id="sessionNumber" name="sessionNumber" value=""--%>
+<%--                                   class="input" readonly="readonly" style="width: 135px;margin-left: -30px"/>--%>
+<%--                        </td>--%>
+<%--                        <td class="td_left">--%>
+<%--                            <nobr style="margin-left: 25px">&#12288;培训专业：</nobr>--%>
+<%--                        </td>--%>
+<%--                        <td class="td_right">--%>
+<%--                            <input type="text" value="${param.trainingSpeName}" class="input" name="trainingSpeName" style="width: 160px;margin-left: -41px"/>--%>
+<%--                        </td>--%>
+
+<%--                        <td class="td_left">--%>
+<%--                            <nobr>姓&#12288;&#12288;&#12288;名：</nobr>--%>
+<%--                        </td>--%>
+<%--                        <td class="td_right">--%>
+<%--                            <input type="text" value="${param.userName}" class="input" name="userName" style="width: 135px; margin-left: -30px" />--%>
+<%--                        </td>--%>
+
+<%--                        <td class="td_left">--%>
+<%--                            <nobr style="margin-left: 26px;">证件号：</nobr>--%>
+<%--                        </td>--%>
+<%--                        <td class="td_right">--%>
+<%--                            <input type="text" value="${param.idNo}" class="input" name="idNo" style="width: 160px;margin-left: -41px" />--%>
+<%--                        </td>--%>
+
+<%--                        <c:if test="${JointOrgCount ne '0'}">--%>
+<%--                            <td class="td_left">--%>
+<%--                                <nobr style="margin-right: -39px;margin-left: 34px">培训基地：</nobr>--%>
+<%--                            </td>--%>
+<%--                            <td class="td_right">--%>
+<%--                                <select class="select" name="orgFlow0" style="width: 170px;margin-left: 17px;margin-right: -32px;" onchange="searchDeptList(this.value)">--%>
+<%--                                    <option value="all" <c:if test="${orgFlow eq 'all'}">selected="selected"</c:if>>全部</option>--%>
+<%--                                    <c:forEach items="${orgList}" var="org">--%>
+<%--                                        <option value="${org.orgFlow}" <c:if test="${orgFlow == org.orgFlow}">selected="selected"</c:if>>${org.orgName}</option>--%>
+<%--                                    </c:forEach>--%>
+<%--                                </select>--%>
+<%--                            </td>--%>
+<%--                        </c:if>--%>
+<%--                    </tr>--%>
+<%--                    <tr>--%>
+<%--                        <td colspan="6">--%>
+<%--                            <input class="btn_green" type="button" onclick="search()"  value="查&#12288;询"/>&#12288;--%>
+<%--                            <c:if test="${GlobalConstant.USER_LIST_LOCAL eq sessionScope.userListScope || GlobalConstant.USER_LIST_CHARGE eq sessionScope.userListScope}">--%>
+<%--                                <input class="btn_green" type="button"  onclick="addBlackList('local')" value="新&#12288;增"/>--%>
+<%--                            </c:if>--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
+<%--                </table>--%>
             </c:if>
         </form>
     </div>

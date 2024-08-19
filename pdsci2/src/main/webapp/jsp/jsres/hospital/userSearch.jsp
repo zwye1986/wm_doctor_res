@@ -4,7 +4,7 @@
 </jsp:include>
 <link rel="stylesheet" type="text/css" href="<s:url value='/jsp/jsres/css/exam.css'/>?v=${applicationScope.sysCfgMap['sys_version']}"></link>
 <link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="<s:url value='/js/itemSelect/itemSelect.js'/>"></script>
+<%--<script type="text/javascript" src="<s:url value='/js/itemSelect/itemSelect.js'/>"></script>--%>
 <style type="text/css">
     .boxHome .item:HOVER {
         background-color: #eee;
@@ -123,7 +123,8 @@
     })(jQuery);
 
     $(document).ready(function () {
-        $("#statusId,#userRoleList").selectpicker({});
+        // $("#statusId,#userRoleList").selectpicker({});
+        $("#userRoleList").selectpicker({});
         search();
         $("#ksmc").likeSearchInit({
             clickActive: function (flow) {
@@ -284,7 +285,7 @@
                 <div class="form_item">
                     <div class="form_label">用户状态：</div>
                     <div class="form_content">
-                        <select name="statusId" class="selectpicker" id="statusId">
+                        <select name="statusId"  id="statusId" class="select">
                             <option value="" >全部</option>
                             <option value="${userStatusEnumActivated.id }" <c:if test='${param.statusId==userStatusEnumActivated.id or empty param.statusId}'>selected</c:if>>${userStatusEnumActivated.name}</option>
                             <option value="${userStatusEnumLocked.id }" <c:if test='${param.statusId==userStatusEnumLocked.id}'>selected</c:if>>${userStatusEnumLocked.name}</option>

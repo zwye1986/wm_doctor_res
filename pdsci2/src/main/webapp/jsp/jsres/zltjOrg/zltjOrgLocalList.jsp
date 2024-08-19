@@ -1,13 +1,13 @@
 
-<script type="text/javascript" src="<s:url value='/js/Scoll/Scorll2.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
+<%--<script type="text/javascript" src="<s:url value='/js/Scoll/Scorll2.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>--%>
 <script>
-	$(document).ready(function(){
-		var style={"margin-left":"0px","width":"100%","height":"600px","overflow":"auto"};
-		var options ={
-			"colums":1//根据固定列的数量
-		};
-		$("#dataTable").Scorll(options,style,true,null);
-	});
+	// $(document).ready(function(){
+	// 	var style={"margin-left":"0px","width":"100%","height":"600px","overflow":"auto"};
+	// 	var options ={
+	// 		"colums":1//根据固定列的数量
+	// 	};
+	// 	$("#dataTable").Scorll(options,style,true,null);
+	// });
 </script>
 <div class="search_table">
    <table border="0" cellpadding="0" cellspacing="0" id="dataTable" class="grid">
@@ -20,6 +20,9 @@
 		   <th style="min-width: 60px; max-width: 60px; "   class="toFiexdDept">合计</th>
 	   </tr>
 	   </thead>
+   </table>
+	<div style=" height: 600px;overflow: auto">
+		<table border="0" cellpadding="0" cellspacing="0" id="dataTable" class="grid">
 	   <tbody>
 	   <c:set var="hjsum" value="0"></c:set>
 	   <c:forEach items="${spes}" var="spe">
@@ -51,4 +54,6 @@
 	   </tr>
 	   </tbody>
    </table>
+	</div>
+
 </div>

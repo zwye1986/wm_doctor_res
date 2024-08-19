@@ -61,7 +61,7 @@
         jboxOpen(url, title, 1000, 600);
     }
 </script>
-    <div class="search_table" style="width: 100%;padding: 0 20px">
+    <div class="search_table" >
         <table border="0" cellpadding="0" cellspacing="0" class="grid">
             <tr>
                 <th width="15%">培训计划</th>

@@ -14,6 +14,7 @@
     <jsp:param name="jquery_iealert" value="false"/>
     <jsp:param name="jquery_datePicker" value="true"/>
 </jsp:include>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <style type="text/css">
     .boxHome .item:HOVER {
         background-color: #eee;
@@ -98,35 +99,36 @@
 <div class="div_search" style="width: 95%;line-height:normal;">
     <form id="searchForm">
         <input type="hidden" id="currentPage" name="currentPage"/>
-        <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
-            <tr>
-                <td class="td_left">
-                    <nobr>培&ensp;训&ensp;计&ensp;划&ensp;：</nobr>
-                </td>
-                <td>
-                    <select name="planFlow" id="planFlow" class="select" style="width: 150px;">
+
+        <div class="form_search">
+            <div class="form_item">
+                <div class="form_label">培训计划：</div>
+                <div class="form_content">
+                    <select name="planFlow" id="planFlow" class="select" >
                         <option value="">全部</option>
                         <c:forEach items="${contentList}" var="c">
                             <option value="${c.planFlow}" ${planFlow eq c.planFlow?'selected':''}>${c.planContent}</option>
                         </c:forEach>
                     </select>
-                </td>
-                <td class="td_left">
-                    <nobr>培&ensp;训&ensp;专&ensp;业&ensp;：</nobr>
-                </td>
-                <td>
-                    <select name="speName" id="speName" class="select" style="width: 150px;">
+                </div>
+            </div>
+
+            <div class="form_item">
+                <div class="form_label">培训专业：</div>
+                <div class="form_content">
+                    <select name="speName" id="speName" class="select" >
                         <option value="">全部</option>
                         <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
                             <option value="${dict.dictName}" ${sepName eq dict.dictName?'selected':''}>${dict.dictName}</option>
                         </c:forEach>
                     </select>
-                </td>
-                <td class="td_left">
-                    <nobr>状态：</nobr>
-                </td>
-                <td>
-                    <select name="planStatusId" id="planStatusId" class="select" style="width: 150px;">
+                </div>
+            </div>
+
+            <div class="form_item">
+                <div class="form_label">状&#12288;&#12288;态：</div>
+                <div class="form_content">
+                    <select name="planStatusId" id="planStatusId" class="select" >
                         <option value="">全部</option>
                         <c:forEach items="${resTeachQualifiedStatusEnumList}" var="r">
                             <c:if test="${roleFlag ne 'local'}">
@@ -138,42 +140,117 @@
                             </c:if>
                         </c:forEach>
                     </select>
-                </td>
+                </div>
+            </div>
 
-            </tr>
-            <tr>
-                <td class="td_left">
-                    <nobr>报名开始日期：</nobr>
-                </td>
-                <td>
-                    <input name="enrollStartTime"  style="margin-left: 0px;width: 145px;" placeholder="请选择报名开始时间"
+
+            <div class="form_item">
+                <div class="form_label">报名开始日期：</div>
+                <div class="form_content">
+                    <input name="enrollStartTime" placeholder="请选择报名开始时间"
                            onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" id="enrollStartTime"
                            value="${plan.enrollStartTime}" class="input">
-                </td>
-                <td class="td_left">
-                    <nobr>报名结束日期：</nobr>
-                </td>
-                <td>
-                    <input name="enrollEndTime"  style="margin-left: 0px;width: 145px;" placeholder="请选择报名结束时间"
+                </div>
+            </div>
+
+            <div class="form_item">
+                <div class="form_label">报名结束日期：</div>
+                <div class="form_content">
+                    <input name="enrollEndTime"  placeholder="请选择报名结束时间"
                            onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" id="enrollEndTime"
                            value="${plan.enrollEndTime}" class="input">
-                </td>
-                <td colspan="2">
-                    <input class="btn_green" type="button" style="margin-left: 27px" value="查&#12288;询" onclick="toPage(1);"/>
-                    <c:if test="${roleFlag eq 'local'}">
-                        <input class="btn_green" type="button" value="导&#12288;入" onclick="importMain();"/>
-                    </c:if>
-                    <c:if test="${roleFlag ne 'local'}">
-                        <input class="btn_green" type="button" value="新&#12288;增" onclick="editPhyAssMain('add');"/>
-                    </c:if>
+                </div>
+            </div>
 
-                </td>
+        </div>
 
-            </tr>
-        </table>
+        <div class="form_btn">
+            <input class="btn_green" type="button"  value="查&#12288;询" onclick="toPage(1);"/>
+            <c:if test="${roleFlag eq 'local'}">
+                <input class="btn_green" type="button" value="导&#12288;入" onclick="importMain();"/>
+            </c:if>
+            <c:if test="${roleFlag ne 'local'}">
+                <input class="btn_green" type="button" value="新&#12288;增" onclick="editPhyAssMain('add');"/>
+            </c:if>
+        </div>
+
+
+<%--        <table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">--%>
+<%--            <tr>--%>
+<%--                <td class="td_left">--%>
+<%--                    <nobr>培&ensp;训&ensp;计&ensp;划&ensp;：</nobr>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <select name="planFlow" id="planFlow" class="select" style="width: 150px;">--%>
+<%--                        <option value="">全部</option>--%>
+<%--                        <c:forEach items="${contentList}" var="c">--%>
+<%--                            <option value="${c.planFlow}" ${planFlow eq c.planFlow?'selected':''}>${c.planContent}</option>--%>
+<%--                        </c:forEach>--%>
+<%--                    </select>--%>
+<%--                </td>--%>
+<%--                <td class="td_left">--%>
+<%--                    <nobr>培&ensp;训&ensp;专&ensp;业&ensp;：</nobr>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <select name="speName" id="speName" class="select" style="width: 150px;">--%>
+<%--                        <option value="">全部</option>--%>
+<%--                        <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">--%>
+<%--                            <option value="${dict.dictName}" ${sepName eq dict.dictName?'selected':''}>${dict.dictName}</option>--%>
+<%--                        </c:forEach>--%>
+<%--                    </select>--%>
+<%--                </td>--%>
+<%--                <td class="td_left">--%>
+<%--                    <nobr>状态：</nobr>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <select name="planStatusId" id="planStatusId" class="select" style="width: 150px;">--%>
+<%--                        <option value="">全部</option>--%>
+<%--                        <c:forEach items="${resTeachQualifiedStatusEnumList}" var="r">--%>
+<%--                            <c:if test="${roleFlag ne 'local'}">--%>
+<%--                                <option value="${r.id}">${r.name}</option>--%>
+<%--                            </c:if>--%>
+
+<%--                            <c:if test="${roleFlag eq 'local' and r.name ne '暂存'}">--%>
+<%--                                <option value="${r.id}">${r.name}</option>--%>
+<%--                            </c:if>--%>
+<%--                        </c:forEach>--%>
+<%--                    </select>--%>
+<%--                </td>--%>
+
+<%--            </tr>--%>
+<%--            <tr>--%>
+<%--                <td class="td_left">--%>
+<%--                    <nobr>报名开始日期：</nobr>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <input name="enrollStartTime"  style="margin-left: 0px;width: 145px;" placeholder="请选择报名开始时间"--%>
+<%--                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" id="enrollStartTime"--%>
+<%--                           value="${plan.enrollStartTime}" class="input">--%>
+<%--                </td>--%>
+<%--                <td class="td_left">--%>
+<%--                    <nobr>报名结束日期：</nobr>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <input name="enrollEndTime"  style="margin-left: 0px;width: 145px;" placeholder="请选择报名结束时间"--%>
+<%--                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" id="enrollEndTime"--%>
+<%--                           value="${plan.enrollEndTime}" class="input">--%>
+<%--                </td>--%>
+<%--                <td colspan="2">--%>
+<%--                    <input class="btn_green" type="button" style="margin-left: 27px" value="查&#12288;询" onclick="toPage(1);"/>--%>
+<%--                    <c:if test="${roleFlag eq 'local'}">--%>
+<%--                        <input class="btn_green" type="button" value="导&#12288;入" onclick="importMain();"/>--%>
+<%--                    </c:if>--%>
+<%--                    <c:if test="${roleFlag ne 'local'}">--%>
+<%--                        <input class="btn_green" type="button" value="新&#12288;增" onclick="editPhyAssMain('add');"/>--%>
+<%--                    </c:if>--%>
+
+<%--                </td>--%>
+
+<%--            </tr>--%>
+<%--        </table>--%>
 
     </form>
 </div>
-<div id="doctorListZi" style="width: 95%">
+<div id="doctorListZi">
 
 </div>

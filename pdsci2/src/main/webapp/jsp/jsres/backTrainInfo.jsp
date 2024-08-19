@@ -278,7 +278,20 @@
 
 
 
+                    <div class="form_item form_item_hide">
 
+                        <div class="form_label" style="width: 100px;">退培主要原因：</div>
+                        <div class="form_content">
+                            <select class="select" id="reasonId" name="reasonId"   onchange="changeReason(this);">
+                                <option value="">请选择</option>
+                                <option value="1" <c:if test="${param.reasonId eq 1}">selected="selected"</c:if>>辞职</option>
+                                <option value="2" <c:if test="${param.reasonId eq 2}">selected="selected"</c:if>>考研</option>
+                                <option value="3" <c:if test="${param.reasonId eq 3}">selected="selected"</c:if>>其他</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    
                      <div class="form_item form_item_hide">
 
                         <div class="form_label">退培类型：</div>
@@ -293,27 +306,12 @@
                     </div>
 
 
-                    <div class="form_item form_item_hide">
-
-                        <div class="form_label" style="width: 100px;margin-left: 15px">退培主要原因：</div>
-                        <div class="form_content">
-                            <select class="select" id="reasonId" name="reasonId"   onchange="changeReason(this);">
-                                <option value="">请选择</option>
-                                <option value="1" <c:if test="${param.reasonId eq 1}">selected="selected"</c:if>>辞职</option>
-                                <option value="2" <c:if test="${param.reasonId eq 2}">selected="selected"</c:if>>考研</option>
-                                <option value="3" <c:if test="${param.reasonId eq 3}">selected="selected"</c:if>>其他</option>
-                            </select>
-                        </div>
-
-                    </div>
-
-
 
 
 
                      <div class="form_item form_item_hide">
 
-                        <div class="form_label" style="width: 100px;margin-left: 15px">省厅审核结果：</div>
+                        <div class="form_label" style="width: 100px;">省厅审核结果：</div>
                         <div class="form_content">
                             <select class="select" id="auditStatusId" name="auditStatusId" >
                                 <option value="">请选择</option>
@@ -346,20 +344,20 @@
                         </div>
                     </div>
 
-                    <div class="form_item">
-                        <div class="form_label" style="width: auto;">
-                            <a style="color: #54B2E5; margin-left: 15px;margin-right: 15px;" onclick="showOrHide()" id="open">展开</a>
-                        </div>
-                        <div class="form_content">
-                            <input class="btn_green" type="button" onclick="searchRecInfo()" value="查&#12288;询"/>&#12288;
-                            <c:if test="${GlobalConstant.USER_LIST_GLOBAL eq sessionScope.userListScope}">
-                                <input class="btn_green" type="button" value="导&#12288;出" onclick="exportExcel();"/>
-                            </c:if>
-                        </div>
-
-                    </div>
 
                 </div>
+
+                <div style="margin-top: 15px;margin-bottom: 15px">
+
+                    <input class="btn_green" type="button" onclick="searchRecInfo()" value="查&#12288;询"/>&#12288;
+                    <c:if test="${GlobalConstant.USER_LIST_GLOBAL eq sessionScope.userListScope}">
+                        <input class="btn_green" type="button" value="导&#12288;出" onclick="exportExcel();"/>
+                    </c:if>
+
+                    <a style="color: #54B2E5; margin: auto 0 auto 0;" onclick="showOrHide()" id="open">展开</a>
+
+                </div>
+
 
 <%--                <table class="searchTable">--%>
 <%--                    &lt;%&ndash;<td style="position: relative">&ndash;%&gt;--%>

@@ -353,7 +353,6 @@ function tabClick(tag,type){
 				</div>
 			</div>
 
-			<a style="color: #54B2E5;margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
 
 		 </div>
 
@@ -427,8 +426,9 @@ function tabClick(tag,type){
 <%--		</div>--%>
 
 		<div style="margin-top: 15px;margin-bottom: 15px">
-			<input class="btn_green" style="margin-left: 0px;" type="button" value="查&#12288;询" onclick="toPage();"/>&nbsp;
-			<input class="btn_green" style="margin-left: 0px;" type="button" value="导&#12288;出" onclick="exportInfo('${param.tabId}');"/>&nbsp;
+			<input class="btn_green" style="margin-left: 0px;" type="button" value="查&#12288;询" onclick="toPage();"/>
+			<input class="btn_green" style="margin-left: 0px;" type="button" value="导&#12288;出" onclick="exportInfo('${param.tabId}');"/>
+			<a style="color: #54B2E5;margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
 		</div>
 
 

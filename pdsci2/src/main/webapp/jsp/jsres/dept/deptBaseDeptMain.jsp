@@ -10,6 +10,7 @@
         width: 7em;
     }
 </style>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script type="text/javascript">
     $(document).ready(function(){
         search();
@@ -170,58 +171,37 @@
             <input id="orgFlow" type="hidden" name="orgFlow" value="${sessionScope.currUser.orgFlow}"/>
             <input id="orgName" type="hidden" name="orgName" value="${sessionScope.currUser.orgName}"/>
 
-            <div style="display: flex;justify-content: flex-start; column-gap: 52px;margin-top: 15px">
-                <div>
-                    科室代码：
-                    <input type="text" name="deptCode" id="deptCode" value="" class="input"/>
+
+            <div class="form_search">
+                <div class="form_item">
+                    <div class="form_label">科室代码：</div>
+                    <div class="form_content">
+                        <input type="text" name="deptCode" id="deptCode" value="" class="input"/>
+                    </div>
                 </div>
-                <div>
-                    科室名称：
-                    <input type="text" name="deptNameFuzzy" id="deptNameFuzzy" value="" class="input"/>
+                <div class="form_item">
+                    <div class="form_label">科室名称：</div>
+                    <div class="form_content">
+                        <input type="text" name="deptNameFuzzy" id="deptNameFuzzy" value="" class="input"/>
+                    </div>
                 </div>
-                <div>
-                    关联标准科室：
-                    <select name="relStdDeptFlag" class="select" style="width: 161px;" id="relStdDeptFlag">
+                <div class="form_item" style="margin-left: 10px">
+                    <div class="form_label">关联标准科室：</div>
+                    <div class="form_content">
+                        <select name="relStdDeptFlag" class="select" style="width: 161px;" id="relStdDeptFlag">
                         <option value="">全部</option>
                         <option value="Y">已关联</option>
                         <option value="N">未关联</option>
                     </select>
+                    </div>
                 </div>
             </div>
+
             <div style="margin-top: 15px;margin-bottom: 15px">
                 <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
                 <input type="button" class="btn_grey" onclick="searchReset()" value="重&#12288;置">
                 <input type="button" class="btn_green" onclick="deptAdd()" value="新&#12288;增">
             </div>
-<%--            <table class="searchTable">--%>
-<%--                <tr>--%>
-<%--                    <td class="td_left" style="width: 6em">--%>
-<%--                        科室代码：--%>
-<%--                    </td>--%>
-<%--                    <td>--%>
-<%--                        <input type="text" name="deptCode" id="deptCode" value="" class="input"/>--%>
-<%--                    </td>--%>
-<%--                    <td class="td_left" style="width: 6em">--%>
-<%--                        科室名称：--%>
-<%--                    </td>--%>
-<%--                    <td>--%>
-<%--                        <input type="text" name="deptNameFuzzy" id="deptNameFuzzy" value="" class="input"/>--%>
-<%--                    </td>--%>
-<%--                    <td class="td_left" style="width: 8em">关联标准科室：</td>--%>
-<%--                    <td>--%>
-<%--                        <select name="relStdDeptFlag" class="select" style="width: 127px;" id="relStdDeptFlag">--%>
-<%--                            <option value="">全部</option>--%>
-<%--                            <option value="Y">已关联</option>--%>
-<%--                            <option value="N">未关联</option>--%>
-<%--                        </select>--%>
-<%--                    </td>--%>
-<%--                    <td colspan="3">--%>
-<%--                        <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">--%>
-<%--                        <input type="button" class="btn_grey" onclick="searchReset()" value="重&#12288;置">--%>
-<%--                        <input type="button" class="btn_green" onclick="deptAdd()" value="新&#12288;增">--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--            </table>--%>
 
         </form>
     </div>

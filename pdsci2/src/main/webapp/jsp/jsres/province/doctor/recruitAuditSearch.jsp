@@ -252,8 +252,6 @@ function exportRecruitList(){
 				</div>
 			</div>
 
-			<a style="color: #54B2E5; margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
-
 		 </div>
 
 
@@ -262,6 +260,8 @@ function exportRecruitList(){
 			<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
 			<%--<input class="btn_green" type="button" value="国家医师协会名册" onclick="exportForDetail();"/>--%>
 			<input class="btn_green" type="button" value="导&#12288;出" onclick="exportRecruitList();"/>
+
+			<a style="color: #54B2E5; margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
 		</div>
 
 		<div style="margin-bottom: 15px" >
