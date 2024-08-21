@@ -186,6 +186,12 @@
         </dependency>
 
         <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.10</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.docx4j</groupId>
             <artifactId>docx4j</artifactId>
             <version>3.2.0</version>
@@ -201,6 +207,42 @@
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
             <version>1.6.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-api</artifactId>
+            <version>7.7.0.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-internal</artifactId>
+            <version>7.7.0.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.kie.soup</groupId>
+            <artifactId>kie-soup-commons</artifactId>
+            <version>7.7.0.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.kie.soup</groupId>
+            <artifactId>kie-soup-maven-support</artifactId>
+            <version>7.7.0.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.kie.soup</groupId>
+            <artifactId>kie-soup-project-datamodel-api</artifactId>
+            <version>7.7.0.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.kie.soup</groupId>
+            <artifactId>kie-soup-project-datamodel-commons</artifactId>
+            <version>7.7.0.Final</version>
         </dependency>
 
 
@@ -329,13 +371,16 @@
             </plugin>-->
 
 
+
         </plugins>
         <!-- 与dependencyManagement类似，为了统一版本 -->
         <pluginManagement></pluginManagement>
     </build>
     <!-- 针对site生成报告插件，与build内插件类似 -->
     <reporting>
-        <plugins></plugins>
+        <plugins>
+
+        </plugins>
     </reporting>
     <!-- 仓库库配置，可以用来设置远程仓库 -->
     <repositories>
