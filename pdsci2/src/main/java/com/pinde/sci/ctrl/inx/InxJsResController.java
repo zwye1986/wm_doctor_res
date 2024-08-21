@@ -1965,10 +1965,10 @@ public class InxJsResController extends GeneralController {
             return GlobalConstant.PHONE_NOT_SAME;
         }
         SysUser sysUser = GlobalContext.getCurrentUser();
+        sysUser = userBiz.readSysUser(sysUser.getUserFlow());
         String currDateTime = DateUtil.getCurrDateTime2();
         String verifyCodeTime = sysUser.getVerifyCodeTime();
         long betweenTowDate = DateUtil.signSecondsBetweenTowDate(currDateTime, verifyCodeTime);
-        sysUser = userBiz.readSysUser(sysUser.getUserFlow());
         String userVerifyCode = sysUser.getVerifyCode();
         if (verifyCode.equals(userVerifyCode)) {
             if (betweenTowDate > 300) {
