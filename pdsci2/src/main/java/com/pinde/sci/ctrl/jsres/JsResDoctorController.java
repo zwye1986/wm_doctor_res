@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.jspform.ItemGroupData;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
@@ -39,7 +40,7 @@ import com.pinde.sci.model.jsres.*;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.util.jsres.ResultUtil;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -49,7 +50,6 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import org.kie.api.definition.rule.Global;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

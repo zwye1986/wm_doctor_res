@@ -1,16 +1,12 @@
 package com.pinde.sci.biz.osca;
 
-import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.mo.OscaFrom;
-import com.pinde.sci.model.mo.OscaSkillsAssessment;
 import com.pinde.sci.model.mo.OscaSubjectStationFrom;
-import com.pinde.sci.model.mo.ResAssessCfg;
 import com.pinde.sci.model.osca.OscaFromCfgExt;
 import com.pinde.sci.model.osca.OscaFromCfgItemExt;
 import com.pinde.sci.model.osca.OscaFromCfgTitleExt;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IOscaFormCfgBiz {
 

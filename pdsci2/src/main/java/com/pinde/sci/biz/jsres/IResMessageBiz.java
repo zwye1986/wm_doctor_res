@@ -1,8 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.sci.model.mo.*;
-import org.dom4j.DocumentException;
-import org.springframework.web.multipart.MultipartFile;
+import com.pinde.sci.model.mo.ResMessage;
 
 import java.util.List;
 import java.util.Map;

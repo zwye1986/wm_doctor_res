@@ -1,7 +1,5 @@
 package com.pinde.sci.biz.sch;
 
-import com.pinde.sci.model.mo.SchExternalDept;
-
 import java.util.List;
 import java.util.Map;
 

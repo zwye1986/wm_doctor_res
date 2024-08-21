@@ -2,6 +2,7 @@ package com.pinde.res.ctrl.hzyy;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.NfyyGlobalConstant;
+import com.pinde.core.commom.enums.DeptStatusEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -9,7 +10,6 @@ import com.pinde.res.biz.hzyy.IHzyyAppBiz;
 import com.pinde.res.biz.hzyy.IHzyyStudentBiz;
 import com.pinde.res.biz.hzyy.IHzyyTeacherBiz;
 import com.pinde.res.ctrl.upload.FileForm;
-import com.pinde.res.enums.nfyy.DeptStatusEnum;
 import com.pinde.res.model.nfyy.mo.MedicalInfo;
 import com.pinde.res.model.nfyy.mo.StudyInfo;
 import org.slf4j.Logger;

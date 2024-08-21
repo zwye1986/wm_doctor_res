@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.SysOrgBatch;
 import com.pinde.sci.model.mo.SysOrgBatchExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysOrgBatchMapper {
     int countByExample(SysOrgBatchExample example);

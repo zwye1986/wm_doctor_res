@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResIdctrlMain;
 import com.pinde.sci.model.mo.ResIdctrlMainExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResIdctrlMainMapper {
     int countByExample(ResIdctrlMainExample example);

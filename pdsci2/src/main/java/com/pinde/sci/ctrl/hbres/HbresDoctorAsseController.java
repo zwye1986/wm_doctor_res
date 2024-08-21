@@ -1,11 +1,15 @@
 package com.pinde.sci.ctrl.hbres;
 
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.hbres.IHbResGraduationApplyBiz;
-import com.pinde.sci.biz.jsres.*;
+import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
+import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
+import com.pinde.sci.biz.jsres.IJsResRecBiz;
+import com.pinde.sci.biz.jsres.ISchRotationDeptAfterBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.*;

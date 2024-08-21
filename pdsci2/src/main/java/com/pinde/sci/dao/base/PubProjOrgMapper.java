@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.PubProjOrg;
 import com.pinde.sci.model.mo.PubProjOrgExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface PubProjOrgMapper {
     int countByExample(PubProjOrgExample example);

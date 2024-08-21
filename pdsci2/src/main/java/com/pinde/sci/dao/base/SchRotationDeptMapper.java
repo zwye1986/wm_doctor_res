@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.SchRotationDept;
 import com.pinde.sci.model.mo.SchRotationDeptExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SchRotationDeptMapper {
     int countByExample(SchRotationDeptExample example);

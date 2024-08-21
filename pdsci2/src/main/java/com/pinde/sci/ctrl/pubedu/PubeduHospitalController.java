@@ -10,9 +10,10 @@ import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.StudyCourseDetailInfoMapper;
 import com.pinde.sci.enums.pubedu.CourseDetailTypeEnum;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.StudyCourse;
+import com.pinde.sci.model.mo.StudyCourseDetail;
+import com.pinde.sci.model.mo.StudyCourseDetailInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;

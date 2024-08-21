@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.study.impl;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -10,9 +11,9 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
+import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.PasswordHelper;
-import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResDoctorMapper;
 import com.pinde.sci.dao.base.StudySubjectMapper;
 import com.pinde.sci.dao.base.SysUserMapper;

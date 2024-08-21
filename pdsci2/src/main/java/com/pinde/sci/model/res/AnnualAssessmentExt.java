@@ -1,6 +1,6 @@
 package com.pinde.sci.model.res;
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResAnnualAssessmentWithBLOBs;
 
 /**
  * Created by www.0001.Ga on 2016-10-18.

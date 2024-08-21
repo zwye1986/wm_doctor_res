@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.PubRegulation;
 import com.pinde.sci.model.mo.PubRegulationExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface PubRegulationMapper {
     int countByExample(PubRegulationExample example);

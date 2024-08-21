@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResSchProcessExpress;
 import com.pinde.sci.model.mo.ResSchProcessExpressExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResSchProcessExpressMapper {
     int countByExample(ResSchProcessExpressExample example);

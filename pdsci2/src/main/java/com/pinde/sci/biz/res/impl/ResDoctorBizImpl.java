@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
-import com.pinde.core.commom.GeneralEnum;
+import com.pinde.core.commom.enums.GeneralEnum;
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
@@ -28,21 +29,21 @@ import com.pinde.sci.enums.pub.UserNationEnum;
 import com.pinde.sci.enums.pub.UserSexEnum;
 import com.pinde.sci.enums.res.*;
 import com.pinde.sci.enums.sch.SchStatusEnum;
-import com.pinde.sci.enums.sys.*;
 import com.pinde.sci.enums.sys.CertificateTypeEnum;
+import com.pinde.sci.enums.sys.DictTypeEnum;
+import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.form.hbres.ExtInfoForm;
 import com.pinde.sci.form.hbres.ReplenishInfoForm;
 import com.pinde.sci.form.hbres.ResDoctorClobForm;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.res.EduCourseExt;
 import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.model.res.ResDoctorScoreExt;
 import com.pinde.sci.model.sys.SysUserResDoctorExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.CellRangeAddress;
@@ -108,8 +109,6 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 	private SchArrangeResultMapper resultMapper;
 	@Autowired
 	private SchDoctorDeptMapper docDeptMapper;
-	@Autowired
-	private IResEduStudentCourseBiz studentCourseBiz;
 	@Autowired
 	private IOrgBiz orgBiz;
 	@Autowired
@@ -1099,31 +1098,6 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 		return GlobalConstant.ZERO_LINE;
 	}
 
-	@Override
-	public Map<String, Map<String, Object>> courseFlowResDoctorMap(
-			List<EduCourseExt> eduCourseList) {
-		if (eduCourseList!=null&&!eduCourseList.isEmpty()) {
-			List<String> courseFlowList=new ArrayList<String>();
-			Map<String,Map<String,Object>> studentCourseMap=new HashMap<String, Map<String,Object>>();
-			Map<String, Object> sysUserMap=null;
-			for (EduCourse course : eduCourseList) {
-				if (!courseFlowList.contains(course.getCourseFlow())) {
-					courseFlowList.add(course.getCourseFlow());
-					sysUserMap=new HashMap<String, Object>();
-					studentCourseMap.put(course.getCourseFlow(),sysUserMap);
-				}
-			}
-			List<EduStudentCourse> eduStudentCourseList=studentCourseBiz.searchStudentCourseList(courseFlowList);
-
-			for (EduStudentCourse eduStudentCourse : eduStudentCourseList) {
-				ResDoctor doctor=searchByUserFlow(eduStudentCourse.getUserFlow());
-				studentCourseMap.get(eduStudentCourse.getCourseFlow()).put(eduStudentCourse.getUserFlow(), doctor);
-			}
-			return studentCourseMap;
-		}
-		return null;
-
-	}
 
 	@Override
 	public ResDoctor findByFlow(String doctorFlow) {

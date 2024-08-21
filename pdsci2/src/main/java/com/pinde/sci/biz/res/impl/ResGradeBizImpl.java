@@ -25,7 +25,7 @@ import com.pinde.sci.enums.res.ResRecTypeEnum;
 import com.pinde.sci.model.hbres.teacherRec;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.DeptTeacherGradeInfoExt;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -153,7 +153,7 @@
 					or train_end_date between #{startTime} and #{endTime})
 				order by start_time
 	</select>
-	<select id="searchStartDictList"  parameterType="com.pinde.sci.model.mo.SysDict" resultMap="com.pinde.sci.dao.base.SysDictMapper.BaseResultMap">
+	<select id="searchStartDictList" parameterType="com.pinde.core.entyties.SysDict" resultMap="com.pinde.sci.dao.base.SysDictMapper.BaseResultMap">
 		select a.* from sys_dict a
 			where a.record_status='Y'
 				and a.org_flow = #{orgFlow}

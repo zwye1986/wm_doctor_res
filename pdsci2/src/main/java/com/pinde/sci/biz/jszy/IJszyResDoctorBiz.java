@@ -1,6 +1,5 @@
 package com.pinde.sci.biz.jszy;
 
-import com.pinde.sci.form.jszy.JszyBackTrainForm;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
 import com.pinde.sci.model.mo.*;

@@ -4,6 +4,9 @@ package com.pinde.res.biz.ezhupei.impl;
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalConstant;
 import com.pinde.app.common.GlobalUtil;
+import com.pinde.core.commom.enums.ResAssessTypeEnum;
+import com.pinde.core.commom.enums.ResRecTypeEnum;
+import com.pinde.core.commom.enums.SigninTypeEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -16,13 +19,10 @@ import com.pinde.res.dao.jswjw.ext.SchArrangeResultExtMapper;
 import com.pinde.res.dao.jswjw.ext.SysDeptExtMapper;
 import com.pinde.res.dao.stdp.ext.StdpResRecExtMapper;
 import com.pinde.res.dao.stdp.ext.StdpSchArrangeResultExtMapper;
-import com.pinde.res.enums.ezhupei.ResAssessTypeEnum;
-import com.pinde.res.enums.ezhupei.ResRecTypeEnum;
-import com.pinde.res.enums.ezhupei.SigninTypeEnum;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.SysUserExample.Criteria;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -214,7 +214,7 @@ public class EzhupeiAppBizImpl implements IEzhupeiAppBiz {
 					Element root = doc.getRootElement();
 					if(root!=null){
 //						List<Element> elements = root.elements();
-						Element afterEvaluation = root.element(GlobalConstant.RES_ROLE_SCOPE_MANAGER+ResRecTypeEnum.AfterEvaluation.getId());
+						Element afterEvaluation = root.element(GlobalConstant.RES_ROLE_SCOPE_MANAGER+ ResRecTypeEnum.AfterEvaluation.getId());
 						if(afterEvaluation==null){
 							afterEvaluation = root.element(GlobalConstant.RES_ROLE_SCOPE_HEAD+ResRecTypeEnum.AfterEvaluation.getId());
 						}
@@ -1371,8 +1371,8 @@ public class EzhupeiAppBizImpl implements IEzhupeiAppBiz {
 	@Override
 	public List<DeptTeacherGradeInfo> searchAllGrade(String userFlow) {
 		List<String> recTypes = new ArrayList<String>();
-		recTypes.add(com.pinde.res.enums.stdp.ResRecTypeEnum.TeacherGrade.getId());
-		recTypes.add(com.pinde.res.enums.stdp.ResRecTypeEnum.DeptGrade.getId());
+		recTypes.add(com.pinde.core.commom.enums.ResRecTypeEnum.TeacherGrade.getId());
+		recTypes.add(com.pinde.core.commom.enums.ResRecTypeEnum.DeptGrade.getId());
 		DeptTeacherGradeInfoExample example = new DeptTeacherGradeInfoExample();
 		example.createCriteria().andOperUserFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
 				.andRecTypeIdIn(recTypes);

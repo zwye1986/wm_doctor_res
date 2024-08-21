@@ -15,12 +15,6 @@ public class CodeValues implements Serializable{
 	public void setText(String text) {
 		this.text = text;
 	}
-	public String getNewLine() {
-		return newLine;
-	}
-	public void setNewLine(String newLine) {
-		this.newLine = newLine;
-	}
 	public String getRemark() {
 		return remark;
 	}

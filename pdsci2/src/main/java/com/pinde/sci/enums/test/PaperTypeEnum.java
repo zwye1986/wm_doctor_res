@@ -1,6 +1,6 @@
 package com.pinde.sci.enums.test;
 
-import com.pinde.core.commom.GeneralEnum;
+import com.pinde.core.commom.enums.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
 public enum PaperTypeEnum implements GeneralEnum<String> {

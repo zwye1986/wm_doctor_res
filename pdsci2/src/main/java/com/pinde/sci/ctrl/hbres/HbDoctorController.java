@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.hbres;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.jspform.ItemGroupData;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
@@ -75,8 +76,8 @@ import java.awt.*;
 import java.io.File;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/hbres/singup")

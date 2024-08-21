@@ -22,7 +22,7 @@ import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;

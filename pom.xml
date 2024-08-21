@@ -29,11 +29,6 @@
 
     <!-- 声明变量，如果后面用到可使用${变量名}来替代 -->
     <properties>
-        <!--<sf.version>2.0.0</sf.version>
-        <druid.version>1.1.5</druid.version>
-        <shrio-spring.version>1.4.0</shrio-spring.version>
-        <oracle.version>12.1</oracle.version>
-        <spring.version>4.3.18</spring.version>-->
 
         <mybatis-spring-boot-starter.version>1.3.2</mybatis-spring-boot-starter.version>
         <mapper-spring-boot-starter.version>1.1.7</mapper-spring-boot-starter.version>
@@ -52,6 +47,17 @@
             <groupId>io.lettuce</groupId>
             <artifactId>lettuce-core</artifactId>
         </dependency>-->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+            <version>3.9.1</version>
+        </dependency>
+
+        <!-- 引入 session与redis的集成 -->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
 
        <!-- <dependency>
             <groupId>biz.paluch.redis</groupId>
@@ -109,19 +115,157 @@
             <!-- 打war包时放开 -->
             <scope>provided</scope>
         </dependency>
-
-
-        <!-- 添加servlet依赖模块 -->
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <!-- 添加jstl标签库依赖模块 -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
+            <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
+            <version>1.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.jtds</groupId>
+            <artifactId>jtds</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.7.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.15.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-discovery</groupId>
+            <artifactId>commons-discovery</artifactId>
+            <version>0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>2.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-pool</groupId>
+            <artifactId>commons-pool</artifactId>
+            <version>1.5.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>33.0.0-jre</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.virtuald</groupId>
+            <artifactId>curvesapi</artifactId>
+            <version>1.04</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.docx4j</groupId>
+            <artifactId>docx4j</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.docx4j</groupId>
+            <artifactId>docx4j-ImportXHTML</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-api</artifactId>
+            <version>7.7.0.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-internal</artifactId>
+            <version>7.7.0.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.kie.soup</groupId>
+            <artifactId>kie-soup-commons</artifactId>
+            <version>7.7.0.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.kie.soup</groupId>
+            <artifactId>kie-soup-maven-support</artifactId>
+            <version>7.7.0.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.kie.soup</groupId>
+            <artifactId>kie-soup-project-datamodel-api</artifactId>
+            <version>7.7.0.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.kie.soup</groupId>
+            <artifactId>kie-soup-project-datamodel-commons</artifactId>
+            <version>7.7.0.Final</version>
+        </dependency>
+
+
 
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -155,11 +299,11 @@
     <!-- 多项目（子父项目）中方便依赖管理，保证版本一致，父项目中使用，声明依赖，但不引用，子项目中可以不加版本，使用父项目中配置 -->
     <dependencyManagement>
         <dependencies>
-            <dependency>
+            <!--<dependency>
                 <groupId>org.apache.ant</groupId>
                 <artifactId>ant</artifactId>
                 <version>1.8.4</version>
-            </dependency>
+            </dependency>-->
 
             <dependency>
                 <groupId>org.springframework.session</groupId>
@@ -179,8 +323,8 @@
     <!-- 构建设置 -->
     <!-- 包括project build、profile build -->
     <build>
-        <resources>
-            <!-- 打jar包时放开 -->
+        <!--<resources>
+            &lt;!&ndash; 打jar包时放开 &ndash;&gt;
             <resource>
                 <directory>${basedir}/pdlib</directory>
                 <targetPath>BOOT-INF/lib</targetPath>
@@ -188,7 +332,7 @@
                     <include>*.jar</include>
                 </includes>
             </resource>
-        </resources>
+        </resources>-->
         <!-- 过滤资源信息 -->
         <filters>
             <!--<filter>myproject.properties</filter>-->
@@ -219,31 +363,6 @@
                     </compilerArguments>
                 </configuration>
             </plugin>
-
-            <!--<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>-->
-
-            <!--<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.3.0</version>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-            </plugin>-->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -288,13 +407,16 @@
             </plugin>-->
 
 
+
         </plugins>
         <!-- 与dependencyManagement类似，为了统一版本 -->
         <pluginManagement></pluginManagement>
     </build>
     <!-- 针对site生成报告插件，与build内插件类似 -->
     <reporting>
-        <plugins></plugins>
+        <plugins>
+
+        </plugins>
     </reporting>
     <!-- 仓库库配置，可以用来设置远程仓库 -->
     <repositories>

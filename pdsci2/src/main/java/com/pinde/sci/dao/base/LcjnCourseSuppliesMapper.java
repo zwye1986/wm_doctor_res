@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.LcjnCourseSupplies;
 import com.pinde.sci.model.mo.LcjnCourseSuppliesExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface LcjnCourseSuppliesMapper {
     int countByExample(LcjnCourseSuppliesExample example);

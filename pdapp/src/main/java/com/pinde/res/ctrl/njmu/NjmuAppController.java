@@ -10,7 +10,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.docx4j.model.listnumbering.Emulator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.pinde.core.util.CodeUtil;
 import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.EnumUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.njmu.INjmuBiz;
-import com.pinde.res.enums.njmu.WorkLogTypeEnum;
+import com.pinde.core.commom.enums.WorkLogTypeEnum;
 import com.pinde.res.model.njmu.mo.Userinfo;
 import com.pinde.res.model.njmu.mo.Worklog;
 

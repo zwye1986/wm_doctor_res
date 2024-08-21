@@ -1,6 +1,7 @@
 package com.pinde.res.ctrl.jswjw;
 
 import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.commom.enums.RecDocCategoryEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -8,9 +9,8 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.jswjw.IIeaveAppBiz;
 import com.pinde.res.biz.jswjw.IJswjwBiz;
-import com.pinde.res.enums.ezhupei.RecDocCategoryEnum;
 import com.pinde.res.enums.lcjn.DictTypeEnum;
-import com.pinde.res.enums.stdp.ResDoctorKqStatusEnum;
+import com.pinde.core.commom.enums.ResDoctorKqStatusEnum;
 import com.pinde.res.model.jswjw.mo.ResDoctorKqExt;
 import com.pinde.sci.dao.base.ResDoctorMapper;
 import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;
@@ -24,7 +24,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Decoder;
 

@@ -1,13 +1,11 @@
 package com.pinde.core.util;
 
-import org.apache.tools.zip.ZipEntry;
-import org.apache.tools.zip.ZipFile;
-import org.apache.tools.zip.ZipOutputStream;
 
 import java.io.*;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * 把多个文件打包到一个文件
@@ -40,7 +38,7 @@ public class ZipUtil {
 	 * @throws FileNotFoundException
 	 */
 	private static void recurseFiles(ZipOutputStream jos, File file,
-			String pathName) throws IOException, FileNotFoundException {
+									 String pathName) throws IOException, FileNotFoundException {
 		if (file.isDirectory()) {
 
 			pathName = pathName + file.getName() + "/";
@@ -57,7 +55,7 @@ public class ZipUtil {
 			FileInputStream fin = new FileInputStream(file);
 			BufferedInputStream in = new BufferedInputStream(fin);
 			jos.putNextEntry(jarEntry);
-			jos.setEncoding("gbk");
+//			jos.set("gbk");
 			int len;
 			while ((len = in.read(buf)) >= 0)
 				jos.write(buf, 0, len);
@@ -84,7 +82,7 @@ public class ZipUtil {
 			FileInputStream fin = new FileInputStream(file);
 			BufferedInputStream in = new BufferedInputStream(fin);
 			jos.putNextEntry(jarEntry);
-			jos.setEncoding("GBK");
+//			jos.setEncoding("GBK");
 			int len;
 			while ((len = in.read(buf)) >= 0)
 				jos.write(buf, 0, len);
@@ -207,33 +205,6 @@ public class ZipUtil {
 		return level;
 	}
 
-	public static void unZip(File zipFile,String zipFolderName) throws IOException {
-		ZipFile zis = new ZipFile(zipFile);
-		Enumeration<ZipEntry> e = zis.getEntries();
-		while(e.hasMoreElements()){
-			ZipEntry entry = (ZipEntry) e.nextElement();
-			File file = new File(zipFolderName+entry.getName());
-			
-			if(entry.isDirectory()){
-				file.mkdirs();
-				continue;
-			}
-			InputStream inputStream = zis.getInputStream(entry);
-			File parent = file.getParentFile();
-            if(parent!=null&&!parent.exists()){
-                parent.mkdirs();
-            }
-            byte[] buf = new byte[BUFFER];
-            int readedBytes = 0;
-            FileOutputStream fileOut = new FileOutputStream(file);
-            while((readedBytes = inputStream.read(buf) ) > 0){
-                fileOut.write(buf , 0 , readedBytes );
-            }
-            fileOut.close();
-            inputStream.close();			
-		}
-		zis.close();
-	}
 
 	//下载directory目录下且存在list文件名的的文件
 	public static void makeDirectoryToZip(File directory, List<String> list, File zipFile, int level) throws IOException{

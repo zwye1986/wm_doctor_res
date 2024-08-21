@@ -3,19 +3,14 @@ package com.pinde.sci.ctrl.res;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.inx.INoticeBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
-import com.pinde.sci.biz.pub.IPubUserResumeBiz;
-import com.pinde.sci.biz.res.*;
-import com.pinde.sci.biz.sch.*;
-import com.pinde.sci.biz.sys.*;
-import com.pinde.sci.biz.test.ITestResultBiz;
+import com.pinde.sci.biz.res.IResDoctorBiz;
+import com.pinde.sci.biz.res.IResDoctorProcessBiz;
+import com.pinde.sci.biz.sch.ISchDoctorAbsenceBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,82 +26,17 @@ import java.util.Map;
 @Controller
 @RequestMapping("/res/docTwo")
 public class ResDocTwoController extends GeneralController {
-	public static final String RotationCfg = "rotationCfg";
 	public static final String SchRotation = "schRotation";
 	public static final String SchRotationDept = "schRotationDept";
 	public static final String SchRotationDeptReq = "schRotationDeptReq";
-	public static final String SchRotationDeptGroup = "schRotationDeptGroup";
-	public static final String Dict = "dict";
-	private static Logger logger = LoggerFactory.getLogger(ResDocTwoController.class);
-
-	@Autowired
-	private IResGradeBiz resGradeBiz;
-	@Autowired
-	private ISchRotationBiz schRotationtBiz;
-	@Autowired
-	private ISchDeptRelBiz schDeptRelBiz;
-	@Autowired
-	private IDeptBiz deptBiz;
 	@Autowired
 	private IResDoctorBiz resDoctorBiz;
 	@Autowired
-	private IUserBiz userBiz;
-	@Autowired
-	private IResEnterOpenCfgBiz enterOpenCfgBiz;
-	@Autowired
-	private IResPowerCfgBiz resPowerCfgBiz;
-	@Autowired
-	private ISchArrangeResultBiz schArrangeResultBiz;
-	@Autowired
 	private IResDoctorProcessBiz resDoctorProcessBiz;
-	@Autowired
-	private IResRecBiz resRecBiz;
-	@Autowired
-	private IResDoctorBiz doctorBiz;
-	@Autowired
-	private ISchArrangePeriodRelBiz schArrangePeriodRelBiz;
-	@Autowired
-	private ISchRotationDeptBiz rotationDeptBiz;
-	@Autowired
-	private ISchDeptBiz schDeptBiz;
-	@Autowired
-	private INoticeBiz noticeBiz;
-	@Autowired
-	private IOrgBiz orgBiz;
-	@Autowired
-	private ISchRotationGroupBiz schRotationtGroupBiz;
-	@Autowired
-	private ISchDoctorDeptBiz schDoctorDeptBiz;
-	@Autowired
-	private ISchRotationDeptBiz schRotationDeptBiz;
 	@Autowired
 	private ISchDoctorAbsenceBiz schDoctorAbsenceBiz;
 	@Autowired
-	private IUserRoleBiz userRoleBiz;
-	@Autowired
-	private ISchDeptExternalRelBiz deptExtRelBiz;
-	@Autowired
 	private IFileBiz fileBiz;
-	@Autowired
-	private ITestResultBiz resultBiz;
-	@Autowired
-	private ISchArrangeBiz arrangeBiz;
-	@Autowired
-	private IDictBiz dictBiz;
-	@Autowired
-	private IResEduCourseBiz eduCourseBiz;
-	@Autowired
-	private IResLectureEvaDetailBiz resLectureEvaDetailBiz;
-    @Autowired
-    private IDiscipleBiz discipleBiz;
-	@Autowired
-	private IPubUserResumeBiz userResumeBiz;
-	@Autowired
-	private IResDoctorDelayTeturnBiz resDoctorDelayTeturnBiz;
-	@Autowired
-	private IResDoctorRecruitBiz doctorRecruitBiz;
-	@Autowired
-	private IResJointOrgBiz jointOrgBiz;
 	/**
 	 * 请假记录
 	 * @param model

@@ -3,8 +3,9 @@ package com.pinde.sci.dao.base;
 import com.pinde.sci.model.mo.ResDoctorSchProcessEval;
 import com.pinde.sci.model.mo.ResDoctorSchProcessEvalExample;
 import com.pinde.sci.model.mo.ResDoctorSchProcessEvalWithBLOBs;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResDoctorSchProcessEvalMapper {
     int countByExample(ResDoctorSchProcessEvalExample example);

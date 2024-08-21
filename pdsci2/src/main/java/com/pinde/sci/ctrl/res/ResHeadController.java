@@ -5,7 +5,6 @@ import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.gzzyjxres.IScholarSchArrangeBiz;
 import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.biz.sch.ISchDeptBiz;
@@ -57,8 +56,6 @@ public class ResHeadController extends GeneralController {
 	private IResDoctorProcessBiz processBiz;
 	@Autowired
 	private ISchDeptBiz schDeptBiz;
-	@Autowired
-	private IScholarSchArrangeBiz arrangeBiz;
 	@Autowired
 	private IUserBiz userBiz;
 	@Autowired
@@ -2330,21 +2327,7 @@ public class ResHeadController extends GeneralController {
 		}
 	}
 
-	/**
-	 * 排班
-	 * @param model
-	 * @return
-     */
-	@RequestMapping("/arrange")
-	public String arrange(ScholarSchArrange arrange,HttpServletRequest request,Integer currentPage,Model model){
 
-		SysUser user = GlobalContext.getCurrentUser();
-		arrange.setDeptFlow(user.getDeptFlow());
-		PageHelper.startPage(currentPage,getPageSize(request));
-		List<ScholarSchArrange> arrangeList =arrangeBiz.searchArrange(arrange);
-		model.addAttribute("arrangeList",arrangeList);
-		return "res/head/arrangeList";
-	}
 
 	/**
 	 * 操作入科

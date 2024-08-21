@@ -2,6 +2,7 @@ package com.pinde.res.ctrl.sctcm120;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.commom.enums.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -16,10 +17,6 @@ import com.pinde.res.biz.sctcm120.ISctcm120LiveTrainingBiz;
 import com.pinde.res.biz.sctcm120.ISctcm120StudentBiz;
 import com.pinde.res.biz.stdp.*;
 import com.pinde.res.enums.lcjn.DictTypeEnum;
-import com.pinde.res.enums.sctcm120.RotationStatusEnum;
-import com.pinde.res.enums.sctcm120.SchUnitEnum;
-import com.pinde.res.enums.sctcm120.TrainYearEnum;
-import com.pinde.res.enums.stdp.*;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -143,10 +140,6 @@ public class Sctcm120StudentController {
 			statusId = searchMap.get("statusId");
 			deptName = searchMap.get("deptName");
 		}
-		
-//		if(StringUtil.isBlank(statusId)){
-//			statusId = DeptStatusEnum.Entering.getId();
-//		}
 		
 		//组织查询条件
 		Map<String,Object> paramMap = new HashMap<String, Object>();

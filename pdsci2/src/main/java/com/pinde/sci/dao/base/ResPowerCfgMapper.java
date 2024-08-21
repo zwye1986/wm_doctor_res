@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResPowerCfg;
 import com.pinde.sci.model.mo.ResPowerCfgExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResPowerCfgMapper {
     int countByExample(ResPowerCfgExample example);

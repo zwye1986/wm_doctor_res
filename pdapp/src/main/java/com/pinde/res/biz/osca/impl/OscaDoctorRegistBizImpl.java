@@ -8,7 +8,7 @@ import com.pinde.res.biz.osca.IOscaAppBiz;
 import com.pinde.res.biz.osca.IOscaDoctorRegistBiz;
 import com.pinde.res.dao.osca.ext.OscaDoctorRegistExtMapper;
 import com.pinde.res.enums.osca.AuditStatusEnum;
-import com.pinde.res.enums.stdp.UserStatusEnum;
+import com.pinde.core.commom.enums.UserStatusEnum;
 import com.pinde.sci.dao.base.OscaDoctorRegistMapper;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;

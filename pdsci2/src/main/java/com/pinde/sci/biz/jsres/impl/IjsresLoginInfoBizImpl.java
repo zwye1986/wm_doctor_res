@@ -1,13 +1,10 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
-
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IjsresLoginInfoBiz;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.JsresLoginInfoMapper;
-import com.pinde.sci.dao.base.SysCfgMapper;
-import com.pinde.sci.dao.sys.SysCfgExtMapper;
 import com.pinde.sci.model.mo.JsresLoginInfo;
 import com.pinde.sci.model.mo.JsresLoginInfoExample;
 import org.springframework.beans.factory.annotation.Autowired;

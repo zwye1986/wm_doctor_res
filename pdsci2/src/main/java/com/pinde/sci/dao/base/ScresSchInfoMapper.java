@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ScresSchInfo;
 import com.pinde.sci.model.mo.ScresSchInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ScresSchInfoMapper {
     int countByExample(ScresSchInfoExample example);

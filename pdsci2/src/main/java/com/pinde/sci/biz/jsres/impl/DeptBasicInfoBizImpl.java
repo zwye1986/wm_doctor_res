@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.PkUtil;
@@ -23,8 +24,6 @@ import com.pinde.sci.dao.sch.ResBaseSpeDeptDataExtMapper;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptExtForm;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptForm;
 import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.vo.ResDeptRelStdDeptVO;
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,6 +2,7 @@ package com.pinde.res.biz.hbres.impl;
 
 import com.pinde.app.common.GlobalConstant;
 import com.pinde.app.common.GlobalUtil;
+import com.pinde.core.commom.enums.SchUnitEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -10,8 +11,7 @@ import com.pinde.res.biz.hbres.IHbresAppBiz;
 import com.pinde.res.biz.hbres.IHbresStudentBiz;
 import com.pinde.res.dao.hbres.ext.HbresSchArrangeResultExtMapper;
 import com.pinde.res.dao.hbres.ext.HbresSchRotationDeptExtMapper;
-import com.pinde.res.enums.hbres.SchUnitEnum;
-import com.pinde.res.enums.stdp.RegistryTypeEnum;
+import com.pinde.core.commom.enums.RegistryTypeEnum;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;

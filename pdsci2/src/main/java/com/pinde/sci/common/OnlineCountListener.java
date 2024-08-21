@@ -1,7 +1,5 @@
 package com.pinde.sci.common;
 
-import org.springframework.context.ApplicationContext;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;

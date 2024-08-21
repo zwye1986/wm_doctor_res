@@ -14,7 +14,7 @@ import com.pinde.sci.enums.jsres.BaseStatusEnum;
 import com.pinde.sci.model.jsres.OrgSpeListVo;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;

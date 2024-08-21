@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.OscaExamDifferScore;
 import com.pinde.sci.model.mo.OscaExamDifferScoreExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface OscaExamDifferScoreMapper {
     int countByExample(OscaExamDifferScoreExample example);

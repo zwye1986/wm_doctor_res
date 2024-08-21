@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.sys;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.sci.form.sys.SubDictEditForm;
 import com.pinde.sci.model.mo.DictForm;
-import com.pinde.sci.model.mo.SysDict;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

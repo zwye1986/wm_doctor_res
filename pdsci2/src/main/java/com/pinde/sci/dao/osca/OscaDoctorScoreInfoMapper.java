@@ -1,8 +1,6 @@
 package com.pinde.sci.dao.osca;
 
 
-import com.pinde.sci.model.mo.OscaSkillsAssessment;
-
 import java.util.List;
 import java.util.Map;
 

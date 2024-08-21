@@ -377,13 +377,6 @@
         <function-signature>boolean canShowByVersion(java.lang.String) </function-signature>
     </function>
 
-	<!-- for srm user-->
-    <function>
-        <description></description>
-        <name>showIcn</name>
-        <function-class>com.pinde.sci.common.GeneralSrmMethod</function-class>
-        <function-signature>java.util.Map showIcn(java.util.List) </function-signature>
-    </function>
 
     <!-- for res use-->
     <function>
@@ -393,81 +386,7 @@
         <function-signature>com.pinde.sci.enums.res.RegistryTypeEnum getRegistryTypeEnumById(java.lang.String) </function-signature>
     </function>
 
-    <!-- for edc use-->
-    <function>
-        <description></description>
-        <name>getInputStatusPic</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.lang.String getInputStatusPic(java.lang.String  ,  com.pinde.sci.model.mo.EdcPatientVisit ) </function-signature>
-    </function>
-    <function>
-        <description></description>
-        <name>getSinglePic</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.lang.String getSinglePic(java.lang.String  ) </function-signature>
-    </function>
-    <function>
-        <description></description>
-        <name>getVisitData</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.lang.String getVisitData(java.lang.String,java.util.Map,java.lang.String,  com.pinde.sci.model.mo.EdcPatientVisit ) </function-signature>
-    </function>
-    <function>
-        <description></description>
-        <name>getAttrValue</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.lang.String getAttrValue(com.pinde.sci.model.edc.EdcDesignForm ,java.lang.String,java.lang.String ) </function-signature>
-    </function>
-    <function>
-        <description></description>
-        <name>getIrbTypeNameById</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.lang.String getIrbTypeNameById(java.lang.String)</function-signature>
-    </function>
-    <function>
-        <description></description>
-        <name>filterProjOrg</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.util.List filterProjOrg(java.util.List)</function-signature>
-    </function>
-    <function>
-        <description></description>
-        <name>getCondition</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.lang.String getCondition(java.lang.String,java.lang.String,java.lang.String,java.lang.String) </function-signature>
-    </function>
-    <function>
-        <description></description>
-        <name>getCodeTitle</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.lang.String getCodeTitle(java.lang.String,java.lang.String) </function-signature>
-    </function>
-    <function>
-        <description></description>
-        <name>getCodeValues</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.lang.String getCodeValues(java.lang.String,java.lang.String) </function-signature>
-    </function>
-    <function>
-        <description></description>
-        <name>getProcessClass</name>
-        <function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-        <function-signature>java.lang.String getProcessClass(java.lang.String,java.lang.String) </function-signature>
-    </function>
-	<function>
-		<description></description>
-		<name>getIrbStageOrdinal</name>
-		<function-class>com.pinde.sci.common.GeneralEdcMethod</function-class>
-		<function-signature>java.lang.Integer getIrbStageOrdinal(java.lang.String) </function-signature>
-	</function>
 
-	<!-- for erp use-->
-    <function>
-        <description></description>
-        <name>getVisibleByWorkStatusId</name>
-        <function-class>com.pinde.sci.common.GeneralErpMethod</function-class>
-        <function-signature>boolean getVisibleByWorkStatusId(java.lang.String, java.lang.String)</function-signature>
-    </function>
 
 	<!-- for exam use-->
 	<function>

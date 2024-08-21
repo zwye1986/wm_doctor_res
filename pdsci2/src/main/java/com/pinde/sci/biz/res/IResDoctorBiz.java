@@ -6,7 +6,6 @@ import com.pinde.sci.form.hbres.ResDoctorClobForm;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.res.EduCourseExt;
 import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.model.res.ResDoctorScoreExt;
 import com.pinde.sci.model.sys.SysUserResDoctorExt;
@@ -168,12 +167,7 @@ public interface IResDoctorBiz {
 	 */
 	int clearSelAndRostering(List<String> doctorFlowList);
 
-	/**
-	 * 根据courseFlow查询对应的ResDoctor对象
-	 * @param eduCourseList
-	 * @return
-	 */
-	Map<String,Map<String,Object>> courseFlowResDoctorMap(List<EduCourseExt> eduCourseList);
+
 	/**
 	 * only保存
 	 * @param resDoctor

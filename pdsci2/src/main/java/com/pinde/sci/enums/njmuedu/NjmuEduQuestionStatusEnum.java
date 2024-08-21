@@ -1,6 +1,6 @@
 package com.pinde.sci.enums.njmuedu;
 
-import com.pinde.core.commom.GeneralEnum;
+import com.pinde.core.commom.enums.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
 public enum NjmuEduQuestionStatusEnum implements GeneralEnum<String> {

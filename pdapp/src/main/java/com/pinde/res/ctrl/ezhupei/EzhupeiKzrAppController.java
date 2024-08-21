@@ -1,7 +1,8 @@
 package com.pinde.res.ctrl.ezhupei;
 
-import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.commom.enums.ResAssessScoreTypeEnum;
+import com.pinde.core.commom.enums.ResAssessTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -14,10 +15,8 @@ import com.pinde.res.biz.jswjw.IJswjwTeacherBiz;
 import com.pinde.res.biz.jswjw.IResDoctorProcessBiz;
 import com.pinde.res.biz.stdp.IResGradeBiz;
 import com.pinde.res.biz.stdp.IResSchProcessExpressBiz;
-import com.pinde.res.enums.ezhupei.ResAssessScoreTypeEnum;
-import com.pinde.res.enums.stdp.RegistryTypeEnum;
-import com.pinde.res.enums.stdp.ResAssessTypeEnum;
-import com.pinde.res.enums.stdp.ResRecTypeEnum;
+import com.pinde.core.commom.enums.RegistryTypeEnum;
+import com.pinde.core.commom.enums.ResRecTypeEnum;
 import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgItemForm;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgTitleForm;
@@ -1644,7 +1643,7 @@ public class EzhupeiKzrAppController {
 		}
 		model.addAttribute("isAudit", isAudit);
 		model.addAttribute("funcFlow", recTypeId);
-		if (recTypeId.equals(com.pinde.res.enums.ezhupei.ResRecTypeEnum.AfterEvaluation.getId())) {
+		if (recTypeId.equals(ResRecTypeEnum.AfterEvaluation.getId())) {
 			ResDoctorSchProcess process = ezhupeiBiz.readSchProcessByResultFlow(resultFlow);
 			if (process != null) {
 				String res_after_test_switch = ezhupeiBiz.getCfgByCode("res_after_test_switch");

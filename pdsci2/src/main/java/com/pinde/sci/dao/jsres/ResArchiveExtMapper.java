@@ -1,6 +1,5 @@
 package com.pinde.sci.dao.jsres;
 
-import com.pinde.sci.model.jsres.JsDoctorInfoExt;
 import com.pinde.sci.model.jsres.JsDoctorInfoLogExt;
 import com.pinde.sci.model.jsres.JsResArchDoctorRecruitExt;
 import org.apache.ibatis.annotations.Param;

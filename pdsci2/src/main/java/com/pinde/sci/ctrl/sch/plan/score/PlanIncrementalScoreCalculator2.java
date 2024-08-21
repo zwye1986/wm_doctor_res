@@ -16,13 +16,12 @@
 
 package com.pinde.sci.ctrl.sch.plan.score;
 
-        import com.pinde.sci.ctrl.sch.plan.domain.*;
-        import com.pinde.sci.ctrl.sch.plan.util.SchDateUtil;
-        import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
-        import org.optaplanner.core.impl.score.director.incremental.AbstractIncrementalScoreCalculator;
+import com.pinde.sci.ctrl.sch.plan.domain.*;
+import com.pinde.sci.ctrl.sch.plan.util.SchDateUtil;
+import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
+import org.optaplanner.core.impl.score.director.incremental.AbstractIncrementalScoreCalculator;
 
-
-        import java.text.ParseException;
+import java.text.ParseException;
 import java.util.*;
 
 public class PlanIncrementalScoreCalculator2 extends AbstractIncrementalScoreCalculator<Plan> {

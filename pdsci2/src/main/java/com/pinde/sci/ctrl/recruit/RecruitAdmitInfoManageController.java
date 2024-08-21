@@ -9,7 +9,6 @@ import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.model.mo.RecruitAdmitInfo;
-import com.pinde.sci.model.mo.RecruitInterviewInfo;
 import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.recruit.RecruitInfoExt;
 import org.springframework.beans.factory.annotation.Autowired;

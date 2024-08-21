@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.OscaOrgSpe;
 import com.pinde.sci.model.mo.OscaOrgSpeExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface OscaOrgSpeMapper {
     int countByExample(OscaOrgSpeExample example);

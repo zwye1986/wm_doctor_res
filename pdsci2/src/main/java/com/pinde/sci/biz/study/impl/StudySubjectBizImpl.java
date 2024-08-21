@@ -2,9 +2,7 @@ package com.pinde.sci.biz.study.impl;
 
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
-import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.study.IStudySubjectBiz;
-import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.StudySubjectDetailMapper;

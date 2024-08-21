@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.hbzy;
 
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -43,7 +44,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/hbzy/doctorRecruitInfo")

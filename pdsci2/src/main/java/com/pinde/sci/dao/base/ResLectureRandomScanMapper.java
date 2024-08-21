@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResLectureRandomScan;
 import com.pinde.sci.model.mo.ResLectureRandomScanExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResLectureRandomScanMapper {
     int countByExample(ResLectureRandomScanExample example);

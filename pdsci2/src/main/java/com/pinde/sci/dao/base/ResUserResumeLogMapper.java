@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResUserResumeLog;
 import com.pinde.sci.model.mo.ResUserResumeLogExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResUserResumeLogMapper {
     int countByExample(ResUserResumeLogExample example);

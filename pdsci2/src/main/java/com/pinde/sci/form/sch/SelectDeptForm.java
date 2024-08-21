@@ -1,8 +1,5 @@
 package com.pinde.sci.form.sch;
 
-import com.pinde.sci.model.mo.SchRotationDept;
-import com.pinde.sci.model.mo.SchRotationGroup;
-
 import java.io.Serializable;
 import java.util.List;
 

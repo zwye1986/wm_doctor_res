@@ -1,10 +1,8 @@
 package com.pinde.res.ctrl.pushExam;
 
-import com.alibaba.fastjson.JSON;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.pushExam.IPushExamBiz;
-import com.pinde.res.enums.stdp.ResultEnum;
 import com.pinde.sci.model.mo.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.UnsupportedEncodingException;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/res/appPushExam")

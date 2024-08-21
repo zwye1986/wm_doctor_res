@@ -3,8 +3,9 @@ package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.res.*;
-import com.pinde.sci.biz.sch.*;
+import com.pinde.sci.biz.res.IResDoctorBiz;
+import com.pinde.sci.biz.sch.ISchExamCfgBiz;
+import com.pinde.sci.biz.sch.ISchExamScoreQueryBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;

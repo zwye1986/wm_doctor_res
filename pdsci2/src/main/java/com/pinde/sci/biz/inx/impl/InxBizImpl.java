@@ -21,7 +21,7 @@ import com.pinde.sci.enums.osca.AuditStatusEnum;
 import com.pinde.sci.enums.pub.UserStatusEnum;
 import com.pinde.sci.enums.sys.RoleLevelEnum;
 import com.pinde.sci.model.mo.*;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,12 +47,6 @@ public class InxBizImpl implements IInxBiz{
 	private IUserRoleBiz userRoleBiz;
     @Autowired
     private TjDocinfoMapper docinfoMapper;
-	@Autowired
-	private SysUserRoleMapper userRoleMapper;
-	@Autowired
-	private NydsOfficialDoctorMapper doctorMapper;
-	@Autowired
-	private SysOrgMapper sysOrgMapper;
 	@Autowired
 	private IRoleBiz roleBiz;
 	@Autowired
@@ -387,40 +381,6 @@ public class InxBizImpl implements IInxBiz{
 		}
 		return msgBiz.addEmailMsg(userEmail, title, content,flag);
 	}
-
-	/**
-	 * 天津结业考试登录
-	 * @param userCode
-	 * @param passwd
-	 * @return
-	 */
-	@Override
-	public TjDocinfo loginInfoTj(String userCode, String passwd) {
-		userCode = StringUtil.defaultIfEmpty(userCode, "").trim();
-		passwd = StringUtil.defaultIfEmpty(passwd, passwd).trim();
-		TjDocinfoExample example = new TjDocinfoExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserIdEqualTo(userCode);
-		List<TjDocinfo> docinfos = docinfoMapper.selectByExample(example);
-		if(null == docinfos || docinfos.isEmpty()){
-			TjDocinfoExample example2 = new TjDocinfoExample();
-			example2.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andIdNoEqualTo(userCode);
-			docinfos = docinfoMapper.selectByExample(example2);
-		}
-		TjDocinfo docinfo = null;
-		if(null != docinfos && docinfos.size() > 0){
-			docinfo = docinfos.get(0);
-		}
-		//判断用户是否存在
-		if(docinfo==null){
-			throw new RuntimeException("用户名或密码不正确");
-		}
-		//判断密码
-		String userPasswd = StringUtil.defaultString(docinfo.getUserPassword());
-		if(!userPasswd.equalsIgnoreCase(PasswordHelper.encryptPassword(docinfo.getUserFlow(), passwd))){
-			throw new RuntimeException("密码不正确");
-		}
-		return docinfo;
-	}
     /**
      * 南京准考证打印登录
      * @param userName
@@ -445,50 +405,6 @@ public class InxBizImpl implements IInxBiz{
         return docinfo;
     }
 
-	@Override
-	public String saveTutorUser(SysUser user) {
-		//绑定研究生管理系统(cmis)导师角色
-		String roleFlow = InitConfig.getSysCfg("xjgl_tutor_role_flow");//cmis导师角色配置
-		if(StringUtil.isBlank(roleFlow)){
-			return "后台学籍配置未绑定导师角色";
-		}
-		String schoolName = "南方医科大学";
-		String xjWsId = "cmis";
-		if(GZYKDX.equals(InitConfig.getSysCfg("xjgl_customer"))){
-			schoolName = "广州医科大学";
-			xjWsId = "gycmis";
-		}
-		SysOrgExample orgExample = new SysOrgExample();
-		orgExample.createCriteria().andOrgNameEqualTo(schoolName)
-				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-		List<SysOrg> orgList = sysOrgMapper.selectByExample(orgExample);
-		if(null != orgList && !orgList.isEmpty()){
-			user.setOrgFlow(orgList.get(0).getOrgFlow());
-			user.setOrgName(orgList.get(0).getOrgName());
-		}
-		//新增用户并激活
-		user.setUserFlow(PkUtil.getUUID());
-		user.setUserCode(user.getIdNo());
-		user.setUserPasswd(PasswordHelper.encryptPassword(user.getUserFlow(), user.getUserPasswd()));
-		user.setStatusId(UserStatusEnum.Activated.getId());
-		user.setStatusDesc(UserStatusEnum.Activated.getName());
-		GeneralMethod.setRecordInfo(user, true);
-		userMapper.insert(user);
-		SysUserRole record = new SysUserRole();
-		record.setRecordFlow(PkUtil.getUUID());
-		record.setUserFlow(user.getUserFlow());
-		record.setWsId(xjWsId);
-		record.setRoleFlow(roleFlow);
-		GeneralMethod.setRecordInfo(record,true);
-		userRoleMapper.insertSelective(record);
-		NydsOfficialDoctor tutor = new NydsOfficialDoctor();
-		tutor.setDoctorFlow(user.getUserFlow());
-		tutor.setDoctorName(user.getUserName());
-		tutor.setIdNo(user.getIdNo());
-		GeneralMethod.setRecordInfo(tutor,true);
-		doctorMapper.insertSelective(tutor);
-		return null;
-	}
 
     /**
      * 南京准考证打印登录

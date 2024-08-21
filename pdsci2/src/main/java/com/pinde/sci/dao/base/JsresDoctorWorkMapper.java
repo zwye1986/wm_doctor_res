@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.JsresDoctorWork;
 import com.pinde.sci.model.mo.JsresDoctorWorkExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface JsresDoctorWorkMapper {
     int countByExample(JsresDoctorWorkExample example);

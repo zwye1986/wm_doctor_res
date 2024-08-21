@@ -2,6 +2,7 @@ package com.pinde.sci.biz.sch.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.EnumUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -25,6 +26,7 @@ import com.pinde.sci.enums.sch.SchStageEnum;
 import com.pinde.sci.form.sch.SchRotationDeptForm;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.poi.POIXMLDocument;
@@ -43,7 +45,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -1981,7 +1982,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 		Map<String, SysDict> sysDoctorTrainingSpeMap = new HashMap<>();
 		List<SysDict> sysStandardDepts = rotationExtendMapper.selectDictStandardDept();
 		//名称去重
-		if (org.apache.commons.collections.CollectionUtils.isNotEmpty(sysStandardDepts)) {
+		if (CollectionUtils.isNotEmpty(sysStandardDepts)) {
 			List<SysDict> sysStandardDeptList = sysStandardDepts.stream().collect(
 					Collectors.collectingAndThen(
 							Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(SysDict::getDictName))), ArrayList::new)
@@ -1991,7 +1992,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 
 		List<SysDict> sysDoctorTrainingSpes = rotationExtendMapper.selectDictDoctorTrainingSpe();
 		//名称去重
-		if (org.apache.commons.collections.CollectionUtils.isNotEmpty(sysDoctorTrainingSpes)) {
+		if (CollectionUtils.isNotEmpty(sysDoctorTrainingSpes)) {
 			List<SysDict> sysDoctorTrainingSpeList = sysDoctorTrainingSpes.stream().collect(
 					Collectors.collectingAndThen(
 							Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(SysDict::getDictName))), ArrayList::new)

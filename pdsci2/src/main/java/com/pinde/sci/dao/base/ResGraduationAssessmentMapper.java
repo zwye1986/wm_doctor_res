@@ -3,8 +3,9 @@ package com.pinde.sci.dao.base;
 import com.pinde.sci.model.mo.ResGraduationAssessment;
 import com.pinde.sci.model.mo.ResGraduationAssessmentExample;
 import com.pinde.sci.model.mo.ResGraduationAssessmentWithBLOBs;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResGraduationAssessmentMapper {
     int countByExample(ResGraduationAssessmentExample example);

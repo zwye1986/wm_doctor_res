@@ -1,6 +1,5 @@
 package com.pinde.sci.dao.jsres;
 
-import com.pinde.sci.model.mo.ResDeptRelStdDept;
 import com.pinde.sci.model.vo.ResDeptRelStdDeptVO;
 import com.pinde.sci.model.vo.ResSpeBaseStdDeptVO;
 import com.pinde.sci.model.vo.ResStandardDeptVO;

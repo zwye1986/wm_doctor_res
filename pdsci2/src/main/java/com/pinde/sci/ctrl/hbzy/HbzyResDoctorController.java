@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.hbzy;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -16,8 +17,8 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.jsres.JsResTrainYearEnum;
 import com.pinde.sci.enums.hbzy.*;
+import com.pinde.sci.enums.jsres.JsResTrainYearEnum;
 import com.pinde.sci.enums.res.ResDoctorAuditStatusEnum;
 import com.pinde.sci.enums.res.ResRecTypeEnum;
 import com.pinde.sci.enums.res.ResScoreTypeEnum;

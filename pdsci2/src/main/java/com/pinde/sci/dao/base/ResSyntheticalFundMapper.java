@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResSyntheticalFund;
 import com.pinde.sci.model.mo.ResSyntheticalFundExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResSyntheticalFundMapper {
     int countByExample(ResSyntheticalFundExample example);

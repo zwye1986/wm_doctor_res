@@ -1,33 +1,22 @@
 package com.pinde.sci.biz.jsres.impl;
 
-import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResActivityTargetBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.TeachingActivityFormValueMapper;
 import com.pinde.sci.dao.base.TeachingActivityInfoTargetMapper;
 import com.pinde.sci.dao.base.TeachingActivityTargetMapper;
 import com.pinde.sci.dao.jsres.TeachingActivityInfoExtMapper;
 import com.pinde.sci.dao.jsres.TeachingActivityTargetExtMapper;
 import com.pinde.sci.model.mo.*;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.net.URLEncoder;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional(rollbackFor=Exception.class)

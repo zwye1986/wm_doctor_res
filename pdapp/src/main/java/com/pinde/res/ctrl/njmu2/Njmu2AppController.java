@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.pinde.app.common.PasswordUtil;
+import com.pinde.core.commom.enums.*;
 import com.pinde.res.biz.stdp.IResGradeBiz;
 import com.pinde.res.biz.stdp.IResSchProcessExpressBiz;
-import com.pinde.res.enums.jswjw.RecDocCategoryEnum;
 import com.pinde.sci.model.mo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,11 +34,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.njmu2.INjmu2AppBiz;
 import com.pinde.res.biz.njmu2.INjmu2StudentBiz;
 import com.pinde.res.biz.njmu2.INjmu2TeacherBiz;
-import com.pinde.res.enums.njmu2.ResAssessTypeEnum;
-import com.pinde.res.enums.njmu2.ResRecTypeEnum;
-import com.pinde.res.enums.njmu2.SigninTypeEnum;
-import com.pinde.res.enums.stdp.ResultEnum;
-import com.pinde.res.enums.stdp.UserStatusEnum;
 import com.pinde.sci.util.PasswordHelper;
 
 @Controller
@@ -199,13 +194,6 @@ public class Njmu2AppController{
 					model.addAttribute("resultType", "登录失败,学员数据出错!");
 					return "res/njmu2/login";
 				}
-				
-				//将该用户的培训年限id转换为name
-//				String trainingYears = doctor.getTrainingYears();
-//				if(StringUtil.isNotBlank(trainingYears)){
-//					trainingYears = TrainYearEnum.getNameById(trainingYears);
-//					doctor.setTrainingYears(trainingYears);
-//				}
 				
 				model.addAttribute("doctor", doctor);
 				

@@ -13,11 +13,14 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import com.pinde.app.common.GlobalUtil;
-import com.pinde.res.enums.njmu2.RegistryTypeEnum;
+import com.pinde.core.commom.enums.RegistryTypeEnum;
+import com.pinde.core.commom.enums.ResAssessTypeEnum;
+import com.pinde.core.commom.enums.ResRecTypeEnum;
+import com.pinde.core.commom.enums.SigninTypeEnum;
 import com.pinde.res.dao.jswjw.ext.SchArrangeResultExtMapper;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -27,7 +30,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.druid.sql.visitor.functions.Isnull;
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
@@ -38,9 +40,6 @@ import com.pinde.res.biz.njmu2.INjmu2StudentBiz;
 import com.pinde.res.dao.stdp.ext.StdpResDoctorSchProcessExtMapper;
 import com.pinde.res.dao.stdp.ext.StdpResRecExtMapper;
 import com.pinde.res.dao.stdp.ext.StdpSchArrangeResultExtMapper;
-import com.pinde.res.enums.njmu2.ResAssessTypeEnum;
-import com.pinde.res.enums.njmu2.ResRecTypeEnum;
-import com.pinde.res.enums.njmu2.SigninTypeEnum;
 import com.pinde.sci.model.mo.SysUserExample.Criteria;
 
 @Service

@@ -2,8 +2,10 @@ package com.pinde.sci.dao.jszy;
 
 import com.pinde.sci.model.jszy.JszyDoctorInfoLogExt;
 import com.pinde.sci.model.jszy.JszyResArchDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
-import org.apache.ibatis.annotations.Param;
+import com.pinde.sci.model.mo.DoctorAuth;
+import com.pinde.sci.model.mo.PubUserResume;
+import com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs;
+import com.pinde.sci.model.mo.SysUser;
 
 import java.util.List;
 import java.util.Map;

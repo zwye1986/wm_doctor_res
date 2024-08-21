@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.DgdhyyActivity;
 import com.pinde.sci.model.mo.DgdhyyActivityExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface DgdhyyActivityMapper {
     int countByExample(DgdhyyActivityExample example);

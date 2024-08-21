@@ -1,7 +1,6 @@
 package com.pinde.sci.dao.res;
 
 
-import com.pinde.sci.model.mo.GraduationExamResults;
 import com.pinde.sci.model.mo.ResDoctorGraduationInfo;
 import org.apache.ibatis.annotations.Param;
 

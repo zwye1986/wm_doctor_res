@@ -1,7 +1,5 @@
 package com.pinde.sci.model.osca;
 
-import com.pinde.sci.model.mo.OscaOrgMenu;
-import com.pinde.sci.model.mo.OscaOrgSpe;
 import com.pinde.sci.model.mo.SysOrg;
 
 public class OscaOrgMenuExt extends SysOrg {

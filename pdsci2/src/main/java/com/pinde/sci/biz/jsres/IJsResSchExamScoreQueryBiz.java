@@ -1,6 +1,5 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.sci.model.mo.JsresPowerCfg;
 import com.pinde.sci.model.mo.SchExamDoctorArrangement;
 
 import javax.servlet.http.HttpServletResponse;

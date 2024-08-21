@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.jsres;
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.SysUserRole;
 
 import java.util.List;
 import java.util.Map;

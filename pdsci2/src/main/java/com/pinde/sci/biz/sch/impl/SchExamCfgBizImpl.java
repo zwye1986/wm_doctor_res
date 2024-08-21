@@ -1,26 +1,19 @@
 package com.pinde.sci.biz.sch.impl;
 
-import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.sch.ISchArrangeBiz;
 import com.pinde.sci.biz.sch.ISchExamCfgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sch.SchExamArrangementExtMapper;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.sch.SchArrangeStatusEnum;
-import com.pinde.sci.enums.sch.SchArrangeTypeEnum;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

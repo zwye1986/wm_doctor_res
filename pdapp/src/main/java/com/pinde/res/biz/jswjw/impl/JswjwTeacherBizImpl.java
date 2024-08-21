@@ -9,12 +9,10 @@ import com.pinde.res.biz.jswjw.IJswjwTeacherBiz;
 import com.pinde.res.biz.jswjw.IResDoctorProcessBiz;
 import com.pinde.res.dao.jswjw.ext.*;
 import com.pinde.res.dao.stdp.ext.StdpResDoctorExtMapper;
-import com.pinde.res.enums.stdp.RegistryTypeEnum;
-import com.pinde.res.enums.stdp.ResRecTypeEnum;
+import com.pinde.core.commom.enums.ResRecTypeEnum;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.*;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +23,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(rollbackFor=Exception.class)

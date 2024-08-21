@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.osca.impl;
 
 import com.alibaba.fastjson.JSONArray;
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;

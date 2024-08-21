@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResUserSpe;
 import com.pinde.sci.model.mo.ResUserSpeExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResUserSpeMapper {
     int countByExample(ResUserSpeExample example);

@@ -2,10 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResCostCfgMain;
 import com.pinde.sci.model.mo.ResCostCfgMainExample;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResCostCfgMainMapper {
     int countByExample(ResCostCfgMainExample example);

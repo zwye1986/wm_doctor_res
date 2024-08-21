@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
 import com.pinde.sci.model.mo.*;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;

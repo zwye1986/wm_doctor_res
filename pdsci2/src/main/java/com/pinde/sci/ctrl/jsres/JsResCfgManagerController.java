@@ -1,7 +1,6 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IRoleBiz;

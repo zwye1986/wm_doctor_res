@@ -1,6 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
-import com.alibaba.fastjson.JSON;
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.pub.IFileBiz;
@@ -20,10 +20,8 @@ import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.form.sch.SchGradeFrom;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.*;
-import com.pinde.sci.model.res.ResDoctorExt;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -43,14 +41,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -111,8 +107,6 @@ public class ResTeacherController extends GeneralController {
 	private IResGradeBiz resGradeBiz;
 	@Autowired
 	private ISchArrangeResultBiz schArrangeResultBiz;
-	@Autowired
-	private IZseyHrKqMonthBiz zseyHrKqMonthBiz;
 	@Autowired
 	private SysOrgExtMapper orgExtMapper;
 	@Autowired
@@ -2913,7 +2907,7 @@ public class ResTeacherController extends GeneralController {
 	@RequestMapping(value="/saveAbsenceAudit")
 	@ResponseBody
 	public String saveAbsenceAudit(SchDoctorAbsence doctorAbsence0) throws ParseException {
-		SysUser currtUser = GlobalContext.getCurrentUser();
+		/*SysUser currtUser = GlobalContext.getCurrentUser();
 		if(StringUtil.isNotBlank(doctorAbsence0.getAbsenceFlow())){
 			SimpleDateFormat sdf0 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 			String time = sdf0.format(new Date());
@@ -3018,7 +3012,7 @@ public class ResTeacherController extends GeneralController {
 			if(GlobalConstant.ZERO_LINE != result){
 				return GlobalConstant.SAVE_SUCCESSED;
 			}
-		}
+		}*/
 		return GlobalConstant.SAVE_FAIL;
 	}
 
@@ -3175,19 +3169,19 @@ public class ResTeacherController extends GeneralController {
 	@RequestMapping(value="/importAbsence")
 	@ResponseBody
 	public String importStudentExcel(MultipartFile file){
-		if(file.getSize() > 0){
-			try{
-				int result = schDoctorAbsenceBiz.importDict(file);
-				if(GlobalConstant.ZERO_LINE != result){
-					return GlobalConstant.UPLOAD_SUCCESSED + "导入"+result+"条记录！";
-				}else{
-					return GlobalConstant.UPLOAD_FAIL;
-				}
-			}catch(RuntimeException re) {
-				re.printStackTrace();
-				return re.getMessage();
-			}
-		}
+//		if(file.getSize() > 0){
+//			try{
+//				int result = schDoctorAbsenceBiz.importDict(file);
+//				if(GlobalConstant.ZERO_LINE != result){
+//					return GlobalConstant.UPLOAD_SUCCESSED + "导入"+result+"条记录！";
+//				}else{
+//					return GlobalConstant.UPLOAD_FAIL;
+//				}
+//			}catch(RuntimeException re) {
+//				re.printStackTrace();
+//				return re.getMessage();
+//			}
+//		}
 		return GlobalConstant.UPLOAD_FAIL;
 	}
 
@@ -4421,7 +4415,7 @@ public class ResTeacherController extends GeneralController {
 	 * @param response
 	 * @param schStartDate
 	 * @param schEndDate
-	 * @param deptFlow
+	 * @param schDeptFlow
 	 * @param teacherName
 	 * @param statueId
 	 * @param studentName

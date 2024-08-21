@@ -2,7 +2,10 @@ package com.pinde.sci.dao.hbzy;
 
 import com.pinde.sci.model.hbzy.JszyDoctorInfoLogExt;
 import com.pinde.sci.model.hbzy.JszyResArchDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.DoctorAuth;
+import com.pinde.sci.model.mo.PubUserResume;
+import com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs;
+import com.pinde.sci.model.mo.SysUser;
 
 import java.util.List;
 import java.util.Map;

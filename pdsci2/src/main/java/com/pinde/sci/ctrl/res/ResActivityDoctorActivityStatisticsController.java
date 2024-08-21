@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.res;
 
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
@@ -20,7 +21,8 @@ import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.sci.enums.res.RegistryTypeEnum;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.sci.model.mo.SysUser;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.RecruitCfgInfo;
 import com.pinde.sci.model.mo.RecruitCfgInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface RecruitCfgInfoMapper {
     int countByExample(RecruitCfgInfoExample example);

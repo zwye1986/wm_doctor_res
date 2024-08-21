@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResRecSkillRegistry;
 import com.pinde.sci.model.mo.ResRecSkillRegistryExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResRecSkillRegistryMapper {
     int countByExample(ResRecSkillRegistryExample example);

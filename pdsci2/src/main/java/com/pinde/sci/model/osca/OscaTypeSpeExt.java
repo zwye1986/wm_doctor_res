@@ -1,8 +1,6 @@
 package com.pinde.sci.model.osca;
 
 
-import java.io.Serializable;
-
 /**
  * @author Administrator
  */

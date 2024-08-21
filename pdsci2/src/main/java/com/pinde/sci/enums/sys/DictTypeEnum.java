@@ -1,8 +1,8 @@
 package com.pinde.sci.enums.sys;
 
-import com.pinde.core.commom.GeneralEnum;
+import com.pinde.core.commom.enums.GeneralEnum;
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.EnumUtil;
-import com.pinde.sci.model.mo.SysDict;
 
 import java.util.List;
 import java.util.Map;

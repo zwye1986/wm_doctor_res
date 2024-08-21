@@ -1,7 +1,5 @@
 package com.pinde.sci.model.osca;
 
-import com.pinde.sci.form.res.ResAssessCfgItemForm;
-
 import java.io.Serializable;
 import java.util.List;
 

@@ -2,6 +2,7 @@ package com.pinde.res.ctrl.hbres;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.commom.enums.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -14,13 +15,6 @@ import com.pinde.res.biz.jswjw.IJswjwStudentBiz;
 import com.pinde.res.biz.jswjw.ISchExamCfgBiz;
 import com.pinde.res.biz.jswjw.ISchExamScoreQueryBiz;
 import com.pinde.res.biz.stdp.*;
-import com.pinde.res.enums.hbres.AfterRecTypeEnum;
-import com.pinde.res.enums.hbres.RotationStatusEnum;
-import com.pinde.res.enums.hbres.SchUnitEnum;
-import com.pinde.res.enums.hbres.TrainYearEnum;
-import com.pinde.res.enums.stdp.PreRecTypeEnum;
-import com.pinde.res.enums.stdp.ResScoreTypeEnum;
-import com.pinde.res.enums.stdp.ResultEnum;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -149,10 +143,6 @@ public class HbresStudentController{
 			deptName = searchMap.get("deptName");
 		}
 		
-//		if(StringUtil.isBlank(statusId)){
-//			statusId = DeptStatusEnum.Entering.getId();
-//		}
-		
 		//组织查询条件
 		Map<String,Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("doctorFlow",userFlow);
@@ -227,9 +217,6 @@ public class HbresStudentController{
 					String isCurrentFlag = (String)map.get("isCurrentFlag");
 					String schFlag = (String)map.get("schFlag");
 					if(!GlobalConstant.FLAG_Y.equals(isCurrentFlag) && !GlobalConstant.FLAG_Y.equals(schFlag)){
-						String currDate = DateUtil.getCurrDate();
-						String schStartDate = (String) map.get("schStartDate");
-//					if(StringUtil.isNotBlank(schStartDate) && currDate.compareTo(schStartDate)>=0){
 						if(RotationStatusEnum.Rounding.getId().equals(rotationStatus)){
 							String processFlow = (String)map.get("processFlow");
 							ResDoctorSchProcess process = new ResDoctorSchProcess();

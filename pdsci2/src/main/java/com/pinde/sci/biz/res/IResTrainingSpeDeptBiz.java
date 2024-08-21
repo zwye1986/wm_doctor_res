@@ -1,8 +1,6 @@
 package com.pinde.sci.biz.res;
 
 import com.pinde.sci.model.mo.ResTrainingSpeDept;
-import com.pinde.sci.model.mo.TjDocinfo;
-import com.pinde.sci.model.res.TjDocinfoExt;
 
 import java.util.List;
 

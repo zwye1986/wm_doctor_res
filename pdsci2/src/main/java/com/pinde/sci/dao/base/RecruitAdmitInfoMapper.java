@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.RecruitAdmitInfo;
 import com.pinde.sci.model.mo.RecruitAdmitInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface RecruitAdmitInfoMapper {
     int countByExample(RecruitAdmitInfoExample example);

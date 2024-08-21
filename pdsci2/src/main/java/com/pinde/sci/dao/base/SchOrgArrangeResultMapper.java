@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.SchOrgArrangeResult;
 import com.pinde.sci.model.mo.SchOrgArrangeResultExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SchOrgArrangeResultMapper {
     int countByExample(SchOrgArrangeResultExample example);

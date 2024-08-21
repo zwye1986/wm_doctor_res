@@ -3,7 +3,9 @@ package com.pinde.res.ctrl.jszy;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.commom.GeneralEnum;
+import com.pinde.core.commom.enums.GeneralEnum;
+import com.pinde.core.commom.enums.ResAssessTypeEnum;
+import com.pinde.core.commom.enums.ResRecTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -16,9 +18,7 @@ import com.pinde.res.biz.stdp.IResActivityBiz;
 import com.pinde.res.biz.stdp.IResActivityTargetBiz;
 import com.pinde.res.biz.stdp.IResSchProcessExpressBiz;
 import com.pinde.res.ctrl.jswjw.ActivityImageFileForm;
-import com.pinde.res.enums.jszy.ResAssessTypeEnum;
-import com.pinde.res.enums.jszy.ResRecTypeEnum;
-import com.pinde.res.enums.stdp.RegistryTypeEnum;
+import com.pinde.core.commom.enums.RegistryTypeEnum;
 import com.pinde.sci.model.mo.*;
 
 import com.pinde.sci.util.PasswordHelper;
@@ -307,13 +307,11 @@ public class JszyTeacherController{
                     String flag = jszyAppBiz.getCfgByCode(code);
                     if(GlobalConstant.FLAG_Y.equals(flag)){
                         enumList.add(ResRecTypeEnum.MonthlyAssessment_clinic);
-                       // typeId.add(ResRecTypeEnum.MonthlyAssessment_clinic.getId());
                     }
                     code=  "res_"+ResRecTypeEnum.MonthlyAssessment_inpatientArea.getId()+"_form_flag";
                     flag = jszyAppBiz.getCfgByCode(code);
                     if(GlobalConstant.FLAG_Y.equals(flag)){
                         enumList.add(ResRecTypeEnum.MonthlyAssessment_inpatientArea);
-                       // typeId.add(ResRecTypeEnum.MonthlyAssessment_inpatientArea.getId());
                     }
                 }
             }
@@ -397,33 +395,6 @@ public class JszyTeacherController{
                     j++;
                     resRecCountMap.put(k2,j);
                 }
-//                if (ResRecTypeEnum.AfterEvaluation.getId().equals(resRec.getRecTypeId())) {
-//                    String dopsKey=map.get("processFlow")+"AfterEvaluation";
-//                    resRecMap.put(dopsKey,resRec);
-//                }
-//                if (ResRecTypeEnum.DOPS.getId().equals(resRec.getRecTypeId())) {
-//                    String dopsKey=map.get("processFlow")+"DOPS";
-//                    resRecMap.put(dopsKey,resRec);
-//                }
-//                if (ResRecTypeEnum.AfterSummary.getId().equals(resRec.getRecTypeId())) {
-//                    String dopsKey=map.get("processFlow")+"AfterSummary";
-//                    resRecMap.put(dopsKey,resRec);
-//                }
-//                if (ResRecTypeEnum.Mini_CEX.getId().equals(resRec.getRecTypeId())) {
-//                    String miniKey=map.get("processFlow")+"Mini_CEX";
-//                    resRecMap.put(miniKey,resRec);
-//                }
-//                //老师所属基地开通月度考核表功能
-//                if(GlobalConstant.FLAG_Y.equals(isAppFlag)) {
-//                    if (ResRecTypeEnum.MonthlyAssessment_clinic.getId().equals(resRec.getRecTypeId())) {
-//                        String miniKey=map.get("processFlow")+"MonthlyAssessment_clinic";
-//                        resRecMap.put(miniKey,resRec);
-//                    }
-//                    if (ResRecTypeEnum.MonthlyAssessment_inpatientArea.getId().equals(resRec.getRecTypeId())) {
-//                        String miniKey=map.get("processFlow")+"MonthlyAssessment_inpatientArea";
-//                        resRecMap.put(miniKey,resRec);
-//                    }
-//                }
             }
 
             List<String> recTypeIds=new ArrayList<>();
@@ -824,24 +795,12 @@ public class JszyTeacherController{
             case "disease":
                 recTypeId = ResRecTypeEnum.DiseaseRegistry.getId();
                 break;
-//            case "skill":
-//                recTypeId = ResRecTypeEnum.SkillRegistry.getId();
-//                break;
-//            case "operation":
-//                recTypeId = ResRecTypeEnum.OperationRegistry.getId();
-//                break;
             case "activity":
                 recTypeId = ResRecTypeEnum.CampaignNoItemRegistry.getId();
                 break;
             case "afterSum":
                 recTypeId = ResRecTypeEnum.AfterSummary.getId();
                 break;
-//            case "dops":
-//                recTypeId = ResRecTypeEnum.DOPS.getId();
-//                break;
-//            case "miniCex":
-//                recTypeId = ResRecTypeEnum.Mini_CEX.getId();
-//                break;
             case "afterEva":
                 recTypeId = ResRecTypeEnum.AfterEvaluation.getId();
                 break;

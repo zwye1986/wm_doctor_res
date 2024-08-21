@@ -1,6 +1,5 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IFileBiz;

@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.SysWsConfig;
 import com.pinde.sci.model.mo.SysWsConfigExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysWsConfigMapper {
     int countByExample(SysWsConfigExample example);

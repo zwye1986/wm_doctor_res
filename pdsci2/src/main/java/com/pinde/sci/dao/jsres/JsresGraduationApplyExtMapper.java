@@ -1,9 +1,6 @@
 package com.pinde.sci.dao.jsres;
 
-import com.pinde.sci.model.mo.JsresGraduationApply;
 import com.pinde.sci.model.mo.JsresGraduationInfo;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;

@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.StuFurtherStudyRegist;
 import com.pinde.sci.model.mo.StuFurtherStudyRegistExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface StuFurtherStudyRegistMapper {
     int countByExample(StuFurtherStudyRegistExample example);

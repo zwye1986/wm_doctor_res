@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.SysUserDept;
 import com.pinde.sci.model.mo.SysUserDeptExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysUserDeptMapper {
     int countByExample(SysUserDeptExample example);

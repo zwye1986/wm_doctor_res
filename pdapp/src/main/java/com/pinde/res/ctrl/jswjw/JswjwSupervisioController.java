@@ -9,7 +9,7 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.*;
 import com.pinde.res.dao.jswjw.ext.HospitalSupervisioExtMapper;
-import com.pinde.res.enums.stdp.UserStatusEnum;
+import com.pinde.core.commom.enums.UserStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.util.PasswordHelper;
 import org.slf4j.Logger;

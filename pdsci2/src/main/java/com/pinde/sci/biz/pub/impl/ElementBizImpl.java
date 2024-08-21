@@ -6,7 +6,6 @@ import com.pinde.sci.biz.pub.IAttributeBiz;
 import com.pinde.sci.biz.pub.IElementBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.ctrl.pub.ModuleController;
 import com.pinde.sci.dao.base.PubAttributeMapper;
 import com.pinde.sci.dao.base.PubElementMapper;
 import com.pinde.sci.enums.edc.AttrDataTypeEnum;
@@ -15,8 +14,6 @@ import com.pinde.sci.model.mo.PubAttrCode;
 import com.pinde.sci.model.mo.PubAttribute;
 import com.pinde.sci.model.mo.PubElement;
 import com.pinde.sci.model.mo.PubElementExample;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +28,7 @@ import java.util.Map;
 @Transactional(rollbackFor=Exception.class)
 public class ElementBizImpl implements IElementBiz{
 
-	private static Logger logger = LoggerFactory.getLogger(ModuleController.class);
+
 	@Autowired
 	private PubElementMapper pubElementMapper;
 	@Autowired

@@ -3,10 +3,10 @@ package com.pinde.sci.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.pinde.core.commom.enums.UserSexEnum;
 import com.pinde.core.util.StringUtil;
-import com.pinde.res.enums.pub.UserSexEnum;
-import com.pinde.res.enums.pub.WeixinStatusEnum;
-import com.pinde.res.enums.stdp.UserStatusEnum;
+import com.pinde.core.commom.enums.WeixinStatusEnum;
+import com.pinde.core.commom.enums.UserStatusEnum;
 import com.pinde.sci.model.mo.SysDept;
 import com.pinde.sci.model.mo.SysUser;
 import org.apache.commons.httpclient.HttpClient;
@@ -65,7 +65,7 @@ public class WeixinQiYeUtil {
 				  +"\"department\": ["+StringUtil.defaultIfEmpty(weiXinDeptId,"1")+"],"
 				  +"\"position\": \""+StringUtil.defaultString("")+"\","
 				  +"\"mobile\": \""+StringUtil.defaultString(user.getUserPhone())+"\",";
-				  if(StringUtil.isEquals(user.getSexId(),UserSexEnum.Man.getId())){
+				  if(StringUtil.isEquals(user.getSexId(), UserSexEnum.Man.getId())){
 					  jsonData = jsonData +"\"gender\": 0,";
 				  }else if(StringUtil.isEquals(user.getSexId(),UserSexEnum.Man.getId())){
 					  jsonData = jsonData +"\"gender\": 1,";

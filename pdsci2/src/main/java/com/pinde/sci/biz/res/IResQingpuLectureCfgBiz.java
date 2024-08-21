@@ -1,6 +1,8 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.form.res.*;
+import com.pinde.sci.form.res.QingpuLectureCfgExt;
+import com.pinde.sci.form.res.QingpuLectureCfgItemExt;
+import com.pinde.sci.form.res.QingpuLectureCfgTitleExt;
 import com.pinde.sci.model.mo.QingpuLectureEvalCfg;
 
 import java.util.List;

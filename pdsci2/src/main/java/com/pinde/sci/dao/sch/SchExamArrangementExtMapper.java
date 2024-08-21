@@ -3,8 +3,6 @@ package com.pinde.sci.dao.sch;
 
 import com.pinde.sci.model.mo.SchArrangeResult;
 import com.pinde.sci.model.mo.SchExamArrangement;
-import com.pinde.sci.model.mo.SchExamDoctorArrangement;
-import com.pinde.sci.model.res.SchArrangeResultExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -1,12 +1,12 @@
 package com.pinde.res.ctrl.hzyy;
 
 import com.pinde.app.common.NfyyGlobalConstant;
+import com.pinde.core.commom.enums.DeptStatusEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.hzyy.IHzyyAppBiz;
 import com.pinde.res.biz.hzyy.IHzyyStudentBiz;
 import com.pinde.res.biz.hzyy.IHzyyTeacherBiz;
-import com.pinde.res.enums.nfyy.DeptStatusEnum;
 import com.pinde.res.model.nfyy.mo.Activity;
 import com.pinde.res.model.nfyy.mo.Evaluation;
 import org.slf4j.Logger;

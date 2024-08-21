@@ -2,15 +2,14 @@ package com.pinde.res.biz.stdp.impl;
 
 import com.pinde.app.common.GlobalConstant;
 import com.pinde.app.common.GlobalUtil;
+import com.pinde.core.commom.enums.ResAssessTypeEnum;
+import com.pinde.core.commom.enums.ResRecTypeEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.stdp.IResGradeBiz;
 import com.pinde.res.dao.jswjw.ext.DeptTeacherGradeInfoExtMapper;
-import com.pinde.res.enums.hbres.ResAssessTypeEnum;
-import com.pinde.res.enums.hbres.ResRecTypeEnum;
-import com.pinde.res.enums.stdp.AchScoreEnum;
-import com.pinde.res.enums.stdp.RecStatusEnum;
+import com.pinde.core.commom.enums.RecStatusEnum;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.*;
@@ -344,11 +343,11 @@ public class ResGradeBizImpl implements IResGradeBiz {
         String recTypeId = "";
         String recTypeName = "";
         if("TeacherAssess".equals(assessType)){
-            recTypeId = com.pinde.res.enums.stdp.ResRecTypeEnum.TeacherGrade.getId();
-            recTypeName = com.pinde.res.enums.stdp.ResRecTypeEnum.TeacherGrade.getName();
+            recTypeId = com.pinde.core.commom.enums.ResRecTypeEnum.TeacherGrade.getId();
+            recTypeName = com.pinde.core.commom.enums.ResRecTypeEnum.TeacherGrade.getName();
         }else if("DeptAssess".equals(assessType)){
-            recTypeId = com.pinde.res.enums.stdp.ResRecTypeEnum.DeptGrade.getId();
-            recTypeName = com.pinde.res.enums.stdp.ResRecTypeEnum.DeptGrade.getName();
+            recTypeId = com.pinde.core.commom.enums.ResRecTypeEnum.DeptGrade.getId();
+            recTypeName = com.pinde.core.commom.enums.ResRecTypeEnum.DeptGrade.getName();
         }
 
         SchArrangeResult result = resultMapper.selectByPrimaryKey(subDeptFlow);
@@ -430,11 +429,11 @@ public class ResGradeBizImpl implements IResGradeBiz {
         String recTypeId = "";
         String recTypeName = "";
         if("TeacherAssess".equals(assessType)){
-            recTypeId = com.pinde.res.enums.stdp.ResRecTypeEnum.TeacherGrade.getId();
-            recTypeName = com.pinde.res.enums.stdp.ResRecTypeEnum.TeacherGrade.getName();
+            recTypeId = com.pinde.core.commom.enums.ResRecTypeEnum.TeacherGrade.getId();
+            recTypeName = com.pinde.core.commom.enums.ResRecTypeEnum.TeacherGrade.getName();
         }else if("DeptAssess".equals(assessType)){
-            recTypeId = com.pinde.res.enums.stdp.ResRecTypeEnum.DeptGrade.getId();
-            recTypeName = com.pinde.res.enums.stdp.ResRecTypeEnum.DeptGrade.getName();
+            recTypeId = com.pinde.core.commom.enums.ResRecTypeEnum.DeptGrade.getId();
+            recTypeName = com.pinde.core.commom.enums.ResRecTypeEnum.DeptGrade.getName();
         }
 
         SchArrangeResult result = resultMapper.selectByPrimaryKey(subDeptFlow);
@@ -516,20 +515,20 @@ public class ResGradeBizImpl implements IResGradeBiz {
         String recTypeId = "";
         String recTypeName = "";
         if("TeacherDoctorAssess".equals(assessType)){
-            recTypeId = com.pinde.res.enums.stdp.ResRecTypeEnum.TeacherDoctorAssess.getId();
-            recTypeName = com.pinde.res.enums.stdp.ResRecTypeEnum.TeacherDoctorAssess.getName();
+            recTypeId = com.pinde.core.commom.enums.ResRecTypeEnum.TeacherDoctorAssess.getId();
+            recTypeName = com.pinde.core.commom.enums.ResRecTypeEnum.TeacherDoctorAssess.getName();
         }else if("TeacherDoctorAssessTwo".equals(assessType)){
-            recTypeId = com.pinde.res.enums.stdp.ResRecTypeEnum.TeacherDoctorAssessTwo.getId();
-            recTypeName = com.pinde.res.enums.stdp.ResRecTypeEnum.TeacherDoctorAssessTwo.getName();
+            recTypeId = com.pinde.core.commom.enums.ResRecTypeEnum.TeacherDoctorAssessTwo.getId();
+            recTypeName = com.pinde.core.commom.enums.ResRecTypeEnum.TeacherDoctorAssessTwo.getName();
         }else if("NurseDoctorAssess".equals(assessType)){
-            recTypeId = com.pinde.res.enums.stdp.ResRecTypeEnum.NurseDoctorAssess.getId();
-            recTypeName = com.pinde.res.enums.stdp.ResRecTypeEnum.NurseDoctorAssess.getName();
+            recTypeId = com.pinde.core.commom.enums.ResRecTypeEnum.NurseDoctorAssess.getId();
+            recTypeName = com.pinde.core.commom.enums.ResRecTypeEnum.NurseDoctorAssess.getName();
         }else if("TeacherAssess".equals(assessType)){
-            recTypeId = com.pinde.res.enums.stdp.ResRecTypeEnum.TeacherAssess.getId();
-            recTypeName = com.pinde.res.enums.stdp.ResRecTypeEnum.TeacherAssess.getName();
+            recTypeId = com.pinde.core.commom.enums.ResRecTypeEnum.TeacherAssess.getId();
+            recTypeName = com.pinde.core.commom.enums.ResRecTypeEnum.TeacherAssess.getName();
         }else if("TeacherAssessTwo".equals(assessType)){
-            recTypeId = com.pinde.res.enums.stdp.ResRecTypeEnum.TeacherAssessTwo.getId();
-            recTypeName = com.pinde.res.enums.stdp.ResRecTypeEnum.TeacherAssessTwo.getName();
+            recTypeId = com.pinde.core.commom.enums.ResRecTypeEnum.TeacherAssessTwo.getId();
+            recTypeName = com.pinde.core.commom.enums.ResRecTypeEnum.TeacherAssessTwo.getName();
         }
 
         SchArrangeResult result = resultMapper.selectByPrimaryKey(resultFlow);
