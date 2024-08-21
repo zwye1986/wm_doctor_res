@@ -20,7 +20,35 @@
             }
         });
 
-        require(['echarts', 'echarts/chart/pie'], function (ec) {
+
+
+        function EvaStudent() {
+            jboxLoad("content", "<s:url value='/res/teacherEvaDoctor/manageEvaluation'/>?recTypeId=ManageDoctorAssess360&roleFlag=local&trainingTypeId=DoctorTrainingSpe&sessionNumber=${pdfn:getCurrYear()}", true);
+        }
+
+        function pjjgcx(role) {
+            var url = "<s:url value='/res/evaluateHospitalResult/base?gradeRole=doctor&role='/>" + role+"&trainingTypeId=DoctorTrainingSpe";
+            currentJboxLoadNoData("content", url, true);
+        }
+
+
+        function hsxxgl() {
+            jboxLoad("content", "<s:url value='/res/nurse/list'/>", true);
+        }
+
+        function djxxgl() {
+            jboxLoad("content", "<s:url value='/res/nurse/teachingList'/>", true);
+        }
+
+    </script>
+    <script type="text/javascript"
+            src="<s:url value='/js/jquery-select/js/jquery.select.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
+    <script type="text/javascript"
+            src="<s:url value='/js/DatePicker/WdatePicker.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
+    <script>
+        $(document).ready(function () {
+
+            require(['echarts', 'echarts/chart/pie'], function (ec) {
             var myChart = ec.init(document.getElementById('docChartForIndex'));
             option = {
                 tooltip: {
@@ -58,35 +86,9 @@
                     }
                 ]
             };
-// 为echarts对象加载数据
+            // 为echarts对象加载数据
             myChart.setOption(option);
         });
-
-        function EvaStudent() {
-            jboxLoad("content", "<s:url value='/res/teacherEvaDoctor/manageEvaluation'/>?recTypeId=ManageDoctorAssess360&roleFlag=local&trainingTypeId=DoctorTrainingSpe&sessionNumber=${pdfn:getCurrYear()}", true);
-        }
-
-        function pjjgcx(role) {
-            var url = "<s:url value='/res/evaluateHospitalResult/base?gradeRole=doctor&role='/>" + role+"&trainingTypeId=DoctorTrainingSpe";
-            currentJboxLoadNoData("content", url, true);
-        }
-
-
-        function hsxxgl() {
-            jboxLoad("content", "<s:url value='/res/nurse/list'/>", true);
-        }
-
-        function djxxgl() {
-            jboxLoad("content", "<s:url value='/res/nurse/teachingList'/>", true);
-        }
-
-    </script>
-    <script type="text/javascript"
-            src="<s:url value='/js/jquery-select/js/jquery.select.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
-    <script type="text/javascript"
-            src="<s:url value='/js/DatePicker/WdatePicker.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
-    <script>
-        $(document).ready(function () {
 //	$('#sessionNumber').datepicker({
 //		startView: 2,
 //		maxViewMode: 2,

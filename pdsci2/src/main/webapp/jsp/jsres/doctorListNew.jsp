@@ -471,21 +471,21 @@
         jboxOpen(url, "添加存档", 500, 200, true);
     }
 
-    function changeOrgCityId(obj) {
-        var data = "";
-        <c:forEach items="${jsResDocTypeEnumList}" var="type">
-        if ($("#" + "${type.id}").attr("checked")) {
-            data += "&datas=" + $("#" + "${type.id}").val();
-        }
-        </c:forEach>
-        var orgCityId = $(obj).val();
-        if (orgCityId) {
-            $("#orgFlow").val("");
-            jboxStartLoading();
-            var roleFlag = "${GlobalConstant.USER_LIST_GLOBAL}";
-            jboxPostLoad("content", "<s:url value='/jsres/doctorRecruit/provinceDoctorListNew'/>?roleFlag=" + roleFlag, $("#searchForm").serialize(), false);
-        }
-    }
+    <%--function changeOrgCityId(obj) {--%>
+    <%--    var data = "";--%>
+    <%--    <c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+    <%--    if ($("#" + "${type.id}").attr("checked")) {--%>
+    <%--        data += "&datas=" + $("#" + "${type.id}").val();--%>
+    <%--    }--%>
+    <%--    </c:forEach>--%>
+    <%--    var orgCityId = $(obj).val();--%>
+    <%--    if (orgCityId) {--%>
+    <%--        $("#orgFlow").val("");--%>
+    <%--        jboxStartLoading();--%>
+    <%--        var roleFlag = "${GlobalConstant.USER_LIST_GLOBAL}";--%>
+    <%--        jboxPostLoad("content", "<s:url value='/jsres/doctorRecruit/provinceDoctorListNew'/>?roleFlag=" + roleFlag, $("#searchForm").serialize(), false);--%>
+    <%--    }--%>
+    <%--}--%>
 
     function showSelection(flag) {
         if (flag) {

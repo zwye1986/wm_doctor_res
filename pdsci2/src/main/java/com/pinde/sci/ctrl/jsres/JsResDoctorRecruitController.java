@@ -2920,7 +2920,12 @@ public class JsResDoctorRecruitController extends GeneralController {
 		List<String>trainYearList=new ArrayList<String>();
 		//orgCityId参数2个(form和url里）
 		if(!",".equals(orgCityId)){
-			orgCityId = orgCityId.split(",")[0];
+			String[] orgCity = orgCityId.split(",");
+			if(orgCity.length>1){
+				orgCityId = orgCity[1];
+			}else{
+				orgCityId = orgCity[0];
+			}
 		}else{
 			orgCityId = "";
 		}
