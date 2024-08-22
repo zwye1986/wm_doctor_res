@@ -25,6 +25,8 @@ public class teacherRec extends MybatisObject {
     private String recFlow;
     private String operUserName;
     private String sumScore;
+    private String cfgCodeName;
+    private String totalScore;
 
     public String getSumScore() {
         return sumScore;
@@ -199,5 +201,21 @@ public class teacherRec extends MybatisObject {
 
     public void setRecFlow(String recFlow) {
         this.recFlow = recFlow;
+    }
+
+    public String getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(String totalScore) {
+        this.totalScore = totalScore;
+    }
+
+    public String getCfgCodeName() {
+        return cfgCodeName;
+    }
+
+    public void setCfgCodeName(String cfgCodeName) {
+        this.cfgCodeName = cfgCodeName;
     }
 }

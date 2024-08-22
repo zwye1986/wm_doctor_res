@@ -1,0 +1,27 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!--<includeAll path="db/changelog/" relativeToChangelogFile="false"/>-->
+
+    <changeSet id="20240710-01-zxr" author="czc">
+        <sqlFile path="db/sql/2024/daijiao360.sql"/>
+    </changeSet>
+
+    <!--<changeSet id="20240703-02" author="zxr">
+        <sql>
+            insert into pdsci.test_liquibase(id, name) values (lower(sys_guid()), 'first record');
+        </sql>
+    </changeSet>-->
+
+    <!--<changeSet id="20240703-03" author="zxr">
+        <sql>
+            insert into pdsci.test_liquibase(id, name) values (lower(sys_guid()), 'second record');
+        </sql>
+    </changeSet>-->
+
+</databaseChangeLog>
+

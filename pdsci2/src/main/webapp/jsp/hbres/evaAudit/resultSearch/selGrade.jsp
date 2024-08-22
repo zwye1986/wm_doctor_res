@@ -42,7 +42,12 @@
 			    jboxTip("请选择评估表单！");
 			    return false;
 			}
-			top.grade(recTypeId, null, null, processFlow);
+			if(recTypeId == 'TeacherAssess'){
+				top.newGrade(recTypeId, null, null, processFlow);
+			}else{
+				top.grade(recTypeId, null, null, processFlow);
+			}
+			// top.grade(recTypeId, null, null, processFlow);
 			top.jboxCloseMessager();
 		}
 
