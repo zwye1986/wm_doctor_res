@@ -36,7 +36,7 @@
 </style>
 <div class="div_table">
 	<h4>轮转科室</h4>
-	请务必按照《住院医师规范化培训基地认定标准（试行）》各专业基地细则要求的必选、可选轮转科室排序如实填写。
+	请务必按照《住院医师规范化培训基地评估指标》各专业基地细则要求的必选、可选轮转科室排序如实填写。
 	<div
 			<c:if test="${isJoin eq 'Y'}"> style="position: relative;overflow-y: auto;margin-top: 10px;" </c:if>
 			<c:if test="${isglobal eq 'Y'}"> style="position: relative;overflow-y: auto;margin-top: 10px;" </c:if>
