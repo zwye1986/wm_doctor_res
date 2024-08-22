@@ -357,6 +357,9 @@
         on rd.doctor_flow=dtgi.oper_user_flow
         where dtgi.record_status = 'Y'
         and rd.record_status='Y'
+        <if test='cfgFlow!=null and cfgFlow!=""'>
+            and dtgi.CFG_FLOW = #{cfgFlow}
+        </if>
         <if test="sessionNumber!=null and sessionNumber!=''">
             and rd.SESSION_NUMBER=#{sessionNumber}
         </if>
@@ -1152,6 +1155,8 @@
         <result column="CFG_FLOW" property="cfgFlow" jdbcType="VARCHAR" />
         <result column="rec_type_id" property="recTypeId" jdbcType="VARCHAR" />
         <result column="rec_flow" property="recFlow" jdbcType="VARCHAR" />
+        <result column="CFG_CODE_NAME" property="cfgCodeName" jdbcType="VARCHAR" />
+        <result column="TOTAL_SCORE" property="totalScore" jdbcType="VARCHAR" />
     </resultMap>
     <select id="getDoctorByRecAndAvgScore" resultMap="teacherRecMap">
         SELECT
@@ -1222,10 +1227,11 @@
         order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
     </select>
     <select id="getUserByRecAndAvgScore" resultMap="teacherRecMap">
-        SELECT ROUND(avg(dtgi.all_score),1) avg,substr(dtgi.CREATE_TIME,1,4) CREATE_YEAR,su.user_name, su.user_Flow, su.user_code, su.dept_flow, su.dept_name,dtgi.CFG_FLOW
+        SELECT ROUND(avg(dtgi.all_score),1) avg,substr(dtgi.CREATE_TIME,1,4) CREATE_YEAR,su.user_name, su.user_Flow, su.user_code, su.dept_flow, su.dept_name,dtgi.CFG_FLOW,cfg.CFG_CODE_NAME,cfg.TOTAL_SCORE
         FROM pdsci.res_doctor_sch_process rdsp
         JOIN pdsci.DEPT_TEACHER_GRADE_INFO dtgi ON rdsp.process_flow = dtgi.process_flow
         JOIN sys_User su ON rdsp.teacher_user_flow = su.user_Flow
+        inner join RES_ASSESS_CFG cfg on dtgi.CFG_FLOW = cfg.CFG_FLOW and cfg.record_status = 'Y' and cfg.FORM_STATUS_ID = 'Y'
         WHERE rdsp.record_status = 'Y'
         AND dtgi.record_status = 'Y'
         AND su.record_status = 'Y'
@@ -1266,7 +1272,7 @@
                 #{item}
             </foreach>
         </if>
-        group by substr(dtgi.CREATE_TIME,1,4),su.user_name, su.user_Flow, su.user_code,su.dept_flow, su.dept_name,dtgi.CFG_FLOW
+        group by substr(dtgi.CREATE_TIME,1,4),su.user_name, su.user_Flow, su.user_code,su.dept_flow, su.dept_name,dtgi.CFG_FLOW,cfg.CFG_CODE_NAME,cfg.TOTAL_SCORE
         <if test='startScore!=null and startScore!=""and endScore!= null and endScore!=""'>
             having avg(dtgi.all_score) <![CDATA[<=]]> #{endScore} and avg(dtgi.all_score) <![CDATA[>=]]> #{startScore}
         </if>
@@ -1279,10 +1285,11 @@
         order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M'),su.user_code
     </select>
     <select id="getUserByRecAndAvgScore2" resultMap="teacherRecMap">
-        SELECT ROUND(avg(dtgi.all_score),1) avg,substr(dtgi.CREATE_TIME,1,4) CREATE_YEAR,su.user_name, su.user_Flow, su.user_code,rdsp.dept_flow, rdsp.dept_name,dtgi.CFG_FLOW
+        SELECT ROUND(avg(dtgi.all_score),1) avg,substr(dtgi.CREATE_TIME,1,4) CREATE_YEAR,su.user_name, su.user_Flow, su.user_code,rdsp.dept_flow, rdsp.dept_name,dtgi.CFG_FLOW,cfg.CFG_CODE_NAME,cfg.TOTAL_SCORE
         FROM pdsci.res_doctor_sch_process rdsp
         JOIN pdsci.DEPT_TEACHER_GRADE_INFO dtgi ON rdsp.process_flow = dtgi.process_flow
         JOIN sys_User su ON rdsp.teacher_user_flow = su.user_Flow
+        inner join RES_ASSESS_CFG cfg on dtgi.CFG_FLOW = cfg.CFG_FLOW and cfg.record_status = 'Y' and cfg.FORM_STATUS_ID = 'Y'
         WHERE rdsp.record_status = 'Y'
         AND dtgi.record_status = 'Y'
         AND su.record_status = 'Y'
@@ -1323,7 +1330,7 @@
                 #{item}
             </foreach>
         </if>
-        group by substr(dtgi.CREATE_TIME,1,4),su.user_name, su.user_Flow, su.user_code,rdsp.dept_flow, rdsp.dept_name,dtgi.CFG_FLOW
+        group by substr(dtgi.CREATE_TIME,1,4),su.user_name, su.user_Flow, su.user_code,rdsp.dept_flow, rdsp.dept_name,dtgi.CFG_FLOW,cfg.CFG_CODE_NAME,cfg.TOTAL_SCORE
         <if test='startScore!=null and startScore!=""and endScore!= null and endScore!=""'>
             having avg(dtgi.all_score) <![CDATA[<=]]> #{endScore} and avg(dtgi.all_score) <![CDATA[>=]]> #{startScore}
         </if>
@@ -1411,6 +1418,9 @@
         on rd.doctor_flow=rdsp.user_flow
         where dtgi.record_status = 'Y'
         and rd.record_status='Y'
+        <if test='cfgFlow!=null and cfgFlow!=""'>
+            and dtgi.CFG_FLOW = #{cfgFlow}
+        </if>
         <if test="sessionNumber!=null and sessionNumber!=''">
             and substr(dtgi.CREATE_TIME,1,4) = #{sessionNumber}
         </if>

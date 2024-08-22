@@ -1,0 +1,3 @@
+update PDSCI.RES_ASSESS_CFG set TOTAL_SCORE = '55' where CFG_FLOW = 'f38b2734220c4b659ddb85f9b99b82ce';
+update PDSCI.RES_ASSESS_CFG set TOTAL_SCORE = '50' where CFG_FLOW = '0ddacbf047fc4beb9b9d94246237cbe3';
+commit;
