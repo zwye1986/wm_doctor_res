@@ -69,10 +69,10 @@
                     <td>
                         <c:if test="${s.baseAudit eq 'Passing'}">
 <%--                            <img src="<s:url value='/css/skin/${skinPath}/images/unchecked.png'/>"/>--%>
-                            <input type="button" class="btn_green" onclick="toSchedulingAudit('${s.resultFlow}');" value="审&#12288;核"/>
+                            <a  onclick="toSchedulingAudit('${s.resultFlow}');" >审&#12288;核</a>
                         </c:if>
                         <c:if test="${s.baseAudit ne 'Passing'}">
-                            <input type="button" class="btn_green" onclick="" value="查&#12288;看"/>
+                            <a  onclick="" >查&#12288;看</a>
                         </c:if>
                     </td>
                 </tr>
