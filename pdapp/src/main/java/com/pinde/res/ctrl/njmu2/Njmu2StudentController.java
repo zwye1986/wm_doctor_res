@@ -1,10 +1,8 @@
 package com.pinde.res.ctrl.njmu2;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.pinde.core.commom.enums.SchUnitEnum;
 import com.pinde.core.util.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,12 +27,9 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.njmu2.impl.Njmu2AppBizImpl;
 import com.pinde.res.biz.njmu2.impl.Njmu2StudentBizImpl;
-import com.pinde.res.enums.njmu2.SchUnitEnum;
-import com.pinde.res.enums.stdp.ResultEnum;
+import com.pinde.core.commom.enums.ResultEnum;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.ResSignin;
-import com.pinde.sci.model.mo.SchArrangeResult;
-import com.pinde.sci.model.mo.SysCfg;
 
 @Controller
 @RequestMapping("/res/njmu2/student")
@@ -108,10 +104,6 @@ public class Njmu2StudentController{
 			deptName = searchMap.get("deptName");
 		}
 		
-//		if(StringUtil.isBlank(statusId)){
-//			statusId = DeptStatusEnum.Entering.getId();
-//		}
-		
 		//组织查询条件
 		Map<String,Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("doctorFlow",userFlow);
@@ -148,7 +140,7 @@ public class Njmu2StudentController{
 				
 				BigDecimal realMonth = BigDecimal.valueOf(0);
 				if(StringUtil.isNotBlank(startDate)){
-					if (com.pinde.res.enums.hbres.SchUnitEnum.Week.getId().equals(unit)) {
+					if (SchUnitEnum.Week.getId().equals(unit)) {
 						//如果是周按7天算/没配置或者选择月按30天
 						step = 7;
 						long realDays = DateUtil.signDaysBetweenTowDate(endDate,startDate)+1;

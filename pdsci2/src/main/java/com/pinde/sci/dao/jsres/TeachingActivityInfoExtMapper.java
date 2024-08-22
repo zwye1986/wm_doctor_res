@@ -1,6 +1,5 @@
 package com.pinde.sci.dao.jsres;
 
-import com.pinde.sci.model.mo.ResTrainingSpeDept;
 import com.pinde.sci.model.mo.TeachingActivityEval;
 import com.pinde.sci.model.mo.TeachingActivityInfo;
 import org.apache.ibatis.annotations.Param;

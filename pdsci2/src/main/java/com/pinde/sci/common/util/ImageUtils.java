@@ -1,13 +1,5 @@
 package com.pinde.sci.common.util;
 
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
 public class ImageUtils {
 //	public final static void pressImage(String pressImg, String targetImg,
 //            int x, int y) {

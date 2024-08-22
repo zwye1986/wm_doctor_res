@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.RecruitExamTeacher;
 import com.pinde.sci.model.mo.RecruitExamTeacherExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface RecruitExamTeacherMapper {
     int countByExample(RecruitExamTeacherExample example);

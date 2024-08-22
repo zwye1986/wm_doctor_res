@@ -7,7 +7,10 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyDoctorAuthBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.res.*;
-import com.pinde.sci.biz.sch.*;
+import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
+import com.pinde.sci.biz.sch.ISchDeptBiz;
+import com.pinde.sci.biz.sch.ISchDoctorAbsenceBiz;
+import com.pinde.sci.biz.sch.ISchRotationDeptBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.*;
 import com.pinde.sci.dao.base.ResScoreMapper;
@@ -44,7 +47,7 @@ import java.text.MessageFormat;
 import java.util.*;
 import java.util.Map.Entry;
 @Controller
-@RequestMapping("/res/rec")
+@RequestMapping("/z")
 public class ResRecController extends GeneralController {
 	final static String JXCF = "1";
 	final static String YN = "2";

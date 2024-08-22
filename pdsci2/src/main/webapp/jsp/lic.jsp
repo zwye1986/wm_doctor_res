@@ -2,23 +2,9 @@
 <%@include file="/jsp/common/doctype.jsp" %>
 <html>
 <head>
-<jsp:include page="/jsp/common/htmlhead.jsp">
+<jsp:include page="/jsp/common/htmlhead.jsp" flush="true">
 	<jsp:param name="basic" value="true"/>
 	<jsp:param name="jbox" value="true"/>
-	<jsp:param name="jquery_form" value="true"/>
-	<jsp:param name="jquery_ui_tooltip" value="true"/>
-	<jsp:param name="jquery_ui_combobox" value="true"/>
-	<jsp:param name="jquery_ui_sortable" value="true"/>
-	<jsp:param name="jquery_cxselect" value="true"/>
-	<jsp:param name="jquery_scrollTo" value="true"/>
-	<jsp:param name="jquery_jcallout" value="true"/>
-	<jsp:param name="jquery_validation" value="true"/>
-	<jsp:param name="jquery_datePicker" value="true"/>
-	<jsp:param name="jquery_fullcalendar" value="true"/>
-	<jsp:param name="jquery_fngantt" value="true"/>
-	<jsp:param name="jquery_fixedtableheader" value="true"/>
-	<jsp:param name="jquery_placeholder" value="true"/>
-	<jsp:param name="jquery_iealert" value="true"/>
 </jsp:include>
 <script type="text/javascript">
 function upload() {

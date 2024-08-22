@@ -1,7 +1,5 @@
 package com.pinde.sci.model.jsres;
 
-import java.util.List;
-
 /**
  * 基地--------学员轮转异常统计
  */

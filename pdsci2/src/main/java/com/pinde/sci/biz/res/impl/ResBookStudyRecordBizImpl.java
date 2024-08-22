@@ -3,22 +3,16 @@ package com.pinde.sci.biz.res.impl;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResBookStudyRecordBiz;
-import com.pinde.sci.biz.res.IResDiscipleInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResBookStudyRecordMapper;
-import com.pinde.sci.dao.base.ResDiscipleInfoMapper;
-import com.pinde.sci.dao.res.ResDiscipleInfoExtMapper;
 import com.pinde.sci.model.mo.ResBookStudyRecord;
 import com.pinde.sci.model.mo.ResBookStudyRecordExample;
-import com.pinde.sci.model.mo.ResDiscipleInfo;
-import com.pinde.sci.model.mo.ResDiscipleInfoExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2016/10/11.

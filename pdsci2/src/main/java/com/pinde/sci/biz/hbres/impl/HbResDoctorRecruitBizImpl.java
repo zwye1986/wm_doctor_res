@@ -1,11 +1,12 @@
 package com.pinde.sci.biz.hbres.impl;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.hbres.IHbResDoctorRecruitBiz;
-import com.pinde.sci.biz.res.IRecruitCfgBiz;
 import com.pinde.sci.biz.pub.IMsgBiz;
+import com.pinde.sci.biz.res.IRecruitCfgBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.res.IResOrgSpeAssignBiz;

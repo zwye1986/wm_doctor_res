@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.hbres;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.sci.form.hbres.ResDoctorTrainingSpeForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;

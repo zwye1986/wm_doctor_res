@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.PubTrainUser;
 import com.pinde.sci.model.mo.PubTrainUserExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface PubTrainUserMapper {
     int countByExample(PubTrainUserExample example);

@@ -1,6 +1,6 @@
 package com.pinde.sci.enums.res;
 
-import com.pinde.core.commom.GeneralEnum;
+import com.pinde.core.commom.enums.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
 public enum ExamTypeEnum implements GeneralEnum<String> {

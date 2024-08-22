@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.hbres.impl;
 
 import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.FtpHelperUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.hbres.IHbResGraduationApplyBiz;
@@ -20,10 +19,7 @@ import com.pinde.sci.dao.hbres.HbresGraduationApplyExtMapper;
 import com.pinde.sci.dao.hbres.HbresTempMapper;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
-import org.dom4j.Document;
 import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +28,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.*;
 

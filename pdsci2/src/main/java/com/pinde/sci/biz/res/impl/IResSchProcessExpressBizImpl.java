@@ -22,7 +22,7 @@ import com.pinde.sci.enums.res.RecStatusEnum;
 import com.pinde.sci.enums.res.ResRecTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

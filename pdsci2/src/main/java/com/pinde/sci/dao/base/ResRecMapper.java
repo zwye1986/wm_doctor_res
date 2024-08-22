@@ -2,10 +2,10 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResRec;
 import com.pinde.sci.model.mo.ResRecExample;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
 
 public interface ResRecMapper {
     int countByExample(ResRecExample example);

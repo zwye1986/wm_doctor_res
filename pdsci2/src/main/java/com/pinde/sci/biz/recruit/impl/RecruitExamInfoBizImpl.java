@@ -11,7 +11,6 @@ import com.pinde.sci.dao.base.RecruitExamInfoMapper;
 import com.pinde.sci.dao.recruit.RecruitExamInfoExtMapper;
 import com.pinde.sci.model.mo.RecruitExamInfo;
 import com.pinde.sci.model.mo.RecruitExamInfoExample;
-import com.pinde.sci.model.mo.RecruitInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

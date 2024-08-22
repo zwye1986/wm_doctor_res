@@ -1,7 +1,6 @@
 package com.pinde.res.biz.hzyy.impl;
 
 import com.pinde.res.biz.hzyy.IHzyyDoctorBiz;
-import com.pinde.res.biz.nfyy.INfyyDoctorBiz;
 import com.pinde.res.dao.nfyy.ext.NfyyDoctorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

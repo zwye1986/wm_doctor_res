@@ -1,6 +1,9 @@
 package com.pinde.sci.form.jsres;
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResDoctorLog;
+import com.pinde.sci.model.mo.ResDoctorRecruitLog;
+import com.pinde.sci.model.mo.ResUserResumeLog;
+import com.pinde.sci.model.mo.SysUserLog;
 
 import java.io.Serializable;
 

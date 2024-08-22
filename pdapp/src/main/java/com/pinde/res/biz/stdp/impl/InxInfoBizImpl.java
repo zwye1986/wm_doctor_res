@@ -5,7 +5,7 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.stdp.IInxInfoBiz;
-import com.pinde.res.enums.stdp.InfoStatusEnum;
+import com.pinde.core.commom.enums.InfoStatusEnum;
 import com.pinde.res.model.stdp.mo.InxInfoForm;
 import com.pinde.sci.dao.base.InxColumnMapper;
 import com.pinde.sci.dao.base.InxInfoMapper;

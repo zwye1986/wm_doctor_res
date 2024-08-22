@@ -5,13 +5,10 @@ import com.pinde.app.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IJswjwAdminBiz;
-import com.pinde.res.biz.jswjw.IJswjwKzrBiz;
 import com.pinde.res.biz.stdp.IResErrorSchNoticeBiz;
-import com.pinde.res.biz.stdp.impl.ResErrorSchNoticeBizImpl;
 import com.pinde.res.dao.jswjw.ext.*;
-import com.pinde.res.dao.stdp.ext.StdpResDoctorExtMapper;
 import com.pinde.res.enums.lcjn.DictTypeEnum;
-import com.pinde.res.enums.stdp.NoticeStatusEnum;
+import com.pinde.core.commom.enums.NoticeStatusEnum;
 import com.pinde.res.model.jswjw.mo.JsResDoctorOrgHistoryExt;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
@@ -21,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

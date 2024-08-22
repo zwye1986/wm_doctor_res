@@ -1,7 +1,6 @@
 package com.pinde.sci.dao.osca;
 
 import com.pinde.sci.model.mo.PubFile;
-import com.pinde.sci.model.njmuedu.EduAnswerExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

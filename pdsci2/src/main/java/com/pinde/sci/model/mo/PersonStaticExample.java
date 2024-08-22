@@ -1,9 +1,5 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
-
-import java.util.List;
-
 public class PersonStaticExample extends SysOrg {
 
     //年级

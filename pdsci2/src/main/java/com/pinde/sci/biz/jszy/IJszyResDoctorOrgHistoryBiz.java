@@ -4,7 +4,6 @@ import com.pinde.sci.model.jszy.JszyResDoctorOrgHistoryExt;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorOrgHistory;
 import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

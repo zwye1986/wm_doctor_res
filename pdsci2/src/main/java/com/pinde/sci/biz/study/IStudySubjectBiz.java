@@ -1,6 +1,5 @@
 package com.pinde.sci.biz.study;
 
-import com.pinde.sci.model.mo.StudyDoctor;
 import com.pinde.sci.model.mo.StudySubject;
 import com.pinde.sci.model.mo.StudySubjectDetail;
 

@@ -1,30 +1,25 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.impl.ResPersonnelChangeReportImpl;
 import com.pinde.sci.biz.res.impl.ResPersonnelStatisticsImpl;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.DateUtil;
 import com.pinde.sci.dao.base.PersonnelCollaborativeBaseMapper;
-import com.pinde.sci.dao.base.PersonnelStatisticsMapper;
-import com.pinde.sci.job.LocalSchdualJob;
 import com.pinde.sci.model.mo.PersonnelChangeReport;
 import com.pinde.sci.model.mo.PersonnelStatisticsByName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.spel.ast.Selection;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/jsres/personnelStatistics")

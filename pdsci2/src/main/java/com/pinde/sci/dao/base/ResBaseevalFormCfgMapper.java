@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResBaseevalFormCfg;
 import com.pinde.sci.model.mo.ResBaseevalFormCfgExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResBaseevalFormCfgMapper {
     int countByExample(ResBaseevalFormCfgExample example);

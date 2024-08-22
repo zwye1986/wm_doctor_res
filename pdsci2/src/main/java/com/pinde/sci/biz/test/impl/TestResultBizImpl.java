@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-//import com.pinde.sci.biz.edu.IEduCourseTestPaperBiz;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -23,62 +22,6 @@ public class TestResultBizImpl implements ITestResultBiz{
     
 	@Autowired
 	private TestResultMapper testResultMapper;
-//	@Autowired
-//	private TestResultExtMapper testResultExtMapper;
-//	@Autowired
-//    private IEduCourseTestPaperBiz eduCourseTestPaperBiz;
-
-
-//	@Override
-//	public List<TestResult> searchTestResultList(TestResult testResult) {
-//		TestResultExample example=new TestResultExample();
-//		Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-//
-//		if(testResult!=null){
-//			if(StringUtil.isNotBlank(testResult.getPaperFlow())){
-//				criteria.andPaperFlowEqualTo(testResult.getPaperFlow());
-//			}
-//			if(StringUtil.isNotBlank(testResult.getUserFlow())){
-//				criteria.andUserFlowEqualTo(testResult.getUserFlow());
-//			}
-//			if(StringUtil.isNotBlank(testResult.getUserName())){
-//				criteria.andUserNameEqualTo(testResult.getUserName());
-//			}
-//			if(StringUtil.isNotBlank(testResult.getPassFlag())){
-//				criteria.andPassFlagEqualTo(testResult.getPassFlag());
-//			}
-//		}
-//		return testResultMapper.selectByExample(example);
-//	}
-
-//	@Override
-//	public List<TestResultExt> reasonTestreRultChaTestPaper(String courseFlow,String userFlow,TestResultForm testResult){
-//		Map<String,Object> map=new HashMap<String, Object>();
-//		if (StringUtil.isNotBlank(courseFlow)) {
-//			map.put("courseFlow", courseFlow);
-//		}
-//		if (StringUtil.isNotBlank(userFlow)) {
-//			map.put("userFlow",userFlow);
-//		}
-//
-//		if (testResult!=null) {
-//			map.put("testResult",testResult);
-//		}
-//
-//		return testResultExtMapper.searchTestResultExtList(map);
-//
-//	}
-	/**
-	 * 根据userFlow查询考试成绩信息
-	 * @param userFlow
-	 * @return
-	 */
-//	@Override
-//	public List<TestResult> searchResultByUserFlow(String userFlow){
-//		TestResultExample example = new TestResultExample();
-//		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(userFlow);
-//		return testResultMapper.selectByExample(example);
-//	}
 	/**
 	 * 编辑考试成绩
 	 * @param result
@@ -95,24 +38,6 @@ public class TestResultBizImpl implements ITestResultBiz{
 			return testResultMapper.insertSelective(result);
 			}
 	}
-
-//	/**
-//	 * 保存
-//	 * @param testResult
-//	 * @return
-//	 */
-//	@Override
-//	public int saveTestResultList(List<TestResult> testResult){
-//		for(TestResult tr:testResult){
-//			if(StringUtil.isNotBlank(tr.getTestTypeId())){
-//				tr.setTestTypeName(DictTypeEnum.TestType.getDictNameById(tr.getTestTypeId()));
-//			}else{
-//				tr.setTestTypeName("");
-//			}
-//			edit(tr);
-//		}
-//		return GlobalConstant.ONE_LINE;
-//	}
 
 
 	@Override
@@ -133,20 +58,5 @@ public class TestResultBizImpl implements ITestResultBiz{
 		}
 		return testResultMapper.selectByExample(example);
 	}
-
-//	@Override
-//	public List<TestResult> searchPassResult(String userFlow, String chapterFlow) {
-//		EduCourseTestPaper eduCourseTestPaper=new EduCourseTestPaper();
-//		eduCourseTestPaper.setChapterFlow(chapterFlow);
-//		List<EduCourseTestPaper> courseTestPaperList=this.eduCourseTestPaperBiz.searchCourseTestPaperList(eduCourseTestPaper);
-//		if(courseTestPaperList!=null && !courseTestPaperList.isEmpty()){
-//			EduCourseTestPaper courseTestPaper=courseTestPaperList.get(0);
-//			TestResult testResult=new TestResult();
-//			testResult.setPaperFlow(courseTestPaper.getPaperFlow());
-//			testResult.setPassFlag(GlobalConstant.FLAG_Y);
-//			return searchTestResultList(testResult);
-//	    }
-//		return null;
-//	}
 
 }

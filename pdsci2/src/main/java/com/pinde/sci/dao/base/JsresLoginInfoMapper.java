@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.JsresLoginInfo;
 import com.pinde.sci.model.mo.JsresLoginInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface JsresLoginInfoMapper {
     int countByExample(JsresLoginInfoExample example);

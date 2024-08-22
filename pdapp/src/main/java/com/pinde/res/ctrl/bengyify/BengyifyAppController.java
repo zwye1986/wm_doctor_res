@@ -23,7 +23,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.bengyify.IBengyifyAppBiz;
 import com.pinde.res.biz.bengyify.IBengyifyStudentBiz;
 import com.pinde.res.biz.bengyify.IBengyifyTeacherBiz;
-import com.pinde.res.enums.bengyify.DeptStatusEnum;
+import com.pinde.core.commom.enums.DeptStatusEnum;
 import com.pinde.res.model.bengyify.mo.Activity;
 import com.pinde.res.model.bengyify.mo.Evaluation;
 

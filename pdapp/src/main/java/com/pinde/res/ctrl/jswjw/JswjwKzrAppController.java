@@ -1,6 +1,7 @@
 package com.pinde.res.ctrl.jswjw;
 
 import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.commom.enums.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -11,13 +12,6 @@ import com.pinde.res.biz.jswjw.IJswjwKzrBiz;
 import com.pinde.res.biz.jswjw.IJswjwTeacherBiz;
 import com.pinde.res.biz.jswjw.IResDoctorProcessBiz;
 import com.pinde.res.biz.stdp.*;
-import com.pinde.res.enums.hbres.ResAssessScoreTypeEnum;
-import com.pinde.res.enums.jswjw.JsRecDocTypeEnum;
-import com.pinde.res.enums.jswjw.TrainCategoryEnum;
-import com.pinde.res.enums.stdp.ActivityTypeEnum;
-import com.pinde.res.enums.stdp.RegistryTypeEnum;
-import com.pinde.res.enums.stdp.ResAssessTypeEnum;
-import com.pinde.res.enums.stdp.ResRecTypeEnum;
 import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgItemForm;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgTitleForm;

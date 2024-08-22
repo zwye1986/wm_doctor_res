@@ -1,14 +1,10 @@
 package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.util.DateUtil;
-import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.jsres.IJsResSchExamScoreQueryBiz;
-import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.JsresPowerCfgMapper;
 import com.pinde.sci.dao.base.SchExamDoctorArrangementMapper;
 import com.pinde.sci.dao.jsres.JsResSchExamScoreQueryMapper;
-import com.pinde.sci.model.mo.JsresPowerCfg;
 import com.pinde.sci.model.mo.SchExamDoctorArrangement;
 import com.pinde.sci.model.mo.SchExamDoctorArrangementExample;
 import org.apache.poi.hssf.usermodel.*;

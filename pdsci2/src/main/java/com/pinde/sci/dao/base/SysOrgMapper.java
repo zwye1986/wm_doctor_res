@@ -3,10 +3,10 @@ package com.pinde.sci.dao.base;
 import com.pinde.sci.model.mo.PersonStaticExample;
 import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.mo.SysOrgExample;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
 
 public interface SysOrgMapper {
     int countByExample(SysOrgExample example);

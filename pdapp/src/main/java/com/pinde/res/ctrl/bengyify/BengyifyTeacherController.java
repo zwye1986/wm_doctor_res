@@ -1,19 +1,15 @@
 package com.pinde.res.ctrl.bengyify;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.pinde.core.util.SpringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +26,9 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.bengyify.IBengyifyAppBiz;
 import com.pinde.res.biz.bengyify.IBengyifyStudentBiz;
 import com.pinde.res.biz.bengyify.IBengyifyTeacherBiz;
-import com.pinde.res.enums.bengyify.DeptStatusEnum;
+import com.pinde.core.commom.enums.DeptStatusEnum;
 import com.pinde.res.model.bengyify.mo.MedicalInfo;
 import com.pinde.res.model.bengyify.mo.StudyInfo;
-import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/res/bengyify/teacher")

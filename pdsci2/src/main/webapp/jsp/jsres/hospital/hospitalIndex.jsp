@@ -20,7 +20,35 @@
             }
         });
 
-        require(['echarts', 'echarts/chart/pie'], function (ec) {
+
+
+        function EvaStudent() {
+            jboxLoad("content", "<s:url value='/res/teacherEvaDoctor/manageEvaluation'/>?recTypeId=ManageDoctorAssess360&roleFlag=local&trainingTypeId=DoctorTrainingSpe&sessionNumber=${pdfn:getCurrYear()}", true);
+        }
+
+        function pjjgcx(role) {
+            var url = "<s:url value='/res/evaluateHospitalResult/base?gradeRole=doctor&role='/>" + role+"&trainingTypeId=DoctorTrainingSpe";
+            currentJboxLoadNoData("content", url, true);
+        }
+
+
+        function hsxxgl() {
+            jboxLoad("content", "<s:url value='/res/nurse/list'/>", true);
+        }
+
+        function djxxgl() {
+            jboxLoad("content", "<s:url value='/res/nurse/teachingList'/>", true);
+        }
+
+    </script>
+    <script type="text/javascript"
+            src="<s:url value='/js/jquery-select/js/jquery.select.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
+    <script type="text/javascript"
+            src="<s:url value='/js/DatePicker/WdatePicker.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
+    <script>
+        $(document).ready(function () {
+
+            require(['echarts', 'echarts/chart/pie'], function (ec) {
             var myChart = ec.init(document.getElementById('docChartForIndex'));
             option = {
                 tooltip: {
@@ -58,35 +86,9 @@
                     }
                 ]
             };
-// 为echarts对象加载数据
+            // 为echarts对象加载数据
             myChart.setOption(option);
         });
-
-        function EvaStudent() {
-            jboxLoad("content", "<s:url value='/res/teacherEvaDoctor/manageEvaluation'/>?recTypeId=ManageDoctorAssess360&roleFlag=local&trainingTypeId=DoctorTrainingSpe&sessionNumber=${pdfn:getCurrYear()}", true);
-        }
-
-        function pjjgcx(role) {
-            var url = "<s:url value='/res/evaluateHospitalResult/base?gradeRole=doctor&role='/>" + role+"&trainingTypeId=DoctorTrainingSpe";
-            currentJboxLoadNoData("content", url, true);
-        }
-
-
-        function hsxxgl() {
-            jboxLoad("content", "<s:url value='/res/nurse/list'/>", true);
-        }
-
-        function djxxgl() {
-            jboxLoad("content", "<s:url value='/res/nurse/teachingList'/>", true);
-        }
-
-    </script>
-    <script type="text/javascript"
-            src="<s:url value='/js/jquery-select/js/jquery.select.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
-    <script type="text/javascript"
-            src="<s:url value='/js/DatePicker/WdatePicker.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
-    <script>
-        $(document).ready(function () {
 //	$('#sessionNumber').datepicker({
 //		startView: 2,
 //		maxViewMode: 2,
@@ -1026,15 +1028,51 @@
         }
 
         $(function () {
-            isVerify = '${sessionScope.currUser.isVerify}';
-            if (isVerify != 'Y') {
-                jboxConfirm("认证手机号码，享受更便捷的登录体验，快去认证吧", function () {
-                    accounts();
+            if(!getCookie('first')){
+                $(function () {
+                    isVerify = '${sessionScope.currUser.isVerify}';
+                    if(isVerify != 'Y'){
+                        jboxConfirm("认证手机号码，享受更便捷的登录体验，快去认证吧" , function(){
+                            accounts();
+                        });
+                    }
                 });
+                setCookie('first',1,1)
             }
             getSpandAndshousuo();
             getAA();
         });
+
+        //设置cookie
+		function setCookie(cname, cvalue, exdays) {
+			var d = new Date();
+			d.setTime(d.getTime() + (exdays*60*60*1000));
+			var expires = "expires="+d.toUTCString();
+			document.cookie = cname + "=" + cvalue + ";" + expires+";path=/";
+		}
+		//获取cookie
+		function getCookie(cname) {
+			var name = cname + "=";
+			var ca = document.cookie.split(';');
+			for(var i=0; i<ca.length; i++) {
+				var c = ca[i];
+				while (c.charAt(0)==' ') c = c.substring(1);
+				if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+			}
+			return "";
+		}
+
+        //清除cookie
+        function delCookie(name) {
+            setCookie(name, "", -1);
+        }
+
+
+        function logout() {
+            delCookie('first')
+            var url ="<s:url value='/inx/jsres/logout'/>"
+            window.location.href = url;
+        }
 
         //菜单收缩展开yuh
         function getSpandAndshousuo() {
@@ -1140,7 +1178,7 @@
 	                            <a><c:out value="${param.actionName}" default="切换"/></a>&#12288;
                             </span>
                             <a onclick="shouye();">首页</a>&#12288;
-                            <a href="<s:url value='/inx/jsres/logout'/>">退出</a>
+                            <a onclick="logout()">退出</a>
                         </div>
                     </div>
                 </div>

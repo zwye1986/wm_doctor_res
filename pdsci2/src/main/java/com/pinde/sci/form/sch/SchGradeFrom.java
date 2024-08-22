@@ -1,7 +1,6 @@
 package com.pinde.sci.form.sch;
 
 
-import com.pinde.sci.model.mo.DeptTeacherGradeInfo;
 import com.pinde.sci.model.mo.SchArrangeResult;
 
 import java.io.Serializable;

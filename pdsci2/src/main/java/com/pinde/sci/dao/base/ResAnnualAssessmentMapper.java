@@ -3,8 +3,9 @@ package com.pinde.sci.dao.base;
 import com.pinde.sci.model.mo.ResAnnualAssessment;
 import com.pinde.sci.model.mo.ResAnnualAssessmentExample;
 import com.pinde.sci.model.mo.ResAnnualAssessmentWithBLOBs;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResAnnualAssessmentMapper {
     int countByExample(ResAnnualAssessmentExample example);

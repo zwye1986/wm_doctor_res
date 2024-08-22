@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.hbzy.impl;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.PkUtil;
@@ -34,7 +35,6 @@ import com.pinde.sci.model.hbzy.JszyDoctorInfoExt;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.CellRangeAddress;
-import org.apache.tools.ant.types.resources.selectors.Date;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;

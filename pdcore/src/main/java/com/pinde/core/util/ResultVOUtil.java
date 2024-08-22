@@ -1,6 +1,6 @@
 package com.pinde.core.util;
 
-import com.pinde.core.VO.ResultVO;
+import com.pinde.core.vo.ResultVO;
 
 /**
  * 给前端返回结果信息工具类

@@ -1,7 +1,8 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.sci.model.jsres.JsresBaseEvaluationExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.JsresBaseEvaluation;
+import com.pinde.sci.model.mo.JsresBaseEvaluationFile;
+import com.pinde.sci.model.mo.JsresBaseEvaluationScore;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

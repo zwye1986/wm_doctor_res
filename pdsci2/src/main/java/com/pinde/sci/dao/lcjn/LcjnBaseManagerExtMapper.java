@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.lcjn;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.sci.model.mo.LcjnCourseTime;
-import com.pinde.sci.model.mo.SysDict;
 import com.pinde.sci.model.mo.SysUser;
 import org.apache.ibatis.annotations.Param;
 

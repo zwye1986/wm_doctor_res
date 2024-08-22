@@ -5,7 +5,7 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.hbres.IHbresTeacherBiz;
 import com.pinde.res.dao.stdp.ext.StdpResDoctorExtMapper;
-import com.pinde.res.enums.stdp.RecStatusEnum;
+import com.pinde.core.commom.enums.RecStatusEnum;
 import com.pinde.sci.dao.base.ResRecMapper;
 import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.model.mo.ResRec;

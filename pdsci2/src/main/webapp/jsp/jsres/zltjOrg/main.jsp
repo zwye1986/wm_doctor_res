@@ -26,6 +26,7 @@
 }
 </style>
 <script src="<s:url value='/js/yearSelect/checkYear.js'/>" type="text/javascript"></script>
+<link href="<s:url value='/css/form.css'/>" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 $(document).ready(function(){
 	$.checkYear("sessionNumber","",null);
@@ -273,101 +274,231 @@ function tabClick(tag,type){
 		<input type="hidden" id="orgTypeFlag" value="${orgLevel}"/>
 		<input type="hidden" id="orgCityFlag" value="${orgCityId}"/>
 		<input type="hidden" name="firstFlag" value="${param.firstFlag}"/>
-		<table class="searchTable">
-				<tr>
-					<td class="td_left">年&#12288;&#12288;级：</td>
-					<td>
-						<input type="text" id="sessionNumber" name="sessionNumber" value="${pdfn:getCurrYearByMonth()}" class="input indexNum" readonly="readonly"/>
-					</td>
-					<td class="td_left">地&#12288;&#12288;市：</td>
-					<td>
-						<div id="native">
-							<select class="notBlank province inputText" data-value="320000" style="display: none" ></select>
-							<select id="orgCityId" name="orgCityId"
-									class="notBlank city select" data-value="${orgCityId}"
-									onchange="chanegOrgLevel();"></select>
-						</div>
-					</td>
-					<td class="td_left">培训类别：</td>
-					<td>
-						<c:if test="${param.tabId eq 'doctorType'}">
-							<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" >
-								<option value="DoctorTrainingSpe">住院医师</option>
-								<%--<option value="" >请选择</option>
-								<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
-									<option value="${trainCategory.id}" <c:if test="${param.trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>
-								</c:forEach>--%>
-							</select>
-						</c:if>
-						<c:if test="${param.tabId eq 'speType'}">
-							<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" >
-								<option value="DoctorTrainingSpe">住院医师</option>
-								<%--<option value="" >请选择</option>
-								<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
-									<option value="${trainCategory.id}" <c:if test="${trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>
-								</c:forEach>--%>
-							</select>
-						</c:if>
-					</td>
-					<td class="td_left">培训专业：</td>
-					<td>
-						<select name="trainingSpeId" id="trainingSpeId"class="select" >
-							<option value="">全部</option>
+
+
+		<div class="form_search">
+
+			<div class="form_item">
+				<div class="form_label">年&#12288;&#12288;级：</div>
+				<div class="form_content">
+					<input type="text" id="sessionNumber" name="sessionNumber" value="${pdfn:getCurrYearByMonth()}" class="input indexNum" readonly="readonly"/>
+				</div>
+			</div>
+
+			<div class="form_item">
+				<div class="form_label">地&#12288;&#12288;市：</div>
+				<div class="form_content">
+					<div id="native">
+						<select class="notBlank province inputText" data-value="320000" style="display: none" ></select>
+						<select id="orgCityId" name="orgCityId"
+								class="notBlank city select" data-value="${orgCityId}"
+								onchange="chanegOrgLevel();"></select>
+					</div>
+				</div>
+			</div>
+
+			<div class="form_item">
+				<div class="form_label">培训类别：</div>
+				<div class="form_content">
+					<c:if test="${param.tabId eq 'doctorType'}">
+						<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" >
+							<option value="DoctorTrainingSpe">住院医师</option>
+							<%--<option value="" >请选择</option>
+							<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
+								<option value="${trainCategory.id}" <c:if test="${param.trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>
+							</c:forEach>--%>
 						</select>
-					</td>
-				</tr>
-				<tr>
-					<td class="td_left">基地类型：</td>
-					<td>
-						<select name="orgLevel" id="orgLevelId" class="select" onchange="chanegOrgLevel();">
-							<option value="">请选择</option>
-							<c:forEach items="${orgLevelEnumList}" var="level">
-								<option value="${level.id}" <c:if test="${param.orgLevel==level.id}">selected="selected"</c:if>
-										<c:if test="${ orgLevelEnumCountryOrg.id==level.id}">selected="selected"</c:if>
-										<c:if test="${orgLevelEnumGaugeTrainingBase.id ==level.id}">style="display: none;"</c:if>
-								>${level.name}</option>
-							</c:forEach>
-						</select>
-					</td>
-					<td class="td_left">培训基地：</td>
-					<td>
-						<input id="trainOrg" oncontextmenu="return false"  class="toggleView input" type="text" value="${orgName}"  autocomplete="off" onkeydown="changeStatus();" onkeyup="changeStatus();" />
-						<div id="pDiv" style="width: 0px;height: 0px;overflow: visible;float: left; position:relative;left :0px;top:30px;z-index:9999;">
-							<div class="boxHome trainOrg" id="trainOrgSel" style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
-								<c:forEach items="${orgs}" var="org">
-									<c:if test="${org.recordStatus eq 'Y'}">
-										<p class="item trainOrg allOrg orgs" flow="${org.orgFlow}" value="${org.orgName}"
-										   <c:if test="${empty org.orgLevelId}">type="allOrg"</c:if>
-										   <c:if test="${!empty org.orgLevelId }">type="${org.orgLevelId}"</c:if>
-										   orgCityId="${org.orgCityId}"
-										   style="line-height: 20px; padding:10px 0;cursor: default; "
-										   <c:if test="${sessionScope.currUser.orgFlow==org.orgFlow }">style="display: none;"</c:if>
-										>${org.orgName}</p>
-									</c:if>
-								</c:forEach>
-							</div>
-							<input type="text" name="orgFlow" id="orgFlow" value="${param.orgFlow}" style="display: none;"/>
-						</div>
-					</td>
-					<c:if test="${'speType' eq param.tabId}">
-						<td class="td_left">人员类型：</td>
-						<td colspan="3">
-							<c:forEach items="${jsResDocTypeEnumList}" var="type">
-								<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" checked/>${type.name}&nbsp;</label>
-							</c:forEach>
-						</td>
 					</c:if>
-				</tr>
-			<tr>
-				<td id='jointOrg'style="display: none;" colspan="2">
-					<label style="cursor: pointer;" ><input type="checkbox" id="jointOrgFlag" <c:if test="${param.jointOrgFlag eq GlobalConstant.FLAG_Y}">checked="checked"</c:if> name="jointOrgFlag" value="${GlobalConstant.FLAG_Y}"/>&nbsp;显示协同基地</label>
-				</td>
-				<td id="func" colspan="6">
-					<input class="btn_green" style="margin-left: 0px;" type="button" value="查&#12288;询" onclick="toPage();"/>&nbsp;
-					<input class="btn_green" style="margin-left: 0px;" type="button" value="导&#12288;出" onclick="exportInfo('${param.tabId}');"/>&nbsp;
-				</td>
-			</tr>
-			</table>
+					<c:if test="${param.tabId eq 'speType'}">
+						<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" >
+							<option value="DoctorTrainingSpe">住院医师</option>
+							<%--<option value="" >请选择</option>
+							<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
+								<option value="${trainCategory.id}" <c:if test="${trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>
+							</c:forEach>--%>
+						</select>
+					</c:if>
+				</div>
+			</div>
+
+			<div class="form_item">
+				<div class="form_label">培训专业：</div>
+				<div class="form_content">
+					<select name="trainingSpeId" id="trainingSpeId"class="select" >
+						<option value="">全部</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form_item">
+				<div class="form_label">基地类型：</div>
+				<div class="form_content">
+					<select name="orgLevel" id="orgLevelId" class="select" onchange="chanegOrgLevel();">
+						<option value="">请选择</option>
+						<c:forEach items="${orgLevelEnumList}" var="level">
+							<option value="${level.id}" <c:if test="${param.orgLevel==level.id}">selected="selected"</c:if>
+									<c:if test="${ orgLevelEnumCountryOrg.id==level.id}">selected="selected"</c:if>
+									<c:if test="${orgLevelEnumGaugeTrainingBase.id ==level.id}">style="display: none;"</c:if>
+							>${level.name}</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+
+			<div class="form_item">
+				<div class="form_label">培训基地：</div>
+				<div class="form_content">
+					<input id="trainOrg" oncontextmenu="return false"  class="toggleView input" type="text" value="${orgName}"  autocomplete="off" onkeydown="changeStatus();" onkeyup="changeStatus();" />
+					<div id="pDiv" style="width: 0px;height: 0px;overflow: visible;float: left; position:relative;left :0px;top:30px;z-index:9999;">
+						<div class="boxHome trainOrg" id="trainOrgSel" style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
+							<c:forEach items="${orgs}" var="org">
+								<c:if test="${org.recordStatus eq 'Y'}">
+									<p class="item trainOrg allOrg orgs" flow="${org.orgFlow}" value="${org.orgName}"
+									   <c:if test="${empty org.orgLevelId}">type="allOrg"</c:if>
+									   <c:if test="${!empty org.orgLevelId }">type="${org.orgLevelId}"</c:if>
+									   orgCityId="${org.orgCityId}"
+									   style="line-height: 20px; padding:10px 0;cursor: default; "
+									   <c:if test="${sessionScope.currUser.orgFlow==org.orgFlow }">style="display: none;"</c:if>
+									>${org.orgName}</p>
+								</c:if>
+							</c:forEach>
+						</div>
+						<input type="text" name="orgFlow" id="orgFlow" value="${param.orgFlow}" style="display: none;"/>
+					</div>
+				</div>
+			</div>
+
+			<c:if test="${'speType' eq param.tabId}">
+
+				<div class="form_item" style="width: 430px">
+					<div class="form_label">人员类型：</div>
+					<div class="form_content">
+						<div style=" display: flex">
+							<c:forEach items="${jsResDocTypeEnumList}" var="type">
+								<input style="margin-right: 5px" type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" checked/>
+								<div style="margin-right: 10px">${type.name}</div>
+							</c:forEach>
+						</div>
+
+					</div>
+
+				</div>
+
+			</c:if>
+
+			<div class="form_item" >
+				<div class="form_content" style="margin-left: 30px">
+					<div style=" display: flex">
+						<input style="margin-right: 5px" type="checkbox" id="jointOrgFlag" <c:if test="${param.jointOrgFlag eq GlobalConstant.FLAG_Y}">checked="checked"</c:if> name="jointOrgFlag" value="${GlobalConstant.FLAG_Y}"/>
+						<div>显示协同基地</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="form_btn">
+			<input class="btn_green" style="margin-left: 0px;" type="button" value="查&#12288;询" onclick="toPage();"/>
+			<input class="btn_green" style="margin-left: 0px;" type="button" value="导&#12288;出" onclick="exportInfo('${param.tabId}');"/>
+		</div>
+
+
+
+<%--		<table class="searchTable">--%>
+<%--				<tr>--%>
+<%--					<td class="td_left">年&#12288;&#12288;级：</td>--%>
+<%--					<td>--%>
+<%--						<input type="text" id="sessionNumber" name="sessionNumber" value="${pdfn:getCurrYearByMonth()}" class="input indexNum" readonly="readonly"/>--%>
+<%--					</td>--%>
+<%--					<td class="td_left">地&#12288;&#12288;市：</td>--%>
+<%--					<td>--%>
+<%--						<div id="native">--%>
+<%--							<select class="notBlank province inputText" data-value="320000" style="display: none" ></select>--%>
+<%--							<select id="orgCityId" name="orgCityId"--%>
+<%--									class="notBlank city select" data-value="${orgCityId}"--%>
+<%--									onchange="chanegOrgLevel();"></select>--%>
+<%--						</div>--%>
+<%--					</td>--%>
+<%--					<td class="td_left">培训类别：</td>--%>
+<%--					<td>--%>
+<%--						<c:if test="${param.tabId eq 'doctorType'}">--%>
+<%--							<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" >--%>
+<%--								<option value="DoctorTrainingSpe">住院医师</option>--%>
+<%--								&lt;%&ndash;<option value="" >请选择</option>--%>
+<%--								<c:forEach items="${trainCategoryEnumList}" var="trainCategory">--%>
+<%--									<option value="${trainCategory.id}" <c:if test="${param.trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>--%>
+<%--								</c:forEach>&ndash;%&gt;--%>
+<%--							</select>--%>
+<%--						</c:if>--%>
+<%--						<c:if test="${param.tabId eq 'speType'}">--%>
+<%--							<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" >--%>
+<%--								<option value="DoctorTrainingSpe">住院医师</option>--%>
+<%--								&lt;%&ndash;<option value="" >请选择</option>--%>
+<%--								<c:forEach items="${trainCategoryEnumList}" var="trainCategory">--%>
+<%--									<option value="${trainCategory.id}" <c:if test="${trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>--%>
+<%--								</c:forEach>&ndash;%&gt;--%>
+<%--							</select>--%>
+<%--						</c:if>--%>
+<%--					</td>--%>
+<%--					<td class="td_left">培训专业：</td>--%>
+<%--					<td>--%>
+<%--						<select name="trainingSpeId" id="trainingSpeId"class="select" >--%>
+<%--							<option value="">全部</option>--%>
+<%--						</select>--%>
+<%--					</td>--%>
+<%--				</tr>--%>
+<%--				<tr>--%>
+<%--					<td class="td_left">基地类型：</td>--%>
+<%--					<td>--%>
+<%--						<select name="orgLevel" id="orgLevelId" class="select" onchange="chanegOrgLevel();">--%>
+<%--							<option value="">请选择</option>--%>
+<%--							<c:forEach items="${orgLevelEnumList}" var="level">--%>
+<%--								<option value="${level.id}" <c:if test="${param.orgLevel==level.id}">selected="selected"</c:if>--%>
+<%--										<c:if test="${ orgLevelEnumCountryOrg.id==level.id}">selected="selected"</c:if>--%>
+<%--										<c:if test="${orgLevelEnumGaugeTrainingBase.id ==level.id}">style="display: none;"</c:if>--%>
+<%--								>${level.name}</option>--%>
+<%--							</c:forEach>--%>
+<%--						</select>--%>
+<%--					</td>--%>
+<%--					<td class="td_left">培训基地：</td>--%>
+<%--					<td>--%>
+<%--						<input id="trainOrg" oncontextmenu="return false"  class="toggleView input" type="text" value="${orgName}"  autocomplete="off" onkeydown="changeStatus();" onkeyup="changeStatus();" />--%>
+<%--						<div id="pDiv" style="width: 0px;height: 0px;overflow: visible;float: left; position:relative;left :0px;top:30px;z-index:9999;">--%>
+<%--							<div class="boxHome trainOrg" id="trainOrgSel" style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">--%>
+<%--								<c:forEach items="${orgs}" var="org">--%>
+<%--									<c:if test="${org.recordStatus eq 'Y'}">--%>
+<%--										<p class="item trainOrg allOrg orgs" flow="${org.orgFlow}" value="${org.orgName}"--%>
+<%--										   <c:if test="${empty org.orgLevelId}">type="allOrg"</c:if>--%>
+<%--										   <c:if test="${!empty org.orgLevelId }">type="${org.orgLevelId}"</c:if>--%>
+<%--										   orgCityId="${org.orgCityId}"--%>
+<%--										   style="line-height: 20px; padding:10px 0;cursor: default; "--%>
+<%--										   <c:if test="${sessionScope.currUser.orgFlow==org.orgFlow }">style="display: none;"</c:if>--%>
+<%--										>${org.orgName}</p>--%>
+<%--									</c:if>--%>
+<%--								</c:forEach>--%>
+<%--							</div>--%>
+<%--							<input type="text" name="orgFlow" id="orgFlow" value="${param.orgFlow}" style="display: none;"/>--%>
+<%--						</div>--%>
+<%--					</td>--%>
+<%--					<c:if test="${'speType' eq param.tabId}">--%>
+<%--						<td class="td_left">人员类型：</td>--%>
+<%--						<td colspan="3">--%>
+<%--							<c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+<%--								<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" checked/>${type.name}&nbsp;</label>--%>
+<%--							</c:forEach>--%>
+<%--						</td>--%>
+<%--					</c:if>--%>
+<%--				</tr>--%>
+<%--			<tr>--%>
+<%--				<td id='jointOrg'style="display: none;" colspan="2">--%>
+<%--					<label style="cursor: pointer;" ><input type="checkbox" id="jointOrgFlag" <c:if test="${param.jointOrgFlag eq GlobalConstant.FLAG_Y}">checked="checked"</c:if> name="jointOrgFlag" value="${GlobalConstant.FLAG_Y}"/>&nbsp;显示协同基地</label>--%>
+<%--				</td>--%>
+<%--				<td id="func" colspan="6">--%>
+<%--					<input class="btn_green" style="margin-left: 0px;" type="button" value="查&#12288;询" onclick="toPage();"/>&nbsp;--%>
+<%--					<input class="btn_green" style="margin-left: 0px;" type="button" value="导&#12288;出" onclick="exportInfo('${param.tabId}');"/>&nbsp;--%>
+<%--				</td>--%>
+<%--			</tr>--%>
+<%--			</table>--%>
 	</form>
     </div>
    <div id="doctorListZi">

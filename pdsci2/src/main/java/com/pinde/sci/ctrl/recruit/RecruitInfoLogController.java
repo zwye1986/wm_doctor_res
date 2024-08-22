@@ -6,7 +6,6 @@ import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoLogBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.model.mo.RecruitCfgInfo;
 import com.pinde.sci.model.mo.RecruitInfo;
 import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.recruit.RecruitInfoExt;
@@ -17,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-import static com.pinde.core.util.DateUtil.defDtPtn01;
-import static com.pinde.core.util.DateUtil.defDtPtn02;
-import static com.pinde.core.util.DateUtil.defDtPtn04;
+import static com.pinde.core.util.DateUtil.*;
 
 
 @Controller

@@ -6,6 +6,7 @@ import com.pinde.app.common.GlobalConstant;
 import com.pinde.app.common.GlobalUtil;
 import com.pinde.app.common.InitConfig;
 import com.pinde.app.common.UserResumeExtInfoForm;
+import com.pinde.core.commom.enums.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.res.biz.jswjw.IJswjwBiz;
@@ -17,12 +18,7 @@ import com.pinde.res.dao.jswjw.ext.*;
 import com.pinde.res.dao.sctcm120.ext.ResDoctorKqExtMapper;
 import com.pinde.res.dao.stdp.ext.StdpResDoctorExtMapper;
 import com.pinde.res.dao.stdp.ext.TeachingActivityInfoExtMapper;
-import com.pinde.res.enums.ezhupei.AfterRecTypeEnum;
-import com.pinde.res.enums.gydxj.UserNationEnum;
-import com.pinde.res.enums.jswjw.TrainYearEnum;
-import com.pinde.res.enums.jswjw.*;
 import com.pinde.res.enums.lcjn.DictTypeEnum;
-import com.pinde.res.enums.stdp.*;
 import com.pinde.res.model.jswjw.mo.*;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
@@ -33,7 +29,7 @@ import com.pinde.sci.util.PicZoom;
 import com.pinde.sci.util.WeixinQiYeUtil;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -1206,120 +1202,18 @@ public class JswjwBizImpl implements IJswjwBiz {
                 }
             }
         } else {
-//			ResRecCaseRegistryExample caseRegistryExample = new ResRecCaseRegistryExample();
-//			caseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(userFlow).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(deptFlow);
-//			ResRecDiseaseRegistryExample diseaseRegistryExample = new ResRecDiseaseRegistryExample();
-//			ResRecDiseaseRegistryExample.Criteria diseaseRegistryCriteria = diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(userFlow).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(deptFlow);
-//			ResRecLanguageRegistryExample languageRegistryExample = new ResRecLanguageRegistryExample();
-//			ResRecLanguageRegistryExample.Criteria languageRegistryCriteria = languageRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(userFlow).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(deptFlow);
-//			ResRecOperationRegistryExample operationRegistryExample = new ResRecOperationRegistryExample();
-//			ResRecOperationRegistryExample.Criteria operationRegistryCriteria = operationRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(userFlow).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(deptFlow);
-//			ResRecSkillRegistryExample skillRegistryExample = new ResRecSkillRegistryExample();
-//			ResRecSkillRegistryExample.Criteria skillRegistryCriteria = skillRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(userFlow).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(deptFlow);
             ResRecExample recExample = new ResRecExample();
             com.pinde.sci.model.mo.ResRecExample.Criteria criteria = recExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(userFlow).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(deptFlow);
             if ("disease".equals(dataType) || "skill".equals(dataType) || "operation".equals(dataType) || "languageTeaching".equals(dataType)) {
-//				diseaseRegistryCriteria.andItemIdEqualTo(cataFlow);
-//				languageRegistryCriteria.andItemIdEqualTo(cataFlow);
-//				operationRegistryCriteria.andItemIdEqualTo(cataFlow);
-//				skillRegistryCriteria.andItemIdEqualTo(cataFlow);
                 criteria.andItemIdEqualTo(cataFlow);
             }
-//			caseRegistryExample.setOrderByClause("create_time desc,rec_flow");
-//			diseaseRegistryExample.setOrderByClause("create_time desc,rec_flow");
-//			languageRegistryExample.setOrderByClause("create_time desc,rec_flow");
-//			operationRegistryExample.setOrderByClause("create_time desc,rec_flow");
-//			skillRegistryExample.setOrderByClause("create_time desc,rec_flow");
+//
             recExample.setOrderByClause("create_time desc,rec_flow");
             List<ResRec> recList = recMapper.selectByExampleWithBLOBs(recExample);
-//			List<ResRec> recList = new ArrayList<>();
-//			if (recTypeId.equals(ResRecTypeEnum.CaseRegistry.getId())) {
-//				List<ResRecCaseRegistry> caseRegistryList = caseRegistryMapper.selectByExampleWithBLOBs(caseRegistryExample);
-//				recList = caseRegistryList.stream().map(e -> {
-//					ResRec resRec = new ResRec();
-//					BeanUtils.copyProperties(e, resRec);
-//					return resRec;
-//				}).collect(Collectors.toList());
-//			}
-//			if (recTypeId.equals(ResRecTypeEnum.DiseaseRegistry.getId())) {
-//				List<ResRecDiseaseRegistry> diseaseRegistryList = diseaseRegistryMapper.selectByExampleWithBLOBs(diseaseRegistryExample);
-//				recList = diseaseRegistryList.stream().map(e -> {
-//					ResRec resRec = new ResRec();
-//					BeanUtils.copyProperties(e, resRec);
-//					return resRec;
-//				}).collect(Collectors.toList());
-//			}
-//			if (recTypeId.equals(ResRecTypeEnum.LanguageTeachingResearch.getId())) {
-//				List<ResRecLanguageRegistry> languageRegistryList = languageRegistryMapper.selectByExampleWithBLOBs(languageRegistryExample);
-//				recList = languageRegistryList.stream().map(e -> {
-//					ResRec resRec = new ResRec();
-//					BeanUtils.copyProperties(e, resRec);
-//					return resRec;
-//				}).collect(Collectors.toList());
-//			}
-//			if (recTypeId.equals(ResRecTypeEnum.OperationRegistry.getId())) {
-//				List<ResRecOperationRegistry> operationRegistryList = operationRegistryMapper.selectByExampleWithBLOBs(operationRegistryExample);
-//				recList = operationRegistryList.stream().map(e -> {
-//					ResRec resRec = new ResRec();
-//					BeanUtils.copyProperties(e, resRec);
-//					return resRec;
-//				}).collect(Collectors.toList());
-//			}
-//			if (recTypeId.equals(ResRecTypeEnum.SkillRegistry.getId())) {
-//				List<ResRecSkillRegistry> skillRegistryList = skillRegistryMapper.selectByExampleWithBLOBs(skillRegistryExample);
-//				recList = skillRegistryList.stream().map(e -> {
-//					ResRec resRec = new ResRec();
-//					BeanUtils.copyProperties(e, resRec);
-//					return resRec;
-//				}).collect(Collectors.toList());
-//			}
             for (ResRec rec : recList) {
-//			Map<String ,Object> dataMap = new HashMap<String, Object>();
                 String recContent = rec.getRecContent();
                 Map<String, Object> formDataMap = parseRecContent(recContent);
                 formDataMap.put("dataFlow", rec.getRecFlow());
-			/*
-			if("mr".equals(dataType)){
-				dataMap.put("dataFlow", rec.getRecFlow());
-				dataMap.put("mrPName", formDataMap.get("mrPName"));
-				dataMap.put("mrNo", formDataMap.get("mrNo"));
-				dataMap.put("diseaseName", formDataMap.get("diseaseName"));
-				dataMap.put("diagnosis", formDataMap.get("diagnosis"));
-			}else if("disease".equals(dataType)){
-				dataMap.put("dataFlow", rec.getRecFlow());
-				dataMap.put("mrPName", formDataMap.get("mrPName"));
-				dataMap.put("mrNo", formDataMap.get("mrNo"));
-				dataMap.put("diseasePName", formDataMap.get("diseasePName"));
-				dataMap.put("diseasePDate", formDataMap.get("diseasePDate"));
-				dataMap.put("diagnosis", formDataMap.get("diagnosis"));
-				dataMap.put("isCharge", formDataMap.get("isCharge"));
-				dataMap.put("isRescue", formDataMap.get("isRescue"));
-				dataMap.put("rescueStatus", formDataMap.get("rescueStatus"));
-			}else if("skill".equals(dataType)){
-				dataMap.put("dataFlow", rec.getRecFlow());
-				dataMap.put("mrPName", formDataMap.get("mrPName"));
-				dataMap.put("mrNo", formDataMap.get("mrNo"));
-				dataMap.put("skillOperDate", formDataMap.get("skillOperDate"));
-				dataMap.put("skillPName", formDataMap.get("skillPName"));
-				dataMap.put("isSuccess", formDataMap.get("isSuccess"));
-				dataMap.put("failReason", formDataMap.get("failReason"));
-			}else if("operation".equals(dataType)){
-				dataMap.put("dataFlow", rec.getRecFlow());
-				dataMap.put("mrPName", formDataMap.get("mrPName"));
-				dataMap.put("mrNo", formDataMap.get("mrNo"));
-				dataMap.put("operationPName", formDataMap.get("operationPName"));
-				dataMap.put("operationOperDate", formDataMap.get("operationOperDate"));
-				dataMap.put("operaType", formDataMap.get("operaType"));
-				dataMap.put("note", formDataMap.get("note"));
-			}else if("activity".equals(dataType)){
-				dataMap.put("dataFlow", rec.getRecFlow());
-				dataMap.put("activityDate", formDataMap.get("activityDate"));
-				dataMap.put("activityWay", formDataMap.get("activityWay"));
-				dataMap.put("activitySpeaker", formDataMap.get("activitySpeaker"));
-				dataMap.put("content", formDataMap.get("content"));
-				dataMap.put("period", formDataMap.get("period"));
-			}
-			*/
 
                 dataList.add(formDataMap);
             }
@@ -5264,25 +5158,6 @@ public class JswjwBizImpl implements IJswjwBiz {
                         titleList.add(fromTitle);
                     }
                 }
-//				if(titleList.size()>0)
-//				{
-//
-//					Collections.sort(titleList,new Comparator<FromTitle>(){
-//						@Override
-//						public int compare(FromTitle f1,FromTitle f2) {
-//							String order1=f1.getOrderNum();
-//							String order2=f2.getOrderNum();
-//							if(order1==null){
-//								return -1;
-//							}else if(order2==null){
-//								return 1;
-//							}else if(order1!=null && order2!=null){
-//								return order1.compareTo(order2);
-//							}
-//							return 0;
-//						}
-//					});
-//				}
                 return titleList;
             } catch (DocumentException e) {
                 //

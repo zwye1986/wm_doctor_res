@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.hbzy.impl;
 
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.hbzy.IJszyResDoctorBiz;
@@ -135,7 +136,7 @@ public class HbzyResStatisticBizImpl implements IJszyResStatisticBiz {
 		return recruitExtMapper.statisticJointCount(paramMap);
 	}
 	@Override
-	public void export(List<SysOrg> sysOrgList,List<SysDict> typeSpeList,String trainTypeId,Map<Object, Object> totalCountMap,Map<Object, Object> zongjiMap,Map<Object, Object> orgSpeFlagMap,Map<Object, Object> joingCountMap,HttpServletResponse response) throws IOException {
+	public void export(List<SysOrg> sysOrgList, List<SysDict> typeSpeList, String trainTypeId, Map<Object, Object> totalCountMap, Map<Object, Object> zongjiMap, Map<Object, Object> orgSpeFlagMap, Map<Object, Object> joingCountMap, HttpServletResponse response) throws IOException {
 				//创建工作簿
 				HSSFWorkbook wb = new HSSFWorkbook();
 				// 为工作簿添加sheet

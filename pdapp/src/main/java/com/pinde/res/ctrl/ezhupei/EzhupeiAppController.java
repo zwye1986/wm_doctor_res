@@ -4,6 +4,7 @@ package com.pinde.res.ctrl.ezhupei;
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalConstant;
 import com.pinde.app.common.PasswordUtil;
+import com.pinde.core.commom.enums.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -14,10 +15,6 @@ import com.pinde.res.biz.ezhupei.IEzhupeiTeacherBiz;
 import com.pinde.res.biz.stdp.IResActivityBiz;
 import com.pinde.res.biz.stdp.IResGradeBiz;
 import com.pinde.res.biz.stdp.IResSchProcessExpressBiz;
-import com.pinde.res.enums.ezhupei.ResAssessTypeEnum;
-import com.pinde.res.enums.ezhupei.ResRecTypeEnum;
-import com.pinde.res.enums.stdp.ResultEnum;
-import com.pinde.res.enums.stdp.UserStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.util.PasswordHelper;
 import org.slf4j.Logger;
@@ -1595,7 +1592,7 @@ public class EzhupeiAppController{
 			}
 
 			//签到
-			String signinType = com.pinde.res.enums.ezhupei.SigninTypeEnum.Day.getId();
+			String signinType = SigninTypeEnum.Day.getId();
 			boolean result = appBiz.signin(userFlow,deptFlow,signinType);
 			if(!result){
 				model.addAttribute("resultId", "3011108");

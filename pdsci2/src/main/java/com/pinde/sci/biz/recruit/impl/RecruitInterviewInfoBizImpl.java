@@ -1,12 +1,10 @@
 package com.pinde.sci.biz.recruit.impl;
 
-import com.pinde.core.util.DateUtil;
 import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoLogBiz;
 import com.pinde.sci.biz.recruit.IRecruitInterviewInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.RecruitInfoMapper;
 import com.pinde.sci.dao.base.RecruitInterviewInfoMapper;
 import com.pinde.sci.dao.recruit.RecruitInfoExtMapper;

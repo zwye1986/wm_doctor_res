@@ -3,8 +3,9 @@ package com.pinde.sci.dao.base;
 import com.pinde.sci.model.mo.ResDoctorRecruitLog;
 import com.pinde.sci.model.mo.ResDoctorRecruitLogExample;
 import com.pinde.sci.model.mo.ResDoctorRecruitLogWithBLOBs;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResDoctorRecruitLogMapper {
     int countByExample(ResDoctorRecruitLogExample example);

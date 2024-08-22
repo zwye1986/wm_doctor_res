@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.jsres;
 
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -38,7 +39,7 @@ import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
@@ -68,11 +69,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -2922,7 +2920,12 @@ public class JsResDoctorRecruitController extends GeneralController {
 		List<String>trainYearList=new ArrayList<String>();
 		//orgCityId参数2个(form和url里）
 		if(!",".equals(orgCityId)){
-			orgCityId = orgCityId.split(",")[0];
+			String[] orgCity = orgCityId.split(",");
+			if(orgCity.length>1){
+				orgCityId = orgCity[1];
+			}else{
+				orgCityId = orgCity[0];
+			}
 		}else{
 			orgCityId = "";
 		}

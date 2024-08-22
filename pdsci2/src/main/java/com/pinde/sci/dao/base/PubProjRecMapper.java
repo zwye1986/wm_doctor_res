@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.PubProjRec;
 import com.pinde.sci.model.mo.PubProjRecExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface PubProjRecMapper {
     int countByExample(PubProjRecExample example);

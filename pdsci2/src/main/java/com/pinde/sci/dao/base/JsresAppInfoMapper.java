@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.JsresAppInfo;
 import com.pinde.sci.model.mo.JsresAppInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface JsresAppInfoMapper {
     int countByExample(JsresAppInfoExample example);

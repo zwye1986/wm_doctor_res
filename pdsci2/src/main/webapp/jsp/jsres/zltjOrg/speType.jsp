@@ -63,8 +63,14 @@
 	}
 </script>
 
+<style>
+	.grid th {
+		background: #EDF3FF;
+	}
+</style>
+
 <div class="div_search">
-	<div id="tableContext"style="width:900px;height: 600px; margin-top: 10px;margin-bottom: 10px;overflow: auto;margin-left: 0px;" onscroll="tableFixed(this);">
+	<div id="tableContext" style="width:calc(90vw - 268px);;height: 600px; margin-top: 10px;margin-bottom: 10px;overflow: auto;margin-left: 0px;" onscroll="tableFixed(this);">
 		<!--第一次 -->
 		<div id="dateFixed" style="height: 0px;overflow: visible;position: relative;">
 			<table class="grid"style="width: auto;" >
@@ -164,7 +170,7 @@
 			</table>
 		</div>
 		<div style="width: 0px; overflow: visible;   top: 0px; left: 0px;">
-			<table border="0" cellpadding="0" cellspacing="0" class="grid" id="dataTable">
+			<table border="0" cellpadding="0" cellspacing="0" class="grid" >
 				<tr class="headTrTh">
 					<c:if test="${sessionScope.userListScope!=GlobalConstant.USER_LIST_CHARGE}">
 						<th style="min-width: 100px;max-width: 100px;border: 1px solid #e7e7eb;" >地市名称</th>

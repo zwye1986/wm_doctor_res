@@ -1,6 +1,9 @@
 package com.pinde.res.ctrl.sctcm120;
 
 import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.commom.enums.ResAssessScoreTypeEnum;
+import com.pinde.core.commom.enums.ResAssessTypeEnum;
+import com.pinde.core.commom.enums.ResRecTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -13,10 +16,7 @@ import com.pinde.res.biz.jswjw.IJswjwTeacherBiz;
 import com.pinde.res.biz.jswjw.IResDoctorProcessBiz;
 import com.pinde.res.biz.stdp.IResGradeBiz;
 import com.pinde.res.biz.stdp.IResSchProcessExpressBiz;
-import com.pinde.res.enums.sctcm120.ResAssessScoreTypeEnum;
-import com.pinde.res.enums.stdp.RegistryTypeEnum;
-import com.pinde.res.enums.stdp.ResAssessTypeEnum;
-import com.pinde.res.enums.sctcm120.ResRecTypeEnum;
+import com.pinde.core.commom.enums.RegistryTypeEnum;
 import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgItemForm;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgTitleForm;
@@ -368,12 +368,6 @@ public class Sctcm120KzrAppController {
 		recTypeIds.add(ResRecTypeEnum.AfterEvaluation.getId());
 		recTypeIds.add(ResRecTypeEnum.AfterSummary.getId());
 		recTypeIds.add(ResRecTypeEnum.DiscipleSummary.getId());
-//		recTypeIds.add(ResRecTypeEnum.CaseRegistry.getId());//6种登记数据
-//		recTypeIds.add(ResRecTypeEnum.DiseaseRegistry.getId());
-//		recTypeIds.add(ResRecTypeEnum.SkillRegistry.getId());
-//		recTypeIds.add(ResRecTypeEnum.CampaignRegistry.getId());
-//		recTypeIds.add(ResRecTypeEnum.Grave.getId());
-//		recTypeIds.add(ResRecTypeEnum.CaseRecord.getId());
 		List<ResSchProcessExpress> expressList = expressBiz.getDocexpressList(processFlow, recTypeIds);
 		for(ResSchProcessExpress express:expressList){
 			String key =express.getProcessFlow()+express.getRecTypeId();
@@ -1695,7 +1689,7 @@ public class Sctcm120KzrAppController {
 			}
 		}
 		model.addAttribute("isAudit", isAudit);
-		if (recTypeId.equals(com.pinde.res.enums.sctcm120.ResRecTypeEnum.AfterEvaluation.getId())) {
+		if (recTypeId.equals(ResRecTypeEnum.AfterEvaluation.getId())) {
 			ResDoctorSchProcess process = sctcm120Biz.readSchProcessByResultFlow(resultFlow);
 			if (process != null) {
 				String res_after_test_switch = sctcm120Biz.getCfgByCode("res_after_test_switch");

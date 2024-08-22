@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.osca;
 
 import com.pinde.sci.model.mo.OscaDoctorRegist;
-import com.pinde.sci.model.mo.OscaSkillsAssessment;
 
 import java.util.List;
 import java.util.Map;

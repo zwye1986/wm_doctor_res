@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
@@ -8,7 +9,6 @@ import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorProcessBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
-import com.pinde.sci.biz.sys.impl.UserBizImpl;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
@@ -32,15 +32,8 @@ import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.*;
 import com.pinde.sci.model.mo.*;
-import oracle.sql.CLOB;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.CellRangeAddress;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,9 +48,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.regex.Pattern;
 
 @Service
 @Transactional(rollbackFor=Exception.class)
@@ -4167,51 +4158,5 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 				e.printStackTrace();
 			}
 		}
-	}
-
-	public UserResumeExtInfoForm parseExtInfoXml(String extInfoXml){
-		UserResumeExtInfoForm extInfo = null;
-		if(StringUtil.isNotBlank(extInfoXml)){
-			try{
-				extInfo = new UserResumeExtInfoForm();
-				Document doc = DocumentHelper.parseText(extInfoXml);
-				Element root = doc.getRootElement();
-				/*Element extInfoFormEle = root.element(EXT_INFO_ELE);
-				if(extInfoFormEle!=null){
-					List<Element> extInfoAttrEles = extInfoFormEle.elements();
-					if(extInfoAttrEles!=null && extInfoAttrEles.size()>0){
-						for(Element attr : extInfoAttrEles){
-							String attrName = attr.getName();
-							String attrValue = attr.getText();
-							setValue(extInfo,attrName,attrValue);
-						}
-					}
-				}*/
-
-				/*Element workResumeListEle = root.element(WORK_RESUME_LIST_ELE);
-				if(workResumeListEle!=null){
-					List<Element> workResumeEles = workResumeListEle.elements();
-					if(workResumeEles!=null && workResumeEles.size()>0){
-						List<WorkResumeForm> resumeList = new ArrayList<WorkResumeForm>();
-						for(Element resumeEle : workResumeEles){
-							WorkResumeForm resume = new WorkResumeForm();
-							List<Element> resumeAttrEles = resumeEle.elements();
-							if(resumeAttrEles!=null && resumeAttrEles.size()>0){
-								for(Element attr : resumeAttrEles){
-									String attrName = attr.getName();
-									String attrValue = attr.getText();
-									setValue(resume,attrName,attrValue);
-								}
-							}
-							resumeList.add(resume);
-						}
-						extInfo.setWorkResumeList(resumeList);
-					}
-				}*/
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-		}
-		return extInfo;
 	}
 }

@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.lcjn;
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.SysUser;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

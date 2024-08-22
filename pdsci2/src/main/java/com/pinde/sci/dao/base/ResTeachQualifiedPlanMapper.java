@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResTeachQualifiedPlan;
 import com.pinde.sci.model.mo.ResTeachQualifiedPlanExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResTeachQualifiedPlanMapper {
     int countByExample(ResTeachQualifiedPlanExample example);

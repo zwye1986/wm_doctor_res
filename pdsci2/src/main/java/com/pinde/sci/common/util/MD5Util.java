@@ -1,8 +1,5 @@
 package com.pinde.sci.common.util;
 
-import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.util.ByteSource;
-
 import java.security.MessageDigest;
 
 /**

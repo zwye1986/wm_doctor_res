@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.FeeNoticeConfig;
 import com.pinde.sci.model.mo.FeeNoticeConfigExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface FeeNoticeConfigMapper {
     int countByExample(FeeNoticeConfigExample example);

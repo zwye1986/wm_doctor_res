@@ -2,7 +2,9 @@ package com.pinde.sci.ctrl.jszy;
 
 
 import com.pinde.core.util.DateUtil;
-import com.pinde.sci.biz.jsres.*;
+import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
+import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
+import com.pinde.sci.biz.jsres.ISchRotationDeptAfterBiz;
 import com.pinde.sci.biz.jszy.IJszyGraduationApplyBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
@@ -24,7 +26,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/jszy/asse")

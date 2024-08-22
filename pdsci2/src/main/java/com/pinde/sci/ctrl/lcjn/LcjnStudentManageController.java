@@ -7,7 +7,6 @@ import com.pinde.sci.biz.lcjn.ILcjnStudentBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.model.mo.SysCfg;
 import com.pinde.sci.model.mo.SysUser;

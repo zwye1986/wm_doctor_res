@@ -36,13 +36,7 @@ public interface IInxBiz {
 
     void sendResetPassEmail(String userEmail, String userFlow);
 
-    /**
-     * 天津结业考核
-     * @param userCode
-     * @param passwd
-     * @return
-     */
-    TjDocinfo loginInfoTj(String userCode, String passwd);
+
 
     /**
      * 南京准考证打印登录
@@ -51,9 +45,6 @@ public interface IInxBiz {
      * @return
      */
     TjDocinfo loginInfo(String userCode, String passwd);
-
-    //南方医科大学保存并直接激活用户并赋予导师角色
-    String saveTutorUser(SysUser user);
 
 
     /**

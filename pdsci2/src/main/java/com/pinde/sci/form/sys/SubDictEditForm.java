@@ -1,6 +1,6 @@
 package com.pinde.sci.form.sys;
 
-import com.pinde.sci.model.mo.SysDict;
+import com.pinde.core.entyties.SysDict;
 
 import java.io.Serializable;
 import java.util.List;

@@ -14,7 +14,7 @@
             <th width="5%">总成绩</th>
             <th width="6%">排名</th>
             <th width="8%">录取状态</th>
-            <th width="14%">操作</th>
+            <th width="16%">操作</th>
         </tr>
         <c:forEach items="${recruitList}" var="recruit" varStatus="a">
             <tr>
@@ -64,9 +64,9 @@
                     <c:otherwise>
                         <td>
                             <c:if test="${recruit.confirmFlag ne 'Y'}">
-                                <a class="btn" onclick="modifyResult('${recruit.recruitFlow}','${recruit.sysUser.userName}');">修改</a>
-                                <a class="btn" onclick="confireRecruitY('${recruit.recruitFlow}','${recruit.doctorFlow}','${recruit.sysUser.userName}');">录取</a>
-                                <a class="btn" onclick="confireRecruitN('${recruit.recruitFlow}','${recruit.doctorFlow}','${recruit.sysUser.userName}');">不录取</a>
+                                <a  onclick="modifyResult('${recruit.recruitFlow}','${recruit.sysUser.userName}');">修改</a>
+                                <a  onclick="confireRecruitY('${recruit.recruitFlow}','${recruit.doctorFlow}','${recruit.sysUser.userName}');">录取</a>
+                                <a  onclick="confireRecruitN('${recruit.recruitFlow}','${recruit.doctorFlow}','${recruit.sysUser.userName}');">不录取</a>
                             </c:if>
                             <%--<a class="btn" onclick="auditRecruit('${recruit.recruitFlow}','${recruit.doctorFlow}','view');">查看</a>--%>
                         </td>

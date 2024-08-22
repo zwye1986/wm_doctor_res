@@ -1,10 +1,6 @@
 package com.pinde.sci.biz.jszy;
 
-import com.pinde.sci.form.jszy.JszyBackTrainForm;
 import com.pinde.sci.model.mo.DoctorAuth;
-import com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs;
-import com.pinde.sci.model.mo.ResRec;
-import org.dom4j.DocumentException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

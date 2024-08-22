@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.LcjnSkillCfgDetail;
 import com.pinde.sci.model.mo.LcjnSkillCfgDetailExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface LcjnSkillCfgDetailMapper {
     int countByExample(LcjnSkillCfgDetailExample example);

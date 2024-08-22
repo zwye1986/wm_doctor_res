@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResOrgTime;
 import com.pinde.sci.model.mo.ResOrgTimeExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResOrgTimeMapper {
     int countByExample(ResOrgTimeExample example);

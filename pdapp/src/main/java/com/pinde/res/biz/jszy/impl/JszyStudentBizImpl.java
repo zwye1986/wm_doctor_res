@@ -2,6 +2,7 @@ package com.pinde.res.biz.jszy.impl;
 
 import com.pinde.app.common.GlobalConstant;
 import com.pinde.app.common.GlobalUtil;
+import com.pinde.core.commom.enums.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -10,10 +11,6 @@ import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.jszy.IJszyAppBiz;
 import com.pinde.res.biz.jszy.IJszyStudentBiz;
 import com.pinde.res.dao.jszy.ext.*;
-import com.pinde.res.enums.jszy.DiscipleStatusEnum;
-import com.pinde.res.enums.jszy.JszyResTrainYearEnum;
-import com.pinde.res.enums.jszy.JszyTrainCategoryEnum;
-import com.pinde.res.enums.stdp.RegistryTypeEnum;
 import com.pinde.res.model.jszy.mo.AnnualAssessmentExt;
 import com.pinde.res.model.jszy.mo.ResGraduationAssessmentExt;
 import com.pinde.res.model.jszy.mo.UploadFileForm;
@@ -1040,7 +1037,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 		String unit = jszyAppBiz.getCfgByCode("res_rotation_unit");
 		//默认按月计算
 		int step = 30;
-		if (com.pinde.res.enums.hbres.SchUnitEnum.Week.getId().equals(unit)) {
+		if (SchUnitEnum.Week.getId().equals(unit)) {
 			//如果是周按7天算/没配置或者选择月按30天
 			step = 7;
 			BigDecimal realMonth = BigDecimal.valueOf(0);

@@ -3,7 +3,6 @@ package com.pinde.sci.dao.base;
 import com.pinde.sci.form.res.ResEvaluationDeptExt;
 import com.pinde.sci.model.mo.ResEvaluationCfg;
 import com.pinde.sci.model.mo.ResEvaluationDept;
-import com.pinde.sci.model.mo.ResEvaluationDeptExample;
 import com.pinde.sci.model.mo.SysDept;
 import org.apache.ibatis.annotations.Param;
 

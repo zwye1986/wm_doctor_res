@@ -3,6 +3,7 @@ package com.pinde.res.ctrl.jswjw;
 import com.pinde.app.common.GeneralController;
 import com.pinde.app.common.GlobalConstant;
 import com.pinde.app.common.InitConfig;
+import com.pinde.core.commom.enums.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -11,11 +12,6 @@ import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.hbres.IResInprocessInfoBiz;
 import com.pinde.res.biz.jswjw.*;
 import com.pinde.res.biz.stdp.*;
-import com.pinde.res.enums.hbres.ResAssessScoreTypeEnum;
-import com.pinde.res.enums.jswjw.CheckStatusEnum;
-import com.pinde.res.enums.jswjw.JsRecDocTypeEnum;
-import com.pinde.res.enums.jswjw.TrainCategoryEnum;
-import com.pinde.res.enums.stdp.*;
 import com.pinde.res.model.jswjw.mo.FromItem;
 import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgItemForm;
@@ -142,7 +138,7 @@ public class JswjwWxKzrController extends GeneralController {
 		dictMapList.add(dictMap);
 
 		dictMap = new HashMap<>();
-		dictMap.put("trainingTypeId",TrainCategoryEnum.WMFirst.getId());
+		dictMap.put("trainingTypeId", TrainCategoryEnum.WMFirst.getId());
 		dictMap.put("trainingTypeName",TrainCategoryEnum.WMFirst.getName());
 		dictList = new ArrayList<>();
 		dictList.add(dict);

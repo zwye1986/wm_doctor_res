@@ -3,7 +3,7 @@ package com.pinde.sci.ctrl.cfg;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
-import com.pinde.sci.biz.sch.*;
+import com.pinde.sci.biz.sch.ISchManualBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;

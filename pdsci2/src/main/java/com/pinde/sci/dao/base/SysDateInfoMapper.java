@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.SysDateInfo;
 import com.pinde.sci.model.mo.SysDateInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysDateInfoMapper {
     int countByExample(SysDateInfoExample example);

@@ -1,11 +1,8 @@
 package com.pinde.sci.model.res;
 
 import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.model.mo.SysDict;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class HospitalDoctorExportInfo implements Serializable{
 

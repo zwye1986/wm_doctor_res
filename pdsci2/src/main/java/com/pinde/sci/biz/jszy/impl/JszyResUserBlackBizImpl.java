@@ -2,12 +2,10 @@ package com.pinde.sci.biz.jszy.impl;
 
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.jsres.IJsResUserBlackBiz;
 import com.pinde.sci.biz.jszy.IJszyResUserBlackBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.JsresUserBalcklistMapper;
-import com.pinde.sci.dao.jsres.JsResUserBalckListExtMapper;
 import com.pinde.sci.dao.jszy.JszyResUserBalckListExtMapper;
 import com.pinde.sci.model.mo.JsresUserBalcklist;
 import com.pinde.sci.model.mo.JsresUserBalcklistExample;

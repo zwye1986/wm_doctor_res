@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.InxInfo;
 import com.pinde.sci.model.mo.InxInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface InxInfoMapper {
     int countByExample(InxInfoExample example);

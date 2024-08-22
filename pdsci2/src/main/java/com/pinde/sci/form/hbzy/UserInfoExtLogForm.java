@@ -1,6 +1,9 @@
 package com.pinde.sci.form.hbzy;
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.PubUserResume;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResDoctorRecruit;
+import com.pinde.sci.model.mo.SysUser;
 
 import java.io.Serializable;
 import java.util.Map;

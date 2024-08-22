@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResSkillOrg;
 import com.pinde.sci.model.mo.ResSkillOrgExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResSkillOrgMapper {
     int countByExample(ResSkillOrgExample example);

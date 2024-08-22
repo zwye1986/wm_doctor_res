@@ -1,6 +1,6 @@
 package com.pinde.res.enums.osca;
 
-import com.pinde.core.commom.GeneralEnum;
+import com.pinde.core.commom.enums.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
 public enum ScanDocStatusEnum implements GeneralEnum<String> {

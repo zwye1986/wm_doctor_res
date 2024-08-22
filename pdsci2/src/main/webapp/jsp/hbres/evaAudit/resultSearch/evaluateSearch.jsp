@@ -58,6 +58,11 @@
         jboxOpen(url,name+"评分详情",800,500);
     }
 
+    function operDetailByCfgFlow(name,keyCode,date,cfgFlow){
+        var url = "<s:url value='/res/evaluateHospitalResult/gradeSearchDoc'/>?gradeRole=${param.gradeRole}&keyCode="+keyCode+"&date="+date+"&cfgFlow="+cfgFlow+"&role=${role}";
+        jboxOpen(url,name+"评分详情",800,500);
+    }
+
     function operDetail2(name,recFlow,date,processFlow){
         var url = "<s:url value='/res/evaluateHospitalResult/gradeSearchDoc'/>?gradeRole=${param.gradeRole}&recFlow="+recFlow+"&date="+date+"&processFlow="+processFlow+"&role=${role}";
         jboxOpen(url,name+"评分详情",800,500);
@@ -972,8 +977,9 @@
                                     <c:if test="${param.gradeRole eq 'teacher'  or param.gradeRole eq '360teacher'}">
                                         <c:set value="6" var="col"/>
                                         <col width="5%"/>
-                                        <col width="20%"/>
-                                        <col width="20%"/>
+                                        <col width="15%"/>
+                                        <col width="10%"/>
+                                        <col width="15%"/>
                                         <col width="20%"/>
                                         <col width="15%"/>
                                         <col width="15%"/>
@@ -1001,6 +1007,7 @@
                                         <th>姓名</th>
                                         <th>年份</th>
                                         <th>科室</th>
+                                        <th >评分表单</th>
                                     </c:if>
                                     <c:if test="${param.gradeRole eq 'head'}">
 
@@ -1034,6 +1041,8 @@
                                         <c:if test="${param.gradeRole eq 'teacher'  or param.gradeRole eq '360teacher'}">
                                             <td style="text-align: center;padding-left: 10px;">
                                                     ${data.deptName}</td>
+                                            <td style="text-align: center;padding-left: 10px;">
+                                                    ${data.cfgCodeName}</td>
                                         </c:if>
                                         <c:if test="${param.gradeRole eq 'doctor'  or param.gradeRole eq '360doctor'}">
                                             <td style="text-align: center;padding-left: 10px;">
@@ -1053,14 +1062,19 @@
                                             <%--</th>--%>
                                             <%--<th style="font-weight:normal;">${scoreMap[key]}</th>--%>
                                         <c:if test="${param.gradeRole ne 'doctor' and param.gradeRole ne '360doctor'}">
-                                            <td style="font-weight:normal;">${allScore}</td>
+                                            <c:if test="${data.totalScore != null && data.totalScore != ''}">
+                                                <td style="font-weight:normal;" >${data.totalScore}</td>
+                                            </c:if>
+                                            <c:if test="${empty data.totalScore}">
+                                                <td style="font-weight:normal;" >${allScore}</td>
+                                            </c:if>
                                         </c:if>
                                         <td>
                                             <c:if test="${param.gradeRole eq 'doctor'  or param.gradeRole eq '360doctor'}">
                                             <a style="cursor: pointer;color: blue;font-weight: normal;" onclick="operDetail('${name}','${key}','${data.sessionNumber}','${data.processFlow}');">
                                                 </c:if>
                                                 <c:if test="${param.gradeRole ne 'doctor' and param.gradeRole ne '360doctor'}">
-                                                <a style="cursor: pointer;color: blue;font-weight: normal;" onclick="operDetail('${name}','${key}','${data.sessionNumber}');">
+                                                <a style="cursor: pointer;color: blue;font-weight: normal;" onclick="operDetailByCfgFlow('${name}','${key}','${data.sessionNumber}','${data.cfgFlow}');">
                                                     </c:if>
                                                     <c:if test="${!empty data.avg}">
                                                         ${data.avg}

@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.SchAutoArrange;
 import com.pinde.sci.model.mo.SchAutoArrangeExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SchAutoArrangeMapper {
     int countByExample(SchAutoArrangeExample example);

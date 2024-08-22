@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.osca;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -14,7 +15,10 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.OscaOrgMenu;
+import com.pinde.sci.model.mo.OscaOrgSpe;
+import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.osca.OscaOrgSpeExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +28,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/osca/orgSpeGlobal")

@@ -1,9 +1,8 @@
 package com.pinde.sci.enums.pub;
 
-import com.pinde.core.commom.GeneralEnum;
+import com.pinde.core.commom.enums.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.enums.sys.CertificateTypeEnum;
 
 import java.util.HashMap;
 import java.util.Map;

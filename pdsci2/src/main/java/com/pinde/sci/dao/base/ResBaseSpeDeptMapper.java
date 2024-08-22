@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResBaseSpeDept;
 import com.pinde.sci.model.mo.ResBaseSpeDeptExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResBaseSpeDeptMapper {
     int countByExample(ResBaseSpeDeptExample example);

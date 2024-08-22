@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResBaseFundDetail;
 import com.pinde.sci.model.mo.ResBaseFundDetailExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResBaseFundDetailMapper {
     int countByExample(ResBaseFundDetailExample example);

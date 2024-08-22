@@ -1,6 +1,7 @@
 package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.MybatisObject;
+
 import java.math.BigDecimal;
 
 public class GcpContract extends MybatisObject {

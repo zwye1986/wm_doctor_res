@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.inx;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ClientIPUtils;
 import com.pinde.core.util.DateUtil;

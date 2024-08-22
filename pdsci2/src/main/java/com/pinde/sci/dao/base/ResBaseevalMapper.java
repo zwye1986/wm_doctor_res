@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResBaseeval;
 import com.pinde.sci.model.mo.ResBaseevalExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResBaseevalMapper {
     int countByExample(ResBaseevalExample example);

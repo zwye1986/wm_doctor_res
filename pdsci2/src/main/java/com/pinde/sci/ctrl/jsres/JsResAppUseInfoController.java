@@ -2,7 +2,9 @@ package com.pinde.sci.ctrl.jsres;
 
 
 import com.pinde.core.page.PageHelper;
-import com.pinde.core.util.*;
+import com.pinde.core.util.DateUtil;
+import com.pinde.core.util.ExcleUtile;
+import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.*;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.pub.IMsgBiz;
@@ -16,9 +18,12 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
-import com.pinde.sci.enums.sys.*;
-import com.pinde.sci.model.mo.*;
-import org.apache.commons.collections.CollectionUtils;
+import com.pinde.sci.enums.sys.OrgLevelEnum;
+import com.pinde.sci.enums.sys.OrgTypeEnum;
+import com.pinde.sci.model.mo.ResJointOrg;
+import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.sci.model.mo.SysUser;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +32,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author tiger

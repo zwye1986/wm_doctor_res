@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.JsresAttendance;
 import com.pinde.sci.model.mo.JsresAttendanceExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface JsresAttendanceMapper {
     int countByExample(JsresAttendanceExample example);
