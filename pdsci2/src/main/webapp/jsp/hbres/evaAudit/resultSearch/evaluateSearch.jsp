@@ -967,12 +967,13 @@
                                         <col width="5%"/>
                                         <col width="10%"/>
                                         <col width="5%"/>
-                                        <col width="20%"/>
+                                        <col width="8%"/>
+                                        <col width="8%"/>
                                         <col width="15%"/>
-                                        <col width="25%"/>
                                         <col width="10%"/>
-                                        <col width="5%"/>
-                                        <col width="5%"/>
+                                        <col width="19%"/>
+                                        <col width="10%"/>
+                                        <col width="10%"/>
                                     </c:if>
                                     <c:if test="${param.gradeRole eq 'teacher'  or param.gradeRole eq '360teacher'}">
                                         <c:set value="6" var="col"/>
@@ -1002,6 +1003,7 @@
                                         <th>科室</th>
                                         <th>轮转时间</th>
                                         <th>人员类型</th>
+                                        <th>评分表单</th>
                                     </c:if>
                                     <c:if test="${param.gradeRole eq 'teacher' or param.gradeRole eq '360teacher'}">
                                         <th>姓名</th>
@@ -1055,7 +1057,9 @@
                                         <c:if test="${param.gradeRole eq 'doctor' or param.gradeRole eq '360doctor'}">
                                             <td style="text-align: center;padding-left: 10px;">
                                                     ${data.doctorTypeName}</td>
-                                            <td style="font-weight:normal;">${data.sumScore}</td>
+                                            <td style="text-align: center;padding-left: 10px;">
+                                                    ${data.cfgCodeName}</td>
+                                            <td style="font-weight:normal;">${data.totalScore}</td>
                                         </c:if>
                                             <%--<th>--%>
                                             <%--<a style="cursor: pointer;color: blue;font-weight: normal;" onclick="operDetail('${name}','${key}','${data.sessionNumber}');">${avgMap[avgScoreKey]}</a>--%>
