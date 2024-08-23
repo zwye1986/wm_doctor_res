@@ -94,7 +94,7 @@ function setType(flag){
 			</div>
 
 			<div class="form_btn" >
-				<input class="btn_green" type="button" onclick="search()"  value="查&#12288;询"/>
+				<input class="btn_green" type="button" onclick="toPage(1)"  value="查&#12288;询"/>
 			</div>
 
 		</form>
