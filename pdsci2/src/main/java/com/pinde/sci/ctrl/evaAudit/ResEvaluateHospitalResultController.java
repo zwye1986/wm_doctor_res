@@ -160,6 +160,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             List<String> recTypeIdList = new ArrayList<>();
 //            recTypeIdList.add(ResRecTypeEnum.NurseDoctorGrade.getId());
             recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGrade.getId());
+            recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
             paramMap.put("recTypeIdList", recTypeIdList);
 
             paramMap.put("userName", userName);
@@ -169,32 +170,33 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             PageHelper.startPage(currentPage, getPageSize(request));
             List<teacherRec> userList = resGradeBiz.getDoctorByRecAndAvgScore(paramMap);
 
-            for (teacherRec teacherRec : userList) {
-                Map<String, Object> param = new HashMap<String, Object>();
-                param.put("orgFlow", orgFlow);
-                param.put("doctorFlow", teacherRec.getUserFlow());
-                List<String> recTypeIdList1 = new ArrayList<>();
-                recTypeIdList1.add(ResRecTypeEnum.TeacherDoctorGrade.getId());
-                param.put("recTypeIdList", recTypeIdList1);
-                param.put("deptFlow", deptFlow);
-                param.put("processFlow", teacherRec.getProcessFlow());
-                param.put("recFlow", null);
-                List<Map<String, String>> recList = resGradeBiz.getRecContentByProcess3(param);
-                teacherRec.setOperUserName(recList.get(0).get("operUserName"));
-                int scoreSum = 0;
-                List<ResAssessCfgTitleForm> assessCfgList = assessCfgBiz.readForm(recList.get(0).get("cfgFlow"));
-                if (null != assessCfgList && assessCfgList.size() > 0) {
-                    for (ResAssessCfgTitleForm resAssessCfgTitleForm : assessCfgList) {
-                        if (null != resAssessCfgTitleForm.getItemList() && resAssessCfgTitleForm.getItemList().size() > 0) {
-                            for (ResAssessCfgItemForm resAssessCfgItemForm : resAssessCfgTitleForm.getItemList()) {
-                                int s = Integer.parseInt("".equals(resAssessCfgItemForm.getScore()) ? "0" : resAssessCfgItemForm.getScore());
-                                scoreSum += s;
-                            }
-                        }
-                    }
-                }
-                teacherRec.setSumScore(String.valueOf(scoreSum));
-            }
+//            for (teacherRec teacherRec : userList) {
+//                Map<String, Object> param = new HashMap<String, Object>();
+//                param.put("orgFlow", orgFlow);
+//                param.put("doctorFlow", teacherRec.getUserFlow());
+//                List<String> recTypeIdList1 = new ArrayList<>();
+//                recTypeIdList1.add(ResRecTypeEnum.TeacherDoctorGrade.getId());
+//                recTypeIdList1.add(ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
+//                param.put("recTypeIdList", recTypeIdList1);
+//                param.put("deptFlow", deptFlow);
+//                param.put("processFlow", teacherRec.getProcessFlow());
+//                param.put("recFlow", null);
+//                List<Map<String, String>> recList = resGradeBiz.getRecContentByProcess3(param);
+//                teacherRec.setOperUserName(recList.get(0).get("operUserName"));
+//                int scoreSum = 0;
+//                List<ResAssessCfgTitleForm> assessCfgList = assessCfgBiz.readForm(recList.get(0).get("cfgFlow"));
+//                if (null != assessCfgList && assessCfgList.size() > 0) {
+//                    for (ResAssessCfgTitleForm resAssessCfgTitleForm : assessCfgList) {
+//                        if (null != resAssessCfgTitleForm.getItemList() && resAssessCfgTitleForm.getItemList().size() > 0) {
+//                            for (ResAssessCfgItemForm resAssessCfgItemForm : resAssessCfgTitleForm.getItemList()) {
+//                                int s = Integer.parseInt("".equals(resAssessCfgItemForm.getScore()) ? "0" : resAssessCfgItemForm.getScore());
+//                                scoreSum += s;
+//                            }
+//                        }
+//                    }
+//                }
+//                teacherRec.setSumScore(String.valueOf(scoreSum));
+//            }
 
             model.addAttribute("datas", userList);
             model.addAttribute("studentTypes", studentType);
@@ -447,7 +449,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             List<String> recTypeIdList = new ArrayList<>();
 //            recTypeIdList.add(ResRecTypeEnum.NurseDoctorGrade.getId());
             recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGrade.getId());
-            recTypeIdList.add(ResRecTypeEnum.ManageDoctorAssess360.getId());
+            recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
 //            recTypeIdList.add(ResRecTypeEnum.DeptGrade.getId());
 //            recTypeIdList.add(ResRecTypeEnum.TeacherGrade.getId());
             paramMap.put("recTypeIdList", recTypeIdList);
@@ -689,8 +691,9 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             paramMap.put("roleFlow", doctorRoleFlow);
 
             List<String> recTypeIdList = new ArrayList<>();
-            recTypeIdList.add(ResRecTypeEnum.NurseDoctorGrade.getId());
+//            recTypeIdList.add(ResRecTypeEnum.NurseDoctorGrade.getId());
             recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGrade.getId());
+            recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
             paramMap.put("recTypeIdList", recTypeIdList);
 
             paramMap.put("userName", userName);
@@ -699,36 +702,6 @@ public class ResEvaluateHospitalResultController extends GeneralController {
 
             //查出当前机构的所有带教老师
             userList = resGradeBiz.getDoctorByRecAndAvgScore(paramMap);
-
-            for (teacherRec teacherRec : userList) {
-                Map<String, Object> param = new HashMap<String, Object>();
-                param.put("orgFlow", orgFlow);
-                param.put("doctorFlow", teacherRec.getUserFlow());
-                List<String> recTypeIdList1 = new ArrayList<>();
-                recTypeIdList1.add(ResRecTypeEnum.TeacherDoctorGrade.getId());
-                param.put("recTypeIdList", recTypeIdList1);
-                param.put("deptFlow", deptFlow);
-                param.put("processFlow", teacherRec.getProcessFlow());
-                param.put("recFlow", null);
-                List<Map<String, String>> recList = resGradeBiz.getRecContentByProcess3(param);
-                if (CollectionUtils.isNotEmpty(recList)) {
-                    teacherRec.setOperUserName(recList.get(0).get("operUserName"));
-                    int scoreSum = 0;
-                    List<ResAssessCfgTitleForm> assessCfgList = assessCfgBiz.readForm(recList.get(0).get("cfgFlow"));
-                    if (null != assessCfgList && assessCfgList.size() > 0) {
-                        for (ResAssessCfgTitleForm resAssessCfgTitleForm : assessCfgList) {
-                            if (null != resAssessCfgTitleForm.getItemList() && resAssessCfgTitleForm.getItemList().size() > 0) {
-                                for (ResAssessCfgItemForm resAssessCfgItemForm : resAssessCfgTitleForm.getItemList()) {
-                                    int s = Integer.parseInt("".equals(resAssessCfgItemForm.getScore()) ? "0" : resAssessCfgItemForm.getScore());
-                                    scoreSum += s;
-                                }
-                            }
-                        }
-                    }
-                    teacherRec.setSumScore(String.valueOf(scoreSum));
-                }
-            }
-
         } else if ("teacher".equals(gradeRole)) {
             //带教flow
 //            recType = ResRecTypeEnum.TeacherGrade.getId();
@@ -1132,17 +1105,411 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             wb.write(response.getOutputStream());
         }
         if ("doctor".equals(gradeRole)) {
-            titles = new String[]{
-                    "userName:姓名",
-                    "trainingSpeName:培训专业",
-                    "sessionNumber:年级",
-                    "deptName:科室",
-                    "startTime:轮转开始时间",
-                    "endTime:轮转结束时间",
-                    "sumScore:总分",
-                    "avg:得分",
-                    "operUserName:评价人"
-            };
+            List<Map<String,String>> resultList = new ArrayList<>();
+            for(teacherRec user : userList) {
+                Map<String, Object> queryMap = new HashMap<String, Object>();
+                queryMap.put("doctorFlow", user.getUserFlow());
+                List<String> recTypeIdList = new ArrayList<>();
+                recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGrade.getId());
+                recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
+                queryMap.put("recTypeIdList", recTypeIdList);
+                queryMap.put("deptFlow", deptFlow);
+                queryMap.put("processFlow", user.getProcessFlow());
+                List<Map<String, String>> maps = resGradeBiz.getRecContentByProcess3(queryMap);
+                if (CollectionUtils.isEmpty(maps)) {
+                    continue;
+                }
+                for (Map<String, String> map : maps) {
+                    Map<String,String> result = new HashMap<>();
+                    result.put("cfgFlow",user.getCfgFlow());
+                    result.put("userName",user.getUserName());
+                    result.put("trainingSpeName",user.getTrainingSpeName());
+                    result.put("sessionNumber",user.getSessionNumber());
+                    result.put("deptName",user.getDeptName());
+                    result.put("startTime",user.getStartTime());
+                    result.put("endTime",user.getEndTime());
+                    result.put("cfgCodeName",user.getCfgCodeName());
+                    result.put("totalScore",user.getTotalScore());
+                    result.put("avgScore",user.getAvg());
+                    result.put("operUserName",map.get("operUserName"));
+
+                    String content = map.get("content");
+                    Map<String, Object> gradeMap = resRecBiz.parseGradeXml(content);
+                    if (gradeMap != null && !gradeMap.isEmpty()) {
+                        for (String gk : gradeMap.keySet()) {
+                            Object o = gradeMap.get(gk);
+                            if (o instanceof Map) {
+                                Map<String, String> dataMap = (Map<String, String>) o;
+                                if (dataMap != null) {
+                                    try {
+                                        String scoreS = dataMap.get("score");
+                                        result.put(gk,scoreS);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            } else {
+                                try {
+                                    String scoreS = (String) gradeMap.get("totalScore");
+                                    result.put("doctorTotalScore",scoreS);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                    resultList.add(result);
+                }
+            }
+
+
+            List<String> titleList = new ArrayList<>();
+            titleList.add("姓名");
+            titleList.add("培训专业");
+            titleList.add("科室");
+            titleList.add("年级");
+            titleList.add("轮转开始时间");
+            titleList.add("轮转结束时间");
+            titleList.add("评分表单");
+            titleList.add("标准总分");
+            titleList.add("得分");
+            titleList.add("评价人");
+            titleList.add("职业素养");
+            titleList.add("专业能力");
+            titleList.add("病人管理");
+            titleList.add("病人照护");
+            titleList.add("沟通合作");
+            titleList.add("教学能力");
+            titleList.add("学习提升");
+            titleList.add("其他");
+
+            //创建工作簿
+            HSSFWorkbook wb = new HSSFWorkbook();
+            // 为工作簿添加sheet
+            HSSFSheet sheet = wb.createSheet("sheet1");
+            //定义将用到的样式
+            HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
+            styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+
+            //列宽自适应
+            HSSFRow rowOne = sheet.createRow(0);//第1行
+            HSSFRow rowTwo = sheet.createRow(1);//第2行
+
+            // 设计表头
+            HSSFCell cellTitleOne;
+            CellRangeAddress cellRangeAddress;
+
+            for(int i =0; i<10;i++){
+                cellRangeAddress = new CellRangeAddress(0, 1, i, i);
+                sheet.addMergedRegion(cellRangeAddress);
+                cellTitleOne = rowOne.createCell(i);
+                cellTitleOne.setCellValue(titleList.get(i));
+                cellTitleOne.setCellStyle(styleCenter);
+            }
+
+            cellRangeAddress = new CellRangeAddress(0, 0, 10, 11);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowOne.createCell(10);
+            cellTitleOne.setCellValue(titleList.get(10));
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(1, 1, 10, 10);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowTwo.createCell(10);
+            cellTitleOne.setCellValue("热爱医学事业，遵守法律与行业规范，遵纪守时，自律守信");
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(1, 1, 11, 11);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowTwo.createCell(11);
+            cellTitleOne.setCellValue("以病人为中心，尊重和维护病人权益，保护病人隐私");
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(0, 0, 12, 17);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowOne.createCell(12);
+            cellTitleOne.setCellValue(titleList.get(11));
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(1, 1, 12, 12);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowTwo.createCell(12);
+            cellTitleOne.setCellValue("能比较全面深入地理解基础及临床相关知识，具备一定的预防医学及人文、法律等相关知识");
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(1, 1, 13, 13);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowTwo.createCell(13);
+            cellTitleOne.setCellValue("能够正确采集病史和体检，整合归纳各类信息，提出综合分析依据，掌握诊断推理方法，提出科学临床判断");
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(1, 1, 14, 14);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowTwo.createCell(14);
+            cellTitleOne.setCellValue("能遵循循证医学思维，正确选择和实施治疗方案");
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(1, 1, 15, 15);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowTwo.createCell(15);
+            cellTitleOne.setCellValue("按要求完成一定量的常见病和多发病的诊治与临床操作，掌握本专业要求的临床技能");
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(1, 1, 16, 16);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowTwo.createCell(16);
+            cellTitleOne.setCellValue("能够正确分析病史，正确使用影像诊断及实验室检查，并对各种检查资料进行分析总结，并展现出良好的临床判断能力");
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(1, 1, 17, 17);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowTwo.createCell(17);
+            cellTitleOne.setCellValue("临床影像或临床实验室操作的掌握程度");
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(0, 0, 18, 18);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowOne.createCell(18);
+            cellTitleOne.setCellValue(titleList.get(12));
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(1, 1, 18, 18);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowTwo.createCell(18);
+            cellTitleOne.setCellValue("以病人安全为核心，运用专业能力，细致观察病人病情变化，提供有效适宜的医疗服务");
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(0, 0, 19, 19);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowOne.createCell(19);
+            cellTitleOne.setCellValue(titleList.get(13));
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(1, 1, 19, 19);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowTwo.createCell(19);
+            cellTitleOne.setCellValue("对患者和家属服务周到。认真倾听他们的要求，并能为其提供相关教育和咨询");
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(0, 0, 20, 21);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowOne.createCell(20);
+            cellTitleOne.setCellValue(titleList.get(14));
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(1, 1, 20, 20);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowTwo.createCell(20);
+            cellTitleOne.setCellValue("具备临床沟通能力，运用医患沟通的原则和方法，沟通效果好");
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(1, 1, 21, 21);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowTwo.createCell(21);
+            cellTitleOne.setCellValue("有较好的交流沟通合作能力，能够与主管医师，护士和其他专业的医师密切协调合作");
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(0, 0, 22, 22);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowOne.createCell(22);
+            cellTitleOne.setCellValue(titleList.get(15));
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(1, 1, 22, 22);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowTwo.createCell(22);
+            cellTitleOne.setCellValue("具有较好的教学能力，能够指导低年级住院医师或实习医师工作，完成指定的教学任务");
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(0, 0, 23, 25);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowOne.createCell(23);
+            cellTitleOne.setCellValue(titleList.get(16));
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(1, 1, 23, 23);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowTwo.createCell(23);
+            cellTitleOne.setCellValue("有自主学习和终身学习的理念，运用各种学术资源，不断反思与学习");
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(1, 1, 24, 24);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowTwo.createCell(24);
+            cellTitleOne.setCellValue("持续追踪医学进展，更新医学知识和理念，不断提高能力");
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(1, 1, 25, 25);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowTwo.createCell(25);
+            cellTitleOne.setCellValue("结合临床问题与需求，开展或参与科学研究");
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(0, 0, 26, 26);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowOne.createCell(26);
+            cellTitleOne.setCellValue(titleList.get(17));
+            cellTitleOne.setCellStyle(styleCenter);
+
+            cellRangeAddress = new CellRangeAddress(1, 1, 26, 26);
+            sheet.addMergedRegion(cellRangeAddress);
+            cellTitleOne = rowTwo.createCell(26);
+            cellTitleOne.setCellValue("总得分");
+            cellTitleOne.setCellStyle(styleCenter);
+
+            String fileName = "学员得分.xls";
+            for (int i = 0; i < resultList.size(); i++) {
+                int j = 0;
+                HSSFRow newRow = sheet.createRow(i + 2); //第3行
+                Map<String,String> map = resultList.get(i);
+                HSSFCell cellOne = newRow.createCell(j++);
+                cellOne.setCellStyle(styleCenter);
+                cellOne.setCellValue(map.get("userName"));
+                cellOne = newRow.createCell(j++);
+                cellOne.setCellStyle(styleCenter);
+                cellOne.setCellValue(map.get("trainingSpeName"));
+                cellOne = newRow.createCell(j++);
+                cellOne.setCellStyle(styleCenter);
+                cellOne.setCellValue(map.get("deptName"));
+                cellOne = newRow.createCell(j++);
+                cellOne.setCellStyle(styleCenter);
+                cellOne.setCellValue(map.get("sessionNumber"));
+                cellOne = newRow.createCell(j++);
+                cellOne.setCellStyle(styleCenter);
+                cellOne.setCellValue(map.get("startTime"));
+                cellOne = newRow.createCell(j++);
+                cellOne.setCellStyle(styleCenter);
+                cellOne.setCellValue(map.get("endTime"));
+                cellOne = newRow.createCell(j++);
+                cellOne.setCellStyle(styleCenter);
+                cellOne.setCellValue(map.get("cfgCodeName"));
+                cellOne = newRow.createCell(j++);
+                cellOne.setCellStyle(styleCenter);
+                cellOne.setCellValue(map.get("totalScore"));
+                cellOne = newRow.createCell(j++);
+                cellOne.setCellStyle(styleCenter);
+                cellOne.setCellValue(map.get("avgScore"));
+                cellOne = newRow.createCell(j++);
+                cellOne.setCellStyle(styleCenter);
+                cellOne.setCellValue(map.get("operUserName"));
+
+                String cfgFlow = map.get("cfgFlow");
+                if(Objects.equals(cfgFlow,"6d716bd3117f4b279d857a3cb1098db7")) {
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("0222c4d520534840afa68c5ba0d3c52a"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("80af170b9f4a4132a25247fcb56749ba"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("27842e3f36bc4804a6fc94b76d6c2d39"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("f61a1b8331de4a72b2efd7211b56914c") == null ? "-" : map.get("f61a1b8331de4a72b2efd7211b56914c"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("3653a04631b148a08b1cda7720f9252e")== null ? "-" : map.get("3653a04631b148a08b1cda7720f9252e"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("dc93bcc92d7845af88c506005c748782")== null ? "-" : map.get("dc93bcc92d7845af88c506005c748782"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("6c17ab54cd2548cb8edc3dd4689f1c1f")== null ? "-" : map.get("6c17ab54cd2548cb8edc3dd4689f1c1f"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("941b90f40c7c42b69e7ad772b7d1e55d")== null ? "-" : map.get("941b90f40c7c42b69e7ad772b7d1e55d"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("11c948bc85fb43738914fc47b0aeeac2")== null ? "-" : map.get("11c948bc85fb43738914fc47b0aeeac2"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("f37e240b95ab48f5b1a7a8e5d5b196c4")== null ? "-" : map.get("f37e240b95ab48f5b1a7a8e5d5b196c4"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("a8dd3fc2cadc4a65b00e06c37e833976"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("592c9c47b84f45c7bef6ad55dee19671"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("254edec51ad4426ab8da8682feb16ed9"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("1bff73a6b8f5485099639ad2f093454b"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("6ed672fa33e64184a6d92844ecaf7ed7"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("764540803daf481582b78ac09f56b8a6"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("2eb5a377da5b440c85c92e9b5bea8304"));
+
+                }
+                if(Objects.equals(cfgFlow,"d47325a126a54721985e5083a15e6901")) {
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("7cd2302c4adb4008a69c7f202f3cdf9f"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("71bad9a1786740449182b6bfea3abd71"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("f4eb3aed2f8e49c18aca962792eedcae"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("f61a1b8331de4a72b2efd7211b56914c") == null ? "-" : map.get("f61a1b8331de4a72b2efd7211b56914c"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("3653a04631b148a08b1cda7720f9252e")== null ? "-" : map.get("3653a04631b148a08b1cda7720f9252e"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("dc93bcc92d7845af88c506005c748782")== null ? "-" : map.get("dc93bcc92d7845af88c506005c748782"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("6c17ab54cd2548cb8edc3dd4689f1c1f")== null ? "-" : map.get("6c17ab54cd2548cb8edc3dd4689f1c1f"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("941b90f40c7c42b69e7ad772b7d1e55d")== null ? "-" : map.get("941b90f40c7c42b69e7ad772b7d1e55d"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("11c948bc85fb43738914fc47b0aeeac2")== null ? "-" : map.get("11c948bc85fb43738914fc47b0aeeac2"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("f37e240b95ab48f5b1a7a8e5d5b196c4")== null ? "-" : map.get("f37e240b95ab48f5b1a7a8e5d5b196c4"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("a033ff73f28c460bac5f49e1678ffc88"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("905e17338fac456b9f42110907817234"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("c709871725c24c51a827dad3380624e1"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("24c8fb3268de49a98182eb29a8480f6d"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("bf71a1c655d644f7af7e66ee6bd5ffaf"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("77a77bab106540809c468f5a93ffabb7"));
+                    cellOne = newRow.createCell(j++);
+                    cellOne.setCellStyle(styleCenter);
+                    cellOne.setCellValue(map.get("612589cdf65b47f3a3603af09cf56a00"));
+
+                }
+
+            }
+
+            fileName = URLEncoder.encode(fileName, "UTF-8");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+            response.setContentType("application/octet-stream;charset=UTF-8");
+            wb.write(response.getOutputStream());
+
         }
         if ("nurse".equals(gradeRole)){
             titles = new String[]{
