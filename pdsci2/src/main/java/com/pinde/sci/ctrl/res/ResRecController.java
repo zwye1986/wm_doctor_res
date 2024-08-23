@@ -47,7 +47,7 @@ import java.text.MessageFormat;
 import java.util.*;
 import java.util.Map.Entry;
 @Controller
-@RequestMapping("/z")
+@RequestMapping("/res/rec")
 public class ResRecController extends GeneralController {
 	final static String JXCF = "1";
 	final static String YN = "2";
