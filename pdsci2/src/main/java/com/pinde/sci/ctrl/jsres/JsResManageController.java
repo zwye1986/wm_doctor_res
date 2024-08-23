@@ -6363,10 +6363,12 @@ public class JsResManageController extends GeneralController {
 
 				if (GlobalConstant.FLAG_Y.equals(degreeType)) {
 					PubUserResume resume = userResumeBiz.readPubUserResume(doctorFlow);
-					String content = resume.getUserResume();
-					if (StringUtil.isNotBlank(content)) {
-						UserResumeExtInfoForm userResumeExt = JaxbUtil.converyToJavaBean(content, UserResumeExtInfoForm.class);
-						userResumeExtMap.put(doctorFlow, userResumeExt);
+					if (resume != null) {
+						String content = resume.getUserResume();
+						if (StringUtil.isNotBlank(content)) {
+							UserResumeExtInfoForm userResumeExt = JaxbUtil.converyToJavaBean(content, UserResumeExtInfoForm.class);
+							userResumeExtMap.put(doctorFlow, userResumeExt);
+						}
 					}
 				}
 			}
