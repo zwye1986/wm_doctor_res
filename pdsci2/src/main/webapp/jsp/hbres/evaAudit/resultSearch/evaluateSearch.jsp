@@ -889,7 +889,12 @@
                                         <td>${data.sessionNumber}</td>
                                         <td>${data.schDeptName}</td>
                                         <td>${data.schStartDate} <br>   ${data.schEndDate}</td>
-                                        <td>${nurseAllScore}</td>
+                                        <c:if test="${data.totalScore != null && data.totalScore != ''}">
+                                            <td style="font-weight:normal;" >${data.totalScore}</td>
+                                        </c:if>
+                                        <c:if test="${empty data.totalScore}">
+                                            <td style="font-weight:normal;" >${nurseAllScore}</td>
+                                        </c:if>
                                         <td>
                                             <a href="javascript:operNurseDetail('${data.userName}','${resRecTypeEnumNurseDoctorGrade.id}',
                                                 '${data.recFlow}','${data.processFlow}','${data.schResultFlow}','${data.schDeptFlow}',
