@@ -7,7 +7,7 @@
 
     <!--<includeAll path="db/changelog/" relativeToChangelogFile="false"/>-->
 
-    <changeSet id="20240710-01-zxr" author="czc">
+    <changeSet id="20240824-01-czc" author="czc">
         <sqlFile path="db/sql/2024/daijiao360.sql"/>
     </changeSet>
 
