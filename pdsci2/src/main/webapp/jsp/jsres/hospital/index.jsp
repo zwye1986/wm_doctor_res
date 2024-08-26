@@ -212,6 +212,15 @@
 			var url = "<s:url value='/jsres/manage/local/doctor/recruitAuditSearch'/>?source=hospital";
 			jboxLoad("content", url, true);
 		}
+
+		function recruitAuditSearchAcc(currentPage) {
+			if (currentPage == undefined) {
+				currentPage = 1;
+			}
+			var url = "<s:url value='/jsres/manage/local/doctor/recruitAuditSearchAcc'/>?source=hospital";
+			jboxLoad("content", url, true);
+		}
+
 		function recruitSignupSearch(currentPage){
 			if(currentPage == undefined){
 				currentPage =1;
@@ -427,6 +436,12 @@
 			var roleFlag="${GlobalConstant.USER_LIST_LOCAL}";
 			jboxLoad("content","<s:url value='/jsres/recruitDoctorInfo/zltjOrgLocal'/>?roleFlag="+roleFlag,true);
 		}
+
+		function zlDocQueryAcc() {
+			var roleFlag = "${GlobalConstant.USER_LIST_LOCAL}";
+			jboxLoad("content", "<s:url value='/jsres/recruitDoctorInfo/mainAcc'/>?roleFlag=" + roleFlag, true);
+		}
+
 		function signUpmain(typeId){
 			var roleFlag="${GlobalConstant.USER_LIST_LOCAL}";
 			jboxLoad("content","<s:url value='/jsres/examSignUp/globalMain'/>?roleFlag="+roleFlag+"&typeId="+typeId,true);
@@ -475,12 +490,24 @@
 			jboxLoad("content","<s:url value='/jsres/message/localSignupConfirm'/>",true);
 		}
 
+		function bmshAcc() {
+			jboxLoad("content", "<s:url value='/jsres/message/localSignupConfirmAcc'/>", true);
+		}
+
 		function xycjgl(){//学员成绩管理
 			jboxLoad("content","<s:url value='/jsres/hospital/achievementsDetails'/>",true);
 		}
 
+		function xycjglAcc() {//学员成绩管理
+			jboxLoad("content", "<s:url value='/jsres/hospital/achievementsDetailsAcc'/>", true);
+		}
+
 		function zlxygl(){//招录学员管理
 			jboxLoad("content","<s:url value='/jsres/hospital/achievements?sortType=Total'/>",true);
+		}
+
+		function zlxyglAcc() {//招录学员管理
+			jboxLoad("content", "<s:url value='/jsres/hospital/achievementsAcc?sortType=Total'/>", true);
 		}
 
 		function mscjgl(){//招录成绩管理
@@ -596,6 +623,16 @@
 							<dd class="menu_item" id="recruitAuditSearch"><a onclick="recruitAuditSearch();">学员报到审核</a></dd>
 							<dd class="menu_item"><a onclick="zlDocQuery();">招录学员查询</a></dd>
 							<dd class="menu_item"><a onclick="zltjOrg();">招录学员统计</a></dd>
+						</dl>
+						<dl class="menu">
+							<dt class="menu_title">
+								<i class="icon_menu menu_management"></i>助理全科招录
+							</dt>
+							<dd class="menu_item"><a onclick="bmshAcc();">招录报名审核</a></dd>
+							<dd class="menu_item"><a onclick="xycjglAcc();">招录成绩管理</a></dd>
+							<dd class="menu_item"><a onclick="zlxyglAcc();">招录录取管理</a></dd>
+							<dd class="menu_item"><a onclick="recruitAuditSearchAcc();">学员报到审核</a></dd>
+							<dd class="menu_item"><a onclick="zlDocQueryAcc();">招录学员查询</a></dd>
 						</dl>
 						<dl class="menu">
 							<dt class="menu_title">
