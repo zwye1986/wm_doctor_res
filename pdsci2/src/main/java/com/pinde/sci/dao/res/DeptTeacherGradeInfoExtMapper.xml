@@ -1351,11 +1351,9 @@
         FROM pdsci.res_doctor_sch_process rdsp
         join pdsci.DEPT_TEACHER_GRADE_INFO dtgi on rdsp.process_flow = dtgi.process_flow
         join  pdsci.sys_dept sd on rdsp.dept_flow = sd.dept_flow
-        LEFT JOIN res_doctor rd ON rd.doctor_flow = dtgi.oper_user_flow
         WHERE rdsp.record_status = 'Y'
         AND dtgi.record_status = 'Y'
         and  sd.record_status = 'Y'
-        and  rd.record_status = 'Y'
         and sd.org_flow = #{orgFlow}
         <if test='sessionNumber!=null and sessionNumber!=""'>
             and substr(dtgi.CREATE_TIME,1,4) = #{sessionNumber}
