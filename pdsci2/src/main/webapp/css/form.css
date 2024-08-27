@@ -11,7 +11,7 @@
         width: 300px;
         display: flex;
         padding: 3px 0;
-        line-height: 35px;
+        line-height: 31px;
         margin-left: -30px;
 
         .form_label {
@@ -26,6 +26,10 @@
 
         .form_content {
             margin: auto 0;
+            display: flex;
+            label{
+                display: flex;
+            }
         }
 
     }

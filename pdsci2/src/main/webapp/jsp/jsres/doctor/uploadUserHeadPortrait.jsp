@@ -116,7 +116,7 @@
            <%-- <div style="color: red;height: 60px;text-align: center;vertical-align: middle;">--%>
                     <c:choose>
                         <c:when test="${'Y' eq Msg}">
-                            <tr><td style="text-align: center"><h1 style="text-align: center;color: #44b549">上传成功</h1> </td> </tr>
+                            <tr><td style="text-align: center"><h1 style="text-align: center;color: #54B2E5">上传成功</h1> </td> </tr>
                         </c:when>
                         <c:otherwise>
                             <tr> <td ><h1  style="text-align: center;">上传失败,照片不符合要求，请重新上传！</h1><br/></td> </tr>

@@ -168,7 +168,7 @@
 </div>
 </span>
     <div style="text-align: center;margin-top:10px; ">
-        <input type="button" value="打印准考证" class="search" onclick="printOscaTicket();" style="font-size: 15px;background: #44b549;"/>
+        <input type="button" value="打印准考证" class="search" onclick="printOscaTicket();" style="font-size: 15px;background: #54B2E5;"/>
     </div>
 </div>
 </body>

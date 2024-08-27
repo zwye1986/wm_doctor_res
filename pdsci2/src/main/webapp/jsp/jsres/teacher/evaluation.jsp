@@ -32,7 +32,7 @@
 	 th { color:#333; height:35px; text-align:right; padding-right:10px; background:#ECF2FA;}
 	 td { text-align:left; padding-left:10px; line-height:35px;border: 1px solid #E7E7EB;}
 	.btn_green{display: inline-block;overflow: visible;padding: 0 20px;height: 30px;line-height: 28px;vertical-align: middle;text-align: center;text-decoration: none;border-radius: 3px;-moz-border-radius: 3px;-webkit-border-radius: 3px;font-size: 14px;cursor: pointer;font-family: "Microsoft YaHei";}
-	.btn_green{background-color: #44b549;color: #fff;border:none;}
+	.btn_green{background-color: #54B2E5;color: #fff;border:none;}
 	.btn_green:hover{background-color: #2f9833;}
 </style>
 <script type="text/javascript">

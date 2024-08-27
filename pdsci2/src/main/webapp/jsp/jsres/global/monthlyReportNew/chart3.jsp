@@ -41,7 +41,7 @@
       zoom:1;
     }
     .setLbtnBg{
-      background: #44b549;
+      background: #54B2E5;
       border-radius: 3px;
     }
     .tbLeft{

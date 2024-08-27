@@ -88,9 +88,9 @@
        		 &#12288;&#12288;
 				<c:set var="isFree" value="${pdfn:isFreeGlobal()}"></c:set>
 				<c:if test="${!isFree}">
-       		 		<a id="operA" class="btn_green" href="javascript:goLabel();" style="background-color:#44b549;">编&#12288;辑</a>
+       		 		<a id="operA" class="btn_green" href="javascript:goLabel();" style="background-color:#54B2E5;">编&#12288;辑</a>
 				</c:if>
-				<%--<a class="btn_green" href="javascript:goBack();" style="background-color:#44b549;">返&#12288;回</a>--%>
+				<%--<a class="btn_green" href="javascript:goBack();" style="background-color:#54B2E5;">返&#12288;回</a>--%>
         </h2>
 		 <div  style="text-align: right;margin-right: 100px;">
 			 <%--计划招录专业：<span id="speNum"></span>&#12288;&#12288;--%>

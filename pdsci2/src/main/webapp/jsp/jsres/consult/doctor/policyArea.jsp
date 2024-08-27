@@ -84,7 +84,7 @@
                         <div style="width: 700px;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 1;overflow: hidden;">
                                 ${consultInfo.consultAnswer}
                         </div>
-                        <a onclick="detailConsult('${consultInfo.consultInfoFlow}')"><font color="#44b549">查看详情</font></a>
+                        <a onclick="detailConsult('${consultInfo.consultInfoFlow}')"><font color="#54B2E5">查看详情</font></a>
                     </div>
                     <div class="cons-lit align-c">
                         <div>来自:</div>

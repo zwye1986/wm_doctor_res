@@ -100,7 +100,7 @@
                     <div class="flex align-c">
                         <div class="ques-icon">
                         </div>
-                        <a href="javascript:void(0);" onclick="myQuestionForm()" class="fs14" style="color: #44B549;">我的问题</a>
+                        <a href="javascript:void(0);" onclick="myQuestionForm()" class="fs14" style="color: #54B2E5;">我的问题</a>
                     </div>
                 </div>
 

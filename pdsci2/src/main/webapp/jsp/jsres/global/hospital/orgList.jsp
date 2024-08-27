@@ -124,7 +124,7 @@ function hideTable(obj) {
 		<c:forEach var="org" items="${orgList}" varStatus="s">
 			<div class="orgCss">
 				<div style="display: flex;flex-wrap: wrap;">
-					<div style="font-weight: bold;margin-left: 10px;background-color: #44b549;color: white;height: 20px;line-height: 20px;margin-top: 10px;border-radius: 3px;">
+					<div style="font-weight: bold;margin-left: 10px;background-color: #54B2E5;color: white;height: 20px;line-height: 20px;margin-top: 10px;border-radius: 3px;">
 						&#12288;${baseMap[org.orgFlow].baseGradeName}&#12288;
 					</div>
 					<div style="color:#409eff;font-weight: bold;cursor: pointer;" onclick="showOrg('${org.orgFlow}');">

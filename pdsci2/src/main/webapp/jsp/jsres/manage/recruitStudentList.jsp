@@ -33,7 +33,7 @@
             border-bottom: 1px #d0d0d0 solid;
         }
         .tab.active {
-            border-bottom: 3px #44b549 solid;
+            border-bottom: 3px #54B2E5 solid;
         }
 
         /* select */
@@ -60,7 +60,7 @@
         .zl-btn {
             height: 30px;
             width: 60px;
-            background-color: #44b549;
+            background-color: #54B2E5;
             border: none;
             border-radius: 8px;
             color: white;
@@ -232,7 +232,7 @@
         }
 
         .green {
-            color: #44b549;
+            color: #54B2E5;
         }
 
         .isHidden {
