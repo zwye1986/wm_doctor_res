@@ -20,7 +20,6 @@ import com.pinde.sci.enums.srm.AchScoreEnum;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.mo.*;
-import org.apache.ibatis.annotations.Param;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -31,7 +30,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import sun.security.krb5.internal.PAData;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;

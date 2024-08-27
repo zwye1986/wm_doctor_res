@@ -118,9 +118,19 @@
             jboxLoad("content", "<s:url value='/jsres/recruitDoctorInfo/globalCheckMain'/>?roleFlag=" + roleFlag, true);
         }
 
+        function zlDocCheckAcc() {
+            var roleFlag = "${GlobalConstant.USER_LIST_GLOBAL}";
+            jboxLoad("content", "<s:url value='/jsres/recruitDoctorInfo/globalCheckMainAcc'/>?roleFlag=" + roleFlag, true);
+        }
+
         function zlDocQuery() {
             var roleFlag = "${GlobalConstant.USER_LIST_GLOBAL}";
             jboxLoad("content", "<s:url value='/jsres/recruitDoctorInfo/mainGlobal'/>?roleFlag=" + roleFlag, true);
+        }
+
+        function zlDocQueryAcc() {
+            var roleFlag = "${GlobalConstant.USER_LIST_GLOBAL}";
+            jboxLoad("content", "<s:url value='/jsres/recruitDoctorInfo/mainGlobalAcc'/>?roleFlag=" + roleFlag, true);
         }
 
         function zltjCity() {
@@ -128,9 +138,19 @@
             jboxLoad("content", "<s:url value='/jsres/recruitDoctorInfo/zltjCityMain'/>?tabId=doctorType&roleFlag=" + roleFlag, true);
         }
 
+        function zltjCityAcc() {
+            var roleFlag = "${GlobalConstant.USER_LIST_GLOBAL}";
+            jboxLoad("content", "<s:url value='/jsres/recruitDoctorInfo/zltjCityMainAcc'/>?tabId=doctorType&roleFlag=" + roleFlag, true);
+        }
+
         function zltjOrg() {
             var roleFlag = "${GlobalConstant.USER_LIST_GLOBAL}";
             jboxLoad("content", "<s:url value='/jsres/recruitDoctorInfo/zltjOrgMain'/>?tabId=doctorType&roleFlag=" + roleFlag, true);
+        }
+
+        function zltjOrgAcc() {
+            var roleFlag = "${GlobalConstant.USER_LIST_GLOBAL}";
+            jboxLoad("content", "<s:url value='/jsres/recruitDoctorInfo/zltjOrgMainAcc'/>?tabId=doctorType&roleFlag=" + roleFlag, true);
         }
 
         function archiveDoctorList() {
@@ -1228,19 +1248,34 @@
                             <dd class="menu_item"><a href="javascript:baseExpertSuperVisio();">专业基地自评汇总表</a></dd>
                         </dl>
 
-                        <dl class="menu">
-                            <dt class="menu_title">
-                                <i class="icon_menu menu_management"></i>学员招录管理
-                            </dt>
-                            <dd class="menu_item"><a onclick="zlDocCheck();">招录学员审核</a></dd>
-                            <%--<dd class="menu_item"><a onclick="zltjReport();">招录统计报表</a></dd>--%>
-                            <dd class="menu_item"><a onclick="zltjReport();">招录学员统计</a></dd>
-                            <dd class="menu_item"><a onclick="zlDocQuery();">招录学员查询</a></dd>
-                            <dd class="menu_item"><a onclick="zltjCity();">招录统计-地市</a></dd>
-                            <dd class="menu_item"><a onclick="zltjOrg();">招录统计-基地</a></dd>
-                            <%--<dd class="menu_item"><a onclick="zlxytj();">住院医师招录统计</a></dd>--%>
-                            <%--<dd class="menu_item"><a onclick="zlxytj2();">招录学员统计</a></dd>--%>
-                        </dl>
+                        <c:if test="${currUser.userName ne '江苏省全科中心'}">
+                            <dl class="menu">
+                                <dt class="menu_title">
+                                    <i class="icon_menu menu_management"></i>学员招录管理
+                                </dt>
+                                <dd class="menu_item"><a onclick="zlDocCheck();">招录学员审核</a></dd>
+                                    <%--<dd class="menu_item"><a onclick="zltjReport();">招录统计报表</a></dd>--%>
+                                <dd class="menu_item"><a onclick="zltjReport();">招录学员统计</a></dd>
+                                <dd class="menu_item"><a onclick="zlDocQuery();">招录学员查询</a></dd>
+                                <dd class="menu_item"><a onclick="zltjCity();">招录统计-地市</a></dd>
+                                <dd class="menu_item"><a onclick="zltjOrg();">招录统计-基地</a></dd>
+                                    <%--<dd class="menu_item"><a onclick="zlxytj();">住院医师招录统计</a></dd>--%>
+                                    <%--<dd class="menu_item"><a onclick="zlxytj2();">招录学员统计</a></dd>--%>
+                            </dl>
+                        </c:if>
+
+                        <c:if test="${currUser.userName eq '江苏省全科中心'}">
+                            <dl class="menu">
+                                <dt class="menu_title">
+                                    <i class="icon_menu menu_management"></i>学员招录管理
+                                </dt>
+                                <dd class="menu_item"><a onclick="zlDocCheckAcc();">招录学员审核</a></dd>
+                                <dd class="menu_item"><a onclick="zlDocQueryAcc();">招录学员查询</a></dd>
+                                <dd class="menu_item"><a onclick="zltjCityAcc();">招录统计-地市</a></dd>
+                                <dd class="menu_item"><a onclick="zltjOrgAcc();">招录统计-基地</a></dd>
+                            </dl>
+                        </c:if>
+
                         <dl class="menu">
                             <dt class="menu_title">
                                 <i class="icon_menu menu_doctor"></i>异动学员管理

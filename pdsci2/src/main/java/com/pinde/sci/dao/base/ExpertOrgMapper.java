@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ExpertOrg;
 import com.pinde.sci.model.mo.ExpertOrgExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ExpertOrgMapper {
     int countByExample(ExpertOrgExample example);

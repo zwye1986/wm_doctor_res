@@ -4,16 +4,16 @@ import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalConstant;
 import com.pinde.app.common.GlobalUtil;
 import com.pinde.app.common.InitConfig;
+import com.pinde.core.commom.enums.ResRecTypeEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.common.IResPowerCfgBiz;
 import com.pinde.res.biz.stdp.IResSchProcessExpressBiz;
-import com.pinde.res.enums.hbres.ResRecTypeEnum;
-import com.pinde.res.enums.stdp.RecStatusEnum;
+import com.pinde.core.commom.enums.RecStatusEnum;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -570,7 +570,7 @@ public class ResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
             //获取表单类型名称
             if(StringUtil.isNotBlank(recTypeId)){
                 rec.setRecTypeId(recTypeId);
-                rec.setRecTypeName(com.pinde.res.enums.jszy.ResRecTypeEnum.getNameById(recTypeId));
+                rec.setRecTypeName(ResRecTypeEnum.getNameById(recTypeId));
             }
 
             rec.setRecVersion(GlobalConstant.RES_DEFAULT_FORM_VER);
@@ -639,25 +639,25 @@ public class ResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     //根据request获取这次表单的xml
     private String getSxsXmlByRequest(HttpServletRequest request,String rootName,String separator,ResDoctorSchProcess writeBackProcess,String roleId){
         Map<String,String> idValCfg=new HashMap<>();
-        idValCfg.put(com.pinde.res.enums.njmu2.ResRecTypeEnum.SkillRegistry.getId()+"status1","亲自");
-        idValCfg.put(com.pinde.res.enums.njmu2.ResRecTypeEnum.SkillRegistry.getId()+"status2","一助");
-        idValCfg.put(com.pinde.res.enums.njmu2.ResRecTypeEnum.SkillRegistry.getId()+"status3","二助");
-        idValCfg.put(com.pinde.res.enums.njmu2.ResRecTypeEnum.SkillRegistry.getId()+"status4","参观");
-        idValCfg.put(com.pinde.res.enums.njmu2.ResRecTypeEnum.TeachRecordRegistry.getId()+"teachType1","讲课");
-        idValCfg.put(com.pinde.res.enums.njmu2.ResRecTypeEnum.TeachRecordRegistry.getId()+"teachType2","示教");
-        idValCfg.put(com.pinde.res.enums.njmu2.ResRecTypeEnum.TeachRecordRegistry.getId()+"teachType3","讨论");
-        idValCfg.put(com.pinde.res.enums.njmu2.ResRecTypeEnum.TeachRecordRegistry.getId()+"teachType4","教学查房");
-        idValCfg.put(com.pinde.res.enums.njmu2.ResRecTypeEnum.AfterSummary.getId()+"internshipEvaluation1","优");
-        idValCfg.put(com.pinde.res.enums.njmu2.ResRecTypeEnum.AfterSummary.getId()+"internshipEvaluation2","良");
-        idValCfg.put(com.pinde.res.enums.njmu2.ResRecTypeEnum.AfterSummary.getId()+"internshipEvaluation3","中");
-        idValCfg.put(com.pinde.res.enums.njmu2.ResRecTypeEnum.AfterSummary.getId()+"internshipEvaluation4","合格");
-        idValCfg.put(com.pinde.res.enums.njmu2.ResRecTypeEnum.AfterSummary.getId()+"internshipEvaluation5","不合格");
+        idValCfg.put(ResRecTypeEnum.SkillRegistry.getId()+"status1","亲自");
+        idValCfg.put(ResRecTypeEnum.SkillRegistry.getId()+"status2","一助");
+        idValCfg.put(ResRecTypeEnum.SkillRegistry.getId()+"status3","二助");
+        idValCfg.put(ResRecTypeEnum.SkillRegistry.getId()+"status4","参观");
+        idValCfg.put(ResRecTypeEnum.TeachRecordRegistry.getId()+"teachType1","讲课");
+        idValCfg.put(ResRecTypeEnum.TeachRecordRegistry.getId()+"teachType2","示教");
+        idValCfg.put(ResRecTypeEnum.TeachRecordRegistry.getId()+"teachType3","讨论");
+        idValCfg.put(ResRecTypeEnum.TeachRecordRegistry.getId()+"teachType4","教学查房");
+        idValCfg.put(ResRecTypeEnum.AfterSummary.getId()+"internshipEvaluation1","优");
+        idValCfg.put(ResRecTypeEnum.AfterSummary.getId()+"internshipEvaluation2","良");
+        idValCfg.put(ResRecTypeEnum.AfterSummary.getId()+"internshipEvaluation3","中");
+        idValCfg.put(ResRecTypeEnum.AfterSummary.getId()+"internshipEvaluation4","合格");
+        idValCfg.put(ResRecTypeEnum.AfterSummary.getId()+"internshipEvaluation5","不合格");
 
         Map<String,List<String>>  sumItemMap = new HashMap<String, List<String>>();
         List<String> nodeNames = new ArrayList<String>();
         nodeNames.add("theoryTest");
         nodeNames.add("skillTest");
-        sumItemMap.put(com.pinde.res.enums.njmu2.ResRecTypeEnum.AfterSummary.getId(),nodeNames);
+        sumItemMap.put(ResRecTypeEnum.AfterSummary.getId(),nodeNames);
         if(request!=null){
             separator = separator==null?",":separator;
             rootName = StringUtil.defaultIfEmpty(rootName,"root");

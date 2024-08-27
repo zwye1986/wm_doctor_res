@@ -1,6 +1,5 @@
 package com.pinde.sci.biz.sch;
 
-import com.pinde.sci.model.jsres.JsDoctorInfoExt;
 import com.pinde.sci.model.res.SchProcessExt;
 
 import javax.servlet.http.HttpServletResponse;

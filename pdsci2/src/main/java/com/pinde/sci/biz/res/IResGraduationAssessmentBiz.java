@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.res;
 
 import com.pinde.sci.model.mo.PubFile;
-import com.pinde.sci.model.mo.ResGraduationAssessment;
 import com.pinde.sci.model.mo.ResGraduationAssessmentWithBLOBs;
 import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.res.ResGraduationAssessmentExt;

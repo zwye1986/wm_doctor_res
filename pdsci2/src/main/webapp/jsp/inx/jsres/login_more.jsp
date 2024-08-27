@@ -25,7 +25,7 @@ function toPage(page) {
  <div class="head">
    <div class="head_inner">
      <h1 class="logo">
-       <a href="#">${sysCfgMap['sys_title_name']}</a>s
+       <a href="#">${sysCfgMap['sys_title_name']}</a>
      </h1>
    </div>
  </div>

@@ -1,7 +1,7 @@
 package com.pinde.core.util;
 
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.docx4j.Docx4J;
 import org.docx4j.XmlUtils;
 import org.docx4j.convert.in.xhtml.DivToSdt;
@@ -104,7 +104,7 @@ public final class Docx4jUtil {
 					value = value.replaceAll("\\s+[<]", "<");
 					value = value.replaceAll("\\s+", " ");
 
-				    value = StringEscapeUtils.unescapeHtml(value);
+				    value = StringEscapeUtils.unescapeHtml3(value);
 				    value =  value.replaceAll("&", "＆");
 
 //					String ref = "^width:\\.*px;$";

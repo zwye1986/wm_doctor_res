@@ -1,6 +1,5 @@
 package com.pinde.sci.dao.jsres;
 
-import com.pinde.sci.model.mo.ResDoctorGraduationExam;
 import com.pinde.sci.model.mo.SchExamDoctorArrangement;
 import org.apache.ibatis.annotations.Param;
 

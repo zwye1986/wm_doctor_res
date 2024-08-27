@@ -1,10 +1,8 @@
 package com.pinde.sci.biz.sch;
 
 import com.pinde.sci.model.mo.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 
 public interface ISchRotationBiz {
@@ -40,7 +38,6 @@ public interface ISchRotationBiz {
 	int saveLocalRotation(List<SchRotation> rotationList, String orgFlow);
 
 	List<SchRotation> searchSchRotationForPlatform(String doctorCateGoryId);
-	Map<String, Object> importRoationFromExcel(MultipartFile file);
 
 	List<SchRotation> searchRotationByName(String rotationName);
 

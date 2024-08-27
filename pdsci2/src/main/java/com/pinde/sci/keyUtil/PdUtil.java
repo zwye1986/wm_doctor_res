@@ -2,7 +2,7 @@ package com.pinde.sci.keyUtil;
 
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.common.InitConfig;
-import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
  * Created by pdkj on 2018/4/23.

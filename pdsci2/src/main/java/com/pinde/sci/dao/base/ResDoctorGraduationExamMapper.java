@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResDoctorGraduationExam;
 import com.pinde.sci.model.mo.ResDoctorGraduationExamExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResDoctorGraduationExamMapper {
     int countByExample(ResDoctorGraduationExamExample example);

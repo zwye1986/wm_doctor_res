@@ -1,11 +1,9 @@
 package com.pinde.sci.dao.sch;
 
 
-import com.pinde.sci.model.mo.SchArrangeResult;
 import com.pinde.sci.model.mo.SchDept;
 import com.pinde.sci.model.mo.SchExternalDept;
 import com.pinde.sci.model.res.ResDoctorExt;
-import com.pinde.sci.model.res.SchArrangeResultExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

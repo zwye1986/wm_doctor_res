@@ -1,14 +1,17 @@
 package com.pinde.sci.ctrl.sys;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResActivityTargetBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
-import com.pinde.sci.common.*;
+import com.pinde.sci.common.GeneralController;
+import com.pinde.sci.common.GlobalConstant;
+import com.pinde.sci.common.InitConfig;
+import com.pinde.sci.common.InitResConfig;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.sys.SubDictEditForm;
 import com.pinde.sci.model.mo.DictForm;
-import com.pinde.sci.model.mo.SysDict;
 import com.pinde.sci.model.mo.TeachingActivityFormValue;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;

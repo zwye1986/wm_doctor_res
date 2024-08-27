@@ -1,6 +1,5 @@
 package com.pinde.sci.biz.res.impl;
 
-import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IGzzyyyAssessmentBiz;
@@ -11,7 +10,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.GzzyyyAnnualAssessmentMapper;
 import com.pinde.sci.dao.base.GzzyyyQuarterlyAssessmentMapper;
 import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.res.GradeDetail4ShiYan;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;

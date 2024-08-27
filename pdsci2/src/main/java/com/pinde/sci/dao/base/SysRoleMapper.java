@@ -4,11 +4,10 @@ import com.pinde.sci.model.jsres.ActivityCfgExt;
 import com.pinde.sci.model.mo.ActivityAuditCfg;
 import com.pinde.sci.model.mo.SysRole;
 import com.pinde.sci.model.mo.SysRoleExample;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
 
 public interface SysRoleMapper {
     int countByExample(SysRoleExample example);

@@ -5,7 +5,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.core.util.XmlParse;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.common.CommonQueryMapper;
 import org.dom4j.Element;
 import org.slf4j.Logger;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;

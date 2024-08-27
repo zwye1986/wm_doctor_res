@@ -1,13 +1,10 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
-import com.pinde.sci.model.jsres.*;
-import com.pinde.sci.model.mo.*;
-import org.dom4j.DocumentException;
-import org.springframework.web.multipart.MultipartFile;
+import com.pinde.sci.model.mo.TeachingActivityEval;
+import com.pinde.sci.model.mo.TeachingActivityFormValue;
+import com.pinde.sci.model.mo.TeachingActivityInfoTarget;
+import com.pinde.sci.model.mo.TeachingActivityTarget;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 

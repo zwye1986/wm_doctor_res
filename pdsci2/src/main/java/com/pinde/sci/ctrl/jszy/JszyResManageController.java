@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.jszy;
 
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
 import com.pinde.core.pdf.PdfDocumentGenerator;
@@ -24,7 +25,10 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
-import com.pinde.sci.common.*;
+import com.pinde.sci.common.GeneralController;
+import com.pinde.sci.common.GlobalConstant;
+import com.pinde.sci.common.GlobalContext;
+import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysLogMapper;
 import com.pinde.sci.enums.jszy.*;
 import com.pinde.sci.enums.pub.UserStatusEnum;

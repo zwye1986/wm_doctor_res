@@ -1,18 +1,11 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.PkUtil;
-import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.model.jsres.ResTeachQualifiedPlanExt;
-import com.pinde.sci.model.mo.PubFile;
 import com.pinde.sci.model.mo.ResQualifiedPlanMsg;
 import com.pinde.sci.model.mo.ResTeachPlanDoctor;
 import com.pinde.sci.model.mo.SysUser;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 

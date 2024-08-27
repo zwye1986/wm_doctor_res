@@ -2,19 +2,17 @@ package com.pinde.sci.ctrl.recruit;
 
 
 import com.pinde.core.page.PageHelper;
-import com.pinde.core.util.DateUtil;
-import com.pinde.sci.biz.recruit.*;
+import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
+import com.pinde.sci.biz.recruit.IRecruitInterviewInfoBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.form.recruit.ExamInfoFlowForm;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.RecruitInterviewInfo;
+import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.recruit.RecruitInfoExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;

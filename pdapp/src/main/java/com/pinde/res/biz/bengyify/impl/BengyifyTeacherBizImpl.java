@@ -15,7 +15,6 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.bengyify.IBengyifyTeacherBiz;
 import com.pinde.res.dao.bengyify.ext.BengyifyStudentMapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,8 +23,7 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.res.biz.bengyify.IBengyifyAppBiz;
 import com.pinde.res.biz.bengyify.IBengyifyStudentBiz;
 import com.pinde.res.dao.bengyify.ext.BengyifyTeacherMapper;
-import com.pinde.res.enums.bengyify.DeptStatusEnum;
-import org.springframework.web.multipart.MultipartFile;
+import com.pinde.core.commom.enums.DeptStatusEnum;
 import sun.misc.BASE64Decoder;
 
 @Service

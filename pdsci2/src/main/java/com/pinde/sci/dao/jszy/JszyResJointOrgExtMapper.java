@@ -5,7 +5,6 @@ import com.pinde.sci.model.mo.SysOrg;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by pdkj20 on 2018/3/29.

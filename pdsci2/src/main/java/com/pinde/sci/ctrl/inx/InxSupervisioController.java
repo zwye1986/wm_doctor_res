@@ -19,7 +19,10 @@ import com.pinde.sci.dao.base.SysLogMapper;
 import com.pinde.sci.enums.pub.UserStatusEnum;
 import com.pinde.sci.enums.sys.OperTypeEnum;
 import com.pinde.sci.enums.sys.ReqTypeEnum;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.InxInfo;
+import com.pinde.sci.model.mo.SysLog;
+import com.pinde.sci.model.mo.SysSupervisioUser;
+import com.pinde.sci.model.mo.SysUser;
 import org.bouncycastle.util.encoders.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,8 +35,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.interfaces.RSAPublicKey;
 import java.util.List;
 import java.util.Map;
-
-import static com.pinde.sci.common.GeneralMethod.setRecordInfo;
 
 /**
  * @author tiger

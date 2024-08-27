@@ -5,23 +5,11 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.stdp.IResErrorSchNoticeBiz;
-import com.pinde.res.biz.stdp.IResGradeBiz;
-import com.pinde.res.dao.jswjw.ext.DeptTeacherGradeInfoExtMapper;
-import com.pinde.res.enums.hbres.ResAssessTypeEnum;
-import com.pinde.res.enums.hbres.ResRecTypeEnum;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
-import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional(rollbackFor=Exception.class)

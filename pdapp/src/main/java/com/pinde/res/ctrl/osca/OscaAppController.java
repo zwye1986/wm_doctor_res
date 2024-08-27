@@ -13,7 +13,7 @@ import com.pinde.res.enums.osca.ExamStatusEnum;
 import com.pinde.res.enums.osca.ScanDocStatusEnum;
 import com.pinde.res.enums.osca.ScoreStatusEnum;
 import com.pinde.res.enums.osca.SignStatusEnum;
-import com.pinde.res.enums.stdp.UserStatusEnum;
+import com.pinde.core.commom.enums.UserStatusEnum;
 import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.util.FtpHelperUtil;

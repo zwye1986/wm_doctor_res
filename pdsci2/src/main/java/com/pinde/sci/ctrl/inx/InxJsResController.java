@@ -28,7 +28,7 @@ import com.pinde.sci.model.jsres.ResultVo;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.util.jsres.ResultUtil;
 import com.wf.captcha.utils.CaptchaUtil;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.util.encoders.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -1965,6 +1965,7 @@ public class InxJsResController extends GeneralController {
             return GlobalConstant.PHONE_NOT_SAME;
         }
         SysUser sysUser = GlobalContext.getCurrentUser();
+        sysUser = userBiz.readSysUser(sysUser.getUserFlow());
         String currDateTime = DateUtil.getCurrDateTime2();
         String verifyCodeTime = sysUser.getVerifyCodeTime();
         long betweenTowDate = DateUtil.signSecondsBetweenTowDate(currDateTime, verifyCodeTime);

@@ -2,19 +2,19 @@ package com.pinde.res.ctrl.jswjw;
 
 import com.pinde.app.common.GeneralController;
 import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.commom.enums.RecDocCategoryEnum;
+import com.pinde.core.commom.enums.ResRecTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.PdfUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.jswjw.IIeaveAppBiz;
 import com.pinde.res.biz.jswjw.IJswjwBiz;
 import com.pinde.res.biz.stdp.IResGradeBiz;
-import com.pinde.res.enums.ezhupei.RecDocCategoryEnum;
 import com.pinde.res.enums.lcjn.DictTypeEnum;
-import com.pinde.res.enums.stdp.RecStatusEnum;
-import com.pinde.res.enums.stdp.ResDoctorKqStatusEnum;
+import com.pinde.core.commom.enums.RecStatusEnum;
+import com.pinde.core.commom.enums.ResDoctorKqStatusEnum;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgItemForm;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgTitleForm;
 import com.pinde.res.model.jswjw.mo.ResDoctorKqExt;
@@ -28,7 +28,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,7 +39,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -1509,7 +1507,7 @@ public class JswjwWxStudentController extends GeneralController {
             return resultMap;
         }
         resultMap.put("resultUser", user);
-        List<ResAssessCfg> resAssessCfgList = gradeBiz.getAssCfg(com.pinde.res.enums.stdp.ResRecTypeEnum.PatientDoctorAssess360.getId());
+        List<ResAssessCfg> resAssessCfgList = gradeBiz.getAssCfg(ResRecTypeEnum.PatientDoctorAssess360.getId());
         if (null == resAssessCfgList || resAssessCfgList.isEmpty()) {
             resultMap.put("resultId", "202");
             resultMap.put("resultType", "无对应的评价表单");
@@ -1627,8 +1625,8 @@ public class JswjwWxStudentController extends GeneralController {
         gradeInfo.setSchRotationDeptFlow(resDoctorSchProcess.getSchDeptFlow());
         gradeInfo.setSchDeptFlow(resDoctorSchProcess.getSchDeptFlow());
         gradeInfo.setSchDeptName(resDoctorSchProcess.getSchDeptName());
-        gradeInfo.setRecTypeId(com.pinde.res.enums.stdp.ResRecTypeEnum.PatientDoctorAssess360.getId());
-        gradeInfo.setRecTypeName(com.pinde.res.enums.stdp.ResRecTypeEnum.PatientDoctorAssess360.getName());
+        gradeInfo.setRecTypeId(ResRecTypeEnum.PatientDoctorAssess360.getId());
+        gradeInfo.setRecTypeName(ResRecTypeEnum.PatientDoctorAssess360.getName());
         gradeInfo.setAllScore(allScore);
         gradeInfo.setCfgFlow(cfgFlow);
         String content="";

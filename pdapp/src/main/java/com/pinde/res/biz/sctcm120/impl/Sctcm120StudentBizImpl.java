@@ -2,6 +2,7 @@ package com.pinde.res.biz.sctcm120.impl;
 
 import com.pinde.app.common.GlobalConstant;
 import com.pinde.app.common.GlobalUtil;
+import com.pinde.core.commom.enums.SchUnitEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -11,8 +12,7 @@ import com.pinde.res.biz.sctcm120.ISctcm120StudentBiz;
 import com.pinde.res.dao.sctcm120.ext.ResDoctorKqExtMapper;
 import com.pinde.res.dao.sctcm120.ext.Sctcm120SchArrangeResultExtMapper;
 import com.pinde.res.dao.sctcm120.ext.Sctcm120SchRotationDeptExtMapper;
-import com.pinde.res.enums.sctcm120.SchUnitEnum;
-import com.pinde.res.enums.stdp.RegistryTypeEnum;
+import com.pinde.core.commom.enums.RegistryTypeEnum;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;

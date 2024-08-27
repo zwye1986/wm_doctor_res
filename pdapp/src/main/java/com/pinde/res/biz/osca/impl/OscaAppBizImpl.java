@@ -1472,25 +1472,6 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 						titleList.add(fromTitle);
 					}
 				}
-//				if(titleList.size()>0)
-//				{
-//
-//					Collections.sort(titleList,new Comparator<FromTitle>(){
-//						@Override
-//						public int compare(FromTitle f1,FromTitle f2) {
-//							String order1=f1.getOrderNum();
-//							String order2=f2.getOrderNum();
-//							if(order1==null){
-//								return -1;
-//							}else if(order2==null){
-//								return 1;
-//							}else if(order1!=null && order2!=null){
-//								return order1.compareTo(order2);
-//							}
-//							return 0;
-//						}
-//					});
-//				}
 				return titleList;
 			}
 			catch (DocumentException e)

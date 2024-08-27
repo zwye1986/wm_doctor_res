@@ -1,6 +1,6 @@
 package com.pinde.sci.enums.res;
 
-import com.pinde.core.commom.GeneralEnum;
+import com.pinde.core.commom.enums.GeneralEnum;
 
 /**
  * Created by pdkj on 2018/1/3.

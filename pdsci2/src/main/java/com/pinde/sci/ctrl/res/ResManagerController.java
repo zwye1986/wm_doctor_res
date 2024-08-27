@@ -1,12 +1,12 @@
 package com.pinde.sci.ctrl.res;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.gzzyjxres.IGzjxDocSingupBiz;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
 import com.pinde.sci.biz.jsres.IResLectureRandomSignBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
@@ -26,8 +26,6 @@ import com.pinde.sci.enums.sch.SchUnitEnum;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
-import com.pinde.sci.form.gzzyjxres.ExtInfoForm;
-import com.pinde.sci.form.gzzyjxres.SpeForm;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
@@ -35,7 +33,6 @@ import com.pinde.sci.form.sch.SchGradeFrom;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.model.res.ResDoctorSchProcessExt;
-import com.pinde.sci.model.res.StuUserExt;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Font;
@@ -62,7 +59,6 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
-import java.sql.Clob;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -79,8 +75,6 @@ public class ResManagerController extends GeneralController {
     private IStuUserResumeBiz stuUserBiz;
     @Autowired
     private IStuBatchBiz stuBatchBiz;
-    @Autowired
-    private IGzjxDocSingupBiz docSingupBiz;
     @Autowired
 	private ISchArrangeBiz arrangeBiz;
 	@Autowired
@@ -839,224 +833,6 @@ public class ResManagerController extends GeneralController {
 		}
 		return GlobalConstant.FLAG_Y;//可执行保存
 	}
-
-
-	/**
-     * 进修过程 人员信息查询
-     */
-    @RequestMapping(value = "/getUserList/{role}")
-    public String getUserList(@PathVariable String role,String isForeign, String isAudit,  String isAdmited, String isRecruit,
-                              String userName, String batchFlow, String speName2,String beginDate,String endDate,Integer currentPage, HttpServletRequest request, Model model) {
-
-        List<StuBatch> batchLst = stuBatchBiz.getStuBatchLst();
-        model.addAttribute("batchLst", batchLst);
-        if(StringUtil.isBlank(batchFlow)){
-            if (null != batchLst && batchLst.size() > 0) {
-                for (StuBatch obj : batchLst) {
-					//系统默认批次设置为"Y"，反之为"N"，不存在null
-                    if ("Y".equals(obj.getIsDefault())) {
-                        if(StringUtil.isBlank(batchFlow)){
-                            batchFlow = obj.getBatchFlow();
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        model.addAttribute("batchFlow", batchFlow);
-        model.addAttribute("role",role);
-        model.addAttribute("currentPage",currentPage);
-        model.addAttribute(GlobalConstant.CURRENT_DEPT_LIST, deptBiz.searchDeptByOrg(GZZY_ORG_FLOW));
-
-        if (currentPage == null) {
-            currentPage = 1;
-        }
-
-        PageHelper.startPage(currentPage, getPageSize(request));
-        Map<String, Object> parMp = new HashMap<String, Object>();
-
-//        if(!"all".equals(batchFlow) && StringUtil.isNotBlank(batchFlow)){
-//            parMp.put("batchFlow", batchFlow);  //批次
-//        }
-		//进修专业
-        parMp.put("speName2", speName2);
-		if(StringUtil.isNotBlank(userName)){
-			userName = userName.trim();
-		}
-        parMp.put("userName", userName);    //姓名
-        parMp.put("isForeign",isForeign);   //学员类型
-        parMp.put("beginDate",beginDate);   //开始时间
-        parMp.put("endDate",endDate);   //结束时间
-		//过程查询标志
-		parMp.put("processFlag", GlobalConstant.FLAG_Y);
-
-        List<StuUserExt> stuUserLst = stuUserBiz.queryStuList(parMp);
-        model.addAttribute("stuUserLst", stuUserLst);
-        Map<String, ExtInfoForm> extInfoMap = new HashMap();
-        if (stuUserLst != null && stuUserLst.size() > 0) {
-            ExtInfoForm extInfo = null;
-            for (StuUserExt tempUserExt : stuUserLst) {
-                extInfo = new ExtInfoForm();
-                extInfo = docSingupBiz.parseExtInfoXml(tempUserExt.getResumeInfo());
-                extInfoMap.put(tempUserExt.getResumeFlow(), extInfo);
-            }
-            model.addAttribute("extInfoMap", extInfoMap);
-        }
-//        doctor.setDoctorCategoryId(RecDocCategoryEnum.Scholar.getId());//进修生
-//        doctor.setOrgFlow(GZZY_ORG_FLOW);
-//
-//        PageHelper.startPage(currentPage, getPageSize(request));
-//        List<ResDoctorExt> doctorList = doctorBiz.searchDocUserByJx(doctor);
-
-//        Map<String,ExtInfoForm> extInfoMap = new HashMap<>();
-//        if(null!=doctorList && doctorList.size()>0){
-//            for(ResDoctorExt doctorExt:doctorList){
-//                ExtInfoForm extInfo = docSingupBiz.parseExtInfoXml(doctorExt.getUserResume().getResumeInfo());
-//
-//            }
-//        }
-//        model.addAttribute("extInfoMap",extInfoMap);
-//        model.addAttribute("doctorList", doctorList);
-
-        return "/res/manager/userList_jx";
-
-    }
-
-	/**
-	 * 广医进修 人员导出
-	 */
-	@RequestMapping("/exportJxDoc")
-	public void exportJxDoc(String stuBatName,String batchFlow,String isForeign, String userName, String speName2,String beginDate,String endDate,HttpServletResponse response) throws Exception {
-
-		List<StuBatch> batchLst = stuBatchBiz.getStuBatchLst();
-		if(StringUtil.isBlank(batchFlow)){
-			if (null != batchLst && batchLst.size() > 0) {
-				for (StuBatch obj : batchLst) {
-					//系统默认批次设置为"Y"，反之为"N"，不存在null
-					if ("Y".equals(obj.getIsDefault())) {
-						if(StringUtil.isBlank(batchFlow)){
-							batchFlow = obj.getBatchFlow();
-							break;
-						}
-					}
-				}
-			}
-		}
-
-
-		String[] titles = new String[]{
-				"num:编号",
-				"userName:姓名",
-				"sexName:性别",
-				"userBirthday:出生日期",
-				"maxEduName:学历",
-				"titleName:职称",
-				"idNo:身份证号",
-				"certifiedNo:医师执业证书编号",
-				"sendComName:选送单位",
-				"depts:进修科目",
-				"beginDate:开始时间",
-				"endDate:结束时间",
-				"userPhone:联系电话",
-				"tuition:学费",
-				"hotelExpense:住宿费",
-				"according:押金",
-				"isOwnOrg:是否帮扶单位、教学基地"
-		};
-
-		Map<String, Object> parMp = new HashMap<String, Object>(16);
-
-		//进修专业
-		parMp.put("speName2", speName2.trim());
-		//姓名
-		parMp.put("userName", userName.trim());
-		//学员类型
-		if(!"all".equals(isForeign) && StringUtil.isNotBlank(isForeign)){
-			parMp.put("isForeign",isForeign);
-		}
-		//开始时间
-		parMp.put("beginDate",beginDate);
-		//结束时间
-		parMp.put("endDate",endDate);
-		//过程查询标志
-		parMp.put("processFlag", GlobalConstant.FLAG_Y);
-
-		List<Map<String, Object>> stuUserLst = stuUserBiz.queryStuListForExport(parMp);
-
-		int num=0;
-		for (Map map : stuUserLst) {
-			num++;
-			map.put("num",num);
-			if (null != map.get("RESUME_INFO")) {
-				String resumeInfo = StringUtil.ClobToString((Clob) map.get("RESUME_INFO"));
-				ExtInfoForm extInfo = docSingupBiz.parseExtInfoXml(resumeInfo);
-
-				List<String> dateList = new ArrayList<>(16);
-				StringBuilder depts = new StringBuilder();
-
-				if(null!=extInfo.getSpeFormList() && extInfo.getSpeFormList().size()>0){
-					for(SpeForm speForm:extInfo.getSpeFormList()){
-						depts.append(speForm.getSpeName()).append(",");
-					}
-					map.put("depts",depts.substring(0,depts.length()-1));
-
-					Map<String,Object> resultMap = new HashMap<>(16);
-					resultMap.put("doctorFlow",map.get("userFlow"));
-					//查询出 该学员安排轮转的所有时间
-					List<SchArrangeResult> schArrangeResults = schArrangeResultBiz.schArrangeResultQuery(resultMap);
-					if(null!=schArrangeResults && schArrangeResults.size()>0){
-						for(SchArrangeResult arrangeResult:schArrangeResults){
-							dateList.add(arrangeResult.getSchStartDate());
-							dateList.add(arrangeResult.getSchEndDate());
-						}
-						//用冒泡排序算出最小时间和最大时间
-						String[] dates = new String[dateList.size()];
-						dateList.toArray(dates);
-						for(int i=0;i<dates.length-1;i++){
-							for(int j=0;j<dates.length-1-i;j++){
-								if(dates[j].compareTo(dates[j+1])>0){
-									String temp=dates[j];
-									dates[j]=dates[j+1];
-									dates[j+1]=temp;
-								}
-							}
-						}
-						map.put("beginDate",dates[0]);
-						map.put("endDate",dates[dates.length-1]);
-					}
-				}
-
-				map.put("certifiedNo", extInfo.getCertifiedNo());
-				//学费
-				map.put("tuition",extInfo.getTuition());
-				//住宿费
-				map.put("hotelExpense",extInfo.getHotelExpense());
-				//押金
-				map.put("according",extInfo.getAccording());
-				//是否帮扶单位、教学基地
-				if("own".equals(extInfo.getIsOwnOrg())){
-					map.put("isOwnOrg","我院教学基地");
-				}
-				if("other".equals(extInfo.getIsOwnOrg())){
-					map.put("isOwnOrg","帮扶协议单位");
-				}
-				if("N".equals(extInfo.getIsOwnOrg())){
-					map.put("isOwnOrg","否");
-				}
-
-			}
-		}
-
-
-//		stuBatName = java.net.URLDecoder.decode(stuBatName,"UTF-8");
-		String fileName = "进修人员登记表.xls";
-		fileName = URLEncoder.encode(fileName, "UTF-8");
-		ExcleUtile.exportSimpleExcleByObjsAllString(titles, stuUserLst, response.getOutputStream());
-		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-		response.setContentType("application/octet-stream;charset=UTF-8");
-
-	}
-
 
 
 	/**

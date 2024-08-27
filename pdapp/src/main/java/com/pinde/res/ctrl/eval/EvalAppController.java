@@ -8,7 +8,7 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.eval.IEvalAppBiz;
 import com.pinde.res.ctrl.upload.FileForm;
-import com.pinde.res.enums.stdp.UserStatusEnum;
+import com.pinde.core.commom.enums.UserStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.util.FtpHelperUtil;
 import com.pinde.sci.util.PasswordHelper;

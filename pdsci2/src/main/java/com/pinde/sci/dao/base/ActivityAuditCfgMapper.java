@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ActivityAuditCfg;
 import com.pinde.sci.model.mo.ActivityAuditCfgExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ActivityAuditCfgMapper {
     int countByExample(ActivityAuditCfgExample example);

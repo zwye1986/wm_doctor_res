@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.res;
 
 import com.pinde.sci.model.mo.QingpuDoctorKq;
-import com.pinde.sci.model.mo.SysUser;
 
 import java.util.List;
 import java.util.Map;

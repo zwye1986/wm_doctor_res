@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -40,79 +41,23 @@ import java.util.*;
 @RequestMapping("/res/doctorSignin")
 public class ResDoctorSigninController extends GeneralController{
 	@Autowired
-	private IResGradeBiz resGradeBiz;
-	@Autowired
-	private ISchRotationBiz schRotationtBiz;
-	@Autowired
 	private IDeptBiz deptBiz;
-	@Autowired
-	private IResDoctorBiz resDoctorBiz;
 	@Autowired
 	private IUserBiz userBiz;
 	@Autowired
-	private IResEnterOpenCfgBiz enterOpenCfgBiz;
-	@Autowired
-	private IResPowerCfgBiz resPowerCfgBiz;
-	@Autowired
-	private ISchArrangeResultBiz schArrangeResultBiz;
-	@Autowired
 	private IResDoctorProcessBiz resDoctorProcessBiz;
-	@Autowired
-	private IResRecBiz resRecBiz;
 	@Autowired
 	private IResDoctorBiz doctorBiz;
 	@Autowired
-	private ISchRotationDeptBiz rotationDeptBiz;
-	@Autowired
 	private ISchDeptBiz schDeptBiz;
-	@Autowired
-	private INoticeBiz noticeBiz;
-	@Autowired
-	private IOrgBiz orgBiz;
-	@Autowired
-	private ISchRotationGroupBiz schRotationtGroupBiz;
-	@Autowired
-	private ISchDoctorDeptBiz schDoctorDeptBiz;
-	@Autowired
-	private ISchRotationDeptBiz schRotationDeptBiz;
-	@Autowired
-	private ISchDoctorAbsenceBiz schDoctorAbsenceBiz;
-	@Autowired
-	private IUserRoleBiz userRoleBiz;
-	@Autowired
-	private ISchDeptExternalRelBiz deptExtRelBiz;
 	@Autowired
 	private IFileBiz fileBiz;
 	@Autowired
-	private ITestResultBiz resultBiz;
-	@Autowired
-	private ISchArrangeBiz arrangeBiz;
-	@Autowired
 	private IDictBiz dictBiz;
-	@Autowired
-	private IResLectureEvaDetailBiz resLectureEvaDetailBiz;
-    @Autowired
-    private IDiscipleBiz discipleBiz;
-	@Autowired
-	private IPubUserResumeBiz userResumeBiz;
-	@Autowired
-	private IResDoctorDelayTeturnBiz resDoctorDelayTeturnBiz;
-	@Autowired
-	private IResDoctorRecruitBiz doctorRecruitBiz;
-	@Autowired
-	private IResJointOrgBiz jointOrgBiz;
-	@Autowired
-	private IZseyHrKqMonthBiz zseyHrKqMonthBiz;
-	@Autowired
-	private IJsResUserBlackBiz blackBiz;
-	@Autowired
-	private ISchDeptRelBiz deptRelBiz;
 	@Autowired
 	private IResDoctorKqBiz resDoctorKqBiz;
 	@Autowired
 	private SysUserDeptMapper sysUserDeptMapper;
-	@Autowired
-	private IResEntryReportBiz reportBiz;
 
 	@RequestMapping(value="/timeSet")
 	public String timeSet(Model model) {

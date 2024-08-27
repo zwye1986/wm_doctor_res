@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResQualifiedPlanMsg;
 import com.pinde.sci.model.mo.ResQualifiedPlanMsgExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResQualifiedPlanMsgMapper {
     int countByExample(ResQualifiedPlanMsgExample example);

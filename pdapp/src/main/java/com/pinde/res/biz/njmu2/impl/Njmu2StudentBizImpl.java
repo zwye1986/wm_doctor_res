@@ -6,7 +6,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.njmu2.INjmu2AppBiz;
 import com.pinde.res.biz.njmu2.INjmu2StudentBiz;
 import com.pinde.res.dao.stdp.ext.StdpSchArrangeResultExtMapper;
-import com.pinde.res.enums.stdp.RegistryTypeEnum;
+import com.pinde.core.commom.enums.RegistryTypeEnum;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
 import org.springframework.stereotype.Service;

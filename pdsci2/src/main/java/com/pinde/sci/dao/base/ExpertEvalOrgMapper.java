@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ExpertEvalOrg;
 import com.pinde.sci.model.mo.ExpertEvalOrgExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ExpertEvalOrgMapper {
     int countByExample(ExpertEvalOrgExample example);

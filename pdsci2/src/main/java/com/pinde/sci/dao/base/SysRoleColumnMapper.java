@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.SysRoleColumn;
 import com.pinde.sci.model.mo.SysRoleColumnExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysRoleColumnMapper {
     int countByExample(SysRoleColumnExample example);

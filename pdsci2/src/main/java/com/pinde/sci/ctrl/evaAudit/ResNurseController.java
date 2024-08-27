@@ -10,13 +10,11 @@ import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.biz.sch.ISchDeptBiz;
 import com.pinde.sci.biz.sys.*;
-import com.pinde.sci.biz.xjgl.IXjEduUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.PasswordHelper;
-import com.pinde.sci.dao.base.SysDeptMapper;
 import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.enums.pub.NurseStatusEnum;
 import com.pinde.sci.enums.pub.UserStatusEnum;
@@ -29,7 +27,7 @@ import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -68,8 +66,6 @@ public class ResNurseController extends GeneralController {
     @Autowired
     private IUserBiz userBiz;
     @Autowired
-    private IOrgBiz orgBiz;
-    @Autowired
     private IRoleBiz roleBiz;
     @Autowired
     private IDeptBiz deptBiz;
@@ -77,8 +73,6 @@ public class ResNurseController extends GeneralController {
     private IFileBiz fileBiz;
     @Autowired
     private IUserRoleBiz userRoleBiz;
-    @Autowired
-    private IXjEduUserBiz eduUserBiz;
     @Autowired
     private IResDoctorProcessBiz resDoctorProcessBiz;
     @Autowired
@@ -99,8 +93,6 @@ public class ResNurseController extends GeneralController {
     private IResDoctorRecruitBiz recruitBiz;
     @Autowired
     private SysUserMapper sysUserMapper;
-    @Autowired
-    private SysDeptMapper sysDeptMapper;
 
     @RequestMapping("/index")
     public String index(){
@@ -152,7 +144,7 @@ public class ResNurseController extends GeneralController {
 
     @RequestMapping(value = "/teachingList", method = {RequestMethod.POST, RequestMethod.GET})
     public String teachingList(Integer currentPage, SysUser search, String deptFlow,
-                       Model model, HttpServletRequest request,String roleFlag) {
+                               Model model, HttpServletRequest request, String roleFlag) {
         List<SysDept> depts = deptBiz.searchDeptByOrg(GlobalContext.getCurrentUser().getOrgFlow());
         model.addAttribute("depts", depts);
         model.addAttribute("search", search);
@@ -245,7 +237,7 @@ public class ResNurseController extends GeneralController {
     }
 
     @RequestMapping(value = {"/teachingAudit"})
-    public String teachingAudit(String userFlow,Model model) {
+    public String teachingAudit(String userFlow, Model model) {
         if (StringUtil.isNotBlank(userFlow)) {
             SysUser sysUser = userBiz.readSysUser(userFlow);
             model.addAttribute("sysUser", sysUser);
@@ -570,13 +562,13 @@ public class ResNurseController extends GeneralController {
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public @ResponseBody
     String delete(SysUser user, String wsid) {
-        if (StringUtil.isNotBlank(wsid)) {
-            if (wsid.equals(GlobalConstant.CMIS_WS_ID) || wsid.equals("gycmis")) {
-                EduUser eduUser = eduUserBiz.findByFlow(user.getUserFlow());
-                if (eduUser != null)
-                    return "当前学生存在学籍信息，不允许删除！！";
-            }
-        }
+//        if (StringUtil.isNotBlank(wsid)) {
+//            if (wsid.equals(GlobalConstant.CMIS_WS_ID) || wsid.equals("gycmis")) {
+//                EduUser eduUser = eduUserBiz.findByFlow(user.getUserFlow());
+//                if (eduUser != null)
+//                    return "当前学生存在学籍信息，不允许删除！！";
+//            }
+//        }
         user.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
         userBiz.saveUser(user);
         return GlobalConstant.DELETE_SUCCESSED;
@@ -787,7 +779,7 @@ public class ResNurseController extends GeneralController {
                     }
                 }
 
-                if(StringUtil.isNotBlank(sysUser.getOrgFlow())&&StringUtil.isNotBlank(sysUser.getDeptName()))
+                if(StringUtil.isNotBlank(sysUser.getOrgFlow())&& StringUtil.isNotBlank(sysUser.getDeptName()))
                 {
                     SysDept dept=deptBiz.readSysDeptByName(sysUser.getOrgFlow(),sysUser.getDeptName());
                     if(dept==null)
@@ -838,7 +830,7 @@ public class ResNurseController extends GeneralController {
     @RequestMapping(value = "/importTeachingFromExcel")
     @ResponseBody
     public String importTeachingFromExcel(MultipartFile file) {
-        SysUser loginUser=GlobalContext.getCurrentUser();
+        SysUser loginUser= GlobalContext.getCurrentUser();
         if (file.getSize() > 0) {
             try {
                 int result = userBiz.importTeachingFromExcel(file,loginUser);

@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.OscaSkillDocStation;
 import com.pinde.sci.model.mo.OscaSkillDocStationExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface OscaSkillDocStationMapper {
     int countByExample(OscaSkillDocStationExample example);

@@ -2,7 +2,6 @@ package com.pinde.sci.biz.res;
 
 import com.pinde.sci.model.mo.LectureInfoTarget;
 import com.pinde.sci.model.mo.ResLectureEvaDetail;
-import com.pinde.sci.model.mo.ResLectureInfo;
 
 import java.util.List;
 import java.util.Map;

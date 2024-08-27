@@ -1,10 +1,10 @@
 package com.pinde.sci.dao.res;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.sci.model.jsres.OrgSpeListVo;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorRecruit;
 import com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs;
-import com.pinde.sci.model.mo.SysDict;
 import com.pinde.sci.model.res.ResDoctorRecruitExt;
 import org.apache.ibatis.annotations.Param;
 

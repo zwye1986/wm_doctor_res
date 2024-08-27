@@ -1,7 +1,5 @@
 package com.pinde.sci.model.jsres;
 
-import com.pinde.core.model.MybatisObject;
-
 public class ParticipateInfoExt {
 
     /**

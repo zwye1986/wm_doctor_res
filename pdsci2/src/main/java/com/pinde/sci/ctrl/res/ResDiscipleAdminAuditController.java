@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDiscipleInfoBiz;
@@ -18,7 +19,9 @@ import com.pinde.sci.enums.res.NoteTypeEnum;
 import com.pinde.sci.enums.res.RecDocCategoryEnum;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResDiscipleReq;
+import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

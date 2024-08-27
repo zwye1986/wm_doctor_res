@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
-import com.pinde.sci.model.jsres.JsDoctorInfoExt;
 import com.pinde.sci.model.jsres.JsRecruitDocInfoExt;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.JsresRecruitDocInfo;

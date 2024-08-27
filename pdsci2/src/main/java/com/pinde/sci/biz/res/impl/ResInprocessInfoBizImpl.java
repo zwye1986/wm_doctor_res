@@ -1,9 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
-import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.res.IDiscipleBiz;
 import com.pinde.sci.biz.res.IResInprocessInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
@@ -13,8 +11,10 @@ import com.pinde.sci.dao.base.ResInprocessInfoMemberMapper;
 import com.pinde.sci.dao.base.ResStudentDiscipleTeacherMapper;
 import com.pinde.sci.dao.res.DiscipleDoctorExtMapper;
 import com.pinde.sci.dao.res.ResInprocessInfoMemberExtMapper;
-import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.res.ResDoctorDiscioleExt;
+import com.pinde.sci.model.mo.ResInprocessInfo;
+import com.pinde.sci.model.mo.ResInprocessInfoExample;
+import com.pinde.sci.model.mo.ResInprocessInfoMember;
+import com.pinde.sci.model.mo.ResInprocessInfoMemberExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

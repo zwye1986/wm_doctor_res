@@ -1,12 +1,15 @@
 package com.pinde.sci.ctrl.sch;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.gzzyjxres.IGzjxDocSingupBiz;
-import com.pinde.sci.biz.pub.IPubUserResumeBiz;
-import com.pinde.sci.biz.res.*;
-import com.pinde.sci.biz.sch.*;
-import com.pinde.sci.biz.sys.*;
+import com.pinde.sci.biz.res.IDiscipleBiz;
+import com.pinde.sci.biz.res.IResDoctorBiz;
+import com.pinde.sci.biz.sch.ISchDoctorSelectDeptBiz;
+import com.pinde.sci.biz.sch.ISchRotationBiz;
+import com.pinde.sci.biz.sys.IDictBiz;
+import com.pinde.sci.biz.sys.IOrgBiz;
+import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
@@ -37,74 +40,18 @@ import java.util.Map;
 @RequestMapping("/sch/manager")
 public class SchManagerController extends GeneralController {
 	private static Logger logger = LoggerFactory.getLogger(SchManagerController.class);
-
-    @Autowired
-    private IStuUserResumeBiz stuUserBiz;
-    @Autowired
-    private IStuBatchBiz stuBatchBiz;
-    @Autowired
-    private IGzjxDocSingupBiz docSingupBiz;
-    @Autowired
-	private ISchArrangeBiz arrangeBiz;
-	@Autowired
-	private IResAssessCfgBiz assessCfgBiz;
-	@Autowired
-	private IResRecBiz resRecBiz;
-	@Autowired
-	private IResSchProcessExpressBiz expressBiz;
-	@Autowired
-	private IResGradeBiz resGradeBiz;
-	@Autowired
-	private IDeptBiz deptBiz;
-	@Autowired
-	private IUserRoleBiz userRoleBiz;
-	@Autowired
-	private ISchDeptBiz schDeptBiz;
-	@Autowired
-	private ISchArrangeResultBiz resultBiz;
-	@Autowired
-	private ISchRotationDeptBiz rotationDeptBiz;
 	@Autowired
 	private IResDoctorBiz doctorBiz;
 	@Autowired
 	private IUserBiz userBiz;
 	@Autowired
-	private IRoleBiz roleBiz;
-	@Autowired
-	private IResDoctorProcessBiz processBiz;
-	@Autowired
 	private ISchRotationBiz schRotationtBiz;
 	@Autowired
 	private IOrgBiz orgBiz;
 	@Autowired
-	private ISchArrangeResultBiz schArrangeResultBiz;
-	@Autowired
-	private IResDoctorOrgHistoryBiz docOrgHisBiz;
-	@Autowired
 	private ISchDoctorSelectDeptBiz doctorDeptBiz;
 	@Autowired
-	private IResUserSpeBiz userSpeBiz;
-	@Autowired
-	private IResRotationOrgBiz iResRotationOrgBiz;
-	@Autowired
-	private IResLectureInfoBiz resLectureInfoBiz;
-	@Autowired
-	private IResLectureEvaDetailBiz resLectureEvaDetailBiz;
-	@Autowired
-	private IPubUserResumeBiz userResumeBiz;
-	@Autowired
-	private IResDoctorDelayTeturnBiz resDoctorDelayTeturnBiz;
-	@Autowired
-	private IResLectureScanRegistBiz resLectureScanRegistBiz;
-	@Autowired
 	private IDictBiz dictBiz;
-	@Autowired
-	private IResTrainingSpeDeptBiz resTrainingSpeDeptBiz;
-	@Autowired
-	private IResResponsibleTeacherDoctorBiz resResponsibleTeacherDoctorBiz;
-	@Autowired
-	private IResDiscipleInfoBiz discipleInfoBiz;
-    @Autowired
     private IDiscipleBiz iDiscipleBiz;
 
 	/**

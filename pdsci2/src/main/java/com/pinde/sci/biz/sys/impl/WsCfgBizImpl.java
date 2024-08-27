@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.sys.impl;
 
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.sys.ICfgBiz;
 import com.pinde.sci.biz.sys.IWsCfgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
@@ -12,11 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional(rollbackFor = Exception.class)

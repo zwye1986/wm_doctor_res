@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
 import com.pinde.sci.form.jsres.BackTrainForm;
-import com.pinde.sci.model.mo.PubFile;
 import com.pinde.sci.model.mo.ResDoctorRecruit;
 import com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs;
 import com.pinde.sci.model.mo.ResRec;

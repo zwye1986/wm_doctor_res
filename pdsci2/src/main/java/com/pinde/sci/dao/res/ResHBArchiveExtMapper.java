@@ -1,12 +1,9 @@
 package com.pinde.sci.dao.res;
 
-import com.pinde.sci.model.jsres.JsDoctorInfoLogExt;
-import com.pinde.sci.model.jsres.JsResArchDoctorRecruitExt;
 import com.pinde.sci.model.mo.PubUserResume;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.res.ResDoctorExt;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;

@@ -2,6 +2,7 @@ package com.pinde.res.ctrl.ezhupei;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.commom.enums.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -13,12 +14,6 @@ import com.pinde.res.biz.hbres.IResInprocessInfoBiz;
 import com.pinde.res.biz.stdp.IExamResultsBiz;
 import com.pinde.res.biz.stdp.ISchAndStandardDeptCfgBiz;
 import com.pinde.res.biz.stdp.ResPaperBiz;
-import com.pinde.res.enums.ezhupei.RotationStatusEnum;
-import com.pinde.res.enums.ezhupei.SchUnitEnum;
-import com.pinde.res.enums.ezhupei.TrainYearEnum;
-import com.pinde.res.enums.stdp.PreRecTypeEnum;
-import com.pinde.res.enums.stdp.ResScoreTypeEnum;
-import com.pinde.res.enums.stdp.ResultEnum;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -130,11 +125,6 @@ public class EzhupeiStudentController{
 			statusId = searchMap.get("statusId");
 			deptName = searchMap.get("deptName");
 		}
-		
-//		if(StringUtil.isBlank(statusId)){
-//			statusId = DeptStatusEnum.Entering.getId();
-//		}
-		
 		//组织查询条件
 		Map<String,Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("doctorFlow",userFlow);
@@ -168,16 +158,8 @@ public class EzhupeiStudentController{
 				String endDate = (String)map.get("schEndDate");
 				//轮转中，结束时间为当前时间
 				String rotationStatus = (String)map.get("rotationStatus");
-//				if(RotationStatusEnum.Rounding.getId().equals(rotationStatus)) {
-//					endDate = DateUtil.getCurrDate();
-//					map.put("endDate",endDate);
-//				}
 				BigDecimal realMonth = BigDecimal.valueOf(0);
 				if(StringUtil.isNotBlank(startDate)){
-					//如果还未出科则没有实际出科时间便取当前时间
-//					if(!StringUtil.isNotBlank(endDate)){
-//						endDate = DateUtil.getCurrDate();
-//					}
 					//计算实际入科时间和实际结束时间之间的天数
 					long realDays = DateUtil.signDaysBetweenTowDate(endDate,startDate)+1;
 					if(realDays!=0){

@@ -5,7 +5,6 @@ import com.pinde.sci.model.mo.ResLectureInfo;
 import com.pinde.sci.model.mo.ResLectureInfoRole;
 import com.pinde.sci.model.mo.ResLectureScanRegist;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

@@ -1,6 +1,5 @@
 package com.pinde.sci.ctrl.sys;
 
-import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IResTestConfigBiz;
 import com.pinde.sci.biz.pub.IMsgBiz;

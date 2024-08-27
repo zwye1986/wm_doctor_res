@@ -1,6 +1,5 @@
 package com.pinde.sci.common;
 
-import com.pinde.core.util.StringUtil;
 import com.pinde.sci.enums.res.RegistryTypeEnum;
 
 /**

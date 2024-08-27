@@ -6,17 +6,12 @@ import com.pinde.sci.biz.res.IResOrgDateBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResOrgSigninDateMapper;
-import com.pinde.sci.dao.base.ResOrgTimeMapper;
-import com.pinde.sci.form.res.ResOrgTimeForm;
 import com.pinde.sci.model.mo.ResOrgSigninDate;
 import com.pinde.sci.model.mo.ResOrgSigninDateExample;
-import com.pinde.sci.model.mo.ResOrgTime;
-import com.pinde.sci.model.mo.ResOrgTimeExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

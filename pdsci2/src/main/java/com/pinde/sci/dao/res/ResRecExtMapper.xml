@@ -2162,22 +2162,24 @@
 		<result property="processFlow" column="PROCESS_FLOW" javaType="String"/>
 		<result property="schResultFlow" column="sch_Result_Flow" javaType="String"/>
 		<result property="rotationFlow" column="rotation_Flow" javaType="String"/>
+		<result column="TOTAL_SCORE" property="totalScore" jdbcType="VARCHAR" />
+		<result column="REC_CONTENT" property="recContent" javaType="string" />
 	</resultMap>
 	<select id="searchNurseAssEvaluate" resultMap="searchNurseAssEvaluateMap">
 		SELECT
-			D.REC_FLOW,S.USER_FLOW,S.USER_NAME,RD.TRAINING_SPE_NAME,RD.TRAINING_TYPE_NAME,RD.SESSION_NUMBER,
-			D.ALL_SCORE,P.SCH_DEPT_NAME,P.SCH_START_DATE,P.SCH_END_DATE,D.OPER_USER_NAME,
-			P.PROCESS_FLOW,P.sch_Result_Flow,RD.rotation_Flow
+		D.REC_FLOW,P.USER_FLOW,RD.DOCTOR_NAME as USER_NAME,RD.TRAINING_SPE_NAME,RD.TRAINING_TYPE_NAME,RD.SESSION_NUMBER,
+		D.ALL_SCORE,P.SCH_DEPT_NAME,P.SCH_START_DATE,P.SCH_END_DATE,D.OPER_USER_NAME,
+		P.PROCESS_FLOW,P.sch_Result_Flow,RD.rotation_Flow,cfg.TOTAL_SCORE,D.REC_CONTENT
 		FROM DEPT_TEACHER_GRADE_INFO D
 		LEFT JOIN RES_DOCTOR_SCH_PROCESS P ON P.PROCESS_FLOW=D.PROCESS_FLOW
 		LEFT JOIN RES_DOCTOR RD ON RD.DOCTOR_FLOW =P.USER_FLOW
-		LEFT JOIN SYS_USER S ON S.USER_FLOW =P.USER_FLOW
+		inner join RES_ASSESS_CFG cfg on D.CFG_FLOW = cfg.CFG_FLOW and cfg.record_status = 'Y' and cfg.FORM_STATUS_ID = 'Y'
 		WHERE D.RECORD_STATUS = 'Y'
 		AND D.REC_TYPE_ID ='NurseDoctorGrade'
 		AND D.STATUS_ID ='Submit'
 		AND RD.ORG_FLOW = #{orgFlow}
 		<if test="userName != null and userName != ''">
-			AND S.USER_NAME like '%${userName}%'
+			AND RD.DOCTOR_NAME like '%${userName}%'
 		</if>
 		<if test="deptFlow != null and deptFlow != ''">
 			AND P.SCH_DEPT_FLOW = #{deptFlow}
@@ -2197,7 +2199,7 @@
 		<if test="endScore != null and endScore != ''">
 			AND D.ALL_SCORE <![CDATA[<=]]> #{endScore}
 		</if>
-		ORDER BY nlssort(s.user_name, 'NLS_SORT=SCHINESE_PINYIN_M'),RD.SESSION_NUMBER
+		ORDER BY nlssort(RD.DOCTOR_NAME, 'NLS_SORT=SCHINESE_PINYIN_M'),RD.SESSION_NUMBER
 	</select>
 
 </mapper>

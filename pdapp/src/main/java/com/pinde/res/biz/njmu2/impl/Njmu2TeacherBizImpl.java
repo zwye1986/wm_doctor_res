@@ -3,7 +3,6 @@ package com.pinde.res.biz.njmu2.impl;
 import java.util.List;
 import java.util.Map;
 
-import com.pinde.app.common.GlobalConstant;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.njmu2.INjmu2TeacherBiz;
 import com.pinde.res.dao.stdp.ext.StdpResDoctorExtMapper;
-import com.pinde.res.enums.stdp.RecStatusEnum;
+import com.pinde.core.commom.enums.RecStatusEnum;
 
 @Service
 @Transactional(rollbackFor=Exception.class)

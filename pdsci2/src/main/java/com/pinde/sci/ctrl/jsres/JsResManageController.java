@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.jsres;
 
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.Page;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
@@ -38,9 +39,9 @@ import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.jsres.*;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.*;
@@ -422,6 +423,8 @@ public class JsResManageController extends GeneralController {
 			if ("maintenance".equals(role)){
 				return "jsres/maintenance/index";
 			}
+			SysUser sysuser = GlobalContext.getCurrentUser();
+			model.addAttribute("currUser", sysuser);
 			return "jsres/global/globalIndex";
 		} else if ("quality".equals(role)) { //质控组
 			SysUser sysuser = GlobalContext.getCurrentUser();
@@ -6362,10 +6365,12 @@ public class JsResManageController extends GeneralController {
 
 				if (GlobalConstant.FLAG_Y.equals(degreeType)) {
 					PubUserResume resume = userResumeBiz.readPubUserResume(doctorFlow);
-					String content = resume.getUserResume();
-					if (StringUtil.isNotBlank(content)) {
-						UserResumeExtInfoForm userResumeExt = JaxbUtil.converyToJavaBean(content, UserResumeExtInfoForm.class);
-						userResumeExtMap.put(doctorFlow, userResumeExt);
+					if (resume != null) {
+						String content = resume.getUserResume();
+						if (StringUtil.isNotBlank(content)) {
+							UserResumeExtInfoForm userResumeExt = JaxbUtil.converyToJavaBean(content, UserResumeExtInfoForm.class);
+							userResumeExtMap.put(doctorFlow, userResumeExt);
+						}
 					}
 				}
 			}

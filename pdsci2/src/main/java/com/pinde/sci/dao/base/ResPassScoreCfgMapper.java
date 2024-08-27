@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResPassScoreCfg;
 import com.pinde.sci.model.mo.ResPassScoreCfgExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResPassScoreCfgMapper {
     int countByExample(ResPassScoreCfgExample example);

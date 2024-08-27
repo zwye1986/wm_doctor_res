@@ -1,7 +1,5 @@
 package com.pinde.sci.dao.jsres;
 
-import com.pinde.sci.model.jsres.JsDoctorInfoExt;
-import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.PersonStaticExample;
 import com.pinde.sci.model.mo.ResDoctorRecruit;
 import com.pinde.sci.model.mo.SysOrg;

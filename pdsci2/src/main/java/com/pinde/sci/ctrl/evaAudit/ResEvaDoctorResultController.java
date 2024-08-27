@@ -21,7 +21,6 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import org.kie.api.definition.rule.Global;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Array;
 import java.util.*;
 
 @Controller
@@ -160,6 +158,52 @@ public class ResEvaDoctorResultController extends GeneralController {
                 assessCfg = resAssessCfgList.get(0);
                 for (ResAssessCfg resAssessCfg : resAssessCfgList) {
                     if("Percentile".equals(resAssessCfg.getAssessTypeId())) {
+                        assessCfg = resAssessCfg;
+                        break;
+                    }
+                }
+            }
+
+        }
+        if (assessCfg != null) {
+            if(assessCfg != null){
+                getForm(model, assessCfg);
+            }
+        }
+        if (rec != null) {
+            String modifyTime = rec.getModifyTime();
+            if(StringUtil.isNotBlank(modifyTime)){
+                String yyyyMMdd = DateUtil.transDate(modifyTime, "yyyyMMdd");
+                model.addAttribute("openTime",yyyyMMdd.substring(0,4)+"年"+yyyyMMdd.substring(4,6)+"月"+yyyyMMdd.substring(6,yyyyMMdd.length())+"日");
+            }
+            model.addAttribute("rec",rec);
+            Map<String,Object> gradeMap = resRecBiz.parseGradeXml(rec.getRecContent());
+            model.addAttribute("gradeMap",gradeMap);
+            assessCfg = assessCfgBiz.readResAssessCfg(rec.getCfgFlow());
+            getForm(model, assessCfg);
+        }
+        model.addAttribute("processFlow", processFlow);
+        model.addAttribute("rec", rec);
+        model.addAttribute("assessCfg", assessCfg);
+        return "hbres/evaAudit/resultSearch/grade";
+    }
+
+
+    @RequestMapping(value = {"/fiveGrade"})
+    public String fiveGrade(String doctorFlow, String recFlow, String recTypeId,String processFlow, Model model) throws DocumentException {
+        DeptTeacherGradeInfo rec = resGradeBiz.readResGrade(recFlow);
+        ResAssessCfg assessCfg = null;
+        if (rec == null) {
+            ResAssessCfg search = new ResAssessCfg();
+            search.setCfgCodeId(recTypeId);
+            search.setFormStatusId(AchScoreEnum.Enable.getId());
+            List<ResAssessCfg> resAssessCfgList = assessCfgBiz.selectByExampleWithBLOBs(search);
+            model.addAttribute("formCount",resAssessCfgList.size());
+            if (resAssessCfgList != null && resAssessCfgList.size() > 0) {
+                // 优先取5分制的那一条，没有就取第一条
+                assessCfg = resAssessCfgList.get(0);
+                for (ResAssessCfg resAssessCfg : resAssessCfgList) {
+                    if("Five".equals(resAssessCfg.getAssessTypeId())) {
                         assessCfg = resAssessCfg;
                         break;
                     }

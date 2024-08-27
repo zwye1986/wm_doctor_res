@@ -9,9 +9,9 @@ import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.OscaFromMapper;
 import com.pinde.sci.dao.osca.OscaFromExtMapper;
-import com.pinde.sci.enums.res.ResAssessScoreTypeEnum;
-import com.pinde.sci.enums.res.ResAssessTypeEnum;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.OscaFrom;
+import com.pinde.sci.model.mo.OscaFromExample;
+import com.pinde.sci.model.mo.OscaSubjectStationFrom;
 import com.pinde.sci.model.osca.OscaFromCfgExt;
 import com.pinde.sci.model.osca.OscaFromCfgItemExt;
 import com.pinde.sci.model.osca.OscaFromCfgTitleExt;
@@ -19,14 +19,12 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
-import org.kie.api.definition.rule.Global;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional(rollbackFor = Exception.class)

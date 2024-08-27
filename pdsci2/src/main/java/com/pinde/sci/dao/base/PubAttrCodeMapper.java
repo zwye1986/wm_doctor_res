@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.PubAttrCode;
 import com.pinde.sci.model.mo.PubAttrCodeExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface PubAttrCodeMapper {
     int countByExample(PubAttrCodeExample example);

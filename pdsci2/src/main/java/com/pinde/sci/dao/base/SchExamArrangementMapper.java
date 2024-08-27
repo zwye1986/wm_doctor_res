@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.SchExamArrangement;
 import com.pinde.sci.model.mo.SchExamArrangementExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SchExamArrangementMapper {
     int countByExample(SchExamArrangementExample example);

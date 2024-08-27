@@ -3,8 +3,9 @@ package com.pinde.sci.dao.base;
 import com.pinde.sci.model.mo.ExamQuestionDetail;
 import com.pinde.sci.model.mo.ExamQuestionDetailExample;
 import com.pinde.sci.model.mo.ExamQuestionDetailWithBLOBs;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ExamQuestionDetailMapper {
     int countByExample(ExamQuestionDetailExample example);

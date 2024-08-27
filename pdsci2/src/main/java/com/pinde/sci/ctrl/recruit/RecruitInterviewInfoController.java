@@ -5,7 +5,6 @@ import com.pinde.sci.biz.recruit.IRecruitInterviewInfoBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.recruit.RecruitStatusEnum;
 import com.pinde.sci.model.mo.RecruitInterviewInfo;
 import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.recruit.RecruitInfoExt;

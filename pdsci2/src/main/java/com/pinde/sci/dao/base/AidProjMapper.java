@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.AidProj;
 import com.pinde.sci.model.mo.AidProjExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface AidProjMapper {
     int countByExample(AidProjExample example);

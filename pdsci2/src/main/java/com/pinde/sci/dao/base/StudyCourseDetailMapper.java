@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.StudyCourseDetail;
 import com.pinde.sci.model.mo.StudyCourseDetailExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface StudyCourseDetailMapper {
     int countByExample(StudyCourseDetailExample example);

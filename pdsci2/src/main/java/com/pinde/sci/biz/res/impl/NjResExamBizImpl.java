@@ -18,8 +18,8 @@ import com.pinde.sci.dao.res.NjDocinfoExtMapper;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.NjDocinfoExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.*;
@@ -40,7 +40,9 @@ import java.io.InputStream;
 import java.io.PushbackInputStream;
 import java.net.URLEncoder;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by www.0001.Ga on 2016-11-02.

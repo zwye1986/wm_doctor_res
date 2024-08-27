@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResSupervisioSubject;
 import com.pinde.sci.model.mo.ResSupervisioSubjectExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResSupervisioSubjectMapper {
     int countByExample(ResSupervisioSubjectExample example);

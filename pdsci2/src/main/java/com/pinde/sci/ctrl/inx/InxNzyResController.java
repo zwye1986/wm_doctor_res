@@ -1,13 +1,8 @@
 package com.pinde.sci.ctrl.inx;
 
 import com.pinde.core.page.PageHelper;
-import com.pinde.sci.biz.inx.IInxBiz;
 import com.pinde.sci.biz.inx.INoticeBiz;
-import com.pinde.sci.biz.sys.IRoleBiz;
-import com.pinde.sci.biz.sys.IUserBiz;
-import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.dao.base.SysLogMapper;
 import com.pinde.sci.model.mo.InxInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,19 +15,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/inx/nzyres")
 public class InxNzyResController extends GeneralController{
-
-	@Autowired
-	private IInxBiz inxBiz;
-	@Autowired
-	private IUserRoleBiz userRoleBiz;
-	@Autowired
-	private IRoleBiz roleBiz;
-	@Autowired
-	private IUserBiz userBiz;
 	@Autowired
 	private INoticeBiz noticeBiz;
-	@Autowired
-	private SysLogMapper logMapper;
 	
 	/**
 	 * 显示登陆界面

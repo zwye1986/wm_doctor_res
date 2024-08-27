@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
 import com.pinde.core.pdf.PdfDocumentGenerator;
@@ -43,7 +44,7 @@ import com.pinde.sci.model.sys.SysOrgExt;
 import com.pinde.sci.model.vo.ResDeptRelStdDeptVO;
 import com.pinde.sci.model.vo.ResOrgSepVO;
 import com.pinde.sci.model.vo.SysDeptVO;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -71,7 +72,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;

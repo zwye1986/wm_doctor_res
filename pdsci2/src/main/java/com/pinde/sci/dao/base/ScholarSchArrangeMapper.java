@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ScholarSchArrange;
 import com.pinde.sci.model.mo.ScholarSchArrangeExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ScholarSchArrangeMapper {
     int countByExample(ScholarSchArrangeExample example);

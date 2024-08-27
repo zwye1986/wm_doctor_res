@@ -3,11 +3,9 @@ package com.pinde.sci.biz.jsres;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.model.mo.JsresDeptConfig;
 import com.pinde.sci.model.mo.JsresPowerCfg;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
 import com.pinde.sci.model.mo.ResOrgCkxz;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;

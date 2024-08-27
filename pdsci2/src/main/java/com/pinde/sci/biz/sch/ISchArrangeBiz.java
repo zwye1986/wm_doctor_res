@@ -3,7 +3,6 @@ package com.pinde.sci.biz.sch;
 import com.pinde.sci.form.sch.SchGradeFrom;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.SchArrange;
-import com.pinde.sci.model.mo.SchArrangeResult;
 
 import java.util.List;
 

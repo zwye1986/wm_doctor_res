@@ -1,9 +1,7 @@
 package com.pinde.sci.biz.osca.impl;
 
-import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.osca.IOscaCityBiz;
 import com.pinde.sci.biz.osca.IOscaDoctorRegistBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sys.IRoleBiz;
@@ -13,16 +11,16 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.OscaDoctorRegistMapper;
 import com.pinde.sci.dao.osca.OscaDoctorRegistExtMapper;
-import com.pinde.sci.dao.osca.OscaSkillsAssessmentExtMapper;
 import com.pinde.sci.enums.osca.AuditStatusEnum;
 import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.RoleLevelEnum;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.OscaDoctorRegist;
+import com.pinde.sci.model.mo.OscaDoctorRegistExample;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.JsresExamSignupLog;
 import com.pinde.sci.model.mo.JsresExamSignupLogExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface JsresExamSignupLogMapper {
     int countByExample(JsresExamSignupLogExample example);

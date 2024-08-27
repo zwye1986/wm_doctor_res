@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResRecCaseRegistry;
 import com.pinde.sci.model.mo.ResRecCaseRegistryExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResRecCaseRegistryMapper {
     int countByExample(ResRecCaseRegistryExample example);

@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.SysMonthlyReturnDelayInfo;
 import com.pinde.sci.model.mo.SysMonthlyReturnDelayInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysMonthlyReturnDelayInfoMapper {
     int countByExample(SysMonthlyReturnDelayInfoExample example);

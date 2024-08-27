@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.JsresGraduationApply;
 import com.pinde.sci.model.mo.JsresGraduationApplyExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface JsresGraduationApplyMapper {
     int countByExample(JsresGraduationApplyExample example);

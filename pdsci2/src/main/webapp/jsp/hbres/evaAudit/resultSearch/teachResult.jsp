@@ -44,6 +44,11 @@
                 '学员评估带教', 1200, 800);
         }
 
+        function newGrade(recTypeId, recFlow, doctorFlow, processFlow) {
+            jboxOpen("<s:url value='/res/evaDoctorResult/fiveGrade'/>?recTypeId=" + recTypeId + "&recFlow=" + recFlow+ "&doctorFlow=" + doctorFlow+ "&processFlow=" + processFlow,
+                '学员评估带教', 1200, 800);
+        }
+
         function selGrade(recTypeId, recFlow, doctorFlow, processFlow) {
             var url = "<s:url value='/res/evaDoctorResult/selGrade'/>?recFlow=" + recFlow+ "&doctorFlow=" + doctorFlow+ "&processFlow=" + processFlow;
             var iframe ="<iframe name='jbox-message-iframe' id='jbox-message-iframe' width='100%' height='100%' marginheight='0' marginwidth='0' frameborder='0' scrolling='auto' src='"+url+"'></iframe>";

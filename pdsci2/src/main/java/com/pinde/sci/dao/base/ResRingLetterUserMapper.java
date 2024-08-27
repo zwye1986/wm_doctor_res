@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.ResRingLetterUser;
 import com.pinde.sci.model.mo.ResRingLetterUserExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResRingLetterUserMapper {
     int countByExample(ResRingLetterUserExample example);

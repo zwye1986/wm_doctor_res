@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.SchDeptRel;
 import com.pinde.sci.model.mo.SchDeptRelExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SchDeptRelMapper {
     int countByExample(SchDeptRelExample example);

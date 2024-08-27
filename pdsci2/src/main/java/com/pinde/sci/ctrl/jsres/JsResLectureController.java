@@ -17,13 +17,8 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.res.ResDocTypeEnum;
-import com.pinde.sci.enums.sch.ActivityTypeEnum;
 import com.pinde.sci.enums.sch.SchUnitEnum;
-import com.pinde.sci.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
-import com.pinde.sci.model.jsres.JsRecruitDocInfoExt;
 import com.pinde.sci.model.jsres.ParticipateInfoExt;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
@@ -37,8 +32,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.*;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/jsres/lecture")

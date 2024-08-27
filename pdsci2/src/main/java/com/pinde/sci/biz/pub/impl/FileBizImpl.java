@@ -283,58 +283,6 @@ public class FileBizImpl implements IFileBiz {
 	}
 
 	@Override
-	public void down(SrmAchFile file, HttpServletResponse response) throws Exception{
-		try {
-			if(null != file) {
-				byte[] data = null;
-				long dataLength = 0;
-				if ("1".equals(file.getFileSaveType()) && StringUtil.isNotBlank(file.getFilePath())) {
-                /*获取文件物理路径*/
-					String filePath = InitConfig.getSysCfg("upload_base_dir") + File.separator + file.getFilePath();
-					File downLoadFile = new File(filePath);
-                /*文件是否存在*/
-					if (downLoadFile.exists()) {
-						InputStream fis = new BufferedInputStream(new FileInputStream(filePath));
-						data = new byte[fis.available()];
-						dataLength = downLoadFile.length();
-						fis.read(data);
-						fis.close();
-					}
-				} else {
-					data = file.getFileContent();
-					if (data != null) {
-						dataLength = data.length;
-					}
-				}
-				if(dataLength <= 0){
-					throw new Exception();
-				}
-				String fileName = file.getFileName();
-				fileName = URLEncoder.encode(fileName, "UTF-8");
-				if (StringUtil.isNotBlank(file.getFileSuffix())) {
-					fileName += "." + file.getFileSuffix();
-				}
-				response.reset();
-				response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-				response.addHeader("Content-Length", "" + dataLength);
-				response.setContentType("application/octet-stream;charset=UTF-8");
-				OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
-				outputStream.write(data);
-				outputStream.flush();
-				outputStream.close();
-			}
-		} catch (Exception e){//捕获异常并处理
-			/*设置页面编码为UTF-8*/
-			response.setHeader("Content-Type","text/html;charset=UTF-8");
-			OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
-			outputStream.write("<a href='javascript:history.go(-1)'>未发现文件,点击返回上一页</a>".getBytes("UTF-8"));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
-			outputStream.flush();
-			outputStream.close();
-		}
-
-	}
-
-	@Override
 	public void addFile(PubFile file) {
 		if (file.getFileContent() != null) {
 			file.setFileSize(new BigDecimal(file.getFileContent().length));

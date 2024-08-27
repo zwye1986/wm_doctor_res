@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.inx;
 
 import com.pinde.sci.model.mo.SysUser;
-import com.pinde.sci.model.mo.TjDocinfo;
 
 import java.util.List;
 import java.util.Map;

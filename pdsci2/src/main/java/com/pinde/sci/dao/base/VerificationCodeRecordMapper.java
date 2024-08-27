@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.VerificationCodeRecord;
 import com.pinde.sci.model.mo.VerificationCodeRecordExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface VerificationCodeRecordMapper {
     int countByExample(VerificationCodeRecordExample example);

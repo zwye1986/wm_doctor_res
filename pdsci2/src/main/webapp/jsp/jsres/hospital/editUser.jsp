@@ -273,9 +273,8 @@
 					<td>
 						<select name="teacherLevel" class="select" style="width: 160px;">
 							<option value="" >请选择</option>
-							<option value="院级" <c:if test="${sysUser.teacherLevel eq '院级'}">selected="selected"</c:if>>院级</option>
-							<option value="省级" <c:if test="${sysUser.teacherLevel eq '省级'}">selected="selected"</c:if>>省级</option>
-							<option value="国家级" <c:if test="${sysUser.teacherLevel eq '国家级'}">selected="selected"</c:if>>国家级</option>
+							<option value="一般师资" <c:if test="${sysUser.teacherLevel eq '一般师资'}">selected="selected"</c:if>>一般师资</option>
+							<option value="骨干师资" <c:if test="${sysUser.teacherLevel eq '骨干师资'}">selected="selected"</c:if>>骨干师资</option>
 						</select>
 					</td>
 				</tr>

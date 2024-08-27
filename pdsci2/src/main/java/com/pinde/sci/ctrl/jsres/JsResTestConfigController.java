@@ -6,7 +6,6 @@ import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.util.DateUtil;
 import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
 import com.pinde.sci.model.mo.ResTestConfig;
-import org.apache.regexp.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller

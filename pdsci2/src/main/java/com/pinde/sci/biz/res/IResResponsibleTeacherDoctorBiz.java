@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.res;
 
 import com.pinde.sci.model.mo.ResResponsibleteacherDoctor;
-import com.pinde.sci.model.mo.ResTrainingSpeDept;
 
 import java.util.List;
 

@@ -24,7 +24,7 @@ import com.pinde.app.common.NfyyGlobalConstant;
 import com.pinde.core.util.StringUtil;
 import com.pinde.exam.biz.stdp.IExamStdpBiz;
 import com.pinde.exam.enums.stdp.QuestionTypeEnum;
-import com.pinde.res.enums.stdp.ResultEnum;
+import com.pinde.core.commom.enums.ResultEnum;
 
 @Controller
 @RequestMapping("/exam/stdp")
