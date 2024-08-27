@@ -50,7 +50,7 @@
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson-spring-boot-starter</artifactId>
-            <version>3.9.1</version>
+            <version>3.12.5</version>
         </dependency>
 
         <!-- 引入 session与redis的集成 -->
