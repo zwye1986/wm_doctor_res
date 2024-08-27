@@ -244,7 +244,7 @@ function nextItem(){
                     </dd>
                 </dl>
                 <span id="retestResultSpan" style="display: none;">
-	                <span style="float:left;margin: 18px 20px 0 0;font-size: 15px;"><img src="<s:url value='/jsp/res/css/images/gou.png'/>"/>&nbsp;&nbsp;&nbsp;<strong class="score-num">6 题</strong>&nbsp;&nbsp;<img src="<s:url value='/jsp/res/css/images/del3.png'/>"/>&nbsp;&nbsp;&nbsp;<strong class="score-num">1 题</strong>&nbsp;&nbsp;得分：<strong class="score-num">80分</strong>&nbsp;&nbsp;<font style="color:#44b549; padding-left:10px;">恭喜你，通过此次考试！</font></span>
+	                <span style="float:left;margin: 18px 20px 0 0;font-size: 15px;"><img src="<s:url value='/jsp/res/css/images/gou.png'/>"/>&nbsp;&nbsp;&nbsp;<strong class="score-num">6 题</strong>&nbsp;&nbsp;<img src="<s:url value='/jsp/res/css/images/del3.png'/>"/>&nbsp;&nbsp;&nbsp;<strong class="score-num">1 题</strong>&nbsp;&nbsp;得分：<strong class="score-num">80分</strong>&nbsp;&nbsp;<font style="color:#54B2E5; padding-left:10px;">恭喜你，通过此次考试！</font></span>
           		</span>
           	</form>
            </div>

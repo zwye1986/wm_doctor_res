@@ -70,7 +70,7 @@
 <body>
 <div class="infoAudit" style="height: auto">
         <%--<div>
-            <div style="width: 4px;height: 20px;background-color: #44b549"></div>
+            <div style="width: 4px;height: 20px;background-color: #54B2E5"></div>
             <div style="margin-left: 12px;margin-top: -20px;color: #000000; font: 15px 'Microsoft Yahei'; font-weight: 500;">基地信息</div>
         </div>--%>
     <div style="margin: 30px 30px 20px 0px; text-align: right;">

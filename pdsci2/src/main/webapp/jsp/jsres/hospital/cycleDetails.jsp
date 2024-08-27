@@ -29,7 +29,7 @@
         <tr>
             <td>完成比例</td>
             <td style="padding: 0 10px 0 10px;">
-                        <span style="width: ${empty processPerMap[resultFlow]?0:processPerMap[resultFlow]}%;background-color: #44b549;display:block;float:left;">&nbsp;</span>
+                        <span style="width: ${empty processPerMap[resultFlow]?0:processPerMap[resultFlow]}%;background-color: #54B2E5;display:block;float:left;">&nbsp;</span>
                         <span style="width: ${100-(empty processPerMap[resultFlow]?0:processPerMap[resultFlow])}%;background-color: #eeeeee;display:block;float:left;">&nbsp;</span>
                         <div style="width:61%; position:absolute;z-index:999;text-align: center;cursor:pointer;"
                          onclick="catalogue('${resultFlow}','${schDeptFlow}')">${empty processPerMap[resultFlow]?0:processPerMap[resultFlow]}%</div>

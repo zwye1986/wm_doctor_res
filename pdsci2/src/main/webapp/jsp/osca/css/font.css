@@ -2,7 +2,7 @@
 .title_tab ul{ display:inline-block; line-height:40px;}
 .title_tab ul li{ float:left;}
 .title_tab ul li a{ padding:0 30px; color:#222;}
-.tab_select{ border-bottom:3px solid #44b549;}
+.tab_select{ border-bottom:3px solid #54B2E5;}
 .tab{border-bottom: 3px solid #fff;}
 .main_hd{line-height:40px;}
 .main_hd h2{font-size: 16px;padding: 0 30px;line-height: 75px;font-weight: 400;font-style: normal;display:block;}
@@ -16,7 +16,7 @@
 .btn:hover{background-color: #e6e7ec;}
 .btn_red{background-color: #f24d4d;color: #fff; border:none;}
 .btn_red:hover{background-color: #d43d3d;}
-.btn_green{background-color: #44b549;color: #fff;border:none;}
+.btn_green{background-color: #54B2E5;color: #fff;border:none;}
 .btn_green:hover{background-color: #2f9833;}
 .btn_blue{background-color: #017bce;color: #fff;border:none;}
 .btn_blue:hover{background-color: #0097fe;}

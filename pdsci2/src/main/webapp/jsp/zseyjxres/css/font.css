@@ -24,7 +24,7 @@ strong{ font-weight:normal;}
 .btn:hover{background-color: #e6e7ec;}
 .btn_red{background-color: #f24d4d;color: #fff; border:none;}
 .btn_red:hover{background-color: #d43d3d;}
-.btn_green{background-color: #44b549;color: #fff;border:none;}
+.btn_green{background-color: #54B2E5;color: #fff;border:none;}
 .btn_green:hover{background-color: #2f9833;}
 .btn_blue{background-color: #017bce;color: #fff;border:none;}
 .btn_blue:hover{background-color: #0097fe;}
@@ -211,8 +211,8 @@ textarea{ width:100%; height:150px;padding:0; resize:none; outline:none;text-ind
 .sub_menu ul li{float:left;}
 .ryxz{ display:inline-flex;}
 .ryxz a{display: block;padding: 0 22px;min-width: 60px;height: 30px;border: 1px solid #e6e7ec;background: #fff;line-height: 30px;color: #222;text-align: center;}
-.ryxz a:hover{background: #44b549; color:#fff;}
-.ryxz .active a{background: #44b549; color:#fff;}
+.ryxz a:hover{background: #54B2E5; color:#fff;}
+.ryxz .active a{background: #54B2E5; color:#fff;}
 
 /*----------------后台------------end--------*/
 
@@ -337,11 +337,11 @@ textarea{ width:100%; height:150px;padding:0; resize:none; outline:none;text-ind
 /*住陪招录计划*/
 .recruit{height: 60px;display: inline-block;float: left;margin:12px;margin-top:15px; border:1px solid #f6f6f6;}
 .recruit_top{width: 229px;padding-top:20px; height:40px;font-size:13px;text-align:center;float: left; background:#f6f6f6;}
-.recruit_body{width: 46px;line-height:60px;height:60px;text-align:center; color:#44b549;font-size:14px; font-weight:bold;float: left;background:#e0f7e1;}
+.recruit_body{width: 46px;line-height:60px;height:60px;text-align:center; color:#54B2E5;font-size:14px; font-weight:bold;float: left;background:#e0f7e1;}
 /*前台-----------------------------------basic--end-------------------------------------*/
 
 /*考场打印*/
-.search_table h4{ float:left;border-left:4px solid #44b549;font-size: 15px;font-weight: 400;font-style: normal;padding: 0 7px; margin-top:5px; margin-bottom:15px;}
+.search_table h4{ float:left;border-left:4px solid #54B2E5;font-size: 15px;font-weight: 400;font-style: normal;padding: 0 7px; margin-top:5px; margin-bottom:15px;}
 .fl{float:left;}
 .A4{ page-break-before: auto;page-break-after: always;}
 .kch{border:0px solid #d6d6d6; font-size:50px; margin-right:2px; width:100%; margin-top:20%;}
@@ -372,7 +372,7 @@ textarea{ width:100%; height:150px;padding:0; resize:none; outline:none;text-ind
 .infoAudit{ overflow-y:auto;/*padding:20px 0;*/height:505px;background:#fff;}
 .infoAudit2{ overflow-y:auto;padding:20px 0;height:505px;background:#fff;}
 .infoAudit h1{ line-height:40px;  text-align:center; font-size:16px; color:#333;}
-.infoAudit h2{line-height:40px; border-bottom:2px solid #44b549;padding-left:10px; color:#44b549; text-indend:10px;font-size:14px;}
+.infoAudit h2{line-height:40px; border-bottom:2px solid #54B2E5;padding-left:10px; color:#54B2E5; text-indend:10px;font-size:14px;}
 .infoAudit table{/* margin:10px 0;*/border-collapse: collapse;}
 .infoAudit caption,.infoAudit th,.infoAudit td{height:40px;}
 .infoAudit table caption,.caption{line-height:40px;text-align:left;font-weight:bold; padding-left:10px; border-bottom:1px solid #ddd;color:#f60;}
@@ -380,7 +380,7 @@ textarea{ width:100%; height:150px;padding:0; resize:none; outline:none;text-ind
 .infoAudit table td{/*text-align:left;*/ padding-left:5px;padding-right:5px; /*color:#999;*/}
 .infoAudit table a{ color:#459ae9;}
 .infoAudit .caption span{ margin-right:10px;margin-top:11px;}
-.infoAudit h4{display:block;border-left:4px solid #44b549;font-size: 15px;font-weight: 400;font-style: normal;padding: 0 7px;}
+.infoAudit h4{display:block;border-left:4px solid #54B2E5;font-size: 15px;font-weight: 400;font-style: normal;padding: 0 7px;}
 .btn_info{margin-top: 20px; margin-bottom:20px; text-align:center;}
 
 /*进度条--2015-04-08--淘宝*/
@@ -412,7 +412,7 @@ textarea{ width:100%; height:150px;padding:0; resize:none; outline:none;text-ind
 .index_table table .gray{color: #A1A1A1;}
 .index_table table .left{text-indent: 2em;text-align: left;}
 .index_table table .right{padding-left: 20px;text-align: left;}
-.index_table h3 {line-height:20px;display: block;border-left: 4px solid #44b549;font-size: 14px;font-weight: 400;font-style: normal;padding: 0 7px;margin-top: 10px;margin-bottom: 10px;}
+.index_table h3 {line-height:20px;display: block;border-left: 4px solid #54B2E5;font-size: 14px;font-weight: 400;font-style: normal;padding: 0 7px;margin-top: 10px;margin-bottom: 10px;}
 
 /*表格*/
 .base_info{ width:100%; text-align:center; border:1px solid #e7e7eb; color:#686868; border-collapse:collapse;}

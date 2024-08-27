@@ -1245,7 +1245,7 @@ button, input, select, textarea {
 
 .title_tab .tab_nav.selected {
     background: 0;
-    border-bottom: 3px solid #44b549
+    border-bottom: 3px solid #54B2E5
 }
 
 .tips_box {
@@ -2363,13 +2363,13 @@ button.btn {
 }
 
 .btn_primary {
-    background-color: #44b549;
-    background-image: -moz-linear-gradient(top, #44b549 0, #44b549 100%);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#44b549), to(#44b549));
-    background-image: -webkit-linear-gradient(top, #44b549 0, #44b549 100%);
-    background-image: -o-linear-gradient(top, #44b549 0, #44b549 100%);
-    background-image: linear-gradient(to bottom, #44b549 0, #44b549 100%);
-    border-color: #44b549;
+    background-color: #54B2E5;
+    background-image: -moz-linear-gradient(top, #54B2E5 0, #54B2E5 100%);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#54B2E5), to(#54B2E5));
+    background-image: -webkit-linear-gradient(top, #54B2E5 0, #54B2E5 100%);
+    background-image: -o-linear-gradient(top, #54B2E5 0, #54B2E5 100%);
+    background-image: linear-gradient(to bottom, #54B2E5 0, #54B2E5 100%);
+    border-color: #54B2E5;
     color: #fff
 }
 
@@ -3216,7 +3216,7 @@ button.btn {
 }
 
 .page_tips.success .inner {
-    background-color: #44b549
+    background-color: #54B2E5
 }
 
 .page_tips.error .inner {
@@ -4539,12 +4539,12 @@ button.btn {
 }
 
 .menu_title.selected {
-    background-color: #44b549;
+    background-color: #54B2E5;
     color: #fff
 }
 
 .menu_title.selected:hover {
-    background-color: #44b549
+    background-color: #54B2E5
 }
 
 .menu_title.selected a {
@@ -4607,7 +4607,7 @@ button.btn {
 }
 
 .menu_item.selected {
-    background-color: #44b549;
+    background-color: #54B2E5;
     color: #fff
 }
 
@@ -4698,7 +4698,7 @@ button.btn {
 }
 
 .menu_primary_item.selected {
-    background-color: #44b549
+    background-color: #54B2E5
 }
 
 .menu_primary_item.selected .menu_primary_link {

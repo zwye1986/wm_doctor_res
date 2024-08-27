@@ -79,7 +79,7 @@
         for (var i = 0; i < ddList.length; i++) {
             $(ddList[i]).css("background-color","white");
         }
-        $(obj).parent().css("background-color","#44b549");
+        $(obj).parent().css("background-color","#54B2E5");
         $(obj).css("color","white");
 
         $("#tdinfo").show()
@@ -129,7 +129,7 @@
                 }
                 for (var i = 0; i < aList.length; i++) {
                     if (aList[i].getAttribute("recordId") == recordFlow){
-                        $(aList[i]).parent().css("background-color","#44b549");
+                        $(aList[i]).parent().css("background-color","#54B2E5");
                         $(aList[i]).css("color","white");
                         return;
                     }
@@ -244,7 +244,7 @@
             <div id="textContext" style="width: 65%;margin-left: 20px;margin-bottom: 40px; float: left;">
                     <div   style="text-align: right;margin-bottom: 10px">
                         <input class="btn_green" type="button" value="导出Word文件"
-                               style="background-color: #44B549;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
+                               style="background-color: #54B2E5;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
                                onclick="exportReport('${subjectActivitiFlows}','management');" />
                     </div>
 
@@ -261,14 +261,14 @@
                         </div>
                         <input id="recodeFlow1" name="recordFlow" type="hidden">
                         <input class="btn_green" type="button" value="上一步" id="msgSave1"
-                               style="background-color: #44B549;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
+                               style="background-color: #54B2E5;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
                                onclick="shouInfo('S');"/>&#12288;
                         <input class="btn_green" type="button" value="下一步" id="msgSave2"
-                               style="background-color: #44B549;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
+                               style="background-color: #54B2E5;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
                                onclick="shouInfo('X');"/>&#12288;
                         <c:if test="${roleFlag eq  'management' && isRead ne 'Y'}">
                             <input class="btn_green" type="button" value="保&#12288;存" id="msgSave"
-                                   style="background-color: #44B549;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
+                                   style="background-color: #54B2E5;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
                                    onclick="saveInfo();"/>&#12288;
                         </c:if>
                     </form>

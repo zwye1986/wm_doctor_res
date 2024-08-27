@@ -98,7 +98,7 @@ text-decoration: none;
 .video-info dd li p.p3 span{ color:#919191; font-size:12px; font-weight:normal;}
 .video-info dd li p.p4{ color:#575757; font-size:14px; line-height:30px;padding-left:70px;}
 .video-info .best{ background:url(images/best.png) no-repeat; z-index:500; position:relative; width:60px; height:60px; margin-left:689px;}
-.score-num{background:#44b549; color:#fff; border-radius:3px; -webkit-border-radius:3px;-moz-border-radius:3px; padding:3px; margin-right:20px;}
+.score-num{background:#54B2E5; color:#fff; border-radius:3px; -webkit-border-radius:3px;-moz-border-radius:3px; padding:3px; margin-right:20px;}
 .nomessage{text-align:center;display:block;margin-top:100px;}
 .nomessage p{padding-left:8px;margin-top:20px;font-size:14px;}
 .nomq{padding-right:100px;}

@@ -180,6 +180,7 @@
                 <div class="form_label">专业：</div>
                 <div>
                     <select name="trainingSpeId" class="select" id="trainingSpeId" >
+                        <option value="" >全部</option>
                         <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
                             <c:if test="${'3500' ne dict.dictId and '3700' ne dict.dictId}">
                                 <option value="${dict.dictId}" <c:if test="${param.speId eq dict.dictId}">selected</c:if>>${dict.dictName}</option>
@@ -196,7 +197,7 @@
                            value="${user.deptName}" autocomplete="off" title="${param.deptName}"  placeholder="请选择科室"
                            onmouseover="this.title = this.value"/>
                     <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:35px;left:5px;">
-                        <div id="boxHome" style="max-height: 250px; margin-left: 45px;overflow: auto;border: 1px #ccc solid;background-color: white;min-width: 169px;border-top: none;position: relative;display: none;">
+                        <div id="boxHome" style="max-height: 250px;overflow: auto;border: 1px #ccc solid;background-color: white;min-width: 161px;border-top: none;position: relative;display: none;">
                             <c:forEach items="${deptList}" var="dept">
                                 <p class="item" flow="${dept.deptFlow}" value="${dept.deptName}" onclick="toDeptFlow('${dept.deptFlow}');" style="height: 30px;padding-left: 10px;text-align: left;">${dept.deptName}</p>
                             </c:forEach>

@@ -23,7 +23,7 @@ strong{ font-weight:normal;}
 .btn:hover{background-color: #e6e7ec;}
 .btn_red{background-color: #f24d4d;color: #fff; border:none;}
 .btn_red:hover{background-color: #d43d3d;}
-.btn_green{background-color: #44b549;color: #fff;border:none;}
+.btn_green{background-color: #54B2E5;color: #fff;border:none;}
 .btn_green:hover{background-color: #2f9833;}
 .btn_blue{background-color: #017bce;color: #fff;border:none;}
 .btn_blue:hover{background-color: #0097fe;}
@@ -129,10 +129,10 @@ textarea{ width:100%; height:150px;padding:0; resize:none; outline:none;text-ind
 /*.title_tab ul{ display:inline-block; line-height:40px;}*/
 /*.title_tab ul li{ float:left;}*/
 /*.title_tab ul li a{ padding:0 30px; color:#222;}*/
-/*.tab_select{ border-bottom:3px solid #44b549;}*/
+/*.tab_select{ border-bottom:3px solid #54B2E5;}*/
 /*.tab:hover{ border-bottom:3px solid #a0a3ab;}*/
 /*.div_table{ padding:20px 40px 0;margin-bottom: 10px;}*/
-/*.div_table h4{display:block;border-left:4px solid #44b549;font-size: 15px;font-weight: 400;font-style: normal;padding: 0 7px; margin-top:5px; margin-bottom:10px;}*/
+/*.div_table h4{display:block;border-left:4px solid #54B2E5;font-size: 15px;font-weight: 400;font-style: normal;padding: 0 7px; margin-top:5px; margin-bottom:10px;}*/
 /*.div_table p{height:45px; line-height:45px; display:table;}*/
 /*.search_table{padding:0 40px;margin-bottom: 10px;}*/
 /*.search_table span{font-weight:normal; font-size:14px; display:inline-block;}*/
@@ -289,7 +289,7 @@ textarea{ width:100%; height:150px;padding:0; resize:none; outline:none;text-ind
 /*住陪招录计划*/
 .recruit{height: 60px;display: inline-block;float: left;margin:12px;margin-top:15px; border:1px solid #f6f6f6;}
 .recruit_top{width: 229px;padding-top:20px; height:40px;font-size:13px;text-align:center;float: left; background:#f6f6f6;}
-.recruit_body{width: 46px;line-height:60px;height:60px;text-align:center; color:#44b549;font-size:14px; font-weight:bold;float: left;background:#e0f7e1;}
+.recruit_body{width: 46px;line-height:60px;height:60px;text-align:center; color:#54B2E5;font-size:14px; font-weight:bold;float: left;background:#e0f7e1;}
 /*前台-----------------------------------basic--end-------------------------------------*/
 
 
