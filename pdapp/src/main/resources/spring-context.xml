@@ -37,10 +37,24 @@
     </bean>    
     
     <!-- 调度注解支持 -->
-    <task:executor id="executor" pool-size="5" />  
+    <!--<task:executor id="executor" pool-size="5" />
     <task:scheduler id="scheduler" pool-size="10" />  
-    <task:annotation-driven executor="executor" scheduler="scheduler" />
-    
+    <task:annotation-driven executor="executor" scheduler="scheduler" />-->
+
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="queueCapacity" value="500"/>
+        <property name="keepAliveSeconds" value="3600" />
+        <property name="corePoolSize" value="100" />
+        <property name="maxPoolSize" value="200" />
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy"/>
+        </property>
+    </bean>
+
+    <bean id="TaskScheduler" class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
+        <property name="poolSize" value="1000" />
+    </bean>
+
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 	<!-- 引入mybatis配置文件	 -->
 	<import resource="classpath:/spring-mybatis.xml" />

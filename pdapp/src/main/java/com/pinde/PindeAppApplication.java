@@ -12,15 +12,18 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 import javax.sql.DataSource;
 
 @SpringBootApplication(exclude = { FreeMarkerAutoConfiguration.class, MustacheAutoConfiguration.class })
 //@ComponentScan(basePackages = {"com.pinde"})
-//@PropertySource(value = {"classpath:jdbc.properties", "classpath:log4j.properties", "classpath:pdsci.properties", "classpath:sso.properties"}, ignoreResourceNotFound = true)
+@PropertySource(value = {"classpath:jdbc.properties", "classpath:log4j.properties", "classpath:pdapp.properties", "classpath:sso.properties"}, ignoreResourceNotFound = true)
 @ImportResource({"classpath:spring-context.xml"/*,"classpath:spring-mvc.xml","classpath:spring-mybatis.xml"*/})
 //@MapperScan({"com.pinde.sci.dao.**"})
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 3600, redisNamespace = "pdsci-jsres-app")
 public class PindeAppApplication extends SpringBootServletInitializer {
     private static Logger logger = LoggerFactory.getLogger(PindeAppApplication.class);
 
@@ -29,13 +32,24 @@ public class PindeAppApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         logger.info("PindeSciApplication start...");
-        SpringApplication.run(PindeAppApplication.class, args); // 启动Spring Boot应用
+        try {
+            SpringApplication.run(PindeAppApplication.class, args); // 启动Spring Boot应用
+        }catch (Exception e) {
+            logger.error("PindeSciApplication start error.", e);
+        }
     }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         logger.info("PindeSciApplication config web.xml load...");
-        return builder.sources(PindeAppApplication.class);
+        SpringApplicationBuilder springApplicationBuilder = null;
+        try {
+            springApplicationBuilder = builder.sources(PindeAppApplication.class);
+        }catch (Exception e) {
+            logger.error("PindeSciApplication start error.", e);
+        }
+
+        return springApplicationBuilder;
     }
 
     /**
@@ -45,12 +59,12 @@ public class PindeAppApplication extends SpringBootServletInitializer {
      */
     @Bean
     public SpringLiquibase springLiquibase(DataSource dataSource) {
-        logger.error("PindeSciApplication config liquibase...");
+        logger.info("PindeSciApplication config liquibase...");
         SpringLiquibase springLiquibase = new SpringLiquibase();
         springLiquibase.setChangeLog(env.getProperty("liquibase.change-log"));
         springLiquibase.setDataSource(dataSource);
         springLiquibase.setShouldRun(true);
-        logger.error("PindeSciApplication config liquibase end...");
+        logger.info("PindeSciApplication config liquibase end...");
         return springLiquibase;
     }
 }
