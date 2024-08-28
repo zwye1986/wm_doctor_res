@@ -99,56 +99,60 @@ public class InitConfig implements ServletContextListener {
     }
 
     private static void _loadDict(ServletContext context) {
-        Map<String, List<SysDict>> sysListDictMap = new HashMap<String, List<SysDict>>();
-        Map<String, String> sysDictIdMap = new HashMap<String, String>();
-        Map<String, Map<String, String>> sysDictNameMap = new HashMap<String, Map<String, String>>();
-        List<DictTypeEnum> dictTypeEnumList = (List<DictTypeEnum>) EnumUtil.toList(DictTypeEnum.class);
-        for (DictTypeEnum dictTypeEnum : dictTypeEnumList) {
-            String dictTypeId = dictTypeEnum.getId();
-            Map<String, String> dictNameMap = new HashMap<String, String>();
-            sysDictNameMap.put(dictTypeId, dictNameMap);
-            IDictBiz dictBiz = SpringUtil.getBean(IDictBiz.class);
-            SysDict sysDict = new SysDict();
-            sysDict.setDictTypeId(dictTypeId);
-            sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-            List<SysDict> sysDictList = dictBiz.searchDictList(sysDict);
-            for (SysDict dict : sysDictList) {
-                String typeId = dict.getDictTypeId() + "." + dict.getDictId();
-                sysDictIdMap.put(typeId, dict.getDictName());
-                dictNameMap.put(dict.getDictName(), dict.getDictId());
-                if (dictTypeEnum.getLevel() > 1) {
-                    sysDict.setDictTypeId(typeId);
-                    List<SysDict> sysDictSecondList = dictBiz.searchDictList(sysDict);
-                    if (sysDictSecondList != null && sysDictSecondList.size() > 0) {
-                        for (SysDict sDict : sysDictSecondList) {
-                            String tTypeId = typeId + "." + sDict.getDictId();
-                            String tTypeName = dict.getDictName() + "." + sDict.getDictName();
-                            sysDictIdMap.put(tTypeId, tTypeName);
-                            if (dictTypeEnum.getLevel() > 2) {
-                                sysDict.setDictTypeId(tTypeId);
-                                List<SysDict> sysDictThirdList = dictBiz.searchDictList(sysDict);
-                                if (sysDictThirdList != null && sysDictThirdList.size() > 0) {
-                                    for (SysDict tDict : sysDictThirdList) {
-                                        sysDictIdMap.put(tTypeId + "." + tDict.getDictId(), tTypeName + "." + tDict.getDictName());
+        try {
+            Map<String, List<SysDict>> sysListDictMap = new HashMap<String, List<SysDict>>();
+            Map<String, String> sysDictIdMap = new HashMap<String, String>();
+            Map<String, Map<String, String>> sysDictNameMap = new HashMap<String, Map<String, String>>();
+            List<DictTypeEnum> dictTypeEnumList = (List<DictTypeEnum>) EnumUtil.toList(DictTypeEnum.class);
+            for (DictTypeEnum dictTypeEnum : dictTypeEnumList) {
+                String dictTypeId = dictTypeEnum.getId();
+                Map<String, String> dictNameMap = new HashMap<String, String>();
+                sysDictNameMap.put(dictTypeId, dictNameMap);
+                IDictBiz dictBiz = SpringUtil.getBean(IDictBiz.class);
+                SysDict sysDict = new SysDict();
+                sysDict.setDictTypeId(dictTypeId);
+                sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                List<SysDict> sysDictList = dictBiz.searchDictList(sysDict);
+                for (SysDict dict : sysDictList) {
+                    String typeId = dict.getDictTypeId() + "." + dict.getDictId();
+                    sysDictIdMap.put(typeId, dict.getDictName());
+                    dictNameMap.put(dict.getDictName(), dict.getDictId());
+                    if (dictTypeEnum.getLevel() > 1) {
+                        sysDict.setDictTypeId(typeId);
+                        List<SysDict> sysDictSecondList = dictBiz.searchDictList(sysDict);
+                        if (sysDictSecondList != null && sysDictSecondList.size() > 0) {
+                            for (SysDict sDict : sysDictSecondList) {
+                                String tTypeId = typeId + "." + sDict.getDictId();
+                                String tTypeName = dict.getDictName() + "." + sDict.getDictName();
+                                sysDictIdMap.put(tTypeId, tTypeName);
+                                if (dictTypeEnum.getLevel() > 2) {
+                                    sysDict.setDictTypeId(tTypeId);
+                                    List<SysDict> sysDictThirdList = dictBiz.searchDictList(sysDict);
+                                    if (sysDictThirdList != null && sysDictThirdList.size() > 0) {
+                                        for (SysDict tDict : sysDictThirdList) {
+                                            sysDictIdMap.put(tTypeId + "." + tDict.getDictId(), tTypeName + "." + tDict.getDictName());
+                                        }
                                     }
+                                    sysListDictMap.put(tTypeId, sysDictThirdList);
+                                    context.setAttribute("dictTypeEnum" + tTypeId + "List", sysDictThirdList);
                                 }
-                                sysListDictMap.put(tTypeId, sysDictThirdList);
-                                context.setAttribute("dictTypeEnum" + tTypeId + "List", sysDictThirdList);
                             }
                         }
+                        sysListDictMap.put(typeId, sysDictSecondList);
+                        context.setAttribute("dictTypeEnum" + typeId + "List", sysDictSecondList);
                     }
-                    sysListDictMap.put(typeId, sysDictSecondList);
-                    context.setAttribute("dictTypeEnum" + typeId + "List", sysDictSecondList);
                 }
-            }
 
-            sysListDictMap.put(dictTypeId, sysDictList);
-            context.setAttribute("dictTypeEnum" + dictTypeEnum.name() + "List", sysDictList);
+                sysListDictMap.put(dictTypeId, sysDictList);
+                context.setAttribute("dictTypeEnum" + dictTypeEnum.name() + "List", sysDictList);
+            }
+            context.setAttribute("sysDictIdMap", sysDictIdMap);
+            InitConfig.sysDictNameMap = sysDictNameMap;
+            DictTypeEnum.sysDictIdMap = sysDictIdMap;
+            DictTypeEnum.sysListDictMap = sysListDictMap;
+        }catch (Exception e) {
+            logger.error("", e);
         }
-        context.setAttribute("sysDictIdMap", sysDictIdMap);
-        InitConfig.sysDictNameMap = sysDictNameMap;
-        DictTypeEnum.sysDictIdMap = sysDictIdMap;
-        DictTypeEnum.sysListDictMap = sysListDictMap;
     }
 
     private static void _loadEnum(ServletContext context) {
