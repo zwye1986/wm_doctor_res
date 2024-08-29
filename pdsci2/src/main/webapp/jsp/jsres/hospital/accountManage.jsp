@@ -267,7 +267,7 @@ function showOrHide(){
                 <div class="form_item form_item_hide">
                     <div class="form_label">账号状态：</div>
                     <div class="form_content">
-                        <select name="trainingSpeId" id="trainingSpeId" class="select" >
+                        <select name="lockStatus" id="lockStatus" class="select" >
                             <option value="">全部</option>
                         </select>
                     </div>

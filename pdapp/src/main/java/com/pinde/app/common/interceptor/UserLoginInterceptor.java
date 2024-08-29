@@ -22,7 +22,7 @@ public class UserLoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
 
-        Map<String, String[]> map = httpServletRequest.getParameterMap();
+       /* Map<String, String[]> map = httpServletRequest.getParameterMap();
         for (String key : map.keySet()) {
             String[] values = httpServletRequest.getParameterValues(key);
             for (String value : values) {
@@ -34,7 +34,7 @@ public class UserLoginInterceptor implements HandlerInterceptor {
                     return false;
                 }
             }
-        }
+        } */
 
         /*String servletPath = httpServletRequest.getServletPath();
         if(servletPath.contains("/wx/")) {
