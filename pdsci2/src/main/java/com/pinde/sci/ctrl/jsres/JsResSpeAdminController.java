@@ -1273,18 +1273,24 @@ public class JsResSpeAdminController extends GeneralController{
 
 		boolean isPay=false;	//基地是否付费
 		boolean dataIsNull=false;
-		JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_baseInfo_maintenance_" + orgFlow);
-		//基地是付费用户，科主任可以填写信息，如果不是就不可以填写，只能由基地填写
-		if (null != cfg && StringUtil.isNotBlank(cfg.getCfgValue()) && cfg.getCfgValue().equals("Y")) {
-			isPay=true;	//是付费用户
-			if (StringUtil.isEmpty(onlyRead) || !onlyRead.equals("Y")){		//基地查看
-				viewFlag=GlobalConstant.FLAG_N;
-			}
-		}else {
+		String hospitalAdmin = InitConfig.getSysCfg("res_admin_role_flow");
+		List<String> currRoleList = (List<String>) getSessionAttribute("currRoleList");
+		if(currRoleList == null || !currRoleList.contains(hospitalAdmin)) {
+			JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_baseInfo_maintenance_" + orgFlow);
+			//基地是付费用户，科主任可以填写信息，如果不是就不可以填写，只能由基地填写
+			if (null != cfg && StringUtil.isNotBlank(cfg.getCfgValue()) && cfg.getCfgValue().equals("Y")) {
+				isPay = true;    //是付费用户
+				if (StringUtil.isEmpty(onlyRead) || !onlyRead.equals("Y")) {        //基地查看
+					viewFlag = GlobalConstant.FLAG_N;
+				}
+			} else {
 //			viewFlag=GlobalConstant.FLAG_Y;
 //			if (isOrg){ // 管理员编辑
 //				viewFlag=GlobalConstant.FLAG_N;
 //			}
+			}
+		}else {
+			isPay = true;
 		}
 
 		if (GlobalConstant.DEPT_BASIC_INFO.equals(baseInfoName) &&!GlobalConstant.FLAG_Y.equals(viewFlag) && isPay) {    //基本信息
