@@ -1408,14 +1408,21 @@ public class JsResHeadDeptController extends GeneralController{
 		Integer year=Integer.parseInt(sessionNumber)-1;
 		mav.addObject("sessionNumber", sessionNumber);
 		boolean isPay=false;	//基地是否付费
-		JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_baseInfo_maintenance_" + orgFlow);
-		//基地是付费用户，科主任可以填写信息，如果不是就不可以填写，只能由基地填写
-		if (null != cfg && StringUtil.isNotBlank(cfg.getCfgValue()) && cfg.getCfgValue().equals("Y")) {
-			isPay=true;	//是付费用户
-			viewFlag=GlobalConstant.FLAG_N;
-		}else {
-			viewFlag=GlobalConstant.FLAG_Y;
-		}
+			String hospitalAdmin = InitConfig.getSysCfg("res_admin_role_flow");
+			List<String> currRoleList = (List<String>) getSessionAttribute("currRoleList");
+			if(currRoleList == null || !currRoleList.contains(hospitalAdmin)) {
+				JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_baseInfo_maintenance_" + orgFlow);
+				//基地是付费用户，科主任可以填写信息，如果不是就不可以填写，只能由基地填写
+				if (null != cfg && StringUtil.isNotBlank(cfg.getCfgValue()) && cfg.getCfgValue().equals("Y")) {
+					isPay = true;    //是付费用户
+					viewFlag = GlobalConstant.FLAG_N;
+				} else {
+					viewFlag = GlobalConstant.FLAG_Y;
+				}
+			}else {
+				isPay = true;
+			}
+
 
 
 
