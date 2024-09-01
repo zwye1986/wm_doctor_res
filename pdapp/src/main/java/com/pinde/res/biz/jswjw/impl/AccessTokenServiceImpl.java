@@ -25,8 +25,8 @@ public class AccessTokenServiceImpl implements IAccessTokenService {
 
     private static final String ACCESS_TOKEN_KEY = "access_token";
     private static final String LOCK_KEY = "lock:access_token";
-    private static final long LOCK_EXPIRATION = 5; // 锁过期时间（秒）
-    private static final long EXPIRATION_TIME = 3600; // access_token过期时间（秒）
+    private static final long LOCK_EXPIRATION = 300; // 锁过期时间（秒）
+    private static final long EXPIRATION_TIME = 7000; // access_token过期时间（秒）
 
     private static final int MAX_RETRY_COUNT = 3;
 
@@ -62,8 +62,6 @@ public class AccessTokenServiceImpl implements IAccessTokenService {
         }
 
         throw new RuntimeException("Failed to acquire lock after " + MAX_RETRY_COUNT + " retries");
-
-
     }
 
 
