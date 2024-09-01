@@ -6,6 +6,7 @@ import com.pinde.core.pdf.utils.ObjectUtils;
 import com.pinde.res.biz.jswjw.IAccessTokenService;
 import com.pinde.res.ctrl.jswjw.JswjwWxController;
 import com.pinde.sci.util.WechatUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,41 +28,44 @@ public class AccessTokenServiceImpl implements IAccessTokenService {
     private static final long LOCK_EXPIRATION = 5; // 锁过期时间（秒）
     private static final long EXPIRATION_TIME = 3600; // access_token过期时间（秒）
 
+    private static final int MAX_RETRY_COUNT = 3;
+
     private static Logger logger = LoggerFactory.getLogger(AccessTokenServiceImpl.class);
 
-    public String getAccessToken(String appid,String secret) throws Exception {
+    public String getAccessToken(String appId, String secret) throws Exception {
         ValueOperations<String, String> valueOps = redisTemplate.opsForValue();
-        String accessToken = valueOps.get(ACCESS_TOKEN_KEY);
+        String currentAccessToken = valueOps.get(ACCESS_TOKEN_KEY);
+        if(StringUtils.isNotBlank(currentAccessToken)) return currentAccessToken;
 
-        if (accessToken == null || accessToken.isEmpty()) {
-            // 尝试获取分布式锁
+        int retryCount = 0;
+        while (retryCount < MAX_RETRY_COUNT) {
             if (tryLock(LOCK_KEY, LOCK_EXPIRATION)) {
                 try {
-                    // 再次检查，因为可能多个线程同时通过了第一次检查
-                    accessToken = valueOps.get(ACCESS_TOKEN_KEY);
-                    if (accessToken == null || accessToken.isEmpty()) {
-                        // 调用接口获取新的access_token
-                        accessToken = fetchNewAccessToken(appid, secret);
-                        // 保存新的access_token到Redis，并设置过期时间
-                        valueOps.set(ACCESS_TOKEN_KEY, accessToken, EXPIRATION_TIME, TimeUnit.SECONDS);
-                    }
+                    // 调用接口获取新的access_token
+                    String newAccessToken = fetchNewAccessToken(appId, secret);
+                    // 保存新的access_token到Redis，并设置过期时间
+                    valueOps.set(ACCESS_TOKEN_KEY, newAccessToken, EXPIRATION_TIME, TimeUnit.SECONDS);
+                    return newAccessToken;
+                } catch (Exception e) {
+                    throw new RuntimeException("Failed to fetch new access token", e);
                 } finally {
-                    // 释放分布式锁
                     releaseLock(LOCK_KEY);
                 }
             } else {
-                // 如果获取锁失败，等待一段时间后重试
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
-                return getAccessToken(appid, secret); // 重试
+                retryCount++;
             }
         }
 
-        return accessToken;
+        throw new RuntimeException("Failed to acquire lock after " + MAX_RETRY_COUNT + " retries");
+
+
     }
+
 
     private boolean tryLock(String lockKey, long expiration) {
         ValueOperations<String, String> valueOps = redisTemplate.opsForValue();
