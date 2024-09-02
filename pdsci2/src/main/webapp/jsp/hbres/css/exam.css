@@ -20,7 +20,7 @@ border: 0;
 /*border-style: solid;*/
 cursor: pointer;
 }
-.blue-btn{ background:#44b549; border: 1px solid #3ea543; color:#fff;}
+.blue-btn{ background:#54B2E5; border: 1px solid #3ea543; color:#fff;}
 .blue-btn:hover{ background:#3ea543;}
 
 .sch{width:213px;min-height: 146px;display:inline-block; float:left;margin:0 6px;border:1px #ccc solid;margin-top: 15px;}
@@ -35,7 +35,7 @@ cursor: pointer;
 .sch_info p{margin-bottom: 5px;margin-top: 5px;}
 .sch_info p span{margin:0 5px;}
 .sch_add{width:213px;min-height: 166px;display:inline-block;margin:0 6px;margin-top: 15px;cursor: pointer;border: 1px dashed #cfcfcf;background-color: #f9f9f9;background-image:url(../images/add.png); background-repeat:no-repeat; background-position:center 38px;font-size: 20px;text-align: center;}
-.sch_add:hover{border: 1px dashed #44b549;background-color: #f6f6f6;}
+.sch_add:hover{border: 1px dashed #54B2E5;background-color: #f6f6f6;}
 .sch_add img{margin-top:55px; float:left;}
 .add_font{color: #cfcfcf; display:block; margin-top:100px; float:left; width:100%;}
 .infoAudit {overflow-y: auto;padding: 20px;height: 505px;background: #fff;}

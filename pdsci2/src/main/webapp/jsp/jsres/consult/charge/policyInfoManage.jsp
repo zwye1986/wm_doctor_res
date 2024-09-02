@@ -77,7 +77,7 @@
                             ${consultInfo.consultAnswer}
                     </div>
                     <span>
-                        <a onclick="detailConsult('${consultInfo.consultInfoFlow}')"><font color="#44b549">查看详情</font></a>
+                        <a onclick="detailConsult('${consultInfo.consultInfoFlow}')"><font color="#54B2E5">查看详情</font></a>
                     </span>
                 </div>
                 <div class="cons-lit align-c">

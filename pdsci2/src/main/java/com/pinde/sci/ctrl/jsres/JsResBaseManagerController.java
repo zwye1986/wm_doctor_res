@@ -6213,14 +6213,17 @@ public class JsResBaseManagerController extends GeneralController {
 					ResOrgSepVO jointOrgVO = orgToOrgSpeVOMap.get(jointFlow);
 					if(null != jointOrgVO) {
 						// 顺便把baseCode添上
-						jointOrgVO.setBaseCode(orgToEntityMap.getOrDefault(jointOrgVO.getOrgFlow(), new SysOrg()).getOrgCode());
+						jointOrgVO.setBaseCode(orgToEntityMap.getOrDefault(jointOrgVO.getOrgFlow(), new SysOrg()).getBaseCode());
 						jointOrgVO.setOrgName(orgToEntityMap.getOrDefault(jointOrgVO.getOrgFlow(), new SysOrg()).getOrgName());
 						jointOrgList.add(jointOrgVO);
 					}
 				}
 				jointOrgList = jointOrgList.stream().sorted((vo1, vo2) -> {
 					if(StringUtils.isNotEmpty(vo1.getBaseCode()) && StringUtils.isNotEmpty(vo2.getBaseCode())) {
-						return Integer.compare(Integer.parseInt(vo1.getBaseCode()), Integer.parseInt(vo2.getBaseCode()));
+						if(NumberUtils.isDigits(vo1.getBaseCode()) && NumberUtils.isDigits(vo2.getBaseCode())) {
+							return Integer.compare(Integer.parseInt(vo1.getBaseCode()), Integer.parseInt(vo2.getBaseCode()));
+						}
+						return vo1.getBaseCode().compareTo(vo2.getBaseCode());
 					}else if(StringUtils.isNotEmpty(vo1.getBaseCode())){
 						return -1;
 					}else if(StringUtils.isNotEmpty(vo2.getBaseCode())) {
@@ -6229,7 +6232,7 @@ public class JsResBaseManagerController extends GeneralController {
 				}).collect(Collectors.toList());
 				mainOrgVO.setJointOrgList(jointOrgList);
 				// 顺便把baseCode添上
-				mainOrgVO.setBaseCode(orgToEntityMap.getOrDefault(mainOrgVO.getOrgFlow(), new SysOrg()).getOrgCode());
+				mainOrgVO.setBaseCode(orgToEntityMap.getOrDefault(mainOrgVO.getOrgFlow(), new SysOrg()).getBaseCode());
 				mainOrgVO.setOrgName(orgToEntityMap.getOrDefault(mainOrgVO.getOrgFlow(), new SysOrg()).getOrgName());
 				resList.add(mainOrgVO);
 			}

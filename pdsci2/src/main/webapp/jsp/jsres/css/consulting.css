@@ -104,7 +104,7 @@ textarea{
 }
 
 input:checked+.show-box {
-	background: #44B549;
+	background: #54B2E5;
 }
 
 .show-box {
@@ -183,8 +183,8 @@ input:checked+.show-box {
 	height: 30px;
 	font-size: 14px;
 	background: #FFF;
-	color: #44B549;
-	border: 1px solid #44B549;
+	color: #54B2E5;
+	border: 1px solid #54B2E5;
 	border-radius: 3px;
 	cursor: pointer;
 	outline: none;
@@ -228,7 +228,7 @@ input:checked+.show-box {
 	left: 0;
 	top: 0;
 	border: 21px solid;
-	border-color: #44B549 #FFF #FFF #44B549;
+	border-color: #54B2E5 #FFF #FFF #54B2E5;
 }
 
 .cons-cont.cons-none {
@@ -293,7 +293,7 @@ input:checked+.show-box {
 	width: 30px;
 	height: 30px;
 	border-radius: 50%;
-	background: #44B549;
+	background: #54B2E5;
 	cursor: pointer;
 }
 
@@ -322,7 +322,7 @@ input:checked+.show-box {
 .poli-editor input {
 	padding: 4px 20px;
 	border-radius: 3px;
-	background: #44B549;
+	background: #54B2E5;
 	color: #FFF;
 	margin-right: 8px;
 	border: none;
@@ -353,7 +353,7 @@ input:checked+.show-box {
 }
 
 .filter.active {
-	color: #44B549;
+	color: #54B2E5;
 }
 
 .poli-cont>li {
@@ -518,7 +518,7 @@ input:checked+.show-box {
 	position: relative;
 }
 .btn_green {
-	background-color: #44b549;
+	background-color: #54B2E5;
 	color: #fff;
 	border: none;
 }

@@ -30,7 +30,7 @@
 		padding-left: 100px;
 	}
 	.searchCss{
-		background-color: #44b549;
+		background-color: #54B2E5;
 		color: #fff;
 		border: none;
 		display: inline-block;

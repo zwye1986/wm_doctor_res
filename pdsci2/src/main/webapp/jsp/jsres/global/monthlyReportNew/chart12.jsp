@@ -28,7 +28,7 @@
       margin: 0;
     }
     .setLbtnBg{
-      background: #44b549;
+      background: #54B2E5;
       border-radius: 3px;
     }
 
@@ -80,7 +80,7 @@
               if(!$(this).parent("li").hasClass("choose")){
                   $(this).parent('li').css({
                       "margin-left":"10px",
-                      "background":"#44b549",
+                      "background":"#54B2E5",
                   });
                   $(this).css("color","#fff")
               }

@@ -67,15 +67,20 @@ public class HttpContextFilter implements Filter {
 			logger.debug("app "+httpRequest.getMethod()+" request is:"+httpRequest.getRequestURL().toString());
 
 		}
-		try
-		{
-
-			PrintWriter out = httpResponse.getWriter();
+		PrintWriter out = null;
+		try {
+			out = httpResponse.getWriter();
 			out.write(resp);
-			out.close();
+			out.flush();
+		}catch(Exception ex){
+			logger.error("close PrintWriter exception ......",ex);
 		}
-		catch(Exception ex)
-		{
+		finally {
+			try {
+				if(out != null ) out.close();
+			} catch (Exception e) {
+				logger.error("close PrintWriter exception:",e);
+			}
 		}
 	}
 

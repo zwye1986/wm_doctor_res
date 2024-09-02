@@ -50,7 +50,7 @@
 					<c:choose>
 						<c:when test="${'Locked' eq  doctorExt.sysUser.statusId}"> <font style="color: red">已停用</font></c:when>
 						<c:when test="${'SysLocked' eq  doctorExt.sysUser.statusId}"> <font style="color: red">已锁定</font></c:when>
-						<c:otherwise><font style="color: #44b549">已激活</font></c:otherwise>
+						<c:otherwise><font style="color: #54B2E5">已激活</font></c:otherwise>
 					</c:choose>
 				</td>
 				<c:if test="${maintenance ne 'Y'}"> <%--客服（运维角色）只能查看——--%>

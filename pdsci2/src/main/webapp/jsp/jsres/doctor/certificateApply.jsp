@@ -21,14 +21,14 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#toptab li:first").removeClass("tab").addClass("tab_select")
-			.attr("style","background-color:#44b549;")
+			.attr("style","background-color:#54B2E5;")
 			.find("a").attr("style","color: white;");
 	$("#toptab .tabli").click(function(){
 		$("#toptab .tab_select").addClass("tab").attr("style","")
 				.find("a").attr("style","");
 		$("#toptab .tab_select").removeClass("tab_select");
 		$(this).removeClass("tab");
-		$(this).addClass("tab_select").attr("style","background-color:#44b549;")
+		$(this).addClass("tab_select").attr("style","background-color:#54B2E5;")
 										.find("a").attr("style","color: white;");
 	});
 	

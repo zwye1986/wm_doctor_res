@@ -26,7 +26,7 @@
 <style>
 .infoAudit{padding:20px;background:#fff;}
 .infoAudit h1{ line-height:40px;  text-align:center; font-size:16px; color:#333;}
-.infoAudit h2{line-height:40px; border-bottom:2px solid #44b549;padding-left:10px; color:#44b549; text-indend:10px;font-size:14px;}
+.infoAudit h2{line-height:40px; border-bottom:2px solid #54B2E5;padding-left:10px; color:#54B2E5; text-indend:10px;font-size:14px;}
 .orgTable{ margin:10px 0;border-collapse: collapse;}
 .orgCaption,.orgTh,.orgTd{height:40px;}
 .orgCaption{line-height:40px;text-align:left;font-weight:bold; padding-left:10px; border-bottom:1px solid #ddd;color:#f60;}
@@ -34,7 +34,7 @@
 .orgTd{text-align:left; padding-left:5px; color:#999;}
 .orgTable a{ color:#00f;}
 .btn{padding-left:22px; padding-right:22px;}
-.blue-btn{ background:#44b549; border: 1px solid #3ea543; color:#fff;}
+.blue-btn{ background:#54B2E5; border: 1px solid #3ea543; color:#fff;}
 .blue-btn:hover{ background:#3ea543;}
 .red-btn{background:#f90; border: 1px solid #f49200; color:#fff;}
 .red-btn:hover{ background:#f60;}

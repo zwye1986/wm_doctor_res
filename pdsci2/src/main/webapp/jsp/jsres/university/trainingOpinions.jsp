@@ -50,7 +50,7 @@
                 <c:if test="${!empty trainingOpinion.opinionReplyContent}">
                 <tr>
                     <td colspan="3" style="text-align: left;padding-left: 8px;">
-                        回复:&nbsp;<font style="color:#44b549" >${trainingOpinion.opinionReplyContent}</font></td>
+                        回复:&nbsp;<font style="color:#54B2E5" >${trainingOpinion.opinionReplyContent}</font></td>
                 </tr>
                 </c:if>
             </c:forEach>

@@ -85,7 +85,7 @@
         for (var i = 0; i < ddList.length; i++) {
             $(ddList[i]).css("background-color","white");
         }
-        $(obj).parent().css("background-color","#44b549");
+        $(obj).parent().css("background-color","#54B2E5");
         $(obj).css("color","white");
 
 
@@ -156,7 +156,7 @@
                     $("#tdinfo").hide();
                     for (var i = 0; i < aList.length; i++) {
                         if (aList[i].getAttribute("recordId") == recordFlow){
-                            $(aList[i]).parent().css("background-color","#44b549");
+                            $(aList[i]).parent().css("background-color","#54B2E5");
                             $(aList[i]).css("color","white");
                             return;
                         }
@@ -183,7 +183,7 @@
                 }
                 for (var i = 0; i < aList.length; i++) {
                     if (aList[i].getAttribute("recordId") == recordFlow){
-                        $(aList[i]).parent().css("background-color","#44b549");
+                        $(aList[i]).parent().css("background-color","#54B2E5");
                         $(aList[i]).css("color","white");
                         return;
                     }
@@ -306,7 +306,7 @@
             <div id="textContext" style="width: 65%;margin-left: 20px;margin-bottom: 40px; float: left;">
                     <div   style="text-align: right;margin-bottom: 10px">
                         <input class="btn_green" type="button" value="导出Word文件"
-                               style="background-color: #44B549;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
+                               style="background-color: #54B2E5;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
                                onclick="exportReport('${subjectActivitiFlows}','major');" />
                     </div>
 
@@ -323,14 +323,14 @@
                         </div>
                         <input id="recodeFlow1" name="recordFlow" type="hidden">
                         <input class="btn_green" type="button" value="上一步" id="msgSave1"
-                               style="background-color: #44B549;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
+                               style="background-color: #54B2E5;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
                                onclick="shouInfo('S');"/>&#12288;
                         <input class="btn_green" type="button" value="下一步" id="msgSave2"
-                               style="background-color: #44B549;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
+                               style="background-color: #54B2E5;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
                                onclick="shouInfo('X');"/>&#12288;
                         <c:if test="${roleFlag eq  'local' && isRead ne 'Y'}">
                             <input class="btn_green" type="button" value="保&#12288;存" id="msgSave"
-                                   style="background-color: #44B549;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
+                                   style="background-color: #54B2E5;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
                                    onclick="saveInfo();"/>&#12288;
                         </c:if>
 <%--                        <a class="btn" id="msgSave" style="width: 56px;margin-left: 500px" href="javascript:void(0);" onclick="saveInfo();">保存</a>--%>
@@ -446,14 +446,14 @@
                             <div style="margin-top: 25px"><font color="red" style="font-weight: bold">注：请注意提供数据真实、准确，评估组将与省毕教办数据对比。</font></div>
                         </div>
                         <input class="btn_green" type="button" value="上一步" id="msgSave3"
-                               style="background-color: #44B549;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
+                               style="background-color: #54B2E5;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
                                onclick="shouInfo('S');"/>&#12288;
                         <c:if test="${roleFlag eq 'local' && isRead ne 'Y'}">
                             <input class="btn_green" type="button" value="保&#12288;存" id="msgSave"
-                                   style="margin-top: 15px;background-color: #44B549;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
+                                   style="margin-top: 15px;background-color: #54B2E5;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
                                    onclick="ZanSaveScore();"/>&#12288;
                             <input class="btn_green" type="button" value="提&#12288;交"
-                                   style="margin-top: 15px;background-color: #44B549;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
+                                   style="margin-top: 15px;background-color: #54B2E5;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
                                    onclick="subReport();"/>&#12288;
                         </c:if>
                     </div>

@@ -11,7 +11,7 @@
 	.label td{
 		width:120px;height:35px;text-align:center;border:1px solid #E3E3E3;cursor:pointer;
 	}
-	.label td.on{background-color:#44b549;color:#fff;}
+	.label td.on{background-color:#54B2E5;color:#fff;}
 </style>
 <script type="text/javascript">
 	$(function(){

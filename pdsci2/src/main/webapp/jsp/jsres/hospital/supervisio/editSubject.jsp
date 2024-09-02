@@ -435,7 +435,7 @@
                     <th><span style="color:red;">*&nbsp;</span>基地代码：</th>
                     <td>
                         <input class="input" style="width: 270px;" name="baseCode" id="baseCode" type="text" value="${subject.baseCode}"/>
-                        <a style="width: 42px;background-color: #44b549;color: white" class="btn" href="javascript:void(0);"
+                        <a style="width: 42px;background-color: #54B2E5;color: white" class="btn" href="javascript:void(0);"
                            onclick="searchBaseCode('baseCode');">查&#12288;询</a><br>
                     </td>
                 </tr>

@@ -423,6 +423,8 @@ public class JsResManageController extends GeneralController {
 			if ("maintenance".equals(role)){
 				return "jsres/maintenance/index";
 			}
+			SysUser sysuser = GlobalContext.getCurrentUser();
+			model.addAttribute("currUser", sysuser);
 			return "jsres/global/globalIndex";
 		} else if ("quality".equals(role)) { //质控组
 			SysUser sysuser = GlobalContext.getCurrentUser();

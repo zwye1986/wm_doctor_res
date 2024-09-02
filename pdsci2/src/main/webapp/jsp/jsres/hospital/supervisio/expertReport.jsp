@@ -119,7 +119,7 @@
         </div>
         <div style="margin-top: -36px;text-align: right;margin-bottom: 15px;margin-right: 4px">
             <input class="btn_green" type="button" value="导出Word文件"
-                   style="background-color: #44B549;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
+                   style="background-color: #54B2E5;color: #fff;border: none;display: inline-block;height: 30px;line-height: 28px;padding: 0 20px;border-radius: 3px"
                    onclick="exportReport('${subjectActivitiFlows}','spe');" />
         </div>
     </div>

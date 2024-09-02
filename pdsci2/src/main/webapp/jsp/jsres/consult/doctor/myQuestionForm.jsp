@@ -93,7 +93,7 @@
         <div class="flex align-c">
             <div class="back-icon">
             </div>
-            <a href="javascript:void(0);" onclick="returnTo()" style="color:#44B549;">返回</a>
+            <a href="javascript:void(0);" onclick="returnTo()" style="color:#54B2E5;">返回</a>
         </div>
     </div>
 </div>
