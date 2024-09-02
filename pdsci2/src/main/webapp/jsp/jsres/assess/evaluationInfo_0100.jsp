@@ -29,6 +29,13 @@
             border-bottom: 1px solid #D3D3D3;
             border-left: 0;
         }
+
+        .grid th {
+
+            background: #EDF3FF;
+
+        }
+
     </style>
     <script type="text/javascript">
         $(function () {
@@ -52,7 +59,7 @@
             );
 
             if ('${widthSize}'=='Y'){
-                $('#tableContext').css("width","1000px");
+                $('#tableContext').css("width","calc(100vw - 460px)");
             }
 
         });
@@ -662,7 +669,7 @@
     </script>
 </head>
 <body>
-<div id="tableContext" style="overflow-y: auto;margin-left: 10px;margin-right: 10px;height: 750px;" onscroll="tableFixed(this);">
+<div id="tableContext" style="overflow-y: auto;margin-left: 30px;margin-right: 10px;height: 750px;" onscroll="tableFixed(this);">
     <div id="dateFixed" style="height: 0px;overflow: visible;position: relative;">
         <table class="grid" style="width: 100%;" >
             <tr height="34" class="firstRow">
@@ -682,12 +689,12 @@
                 <th style="min-width: 50px;max-width: 50px" rowspan="2">分值</th>
                 <th style="min-width: 130px;max-width: 130px" rowspan="2">附件信息</th>
                 <c:if test="${indicators eq 'Y'}">
-                    <th style="min-width: 54px;max-width: 50px" rowspan="2">自评得分</th>
-                    <th style="min-width: 54px;max-width: 50px" rowspan="2">专家评分</th>
+                    <th style="min-width: 58px;max-width: 58px" rowspan="2">自评得分</th>
+                    <th style="min-width: 58px;max-width: 58px" rowspan="2">专家评分</th>
                 </c:if>
                 <c:if test="${indicators ne 'Y'}">
-                    <th style="min-width: 50px;max-width: 50px" rowspan="2">自评得分</th>
-                    <th style="min-width: 50px;max-width: 50px" rowspan="2">专家评分</th>
+                    <th style="min-width: 58px;max-width: 58px" rowspan="2">自评得分</th>
+                    <th style="min-width: 58px;max-width: 58px" rowspan="2">专家评分</th>
                 </c:if>
                 <th style="min-width: 150px;max-width: 150px" rowspan="2">扣分原因</th>
             </tr>
