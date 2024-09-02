@@ -249,7 +249,7 @@
                         <input id="ksmcFlow" name="deptFlow" value="${param.deptFlow}" hidden="hidden"/>
                         <div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; left:0px; top:30px;">
                             <div class="boxHome ksmc" id="ksmcSel"
-                                 style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
+                                 style="margin-left: -161px; max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 161px;border-top: none;position: relative;display:none;">
                                 <c:forEach items="${sysDeptList}" var="dept">
                                     <p class="item ksmc" flow="${dept.deptFlow}" value="${dept.deptName}"
                                        style="line-height: 25px; padding:0px 0;cursor: default;width: 100% ">${dept.deptName}</p>
