@@ -50,18 +50,18 @@
    <task:scheduler id="scheduler" pool-size="1000" />  
    <task:annotation-driven executor="executor" scheduler="scheduler" proxy-target-class="true"/>-->
 
-    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+    <bean id="springSessionRedisTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
         <property name="queueCapacity" value="500"/>
-        <property name="keepAliveSeconds" value="3600" />
-        <property name="corePoolSize" value="100" />
-        <property name="maxPoolSize" value="200" />
+        <property name="keepAliveSeconds" value="60" />
+        <property name="corePoolSize" value="50" />
+        <property name="maxPoolSize" value="100" />
         <property name="rejectedExecutionHandler">
             <bean class="java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy"/>
         </property>
     </bean>
 
-    <bean id="TaskScheduler" class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
-        <property name="poolSize" value="1000" />
+    <bean id="taskScheduler" class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
+        <property name="poolSize" value="20" />
     </bean>
       
 </beans>

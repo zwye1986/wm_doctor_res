@@ -1363,6 +1363,7 @@
 		AND RD.RECORD_STATUS = 'Y'
 		AND RDR.RECORD_STATUS = 'Y'
 		AND RDR.audit_status_id = 'Passed'
+		AND RDR.recruit_flag = 'Y'
 		AND info.AUDIT_STATUS_ID = 'Passed'
 		AND info.CAT_SPE_ID = 'DoctorTrainingSpe'
 		<if test="orgFlow !=null and orgFlow !='' ">

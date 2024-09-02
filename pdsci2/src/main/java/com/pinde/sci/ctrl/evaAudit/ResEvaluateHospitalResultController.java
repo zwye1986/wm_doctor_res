@@ -1602,7 +1602,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             cellRangeAddress = new CellRangeAddress(1, 1, 26, 26);
             sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(26);
-            cellTitleOne.setCellValue("总得分");
+            cellTitleOne.setCellValue("综合得分");
             cellTitleOne.setCellStyle(styleCenter);
 
             String fileName = "学员得分.xls";

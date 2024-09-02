@@ -28,7 +28,6 @@ import java.util.Map;
  * @Version 1.0
  **/
 @Service
-@Transactional(rollbackFor=Exception.class)
 public class EaveAppBizImpl implements IIeaveAppBiz {
 
     @Autowired

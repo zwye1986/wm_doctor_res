@@ -38,6 +38,8 @@ import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,6 +60,7 @@ import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -130,11 +133,12 @@ public class JswjwWxController extends GeneralController {
     @Autowired
     private VerificationCodeRecordMapper verificationCodeRecordMapper;
     @Autowired
-    private DictBizImpl dictBiz;
-    @Autowired
-    private JsResPowerCfgExtMapper powerCfgExtMapper;
+    private RedisTemplate<String, String> redisTemplate;
     @Autowired
     private ResOrgCkxzMapper resOrgCkxzMapper;
+
+    @Autowired
+    IAccessTokenService accessTokenService;
 
     public boolean isChargeOrg(String userFlow) {
         if (StringUtil.isNotBlank(userFlow)) {
@@ -177,21 +181,16 @@ public class JswjwWxController extends GeneralController {
         String openId = authInfo.get("openid");
         resultMap.put("openId", openId);
         logger.info("=========获取openId信息: {}", JSON.toJSONString(openId));
-        // 获取基础刷新的接口访问凭证
-        String access_token;
-        Jedis jedis = RedisUtil.pool.getResource();
-        access_token = jedis.get("access_token");
-        if (StringUtil.isBlank(access_token)) {
-            JSONObject accessToken = WechatUtil.getAccessToken(appid, secret);
-            if (ObjectUtils.isEmpty(accessToken) || !accessToken.containsKey("access_token")) {
-                logger.error("=========获取accessToken失败，失败信息: {}", JSON.toJSONString(accessToken));
-                return ResultDataThrow("获取accessToken失败");
+        ValueOperations<String, String> valueOps = redisTemplate.opsForValue();
+        String access_token = valueOps.get("access_token");
+        if(StringUtil.isBlank(access_token)){// 获取基础刷新的接口访问凭证
+            try {
+                access_token = accessTokenService.getAccessToken(appid, secret);
+            } catch (Exception e) {
+                logger.error("获取access_token失败",e);
+                return ResultDataThrow("获取access_token失败");
             }
-            access_token = accessToken.getString("access_token");
-            jedis.setex("access_token", 60 * 60, access_token);
         }
-        // 释放对象池
-        jedis.close();
         resultMap.put("access_token", access_token);
         //判断是否绑定账号
         SysUser user = jswjwBiz.readSysUserByOpenId(openId);
@@ -299,20 +298,16 @@ public class JswjwWxController extends GeneralController {
         String secret = PropertiesUtils.getValue("appSecret");
         logger.debug("=========获取appSecret成功，appSecret信息: {}", JSON.toJSONString(secret));
         // 调用生成access_token的方法
-        String access_token;
-        Jedis jedis = RedisUtil.pool.getResource();
-        access_token = jedis.get("access_token");
-        if (StringUtil.isBlank(access_token)) {
-            JSONObject accessToken = WechatUtil.getAccessToken(appid, secret);
-            if (ObjectUtils.isEmpty(accessToken) || !accessToken.containsKey("access_token")) {
-                logger.error("=========获取accessToken失败，失败信息: {}", JSON.toJSONString(accessToken));
-                return ResultDataThrow("获取accessToken失败");
+        ValueOperations<String, String> valueOps = redisTemplate.opsForValue();
+        String access_token = valueOps.get("access_token");
+        if(StringUtil.isBlank(access_token)){// 获取基础刷新的接口访问凭证
+            try {
+                access_token = accessTokenService.getAccessToken(appid, secret);
+            } catch (Exception e) {
+                logger.error("获取access_token失败",e);
+                return ResultDataThrow("获取access_token失败");
             }
-            access_token = accessToken.getString("access_token");
-            jedis.setex("access_token", 60 * 60, access_token);
         }
-        // 释放对象池
-        jedis.close();
         logger.info("=========获取access_token成功: {}", JSON.toJSONString(access_token));
 //        redissonManager.setString(ACCESS_TOKEN, access_token, 7000, TimeUnit.SECONDS);
 //        logger.info("=========access_token保存成功================");
