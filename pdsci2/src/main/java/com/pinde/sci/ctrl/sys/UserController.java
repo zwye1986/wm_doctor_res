@@ -1933,4 +1933,11 @@ public class UserController extends GeneralController{
 		ExcleUtile.exportSimpleExcleByObjsAllString(titles, sysUserList, response.getOutputStream());
 	}
 
+	@RequestMapping(value="/delete",method=RequestMethod.GET)
+	public @ResponseBody String delete(SysUser user,String wsid){
+		user.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+		userBiz.saveUser(user);
+		return GlobalConstant.DELETE_SUCCESSED;
+	}
+
 }
