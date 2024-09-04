@@ -2914,6 +2914,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		String[] titles = new String[]{
 				"学员姓名",
 				"身份证号码",
+				"性别",
 				"联系电话",
 				"最高学历",
 				"培训专业",
@@ -2979,6 +2980,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				dataList = new String[]{
 						recruitExt.getSysUser().getUserName(),
 						recruitExt.getSysUser().getIdNo(),
+						recruitExt.getSysUser().getSexName(),
 						recruitExt.getSysUser().getUserPhone(),
 						recruitExt.getSysUser().getEducationName(),
 						recruitExt.getSpeName(),
