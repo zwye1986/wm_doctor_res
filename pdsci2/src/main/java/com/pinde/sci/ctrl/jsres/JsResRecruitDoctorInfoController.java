@@ -431,6 +431,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		param.put("sessionNumber",sessionNumber);
 		param.put("graduationYear",graduationYear);
 		param.put("idNo",idNo);
+		param.put("orgFlow",orgFlow);
 		param.put("userName",userName);
 		param.put("workOrgName",workOrgName);
 		param.put("docTypeList",docTypeList);
