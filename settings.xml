@@ -205,12 +205,12 @@ under the License.
           <mirrorOf>*</mirrorOf>
       </mirror>
 
-      <mirror>
+      <!--<mirror>
           <id>uk</id>
           <mirrorOf>central</mirrorOf>
           <name>Human Readable Name for this Mirror.</name>
           <url>http://uk.maven.org/maven2/</url>
-      </mirror>
+      </mirror>-->
 
       <mirror>
           <id>CN</id>
