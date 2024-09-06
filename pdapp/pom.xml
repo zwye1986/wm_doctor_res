@@ -408,22 +408,6 @@
         </dependency>
 
         <dependency>
-            <groupId>mybatis-3.2.6</groupId>
-            <artifactId>mybatis-3.2.6</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/mybatis-3.2.6.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>mybatis-spring-1.2.2</groupId>
-            <artifactId>mybatis-spring-1.2.2</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/mybatis-spring-1.2.2.jar</systemPath>
-        </dependency>
-
-        <dependency>
             <groupId>mysql-connector-java-5.1.23</groupId>
             <artifactId>mysql-connector-java-5.1.23</artifactId>
             <version>1.0</version>
@@ -701,102 +685,6 @@
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${lib.dir}/slf4j-log4j12-1.6.6.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>spring-aop-4.3.18.RELEASE</groupId>
-            <artifactId>spring-aop-4.3.18.RELEASE</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/spring-aop-4.3.18.RELEASE.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>spring-beans-4.3.18.RELEASE</groupId>
-            <artifactId>spring-beans-4.3.18.RELEASE</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/spring-beans-4.3.18.RELEASE.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>spring-context-4.3.18.RELEASE</groupId>
-            <artifactId>spring-context-4.3.18.RELEASE</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/spring-context-4.3.18.RELEASE.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>spring-context-support-4.3.18.RELEASE</groupId>
-            <artifactId>spring-context-support-4.3.18.RELEASE</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/spring-context-support-4.3.18.RELEASE.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>spring-core-4.3.18.RELEASE</groupId>
-            <artifactId>spring-core-4.3.18.RELEASE</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/spring-core-4.3.18.RELEASE.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>spring-expression-4.3.18.RELEASE</groupId>
-            <artifactId>spring-expression-4.3.18.RELEASE</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/spring-expression-4.3.18.RELEASE.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>spring-jdbc-4.3.18.RELEASE</groupId>
-            <artifactId>spring-jdbc-4.3.18.RELEASE</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/spring-jdbc-4.3.18.RELEASE.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>spring-oxm-4.3.18.RELEASE</groupId>
-            <artifactId>spring-oxm-4.3.18.RELEASE</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/spring-oxm-4.3.18.RELEASE.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>spring-test-4.3.18.RELEASE</groupId>
-            <artifactId>spring-test-4.3.18.RELEASE</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/spring-test-4.3.18.RELEASE.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>spring-tx-4.3.18.RELEASE</groupId>
-            <artifactId>spring-tx-4.3.18.RELEASE</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/spring-tx-4.3.18.RELEASE.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>spring-web-4.3.18.RELEASE</groupId>
-            <artifactId>spring-web-4.3.18.RELEASE</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/spring-web-4.3.18.RELEASE.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>spring-webmvc-4.3.18.RELEASE</groupId>
-            <artifactId>spring-webmvc-4.3.18.RELEASE</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/spring-webmvc-4.3.18.RELEASE.jar</systemPath>
         </dependency>
 
         <dependency>
