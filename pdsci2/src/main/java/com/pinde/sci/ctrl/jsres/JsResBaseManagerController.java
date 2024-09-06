@@ -543,8 +543,10 @@ public class JsResBaseManagerController extends GeneralController {
 	public String saveBase(String flag, BaseInfoForm form, String index, String type,
 						   String fileFlows[],
 						   HttpServletRequest request) throws Exception {
-		if(form==null||form.getBasicInfo()==null||form.getBasicInfo().getContactManList()==null){
-			return "请填写联络员数据";
+		if(GlobalConstant.BASIC_INFO.equals(flag)) {
+			if (form == null || form.getBasicInfo() == null || form.getBasicInfo().getContactManList() == null) {
+				return "请填写联络员数据";
+			}
 		}
 		int result = baseBiz.saveBaseInfo(flag, form, index, type, fileFlows, request);
 		if (GlobalConstant.ZERO_LINE != result) {

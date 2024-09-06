@@ -791,7 +791,7 @@
          style="float:right;width: 20px;height: 20px;margin-right: 40px;margin-top: -35px"/>
     <img id="lbup" src="<s:url value='/jsp/jsres/images/up3.png'/>" onclick="showTable('lb');"
          style="display: none;float:right;width: 20px;height: 20px;margin-right: 40px;margin-top: -35px"/>
-    <c:if test="${maintenanceFlag ne true and isglobal ne 'Y' and isJoin ne 'Y' and sessionNumber lt pdfn:getCurrYear()}">
+    <c:if test="${maintenanceFlag ne true and isglobal ne 'Y' and isJoin ne 'Y'}">
         <img src="<s:url value='/jsp/res/images/test.png'/>"   onclick="editInfo('OrgManage','${sessionScope.currUser.orgFlow}','${sessionNumber}');"
              style="cursor: pointer;height: 20px;width: 20px;float: right;margin-top: -35px"/>
     </c:if>
