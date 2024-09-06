@@ -222,7 +222,7 @@ under the License.
       <mirror>
           <id>nexus</id>
           <name>internal nexus repository</name>
-          <url>http://repo.maven.apache.org/maven2</url>
+          <url>https://repo.maven.apache.org/maven2</url>
           <mirrorOf>central</mirrorOf>
       </mirror>
     </mirrors>
