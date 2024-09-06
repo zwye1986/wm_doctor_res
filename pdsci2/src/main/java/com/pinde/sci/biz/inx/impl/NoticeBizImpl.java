@@ -155,7 +155,7 @@ public class NoticeBizImpl implements INoticeBiz {
 	@Override
 	public List<InxInfo> findNotice(InxInfo info) {
 		InxInfoExample example = new InxInfoExample();
-		example.setOrderByClause("MODIFY_TIME DESC, INFO_TIME DESC");
+		example.setOrderByClause("CREATE_TIME DESC");
 		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(info.getColumnId())) {
 			criteria.andColumnIdEqualTo(info.getColumnId());
