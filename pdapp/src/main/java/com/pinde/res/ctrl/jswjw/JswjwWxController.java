@@ -212,8 +212,8 @@ public class JswjwWxController extends GeneralController {
         if ("0".equals(phoneRegex(userPhone).get(0))) {
             return ResultDataThrow(phoneRegex(userPhone).get(1));
         }
-        List<SysUser> sysUsers = jswjwBiz.selectByUserPhoneAndIsVerify(userPhone);
-        if (sysUsers != null && sysUsers.size() > 0) {
+//        List<SysUser> sysUsers = jswjwBiz.selectByUserPhoneAndIsVerify(userPhone);
+//        if (sysUsers != null && sysUsers.size() > 0) {
             SMSUtil smsUtil = new SMSUtil(userPhone);
             int code = (int) ((Math.random() * 9 + 1) * 1000);
             SysSmsLog sSmsRecord = smsUtil.send("10001", "516946", "R101", code);
@@ -224,8 +224,8 @@ public class JswjwWxController extends GeneralController {
             resultMap.put("resultType", "发送成功");
             resultMap.put("phoneCode", code);
             return resultMap;
-        }
-        return ResultDataThrow("用户不存在");
+//        }
+//        return ResultDataThrow("用户不存在");
     }
 
     /**
@@ -239,23 +239,79 @@ public class JswjwWxController extends GeneralController {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("resultId", "200");
         resultMap.put("resultType", "绑定成功");
-        //查询openId是否绑定账号，若绑定 先解绑
-        SysUser oldUser = jswjwBiz.readSysUserByOpenId(openId);
-        if (oldUser != null) {
-            oldUser.setOpenId("");
-            jswjwBiz.updateUser(oldUser);
-        }
         //根据手机号查询账户
-        SysUser user = jswjwBiz.selectByUserPhone(userPhone);
-        if (null == user) {
-            return ResultDataThrow("请去网页端绑定手机！");
+        SysUser oldUser = jswjwBiz.selectByUserPhone(userPhone);
+        if(null == oldUser){
+            //根据openId查询用户
+            SysUser user = jswjwBiz.readSysUserByOpenId(openId);
+            //设置用户手机号
+            user.setUserPhone(userPhone);
+
+            jswjwBiz.updateUser(user);
+
+            resultMap.put("openId", openId);
+            resultMap.put("userFlow", user.getUserFlow());
+
+            return getUserInfo(user, resultMap, null, null, openId);
+
+        }else {
+
+            resultMap.put("resultId", "1003");
+            resultMap.put("resultType", "该手机号已绑定用户"+oldUser.getUserCode());
+
+            return resultMap;
+
         }
-        user.setOpenId(openId);
-        jswjwBiz.updateUser(user);
-        resultMap.put("openId", openId);
-        resultMap.put("userFlow", user.getUserFlow());
-        return getUserInfo(user, resultMap, null, null, openId);
+
     }
+
+    /**
+     * @Department：研发部
+     * @Description 绑定账号
+     * @Date 2022/11/23
+     */
+    @RequestMapping("/changePhone")
+    @ResponseBody
+    public Object changePhone(String openId, String userPhone) {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("resultId", "200");
+        resultMap.put("resultType", "绑定成功");
+        //根据手机号查询账户
+        SysUser oldUser = jswjwBiz.selectByUserPhone(userPhone);
+        if(null == oldUser){
+            //根据openId查询用户
+            SysUser user = jswjwBiz.readSysUserByOpenId(openId);
+            //设置用户手机号
+            user.setUserPhone(userPhone);
+
+            jswjwBiz.updateUser(user);
+
+            resultMap.put("openId", openId);
+            resultMap.put("userFlow", user.getUserFlow());
+
+            return getUserInfo(user, resultMap, null, null, openId);
+
+        }else {
+
+            oldUser.setUserPhone("");
+            jswjwBiz.updateUser(oldUser);
+
+            //根据openId查询用户
+            SysUser user = jswjwBiz.readSysUserByOpenId(openId);
+            //设置用户手机号
+            user.setUserPhone(userPhone);
+
+            jswjwBiz.updateUser(user);
+
+            resultMap.put("openId", openId);
+            resultMap.put("userFlow", user.getUserFlow());
+
+            return getUserInfo(user, resultMap, null, null, openId);
+
+        }
+
+    }
+
 //
 //    /**
 //     * @Department：研发部
@@ -11121,5 +11177,83 @@ public class JswjwWxController extends GeneralController {
         resultMap.put("resultType", list);
         return resultMap;
     }
+
+    //账号密码登录并绑定账号
+    @RequestMapping(value = {"/webLogin"}, method = {RequestMethod.POST})
+    @ResponseBody
+    public Object webLogin(String userCode, String userPasswd, String openId, String uuid, HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("resultId", "200");
+        resultMap.put("resultType", "交易成功");
+
+        if (StringUtil.isEmpty(userCode)) {
+            return ResultDataThrow("用户名不能为空");
+        }
+        if (StringUtil.isEmpty(userPasswd)) {
+            return ResultDataThrow("密码为空");
+        }
+        if (StringUtil.isEmpty(openId)) {
+            return ResultDataThrow("openId为空");
+        }
+        SysUser userinfo = jswjwBiz.findByUserCode(userCode);
+        if (userinfo == null) {
+            userinfo = jswjwBiz.findByUserPhone(userCode);
+        }
+        if (userinfo == null) {
+            return ResultDataThrow("用户不存在");
+        }
+        //有历史绑定，清除历史绑定
+        SysUser oldUser = jswjwBiz.readSysUserByOpenId(openId);
+        if (oldUser != null) {
+            oldUser.setOpenId("");
+            jswjwBiz.updateUser(oldUser);
+        }
+        //更新新绑定
+        userinfo.setOpenId(openId);
+        jswjwBiz.updateUser(userinfo);
+
+
+        if(userinfo.getUserPhone()==null||"".equals(userinfo.getUserPhone())) {
+            resultMap.put("resultId", "1002");
+            resultMap.put("resultType", "未绑定手机号,请绑定手机号");
+            return resultMap;
+        }
+
+//        ServletContext application = request.getServletContext();
+//        if (application.getAttribute("onlineCountNum") == null) {
+//            application.setAttribute("onlineCountNum", 1);
+//        } else {
+//            application.setAttribute("onlineCountNum", (Integer) application.getAttribute("onlineCountNum") + 1);
+//        }
+        return getUserInfo(userinfo, resultMap, userPasswd, uuid, null);
+    }
+
+    //测试接口
+
+    private static String WECHAT_TOKEN = "WADJFSASF"; //WECHAT_TOKEN和你申请时填写的Token一样
+
+    @RequestMapping(value = {"/verityToken"}, method = {RequestMethod.GET})
+    @ResponseBody
+    public void get(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        logger.info("请求进来了...");
+
+        Enumeration pNames = request.getParameterNames();
+        while (pNames.hasMoreElements()) {
+            String name = (String) pNames.nextElement();
+            String value = request.getParameter(name);
+            String log = "name =" + name + "     value =" + value;
+            logger.info(log);
+        }
+
+        String signature = request.getParameter("signature");/// 微信加密签名
+        String timestamp = request.getParameter("timestamp");/// 时间戳
+        String nonce = request.getParameter("nonce"); /// 随机数
+        String echostr = request.getParameter("echostr"); // 随机字符串
+        PrintWriter out = response.getWriter();
+        out.print(echostr);
+        out.close();
+    }
+
 }
 
