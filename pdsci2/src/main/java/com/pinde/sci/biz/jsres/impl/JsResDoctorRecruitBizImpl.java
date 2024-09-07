@@ -2914,8 +2914,16 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		String[] titles = new String[]{
 				"学员姓名",
 				"身份证号码",
+
+				"性别",
+				"年龄",
+
 				"联系电话",
 				"最高学历",
+
+				"毕业院校",
+				"毕业时间",
+
 				"培训专业",
 				"审核状态",
 				"基地",
@@ -2931,6 +2939,9 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				"医师走向",
 				"结业考核年份",
 				"人员类型",
+
+				"地址",
+				"工作单位",
 		};
 		HSSFCell cellTitle = null;
 		for (int i = 0; i < titles.length; i++) {
@@ -2979,8 +2990,12 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				dataList = new String[]{
 						recruitExt.getSysUser().getUserName(),
 						recruitExt.getSysUser().getIdNo(),
+						recruitExt.getSex(),
+						recruitExt.getAge(),
 						recruitExt.getSysUser().getUserPhone(),
 						recruitExt.getSysUser().getEducationName(),
+						recruitExt.getGraduateSchool(),
+						recruitExt.getGraduateTime(),
 						recruitExt.getSpeName(),
 						recruitExt.getAuditStatusName(),
 						recruitExt.getResDoctor().getOrgName(),
@@ -2996,6 +3011,8 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 						recruitExt.getDoctorStrikeName(),
 						recruitExt.getGraduationYear(),
 						recruitExt.getResDoctor().getDoctorTypeName(),
+						recruitExt.getSysUser().getUserAddress(),
+						recruitExt.getWorkAddr()
 				};
 				for (int j = 0; j < titles.length; j++) {
 					HSSFCell cellFirst = rowFour.createCell(j);

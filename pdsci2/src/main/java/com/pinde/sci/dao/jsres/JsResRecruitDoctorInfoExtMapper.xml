@@ -44,33 +44,35 @@
 		and dd.recruit_flag = 'Y'
 		AND dd.AUDIT_STATUS_ID = 'Passed'
 		LEFT JOIN pdsci.PUB_USER_RESUME pur ON pur.USER_FLOW = dr.DOCTOR_FLOW
+		LEFT JOIN pdsci.SYS_ORG s ON s.ORG_FLOW = dr.ORG_FLOW
 		where dr.RECORD_STATUS= 'Y' and pur.RECORD_STATUS= 'Y'
 		and ed.RECORD_STATUS= 'Y'
 		and dd.RECORD_STATUS= 'Y'
-		and dr.org_flow in(
-		SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+		and s.RECORD_STATUS= 'Y'
+
 		<if test="orgProvId!=null and orgProvId!=''">
-			AND ORG_PROV_ID = #{orgProvId}
+			AND s.ORG_PROV_ID = #{orgProvId}
 		</if>
 		<if test="orgCityId!=null and orgCityId!=''">
-			AND ORG_CITY_ID = #{orgCityId}
+			AND s.ORG_CITY_ID = #{orgCityId}
 		</if>
 		<if test="orgFlow!=null and orgFlow!=''">
-			AND ORG_FLOW = #{orgFlow}
+			AND s.ORG_FLOW = #{orgFlow}
 		</if>
 		<if test="orgLevel!=null and orgLevel!=''">
-			AND ORG_LEVEL_ID = #{orgLevel}
+			AND s.ORG_LEVEL_ID = #{orgLevel}
 		</if>
 		<if test="orgTypeId!=null and orgTypeId!=''">
-			AND ORG_TYPE_ID = #{orgTypeId}
+			AND s.ORG_TYPE_ID = #{orgTypeId}
 		</if>
-		)
-		<if test="jointOrgFlowList!=null and jointOrgFlowList.size>0">
-			and dr.ORG_FLOW in
-			<foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+
+		<if test="orgFlow!=null and orgFlow!=''">
+			<if test="jointOrgFlowList!=null and jointOrgFlowList.size>0">
+				and dr.ORG_FLOW in
+				<foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+			</if>
 		</if>
+
 		<if test="joinOrgFlow!=null and joinOrgFlow!=''">
 			and dr.ORG_FLOW = #{joinOrgFlow}
 		</if>

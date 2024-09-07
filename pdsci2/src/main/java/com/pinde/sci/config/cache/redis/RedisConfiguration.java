@@ -114,8 +114,8 @@ public class RedisConfiguration {
                 clusterServersConfig.setPassword(redisProperties.getPassword());
             }
 
-            clusterServersConfig.setTimeout(redisProperties.getTimeout());
-            clusterServersConfig.setPingConnectionInterval(redisProperties.getTimeout() * 1000);
+            clusterServersConfig.setTimeout((int) redisProperties.getTimeout().toMillis());
+            clusterServersConfig.setPingConnectionInterval(redisProperties.getTimeout().getNano());
             return Redisson.create(config);
         }
 
@@ -127,8 +127,8 @@ public class RedisConfiguration {
                 singleServerConfig.setPassword(redisProperties.getPassword());
             }
 
-            singleServerConfig.setTimeout(redisProperties.getTimeout());
-            singleServerConfig.setPingConnectionInterval(redisProperties.getTimeout() * 1000);
+            singleServerConfig.setTimeout((int) redisProperties.getTimeout().toMillis());
+            singleServerConfig.setPingConnectionInterval(redisProperties.getTimeout().getNano());
             singleServerConfig.setDatabase(redisProperties.getDatabase());
             return Redisson.create(config);
         }
@@ -137,7 +137,7 @@ public class RedisConfiguration {
         if (Objects.nonNull(sentinel)) {
             SentinelServersConfig sentinelServersConfig = config.useSentinelServers();
             sentinelServersConfig.setMasterName(sentinel.getMaster());
-            for (String node : sentinel.getNodes().split(COMMA)) {
+            for (String node : sentinel.getNodes()) {
                 sentinelServersConfig.addSentinelAddress(schema_prefix + node);
             }
 
@@ -145,8 +145,8 @@ public class RedisConfiguration {
                 sentinelServersConfig.setPassword(redisProperties.getPassword());
             }
 
-            sentinelServersConfig.setTimeout(redisProperties.getTimeout());
-            sentinelServersConfig.setPingConnectionInterval(redisProperties.getTimeout() * 1000);
+            sentinelServersConfig.setTimeout((int) redisProperties.getTimeout().toMillis());
+            sentinelServersConfig.setPingConnectionInterval(redisProperties.getTimeout().getNano());
             sentinelServersConfig.setDatabase(redisProperties.getDatabase());
             return Redisson.create(config);
         }

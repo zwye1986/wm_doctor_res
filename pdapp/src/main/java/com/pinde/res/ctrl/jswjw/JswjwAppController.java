@@ -1385,6 +1385,8 @@ public class JswjwAppController {
         List<SchArrangeResult> resultList = jswjwBiz.searchSchArrangeResult(userFlow, deptFlow, pageIndex, pageSize);
         model.addAttribute("resultList", resultList);
         model.addAttribute("dataCount", PageHelper.total);
+        model.addAttribute("pageIndex", pageIndex);
+        model.addAttribute("pageSize", pageSize);
 
         ResDoctor doctor = jswjwBiz.readResDoctor(userFlow);
         String ckxz = jswjwBiz.getJsResCfgCode("jsres_" + doctor.getOrgFlow() + "_org_ckxz");
