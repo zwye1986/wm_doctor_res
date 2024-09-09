@@ -77,6 +77,25 @@
 					setTimeout(function(){
 						jboxClose();
 					}, 1000);
+				}else if('${GlobalConstant.USER_PHONE_REPETE}'==data) {
+					jboxConfirm("改手机号已绑定用户，是否绑定新的账号？", function () {
+						var url = "<s:url value='/sys/user/save4jsresteacher'/>";
+						var data = $('#editForm').serialize();
+						debugger
+						console.log(data)
+						console.log(typeof data)
+						data = data + "&coverPhone=Y"
+						jboxPost(url, data, function(data) {
+							if('${GlobalConstant.SAVE_SUCCESSED}'==data){
+								window.parent.search();
+								setTimeout(function(){
+									jboxClose();
+								}, 1000);
+							}else {
+							}
+						},null,true);
+					});
+				}else {
 				}
 			},null,true);
 		}
@@ -152,7 +171,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>手机号码：</th>
+					<th><font color="red">*</font>手机号码：</th>
 					<td>
 						<c:choose>
 							<c:when test="${sessionScope.userListScope eq GlobalConstant.USER_LIST_PERSONAL && GlobalConstant.FLAG_N eq sysCfgMap['user_edit_phone']}">
@@ -160,7 +179,7 @@
 								<input name="userPhone" type="hidden" value="${sysUser.userPhone}" >
 							</c:when>
 							<c:otherwise>
-								<input class="validate[custom[mobile]] input" name="userPhone" type="text" value="${sysUser.userPhone}" >
+								<input class="validate[required, custom[mobile]] input" required name="userPhone" type="text" value="${sysUser.userPhone}" >
 							</c:otherwise>
 						</c:choose>
 					</td>
