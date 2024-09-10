@@ -260,14 +260,6 @@
         </dependency>
 
         <dependency>
-            <groupId>junit-3.8.1</groupId>
-            <artifactId>junit-3.8.1</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/junit-3.8.1.jar</systemPath>
-        </dependency>
-
-        <dependency>
             <groupId>license3j-1.0.3</groupId>
             <artifactId>license3j-1.0.3</artifactId>
             <version>1.0</version>
