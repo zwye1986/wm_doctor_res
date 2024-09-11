@@ -953,7 +953,7 @@
 
         function zltjOrg() {
             var roleFlag = "${GlobalConstant.USER_LIST_LOCAL}";
-            jboxLoad("content", "<s:url value='/jsres/recruitDoctorInfo/zltjOrgLocal'/>?roleFlag=" + roleFlag, true);
+            jboxLoad("content", "<s:url value='/jsres/recruitDoctorInfo/recruitStatisticsReport'/>?roleFlag=" + roleFlag, true);
         }
 
         function zlxxfb() {

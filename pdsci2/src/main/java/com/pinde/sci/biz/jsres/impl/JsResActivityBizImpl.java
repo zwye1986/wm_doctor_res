@@ -1006,33 +1006,36 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 		}
 		criteria.andCfgCodeIn(userRoleList);
 		SysCfg sysCfg= sysCfgMapper.selectByExample(example).get(0);     //获取该用户当前角色信息
-		List<SysUserRole> subRoleList = userRoleBiz.getByUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-		List<TeachActivityCfg> cfgList = this.searchActivityCfgs(roleFlow,GlobalContext.getCurrentUser().getOrgFlow());
-		if(null != cfgList && cfgList.size()>0){
-			TeachActivityCfg cfg = cfgList.get(0);
-			if(cfg.getSubmitRole().equals(roleFlow)){
-				activity.setSubmitRole(cfg.getSubmitRole());
-				activity.setAuditRole(cfg.getAuditRole());
-				activity.setActivityStatus("audit");
-				//判断由谁审核
-				if(cfg.getAuditRole().equals(roleFlow)){
-					//当前角色审核
-					activity.setActivityStatus("pass");
-				}else{
-					//当前登录人拥有多个角色
-					for(SysUserRole sur:subRoleList){
-						if(sur.getRoleFlow().equals(cfg.getAuditRole())){
-							activity.setActivityStatus("pass");
-							break;
+		if (StringUtil.isBlank(activity.getActivityStatus())) {
+			List<SysUserRole> subRoleList = userRoleBiz.getByUserFlow(GlobalContext.getCurrentUser().getUserFlow());
+			List<TeachActivityCfg> cfgList = this.searchActivityCfgs(roleFlow,GlobalContext.getCurrentUser().getOrgFlow());
+			if(null != cfgList && cfgList.size()>0){
+				TeachActivityCfg cfg = cfgList.get(0);
+				if(cfg.getSubmitRole().equals(roleFlow)){
+					activity.setSubmitRole(cfg.getSubmitRole());
+					activity.setAuditRole(cfg.getAuditRole());
+					activity.setActivityStatus("audit");
+					//判断由谁审核
+					if(cfg.getAuditRole().contains(roleFlow)){
+						//当前角色审核
+						activity.setActivityStatus("pass");
+					}else{
+						//当前登录人拥有多个角色
+						for(SysUserRole sur:subRoleList){
+							if(sur.getRoleFlow().equals(cfg.getAuditRole())){
+								activity.setActivityStatus("pass");
+								break;
+							}
 						}
 					}
+				}else {
+					return "该角色无法发起教学活动，请联系基地管理员！";
 				}
-			}else {
+			}else{
 				return "该角色无法发起教学活动，请联系基地管理员！";
 			}
-		}else{
-			return "该角色无法发起教学活动，请联系基地管理员！";
 		}
+
 		int c ;
 		String newFlow ;
 		if (StringUtil.isBlank(activity.getActivityFlow())) {
