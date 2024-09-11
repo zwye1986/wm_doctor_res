@@ -2488,11 +2488,12 @@ public class JswjwWxController extends GeneralController {
         String isNdks = jswjwBiz.getJsResCfgCode(key);
         resultMap.put("isNdks", isNdks);
 
+        resultMap = (Map<String, Object>) jswjwBiz.getDoctorAuthorityInfo2(resultMap, userFlow, orgFlow);
         if (doctor != null && TrainCategoryEnum.DoctorTrainingSpe.getId().equals(doctor.getTrainingTypeId())) {
             resultMap.put("isPxsc", true);
         }
         // 查询医师权限
-        return jswjwBiz.getDoctorAuthorityInfo2(resultMap, userFlow, orgFlow);
+        return resultMap;
     }
 
     /**

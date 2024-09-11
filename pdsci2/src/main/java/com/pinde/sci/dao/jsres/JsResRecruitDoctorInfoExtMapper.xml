@@ -1125,9 +1125,14 @@
 		left join  pdsci.res_doctor rd on dr.DOCTOR_FLOW =  rd.DOCTOR_FLOW
 		left join  jsres_recruit_info ed on dr.doctor_flow =  ed.doctor_flow
 		and dr.session_number=ed.session_number
+		left join  res_doctor_recruit dd on dr.doctor_flow =  dd.doctor_flow
+		and dr.session_number=dd.session_number
+		and dd.recruit_flag = 'Y'
+		AND dd.AUDIT_STATUS_ID = 'Passed'
 		LEFT JOIN pdsci.PUB_USER_RESUME pur ON pur.USER_FLOW = dr.DOCTOR_FLOW
 		where dr.RECORD_STATUS= 'Y' and pur.RECORD_STATUS= 'Y'
 		and ed.RECORD_STATUS= 'Y'
+		and dd.RECORD_STATUS= 'Y'
 		and dr.org_flow in(
 		SELECT ORG_FLOW
 		FROM PDSCI.SYS_ORG
@@ -1193,6 +1198,9 @@
 		<if test="idNo!=null and idNo!=''">
 			<bind name="idNo" value="'%'+idNo+'%'"/>
 			and u.ID_NO like #{idNo}
+		</if>
+		<if test="signupWay!=null and signupWay!=''">
+			and dd.SIGNUP_WAY=#{signupWay}
 		</if>
 		order by  dr.session_number desc,dr.org_flow,dr.spe_id,NLSSORT(u.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M'), dr.doctor_flow,dr.CREATE_TIME desc
 	</select>

@@ -3,6 +3,7 @@ package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
+import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
@@ -28,9 +29,7 @@ import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.dom4j.DocumentException;
@@ -45,6 +44,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.*;
 
 @Controller
@@ -3066,6 +3066,272 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 			}
 		}
 		return  "jsres/zltjOrg/zltjOrgLocal";
+	}
+
+	/**
+	 * @Author xieyh
+	 * @Description 基地招录统计报表
+	 * @Date  2024-09-09
+	 **/
+	@RequestMapping(value = {"/recruitStatisticsReport"})
+	public String recruitStatisticsReport(String sessionNumber, String roleFlag, String speId, String statusId, String docType, String isLoad, Model model) {
+		Map<String,Object> params = new HashMap<>();
+		List<String> docTypeList = new ArrayList<>();
+		if(StringUtil.isNotBlank(docType)){
+			docTypeList.add(docType);
+		}else{
+			for(JsResDocTypeEnum e : JsResDocTypeEnum.values()) {
+				docTypeList.add(e.getId());
+			}
+		}
+		params.put("docTypeList",docTypeList);
+		params.put("statusId",statusId);
+		params.put("speId",speId);
+
+		if (StringUtil.isBlank(sessionNumber)) {
+			if (com.pinde.core.util.DateUtil.getCurrDate().compareTo(com.pinde.core.util.DateUtil.getYear() + "-09-30") > 0) {
+				sessionNumber = com.pinde.core.util.DateUtil.getYear();
+			} else {
+				sessionNumber = String.valueOf(Integer.parseInt(DateUtil.getYear()) - 1);
+			}
+		}
+		model.addAttribute("sessionNumber", sessionNumber);
+
+		SysOrg org = null;
+		if (StringUtil.isNotBlank(GlobalContext.getCurrentUser().getOrgFlow())) {
+			org = orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
+		}
+
+		model.addAttribute("speId",speId);
+
+		// 对数据进行计算，初始化值
+		// 住院医师
+		HashMap<String, Integer> doctorTrainingMap = new HashMap<>();
+		doctorTrainingMap.put("all", 0);
+		// 在校专硕
+		HashMap<String, Integer> graduateMap = new HashMap<>();
+		graduateMap.put("all", 0);
+		// 各专业所有学校总计
+		Map<String,Integer> speAll = new HashMap<>();
+
+		// 查询专业
+		String searchOrgFlow = org.getOrgFlow() == null ? "" : org.getOrgFlow();
+		// 查询人数信息
+		params.put("orgFlow",searchOrgFlow);
+		params.put("sessionNumber",sessionNumber);
+		// 查询人员名单并处理数据
+		Map<String,Integer> speInfos = new HashMap<>();
+		speInfos.put("all", 0);
+		List<Map<String,Object>> infos = recruitDoctorInfoBiz.getOrgRecruitSpeInfo(params);
+		for (Map<String, Object> info : infos) {
+			calculateRecruitStudentForReport(doctorTrainingMap, graduateMap, speAll, speInfos, info);
+		}
+		model.addAttribute("speInfos",speInfos);
+		model.addAttribute("doctorTrainingMap",doctorTrainingMap);
+		model.addAttribute("graduateMap",graduateMap);
+		model.addAttribute("speAll",speAll);
+
+		if (StringUtil.isNotBlank(isLoad)) {
+			return "jsres/zltjOrg/statisticsLoad";
+		} else {
+			return "jsres/zltjOrg/recruitStudentList";
+		}
+	}
+
+	/**
+	 * @Description 招录学员统计计算各类型学员数据
+	 * @param doctorTrainingMap 住院医师统计
+	 * @param graduateMap 在校专硕统计
+	 * @param speAll 按专业分总人数统计
+	 * @param speInfos 每个学校各专业各类型人数统计
+	 * @param info 查询数据库原始数据
+	 * @Date  2024-09-09
+	 * @Author xieyh
+	 */
+	private void calculateRecruitStudentForReport(HashMap<String, Integer> doctorTrainingMap, HashMap<String, Integer> graduateMap, Map<String, Integer> speAll, Map<String, Integer> speInfos, Map<String, Object> info) {
+		if (JsResDocTypeEnum.Graduate.getId().equals(info.get("doctorTypeId"))) {
+			// 做大数据在校专硕各项的分开统计
+			graduateMap.put("all", graduateMap.get("all") + 1); // 在校专硕总人数+1
+			// 此处的key用的是各学员在校状态的ID
+			if (graduateMap.containsKey(info.get("doctorStatusId"))) {
+				graduateMap.put((String) info.get("doctorStatusId"), graduateMap.get(info.get("doctorStatusId")) + 1);
+			} else {
+				graduateMap.put((String) info.get("doctorStatusId"), 1);
+			}
+		} else {
+			// 做大数据住院医师各项的分开统计
+			doctorTrainingMap.put("all", doctorTrainingMap.get("all") + 1);
+			// 此处的key用的是各学员在校状态的ID
+			if (doctorTrainingMap.containsKey(info.get("doctorStatusId"))) {
+				doctorTrainingMap.put((String) info.get("doctorStatusId"), doctorTrainingMap.get(info.get("doctorStatusId")) + 1);
+			} else {
+				doctorTrainingMap.put((String) info.get("doctorStatusId"), 1);
+			}
+		}
+		if (speInfos.containsKey(info.get("speId") + (String) info.get("doctorTypeId"))) {
+			speInfos.put(info.get("speId") + (String) info.get("doctorTypeId"), speInfos.get(info.get("speId") + (String) info.get("doctorTypeId")) + 1);
+		} else {
+			speInfos.put(info.get("speId") + (String) info.get("doctorTypeId"), 1);
+		}
+		if (speInfos.containsKey(info.get("speId") + "all")) {
+			speInfos.put(info.get("speId") + "all", speInfos.get(info.get("speId") + "all") + 1);
+		} else {
+			speInfos.put(info.get("speId") + "all", 1);
+		}
+		// 做每个类型以及总人数的统计
+		if (speAll.containsKey(info.get("doctorTypeId"))) {
+			speAll.put((String) info.get("doctorTypeId"), speAll.get(info.get("doctorTypeId")) + 1);
+		} else {
+			speAll.put((String) info.get("doctorTypeId"), 1);
+		}
+		if (speAll.containsKey("all")) {
+			speAll.put("all", speAll.get("all") + 1);
+		} else {
+			speAll.put("all", 1);
+		}
+	}
+
+	/**
+	 * @Author xieyh
+	 * @Description 导出招录学员统计数据
+	 * @Date  2024-09-10
+	 **/
+	@RequestMapping(value = {"/exportRecruitStatistics"})
+	public void exportRecruitStatistics(String sessionNumber, String speId, String statusId, String docType, HttpServletResponse response) throws IOException {
+
+		//创建工作簿
+		HSSFWorkbook wb = new HSSFWorkbook();
+		// 为工作簿添加sheet
+		HSSFSheet sheet = wb.createSheet("sheet1");
+		//定义将用到的样式
+		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
+		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+
+		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
+		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+
+		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
+		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+
+		//列宽自适应
+		HSSFRow rowOne = sheet.createRow(0);//第1行
+
+		List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(DictTypeEnum.DoctorTrainingSpe.getId());
+		List<String> titles = new ArrayList<>();
+		titles.add("专业基地");
+		titles.add("本单位人");
+		titles.add("委培单位人");
+		titles.add("社会人");
+		titles.add("在校专硕");
+		titles.add("合计");
+		// 设计表头
+		HSSFCell cellTitleOne;
+		for (int i = 0; i < titles.size(); i++) {
+			cellTitleOne = rowOne.createCell(i);
+			cellTitleOne.setCellValue(titles.get(i));
+			cellTitleOne.setCellStyle(styleCenter);
+		}
+
+		Map<String,Object> params = new HashMap<>();
+		List<String> docTypeList = new ArrayList<>();
+		if(StringUtil.isNotBlank(docType)){
+			docTypeList.add(docType);
+		}else{
+			for(JsResDocTypeEnum e : JsResDocTypeEnum.values()) {
+				docTypeList.add(e.getId());
+			}
+		}
+		params.put("docTypeList",docTypeList);
+		params.put("statusId",statusId);
+		params.put("speId",speId);
+
+		SysOrg org = null;
+		if (StringUtil.isNotBlank(GlobalContext.getCurrentUser().getOrgFlow())) {
+			org = orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
+		}
+
+		// 对数据进行计算，初始化值
+		// 住院医师
+		HashMap<String, Integer> doctorTrainingMap = new HashMap<>();
+		doctorTrainingMap.put("all", 0);
+		// 在校专硕
+		HashMap<String, Integer> graduateMap = new HashMap<>();
+		graduateMap.put("all", 0);
+		// 各专业所有学校总计
+		Map<String,Integer> speAll = new HashMap<>();
+
+		// 查询专业
+		String searchOrgFlow = org.getOrgFlow() == null ? "" : org.getOrgFlow();
+		// 查询人数信息
+		params.put("orgFlow",searchOrgFlow);
+		params.put("sessionNumber",sessionNumber);
+		// 查询人员名单并处理数据
+		Map<String,Integer> speInfos = new HashMap<>();
+		speInfos.put("all", 0);
+		List<Map<String,Object>> infos = recruitDoctorInfoBiz.getOrgRecruitSpeInfo(params);
+		for (Map<String, Object> info : infos) {
+			calculateRecruitStudentForReport(doctorTrainingMap, graduateMap, speAll, speInfos, info);
+		}
+
+		for (int i = 0; i < sysDictList.size(); i++) {
+			if (sysDictList.get(i).getDictId().equals("50")) {
+				continue;
+			}
+			HSSFRow rowTwo = sheet.createRow(i + 1);
+			HSSFCell cellTitle1 = rowTwo.createCell(0);
+			cellTitle1.setCellValue(sysDictList.get(i).getDictName());
+			cellTitle1.setCellStyle(styleCenter);
+			HSSFCell cellTitle2 = rowTwo.createCell(1);
+			cellTitle2.setCellValue(speInfos.getOrDefault(sysDictList.get(i).getDictId() + "Company", 0));
+			cellTitle2.setCellStyle(styleCenter);
+			HSSFCell cellTitle3 = rowTwo.createCell(2);
+			cellTitle3.setCellValue(speInfos.getOrDefault(sysDictList.get(i).getDictId() + "CompanyEntrust", 0));
+			cellTitle3.setCellStyle(styleCenter);
+			HSSFCell cellTitle4 = rowTwo.createCell(3);
+			cellTitle4.setCellValue(speInfos.getOrDefault(sysDictList.get(i).getDictId() + "Social", 0));
+			cellTitle4.setCellStyle(styleCenter);
+			HSSFCell cellTitle5 = rowTwo.createCell(4);
+			cellTitle5.setCellValue(speInfos.getOrDefault(sysDictList.get(i).getDictId() + "Graduate", 0));
+			cellTitle5.setCellStyle(styleCenter);
+			HSSFCell cellTitle6 = rowTwo.createCell(5);
+			cellTitle6.setCellValue(speInfos.getOrDefault(sysDictList.get(i).getDictId() + "all", 0));
+			cellTitle6.setCellStyle(styleCenter);
+		}
+
+
+
+		// 最下方的统计
+		HSSFRow rowThree = sheet.createRow(sysDictList.size() + 1);
+		HSSFCell cell1 = rowThree.createCell(0);
+		cell1.setCellStyle(styleCenter);
+		cell1.setCellValue("合计");
+		HSSFCell cell2 = rowThree.createCell(1);
+		cell2.setCellStyle(styleCenter);
+		cell2.setCellValue(speAll.getOrDefault("Company", 0));
+		HSSFCell cell3 = rowThree.createCell(2);
+		cell3.setCellStyle(styleCenter);
+		cell3.setCellValue(speAll.getOrDefault("CompanyEntrust", 0));
+		HSSFCell cell4 = rowThree.createCell(3);
+		cell4.setCellStyle(styleCenter);
+		cell4.setCellValue(speAll.getOrDefault("Social", 0));
+		HSSFCell cell5 = rowThree.createCell(4);
+		cell5.setCellStyle(styleCenter);
+		cell5.setCellValue(speAll.getOrDefault("Graduate", 0));
+		HSSFCell cell6 = rowThree.createCell(5);
+		cell6.setCellStyle(styleCenter);
+		cell6.setCellValue(speAll.getOrDefault("all", 0));
+
+
+		String fileName = "招录统计报表.xls";
+		if (StringUtil.isNotBlank(sessionNumber)) {
+			fileName = sessionNumber + "年招录统计报表.xls";
+		}
+		fileName = URLEncoder.encode(fileName, "UTF-8");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+		response.setContentType("application/octet-stream;charset=UTF-8");
+		wb.write(response.getOutputStream());
 	}
 
 	@RequestMapping(value="/zltjOrgLocalAcc")
