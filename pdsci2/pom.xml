@@ -339,27 +339,21 @@
         </dependency>
 
         <dependency>
-            <groupId>jackson-annotations-2.8.9</groupId>
-            <artifactId>jackson-annotations-2.8.9</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/jackson-annotations-2.8.9.jar</systemPath>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.17.0</version>
         </dependency>
 
         <dependency>
-            <groupId>jackson-core-2.8.9</groupId>
-            <artifactId>jackson-core-2.8.9</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/jackson-core-2.8.9.jar</systemPath>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.17.0</version>
         </dependency>
 
         <dependency>
-            <groupId>jackson-databind-2.8.9</groupId>
-            <artifactId>jackson-databind-2.8.9</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/jackson-databind-2.8.9.jar</systemPath>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.17.0</version>
         </dependency>
 
         <dependency>
