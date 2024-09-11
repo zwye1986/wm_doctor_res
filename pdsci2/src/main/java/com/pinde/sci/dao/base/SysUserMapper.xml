@@ -131,6 +131,7 @@
     <result column="TRAINING_TYPE_ID" property="trainingTypeId" jdbcType="VARCHAR" />
     <result column="TRAINING_TYPE_NAME" property="trainingTypeName" jdbcType="VARCHAR" />
     <result column="LOCK_REASON" property="lockReason" jdbcType="VARCHAR" />
+    <result column="IS_RESPONSIBLE_TUTOR" property="isResponsibleTutor" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -213,7 +214,7 @@
     IS_SUBMIT_NAME, CHECK_STATUS_ID, CHECK_STATUS_NAME, CHECK_REASON, APP_LAST_LOGIN_ERROR_TIME, 
     APP_LOGIN_ERROR_COUNT, AUDIT_STATUS, ORG_FLOW_GX, SCHOOL, USER_LEVEL_ID, USER_LEVEL_NAME, 
     USER_SIGN_URL, BANK_OF_DEPOSIT, BANK_ACCOUNT_NUMBER, OPEN_ID, UN_LOCK_TIME, TEACHER_LEVEL, 
-    TRAINING_TYPE_ID, TRAINING_TYPE_NAME, LOCK_REASON
+    TRAINING_TYPE_ID, TRAINING_TYPE_NAME, LOCK_REASON ,IS_RESPONSIBLE_TUTOR
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysUserExample" >
     select
@@ -290,7 +291,7 @@
       USER_LEVEL_ID, USER_LEVEL_NAME, USER_SIGN_URL, 
       BANK_OF_DEPOSIT, BANK_ACCOUNT_NUMBER, OPEN_ID, 
       UN_LOCK_TIME, TEACHER_LEVEL, TRAINING_TYPE_ID, 
-      TRAINING_TYPE_NAME, LOCK_REASON)
+      TRAINING_TYPE_NAME, LOCK_REASON,IS_RESPONSIBLE_TUTOR)
     values (#{userFlow,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}, #{userPasswd,jdbcType=VARCHAR}, 
       #{userName,jdbcType=VARCHAR}, #{sexId,jdbcType=VARCHAR}, #{sexName,jdbcType=VARCHAR}, 
       #{statusId,jdbcType=VARCHAR}, #{statusDesc,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, 
@@ -335,7 +336,7 @@
       #{userLevelId,jdbcType=VARCHAR}, #{userLevelName,jdbcType=VARCHAR}, #{userSignUrl,jdbcType=VARCHAR}, 
       #{bankOfDeposit,jdbcType=VARCHAR}, #{bankAccountNumber,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, 
       #{unLockTime,jdbcType=VARCHAR}, #{teacherLevel,jdbcType=VARCHAR}, #{trainingTypeId,jdbcType=VARCHAR}, 
-      #{trainingTypeName,jdbcType=VARCHAR}, #{lockReason,jdbcType=VARCHAR})
+      #{trainingTypeName,jdbcType=VARCHAR}, #{lockReason,jdbcType=VARCHAR}, #{isResponsibleTutor,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysUser" >
     insert into PDSCI.SYS_USER
@@ -727,6 +728,9 @@
       <if test="lockReason != null" >
         LOCK_REASON,
       </if>
+      <if test="isResponsibleTutor != null" >
+        IS_RESPONSIBLE_TUTOR,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userFlow != null" >
@@ -1115,6 +1119,9 @@
       </if>
       <if test="lockReason != null" >
         #{lockReason,jdbcType=VARCHAR},
+      </if>
+      <if test="isResponsibleTutor != null" >
+        #{isResponsibleTutor,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -1514,6 +1521,9 @@
       <if test="record.lockReason != null" >
         LOCK_REASON = #{record.lockReason,jdbcType=VARCHAR},
       </if>
+      <if test="record.isResponsibleTutor != null" >
+        IS_RESPONSIBLE_TUTOR = #{record.isResponsibleTutor,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -1649,7 +1659,8 @@
       TEACHER_LEVEL = #{record.teacherLevel,jdbcType=VARCHAR},
       TRAINING_TYPE_ID = #{record.trainingTypeId,jdbcType=VARCHAR},
       TRAINING_TYPE_NAME = #{record.trainingTypeName,jdbcType=VARCHAR},
-      LOCK_REASON = #{record.lockReason,jdbcType=VARCHAR}
+      LOCK_REASON = #{record.lockReason,jdbcType=VARCHAR},
+      IS_RESPONSIBLE_TUTOR = #{record.isResponsibleTutor,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -2041,6 +2052,9 @@
       <if test="lockReason != null" >
         LOCK_REASON = #{lockReason,jdbcType=VARCHAR},
       </if>
+      <if test="isResponsibleTutor != null" >
+        IS_RESPONSIBLE_TUTOR = #{isResponsibleTutor,jdbcType=VARCHAR},
+      </if>
     </set>
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </update>
@@ -2173,7 +2187,8 @@
       TEACHER_LEVEL = #{teacherLevel,jdbcType=VARCHAR},
       TRAINING_TYPE_ID = #{trainingTypeId,jdbcType=VARCHAR},
       TRAINING_TYPE_NAME = #{trainingTypeName,jdbcType=VARCHAR},
-      LOCK_REASON = #{lockReason,jdbcType=VARCHAR}
+      LOCK_REASON = #{lockReason,jdbcType=VARCHAR},
+      IS_RESPONSIBLE_TUTOR = #{isResponsibleTutor,jdbcType=VARCHAR}
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </update>
 </mapper>

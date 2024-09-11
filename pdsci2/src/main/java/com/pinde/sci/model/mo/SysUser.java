@@ -2,7 +2,9 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.MybatisObject;
 
-public class SysUser extends MybatisObject {
+public class SysUser implements java.io.Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String userFlow;
 
     private String userCode;
@@ -260,6 +262,8 @@ public class SysUser extends MybatisObject {
     private String trainingTypeName;
 
     private String lockReason;
+
+    private String isResponsibleTutor;
 
     public String getUserFlow() {
         return userFlow;
@@ -1291,5 +1295,13 @@ public class SysUser extends MybatisObject {
 
     public void setLockReason(String lockReason) {
         this.lockReason = lockReason;
+    }
+
+    public String getIsResponsibleTutor() {
+        return isResponsibleTutor;
+    }
+
+    public void setIsResponsibleTutor(String isResponsibleTutor) {
+        this.isResponsibleTutor = isResponsibleTutor;
     }
 }

@@ -69,6 +69,14 @@
 			if(false==$("#editForm").validationEngine("validate")){
 				return false ;
 			}
+
+			var $recTypeId = $("#editForm input[name='sexId']:checked");
+			var recTypeId = $recTypeId.val();
+			if(recTypeId == '' || recTypeId == undefined){
+				jboxTip("请选择性别！");
+				return false;
+			}
+
 			var url = "<s:url value='/sys/user/save4jsresteacher'/>";
 			var data = $('#editForm').serialize();
 			jboxPost(url, data, function(data) {
@@ -77,6 +85,25 @@
 					setTimeout(function(){
 						jboxClose();
 					}, 1000);
+				}else if('${GlobalConstant.USER_PHONE_REPETE}'==data) {
+					jboxConfirm("改手机号已绑定用户，是否绑定新的账号？", function () {
+						var url = "<s:url value='/sys/user/save4jsresteacher'/>";
+						var data = $('#editForm').serialize();
+						debugger
+						console.log(data)
+						console.log(typeof data)
+						data = data + "&coverPhone=Y"
+						jboxPost(url, data, function(data) {
+							if('${GlobalConstant.SAVE_SUCCESSED}'==data){
+								window.parent.search();
+								setTimeout(function(){
+									jboxClose();
+								}, 1000);
+							}else {
+							}
+						},null,true);
+					});
+				}else {
 				}
 			},null,true);
 		}
@@ -100,7 +127,6 @@
 				selectAllText: "全选"
 			});
 		});
-
 	</script>
 </head>
 
@@ -114,7 +140,7 @@
 
 			<table width="800" cellpadding="0" cellspacing="0" class="base_info">
 				<tr>
-					<th width="20%"><font color="red">*</font>登录名：</th>
+					<th width="20%"><font color="red">*</font>用户名：</th>
 					<td width="30%">
 						<input type="hidden" name="userFlow" value="${sysUser.userFlow}" />
 						<c:if test="${sysUser.statusId == userStatusEnumAdded.id  }">
@@ -133,17 +159,17 @@
                                   </c:if> --%>
 						</c:if>
 					</td>
-					<th width="20%">身份证号：</th>
-					<td width="30%">
-						<input class="validate[custom[chinaIdLoose]] input" name="idNo" type="text" value="${sysUser.idNo}" onblur="makeBirthdayByIdCard(this.value)">
-					</td>
-				</tr>
-				<tr>
 					<th><font color="red">*</font>姓名：</th>
 					<td>
 						<input class="validate[required] input" name="userName" type="text" value="${sysUser.userName}" >
 					</td>
-					<th>性别：</th>
+				</tr>
+				<tr>
+					<th width="20%"><font color="red">*</font>身份证号：</th>
+					<td width="30%">
+						<input class="validate[required custom[chinaIdLoose]] input" name="idNo" type="text" value="${sysUser.idNo}">
+					</td>
+					<th><font color="red">*</font>性别：</th>
 					<td>
 						<input id="${userSexEnumMan.id }" type="radio" name="sexId"  value="${userSexEnumMan.id }" <c:if test="${userSexEnumMan.id == sysUser.sexId}">checked</c:if> />
 						<label for="${userSexEnumMan.id }">${userSexEnumMan.name}</label>&#12288;
@@ -152,7 +178,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>手机号码：</th>
+					<th><font color="red">*</font>手机号码：</th>
 					<td>
 						<c:choose>
 							<c:when test="${sessionScope.userListScope eq GlobalConstant.USER_LIST_PERSONAL && GlobalConstant.FLAG_N eq sysCfgMap['user_edit_phone']}">
@@ -160,7 +186,7 @@
 								<input name="userPhone" type="hidden" value="${sysUser.userPhone}" >
 							</c:when>
 							<c:otherwise>
-								<input class="validate[custom[mobile]] input" name="userPhone" type="text" value="${sysUser.userPhone}" >
+								<input class="validate[required, custom[mobile]] input" required name="userPhone" type="text" value="${sysUser.userPhone}" >
 							</c:otherwise>
 						</c:choose>
 					</td>
@@ -227,47 +253,55 @@
                         </select>
                     </td>
                 </tr> --%>
+<%--				<tr>--%>
+<%--					<th>基地名称：</th>--%>
+<%--					<td>&nbsp;${sessionScope.currUser.orgName}</td>--%>
+<%--					<th>证书编号：</th>--%>
+<%--					<td>--%>
+<%--						<input name="certificateId" type="text" class="input validate[maxsize[25]]" value="${sysUser.certificateId}" >--%>
+<%--					</td>--%>
+<%--				</tr>--%>
 				<tr>
-					<th>基地名称：</th>
-					<td>&nbsp;${sessionScope.currUser.orgName}</td>
-					<th>证书编号：</th>
-					<td>
-						<input name="certificateId" type="text" class="input validate[maxsize[25]]" value="${sysUser.certificateId}" >
-					</td>
-				</tr>
-				<tr>
-					<th>科室名称：</th>
-					<td>
-						<c:if test="${sysCfgMap['sys_user_dept_flag'] eq GlobalConstant.RECORD_STATUS_Y}">
-							<script>
-								// function setMulDept(deptFlow){
-								// 	$("#mDept div").show();
-								// 	$("#"+deptFlow+"View").hide().find(":checkbox").attr("checked",false);
-								// }
+<%--					<th>科室名称：</th>--%>
+<%--					<td>--%>
+<%--						<c:if test="${sysCfgMap['sys_user_dept_flag'] eq GlobalConstant.RECORD_STATUS_Y}">--%>
+<%--							<script>--%>
+<%--								// function setMulDept(deptFlow){--%>
+<%--								// 	$("#mDept div").show();--%>
+<%--								// 	$("#"+deptFlow+"View").hide().find(":checkbox").attr("checked",false);--%>
+<%--								// }--%>
 
-								function setMulDept(deptName){
-									if('' != deptName){
-										$("#mDept div").hide();
-										$("#"+deptName+"View").show();
-									}else{
-										$("#mDept div").show();
-									}
+<%--								function setMulDept(deptName){--%>
+<%--									if('' != deptName){--%>
+<%--										$("#mDept div").hide();--%>
+<%--										$("#"+deptName+"View").show();--%>
+<%--									}else{--%>
+<%--										$("#mDept div").show();--%>
+<%--									}--%>
 
-								}
-							</script>
-						</c:if>
-						<input type="hidden" name="deptFlow">
-						<input name="deptName" type="text" class="input validate[maxsize[25]]"  <c:if test="${sysCfgMap['sys_user_dept_flag'] eq GlobalConstant.RECORD_STATUS_Y}">onchange="setMulDept(this.value);"</c:if>>
-						<%--					&nbsp;<select name="deptFlow" class="validate[required] select"  style="width: 160px;" <c:if test="${sysCfgMap['sys_user_dept_flag'] eq GlobalConstant.RECORD_STATUS_Y}">onchange="setMulDept(this.value);"</c:if>>--%>
-						<%--					<option></option>--%>
-						<%--					<c:forEach items="${sysDeptList}" var="dept">--%>
-						<%--						<option value="${dept.deptFlow}" <c:if test='${sysUser.deptFlow==dept.deptFlow}'>selected="selected"</c:if>>${dept.deptName}</option>--%>
-						<%--					</c:forEach>--%>
+<%--								}--%>
+<%--							</script>--%>
+<%--						</c:if>--%>
+<%--						<input type="hidden" name="deptFlow">--%>
+<%--						<input name="deptName" type="text" class="input validate[maxsize[25]]"  <c:if test="${sysCfgMap['sys_user_dept_flag'] eq GlobalConstant.RECORD_STATUS_Y}">onchange="setMulDept(this.value);"</c:if>>--%>
+<%--						&lt;%&ndash;					&nbsp;<select name="deptFlow" class="validate[required] select"  style="width: 160px;" <c:if test="${sysCfgMap['sys_user_dept_flag'] eq GlobalConstant.RECORD_STATUS_Y}">onchange="setMulDept(this.value);"</c:if>>&ndash;%&gt;--%>
+<%--						&lt;%&ndash;					<option></option>&ndash;%&gt;--%>
+<%--						&lt;%&ndash;					<c:forEach items="${sysDeptList}" var="dept">&ndash;%&gt;--%>
+<%--						&lt;%&ndash;						<option value="${dept.deptFlow}" <c:if test='${sysUser.deptFlow==dept.deptFlow}'>selected="selected"</c:if>>${dept.deptName}</option>&ndash;%&gt;--%>
+<%--						&lt;%&ndash;					</c:forEach>&ndash;%&gt;--%>
+<%--						</select>--%>
+<%--						&lt;%&ndash; 					<c:if test="${sysCfgMap['sys_user_dept_flag'] eq GlobalConstant.RECORD_STATUS_Y}"> &ndash;%&gt;--%>
+<%--						<!-- 						&nbsp; -->--%>
+<%--						<!-- 						<a onclick="$('#mDept').toggle();">多选</a> -->--%>
+<%--						&lt;%&ndash; 					</c:if> &ndash;%&gt;--%>
+<%--					</td>--%>
+					<th>责任导师：</th>
+					<td>
+						<select name="isResponsibleTutor" class="select" style="width: 160px;">
+							<option value="" >请选择</option>
+							<option value="Y" <c:if test="${sysUser.isResponsibleTutor eq 'Y'}">selected="selected"</c:if>>是</option>
+							<option value="N" <c:if test="${sysUser.isResponsibleTutor eq 'N'}">selected="selected"</c:if>>否</option>
 						</select>
-						<%-- 					<c:if test="${sysCfgMap['sys_user_dept_flag'] eq GlobalConstant.RECORD_STATUS_Y}"> --%>
-						<!-- 						&nbsp; -->
-						<!-- 						<a onclick="$('#mDept').toggle();">多选</a> -->
-						<%-- 					</c:if> --%>
 					</td>
 					<th>师资级别：</th>
 					<td>
