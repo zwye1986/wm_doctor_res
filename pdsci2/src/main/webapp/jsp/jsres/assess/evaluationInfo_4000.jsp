@@ -29,6 +29,14 @@
             border-bottom: 1px solid #D3D3D3;
             border-left: 0;
         }
+
+
+        .grid th {
+
+            background: #EDF3FF;
+
+        }
+
     </style>
     <script src="<s:url value='/js/dsbridge.js'/>"></script>
     <script type="text/javascript">
@@ -56,8 +64,11 @@
                     $(".info", this).toggle(100);
                 }
             );
+            <%--if ('${widthSize}'=='Y'){--%>
+            <%--    $('#tableContext').css("width","1000px");--%>
+            <%--}--%>
             if ('${widthSize}'=='Y'){
-                $('#tableContext').css("width","1000px");
+                $('#tableContext').css("width","calc(100vw - 460px)");
             }
         });
 
@@ -573,7 +584,7 @@
     </script>
 </head>
 <body>
-<div id="tableContext" style="overflow-y: auto;margin-left: 10px;margin-right: 10px;height: 750px;" onscroll="tableFixed(this);">
+<div id="tableContext" style="overflow-y: auto;margin-left: 30px;margin-right: 10px;height: 750px;" onscroll="tableFixed(this);">
     <div id="dateFixed" style="height: 0px;overflow: visible;position: relative;width: 98%;">
         <table border="0" cellpadding="0" cellspacing="0" class="grid" style="width: 100%" >
             <tr height="34" class="firstRow">

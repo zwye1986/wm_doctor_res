@@ -708,7 +708,7 @@ public class UserController extends GeneralController{
      * @return
      */
 	@RequestMapping(value={"/save4jsresteacher"},method=RequestMethod.POST)
-	public @ResponseBody String save4jsresteacher(SysUser user,String[] mulDeptFlow,String roleFlow, String[] userRoleList){
+	public @ResponseBody String save4jsresteacher(SysUser user,String[] mulDeptFlow,String roleFlow, String[] userRoleList,String coverPhone){
 		//新增用户是判断
 		if(StringUtil.isBlank(user.getUserFlow())){
 			// 判断用户phone是否存在
@@ -717,12 +717,17 @@ public class UserController extends GeneralController{
 				if(oldUser!=null){
 					//已结业的学员可用作师资账号
 					ResDoctor resDoctor = doctorBiz.readDoctor(oldUser.getUserFlow());
-					if(null == resDoctor || !"21".equals(resDoctor.getDoctorStatusId())){
-						return GlobalConstant.USER_PHONE_REPETE;
+					if(coverPhone==null){
+						if(null == resDoctor || !"21".equals(resDoctor.getDoctorStatusId())){
+							return GlobalConstant.USER_PHONE_REPETE;
+						}
+						oldUser.setRecordStatus("N");
+						oldUser.setUserPhone(oldUser.getUserPhone() + "_x"); // 因为手机号不允许重复，这里把手机号做个标记
+						userBiz.edit(oldUser);
+					}else {
+						oldUser.setUserPhone("");
+						userBiz.edit(oldUser);
 					}
-					oldUser.setRecordStatus("N");
-					oldUser.setUserPhone(oldUser.getUserPhone() + "_x"); // 因为手机号不允许重复，这里把手机号做个标记
-					userBiz.edit(oldUser);
 				}
 			}
 

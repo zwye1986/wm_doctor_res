@@ -38,6 +38,56 @@ public class JsResDoctorRecruitExt extends ResDoctorRecruit{
 
 	private String firstIsPass;
 
+	private String sex;
+
+	private String age;
+
+	private String graduateSchool;
+
+	private String graduateTime;
+
+	private String workAddr;
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getAge() {
+		return age;
+	}
+
+	public void setAge(String age) {
+		this.age = age;
+	}
+
+	public String getGraduateSchool() {
+		return graduateSchool;
+	}
+
+	public void setGraduateSchool(String graduateSchool) {
+		this.graduateSchool = graduateSchool;
+	}
+
+	public String getGraduateTime() {
+		return graduateTime;
+	}
+
+	public void setGraduateTime(String graduateTime) {
+		this.graduateTime = graduateTime;
+	}
+
+	public String getWorkAddr() {
+		return workAddr;
+	}
+
+	public void setWorkAddr(String workAddr) {
+		this.workAddr = workAddr;
+	}
+
 	public String getFirstIsPass() {
 		return firstIsPass;
 	}

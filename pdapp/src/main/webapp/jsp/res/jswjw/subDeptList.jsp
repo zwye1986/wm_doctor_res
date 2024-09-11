@@ -4,8 +4,8 @@
     "resultType": ${pdfn:toJsonString(resultType)}
     <c:if test="${resultId eq '200' }">
     ,
-    "pageIndex": ${param.pageIndex},
-    "pageSize": ${param.pageSize},
+    "pageIndex": ${pageIndex},
+    "pageSize": ${pageSize},
     "dataCount": ${dataCount},
     "isChargeOrg":${pdfn:toJsonString(isChargeOrg)},
     "depts": [
@@ -61,6 +61,6 @@
         </c:forEach>
     ],
 		"schMonth":${schMonth},
-		"schMaxMonth":${empty rotationDept.schMaxMonth ? "0" : rotationDept.schMaxMonth},
+		"schMaxMonth":${empty rotationDept.schMaxMonth ? "0" : rotationDept.schMaxMonth}
     </c:if>
 }

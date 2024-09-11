@@ -269,7 +269,7 @@ public class JswjwWxKzrController extends GeneralController {
 		if(StringUtil.isBlank(roleId)){
 			return ResultDataThrow("用户角色ID为空");
 		}
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			return ResultDataThrow("用户角色ID与角色不符");
 		}
 		if("waitSch".equals(typeId)&&StringUtil.isBlank(yearMonth))
@@ -430,7 +430,7 @@ public class JswjwWxKzrController extends GeneralController {
 		if(StringUtil.isBlank(roleId)){
 			return ResultDataThrow("用户角色ID为空");
 		}
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			return ResultDataThrow("用户角色ID与角色不符");
 		}
 		if (StringUtil.isBlank(yearMonth)) {
@@ -498,7 +498,7 @@ public class JswjwWxKzrController extends GeneralController {
 		if(StringUtil.isBlank(roleId)){
 			return ResultDataThrow("用户角色ID为空");
 		}
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			return ResultDataThrow("用户角色ID与角色不符");
 		}
 		//验证用户是否存在
@@ -546,7 +546,7 @@ public class JswjwWxKzrController extends GeneralController {
 		if(StringUtil.isBlank(doctorFlow)){
 			return ResultDataThrow("学员流水号为空");
 		}
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			return ResultDataThrow("用户角色ID与角色不符");
 		}
 		//验证用户是否存在
@@ -680,7 +680,7 @@ public class JswjwWxKzrController extends GeneralController {
 		if(StringUtil.isBlank(roleId)){
 			return ResultDataThrow("用户角色ID为空");
 		}
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			return ResultDataThrow("用户角色ID与角色不符");
 		}
 		if (StringUtil.isBlank(yearMonth)) {
@@ -1562,7 +1562,7 @@ public class JswjwWxKzrController extends GeneralController {
 		if(StringUtil.isBlank(processFlow)){
 			return ResultDataThrow("过程标识符为空");
 		}
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			return ResultDataThrow("用户角色ID与角色不符");
 		}
 		String recTypeId=ResRecTypeEnum.AfterEvaluation.getId();
@@ -2514,7 +2514,7 @@ public class JswjwWxKzrController extends GeneralController {
 		if(StringUtil.isBlank(processFlow)){
 			return ResultDataThrow("过程标识符为空");
 		}
-		if(!roleFlag.equals("Head")&&!roleFlag.equals("Seretary")){
+		if(!roleFlag.equals("Head")&&!roleFlag.equals("Seretary")&&!roleFlag.equals("TeachingHead")&&!roleFlag.equals("TeachingSeretary")){
 			return ResultDataThrow("用户角色ID与角色不符");
 		}
 
@@ -3660,7 +3660,7 @@ public class JswjwWxKzrController extends GeneralController {
 		} catch (Exception e) {
 			return ResultDataThrow("yearMonth格式有误");
 		}
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			return ResultDataThrow("用户角色ID与角色不符");
 		}
 
@@ -3898,7 +3898,7 @@ public class JswjwWxKzrController extends GeneralController {
 		if(StringUtil.isBlank(activityFlow)){
 			return ResultDataThrow("活动标识符为空");
 		}
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			return ResultDataThrow("用户角色ID与角色不符");
 		}
 
@@ -3934,7 +3934,7 @@ public class JswjwWxKzrController extends GeneralController {
 		if(StringUtil.isBlank(activityFlow)){
 			return ResultDataThrow("活动标识符为空");
 		}
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			return ResultDataThrow("用户角色ID与角色不符");
 		}
 
@@ -3987,7 +3987,7 @@ public class JswjwWxKzrController extends GeneralController {
 		if(StringUtil.isBlank(activityFlow)){
 			return ResultDataThrow("活动标识符为空");
 		}
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			return ResultDataThrow("用户角色ID与角色不符");
 		}
 		//验证用户是否存在
@@ -4104,7 +4104,7 @@ public class JswjwWxKzrController extends GeneralController {
 		if(StringUtil.isBlank(activityFlow)){
 			return ResultDataThrow("活动标识符为空");
 		}
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			return ResultDataThrow("用户角色ID与角色不符");
 		}
 		//验证用户是否存在
@@ -4151,7 +4151,7 @@ public class JswjwWxKzrController extends GeneralController {
 		if(StringUtil.isBlank(activityFlow)){
 			return ResultDataThrow("活动标识符为空");
 		}
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			return ResultDataThrow("用户角色ID与角色不符");
 		}
 		//验证用户是否存在
@@ -4257,7 +4257,7 @@ public class JswjwWxKzrController extends GeneralController {
 		if(!"Y".equals(typeId)&&!"N".equals(typeId)){
 			return ResultDataThrow("typeId只能是Y或N");
 		}
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			return ResultDataThrow("用户角色ID与角色不符");
 		}
 		//验证用户是否存在
@@ -4329,7 +4329,7 @@ public class JswjwWxKzrController extends GeneralController {
 		{
 			return ResultDataThrow("isEffective只能是Y或N");
 		}
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			return ResultDataThrow("用户角色ID与角色不符");
 		}
 		//验证用户是否存在
@@ -4367,7 +4367,7 @@ public class JswjwWxKzrController extends GeneralController {
 		if(StringUtil.isBlank(roleId)){
 			return ResultDataThrow("用户角色ID为空");
 		}
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			return ResultDataThrow("用户角色ID与角色不符");
 		}
 		//验证用户是否存在
@@ -4494,7 +4494,7 @@ public class JswjwWxKzrController extends GeneralController {
 		if(StringUtil.isBlank(activity.getActivityRemark())){
 			return ResultDataThrow("活动简介为空");
 		}
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			return ResultDataThrow("用户角色ID与角色不符");
 		}
 		//验证用户是否存在
@@ -4556,7 +4556,7 @@ public class JswjwWxKzrController extends GeneralController {
 			return ResultDataThrow("用户角色ID为空");
 		}
 
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			return ResultDataThrow( "用户角色ID与角色不符");
 		}
 		//验证用户是否存在
@@ -5228,7 +5228,7 @@ public class JswjwWxKzrController extends GeneralController {
 			resultMap.put("resultType", "用户角色ID为空");
 			return resultMap;
 		}
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			resultMap.put("resultId", "3011101");
 			resultMap.put("resultType", "用户角色ID与角色不符");
 			return resultMap;
@@ -5289,7 +5289,7 @@ public class JswjwWxKzrController extends GeneralController {
 			resultMap.put("resultType", "用户角色ID为空");
 			return resultMap;
 		}
-		if(!roleId.equals("Head")&&!roleId.equals("Seretary")){
+		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
 			resultMap.put("resultId", "3011101");
 			resultMap.put("resultType", "用户角色ID与角色不符");
 			return resultMap;

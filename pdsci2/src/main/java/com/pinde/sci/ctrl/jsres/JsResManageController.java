@@ -42,6 +42,7 @@ import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.*;
@@ -3905,6 +3906,81 @@ public class JsResManageController extends GeneralController {
 		}
 //		List<JsResDoctorRecruitExt> recruitList = jsResDoctorRecruitBiz.resDoctorRecruitExtList1(resDoctorRecruit, sysUser, null, docTypeList, sessionNumbers);
 		List<JsResDoctorRecruitExt> recruitList = jsResDoctorRecruitBiz.resDoctorRecruitExtNew(resDoctorRecruit, sysUser, jointOrgFlowList, docTypeList, sessionNumbers,joinOrgFlow,isJointOrg);
+
+		// 增加几个导出字段 性别/年龄/ 地址/工作单位 /毕业院校/毕业时间
+		// /毕业院校/毕业时间 根据最高学历，从PubUserResume里取
+		List<String> userFlowList = new ArrayList<>();
+		recruitList.forEach(vo -> {
+			if(",硕士研究生,博士研究生,本科,专科,".contains("," + vo.getSysUser().getEducationName() + ",")) {
+				userFlowList.add(vo.getSysUser().getUserFlow());
+			}
+		});
+
+		List<PubUserResume> pubUserResumeList = userResumeBiz.findPubUserResumeByUserFlows(userFlowList);
+		Map<String, UserResumeExtInfoForm> userStudyMap = new HashMap<>();
+		if (pubUserResumeList != null) {
+			for (PubUserResume pubUserResume : pubUserResumeList) {
+				String xmlContent = pubUserResume.getUserResume();
+				if (StringUtil.isNotBlank(xmlContent)) {
+					//xml转换成JavaBean
+					UserResumeExtInfoForm userResumeExt = userResumeBiz.converyToJavaBean(xmlContent, UserResumeExtInfoForm.class);
+					userStudyMap.put(pubUserResume.getUserFlow() ,userResumeExt);
+				}
+			}
+		}
+
+		for (JsResDoctorRecruitExt recruitExt : recruitList) {
+			// 性别/年龄从身份证里获取
+			String idNo = recruitExt.getSysUser().getIdNo();
+			String sex = "";
+			String age = "";
+			if (StringUtils.isNotEmpty(idNo)) {
+				// 第17位表性别，奇数为男，偶数为女
+				int sexInt = Integer.parseInt(idNo.substring(16, 17));
+				if (sexInt % 2 == 0) {
+					sex = "女";
+				} else {
+					sex = "男";
+				}
+
+				int birthYear = Integer.parseInt(idNo.substring(6, 10));
+				int currYear = Integer.parseInt(DateUtil.getYear());
+				age = String.valueOf(currYear - birthYear);
+			}
+			recruitExt.setSex(sex);
+			recruitExt.setAge(age);
+
+			String graduateSchool = "";
+			String graduateTime = "";
+			UserResumeExtInfoForm userResumeExtInfoForm = userStudyMap.get(recruitExt.getSysUser().getUserFlow());
+			if(null != userResumeExtInfoForm) {
+				switch (recruitExt.getSysUser().getEducationName()) {
+					case "专科":
+						graduateSchool = userResumeExtInfoForm.getJuniorCollegeSchoolName();
+						graduateTime = userResumeExtInfoForm.getJuniorCollegeGradate();
+						break;
+					case "本科":
+						graduateSchool = userResumeExtInfoForm.getGraduatedName();
+						graduateTime = userResumeExtInfoForm.getGraduationTime();
+						break;
+					case "硕士研究生":
+						graduateSchool = userResumeExtInfoForm.getMasterGraSchoolName();
+						graduateTime = userResumeExtInfoForm.getMasterGraTime();
+						break;
+					case "博士研究生":
+						graduateSchool = userResumeExtInfoForm.getDoctorGraSchoolName();
+						graduateTime = userResumeExtInfoForm.getDoctorGraTime();
+						break;
+					default:
+				}
+			}
+			// /毕业院校/毕业时间
+			recruitExt.setGraduateSchool(graduateSchool);
+			recruitExt.setGraduateTime(graduateTime);
+			// 工作单位
+			recruitExt.setWorkAddr(userResumeExtInfoForm.getWorkUnit());
+		}
+
 		jsResDoctorRecruitBiz.exportRecruitList(recruitList,response);
 	}
 

@@ -470,6 +470,56 @@
 		<input type="hidden" id="orgCityFlag" value=""/>
 		<%--<input type="hidden" id="graduationMaterialName" name="materialName"/>--%>
 		<%--省厅市局查询条件--%>
+
+<%--		<div class="form_search">--%>
+
+<%--			<div class="form_item">--%>
+
+<%--				<div class="form_label">结业年份：</div>--%>
+<%--				<div class="form_content">--%>
+<%--					<input type="text" id="graduationYear" name="graduationYear" value="${param.graduationYear}" class="input" readonly="readonly" />--%>
+<%--				</div>--%>
+
+<%--			</div>--%>
+
+<%--			<div class="form_item">--%>
+
+<%--				<div class="form_label">申请年份：</div>--%>
+<%--				<div class="form_content">--%>
+<%--					<input type="text" id="applyYear" name="applyYear" class="input" readonly="readonly" value="${pdfn:getCurrYear()}" />--%>
+<%--				</div>--%>
+
+<%--			</div>--%>
+
+<%--			<div class="form_item">--%>
+
+<%--				<div class="form_label">培训基地：</div>--%>
+<%--				<div class="form_content">--%>
+<%--					<input id="trainOrg" oncontextmenu="return false"  class="toggleView input" type="text" value="${orgName}"  autocomplete="off" onkeydown="changeStatus();" onkeyup="changeStatus();" />--%>
+<%--					<div id="pDiv" style="width: 0px;height: 0px;overflow: visible;float: left; position:relative;left :0px;top:30px;">--%>
+<%--						<div class="boxHome trainOrg" id="trainOrgSel" style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 185px;border-top: none;position: relative;display:none;">--%>
+<%--							&lt;%&ndash;<p class="item trainOrg allOrg orgs" flow="" value="全部" type="AllOrgP" style="line-height: 20px; padding:10px 0;cursor: default; ">全部</p>&ndash;%&gt;--%>
+<%--							<c:forEach items="${orgs}" var="org">--%>
+<%--								<p class="item trainOrg allOrg orgs" flow="${org.orgFlow}" value="${org.orgName}"--%>
+<%--								   <c:if test="${empty org.orgLevelId}">type="allOrg"</c:if>--%>
+<%--								   <c:if test="${!empty org.orgLevelId }">type="${org.orgLevelId}"</c:if>--%>
+<%--								   orgCityId="${org.orgCityId}"--%>
+<%--								   style="line-height: 20px; padding:5px 0;cursor: default; "--%>
+<%--								   <c:if test="${sessionScope.currUser.orgFlow==org.orgFlow }">style="display: none;"</c:if>--%>
+<%--								>${org.orgName}</p>--%>
+<%--							</c:forEach>--%>
+<%--						</div>--%>
+<%--						<input type="text" name="orgFlow" id="orgFlow" value="${param.orgFlow}" style="display: none;"/>--%>
+<%--					</div>--%>
+<%--				</div>--%>
+
+<%--			</div>--%>
+
+<%--			<div class="form_item">--%>
+<%--				<div class="form_label"> </div>--%>
+<%--			</div>--%>
+
+<%--		</div>--%>
 		<table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
 			<tr>
 				<td class="td_left">结业年份：</td>

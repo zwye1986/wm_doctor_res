@@ -514,6 +514,11 @@
 			jboxLoad("content","<s:url value='/jsres/hospital/achievements?achievementType=interview'/>",true);
 		}
 
+		function baseInfoTeacher() { //师资管理
+            var url = "<s:url value='/jsres/manage/baseInfoTeacher'/>";
+            jboxLoad("content", url, true);
+        }
+
 		function logout() {
             delCookie('first')
             var url ="<s:url value='/inx/jsres/logout'/>"
@@ -601,12 +606,13 @@
 						<%--</dt>--%>
 						<%--<dd class="menu_item"><a href="javascript:pjjgcx('global');">评价结果查询</a></dd>--%>
 						<%--</dl>--%>
-						<%--<dl class="menu">--%>
-						<%--<dt class="menu_title">--%>
-						<%--<i class="icon_menu menu_management"></i>人员管理--%>
-						<%--</dt>--%>
+						<dl class="menu">
+						<dt class="menu_title">
+						<i class="icon_menu menu_management"></i>人员管理
+						</dt>
 						<%--<dd class="menu_item"><a onclick="hsxxgl();">护士信息管理</a></dd>--%>
-						<%--</dl>--%>
+						<dd class="menu_item"><a href="javascript:baseInfoTeacher();">师资管理</a></dd>
+						</dl>
 						<dl class="menu">
 							<dt class="menu_title">
 								<i class="icon_menu menu_management"></i>招录信息管理

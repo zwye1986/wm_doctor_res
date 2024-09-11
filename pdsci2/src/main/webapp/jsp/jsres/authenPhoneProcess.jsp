@@ -28,7 +28,8 @@
                 return;
             }
             $("#verifyCodeErr").html("");
-            var url = "<s:url value='/inx/jsres/authenVerifyCode'/>";
+            <%--var url = "<s:url value='/inx/jsres/authenVerifyCode'/>";--%>
+            var url = "<s:url value='/inx/jsres/modifyPhoneVerifyCode'/>";
             jboxPost(url, $("#registerForm").serialize(),
                 function (resp) {
                     if (resp == "${GlobalConstant.VERIFT_CODE_RIGHT}") {
