@@ -7174,15 +7174,17 @@ public class JsResManageController extends GeneralController {
 			List<SysUserRole> userRoleList = userRoleBiz.getByUserFlowAndWsid(userFlow, GlobalConstant.RES_WS_ID);
 			List<String> roleFlowList = userRoleList.stream().map(vo -> vo.getRoleFlow()).collect(Collectors.toList());
 			model.addAttribute("roleFlowList", roleFlowList);
-		}
-		List<SysUserDept> userDepts = userBiz.searchUserDeptByUser(userFlow);
-		if (userDepts != null && !userDepts.isEmpty()) {
-			Map<String, SysUserDept> userDeptMap = new HashMap<String, SysUserDept>();
-			for (SysUserDept sud : userDepts) {
-				userDeptMap.put(sud.getDeptFlow(), sud);
+
+			List<SysUserDept> userDepts = userBiz.searchUserDeptByUser(userFlow);
+			if (userDepts != null && !userDepts.isEmpty()) {
+				Map<String, SysUserDept> userDeptMap = new HashMap<String, SysUserDept>();
+				for (SysUserDept sud : userDepts) {
+					userDeptMap.put(sud.getDeptFlow(), sud);
+				}
+				model.addAttribute("userDeptMap", userDeptMap);
 			}
-			model.addAttribute("userDeptMap", userDeptMap);
 		}
+
 		return "jsres/hospital/editUser";
 	}
 
