@@ -6214,8 +6214,8 @@ public class JsResBaseManagerController extends GeneralController {
 				for(String jointFlow: val) {
 					ResOrgSepVO jointOrgVO = orgToOrgSpeVOMap.get(jointFlow);
 					if(null != jointOrgVO) {
-						// 顺便把baseCode添上
-						jointOrgVO.setBaseCode(orgToEntityMap.getOrDefault(jointOrgVO.getOrgFlow(), new SysOrg()).getBaseCode());
+						// 顺便把OrgCode添上,历史原因，放在baseCode里，少改一点前端代码
+						jointOrgVO.setBaseCode(orgToEntityMap.getOrDefault(jointOrgVO.getOrgFlow(), new SysOrg()).getOrgCode());
 						jointOrgVO.setOrgName(orgToEntityMap.getOrDefault(jointOrgVO.getOrgFlow(), new SysOrg()).getOrgName());
 						jointOrgList.add(jointOrgVO);
 					}
@@ -6233,8 +6233,8 @@ public class JsResBaseManagerController extends GeneralController {
 					}else return 0;
 				}).collect(Collectors.toList());
 				mainOrgVO.setJointOrgList(jointOrgList);
-				// 顺便把baseCode添上
-				mainOrgVO.setBaseCode(orgToEntityMap.getOrDefault(mainOrgVO.getOrgFlow(), new SysOrg()).getBaseCode());
+				// 顺便把orgCode添上,历史原因，放在baseCode里，少改一点前端代码
+				mainOrgVO.setBaseCode(orgToEntityMap.getOrDefault(mainOrgVO.getOrgFlow(), new SysOrg()).getOrgCode());
 				mainOrgVO.setOrgName(orgToEntityMap.getOrDefault(mainOrgVO.getOrgFlow(), new SysOrg()).getOrgName());
 				resList.add(mainOrgVO);
 			}
