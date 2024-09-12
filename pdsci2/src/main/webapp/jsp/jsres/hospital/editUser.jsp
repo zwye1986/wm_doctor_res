@@ -70,13 +70,6 @@
 				return false ;
 			}
 
-			var $recTypeId = $("#editForm input[name='sexId']:checked");
-			var recTypeId = $recTypeId.val();
-			if(recTypeId == '' || recTypeId == undefined){
-				jboxTip("请选择性别！");
-				return false;
-			}
-
 			var url = "<s:url value='/sys/user/save4jsresteacher'/>";
 			var data = $('#editForm').serialize();
 			jboxPost(url, data, function(data) {
@@ -167,9 +160,9 @@
 				<tr>
 					<th width="20%"><font color="red">*</font>身份证号：</th>
 					<td width="30%">
-						<input class="validate[required custom[chinaIdLoose]] input" name="idNo" type="text" value="${sysUser.idNo}">
+						<input class="validate[required,custom[chinaIdLoose]] input" name="idNo" type="text" value="${sysUser.idNo}">
 					</td>
-					<th><font color="red">*</font>性别：</th>
+					<th>性别：</th>
 					<td>
 						<input id="${userSexEnumMan.id }" type="radio" name="sexId"  value="${userSexEnumMan.id }" <c:if test="${userSexEnumMan.id == sysUser.sexId}">checked</c:if> />
 						<label for="${userSexEnumMan.id }">${userSexEnumMan.name}</label>&#12288;
@@ -178,7 +171,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th><font color="red">*</font>手机号码：</th>
+					<th>手机号码：</th>
 					<td>
 						<c:choose>
 							<c:when test="${sessionScope.userListScope eq GlobalConstant.USER_LIST_PERSONAL && GlobalConstant.FLAG_N eq sysCfgMap['user_edit_phone']}">
@@ -186,7 +179,7 @@
 								<input name="userPhone" type="hidden" value="${sysUser.userPhone}" >
 							</c:when>
 							<c:otherwise>
-								<input class="validate[required, custom[mobile]] input" required name="userPhone" type="text" value="${sysUser.userPhone}" >
+								<input class="validate[custom[mobile]] input" required name="userPhone" type="text" value="${sysUser.userPhone}" >
 							</c:otherwise>
 						</c:choose>
 					</td>

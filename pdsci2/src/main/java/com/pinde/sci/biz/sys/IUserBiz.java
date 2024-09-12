@@ -275,6 +275,8 @@ public interface IUserBiz {
     List<SysUser> getUserByRecForUni(Map<String, Object> paramMap);
 
     List<SysUser> searchResManageUserNotSelf(SysUser user, List<String> roleList, String userFlow, String isSelect, String examTeaRole);
+
+    List<SysUser> searchResManageUserNotSelf2(SysUser user, List<String> roleList, String userFlow, String isSelect, String examTeaRole);
     /**
      * usercode like"%***%"
      */
