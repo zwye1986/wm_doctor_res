@@ -23,7 +23,7 @@
 	}
 	.btn{
 		height: 28px !important;
-		border: 1px solid #e7e7eb
+		border: 1px solid #e7e7eb !important;
 	}
 	.body{
 		width: 90%;

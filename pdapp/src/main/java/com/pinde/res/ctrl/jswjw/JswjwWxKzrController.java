@@ -3777,9 +3777,9 @@ public class JswjwWxKzrController extends GeneralController {
 		typeMap = new HashMap<>();
 		typeMap.put("activityTypeId","11");
 		typeMap.put("activityTypeName","教学病例讨论");
-		Integer num1 = null == activityTypeMap.get("2") ? 0 : (Integer)activityTypeMap.get("2");
-		Integer num2 = null == activityTypeMap.get("3") ? 0 : (Integer)activityTypeMap.get("3");
-		Integer num3 = null == activityTypeMap.get("5") ? 0 : (Integer)activityTypeMap.get("5");
+		Integer num1 = null == activityTypeMap.get("2") ? 0 : Integer.parseInt (activityTypeMap.get("2").toString());
+		Integer num2 = null == activityTypeMap.get("3") ? 0 : Integer.parseInt (activityTypeMap.get("3").toString());
+		Integer num3 = null == activityTypeMap.get("5") ? 0 : Integer.parseInt (activityTypeMap.get("5").toString());
 //		Integer num4 = null == activityTypeMap.get("11") ? 0 : (Integer)activityTypeMap.get("11");
 		Integer num4 = 0;
 		if (null != activityTypeMap.get("11") ){

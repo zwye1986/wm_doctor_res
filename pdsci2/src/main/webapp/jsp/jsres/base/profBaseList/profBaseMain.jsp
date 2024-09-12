@@ -23,7 +23,7 @@
     }
     .btn{
         /*height: 28px !important;*/
-        border: 1px solid #e7e7eb;
+        border: 1px solid #e7e7eb !important;
         padding: 0px;
     }
     .body{
@@ -196,10 +196,14 @@
                 mainList[orgFlowArr[i]] = [];
             }
         }
+        console.log(orgFlowArr);
+        console.log(mainBaseList);
+        console.log(jointOrgList);
         // 找出主基地其下的协同单位
         for(var i = 0; i < orgFlowArr.length; i++) {
             if(jointOrgList[orgFlowArr[i]]) {
                 var mainBase  = jointOrgList[orgFlowArr[i]].orgFlow;
+                console.log(mainBase);
                 mainList[mainBase].push(orgFlowArr[i]);
             }
         }
