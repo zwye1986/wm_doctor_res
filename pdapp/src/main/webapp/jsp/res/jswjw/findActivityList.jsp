@@ -60,19 +60,19 @@
 				"operName":
 					<c:choose>
 						<c:when test="${param.typeId eq 'isNew' and b.isRegiest ne 'Y' and b.startTime >= nowDate}">
-							"报名",
+							"报名"
 						</c:when>
 						<c:when test="${param.typeId  eq 'isEval' and b.isScan eq 'Y'and b.isScan2 eq 'Y' and empty b.evalScore2}">
-							"评价",
+							"评价"
 						</c:when>
 						<c:when test="${param.typeId  eq 'isEval' and b.isScan eq 'Y'and b.isScan2 eq 'Y' and not empty b.evalScore2}">
-							"查看评价",
+							"查看评价"
 						</c:when>
 						<c:when test="${not empty b.resultFlow and b.isRegiest eq 'Y' and b.isScan ne 'Y'}">
-							"取消报名",
+							"取消报名"
 						</c:when>
 						<c:otherwise>
-							"",
+							""
 						</c:otherwise>
 					</c:choose>
 
