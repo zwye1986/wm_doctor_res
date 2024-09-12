@@ -25,7 +25,7 @@
                 </c:if>
                 <td>${sysUser.sexName}</td>
 <%--                <td>${sysUser.deptName}</td>--%>
-                <td title="${sysUser.deptName}">${pdfn:cutString(sysUser.deptName,4,true,3)}</td>
+                <td title="${sysUserDeptNameMap[sysUser.userFlow]}">${pdfn:cutString(sysUserDeptNameMap[sysUser.userFlow],4,true,3)}</td>
                 <td>${sysUser.teacherLevel}</td>
                 <%--<td title="${sysUser.certificateId}">${pdfn:cutString(sysUser.certificateId,4,true,3)}</td>--%>
                 <td>${sysUser.userPhone}</td>

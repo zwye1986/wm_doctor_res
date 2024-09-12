@@ -1239,6 +1239,11 @@ public class ResTeacherTrainingExample {
             return (Criteria) this;
         }
 
+        public Criteria andIsResponsibleTutorEqualTo(String value) {
+            addCriterion("IS_RESPONSIBLE_TUTOR =", value, "isResponsibleTutor");
+            return (Criteria) this;
+        }
+
         public Criteria andTrainingYearNotEqualTo(String value) {
             addCriterion("TRAINING_YEAR <>", value, "trainingYear");
             return (Criteria) this;

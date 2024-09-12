@@ -902,6 +902,31 @@ public class UserBizImpl implements IUserBiz {
 	}
 
 	@Override
+	public List<SysUser> searchResManageUserNotSelf2(SysUser user, List<String> roleList, String userFlow, String isSelect, String examTeaRole) {
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("deptFlow", user.getDeptFlow());
+		map.put("deptName", user.getDeptName());
+		map.put("idNo", user.getIdNo());
+		map.put("userPhone", user.getUserPhone());
+		map.put("userEmail", user.getUserEmail());
+		map.put("userCode", user.getUserCode());
+		map.put("userName", user.getUserName());
+		map.put("statusId", user.getStatusId());
+		map.put("orgFlow", user.getOrgFlow());
+		map.put("isSelect",isSelect);
+		map.put("examTeaRole",examTeaRole);
+		map.put("moreDept",user.getIsForeign());//用作暂存多科室查询字段
+		if(roleList!=null && roleList.size()>0){
+			map.put("roleList", roleList);
+		}
+		if(StringUtil.isNotBlank(userFlow)){
+			map.put("userFlow", userFlow);
+		}
+		List<SysUser> sysUsers = userExtMapper.searchResManageUserNotSelf(map);
+		return sysUsers;
+	}
+
+	@Override
 	public List<SysUser> searchResManageUserByModeDept(SysUser user, String moreDept, List<String> roleList,String roleFlow) {
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("deptFlow", user.getDeptFlow());

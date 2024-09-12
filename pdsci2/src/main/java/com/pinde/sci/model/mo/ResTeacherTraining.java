@@ -87,6 +87,8 @@ public class ResTeacherTraining extends MybatisObject {
 
     private String certificateTime;
 
+    private String isResponsibleTutor;
+
     public String getRecordFlow() {
         return recordFlow;
     }
@@ -421,5 +423,13 @@ public class ResTeacherTraining extends MybatisObject {
 
     public void setCertificateTime(String certificateTime) {
         this.certificateTime = certificateTime;
+    }
+
+    public String getIsResponsibleTutor() {
+        return isResponsibleTutor;
+    }
+
+    public void setIsResponsibleTutor(String isResponsibleTutor) {
+        this.isResponsibleTutor = isResponsibleTutor;
     }
 }
