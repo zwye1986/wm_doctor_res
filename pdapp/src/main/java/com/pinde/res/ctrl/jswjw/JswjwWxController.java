@@ -45,6 +45,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -196,6 +197,13 @@ public class JswjwWxController extends GeneralController {
             resultMap.put("access_token", "");
             return resultMap;
         }
+        if(user.getUserPhone()==null||"".equals(user.getUserPhone())){
+            resultMap.put("resultId", "1005");
+            resultMap.put("resultType", "未绑定手机号");
+            resultMap.put("access_token", "");
+            return resultMap;
+        }
+
         return getUserInfo(user, resultMap, null, null, openId);
     }
 
@@ -244,15 +252,32 @@ public class JswjwWxController extends GeneralController {
         if(null == oldUser){
             //根据openId查询用户
             SysUser user = jswjwBiz.readSysUserByOpenId(openId);
-            //设置用户手机号
-            user.setUserPhone(userPhone);
 
-            jswjwBiz.updateUser(user);
 
-            resultMap.put("openId", openId);
-            resultMap.put("userFlow", user.getUserFlow());
+            if(user != null){
 
-            return getUserInfo(user, resultMap, null, null, openId);
+                //用来更新的用户
+                SysUser updateUser = new SysUser();
+
+                updateUser.setUserFlow(user.getUserFlow());
+                //设置用户手机号
+                updateUser.setUserPhone(userPhone);
+
+                jswjwBiz.updateUser(updateUser);
+
+                resultMap.put("openId", openId);
+                resultMap.put("userFlow", user.getUserFlow());
+
+                return getUserInfo(user, resultMap, null, null, openId);
+
+            }else {
+
+                resultMap.put("resultId", "1004");
+                resultMap.put("resultType", "未知错误，请联系管理员");
+
+                return resultMap;
+
+            }
 
         }else {
 
