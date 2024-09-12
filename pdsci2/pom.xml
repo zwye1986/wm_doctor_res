@@ -48,7 +48,6 @@
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
-            <version>2.2.12</version>
         </dependency>
 
         <dependency>
@@ -158,11 +157,8 @@
         </dependency>
 
         <dependency>
-            <groupId>aspectjweaver-1.6.10</groupId>
-            <artifactId>aspectjweaver-1.6.10</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/aspectjweaver-1.6.10.jar</systemPath>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
         </dependency>
 
         <dependency>
@@ -281,20 +277,17 @@
         </dependency>
 
         <dependency>
-            <groupId>freemarker-2.3.19</groupId>
-            <artifactId>freemarker-2.3.19</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/freemarker-2.3.19.jar</systemPath>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>freemarker-2.3.26.jbossorg-1</groupId>
             <artifactId>freemarker-2.3.26.jbossorg-1</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${lib.dir}/freemarker-2.3.26.jbossorg-1.jar</systemPath>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>gson-2.7</groupId>
@@ -306,21 +299,13 @@
 
 
 
-        <dependency>
+        <!--<dependency>
             <groupId>httpclient-4.5.5</groupId>
             <artifactId>httpclient-4.5.5</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${lib.dir}/httpclient-4.5.5.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>httpcore-4.4.9</groupId>
-            <artifactId>httpcore-4.4.9</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/httpcore-4.4.9.jar</systemPath>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>itext-2.1.7</groupId>
@@ -339,27 +324,21 @@
         </dependency>
 
         <dependency>
-            <groupId>jackson-annotations-2.8.9</groupId>
-            <artifactId>jackson-annotations-2.8.9</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/jackson-annotations-2.8.9.jar</systemPath>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.17.0</version>
         </dependency>
 
         <dependency>
-            <groupId>jackson-core-2.8.9</groupId>
-            <artifactId>jackson-core-2.8.9</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/jackson-core-2.8.9.jar</systemPath>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.17.0</version>
         </dependency>
 
         <dependency>
-            <groupId>jackson-databind-2.8.9</groupId>
-            <artifactId>jackson-databind-2.8.9</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/jackson-databind-2.8.9.jar</systemPath>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.17.0</version>
         </dependency>
 
         <dependency>
@@ -445,11 +424,8 @@
         </dependency>
 
         <dependency>
-            <groupId>junit-3.8.1</groupId>
-            <artifactId>junit-3.8.1</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/junit-3.8.1.jar</systemPath>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
         </dependency>
 
         <dependency>
@@ -476,36 +452,27 @@
             <systemPath>${lib.dir}/log4jdbc4-1.2.jar</systemPath>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${lib.dir}/mail.jar</systemPath>
+        </dependency>-->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>javax.mail-api</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>mybatis-3.2.6</groupId>
-            <artifactId>mybatis-3.2.6</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/mybatis-3.2.6.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>mybatis-spring-1.2.2</groupId>
-            <artifactId>mybatis-spring-1.2.2</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/mybatis-spring-1.2.2.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>mysql-connector-java-5.1.23</groupId>
-            <artifactId>mysql-connector-java-5.1.23</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/mysql-connector-java-5.1.23.jar</systemPath>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.protobuf</groupId>
+                    <artifactId>protobuf-java</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -517,11 +484,8 @@
         </dependency>
 
         <dependency>
-            <groupId>okhttp-2.7.5</groupId>
-            <artifactId>okhttp-2.7.5</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/okhttp-2.7.5.jar</systemPath>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
         </dependency>
 
         <dependency>
