@@ -133,7 +133,8 @@ public class JsResAfterDataManagerController extends GeneralController {
                         return "jsres/hospital/afterDataManager/afterDataDelList";
                     }
 
-                    if((doctor.getOrgFlow().equals(orgFlow1)) || (orgFlow1.equals(secondOrgFlow) && "1".equals(baseFlag))) {
+//                    if((doctor.getOrgFlow().equals(orgFlow1)) || (orgFlow1.equals(secondOrgFlow) && "1".equals(baseFlag))) {
+                    if((doctor.getOrgFlow().equals(orgFlow1)) || (orgFlow1.equals(secondOrgFlow))) {
                         List<ResDoctorSchProcess> processes = afterBiz.queryProcess(userCode);
                         Map<String,ResSchProcessExpress> expressMap=new HashMap<>();
                         List<String> recTypeIds=new ArrayList<>();

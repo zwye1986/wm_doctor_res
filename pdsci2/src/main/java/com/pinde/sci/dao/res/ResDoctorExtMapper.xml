@@ -1643,7 +1643,7 @@
 		AND d.OSCA_STUDENT_SUBMIT is null
 		<if test="sysOrg!=null">
    			<if test="sysOrg.orgFlow!=null and sysOrg.orgFlow!=''">
-		    	 AND d.ORG_FLOW = #{sysOrg.orgFlow} 
+		    	 AND (d.ORG_FLOW = #{sysOrg.orgFlow} or d.SECOND_ORG_FLOW = #{sysOrg.orgFlow})
 		    </if>
 
    			<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
