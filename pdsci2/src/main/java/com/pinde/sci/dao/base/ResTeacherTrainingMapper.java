@@ -19,6 +19,8 @@ public interface ResTeacherTrainingMapper {
 
     List<ResTeacherTraining> selectByExample(ResTeacherTrainingExample example);
 
+    List<ResTeacherTraining> selectByCondition(@Param("record") ResTeacherTraining record);
+
     ResTeacherTraining selectByPrimaryKey(String recordFlow);
 
     int updateByExampleSelective(@Param("record") ResTeacherTraining record, @Param("example") ResTeacherTrainingExample example);
@@ -28,4 +30,6 @@ public interface ResTeacherTrainingMapper {
     int updateByPrimaryKeySelective(ResTeacherTraining record);
 
     int updateByPrimaryKey(ResTeacherTraining record);
+
+    ResTeacherTraining selectDetailByKey(@Param("recordFlow") String recordFlow);
 }

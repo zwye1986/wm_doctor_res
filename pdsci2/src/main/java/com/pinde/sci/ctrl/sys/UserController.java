@@ -16,6 +16,7 @@ import com.pinde.sci.common.util.RSAUtils;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.ResTeacherTrainingMapper;
 import com.pinde.sci.dao.base.SysUserSchoolMapper;
+import com.pinde.sci.enums.jsres.JsResTeacherLevelEnum;
 import com.pinde.sci.enums.pub.UserSexEnum;
 import com.pinde.sci.enums.pub.UserStatusEnum;
 import com.pinde.sci.enums.sys.DictTypeEnum;
@@ -796,6 +797,12 @@ public class UserController extends GeneralController{
 			teacherTraining.setOrgFlow(user.getOrgFlow());
 			teacherTraining.setOrgName(user.getOrgName());
 			teacherTraining.setRecordStatus("Y");
+			if (JsResTeacherLevelEnum.GeneralFaculty.getName().equals(user.getTeacherLevel())) {
+				teacherTraining.setTeacherLevelId(JsResTeacherLevelEnum.GeneralFaculty.getId());
+			}
+			if (JsResTeacherLevelEnum.KeyFaculty.getName().equals(user.getTeacherLevel())) {
+				teacherTraining.setTeacherLevelId(JsResTeacherLevelEnum.KeyFaculty.getId());
+			}
 			teacherTraining.setTeacherLevelName(user.getTeacherLevel());
 			teacherTraining.setUserPhone(user.getUserPhone());
 			teacherTraining.setIsResponsibleTutor(user.getIsResponsibleTutor());
@@ -808,6 +815,12 @@ public class UserController extends GeneralController{
 			record.setOrgFlow(user.getOrgFlow());
 			record.setOrgName(user.getOrgName());
 			record.setRecordStatus("Y");
+			if (JsResTeacherLevelEnum.GeneralFaculty.getName().equals(user.getTeacherLevel())) {
+				record.setTeacherLevelId(JsResTeacherLevelEnum.GeneralFaculty.getId());
+			}
+			if (JsResTeacherLevelEnum.KeyFaculty.getName().equals(user.getTeacherLevel())) {
+				record.setTeacherLevelId(JsResTeacherLevelEnum.KeyFaculty.getId());
+			}
 			record.setTeacherLevelName(user.getTeacherLevel());
 			record.setUserPhone(user.getUserPhone());
 			record.setIsResponsibleTutor(user.getIsResponsibleTutor());

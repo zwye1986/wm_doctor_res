@@ -20,8 +20,8 @@
 		jboxLoad("div_table_0", url, true);
 	}
 
-	function commonSzManage(){
-		var url = "<s:url value='/jsres/manage/commonSzManage'/>?orgFlow=${sessionScope.currUser.orgFlow}";
+	function commonSzManage(teacherLevelId){
+		var url = "<s:url value='/jsres/manage/commonSzManage'/>?orgFlow=${sessionScope.currUser.orgFlow}" + "&teacherLevelId=" + teacherLevelId;
 		jboxLoad("div_table_0", url, true);
 	}
 
@@ -30,10 +30,10 @@
 			teacherManage();
 		}
 		if(gradeRole == 'ybsz'){
-			commonSzManage();
+			commonSzManage('GeneralFaculty');
 		}
 		if(gradeRole == 'ggsz'){
-			teacherManage();
+			commonSzManage('KeyFaculty');
 		}
 		if(gradeRole == 'responsibleTutor'){
 			teacherManage();

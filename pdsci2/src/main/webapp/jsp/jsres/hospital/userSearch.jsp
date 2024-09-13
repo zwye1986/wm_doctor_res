@@ -271,15 +271,9 @@
                     </div>
                 </div>
                 <div class="form_item">
-                    <div class="form_label">手机号：</div>
+                    <div class="form_label">手机号码：</div>
                     <div class="form_content">
                         <input type="text" name="userPhone" value="${param.userPhone}"  class="input"  />
-                    </div>
-                </div>
-                <div class="form_item">
-                    <div class="form_label">证书编号：</div>
-                    <div class="form_content">
-                        <input type="text" name="certificateId" value="${param.certificateId}"  class="input" />
                     </div>
                 </div>
                 <div class="form_item">
