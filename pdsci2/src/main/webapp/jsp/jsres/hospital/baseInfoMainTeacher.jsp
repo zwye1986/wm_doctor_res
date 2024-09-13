@@ -25,6 +25,11 @@
 		jboxLoad("div_table_0", url, true);
 	}
 
+	function responsibleTutor(){
+		var url = "<s:url value='/jsres/manage/responsibleTutor'/>?orgFlow=${sessionScope.currUser.orgFlow}";
+		jboxLoad("div_table_0", url, true);
+	}
+
 	function selTag(gradeRole){
 		if(gradeRole == 'sysuser'){
 			teacherManage();
@@ -36,7 +41,7 @@
 			commonSzManage('KeyFaculty');
 		}
 		if(gradeRole == 'responsibleTutor'){
-			teacherManage();
+			responsibleTutor();
 		}
 	}
 
