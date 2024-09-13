@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.jsres;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.Page;
 import com.pinde.core.page.PageHelper;
@@ -194,6 +195,12 @@ public class JsResManageController extends GeneralController {
 	private ResTeacherTrainingMapper resTeacherTrainingMapper;
 	@Autowired
 	private ISchRotationBiz schRotationtBiz;
+	@Autowired
+	private IResStatisticBiz iresStatisticBiz;
+	@Autowired
+	private SysUserDeptMapper userDeptMapper;
+	@Autowired
+	private PubFileMapper pubFileMapper;
 
 	/**
 	 * 管理员主界面
@@ -7074,6 +7081,18 @@ public class JsResManageController extends GeneralController {
 		return "jsres/hospital/userSearch";
 	}
 
+
+	@RequestMapping(value = "/commonSzManage", method = {RequestMethod.POST, RequestMethod.GET})
+	public String commonSzManage(HttpServletRequest request, Model model) {
+		SysUser currUser = GlobalContext.getCurrentUser();
+		SysDept sysDept = new SysDept();
+		sysDept.setOrgFlow(currUser.getOrgFlow());
+		sysDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+		List<SysDept> sysDeptList = deptBiz.searchDept(sysDept);
+		model.addAttribute("sysDeptList", sysDeptList);
+		return "jsres/hospital/commonSzSearch";
+	}
+
 	/**
 	 * 师资维护
 	 *
@@ -7131,25 +7150,111 @@ public class JsResManageController extends GeneralController {
 		PageHelper.startPage(currentPage, getPageSize(request));
 		user.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 		user.setIsForeign(moreDept);//用作暂存多科室查询字段
-		List<SysUser> sysUserList = userBiz.searchResManageUserNotSelf(user, roleList, GlobalContext.getCurrentUser().getUserFlow(), isSelect, examTeaRole);
+		List<SysUser> sysUserList = userBiz.searchResManageUserNotSelf2(user, roleList, GlobalContext.getCurrentUser().getUserFlow(), isSelect, examTeaRole);
 		model.addAttribute("sysUserList", sysUserList);
-		String wsId = GlobalConstant.RES_WS_ID;
-		List<SysUserRole> sysUserRoleList = userRoleBiz.getByOrgFlow(user.getOrgFlow(), wsId);
-		Map<String, List<String>> sysUserRoleMap = new HashMap<String, List<String>>();
-		for (SysUserRole sysUserRole : sysUserRoleList) {
-			String userFlow = sysUserRole.getUserFlow();
-			if (sysUserRoleMap.containsKey(userFlow)) {
-				List<String> list = sysUserRoleMap.get(userFlow);
-				list.add(sysUserRole.getRoleFlow());
-			} else {
-				List<String> list = new ArrayList<String>();
-				list.add(sysUserRole.getRoleFlow());
-				sysUserRoleMap.put(userFlow, list);
-			}
-		}
-		model.addAttribute("sysUserRoleMap", sysUserRoleMap);
 
+		if(CollectionUtils.isNotEmpty(sysUserList)){
+			List<String> userFlows = sysUserList.stream().map(SysUser::getUserFlow).collect(Collectors.toList());
+
+			String wsId = GlobalConstant.RES_WS_ID;
+			List<SysUserRole> sysUserRoleList = userRoleBiz.getByUserFlow(userFlows, wsId);
+			Map<String, List<String>> sysUserRoleMap = new HashMap<String, List<String>>();
+			for (SysUserRole sysUserRole : sysUserRoleList) {
+				String userFlow = sysUserRole.getUserFlow();
+				if (sysUserRoleMap.containsKey(userFlow)) {
+					List<String> list = sysUserRoleMap.get(userFlow);
+					list.add(sysUserRole.getRoleFlow());
+				} else {
+					List<String> list = new ArrayList<String>();
+					list.add(sysUserRole.getRoleFlow());
+					sysUserRoleMap.put(userFlow, list);
+				}
+			}
+			model.addAttribute("sysUserRoleMap", sysUserRoleMap);
+
+
+			SysUserDeptExample example = new SysUserDeptExample();
+			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowIn(userFlows);
+			List<SysUserDept> sysUserDeptList = userDeptMapper.selectByExample(example);
+			Map<String, List<String>> sysUserDeptMap = new HashMap<String, List<String>>();
+			for (SysUserDept sysUserDept : sysUserDeptList) {
+				String userFlow = sysUserDept.getUserFlow();
+				if (sysUserDeptMap.containsKey(userFlow)) {
+					List<String> list = sysUserDeptMap.get(userFlow);
+					list.add(sysUserDept.getDeptName());
+				} else {
+					List<String> list = new ArrayList<String>();
+					list.add(sysUserDept.getDeptName());
+					sysUserDeptMap.put(userFlow, list);
+				}
+			}
+			Map<String,String> sysUserDeptNameMap = new HashMap<>();
+			for(Map.Entry<String, List<String>> entry : sysUserDeptMap.entrySet()){
+				String key = entry.getKey();
+				List<String> list = entry.getValue();
+				sysUserDeptNameMap.put(key,StringUtils.join(list,","));
+			}
+			model.addAttribute("sysUserDeptNameMap", sysUserDeptNameMap);
+		}
 		return "jsres/hospital/userList";
+	}
+
+
+	@RequestMapping(value = "/commonSzList", method = {RequestMethod.POST, RequestMethod.GET})
+	public String commonSzList(ResTeacherTraining resTeacherTraining, Integer currentPage, HttpServletRequest request, Model model) {
+		if(null == resTeacherTraining){
+			resTeacherTraining = new ResTeacherTraining();
+		}
+		resTeacherTraining.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
+		resTeacherTraining.setTeacherLevelName("一般师资");
+		PageHelper.startPage(currentPage, getPageSize(request));
+		List<ResTeacherTraining> sysUserList = iresStatisticBiz.searchTeacherInfo(resTeacherTraining);
+		model.addAttribute("sysUserList", sysUserList);
+
+
+		if(CollectionUtils.isNotEmpty(sysUserList)){
+			List<String> userFlows = sysUserList.stream().map(ResTeacherTraining::getRecordFlow).collect(Collectors.toList());
+
+//			String wsId = GlobalConstant.RES_WS_ID;
+//			List<SysUserRole> sysUserRoleList = userRoleBiz.getByUserFlow(userFlows, wsId);
+//			Map<String, List<String>> sysUserRoleMap = new HashMap<String, List<String>>();
+//			for (SysUserRole sysUserRole : sysUserRoleList) {
+//				String userFlow = sysUserRole.getUserFlow();
+//				if (sysUserRoleMap.containsKey(userFlow)) {
+//					List<String> list = sysUserRoleMap.get(userFlow);
+//					list.add(sysUserRole.getRoleFlow());
+//				} else {
+//					List<String> list = new ArrayList<String>();
+//					list.add(sysUserRole.getRoleFlow());
+//					sysUserRoleMap.put(userFlow, list);
+//				}
+//			}
+//			model.addAttribute("sysUserRoleMap", sysUserRoleMap);
+
+			SysUserDeptExample example = new SysUserDeptExample();
+			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowIn(userFlows);
+			List<SysUserDept> sysUserDeptList = userDeptMapper.selectByExample(example);
+			Map<String, List<String>> sysUserDeptMap = new HashMap<String, List<String>>();
+			for (SysUserDept sysUserDept : sysUserDeptList) {
+				String userFlow = sysUserDept.getUserFlow();
+				if (sysUserDeptMap.containsKey(userFlow)) {
+					List<String> list = sysUserDeptMap.get(userFlow);
+					list.add(sysUserDept.getDeptName());
+				} else {
+					List<String> list = new ArrayList<String>();
+					list.add(sysUserDept.getDeptName());
+					sysUserDeptMap.put(userFlow, list);
+				}
+			}
+			Map<String,String> sysUserDeptNameMap = new HashMap<>();
+			for(Map.Entry<String, List<String>> entry : sysUserDeptMap.entrySet()){
+				String key = entry.getKey();
+				List<String> list = entry.getValue();
+				sysUserDeptNameMap.put(key,StringUtils.join(list,","));
+			}
+			model.addAttribute("sysUserDeptNameMap", sysUserDeptNameMap);
+		}
+		return "jsres/hospital/commonSzList";
 	}
 
 	/**
@@ -16552,5 +16657,81 @@ public class JsResManageController extends GeneralController {
 		}
 		model.addAttribute("roleFlowList", roleFlowList);
 		return "jsres/hospital/authRole";
+	}
+
+	@RequestMapping("/editCommonSzInfo")
+	public String editCommonSzInfo(String recordFlow,String roleFlag,Model model){
+		if(StringUtils.isNotEmpty(recordFlow)){
+			ResTeacherTraining teacherTraining=resStatisticBiz.searchTeacherInfoByPK(recordFlow);
+			model.addAttribute("teacher",teacherTraining);
+		}
+//		List<SysOrg> orgs=new ArrayList<SysOrg>();
+//		SysOrg org=new SysOrg();
+//		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
+//		if(GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)){
+//			orgs.add(s);
+//		}else if(GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)){
+//			org.setOrgProvId(s.getOrgProvId());
+//			org.setOrgCityId(s.getOrgCityId());
+//			org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+//			orgs = orgBiz.searchAllSysOrg(org);
+//		}else {
+//			org.setOrgProvId(s.getOrgProvId());
+//			org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+//			orgs = orgBiz.searchAllSysOrg(org);
+//		}
+//		model.addAttribute("roleFlag",roleFlag);
+//		model.addAttribute("orgs", orgs);
+		return "jsres/hospital/editCommonSzInfo";
+	}
+
+
+	@RequestMapping(value = {"/attachment"})
+	public String attachment(Model model,String recFlow,String readonly,String recType){
+		if(StringUtils.isEmpty(readonly)){
+			readonly = "N";
+		}
+		model.addAttribute("readonly",readonly);
+		model.addAttribute("recFlow",recFlow);
+		model.addAttribute("recType",recType);
+		List<PubFile> pubFiles = fileBiz.findFileByTypeFlow(recType,recFlow);
+		model.addAttribute("pubFiles",pubFiles);
+		return "jsres/hospital/attachment";
+	}
+
+	@RequestMapping(value="/attachmentUpload")
+	@ResponseBody
+	public Map<String,String> attachmentUpload(String recFlow, String recType , MultipartFile checkFile){
+		Map<String, String> map=new HashMap<String, String>();
+		if(StringUtils.isEmpty(recFlow)){
+			map.put("status", GlobalConstant.OPRE_FAIL_FLAG);
+			return map;
+		}
+		if(checkFile!=null && checkFile.getSize() > 0){
+			String resultPath = resStatisticBiz.saveFileToDirs("",checkFile,recType);
+
+			String originalFilename = checkFile.getOriginalFilename();
+			PubFile pubFile = new PubFile();
+			pubFile.setFileFlow(PkUtil.getUUID());
+			pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+			pubFile.setFilePath(resultPath);
+			pubFile.setFileName(originalFilename);
+			pubFile.setFileSuffix(originalFilename.substring(originalFilename.lastIndexOf(".")));
+			pubFile.setProductType(recType);
+			pubFile.setProductFlow(recFlow);
+			fileBiz.addFile(pubFile);
+
+			map.put("url",InitConfig.getSysCfg("upload_base_url")+File.separator+resultPath);
+			map.put("flow",pubFile.getFileFlow());
+			map.put("status",GlobalConstant.OPRE_SUCCESSED_FLAG);
+		}
+		return map;
+	}
+
+	@RequestMapping(value="/attachmentDelete")
+	@ResponseBody
+	public String attachmentDelete(String recFlow, String fileFlow) {
+		pubFileMapper.deleteByPrimaryKey(fileFlow);
+		return GlobalConstant.OPRE_SUCCESSED_FLAG;
 	}
 }

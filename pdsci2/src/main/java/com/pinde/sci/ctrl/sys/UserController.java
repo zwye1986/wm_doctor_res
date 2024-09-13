@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
+import com.pinde.sci.biz.jsres.IJsResStatisticBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.pub.IMsgBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
@@ -13,6 +14,7 @@ import com.pinde.sci.common.*;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.common.util.RSAUtils;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
+import com.pinde.sci.dao.base.ResTeacherTrainingMapper;
 import com.pinde.sci.dao.base.SysUserSchoolMapper;
 import com.pinde.sci.enums.pub.UserSexEnum;
 import com.pinde.sci.enums.pub.UserStatusEnum;
@@ -78,6 +80,9 @@ public class UserController extends GeneralController{
 	private IJsResPowerCfgBiz jsResPowerCfgBiz;
 	@Autowired
 	private SysUserSchoolMapper userSchoolMapper;
+	@Autowired
+	private ResTeacherTrainingMapper teacherTrainingMapper;
+
 	@RequestMapping(value="/list/{userListScope}",method={RequestMethod.POST,RequestMethod.GET})
 	public String list(@PathVariable String userListScope,Integer currentPage ,SysUser search,String roleFlow,String deptFlow,
 					   Model model,HttpServletRequest request){
@@ -780,6 +785,37 @@ public class UserController extends GeneralController{
 			userBiz.saveUser(user,roleFlow);
 		}else{
 			userBiz.saveUser(user);
+		}
+		//
+		ResTeacherTraining resTeacherTraining = teacherTrainingMapper.selectByPrimaryKey(user.getUserFlow());
+		if(null == resTeacherTraining){
+			ResTeacherTraining teacherTraining = new ResTeacherTraining();
+			teacherTraining.setRecordFlow(user.getUserFlow());
+			teacherTraining.setDoctorName(user.getUserName());
+			teacherTraining.setSexName(user.getSexName());
+			teacherTraining.setOrgFlow(user.getOrgFlow());
+			teacherTraining.setOrgName(user.getOrgName());
+			teacherTraining.setRecordStatus("Y");
+			teacherTraining.setTeacherLevelName(user.getTeacherLevel());
+			teacherTraining.setUserPhone(user.getUserPhone());
+			teacherTraining.setIsResponsibleTutor(user.getIsResponsibleTutor());
+			GeneralMethod.setRecordInfo(teacherTraining, true);
+			teacherTrainingMapper.insertSelective(teacherTraining);
+		}else{
+			ResTeacherTraining record = new ResTeacherTraining();
+			record.setDoctorName(user.getUserName());
+			record.setSexName(user.getSexName());
+			record.setOrgFlow(user.getOrgFlow());
+			record.setOrgName(user.getOrgName());
+			record.setRecordStatus("Y");
+			record.setTeacherLevelName(user.getTeacherLevel());
+			record.setUserPhone(user.getUserPhone());
+			record.setIsResponsibleTutor(user.getIsResponsibleTutor());
+			GeneralMethod.setRecordInfo(record, false);
+			ResTeacherTrainingExample example = new ResTeacherTrainingExample();
+			ResTeacherTrainingExample.Criteria criteria=example.createCriteria();
+			criteria.andRecordFlowEqualTo(user.getUserFlow());
+			teacherTrainingMapper.updateByExampleSelective(record,example);
 		}
 		//处理多部门选择
 		List<String> allDeptFlows = new ArrayList<String>();

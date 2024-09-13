@@ -18,6 +18,7 @@ import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
+import com.pinde.sci.common.util.FileUtil;
 import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.dao.base.*;
@@ -277,6 +278,9 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 			System.out.println("===============FTP上传开始 ============= localFilePath："+localFilePath);
 			ftpHelperUtil.uploadFile(localFilePath,ftpDir,ftpFileName);
 			System.out.println("===============FTP上传开始 ============= localFilePath："+localFilePath);
+
+			//删除临时目录
+			FileUtil.deletefile(newDir+File.separator +originalFilename);
 		}
 		return path;
 	}

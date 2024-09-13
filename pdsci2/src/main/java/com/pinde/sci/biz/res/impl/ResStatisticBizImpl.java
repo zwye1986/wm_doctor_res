@@ -509,17 +509,35 @@ public class ResStatisticBizImpl implements IResStatisticBiz {
 		if(StringUtil.isNotBlank(resTeacherTraining.getDoctorName())){
 			criteria.andDoctorNameLike("%"+resTeacherTraining.getDoctorName()+"%");
 		}
+		if(StringUtil.isNotBlank(resTeacherTraining.getUserPhone())){
+			criteria.andUserPhoneLike("%"+resTeacherTraining.getUserPhone()+"%");
+		}
+		if(StringUtil.isNotBlank(resTeacherTraining.getSpeId())){
+			criteria.andSpeIdEqualTo(resTeacherTraining.getSpeId());
+		}
 		if(StringUtil.isNotBlank(resTeacherTraining.getCertificateNo())){
 			criteria.andCertificateNoLike("%"+resTeacherTraining.getCertificateNo()+"%");
 		}
 		if(StringUtil.isNotBlank(resTeacherTraining.getOrgName())){
 			criteria.andOrgNameLike("%"+resTeacherTraining.getOrgName()+"%");
 		}
+		if(StringUtil.isNotBlank(resTeacherTraining.getOrgFlow())){
+			criteria.andOrgFlowEqualTo(resTeacherTraining.getOrgFlow());
+		}
 		if(StringUtil.isNotBlank(resTeacherTraining.getSexName())){
 			criteria.andSexNameEqualTo(resTeacherTraining.getSexName());
 		}
 		if(StringUtil.isNotBlank(resTeacherTraining.getTechnicalTitle())){
 			criteria.andTechnicalTitleLike("%"+resTeacherTraining.getTechnicalTitle()+"%");
+		}
+		if(StringUtil.isNotBlank(resTeacherTraining.getTeacherLevelName())){
+			criteria.andTeacherLevelNameEqualTo(resTeacherTraining.getTeacherLevelName());
+		}
+		if(StringUtil.isNotBlank(resTeacherTraining.getTrainingYear())){
+			criteria.andTrainingYearEqualTo(resTeacherTraining.getTrainingYear());
+		}
+		if(StringUtil.isNotBlank(resTeacherTraining.getIsResponsibleTutor())){
+			criteria.andIsResponsibleTutorEqualTo(resTeacherTraining.getIsResponsibleTutor());
 		}
 		return teacherTrainingMapper.selectByExample(example);
 	}

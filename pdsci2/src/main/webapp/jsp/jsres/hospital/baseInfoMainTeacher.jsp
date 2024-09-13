@@ -1,17 +1,54 @@
 <script type="text/javascript">
-$(document).ready(function(){
-	teacherManage();
-});
+	$(document).ready(function(){
+		debugger;
+		$("li").click(function(){
+			$(".tab_select").addClass("tab");
+			$(".tab_select").removeClass("tab_select");
+			$(this).removeClass("tab");
+			$(this).addClass("tab_select");
+		});
+		if ("${param.liId}" != "") {
+			$("#${param.liId}").addClass("tab_select");
+		} else {
+			$('li').first().addClass("tab_select");
+		}
+		$(".tab_select").click();
+	});
 
-function teacherManage(){
-	var url = "<s:url value='/jsres/manage/userSearch'/>?orgFlow=${sessionScope.currUser.orgFlow}";
-	jboxLoad("div_table_0", url, true);
-}
+	function teacherManage(){
+		var url = "<s:url value='/jsres/manage/userSearch'/>?orgFlow=${sessionScope.currUser.orgFlow}";
+		jboxLoad("div_table_0", url, true);
+	}
+
+	function commonSzManage(){
+		var url = "<s:url value='/jsres/manage/commonSzManage'/>?orgFlow=${sessionScope.currUser.orgFlow}";
+		jboxLoad("div_table_0", url, true);
+	}
+
+	function selTag(gradeRole){
+		if(gradeRole == 'sysuser'){
+			teacherManage();
+		}
+		if(gradeRole == 'ybsz'){
+			commonSzManage();
+		}
+		if(gradeRole == 'ggsz'){
+			teacherManage();
+		}
+		if(gradeRole == 'responsibleTutor'){
+			teacherManage();
+		}
+	}
 
 </script>
 
-<div class="main_hd">
-	<h2 class="underline" >师资管理</h2>
+<div class="title_tab" style="margin-top:0px">
+	<ul>
+		<li class="tab_select" onclick="selTag('sysuser');"><a>用户信息</a></li>
+		<li class="tab" onclick="selTag('ybsz','');"><a>一般师资</a></li>
+		<li class="tab" onclick="selTag('ggsz','');"><a>骨干师资</a></li>
+		<li class="tab" onclick="selTag('responsibleTutor','');"><a>责任导师</a></li>
+	</ul>
 </div>
 
 <div class="main_bd" id="div_table_0" >
