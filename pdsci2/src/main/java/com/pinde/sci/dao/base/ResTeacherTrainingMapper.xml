@@ -233,12 +233,15 @@
       <if test="record.achievementUrl != null and record.achievementUrl != ''" >
         AND ACHIEVEMENT_URL = #{record.achievementUrl,jdbcType=VARCHAR}
       </if>
-      <if test="record.teacherLevelId != null and record.teacherLevelId != ''" >
+      <if test="record.teacherLevelId != null and record.teacherLevelId != '' and record.teacherLevelId != 'ALL'" >
         AND TEACHER_LEVEL_ID = #{record.teacherLevelId,jdbcType=VARCHAR}
       </if>
-      <if test="record.teacherLevelName != null and record.teacherLevelName != ''" >
-        AND TEACHER_LEVEL_NAME = #{record.teacherLevelName,jdbcType=VARCHAR}
+      <if test="record.teacherLevelId == null or record.teacherLevelId == ''" >
+        AND (TEACHER_LEVEL_ID is null or TEACHER_LEVEL_ID = '')
       </if>
+<!--      <if test="record.teacherLevelName != null and record.teacherLevelName != ''" >-->
+<!--        AND TEACHER_LEVEL_NAME = #{record.teacherLevelName,jdbcType=VARCHAR}-->
+<!--      </if>-->
       <if test="record.userPhone != null and record.userPhone != ''" >
         <bind name="userPhone" value="'%'+record.userPhone+'%'"/>
         AND USER_PHONE LIKE#{userPhone}

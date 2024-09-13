@@ -7101,6 +7101,17 @@ public class JsResManageController extends GeneralController {
 		return "jsres/hospital/commonSzSearch";
 	}
 
+	@RequestMapping(value = "/responsibleTutor", method = {RequestMethod.POST, RequestMethod.GET})
+	public String responsibleTutor(HttpServletRequest request, Model model) {
+		SysUser currUser = GlobalContext.getCurrentUser();
+		SysDept sysDept = new SysDept();
+		sysDept.setOrgFlow(currUser.getOrgFlow());
+		sysDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+		List<SysDept> sysDeptList = deptBiz.searchDept(sysDept);
+		model.addAttribute("sysDeptList", sysDeptList);
+		return "jsres/hospital/responsibleTutorSearch";
+	}
+
 	/**
 	 * 师资维护
 	 *
@@ -7214,7 +7225,7 @@ public class JsResManageController extends GeneralController {
 			resTeacherTraining = new ResTeacherTraining();
 		}
 //		resTeacherTraining.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-		resTeacherTraining.setTeacherLevelName(JsResTeacherLevelEnum.getNameById(resTeacherTraining.getTeacherLevelId()));
+//		resTeacherTraining.setTeacherLevelName(JsResTeacherLevelEnum.getNameById(resTeacherTraining.getTeacherLevelId()));
 		resTeacherTraining.setRecordStatus("Y");
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<ResTeacherTraining> sysUserList = teacherTrainingMapper.selectByCondition(resTeacherTraining);
