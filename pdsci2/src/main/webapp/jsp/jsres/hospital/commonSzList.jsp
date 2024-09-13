@@ -31,11 +31,11 @@
                 <c:if test="${sysUser.isResponsibleTutor ne 'Y'}">
                     <td>否</td>
                 </c:if>
-                <td>查看</td>
-                <td>查看</td>
+                <td><a href="javascript:viewAttachment('${sysUser.recordFlow}','szzsAttach','证书附件');" class="btn" style="padding: 0px 10px;">查看</a></td>
+                <td><a href="javascript:viewAttachment('${sysUser.recordFlow}','szcgAttach','成果附件');" class="btn" style="padding: 0px 10px;">查看</a></td>
                 <td style="text-align: left;">
-                        <a href="javascript:editCommonSzInfo('${sysUser.recordFlow}');" class="btn" style="padding: 0px 10px;">编辑</a>
-                        <a href="javascript:delete('${sysUser.recordFlow}');" class="btn" style="padding: 0px 10px;">删除</a>
+                        <a href="javascript:editCommonSzInfo('${sysUser.recordFlow}','${sysUser.teacherLevelId}');" class="btn" style="padding: 0px 10px;">编辑</a>
+                        <a href="javascript:deleteCommonSz('${sysUser.recordFlow}');" class="btn" style="padding: 0px 10px;">删除</a>
                 </td>
             </tr>
         </c:forEach>

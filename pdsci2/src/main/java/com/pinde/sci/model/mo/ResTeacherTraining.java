@@ -89,6 +89,8 @@ public class ResTeacherTraining extends MybatisObject {
 
     private String isResponsibleTutor;
 
+    private String idNo;
+
     public String getRecordFlow() {
         return recordFlow;
     }
@@ -431,5 +433,13 @@ public class ResTeacherTraining extends MybatisObject {
 
     public void setIsResponsibleTutor(String isResponsibleTutor) {
         this.isResponsibleTutor = isResponsibleTutor;
+    }
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
     }
 }

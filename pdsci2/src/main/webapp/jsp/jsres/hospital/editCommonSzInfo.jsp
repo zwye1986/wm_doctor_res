@@ -6,12 +6,53 @@
 	<jsp:param name="jquery_datePicker" value="true"/>
 	<jsp:param name="jquery_form" value="true"/>
 	<jsp:param name="jquery_validation" value="true"/>
+	<jsp:param name="basic_bootstrap" value="true" />
+	<jsp:param name="bootstrapSelect" value="true"/>
 </jsp:include>
 <style type="text/css">
+
 	#boxHome .item:HOVER{background-color: #eee;}
+
+	.text{
+		margin-left: 0;
+		width: auto;
+		height: auto;
+		line-height: inherit;
+		color: black;
+	}
+
+	.selected a{
+		padding: 0;
+		background: white !important;
+	}
+
+	.base_info td a{
+		color: black !important;
+	}
+
+	.btn-group.bootstrap-select {
+		margin: 0 12px 0 4px !important;
+		width: 147px !important;
+		height: 30px;
+	}
+
+	.btn-default {
+		background-color: white;
+		border-color: black;
+	}
+
+	.pull-left {
+		float: left !important;
+		margin-left: -21px;
+	}
 </style>
 <script type="text/javascript">
     $(document).ready(function () {
+		$("#userDepts").selectpicker({
+			deselectAllText: "全不选",
+			selectAllText: "全选"
+		});
+
         $('#trainingYear').datepicker({
             startView: 2,
             maxViewMode: 2,
@@ -32,38 +73,40 @@
             minViewMode: 1,
             format: 'yyyy-mm'
         });
-
-        var deptId = '${teacher.deptFlow}';
-        $("#deptFlow").empty();
-        $("#deptFlow").append("<option value=''>请选择</option>");
-        <c:forEach var="dept" items="${deptList}">
-			var deptFlow = '${dept.deptFlow}';
-			var deptName = '${dept.deptName}';
-			if(deptFlow == deptId) {
-				$("#deptFlow").append("<option selected value='" + deptFlow + "'>" + deptName + "</option>");
-			}else{
-				$("#deptFlow").append("<option value='" + deptFlow + "'>" + deptName + "</option>");
-			}
-		</c:forEach>
     });
 
-    function checkUploadFile(){
-    	var recordFlow = $("#recordFlow").val();
-    	var userPhone = $("#userPhone").val();
-        if ($("#excelForm").validationEngine("validate")) {
-            $("#speName").val($("#speId option:selected").text());
-            $("#deptName").val($("#deptFlow option:selected").text());
-            jboxStartLoading();
-            $(":file.auto:hidden").attr("disabled",true);
-			jboxPost("<s:url value='/jsres/statistic/checkUserPhone'/>?userPhone="+userPhone+"&recordFlow="+recordFlow, null, function (resp) {
-				jboxTip(resp);
-				if (resp == "${GlobalConstant.SAVE_SUCCESSED}") {
-					$("#excelForm").submit();
-				}
-				jboxEndLoading();
-			},null,false);
-        }
-    }
+	function saveCommonSzInfo() {
+		if(false==$("#excelForm").validationEngine("validate")){
+			return false ;
+		}
+
+		var url = "<s:url value='/jsres/manage/saveCommonSzInfo'/>";
+		var data = $('#excelForm').serialize();
+		jboxPost(url, data, function(data) {
+			if('${GlobalConstant.SAVE_SUCCESSED}'==data){
+				window.parent.search();
+				setTimeout(function(){
+					jboxClose();
+				}, 1000);
+			}else if('${GlobalConstant.USER_PHONE_REPETE}'==data) {
+				jboxConfirm("改手机号已绑定用户，是否绑定新的账号？", function () {
+					var url = "<s:url value='/sys/user/save4jsresteacher'/>";
+					var data = $('#excelForm').serialize();
+					data = data + "&coverPhone=Y"
+					jboxPost(url, data, function(data) {
+						if('${GlobalConstant.SAVE_SUCCESSED}'==data){
+							window.parent.search();
+							setTimeout(function(){
+								jboxClose();
+							}, 1000);
+						}else {
+						}
+					},null,true);
+				});
+			}else {
+			}
+		},null,true);
+	}
 
     function returnUrl(){
         window.parent.search();
@@ -156,10 +199,10 @@
 		$("#newFileOne").show();
 	}
 
-	function viewTrainAttachment(recordFlow,recType){
+	function viewTrainAttachment(recordFlow,recType,title){
 		debugger;
 		var url = "<s:url value='/jsres/manage/attachment'/>?recFlow="+recordFlow + "&recType=" + recType;
-		jboxOpen(url, "证书附件",700,550);
+		jboxOpen(url, title,700,550);
 	}
 
 	function jboxOpen(url,title,width,height,showClose){
@@ -184,10 +227,11 @@
 </head>
 <body>
 <input type="hidden" id="checkFileFlag" name="checkFileFlag"/>
-<form id="excelForm" method="post" action="<s:url value='/jsres/statistic/checkUploadFile'/>" enctype="multipart/form-data"
+<form id="excelForm" method="post" enctype="multipart/form-data"
 	style="height: 500px;overflow-y: auto">
 	<table class="grid" style="width: 100%;margin-top: 15px">
 		<input  type="text" name="recordFlow" id="recordFlow"  value="${teacher.recordFlow}" style="display: none;"/>
+		<input  type="text" name="orgFlow" id="orgFlow"  value="${teacher.orgFlow}" style="display: none;"/>
 		<input  type="text" name="roleFlag" id="roleFlag" value="${roleFlag}" style="text-align: left;display: none;width: 150px;"/>
 		<tr>
 			<th width="150px"><font color="red" >*</font>姓名</th>
@@ -204,7 +248,7 @@
 		<tr>
 			<th width="150px"><font color="red" >*</font>身份证号</th>
 			<td  style="text-align: left;">
-				<input  type="text" id="idNo" name="idNo" class="select validate[required]" value="${teacher.userPhone}" style="text-align: left;width: 150px;"/>
+				<input  type="text" id="idNo" name="idNo" class="select validate[required]" value="${teacher.idNo}" style="text-align: left;width: 150px;"/>
 			</td>
 		</tr>
 		<tr>
@@ -220,7 +264,7 @@
 		<tr>
 			<th width="150px"><font color="red" >*</font>年龄</th>
 			<td  style="text-align: left;">
-				<input  type="text" name="doctorAge" class="select validate[required,custom[integer],min[0]]" readonly="readonly" value="${teacher.doctorAge}" style="text-align: left;width: 150px;"/>
+				<input  type="text" name="doctorAge" class="select validate[required,custom[integer],min[0]]" value="${teacher.doctorAge}" style="text-align: left;width: 150px;"/>
 			</td>
 		</tr>
 		<tr>
@@ -237,13 +281,11 @@
 		<tr>
 			<th width="150px"><font color="red" >*</font>科室</th>
 			<td  style="text-align: left;">
-				<select name="orgFlow" id="orgFlow" class="select validate[required]" style="width: 150px;" onchange="getOrgName();searchDeptList(this.value)" >
-					<option value="">全部</option>
-					<c:forEach items="${orgs}" var="org">
-						<option value="${org.orgFlow}"<c:if test="${(teacher.orgFlow==org.orgFlow) or (teacher.orgName==org.orgName) }">selected="selected"</c:if>>${org.orgName}</option>
+				<select multiple class="selectpicker" name="userDepts" id="userDepts" title="请选择科室" data-actions-box="true">
+					<c:forEach items="${sysDeptList}" var="sysDept">
+						<option value="${sysDept.deptFlow}"<c:if test="${!empty sysUserDeptMap[sysDept.deptFlow]}">selected="selected"</c:if>>${sysDept.deptName}</option>
 					</c:forEach>
 				</select>
-				<input  type="text" name="orgName" id="orgName" class="validate[required]" value="${teacher.orgName}" style="text-align: left;display: none;width: 150px;"/>
 			</td>
 		</tr>
 		<tr>
@@ -255,7 +297,15 @@
 		<tr>
 			<th width="150px"><font color="red" >*</font>学历</th>
 			<td  style="text-align: left;">
-				<input  type="text" name="doctorEdu" class="select" value="${teacher.doctorEdu}" style="text-align: left;width: 150px;"/>
+				<select class="select validate[required]" id="doctorEdu" name="doctorEdu" style="width: 150px">
+					<option value="">请选择</option>
+					<option value="专科"<c:if test="${teacher.doctorEdu eq '专科'}">selected="selected"</c:if>>专科</option>
+					<option value="本科"<c:if test="${teacher.doctorEdu eq '本科'}">selected="selected"</c:if>>本科</option>
+					<option value="硕士研究生"<c:if test="${teacher.doctorEdu eq '硕士研究生'}">selected="selected"</c:if>>硕士研究生</option>
+					<option value="博士研究生"<c:if test="${teacher.doctorEdu eq '博士研究生'}">selected="selected"</c:if>>博士研究生</option>
+					<option value="其他"<c:if test="${teacher.doctorEdu eq '其他'}">selected="selected"</c:if>>其他</option>
+					<option value="无"<c:if test="${teacher.doctorEdu eq '无'}">selected="selected"</c:if>>无</option>
+				</select>
 			</td>
 		</tr>
 		<tr>
@@ -292,7 +342,7 @@
 			<th width="150px"><font color="red" >*</font>证书编号</th>
 			<td  style="text-align: left;">
 				<input  type="text" id="certificateNo" name="certificateNo" class="select validate[required]" value="${teacher.certificateNo}"  style="text-align: left;width: 150px;"/>
-				<a style="cursor: pointer;" onclick="javascript:viewTrainAttachment('${teacher.recordFlow}','szzsAttach')">查看和上传附件</a>
+				<a style="cursor: pointer;" onclick="javascript:viewTrainAttachment('${teacher.recordFlow}','szzsAttach','证书附件')">查看和上传附件</a>
 			</td>
 		</tr>
 		<tr>
@@ -332,13 +382,13 @@
 		<tr>
 			<th width="150px">成果附件</th>
 			<td >
-				<a style="cursor: pointer;" onclick="javascript:viewTrainAttachment('${teacher.recordFlow}','szcgAttach')">查看和上传附件</a>
+				<a style="cursor: pointer;" onclick="javascript:viewTrainAttachment('${teacher.recordFlow}','szcgAttach','成果附件')">查看和上传附件</a>
 			</td>
 		</tr>
 	</table>
 
 </form>
 <div style="text-align: center; margin-top: 10px;">
-	<input type="button" onclick="checkUploadFile();" class="btn_green" value="保&#12288;存"/>
+	<input type="button" onclick="saveCommonSzInfo();" class="btn_green" value="保&#12288;存"/>
 	<input type="button" class="btn_green" value="关&#12288;闭" onclick="jboxClose();"/>
 </div>

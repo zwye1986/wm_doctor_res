@@ -3,6 +3,7 @@ package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Lists;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.Page;
 import com.pinde.core.page.PageHelper;
@@ -22,6 +23,7 @@ import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sch.impl.SchRotationGroupBizImpl;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.*;
+import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.common.util.RSAUtils;
 import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
 import com.pinde.sci.ctrl.res.ResMonthlyReportGlobalControllerClass;
@@ -34,6 +36,7 @@ import com.pinde.sci.enums.pub.UserSexEnum;
 import com.pinde.sci.enums.pub.UserStatusEnum;
 import com.pinde.sci.enums.res.*;
 import com.pinde.sci.enums.sys.*;
+import com.pinde.sci.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
@@ -67,6 +70,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -78,6 +82,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Controller
@@ -95,6 +100,8 @@ public class JsResManageController extends GeneralController {
 
 	private List<String> acceptedRoleNameList = Arrays.asList("带教老师", "科主任", "科秘", "教学主任", "教学秘书", "督导-评分专家");
 
+	@Autowired
+	private ResTeacherTrainingMapper teacherTrainingMapper;
 	@Autowired
 	private SysLogMapper logMapper;
 	@Autowired
@@ -7083,13 +7090,14 @@ public class JsResManageController extends GeneralController {
 
 
 	@RequestMapping(value = "/commonSzManage", method = {RequestMethod.POST, RequestMethod.GET})
-	public String commonSzManage(HttpServletRequest request, Model model) {
+	public String commonSzManage(HttpServletRequest request, Model model,String teacherLevelId) {
 		SysUser currUser = GlobalContext.getCurrentUser();
 		SysDept sysDept = new SysDept();
 		sysDept.setOrgFlow(currUser.getOrgFlow());
 		sysDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
 		List<SysDept> sysDeptList = deptBiz.searchDept(sysDept);
 		model.addAttribute("sysDeptList", sysDeptList);
+		model.addAttribute("teacherLevelId", teacherLevelId);
 		return "jsres/hospital/commonSzSearch";
 	}
 
@@ -7205,10 +7213,11 @@ public class JsResManageController extends GeneralController {
 		if(null == resTeacherTraining){
 			resTeacherTraining = new ResTeacherTraining();
 		}
-		resTeacherTraining.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-		resTeacherTraining.setTeacherLevelName("一般师资");
+//		resTeacherTraining.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
+		resTeacherTraining.setTeacherLevelName(JsResTeacherLevelEnum.getNameById(resTeacherTraining.getTeacherLevelId()));
+		resTeacherTraining.setRecordStatus("Y");
 		PageHelper.startPage(currentPage, getPageSize(request));
-		List<ResTeacherTraining> sysUserList = iresStatisticBiz.searchTeacherInfo(resTeacherTraining);
+		List<ResTeacherTraining> sysUserList = teacherTrainingMapper.selectByCondition(resTeacherTraining);
 		model.addAttribute("sysUserList", sysUserList);
 
 
@@ -16659,12 +16668,41 @@ public class JsResManageController extends GeneralController {
 		return "jsres/hospital/authRole";
 	}
 
+
+	@RequestMapping("/deleteCommonSzInfo")
+	@ResponseBody
+	public String deleteCommonSzInfo(String recordFlow,String roleFlag,Model model){
+		if(StringUtils.isEmpty(recordFlow)){
+			return GlobalConstant.OPRE_FAIL_FLAG;
+		}
+		//删除附件
+		PubFileExample example = new PubFileExample();
+		example.createCriteria().andProductFlowEqualTo(recordFlow).andProductTypeIn(Lists.newArrayList("szcgAttach","szzsAttach"));
+		pubFileMapper.deleteByExample(example);
+		//删除师资
+		teacherTrainingMapper.deleteByPrimaryKey(recordFlow);
+		return GlobalConstant.OPRE_SUCCESSED_FLAG;
+	}
+
 	@RequestMapping("/editCommonSzInfo")
 	public String editCommonSzInfo(String recordFlow,String roleFlag,Model model){
 		if(StringUtils.isNotEmpty(recordFlow)){
-			ResTeacherTraining teacherTraining=resStatisticBiz.searchTeacherInfoByPK(recordFlow);
+			ResTeacherTraining teacherTraining=teacherTrainingMapper.selectDetailByKey(recordFlow);
 			model.addAttribute("teacher",teacherTraining);
 		}
+
+		List<SysUserDept> userDepts = userBiz.searchUserDeptByUser(recordFlow);
+		Map<String, String> sysUserDeptMap = userDepts.stream().collect(Collectors.toMap(SysUserDept::getDeptFlow, SysUserDept::getDeptFlow,
+				(existing, replacement) -> existing));
+		model.addAttribute("sysUserDeptMap", sysUserDeptMap);
+
+		SysUser currUser = GlobalContext.getCurrentUser();
+		SysDept sysDept = new SysDept();
+		sysDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+		sysDept.setOrgFlow(currUser.getOrgFlow());
+		List<SysDept> sysDeptList = deptBiz.searchDept(sysDept);
+		model.addAttribute("sysDeptList", sysDeptList);
+
 //		List<SysOrg> orgs=new ArrayList<SysOrg>();
 //		SysOrg org=new SysOrg();
 //		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
@@ -16683,6 +16721,106 @@ public class JsResManageController extends GeneralController {
 //		model.addAttribute("roleFlag",roleFlag);
 //		model.addAttribute("orgs", orgs);
 		return "jsres/hospital/editCommonSzInfo";
+	}
+
+	@RequestMapping(value="/saveCommonSzInfo",method={RequestMethod.POST})
+	@ResponseBody
+	public String saveCommonSzInfo(ResTeacherTraining teacherTraining, String[] userDepts, ServletRequest request,String coverPhone){
+		if(StringUtil.isBlank(teacherTraining.getRecordFlow())){
+			// 判断用户phone是否存在
+			if(StringUtils.isNotEmpty(teacherTraining.getUserPhone())) {
+				SysUser oldUser = userBiz.findByUserPhone(teacherTraining.getUserPhone());
+				if(oldUser!=null){
+					//已结业的学员可用作师资账号
+					ResDoctor resDoctor = resDoctorBiz.readDoctor(oldUser.getUserFlow());
+					if(coverPhone==null){
+						if(null == resDoctor || !"21".equals(resDoctor.getDoctorStatusId())){
+							return GlobalConstant.USER_PHONE_REPETE;
+						}
+						oldUser.setRecordStatus("N");
+						oldUser.setUserPhone(oldUser.getUserPhone() + "_x"); // 因为手机号不允许重复，这里把手机号做个标记
+						userBiz.edit(oldUser);
+					}else {
+						oldUser.setUserPhone("");
+						userBiz.edit(oldUser);
+					}
+				}
+			}
+		}else{
+			// 判断用户phone是否重复
+			if(StringUtils.isNotEmpty(teacherTraining.getUserPhone())) {
+				SysUser oldUser = userBiz.findByUserPhoneNotSelf(teacherTraining.getRecordFlow(), teacherTraining.getUserPhone());
+				if(oldUser!=null){
+					return GlobalConstant.USER_PHONE_REPETE;
+				}
+			}
+		}
+		// 用户信息
+		SysUser user = new SysUser();
+		user.setUserFlow(teacherTraining.getRecordFlow());
+		user.setUserName(teacherTraining.getDoctorName());
+		user.setUserPhone(teacherTraining.getUserPhone());
+		user.setIdNo(teacherTraining.getIdNo());
+		if(UserSexEnum.Man.getName().equals(teacherTraining.getSexName())){
+			user.setSexId(UserSexEnum.Man.getId());
+		}
+		if(UserSexEnum.Woman.getName().equals(teacherTraining.getSexName())){
+			user.setSexId(UserSexEnum.Woman.getId());
+		}
+		user.setSexName(teacherTraining.getSexName());
+		SysUser sysUser = userBiz.readSysUser(teacherTraining.getRecordFlow());
+		if (sysUser == null) {
+			user.setUserCode(teacherTraining.getUserPhone());
+			user.setUserPasswd(PasswordHelper.encryptPassword(user.getUserFlow(), InitConfig.getJxInitPassWord()));
+			user.setStatusId(UserStatusEnum.Activated.getId());
+			user.setStatusDesc(UserStatusEnum.Activated.getName());
+			user.setOrgFlow(teacherTraining.getOrgFlow());
+			user.setOrgName(StringUtil.defaultString(InitConfig.getOrgNameByFlow(user.getOrgFlow())));
+			GeneralMethod.setRecordInfo(user, true);
+			sysUserMapper.insert(user);
+		}else{
+			userBiz.saveUser(user);
+			user.setOrgFlow(sysUser.getOrgFlow());
+		}
+
+		// 师资
+		List<SysDict> list = (List<SysDict>) request.getServletContext().getAttribute("dictTypeEnumDoctorTrainingSpeList");
+		Map<String,String> map = list.stream().collect(Collectors.toMap(SysDict::getDictId, SysDict::getDictName, (key1, key2)-> key2));
+		teacherTraining.setSpeName(map.get(teacherTraining.getSpeId()));
+		resStatisticBiz.save(teacherTraining);
+
+		// 科室
+		List<String> allDeptFlows = new ArrayList<String>();
+		if(userDepts!=null){
+			allDeptFlows.addAll(Arrays.asList(userDepts));
+		}
+		if(allDeptFlows.size()>0){
+			userBiz.addUserDept(user,allDeptFlows);
+		}else {
+			userBiz.disUserDept(user);
+		}
+
+		//打开app权限
+		String cfgCode = "jsres_teacher_app_login_"+user.getUserFlow();
+		String cfgValue = "Y";
+		String cfgDesc = "是否开放带教app权限";
+		JsresPowerCfg cfg = new JsresPowerCfg();
+		cfg.setCfgCode(cfgCode);
+		cfg.setCfgValue(cfgValue);
+		cfg.setCfgDesc(cfgDesc);
+		cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+		jsResPowerCfgBiz.save(cfg);
+
+		SysRole sysRole = userRoleBiz.getByRoleName("带教老师");
+		SysUserRole sysUserRole = userRoleBiz.readUserRole(user.getUserFlow(), sysRole.getRoleFlow());
+		if (sysUserRole == null) {
+			List<String> allRoleFlows = new ArrayList<String>();
+			allRoleFlows.add(sysRole.getRoleFlow());
+			for (String roleFlow : allRoleFlows) {
+				userRoleBiz.saveSysUserRole(user.getUserFlow(), roleFlow, GlobalConstant.RES_WS_ID);
+			}
+		}
+		return GlobalConstant.SAVE_SUCCESSED;
 	}
 
 

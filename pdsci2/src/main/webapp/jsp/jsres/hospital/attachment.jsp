@@ -212,10 +212,19 @@
 
 
                 <div class="imageOper" style="display: none; border: 1px solid #e3e3e3; margin-left: 5px; margin-top: 5px;margin-bottom:5px;  width: 160px;height: 150px;float: left;text-align: center;" id="s">
-                    <div style="float: right;padding-top:5px;padding-right: 5px;position: relative;"><img title="删除" src="<s:url value="/css/skin/Blue/images/del1.png" />" style="margin-right: 5px;cursor: pointer;" onclick="del(this);"/></div>
-                    <img class="imgc" style="display: none;margin-top: -21px;" width="100%" height="100%"/>
-                    <div style="padding-top:45%;" class="upload"><a>请选择上传</a></div>
-                    <input id="file" style="display: none;" type="file" name="checkFile" class="validate[required]"/>
+                    <c:if test="${not (readonly eq 'Y')}">
+                        <div style="float: right;padding-top:5px;padding-right: 5px;position: relative;"><img title="删除" src="<s:url value="/css/skin/Blue/images/del1.png" />" style="margin-right: 5px;cursor: pointer;" onclick="del(this);"/></div>
+                        <img class="imgc" style="display: none;margin-top: -21px;" width="100%" height="100%"/>
+                        <div style="padding-top:45%;" class="upload"><a>请选择上传</a></div>
+                        <input id="file" style="display: none;" type="file" name="checkFile" class="validate[required]"/>
+                    </c:if>
+
+                    <c:if test="${readonly eq 'Y'}">
+                        <div style="float: right;padding-top:5px;padding-right: 5px;position: relative;"></div>
+                        <img class="imgc" style="display: none;margin-top: -21px;" width="100%" height="100%"/>
+                        <div style="padding-top:45%;" class="upload">无文件</div>
+                        <input id="file" style="display: none;" type="file" name="checkFile" class="validate[required]"/>
+                    </c:if>
                 </div>
 
             </table>

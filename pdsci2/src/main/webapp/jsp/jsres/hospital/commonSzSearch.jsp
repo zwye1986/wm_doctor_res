@@ -144,14 +144,37 @@
         jboxPostLoad("searchContent", url, $("#searchForm").serialize(), true);
     }
 
-    function editCommonSzInfo(recordFlow) {
+    function editCommonSzInfo(recordFlow,teacherLevelId) {
         var url = "<s:url value='/jsres/manage/editCommonSzInfo?'/>" + "recordFlow=" + recordFlow;
-        jboxOpen(url, "编辑一般师资信息", 550, 540);
+        if(teacherLevelId == 'GeneralFaculty'){
+            jboxOpen(url, "编辑一般师资信息", 550, 540);
+        }
+        if('KeyFaculty' == teacherLevelId){
+            jboxOpen(url, "编辑骨干师资信息", 550, 540);
+        }
+    }
+
+    function deleteCommonSz(recordFlow){
+        jboxConfirm("确定删除师资信息，不删除用户信息？", function () {
+            var url = "<s:url value='/jsres/manage/deleteCommonSzInfo?'/>" + "recordFlow=" + recordFlow;
+            jboxPost(url, null, function(data) {
+                if('${GlobalConstant.OPRE_SUCCESSED_FLAG}' == data){
+                    search();
+                }else{
+                    jboxTip("删除失败");
+                }
+            },null,true);
+        });
     }
 
     function exportUser() {
         var url = "<s:url value='/jsres/manage/exportUser?orgFlow=${sessionScope.currUser.orgFlow}'/>";
         jboxExp($("#searchForm"), url);
+    }
+
+    function viewAttachment(recordFlow,recType,title){
+        var url = "<s:url value='/jsres/manage/attachment'/>?recFlow="+recordFlow + "&recType=" + recType+ "&readonly=Y";
+        jboxOpen(url, title,700,550);
     }
 
 </script>
@@ -161,18 +184,18 @@
     <div class="div_search">
         <form id="searchForm" action="<s:url value="/jsres/manage/teacherList" />" method="post">
             <input type="hidden" name="currentPage" id="currentPage" value="${param.currentPage}">
-
+            <input type="hidden" name="teacherLevelId" id="teacherLevelId" value="${teacherLevelId}">
 
              <div class="form_search">
                  <div class="form_item">
                      <div class="form_label">姓名：</div>
                      <div class="form_content">
-                         <input type="text" name="userName" value="${param.userName}" class="input" />
+                         <input type="text" name="doctorName" value="${param.doctorName}" class="input" />
                      </div>
                  </div>
 
                  <div class="form_item">
-                     <div class="form_label">手机号：</div>
+                     <div class="form_label">手机号码：</div>
                      <div class="form_content">
                          <input type="text" name="userPhone" value="${param.userPhone}"  class="input"  />
                      </div>
@@ -181,9 +204,11 @@
                  <div class="form_item">
                      <div class="form_label">专业：</div>
                      <div class="form_content">
-                         <select name="statusId"  id="statusId" class="select">
+                         <select name="speId"  id="speId" class="select">
                              <option value="" >全部</option>
-                             <option value="${userStatusEnumActivated.id }" <c:if test='${param.statusId==userStatusEnumActivated.id or empty param.statusId}'>selected</c:if>>${userStatusEnumActivated.name}</option>
+                             <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
+                                 <option <c:if test="${teacher.speId eq dict.dictId}">selected="selected"</c:if> value="${dict.dictId}">${dict.dictName}</option>
+                             </c:forEach>
                          </select>
                      </div>
                  </div>
@@ -208,21 +233,21 @@
                 <div class="form_item">
                     <div class="form_label">证书编号：</div>
                     <div class="form_content">
-                        <input type="text" name="certificateId" value="${param.certificateId}"  class="input" />
+                        <input type="text" name="certificateNo" value="${param.certificateNo}"  class="input" />
                     </div>
                 </div>
 
                  <div class="form_item">
                      <div class="form_label">技术职称：</div>
                      <div class="form_content">
-                         <input type="text" name="certificateId" value="${param.certificateId}"  class="input" />
+                         <input type="text" name="technicalTitle" value="${param.technicalTitle}"  class="input" />
                      </div>
                  </div>
 
                  <div class="form_item">
                      <div class="form_label">培训年份：</div>
                      <div class="form_content">
-                         <input type="text" name="certificateId" value="${param.certificateId}"  class="input" />
+                         <input type="text" name="trainingYear" value="${param.trainingYear}"  class="input" />
                      </div>
                  </div>
 
@@ -230,7 +255,7 @@
                      <div class="form_label">责任导师：</div>
                      <div class="form_content">
                          <select name="isResponsibleTutor" class="select" style="width: 160px;">
-                             <option value="" >请选择</option>
+                             <option value="" >全部</option>
                              <option value="Y" <c:if test="${param.isResponsibleTutor eq 'Y'}">selected="selected"</c:if>>是</option>
                              <option value="N" <c:if test="${param.isResponsibleTutor eq 'N'}">selected="selected"</c:if>>否</option>
                          </select>
