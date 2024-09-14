@@ -32,4 +32,6 @@ public interface ResTeacherTrainingMapper {
     int updateByPrimaryKey(ResTeacherTraining record);
 
     ResTeacherTraining selectDetailByKey(@Param("recordFlow") String recordFlow);
+
+    List<ResTeacherTraining> selectByConditionAddUserDept(@Param("record") ResTeacherTraining record);
 }

@@ -6783,6 +6783,7 @@ public class JsResManageController extends GeneralController {
 				Row r =  sheet.getRow(i);
 				SysUser sysUser = new SysUser();
 				String userName;
+				String idNo;
 				String userPhone;
 				List<String> allDeptFlows = new ArrayList<String>();
 				String userCode;
@@ -6804,7 +6805,14 @@ public class JsResManageController extends GeneralController {
 						}
 						userName = value;
 						sysUser.setUserName(userName);
-					}else if("联系方式".equals(colnames.get(j))){
+					}else if("身份证号".equals(colnames.get(j))){
+						if(StringUtil.isEmpty(value)) {
+							errorMsg.add("第"+(row+2)+"行身份证号未填写，导入失败");
+							continue loop;
+						}
+						idNo = value;
+						sysUser.setIdNo(idNo);
+					} else if("联系方式".equals(colnames.get(j))){
 						userPhone = value;
 						sysUser.setUserPhone(userPhone);
 					}else if("科室名称".equals(colnames.get(j))){
@@ -6819,9 +6827,9 @@ public class JsResManageController extends GeneralController {
 								allDeptFlows.add(sysDept.getDeptFlow());
 							}
 						}
-					}else if("登录名".equals(colnames.get(j))){
+					}else if("用户名".equals(colnames.get(j))){
 						if(StringUtil.isEmpty(value)) {
-							errorMsg.add("第"+(row+2)+"行登录名未填写，导入失败");
+							errorMsg.add("第"+(row+2)+"行用户名未填写，导入失败");
 							continue loop;
 						}
 						userCode = value;
@@ -6954,23 +6962,38 @@ public class JsResManageController extends GeneralController {
 		user.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 		user.setIsForeign(moreDept);//用作暂存多科室查询字段
 		List<SysUser> sysUserList = userBiz.searchResManageUserNotSelf(user, roleList, GlobalContext.getCurrentUser().getUserFlow(), isSelect, examTeaRole);
-		String wsId = GlobalConstant.RES_WS_ID;
-		List<SysUserRole> sysUserRoleList = userRoleBiz.getByOrgFlow(user.getOrgFlow(), wsId);
+
 		Map<String, List<String>> sysUserRoleMap = new HashMap<String, List<String>>();
-		for (SysUserRole sysUserRole : sysUserRoleList) {
-			String userFlow = sysUserRole.getUserFlow();
-			if (sysUserRoleMap.containsKey(userFlow)) {
-				List<String> list = sysUserRoleMap.get(userFlow);
-				list.add(sysUserRole.getRoleFlow());
-			} else {
-				List<String> list = new ArrayList<String>();
-				list.add(sysUserRole.getRoleFlow());
-				sysUserRoleMap.put(userFlow, list);
+		if(CollectionUtils.isNotEmpty(sysUserList)){
+			List<String> userFlows = sysUserList.stream().map(SysUser::getUserFlow).collect(Collectors.toList());
+			String wsId = GlobalConstant.RES_WS_ID;
+			int start = 0;
+			int batchSize = 100;
+			while (start < userFlows.size()) {
+				int end = Math.min(start + batchSize, userFlows.size());
+				List<String> batchList = userFlows.subList(start, end);
+				List<SysUserRole> sysUserRoleList = userRoleBiz.getByUserFlow(batchList, wsId);
+				for (SysUserRole sysUserRole : sysUserRoleList) {
+					String userFlow = sysUserRole.getUserFlow();
+					if (sysUserRoleMap.containsKey(userFlow)) {
+						List<String> list = sysUserRoleMap.get(userFlow);
+						list.add(sysUserRole.getRoleFlow());
+					} else {
+						List<String> list = new ArrayList<String>();
+						list.add(sysUserRole.getRoleFlow());
+						sysUserRoleMap.put(userFlow, list);
+					}
+				}
+				start += batchSize;
 			}
 		}
+
 		roleTeacher = InitConfig.getSysCfg("res_teacher_role_flow");
 		roleHead = InitConfig.getSysCfg("res_head_role_flow");
 		roleScretary = InitConfig.getSysCfg("res_secretary_role_flow");
+		String teachingHead = InitConfig.getSysCfg("res_teaching_head_role_flow");
+		String teachingSecretary = InitConfig.getSysCfg("res_teaching_secretary_role_flow");
+		String hospitalLeader = InitConfig.getSysCfg("res_hospitalLeader_role_flow");
 		for (SysUser su : sysUserList) {
 			List<String> roles = sysUserRoleMap.get(su.getUserFlow());
 			String roleName = "";
@@ -6990,11 +7013,29 @@ public class JsResManageController extends GeneralController {
 					}
 					roleName += "科秘";
 				}
+				if (roles.contains(teachingHead) && teachingHead != null) {
+					if (StringUtil.isNotBlank(roleName)) {
+						roleName += ",";
+					}
+					roleName += "教学主任";
+				}
+				if (roles.contains(teachingSecretary) && teachingSecretary != null) {
+					if (StringUtil.isNotBlank(roleName)) {
+						roleName += ",";
+					}
+					roleName += "教学秘书";
+				}
+				if (roles.contains(hospitalLeader) && hospitalLeader != null) {
+					if (StringUtil.isNotBlank(roleName)) {
+						roleName += ",";
+					}
+					roleName += "督导-评分专家";
+				}
 			}
 			su.setAppLoginTime(roleName);
 		}
 		SysOrg org = orgBiz.readSysOrg(user.getOrgFlow());
-		String fileName = "师资信息.xls";
+		String fileName = "用户信息.xls";
 		if (org != null) {
 			fileName = "【" + org.getOrgName() + "】" + fileName;
 		}
@@ -7005,6 +7046,7 @@ public class JsResManageController extends GeneralController {
 				"sexName:性别",
 				"deptName:科室名称",
 				"idNo:身份证号",
+				"teacherLevel:师资级别",
 				"userPhone:手机号",
 				"userEmail:电子邮箱",
 				"appLoginTime:角色"
@@ -7015,6 +7057,8 @@ public class JsResManageController extends GeneralController {
 		response.setContentType("application/octet-stream;charset=UTF-8");
 		ExcleUtile.exportSimpleExcleByObjsAllString(titles, sysUserList, response.getOutputStream());
 	}
+
+
 
 	/**
 	 * 科室维护
@@ -7220,7 +7264,7 @@ public class JsResManageController extends GeneralController {
 
 
 	@RequestMapping(value = "/commonSzList", method = {RequestMethod.POST, RequestMethod.GET})
-	public String commonSzList(ResTeacherTraining resTeacherTraining, Integer currentPage, HttpServletRequest request, Model model) {
+	public String commonSzList(ResTeacherTraining resTeacherTraining, Integer currentPage, HttpServletRequest request, Model model,String isQueryTutor) {
 		if(null == resTeacherTraining){
 			resTeacherTraining = new ResTeacherTraining();
 		}
@@ -7274,7 +7318,48 @@ public class JsResManageController extends GeneralController {
 			}
 			model.addAttribute("sysUserDeptNameMap", sysUserDeptNameMap);
 		}
+		model.addAttribute("isQueryTutor", isQueryTutor);
 		return "jsres/hospital/commonSzList";
+	}
+
+	@RequestMapping(value = "/exportSzList", method = {RequestMethod.POST, RequestMethod.GET})
+	public void exportSzList(ResTeacherTraining resTeacherTraining, Integer currentPage, HttpServletRequest request, Model model,String isQueryTutor, HttpServletResponse response) throws Exception {
+		if(null == resTeacherTraining){
+			resTeacherTraining = new ResTeacherTraining();
+		}
+		resTeacherTraining.setRecordStatus("Y");
+		List<ResTeacherTraining> sysUserList = teacherTrainingMapper.selectByConditionAddUserDept(resTeacherTraining);
+		model.addAttribute("sysUserList", sysUserList);
+
+		String fileName;
+		String[] titles;
+		SysOrg org = orgBiz.readSysOrg(resTeacherTraining.getOrgFlow());
+		if(Objects.equals(isQueryTutor,"Y")){
+			fileName = "责任导师信息.xls";
+		}else{
+			fileName = "师资信息.xls";
+		}
+		titles = new String[]{
+				"doctorName:姓名",
+				"sexName:性别",
+				"userPhone:手机号",
+				"technicalTitle:技术职称",
+				"speName:专业",
+				"allUserDeptNames:科室名称",
+				"trainingYear:培训年份",
+				"certificateNo:证书编号",
+				"teacherLevelName:师资级别",
+				"isResponsibleTutor:是否责任导师"
+		};
+
+		if (org != null) {
+			fileName = "【" + org.getOrgName() + "】" + fileName;
+		}
+
+		fileName = new String(fileName.getBytes(), "ISO-8859-1");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+		response.setContentType("application/octet-stream;charset=UTF-8");
+		ExcleUtile.exportSimpleExcleByObjsAllString(titles, sysUserList, response.getOutputStream());
 	}
 
 	/**
@@ -16692,8 +16777,34 @@ public class JsResManageController extends GeneralController {
 		pubFileMapper.deleteByExample(example);
 		//删除师资
 		teacherTrainingMapper.deleteByPrimaryKey(recordFlow);
+		//更新用户信息
+		SysUser user = new SysUser();
+		user.setUserFlow(recordFlow);
+		user.setTeacherLevel("");
+		user.setIsResponsibleTutor("");
+		userBiz.saveUser(user);
 		return GlobalConstant.OPRE_SUCCESSED_FLAG;
 	}
+
+//	@RequestMapping("/deleteTutorInfo")
+//	@ResponseBody
+//	public String deleteTutorInfo(String recordFlow,String roleFlag,Model model){
+//		if(StringUtils.isEmpty(recordFlow)){
+//			return GlobalConstant.OPRE_FAIL_FLAG;
+//		}
+//		//删除附件
+//		PubFileExample example = new PubFileExample();
+//		example.createCriteria().andProductFlowEqualTo(recordFlow).andProductTypeIn(Lists.newArrayList("szcgAttach","szzsAttach"));
+//		pubFileMapper.deleteByExample(example);
+//		//删除师资
+//		teacherTrainingMapper.deleteByPrimaryKey(recordFlow);
+//		//更新用户信息
+//		SysUser user = new SysUser();
+//		user.setUserFlow(recordFlow);
+//		user.setIsResponsibleTutor("");
+//		userBiz.saveUser(user);
+//		return GlobalConstant.OPRE_SUCCESSED_FLAG;
+//	}
 
 	@RequestMapping("/editCommonSzInfo")
 	public String editCommonSzInfo(String recordFlow,String roleFlag,Model model){

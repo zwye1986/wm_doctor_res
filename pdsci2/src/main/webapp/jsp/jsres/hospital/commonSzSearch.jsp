@@ -163,12 +163,12 @@
                 }else{
                     jboxTip("删除失败");
                 }
-            },null,true);
+            },null,false);
         });
     }
 
     function exportUser() {
-        var url = "<s:url value='/jsres/manage/exportUser?orgFlow=${sessionScope.currUser.orgFlow}'/>";
+        var url = "<s:url value='/jsres/manage/exportSzList?orgFlow=${sessionScope.currUser.orgFlow}'/>";
         jboxExp($("#searchForm"), url);
     }
 

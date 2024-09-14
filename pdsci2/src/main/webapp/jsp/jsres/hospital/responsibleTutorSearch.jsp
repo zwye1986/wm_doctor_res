@@ -140,7 +140,7 @@
         if($("input[name='deptName']").val()==''){
             $("input[name='deptFlow']").val('');
         }
-        var url = "<s:url value='/jsres/manage/commonSzList'/>?orgFlow=${sessionScope.currUser.orgFlow}";
+        var url = "<s:url value='/jsres/manage/commonSzList'/>?orgFlow=${sessionScope.currUser.orgFlow}" + "&isQueryTutor=Y";
         jboxPostLoad("searchContent", url, $("#searchForm").serialize(), true);
     }
 
@@ -155,7 +155,7 @@
     }
 
     function deleteCommonSz(recordFlow){
-        jboxConfirm("确定删除师资信息，不删除用户信息？", function () {
+        jboxConfirm("确定删除导师信息，不删除用户信息？", function () {
             var url = "<s:url value='/jsres/manage/deleteCommonSzInfo?'/>" + "recordFlow=" + recordFlow;
             jboxPost(url, null, function(data) {
                 if('${GlobalConstant.OPRE_SUCCESSED_FLAG}' == data){
@@ -163,12 +163,12 @@
                 }else{
                     jboxTip("删除失败");
                 }
-            },null,true);
+            },null,false);
         });
     }
 
     function exportUser() {
-        var url = "<s:url value='/jsres/manage/exportUser?orgFlow=${sessionScope.currUser.orgFlow}'/>";
+        var url = "<s:url value='/jsres/manage/exportSzList?orgFlow=${sessionScope.currUser.orgFlow}'/>" + "&isQueryTutor=Y";
         jboxExp($("#searchForm"), url);
     }
 
