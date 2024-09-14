@@ -330,6 +330,7 @@
         AND IS_RESPONSIBLE_TUTOR = #{record.isResponsibleTutor,jdbcType=VARCHAR}
       </if>
     </where>
+    order by NLSSORT(DOCTOR_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
   </select>
 
   <select id="selectByConditionAddUserDept" resultMap="BaseResultMap2" >
