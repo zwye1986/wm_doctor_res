@@ -1,6 +1,10 @@
 package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.MybatisObject;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 
 public class ResTeacherTraining extends MybatisObject {
     private String recordFlow;
@@ -90,6 +94,10 @@ public class ResTeacherTraining extends MybatisObject {
     private String isResponsibleTutor;
 
     private String idNo;
+
+    private List<String> userDeptNames;
+
+    private String allUserDeptNames;
 
     public String getRecordFlow() {
         return recordFlow;
@@ -441,5 +449,24 @@ public class ResTeacherTraining extends MybatisObject {
 
     public void setIdNo(String idNo) {
         this.idNo = idNo;
+    }
+
+    public List<String> getUserDeptNames() {
+        return userDeptNames;
+    }
+
+    public void setUserDeptNames(List<String> userDeptNames) {
+        this.userDeptNames = userDeptNames;
+    }
+
+    public String getAllUserDeptNames() {
+        if(CollectionUtils.isEmpty(userDeptNames)){
+            return "";
+        }
+        return StringUtils.join(userDeptNames,",");
+    }
+
+    public void setAllUserDeptNames(String allUserDeptNames) {
+        this.allUserDeptNames = allUserDeptNames;
     }
 }

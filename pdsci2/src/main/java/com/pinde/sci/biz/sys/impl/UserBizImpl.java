@@ -889,13 +889,13 @@ public class UserBizImpl implements IUserBiz {
 		if(CollectionUtils.isNotEmpty(sysUsers)){
 			//多科室查询
 			for (SysUser sysUser : sysUsers) {
-				if(StringUtil.isEmpty(sysUser.getDeptName())){
+//				if(StringUtil.isEmpty(sysUser.getDeptName())){
 					List<SysUserDept> sysUserDepts = searchUserDeptByUser(sysUser.getUserFlow());
 					if(CollectionUtils.isNotEmpty(sysUserDepts)){
 						List<String> collect = sysUserDepts.stream().map(SysUserDept::getDeptName).collect(Collectors.toList());
 						sysUser.setDeptName(collect.toString().replace("[","").replace("]",""));
 					}
-				}
+//				}
 			}
 		}
 		return sysUsers;

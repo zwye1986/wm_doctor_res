@@ -77,10 +77,10 @@
                     <c:if test="${!empty applicationScope.sysCfgMap['res_hospitalLeader_role_flow'] && pdfn:contain(applicationScope.sysCfgMap['res_hospitalLeader_role_flow'],sysUserRoleMap[sysUser.userFlow])}">
                         <c:choose>
                             <c:when test="${not empty roleName}">
-                                <c:set var="roleName" value="${roleName}，评分专家"></c:set>
+                                <c:set var="roleName" value="${roleName}，督导-评分专家"></c:set>
                             </c:when>
                             <c:otherwise>
-                                <c:set var="roleName" value="${roleName}评分专家"></c:set>
+                                <c:set var="roleName" value="${roleName}督导-评分专家"></c:set>
                             </c:otherwise>
                         </c:choose>
                     </c:if>

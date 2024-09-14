@@ -325,7 +325,7 @@
 								<option <c:if test="${pdfn:contain(applicationScope.sysCfgMap['res_teaching_secretary_role_flow'], roleFlowList)}">selected</c:if> value="${applicationScope.sysCfgMap['res_teaching_secretary_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teaching_secretary_role_flow']]?sysRoleMap[sysCfgMap['res_teaching_secretary_role_flow']].roleName:'教学秘书'}</option>
 							</c:if>
 							<c:if test="${!empty applicationScope.sysCfgMap['res_hospitalLeader_role_flow']}">
-								<option <c:if test="${pdfn:contain(applicationScope.sysCfgMap['res_hospitalLeader_role_flow'], roleFlowList)}">selected</c:if> value="${applicationScope.sysCfgMap['res_hospitalLeader_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_hospitalLeader_role_flow']]?sysRoleMap[sysCfgMap['res_hospitalLeader_role_flow']].roleName:'评分专家'}</option>
+								<option <c:if test="${pdfn:contain(applicationScope.sysCfgMap['res_hospitalLeader_role_flow'], roleFlowList)}">selected</c:if> value="${applicationScope.sysCfgMap['res_hospitalLeader_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_hospitalLeader_role_flow']]?sysRoleMap[sysCfgMap['res_hospitalLeader_role_flow']].roleName:'督导-评分专家'}</option>
 							</c:if>
 						</select>
 					</td>

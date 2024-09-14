@@ -83,6 +83,8 @@ public class UserController extends GeneralController{
 	private SysUserSchoolMapper userSchoolMapper;
 	@Autowired
 	private ResTeacherTrainingMapper teacherTrainingMapper;
+	@Autowired
+	private IJsResStatisticBiz resStatisticBiz;
 
 	@RequestMapping(value="/list/{userListScope}",method={RequestMethod.POST,RequestMethod.GET})
 	public String list(@PathVariable String userListScope,Integer currentPage ,SysUser search,String roleFlow,String deptFlow,
@@ -957,6 +959,11 @@ public class UserController extends GeneralController{
 	@RequestMapping(value="/activate",method=RequestMethod.GET)
 	public @ResponseBody String activate(SysUser user){
 		this.userBiz.activateUser(user);
+		//存在师资信息也生效师资
+		ResTeacherTraining teacherTraining = new ResTeacherTraining();
+		teacherTraining.setRecordFlow(user.getUserFlow());
+		teacherTraining.setRecordStatus("Y");
+		resStatisticBiz.save(teacherTraining);
 		return GlobalConstant.OPERATE_SUCCESSED;
 	}
 
@@ -992,6 +999,11 @@ public class UserController extends GeneralController{
 		user.setStatusId(UserStatusEnum.Locked.getId());
 		user.setStatusDesc(UserStatusEnum.Locked.getName());
 		userBiz.saveUser(user);
+		//存在师资信息也生效师资
+		ResTeacherTraining teacherTraining = new ResTeacherTraining();
+		teacherTraining.setRecordFlow(user.getUserFlow());
+		teacherTraining.setRecordStatus("N");
+		resStatisticBiz.save(teacherTraining);
 		return GlobalConstant.LOCK_SUCCESSED;
 	}
 
@@ -1001,6 +1013,11 @@ public class UserController extends GeneralController{
 		user.setStatusId(UserStatusEnum.Locked.getId());
 		user.setStatusDesc(UserStatusEnum.Locked.getName());
 		userBiz.saveUser(user);
+		//存在师资信息也生效师资
+		ResTeacherTraining teacherTraining = new ResTeacherTraining();
+		teacherTraining.setRecordFlow(user.getUserFlow());
+		teacherTraining.setRecordStatus("N");
+		resStatisticBiz.save(teacherTraining);
 		return GlobalConstant.STOP_USE_SUCCESSED;
 	}
 

@@ -47,6 +47,56 @@
     <result column="IS_RESPONSIBLE_TUTOR" property="isResponsibleTutor" jdbcType="VARCHAR" />
     <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
   </resultMap>
+
+  <resultMap id="BaseResultMap2" type="com.pinde.sci.model.mo.ResTeacherTraining" >
+    <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
+    <result column="SEX_NAME" property="sexName" jdbcType="VARCHAR" />
+    <result column="TECHNICAL_TITLE" property="technicalTitle" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_NO" property="certificateNo" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+    <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+    <result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="TRAINING_YEAR" property="trainingYear" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_URL" property="certificateUrl" jdbcType="VARCHAR" />
+    <result column="MEETING_NAME" property="meetingName" jdbcType="VARCHAR" />
+    <result column="DOCTOR_AGE" property="doctorAge" jdbcType="VARCHAR" />
+    <result column="DOCTOR_EDU" property="doctorEdu" jdbcType="VARCHAR" />
+    <result column="OFFICE_YEAR" property="officeYear" jdbcType="VARCHAR" />
+    <result column="WORK_YEAR" property="workYear" jdbcType="VARCHAR" />
+    <result column="INTERN_YEAR" property="internYear" jdbcType="VARCHAR" />
+    <result column="THREE_INTERN_YEAR" property="threeInternYear" jdbcType="VARCHAR" />
+    <result column="HOS_YEAR" property="hosYear" jdbcType="VARCHAR" />
+    <result column="THREE_HOS_YEAR" property="threeHosYear" jdbcType="VARCHAR" />
+    <result column="IS_TRAIN" property="isTrain" jdbcType="VARCHAR" />
+    <result column="ACHIEVEMENT_URL" property="achievementUrl" jdbcType="VARCHAR" />
+    <result column="TEACHER_LEVEL_ID" property="teacherLevelId" jdbcType="VARCHAR" />
+    <result column="TEACHER_LEVEL_NAME" property="teacherLevelName" jdbcType="VARCHAR" />
+    <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR" />
+    <result column="APPLICATION_TEACHER_LEVEL_ID" property="applicationTeacherLevelId" jdbcType="VARCHAR" />
+    <result column="APPLICATION_AUDIT_STATUS" property="applicationAuditStatus" jdbcType="VARCHAR" />
+    <result column="APPLICATION_AUDIT_MESSAGE" property="applicationAuditMessage" jdbcType="VARCHAR" />
+    <result column="APPLICATION_MESSAGE" property="applicationMessage" jdbcType="VARCHAR" />
+    <result column="APPLICATION_PROVAL_URL" property="applicationProvalUrl" jdbcType="VARCHAR" />
+    <result column="GRADUATION_SCHOOL" property="graduationSchool" jdbcType="VARCHAR" />
+    <result column="GRADUATION_TIME" property="graduationTime" jdbcType="VARCHAR" />
+    <result column="WORKING_TIME" property="workingTime" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_LEVEL" property="certificateLevel" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_TIME" property="certificateTime" jdbcType="VARCHAR" />
+    <result column="IS_RESPONSIBLE_TUTOR" property="isResponsibleTutor" jdbcType="VARCHAR" />
+    <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+    <collection property="userDeptNames" ofType="java.lang.String" javaType="list">
+      <result column="USER_DEPE_NAMES"/>
+    </collection>
+  </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -278,6 +328,154 @@
       </if>
       <if test="record.isResponsibleTutor != null and record.isResponsibleTutor != ''" >
         AND IS_RESPONSIBLE_TUTOR = #{record.isResponsibleTutor,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectByConditionAddUserDept" resultMap="BaseResultMap2" >
+    select
+    <include refid="Column_List" />,dept.dept_name as USER_DEPE_NAMES
+    from PDSCI.RES_TEACHER_TRAINING a
+    LEFT JOIN SYS_USER_DEPT dept on a.record_flow = dept.USER_FLOW and dept.RECORD_STATUS = 'Y'
+    <where>
+      <if test="record.doctorName != null and record.doctorName != ''" >
+        <bind name="doctorName" value="'%'+record.doctorName+'%'"/>
+        AND a.DOCTOR_NAME LIKE #{doctorName}
+      </if>
+      <if test="record.sexName != null and record.sexName != ''" >
+        AND a.SEX_NAME = #{record.sexName,jdbcType=VARCHAR}
+      </if>
+      <if test="record.technicalTitle != null and record.technicalTitle != ''" >
+        <bind name="technicalTitle" value="'%'+record.technicalTitle+'%'"/>
+        AND a.TECHNICAL_TITLE LIKE #{technicalTitle}
+      </if>
+      <if test="record.orgFlow != null and record.orgFlow != ''" >
+        AND a.ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR}
+      </if>
+      <if test="record.orgName != null and record.orgName != ''" >
+        AND a.ORG_NAME = #{record.orgName,jdbcType=VARCHAR}
+      </if>
+      <if test="record.certificateNo != null and record.certificateNo != ''" >
+        <bind name="certificateNo" value="'%'+record.certificateNo+'%'"/>
+        AND a.CERTIFICATE_NO LIKE #{certificateNo}
+      </if>
+      <if test="record.recordStatus != null and record.recordStatus != ''" >
+        AND a.RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="record.createTime != null and record.createTime != ''" >
+        AND a.CREATE_TIME = #{record.createTime,jdbcType=VARCHAR}
+      </if>
+      <if test="record.createUserFlow != null and record.createUserFlow != ''" >
+        AND a.CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR}
+      </if>
+      <if test="record.modifyTime != null and record.modifyTime != ''" >
+        AND a.MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR}
+      </if>
+      <if test="record.modifyUserFlow != null and record.modifyUserFlow != ''" >
+        AND  a.MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+      </if>
+      <if test="record.speId != null and record.speId != ''" >
+        AND a.SPE_ID = #{record.speId,jdbcType=VARCHAR}
+      </if>
+      <if test="record.speName != null and record.speName != ''" >
+        AND a.SPE_NAME = #{record.speName,jdbcType=VARCHAR}
+      </if>
+      <if test="record.deptFlow != null and record.deptFlow != ''" >
+        AND exists (select 1 from sys_user_dept sud where
+        sud.user_flow=RES_TEACHER_TRAINING.RECORD_FLOW
+        and sud.record_status = 'Y'
+        and sud.dept_flow= #{record.deptFlow})
+      </if>
+      <!--      <if test="record.deptName != null and record.deptName != ''" >-->
+      <!--        AND exists (select 1 from sys_user_dept sud where-->
+      <!--        sud.user_flow=RES_TEACHER_TRAINING.user_flow-->
+      <!--        and sud.record_status = 'Y'-->
+      <!--        and sud.dept_name= #{record.deptName})-->
+      <!--      </if>-->
+      <if test="record.trainingYear != null and record.trainingYear != ''" >
+        AND a.TRAINING_YEAR = #{record.trainingYear,jdbcType=VARCHAR}
+      </if>
+      <if test="record.certificateUrl != null and record.certificateUrl != ''" >
+        AND a.CERTIFICATE_URL = #{record.certificateUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="record.meetingName != null and record.meetingName != ''" >
+        AND a.MEETING_NAME = #{record.meetingName,jdbcType=VARCHAR}
+      </if>
+      <if test="record.doctorAge != null and record.doctorAge != ''" >
+        AND a.DOCTOR_AGE = #{record.doctorAge,jdbcType=VARCHAR}
+      </if>
+      <if test="record.doctorEdu != null and record.doctorEdu != ''" >
+        AND a.DOCTOR_EDU = #{record.doctorEdu,jdbcType=VARCHAR}
+      </if>
+      <if test="record.officeYear != null and record.officeYear != ''" >
+        AND a.OFFICE_YEAR = #{record.officeYear,jdbcType=VARCHAR}
+      </if>
+      <if test="record.workYear != null and record.workYear != ''" >
+        AND a.WORK_YEAR = #{record.workYear,jdbcType=VARCHAR}
+      </if>
+      <if test="record.internYear != null and record.internYear != ''" >
+        AND a.INTERN_YEAR = #{record.internYear,jdbcType=VARCHAR}
+      </if>
+      <if test="record.threeInternYear != null and record.threeInternYear != ''" >
+        AND a.THREE_INTERN_YEAR = #{record.threeInternYear,jdbcType=VARCHAR}
+      </if>
+      <if test="record.hosYear != null and record.hosYear != ''" >
+        AND a.HOS_YEAR = #{record.hosYear,jdbcType=VARCHAR}
+      </if>
+      <if test="record.threeHosYear != null and record.threeHosYear != ''" >
+        AND a.THREE_HOS_YEAR = #{record.threeHosYear,jdbcType=VARCHAR}
+      </if>
+      <if test="record.isTrain != null and record.isTrain != ''" >
+        AND a.IS_TRAIN = #{record.isTrain,jdbcType=VARCHAR}
+      </if>
+      <if test="record.achievementUrl != null and record.achievementUrl != ''" >
+        AND a.ACHIEVEMENT_URL = #{record.achievementUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="record.teacherLevelId != null and record.teacherLevelId != '' and record.teacherLevelId != 'ALL'" >
+        AND a.TEACHER_LEVEL_ID = #{record.teacherLevelId,jdbcType=VARCHAR}
+      </if>
+      <if test="record.teacherLevelId == null or record.teacherLevelId == ''" >
+        AND (a.TEACHER_LEVEL_ID is null or a.TEACHER_LEVEL_ID = '')
+      </if>
+      <!--      <if test="record.teacherLevelName != null and record.teacherLevelName != ''" >-->
+      <!--        AND TEACHER_LEVEL_NAME = #{record.teacherLevelName,jdbcType=VARCHAR}-->
+      <!--      </if>-->
+      <if test="record.userPhone != null and record.userPhone != ''" >
+        <bind name="userPhone" value="'%'+record.userPhone+'%'"/>
+        AND a.USER_PHONE LIKE#{userPhone}
+      </if>
+      <if test="record.applicationTeacherLevelId != null and record.applicationTeacherLevelId != ''" >
+        AND a.APPLICATION_TEACHER_LEVEL_ID = #{record.applicationTeacherLevelId,jdbcType=VARCHAR}
+      </if>
+      <if test="record.applicationAuditStatus != null and record.applicationAuditStatus != ''" >
+        AND a.APPLICATION_AUDIT_STATUS = #{record.applicationAuditStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="record.applicationAuditMessage != null and record.applicationAuditMessage != ''" >
+        AND a.APPLICATION_AUDIT_MESSAGE = #{record.applicationAuditMessage,jdbcType=VARCHAR}
+      </if>
+      <if test="record.applicationMessage != null and record.applicationMessage != ''" >
+        AND a.APPLICATION_MESSAGE = #{record.applicationMessage,jdbcType=VARCHAR}
+      </if>
+      <if test="record.applicationProvalUrl != null and record.applicationProvalUrl != ''" >
+        AND a.APPLICATION_PROVAL_URL = #{record.applicationProvalUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="record.graduationSchool != null and record.graduationSchool != ''" >
+        AND  a.GRADUATION_SCHOOL = #{record.graduationSchool,jdbcType=VARCHAR}
+      </if>
+      <if test="record.graduationTime != null and record.graduationTime != ''" >
+        AND a.GRADUATION_TIME = #{record.graduationTime,jdbcType=VARCHAR}
+      </if>
+      <if test="record.workingTime != null and record.workingTime != ''" >
+        AND a.WORKING_TIME = #{record.workingTime,jdbcType=VARCHAR}
+      </if>
+      <if test="record.certificateLevel != null and record.certificateLevel != ''" >
+        AND a.CERTIFICATE_LEVEL = #{record.certificateLevel,jdbcType=VARCHAR}
+      </if>
+      <if test="record.certificateTime != null and record.certificateTime != ''" >
+        AND a.CERTIFICATE_TIME = #{record.certificateTime,jdbcType=VARCHAR}
+      </if>
+      <if test="record.isResponsibleTutor != null and record.isResponsibleTutor != ''" >
+        AND a.IS_RESPONSIBLE_TUTOR = #{record.isResponsibleTutor,jdbcType=VARCHAR}
       </if>
     </where>
   </select>
