@@ -129,16 +129,6 @@
             <scope>system</scope>
             <systemPath>${lib.dir}/xstream-1.4.10.jar</systemPath>
         </dependency>
-        <!-- sci lib end -->
-
-        <!-- pdlib start -->
-        <!--<dependency>
-            <groupId>ant-1.8.4</groupId>
-            <artifactId>ant-1.8.4</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/ant-1.8.4.jar</systemPath>
-        </dependency>-->
 
         <dependency>
             <groupId>AnyChart6.2.0</groupId>
@@ -167,22 +157,6 @@
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${lib.dir}/axis.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>bcpg-jdk15-143</groupId>
-            <artifactId>bcpg-jdk15-143</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/bcpg-jdk15-143.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>bcprov-jdk15-143</groupId>
-            <artifactId>bcprov-jdk15-143</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/bcprov-jdk15-143.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -322,25 +296,6 @@
             <scope>system</scope>
             <systemPath>${lib.dir}/itextpdf-5.4.4.jar</systemPath>
         </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>2.17.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>2.17.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.17.0</version>
-        </dependency>
-
         <dependency>
             <groupId>jacob</groupId>
             <artifactId>jacob</artifactId>

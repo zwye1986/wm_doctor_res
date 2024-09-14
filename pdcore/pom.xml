@@ -63,19 +63,15 @@
         </dependency>
 
         <dependency>
-            <groupId>bcpg-jdk15-143</groupId>
-            <artifactId>bcpg-jdk15-143</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/bcpg-jdk15-143.jar</systemPath>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpg-jdk18on</artifactId>
+            <version>1.78.1</version>
         </dependency>
 
         <dependency>
-            <groupId>bcprov-jdk15-143</groupId>
-            <artifactId>bcprov-jdk15-143</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/bcprov-jdk15-143.jar</systemPath>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk18on</artifactId>
+            <version>1.78.1</version>
         </dependency>
 
         <dependency>
