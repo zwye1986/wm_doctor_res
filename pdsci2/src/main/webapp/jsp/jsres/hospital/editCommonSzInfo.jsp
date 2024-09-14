@@ -342,7 +342,7 @@
 			<th width="150px"><font color="red" >*</font>证书编号</th>
 			<td  style="text-align: left;">
 				<input  type="text" id="certificateNo" name="certificateNo" class="select validate[required]" value="${teacher.certificateNo}"  style="text-align: left;width: 150px;"/>
-				<a style="cursor: pointer;" onclick="javascript:viewTrainAttachment('${teacher.recordFlow}','szzsAttach','证书附件')">查看和上传附件</a>
+				<a style="cursor: pointer;" onclick="javascript:viewTrainAttachment('${teacher.recordFlow}','szzsAttach','证书附件')">上传附件</a>
 			</td>
 		</tr>
 		<tr>
@@ -382,7 +382,7 @@
 		<tr>
 			<th width="150px">成果附件</th>
 			<td >
-				<a style="cursor: pointer;" onclick="javascript:viewTrainAttachment('${teacher.recordFlow}','szcgAttach','成果附件')">查看和上传附件</a>
+				<a style="cursor: pointer;" onclick="javascript:viewTrainAttachment('${teacher.recordFlow}','szcgAttach','成果附件')">上传附件</a>
 			</td>
 		</tr>
 	</table>
