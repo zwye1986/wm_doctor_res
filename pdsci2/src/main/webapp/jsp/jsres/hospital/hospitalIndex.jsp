@@ -1460,18 +1460,18 @@
                                 <dd class="menu_item"><a onclick="graduationExam()">结业理论模拟考核</a></dd>
                             </c:if>
                         </dl>--%>
-                        <dl class="menu">
-                            <dt class="menu_title">
-                                <i class="icon_menu menu_management"></i>师资管理
-                            </dt>
-                            <dd class="menu_item"><a onclick="teachTrainMain1()">师资名单录入</a></dd>
-                            <dd class="menu_item"><a onclick="statisticsTeachTrainMain1()">师资信息维护</a></dd>
-                            <dd class="menu_item"><a onclick="searchOldTeachTrain1()">师资培训证书</a></dd>
-                            <dd class="menu_item"><a onclick="teachTrainMain()">师资信息管理</a></dd>
-                            <dd class="menu_item"><a onclick="auditTeacherApplicationMain()">审核师资申请</a></dd>
-                            <dd class="menu_item"><a onclick="statisticsTeachTrainMain()">师资培训统计</a></dd>
-                            <dd class="menu_item"><a onclick="searchOldTeachTrain()">师资历史数据</a></dd>
-                        </dl>
+<%--                        <dl class="menu">--%>
+<%--                            <dt class="menu_title">--%>
+<%--                                <i class="icon_menu menu_management"></i>师资管理--%>
+<%--                            </dt>--%>
+<%--                            <dd class="menu_item"><a onclick="teachTrainMain1()">师资名单录入</a></dd>--%>
+<%--                            <dd class="menu_item"><a onclick="statisticsTeachTrainMain1()">师资信息维护</a></dd>--%>
+<%--                            <dd class="menu_item"><a onclick="searchOldTeachTrain1()">师资培训证书</a></dd>--%>
+<%--                            <dd class="menu_item"><a onclick="teachTrainMain()">师资信息管理</a></dd>--%>
+<%--                            <dd class="menu_item"><a onclick="auditTeacherApplicationMain()">审核师资申请</a></dd>--%>
+<%--                            <dd class="menu_item"><a onclick="statisticsTeachTrainMain()">师资培训统计</a></dd>--%>
+<%--                            <dd class="menu_item"><a onclick="searchOldTeachTrain()">师资历史数据</a></dd>--%>
+<%--                        </dl>--%>
                         <dl class="menu">
                             <dt class="menu_title">
                                 <i class="icon_menu menu_management"></i>绩效管理
