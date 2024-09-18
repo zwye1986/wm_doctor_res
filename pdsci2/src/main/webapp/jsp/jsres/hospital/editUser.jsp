@@ -158,9 +158,9 @@
 					</td>
 				</tr>
 				<tr>
-					<th width="20%"><font color="red">*</font>身份证号：</th>
+					<th width="20%">身份证号：</th>
 					<td width="30%">
-						<input class="validate[required,custom[chinaIdLoose]] input" name="idNo" type="text" value="${sysUser.idNo}">
+						<input class="validate[custom[chinaIdLoose]] input" name="idNo" type="text" value="${sysUser.idNo}">
 					</td>
 					<th>性别：</th>
 					<td>
