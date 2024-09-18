@@ -856,7 +856,7 @@ function save(){
 								<%--禅道 201 修改--%>
 								<c:if test="${teacherWrite}">
 									<input type="text" class="inputText validate[required,custom[number],max[100]]" style="width: 70px;" name="theoreResult"
-										   value="${formDataMap['theoreResult']}"/>
+										   value="${not empty formDataMap['theoreResult'] ? formDataMap['theoreResult'] : outScore.theoryScore}"/>
 								</c:if>
 								<c:if test="${!teacherWrite}">
 									<input  class="inputText validate[required,custom[number],max[100]]" style="width: 70px;" name="theoreResult" readonly="readonly" value="${empty formDataMap['theoreResult'] ? (empty outScore.theoryScore ? '':outScore.theoryScore):formDataMap['theoreResult']}"/>
@@ -867,12 +867,12 @@ function save(){
 							<c:if test="${!ckk}">
 								<c:if test="${showEdit and teacherWrite}">
 									<input type="text" class="inputText validate[required,custom[number],max[100]]" style="width: 70px;" name="theoreResult"
-											 value="${formDataMap['theoreResult']}"/>
+											 value="${not empty formDataMap['theoreResult'] ? formDataMap['theoreResult'] : outScore.theoryScore}"/>
 								</c:if>
 								<c:if test="${!showEdit }">
-									${formDataMap['theoreResult']}
+									${not empty formDataMap['theoreResult'] ? formDataMap['theoreResult'] : outScore.theoryScore}
 									<input type="hidden" class="inputText validate[required,custom[number],max[100]]" style="width: 70px;" name="theoreResult"
-											 value="${formDataMap['theoreResult']}"/>
+											 value="${not empty formDataMap['theoreResult'] ? formDataMap['theoreResult'] : outScore.theoryScore}"/>
 								</c:if>
 								分
 							</c:if>
