@@ -383,12 +383,18 @@
             <artifactId>junit</artifactId>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>license3j-1.0.3</groupId>
             <artifactId>license3j-1.0.3</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${lib.dir}/license3j-1.0.3.jar</systemPath>
+        </dependency>-->
+
+        <dependency>
+            <groupId>com.verhas</groupId>
+            <artifactId>license3j</artifactId>
+            <version>2.0.0-JVM8</version>
         </dependency>
 
         <dependency>
