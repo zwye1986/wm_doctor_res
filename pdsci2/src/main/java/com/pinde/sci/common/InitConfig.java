@@ -7,10 +7,7 @@ import com.pinde.core.commom.enums.GeneralEnum;
 import com.pinde.core.config.*;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.license.PdLicense;
-import com.pinde.core.util.ClassUtil;
-import com.pinde.core.util.EnumUtil;
-import com.pinde.core.util.SpringUtil;
-import com.pinde.core.util.StringUtil;
+import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IjsresLoginInfoBiz;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.util.RegionUtil;
@@ -144,7 +141,7 @@ public class InitConfig implements ServletContextListener {
         }
 
 		context.setAttribute("licenseed", licenseed);
-		context.setAttribute("machineId", PdLicense.getMachineId());
+		context.setAttribute("machineId", ServerUtil.getMachineId());
 		context.setAttribute("licenseedWorkStation", PdLicense.getLicensedWorkStation());
 		context.setAttribute("issueDate", PdLicense.getIssueDate());
 		context.setAttribute("validDate", PdLicense.getValidDate());

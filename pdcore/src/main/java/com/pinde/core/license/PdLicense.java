@@ -2,6 +2,7 @@ package com.pinde.core.license;
 
 import com.javax0.license3j.licensor.License;
 import com.pinde.core.util.DateUtil;
+import com.pinde.core.util.ServerUtil;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.lic.hardware.MechineInfo;
@@ -89,7 +90,7 @@ public class PdLicense {
 		
 		
 		try {			
-			if(StringUtil.isNotEquals(MechineInfo.getMachineId(), machineId)){
+			if(StringUtil.isNotEquals(ServerUtil.getMachineId(), machineId)){
 				logger.debug("系统验证错误，硬件ID不匹配！");				
 				return false;				
 			}			
@@ -124,9 +125,9 @@ public class PdLicense {
 		return true;		
 	}
 	
-	public static String getMachineId(){
-	    return MechineInfo.getMachineId();
-	}
+//	public static String getMachineId(){
+//	    return MechineInfo.getMachineId();
+//	}
 	
 	public static void main(String args [] ){
 		

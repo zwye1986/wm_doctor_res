@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
@@ -103,7 +104,7 @@ public class RSAUtils {
         try {
             byte[] en_data = Hex.decode(encryptText);
             byte[] data = decrypt((RSAPrivateKey) keyPair.getPrivate(), en_data);
-            return new String(data);
+            return new String(data, StandardCharsets.UTF_8);
         } catch (NullPointerException ex) {
             ex.printStackTrace();
         } catch (Exception ex) {

@@ -665,6 +665,11 @@
             <scope>system</scope>
             <systemPath>${lib.dir}/zxing-javase-3.1.0.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <!-- 多项目（子父项目）中方便依赖管理，保证版本一致，父项目中使用，声明依赖，但不引用，子项目中可以不加版本，使用父项目中配置 -->
     <dependencyManagement>
