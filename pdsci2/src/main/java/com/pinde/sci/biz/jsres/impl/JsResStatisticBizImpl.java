@@ -280,7 +280,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 			System.out.println("===============FTP上传开始 ============= localFilePath："+localFilePath);
 
 			//删除临时目录
-			FileUtil.deletefile(newDir+File.separator +originalFilename);
+//			FileUtil.deletefile(newDir+File.separator +originalFilename);
 		}
 		return path;
 	}
