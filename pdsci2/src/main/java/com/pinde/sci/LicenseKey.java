@@ -1,10 +1,13 @@
 package com.pinde.sci;
 
+import com.javax0.license3j.licensor.License;
 import com.pinde.core.util.DateUtil;
 import com.pinde.lic.hardware.MechineInfo;
-import com.verhas.licensor.License;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.bouncycastle.crypto.digests.SHA512Digest;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class LicenseKey {
@@ -31,7 +34,7 @@ public class LicenseKey {
         issueDate = "issueDate=" + StringEscapeUtils.escapeJava("2021-01-01");
 
         String machineId = "";
-        machineId = "machineId=" + StringEscapeUtils.escapeJava("19f2d81c-95ec-3f38-ac84-f977586269f6");
+        machineId = "machineId=" + StringEscapeUtils.escapeJava(MechineInfo.getMachineId());
         String workStationId = "";
 //        workStationId = "workStation=" + StringEscapeUtils.escapeJava("srm,edc,gcp,irb,sch,edu,njmuedu,erp,exam,res,test,fstu,cmis,osca,lcjn,eval,zsey,zseylcjn,portals,study");
         workStationId = "workStation=" + StringEscapeUtils.escapeJava("srm,edc,gcp,irb,sch,edu,njmuedu,erp,exam,res,test,fstu,cmis,osca,lcjn,eval,zsey,zseylcjn,portals,study,recruit");
@@ -46,6 +49,7 @@ public class LicenseKey {
         license.setLicense(licenseString);
         InputStream in = LicenseKey.class.getResourceAsStream("/secring.gpg");
         license.loadKey(in, "njpdkj <admin@njpdkj.com>");
+        license.setHashAlgorithm(2);
         String encoded = license.encodeLicense("njpdkj123456");
         System.out.println(encoded);
        /* _checkLicense("-----BEGIN PGP MESSAGE-----\n" +
@@ -76,6 +80,41 @@ public class LicenseKey {
         checkValid();
         System.out.println("score1".substring(5));
         System.out.println("11score1".indexOf("score"));*/
+    }
+
+    public static byte[] calculatePublicKeyRingDigest(byte[] publicKeyRing) {
+        SHA512Digest dig = new SHA512Digest();
+        dig.reset();
+        dig.update(publicKeyRing, 0, publicKeyRing.length);
+        byte[] digest = new byte[dig.getDigestSize()];
+        dig.doFinal(digest, 0);
+        return digest;
+    }
+
+    public static void dumpPublicKeyRingDigest() throws IOException {
+
+        System.out.println("------------------------------------------------------------------------------------");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        InputStream in = LicenseKey.class.getResourceAsStream("/pubring.gpg");
+        int ch;
+        while((ch = in.read()) >= 0) {
+            baos.write(ch);
+        }
+        byte[] publicKeyRing = baos.toByteArray();
+        byte[] calculatedDigest = calculatePublicKeyRingDigest(publicKeyRing);
+        StringBuilder retval = new StringBuilder("byte [] digest = new byte[] {\n");
+
+        for(int i = 0; i < calculatedDigest.length; ++i) {
+            int intVal = calculatedDigest[i] & 255;
+            retval.append(String.format("(byte)0x%02X, ", intVal));
+            if (i % 8 == 0) {
+                retval.append("\n");
+            }
+        }
+
+        retval.append("\n};\n");
+        System.out.println(retval.toString());
+        System.out.println("------------------------------------------------------------------------------------");
     }
 
     private static void _checkLicense(String licenseStringEncoded) throws Exception{
