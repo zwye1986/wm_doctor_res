@@ -96,7 +96,7 @@ function exportExcel(){
 		return false;
 	}
 	var data="${jsResDocTypeEnumGraduate.id}";
-	var url = "<s:url value='/jsres/doctor/exportDoctorForUni'/>?"+data+"&sessionNumber="+sessionNumber;
+	var url = "<s:url value='/jsres/doctor/exportDoctorForUni'/>?"+data;
 	jboxTip("导出中…………");
 	jboxSubmit($("#searchForm"), url, null, null, false);
 	jboxEndLoading();

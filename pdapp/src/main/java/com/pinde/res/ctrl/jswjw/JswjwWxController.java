@@ -2672,7 +2672,10 @@ public class JswjwWxController extends GeneralController {
         if (rec != null) {
             assessCfg = jswjwBiz.readCfgAssess(rec.getCfgFlow());
         } else {
-            List<ResAssessCfg> resAssessCfgList = gradeBiz.getAssCfg(assessType);
+            ResAssessCfg search = new ResAssessCfg();
+            search.setCfgCodeId(assessType);
+            search.setFormStatusId(AchScoreEnum.Enable.getId());
+            List<ResAssessCfg> resAssessCfgList = jswjwBiz.selectResByExampleWithBLOBs(search);
             if (resAssessCfgList != null && resAssessCfgList.size() > 0) {
                 assessCfg = resAssessCfgList.get(0);
             } else {
@@ -2752,7 +2755,10 @@ public class JswjwWxController extends GeneralController {
         if (rec != null) {
             assessCfg = jswjwBiz.readCfgAssess(rec.getCfgFlow());
         } else {
-            List<ResAssessCfg> resAssessCfgList = gradeBiz.getAssCfg(assessType);
+            ResAssessCfg search = new ResAssessCfg();
+            search.setCfgCodeId(assessType);
+            search.setFormStatusId(AchScoreEnum.Enable.getId());
+            List<ResAssessCfg> resAssessCfgList = jswjwBiz.selectResByExampleWithBLOBs(search);
             if (resAssessCfgList != null && resAssessCfgList.size() > 0) {
                 assessCfg = resAssessCfgList.get(0);
             } else {
