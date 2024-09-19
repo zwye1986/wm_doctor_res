@@ -16,7 +16,7 @@
         <c:forEach items="${sysUserList}" var="sysUser">
             <tr style="height:20px ">
                 <td title="${sysUser.userCode }">${pdfn:cutString(sysUser.userCode,4,true,3)}</td>
-                <td title="${sysUser.userCode}">${sysUser.userName}</td>
+                <td title="${sysUser.userName}">${sysUser.userName}</td>
                 <c:if test="${sysUser.statusDesc == '锁定'}">
                     <td title="${sysUser.lockReason}">${sysUser.statusDesc}</td>
                 </c:if>

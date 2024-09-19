@@ -164,7 +164,7 @@
 					</td>
 					<th>性别：</th>
 					<td>
-						<input id="${userSexEnumMan.id }" type="radio" name="sexId"  value="${userSexEnumMan.id }" <c:if test="${userSexEnumMan.id == sysUser.sexId}">checked</c:if> />
+						<input id="${userSexEnumMan.id }" type="radio" name="sexId" style="margin:0 1px 0 4px"  value="${userSexEnumMan.id }" <c:if test="${userSexEnumMan.id == sysUser.sexId}">checked</c:if> />
 						<label for="${userSexEnumMan.id }">${userSexEnumMan.name}</label>&#12288;
 						<input id="${userSexEnumWoman.id }" type="radio"  name="sexId" value="${userSexEnumWoman.id }" <c:if test="${userSexEnumWoman.id == sysUser.sexId}">checked</c:if> />
 						<label for="${userSexEnumWoman.id }">${userSexEnumWoman.name }</label>
@@ -290,7 +290,7 @@
 <%--					</td>--%>
 					<th>责任导师：</th>
 					<td>
-						<select name="isResponsibleTutor" class="select" style="width: 160px;">
+						<select name="isResponsibleTutor" class="select" style="width: 181px;margin:0 12px 0 4px">
 							<option value="" >请选择</option>
 							<option value="Y" <c:if test="${sysUser.isResponsibleTutor eq 'Y'}">selected="selected"</c:if>>是</option>
 							<option value="N" <c:if test="${sysUser.isResponsibleTutor eq 'N'}">selected="selected"</c:if>>否</option>
@@ -298,7 +298,7 @@
 					</td>
 					<th>师资级别：</th>
 					<td>
-						<select name="teacherLevel" class="select" style="width: 160px;">
+						<select name="teacherLevel" class="select" style="width: 181px;margin:0 12px 0 4px">
 							<option value="" >请选择</option>
 							<option value="一般师资" <c:if test="${sysUser.teacherLevel eq '一般师资'}">selected="selected"</c:if>>一般师资</option>
 							<option value="骨干师资" <c:if test="${sysUser.teacherLevel eq '骨干师资'}">selected="selected"</c:if>>骨干师资</option>
