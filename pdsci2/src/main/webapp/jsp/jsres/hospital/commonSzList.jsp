@@ -34,8 +34,11 @@
                     <c:if test="${sysUser.isResponsibleTutor == 'Y'}">
                         <td>是</td>
                     </c:if>
-                    <c:if test="${sysUser.isResponsibleTutor ne 'Y'}">
+                    <c:if test="${sysUser.isResponsibleTutor == 'N'}">
                         <td>否</td>
+                    </c:if>
+                    <c:if test="${empty sysUser.isResponsibleTutor}">
+                        <td>-</td>
                     </c:if>
                 </c:if>
                 <c:if test="${isQueryTutor eq 'Y' }">

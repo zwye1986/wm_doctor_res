@@ -137,6 +137,13 @@
         }
     };
     function checkFile(obj){
+        debugger;
+        var filePath = obj.value;
+        var suffix = filePath.substring(filePath.lastIndexOf(".")+1);
+        if("jpg" != suffix && "png" != suffix && "jpeg" != suffix){
+            jboxTip("请上传jpg,png,jpeg格式的图片");
+            return;
+        }
         var id = obj.id;
         jboxStartLoading();
         $.ajaxFileUpload({
@@ -195,7 +202,7 @@
                     <td style="border-bottom: 1px solid #e3e3e3;" id="f">
                         <c:if test="${not empty pubFiles}">
                         <c:forEach items="${pubFiles}" var="pubFile" varStatus="status">
-                            <div class="imageOper" style="border: 1px solid #e3e3e3; margin-left: 5px; margin-top: 5px;margin-bottom:5px;  width: 160px;height: 150px;float: left;text-align: center;" id="${pubFile.fileFlow}">
+                            <div class="imageOper" style="border: 1px solid #e3e3e3; margin-left: 5px; margin-top: 5px;margin-bottom:5px;  width: 160px;height: 150px;float: left;text-align: center;" id="${pubFile.fileFlow}" title="${pubFile.fileName}">
                                 <c:if test="${not (readonly eq 'Y')}">
                                   <div style="float: right;padding-top:5px;padding-right: 5px;position: relative;"><img title="删除" src="<s:url value="/css/skin/Blue/images/del1.png" />" style="margin-right: 5px;cursor: pointer;" onclick="del(this);"/></div>
                                     <a target="_blank" href="${sysCfgMap['upload_base_url']}/${pubFile.filePath}"><img class="imgc" src="${sysCfgMap['upload_base_url']}/${pubFile.filePath}" style="margin-top: -21px;" width="100%" height="100%"/> </a>

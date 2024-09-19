@@ -83,6 +83,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Controller
@@ -97,6 +98,12 @@ public class JsResManageController extends GeneralController {
 	final static String Ssczzd = "14"; final static String Yxzdbgsxzd = "15"; final static String Lcwxyd = "16";
 	final static String Ryjy = "17"; final static String Rzyjdjy = "18"; final static String Cjbg = "19";
 	final static String Bgdfx = "20";final static String Jxsj = "21";final static String Sjys = "22";
+
+	private final static String chinaIdLoose = "^(\\d{18}|\\d{15}|\\d{17}[X])$";
+	private final static String mobile = "^[1][3456789]\\d{9}$";
+
+	private final static Pattern id_pattern = Pattern.compile(chinaIdLoose);
+	private final static Pattern mobile_pattern = Pattern.compile(mobile);
 
 	private List<String> acceptedRoleNameList = Arrays.asList("带教老师", "科主任", "科秘", "教学主任", "教学秘书", "督导-评分专家");
 
@@ -6806,13 +6813,17 @@ public class JsResManageController extends GeneralController {
 						userName = value;
 						sysUser.setUserName(userName);
 					}else if("身份证号".equals(colnames.get(j))){
-						if(StringUtil.isEmpty(value)) {
-							errorMsg.add("第"+(row+2)+"行身份证号未填写，导入失败");
+						if(StringUtil.isNotEmpty(value) && !id_pattern.matcher(value).matches()) {
+							errorMsg.add("第"+(row+2)+"行身份证号格式不对，导入失败");
 							continue loop;
 						}
 						idNo = value;
 						sysUser.setIdNo(idNo);
-					} else if("联系方式".equals(colnames.get(j))){
+					} else if("电话号码".equals(colnames.get(j))){
+						if(StringUtil.isNotEmpty(value) && !mobile_pattern.matcher(value).matches()) {
+							errorMsg.add("第"+(row+2)+"行电话号码格式不对，导入失败");
+							continue loop;
+						}
 						userPhone = value;
 						sysUser.setUserPhone(userPhone);
 					}else if("科室名称".equals(colnames.get(j))){
@@ -6835,22 +6846,28 @@ public class JsResManageController extends GeneralController {
 						userCode = value;
 						sysUser.setUserCode(userCode);
 					} else if("角色".equals(colnames.get(j))){
-						String[] mulRoleName = value.split(";");
-						for (String roleName : mulRoleName) {
-							if(!acceptedRoleNameList.contains(roleName)) {
-								errorMsg.add("导入失败！第"+ (row+2) +"行，【"+roleName+"角色】不在允许的角色范围内！");
-								continue loop;
-							}
+						if(StringUtils.isNotEmpty(value)){
+							String[] mulRoleName = value.split(";");
+							for (String roleName : mulRoleName) {
+								if(StringUtils.isEmpty(roleName)){
+									continue loop;
+								}
+								if(!acceptedRoleNameList.contains(roleName)) {
+									errorMsg.add("导入失败！第"+ (row+2) +"行，【"+roleName+"角色】不在允许的角色范围内！");
+									continue loop;
+								}
 
-							SysRole sysRole = userRoleBiz.getByRoleName(roleName);
-							if (sysRole == null) {
-								errorMsg.add("导入失败！第"+ (row+2) +"行，【"+roleName+"角色】不属于该机构！");
-								continue loop;
-							}
-							if (sysRole != null) {
-								allRoleFlows.add(sysRole.getRoleFlow());
+								SysRole sysRole = userRoleBiz.getByRoleName(roleName);
+								if (sysRole == null) {
+									errorMsg.add("导入失败！第"+ (row+2) +"行，【"+roleName+"角色】不属于该机构！");
+									continue loop;
+								}
+								if (sysRole != null) {
+									allRoleFlows.add(sysRole.getRoleFlow());
+								}
 							}
 						}
+
 					}
 				}
 				//验证惟一用户登录名

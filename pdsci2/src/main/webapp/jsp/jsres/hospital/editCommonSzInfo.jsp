@@ -242,13 +242,13 @@
 		<tr>
 			<th width="150px">手机号码</th>
 			<td  style="text-align: left;">
-				<input  type="text" id="userPhone" name="userPhone"  class="select" value="${teacher.userPhone}" style="text-align: left;width: 150px;"/>
+				<input  type="text" id="userPhone" name="userPhone"  class="validate[custom[mobile]] input" value="${teacher.userPhone}" style="text-align: left;width: 150px;"/>
 			</td>
 		</tr>
 		<tr>
 			<th width="150px">身份证号</th>
 			<td  style="text-align: left;">
-				<input  type="text" id="idNo" name="idNo" class="select" value="${teacher.idNo}" style="text-align: left;width: 150px;"/>
+				<input  type="text" id="idNo" name="idNo" class="validate[custom[chinaIdLoose]] input"  value="${teacher.idNo}" style="text-align: left;width: 150px;"/>
 			</td>
 		</tr>
 		<tr>
