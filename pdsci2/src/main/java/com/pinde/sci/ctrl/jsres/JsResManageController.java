@@ -6827,15 +6827,20 @@ public class JsResManageController extends GeneralController {
 						userPhone = value;
 						sysUser.setUserPhone(userPhone);
 					}else if("科室名称".equals(colnames.get(j))){
-						String[] mulDeptName = value.split(";");
-						for (String deptName : mulDeptName) {
-							SysDept sysDept = deptBiz.readSysDeptByName(GlobalContext.getCurrentUser().getOrgFlow(),deptName);
-							if (sysDept == null) {
-								errorMsg.add("导入失败！第"+ (row+2) +"行，【"+deptName+"科室】不属于该机构！");
-								continue loop;
-							}
-							if (sysDept != null) {
-								allDeptFlows.add(sysDept.getDeptFlow());
+						if(StringUtils.isNotEmpty(value)){
+							String[] mulDeptName = value.split(";");
+							for (String deptName : mulDeptName) {
+								if(StringUtils.isEmpty(deptName)){
+									continue loop;
+								}
+								SysDept sysDept = deptBiz.readSysDeptByName(GlobalContext.getCurrentUser().getOrgFlow(),deptName);
+								if (sysDept == null) {
+									errorMsg.add("导入失败！第"+ (row+2) +"行，【"+deptName+"科室】不属于该机构！");
+									continue loop;
+								}
+								if (sysDept != null) {
+									allDeptFlows.add(sysDept.getDeptFlow());
+								}
 							}
 						}
 					}else if("用户名".equals(colnames.get(j))){
