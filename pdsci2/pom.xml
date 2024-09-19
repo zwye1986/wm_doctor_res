@@ -383,12 +383,18 @@
             <artifactId>junit</artifactId>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>license3j-1.0.3</groupId>
             <artifactId>license3j-1.0.3</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${lib.dir}/license3j-1.0.3.jar</systemPath>
+        </dependency>-->
+
+        <dependency>
+            <groupId>com.verhas</groupId>
+            <artifactId>license3j</artifactId>
+            <version>2.0.0-JVM8</version>
         </dependency>
 
         <dependency>
@@ -802,6 +808,34 @@
             <scope>system</scope>
             <systemPath>${lib.dir}/zxing-javase-3.1.0.jar</systemPath>
         </dependency>
+
+        <dependency>
+            <groupId>io.klib.tools</groupId>
+            <artifactId>org.hyperic.sigar.linux.x86</artifactId>
+            <version>1.6.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.vindell</groupId>
+            <artifactId>sigar-native</artifactId>
+            <version>1.0.1.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>sigar</artifactId>
+                    <groupId>org.hyperic</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>sigar-dist</artifactId>
+                    <groupId>org.hyperic</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.34</version>
+        </dependency>
     </dependencies>
     <!-- 多项目（子父项目）中方便依赖管理，保证版本一致，父项目中使用，声明依赖，但不引用，子项目中可以不加版本，使用父项目中配置 -->
     <dependencyManagement>
@@ -945,6 +979,26 @@
                         <argument>com.pinde.sci.PindeSciApplication</argument>
                     </arguments>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>native-dep</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <!--<stripVersion>true</stripVersion>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <includeGroupIds>org.hyperic</includeGroupIds>-->
+                            <outputDirectory>${project.build.directory}/</outputDirectory>
+                            <includeTypes>dll,so</includeTypes>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

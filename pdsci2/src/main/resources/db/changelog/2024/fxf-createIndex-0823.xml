@@ -5,15 +5,15 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="fxf-createIndex-240823" author="fxf">
-        <sql>
-            CREATE INDEX PDSCI.activity_index2
-            ON PDSCI.TEACHING_ACTIVITY_INFO (DEPT_FLOW ASC);
+<!--    <changeSet id="fxf-createIndex-240823" author="fxf">-->
+<!--        <sql>-->
+<!--            CREATE INDEX PDSCI.activity_index2-->
+<!--            ON PDSCI.TEACHING_ACTIVITY_INFO (DEPT_FLOW ASC);-->
 
-            CREATE INDEX PDSCI.activity_result_index2
-            ON PDSCI.TEACHING_ACTIVITY_RESULT (USER_FLOW ASC);
-        </sql>
-    </changeSet>
+<!--            CREATE INDEX PDSCI.activity_result_index2-->
+<!--            ON PDSCI.TEACHING_ACTIVITY_RESULT (USER_FLOW ASC);-->
+<!--        </sql>-->
+<!--    </changeSet>-->
 
 </databaseChangeLog>
 

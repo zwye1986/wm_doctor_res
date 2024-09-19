@@ -246,9 +246,9 @@
 			</td>
 		</tr>
 		<tr>
-			<th width="150px"><font color="red" >*</font>身份证号</th>
+			<th width="150px">身份证号</th>
 			<td  style="text-align: left;">
-				<input  type="text" id="idNo" name="idNo" class="select validate[required]" value="${teacher.idNo}" style="text-align: left;width: 150px;"/>
+				<input  type="text" id="idNo" name="idNo" class="select" value="${teacher.idNo}" style="text-align: left;width: 150px;"/>
 			</td>
 		</tr>
 		<tr>
