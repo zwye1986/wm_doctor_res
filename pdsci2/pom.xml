@@ -437,14 +437,6 @@
         </dependency>
 
         <dependency>
-            <groupId>ojdbc6-11.2.0.1.0</groupId>
-            <artifactId>ojdbc6-11.2.0.1.0</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/ojdbc6-11.2.0.1.0.jar</systemPath>
-        </dependency>
-
-        <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
         </dependency>
