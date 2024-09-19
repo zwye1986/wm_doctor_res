@@ -62,7 +62,7 @@
             <systemPath>${lib.dir}/axis.jar</systemPath>
         </dependency>
 
-        <dependency>
+<!--        <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcpg-jdk18on</artifactId>
             <version>1.78.1</version>
@@ -72,7 +72,7 @@
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk18on</artifactId>
             <version>1.78.1</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>bonecp-0.8.0.RELEASE</groupId>

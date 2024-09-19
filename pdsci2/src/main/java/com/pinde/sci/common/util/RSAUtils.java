@@ -77,6 +77,10 @@ public class RSAUtils {
         return null;
     }
 
+    public static KeyPair getDefaultKeyPair() {
+        return generateKeyPair();
+    }
+
     /**
      * 使用指定的私钥解密数据。
      *
@@ -113,6 +117,22 @@ public class RSAUtils {
         return null;
     }
 
+    public static String decryptString(String encryptText,KeyPair keyPair) {
+        if (StringUtils.isBlank(encryptText)) {
+            return null;
+        }
+        try {
+            byte[] en_data = Hex.decode(encryptText);
+            byte[] data = decrypt( keyPair.getPrivate(), en_data);
+            return new String(data, StandardCharsets.UTF_8);
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * 使用秘钥 - 对js端传递过来密文进行解密
      *
@@ -121,6 +141,24 @@ public class RSAUtils {
      */
     public static String decryptStringByJs(String encryptText) {
         String text = decryptString(encryptText);
+        if (text == null) {
+            return null;
+        }
+        String reverse = StringUtils.reverse(text);
+        String decode = null;
+        try {
+            //这里需要进行编码转换.注:在前端js对明文加密前需要先进行转码-可自行百度"编码转换"
+            decode = URLDecoder.decode(reverse, "UTF-8");
+            System.out.println("解密后文字：" + decode);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return decode;
+    }
+
+
+    public static String decryptStringByJs(String encryptText,KeyPair keyPair) {
+        String text = decryptString(encryptText,keyPair);
         if (text == null) {
             return null;
         }
@@ -193,6 +231,7 @@ public class RSAUtils {
 //        System.out.println(param1);
 
         System.out.println(decryptStringByJs("784ee3f15625bb5718b05ea7b19ac2beab778998721f1c54a6c804f48b31a8397baa85b9727f59e6d7a7abdbeba6f284449249f7cb7e7151b3cfbb6f1d0dae335011fda60d796a6f6b78ec55f7f43965d4b0275191aa6ab13e5d115521cd4f6e04895f6eb7358f7d0d592109c5b942f5a5ba5766e0a99840272ec6ee368ca507"));
+        System.out.println(decryptStringByJs("229de3cec56863a381b902a1a469c1e634976b43d2017b7e0d46283ca85d6ff9653b499f530018751859b7159e3e59c0119c43cc1e1d4d193c010545dc4dee5566de97667ca410c499352ff01f13b7eb99f693d9d8198c453a55778f0ca04d0f94f80b4dcb739b9839e0cac3c3d8de0542e5c0f912fdd49ac9fc65e7041ceb14"));
 
     }
 }

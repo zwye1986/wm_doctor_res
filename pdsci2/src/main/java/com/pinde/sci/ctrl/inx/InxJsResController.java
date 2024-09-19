@@ -43,6 +43,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
+import java.security.KeyPair;
 import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
 import java.util.*;
@@ -108,7 +109,9 @@ public class InxJsResController extends GeneralController {
         request.getSession().setAttribute("loginUrl", url);
         request.getSession().setAttribute("sysTitle", title);
         // 获取公钥系数和公钥指数
-        RSAPublicKey publicKey = RSAUtils.getDefaultPublicKey();
+        KeyPair defaultKeyPair = RSAUtils.getDefaultKeyPair();
+        setSessionAttribute("defaultKeyPair",defaultKeyPair);
+        RSAPublicKey publicKey = (RSAPublicKey)defaultKeyPair.getPublic();
         if (null != publicKey) {
             //公钥-系数(n)
             model.addAttribute("pkModulus", new String(Hex.encode(publicKey.getModulus().toByteArray())));
@@ -1092,14 +1095,16 @@ public class InxJsResController extends GeneralController {
     @RequestMapping(value = {"/login"}, method = {RequestMethod.POST})
     public String login(String data, String errorLoginPage, Model model, HttpServletRequest request) throws UnsupportedEncodingException {
         // 解密
-        data = RSAUtils.decryptStringByJs(data);
+        // 获取公钥系数和公钥指数
+        KeyPair defaultKeyPair = (KeyPair)getSessionAttribute("defaultKeyPair");
+        RSAPublicKey publicKey = (RSAPublicKey)defaultKeyPair.getPublic();
+        data = RSAUtils.decryptStringByJs(data,defaultKeyPair);
         Map<String, String> paramMap = (Map<String, String>) JSON.parse(data);
         String userCode = paramMap.get("userCode");
         String userPasswd1 = paramMap.get("userPasswd");
         String userPasswd = java.net.URLDecoder.decode(userPasswd1, "UTF-8");
         String verifyCode = paramMap.get("verifyCode");
-        // 获取公钥系数和公钥指数
-        RSAPublicKey publicKey = RSAUtils.getDefaultPublicKey();
+
 
         InxInfo info = new InxInfo();
         PageHelper.startPage(1, 4);
