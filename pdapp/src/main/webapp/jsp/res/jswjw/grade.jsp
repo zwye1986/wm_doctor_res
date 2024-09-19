@@ -43,7 +43,7 @@
 		</c:forEach>
 		</c:forEach>
 		</c:if>
-
+	,
 		{
 			"name":"主观评价",
 			"inputId":"lostReason",
