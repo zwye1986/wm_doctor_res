@@ -383,7 +383,7 @@
       </if>
       <if test="record.deptFlow != null and record.deptFlow != ''" >
         AND exists (select 1 from sys_user_dept sud where
-        sud.user_flow=RES_TEACHER_TRAINING.RECORD_FLOW
+        sud.user_flow=a.RECORD_FLOW
         and sud.record_status = 'Y'
         and sud.dept_flow= #{record.deptFlow})
       </if>
