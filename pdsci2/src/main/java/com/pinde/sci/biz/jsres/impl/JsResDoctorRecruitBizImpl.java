@@ -2942,6 +2942,8 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 
 				"地址",
 				"工作单位",
+
+				"派送学校"
 		};
 		HSSFCell cellTitle = null;
 		for (int i = 0; i < titles.length; i++) {
@@ -3012,7 +3014,8 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 						recruitExt.getGraduationYear(),
 						recruitExt.getResDoctor().getDoctorTypeName(),
 						recruitExt.getSysUser().getUserAddress(),
-						recruitExt.getWorkAddr()
+						recruitExt.getWorkAddr(),
+						recruitExt.getWorkSchoolName()
 				};
 				for (int j = 0; j < titles.length; j++) {
 					HSSFCell cellFirst = rowFour.createCell(j);

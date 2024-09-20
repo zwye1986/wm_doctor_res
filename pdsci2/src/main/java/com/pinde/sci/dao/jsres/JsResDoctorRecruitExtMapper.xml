@@ -19,6 +19,7 @@
 			<result column="edOrgName" jdbcType="VARCHAR" property="orgName"/>
 			<result column="DOCTOR_TYPE_ID" jdbcType="VARCHAR" property="doctorTypeId"/>
 			<result column="DOCTOR_TYPE_NAME" jdbcType="VARCHAR" property="doctorTypeName"/>
+			<result column="WORK_ORG_ID" jdbcType="VARCHAR" property="workOrgId"/>
 		</association>
 	</resultMap>
 	<resultMap id="DoctorRecruitNew" type="com.pinde.sci.model.jsres.JsResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
@@ -1913,7 +1914,8 @@
 			ED.ORG_FLOW AS EDORGFLOW,
 			ED.ORG_NAME AS EDORGNAME,
 			ED.DOCTOR_TYPE_NAME,
-			ED.DOCTOR_TYPE_ID
+			ED.DOCTOR_TYPE_ID,
+			ED.WORK_ORG_ID
 		FROM
 			RES_DOCTOR_RECRUIT DR
 		LEFT JOIN PDSCI.SYS_USER U ON DR.DOCTOR_FLOW = U .USER_FLOW
