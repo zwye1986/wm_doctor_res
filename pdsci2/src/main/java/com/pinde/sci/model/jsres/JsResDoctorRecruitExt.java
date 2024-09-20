@@ -48,6 +48,16 @@ public class JsResDoctorRecruitExt extends ResDoctorRecruit{
 
 	private String workAddr;
 
+	private String workSchoolName;
+
+	public String getWorkSchoolName() {
+		return workSchoolName;
+	}
+
+	public void setWorkSchoolName(String workSchoolName) {
+		this.workSchoolName = workSchoolName;
+	}
+
 	public String getSex() {
 		return sex;
 	}

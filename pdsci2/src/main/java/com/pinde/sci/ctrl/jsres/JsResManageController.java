@@ -3931,9 +3931,17 @@ public class JsResManageController extends GeneralController {
 		// 增加几个导出字段 性别/年龄/ 地址/工作单位 /毕业院校/毕业时间
 		// /毕业院校/毕业时间 根据最高学历，从PubUserResume里取
 		List<String> userFlowList = new ArrayList<>();
+		List<SysDict>sendSchoolList = dictBiz.searchDictListByDictTypeId(DictTypeEnum.SendSchool.getId());
+		Map<String, String> sendSchoolIdToNameMap = sendSchoolList.stream().collect(Collectors.toMap(vo -> vo.getDictId(), vo -> vo.getDictName(), (vo1, vo2) -> vo1));
+
 		recruitList.forEach(vo -> {
 			if(",硕士研究生,博士研究生,本科,专科,".contains("," + vo.getSysUser().getEducationName() + ",")) {
 				userFlowList.add(vo.getSysUser().getUserFlow());
+			}
+			// 在校专硕
+			if(JsResDocTypeEnum.Graduate.getId().equals(vo.getResDoctor().getDoctorTypeId())) {
+				// 派送学校
+				vo.setWorkSchoolName(sendSchoolIdToNameMap.get(vo.getResDoctor().getWorkOrgId()));
 			}
 		});
 
@@ -3994,12 +4002,13 @@ public class JsResManageController extends GeneralController {
 						break;
 					default:
 				}
+
+				// 工作单位
+				recruitExt.setWorkAddr(userResumeExtInfoForm.getWorkUnit());
 			}
 			// /毕业院校/毕业时间
 			recruitExt.setGraduateSchool(graduateSchool);
 			recruitExt.setGraduateTime(graduateTime);
-			// 工作单位
-			recruitExt.setWorkAddr(userResumeExtInfoForm.getWorkUnit());
 		}
 
 		jsResDoctorRecruitBiz.exportRecruitList(recruitList,response);

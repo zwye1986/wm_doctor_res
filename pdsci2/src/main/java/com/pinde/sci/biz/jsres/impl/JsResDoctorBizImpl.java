@@ -3770,7 +3770,8 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 				"#协同单位（与单位公章对应的官方全称）",
 				"#协同医院级别",
 				"#协同医院等次",
-				"#医疗卫生机构类别"
+				"#医疗卫生机构类别",
+				"派送学校"
 		};
 		HSSFCell cellTitle = null;
 		for (int i = 0; i < titles.length; i++) {
@@ -3904,6 +3905,7 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 				String hospitalCateName="";
 				String hospitalAttrName="";
 				String workOrg = (String)doctorInfoExts.get(i).getWorkOrgName();
+				String graduatedWorkOrg = "";
 				if (ResDocTypeEnum.Company.getId().equals(doctorInfoExts.get(i).getDoctorTypeId())) {
 //					ResBase resBase = resBaseMapper.selectByPrimaryKey((String)doctorInfoExts.get(i).getInfoOrgFlow());
 //					if (resBase != null && jointFlag.equals("是")) {
@@ -3968,6 +3970,9 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 						hospitalCateName=userResumeExt.getBasicHealthOrgName();
 					}
 				} else {
+					if(ResDocTypeEnum.Graduate.getId().equals(doctorInfoExts.get(i).getDoctorTypeId())) {
+						graduatedWorkOrg = workOrg;
+					}
 					workOrg = "";
 					userResumeExt.setMedicalHeaithOrgName("");
 				}
@@ -4057,7 +4062,8 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 						joinName,
 						"",
 						"",
-						""
+						"",
+						graduatedWorkOrg
 				};
 				for (int j = 0; j < titles.length; j++) {
 					HSSFCell cellFirst = rowFour.createCell(j);
