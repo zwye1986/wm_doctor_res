@@ -158,17 +158,17 @@
     </div>
 
     <c:set var="preKey" value="res_${preRecTypeEnumPreTrainForm.id}_form_flag"/>
-    <div style="overflow-x:auto;max-width:940px;overflow-y:auto;min-height:500px; margin-left: 30px;">
+    <div style="overflow-x:auto;max-width:100%;overflow-y:auto;min-height:500px; margin-left: 30px; margin-right: 30px; ">
         <table border="0" cellpadding="0" cellspacing="0" class="grid">
             <tr>
-                <th style="width: 80px;">姓名</th>
-                <th style="width: 80px;">人员类型</th>
-                <th style="width: 80px;">标准科室</th>
-                <th style="width: 80px;">轮转科室</th>
+                <th style="width: 100px;">姓名</th>
+                <th style="width: 100px;">人员类型</th>
+                <th style="width: 100px;">标准科室</th>
+                <th style="width: 100px;">轮转科室</th>
                 <th style="width: 170px;">轮转时间</th>
                 <c:forEach items="${registryTypeEnumList}" var="registryType">
                     <c:set value="res_registry_type_${registryType.id}" var="viewCfgKey"/>
-                    <c:if test="${sysCfgMap[viewCfgKey] eq GlobalConstant.FLAG_Y}">
+                    <c:if test="${sysCfgMap[viewCfgKey] eq GlobalConstant.FLAG_Y}">git
                         <th style="width: 80px;">${registryType.name}</th>
                     </c:if>
                 </c:forEach>
