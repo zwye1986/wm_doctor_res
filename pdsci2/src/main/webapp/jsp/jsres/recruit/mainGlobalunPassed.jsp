@@ -33,6 +33,7 @@ $(document).ready(function(){
 	</c:forEach>
     showProve();
 	toPage(1);
+	changeTrainSpes();
 });
 function showProve()
 {

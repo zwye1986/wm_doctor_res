@@ -58,9 +58,11 @@ $(document).ready(function(){
 			$("#year"+"${dict.id}").attr("checked","checked");
 		</c:if>
 	</c:forEach>
-	<c:if test="${not empty param.trainingTypeId}">
+
+	var curTrainingTypeId = $("#trainingTypeId").val();
+	if(curTrainingTypeId) {
 		changeTrainSpes('0');
-	</c:if>
+	}
 	showProve();
 	toPage(1);
 });
