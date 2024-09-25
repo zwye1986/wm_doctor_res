@@ -168,7 +168,7 @@
                 <th style="width: 170px;">轮转时间</th>
                 <c:forEach items="${registryTypeEnumList}" var="registryType">
                     <c:set value="res_registry_type_${registryType.id}" var="viewCfgKey"/>
-                    <c:if test="${sysCfgMap[viewCfgKey] eq GlobalConstant.FLAG_Y}">git
+                    <c:if test="${sysCfgMap[viewCfgKey] eq GlobalConstant.FLAG_Y}">
                         <th style="width: 80px;">${registryType.name}</th>
                     </c:if>
                 </c:forEach>
