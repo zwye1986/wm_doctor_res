@@ -44,6 +44,9 @@ public interface IResScoreBiz {
 	 * @return
 	 */
 	ResScore getScoreByProcess(String processFlow);
+
+	ResScore getMaxScoreByProcess(String processFlow);
+
 	ResScore getScoreByResult(String resultFlow);
 
 	/**

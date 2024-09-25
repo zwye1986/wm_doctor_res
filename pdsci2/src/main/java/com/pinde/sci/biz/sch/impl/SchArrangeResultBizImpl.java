@@ -2665,6 +2665,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			//数据行开始遍历
 			for (int i = 1; i <= row_num; i++) {
 				Row r = sheet.getRow(i);
+				if(r == null) continue;
 				String value = "";
 				Map<String, Object> map = new HashMap<>();
 				List<Map<String, Object>> deptList = new ArrayList<>();

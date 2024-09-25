@@ -655,10 +655,10 @@ function showSelection(flag) {
 							<div class="form_label">培训类别：</div>
 							<div class="form_content">
 								<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')">
-									<option value="">请选择</option>
+									<%--<option value="">请选择</option>--%>
 									<option value="DoctorTrainingSpe" <c:if test="${param.trainingTypeId=='DoctorTrainingSpe'}">selected="selected"</c:if>>住院医师</option>
-									<option value="AssiGeneral" <c:if test="${param.trainingTypeId=='AssiGeneral'}">selected="selected"</c:if>>助理全科</option>
-									<%--<option value="">请选择</option>
+									<%--<option value="AssiGeneral" <c:if test="${param.trainingTypeId=='AssiGeneral'}">selected="selected"</c:if>>助理全科</option>
+									    <option value="">请选择</option>
 									<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
 										<option value="${trainCategory.id}" <c:if test="${param.trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>
 									</c:forEach>--%>
