@@ -144,7 +144,7 @@
         {
         "optionId": "急诊",
         "optionDesc": "急诊"
-        }
+        },
         {
         "optionId":"手术室",
         "optionDesc":"手术室"
@@ -314,7 +314,7 @@
         {
         "optionId": "9",
         "optionDesc": "9"
-        },
+        }
         ]
         },
         {
@@ -359,7 +359,7 @@
         {
         "optionId": "9",
         "optionDesc": "9"
-        },
+        }
         ]
         },
         {
@@ -404,7 +404,7 @@
         {
         "optionId": "9",
         "optionDesc": "9"
-        },
+        }
         ]
         },
         {
@@ -449,7 +449,7 @@
         {
         "optionId": "9",
         "optionDesc": "9"
-        },
+        }
         ]
         },
         {
@@ -494,7 +494,7 @@
         {
         "optionId": "9",
         "optionDesc": "9"
-        },
+        }
         ]
         },
         {
@@ -539,7 +539,7 @@
         {
         "optionId": "9",
         "optionDesc": "9"
-        },
+        }
         ]
         },
         {
@@ -584,7 +584,7 @@
         {
         "optionId": "9",
         "optionDesc": "9"
-        },
+        }
         ]
         },
         {
@@ -629,7 +629,7 @@
         {
         "optionId": "9",
         "optionDesc": "9"
-        },
+        }
         ]
         },
         {
@@ -674,7 +674,7 @@
         {
         "optionId": "9",
         "optionDesc": "9"
-        },
+        }
         ]
         },
         {
@@ -719,7 +719,7 @@
         {
         "optionId": "9",
         "optionDesc": "9"
-        },
+        }
         ]
         },
         {
@@ -764,7 +764,7 @@
         {
         "optionId": "9",
         "optionDesc": "9"
-        },
+        }
         ]
         },
         {
@@ -823,7 +823,7 @@
         {
         "optionId": "9",
         "optionDesc": "9"
-        },
+        }
         ]
         },
         {
