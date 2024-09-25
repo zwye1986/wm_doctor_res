@@ -2019,7 +2019,7 @@ public class JsResTeacherController extends GeneralController{
 			boolean f = false;
 			f=doctorBiz.getCkkPower(operUserFlow);
 			if (f) {
-				ResScore outScore = resScoreBiz.getScoreByProcess(processFlow);
+				ResScore outScore = resScoreBiz.getMaxScoreByProcess(processFlow);
 				model.addAttribute("outScore",outScore);
 				// 如果有出科成绩 出科试卷flow不为空则查询试卷对应的及格分
 				if(null != outScore && StringUtil.isNotBlank(outScore.getPaperFlow())){

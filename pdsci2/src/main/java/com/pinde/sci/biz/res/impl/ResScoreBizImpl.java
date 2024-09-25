@@ -42,6 +42,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(rollbackFor=Exception.class)
@@ -160,6 +161,30 @@ public class ResScoreBizImpl implements IResScoreBiz{
 		}
 		
 		return scores.get(0);
+	}
+
+	@Override
+	public ResScore getMaxScoreByProcess(String processFlow){
+		if(!StringUtil.isNotBlank(processFlow)){
+			return null;
+		}
+
+		ResScoreExample example=new ResScoreExample();
+		Criteria criteria= example.createCriteria();
+		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+				.andProcessFlowEqualTo(processFlow);
+
+		List<ResScore> scores = scoreMapper.selectByExample(example);
+
+		if(scores==null || scores.isEmpty()){
+			return null;
+		}
+
+		return scores.stream().sorted((s1, s2) -> {
+			if(s1.getTheoryScore() == null) return 1;
+			else if(s2.getTheoryScore() == null) return -1;
+			else return s2.getTheoryScore().compareTo(s1.getTheoryScore());
+		}).collect(Collectors.toList()).get(0);
 	}
 
 	@Override
