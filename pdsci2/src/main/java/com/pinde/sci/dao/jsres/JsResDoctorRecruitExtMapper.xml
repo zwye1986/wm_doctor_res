@@ -339,6 +339,9 @@
 			<if test="resDoctorRecruit.graduationYear!=null and resDoctorRecruit.graduationYear!=''">
 				and dr.GRADUATION_YEAR=#{resDoctorRecruit.graduationYear}
 			</if>
+			<if test="resDoctorRecruit.doctorStatusId == null">
+				and dr.DOCTOR_STATUS_ID in ('20','21','22','24')
+			</if>
 		</if>
 		<if test="derateFlag!=null and resDoctorRecruit.trainYear!=null and resDoctorRecruit.trainYear!='' ">
 			and dr.TRAIN_YEAR not in (#{resDoctorRecruit.trainYear})
