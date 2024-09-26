@@ -45,10 +45,11 @@
 </style>
 <script type="text/javascript">
 	function saveBaseInfo(){
-		if(!$("#BaseInfoForm").validationEngine("validate")){
+		if(!$("#BaseInfoForm").validationEngine("validate") || !checkSetJointOrg()){ // 新加了协同单位相关内容，保存时校验并组织数据
 			$("#indexBody").scrollTop("0px");
 			return false;
 		}
+
         var orgProvNameText = $("#orgProvId option:selected").text();
         if(orgProvNameText == "选择省"){
             orgProvNameText = "";
@@ -64,7 +65,7 @@
         $("#orgProvName").val(orgProvNameText);
         $("#orgCityName").val(orgCityNameText);
         $("#orgAreaName").val(orgAreaNameText);
-		jboxPost("<s:url value='/jsres/base/saveBase'/>" , $("#BaseInfoForm").serialize() , function(resp){
+		jboxSubmit($("#BaseInfoForm"), "<s:url value='/jsres/base/saveBase'/>", function(resp){
 			if("${GlobalConstant.SAVE_SUCCESSED}" == resp){
 				$("#submitBtn").show();
 				setTimeout(function(){
@@ -73,6 +74,54 @@
 				},1000);
 			}
 		} , null , true);
+	}
+
+	function checkSetJointOrg() {
+		var joints = $("#jointContractBody tr");
+		// 校验必填项是不是都填了
+		for(var i = 0; i < joints.length; i++) {
+			var joint = joints[i];
+			var jointOrg = $(joint).find('select[name="jointOrgFlows"]');
+			if(!$(jointOrg).val()) {
+				jboxTip("请选择协同单位！");
+				return false;
+			}
+
+			var speId = $(joint).find('select[name="speIds"]');
+			if(!$(speId).val()) {
+				jboxTip("请选择专业基地！");
+				return false;
+			}
+
+			var uploadFiles = $(joint).find("input[name='files']");
+			var uploadNum = 0;
+			for(var j = 0; j < uploadFiles.length; j++) {
+				var uploadFile = uploadFiles[j];
+				if($(uploadFile).val()) {
+					uploadNum++;
+				}
+			}
+
+			// 记录一下该基地上传了几个文件
+			var fileUploadNum = $(joint).find("input[name='fileUploadNum']");
+			$(fileUploadNum).val(uploadNum);
+
+			var fileFlows = $(joint).find("input[name='jointContractFileFlows']");
+
+			if(!fileFlows.length) {
+				jboxTip("请上传协同关系协议！");
+				return false;
+			}
+
+			fileFlows = Array.from(fileFlows).filter(function(item) {
+				return $(item).val();
+			});
+			// 记录下原来的文件还剩几个
+			var fileRemainNum = $(joint).find("input[name='fileRemainNum']");
+			$(fileRemainNum).val(fileFlows.length);
+		}
+
+		return true;
 	}
 
 	String.prototype.htmlFormartById = function(data){
@@ -93,7 +142,7 @@
 	};
 
 	$(document).ready(function(){
-		if ($("#ywfgfzrTb tr").length <= 0) {
+		/*if ($("#ywfgfzrTb tr").length <= 0) {
 			add('ywfgfzr');
 		}
         if ($("#zpywkslxrTb tr").length <= 0) {
@@ -101,7 +150,7 @@
         }
         if ($("#zpglbmfzrTb tr").length <= 0) {
             add('zpglbmfzr');
-        }
+        }*/
 	});
 
 	function add(tb) {
@@ -143,6 +192,50 @@
 			$(cur).find("option[value='" + $(cur).val() + "']").attr("selected", true);
 		}
 	}
+
+	function addFile(obj) {
+		var td = obj.parentNode;
+		if($(td).find("div[class='jointContractFile']").length >= 3) {
+			jboxTip("一个协同单位最多只能上传3个协同关系协议！");
+			return;
+		}
+
+		$(td).append($("#jointContractFileTemplate div").clone());
+	}
+
+	function delJointFile(obj) {
+		jboxConfirm("确认删除？" , function(){
+			var div = obj.parentNode;
+			div.remove();
+		});
+	}
+
+	function moveTr(obj) {
+		jboxConfirm("确认删除？", function () {
+			var tr = obj.parentNode.parentNode;
+			tr.remove();
+		});
+	}
+
+	function addJointContract() {
+		$('#jointContractBody').append($("#jointContractTemplate tr:eq(0)").clone());
+	}
+
+	function uploadFileCheck(obj) {
+		var fileName = $(obj).val();
+		if (!$.trim(fileName)) {
+			jboxTip("请选择文件！");
+			return;
+		}
+		fileName = $.trim(fileName);
+		var types = ".pdf";
+		var regStr = /\.pdf$/i;
+		if (!regStr.test(fileName)) {
+			$(obj).val("");
+			jboxTip("请上传 pdf 格式的文件");
+			return;
+		}
+	}
 </script>
 <input type="hidden" id="resBase" name="resBase" value="${resBase}"/>
 <form id='BaseInfoForm' style="position:relative;">
@@ -153,7 +246,7 @@
 	<input type="hidden" name="resBase.sessionNumber" value="${sessionNumber}"/>
 	<div class="main_bd">
 		<div class="div_table">
-			<h4>基本信息</h4>
+			<h4><span class="red">*</span>基本信息</h4>
 			<table border="0" cellspacing="0" cellpadding="0" class="base_info" id="table1">
 				<colgroup>
 					<col width="20%"/>
@@ -421,7 +514,7 @@
 		</div>
 
 		<div class="div_table">
-			<h4>医院资质</h4>
+			<h4><span class="red">*</span>培训基地资质</h4>
 			<table border="0" cellspacing="0" cellpadding="0" class="base_info">
 				<colgroup>
 					<col width="30%"/>
@@ -429,7 +522,7 @@
 				</colgroup>
 				<tbody>
 					<tr>
-						<th>类别：</th>
+						<th><span class="red">*</span>类别：</th>
 						<td>
 							<input type="checkbox" name="basicInfo.lx" value="综合医院" <c:if test="${pdfn:contains(basicInfo.lx, '综合医院') }">checked="checked"</c:if>/>综合医院&nbsp;
 							<input type="checkbox" name="basicInfo.lx" value="专科医院" <c:if test="${pdfn:contains(basicInfo.lx, '专科医院') }">checked="checked"</c:if>/>专科医院&nbsp;
@@ -438,7 +531,7 @@
 						</td>
 					</tr>
 					<tr>
-						<th>级别：</th>
+						<th><span class="red">*</span>级别：</th>
 						<td>
 							<select style="width:207px;" class='select' name="basicInfo.levelRank">
 								<option value="">请选择</option>
@@ -473,7 +566,7 @@
 						</td>
 					</tr>--%>
 					<tr>
-						<th>注册登记类型：</th>
+						<th><span class="red">*</span>培训基地性质：</th>
 						<td>
 							<input type="radio" name="basicInfo.zcdjlx" value="公立医院" <c:if test="${basicInfo.zcdjlx eq '公立医院' }">checked="checked"</c:if>/>公立医院&nbsp;
 							&nbsp;&nbsp;&nbsp;&nbsp; 民营：
@@ -482,15 +575,15 @@
 							<input type="radio" name="basicInfo.zcdjlx" value="外资医院" <c:if test="${basicInfo.zcdjlx eq '外资医院' }">checked="checked"</c:if>/>外资医院
 						</td>
 					</tr>
-					<tr>
+					<%--<tr>
 						<th>分类管理方式：</th>
 						<td>
 							<input type="radio" name="basicInfo.classificationManagement" value="营利" <c:if test="${basicInfo.classificationManagement eq '营利' }">checked="checked"</c:if>/>营利&nbsp;
 							<input type="radio" name="basicInfo.classificationManagement" value="非营利" <c:if test="${basicInfo.classificationManagement eq '非营利' }">checked="checked"</c:if>/>非营利
 						</td>
-					</tr>
+					</tr>--%>
 					<tr>
-						<th>住院医师基地获批文号：</th>
+						<th><span class="red">*</span>住院医师基地获批文号：</th>
 						<td>
 							<select style="width:207px;" class='select' name="resBase.resApprovalNumberId">
 								<option value="">请选择</option>
@@ -501,11 +594,11 @@
 						</td>
 					</tr>
 					<tr>
-						<th>培训基地（医院）统一社会信用代码：</th>
+						<th><span class="red">*</span>培训基地统一社会信用代码：</th>
 						<td><input type="text" name="sysOrg.creditCode"  class='input' style="width: 197px;margin-left: 2px;"  value="${sysOrg.creditCode}"/></td>
 					</tr>
 					<tr>
-						<th>执业许可证：</th>
+						<th><span class="red">*</span>执业许可证：</th>
 						<td>
 							<span id="professionLicenceUrlSpan" style="display:${!empty basicInfo.professionLicenceUrl?'':'none'} ">
 								&nbsp; <a href="${sysCfgMap['upload_base_url']}/${basicInfo.professionLicenceUrl}" target="_blank">查看图片</a>&nbsp;
@@ -518,19 +611,19 @@
 						</td>
 					</tr>
 					<tr>
-						<th>医院等级证书：</th>
+						<th><span class="red">*</span>医院等级证书：</th>
 						<td>
 							<span id="hospitalLevelLicenceUrlSpan" style="display:${!empty basicInfo.hospitalLevelLicenceUrl?'':'none'} ">
 								&nbsp; <a href="${sysCfgMap['upload_base_url']}/${basicInfo.hospitalLevelLicenceUrl}" target="_blank">查看图片</a>&nbsp;
 							</span>
 							<c:if test="${resBase.baseStatusId eq baseStatusEnumNotSubmit.id or resBase.baseStatusId eq baseStatusEnumNotPassed.id or empty resBase.baseStatusId}">
 								<a id="hospitalLevelLicenceUrl" href="javascript:uploadFile('hospitalLevelLicenceUrl','医院等级证书图片');" style="margin-left: 2px">${empty basicInfo.hospitalLevelLicenceUrl?'':'重新'}上传</a>&nbsp;
-								<a id="hospitalLevelLicenceUrlDel" href="javascript:delFile('hospitalLevelLicenceUrl');" style="${empty basicInfo.hospitalLevelLicenceUrl?'display:none':''}">删除</a>&nbsp
+								<a id="hospitalLevelLicenceUrlDel" href="javascript:delFile('hospitalLevelLicenceUrl');" style="${empty basicInfo.hospitalLevelLicenceUrl?'display:none':''}">删除</a>
 								<input type="hidden" id="hospitalLevelLicenceUrlValue"  name="basicInfo.hospitalLevelLicenceUrl" value="${basicInfo.hospitalLevelLicenceUrl}" />
 							</c:if>
 						</td>
 					</tr>
-					<c:if test="${not empty jointOrgFlag and jointOrgFlag eq 'Y'}">
+					<%--<c:if test="${not empty jointOrgFlag and jointOrgFlag eq 'Y'}">
 						<tr>
 							<th>协同关系协议：</th>
 							<td>
@@ -544,7 +637,65 @@
 								</c:if>
 							</td>
 						</tr>
-					</c:if>
+					</c:if>--%>
+				</tbody>
+			</table>
+			<table class="base_info">
+				<thead>
+				<colgroup>
+					<col width="30%"/>
+					<col width="30%"/>
+					<col width="30%"/>
+					<col width="10%"/>
+				</colgroup>
+				<tr>
+					<th style="text-align: center"><span class="red">*</span>协同单位名称</th>
+					<th style="text-align: center"><span class="red">*</span>专业基地</th>
+					<th style="text-align: center"><span class="red">*</span>协同关系协议</th>
+					<th style="text-align: center">
+						操作
+						<span style="float: right;padding-right: 20px">
+							<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />" style="cursor: pointer;" onclick="addJointContract();" />
+						</span>
+					</th>
+				</tr>
+				</thead>
+				<tbody id="jointContractBody">
+				<c:forEach var="jointContract" items="${jointContractList}" varStatus="status">
+					<tr>
+						<td style="text-align: center">
+							<select name="jointOrgFlows" class="select" οnclick="return false;" οnmοusedοwn="return false;">
+								<option value="${jointContract.orgFlow}">${jointContract.orgName}</option>
+							</select>
+						</td>
+						<td style="text-align: center">
+							<select name="speIds" class="select">
+								<option></option>
+								<c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
+									<option value="${dict.dictId}" <c:if test="${jointContract.speId eq dict.dictId}">selected</c:if> >${dict.dictName}</option>
+								</c:forEach>
+							</select>
+						</td>
+						<td style="text-align: center">
+							（请选择pdf格式的文件）<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />" style="cursor: pointer;" onclick="addFile(this);" />
+							<c:if test="${not empty jointContract.fileList}">
+								<c:forEach items="${jointContract.fileList}" var="contractFile">
+									<div style="text-align: center;padding: 2px;margin: 2px" class="jointContractFile">
+										<a href="${sysCfgMap['upload_base_url']}/${contractFile.filePath}"
+										   target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;width: 60%;background-color: white;color: #409eff">${contractFile.fileName}</a>
+										<a onclick="delJointFile(this);" style="background-color: white;color: #409eff">删除</a>
+										<input type="hidden" name="jointContractFileFlows" value="${contractFile.fileFlow}" />
+									</div>
+								</c:forEach>
+							</c:if>
+							<input type="hidden" name="fileUploadNum" value="0" />
+							<input type="hidden" name="fileRemainNum" value="0" />
+						</td>
+						<td>
+							<a onclick="moveTr(this);">删除</a>
+						</td>
+					</tr>
+				</c:forEach>
 				</tbody>
 			</table>
 		</div>
@@ -554,6 +705,47 @@
 	</div>
 </form>
 <div style="display: none">
+	<div id="jointContractFileTemplate">
+		<div style="text-align: center" class="jointContractFile">
+			<input type='file' name='files' class='' onchange="uploadFileCheck(this);"
+				   accept=".pdf" style="width: 60%;padding: 2px;margin: 2px"/>
+			<a onclick="delJointFile(this);" style="background-color: white;color: #409eff">删除</a>
+			<input type="hidden" name="jointContractFileFlows" value="${contractFile.fileFlow}" />
+		</div>
+	</div>
+
+	<table id="jointContractTemplate">
+		<tr>
+			<td style="text-align: center">
+				<select name="jointOrgFlows" class="select">
+					<option></option>
+					<c:forEach items="${unjointOrgList}" var="jointOrg">
+						<option value="${jointOrg.orgFlow}">${jointOrg.orgName}</option>
+					</c:forEach>
+					<c:forEach items="${jointContractList}" var="jointOrg">
+						<option value="${jointOrg.orgFlow}">${jointOrg.orgName}</option>
+					</c:forEach>
+				</select>
+			</td>
+			<td style="text-align: center">
+				<select name="speIds" class="select">
+					<option></option>
+					<c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
+						<option value="${dict.dictId}">${dict.dictName}</option>
+					</c:forEach>
+				</select>
+			</td>
+			<td style="text-align: center">
+				（请选择pdf格式的文件）<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />" style="cursor: pointer;" onclick="addFile(this);" />
+				<input type="hidden" name="fileUploadNum" value="0" />
+				<input type="hidden" name="fileRemainNum" value="0" />
+			</td>
+			<td>
+				<a onclick="moveTr(this);">删除</a>
+			</td>
+		</tr>
+	</table>
+
 	<table id="ywfgfzrTemplate">
 		<tr>
 			<td style="position: relative">

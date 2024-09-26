@@ -42,4 +42,6 @@ public interface IResJointOrgBiz {
 	List<ResJointOrg> selectByJointOrgFlow(String jointOrgFlow);
 
 	int deleteByOrgFlow(String orgFlow, String sessionNumber);
+
+	int deleteJointOrg(ResJointOrg jointOrg);
 }

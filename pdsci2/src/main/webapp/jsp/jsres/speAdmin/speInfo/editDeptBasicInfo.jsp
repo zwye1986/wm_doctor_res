@@ -68,6 +68,45 @@
             }
         }, null, true);
     }
+
+    function addGroupMember(tb) {
+        var cloneTr = $("#" + tb + "Template tr:eq(0)").clone();
+        var index = $("#" + tb + "Tb tr").length;
+        cloneTr.html(cloneTr.html().htmlFormartById({"index": index}));
+        $("#" + tb + "Tb").append(cloneTr);
+    }
+
+    function delGroupMember(obj, type, pre) {
+        $(obj).parent().parent().remove();
+        if(type) {
+            var index = $("#" + type + "Tb tr").length;
+            for(var i = 0; i < index; i++) {
+                var cur = $($("#" + type + "Tb tr")[i]);
+                cur.html(cur.html().htmlFormatByIndex(i + "", pre));
+            }
+        }
+    }
+
+    function valueUpdate(cur) {
+        $(cur).attr("value", $(cur).val());
+    }
+
+    String.prototype.htmlFormartById = function(data){
+        var html = this;
+        for(var key in data){
+            var reg = new RegExp('\\{'+key+'\\}','g');
+            html = html.replace(reg,data[key]);
+        }
+        return html;
+    };
+
+    String.prototype.htmlFormatByIndex = function(data, pre){
+        var html = this;
+        var reg = new RegExp(pre + "\\[\\d+\\]", "g");
+        html = html.replace(reg, pre + "[" + data + "]");
+        return html;
+
+    };
 </script>
 <input type="hidden" id="resBase" name="resBase" value="${baseSpeDept}"/>
 <form id='BaseInfoForm' style="position:relative;">
@@ -78,7 +117,7 @@
     <input type="hidden" name="flag" value="${GlobalConstant.DEPT_BASIC_INFO}"/>
     <div class="main_bd">
         <div class="div_table">
-            <h4>基本信息</h4>
+            <h4><span class="red">*</span>基本信息</h4>
             <table border="0" cellspacing="0" cellpadding="0" class="base_info">
                 <colgroup>
                     <col width="17%"/>
@@ -95,7 +134,7 @@
                     <th><span style="color: red">*</span>&nbsp;专业基地编码：</th>
                     <td colspan="3">${speFlow}</td>
                 </tr>
-                <tr>
+                <%--<tr>
                     <th><span style="color: red">*</span>&nbsp;专业基地负责人姓名：</th>
                     <td><input type="text" class="input validate[required]" name="deptBasicInfoForm.speRespName" style="width:90%;"
                                value="${deptBasicInfoForm.speRespName}"/></td>
@@ -127,7 +166,148 @@
                     <th><span style="color: red">*</span>&nbsp;教学秘书邮箱：</th>
                     <td><input type="text" class=" input validate[required,custom[email]]"style="width:90%;" name="deptBasicInfoForm.speSceEmail"
                                value="${deptBasicInfoForm.speSceEmail}"/></td>
+                </tr>--%>
+                </tbody>
+            </table>
+
+            <table border="2px" cellpadding="0" cellspacing="0" class="grid" id="speRespTable" style="table-layout: fixed">
+                <tr>
+                    <th style="width: 33.3%">专业基地负责人<span class="red">*</span></th>
+                    <th style="width: 33.3%">手机号码<span class="red">*</span></th>
+                    <th style="width: 33.3%">邮箱地址<span class="red">*</span></th>
+                    <%--<th>操作&nbsp;<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
+                                     style="cursor: pointer;position: absolute;margin-top: 2px;" onclick="javascript:add('zpglbmfzr')" /></th>--%>
                 </tr>
+                <tbody id="speRespTb">
+                <tr>
+                    <td>
+                        <input type="text" style="width: 200px" name="deptBasicInfoForm.speRespName" class='input validate[required]' value="${deptBasicInfoForm.speRespName}"/>
+                    </td>
+                    <td>
+                        <input type="text" class='input validate[required,custom[phone]]' style="width: 200px"
+                               name="deptBasicInfoForm.speRespPhone" oninput="valueUpdate(this);"
+                               value="${deptBasicInfoForm.speRespPhone }"/>
+                    </td>
+                    <td>
+                        <input type="text" class='input validate[required,custom[email]]' style="width: 200px"
+                               name="deptBasicInfoForm.speRespEmail" oninput="valueUpdate(this);"
+                               value="${deptBasicInfoForm.speRespEmail }"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table border="2px" cellpadding="0" cellspacing="0" class="grid" id="speDirTable" style="table-layout: fixed">
+                <tr>
+                    <th style="width: 33.3%">教学主任<span class="red">*</span></th>
+                    <th style="width: 33.3%">手机号码<span class="red">*</span></th>
+                    <th style="width: 33.3%">邮箱地址<span class="red">*</span></th>
+                    <%--<th>操作&nbsp;<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
+                                     style="cursor: pointer;position: absolute;margin-top: 2px;" onclick="javascript:add('zpglbmfzr')" /></th>--%>
+                </tr>
+                <tbody id="speDirTb">
+                <tr>
+                    <td>
+                        <input type="text" style="width: 200px" name="deptBasicInfoForm.speDirName" class='input validate[required]' value="${deptBasicInfoForm.speDirName}"/>
+                    </td>
+                    <td>
+                        <input type="text" class='input validate[required,custom[phone]]' style="width: 200px"
+                               name="deptBasicInfoForm.speDirPhone" oninput="valueUpdate(this);"
+                               value="${deptBasicInfoForm.speDirPhone }"/>
+                    </td>
+                    <td>
+                        <input type="text" class='input validate[required,custom[email]]' style="width: 200px"
+                               name="deptBasicInfoForm.speDirEmail" oninput="valueUpdate(this);"
+                               value="${deptBasicInfoForm.speDirEmail }"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table border="2px" cellpadding="0" cellspacing="0" class="grid" id="speSceTable" style="table-layout: fixed">
+                <tr>
+                    <th style="width: 33.3%">教学秘书<span class="red">*</span></th>
+                    <th style="width: 33.3%">手机号码<span class="red">*</span></th>
+                    <th style="width: 33.3%">邮箱地址<span class="red">*</span></th>
+                    <%--<th>操作&nbsp;<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
+                                     style="cursor: pointer;position: absolute;margin-top: 2px;" onclick="javascript:add('zpglbmfzr')" /></th>--%>
+                </tr>
+                <tbody id="speSceTb">
+                <tr>
+                    <td>
+                        <input type="text" style="width: 200px" name="deptBasicInfoForm.speSceName" class='input validate[required]' value="${deptBasicInfoForm.speSceName}"/>
+                    </td>
+                    <td>
+                        <input type="text" class='input validate[required,custom[phone]]' style="width: 200px"
+                               name="deptBasicInfoForm.speScePhone" oninput="valueUpdate(this);"
+                               value="${deptBasicInfoForm.speScePhone }"/>
+                    </td>
+                    <td>
+                        <input type="text" class='input validate[required,custom[email]]' style="width: 200px"
+                               name="deptBasicInfoForm.speSceEmail" oninput="valueUpdate(this);"
+                               value="${deptBasicInfoForm.speSceEmail }"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table border="2px" cellpadding="0" cellspacing="0" class="grid" id="groupLeaderTable" style="table-layout: fixed">
+                <tr>
+                    <th style="width: 33.3%">教学小组组长<span class="red">*</span></th>
+                    <th style="width: 33.3%">手机号码<span class="red">*</span></th>
+                    <th style="width: 33.3%">邮箱地址<span class="red">*</span></th>
+                    <%--<th>操作&nbsp;<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
+                                     style="cursor: pointer;position: absolute;margin-top: 2px;" onclick="javascript:add('zpglbmfzr')" /></th>--%>
+                </tr>
+                <tbody id="groupLeaderTb">
+                <tr>
+                    <td>
+                        <input type="text" style="width: 200px" name="deptBasicInfoForm.teachingGroupLeaderName" class='input validate[required]' value="${deptBasicInfoForm.teachingGroupLeaderName}"/>
+                    </td>
+                    <td>
+                        <input type="text" class='input validate[required,custom[phone]]' style="width: 200px"
+                               name="deptBasicInfoForm.teachingGroupLeaderPhone" oninput="valueUpdate(this);"
+                               value="${deptBasicInfoForm.teachingGroupLeaderPhone }"/>
+                    </td>
+                    <td>
+                        <input type="text" class='input validate[required,custom[email]]' style="width: 200px"
+                               name="deptBasicInfoForm.teachingGroupLeaderEmail" oninput="valueUpdate(this);"
+                               value="${deptBasicInfoForm.teachingGroupLeaderEmail }"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table border="2px" cellpadding="0" cellspacing="0" class="grid" id="groupMemberTable" style="table-layout: fixed">
+                <tr>
+                    <th style="width: 30%">教学小组组员<span class="red">*</span></th>
+                    <th style="width: 30%">手机号码<span class="red">*</span></th>
+                    <th style="width: 30%">邮箱地址<span class="red">*</span></th>
+                    <th style="width: 10%"><img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
+                                                style="cursor: pointer;" onclick="javascript:addGroupMember('groupMember')" /></th>
+                </tr>
+                <tbody id="groupMemberTb">
+                <c:forEach var="groupMember" items="${deptBasicInfoForm.teachingGroupMemberList}" varStatus="status">
+                    <tr>
+                        <td>
+                            <input type="text" class="input validate[required]" style="width: 200px"
+                                   name="deptBasicInfoForm.teachingGroupMemberList[${status.index}].teachingGroupMemberName" oninput="valueUpdate(this);"
+                                   value="${groupMember.teachingGroupMemberName }"/>
+                        </td>
+                        <td>
+                            <input type="text" class='input validate[required,custom[phone]]' style="width: 200px"
+                                   name="deptBasicInfoForm.teachingGroupMemberList[${status.index}].teachingGroupMemberPhone" oninput="valueUpdate(this);"
+                                   value="${groupMember.teachingGroupMemberPhone }"/>
+                        </td>
+                        <td>
+                            <input type="text" class='input validate[required,custom[email]]' style="width: 200px"
+                                   name="deptBasicInfoForm.teachingGroupMemberList[${status.index}].teachingGroupMemberEmail" oninput="valueUpdate(this);"
+                                   value="${groupMember.teachingGroupMemberEmail }"/>
+                        </td>
+                        <td><img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                                 style="cursor: pointer;" onclick="javascript:delGroupMember(this, 'groupMember', 'teachingGroupMemberList');" /></td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -348,11 +528,54 @@
                         </td>
                     </tr>
                 </c:if>
+
+                <tr>
+                    <th><span class="red">*</span>本年总病例病种数（个）：</th>
+                    <td>
+                        <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.annualDiseases"
+                              style="width:200px;" value="${empty deptBasicInfoForm.annualDiseases?0:deptBasicInfoForm.annualDiseases}"/>
+                    </td>
+                    <th>
+                        <span class="red">*</span>本年收治总疾病（种）：
+                    </th>
+                    <td>
+                        <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.annualDiseaseCategory"
+                               style="width:200px;" value="${empty deptBasicInfoForm.annualDiseaseCategory?0:deptBasicInfoForm.annualDiseaseCategory}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="red">*</span>本年收治总疾病（个）：</th>
+                    <td>
+                        <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.annualDiseaseNumber"
+                               style="width:200px;" value="${empty deptBasicInfoForm.annualDiseaseNumber?0:deptBasicInfoForm.annualDiseaseNumber}"/>
+                    </td>
+                    <th>
+                        <span class="red">*</span>教学门诊：
+                    </th>
+                    <td>
+                        <input type="radio" name="deptBasicInfoForm.teachingClinic" value="Y" <c:if test="${deptBasicInfoForm.teachingClinic eq 'Y' }">checked="checked"</c:if>/>有&nbsp;
+                        <input type="radio" name="deptBasicInfoForm.teachingClinic" value="N" <c:if test="${deptBasicInfoForm.teachingClinic eq 'N' }">checked="checked"</c:if>/>无&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="red">*</span>近三年培训人数总计（人）：</th>
+                    <td>
+                        <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.threeYearTrainingCount"
+                               style="width:200px;" value="${empty deptBasicInfoForm.threeYearTrainingCount?0:deptBasicInfoForm.threeYearTrainingCount}"/>
+                    </td>
+                    <th>
+                        <span class="red">*</span>近三年理论首考平均通过率（%）：
+                    </th>
+                    <td>
+                        <input type="text" class='input validate[custom[number],min[0]]' name="deptBasicInfoForm.threeYearExamPassPer"
+                               style="width:200px;" value="${empty deptBasicInfoForm.threeYearExamPassPer?0:deptBasicInfoForm.threeYearExamPassPer}"/>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="div_table">
+        <%--<div class="div_table">
             <h4>承担教学任务（近三年总数）</h4>
             <table border="0" cellspacing="0" cellpadding="0" class="base_info">
                 <colgroup>
@@ -552,9 +775,31 @@
                 </tr>
                 </tbody>
             </table>
-        </div>
+        </div>--%>
     </div>
     <div class="btn_info">
         <input class="btn_green" onclick="saveBaseInfo()" type="button" value="保&#12288;存"/>
     </div>
 </form>
+<div style="display: none">
+    <table id="groupMemberTemplate">
+        <tr>
+            <td>
+                <input type="text" class="input validate[required]" style="width:200px"
+                       name="deptBasicInfoForm.teachingGroupMemberList[{index}].teachingGroupMemberName" oninput="valueUpdate(this);" />
+            </td>
+            <td>
+                <input type="text" class='input validate[required,custom[phone]]' style="width: 200px"
+                       name="deptBasicInfoForm.teachingGroupMemberList[{index}].teachingGroupMemberPhone" oninput="valueUpdate(this);" />
+            </td>
+            <td>
+                <input type="text" class='input validate[required,custom[email]]' style="width: 200px"
+                       name="deptBasicInfoForm.teachingGroupMemberList[{index}].teachingGroupMemberEmail" oninput="valueUpdate(this);" />
+            </td>
+            <td>
+                <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                     style="cursor: pointer;" onclick="javascript:delGroupMember(this, 'groupMember', 'groupMemberList');" />
+            </td>
+        </tr>
+    </table>
+</div>
