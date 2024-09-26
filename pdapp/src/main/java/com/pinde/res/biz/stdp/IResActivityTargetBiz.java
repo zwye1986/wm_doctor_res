@@ -1,6 +1,9 @@
 package com.pinde.res.biz.stdp;
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.SysUser;
+import com.pinde.sci.model.mo.TeachingActivityFormValue;
+import com.pinde.sci.model.mo.TeachingActivityInfoTarget;
+import com.pinde.sci.model.mo.TeachingActivityTarget;
 
 import java.util.List;
 import java.util.Map;

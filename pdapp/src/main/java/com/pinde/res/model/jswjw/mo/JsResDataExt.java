@@ -1,7 +1,5 @@
 package com.pinde.res.model.jswjw.mo;
 
-import com.pinde.sci.model.mo.TeachingActivityEval;
-
 import java.util.List;
 
 public class JsResDataExt  {

@@ -2,6 +2,7 @@ package com.pinde.res.ctrl.jswjw;
 
 import com.pinde.app.common.GlobalConstant;
 import com.pinde.core.commom.enums.RecDocCategoryEnum;
+import com.pinde.core.commom.enums.ResDoctorKqStatusEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -10,7 +11,6 @@ import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.jswjw.IIeaveAppBiz;
 import com.pinde.res.biz.jswjw.IJswjwBiz;
 import com.pinde.res.enums.lcjn.DictTypeEnum;
-import com.pinde.core.commom.enums.ResDoctorKqStatusEnum;
 import com.pinde.res.model.jswjw.mo.ResDoctorKqExt;
 import com.pinde.sci.dao.base.ResDoctorMapper;
 import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;

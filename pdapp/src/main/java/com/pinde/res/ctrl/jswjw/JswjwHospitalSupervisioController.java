@@ -1,6 +1,5 @@
 package com.pinde.res.ctrl.jswjw;
 
-import com.pinde.app.common.GlobalConstant;
 import com.pinde.app.common.InitConfig;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -11,7 +10,6 @@ import com.pinde.sci.dao.base.SysOrgMapper;
 import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.base.TeachingActivityInfoMapper;
 import com.pinde.sci.model.mo.*;
-import jdk.nashorn.internal.objects.Global;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

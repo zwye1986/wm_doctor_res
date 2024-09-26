@@ -3,7 +3,6 @@ package com.pinde.res.dao.jswjw.ext;
 import com.pinde.sci.model.mo.OscaDoctorAssessment;
 import com.pinde.sci.model.mo.OscaSkillsAssessment;
 import com.pinde.sci.model.mo.PubFile;
-import com.pinde.sci.model.mo.SysUser;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

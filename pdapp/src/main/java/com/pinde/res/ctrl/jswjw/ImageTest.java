@@ -1,11 +1,11 @@
 package com.pinde.res.ctrl.jswjw;
 
-import java.io.*;
-import java.util.concurrent.*;
-
 import com.pinde.sci.util.FtpHelperUtil;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
+
+import java.io.*;
+import java.util.concurrent.*;
 
 /**
  * Created by Administrator on 2017/5/25.

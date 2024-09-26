@@ -2,7 +2,6 @@ package com.pinde.res.biz.osca;
 
 import com.pinde.res.model.osca.mo.OscaCheckInfoExt;
 import com.pinde.sci.model.mo.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;

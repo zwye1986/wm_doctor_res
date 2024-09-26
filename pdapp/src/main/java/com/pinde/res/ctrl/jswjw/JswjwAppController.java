@@ -14,7 +14,6 @@ import com.pinde.res.biz.stdp.*;
 import com.pinde.res.dao.jswjw.ext.JsResPowerCfgExtMapper;
 import com.pinde.res.dao.jswjw.ext.JsResUserBalckListExtMapper;
 import com.pinde.res.dao.jswjw.ext.TempMapper;
-import com.pinde.core.commom.enums.JszyTrainCategoryEnum;
 import com.pinde.res.enums.lcjn.DictTypeEnum;
 import com.pinde.res.enums.osca.*;
 import com.pinde.res.model.jswjw.mo.*;
@@ -62,8 +61,6 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/res/jswjw")
 public class JswjwAppController {
-    @Autowired
-    protected ICfgBiz cfgBiz;
     private static Logger logger = LoggerFactory.getLogger(JswjwAppController.class);
 
     private static String regex = "^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\\W_.!@#$%^&*`~()-+=]+$)(?![a-z0-9]+$)(?![a-z\\W_.!@#$%^&*`~()-+=]+$)(?![0-9\\W_.!@#$%^&*`~()-+=]+$)[a-zA-Z0-9\\W_.!@#$%^&*`~()-+=]{8,20}$";

@@ -1,7 +1,5 @@
 package com.pinde.res.dao.lcjn.ext;
 
-import com.pinde.sci.model.mo.InxInfo;
-import com.pinde.sci.model.mo.LcjnCourseInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

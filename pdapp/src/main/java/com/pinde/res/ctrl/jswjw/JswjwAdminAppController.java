@@ -5,12 +5,12 @@ import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.hbres.IFileBiz;
-import com.pinde.res.biz.hbres.IResInprocessInfoBiz;
-import com.pinde.res.biz.jswjw.*;
-import com.pinde.res.biz.stdp.IResSchProcessExpressBiz;
+import com.pinde.res.biz.jswjw.IJswjwAdminBiz;
+import com.pinde.res.biz.jswjw.IJswjwBiz;
+import com.pinde.res.biz.jswjw.IResLiveTrainingBiz;
 import com.pinde.res.model.jswjw.mo.JsResDoctorOrgHistoryExt;
 import com.pinde.sci.model.mo.*;
-import org.dom4j.*;
+import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,16 +42,7 @@ public class JswjwAdminAppController {
 	@Autowired
 	private IResLiveTrainingBiz resLiveTrainingBiz;
 	@Autowired
-	private IJswjwTeacherBiz jswjwTeacherBiz;
-	@Autowired
 	private IJswjwAdminBiz jswjwAdminBiz;
-	private IJswjwKzrBiz jswjwKzrBiz;
-	@Autowired
-	private IResSchProcessExpressBiz expressBiz;
-	@Autowired
-	private IResDoctorProcessBiz iResDoctorProcessBiz;
-	@Autowired
-	private IResInprocessInfoBiz resInprocessInfoBiz;
 	@Autowired
 	private IFileBiz pubFileBiz;
 	@RequestMapping(value={"/test"},method={RequestMethod.GET})

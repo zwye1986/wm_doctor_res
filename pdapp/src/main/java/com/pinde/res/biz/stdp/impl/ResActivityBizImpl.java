@@ -15,7 +15,6 @@ import com.pinde.res.ctrl.hbres.ActivityImageFileForm;
 import com.pinde.res.dao.stdp.ext.TeachingActivityInfoExtMapper;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

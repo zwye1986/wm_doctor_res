@@ -1,6 +1,7 @@
 package com.pinde.res.model.njmu.mo;
 
 import com.pinde.core.model.MybatisObject;
+
 import java.math.BigDecimal;
 import java.util.Date;
 

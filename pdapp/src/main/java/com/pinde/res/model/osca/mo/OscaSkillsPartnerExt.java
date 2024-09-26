@@ -1,6 +1,5 @@
 package com.pinde.res.model.osca.mo;
 
-import com.pinde.sci.model.mo.OscaSkillRoom;
 import com.pinde.sci.model.mo.OscaSkillRoomTea;
 import com.pinde.sci.model.mo.OscaSkillsAssessment;
 

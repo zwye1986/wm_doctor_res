@@ -1,7 +1,5 @@
 package com.pinde.res.dao.ezhupei.ext;
 
-import com.pinde.sci.model.mo.SysUser;
-
 import java.util.List;
 import java.util.Map;
 

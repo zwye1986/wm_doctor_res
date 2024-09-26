@@ -2,6 +2,7 @@ package com.pinde.res.biz.jswjw.impl;
 
 
 import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.commom.enums.ResRecTypeEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IJswjwBiz;
@@ -9,7 +10,6 @@ import com.pinde.res.biz.jswjw.IJswjwTeacherBiz;
 import com.pinde.res.biz.jswjw.IResDoctorProcessBiz;
 import com.pinde.res.dao.jswjw.ext.*;
 import com.pinde.res.dao.stdp.ext.StdpResDoctorExtMapper;
-import com.pinde.core.commom.enums.ResRecTypeEnum;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.*;

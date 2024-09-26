@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.mo.SysOrgExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysOrgMapper {
     int countByExample(SysOrgExample example);

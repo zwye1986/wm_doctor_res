@@ -1,8 +1,6 @@
 package com.pinde.res.biz.hbres.impl;
 
 import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.util.PkUtil;
-import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.hbres.IResInprocessInfoBiz;
 import com.pinde.res.dao.hbres.ext.ResInprocessInfoMemberExtMapper;
 import com.pinde.sci.dao.base.ResInprocessInfoMapper;

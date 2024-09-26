@@ -2,6 +2,8 @@ package com.pinde.res.ctrl.osca;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.commom.enums.CertificateTypeEnum;
+import com.pinde.core.commom.enums.UserSexEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -11,8 +13,6 @@ import com.pinde.res.biz.jswjw.IJsResBaseBiz;
 import com.pinde.res.biz.osca.*;
 import com.pinde.res.enums.lcjn.DictTypeEnum;
 import com.pinde.res.enums.osca.*;
-import com.pinde.core.commom.enums.CertificateTypeEnum;
-import com.pinde.core.commom.enums.UserSexEnum;
 import com.pinde.res.model.jswjw.mo.OscaSkillRoomExt;
 import com.pinde.res.model.osca.mo.OscaSkillsAssessmentExt;
 import com.pinde.sci.model.mo.*;

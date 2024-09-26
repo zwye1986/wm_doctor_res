@@ -1,6 +1,7 @@
 package com.pinde.res.model.osca.mo;
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.OscaSkillRoom;
+import com.pinde.sci.model.mo.OscaSkillsAssessment;
 
 import java.util.List;
 

@@ -1,7 +1,9 @@
 package com.pinde.res.biz.osca;
 
 import com.pinde.res.model.osca.mo.*;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.OscaSkillDocTeaScore;
+import com.pinde.sci.model.mo.OscaSkillsAssessment;
+import com.pinde.sci.model.mo.SysDict;
 
 import java.util.List;
 import java.util.Map;

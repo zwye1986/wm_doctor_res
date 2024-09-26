@@ -2,10 +2,8 @@ package com.pinde.res.biz.jswjw;
 
 import com.pinde.sci.model.mo.ResPassScoreCfg;
 import com.pinde.sci.model.mo.ResScore;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IResScoreBiz {
 

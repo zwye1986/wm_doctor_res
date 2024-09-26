@@ -3,7 +3,6 @@ package com.pinde.res.biz.jswjw;
 import com.pinde.res.model.jswjw.mo.OscaSkillRoomExt;
 import com.pinde.sci.model.mo.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 

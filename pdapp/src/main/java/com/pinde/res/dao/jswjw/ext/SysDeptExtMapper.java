@@ -1,10 +1,10 @@
 package com.pinde.res.dao.jswjw.ext;
 
-import java.util.List;
-import java.util.Map;
-
 import com.pinde.sci.model.mo.SysDept;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 public interface SysDeptExtMapper {
 	/**
