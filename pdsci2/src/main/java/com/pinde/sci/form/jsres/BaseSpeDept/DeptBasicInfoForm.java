@@ -22,6 +22,13 @@ public class DeptBasicInfoForm implements Serializable {
     private String deptScePhone;    //科室秘书联系电话
     private String deptSceEmail;    //科室秘书邮箱
 
+    /* 教学小组组长 */
+    private String teachingGroupLeaderName;
+    private String teachingGroupLeaderPhone;
+    private String teachingGroupLeaderEmail;
+    /* 教学小组成员 */
+    private List<TeachingGroupMemberForm> teachingGroupMemberList;
+
     /**
      * 专业信息
      */
@@ -62,6 +69,12 @@ public class DeptBasicInfoForm implements Serializable {
     private String nbdkszdl;            //年冰冻快速诊断量
     private String nxbxjcbls;           //年细胞学检查病例数
 
+    private String annualDiseases;  // 本年总病例病种数（个）
+    private String annualDiseaseCategory; // 本年收治总疾病（种）
+    private String annualDiseaseNumber; // 本年收治总疾病（个）
+    private String teachingClinic; // 教学门诊
+    private String threeYearTrainingCount; // 近三年培训人数总计（人）
+    private String threeYearExamPassPer; // 近三年理论首考平均通过率（%）
 
     private String bksyw;            //本科生有无
     private String bksrs;            //本科生人数
@@ -91,6 +104,85 @@ public class DeptBasicInfoForm implements Serializable {
     private String kzzyys;            //开展住院医师规范化培训工作年限
     private String ljjyrs;            //累计结业人数
 
+    public String getAnnualDiseases() {
+        return annualDiseases;
+    }
+
+    public void setAnnualDiseases(String annualDiseases) {
+        this.annualDiseases = annualDiseases;
+    }
+
+    public String getAnnualDiseaseCategory() {
+        return annualDiseaseCategory;
+    }
+
+    public void setAnnualDiseaseCategory(String annualDiseaseCategory) {
+        this.annualDiseaseCategory = annualDiseaseCategory;
+    }
+
+    public String getAnnualDiseaseNumber() {
+        return annualDiseaseNumber;
+    }
+
+    public void setAnnualDiseaseNumber(String annualDiseaseNumber) {
+        this.annualDiseaseNumber = annualDiseaseNumber;
+    }
+
+    public String getTeachingClinic() {
+        return teachingClinic;
+    }
+
+    public void setTeachingClinic(String teachingClinic) {
+        this.teachingClinic = teachingClinic;
+    }
+
+    public String getThreeYearTrainingCount() {
+        return threeYearTrainingCount;
+    }
+
+    public void setThreeYearTrainingCount(String threeYearTrainingCount) {
+        this.threeYearTrainingCount = threeYearTrainingCount;
+    }
+
+    public String getThreeYearExamPassPer() {
+        return threeYearExamPassPer;
+    }
+
+    public void setThreeYearExamPassPer(String threeYearExamPassPer) {
+        this.threeYearExamPassPer = threeYearExamPassPer;
+    }
+
+    public List<TeachingGroupMemberForm> getTeachingGroupMemberList() {
+        return teachingGroupMemberList;
+    }
+
+    public void setTeachingGroupMemberList(List<TeachingGroupMemberForm> teachingGroupMemberList) {
+        this.teachingGroupMemberList = teachingGroupMemberList;
+    }
+
+    public String getTeachingGroupLeaderName() {
+        return teachingGroupLeaderName;
+    }
+
+    public void setTeachingGroupLeaderName(String teachingGroupLeaderName) {
+        this.teachingGroupLeaderName = teachingGroupLeaderName;
+    }
+
+    public String getTeachingGroupLeaderPhone() {
+        return teachingGroupLeaderPhone;
+    }
+
+    public void setTeachingGroupLeaderPhone(String teachingGroupLeaderPhone) {
+        this.teachingGroupLeaderPhone = teachingGroupLeaderPhone;
+    }
+
+    public String getTeachingGroupLeaderEmail() {
+        return teachingGroupLeaderEmail;
+    }
+
+    public void setTeachingGroupLeaderEmail(String teachingGroupLeaderEmail) {
+        this.teachingGroupLeaderEmail = teachingGroupLeaderEmail;
+    }
 
     public String getDeptName() {
         return deptName;

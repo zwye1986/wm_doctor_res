@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.alibaba.fastjson.JSON;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
@@ -31,12 +32,9 @@ import com.pinde.sci.enums.sch.SchUnitEnum;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
-import com.pinde.sci.form.jsres.BaseExtInfoForm;
-import com.pinde.sci.form.jsres.BaseInfoForm;
+import com.pinde.sci.form.jsres.*;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptExtForm;
 import com.pinde.sci.form.jsres.BaseSpeDept.TrainingForm;
-import com.pinde.sci.form.jsres.BasicInfoForm;
-import com.pinde.sci.form.jsres.ResOrgSpeForm;
 import com.pinde.sci.model.jsres.ResBaseExt;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.SchProcessExt;
@@ -430,12 +428,11 @@ public class JsResBaseManagerController extends GeneralController {
 					.andJointOrgFlowEqualTo(baseFlow).andSessionNumberEqualTo(sessionNumber);
 			List<ResJointOrg> resJointOrgList = jointOrgBiz.readResJointOrgByExample(jointOrgExample);
 			// 自身是协同单位
+			String jointOrgFlag = "N";
 			if (CollectionUtils.isNotEmpty(resJointOrgList)) {
-				mav.addObject("jointOrgFlag", "Y");
-			} else {
-				mav.addObject("jointOrgFlag", "N");
+				jointOrgFlag = "Y";
 			}
-
+			mav.addObject("jointOrgFlag", jointOrgFlag);
 			if (GlobalConstant.FLAG_Y.equals(editFlag) || GlobalConstant.BASIC_MAIN_ALL.equals(baseInfoName)) {
 
 			} else {
@@ -446,20 +443,17 @@ public class JsResBaseManagerController extends GeneralController {
 				resJointOrgList = jointOrgBiz.readResJointOrgByExample(jointOrgExample);
 				// 有协同单位
 				if (CollectionUtils.isNotEmpty(resJointOrgList)) {
-					List<String> jointOrgFlowList = resJointOrgList.stream().map(vo -> vo.getJointOrgFlow()).collect(Collectors.toList());
-					List<ResBase> jointBaseList = baseBiz.readBaseListByYear(jointOrgFlowList, sessionNumber);
-					List<Map<String, String>> jointContractInfoList = new ArrayList<>();
+					List<String> jointFlowList = resJointOrgList.stream().map(vo -> vo.getJointFlow()).collect(Collectors.toList());
+					List<PubFile> jointContractFileList = pubFileBiz.findFileByTypeFlows("jointContract", jointFlowList);
+					Map<String, List<PubFile>> orgFlowToFileMap = jointContractFileList.stream().collect(Collectors.groupingBy(vo -> vo.getProductFlow()));
+					List<Map<String, Object>> jointContractInfoList = new ArrayList<>();
 					for (ResJointOrg resJointOrg : resJointOrgList) {
-						Map<String, String> jointMap = new HashMap<>();
+						Map<String, Object> jointMap = new HashMap<>();
 						jointMap.put("orgName", resJointOrg.getJointOrgName());
 						jointMap.put("orgFlow", resJointOrg.getJointOrgFlow());
-						for (ResBase base : jointBaseList) {
-							if(base.getOrgFlow().equals(resJointOrg.getJointOrgFlow())) {
-								String Xml = base.getBaseInfo();
-								BaseExtInfoForm baseExtInfoForm = JaxbUtil.converyToJavaBean(Xml, BaseExtInfoForm.class);
-								jointMap.put("jointContractUrl", baseExtInfoForm.getBasicInfo().getCollaborativeRelationshipAgreementUrl());
-							}
-						}
+						jointMap.put("speId", resJointOrg.getSpeId());
+						jointMap.put("speName", resJointOrg.getSpeName());
+						jointMap.put("fileList", orgFlowToFileMap.get(resJointOrg.getJointFlow()));
 						jointContractInfoList.add(jointMap);
 					}
 					mav.addObject("jointContractList", jointContractInfoList);
@@ -469,39 +463,56 @@ public class JsResBaseManagerController extends GeneralController {
 
 		if (resBase != null) {
 			String Xml = resBase.getBaseInfo();
+			String json = resBase.getBaseExtInfo();
 			if (StringUtil.isNotBlank(Xml)) {
 				BaseExtInfoForm baseExtInfoForm = JaxbUtil.converyToJavaBean(Xml, BaseExtInfoForm.class);
+				BaseExtInfo baseExtInfo = JSON.parseObject(json, BaseExtInfo.class);
 				if (GlobalConstant.BASIC_MAIN_ALL.equals(baseInfoName)) {
-					baseInfoSet(mav, baseExtInfoForm, sysOrg);
+					baseInfoSet(mav, baseExtInfoForm, sysOrg, baseExtInfo);
 					mav.addObject("educationInfo", baseExtInfoForm.getEducationInfo());
 				} else if (GlobalConstant.BASIC_INFO.equals(baseInfoName)) {
-					baseInfoSet(mav, baseExtInfoForm, sysOrg);
+					baseInfoSet(mav, baseExtInfoForm, sysOrg, baseExtInfo);
 				} else if (GlobalConstant.ORG_MANAGE.equals(baseInfoName)) {
 					mav.addObject("organizationManage", baseExtInfoForm.getOrganizationManage());
 				} else if (GlobalConstant.TEACH_CONDITION.equals(baseInfoName)) {
 					mav.addObject("educationInfo", baseExtInfoForm.getEducationInfo());
+					if(baseExtInfo != null) {
+						mav.addObject("baseExtInfoEducationInfo", baseExtInfo.getBaseExtInfoEducationInfo());
+					}
 				} else if (GlobalConstant.SUPPORT_CONDITION.equals(baseInfoName)) {
 					mav.addObject("supportCondition", baseExtInfoForm.getSupportCondition());
 				}
 			}
 			if (GlobalConstant.BASIC_MAIN_ALL.equals(baseInfoName)) {
 				mav.setViewName("jsres/hospital/hos/editBasicInfoMainDuplicate");
+				baseInfoEditSet(sessionNumber, baseFlow, mav);
 			} else if ("Y".equals(baseInfoMain)) {
 				mav.setViewName("jsres/hospital/hos/basicInfoMainInfo");
 			} else if ((StringUtil.isBlank(resBase.getBaseStatusId()) || GlobalConstant.FLAG_Y.equals(editFlag)) && !GlobalConstant.FLAG_Y.equals(viewFlag)) {
 				mav.setViewName("jsres/hospital/hos/edit" + baseInfoName);
+				if(GlobalConstant.BASIC_INFO.equals(baseInfoName)) {
+					baseInfoEditSet(sessionNumber, baseFlow, mav);
+				}
 			} else {
 				mav.addObject("baseInfoName", baseInfoName);
 				mav.setViewName("jsres/city/hospital/" + baseInfoName.substring(0, 1).toLowerCase() + baseInfoName.substring(1, baseInfoName.length()));
 			}
+
+			String baseExtInfo = resBase.getBaseExtInfo();
+			BaseExtInfo baseExtInfoJson = JSON.parseObject(baseExtInfo, BaseExtInfo.class);
+			mav.addObject("baseExtInfo", baseExtInfoJson);
 		} else {//无记录
 //			mav.addObject("sysOrg", new SysOrg());
 			if (GlobalConstant.BASIC_MAIN_ALL.equals(baseInfoName)) {
 				mav.setViewName("jsres/hospital/hos/editBasicInfoMainDuplicate");
+				baseInfoEditSet(sessionNumber, baseFlow, mav);
 			} else if ("Y".equals(baseInfoMain)) {
 				mav.setViewName("jsres/hospital/hos/basicInfoMainInfo");
 			} else if (GlobalConstant.FLAG_Y.equals(editFlag)) {
 				mav.setViewName("jsres/hospital/hos/edit" + baseInfoName);
+				if(GlobalConstant.BASIC_INFO.equals(baseInfoName)) {
+					baseInfoEditSet(sessionNumber, baseFlow, mav);
+				}
 			} else {
 				mav.setViewName("jsres/city/hospital/" + baseInfoName.substring(0, 1).toLowerCase() + baseInfoName.substring(1, baseInfoName.length()));
 			}/*else if(GlobalConstant.FLAG_Y.equals(viewFlag)){
@@ -513,7 +524,55 @@ public class JsResBaseManagerController extends GeneralController {
 		return mav;
 	}
 
-	private static void baseInfoSet(ModelAndView mav, BaseExtInfoForm baseExtInfoForm, SysOrg sysOrg) {
+	private void baseInfoEditSet(String sessionNumber, String orgFlow, ModelAndView mav) {
+		// 所有关联协同单位关系（特定年份）
+		ResJointOrg resJointOrg = new ResJointOrg();
+		resJointOrg.setSessionNumber(sessionNumber);
+		resJointOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+		List<ResJointOrg> resJointOrgAllList = jointOrgBiz.searchResJoint(resJointOrg);
+
+		// 所有协同单位
+		SysOrg sysOrg = new SysOrg();
+		sysOrg.setOrgLevelIdNotIn(Arrays.asList("CountryOrg", "ProvinceOrg")); // 去掉56家基地
+		sysOrg.setOrgTypeId("Hospital");
+		List<SysOrg> sysOrgList = orgBiz.selectJointOrgAllList(sysOrg);
+		// sessionNumber还未关联的
+		Map<String, SysOrg> flowToEntityMap = sysOrgList.stream().collect(Collectors.toMap(vo -> vo.getOrgFlow(), Function.identity(), (vo1, vo2) -> vo1));
+		List<SysOrg> unjointOrgList = new ArrayList<>();
+		List<String> allOrgFlowList = sysOrgList.stream().map(vo -> vo.getOrgFlow()).collect(Collectors.toList());
+		List<String> jointOrgList = resJointOrgAllList.stream().map(vo -> vo.getJointOrgFlow()).collect(Collectors.toList());
+		allOrgFlowList.removeAll(jointOrgList);
+		for (String unjointOrgFlow : allOrgFlowList) {
+			unjointOrgList.add(flowToEntityMap.get(unjointOrgFlow));
+		}
+
+		List<ResJointOrg> selfJointOrgList = resJointOrgAllList.stream().filter(vo -> vo.getOrgFlow().equals(orgFlow)).collect(Collectors.toList());
+		resJointOrgAllList.removeAll(selfJointOrgList);
+
+
+		// 有协同单位
+		if (CollectionUtils.isNotEmpty(selfJointOrgList)) {
+			List<String> jointFlowList = selfJointOrgList.stream().map(vo -> vo.getJointFlow()).collect(Collectors.toList());
+			List<PubFile> jointContractFileList = pubFileBiz.findFileByTypeFlows("jointContract", jointFlowList);
+			Map<String, List<PubFile>> orgFlowToFileMap = jointContractFileList.stream().collect(Collectors.groupingBy(vo -> vo.getProductFlow()));
+			List<Map<String, Object>> jointContractInfoList = new ArrayList<>();
+			for (ResJointOrg selfJointOrg : selfJointOrgList) {
+				Map<String, Object> jointMap = new HashMap<>();
+				jointMap.put("orgName", selfJointOrg.getJointOrgName());
+				jointMap.put("orgFlow", selfJointOrg.getJointOrgFlow());
+				jointMap.put("speId", selfJointOrg.getSpeId());
+				jointMap.put("speName", selfJointOrg.getSpeName());
+				jointMap.put("fileList", orgFlowToFileMap.get(selfJointOrg.getJointFlow()));
+				jointContractInfoList.add(jointMap);
+			}
+			mav.addObject("jointContractList", jointContractInfoList);
+		}
+
+
+		mav.addObject("unjointOrgList", unjointOrgList);
+	}
+
+	private void baseInfoSet(ModelAndView mav, BaseExtInfoForm baseExtInfoForm, SysOrg sysOrg, BaseExtInfo baseExtInfo) {
 		mav.addObject("basicInfo", baseExtInfoForm.getBasicInfo());    //基本信息
 		if (baseExtInfoForm.getSysOrg() != null) { // 兼容历史数据
 			SysOrg sysOrgForm = baseExtInfoForm.getSysOrg();
@@ -529,6 +588,9 @@ public class JsResBaseManagerController extends GeneralController {
 		mav.addObject("educationInfo", baseExtInfoForm.getEducationInfo());    //教学条件
 		mav.addObject("organizationManage", baseExtInfoForm.getOrganizationManage());    //组织管理
 		mav.addObject("supportCondition", baseExtInfoForm.getSupportCondition());    //支撑条件
+		if(baseExtInfo != null) {
+			mav.addObject("baseExtInfoEducationInfo", baseExtInfo.getBaseExtInfoEducationInfo()); // 扩展的教学条件
+		}
 	}
 
 	/**
@@ -541,14 +603,16 @@ public class JsResBaseManagerController extends GeneralController {
 	@RequestMapping("/saveBase")
 	@ResponseBody
 	public String saveBase(String flag, BaseInfoForm form, String index, String type,
-						   String fileFlows[],
-						   HttpServletRequest request) throws Exception {
+						   String fileFlows[], HttpServletRequest request,
+						   String[] jointOrgFlows, String[] speIds, String[] fileUploadNum, String[] jointContractFileFlows, String[] fileRemainNum,
+						   BaseExtInfo baseExtInfo) throws Exception {
 		if(GlobalConstant.BASIC_INFO.equals(flag)) {
 			if (form == null || form.getBasicInfo() == null || form.getBasicInfo().getContactManList() == null) {
 				return "请填写联络员数据";
 			}
 		}
-		int result = baseBiz.saveBaseInfo(flag, form, index, type, fileFlows, request);
+
+		int result = baseBiz.saveBaseInfo(flag, form, index, type, fileFlows, request, jointOrgFlows, speIds, fileUploadNum, jointContractFileFlows, fileRemainNum, baseExtInfo);
 		if (GlobalConstant.ZERO_LINE != result) {
 			return GlobalConstant.SAVE_SUCCESSED;
 		}

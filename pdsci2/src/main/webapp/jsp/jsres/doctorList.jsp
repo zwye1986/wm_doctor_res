@@ -19,30 +19,11 @@
 <style type="text/css">
 .boxHome .item:HOVER{background-color: #eee;}
 .cur{color:red;}
-/*.search_table{*/
-	/*width: auto;*/
-/*}*/
-/*.search_table td{*/
-	/*width: auto;*/
-	/*height: 35px;*/
-	/*text-align: left;*/
-/*}*/
-/*.search_table th{*/
-	/*width: 80px;*/
-	/*height: 35px;*/
-	/*text-align: right;*/
-/*}*/
 </style>
 <script src="<s:url value='/js/yearSelect/checkYear.js'/>" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$.checkYear("sessionNumber","",null);
-//	$('#sessionNumber').datepicker({
-//		startView: 2,
-//		maxViewMode: 2,
-//		minViewMode:2,
-//		format:'yyyy'
-//	});
 	$('#graduationYear').datepicker({
 		startView: 2, 
 		maxViewMode: 2,
@@ -139,60 +120,6 @@ function changeTrainSpes(t){
     });
     return false;
 }
-<%--function changeTrainSpes(t){--%>
-	<%--//清空原来专业！！！--%>
-	<%--var sessionNumber=$("#sessionNumber").val();--%>
-	<%--var trainCategoryid=$("#trainingTypeId").val();--%>
-	<%--if(trainCategoryid =="${dictTypeEnumDoctorTrainingSpe.id}"){--%>
-		<%--$("#derateFlagLabel").show();--%>
-	<%--}else{--%>
-		<%--$("#derateFlag").attr("checked",false);--%>
-		<%--$("#derateFlagLabel").hide();--%>
-	<%--}--%>
-	<%--var orgFlow=$("#orgFlow").val();--%>
-	<%--if(trainCategoryid==""){--%>
-		<%--$("select[name=trainingSpeId] option[value != '']").remove();--%>
-		<%--return false;--%>
-	<%--}--%>
-	<%----%>
-	<%--if("${GlobalConstant.USER_LIST_LOCAL}" == "${sessionScope.userListScope}"){--%>
-		<%--orgFlow="${sessionScope.currUser.orgFlow}";--%>
-	<%--}--%>
-	<%--if("${GlobalConstant.USER_LIST_CHARGE}" == "${sessionScope.userListScope}"||"${GlobalConstant.USER_LIST_GLOBAL}" == "${sessionScope.userListScope}"){--%>
-		<%--if(orgFlow == ""){--%>
-			<%--$("select[name=trainingSpeId] option[value != '']").remove();--%>
-			<%--$("#"+trainCategoryid+"_select").find("option").each(function(){--%>
-				<%--$(this).clone().appendTo($("#trainingSpeId"));--%>
-			<%--});--%>
-			<%--return false;--%>
-		<%--}--%>
-	<%--}--%>
-	<%--var url = "<s:url value='/jsres/doctor/searchResOrgSpeList'/>?sessionNumber="+sessionNumber+"&orgFlow="+orgFlow+"&speTypeId="+trainCategoryid;--%>
-	<%--jboxGet(url, null, function(resp){--%>
-		<%--$("select[name=trainingSpeId] option[value != '']").remove();--%>
-			<%--if(resp!=""){--%>
-		   		<%--var dataObj = resp;--%>
-		   	 <%--for(var i = 0; i<dataObj.length;i++){--%>
-			     	<%--var speId = dataObj[i].speId;--%>
-			     	<%--var speName = dataObj[i].speName;--%>
-				 	<%--if("${param.trainingSpeId}"==speId)--%>
-					<%--{--%>
-						<%--$option =$("<option selected='selected'></option>");--%>
-					<%--}else{--%>
-						<%--$option =$("<option></option>");--%>
-					<%--}--%>
-			     	<%--$option.attr("value",speId);--%>
-			     	<%--$option.text(speName);--%>
-			     	<%--$("select[name=trainingSpeId]").append($option);--%>
-			   <%--}--%>
-			<%--}--%>
-		<%--<c:if test="${not empty param.trainingTypeId}">--%>
-			<%--if(t=='0') {--%>
-				<%--toPage();--%>
-			<%--}--%>
-		<%--</c:if>--%>
-		<%--}, null , false);--%>
-<%--}--%>
 function editDoctorTrend(doctorFlow,recruitflow){
 	var url = "<s:url value='/jsres/doctorRecruit/updateDoctorRecruit'/>?doctorFlow="+doctorFlow+"&recruitFlow="+recruitflow;
 	jboxOpen(url,"更新学员走向",650,250);
@@ -378,15 +305,6 @@ function showJointOrg(orgFlow){
 		$("#jointOrg").hide();
 	}
 	$("#jointOrgFlag").removeAttr("checked");
-// alert($("#"+orgFlow));
-// 	var url = "<s:url value='/jsres/doctor/searchJointOrgFlag'/>?orgFlow="+orgFlow;
-// 	jboxPost(url, null, function(resp){
-// 		if(resp=="${GlobalConstant.FLAG_Y}"){
-// 			$("#jointOrg").show();
-// 		}else{
-// 			$("#jointOrg").hide();
-// 		}
-// 		}, null , false);
 }
 function changeStatus(){
 	$("select[name=trainingSpeId] option[value != '']").remove();

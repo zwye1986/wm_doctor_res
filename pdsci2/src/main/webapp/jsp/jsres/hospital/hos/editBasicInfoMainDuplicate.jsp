@@ -68,7 +68,7 @@
 </style>
 <script type="text/javascript">
     function saveBaseInfo(){
-        if(!$("#BaseInfoForm").validationEngine("validate")){
+        if(!$("#BaseInfoForm").validationEngine("validate") || !checkSetJointOrg()){
             $("#indexBody").scrollTop("0px");
             return false;
         }
@@ -87,7 +87,7 @@
         $("#orgProvName").val(orgProvNameText);
         $("#orgCityName").val(orgCityNameText);
         $("#orgAreaName").val(orgAreaNameText);
-        jboxPost("<s:url value='/jsres/base/saveBase'/>" , $("#BaseInfoForm").serialize() , function(resp){
+        jboxSubmit($("#BaseInfoForm"), "<s:url value='/jsres/base/saveBase'/>", function(resp){
             if("${GlobalConstant.SAVE_SUCCESSED}" == resp){
                 $("#submitBtn").show();
                 setTimeout(function(){
@@ -96,6 +96,72 @@
                 },1000);
             }
         } , null , true);
+    }
+
+    function checkSetJointOrg() {
+        var joints = $("#jointContractBody tr");
+        // 校验必填项是不是都填了
+        for(var i = 0; i < joints.length; i++) {
+            var joint = joints[i];
+            var jointOrg = $(joint).find('select[name="jointOrgFlows"]');
+            if(!$(jointOrg).val()) {
+                jboxTip("请选择协同单位！");
+                return false;
+            }
+
+            var speId = $(joint).find('select[name="speIds"]');
+            if(!$(speId).val()) {
+                jboxTip("请选择专业基地！");
+                return false;
+            }
+
+            var uploadFiles = $(joint).find("input[name='files']");
+            var uploadNum = 0;
+            for(var j = 0; j < uploadFiles.length; j++) {
+                var uploadFile = uploadFiles[j];
+                if($(uploadFile).val()) {
+                    uploadNum++;
+                }
+            }
+
+            // 记录一下该基地上传了几个文件
+            var fileUploadNum = $(joint).find("input[name='fileUploadNum']");
+            $(fileUploadNum).val(uploadNum);
+
+            var fileFlows = $(joint).find("input[name='jointContractFileFlows']");
+
+            if(!fileFlows.length) {
+                jboxTip("请上传协同关系协议！");
+                return false;
+            }
+
+            fileFlows = Array.from(fileFlows).filter(function(item) {
+                return $(item).val();
+            });
+            // 记录下原来的文件还剩几个
+            var fileRemainNum = $(joint).find("input[name='fileRemainNum']");
+            $(fileRemainNum).val(fileFlows.length);
+        }
+
+        return true;
+    }
+
+    function uploadPdfFile(type,typeName,fileType,fileSuffix) {
+        var url = "<s:url value='/jsres/doctor/uploadFile'/>?operType="+type+"&fileType="+fileType+"&fileSuffix="+fileSuffix;
+        jboxOpen(url, "上传"+typeName, 500, 185);
+    }
+
+    function changeUrlSpanShow(obj) {
+        var isShow = $(obj).val() == 'Y';
+        var varName = $(obj).attr("name");
+        varName = varName.split('.')[1];
+        varName += 'UrlShowSpan';
+        if(isShow) {
+            $("#" + varName).show();
+        }else {
+            $("#" + varName).hide();
+        }
+
     }
 
     String.prototype.htmlFormartById = function(data){
@@ -224,6 +290,51 @@
             tr.remove();
         });
     }
+
+    function addJointFile(obj) {
+        var td = obj.parentNode;
+        if($(td).find("div[class='jointContractFile']").length >= 3) {
+            jboxTip("一个协同单位最多只能上传3个协同关系协议！");
+            return;
+        }
+
+        $(td).append($("#jointContractFileTemplate div").clone());
+    }
+
+    function delJointFile(obj) {
+        jboxConfirm("确认删除？" , function(){
+            var div = obj.parentNode;
+            div.remove();
+        });
+    }
+
+    function moveJointTr(obj) {
+        jboxConfirm("确认删除？", function () {
+            var tr = obj.parentNode.parentNode;
+            tr.remove();
+        });
+    }
+
+    function addJointContract() {
+        $('#jointContractBody').append($("#jointContractTemplate tr:eq(0)").clone());
+    }
+
+    function uploadFileCheck(obj) {
+
+        var fileName = $(obj).val();
+        if (!$.trim(fileName)) {
+            jboxTip("请选择文件！");
+            return;
+        }
+        fileName = $.trim(fileName);
+        var types = ".pdf";
+        var regStr = /\.pdf$/i;
+        if (!regStr.test(fileName)) {
+            $(obj).val("");
+            jboxTip("请上传 pdf 格式的文件");
+            return;
+        }
+    }
 </script>
 <input type="hidden" id="resBase" name="resBase" value="${resBase}"/>
 <form id='BaseInfoForm' style="position:relative;">
@@ -234,7 +345,7 @@
     <input type="hidden" name="resBase.sessionNumber" value="${pdfn:getCurrYear()}"/>
     <div class="main_bd">
         <div class="div_table">
-            <h4>基本信息</h4>
+            <h4><span class="red">*</span>基本信息</h4>
             <table border="0" cellspacing="0" cellpadding="0" class="base_info" id="table1">
                 <colgroup>
                     <col width="20%"/>
@@ -634,7 +745,7 @@
         </div>
 
         <div class="div_table">
-            <h4>医院资质</h4>
+            <h4><span class="red">*</span>培训基地资质</h4>
             <table border="0" cellspacing="0" cellpadding="0" class="base_info">
                 <colgroup>
                     <col width="30%"/>
@@ -642,7 +753,7 @@
                 </colgroup>
                 <tbody>
                 <tr>
-                    <th>类别：</th>
+                    <th><span class="red">*</span>类别：</th>
                     <td>
                         <input type="checkbox" name="basicInfo.lx" value="综合医院" <c:if test="${pdfn:contains(basicInfo.lx, '综合医院') }">checked="checked"</c:if>/>综合医院&nbsp;
                         <input type="checkbox" name="basicInfo.lx" value="专科医院" <c:if test="${pdfn:contains(basicInfo.lx, '专科医院') }">checked="checked"</c:if>/>专科医院&nbsp;
@@ -651,12 +762,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>级别：</th>
+                    <th><span class="red">*</span>级别：</th>
                     <td>
-                        <select style="width:207px;" class='select' name="resBase.levelRank">
+                        <select style="width:207px;" class='select' name="basicInfo.levelRank">
                             <option value="">请选择</option>
                             <c:forEach items="${dictTypeEnumOrgLevelRankList}" var="orgLevelRank">
-                                <option value="${orgLevelRank.dictId}" <c:if test="${resBase.levelRank eq orgLevelRank.dictId }">selected="selected"</c:if>>${orgLevelRank.dictName}</option>
+                                <option value="${orgLevelRank.dictId}" <c:if test="${basicInfo.levelRank eq orgLevelRank.dictId }">selected="selected"</c:if>>${orgLevelRank.dictName}</option>
                             </c:forEach>
                         </select>
                     </td>
@@ -686,7 +797,7 @@
                     </td>
                 </tr>--%>
                 <tr>
-                    <th>注册登记类型：</th>
+                    <th><span class="red">*</span>培训基地性质：</th>
                     <td>
                         <input type="radio" name="basicInfo.zcdjlx" value="公立医院" <c:if test="${basicInfo.zcdjlx eq '公立医院' }">checked="checked"</c:if>/>公立医院&nbsp;
                         &nbsp;&nbsp;&nbsp;&nbsp; 民营：
@@ -695,15 +806,15 @@
                         <input type="radio" name="basicInfo.zcdjlx" value="外资医院" <c:if test="${basicInfo.zcdjlx eq '外资医院' }">checked="checked"</c:if>/>外资医院
                     </td>
                 </tr>
-                <tr>
+                <%--<tr>
                     <th>分类管理方式：</th>
                     <td>
                         <input type="radio" name="basicInfo.classificationManagement" value="营利" <c:if test="${basicInfo.classificationManagement eq '营利' }">checked="checked"</c:if>/>营利&nbsp;
                         <input type="radio" name="basicInfo.classificationManagement" value="非营利" <c:if test="${basicInfo.classificationManagement eq '非营利' }">checked="checked"</c:if>/>非营利
                     </td>
-                </tr>
+                </tr>--%>
                 <tr>
-                    <th>住院医师基地获批文号：</th>
+                    <th><span class="red">*</span>住院医师基地获批文号：</th>
                     <td>
                         <select style="width:207px;" class='select' name="resBase.resApprovalNumberId">
                             <option value="">请选择</option>
@@ -714,11 +825,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>培训基地（医院）统一社会信用代码：</th>
+                    <th><span class="red">*</span>培训基地统一社会信用代码：</th>
                     <td><input type="text" name="sysOrg.creditCode"  class='input' style="width: 197px;margin-left: 2px;"  value="${sysOrg.creditCode}"/></td>
                 </tr>
                 <tr>
-                    <th>执业许可证：</th>
+                    <th><span class="red">*</span>执业许可证：</th>
                     <td>
 							<span id="professionLicenceUrlSpan" style="display:${!empty basicInfo.professionLicenceUrl?'':'none'} ">
 								&nbsp; <a href="${sysCfgMap['upload_base_url']}/${basicInfo.professionLicenceUrl}" target="_blank">查看图片</a>&nbsp;
@@ -731,19 +842,19 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>医院等级证书：</th>
+                    <th><span class="red">*</span>医院等级证书：</th>
                     <td>
 							<span id="hospitalLevelLicenceUrlSpan" style="display:${!empty basicInfo.hospitalLevelLicenceUrl?'':'none'} ">
 								&nbsp; <a href="${sysCfgMap['upload_base_url']}/${basicInfo.hospitalLevelLicenceUrl}" target="_blank">查看图片</a>&nbsp;
 							</span>
                         <c:if test="${resBase.baseStatusId eq baseStatusEnumNotSubmit.id or resBase.baseStatusId eq baseStatusEnumNotPassed.id or empty resBase.baseStatusId}">
                             <a id="hospitalLevelLicenceUrl" href="javascript:uploadFile('hospitalLevelLicenceUrl','医院等级证书图片');" style="margin-left: 2px">${empty basicInfo.hospitalLevelLicenceUrl?'':'重新'}上传</a>&nbsp;
-                            <a id="hospitalLevelLicenceUrlDel" href="javascript:delFile('hospitalLevelLicenceUrl');" style="${empty basicInfo.hospitalLevelLicenceUrl?'display:none':''}">删除</a>&nbsp
+                            <a id="hospitalLevelLicenceUrlDel" href="javascript:delFile('hospitalLevelLicenceUrl');" style="${empty basicInfo.hospitalLevelLicenceUrl?'display:none':''}">删除</a>
                             <input type="hidden" id="hospitalLevelLicenceUrlValue"  name="basicInfo.hospitalLevelLicenceUrl" value="${basicInfo.hospitalLevelLicenceUrl}" />
                         </c:if>
                     </td>
                 </tr>
-                <c:if test="${not empty jointOrgFlag and jointOrgFlag eq 'Y'}">
+                <%--<c:if test="${not empty jointOrgFlag and jointOrgFlag eq 'Y'}">
                 <tr>
                     <th>协同关系协议：</th>
                     <td>
@@ -757,7 +868,66 @@
                         </c:if>
                     </td>
                 </tr>
-                </c:if>
+                </c:if>--%>
+                </tbody>
+            </table>
+
+            <table class="base_info">
+                <thead>
+                <colgroup>
+                    <col width="30%"/>
+                    <col width="30%"/>
+                    <col width="30%"/>
+                    <col width="10%"/>
+                </colgroup>
+                <tr>
+                    <th style="text-align: center"><span class="red">*</span>协同单位名称</th>
+                    <th style="text-align: center"><span class="red">*</span>专业基地</th>
+                    <th style="text-align: center"><span class="red">*</span>协同关系协议</th>
+                    <th style="text-align: center">
+                        操作
+                        <span style="float: right;padding-right: 20px">
+							<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />" style="cursor: pointer;" onclick="addJointContract();" />
+						</span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody id="jointContractBody">
+                <c:forEach var="jointContract" items="${jointContractList}" varStatus="status">
+                    <tr>
+                        <td style="text-align: center">
+                            <select name="jointOrgFlows" class="select" οnclick="return false;" οnmοusedοwn="return false;">
+                                <option value="${jointContract.orgFlow}">${jointContract.orgName}</option>
+                            </select>
+                        </td>
+                        <td style="text-align: center">
+                            <select name="speIds" class="select">
+                                <option></option>
+                                <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
+                                    <option value="${dict.dictId}" <c:if test="${jointContract.speId eq dict.dictId}">selected</c:if> >${dict.dictName}</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                        <td style="text-align: center">
+                            （请选择pdf格式的文件）<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />" style="cursor: pointer;" onclick="addJointFile(this);" />
+                            <c:if test="${not empty jointContract.fileList}">
+                                <c:forEach items="${jointContract.fileList}" var="contractFile">
+                                    <div style="text-align: center;padding: 2px;margin: 2px" class="jointContractFile">
+                                        <a href="${sysCfgMap['upload_base_url']}/${contractFile.filePath}"
+                                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;width: 60%;background-color: white;color: #409eff">${contractFile.fileName}</a>
+                                        <a onclick="delJointFile(this);" style="background-color: white;color: #409eff">删除</a>
+                                        <input type="hidden" name="jointContractFileFlows" value="${contractFile.fileFlow}" />
+                                    </div>
+                                </c:forEach>
+                            </c:if>
+                            <input type="hidden" name="fileUploadNum" value="0" />
+                            <input type="hidden" name="fileRemainNum" value="0" />
+                        </td>
+                        <td>
+                            <a onclick="moveJointTr(this);">删除</a>
+                        </td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -773,88 +943,161 @@
             </colgroup>
             <tbody>
             <tr>
-                <th>编制总床位数：</th>
+                <th><span class="red">*</span>编制总床位数（张）：</th>
                 <td><input type="text" class="input1 validate[custom[integer],min[0],max[99999999]]" style="width:100px;"
-                           name="educationInfo.bzBedCount" value="${educationInfo.bzBedCount}"/>&nbsp;张
+                           name="educationInfo.bzBedCount" value="${educationInfo.bzBedCount}"/>
                 </td>
-                <th>实有总床位数：</th>
+                <th><span class="red">*</span>实有总床位数（张）：</th>
                 <td><input type="text" class="input1 validate[custom[integer],min[0],max[99999999]]" style="width:100px;"
-                           name="educationInfo.sjBedCount" value="${educationInfo.sjBedCount }"/>&nbsp;张
+                           name="educationInfo.sjBedCount" value="${educationInfo.sjBedCount }"/>
                 </td>
             </tr>
             <tr>
-                <th>年收治住院病人数：</th>
+                <th><span class="red">*</span>年收治住院病人数（人次）：</th>
                 <td><input type="text" class="input1 validate[custom[integer],min[0],max[99999999]]" style="width:100px;"
                            name="educationInfo.yearlyNumberOfClinicalPatients"
-                           value="${educationInfo.yearlyNumberOfClinicalPatients}"/>&nbsp;人次
+                           value="${educationInfo.yearlyNumberOfClinicalPatients}"/>
                 </td>
-                <th>病床使用率：</th>
+                <th><span class="red">*</span>病床使用率（%）：</th>
                 <td><input type="text" class="input1 validate[custom[number],min[0],max[100],maxSize[9]]" style="width:100px;"
-                           name="educationInfo.bedOccupancy" value="${educationInfo.bedOccupancy}"/>&nbsp;%
+                           name="educationInfo.bedOccupancy" value="${educationInfo.bedOccupancy}"/>
                 </td>
             </tr>
             <tr>
-                <th>本年门诊量：</th>
+                <th><span class="red">*</span>本年门诊量（万人次）：</th>
                 <td><input type="text" class="input1 validate[custom[number],min[0],max[9999],maxSize[9]]" style="width:100px;"
-                           name="educationInfo.yearMzCount" value="${educationInfo.yearMzCount}"/>&nbsp;万人次
+                           name="educationInfo.yearMzCount" value="${educationInfo.yearMzCount}"/>
                 </td>
-                <th>本年急诊量：</th>
+                <th><span class="red">*</span>本年急诊量（万人次）：</th>
                 <td><input type="text" class="input1 validate[custom[number],min[0],max[9999],maxSize[9]]" style="width:100px;"
-                           name="educationInfo.yearJzCount" value="${educationInfo.yearJzCount}"/>&nbsp;万人次
+                           name="educationInfo.yearJzCount" value="${educationInfo.yearJzCount}"/>
                 </td>
             </tr>
             <tr>
-                <th>本年手术量：</th>
+                <th><span class="red">*</span>本年手术量（台次）：</th>
                 <td><input type="text" class="input1 validate[custom[integer],min[0],max[99999999]]" style="width:100px;"
-                           name="educationInfo.yearSjCount" value="${ educationInfo.yearSjCount}"/>&nbsp;台次
+                           name="educationInfo.yearSjCount" value="${ educationInfo.yearSjCount}"/>
                 </td>
-                <th>本年出院病人数：</th>
+                <th><span class="red">*</span>本年出院病人数（万人次）：</th>
                 <td><input type="text" class="input1 validate[custom[number],min[0],max[9999],maxSize[9]]" style="width:100px;"
-                           name="educationInfo.yearCybrCount" value="${ educationInfo.yearCybrCount}"/>&nbsp;万人次
+                           name="educationInfo.yearCybrCount" value="${ educationInfo.yearCybrCount}"/>
                 </td>
             </tr>
             <tr>
-                <th>本年专业基地数：</th>
+                <th><span class="red">*</span>本年专业基地数（个）：</th>
                 <td><input type="text" class="input1 validate[custom[integer],min[0],max[99999999]]" style="width:100px;"
                            name="educationInfo.numberOfExistingProfessionalBases"
-                           value="${educationInfo.numberOfExistingProfessionalBases}"/>&nbsp;个
+                           value="${educationInfo.numberOfExistingProfessionalBases}"/>
                 </td>
-                <th>3年培训容量总和：</th>
+                <th><span class="red">*</span>3年培训容量总和（人）：</th>
                 <td><input type="text" class="input1 validate[custom[integer],min[0],max[99999999]]" style="width:100px;"
                            name="educationInfo.total3YearTrainingCapacity"
-                           value="${educationInfo.total3YearTrainingCapacity}"/>&nbsp;人
+                           value="${educationInfo.total3YearTrainingCapacity}"/>
                 </td>
             </tr>
 
 
             <tr>
-                <th>本年入出院病人诊断符合率：</th>
+                <th><span class="red">*</span>本年入出院病人诊断符合率（%）：</th>
                 <td><input type="text" class="input1 validate[custom[number],min[0]],max[100],maxSize[9]]" style="width:100px;"
-                           name="educationInfo.rcybrzdfhl" value="${educationInfo.rcybrzdfhl}"/>&nbsp;%
+                           name="educationInfo.rcybrzdfhl" value="${educationInfo.rcybrzdfhl}"/>
                 </td>
-                <th>本年住院病人治愈好转率：</th>
+                <th><span class="red">*</span>本年住院病人治愈好转率（%）：</th>
                 <td><input type="text" class="input1 validate[custom[number],min[0],max[100],maxSize[9]]" style="width:100px;"
-                           name="educationInfo.zybrzyhzl" value="${educationInfo.zybrzyhzl}"/>&nbsp;%
+                           name="educationInfo.zybrzyhzl" value="${educationInfo.zybrzyhzl}"/>
                 </td>
             </tr>
             <tr>
-                <th>本年住院总死亡率：</th>
+                <th><span class="red">*</span>本年住院总死亡率（%）：</th>
                 <td><input type="text" class="input1 validate[custom[number],min[0],max[100],maxSize[9]]" style="width:100px;"
-                           name="educationInfo.zyzswl" value="${educationInfo.zyzswl}"/>&nbsp;%
+                           name="educationInfo.zyzswl" value="${educationInfo.zyzswl}"/>
                 </td>
-                <th>本年感染总发生率：</th>
+                <th><span class="red">*</span>本年感染总发生率（%）：</th>
                 <td><input type="text" class="input1 validate[custom[number],min[0],max[100],maxSize[9]]" style="width:100px;"
-                           name="educationInfo.grzfsl" value="${educationInfo.grzfsl}"/>&nbsp;%
+                           name="educationInfo.grzfsl" value="${educationInfo.grzfsl}"/>
                 </td>
             </tr>
             <tr>
-                <th>本年手术患者并发症发生率：</th>
+                <th><span class="red">*</span>本年手术患者并发症发生率（%）：</th>
                 <td><input type="text" class="input1 validate[custom[number],min[0],max[100],maxSize[9]]" style="width:100px;"
-                           name="educationInfo.sshzbfzfsl" value="${educationInfo.sshzbfzfsl}"/>&nbsp;%
+                           name="educationInfo.sshzbfzfsl" value="${educationInfo.sshzbfzfsl}"/>
                 </td>
-                <th>按省级卫生健康行政部门有关规定核定的培训容量总和：</th>
+                <th><span class="red">*</span>按本年总病例病种数（个）：</th>
                 <td><input type="text" class="input1 validate[custom[integer],min[0],max[99999999]]" style="width:100px;"
-                           name="educationInfo.hdpxrlzh" value="${educationInfo.hdpxrlzh}"/>&nbsp;人
+                           name="baseExtInfoEducationInfo.annualDiseases" value="${baseExtInfoEducationInfo.annualDiseases}"/>
+                </td>
+            </tr>
+            <tr>
+                <th><span class="red">*</span>本年收治总疾病（种）：</th>
+                <td><input type="text" class="input1 validate[custom[number],min[0],max[100],maxSize[9]]" style="width:100px;"
+                           name="baseExtInfoEducationInfo.annualDiseaseCategory" value="${baseExtInfoEducationInfo.annualDiseaseCategory}"/>
+                </td>
+                <th><span class="red">*</span>按本年总病例病种数（个）：</th>
+                <td><input type="text" class="input1 validate[custom[integer],min[0],max[99999999]]" style="width:100px;"
+                           name="baseExtInfoEducationInfo.annualDiseaseNumber" value="${baseExtInfoEducationInfo.annualDiseaseNumber}"/>
+                </td>
+            </tr>
+            <tr>
+                <th><span class="red">*</span>演示教室：</th>
+                <td>
+                    <input type="radio" name="baseExtInfoEducationInfo.hospitalDemoClass" value="Y" <c:if test="${baseExtInfoEducationInfo.hospitalDemoClass eq 'Y' }">checked="checked"</c:if>/>有&nbsp;
+                    <input type="radio" name="baseExtInfoEducationInfo.hospitalDemoClass" value="N" <c:if test="${baseExtInfoEducationInfo.hospitalDemoClass eq 'N' }">checked="checked"</c:if>/>无&nbsp;
+                </td>
+                <th><span class="red">*</span>图书馆：</th>
+                <td>
+                    <input type="radio" name="baseExtInfoEducationInfo.hospitalLibrary" value="Y" <c:if test="${baseExtInfoEducationInfo.hospitalLibrary eq 'Y' }">checked="checked"</c:if>/>有&nbsp;
+                    <input type="radio" name="baseExtInfoEducationInfo.hospitalLibrary" value="N" <c:if test="${baseExtInfoEducationInfo.hospitalLibrary eq 'N' }">checked="checked"</c:if>/>无&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <th><span class="red">*</span>文献检索系统：</th>
+                <td>
+                    <input type="radio" name="baseExtInfoEducationInfo.literatureRetrievalSystem" value="Y" <c:if test="${baseExtInfoEducationInfo.literatureRetrievalSystem eq 'Y' }">checked="checked"</c:if>/>有&nbsp;
+                    <input type="radio" name="baseExtInfoEducationInfo.literatureRetrievalSystem" value="N" <c:if test="${baseExtInfoEducationInfo.literatureRetrievalSystem eq 'N' }">checked="checked"</c:if>/>无&nbsp;
+                </td>
+                <th><span class="red">*</span>网络信息管理平台：</th>
+                <td>
+                    <input type="radio" name="baseExtInfoEducationInfo.netInfoManagePlatform" value="Y" <c:if test="${baseExtInfoEducationInfo.netInfoManagePlatform eq 'Y' }">checked="checked"</c:if>/>有&nbsp;
+                    <input type="radio" name="baseExtInfoEducationInfo.netInfoManagePlatform" value="N" <c:if test="${baseExtInfoEducationInfo.netInfoManagePlatform eq 'N' }">checked="checked"</c:if>/>无&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <th><span class="red">*</span>临床技能培训中心建筑面积（平米）：</th>
+                <td><input type="text" class="input1 validate[custom[number],min[0],max[100],maxSize[9]]" style="width:100px;"
+                           name="baseExtInfoEducationInfo.clinicalSkillsTrainingCenterM2" value="${baseExtInfoEducationInfo.clinicalSkillsTrainingCenterM2}"/>
+                </td>
+                <th><span class="red">*</span>培训管理制度：</th>
+                <td>
+                    <input type="radio" name="baseExtInfoEducationInfo.trainManageSystem" onclick="changeUrlSpanShow(this)" value="Y" <c:if test="${baseExtInfoEducationInfo.trainManageSystem eq 'Y' }">checked="checked"</c:if>/>有&nbsp;
+                    <input type="radio" name="baseExtInfoEducationInfo.trainManageSystem" onclick="changeUrlSpanShow(this)" value="N" <c:if test="${baseExtInfoEducationInfo.trainManageSystem eq 'N' }">checked="checked"</c:if>/>无&nbsp;
+                    <span id="trainManageSystemUrlShowSpan" style="display: ${baseExtInfoEducationInfo.trainManageSystem eq 'Y' ? '' : 'none'}">
+                                <span id="trainManageSystemUrlSpan" style="display:${!empty baseExtInfoEducationInfo.trainManageSystemUrl?'':'none'} ">
+                                    &nbsp; <a href="${sysCfgMap['upload_base_url']}/${baseExtInfoEducationInfo.trainManageSystemUrl}" target="_blank">查看图片</a>&nbsp;
+                                </span>
+                                <a id="trainManageSystemUrl" href="javascript:uploadPdfFile('trainManageSystemUrl','培训管理制度','', '.pdf');" style="margin-left: 2px">${empty baseExtInfoEducationInfo.trainManageSystemUrl?'':'重新'}上传</a>&nbsp;
+                                <a id="trainManageSystemUrlDel" href="javascript:delFile('trainManageSystemUrl');" style="${empty baseExtInfoEducationInfo.trainManageSystemUrl?'display:none':''}">删除</a>
+                                <input type="hidden" id="trainManageSystemUrlValue"  name="baseExtInfoEducationInfo.trainManageSystemUrl" value="${baseExtInfoEducationInfo.trainManageSystemUrl}" />
+                            </span>
+                </td>
+            </tr>
+            <tr>
+                <th><span class="red">*</span>临床基地培训协议：</th>
+                <td>
+                    <input type="radio" name="baseExtInfoEducationInfo.clinicalBaseTrainContract" onclick="changeUrlSpanShow(this)" value="Y" <c:if test="${baseExtInfoEducationInfo.clinicalBaseTrainContract eq 'Y' }">checked="checked"</c:if>/>有&nbsp;
+                    <input type="radio" name="baseExtInfoEducationInfo.clinicalBaseTrainContract" onclick="changeUrlSpanShow(this)" value="N" <c:if test="${baseExtInfoEducationInfo.clinicalBaseTrainContract eq 'N' }">checked="checked"</c:if>/>无&nbsp;
+                    <span id="clinicalBaseTrainContractUrlShowSpan" style="display: ${baseExtInfoEducationInfo.clinicalBaseTrainContract eq 'Y' ? '' : 'none'}">
+                                <span id="clinicalBaseTrainContractUrlSpan" style="display:${!empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl?'':'none'} ">
+                                    &nbsp; <a href="${sysCfgMap['upload_base_url']}/${baseExtInfoEducationInfo.clinicalBaseTrainContractUrl}" target="_blank">查看图片</a>&nbsp;
+                                </span>
+                                <a id="clinicalBaseTrainContractUrl" href="javascript:uploadPdfFile('clinicalBaseTrainContractUrl','培训管理制度','', '.pdf');" style="margin-left: 2px">${empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl?'':'重新'}上传</a>&nbsp;
+                                <a id="clinicalBaseTrainContractUrlDel" href="javascript:delFile('clinicalBaseTrainContractUrl');" style="${empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl?'display:none':''}">删除</a>
+                                <input type="hidden" id="clinicalBaseTrainContractUrlValue"  name="baseExtInfoEducationInfo.clinicalBaseTrainContractUrl" value="${baseExtInfoEducationInfo.clinicalBaseTrainContractUrl}" />
+                            </span>
+                </td>
+                <th><span class="red">*</span>教学门诊：</th>
+                <td>
+                    <input type="radio" name="baseExtInfoEducationInfo.teachingClinic" value="Y" <c:if test="${baseExtInfoEducationInfo.teachingClinic eq 'Y' }">checked="checked"</c:if>/>有&nbsp;
+                    <input type="radio" name="baseExtInfoEducationInfo.teachingClinic" value="N" <c:if test="${baseExtInfoEducationInfo.teachingClinic eq 'N' }">checked="checked"</c:if>/>无&nbsp;
                 </td>
             </tr>
             </tbody>
@@ -865,6 +1108,47 @@
     </div>
 </form>
 <div style="display: none">
+    <div id="jointContractFileTemplate">
+        <div style="text-align: center" class="jointContractFile">
+            <input type='file' name='files' class='' onchange="uploadFileCheck(this);"
+                   accept=".pdf" style="width: 60%;padding: 2px;margin: 2px"/>
+            <a onclick="delJointFile(this);" style="background-color: white;color: #409eff">删除</a>
+            <input type="hidden" name="jointContractFileFlows" value="${contractFile.fileFlow}" />
+        </div>
+    </div>
+
+    <table id="jointContractTemplate">
+        <tr>
+            <td style="text-align: center">
+                <select name="jointOrgFlows" class="select">
+                    <option></option>
+                    <c:forEach items="${unjointOrgList}" var="jointOrg">
+                        <option value="${jointOrg.orgFlow}">${jointOrg.orgName}</option>
+                    </c:forEach>
+                    <c:forEach items="${jointContractList}" var="jointOrg">
+                        <option value="${jointOrg.orgFlow}">${jointOrg.orgName}</option>
+                    </c:forEach>
+                </select>
+            </td>
+            <td style="text-align: center">
+                <select name="speIds" class="select">
+                    <option></option>
+                    <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
+                        <option value="${dict.dictId}">${dict.dictName}</option>
+                    </c:forEach>
+                </select>
+            </td>
+            <td style="text-align: center">
+                （请选择pdf格式的文件）<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />" style="cursor: pointer;" onclick="addJointFile(this);" />
+                <input type="hidden" name="fileUploadNum" value="0" />
+                <input type="hidden" name="fileRemainNum" value="0" />
+            </td>
+            <td>
+                <a onclick="moveJointTr(this);">删除</a>
+            </td>
+        </tr>
+    </table>
+
     <table id="ywfgfzrTemplate">
         <tr>
             <td style="position: relative">

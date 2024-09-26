@@ -51,7 +51,7 @@
 			<c:if test="${isglobal eq 'Y'}"> style="position: relative;overflow-y: auto;" </c:if>
 			<c:if test="${isJoin eq 'Y'}"> style="position: relative;overflow-y: auto;" </c:if> >
 		<div class="div_table">
-			<h4>专业基地负责人情况</h4>
+			<h4><span class="red">*</span>专业基地负责人情况</h4>
 
 			<c:if test="${ishos ne 'Y'}">
 				<img src="<s:url value='/jsp/res/images/test.png'/>" onclick="editInfo('DepartmentHead','${speFlow}');"
@@ -70,28 +70,28 @@
 				</colgroup>
 				<tbody>
 					<tr>
-						<th>姓名：</th>
+						<th><span class="red">*</span>姓名：</th>
 						<td>${departmentHeadForm.userName}</td>
-						<th>性别：</th>
+						<th><span class="red">*</span>性别：</th>
 						<td>
 							<c:if test="${departmentHeadForm.userSex ==GlobalConstant.FLAG_Y }">男</c:if>
 							<c:if test="${departmentHeadForm.userSex ==GlobalConstant.FLAG_N }">女</c:if>
 						</td>
-						<th>年龄：</th>
+						<th><span class="red">*</span>年龄：</th>
 						<td>${departmentHeadForm.userAge}</td>
-						<th>学历：</th>
+						<th><span class="red">*</span>学历：</th>
 						<td>${departmentHeadForm.xl}</td>
 					</tr>
 					<tr>
-						<th>学位：</th>
+						<th><span class="red">*</span>学位：</th>
 						<td>${departmentHeadForm.xw}</td>
-						<th>职称：</th>
+						<th><span class="red">*</span>职称：</th>
 						<td>${departmentHeadForm.zc}</td>
-						<th>职务：</th>
+						<th><span class="red">*</span>职务：</th>
 						<td colspan="3">${departmentHeadForm.zw}</td>
 					</tr>
 					<tr>
-						<th>导师情况：</th>
+						<th><span class="red">*</span>导师情况：</th>
 						<td colspan="7">
 							<c:if test="${departmentHeadForm.dsqk ==GlobalConstant.FLAG_Y }">&#12288;硕导&#12288;</c:if>
 							<c:if test="${departmentHeadForm.dsqk ==GlobalConstant.FLAG_N }">&#12288;博导&#12288;</c:if>
@@ -100,39 +100,39 @@
 						</td>
 					</tr>
 					<tr>
-						<th>从事住院医师规范化培训工作年限：</th>
+						<th><span class="red">*</span>从事住院医师规范化培训工作年限：</th>
 						<td colspan="7">
 							${departmentHeadForm.cszy}
 						</td>
 					</tr>
 					<tr>
-						<th>从事本专业临床医疗、科研和教学工作经验：</th>
+						<th><span class="red">*</span>从事本专业临床医疗、科研和教学工作经验：</th>
 						<td colspan="7">
 							${departmentHeadForm.cspx}
 						</td>
 					</tr>
 					<tr>
-						<th>教学简历：</th>
+						<th><span class="red">*</span>教学简历：</th>
 						<td colspan="7"><textarea readonly>${departmentHeadForm.jxjl}</textarea></td>
 					</tr>
 					<tr>
-						<th>工作简历：</th>
+						<th><span class="red">*</span>工作简历：</th>
 						<td colspan="7"><textarea readonly>${departmentHeadForm.gzjl}</textarea></td>
 					</tr>
 					<th colspan="8" style="text-align: left;padding-left: 5px;">
-						获得的省、部级以上教学成果奖名称、级别及获奖年度（近3年）
+						获得的省、部级以上教学成果奖名称、级别及获奖年度（近三年）
 					</th>
 					<tr>
 						<td colspan="8" style="padding-left: 0px;"><textarea readonly>${departmentHeadForm.jx}</textarea></td>
 					</tr>
 					<th colspan="8" style="text-align: left;padding-left: 5px;">
-						获得的省、部级以上科研成果奖名称、级别及获奖年度（近3年）
+						获得的省、部级以上科研成果奖名称、级别及获奖年度（近三年）
 					</th>
 					<tr>
 						<td colspan="8" style="padding-left: 0px;"><textarea readonly>${departmentHeadForm.ky}</textarea></td>
 					</tr>
 					<th colspan="8" style="text-align: left;padding-left: 5px;">
-						承担的省、部级以上本专业的临床教学、科研项目（近3年）
+						承担的省、部级以上本专业的临床教学、科研项目（近三年）
 					</th>
 					<tr>
 						<td colspan="8" style="padding-left: 0px;"><textarea readonly>${departmentHeadForm.lc}</textarea></td>

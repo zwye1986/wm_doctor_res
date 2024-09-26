@@ -102,7 +102,7 @@
 </head>
 <body>
 <div class="div_table">
-    <h4 onclick="showTable('jbxx');">基本信息</h4>
+    <h4 onclick="showTable('jbxx');"><span class="red">*</span>基本信息</h4>
     <img id="jbxxdown" src="<s:url value='/jsp/jsres/images/down3.png'/>" onclick="showTable('jbxx');"
          style="display: none;float:right;width: 20px;height: 20px;margin-right: 40px;margin-top: -35px"/>
     <img id="jbxxup" src="<s:url value='/jsp/jsres/images/up3.png'/>" onclick="showTable('jbxx');"
@@ -132,9 +132,9 @@
             <td colspan="2">${sysOrg.orgProvName}${sysOrg.orgCityName}${sysOrg.orgAreaName}</td>
         </tr>
         <tr>
-            <th style="background-color: #f4f5f9;">培训基地地址：</th>
+            <th style="background-color: #f4f5f9;"><span class="red">*</span>培训基地地址：</th>
             <td colspan="2">${sysOrg.orgAddress}</td>
-            <th style="background-color: #f4f5f9;">邮政编码：</th>
+            <th style="background-color: #f4f5f9;"><span class="red">*</span>邮政编码：</th>
             <td colspan="2">${sysOrg.orgZip}</td>
         </tr>
         <%--<tr>
@@ -163,12 +163,12 @@
                 <col width="16.67%"/>
             </colgroup>
             <tr>
-                <th style="text-align: center">培训基地负责人</th>
-                <th style="text-align: center">手机号码</th>
-                <th style="text-align: center">固定电话</th>
-                <th style="text-align: center">邮箱地址</th>
+                <th style="text-align: center"><span class="red">*</span>培训基地负责人</th>
+                <th style="text-align: center"><span class="red">*</span>手机号码</th>
+                <th style="text-align: center"><span class="red">*</span>固定电话</th>
+                <th style="text-align: center"><span class="red">*</span>邮箱地址</th>
                 <th style="text-align: center">职称</th>
-                <th style="text-align: center">职务</th>
+                <th style="text-align: center"><span class="red">*</span>职务</th>
             </tr>
             <c:choose>
                 <c:when test="${not empty sysOrg.orgPersonInCharge}">
@@ -319,12 +319,12 @@
                     <col width="16.67%"/>
                 </colgroup>
                 <tr>
-                    <th style="text-align: center">住培管理部门负责人</th>
-                    <th style="text-align: center">手机号码</th>
-                    <th style="text-align: center">固定电话</th>
-                    <th style="text-align: center">邮箱地址</th>
+                    <th style="text-align: center"><span class="red">*</span>住培管理部门负责人</th>
+                    <th style="text-align: center"><span class="red">*</span>手机号码</th>
+                    <th style="text-align: center"><span class="red">*</span>固定电话</th>
+                    <th style="text-align: center"><span class="red">*</span>邮箱地址</th>
                     <th style="text-align: center">职称</th>
-                    <th style="text-align: center">职务</th>
+                    <th style="text-align: center"><span class="red">*</span>职务</th>
                 </tr>
                 <c:forEach var="zpglbm" items="${basicInfo.zpglbmfzrList}" varStatus="status">
                     <tr>
@@ -361,12 +361,12 @@
                     <col width="16.67%"/>
                 </colgroup>
                 <tr>
-                    <th style="text-align: center">住培管理部门负责人</th>
-                    <th style="text-align: center">手机号码</th>
-                    <th style="text-align: center">固定电话</th>
-                    <th style="text-align: center">邮箱地址</th>
+                    <th style="text-align: center"><span class="red">*</span>住培管理部门负责人</th>
+                    <th style="text-align: center"><span class="red">*</span>手机号码</th>
+                    <th style="text-align: center"><span class="red">*</span>固定电话</th>
+                    <th style="text-align: center"><span class="red">*</span>邮箱地址</th>
                     <th style="text-align: center">职称</th>
-                    <th style="text-align: center">职务</th>
+                    <th style="text-align: center"><span class="red">*</span>职务</th>
                 </tr>
                 <tr>
                     <td colspan="6" style="text-align: center">暂未填写</td>
@@ -387,12 +387,12 @@
                         <col width="16.67%"/>
                     </colgroup>
                     <tr>
-                        <th style="text-align: center">联络员</th>
-                        <th style="text-align: center">手机号码</th>
-                        <th style="text-align: center">固定电话</th>
-                        <th style="text-align: center">邮箱地址</th>
+                        <th style="text-align: center"><span class="red">*</span>联络员</th>
+                        <th style="text-align: center"><span class="red">*</span>手机号码</th>
+                        <th style="text-align: center"><span class="red">*</span>固定电话</th>
+                        <th style="text-align: center"><span class="red">*</span>邮箱地址</th>
                         <th style="text-align: center">职称</th>
-                        <th style="text-align: center">职务</th>
+                        <th style="text-align: center"><span class="red">*</span>职务</th>
                     </tr>
                     <c:forEach var="contactMan" items="${basicInfo.contactManList}" varStatus="status">
                         <tr>
@@ -429,12 +429,12 @@
                         <col width="16.67%"/>
                     </colgroup>
                     <tr>
-                        <th style="text-align: center">联络员</th>
-                        <th style="text-align: center">手机号码</th>
-                        <th style="text-align: center">固定电话</th>
-                        <th style="text-align: center">邮箱地址</th>
+                        <th style="text-align: center"><span class="red">*</span>联络员</th>
+                        <th style="text-align: center"><span class="red">*</span>手机号码</th>
+                        <th style="text-align: center"><span class="red">*</span>固定电话</th>
+                        <th style="text-align: center"><span class="red">*</span>邮箱地址</th>
                         <th style="text-align: center">职称</th>
-                        <th style="text-align: center">职务</th>
+                        <th style="text-align: center"><span class="red">*</span>职务</th>
                     </tr>
                     <tr>
                         <td colspan="6" style="text-align: center">暂未填写</td>
@@ -448,7 +448,7 @@
 </div>
 
 <div class="div_table">
-    <h4  onclick="showTable('zz');">培训基地（医院）资质</h4>
+    <h4  onclick="showTable('zz');"><span class="red">*</span>培训基地资质</h4>
     <img id="zzdown" src="<s:url value='/jsp/jsres/images/down3.png'/>" onclick="showTable('zz');"
          style="float:right;width: 20px;height: 20px;margin-right: 40px;margin-top: -35px"/>
     <img id="zzup" src="<s:url value='/jsp/jsres/images/up3.png'/>" onclick="showTable('zz');"
@@ -468,9 +468,9 @@
             </colgroup>
             <tbody>
             <tr>
-                <th style="background-color: #f4f5f9;">类别：</th>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>类别：</th>
                 <td >${basicInfo.lx}</td>
-                <th style="background-color: #f4f5f9;">级别：</th>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>级别：</th>
                 <td >${basicInfo.levelRankName}</td>
             </tr>
             <tr>
@@ -486,34 +486,39 @@
                 </tr>
             </c:if>--%>
             <tr>
-                <th style="background-color: #f4f5f9;">注册登记类型：</th>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>培训基地性质：</th>
                 <td>${basicInfo.zcdjlx}</td>
-                <th style="background-color: #f4f5f9;">分类管理方式：</th>
-                <td>${basicInfo.classificationManagement} </td>
-            </tr>
-            <tr>
-                <th style="background-color: #f4f5f9;">住院医师基地获批文号：</th>
+                <%--<th style="background-color: #f4f5f9;">分类管理方式：</th>
+                <td>${basicInfo.classificationManagement} </td>--%>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>住院医师基地获批文号：</th>
                 <td>${resBase.resApprovalNumberName}</td>
-                <th style="background-color: #f4f5f9;">培训基地（医院）统一社会信用代码：</th>
-                <td>${sysOrg.creditCode}</td>
             </tr>
             <tr>
-                <th style="background-color: #f4f5f9;">执业许可证：</th>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>培训基地统一社会信用代码：</th>
+                <td>${sysOrg.creditCode}</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>执业许可证：</th>
                 <td>
-                            <span style="display:${!empty basicInfo.professionLicenceUrl?'':'none'} ">
-                                <a href="${sysCfgMap['upload_base_url']}/${basicInfo.professionLicenceUrl}"
-                                   target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看图片</a>
-                            </span>
-                </td>
-                <th style="background-color: #f4f5f9;">医院等级证书：</th>
-                <td>
-                            <span style="display:${!empty basicInfo.hospitalLevelLicenceUrl?'':'none'} ">
-                                <a href="${sysCfgMap['upload_base_url']}/${basicInfo.hospitalLevelLicenceUrl}"
-                                   target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看图片</a>
-                            </span>
+                    <span style="display:${!empty basicInfo.professionLicenceUrl?'':'none'} ">
+                        <a href="${sysCfgMap['upload_base_url']}/${basicInfo.professionLicenceUrl}"
+                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看图片</a>
+                    </span>
                 </td>
             </tr>
-            <c:if test="${null ne jointContractList and jointContractList.size() gt 0}">
+            <tr>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>医院等级证书：</th>
+                <td>
+                    <span style="display:${!empty basicInfo.hospitalLevelLicenceUrl?'':'none'} ">
+                        <a href="${sysCfgMap['upload_base_url']}/${basicInfo.hospitalLevelLicenceUrl}"
+                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看图片</a>
+                    </span>
+                </td>
+                <!-- 这个放最后，因为后面接的是协同单位信息 -->
+                <th style="background-color: #f4f5f9;">是否具有协同单位：</th>
+                <td>
+                    ${not empty jointContractList ? "有" : "无"}
+                </td>
+            </tr>
+            <%--<c:if test="${null ne jointContractList and jointContractList.size() gt 0}">
                 <c:forEach items="${jointContractList}" var="jointContract" varStatus="stat">
                     <tr>
                         <th style="background-color: #f4f5f9;">协同关系协议：${jointContract.orgName}</th>
@@ -541,10 +546,41 @@
                             </span>
                     </td>
                 </tr>
-            </c:if>
+            </c:if>--%>
             </tbody>
         </table>
+        <c:if test="${not empty jointContractList}">
+            <table class="base_info">
+                <colgroup>
+                    <col width="40%"/>
+                    <col width="30%"/>
+                    <col width="30%"/>
+                </colgroup>
+                <tr>
+                    <th style="text-align: center"><span class="red">*</span>协同单位名称</th>
+                    <th style="text-align: center"><span class="red">*</span>专业基地</th>
+                    <th style="text-align: center"><span class="red">*</span>协同关系协议</th>
+                </tr>
+                <c:forEach var="jointContract" items="${jointContractList}" varStatus="status">
+                    <tr>
+                        <td style="text-align: center">${jointContract.orgName}</td>
+                        <td style="text-align: center">${jointContract.speName}</td>
+                        <td style="text-align: center">
+                            <c:if test="${not empty jointContract.fileList}">
+                                <c:forEach items="${jointContract.fileList}" var="contractFile">
+                                    <div style="padding: 2px;margin: 2px">
+                                        <a href="${sysCfgMap['upload_base_url']}/${contractFile.filePath}"
+                                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">${contractFile.fileName}</a>
+                                    </div>
+                                </c:forEach>
+                            </c:if>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </c:if>
     </div>
+
 </div>
 
 <div class="div_table">
@@ -567,52 +603,95 @@
             </colgroup>
             <tbody>
             <tr>
-                <th style="background-color: #f4f5f9;">编制总床位数：</th>
-                <td>${educationInfo.bzBedCount}张</td>
-                <th style="background-color: #f4f5f9;">实有总床位数：</th>
-                <td>${educationInfo.sjBedCount}张</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>编制总床位数（张）：</th>
+                <td>${educationInfo.bzBedCount}</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>实有总床位数（张）：</th>
+                <td>${educationInfo.sjBedCount}</td>
             </tr>
             <tr>
-                <th style="background-color: #f4f5f9;">年收治住院病人数：<br/></th>
-                <td>${ educationInfo. yearlyNumberOfClinicalPatients}人次</td>
-                <th style="background-color: #f4f5f9;">病床使用率：<br/></th>
-                <td>${educationInfo.bedOccupancy}%</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>年收治住院病人数（人次）：<br/></th>
+                <td>${ educationInfo. yearlyNumberOfClinicalPatients}</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>病床使用率（%）：<br/></th>
+                <td>${educationInfo.bedOccupancy}</td>
             </tr>
             <tr>
-                <th style="background-color: #f4f5f9;">本年门诊量：</th>
-                <td>${educationInfo.yearMzCount}万人次</td>
-                <th style="background-color: #f4f5f9;">本年急诊量：</th>
-                <td>${educationInfo.yearJzCount}万人次</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>本年门诊量（万人次）：</th>
+                <td>${educationInfo.yearMzCount}</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>本年急诊量（万人次）：</th>
+                <td>${educationInfo.yearJzCount}</td>
             </tr>
             <tr>
-                <th style="background-color: #f4f5f9;">本年手术量：</th>
-                <td>${educationInfo.yearSjCount}台次</td>
-                <th style="background-color: #f4f5f9;">本年出院病人数：</th>
-                <td>${educationInfo.yearCybrCount}万人次</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>本年手术量（台次）：</th>
+                <td>${educationInfo.yearSjCount}</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>本年出院病人数（万人次）：</th>
+                <td>${educationInfo.yearCybrCount}</td>
             </tr>
             <tr>
-                <th style="background-color: #f4f5f9;">本年专业基地数：</th>
-                <td>${educationInfo.numberOfExistingProfessionalBases}个</td>
-                <th style="background-color: #f4f5f9;">近三年培训容量总和：</th>
-                <td>${educationInfo.total3YearTrainingCapacity}人</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>本年专业基地数（个）：</th>
+                <td>${educationInfo.numberOfExistingProfessionalBases}</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>近三年培训容量总和（人）：</th>
+                <td>${educationInfo.total3YearTrainingCapacity}</td>
             </tr>
             <tr>
-                <th style="background-color: #f4f5f9;">本年入出院病人诊断符合率：</th>
-                <td>${educationInfo.rcybrzdfhl}%</td>
-                <th style="background-color: #f4f5f9;">本年住院病人治愈好转率：</th>
-                <td>${educationInfo.zybrzyhzl}%</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>本年入出院病人诊断符合率（%）：</th>
+                <td>${educationInfo.rcybrzdfhl}</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>本年住院病人治愈好转率（%）：</th>
+                <td>${educationInfo.zybrzyhzl}</td>
             </tr>
             <tr>
-                <th style="background-color: #f4f5f9;">本年住院总死亡率：</th>
-                <td>${educationInfo.zyzswl}%</td>
-                <th style="background-color: #f4f5f9;">本年感染总发生率：</th>
-                <td>${educationInfo.grzfsl}%</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>本年住院总死亡率（%）：</th>
+                <td>${educationInfo.zyzswl}</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>本年感染总发生率（%）：</th>
+                <td>${educationInfo.grzfsl}</td>
             </tr>
             <tr>
-                <th style="background-color: #f4f5f9;">本年手术患者并发症发生率：</th>
-                <td>${educationInfo.sshzbfzfsl}%</td>
-                <th style="background-color: #f4f5f9;">按省级卫生健康行政部门有关规定核定的培训容量总和：</th>
-                <td>${educationInfo.hdpxrlzh}人</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>本年手术患者并发症发生率（%）：</th>
+                <td>${educationInfo.sshzbfzfsl}</td>
+                <%--<th style="background-color: #f4f5f9;"><span class="red">*</span>按省级卫生健康行政部门有关规定核定的培训容量总和（人）：</th>
+                <td>${educationInfo.hdpxrlzh}</td>--%>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>按本年总病例病种数（个）：</th>
+                <td>${baseExtInfoEducationInfo.annualDiseases}</td>
+            </tr>
+
+            <tr>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>本年收治总疾病（种）：</th>
+                <td>${baseExtInfoEducationInfo.annualDiseaseCategory}</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>本年收治总疾病（个）：</th>
+                <td>${baseExtInfoEducationInfo.annualDiseaseNumber}</td>
+            </tr>
+            <tr>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>演示教室：</th>
+                <td>${baseExtInfoEducationInfo.hospitalDemoClass eq 'Y' ? '有' : '无'}</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>图书馆：</th>
+                <td>${baseExtInfoEducationInfo.hospitalLibrary eq 'Y' ? '有' : '无'}</td>
+            </tr>
+            <tr>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>文献检索系统：</th>
+                <td>${baseExtInfoEducationInfo.literatureRetrievalSystem eq 'Y' ? '有' : '无'}</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>网络信息管理平台：</th>
+                <td>${baseExtInfoEducationInfo.netInfoManagePlatform eq 'Y' ? '有' : '无'}</td>
+            </tr>
+            <tr>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>临床技能培训中心建筑面积（平米）：</th>
+                <td>${baseExtInfoEducationInfo.clinicalSkillsTrainingCenterM2}</td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>培训管理制度：</th>
+                <td>
+                    <c:if test="${baseExtInfoEducationInfo.trainManageSystem eq 'Y' and not empty baseExtInfoEducationInfo.trainManageSystemUrl}">
+                        <a href="${sysCfgMap['upload_base_url']}/${baseExtInfoEducationInfo.trainManageSystemUrl}"
+                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看</a>
+                    </c:if>
+                </td>
+            </tr>
+            <tr>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>临床基地培训协议：</th>
+                <td>
+                    <c:if test="${baseExtInfoEducationInfo.clinicalBaseTrainContract eq 'Y' and not empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl}">
+                        <a href="${sysCfgMap['upload_base_url']}/${baseExtInfoEducationInfo.clinicalBaseTrainContractUrl}"
+                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看</a>
+                    </c:if>
+                </td>
+                <th style="background-color: #f4f5f9;"><span class="red">*</span>教学门诊：</th>
+                <td>${baseExtInfoEducationInfo.teachingClinic eq 'Y' ? '有' : '无'}</td>
             </tr>
             </tbody>
         </table>
@@ -785,7 +864,7 @@
         </table>
     </div>
 </div>--%>
-<div class="div_table">
+<%--<div class="div_table">
     <h4 onclick="showTable('lb');">附件列表</h4>
     <img id="lbdown" src="<s:url value='/jsp/jsres/images/down3.png'/>" onclick="showTable('lb');"
          style="float:right;width: 20px;height: 20px;margin-right: 40px;margin-top: -35px"/>
@@ -817,7 +896,7 @@
             </c:if>
         </table>
     </div>
-</div>
+</div>--%>
 <%--<div class="div_table">
     <h4 onclick="showTable('jg')">培训机构</h4>
     <img id="jgdown" src="<s:url value='/jsp/jsres/images/down3.png'/>" onclick="showTable('jg');"

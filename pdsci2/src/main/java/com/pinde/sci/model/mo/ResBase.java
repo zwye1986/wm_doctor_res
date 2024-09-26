@@ -51,6 +51,16 @@ public class ResBase extends MybatisObject {
 
     private String sessionNumber;
 
+    private String baseExtInfo;
+
+    public String getBaseExtInfo() {
+        return baseExtInfo;
+    }
+
+    public void setBaseExtInfo(String baseExtInfo) {
+        this.baseExtInfo = baseExtInfo;
+    }
+
     public String getSessionNumber() {
         return sessionNumber;
     }

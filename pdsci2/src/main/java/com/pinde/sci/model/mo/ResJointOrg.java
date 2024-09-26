@@ -2,6 +2,8 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.MybatisObject;
 
+import java.util.List;
+
 public class ResJointOrg extends MybatisObject {
     private String jointFlow;
 
@@ -24,6 +26,36 @@ public class ResJointOrg extends MybatisObject {
     private String modifyUserFlow;
 
     private String sessionNumber;
+
+    private String speId;
+
+    private String speName;
+
+    private List<String> jointOrgFlowList;
+
+    public List<String> getJointOrgFlowList() {
+        return jointOrgFlowList;
+    }
+
+    public void setJointOrgFlowList(List<String> jointOrgFlowList) {
+        this.jointOrgFlowList = jointOrgFlowList;
+    }
+
+    public String getSpeName() {
+        return speName;
+    }
+
+    public void setSpeName(String speName) {
+        this.speName = speName;
+    }
+
+    public String getSpeId() {
+        return speId;
+    }
+
+    public void setSpeId(String speId) {
+        this.speId = speId;
+    }
 
     public String getJointFlow() {
         return jointFlow;

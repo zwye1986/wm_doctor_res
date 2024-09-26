@@ -13,6 +13,8 @@
     <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+    <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -74,14 +76,14 @@
   </sql>
   <sql id="Base_Column_List" >
     JOINT_FLOW, ORG_FLOW, ORG_NAME, JOINT_ORG_FLOW, JOINT_ORG_NAME, SESSION_NUMBRE, RECORD_STATUS, CREATE_TIME,
-    CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+    CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, spe_id, spe_name
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResJointOrgExample" >
     select
     <if test="distinct" >
       distinct
     </if>
-    JOINT_FLOW, ORG_FLOW, ORG_NAME, JOINT_ORG_FLOW, JOINT_ORG_NAME, RECORD_STATUS
+    JOINT_FLOW, ORG_FLOW, ORG_NAME, JOINT_ORG_FLOW, JOINT_ORG_NAME, RECORD_STATUS,spe_id, spe_name
     from PDSCI.RES_JOINT_ORG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -124,11 +126,12 @@
       into PDSCI.RES_JOINT_ORG (JOINT_FLOW, ORG_FLOW, ORG_NAME,
       JOINT_ORG_FLOW, JOINT_ORG_NAME, RECORD_STATUS,
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME,
-      MODIFY_USER_FLOW, SESSION_NUMBER)
+      MODIFY_USER_FLOW, SESSION_NUMBER, spe_id, spe_name)
       values (#{resJointOrg.jointFlow,jdbcType=VARCHAR}, #{resJointOrg.orgFlow,jdbcType=VARCHAR}, #{resJointOrg.orgName,jdbcType=VARCHAR},
       #{resJointOrg.jointOrgFlow,jdbcType=VARCHAR}, #{resJointOrg.jointOrgName,jdbcType=VARCHAR}, #{resJointOrg.recordStatus,jdbcType=VARCHAR},
       #{resJointOrg.createTime,jdbcType=VARCHAR}, #{resJointOrg.createUserFlow,jdbcType=VARCHAR}, #{resJointOrg.modifyTime,jdbcType=VARCHAR},
-      #{resJointOrg.modifyUserFlow,jdbcType=VARCHAR},#{resJointOrg.sessionNumber,jdbcType=VARCHAR})
+      #{resJointOrg.modifyUserFlow,jdbcType=VARCHAR},#{resJointOrg.sessionNumber,jdbcType=VARCHAR},#{resJointOrg.speId,jdbcType=VARCHAR},
+    #{resJointOrg.speName,jdbcType=VARCHAR})
     </foreach>
     select 1 from dual
   </insert>
@@ -168,6 +171,12 @@
       <if test="modifyUserFlow != null" >
         MODIFY_USER_FLOW,
       </if>
+      <if test="speId != null" >
+        SPE_ID,
+      </if>
+      <if test="speName != null" >
+        SPE_NAME,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="jointFlow != null" >
@@ -202,6 +211,12 @@
       </if>
       <if test="modifyUserFlow != null" >
         #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="speId != null" >
+        #{speId,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        #{speName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -302,6 +317,12 @@
       <if test="modifyUserFlow != null" >
         MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
       </if>
+      <if test="speId != null" >
+        SPE_ID = #{speId,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        SPE_NAME = #{speName,jdbcType=VARCHAR},
+      </if>
     </set>
     where JOINT_FLOW = #{jointFlow,jdbcType=VARCHAR}
   </update>
@@ -332,5 +353,24 @@
         where org_flow = #{orgFlow}
           and session_number = #{sessionNumber}
         and record_status = 'Y'
+  </delete>
+  <!-- 通过flow来更新，用choose，防止无条件更新全表 -->
+  <delete id="deleteJointOrg" parameterType="com.pinde.sci.model.mo.ResJointOrg">
+        update PDSCI.RES_JOINT_ORG
+        set record_status = 'N',
+            modify_time = #{modifyTime},
+            modify_user_flow = #{modifyUserFlow}
+        where record_status = 'Y'
+        <choose>
+            <when test="jointOrgFlowList != null and jointOrgFlowList.size() > 0">
+                and JOINT_ORG_FLOW in
+                <foreach collection="jointOrgFlowList" item="jointOrgFlow" open="(" close=")" separator=",">
+                    #{jointOrgFlow}
+                </foreach>
+            </when>
+            <otherwise>
+                and JOINT_ORG_FLOW = #{jointOrgFlow}
+            </otherwise>
+        </choose>
   </delete>
 </mapper>

@@ -27,6 +27,7 @@
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ResBase" extends="BaseResultMap" >
     <result column="BASE_INFO" property="baseInfo" jdbcType="CLOB" />
+    <result column="BASE_EXT_INFO" property="baseExtInfo" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -156,7 +157,7 @@
       BASE_STATUS_ID, BASE_STATUS_NAME, AUDIT_STATUS_ID, 
       AUDIT_STATUS_NAME, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
-      BASE_INFO, SESSION_NUMBER)
+      BASE_INFO, SESSION_NUMBER, BASE_EXT_INFO)
     values (#{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{baseGradeId,jdbcType=VARCHAR}, #{baseGradeName,jdbcType=VARCHAR}, #{baseTypeId,jdbcType=VARCHAR}, 
       #{baseTypeName,jdbcType=VARCHAR}, #{basePropertyId,jdbcType=VARCHAR}, #{basePropertyName,jdbcType=VARCHAR}, 
@@ -165,7 +166,7 @@
       #{baseStatusId,jdbcType=VARCHAR}, #{baseStatusName,jdbcType=VARCHAR}, #{auditStatusId,jdbcType=VARCHAR}, 
       #{auditStatusName,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
-      #{baseInfo,jdbcType=CLOB}, #{sessionNumber,jdbcType=VARCHAR})
+      #{baseInfo,jdbcType=CLOB}, #{sessionNumber,jdbcType=VARCHAR},#{baseExtInfo,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResBase" >
     insert into PDSCI.RES_BASE
@@ -325,7 +326,7 @@
          , b.BASE_TYPE_ID, b.BASE_TYPE_NAME, b.BASE_PROPERTY_ID, b.BASE_PROPERTY_NAME, b.RES_APPROVAL_NUMBER_ID
          , b.RES_APPROVAL_NUMBER_NAME, b.GPS_APPROVAL_NUMBER_ID, b.GPS_APPROVAL_NUMBER_NAME, b.BASE_STATUS_ID, b.BASE_STATUS_NAME
          , b.AUDIT_STATUS_ID, b.AUDIT_STATUS_NAME, b.RECORD_STATUS, b.CREATE_TIME, b.CREATE_USER_FLOW
-         , b.MODIFY_TIME, b.MODIFY_USER_FLOW, b.BASE_INFO, b.SESSION_NUMBER
+         , b.MODIFY_TIME, b.MODIFY_USER_FLOW, b.BASE_INFO, b.SESSION_NUMBER,b.BASE_EXT_INFO
     FROM PDSCI.RES_BASE b
            LEFT JOIN SYS_ORG o on o.org_flow = b.org_flow
     where b.ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
@@ -534,6 +535,9 @@
       </if>
       <if test="baseInfo != null" >
         BASE_INFO = #{baseInfo,jdbcType=CLOB},
+      </if>
+      <if test="baseInfo != null" >
+        BASE_EXT_INFO = #{baseExtInfo,jdbcType=CLOB},
       </if>
     </set>
     where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
