@@ -155,11 +155,11 @@
                     <div class="form_content" >
                         <select name="trainingSpeId" id="trainingSpeId" class="select" >
                             <option value="">全部</option>
-<%--                                <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="spe">--%>
-<%--                                    <option value="${spe.dictId}"--%>
-<%--                                            <c:if test="${param.trainingSpeId eq spe.dictId}">selected</c:if>--%>
-<%--                                    >${spe.dictName}</option>--%>
-<%--                                </c:forEach>--%>
+                                <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="spe">
+                                    <option value="${spe.dictId}"
+                                            <c:if test="${param.trainingSpeId eq spe.dictId}">selected</c:if>
+                                    >${spe.dictName}</option>
+                                </c:forEach>
                         </select>
                     </div>
 			    </div>
@@ -338,7 +338,7 @@
     </div>
 
 
-            <div class="basic" style="overflow: auto;">
+            <div class="basic" style="overflow: auto;max-width: 1500px">
                 <table border="0" cellpadding="0" cellspacing="0" class="grid" id="dataTable">
                     <thead>
                         <tr>
