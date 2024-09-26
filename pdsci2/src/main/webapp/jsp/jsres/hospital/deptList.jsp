@@ -6,6 +6,7 @@
 			<th style="width: 20%;">科室名称</th>
 			<th style="width: 28%;">标准科室</th>
 			<th style="width: 12%;">出科考试关联</th>
+			<th style="width: 6%;">科室信息</th>
 			<th>操作</th>
 		</tr>
 		</thead>
@@ -23,6 +24,11 @@
 				<c:if test="${dept.recordStatus == GlobalConstant.RECORD_STATUS_N }">
 					<c:if test="${empty dept.recordFlow}">未关联</c:if>
 					<c:if test="${not empty dept.recordFlow}">已关联</c:if>
+				</c:if>
+			</td>
+			<td>
+				<c:if test="${!empty dept.speFlow}">
+					<a href="javascript:void(0)" onclick="showDept('${dept.deptFlow}','${dept.deptName}','','${dept.speFlow}');" style="color:#59d5ff;">查看</a>
 				</c:if>
 			</td>
 			<td>

@@ -126,6 +126,6 @@ function showTab(deptFlow){
     </div>
 </div>
 <div class="main_bd" id="div_table_0" >
-    <div id="hosContent" <c:if test="${param.viewFlag eq GlobalConstant.FLAG_Y }">style="height: 500px;overflow: auto;"</c:if>>
+    <div id="hosContent" <c:if test="${param.viewFlag eq GlobalConstant.FLAG_Y }">style="height: 600px;overflow: auto;"</c:if>>
     </div>
 </div>
