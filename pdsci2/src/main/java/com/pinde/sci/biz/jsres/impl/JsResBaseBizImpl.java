@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
+import com.alibaba.fastjson.JSON;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.PkUtil;
@@ -8,6 +9,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResBaseBiz;
 import com.pinde.sci.biz.jsres.IResOrgSpeBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
+import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
@@ -17,19 +19,19 @@ import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.ResBaseExtMapper;
 import com.pinde.sci.enums.jsres.JsResDoctorAuditStatusEnum;
 import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.form.jsres.BaseExtInfoForm;
-import com.pinde.sci.form.jsres.BaseInfoForm;
-import com.pinde.sci.form.jsres.BasicInfoForm;
-import com.pinde.sci.form.jsres.ContactorInfoForm;
+import com.pinde.sci.form.jsres.*;
 import com.pinde.sci.model.jsres.ResBaseExt;
 import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBException;
@@ -37,6 +39,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional(rollbackFor=Exception.class)
 public class JsResBaseBizImpl implements IJsResBaseBiz{
@@ -59,13 +63,19 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 	private SysUserRoleMapper userRoleMapper;
 	@Autowired
 	private IFileBiz pubFileBiz;
+
+	@Autowired
+	private IResJointOrgBiz jointOrgBiz;
+
 	/**
 	 * 保存基地的基本信息
 	 * @throws IOException 
 	 * @throws JAXBException 
 	 */
 	@Override
-	public int saveBaseInfo(String flag, BaseInfoForm baseInfoForm, String index, String type, String[] fileFlows, HttpServletRequest request) throws Exception {
+	public int saveBaseInfo(String flag, BaseInfoForm baseInfoForm, String index, String type, String[] fileFlows, HttpServletRequest request,
+							String[] jointOrgFlows, String[] speIds, String[] fileUploadNum, String[] jointContractFileFlows, String[] fileRemainNum,
+							BaseExtInfo baseExtInfoJson) throws Exception {
 		SysOrg sysOrg = baseInfoForm.getSysOrg();
 		if(sysOrg!=null && DateUtil.getYear().equals(baseInfoForm.getResBase().getSessionNumber())){
 			orgBiz.update(sysOrg);
@@ -74,17 +84,34 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 //		ResBase resBase=readBase(sysOrg.getOrgFlow());
 //		baseInfoForm.getResBase();
 		String xml= null;
+		String json = null;
 		BaseExtInfoForm baseExtInfo = null ;
+		BaseExtInfoJson baseExtInfoAllJson = null;
 		boolean add = true;
 		if(resBase != null){
 			add = false;
 			xml=resBase.getBaseInfo();
 			baseExtInfo =JaxbUtil.converyToJavaBean(xml, BaseExtInfoForm.class);
+			json = resBase.getBaseExtInfo();
+			baseExtInfoAllJson = JSON.parseObject(json, BaseExtInfoJson.class);
 		}else{
 			resBase=baseInfoForm.getResBase();
 			resBase.setOrgName(baseInfoForm.getSysOrg().getOrgName());
 			baseExtInfo=new BaseExtInfoForm();
 		}
+
+		if(GlobalConstant.BASIC_INFO.equals(flag) || GlobalConstant.BASIC_MAIN_ALL.equals(flag)) {
+			handleJointOrg(request, jointOrgFlows, speIds, fileUploadNum, jointContractFileFlows, fileRemainNum, sysOrg.getOrgFlow(), baseInfoForm.getResBase().getSessionNumber());
+		}
+
+		if(baseExtInfoAllJson == null) {
+			baseExtInfoAllJson = new BaseExtInfoJson();
+		}
+
+		if(GlobalConstant.TEACH_CONDITION.equals(flag) || GlobalConstant.BASIC_MAIN_ALL.equals(flag)) {
+			baseExtInfoAllJson.setBaseExtInfoEducationInfo(baseExtInfoJson.getBaseExtInfoEducationInfo());
+		}
+
 		if(baseInfoForm!=null){
 			if(GlobalConstant.TEACH_CONDITION.equals(flag)){
 				baseExtInfo.setEducationInfo(baseInfoForm.getEducationInfo());
@@ -200,6 +227,9 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 			resBase.setSessionNumber(baseInfoForm.getResBase().getSessionNumber());
 		}
 
+		String saveExtInfo = JSON.toJSONString(baseExtInfoAllJson);
+		resBase.setBaseExtInfo(saveExtInfo);
+
 		if(StringUtil.isNotBlank(type))
 		{
 			List<String> fileFlowList =null;
@@ -218,6 +248,210 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 		}
 		return saveResBase(resBase);
   	}
+
+	/**
+	 * 时间紧，简单做，后台先不校验了
+	 * @param request
+	 * @param jointOrgFlows
+	 * @param speIds
+	 * @param fileUploadNum
+	 */
+	private void handleJointOrg(HttpServletRequest request, String[] jointOrgFlows, String[] speIds, String[] fileUploadNum, String[] jointContractFileFlows, String[] fileRemainNum, String orgFlow, String sessionNumber) {
+		ResJointOrg deleteOrg = new ResJointOrg();
+		deleteOrg.setSessionNumber(sessionNumber);
+		deleteOrg.setOrgFlow(orgFlow);
+		List<ResJointOrg> allJointOrgList = jointOrgBiz.searchResJoint(deleteOrg);
+		if(ArrayUtils.isEmpty(jointOrgFlows)) {
+			if(CollectionUtils.isNotEmpty(allJointOrgList)) {
+				jointOrgBiz.deleteByOrgFlow(orgFlow, sessionNumber);
+			}
+
+			for (ResJointOrg resJointOrg : allJointOrgList) {
+				pubFileBiz.deleteFileByTypeFlow("jointContract", resJointOrg.getJointFlow());
+			}
+			return;
+		}
+		if(ArrayUtils.isNotEmpty(jointContractFileFlows)) {
+			jointContractFileFlows = Arrays.stream(jointContractFileFlows).filter(vo -> StringUtils.isNotEmpty(vo)).toArray(len -> new String[len]);
+		}
+		List<String> jointOrgFlowList = Arrays.stream(jointOrgFlows).collect(Collectors.toList());
+
+		 // 上传的协同关系协议
+		 List<MultipartFile> files = new ArrayList<>();
+		 int curNum = 0;
+		 int remainNum = 0;
+		 if(request instanceof DefaultMultipartHttpServletRequest && ((DefaultMultipartHttpServletRequest) request).isResolved()) {
+			 files = ((DefaultMultipartHttpServletRequest) request).getMultiFileMap().get("files");
+			 files = files.stream().filter(vo -> StringUtils.isNotEmpty(vo.getOriginalFilename())).collect(Collectors.toList());
+		 }
+
+		Map<String, String> orgToSpeMap = new HashMap<>();
+		 List<String> deletingFileFlowList = new ArrayList<>();
+		 // 对协议，已有的flow不变，此次少的删的，此次上传的插入
+		 // 协同单位此次上传的协同关系协议
+		 Map<String, List<MultipartFile>> jointFlowToFileListMap = new HashMap<>();
+		 for(int i = 0; i < jointOrgFlows.length; i++) {
+			 String jointOrgFlow = jointOrgFlows[i];
+			 orgToSpeMap.put(jointOrgFlow, speIds[i]);
+			 int fileNum = Integer.parseInt(fileUploadNum[i]);
+			 List<MultipartFile> curFileList = new ArrayList<>();
+			 for(int j = 0; j < fileNum; j++) {
+				 curFileList.add(files.get(curNum++));
+			 }
+			 jointFlowToFileListMap.put(jointOrgFlow, curFileList);
+			 // 协同单位之前的协同关系协议的flow
+			 List<String> fileRemainList = new ArrayList<>();
+			 int remainFileNum = Integer.parseInt(fileRemainNum[i]);
+			 for(int j = 0; j < remainFileNum; j++) {
+				 fileRemainList.add(jointContractFileFlows[remainNum++]);
+			 }
+
+			 ResJointOrg jointOrgFind = allJointOrgList.stream().filter(vo -> vo.getJointOrgFlow().equals(jointOrgFlow)).findFirst().orElse(null);
+			 if(jointOrgFind != null) {
+				 List<PubFile> oldFileList = pubFileBiz.findFileByTypeFlow("jointContract", jointOrgFind.getJointFlow());
+				 for (PubFile pubFile : oldFileList) {
+					 if (!fileRemainList.contains(pubFile.getFileFlow())) {
+						 deletingFileFlowList.add(pubFile.getFileFlow());
+					 }
+				 }
+			 }
+		 }
+		 if(CollectionUtils.isNotEmpty(deletingFileFlowList)) {
+			 pubFileBiz.deleteFile(deletingFileFlowList);
+		 }
+
+		 // 查出原先的协同单位：两边都有的更新，原先有的删除，这次有的新增
+		List<String> alreadyJointOrgFlowList = allJointOrgList.stream().map(vo -> vo.getJointOrgFlow()).collect(Collectors.toList());
+		// 交集:更新
+		List<String> updateList = new ArrayList(CollectionUtils.intersection(jointOrgFlowList, alreadyJointOrgFlowList));
+		// 差集：删除
+		List<String> deleteList = new ArrayList(CollectionUtils.subtract(alreadyJointOrgFlowList, jointOrgFlowList));
+		// 差集：新增
+		List<String> insertList = new ArrayList(CollectionUtils.subtract(jointOrgFlowList, alreadyJointOrgFlowList));
+
+		if(CollectionUtils.isNotEmpty(updateList)) {
+			List<ResJointOrg> updateJointList = new ArrayList<>();
+			List<PubFile> insertFileList = new ArrayList<>();
+			//
+			for (String updateOrgFlow : updateList) {
+
+				for (ResJointOrg jointOrg : allJointOrgList) {
+					if(updateOrgFlow.equals(jointOrg.getJointOrgFlow())) {
+						jointOrg.setSpeId(orgToSpeMap.get(updateOrgFlow));
+						jointOrg.setSpeName(DictTypeEnum.DoctorTrainingSpe.getDictNameById(orgToSpeMap.get(updateOrgFlow)));
+						List<MultipartFile> fileList =  jointFlowToFileListMap.get(updateOrgFlow);
+						for (MultipartFile file : fileList) {
+							//保存附件
+							PubFile pubFile = new PubFile();
+							//取得当前上传文件的文件名称
+							String oldFileName = file.getOriginalFilename();
+							//定义上传路径
+							String dateString = DateUtil.getCurrDate2();
+							String newDir = StringUtil.defaultString(InitConfig.getSysCfg("upload_base_dir")) + File.separator + "jointContract" + File.separator + dateString;
+							File fileDir = new File(newDir);
+							if (!fileDir.exists()) {
+								fileDir.mkdirs();
+							}
+							//重命名上传后的文件名
+							String originalFilename = "";
+							originalFilename = PkUtil.getUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
+							File newFile = new File(fileDir, originalFilename);
+							try {
+								file.transferTo(newFile);
+							} catch (Exception e) {
+								e.printStackTrace();
+								throw new RuntimeException("保存文件失败！");
+							}
+							String filePath = File.separator + "jointContract" + File.separator + dateString + File.separator + originalFilename;
+							pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+							pubFile.setFilePath(filePath);
+							pubFile.setFileName(oldFileName);
+							pubFile.setProductType("jointContract");
+							//根据记录的主键存入pubFile中，查询时直接根据fileBiz.searchByProductFlow(recordFlow);返回的是List<PubFile>
+							pubFile.setProductFlow(jointOrg.getJointFlow());
+							insertFileList.add(pubFile);
+						}
+
+						updateJointList.add(jointOrg);
+						break;
+					}
+				}
+			}
+			if(CollectionUtils.isNotEmpty(insertFileList)) {
+				pubFileBiz.saveFiles(insertFileList);
+			}
+			jointOrgBiz.editJointOrgList(updateJointList);
+		}
+
+		if(CollectionUtils.isNotEmpty(deleteList)) {
+			ResJointOrg deletingList = new ResJointOrg();
+			deletingList.setJointOrgFlowList(deleteList);
+			jointOrgBiz.deleteJointOrg(deletingList);
+		}
+
+		if(CollectionUtils.isNotEmpty(insertList)) {
+			List<String> orgFlowList = new ArrayList(insertList);
+			orgFlowList.add(orgFlow);
+			List<SysOrg> orgList = orgBiz.searchOrgFlowIn(orgFlowList);
+			Map<String, String> orgFlowToNameMap = orgList.stream().collect(Collectors.toMap(vo -> vo.getOrgFlow(), vo -> vo.getOrgName(), (vo1, vo2) -> vo1));
+			List<PubFile> insertFileList = new ArrayList<>();
+			List<ResJointOrg> insertJointList = new ArrayList<>();
+			for (String insertJointFlow : insertList) {
+				ResJointOrg resJointOrg = new ResJointOrg();
+				resJointOrg.setJointFlow(PkUtil.getUUID());
+				resJointOrg.setSpeId(orgToSpeMap.get(insertJointFlow));
+				resJointOrg.setSpeName(DictTypeEnum.DoctorTrainingSpe.getDictNameById(orgToSpeMap.get(insertJointFlow)));
+				resJointOrg.setJointOrgFlow(insertJointFlow);
+				resJointOrg.setJointOrgName(orgFlowToNameMap.get(insertJointFlow));
+				resJointOrg.setOrgFlow(orgFlow);
+				resJointOrg.setOrgName(orgFlowToNameMap.get(orgFlow));
+				resJointOrg.setSessionNumber(sessionNumber);
+
+				GeneralMethod.setRecordInfo(resJointOrg, true);
+				insertJointList.add(resJointOrg);
+
+				List<MultipartFile> fileList =  jointFlowToFileListMap.get(insertJointFlow);
+				for (MultipartFile file : fileList) {
+					//保存附件
+					PubFile pubFile = new PubFile();
+					//取得当前上传文件的文件名称
+					String oldFileName = file.getOriginalFilename();
+					//定义上传路径
+					String dateString = DateUtil.getCurrDate2();
+					String newDir = StringUtil.defaultString(InitConfig.getSysCfg("upload_base_dir")) + File.separator + "jointContract" + File.separator + dateString;
+					File fileDir = new File(newDir);
+					if (!fileDir.exists()) {
+						fileDir.mkdirs();
+					}
+					//重命名上传后的文件名
+					String originalFilename = "";
+					originalFilename = PkUtil.getUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
+					File newFile = new File(fileDir, originalFilename);
+					try {
+						file.transferTo(newFile);
+					} catch (Exception e) {
+						e.printStackTrace();
+						throw new RuntimeException("保存文件失败！");
+					}
+					String filePath = File.separator + "jointContract" + File.separator + dateString + File.separator + originalFilename;
+					pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+					pubFile.setFilePath(filePath);
+					pubFile.setFileName(oldFileName);
+					pubFile.setProductType("jointContract");
+					//根据记录的主键存入pubFile中，查询时直接根据fileBiz.searchByProductFlow(recordFlow);返回的是List<PubFile>
+					pubFile.setProductFlow(resJointOrg.getJointFlow());
+					insertFileList.add(pubFile);
+				}
+
+				if(CollectionUtils.isNotEmpty(insertFileList)) {
+					pubFileBiz.saveFiles(insertFileList);
+				}
+			}
+			jointOrgBiz.saveAll(insertJointList);
+		}
+	 }
+
+
 	//处理文件
 	private void upadteFileInfo(String recordFlow, List<String> fileFlows, String type) {
 		//查询出不在本次保存中的文件信息

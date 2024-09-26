@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
+import com.pinde.sci.form.jsres.BaseExtInfo;
 import com.pinde.sci.form.jsres.BaseInfoForm;
 import com.pinde.sci.model.jsres.ResBaseExt;
 import com.pinde.sci.model.mo.ResBase;
@@ -51,7 +52,9 @@ public interface IJsResBaseBiz {
      * @throws IOException
      * @throws JAXBException
      */
-    int saveBaseInfo(String flag, BaseInfoForm baseInfoForm, String index, String type, String[] fileFlows, HttpServletRequest request) throws Exception;
+    int saveBaseInfo(String flag, BaseInfoForm baseInfoForm, String index, String type, String[] fileFlows, HttpServletRequest request,
+                     String[] jointOrgFlows, String[] speIds, String[] fileUploadNum, String[] jointContractFileFlows, String[] fileRemainNum,
+                     BaseExtInfo baseExtInfo) throws Exception;
 
     /**
      * 保存专业信息

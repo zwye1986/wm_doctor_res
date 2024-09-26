@@ -3631,7 +3631,7 @@ public class JsResDoctorController extends GeneralController {
      * @return
      */
     @RequestMapping(value = "/checkUploadFile", method = {RequestMethod.POST})
-    public String checkUploadFile(String operType, String fileType, MultipartFile uploadFile, Model model) {
+    public String checkUploadFile(String operType, String fileType, String fileSuffix, MultipartFile uploadFile, Model model) {
         boolean flag = "idcardFrontImg".equals(operType) || "idcardOppositeImg".equals(operType);
         if (uploadFile != null && !uploadFile.isEmpty()) {
             String fileResult = "";
@@ -3640,10 +3640,20 @@ public class JsResDoctorController extends GeneralController {
                 folderName = "idCard";
                 fileResult = jsResDoctorBiz.checkIdCardImg(uploadFile);
             } else {
-                if ("File".equals(fileType)) {
-                    fileResult = jsResDoctorBiz.checkFile(uploadFile);
-                } else {
-                    fileResult = jsResDoctorBiz.checkImg(uploadFile);
+                if(StringUtils.isNotEmpty(fileSuffix)) {
+                    String fileName = uploadFile.getOriginalFilename();
+                    String suffix = fileName.substring(fileName.lastIndexOf("."));//后缀名
+                    if(!fileSuffix.contains(suffix.toLowerCase())){
+                        fileResult = "请上传 "+fileSuffix+" 格式的文件";
+                    }else {
+                        fileResult = GlobalConstant.FLAG_Y;
+                    }
+                }else {
+                    if ("File".equals(fileType)) {
+                        fileResult = jsResDoctorBiz.checkFile(uploadFile);
+                    } else {
+                        fileResult = jsResDoctorBiz.checkImg(uploadFile);
+                    }
                 }
             }
             String resultPath = "";
@@ -4133,13 +4143,14 @@ public class JsResDoctorController extends GeneralController {
      * @return
      */
     @RequestMapping("/uploadFile")
-    public String uploadFile(String second, String fileType, Model model) {
+    public String uploadFile(String second, String fileType, String fileSuffix, Model model) {
         System.err.print("second=" + second);
         if ("File".equals(fileType)) {
             model.addAttribute("fileType", "File");
         } else {
             model.addAttribute("fileType", "");
         }
+        model.addAttribute("fileSuffix", fileSuffix);
         return "jsres/doctor/uploadFile";
     }
 
