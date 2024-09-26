@@ -820,11 +820,15 @@ public class JsResBaseManagerController extends GeneralController {
 	}
 
 	@RequestMapping("/showDeptInfo")
-	public String showDeptInfo(String deptFlow, String speFlow, Model model, String orgFlow, String isJoin, String onlyRead, String isglobal) {
+	public String showDeptInfo(String deptFlow, String speFlow, Model model, String orgFlow, String isJoin, String onlyRead, String isglobal, String viewFlag) {
 		model.addAttribute("speFlow", speFlow);
 		model.addAttribute("deptFlow", deptFlow);
 		model.addAttribute("orgFlow", orgFlow);
-		model.addAttribute("viewFlag", "N");
+		if(!"Y".equals(viewFlag)) {
+			model.addAttribute("viewFlag", "N");
+		}else {
+			model.addAttribute("viewFlag", "Y");
+		}
 		model.addAttribute("isJoin", isJoin);
 		model.addAttribute("onlyRead", onlyRead);
 		model.addAttribute("isglobal", isglobal);
