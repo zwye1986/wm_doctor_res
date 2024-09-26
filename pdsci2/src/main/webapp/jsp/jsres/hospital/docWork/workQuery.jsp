@@ -268,9 +268,9 @@
 					<td class="td_left">培训类别：</td>
 					<td class="td_right">
 						<select name="trainingTypeId" id="trainingTypeId" class="select"   onchange="changeTrainSpes('1')">
-<%--							<option value="">请选择</option>--%>
+                       <%--							<option value="">请选择</option>--%>
 							<option value="DoctorTrainingSpe" <c:if test="${param.trainingTypeId=='DoctorTrainingSpe'}">selected="selected"</c:if>>住院医师</option>
-							<option value="AssiGeneral" <c:if test="${param.trainingTypeId=='AssiGeneral'}">selected="selected"</c:if>>助理全科</option>
+							<%-- <option value="AssiGeneral" <c:if test="${param.trainingTypeId=='AssiGeneral'}">selected="selected"</c:if>>助理全科</option> --%>
 						</select>
 					</td>
 					<td class="td_left">培训专业：</td>
