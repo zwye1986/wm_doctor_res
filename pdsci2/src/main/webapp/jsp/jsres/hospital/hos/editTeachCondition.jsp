@@ -134,6 +134,34 @@
         }
     }
 
+    function uploadPdfFile(type,typeName,fileType,fileSuffix) {
+        var url = "<s:url value='/jsres/doctor/uploadFile'/>?operType="+type+"&fileType="+fileType+"&fileSuffix="+fileSuffix;
+        jboxOpen(url, "上传"+typeName, 500, 185);
+    }
+
+    function delFile(type) {
+        jboxConfirm("确认删除？" , function(){
+            $("#"+type+"Del").hide();
+            $("#"+type+"Span").hide();
+            $("#"+type).text("上传");
+            $("#"+type+"Value").val("");
+            $("#"+type+"Se").show();
+        });
+    }
+
+    function changeUrlSpanShow(obj) {
+        var isShow = $(obj).val() == 'Y';
+        var varName = $(obj).attr("name");
+        varName = varName.split('.')[1];
+        varName += 'UrlShowSpan';
+        if(isShow) {
+            $("#" + varName).show();
+        }else {
+            $("#" + varName).hide();
+        }
+
+    }
+
     function uploadFile(obj) {
 
         var fileName = $(obj).val();
@@ -180,88 +208,160 @@
                 </colgroup>
                 <tbody>
                     <tr>
-                        <th>编制总床位数：</th>
+                        <th><span class="red">*</span>编制总床位数（张）：</th>
                         <td><input type="text" class="input1 validate[custom[integer],min[0],max[99999999]]" style="width:100px;"
-                                   name="educationInfo.bzBedCount" value="${educationInfo.bzBedCount}"/>&nbsp;张
+                                   name="educationInfo.bzBedCount" value="${educationInfo.bzBedCount}"/>
                         </td>
-                        <th>实有总床位数：</th>
+                        <th><span class="red">*</span>实有总床位数（张）：</th>
                         <td><input type="text" class="input1 validate[custom[integer],min[0],max[99999999]]" style="width:100px;"
-                                   name="educationInfo.sjBedCount" value="${educationInfo.sjBedCount }"/>&nbsp;张
+                                   name="educationInfo.sjBedCount" value="${educationInfo.sjBedCount }"/>
                         </td>
                     </tr>
                     <tr>
-                        <th>年收治住院病人数：</th>
+                        <th><span class="red">*</span>年收治住院病人数（人次）：</th>
                         <td><input type="text" class="input1 validate[custom[integer],min[0],max[99999999]]" style="width:100px;"
                                    name="educationInfo.yearlyNumberOfClinicalPatients"
-                                   value="${educationInfo.yearlyNumberOfClinicalPatients}"/>&nbsp;人次
+                                   value="${educationInfo.yearlyNumberOfClinicalPatients}"/>
                         </td>
-                        <th>病床使用率：</th>
+                        <th><span class="red">*</span>病床使用率（%）：</th>
                         <td><input type="text" class="input1 validate[custom[number],min[0],max[100],maxSize[9]]" style="width:100px;"
-                                   name="educationInfo.bedOccupancy" value="${educationInfo.bedOccupancy}"/>&nbsp;%
+                                   name="educationInfo.bedOccupancy" value="${educationInfo.bedOccupancy}"/>
                         </td>
                     </tr>
                     <tr>
-                        <th>本年门诊量：</th>
+                        <th><span class="red">*</span>本年门诊量（万人次）：</th>
                         <td><input type="text" class="input1 validate[custom[number],min[0],max[9999],maxSize[9]]" style="width:100px;"
-                                   name="educationInfo.yearMzCount" value="${educationInfo.yearMzCount}"/>&nbsp;万人次
+                                   name="educationInfo.yearMzCount" value="${educationInfo.yearMzCount}"/>
                         </td>
-                        <th>本年急诊量：</th>
+                        <th><span class="red">*</span>本年急诊量（万人次）：</th>
                         <td><input type="text" class="input1 validate[custom[number],min[0],max[9999],maxSize[9]]" style="width:100px;"
-                                   name="educationInfo.yearJzCount" value="${educationInfo.yearJzCount}"/>&nbsp;万人次
+                                   name="educationInfo.yearJzCount" value="${educationInfo.yearJzCount}"/>
                         </td>
                     </tr>
                     <tr>
-                        <th>本年手术量：</th>
+                        <th><span class="red">*</span>本年手术量（台次）：</th>
                         <td><input type="text" class="input1 validate[custom[integer],min[0],max[99999999]]" style="width:100px;"
-                                   name="educationInfo.yearSjCount" value="${ educationInfo.yearSjCount}"/>&nbsp;台次
+                                   name="educationInfo.yearSjCount" value="${ educationInfo.yearSjCount}"/>
                         </td>
-                        <th>本年出院病人数：</th>
+                        <th><span class="red">*</span>本年出院病人数（万人次）：</th>
                         <td><input type="text" class="input1 validate[custom[number],min[0],max[9999],maxSize[9]]" style="width:100px;"
-                                   name="educationInfo.yearCybrCount" value="${ educationInfo.yearCybrCount}"/>&nbsp;万人次
+                                   name="educationInfo.yearCybrCount" value="${ educationInfo.yearCybrCount}"/>
                         </td>
                     </tr>
                     <tr>
-                        <th>本年专业基地数：</th>
+                        <th><span class="red">*</span>本年专业基地数（个）：</th>
                         <td><input type="text" class="input1 validate[custom[integer],min[0],max[99999999]]" style="width:100px;"
                                    name="educationInfo.numberOfExistingProfessionalBases"
-                                   value="${educationInfo.numberOfExistingProfessionalBases}"/>&nbsp;个
+                                   value="${educationInfo.numberOfExistingProfessionalBases}"/>
                         </td>
-                        <th>3年培训容量总和：</th>
+                        <th><span class="red">*</span>3年培训容量总和（人）：</th>
                         <td><input type="text" class="input1 validate[custom[integer],min[0],max[99999999]]" style="width:100px;"
                                    name="educationInfo.total3YearTrainingCapacity"
-                                   value="${educationInfo.total3YearTrainingCapacity}"/>&nbsp;人
+                                   value="${educationInfo.total3YearTrainingCapacity}"/>
                         </td>
                     </tr>
 
-
                     <tr>
-                        <th>本年入出院病人诊断符合率：</th>
+                        <th><span class="red">*</span>本年入出院病人诊断符合率（%）：</th>
                         <td><input type="text" class="input1 validate[custom[number],min[0]],max[100],maxSize[9]]" style="width:100px;"
-                                   name="educationInfo.rcybrzdfhl" value="${educationInfo.rcybrzdfhl}"/>&nbsp;%
+                                   name="educationInfo.rcybrzdfhl" value="${educationInfo.rcybrzdfhl}"/>
                         </td>
-                        <th>本年住院病人治愈好转率：</th>
+                        <th><span class="red">*</span>本年住院病人治愈好转率（%）：</th>
                         <td><input type="text" class="input1 validate[custom[number],min[0],max[100],maxSize[9]]" style="width:100px;"
-                                   name="educationInfo.zybrzyhzl" value="${educationInfo.zybrzyhzl}"/>&nbsp;%
+                                   name="educationInfo.zybrzyhzl" value="${educationInfo.zybrzyhzl}"/>
                         </td>
                     </tr>
                     <tr>
-                        <th>本年住院总死亡率：</th>
+                        <th><span class="red">*</span>本年住院总死亡率（%）：</th>
                         <td><input type="text" class="input1 validate[custom[number],min[0],max[100],maxSize[9]]" style="width:100px;"
-                                   name="educationInfo.zyzswl" value="${educationInfo.zyzswl}"/>&nbsp;%
+                                   name="educationInfo.zyzswl" value="${educationInfo.zyzswl}"/>
                         </td>
-                        <th>本年感染总发生率：</th>
+                        <th><span class="red">*</span>本年感染总发生率（%）：</th>
                         <td><input type="text" class="input1 validate[custom[number],min[0],max[100],maxSize[9]]" style="width:100px;"
-                                   name="educationInfo.grzfsl" value="${educationInfo.grzfsl}"/>&nbsp;%
+                                   name="educationInfo.grzfsl" value="${educationInfo.grzfsl}"/>
                         </td>
                     </tr>
                     <tr>
-                        <th>本年手术患者并发症发生率：</th>
+                        <th><span class="red">*</span>本年手术患者并发症发生率（%）：</th>
                         <td><input type="text" class="input1 validate[custom[number],min[0],max[100],maxSize[9]]" style="width:100px;"
-                                   name="educationInfo.sshzbfzfsl" value="${educationInfo.sshzbfzfsl}"/>&nbsp;%
+                                   name="educationInfo.sshzbfzfsl" value="${educationInfo.sshzbfzfsl}"/>
                         </td>
-                        <th>按省级卫生健康行政部门有关规定核定的培训容量总和：</th>
+                        <th><span class="red">*</span>按本年总病例病种数（个）：</th>
                         <td><input type="text" class="input1 validate[custom[integer],min[0],max[99999999]]" style="width:100px;"
-                                   name="educationInfo.hdpxrlzh" value="${educationInfo.hdpxrlzh}"/>&nbsp;人
+                                   name="baseExtInfoEducationInfo.annualDiseases" value="${baseExtInfoEducationInfo.annualDiseases}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><span class="red">*</span>本年收治总疾病（种）：</th>
+                        <td><input type="text" class="input1 validate[custom[number],min[0],max[100],maxSize[9]]" style="width:100px;"
+                                   name="baseExtInfoEducationInfo.annualDiseaseCategory" value="${baseExtInfoEducationInfo.annualDiseaseCategory}"/>
+                        </td>
+                        <th><span class="red">*</span>按本年总病例病种数（个）：</th>
+                        <td><input type="text" class="input1 validate[custom[integer],min[0],max[99999999]]" style="width:100px;"
+                                   name="baseExtInfoEducationInfo.annualDiseaseNumber" value="${baseExtInfoEducationInfo.annualDiseaseNumber}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><span class="red">*</span>演示教室：</th>
+                        <td>
+                            <input type="radio" name="baseExtInfoEducationInfo.hospitalDemoClass" value="Y" <c:if test="${baseExtInfoEducationInfo.hospitalDemoClass eq 'Y' }">checked="checked"</c:if>/>有&nbsp;
+                            <input type="radio" name="baseExtInfoEducationInfo.hospitalDemoClass" value="N" <c:if test="${baseExtInfoEducationInfo.hospitalDemoClass eq 'N' }">checked="checked"</c:if>/>无&nbsp;
+                        </td>
+                        <th><span class="red">*</span>图书馆：</th>
+                        <td>
+                            <input type="radio" name="baseExtInfoEducationInfo.hospitalLibrary" value="Y" <c:if test="${baseExtInfoEducationInfo.hospitalLibrary eq 'Y' }">checked="checked"</c:if>/>有&nbsp;
+                            <input type="radio" name="baseExtInfoEducationInfo.hospitalLibrary" value="N" <c:if test="${baseExtInfoEducationInfo.hospitalLibrary eq 'N' }">checked="checked"</c:if>/>无&nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><span class="red">*</span>文献检索系统：</th>
+                        <td>
+                            <input type="radio" name="baseExtInfoEducationInfo.literatureRetrievalSystem" value="Y" <c:if test="${baseExtInfoEducationInfo.literatureRetrievalSystem eq 'Y' }">checked="checked"</c:if>/>有&nbsp;
+                            <input type="radio" name="baseExtInfoEducationInfo.literatureRetrievalSystem" value="N" <c:if test="${baseExtInfoEducationInfo.literatureRetrievalSystem eq 'N' }">checked="checked"</c:if>/>无&nbsp;
+                        </td>
+                        <th><span class="red">*</span>网络信息管理平台：</th>
+                        <td>
+                            <input type="radio" name="baseExtInfoEducationInfo.netInfoManagePlatform" value="Y" <c:if test="${baseExtInfoEducationInfo.netInfoManagePlatform eq 'Y' }">checked="checked"</c:if>/>有&nbsp;
+                            <input type="radio" name="baseExtInfoEducationInfo.netInfoManagePlatform" value="N" <c:if test="${baseExtInfoEducationInfo.netInfoManagePlatform eq 'N' }">checked="checked"</c:if>/>无&nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><span class="red">*</span>临床技能培训中心建筑面积（平米）：</th>
+                        <td><input type="text" class="input1 validate[custom[number],min[0],max[100],maxSize[9]]" style="width:100px;"
+                                   name="baseExtInfoEducationInfo.clinicalSkillsTrainingCenterM2" value="${baseExtInfoEducationInfo.clinicalSkillsTrainingCenterM2}"/>
+                        </td>
+                        <th><span class="red">*</span>培训管理制度：</th>
+                        <td>
+                            <input type="radio" name="baseExtInfoEducationInfo.trainManageSystem" onclick="changeUrlSpanShow(this)" value="Y" <c:if test="${baseExtInfoEducationInfo.trainManageSystem eq 'Y' }">checked="checked"</c:if>/>有&nbsp;
+                            <input type="radio" name="baseExtInfoEducationInfo.trainManageSystem" onclick="changeUrlSpanShow(this)" value="N" <c:if test="${baseExtInfoEducationInfo.trainManageSystem eq 'N' }">checked="checked"</c:if>/>无&nbsp;
+                            <span id="trainManageSystemUrlShowSpan" style="display: ${baseExtInfoEducationInfo.trainManageSystem eq 'Y' ? '' : 'none'}">
+                                <span id="trainManageSystemUrlSpan" style="display:${!empty baseExtInfoEducationInfo.trainManageSystemUrl?'':'none'} ">
+                                    &nbsp; <a href="${sysCfgMap['upload_base_url']}/${baseExtInfoEducationInfo.trainManageSystemUrl}" target="_blank">查看图片</a>&nbsp;
+                                </span>
+                                <a id="trainManageSystemUrl" href="javascript:uploadPdfFile('trainManageSystemUrl','培训管理制度','', '.pdf');" style="margin-left: 2px">${empty baseExtInfoEducationInfo.trainManageSystemUrl?'':'重新'}上传</a>&nbsp;
+                                <a id="trainManageSystemUrlDel" href="javascript:delFile('trainManageSystemUrl');" style="${empty baseExtInfoEducationInfo.trainManageSystemUrl?'display:none':''}">删除</a>
+                                <input type="hidden" id="trainManageSystemUrlValue"  name="baseExtInfoEducationInfo.trainManageSystemUrl" value="${baseExtInfoEducationInfo.trainManageSystemUrl}" />
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><span class="red">*</span>临床基地培训协议：</th>
+                        <td>
+                            <input type="radio" name="baseExtInfoEducationInfo.clinicalBaseTrainContract" onclick="changeUrlSpanShow(this)" value="Y" <c:if test="${baseExtInfoEducationInfo.clinicalBaseTrainContract eq 'Y' }">checked="checked"</c:if>/>有&nbsp;
+                            <input type="radio" name="baseExtInfoEducationInfo.clinicalBaseTrainContract" onclick="changeUrlSpanShow(this)" value="N" <c:if test="${baseExtInfoEducationInfo.clinicalBaseTrainContract eq 'N' }">checked="checked"</c:if>/>无&nbsp;
+                            <span id="clinicalBaseTrainContractUrlShowSpan" style="display: ${baseExtInfoEducationInfo.clinicalBaseTrainContract eq 'Y' ? '' : 'none'}">
+                                <span id="clinicalBaseTrainContractUrlSpan" style="display:${!empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl?'':'none'} ">
+                                    &nbsp; <a href="${sysCfgMap['upload_base_url']}/${baseExtInfoEducationInfo.clinicalBaseTrainContractUrl}" target="_blank">查看图片</a>&nbsp;
+                                </span>
+                                <a id="clinicalBaseTrainContractUrl" href="javascript:uploadPdfFile('clinicalBaseTrainContractUrl','培训管理制度','', '.pdf');" style="margin-left: 2px">${empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl?'':'重新'}上传</a>&nbsp;
+                                <a id="clinicalBaseTrainContractUrlDel" href="javascript:delFile('clinicalBaseTrainContractUrl');" style="${empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl?'display:none':''}">删除</a>
+                                <input type="hidden" id="clinicalBaseTrainContractUrlValue"  name="baseExtInfoEducationInfo.clinicalBaseTrainContractUrl" value="${baseExtInfoEducationInfo.clinicalBaseTrainContractUrl}" />
+                            </span>
+                        </td>
+                        <th><span class="red">*</span>教学门诊：</th>
+                        <td>
+                            <input type="radio" name="baseExtInfoEducationInfo.teachingClinic" value="Y" <c:if test="${baseExtInfoEducationInfo.teachingClinic eq 'Y' }">checked="checked"</c:if>/>有&nbsp;
+                            <input type="radio" name="baseExtInfoEducationInfo.teachingClinic" value="N" <c:if test="${baseExtInfoEducationInfo.teachingClinic eq 'N' }">checked="checked"</c:if>/>无&nbsp;
                         </td>
                     </tr>
                 </tbody>

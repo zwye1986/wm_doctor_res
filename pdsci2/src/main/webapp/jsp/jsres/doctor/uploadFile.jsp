@@ -13,10 +13,16 @@
 function checkFile(file){
 	var filePath = file.value;
 	var fileType = "${fileType}";
-    var types = "${sysCfgMap['inx_image_support_suffix']}".split(",");
+    var typeArr = "${sysCfgMap['inx_image_support_suffix']}";
 	if(fileType == "File"){
-		types = "${sysCfgMap['res_file_support_suffix']}".split(",");
+		typeArr = "${sysCfgMap['res_file_support_suffix']}";
 	}
+
+	if("${fileSuffix}") {
+		typeArr = "${fileSuffix}";
+	}
+
+	var types = typeArr.split(',');
 	var regStr = "/";
 	for(var i = 0 ;i<types.length;i++){
 		if(types[i]){
@@ -31,7 +37,7 @@ function checkFile(file){
 	regStr = eval(regStr);
 	if($.trim(filePath)!="" && !regStr.test(filePath)){
 		file.value = "";
-		jboxTip("请上传&nbsp;${sysCfgMap['inx_image_support_suffix']}格式的图片");
+		jboxTip("请上传 " + typeArr + " 格式的文件");
 	}
 }
 
@@ -39,7 +45,7 @@ function checkUploadFile(){
 	if ($("#uploadFileForm").validationEngine("validate")) {
 		jboxStartLoading();
 		$(":file.auto:hidden").attr("disabled",true);
-		var url = "<s:url value='/jsres/doctor/checkUploadFile'/>?fileType=${fileType}";
+		var url = "<s:url value='/jsres/doctor/checkUploadFile'/>?fileType=${fileType}&fileSuffix=${fileSuffix}";
 		$("#uploadFileForm").submit();
 	}
 }
@@ -91,7 +97,7 @@ $(document).ready(function(){
 </head>
 <body>
 <div class="infoAudit">
-	<form id="uploadFileForm" method="post" style="position:relative;" action="<s:url value='/jsres/doctor/checkUploadFile'/>?fileType=${fileType}" enctype="multipart/form-data">
+	<form id="uploadFileForm" method="post" style="position:relative;" action="<s:url value='/jsres/doctor/checkUploadFile'/>?fileType=${fileType}&fileSuffix=${fileSuffix}" enctype="multipart/form-data">
 		<input type="hidden" name="second" value="${param.second}"/>
 		<input type="hidden" name="operType" value="${param.operType}"/>
 		<input type="hidden" name="userFlow" value="${param.userFlow}"/>
@@ -101,13 +107,17 @@ $(document).ready(function(){
 					<tr>
 						<td style="border: 1px solid #e3e3e3;">上传文件：</td>
 						<td style="text-align: left;padding-left: 10px;border: 1px solid #e3e3e3;">
-							<input type="file" name="uploadFile" class="validate[required] auto" style="border: none;" onchange="checkFile(this);" accept="${empty fileType?sysCfgMap['inx_image_support_mime']:sysCfgMap['res_file_support_mime']}"/>
+							<input type="file" name="uploadFile" class="validate[required] auto" style="border: none;" onchange="checkFile(this);" accept="${!empty fileSuffix ? fileSuffix : (empty fileType?sysCfgMap['inx_image_support_mime']:sysCfgMap['res_file_support_mime'])}"/>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="2" style="text-align: left;padding-left: 10px;">
-							允许上传后缀格式：<c:if test="${empty fileType}"> ${sysCfgMap['inx_image_support_suffix']}</c:if>
-							<c:if test="${fileType eq 'File'}"> ${sysCfgMap['res_file_support_suffix']}</c:if>
+							允许上传后缀格式：
+							<c:if test="${!empty fileSuffix}">${fileSuffix}</c:if>
+							<c:if test="${empty fileSuffix}">
+								<c:if test="${empty fileType}"> ${sysCfgMap['inx_image_support_suffix']}</c:if>
+								<c:if test="${fileType eq 'File'}"> ${sysCfgMap['res_file_support_suffix']}</c:if>
+							</c:if>
 						</td>
 					</tr>
 				</table>

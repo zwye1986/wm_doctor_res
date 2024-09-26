@@ -17,6 +17,7 @@ import com.pinde.sci.model.mo.ResJointOrg;
 import com.pinde.sci.model.mo.ResJointOrgExample;
 import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.mo.SysOrgExample;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -128,8 +129,13 @@ public class ResJointOrgBizImpl implements IResJointOrgBiz{
 	@Override
 	public List<ResJointOrg> searchResJoint(ResJointOrg joint){
 		ResJointOrgExample example = new ResJointOrgExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+		ResJointOrgExample.Criteria  criteria = example.createCriteria();
+		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
 				.andSessionNumberEqualTo(joint.getSessionNumber());
+		if(StringUtils.isNotEmpty(joint.getOrgFlow())) {
+			criteria.andOrgFlowEqualTo(joint.getOrgFlow());
+		}
+
 		return resJointOrgMapper.selectByExample(example);
 	}
 	
@@ -183,5 +189,10 @@ public class ResJointOrgBizImpl implements IResJointOrgBiz{
 	@Override
 	public int deleteByOrgFlow(String orgFlow, String sessionNumber) {
 		return resJointOrgMapper.deleteByOrgFlow(orgFlow, sessionNumber);
+	}
+
+	@Override
+	public int deleteJointOrg(ResJointOrg jointOrg) {
+		return resJointOrgMapper.deleteJointOrg(jointOrg);
 	}
 }

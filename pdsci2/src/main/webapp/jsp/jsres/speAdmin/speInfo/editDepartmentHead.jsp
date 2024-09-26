@@ -68,7 +68,7 @@
 	   <input type="hidden" name="flag" value="${GlobalConstant.DEPARTMENT_HEAD}"/>
 		<div class="main_bd">
 			<div class="div_table">
-				<h4>专业基地负责人情况</h4>
+				<h4><span class="red">*</span>专业基地负责人情况</h4>
 				<table border="0" cellspacing="0" cellpadding="0" class="base_info">
 					<colgroup>
 						<col width="25%"/>
@@ -108,34 +108,34 @@
 							<td colspan="3"><input type="text" class="input validate[required]" style="width:100px;" name="departmentHeadForm.zw"  value="${departmentHeadForm.zw}"/></td>
 						</tr>
 						<tr>
-							<th>导师情况：</th>
+							<th><span class="red">*</span>导师情况：</th>
 							<td colspan="7">
-								<label><input name="departmentHeadForm.dsqk" type="radio" onclick="toEdit('dsqk','dsqkContext','N');" value="${GlobalConstant.FLAG_Y}" <c:if test="${departmentHeadForm.dsqk ==GlobalConstant.FLAG_Y }">checked="checked"</c:if> />&#12288;硕导&#12288;</label>
-								<label><input name="departmentHeadForm.dsqk" type="radio" onclick="toEdit('dsqk','dsqkContext','N');" value="${GlobalConstant.FLAG_N}" <c:if test="${departmentHeadForm.dsqk ==GlobalConstant.FLAG_N }">checked="checked"</c:if> />&#12288;博导&#12288;</label>
-								<label><input name="departmentHeadForm.dsqk" id="dsqk" onclick="toEdit('dsqk','dsqkContext','Y');" type="radio" value="${GlobalConstant.FLAG_F}" <c:if test="${departmentHeadForm.dsqk ==GlobalConstant.FLAG_F }">checked="checked"</c:if> />&#12288;其他</label>
+								<label><input name="departmentHeadForm.dsqk"  class='validate[required]' type="radio" onclick="toEdit('dsqk','dsqkContext','N');" value="${GlobalConstant.FLAG_Y}" <c:if test="${departmentHeadForm.dsqk ==GlobalConstant.FLAG_Y }">checked="checked"</c:if> />&#12288;硕导&#12288;</label>
+								<label><input name="departmentHeadForm.dsqk"  class='validate[required]' type="radio" onclick="toEdit('dsqk','dsqkContext','N');" value="${GlobalConstant.FLAG_N}" <c:if test="${departmentHeadForm.dsqk ==GlobalConstant.FLAG_N }">checked="checked"</c:if> />&#12288;博导&#12288;</label>
+								<label><input name="departmentHeadForm.dsqk"  class='validate[required]' id="dsqk" onclick="toEdit('dsqk','dsqkContext','Y');" type="radio" value="${GlobalConstant.FLAG_F}" <c:if test="${departmentHeadForm.dsqk ==GlobalConstant.FLAG_F }">checked="checked"</c:if> />&#12288;其他</label>
 								<input type="text"  class='input'style="width:100px;" id="dsqkContext"
 									   name="departmentHeadForm.dsqkContext" value="${departmentHeadForm.dsqkContext}"/>
 							</td>
 						</tr>
 						<tr>
-							<th>从事住院医师规范化培训工作年限：</th>
+							<th><span class="red">*</span>从事住院医师规范化培训工作年限：</th>
 							<td colspan="7">
 								<input type="text"  class='input validate[custom[integer],min[0]]' style="width:100px;" name="departmentHeadForm.cszy"  value="${departmentHeadForm.cszy}"/>年
 							</td>
 						</tr>
 						<tr>
-							<th>从事本专业临床医疗、科研和教学工作经验：</th>
+							<th><span class="red">*</span>从事本专业临床医疗、科研和教学工作经验：</th>
 							<td colspan="7">
 								<input type="text"  class='input validate[custom[integer],min[0]]' style="width:100px;" name="departmentHeadForm.cspx"  value="${departmentHeadForm.cspx}"/>年
 							</td>
 						</tr>
 						<tr>
-							<th>教学简历：</th>
-							<td colspan="7"><textarea name="departmentHeadForm.jxjl" >${departmentHeadForm.jxjl}</textarea></td>
+							<th><span class="red">*</span>教学简历：</th>
+							<td colspan="7"><textarea name="departmentHeadForm.jxjl" class="validate[required]">${departmentHeadForm.jxjl}</textarea></td>
 						</tr>
 						<tr>
-							<th>工作简历：</th>
-							<td colspan="7"><textarea name="departmentHeadForm.gzjl" >${departmentHeadForm.gzjl}</textarea></td>
+							<th><span class="red">*</span>工作简历：</th>
+							<td colspan="7"><textarea name="departmentHeadForm.gzjl" class="validate[required]">${departmentHeadForm.gzjl}</textarea></td>
 						</tr>
 						<th colspan="8" style="text-align: left;padding-left: 5px;">
 							获得的省、部级以上教学成果奖名称、级别及获奖年度（近3年）

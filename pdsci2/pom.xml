@@ -801,11 +801,11 @@
             <systemPath>${lib.dir}/zxing-javase-3.1.0.jar</systemPath>
         </dependency>
 
-        <dependency>
-            <groupId>io.klib.tools</groupId>
-            <artifactId>org.hyperic.sigar.linux.x86</artifactId>
-            <version>1.6.4</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.klib.tools</groupId>-->
+<!--            <artifactId>org.hyperic.sigar.linux.x86</artifactId>-->
+<!--            <version>1.6.4</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>com.github.vindell</groupId>

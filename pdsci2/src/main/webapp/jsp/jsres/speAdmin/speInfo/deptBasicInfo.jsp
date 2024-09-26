@@ -53,7 +53,7 @@
     <input type="hidden" name="flag" value="${GlobalConstant.DEPT_BASIC_INFO}"/>
     <div class="main_bd" <c:if test="${isJoin eq 'Y' or isglobal eq 'Y'}"> style="position: relative;overflow-y: auto;" </c:if> >
         <div class="div_table">
-            <h4>基本信息</h4>
+            <h4><span class="red">*</span>基本信息</h4>
             <img id="jbxxdown" src="<s:url value='/jsp/jsres/images/down3.png'/>" onclick="showTable('jbxx');"  title="展开"
                  style="display: none;float:right;width: 20px;height: 20px;margin-right: 40px;margin-top: -35px"/>
             <img id="jbxxup" src="<s:url value='/jsp/jsres/images/up3.png'/>" onclick="showTable('jbxx');"  title="收缩"
@@ -78,7 +78,77 @@
                     <th>专业基地编码：</th>
                     <td colspan="3">${speFlow}</td>
                 </tr>
+
                 <tr>
+                    <table class="base_info">
+                        <thead>
+                            <tr>
+                                <colgroup>
+                                    <col width="33.3%"/>
+                                    <col width="33.3%"/>
+                                    <col width="33.3%"/>
+                                </colgroup>
+                            <tr>
+                                <th style="text-align: center"><span class="red">*</span>专业基地负责人</th>
+                                <th style="text-align: center"><span class="red">*</span>手机号码</th>
+                                <th style="text-align: center"><span class="red">*</span>邮箱地址</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <td style="text-align: center">${deptBasicInfoForm.speRespName}</td>
+                            <td style="text-align: center">${deptBasicInfoForm.speRespPhone}</td>
+                            <td style="text-align: center">${deptBasicInfoForm.speRespEmail}</td>
+                        </tbody>
+                    </table>
+                </tr>
+
+                <tr>
+                    <table class="base_info">
+                        <thead>
+                        <tr>
+                            <colgroup>
+                                <col width="33.3%"/>
+                                <col width="33.3%"/>
+                                <col width="33.3%"/>
+                            </colgroup>
+                        <tr>
+                            <th style="text-align: center"><span class="red">*</span>教学主任</th>
+                            <th style="text-align: center"><span class="red">*</span>手机号码</th>
+                            <th style="text-align: center"><span class="red">*</span>邮箱地址</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <td style="text-align: center">${deptBasicInfoForm.speDirName}</td>
+                        <td style="text-align: center">${deptBasicInfoForm.speDirPhone}</td>
+                        <td style="text-align: center">${deptBasicInfoForm.speDirEmail}</td>
+                        </tbody>
+                    </table>
+                </tr>
+
+                <tr>
+                    <table class="base_info">
+                        <thead>
+                        <tr>
+                            <colgroup>
+                                <col width="33.3%"/>
+                                <col width="33.3%"/>
+                                <col width="33.3%"/>
+                            </colgroup>
+                        <tr>
+                            <th style="text-align: center"><span class="red">*</span>教学秘书</th>
+                            <th style="text-align: center"><span class="red">*</span>手机号码</th>
+                            <th style="text-align: center"><span class="red">*</span>邮箱地址</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <td style="text-align: center">${deptBasicInfoForm.speSceName}</td>
+                        <td style="text-align: center">${deptBasicInfoForm.speScePhone}</td>
+                        <td style="text-align: center">${deptBasicInfoForm.speSceEmail}</td>
+                        </tbody>
+                    </table>
+                </tr>
+
+                <%--<tr>
                     <th>专业基地负责人姓名：</th>
                     <td>${deptBasicInfoForm.speRespName}</td>
                     <th>负责人联系电话：</th>
@@ -101,13 +171,65 @@
                     <td>${deptBasicInfoForm.speScePhone}</td>
                     <th>教学秘书邮箱：</th>
                     <td>${deptBasicInfoForm.speSceEmail}</td>
+                </tr>--%>
+
+                <tr>
+                    <table class="base_info">
+                        <thead>
+                        <tr>
+                            <colgroup>
+                                <col width="33.3%"/>
+                                <col width="33.3%"/>
+                                <col width="33.3%"/>
+                            </colgroup>
+                        <tr>
+                            <th style="text-align: center"><span class="red">*</span>教学小组组长</th>
+                            <th style="text-align: center"><span class="red">*</span>手机号码</th>
+                            <th style="text-align: center"><span class="red">*</span>邮箱地址</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <td style="text-align: center">${deptBasicInfoForm.teachingGroupLeaderName}</td>
+                        <td style="text-align: center">${deptBasicInfoForm.teachingGroupLeaderPhone}</td>
+                        <td style="text-align: center">${deptBasicInfoForm.teachingGroupLeaderEmail}</td>
+                        </tbody>
+                    </table>
+                </tr>
+                <!-- 教学小组组员 -->
+                <tr>
+                    <table class="base_info">
+                        <thead>
+                        <tr>
+                            <colgroup>
+                                <col width="33.3%"/>
+                                <col width="33.3%"/>
+                                <col width="33.3%"/>
+                            </colgroup>
+                        <tr>
+                            <th style="text-align: center"><span class="red">*</span>教学小组组员</th>
+                            <th style="text-align: center"><span class="red">*</span>手机号码</th>
+                            <th style="text-align: center"><span class="red">*</span>邮箱地址</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:if test="${not empty deptBasicInfoForm.teachingGroupMemberList}">
+                            <c:forEach items="${deptBasicInfoForm.teachingGroupMemberList}" var="teachingGroupMember">
+                                <tr>
+                                    <td style="text-align: center">${teachingGroupMember.teachingGroupMemberName}</td>
+                                    <td style="text-align: center">${teachingGroupMember.teachingGroupMemberPhone}</td>
+                                    <td style="text-align: center">${teachingGroupMember.teachingGroupMemberEmail}</td>
+                                </tr>
+                            </c:forEach>
+                        </c:if>
+                        </tbody>
+                    </table>
                 </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="div_table">
-            <h4>基本条件</h4>
+            <h4><span class="red">*</span>基本条件</h4>
             <img id="jbtjdown" src="<s:url value='/jsp/jsres/images/down3.png'/>" onclick="showTable('jbtj');"  title="展开"
                  style="float:right;width: 20px;height: 20px;margin-right: 40px;margin-top: -35px"/>
             <img id="jbtjup" src="<s:url value='/jsp/jsres/images/up3.png'/>" onclick="showTable('jbtj');"  title="收缩"
@@ -132,104 +254,130 @@
                     </td>
                 </tr>--%>
                 <tr>
-                    <th>本年编制总床位数：</th>
-                    <td>${deptBasicInfoForm.bzzcws}张</td>
+                    <th><span class="red">*</span>本年编制总床位数（张）：</th>
+                    <td>${deptBasicInfoForm.bzzcws}</td>
                     <th>
-                        本年实有总床位数：
+                        <span class="red">*</span>本年实有总床位数（张）：
                     </th>
                     <td>
-                        ${deptBasicInfoForm.syzcws}张
+                        ${deptBasicInfoForm.syzcws}
                     </td>
                 </tr>
                 <tr>
-                    <th>本年收治住院病人数：</th>
-                    <td>${deptBasicInfoForm.nszzybrs}人次</td>
+                    <th><span class="red">*</span>本年收治住院病人数（人次）：</th>
+                    <td>${deptBasicInfoForm.nszzybrs}</td>
                     <th>
-                        本年病床使用率：
+                        <span class="red">*</span>本年病床使用率（%）：
                     </th>
-                    <td>${deptBasicInfoForm.bcsyl}%</td>
+                    <td>${deptBasicInfoForm.bcsyl}</td>
                 </tr>
                 <tr>
-                    <th>本年门诊量：</th>
-                    <td>${deptBasicInfoForm.nmzl}人次</td>
+                    <th><span class="red">*</span>本年门诊量（人次）：</th>
+                    <td>${deptBasicInfoForm.nmzl}</td>
                     <th>
-                        本年急诊量：
+                        <span class="red">*</span>本年急诊量（人次）：
                     </th>
-                    <td>${deptBasicInfoForm.njzl}人次</td>
+                    <td>${deptBasicInfoForm.njzl}</td>
                 </tr>
                 <tr>
-                    <th>本年病床周转次数：</th>
-                    <td>${deptBasicInfoForm.bczzcs}次</td>
+                    <th><span class="red">*</span>本年病床周转次数（次）：</th>
+                    <td>${deptBasicInfoForm.bczzcs}</td>
                     <th>
-                        本年平均住院日：
+                        <span class="red">*</span>本年平均住院日（天）：
                     </th>
-                    <td>${deptBasicInfoForm.pjzyr}天</td>
+                    <td>${deptBasicInfoForm.pjzyr}</td>
                 </tr>
                 <tr>
                     <th>
-                        本年出院病人数：</th>
-                    <td>${deptBasicInfoForm.ncybrs}人次</td>
+                        <span class="red">*</span>本年出院病人数（人次）：</th>
+                    <td>${deptBasicInfoForm.ncybrs}</td>
                     <th>
-                        本年急诊手术例数：
+                        <span class="red">*</span>本年急诊手术例数（例次）：
                     </th>
-                    <td>${deptBasicInfoForm.njzscls}例次</td>
+                    <td>${deptBasicInfoForm.njzscls}</td>
                 </tr>
                 <c:if test="${speFlow eq '1600'}">
                     <tr>
                         <th>
-                            产科本年分娩量：</th>
-                        <td>${deptBasicInfoForm.cknfml}人次</td>
+                            <span class="red">*</span>产科本年分娩量（人次）：</th>
+                        <td>${deptBasicInfoForm.cknfml}</td>
                         <th>
-                            妇科本年收治病人数：
+                            <span class="red">*</span> 妇科本年收治病人数（人次）：
                         </th>
-                        <td>${deptBasicInfoForm.fknszbrs}人次</td>
+                        <td>${deptBasicInfoForm.fknszbrs}</td>
                     </tr>
                     <tr>
-                        <th>产科本年收治病人数：</th>
-                        <td colspan="3">${deptBasicInfoForm.cknszbrs}人次</td>
+                        <th><span class="red">*</span>产科本年收治病人数（人次）：</th>
+                        <td colspan="3">${deptBasicInfoForm.cknszbrs}</td>
                     </tr>
                 </c:if>
                 <c:if test="${speFlow eq '1900'}">
                     <tr>
-                        <th>本年麻醉总数：</th>
-                        <td>${deptBasicInfoForm.nmzzszmk}人次</td>
+                        <th><span class="red">*</span>本年麻醉总数（人次）：</th>
+                        <td>${deptBasicInfoForm.nmzzszmk}</td>
                         <th>
-                            本年麻醉恢复室病人数：
+                            <span class="red">*</span>本年麻醉恢复室病人数（人次）：
                         </th>
-                        <td>${deptBasicInfoForm.mzhfsbrs}人次</td>
+                        <td>${deptBasicInfoForm.mzhfsbrs}</td>
                     </tr>
                     <tr>
-                        <th>本年疼痛门诊病人数：</th>
-                        <td>${deptBasicInfoForm.ttmzbrs}人次</td>
+                        <th><span class="red">*</span>本年疼痛门诊病人数（人次）：</th>
+                        <td>${deptBasicInfoForm.ttmzbrs}</td>
                         <th>
-                            本年重症监护室收治病人数：
+                            <span class="red">*</span>本年重症监护室收治病人数（人次）：
                         </th>
-                        <td>${deptBasicInfoForm.zzjhsszbrs}人次</td>
+                        <td>${deptBasicInfoForm.zzjhsszbrs}</td>
                     </tr>
                 </c:if>
                 <c:if test="${speFlow eq '2000'}">
                     <tr>
-                        <th>本年活检标本病例数：</th>
-                        <td>${deptBasicInfoForm.nhjbbbls}人次</td>
+                        <th><span class="red">*</span>本年活检标本病例数（人次）：</th>
+                        <td>${deptBasicInfoForm.nhjbbbls}</td>
                         <th>
-                            本年尸体解剖病例数：
+                            <span class="red">*</span>本年尸体解剖病例数（人次）：
                         </th>
-                        <td>${deptBasicInfoForm.nstjpbls}人次</td>
+                        <td>${deptBasicInfoForm.nstjpbls}</td>
                     </tr>
                     <tr>
-                        <th>本年冰冻快速诊断量：</th>
-                        <td>${deptBasicInfoForm.nbdkszdl}人次</td>
+                        <th><span class="red">*</span>本年冰冻快速诊断量（人次）：</th>
+                        <td>${deptBasicInfoForm.nbdkszdl}</td>
                         <th>
-                            本年细胞学检查病例数：
+                            <span class="red">*</span>本年细胞学检查病例数（人次）：
                         </th>
-                        <td>${deptBasicInfoForm.nxbxjcbls}人次</td>
+                        <td>${deptBasicInfoForm.nxbxjcbls}</td>
                     </tr>
                 </c:if>
+                <tr>
+                    <th><span class="red">*</span>本年总病例病种数（个）：</th>
+                    <td>${deptBasicInfoForm.annualDiseases}</td>
+                    <th>
+                        <span class="red">*</span>本年收治总疾病（种）：
+                    </th>
+                    <td>${deptBasicInfoForm.annualDiseaseCategory}</td>
+                </tr>
+                <tr>
+                    <th><span class="red">*</span>本年收治总疾病（个）：</th>
+                    <td>${deptBasicInfoForm.annualDiseaseNumber}</td>
+                    <th>
+                        <span class="red">*</span>教学门诊：
+                    </th>
+                    <td>
+                        ${deptBasicInfoForm.teachingClinic eq 'Y' ? '有' : '无'}
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="red">*</span>近三年培训人数总计（人）：</th>
+                    <td>${deptBasicInfoForm.threeYearTrainingCount}</td>
+                    <th>
+                        <span class="red">*</span>近三年理论首考平均通过率（%）：
+                    </th>
+                    <td>${deptBasicInfoForm.threeYearExamPassPer}</td>
+                </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="div_table">
+        <%--<div class="div_table">
             <h4>承担教学任务（近三年总数）</h4>
             <img id="cddown" src="<s:url value='/jsp/jsres/images/down3.png'/>" onclick="showTable('cd');"  title="展开"
                  style="display: none;float:right;width: 20px;height: 20px;margin-right: 40px;margin-top: -35px"/>
@@ -436,6 +584,6 @@
                 </tr>
                 </tbody>
             </table>
-        </div>
+        </div>--%>
     </div>
 </form>
