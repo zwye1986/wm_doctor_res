@@ -302,6 +302,8 @@ public class RoleBizImpl implements IRoleBiz {
 		list.add("res_head_role_flow");
 		list.add("res_teacher_role_flow");
 		list.add("res_secretary_role_flow");
+		list.add("res_teaching_head_role_flow");
+		list.add("res_teaching_secretary_role_flow");
 		criteria.andCfgCodeIn(list);
 		return sysCfgMapper.selectByExample(example);
 	}

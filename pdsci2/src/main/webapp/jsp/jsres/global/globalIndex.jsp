@@ -601,6 +601,11 @@
             currentJboxLoadNoData("content", url, true);
         }
 
+        function backTrainAcc() {
+            var url = "<s:url value='/jsres/doctor/globalBackTrainInfoAcc?sessionNumber=${pdfn:getCurrYear()}&currentPage=1'/>";
+            currentJboxLoadNoData("content", url, true);
+        }
+
         function delay() {
             var url = "<s:url value='/jsres/doctor/delay'/>";
             currentJboxLoadNoData("content", url, true);
@@ -1290,10 +1295,17 @@
                             <dd class="menu_item"><a onclick="baseMain();">基地变更管理
                                 <%--<img  id="baseFlag" style="display: none;" src="<s:url value="/jsp/jsres/images/gantanhao.png" />"/>--%>
                             </a></dd>
-                            <dd class="menu_item"><a href="javascript:backTrain();">退培学员管理
-                                <%--<img  id="backFlag" style="display: none;" src="<s:url value="/jsp/jsres/images/gantanhao.png" />"/>--%>
-                            </a>
-                            </dd>
+                            <c:if test="${currUser.userName eq '江苏省全科中心'}">
+                                <dd class="menu_item"><a href="javascript:backTrainAcc();">退培学员管理
+                                </a>
+                                </dd>
+                            </c:if>
+                            <c:if test="${currUser.userName ne '江苏省全科中心'}">
+                                <dd class="menu_item"><a href="javascript:backTrain();">退培学员管理
+                                        <%--<img  id="backFlag" style="display: none;" src="<s:url value="/jsp/jsres/images/gantanhao.png" />"/>--%>
+                                </a>
+                                </dd>
+                            </c:if>
                             <%--<dd class="menu_item"><a onclick="delay();">延期学员查询</a></dd>--%>
                             <dd class="menu_item"><a onclick="delayNew();">延期学员查询</a></dd>
                             <%--<dd class="menu_item"><a onclick="searchBlackInfo();">黑名单管理</a></dd>--%>
