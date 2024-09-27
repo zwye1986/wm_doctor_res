@@ -53,7 +53,7 @@
     <input type="hidden" name="flag" value="${GlobalConstant.DEPT_BASIC_INFO}"/>
     <div class="main_bd" <c:if test="${isJoin eq 'Y'  or isglobal eq 'Y'}"> style="position: relative;overflow-y: auto;height: 600px" </c:if>  >
         <div class="div_table">
-            <h4>基本信息</h4>
+            <h4><span style="color: red">*</span>基本信息</h4>
             <img id="jbxxdown" src="<s:url value='/jsp/jsres/images/down3.png'/>" onclick="showTable('jbxx');"  title="展开"
                  style="display: none;float:right;width: 20px;height: 20px;margin-right: 40px;margin-top: -35px"/>
             <img id="jbxxup" src="<s:url value='/jsp/jsres/images/up3.png'/>" onclick="showTable('jbxx');"  title="收缩"
@@ -74,33 +74,33 @@
                 </colgroup>
                 <tbody>
                 <tr>
-                    <th>科室名称：</th>
+                    <th><span style="color: red">*</span>科室名称：</th>
                     <td style="text-align: left">${deptBasicInfoForm.deptName}</td>
-                    <th>科室代码：</th>
+                    <th><span style="color: red">*</span>科室代码：</th>
                     <td colspan="3">${deptBasicInfoForm.deptCode}</td>
                 </tr>
                 <tr>
-                    <th>科室负责人姓名：</th>
+                    <th><span style="color: red">*</span>科室负责人：</th>
                     <td>${deptBasicInfoForm.deptRespName}</td>
-                    <th>科室负责人联系电话：</th>
+                    <th><span style="color: red">*</span>手机号码：</th>
                     <td>${deptBasicInfoForm.deptRespPhone}</td>
-                    <th>科室负责人邮箱：</th>
+                    <th><span style="color: red">*</span>邮箱地址：</th>
                     <td>${deptBasicInfoForm.deptRespEmail}</td>
                 </tr>
                 <tr>
-                    <th>科室主任姓名：</th>
+                    <th><span style="color: red">*</span>科主任：</th>
                     <td>${deptBasicInfoForm.deptDirName}</td>
-                    <th>科室主任联系电话：</th>
+                    <th><span style="color: red">*</span>手机号码：</th>
                     <td>${deptBasicInfoForm.deptDirPhone}</td>
-                    <th>科室主任邮箱：</th>
+                    <th><span style="color: red">*</span>邮箱地址：</th>
                     <td>${deptBasicInfoForm.deptDirEmail}</td>
                 </tr>
                 <tr>
-                    <th>科室秘书姓名：</th>
+                    <th><span style="color: red">*</span>科室秘书：</th>
                     <td>${deptBasicInfoForm.deptSceName}</td>
-                    <th>科室秘书联系电话：</th>
+                    <th><span style="color: red">*</span>手机号码：</th>
                     <td>${deptBasicInfoForm.deptScePhone}</td>
-                    <th>科室秘书邮箱：</th>
+                    <th><span style="color: red">*</span>邮箱地址：</th>
                     <td>${deptBasicInfoForm.deptSceEmail}</td>
                 </tr>
                 </tbody>
@@ -108,7 +108,7 @@
         </div>
 
         <div class="div_table">
-            <h4>基本条件</h4>
+            <h4><span style="color: red">*</span>基本条件</h4>
             <img id="jbtjdown" src="<s:url value='/jsp/jsres/images/down3.png'/>" onclick="showTable('jbtj');"  title="展开"
                  style="float:right;width: 20px;height: 20px;margin-right: 40px;margin-top: -35px"/>
             <img id="jbtjup" src="<s:url value='/jsp/jsres/images/up3.png'/>" onclick="showTable('jbtj');"  title="收缩"
@@ -134,48 +134,74 @@
                     </td>
                 </tr>--%>
                 <tr>
-                    <th>本年编制总床位数：</th>
-                    <td>${deptBasicInfoForm.bzzcws}张</td>
-                    <th>本年实有总床位数：</th>
+                    <th><span style="color: red">*</span>本年编制总床位数（张）：</th>
+                    <td>${deptBasicInfoForm.bzzcws}</td>
+                    <th><span style="color: red">*</span>本年实有总床位数（张）：</th>
                     <td>
-                        ${deptBasicInfoForm.syzcws}张
+                        ${deptBasicInfoForm.syzcws}
                     </td>
                 </tr>
                 <tr>
-                    <th>本年收治住院病人数：</th>
-                    <td>${deptBasicInfoForm.nszzybrs}人次</td>
-                    <th>本年病床使用率：</th>
-                    <td>${deptBasicInfoForm.bcsyl}%</td>
+                    <th><span style="color: red">*</span>本年收治住院病人数（人次）：</th>
+                    <td>${deptBasicInfoForm.nszzybrs}</td>
+                    <th><span style="color: red">*</span>本年病床使用率（%）：</th>
+                    <td>${deptBasicInfoForm.bcsyl}</td>
                 </tr>
                 <tr>
-                    <th>本年门诊量：</th>
-                    <td>${deptBasicInfoForm.nmzl}人次</td>
-                    <th>本年急诊量：</th>
-                    <td>${deptBasicInfoForm.njzl}人次</td>
+                    <th><span style="color: red">*</span>本年门诊量（人次）：</th>
+                    <td>${deptBasicInfoForm.nmzl}</td>
+                    <th><span style="color: red">*</span>本年急诊量（人次）：</th>
+                    <td>${deptBasicInfoForm.njzl}</td>
                 </tr>
                 <tr>
-                    <th>本年病床周转次数：</th>
-                    <td>${deptBasicInfoForm.bczzcs}次</td>
-                    <th>本年平均住院日：</th>
-                    <td>${deptBasicInfoForm.pjzyr}天</td>
+                    <th><span style="color: red">*</span>本年病床周转次数（次）：</th>
+                    <td>${deptBasicInfoForm.bczzcs}</td>
+                    <th><span style="color: red">*</span>本年平均住院日（天）：</th>
+                    <td>${deptBasicInfoForm.pjzyr}</td>
                 </tr>
                 <tr>
-                    <th>本年出院病人数：</th>
-                    <td>${deptBasicInfoForm.ncybrs}人次</td>
-                    <th>本年急诊手术例数：</th>
-                    <td>${deptBasicInfoForm.njzscls}例次</td>
+                    <th><span style="color: red">*</span>本年出院病人数（人次）：</th>
+                    <td>${deptBasicInfoForm.ncybrs}</td>
+                    <th><span style="color: red">*</span>本年急诊手术例数（例次）：</th>
+                    <td>${deptBasicInfoForm.njzscls}</td>
+                </tr>
+                <%--<tr>
+                    <th><span style="color: red">*</span>近三年培训总容量（人）：</th>
+                    <td>${deptBasicInfoForm.npxzrl}</td>
+                    <th><span style="color: red">*</span>本年剩余培训容量（人）：</th>
+                    <td>${deptBasicInfoForm.sypxrl}</td>
+                </tr>--%>
+                <tr>
+                    <th><span class="red">*</span>本年总病例病种数（个）：</th>
+                    <td>${deptBasicInfoForm.annualDiseases}</td>
+                    <th>
+                        <span class="red">*</span>本年收治总疾病（种）：
+                    </th>
+                    <td>${deptBasicInfoForm.annualDiseaseCategory}</td>
                 </tr>
                 <tr>
-                    <th>近三年培训总容量：</th>
-                    <td>${deptBasicInfoForm.npxzrl}人</td>
-                    <th>本年剩余培训容量：</th>
-                    <td>${deptBasicInfoForm.sypxrl}人</td>
+                    <th><span class="red">*</span>本年收治总疾病（个）：</th>
+                    <td>${deptBasicInfoForm.annualDiseaseNumber}</td>
+                    <th>
+                        <span class="red">*</span>教学门诊：
+                    </th>
+                    <td>
+                        ${deptBasicInfoForm.teachingClinic eq 'Y' ? '有' : '无'}
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="red">*</span>近三年培训人数总计（人）：</th>
+                    <td>${deptBasicInfoForm.threeYearTrainingCount}</td>
+                    <th>
+                        <span class="red">*</span>近三年理论首考平均通过率（%）：
+                    </th>
+                    <td>${deptBasicInfoForm.threeYearExamPassPer}</td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="div_table">
+        <%--<div class="div_table">
             <h4>承担教学任务（近三年总数）</h4>
             <img id="cddown" src="<s:url value='/jsp/jsres/images/down3.png'/>" onclick="showTable('cd');"  title="展开"
                  style="display: none;float:right;width: 20px;height: 20px;margin-right: 40px;margin-top: -35px"/>
@@ -376,6 +402,6 @@
                 </tr>
                 </tbody>
             </table>
-        </div>
+        </div>--%>
     </div>
 </form>

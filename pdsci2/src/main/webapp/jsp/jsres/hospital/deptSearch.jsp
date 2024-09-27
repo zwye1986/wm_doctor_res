@@ -106,6 +106,11 @@ function modifyCfg(deptFlow,recordFlow){
 function searchReset() {
 	$("#deptCode,#ksmc,#isUnion").val("");
 }
+
+function showDept(deptFlow, schDeptName, isJoin, speFlow) {
+	var url = "<s:url value ='/jsres/base/showDeptInfo'/>?viewFlag=Y&deptFlow=" + deptFlow + "&orgFlow=${orgFlow}&isJoin=Y&speFlow=" + speFlow+"&isglobal=Y";
+	jboxOpen(url, '科室信息（' + schDeptName + '）', 1200, 700);
+}
 </script>
 <!-- <div class="main_hd">
     <h2 class="underline">科室维护</h2> 

@@ -124,14 +124,16 @@
 		<result column="ORDINAL" jdbcType="DECIMAL" property="ordinal" />
 		<result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
 		<result column="STANDARD_DEPT_NAME" jdbcType="VARCHAR" property="standardDeptName" />
+		<result column="SPE_FLOW" jdbcType="VARCHAR" property="speFlow" />
 		<result column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
 	</resultMap>
+	<!--  -->
 	<select id="searchDeptByUnion" resultMap="UnionMap">
-		select sd.DEPT_FLOW, sd.ORG_FLOW, sd.DEPT_CODE, sd.DEPT_NAME, sd.ORDINAL, sd.RECORD_STATUS,cfg.record_flow,cfg.STANDARD_DEPT_NAME
+		select sd.DEPT_FLOW, sd.ORG_FLOW, sd.DEPT_CODE, sd.DEPT_NAME, sd.ORDINAL, sd.RECORD_STATUS,cfg.record_flow,cfg.STANDARD_DEPT_NAME,bst.SPE_BASE_ID SPE_FLOW
 		from pdsci.sys_dept sd
-		left join SCH_and_Standard_Dept_cfg cfg
-		on sd.dept_flow=cfg.sch_dept_flow
-		and cfg.record_status='Y'
+		left join SCH_and_Standard_Dept_cfg cfg on sd.dept_flow=cfg.sch_dept_flow and cfg.record_status='Y'
+		left join pdsci.RES_DEPT_REL_STD_DEPT rd on sd.org_flow = rd.org_flow and sd.dept_code = rd.dept_code and rd.record_status = 'Y'
+		left join pdsci.RES_SPE_BASE_STD_DEPT bst on bst.standard_dept_flow = rd.standard_dept_flow and bst.record_status = 'Y'
 		where sd.org_flow = #{dept.orgFlow}
 		<if test='dept.deptFlow!=null and dept.deptFlow!=""'>
 			and sd.dept_flow = #{dept.deptFlow}
