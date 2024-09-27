@@ -1,7 +1,7 @@
 package com.pinde.res.dao.jswjw.ext;
 
-import com.pinde.sci.form.JsresDoctorInfoExt;
 import com.pinde.sci.form.JsRecruitDocInfoExt;
+import com.pinde.sci.form.JsresDoctorInfoExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

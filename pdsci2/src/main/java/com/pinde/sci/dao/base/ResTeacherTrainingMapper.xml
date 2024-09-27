@@ -46,6 +46,8 @@
     <result column="CERTIFICATE_TIME" property="certificateTime" jdbcType="VARCHAR" />
     <result column="IS_RESPONSIBLE_TUTOR" property="isResponsibleTutor" jdbcType="VARCHAR" />
     <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+    <result column="TEACHING_CERT_LEVEL" property="teachingCertLevel" jdbcType="VARCHAR" />
+    <result column="CERT_GRANTED_DATE" property="certGrantedDate" jdbcType="VARCHAR" />
   </resultMap>
 
   <resultMap id="BaseResultMap2" type="com.pinde.sci.model.mo.ResTeacherTraining" >
@@ -162,7 +164,8 @@
     DOCTOR_EDU, OFFICE_YEAR, WORK_YEAR, INTERN_YEAR, THREE_INTERN_YEAR, HOS_YEAR, THREE_HOS_YEAR, 
     IS_TRAIN, ACHIEVEMENT_URL, TEACHER_LEVEL_ID, TEACHER_LEVEL_NAME, USER_PHONE, APPLICATION_TEACHER_LEVEL_ID, 
     APPLICATION_AUDIT_STATUS, APPLICATION_AUDIT_MESSAGE, APPLICATION_MESSAGE, APPLICATION_PROVAL_URL, 
-    GRADUATION_SCHOOL, GRADUATION_TIME, WORKING_TIME, CERTIFICATE_LEVEL, CERTIFICATE_TIME, IS_RESPONSIBLE_TUTOR
+    GRADUATION_SCHOOL, GRADUATION_TIME, WORKING_TIME, CERTIFICATE_LEVEL, CERTIFICATE_TIME, IS_RESPONSIBLE_TUTOR,
+    TEACHING_CERT_LEVEL,CERT_GRANTED_DATE
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResTeacherTrainingExample" >
     select
@@ -656,6 +659,12 @@
       <if test="isResponsibleTutor != null" >
         IS_RESPONSIBLE_TUTOR,
       </if>
+      <if test="teachingCertLevel != null" >
+        TEACHING_CERT_LEVEL,
+      </if>
+      <if test="certGrantedDate != null" >
+        CERT_GRANTED_DATE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -786,6 +795,12 @@
       </if>
       <if test="isResponsibleTutor != null" >
         #{isResponsibleTutor,jdbcType=VARCHAR},
+      </if>
+      <if test="teachingCertLevel != null" >
+        #{teachingCertLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="certGrantedDate != null" >
+        #{certGrantedDate,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -1110,6 +1125,12 @@
       <if test="isResponsibleTutor != null" >
         IS_RESPONSIBLE_TUTOR = #{isResponsibleTutor,jdbcType=VARCHAR},
       </if>
+      <if test="certGrantedDate != null" >
+        CERT_GRANTED_DATE = #{certGrantedDate,jdbcType=VARCHAR},
+      </if>
+      <if test="teachingCertLevel != null" >
+        TEACHING_CERT_LEVEL = #{teachingCertLevel,jdbcType=VARCHAR},
+      </if>
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
@@ -1168,7 +1189,8 @@
     a.DOCTOR_EDU, a.OFFICE_YEAR, a.WORK_YEAR, a.INTERN_YEAR, a.THREE_INTERN_YEAR, a.HOS_YEAR, a.THREE_HOS_YEAR,
     a.IS_TRAIN, a.ACHIEVEMENT_URL, a.TEACHER_LEVEL_ID, a.TEACHER_LEVEL_NAME, a.USER_PHONE, a.APPLICATION_TEACHER_LEVEL_ID,
     a.APPLICATION_AUDIT_STATUS, a.APPLICATION_AUDIT_MESSAGE, a.APPLICATION_MESSAGE, a.APPLICATION_PROVAL_URL,
-    a.GRADUATION_SCHOOL, a.GRADUATION_TIME, a.WORKING_TIME, a.CERTIFICATE_LEVEL, a.CERTIFICATE_TIME, a.IS_RESPONSIBLE_TUTOR
+    a.GRADUATION_SCHOOL, a.GRADUATION_TIME, a.WORKING_TIME, a.CERTIFICATE_LEVEL, a.CERTIFICATE_TIME, a.IS_RESPONSIBLE_TUTOR,
+    a.TEACHING_CERT_LEVEL,a.CERT_GRANTED_DATE
   </sql>
   <select id="selectDetailByKey" resultMap="BaseResultMap">
     select

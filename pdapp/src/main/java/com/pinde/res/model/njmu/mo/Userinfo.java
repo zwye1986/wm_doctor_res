@@ -1,6 +1,7 @@
 package com.pinde.res.model.njmu.mo;
 
 import com.pinde.core.model.MybatisObject;
+
 import java.util.Date;
 
 public class Userinfo extends MybatisObject {

@@ -1,7 +1,6 @@
 package com.pinde.res.biz.stdp.impl;
 
 import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.stdp.ISchAndStandardDeptCfgBiz;
 import com.pinde.sci.dao.base.SchAndStandardDeptCfgMapper;

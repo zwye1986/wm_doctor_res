@@ -3,7 +3,6 @@ package com.pinde.res.biz.stdp;
 import com.pinde.res.model.stdp.mo.InxInfoForm;
 import com.pinde.sci.model.mo.InxInfo;
 import com.pinde.sci.model.mo.ResReadInfo;
-import com.pinde.sci.model.mo.SysUser;
 
 import java.util.List;
 

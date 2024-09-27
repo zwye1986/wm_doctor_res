@@ -1,11 +1,11 @@
 package com.pinde.res.biz.jszy;
 
-import java.util.List;
-import java.util.Map;
-
 import com.pinde.sci.model.mo.ResRec;
 import com.pinde.sci.model.mo.ResScore;
 import com.pinde.sci.model.mo.SchArrangeResult;
+
+import java.util.List;
+import java.util.Map;
 
 public interface IJszyTeacherBiz {
 	/**

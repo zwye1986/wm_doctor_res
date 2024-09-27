@@ -4,7 +4,6 @@ import com.pinde.app.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.osca.IOscaAdminAppBiz;
 import com.pinde.res.biz.osca.IOscaAppBiz;
 import com.pinde.res.model.jswjw.mo.FromTitle;
@@ -42,9 +41,6 @@ public class OscaAdminController {
 	private IOscaAppBiz oscaAppBiz;
 	@Autowired
 	private IOscaAdminAppBiz oscaAdminAppBiz;
-
-	@Autowired
-	private IFileBiz fileBiz;
 
 
 

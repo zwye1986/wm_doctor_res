@@ -6,7 +6,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IResScoreBiz;
 import com.pinde.sci.dao.base.ResPassScoreCfgMapper;
 import com.pinde.sci.dao.base.ResScoreMapper;
-import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.model.mo.ResPassScoreCfg;
 import com.pinde.sci.model.mo.ResPassScoreCfgExample;
 import com.pinde.sci.model.mo.ResScore;
@@ -15,6 +14,7 @@ import com.pinde.sci.model.mo.ResScoreExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service

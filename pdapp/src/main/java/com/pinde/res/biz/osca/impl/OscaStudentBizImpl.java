@@ -5,7 +5,6 @@ import com.pinde.app.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.res.biz.jswjw.IJswjwStudentBiz;
 import com.pinde.res.biz.osca.IOscaStudentBiz;
 import com.pinde.res.dao.jswjw.ext.OscaDoctorAssessmentExtMapper;
 import com.pinde.res.dao.jswjw.ext.OscaSkillRoomDocExtMapper;

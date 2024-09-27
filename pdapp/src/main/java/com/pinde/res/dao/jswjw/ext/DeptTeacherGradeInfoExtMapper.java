@@ -3,7 +3,6 @@ package com.pinde.res.dao.jswjw.ext;
 import com.pinde.sci.model.mo.DeptTeacherGradeInfo;
 import com.pinde.sci.model.mo.SysDept;
 import com.pinde.sci.model.mo.SysUser;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;

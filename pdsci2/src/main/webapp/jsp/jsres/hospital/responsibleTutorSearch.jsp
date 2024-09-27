@@ -146,12 +146,13 @@
 
     function editCommonSzInfo(recordFlow,teacherLevelId) {
         var url = "<s:url value='/jsres/manage/editCommonSzInfo?'/>" + "recordFlow=" + recordFlow;
-        if(teacherLevelId == 'GeneralFaculty'){
-            jboxOpen(url, "编辑一般师资信息", 550, 540);
-        }
-        if('KeyFaculty' == teacherLevelId){
-            jboxOpen(url, "编辑骨干师资信息", 550, 540);
-        }
+        // if(teacherLevelId == 'GeneralFaculty'){
+        //     jboxOpen(url, "编辑一般师资信息", 550, 540);
+        // }
+        // if('KeyFaculty' == teacherLevelId){
+        //     jboxOpen(url, "编辑骨干师资信息", 550, 540);
+        // }
+        jboxOpen(url, "编辑责任导师信息", 550, 540);
     }
 
     function deleteCommonSz(recordFlow){

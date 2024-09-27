@@ -6,7 +6,7 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.lcjn.ILcjnBiz;
-import com.pinde.res.dao.jswjw.ext.*;
+import com.pinde.res.dao.jswjw.ext.SysUserExtMapper;
 import com.pinde.res.dao.lcjn.ext.LcjnCourseInfoExtMapper;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.mo.*;

@@ -1,11 +1,11 @@
 package com.pinde.res.biz.jszy.impl;
 
 import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.commom.enums.RecStatusEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jszy.IJszyTeacherBiz;
 import com.pinde.res.dao.jszy.ext.JszyResDoctorExtMapper;
-import com.pinde.core.commom.enums.RecStatusEnum;
 import com.pinde.sci.dao.base.ResRecMapper;
 import com.pinde.sci.dao.base.ResScoreMapper;
 import com.pinde.sci.dao.base.SchArrangeResultMapper;

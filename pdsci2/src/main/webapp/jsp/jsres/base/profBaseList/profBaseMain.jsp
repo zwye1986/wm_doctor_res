@@ -71,6 +71,7 @@
     </c:forEach>
     var selectAll = false;
     var deselectAll = false;
+    var invalidCb = false;
 
     $(function () {
         $("#mainBase,#jointOrg,#profDept").selectpicker({
@@ -82,10 +83,12 @@
             selectAllCb: function () {
                 selectAll = true;
                 $('#mainBase').trigger('changed.bs.select');
+                selectAll = false;
             },
             deselectAllCb: function () {
                 deselectAll = true;
                 $('#mainBase').trigger('changed.bs.select');
+                deselectAll = false;
             }
         });
 
@@ -97,6 +100,13 @@
         });
 
         $('#mainBase').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+            if(invalidCb) {
+                return;
+            }
+            if(!$("#jointOrgFlag").prop("checked")) {
+                $("#jointOrg").prop("disabled", false);
+            }
+
             var jointSelectedList = $("#jointOrg").val() || [];
             var mainSelectedList = $("#mainBase").val() || [];
             var curVal;
@@ -127,10 +137,13 @@
                     }
                 }
             }
+
             $("#jointOrg").html(html);
             $("#jointOrg").selectpicker("refresh");
-            selectAll = false;
-            deselectAll = false;
+
+            if(!$("#jointOrgFlag").prop("checked")) {
+                $("#jointOrg").prop("disabled", true);
+            }
         });
 
         searchProfBaseList();
@@ -152,6 +165,10 @@
 
         jboxPost("<s:url value='/jsres/base/profBaseList' />", $("#searchForm").serialize(), function (resp) {
             $("#doctorListZi").html(resp);
+            // 初始化统计信息
+            setTimeout(function() {
+                updateSummaryInfo();
+            }, 1);
         }, function () {
 
         }, false);
@@ -196,9 +213,9 @@
                 mainList[orgFlowArr[i]] = [];
             }
         }
-        console.log(orgFlowArr);
-        console.log(mainBaseList);
-        console.log(jointOrgList);
+        // console.log(orgFlowArr);
+        // console.log(mainBaseList);
+        // console.log(jointOrgList);
         // 找出主基地其下的协同单位
         for(var i = 0; i < orgFlowArr.length; i++) {
             if(jointOrgList[orgFlowArr[i]]) {
@@ -221,9 +238,121 @@
         var iframe = "<iframe name='mainIframe' id='mainIframe' width='" + width + "' height='" + height + "' marginheight='0' marginwidth='0' frameborder='0' scrolling='auto' src='" + url + "'></iframe>";
         jboxMessager(iframe, speName+"专业基地("+speId+")", width, height, 'mainIframe', true);
     }
-</script>
 
-<div class="main_hd" id="profBaseListMain">
+    function jointOrgStatis() {
+        invalidCb = true;
+        var jointOrgFlag = $("#jointOrgFlag").prop("checked");
+        if(jointOrgFlag) {
+            $("#jointOrg").attr("disabled", false);
+            // $("#jointOrg").selectpicker("selectAll");
+        }else {
+            $("#jointOrg").selectpicker("deselectAll");
+            $("#jointOrg").attr("disabled", true);
+        }
+        invalidCb = false;
+    }
+
+    function updateSummaryInfo() {
+        var openSpeBasesCount = 0;
+        var inHospitalDoctorsCount = 0;
+        var inCollegeMastersCount = 0;
+        var inTrainsCount = 0;
+        var baseCapacityCount = 0;
+        var minRecruitCapacityCount = 0;
+        var trainingCapacityUsePerCount = 0;
+        if($("#sessionNumber").val() == '${pdfn:getCurrYear()}') {
+            if ($(".openSpeBases") && $(".openSpeBases").length) {
+                $(".openSpeBases").each(function (i, item) {
+                    var openSpeBasesRow = Number.parseInt($(item).text());
+                    if (openSpeBasesRow) {
+                        openSpeBasesCount += openSpeBasesRow;
+                    }
+                });
+            }
+            $(".openSpeBasesCount").text(openSpeBasesCount);
+
+            if ($(".inHospitalDoctors") && $(".inHospitalDoctors").length) {
+                $(".inHospitalDoctors").each(function (i, item) {
+                    var inHospitalDoctorsRow = Number.parseInt($(item).text());
+                    if (inHospitalDoctorsRow) {
+                        inHospitalDoctorsCount += inHospitalDoctorsRow;
+                    }
+                });
+            }
+            $(".inHospitalDoctorsCount").text(inHospitalDoctorsCount);
+
+            if ($(".inCollegeMasters") && $(".inCollegeMasters").length) {
+                $(".inCollegeMasters").each(function (i, item) {
+                    var inCollegeMastersRow = Number.parseInt($(item).text());
+                    if (inCollegeMastersRow) {
+                        inCollegeMastersCount += inCollegeMastersRow;
+                    }
+                });
+            }
+            $(".inCollegeMastersCount").text(inCollegeMastersCount);
+
+            if ($(".inTrains") && $(".inTrains").length) {
+                $(".inTrains").each(function (i, item) {
+                    var inTrainsRow = Number.parseInt($(item).text());
+                    if (inTrainsRow) {
+                        inTrainsCount += inTrainsRow;
+                    }
+                });
+            }
+            $(".inTrainsCount").text(inTrainsCount);
+
+            if ($(".baseCapacity") && $(".baseCapacity").length) {
+                $(".baseCapacity").each(function (i, item) {
+                    var baseCapacityRow = Number.parseInt($(item).text());
+                    if (baseCapacityRow) {
+                        baseCapacityCount += baseCapacityRow;
+                    }
+                });
+            }
+            $(".baseCapacityCount").text(baseCapacityCount);
+
+            if ($(".minRecruitCapacity") && $(".minRecruitCapacity").length) {
+                $(".minRecruitCapacity").each(function (i, item) {
+                    var minRecruitCapacityRow = Number.parseInt($(item).text());
+                    if (minRecruitCapacityRow) {
+                        minRecruitCapacityCount += minRecruitCapacityRow;
+                    }
+                });
+            }
+            $(".minRecruitCapacityCount").text(minRecruitCapacityCount);
+
+            if (baseCapacityCount > 0) {
+                $(".trainingCapacityUsePerCount").text(Math.round(inTrainsCount * 100 / baseCapacityCount).toFixed(1));
+            }
+        }
+
+        var curInHospitalDoctorsCount = 0;
+        if ($(".curInHospitalDoctors") && $(".curInHospitalDoctors").length) {
+            $(".curInHospitalDoctors").each(function (i, item) {
+                // 省厅不可编辑，用span
+                var curInHospitalDoctorsRow = Number.parseInt($(item).text());
+                if (curInHospitalDoctorsRow) {
+                    curInHospitalDoctorsCount += curInHospitalDoctorsRow;
+                }
+            });
+        }
+        $(".curInHospitalDoctorsCount").text(curInHospitalDoctorsCount);
+
+        var curInCollegeMastersCount = 0;
+        if ($(".curInCollegeMasters") && $(".curInCollegeMasters").length) {
+            $(".curInCollegeMasters").each(function (i, item) {
+                var curInCollegeMastersRow = Number.parseInt($(item).text());
+                if (curInCollegeMastersRow) {
+                    curInCollegeMastersCount += curInCollegeMastersRow;
+                }
+            });
+        }
+        $(".curInCollegeMastersCount").text(curInCollegeMastersCount);
+
+    }
+    </script>
+
+    <div class="main_hd" id="profBaseListMain">
     <h2>专业基地清单</h2>
 </div>
 <div class="main_bd" id="div_table_0">
@@ -258,6 +387,13 @@
                                 </c:forEach>
                             </c:if>
                         </select>
+                    </div>
+                    <div id="jointOrgFlagDiv" style="" class="search-div">
+                        <input type="checkbox" class="itemCheckbox" style="margin-right: 8px;height: 30px;" onclick="jointOrgStatis()"
+                               name='jointOrgFlag' id="jointOrgFlag" value="Y" checked/>
+                        <div style="display: inline-block;height: 30px;line-height: 30px;vertical-align: text-bottom;">
+                            <label style="color: #000000; font: 16px 'Microsoft Yahei'; font-weight: 400;" for="jointOrgFlag">参与统计</label></div>
+                        <div class="clearfix"></div>
                     </div>
                     <div id="profDeptDiv" style="" class="search-div">
                         <label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">&#12288;专业基地：</label>

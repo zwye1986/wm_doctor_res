@@ -1,10 +1,8 @@
 package com.pinde.res.biz.jswjw.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.pinde.core.pdf.utils.ObjectUtils;
 import com.pinde.res.biz.jswjw.IAccessTokenService;
-import com.pinde.res.ctrl.jswjw.JswjwWxController;
 import com.pinde.sci.util.WechatUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.TimeUnit;
 

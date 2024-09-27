@@ -1,7 +1,6 @@
 package com.pinde.res.model.bengyify.mo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
  * 自我评价

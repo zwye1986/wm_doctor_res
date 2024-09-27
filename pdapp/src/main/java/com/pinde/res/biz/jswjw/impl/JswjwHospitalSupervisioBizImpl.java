@@ -7,7 +7,6 @@ import com.pinde.core.util.FtpHelperUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IJswjwHospitalSupervisioBiz;
-import com.pinde.res.ctrl.jswjw.JswjwHospitalSupervisioController;
 import com.pinde.res.dao.jswjw.ext.HospitalSupervisioExtMapper;
 import com.pinde.sci.dao.base.ResHospSupervSubjectMapper;
 import com.pinde.sci.dao.base.ResScheduleScoreMapper;
@@ -21,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 

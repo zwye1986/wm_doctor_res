@@ -2,6 +2,7 @@ package com.pinde.sci;
 
 import com.javax0.license3j.licensor.License;
 import com.pinde.core.util.DateUtil;
+import com.pinde.core.util.ServerUtil;
 import com.pinde.lic.hardware.MechineInfo;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.bouncycastle.crypto.digests.SHA512Digest;
@@ -34,7 +35,7 @@ public class LicenseKey {
         issueDate = "issueDate=" + StringEscapeUtils.escapeJava("2021-01-01");
 
         String machineId = "";
-        machineId = "machineId=" + StringEscapeUtils.escapeJava(MechineInfo.getMachineId());
+        machineId = "machineId=" + StringEscapeUtils.escapeJava("29ba4649-26a8-395a-ad87-622d4e3b9788");
         String workStationId = "";
 //        workStationId = "workStation=" + StringEscapeUtils.escapeJava("srm,edc,gcp,irb,sch,edu,njmuedu,erp,exam,res,test,fstu,cmis,osca,lcjn,eval,zsey,zseylcjn,portals,study");
         workStationId = "workStation=" + StringEscapeUtils.escapeJava("srm,edc,gcp,irb,sch,edu,njmuedu,erp,exam,res,test,fstu,cmis,osca,lcjn,eval,zsey,zseylcjn,portals,study,recruit");
@@ -135,7 +136,7 @@ public class LicenseKey {
     }
     private static  void getMachineId()
     {
-        System.out.println(MechineInfo.getMachineId());
+        System.out.println(ServerUtil.getMachineId());
     }
     public static boolean checkValid(){
 

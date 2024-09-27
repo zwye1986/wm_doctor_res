@@ -1,12 +1,9 @@
 package com.pinde.res.ctrl.stdp;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import com.alibaba.fastjson.JSON;
 import com.pinde.core.commom.enums.DeptStatusEnum;
+import com.pinde.core.commom.enums.ResultEnum;
+import com.pinde.core.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,9 +12,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.alibaba.fastjson.JSON;
-import com.pinde.core.util.StringUtil;
-import com.pinde.core.commom.enums.ResultEnum;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/res/stdp/student")

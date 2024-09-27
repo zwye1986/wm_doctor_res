@@ -3963,16 +3963,27 @@ public class JsResManageController extends GeneralController {
 			String idNo = recruitExt.getSysUser().getIdNo();
 			String sex = "";
 			String age = "";
+			int birthYear = 0;
 			if (StringUtils.isNotEmpty(idNo)) {
-				// 第17位表性别，奇数为男，偶数为女
-				int sexInt = Integer.parseInt(idNo.substring(16, 17));
-				if (sexInt % 2 == 0) {
-					sex = "女";
-				} else {
-					sex = "男";
+				if(idNo.length() != 18){
+					SysUser user = sysUserMapper.selectByPrimaryKey(recruitExt.getSysUser().getUserFlow());
+					sex = user.getSexName();
+					String birthday = user.getUserBirthday();
+					birthYear = Integer.valueOf(birthday.split("-")[0]);
+				}else{
+					// 第17位表性别，奇数为男，偶数为女
+					int sexInt = Integer.parseInt(idNo.substring(16, 17));
+					if (sexInt % 2 == 0) {
+						sex = "女";
+					} else {
+						sex = "男";
+					}
+
+					birthYear = Integer.parseInt(idNo.substring(6, 10));
 				}
 
-				int birthYear = Integer.parseInt(idNo.substring(6, 10));
+
+
 				int currYear = Integer.parseInt(DateUtil.getYear());
 				age = String.valueOf(currYear - birthYear);
 			}

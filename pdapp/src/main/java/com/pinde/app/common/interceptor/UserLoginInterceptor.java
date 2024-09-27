@@ -1,14 +1,10 @@
 package com.pinde.app.common.interceptor;
 
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.sci.model.mo.SysUser;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
-import java.util.Map;
 
 public class UserLoginInterceptor implements HandlerInterceptor {
     /**

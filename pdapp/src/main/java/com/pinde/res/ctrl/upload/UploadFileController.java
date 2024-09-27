@@ -3,7 +3,6 @@ package com.pinde.res.ctrl.upload;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.ctrl.jswjw.ImageFileForm;
 import com.pinde.sci.dao.base.SysCfgMapper;
@@ -26,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -1,6 +1,7 @@
 package com.pinde.app.common;
 
 import com.pinde.core.commom.enums.GeneralEnum;
+import com.pinde.core.commom.enums.ResRecTypeEnum;
 import com.pinde.core.util.EnumUtil;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
@@ -8,7 +9,6 @@ import com.pinde.core.util.XmlParse;
 import com.pinde.res.biz.stdp.ICfgBiz;
 import com.pinde.res.biz.stdp.IResGradeBiz;
 import com.pinde.res.dao.stdp.ext.CustomExtMapper;
-import com.pinde.core.commom.enums.ResRecTypeEnum;
 import com.pinde.sci.model.mo.DeptTeacherGradeInfo;
 import org.dom4j.Element;
 

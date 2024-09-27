@@ -1,8 +1,6 @@
 package com.pinde.res.biz.lcjn;
 
 import com.pinde.sci.model.mo.InxInfo;
-import com.pinde.sci.model.mo.SysUser;
-import com.pinde.sci.model.mo.SysUserRole;
 
 import java.util.List;
 

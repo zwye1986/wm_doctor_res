@@ -2,8 +2,6 @@ package com.pinde.res.biz.stdp.impl;
 
 
 import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.stdp.INoticeBiz;
 import com.pinde.res.dao.lcjn.ext.InxInfoExtMapper;
@@ -18,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 

@@ -38,6 +38,11 @@
 		var url="<s:url value='/jsres/speAdmin/guidingPhysicianList'/>"+"?orgFlow=${orgFlow}&isJoin=${isJoin}";;
 		jboxPostLoad("doctorListZi",url , $("#BaseInfoForm").serialize(), false);
 	}
+
+	function viewAttachment(recordFlow){
+		var url = "<s:url value='/jsres/manage/attachment'/>?recFlow="+recordFlow + "&recType=szzsAttach&readonly=Y";
+		jboxOpen(url, '证书附件',600,550);
+	}
 </script>
 <form id='BaseInfoForm'
 		<c:if test="${isJoin ne 'Y' and isglobal ne 'Y'}"> style="position: relative;" </c:if>
@@ -49,22 +54,20 @@
 	<div class="main_bd">
 		<table cellspacing="0" cellpadding="0" class="base_info">
 			<colgroup>
-				<col width="6%"/>
-				<col width="4%"/>
-				<col width="4%"/>
+				<col width="7%"/>
+				<col width="7%"/>
+				<col width="7%"/>
 				<col width="7%"/>
 				<col width="10%"/>
-				<col width="11%"/>
+				<col width="10%"/>
 				<col width="8%"/>
-				<col width="8%"/>
-				<col width="4%"/>
-				<col width="8%"/>
-				<col width="4%"/>
-				<col width="8%"/>
-				<col width="12%"/>
+				<col width="13%"/>
+				<col width="9%"/>
+				<col width="13%"/>
+				<col width="9%"/>
 			</colgroup>
 			<tbody>
-				<tr>
+				<%--<tr>
 					<th rowspan="3" style="text-align: center;border-left: none;">姓名</th>
 					<th rowspan="3" style="text-align: center;">性别</th>
 					<th rowspan="3" style="text-align: center;">年龄</th>
@@ -86,6 +89,23 @@
 					<th style="text-align: center;">近3年累计人数</th>
 					<th style="text-align: center;">年限</th>
 					<th style="text-align: center;">近3年累计人数</th>
+				</tr>--%>
+				<tr>
+					<th rowspan="2" style="text-align: center;border-left: none;">姓名</th>
+					<th rowspan="2" style="text-align: center;">性别</th>
+					<th rowspan="2" style="text-align: center;">年龄</th>
+					<th rowspan="2" style="text-align: center;">学历</th>
+					<th rowspan="2" style="text-align: center;">所在科室</th>
+					<th colspan="3" style="text-align: center;">工作经历</th>
+					<th colspan="3" style="text-align: center;border-right: none;">参加省级及以上住院医师规范化培训师资培训</th>
+				</tr>
+				<tr>
+					<th rowspan="1" style="text-align: center;">专业技术职务</th>
+					<th rowspan="1" style="text-align: center;">任现职务年限</th>
+					<th rowspan="1" style="text-align: center;">从事本专业临床工作年限</th>
+					<th colspan="1" style="text-align: center;">证书等级</th>
+					<th colspan="1" style="text-align: center;">证书取得时间</th>
+					<th colspan="1" style="text-align: center;">证书</th>
 				</tr>
 			</tbody>
 		</table>
