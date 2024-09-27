@@ -1,6 +1,5 @@
 <script type="text/javascript">
 	$(document).ready(function(){
-		debugger;
 		$("li").click(function(){
 			$(".tab_select").addClass("tab");
 			$(".tab_select").removeClass("tab_select");

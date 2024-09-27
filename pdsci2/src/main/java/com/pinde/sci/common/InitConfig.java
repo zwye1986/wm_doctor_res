@@ -12,6 +12,7 @@ import com.pinde.sci.biz.jsres.IjsresLoginInfoBiz;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.util.RegionUtil;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
+import com.pinde.sci.enums.BaseEnum;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.commons.io.FileUtils;
@@ -541,10 +542,22 @@ public class InitConfig implements ServletContextListener {
 	private static void _loadEnum(ServletContext context) {
 		Set<Class<?>> set = ClassUtil.getClasses("com.pinde.sci.enums");
 		for (Class<?> cls : set) {
-			List<GeneralEnum> enumList = (List<GeneralEnum>) EnumUtil.toList((Class<? extends GeneralEnum>) cls);
-			context.setAttribute(StringUtil.uncapitalize(cls.getSimpleName()) + "List", enumList);
-			for (GeneralEnum genum : enumList) {
-				context.setAttribute(StringUtil.uncapitalize(cls.getSimpleName()) + genum.name(), genum);
+			if(BaseEnum.class.isAssignableFrom(cls)) {
+				Class[] innerEnums = cls.getDeclaredClasses();
+				if(innerEnums != null) {
+					for(int i = 0; i < innerEnums.length; i++) {
+						if(Enum.class.isAssignableFrom(innerEnums[i])) {
+							String mixName = innerEnums[i].getSimpleName();
+							context.setAttribute(StringUtil.uncapitalize(mixName.substring(mixName.lastIndexOf("$") + 1)) + "List", EnumUtil.toList((Class<? extends GeneralEnum>) innerEnums[i]));
+						}
+					}
+				}
+			}else if(GeneralEnum.class.isAssignableFrom(cls)){
+				List<GeneralEnum> enumList = (List<GeneralEnum>) EnumUtil.toList((Class<? extends GeneralEnum>) cls);
+				context.setAttribute(StringUtil.uncapitalize(cls.getSimpleName()) + "List", enumList);
+				for (GeneralEnum genum : enumList) {
+					context.setAttribute(StringUtil.uncapitalize(cls.getSimpleName()) + genum.name(), genum);
+				}
 			}
 		}
 	}

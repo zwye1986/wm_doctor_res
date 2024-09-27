@@ -60,18 +60,13 @@
             format: 'yyyy'
         });
 
-        $('#graduationTime').datepicker({
-            startView: 1,
-            maxViewMode: 1,
-            minViewMode: 1,
-            format: 'yyyy-mm'
-        });
-
-        $('#workingTime').datepicker({
-            startView: 1,
-            maxViewMode: 1,
-            minViewMode: 1,
-            format: 'yyyy-mm'
+        $('#graduationTime,#workingTime,#certGrantedDate').datepicker({
+			language:  'zh-CN',
+			startView: 2,
+			maxView: 4,
+			minView: 2,
+			format: 'yyyy-mm-dd',
+			autoclose: true
         });
     });
 
@@ -200,7 +195,6 @@
 	}
 
 	function viewTrainAttachment(recordFlow,recType,title){
-		debugger;
 		var url = "<s:url value='/jsres/manage/attachment'/>?recFlow="+recordFlow + "&recType=" + recType;
 		jboxOpen(url, title,700,550);
 	}
@@ -336,6 +330,23 @@
 			<th width="150px"><font color="red" >*</font>师资培训会议名称</th>
 			<td  style="text-align: left;">
 				<input  type="text" name="meetingName" class="select validate[required]" value="${teacher.meetingName}"  style="text-align: left;width: 150px;"/>
+			</td>
+		</tr>
+		<tr>
+			<th width="150px"><font color="red" >*</font>师资证书等级</th>
+			<td  style="text-align: left;">
+				<select class="select" name="teachingCertLevel" id="teachingCertLevel" style="width: 150px;">
+					<option value="">请选择</option>
+					<c:forEach items="${teachingCertLevelEnumList}" var="certLevel">
+						<option value="${certLevel.code}" <c:if test="${teacher.teachingCertLevel eq certLevel.code}">selected</c:if> >${certLevel.name}</option>
+					</c:forEach>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th width="150px"><font color="red" >*</font>证书取得时间</th>
+			<td  style="text-align: left;">
+				<input type="text" value="${teacher.certGrantedDate}" class="select validate[required]" name="certGrantedDate" id="certGrantedDate" style="width: 150px;"/>
 			</td>
 		</tr>
 		<tr>

@@ -45,5 +45,23 @@
                 </c:if>
             </tr>
         </c:forEach>
+        <tr>
+            <td>总计</td>
+            <td></td>
+            <c:if test="${sessionNumber eq pdfn:getCurrYear()}">
+                <td><span class="openSpeBasesCount"></span>人</td>
+            </c:if>
+            <td><span class="curInHospitalDoctorsCount"></span>人</td>
+            <td><span class="curInCollegeMastersCount"></span>人</td>
+            <c:if test="${sessionNumber eq pdfn:getCurrYear()}">
+                <td><span class="inHospitalDoctorsCount"></span>人</td>
+                <td><span class="inCollegeMastersCount"></span>人</td>
+                <td><span class="inTrainsCount"></span>人</td>
+                <td><span class="baseCapacityCount"></span>人</td>
+                <td><span class="minRecruitCapacityCount"></span>人</td>
+                <td><span class="trainingCapacityUsePerCount"></span>%</td>
+            </c:if>
+
+        </tr>
     </table>
 </div>

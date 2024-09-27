@@ -34,5 +34,16 @@
         </sql>
     </changeSet>
 
+    <changeSet id="20240924-teacherTraining_add_column" author="zxr">
+        <!-- 基地信息扩展，原来的BASE_INFO字段最长4000字符，多了不好操作，怕超了，又加一个字段，且从原先的xml格式改为json格式，省点字符 -->
+        <sql>
+            alter table PDSCI.RES_TEACHER_TRAINING add TEACHING_CERT_LEVEL varchar2(16);
+            comment on column PDSCI.RES_TEACHER_TRAINING.TEACHING_CERT_LEVEL is '师资证书等级';
+
+            alter table PDSCI.RES_TEACHER_TRAINING add CERT_GRANTED_DATE varchar2(16);
+            comment on column PDSCI.RES_TEACHER_TRAINING.CERT_GRANTED_DATE is '师资证书取得时间';
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>
 
