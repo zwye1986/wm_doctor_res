@@ -6,19 +6,17 @@
 </script>
 <table cellspacing="0" cellpadding="0" class="base_info">
 	<colgroup>
-		<col width="6%"/>
-		<col width="4%"/>
-		<col width="4%"/>
+		<col width="7%"/>
+		<col width="7%"/>
+		<col width="7%"/>
 		<col width="7%"/>
 		<col width="10%"/>
-		<col width="11%"/>
+		<col width="10%"/>
 		<col width="8%"/>
-		<col width="8%"/>
-		<col width="4%"/>
-		<col width="8%"/>
-		<col width="4%"/>
-		<col width="8%"/>
-		<col width="12%"/>
+		<col width="13%"/>
+		<col width="9%"/>
+		<col width="13%"/>
+		<col width="9%"/>
 	</colgroup>
 	<tbody>
 	<c:if test="${empty list}">
@@ -37,17 +35,20 @@
 				<td style="text-align: center">${t.technicalTitle}</td>
 				<td style="text-align: center">${t.officeYear}</td>
 				<td style="text-align: center">${t.workYear}</td>
-				<td style="text-align: center">${t.internYear}</td>
+				<%--<td style="text-align: center">${t.internYear}</td>
 				<td style="text-align: center">${t.threeInternYear}</td>
 				<td style="text-align: center">${t.hosYear}</td>
-				<td style="text-align: center">${t.threeHosYear}</td>
+				<td style="text-align: center">${t.threeHosYear}</td>--%>
 				<td style="text-align: center">
-					<c:if test="${t.isTrain eq 'Y'}">
-						有
-					</c:if>
-					<c:if test="${t.isTrain eq 'N'}">
-					无
-					</c:if>
+					<c:forEach items="teachingCertLevelEnumList" var="certLevel">
+						<c:if test="${t.teachingCertLevel eq certLevel.code}">${certLevel.name}</c:if>
+					</c:forEach>
+				</td>
+				<td style="text-align: center">
+						${t.certGrantedDate}
+				</td>
+				<td style="text-align: center">
+					<a href="javascript:viewAttachment('${t.recordFlow}');" class="btn">查看</a>
 				</td>
 			</tr>
 		</c:forEach>

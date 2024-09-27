@@ -97,6 +97,26 @@ public class ResTeacherTraining extends MybatisObject {
 
     private List<String> userDeptNames;
 
+    private String certGrantedDate;
+
+    private String teachingCertLevel;
+
+    public String getCertGrantedDate() {
+        return certGrantedDate;
+    }
+
+    public void setCertGrantedDate(String certGrantedDate) {
+        this.certGrantedDate = certGrantedDate;
+    }
+
+    public String getTeachingCertLevel() {
+        return teachingCertLevel;
+    }
+
+    public void setTeachingCertLevel(String teachingCertLevel) {
+        this.teachingCertLevel = teachingCertLevel;
+    }
+
     private String allUserDeptNames;
 
     public String getRecordFlow() {
