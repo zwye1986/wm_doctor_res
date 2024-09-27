@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.sys;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.base.Strings;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
@@ -717,6 +718,8 @@ public class UserController extends GeneralController{
      */
 	@RequestMapping(value={"/save4jsresteacher"},method=RequestMethod.POST)
 	public @ResponseBody String save4jsresteacher(SysUser user,String[] mulDeptFlow,String roleFlow, String[] userRoleList,String coverPhone){
+		// 去掉用户登陆名和用户名字前后的空格
+		uniformUser(user);
 		//新增用户是判断
 		if(StringUtil.isBlank(user.getUserFlow())){
 			// 判断用户phone是否存在
@@ -903,6 +906,20 @@ public class UserController extends GeneralController{
 			setSessionAttribute(GlobalConstant.CURRENT_ROLE_LIST_BACKUP, currRoleFlowList);
 		}
 		return GlobalConstant.SAVE_SUCCESSED;
+	}
+
+	private void uniformUser(SysUser user) {
+		if(user == null) {
+			return;
+		}
+
+		if(user.getUserName() != null) {
+			user.setUserName(StringUtils.strip(user.getUserName()));
+		}
+
+		if(user.getUserCode() != null) {
+			user.setUserCode(StringUtils.strip(user.getUserCode()));
+		}
 	}
 
 	@RequestMapping(value="/allotRole",method=RequestMethod.GET)
