@@ -29,6 +29,7 @@ public class JsResDataExt  {
 	private String disease_mrNo ;//病历号/病理号
 	private String disease_pDate;//日期
 	private String disease_treatStep;//转归情况
+	private String disease_caseType;//病例类型
 
 	//操作技能
 	private String fail_reason;//失败原因
@@ -58,6 +59,14 @@ public class JsResDataExt  {
 	private List<JsResDataFile> files;
 
 	private String filearr;
+
+	public String getDisease_caseType() {
+		return disease_caseType;
+	}
+
+	public void setDisease_caseType(String disease_caseType) {
+		this.disease_caseType = disease_caseType;
+	}
 
 	public String getUserFlow() {
 		return userFlow;

@@ -1693,12 +1693,7 @@
         ) a
         WHERE 1=1
         <if test='seachStr!=null and seachStr!=""'>
-            and (
-             a.spe_name like '%${seachStr}%'
-            OR a.STATUS_NAME like '%${seachStr}%'
-            OR a.USER_NAME like '%${seachStr}%'
-            OR a.TEACHER_USER_NAME like '%${seachStr}%'
-            )
+            and a.USER_NAME like '%${seachStr}%'
         </if>
         and a.SCH_START_DATE <![CDATA[<=]]>to_char(sysdate,'yyyy-MM-dd')
         GROUP BY USER_FLOW,SESSION_NUMBER,USER_NAME,SPE_NAME
@@ -3480,9 +3475,10 @@
         <result column="rec_type_id" javaType="string" property="recTypeId"/>
         <result column="rec_type_name" javaType="string" property="recTypeName"/>
         <result column="num" javaType="string" property="notAuditNum"/>
+        <result column="rec_flow" javaType="string" property="recFlow"/>
     </resultMap>
     <select id="findSkillNoAudit" parameterType="java.util.Map" resultMap="dataNoAuditMap">
-        SELECT a.oper_user_flow,RR.OPER_USER_NAME,a.process_flow, a.rec_type_id
+        SELECT a.oper_user_flow,RR.OPER_USER_NAME,a.process_flow, a.rec_type_id, rr.rec_flow
           FROM (
             <if test="recTypes!=null and recTypes.size>0">
                 <foreach collection="recTypes" item="item" index="index" separator=" UNION ALL " >

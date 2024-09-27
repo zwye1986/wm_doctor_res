@@ -598,6 +598,10 @@ public class ResActivityBizImpl implements IResActivityBiz {
 				userRoleList.add("res_teacher_role_flow");
 			} else if ("Seretary".equals(roleId)) {
 				userRoleList.add("res_secretary_role_flow");
+			} else if ("TeachingHead".equals(roleId)) {
+				userRoleList.add("res_secretary_role_flow");
+			} else if ("TeachingSeretary".equals(roleId)) {
+				userRoleList.add("res_secretary_role_flow");
 			}
 			criteria.andCfgCodeIn(userRoleList);
 			SysCfg sysCfg = sysCfgMapper.selectByExample(example).get(0);     //获取该用户当前角色信息

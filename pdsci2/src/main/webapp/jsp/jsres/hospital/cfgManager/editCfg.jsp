@@ -54,10 +54,10 @@
     function add(recordFlow){
         if(recordFlow==null){
           var url = "<s:url value ='/jsres/cfgManager/add'/>";
-          jboxOpen(url, "新增教学活动流程", 450, 200);
+          jboxOpen(url, "新增教学活动流程", 700, 200);
         }else{
           var url = "<s:url value ='/jsres/cfgManager/add'/>?recordFlow="+recordFlow;
-          jboxOpen(url, "修改教学活动流程", 450, 200);
+          jboxOpen(url, "修改教学活动流程", 700, 200);
         }
     }
 

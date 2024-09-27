@@ -1764,6 +1764,12 @@ public class JswjwBizImpl implements IJswjwBiz {
             rootEle.add(dPdateElement);
         }
 
+        if (StringUtil.isNotBlank(dataExt.getDisease_caseType())) {
+            Element dPdateElement = DocumentHelper.createElement("disease_caseType");
+            dPdateElement.setText(dataExt.getDisease_caseType());
+            rootEle.add(dPdateElement);
+        }
+
         if (StringUtil.isNotBlank(dataExt.getDisease_treatStep())) {
             Element dTreatStepElement = DocumentHelper.createElement("disease_treatStep");
             dTreatStepElement.setText(dataExt.getDisease_treatStep());
@@ -2930,6 +2936,17 @@ public class JswjwBizImpl implements IJswjwBiz {
                 } else {
                     aSpeakerElement = DocumentHelper.createElement("activity_speaker");
                     aSpeakerElement.setText(dataExt.getActivity_speaker());
+                    rootEle.add(aSpeakerElement);
+                }
+            }
+
+            if (StringUtil.isNotBlank(dataExt.getDisease_caseType())) {
+                Element aSpeakerElement = rootEle.element("disease_caseType");
+                if (null != aSpeakerElement) {
+                    aSpeakerElement.setText(dataExt.getDisease_caseType());
+                } else {
+                    aSpeakerElement = DocumentHelper.createElement("disease_caseType");
+                    aSpeakerElement.setText(dataExt.getDisease_caseType());
                     rootEle.add(aSpeakerElement);
                 }
             }
