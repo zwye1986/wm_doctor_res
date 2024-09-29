@@ -11,6 +11,8 @@ import java.util.Map;
 
 public interface IUserBiz {
 
+    List<SysUser> selectByNamesOrIdNo(List<String> userNameList,
+                                      List<String> idNoList);
 
     int deleteUser(String userFlow);
     SysUser readSysUser(String sysUserFlow);

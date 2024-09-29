@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContextAware;
 public class ApplicationContextRegister implements ApplicationContextAware {
 	private static Logger logger = LoggerFactory.getLogger(ApplicationContextRegister.class);
 
+	@Override
 	public void setApplicationContext(ApplicationContext applicationContext)throws BeansException {
 		SpringUtil.setApplicationContext(applicationContext);
 		logger.debug("ApplicationContext registed");

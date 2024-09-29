@@ -50,6 +50,21 @@
             minViewMode:2,
             format:'yyyy'
         });
+        $('#form_btn').empty();
+        let checkOpen = $("#checkOpen").val();
+        if (checkOpen && "Y" == checkOpen) {
+            $('#form_btn').append("" +
+                "<input class='btn_green' type='button' " +
+                "value='查&#12288;询' onclick='toPage(1);'/>" +
+                "<input class='btn_green' type='button' value='导&#12288;入' onclick='toImport2();'/>"
+            )
+        }else {
+            $('#form_btn').append("" +
+                "<input class='btn_green' type='button' " +
+                "value='查&#12288;询' onclick='toPage(1);'/>" +
+                "<input class='btn_green' type='button' value='导&#12288;入' onclick='toImport();'/>"
+            )
+        }
         toPage();
     });
 
@@ -62,6 +77,17 @@
     function toImport() {
         jboxOpen("<s:url value='/jsres/doctorRecruit/importSchedulingAudit'/>", "导入信息", 500, 220);
     }
+    function toImport2() {
+        jboxOpen("<s:url value='/jsres/doctorRecruit/importSchedulingAudit2'/>", "导入信息", 500, 220);
+    }
+    function toImportCache() {
+        var width = 1200;
+        var height = 800;
+        var url ='<s:url value="/jsres/doctorRecruit/importSchedulingiImport"/>';
+        var iframe ="<iframe name='jbox-message-iframe' id='jbox-message-iframe' width='"+width+"px' height='"+height+"px' marginheight='0' marginwidth='0' frameborder='0' scrolling='auto' src='"+url+"'></iframe>";
+        jboxMessager(iframe,'导入预览',width,height);
+    }
+
     function checkTime() {
         var schStartDate = $("#schStartDate").val();
         var schEndDate = $("#schEndDate").val();
@@ -76,6 +102,8 @@
     <h2 class="underline">排班管理 — 排班安排</h2>
 </div>
 <div class="div_search" style="line-height:normal;">
+    <input type="hidden" id="importCacheFlag" name="importCacheFlag" value="${importCacheFlag}"/>
+    <input type="hidden" id="checkOpen" name="checkOpen" value="${checkOpen}">
     <form id="searchForm">
         <input type="hidden" id="currentPage" name="currentPage"/>
 
@@ -139,9 +167,9 @@
 
         </div>
 
-        <div class="form_btn" >
+        <div class="form_btn" id="form_btn">
             <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
-            <input class="btn_green" type="button" value="导&#12288;入" onclick="toImport();"/>
+            <input class="btn_green" type="button" value="导&#12288;入" onclick="toImport2();"/>
         </div>
 
 
