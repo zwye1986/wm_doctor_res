@@ -1354,9 +1354,11 @@ public class JswjwWxTeacherController extends GeneralController {
 //		resultMap.put("doctorFlow",docFlow);
 		
 		Map<String,String> userInfoMap = new HashMap<>();
-		userInfoMap.put("schStartDate",schArrangeResult.getSchStartDate());
-		userInfoMap.put("schEndDate",schArrangeResult.getSchEndDate());
-		userInfoMap.put("schDeptName",schArrangeResult.getSchDeptName());
+		if(schArrangeResult!=null){
+			userInfoMap.put("schStartDate",schArrangeResult.getSchStartDate());
+			userInfoMap.put("schEndDate",schArrangeResult.getSchEndDate());
+			userInfoMap.put("schDeptName",schArrangeResult.getSchDeptName());
+		}
 		userInfoMap.put("sessionNumber",doctor.getSessionNumber());
 		userInfoMap.put("doctorName",docUser.getUserName());
 		resultMap.put("userInfoMap",userInfoMap);
@@ -1882,9 +1884,9 @@ public class JswjwWxTeacherController extends GeneralController {
 		}
 		resultMap.put("notAuditNum",count);
 		String finishkey = processFlow+recTypeId+"Finished";
-		resultMap.put("finishNum",processPerMap.get(finishkey));
+		resultMap.put("finishNum",processPerMap!=null? processPerMap.get(finishkey):0);
 		String reqkey = processFlow+recTypeId+"ReqNum";
-		resultMap.put("reqNum",processPerMap.get(reqkey));
+		resultMap.put("reqNum",processPerMap!=null?processPerMap.get(reqkey):0);
 
 		List<Map<String,Object>> resultMapList = new ArrayList<>();
 		if(null != dataList && dataList.size()>0){
