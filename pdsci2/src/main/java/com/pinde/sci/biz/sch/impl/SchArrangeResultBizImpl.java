@@ -12,8 +12,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.core.util.TimeUtil;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
-import com.pinde.sci.biz.res.IResDoctorBiz;
-import com.pinde.sci.biz.res.IResDoctorProcessBiz;
+import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.ICfgBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
@@ -151,6 +150,9 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	private SysOrgMapper orgMapper;
 	@Autowired
 	private SysDeptExtMapper sysDeptExtMapper;
+
+	@Autowired
+	private IResRecBiz resRecBiz;
 
 	private static Logger logger = LoggerFactory.getLogger(SchArrangeResultBizImpl.class);
 
@@ -1901,6 +1903,97 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	@Override
 	public List<Map<String,Object>> searchDocResultsListNew(Map<String,Object> paramMap){
 		return resultExtMapper.searchDocResultsListNew(paramMap);
+	}
+
+	@Override
+	public Map<String,Map<String, BigDecimal>> getScoreByDoctorIds(List<String> doctorFlowList) {
+		Map<String,Map<String, BigDecimal>> result = new HashMap<>();
+		String ll = "thryScore";
+		String jn = "killScore";
+		if (CollectionUtil.isEmpty(doctorFlowList)) {
+			return result;
+		}
+		List<ResSchProcessExpress> resSchProcessExpresses = schProcessExpressMapper.listByDoctorList(doctorFlowList);
+		if (CollectionUtil.isEmpty(resSchProcessExpresses)) {
+			Map<String, BigDecimal> itemMap = new HashMap<>();
+			for (String doctorFlow : doctorFlowList) {
+				itemMap = new HashMap<>();
+				itemMap.put(ll,new BigDecimal("0"));
+				itemMap.put(jn,new BigDecimal("0"));
+				result.put(doctorFlow,itemMap);
+			}
+			return result;
+		}
+		Map<String, List<ResSchProcessExpress>> expMap = resSchProcessExpresses.stream().collect(Collectors.groupingBy(ResSchProcessExpress::getOperUserFlow));
+		Map<String, BigDecimal> itemMap = new HashMap<>();
+		for (String doctorFlow : doctorFlowList) {
+			if (StringUtils.isEmpty(doctorFlow)) {
+				continue;
+			}
+			itemMap = new HashMap<>();
+			itemMap.put(ll,new BigDecimal("0"));
+			itemMap.put(jn,new BigDecimal("0"));
+			List<ResSchProcessExpress> itemList = expMap.get(doctorFlow);
+			if (CollectionUtil.isEmpty(itemList)) {
+				result.put(doctorFlow,itemMap);
+				continue;
+			}
+			itemMap = new HashMap<>();
+			BigDecimal lilunScore = new BigDecimal("0");
+			int llCount = 0;
+			itemMap.put(ll,new BigDecimal("0"));
+			BigDecimal jinengScore = new BigDecimal("0");
+			int jnCount = 0;
+			itemMap.put(jn,new BigDecimal("0"));
+			for (ResSchProcessExpress item : itemList) {
+				String recContent = item.getRecContent();
+				if (StringUtils.isEmpty(recContent)) {
+					continue;
+				}
+				Map<String, Object> stringObjectMap = resRecBiz.parseRecContent(recContent);
+				if (CollectionUtil.isEmpty(stringObjectMap)) {
+					continue;
+				}
+				//理论成绩
+				Object theoreResult = stringObjectMap.get("theoreResult");
+				if (ObjectUtil.isNotEmpty(theoreResult)) {
+					try{
+						BigDecimal bigDecimal = new BigDecimal(String.valueOf(theoreResult));
+						lilunScore = lilunScore.add(bigDecimal);
+						llCount++;
+					}catch (Exception e) {
+
+					}
+				}
+				//技能成绩
+				Object score = stringObjectMap.get("score");
+				if (ObjectUtil.isNotEmpty(score)) {
+					try{
+						BigDecimal bigDecimal = new BigDecimal(String.valueOf(score));
+						jinengScore = jinengScore.add(bigDecimal);
+						jnCount++;
+					}catch (Exception e) {
+
+					}
+				}
+			}
+			if (llCount>0){
+				BigDecimal divide = lilunScore.divide(new BigDecimal(llCount), 2, BigDecimal.ROUND_HALF_DOWN);
+				itemMap.put(ll,divide);
+			}
+			if (jnCount>0){
+				BigDecimal divide = jinengScore.divide(new BigDecimal(jnCount), 2, BigDecimal.ROUND_HALF_DOWN);
+				itemMap.put(jn,divide);
+			}
+			if (itemMap.get(ll).compareTo(new BigDecimal("0"))<=0) {
+				itemMap.put(ll,new BigDecimal("0"));
+			}
+			if (itemMap.get(jn).compareTo(new BigDecimal("0"))<=0) {
+				itemMap.put(jn,new BigDecimal("0"));
+			}
+			result.put(doctorFlow,itemMap);
+		}
+		return result;
 	}
 
 	@Override

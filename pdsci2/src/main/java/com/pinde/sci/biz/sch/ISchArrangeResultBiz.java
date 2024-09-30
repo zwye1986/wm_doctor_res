@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
@@ -205,6 +206,8 @@ public interface ISchArrangeResultBiz {
 	 * 医师轮转成绩查询江苏西医优化采用此方法
 	 */
 	List<Map<String,Object>> searchDocResultsListNew(Map<String,Object> paramMap);
+
+	Map<String,Map<String, BigDecimal>> getScoreByDoctorIds(List<String> doctorFlowList);
 
 	List<ResOutOfficeLock> searchDocErrorResultsList(Map<String,Object> paramMap) throws ParseException;
 

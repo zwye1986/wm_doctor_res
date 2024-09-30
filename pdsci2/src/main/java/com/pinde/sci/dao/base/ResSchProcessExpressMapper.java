@@ -36,4 +36,6 @@ public interface ResSchProcessExpressMapper {
     int updateByPrimaryKeyWithBLOBs(ResSchProcessExpress record);
 
     int updateByPrimaryKey(ResSchProcessExpress record);
+
+    List<ResSchProcessExpress> listByDoctorList(@Param("doctorFlowList")List<String> doctorFlowList);
 }

@@ -478,6 +478,8 @@
                 <th style="width:8%;">培训专业</th>
                 <th style="width:8%;">年级</th>
                 <th style="width:12%;">结业考核年份</th>
+                <th style="width:12%;">理论成绩</th>
+                <th style="width:12%;">技能成绩</th>
                 <th style="width:8%;">操作</th>
             </tr>
             <c:forEach var="docResults" items="${docResultsList}">
@@ -489,6 +491,8 @@
                     <td>${docResults.trainingSpeName}</td>
                     <td>${docResults.sessionNumber}</td>
                     <td>${docResults.graduationYear}</td>
+                    <td>${doctorScore[docResults.doctorFlow].thryScore}</td>
+                    <td>${doctorScore[docResults.doctorFlow].killScore}</td>
                     <td style="text-align: center;padding: 0px">
                         <a style="cursor: pointer"
                            onclick="loadDetail('${docResults.doctorFlow}')"

@@ -1,7 +1,9 @@
 package com.pinde.sci.ctrl.jsres;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.poi.word.WordUtil;
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
@@ -45,6 +47,7 @@ import liquibase.pro.packaged.E;
 import liquibase.pro.packaged.S;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hdf.extractor.WordDocument;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
@@ -65,6 +68,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletContext;
 import javax.servlet.http.*;
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -74,6 +78,7 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/jsres/doctorRecruit")
@@ -1752,6 +1757,13 @@ public class JsResDoctorRecruitController extends GeneralController {
 
 		logger.info("出科查询的参数：kzrFlow:{}", JSON.toJSONString(paramMap));
 		List<Map<String,Object>> docResultsList = schArrangeResultBiz.searchDocResultsListNew(paramMap);
+		//TODO::理论成绩 docResultsList
+		model.addAttribute("doctorScore",new HashMap<>());
+		if (CollectionUtil.isNotEmpty(docResultsList)) {
+			List<String> doctorFlow = docResultsList.stream().map(e -> (String)e.get("doctorFlow")).collect(Collectors.toList());
+			Map<String, Map<String, BigDecimal>> doctorScore = schArrangeResultBiz.getScoreByDoctorIds(doctorFlow);
+			model.addAttribute("doctorScore",doctorScore);
+		}
 		model.addAttribute("datas",datas);
 		model.addAttribute("docResultsList",docResultsList);
 		return "jsres/hospital/cycleResults2";
@@ -1965,6 +1977,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 			Map<String,String> MiniFlowMap = new HashMap<>();
 			Map<String,String> AfterFlowMap = new HashMap<>();
 			Map<String,String> AfterSummFlowMap = new HashMap<>();
+			String killScore = "0";
+			String thryScore = "0";
 			if(arrResultList!=null&&arrResultList.size()>0){
 				for(SchArrangeResult schArrangeResult:arrResultList){
 					String resultFlow = schArrangeResult.getResultFlow();
@@ -2008,6 +2022,31 @@ public class JsResDoctorRecruitController extends GeneralController {
 					}
 				}
 			}
+			//处理平均分
+			BigDecimal lilun = new BigDecimal("0");
+			int lilunCount = 0;
+			BigDecimal jineng = new BigDecimal("0");
+			int jinengCount = 0;
+			if (CollectionUtil.isNotEmpty(skillMap)) {
+				for (String processFlow : skillMap.keySet()) {
+					try {
+						Map<String, Object> content = (Map<String,Object>)skillMap.get(processFlow);
+						String ll = (String)content.get("theoreResult");
+						String jn = (String)content.get("score");
+						if (StringUtils.isNotEmpty(ll)) {
+							lilun = lilun.add(new BigDecimal(ll));
+							lilunCount ++;
+						}
+						if (StringUtils.isNotEmpty(jn)) {
+							jineng = jineng.add(new BigDecimal(jn));
+							jinengCount++;
+						}
+
+					}catch (Exception e) {
+
+					}
+				}
+			}
 			model.addAttribute("resultMap",resultMap);
 			model.addAttribute("skillMap",skillMap);
 			model.addAttribute("DOPSFlowMap",DOPSFlowMap);
@@ -2015,6 +2054,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 			model.addAttribute("AfterFlowMap",AfterFlowMap);
 			model.addAttribute("AfterSummFlowMap",AfterSummFlowMap);
 			model.addAttribute("deptMap",deptMap);
+			model.addAttribute("thrAvaScore",lilunCount>0? lilun.divide(new BigDecimal(lilunCount),2,BigDecimal.ROUND_HALF_DOWN):0);
+			model.addAttribute("killAvaScore",jinengCount>0? jineng.divide(new BigDecimal(jinengCount),2,BigDecimal.ROUND_HALF_DOWN):0);
 		}
 		return "jsres/hospital/cycleDetails2";
 	}
@@ -3794,6 +3835,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 		}
 		return "jsres/hospital/schedulingAudit";
 	}
+
+
 
 	//排班审核  助理全科
 	@RequestMapping(value = "/schedulingAuditAcc")

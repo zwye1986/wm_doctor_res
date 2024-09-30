@@ -133,7 +133,7 @@
                 <%--<td style="text-align: center;padding: 0px">${resultMap[result.resultFlow].schScore}</td>--%>
                 <td style="text-align: center;padding: 0px">
                 <c:if test="${ not empty skillMap[key].score}">
-                    <a style="cursor: pointer" onclick="downloadCkkPaper('${key}');">${empty skillMap[key].theoreResult?resultMap[result.resultFlow].schScore:skillMap[key].theoreResult}</a>
+                    <a style="cursor: pointer" onclick="downloadCkkPaper('${key}');" class="theoreResult_id">${empty skillMap[key].theoreResult?resultMap[result.resultFlow].schScore:skillMap[key].theoreResult}</a>
                 </c:if>
                 </td>
                 <td style="text-align: center;padding: 0px">${skillMap[key].skillName}</td>
@@ -160,6 +160,20 @@
                 </td>
             </tr>
         </c:forEach>
+        <c:if test="${!empty arrResultList}">
+            <tr>
+                <td style="text-align: center;padding: 0px">总计</td>
+                <td style="text-align: center;padding: 0px;color: orangered">--</td>
+                <td style="text-align: center;padding: 0px;color: orangered">--</td>
+                <td style="text-align: center;padding: 0px">${thrAvaScore}</td>
+                <td style="text-align: center;padding: 0px;color: orangered">--</td>
+                <td style="text-align: center;padding: 0px">${killAvaScore}</td>
+                <td style="text-align: center;padding: 0px;color: orangered">--</td>
+                <td style="text-align: center;padding: 0px;color: orangered">--</td>
+                <td style="text-align: center;padding: 0px;color: orangered">--</td>
+                <td style="text-align: center;padding: 0px;color: orangered">--</td>
+            </tr>
+        </c:if>
         <c:if test="${empty arrResultList}">
             <tr><td colspan="20" style="text-align: center">暂无轮转计划!</td></tr>
         </c:if>
