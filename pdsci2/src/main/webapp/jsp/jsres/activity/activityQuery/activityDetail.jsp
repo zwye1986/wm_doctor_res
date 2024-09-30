@@ -50,12 +50,28 @@
                 },null,true);
             });
         }
+
+        function save(activityStatus,submitRole,role) {
+            var url = "<s:url value='/jsres/activityQuery/saveActivityForAdmin'/>?activityStatus="+activityStatus+"&submitRole="+submitRole+"&role="+role;
+            jboxStartLoading();
+             jboxSubmit($('#addForm'),url,function(resp) {
+                 jboxEndLoading();
+                 if(resp=='${GlobalConstant.SAVE_SUCCESSED}') {
+                     window.parent.toPage(${currentPage});
+                     setTimeout(function(){
+                         jboxClose();
+                     },2000);
+                 }
+             }, null, true);
+        }
     </script>
 </head>
 <body>
 <div class="mainright">
     <div class="basic" style="max-height: 435px;overflow: auto;">
         <form id="addForm">
+            <input name="activityFlow" type="hidden" value="${activity.activityFlow}"  />
+            <input name="fileFlow" type="hidden" value="${activity.fileFlow}"  />
             <table class="grid" style="width:100%; margin-bottom: 10px; margin-top: 10px;">
                 <tr>
                     <th style="text-align: right;width: 88px;">活动名称：</th>
@@ -76,7 +92,15 @@
                 <tr>
                     <th style="text-align: right;">活动形式：</th>
                     <td style="width: 273px;margin: 0 5px;">
-                        ${activity.activityTypeName}
+                        <c:if test="${roleFlag ne 'local'}">${activity.activityTypeName}</c:if>
+                        <c:if test="${roleFlag eq 'local'}">
+                            <select name="activityTypeId" <c:if test="${activity.activityStatus eq 'pass'}">disabled="disabled"</c:if> style="width: 273px;margin: 0 5px;" class="select validate[required]">
+                                <option value="">请选择</option>
+                                <c:forEach items="${activityTypeEnumList}" var="a">
+                                    <option value="${a.id}" ${(activity.activityTypeId eq a.id) ?'selected':''}>${a.name}</option>
+                                </c:forEach>
+                            </select>
+                        </c:if>
                     </td>
                     <th style="text-align: right;">所在科室：</th>
                     <td style="width: 273px;margin: 0 5px;">
@@ -165,8 +189,9 @@
         </form>
         <p style="text-align: center;margin-top: 10px">
             <c:if test="${param.roleFlag eq 'local'}">
-                <input type="button" onclick="effectiveInfo('Y');"id="rk" style="display: ${activity.isEffective eq 'Y'?'none':''}" class="btn_green" value="认&#12288;可"/>&#12288;
-                <input type="button" onclick="effectiveInfo('N');"id="brk" style="display: ${activity.isEffective eq 'N'?'none':''}" class="btn_green" value="不认可"/>&#12288;
+<%--                <input type="button" onclick="effectiveInfo('Y');"id="rk" style="display: ${activity.isEffective eq 'Y'?'none':''}" class="btn_green" value="认&#12288;可"/>&#12288;--%>
+<%--                <input type="button" onclick="effectiveInfo('N');"id="brk" style="display: ${activity.isEffective eq 'N'?'none':''}" class="btn_green" value="不认可"/>&#12288;--%>
+                <input type="button" onclick="save('${activity.activityStatus}','${activity.submitRole}','${role}');" class="btn_green" value="保&#12288;存"/>
             </c:if>
             <input type="button" onclick="jboxClose();" class="btn_green" value="关&#12288;闭"/>
         </p>

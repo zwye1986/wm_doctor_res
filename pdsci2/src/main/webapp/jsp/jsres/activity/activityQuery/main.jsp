@@ -65,7 +65,7 @@
 		};
 	})(jQuery);
 $(document).ready(function(){
-	// toPage(1);
+	toPage(1);
 	$("#ksmc").likeSearchInit({
 		clickActive:function(flow){
 			$("."+flow).show();

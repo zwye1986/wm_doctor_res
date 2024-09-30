@@ -110,4 +110,6 @@ public interface IJsResActivityBiz {
     String editActivityFiles(String activityFlow, List<MultipartFile> fileList, String[] fileFlow);
 
     String editActivityFiles(String activityFlow, Map<String,List<MultipartFile>> fileMap, String[] fileFlow);
+
+    String editActivityForAdmin(TeachingActivityInfo activityInfo);
 }

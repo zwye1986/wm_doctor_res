@@ -498,11 +498,11 @@ function lookSearchFile(activityFlow,role) {
 						</c:if>
 
 						<c:if test="${param.roleFlag eq 'local' and b.IS_EFFECTIVE eq 'Y'}">
-						<a style="cursor:pointer" class='${b.activityFlow}' onclick="showInfo('${b.activityFlow}','${param.roleFlag}')">查看</a>&nbsp<font style="color: red" >认可</font>
-								<a style="cursor:pointer"  onclick="effectiveInfo2('${b.activityFlow}','${param.roleFlag}','N','${b.IS_EFFECTIVE}',this,'${currentPage}')" id="brk" class="brk" style="display: ${activity.isEffective eq 'N'?'none':''}" >不认可</a>
+						<a style="cursor:pointer" class='${b.activityFlow}' onclick="showInfo('${b.activityFlow}','${param.roleFlag}')">编辑</a>
+							&nbsp<font style="color: red" >认可</font><a style="cursor:pointer"  onclick="effectiveInfo2('${b.activityFlow}','${param.roleFlag}','N','${b.IS_EFFECTIVE}',this,'${currentPage}')" id="brk" class="brk" style="display: ${activity.isEffective eq 'N'?'none':''}" >不认可</a>
 						</c:if>
 						<c:if test="${param.roleFlag eq 'local' and b.IS_EFFECTIVE eq 'N'}">
-							<a style="cursor:pointer" class='${b.activityFlow}' onclick="showInfo('${b.activityFlow}','${param.roleFlag}')">查看</a>
+							<a style="cursor:pointer" class='${b.activityFlow}' onclick="showInfo('${b.activityFlow}','${param.roleFlag}')">编辑</a>
 							<a style="cursor:pointer"  onclick="effectiveInfo('${b.activityFlow}','${param.roleFlag}','Y','${b.IS_EFFECTIVE}',this)" id="rk"  style="display: ${activity.isEffective eq 'Y'?'none':''}"  title="认可该活动" >认可</a>&nbsp<font title="${b.reasonForDisagreement}" style="color: red">不认可</font>
 						</c:if>
 						<c:if test="${(param.roleFlag eq 'teach' or param.roleFlag eq 'head' or param.roleFlag eq 'secretary') and b.startTime <= nowDate}">

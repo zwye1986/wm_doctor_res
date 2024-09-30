@@ -599,9 +599,9 @@ public class ResActivityBizImpl implements IResActivityBiz {
 			} else if ("Seretary".equals(roleId)) {
 				userRoleList.add("res_secretary_role_flow");
 			} else if ("TeachingHead".equals(roleId)) {
-				userRoleList.add("res_secretary_role_flow");
+				userRoleList.add("res_teaching_head_role_flow");
 			} else if ("TeachingSeretary".equals(roleId)) {
-				userRoleList.add("res_secretary_role_flow");
+				userRoleList.add("res_teaching_secretary_role_flow");
 			}
 			criteria.andCfgCodeIn(userRoleList);
 			SysCfg sysCfg = sysCfgMapper.selectByExample(example).get(0);     //获取该用户当前角色信息
@@ -630,6 +630,10 @@ public class ResActivityBizImpl implements IResActivityBiz {
 					subName=subName+"Head";
 				}else if("科秘角色".equals(actCfg.getSubRoleName())){
 					subName=subName+"Seretary";
+				}else if("教学主任角色".equals(actCfg.getSubRoleName())){
+					subName=subName+"TeachingHead";
+				}else if("教学秘书角色".equals(actCfg.getSubRoleName())){
+					subName=subName+"TeachingSeretary";
 				}
 			}
 			if(("undefined".equals(info.getSubmitRole())||StringUtil.isBlank(info.getSubmitRole()))&&(!subName.contains(roleId))){
