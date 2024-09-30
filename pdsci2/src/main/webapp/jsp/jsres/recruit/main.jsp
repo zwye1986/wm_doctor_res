@@ -78,6 +78,7 @@ $(document).ready(function(){
 
 	showProve();
 	toPage(1);
+	changeTrainSpes("");
 });
 function showProve()
 {

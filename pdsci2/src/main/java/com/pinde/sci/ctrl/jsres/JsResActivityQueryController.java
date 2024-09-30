@@ -19,6 +19,7 @@ import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.TeachingActivitySpeakerMapper;
+import com.pinde.sci.enums.sch.ActivityTypeEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
@@ -323,6 +324,7 @@ public class JsResActivityQueryController extends GeneralController {
 			activityInfo.setIsLook(GlobalConstant.FLAG_Y);
 			activityBiz.saveActivity(activityInfo);
 		}
+		model.addAttribute("roleFlag", roleFlag);
 		return "jsres/activity/activityQuery/activityDetail";
 	}
 	@RequestMapping(value="/delActivity")
@@ -512,14 +514,14 @@ public class JsResActivityQueryController extends GeneralController {
 		String editZjr="";
 		if (StringUtil.isNotBlank(scanNum) && Integer.parseInt(scanNum)>0){
 			JsresPowerCfg teachCfg = jsResPowerCfgBiz.read("jsres_" + GlobalContext.getCurrentUser().getOrgFlow() + "_activity_teach");
-			if (null !=teachCfg && teachCfg.getCfgValue().equals(GlobalConstant.FLAG_Y)){
+			if (null !=teachCfg && GlobalConstant.FLAG_Y.equals(teachCfg.getCfgValue())){
 				editTeach=GlobalConstant.FLAG_Y;
 			}else {
 				editTeach=GlobalConstant.FLAG_N;
 			}
 			model.addAttribute("editTeach",editTeach);
 			JsresPowerCfg zjrCfg = jsResPowerCfgBiz.read("jsres_" + GlobalContext.getCurrentUser().getOrgFlow() + "_activity_kzr");
-			if (null !=zjrCfg && zjrCfg.getCfgValue().equals(GlobalConstant.FLAG_Y)){
+			if (null !=zjrCfg && GlobalConstant.FLAG_Y.equals(zjrCfg.getCfgValue())){
 				editZjr=GlobalConstant.FLAG_Y;
 
 			}else {
@@ -642,6 +644,15 @@ public class JsResActivityQueryController extends GeneralController {
 			fileMap.put(s,fileList);
 		}
 		return activityBiz.editActivityNew2(activity,"N", fileMap,data,fileFlow);
+	}
+
+	@RequestMapping(value="/saveActivityForAdmin")
+	@ResponseBody
+	public String saveActivityForAdmin(TeachingActivityInfo activity) throws ParseException {
+		TeachingActivityInfo activityInfo = activityBiz.readActivityInfo(activity.getActivityFlow());
+		activityInfo.setActivityTypeId(activity.getActivityTypeId());
+		activityInfo.setActivityTypeName(ActivityTypeEnum.getNameById(activity.getActivityTypeId()));
+		return activityBiz.editActivityForAdmin(activityInfo);
 	}
 
 	@RequestMapping(value="/saveActivityFile")

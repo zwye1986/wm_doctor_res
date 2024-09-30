@@ -33,6 +33,7 @@ $(document).ready(function(){
 	</c:if>
 	</c:forEach>
 	toPage(1);
+	changeTrainSpes();
 });
 function checkAll(obj){
 	var f=false;

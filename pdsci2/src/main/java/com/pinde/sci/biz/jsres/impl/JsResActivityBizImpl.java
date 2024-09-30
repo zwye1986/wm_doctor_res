@@ -1158,6 +1158,16 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 		return GlobalConstant.SAVE_SUCCESSED;
 	}
 
+	@Override
+	public String editActivityForAdmin(TeachingActivityInfo activityInfo) {
+		GeneralMethod.setRecordInfo(activityInfo,false);
+		int i = activityInfoMapper.updateByPrimaryKey(activityInfo);
+		if (i < 1) {
+			return GlobalConstant.SAVE_FAIL;
+		}
+		return GlobalConstant.SAVE_SUCCESSED;
+	}
+
 	private void saveActivityFileNew(String productFlow, List<MultipartFile> fileList, String[] fileFlow) {
 	/*	//删除旧记录
 		List<String> fileFlows = null;

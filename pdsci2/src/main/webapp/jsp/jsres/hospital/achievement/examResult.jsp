@@ -25,22 +25,7 @@
         </c:if>
         </c:forEach>
 
-        var trainCategoryid="${param.catSpeId}";
-        if(trainCategoryid =="${dictTypeEnumDoctorTrainingSpe.id}"){
-            $("#derateFlagLabel").show();
-        }else{
-            $("#derateFlag").attr("checked",false);
-            $("#derateFlagLabel").hide();
-        }
-        if(trainCategoryid==""){
-            $("select[name=speId] option[value != '']").remove();
-            return false;
-        }
-        $("select[name=speId] option[value != '']").remove();
-        $("#"+trainCategoryid+"_select").find("option").each(function(){
-            $(this).clone().appendTo($("#speId"));
-        });
-        return false;
+        changeTrainSpes();
     });
     function checkAll(obj){
         var f=false;

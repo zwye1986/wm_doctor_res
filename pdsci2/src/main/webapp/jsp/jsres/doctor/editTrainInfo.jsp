@@ -508,6 +508,15 @@
 			});
 		}
 
+		function showConfirmMsg(msg) {
+			var doctorType = "${resDoctor.doctorTypeId}";
+			if (doctorType === "Graduate" && msg !== "Bachelor" && msg !== "") {
+				$("#confirmId").removeAttr("hidden");
+			} else {
+				$("#confirmId").attr("hidden", "hidden");
+			}
+		}
+
 	</script>
 </head>
 
@@ -550,7 +559,7 @@
 				<tr>
 					<th><span class="red">*</span>当前学位类别：</th>
 					<td>
-						<select name="currDegreeCategoryId" id="currDegreeCategoryId" class="select validate[required]" style="width: 160px;">
+						<select name="currDegreeCategoryId" id="currDegreeCategoryId" onchange="showConfirmMsg(this.value);" class="select validate[required]" style="width: 160px;">
 							<option value="">请选择</option>
 							<c:forEach items="${jsResDegreeCategoryEnumList}" var="degreeCategory">
 								<option value="${degreeCategory.id}" ${doctorRecruit.currDegreeCategoryId eq degreeCategory.id?'selected':''}>${degreeCategory.name}</option>
@@ -558,7 +567,7 @@
 						</select>
 					</td>
 					<th style="${auditNotPassed?'color: red':'' }"><c:if test="${not empty doctorRecruit.auditStatusName }">审核状态：</c:if></th>
-					<td class="${auditNotPassed?'red':'' }">${doctorRecruit.auditStatusName }</td>
+					<td class="${auditNotPassed?'red':'' }">${doctorRecruit.auditStatusName }<span id="confirmId" hidden class="red">当前人员类型是在校专硕，学位类别一般为学士，请再三确认！</span></td>
 				</tr>
 				</c:if>
 				<tr>
