@@ -280,7 +280,7 @@ function tabClick(tag,type){
 
 			<div class="form_item">
 				<div class="form_label">年&#12288;&#12288;级：</div>
-				<div class="form_content">
+				<div class="form_content" style="display: block">
 					<input type="text" id="sessionNumber" name="sessionNumber" value="${pdfn:getCurrYearByMonth()}" class="input indexNum" readonly="readonly"/>
 				</div>
 			</div>
