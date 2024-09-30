@@ -183,7 +183,7 @@ function exportRecruitList(){
 			 </div>
 			 <div class="form_item">
 				<div class="form_label">年级：</div>
-				<div class="form_content">
+				<div class="form_content" style="display: block">
 					<input type="text" id="sessionNumber" name="sessionNumber" value="${param.sessionNumber}" class="input indexNum" readonly="readonly"/>
 				</div>
 			 </div>
