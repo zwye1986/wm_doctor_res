@@ -54,7 +54,7 @@
       }
     }
     function logout(){
-      window.location.href="<s:url value='/logout.do'/>";
+      window.location.href="<s:url value='/logout'/>";
     }
     function doClose(){
       window.opener = null;

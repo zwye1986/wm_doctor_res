@@ -311,6 +311,17 @@ $(document).ready(function(){
 			<input type="hidden" name="online_service_qq2_desc"  value="客服QQ2">		
 	</td>
 </tr>
+
+<tr>
+	<td style="text-align: right" width="100px">客服QQ3：</td>
+	<td style="text-align: left;padding-left: 5px" width="200px">
+			<input type="hidden" name="cfgCode" value="online_service_qq3">
+			<input type="text" class="xltext" name="online_service_qq3"  value="${sysCfgMap['online_service_qq3']}" style="width: 400px;"/>
+			<input type="hidden" name="online_service_qq3_ws_id"  value="sys">
+			<input type="hidden" name="online_service_qq3_desc"  value="客服QQ3">
+	</td>
+</tr>
+
 <tr>
 	<td style="text-align: right" width="100px">客服电话1：</td>
 	<td style="text-align: left;padding-left: 5px" width="200px">
@@ -329,6 +340,17 @@ $(document).ready(function(){
 			<input type="hidden" name="online_service_phone2_desc"  value="客服电话2">		
 	</td>
 </tr>
+
+<tr>
+	<td style="text-align: right" width="100px">客服电话3：</td>
+	<td style="text-align: left;padding-left: 5px" width="200px">
+			<input type="hidden" name="cfgCode" value="online_service_phone3">
+			<input type="text" class="xltext" name="online_service_phone3"  value="${sysCfgMap['online_service_phone3']}" style="width: 400px;"/>
+			<input type="hidden" name="online_service_phone3_ws_id"  value="sys">
+			<input type="hidden" name="online_service_phone3_desc"  value="客服电话3">
+	</td>
+</tr>
+
 </table>
 </fieldset>
 <fieldset>

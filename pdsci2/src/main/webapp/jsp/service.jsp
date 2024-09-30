@@ -1,35 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-	<!-- <style type="text/css">
-		/* suspend */
-		.suspend{width:40px;height:198px;position:fixed;top:2px;right:0;overflow:hidden;z-index:9999;}
-		.suspend dl{width:120px;height:198px;border-radius:25px 0 0 25px;padding-left:40px;box-shadow:0 0 5px #e4e8ec;}
-		.suspend dl dt{width:40px;height:198px;background:url(<s:url value='/css/skin/${skinPath}/images/suspend.png'/>);position:absolute;top:0;left:0;cursor:pointer;}
-		.suspend dl dd.suspendQQ{width:120px;height:85px;background:#ffffff;}
-		.suspend dl dd.suspendQQ a{width:120px;height:85px;display:block;background:url(<s:url value='/css/skin/${skinPath}/images/suspend.png'/>) -40px 0;overflow:hidden;}
-		.suspend dl dd.suspendTel{width:120px;height:112px;background:#ffffff;border-top:1px solid #e4e8ec;}
-		.suspend dl dd.suspendTel a{width:120px;height:112px;display:block;background:url(<s:url value='/css/skin/${skinPath}/images/suspend.png'/>) -40px -86px;overflow:hidden;}
-		* html .suspend{position:absolute;left:expression(eval(document.documentElement.scrollRight));top:expression(eval(document.documentElement.scrollTop+200))}
-	</style>
-	<div class="suspend">
-		<dl>
-			<dt class="IE6PNG"></dt>
-			<dd class="suspendQQ"><a href="javascript:void(0);"></a></dd>
-			<dd class="suspendTel"><a href="javascript:void(0);"></a></dd>
-		</dl>
-	</div>
-	<script type="text/javascript">           
-	$(function(){
-		$(".suspend").mouseover(function() {
-	        $(this).stop();
-	        $(this).animate({width: 160}, 400);
-	    });
-	    $(".suspend").mouseout(function() {
-	        $(this).stop();
-	        $(this).animate({width: 40}, 400);
-	    });
-	});
-	</script> -->
 	<link rel="stylesheet" type="text/css" href="<s:url value='/jsp/jsres/css/exam.css'/>?v=${applicationScope.sysCfgMap['sys_version']}"></link>
 	<script>
         function changeWenda() {
@@ -39,7 +8,6 @@
 	</script>
 	<style>
 		@charset "utf-8";
-		
 		/* cus_ser */
 		#cus_ser{z-index:9999;width:32px;height:auto;position:fixed;right:0px;color:#FFF;top:200px;overflow:hidden;}
 		*html #cus_ser{position:absolute;top:expression(eval(document.documentElement.scrollTop));margin:200px 0 0 0;}
@@ -61,26 +29,56 @@
 		<div class="cus_ser_">
 			<div class="title"></div>
 			<ul>
-				<c:if test="${not empty applicationScope.sysCfgMap['online_service_qq1']}">
-				<li id="zqq"><a href="#">${applicationScope.sysCfgMap['online_service_qq1'] }</a></li>
-				</c:if>
+				<c:choose>
 
-				<c:if test="${not empty applicationScope.sysCfgMap['online_service_qq2']}">
-				<li id="zqq"><a href="#">${applicationScope.sysCfgMap['online_service_qq2'] }</a></li>
-				</c:if>
-				
-				<c:if test="${not empty applicationScope.sysCfgMap['online_service_phone1']}">
-					<c:forEach items="${pdfn:split(applicationScope.sysCfgMap['online_service_phone1'], ',')}" var="phone1">
-						<li id="zphone"><a href="#">${phone1}</a></li>
-					</c:forEach>
-				</c:if>
-				
-				<c:if test="${not empty applicationScope.sysCfgMap['online_service_phone2']}">
-					<c:forEach items="${pdfn:split(applicationScope.sysCfgMap['online_service_phone2'], ',')}" var="phone2">
-						<li id="zphone"><a href="#">${phone2}</a></li>
-					</c:forEach>
-				</c:if>
+					<c:when test="${empty sessionScope.currUser}">
+						<c:if test="${not empty applicationScope.sysCfgMap['online_service_qq3']}">
+							<%-- <li id="zqq"><a href="#">${applicationScope.sysCfgMap['online_service_qq1'] }</a></li> --%>
+							<c:forEach items="${pdfn:split(applicationScope.sysCfgMap['online_service_qq3'], ',')}"
+									   var="qq3">
+								<li id="zqq"><a href="#">${qq3}</a></li>
+							</c:forEach>
+						</c:if>
 
+						<c:if test="${not empty applicationScope.sysCfgMap['online_service_phone3']}">
+							<c:forEach items="${pdfn:split(applicationScope.sysCfgMap['online_service_phone3'], ',')}"
+									   var="phone3">
+								<li id="zphone"><a href="#">${phone3}</a></li>
+							</c:forEach>
+						</c:if>
+					</c:when>
+
+					<c:when test="${sessionScope.currRoleObj.roleFlow eq applicationScope.sysCfgMap['res_global_role_flow']  or sessionScope.currRoleObj.roleFlow eq applicationScope.sysCfgMap['res_admin_role_flow'] }">
+						<c:if test="${not empty applicationScope.sysCfgMap['online_service_qq1']}">
+							<%-- <li id="zqq"><a href="#">${applicationScope.sysCfgMap['online_service_qq1'] }</a></li> --%>
+							<c:forEach items="${pdfn:split(applicationScope.sysCfgMap['online_service_qq1'], ',')}"
+									   var="qq1">
+								<li id="zqq"><a href="#">${qq1}</a></li>
+							</c:forEach>
+						</c:if>
+
+						<c:if test="${not empty applicationScope.sysCfgMap['online_service_phone1']}">
+							<c:forEach items="${pdfn:split(applicationScope.sysCfgMap['online_service_phone1'], ',')}"
+									   var="phone1">
+								<li id="zphone"><a href="#">${phone1}</a></li>
+							</c:forEach>
+						</c:if>
+					</c:when>
+					<c:otherwise>
+						<c:if test="${not empty applicationScope.sysCfgMap['online_service_qq2']}">
+							<c:forEach items="${pdfn:split(applicationScope.sysCfgMap['online_service_qq2'], ',')}"
+									   var="qq2">
+								<li id="zqq"><a href="#">${qq2}</a></li>
+							</c:forEach>
+						</c:if>
+						<c:if test="${not empty applicationScope.sysCfgMap['online_service_phone2']}">
+							<c:forEach items="${pdfn:split(applicationScope.sysCfgMap['online_service_phone2'], ',')}"
+									   var="phone2">
+								<li id="zphone"><a href="#">${phone2}</a></li>
+							</c:forEach>
+						</c:if>
+					</c:otherwise>
+				</c:choose>
 				<li id="wenda"><a onclick="changeWenda()">问答专区</a></li>
 			</ul>
 		</div>

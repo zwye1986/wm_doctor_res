@@ -386,7 +386,7 @@ $(function(){
 									<%--</c:if>--%>
 									<a class="zhuye" href="javascript:home();">主页</a>
 									<%-- <a class="help" href="#">帮助</a>--%>
-									<a class="zhuxiao" href="<s:url value='/logout.do?wsId=${workStationId}'/>">注销</a>
+									<a class="zhuxiao" href="<s:url value='/logout?wsId=${workStationId}'/>">注销</a>
 								</p>
 							</span>
 						</div>
@@ -420,7 +420,7 @@ $(function(){
 											 <%--<li><a href="javascript:goback();"><img src="<s:url value='/css/skin/${skinPath}/images/ht.png'/>" />后退</a></li>--%>
 											 <%--<li><a href="javascript:modPasswd('${sessionScope.currUser.userFlow}',true);"><img src="<s:url value='/css/skin/${skinPath}/images/lock1.png'/>" />修改密码</a></li>--%>
 										 <%--</c:if>--%>
-       		 							 <li><a href="<s:url value='/logout.do?wsId=${workStationId}'/>"><img src="<s:url value='/css/skin/${skinPath}/images/login out.png'/>" />注销</a></li>
+       		 							 <li><a href="<s:url value='/logout?wsId=${workStationId}'/>"><img src="<s:url value='/css/skin/${skinPath}/images/login out.png'/>" />注销</a></li>
       								</ul>  
       								<!--[if lte IE 6]></td></tr></table></a><![endif]-->  
    								 </li>  

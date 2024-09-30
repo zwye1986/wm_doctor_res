@@ -2,7 +2,10 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.MybatisObject;
 
-public class SysRole extends MybatisObject {
+import java.io.Serializable;
+
+public class SysRole implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String roleFlow;
 
     private String roleName;

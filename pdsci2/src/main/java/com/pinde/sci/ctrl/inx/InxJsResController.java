@@ -1174,7 +1174,6 @@ public class InxJsResController extends GeneralController {
         //设置当前用户
         setSessionAttribute(GlobalConstant.CURRENT_USER, user);
         setSessionAttribute("sessionId", GlobalContext.getSession().getId());
-
         String clientIp = ClientIPUtils.getClientIp(request);
 //
 //		//在线用户功能使用
@@ -1232,6 +1231,7 @@ public class InxJsResController extends GeneralController {
                 }
                 GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_ROLE_LIST, currRoleList);
                 String roleFlow = role.getRoleFlow();
+                GlobalContext.setSessionAttribute(GlobalConstant.CURR_ROLE_OBJ, role);
                 //如果拥有带教角色  默认显示带教
                 for (SysUserRole myuserRole : userRoleList) {
                     if (myuserRole.getRoleFlow().equals(InitConfig.getSysCfg("res_teacher_role_flow"))) {
@@ -1335,83 +1335,12 @@ public class InxJsResController extends GeneralController {
         return errorLoginPage;
     }
 
-    private boolean isExternal(String userFlow) {
-        int extNum = externalDeptBiz.getExternalNum(userFlow);
-        return extNum > 0;
-    }
-
     public String getRoleUrl(String roleFlow) {
         if (StringUtil.isNotBlank(roleFlow)) {
             // 当前角色放入session
             SysRole role = roleBiz.read(roleFlow);
             GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_ROLE_NAME, role.getRoleName());
-            if (roleFlow.equals(InitConfig.getSysCfg("res_global_role_flow"))) {//省级部门
-                return "/jsres/manage/global";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_quality_control_role_flow"))) {//质控组
-                return "/jsres/manage/quality";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_institute_role_flow"))) {//研究所
-                return "/jsres/manage/institute";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_qkzx_role_flow"))) {//审核部门之全科中心
-                return "/jsres/manage/province";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_bjw_role_flow"))) {//审核部门之毕教委
-                return "/jsres/manage/province";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_zyglj_role_flow"))) {//审核部门之中医管理局
-                return "/jsres/manage/province";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_university_role_flow"))
-            || roleFlow.equals(InitConfig.getSysCfg("res_university_son_role_flow"))) {//高校管理员ss
-                return "/jsres/manage/university";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_school_role_flow"))) {//学校
-                return "/jsres/manage/school";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_charge_role_flow"))) {//主管部门
-                return "/jsres/manage/charge";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_admin_role_flow"))) {//医院管理员
-                return "/jsres/manage/local";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_hospital_secretary_role_flow"))) {//医院秘书
-                return "/jsres/manage/local";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_head_role_flow"))) {//科主任
-                return "/jsres/kzr/index";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_teaching_head_role_flow"))) {//教学主任
-                return "/jsres/kzr/index";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_secretary_role_flow"))) {//教秘
-                return "/jsres/km/index";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_teaching_secretary_role_flow"))) {//教学秘书
-                return "/jsres/km/index";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_teacher_role_flow"))) {//带教老师
-                return "/jsres/teacher/index";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_responsible_teacher_role_flow"))) {//责任导师
-                return "/res/responsibleTeacher/index";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_doctor_role_flow"))) {//学员
-                return "/jsres/doctor/index";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_nurse_role_flow"))) { //护士
-                return "/res/nurse/index";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_business_role_flow"))) { //商务一组角色
-                return "/jsres/business/index";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_businessTwo_role_flow"))) { //商务二组角色
-                return "/jsres/businessTwo/index";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_maintenance_role_flow"))) {//运维角色
-                return "/jsres/manage/maintenance";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_professionalBase_admin_role_flow"))) {//专业基地管理员
-                return "/jsres/manage/speAdmin";
-            } else if (roleFlow.equals(InitConfig.getSysCfg("res_professionalBase_adminSecretary_role_flow"))) {//专业基地秘书
-                return "/jsres/manage/speAdminSecretary";
-            }else if (roleFlow.equals(InitConfig.getSysCfg("res_management_role_flow"))) {//督导-管理专家
-                return "/jsres/manage/management";
-            }
-            else if (roleFlow.equals(InitConfig.getSysCfg("res_expertLeader_role_flow"))) {//督导-专业专家
-                return "/jsres/manage/expertLeader";
-            }
-            else if (roleFlow.equals(InitConfig.getSysCfg("res_baseExpert_role_flow"))) {//督导-基地专业专家
-                return "/jsres/manage/baseExpert";
-            }  else if (roleFlow.equals(InitConfig.getSysCfg("res_hospitalLeader_role_flow"))) {//督导-评分专家
-                return "/jsres/manage/hospitalLeader";
-            }else if (roleFlow.equals(InitConfig.getSysCfg("res_phyAss_role_flow"))) {//师资-医师协会
-                return "/jsres/manage/phyAss";
-            }
-            // 外省基地管理员角色
-            else if (roleFlow.equals(InitConfig.getSysCfg("res_test"))) {
-                return "/jsres/manage/baseQueryStudent";
-            }
-
+            return RolePathMapper.getPath(roleFlow);
         }
         return "";
     }
@@ -1426,25 +1355,6 @@ public class InxJsResController extends GeneralController {
     @RequestMapping("/eidtPassword")
     public String eidtPassword(String userCode, String oldUserPasswd, String ideentityCheck, String userPasswd) {
         return inxBiz.eidtPassword(userCode, oldUserPasswd, ideentityCheck, userPasswd);
-    }
-
-    /**
-     * 基地权限设置
-     *
-     * @param orgFlow
-     * @return
-     */
-    private String orgPermission(String orgFlow) {
-        if (StringUtil.isNotBlank(orgFlow)) {
-            String cfgCode = "jsres_" + orgFlow + "_guocheng";
-            JsresPowerCfg cfg = jsResPowerCfgBiz.read(cfgCode);
-            if (cfg != null) {
-                if (GlobalConstant.FLAG_Y.equals(cfg.getCfgValue())) {
-                    return GlobalConstant.FLAG_Y;
-                }
-            }
-        }
-        return GlobalConstant.FLAG_N;
     }
 
     @RequestMapping("/logout")
@@ -1501,22 +1411,11 @@ public class InxJsResController extends GeneralController {
         if (sysUsers != null && sysUsers.size() > 0) {
             return GlobalConstant.USER_PHONE_REPEAT;
         }
-        // 根据手机号码取session中的发送验证码时间
-        Long sendTime = (Long) getSessionAttribute(userPhone);
-        // 发送时间不为空则判断是否已经超过一分钟
-//        if (null != sendTime && 0 < sendTime) {
-//            Long min = (System.currentTimeMillis() - sendTime) / (1000 * 60);
-//            // 不足一分钟
-//            if (min < 1) {
-//                return "请不要频繁发送短信验证码";
-//            }
-//        }
         boolean b = inxBiz.checkVerificationTime(userPhone);
         if (b == true) {
            return "请不要频繁发送短信验证码";
         }
         SMSUtil smsUtil = new SMSUtil(userPhone);
-//        int code = (int) ((Math.random() * 9 + 1) * 1000);
         int code = (int) ((Math.random() * 9 + 1) * 100000);
         SysSmsLog sSmsRecord = smsUtil.send("10001", GlobalConstant.JSRES_TEMPLATE, "R101", code);
         String currDateTime = DateUtil.getCurrDateTime2();
