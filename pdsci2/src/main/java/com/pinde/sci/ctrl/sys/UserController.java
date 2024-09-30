@@ -374,6 +374,8 @@ public class UserController extends GeneralController{
 
 	@RequestMapping(value={"/save"},method=RequestMethod.POST)
 	public @ResponseBody String save(SysUser user,String[] mulDeptFlow,String roleFlow,MultipartFile file,String isRe){
+		uniformUser(user);
+
 		//新增用户是判断
 		if(StringUtil.isBlank(user.getUserFlow())){
 			//判断用户id是否重复
@@ -908,6 +910,10 @@ public class UserController extends GeneralController{
 		return GlobalConstant.SAVE_SUCCESSED;
 	}
 
+	/**
+	 * 去掉名字和账号前后的空格
+	 * @param user
+	 */
 	private void uniformUser(SysUser user) {
 		if(user == null) {
 			return;
