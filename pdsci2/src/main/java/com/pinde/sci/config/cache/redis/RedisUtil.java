@@ -7,6 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +23,8 @@ import java.util.stream.Collectors;
  * @date 2023/9/1
  */
 @Component
+@Order
+@DependsOn("tunnelListener")
 public class RedisUtil {
     @Autowired
     private RedisConfiguration redisConfiguration;
