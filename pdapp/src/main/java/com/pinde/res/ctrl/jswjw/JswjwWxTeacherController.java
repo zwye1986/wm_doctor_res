@@ -2995,9 +2995,9 @@ public class JswjwWxTeacherController extends GeneralController {
 			Map<String,Object> ckkhMap = new HashMap<>();
 			ckkhMap.put("inputId", "theoreResult");
 			ckkhMap.put("label", "理论成绩");
-			String score = null == formDataMap ? "": null == formDataMap.get("theoreResult") ? "" : (String)formDataMap.get("theoreResult");
-			if(f && (null == formDataMap || null == formDataMap.get("theoreResult"))){
-				score = null == outScore ? "" : null == outScore.getTheoryScore() ? "" : outScore.getTheoryScore().toString();
+			String score = (null == formDataMap ? "": (null == formDataMap.get("theoreResult") ? "" : (String)formDataMap.get("theoreResult")));
+			if(f && (null == formDataMap || StringUtil.isBlank((String) formDataMap.get("theoreResult")))){
+				score = (null == outScore ? "" : (null == outScore.getTheoryScore() ? "" : outScore.getTheoryScore().toString()));
 			}
 			ckkhMap.put("value",score);
 			afterDeptList.add(ckkhMap);
