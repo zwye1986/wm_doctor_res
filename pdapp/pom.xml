@@ -772,6 +772,38 @@
         </dependencies>
     </dependencyManagement>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <package.environment>dev</package.environment>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
+        <profile>
+            <id>test</id>
+            <properties>
+                <package.environment>test</package.environment>
+            </properties>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+        </profile>
+
+        <profile>
+            <id>pro</id>
+            <properties>
+                <package.environment>pro</package.environment>
+            </properties>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+
     <build>
         <!-- 执行目标 -->
         <defaultGoal>package</defaultGoal>
@@ -795,10 +827,16 @@
             </resource>
             <resource>
                 <directory>${basedir}/src/main/resources</directory>
+                <excludes>
+                    <exclude>dev/*</exclude>
+                    <exclude>test/*</exclude>
+                    <exclude>pro/*</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>${basedir}/src/main/resources/${package.environment}</directory>
             </resource>
         </resources>
-
-
 
         <!-- 项目最终构建名称 -->
         <finalName>pdapp</finalName>
