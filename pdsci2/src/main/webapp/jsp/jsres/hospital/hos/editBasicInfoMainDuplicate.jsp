@@ -1048,7 +1048,7 @@
             </tr>
             <tr>
                 <th><span class="red">*</span>本年收治总疾病（种）：</th>
-                <td><input type="text" class="input1 validate[required,custom[number],min[0],max[100],maxSize[9]]" style="width:100px;"
+                <td><input type="text" class="input1 validate[required,custom[integer],min[0],max[99999999]]" style="width:100px;"
                            name="baseExtInfoEducationInfo.annualDiseaseCategory" value="${baseExtInfoEducationInfo.annualDiseaseCategory}"/>
                 </td>
                 <th><span class="red">*</span>按本年总病例病种数（个）：</th>
