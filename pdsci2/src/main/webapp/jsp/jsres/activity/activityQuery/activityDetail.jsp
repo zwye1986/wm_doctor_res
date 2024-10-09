@@ -94,7 +94,7 @@
                     <td style="width: 273px;margin: 0 5px;">
                         <c:if test="${roleFlag ne 'local'}">${activity.activityTypeName}</c:if>
                         <c:if test="${roleFlag eq 'local'}">
-                            <select name="activityTypeId" <c:if test="${activity.activityStatus eq 'pass'}">disabled="disabled"</c:if> style="width: 273px;margin: 0 5px;" class="select validate[required]">
+                            <select name="activityTypeId" style="width: 273px;margin: 0 5px;" class="select validate[required]">
                                 <option value="">请选择</option>
                                 <c:forEach items="${activityTypeEnumList}" var="a">
                                     <option value="${a.id}" ${(activity.activityTypeId eq a.id) ?'selected':''}>${a.name}</option>
