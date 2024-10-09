@@ -57,6 +57,7 @@ $(document).ready(function(){
 	if('${param.currentPage}'){
 		currentPage='${param.currentPage}';
 	}
+	changeTrainSpes();
 	toPage(currentPage);
 	setTimeout(function(){
 		$('#orgCityId option[value=${param.orgCityId}]').attr('selected',true);
