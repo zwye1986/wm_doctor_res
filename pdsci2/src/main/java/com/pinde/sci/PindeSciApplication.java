@@ -56,7 +56,7 @@ public class PindeSciApplication extends SpringBootServletInitializer {
         SpringLiquibase springLiquibase = new SpringLiquibase();
         springLiquibase.setChangeLog(env.getProperty("liquibase.change-log"));
         springLiquibase.setDataSource(dataSource);
-        springLiquibase.setShouldRun(true);
+        springLiquibase.setShouldRun(Boolean.valueOf(env.getProperty("liquibase.enabled")));
         logger.error("PindeSciApplication config liquibase end...");
         return springLiquibase;
     }

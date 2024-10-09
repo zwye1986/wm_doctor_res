@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.sys.impl;
 
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sch.ISchDeptBiz;
@@ -20,6 +21,7 @@ import com.pinde.sci.enums.sys.ReqTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.SysDeptExample.Criteria;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -64,7 +66,40 @@ public class DeptBizImpl implements IDeptBiz {
 	private SysLogMapper logMapper;
 	@Autowired
 	private ISchDeptBiz schDeptBiz;
-	
+
+	@Override
+	public List<SysDept> selectByDeptId(String rotationFlow,String orgFlow) {
+		List<SysDept> result = new ArrayList<>();
+		if (StringUtils.isEmpty(rotationFlow)) {
+			return result;
+		}
+		if (StringUtils.isEmpty(orgFlow)) {
+			return result;
+		}
+		return deptExtMapper.getSchDeptByBzDeptCode(rotationFlow,orgFlow);
+	}
+
+	@Override
+	public List<SchAndStandardDeptCfg> getSchDeptByBzIds(List<String> bzDeptIds, List<String> orgFlows,String orgFlow) {
+		List<SchAndStandardDeptCfg> result = new ArrayList<>();
+		if (CollectionUtil.isEmpty(bzDeptIds)) {
+			return result;
+		}
+		if (CollectionUtil.isEmpty(orgFlows)) {
+			return result;
+		}
+		return deptExtMapper.getSchDeptByBzIds(bzDeptIds, orgFlows,orgFlow);
+	}
+
+	@Override
+	public List<String> relToMeOrgFlow(String myOrgFlow) {
+		List<String> result = new ArrayList<>();
+		if (StringUtils.isEmpty(myOrgFlow))  {
+			return result;
+		}
+		return deptExtMapper.relToMeOrgFlow(myOrgFlow);
+	}
+
 	@Override
 	public SysDept readSysDept(String sysDeptFlow) {
 		return sysDeptMapper.selectByPrimaryKey(sysDeptFlow);
@@ -227,6 +262,9 @@ public class DeptBizImpl implements IDeptBiz {
 	
 	@Override
 	public List<SysDept> searchDeptByFlows(List<String> deptFlows){
+		if (CollectionUtil.isEmpty(deptFlows)) {
+			return new ArrayList<>();
+		}
 		SysDeptExample example = new SysDeptExample();
 		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDeptFlowIn(deptFlows);
 		return sysDeptMapper.selectByExample(example);

@@ -470,6 +470,22 @@
                             </c:if>
                         </td>
                     </tr>
+                    <tr>
+                        <td style="text-align: right">是否开启轮转计划排班校验：</td>
+                        <td style="text-align: left;padding-left: 5px" width="200px">
+                            <c:set var="key" value="process_scheduling_check_${sessionScope.currUser.orgFlow}"></c:set>
+                            <input type="hidden" name="cfgCode" value="${key}">
+                            &nbsp;
+                            <input type="radio" id="${key}_y" name="${key}" value="Y"
+                                   <c:if test="${pdfn:jsresPowerCfgMap(key) eq 'Y'}">checked</c:if>/>
+                            <label for="${key}_y">是</label>&#12288;
+                            <input type="radio" id="${key}_n" name="${key}" value="N"
+                                   <c:if test="${empty pdfn:jsresPowerCfgMap(key) or pdfn:jsresPowerCfgMap(key) eq 'N'}">checked</c:if>/>
+                            <label for="${key}_n">否</label>
+                            <input type="hidden" name="${key}_ws_id" value="res">
+                            <input type="hidden" name="${key}_desc" value="是否开启轮转计划排班校验">
+                        </td>
+                    </tr>
 
                     <tr>
                         <td style="text-align: right;">360评价是否为必评项：</td>

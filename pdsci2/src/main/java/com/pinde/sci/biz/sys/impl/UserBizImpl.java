@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.sys.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.pinde.core.commom.enums.GeneralEnum;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.*;
@@ -97,6 +98,21 @@ public class UserBizImpl implements IUserBiz {
 	@Autowired
 	private SysUserRoleMapper sysUserRoleMapper;
 
+
+	@Override
+	public List<SysUser> selectByNamesOrIdNo(List<String> userNameList, List<String> idNoList) {
+		SysUserExample sysUserExample = new SysUserExample();
+		SysUserExample.Criteria criteria = sysUserExample.createCriteria();
+		criteria.andRecordStatusEqualTo("Y")
+				.andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
+		if (CollectionUtil.isNotEmpty(userNameList)) {
+			criteria.andUserNameIn(userNameList);
+		}
+		if (CollectionUtil.isNotEmpty(idNoList)) {
+			criteria.andIdNoIn(idNoList);
+		}
+		return sysUserMapper.selectByExample(sysUserExample);
+	}
 
 	public static String _doubleTrans(double d) {
 		if ((double) Math.round(d) - d == 0.0D)

@@ -1,13 +1,18 @@
 package com.pinde.sci.biz.sch.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.util.*;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.core.util.TimeUtil;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
-import com.pinde.sci.biz.res.IResDoctorBiz;
-import com.pinde.sci.biz.res.IResDoctorProcessBiz;
+import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.ICfgBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
@@ -32,10 +37,13 @@ import com.pinde.sci.enums.sch.SchUnitEnum;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.sch.SchArrangeResultForm;
 import com.pinde.sci.form.sch.SelectDept;
+import com.pinde.sci.model.jsres.*;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.SchArrangeResultExample.Criteria;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
+import liquibase.pro.packaged.S;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -55,6 +63,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -68,6 +77,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(rollbackFor=Exception.class)
@@ -139,6 +150,9 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	private SysOrgMapper orgMapper;
 	@Autowired
 	private SysDeptExtMapper sysDeptExtMapper;
+
+	@Autowired
+	private IResRecBiz resRecBiz;
 
 	private static Logger logger = LoggerFactory.getLogger(SchArrangeResultBizImpl.class);
 
@@ -1892,6 +1906,97 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	}
 
 	@Override
+	public Map<String,Map<String, BigDecimal>> getScoreByDoctorIds(List<String> doctorFlowList) {
+		Map<String,Map<String, BigDecimal>> result = new HashMap<>();
+		String ll = "thryScore";
+		String jn = "killScore";
+		if (CollectionUtil.isEmpty(doctorFlowList)) {
+			return result;
+		}
+		List<ResSchProcessExpress> resSchProcessExpresses = schProcessExpressMapper.listByDoctorList(doctorFlowList);
+		if (CollectionUtil.isEmpty(resSchProcessExpresses)) {
+			Map<String, BigDecimal> itemMap = new HashMap<>();
+			for (String doctorFlow : doctorFlowList) {
+				itemMap = new HashMap<>();
+				itemMap.put(ll,new BigDecimal("0"));
+				itemMap.put(jn,new BigDecimal("0"));
+				result.put(doctorFlow,itemMap);
+			}
+			return result;
+		}
+		Map<String, List<ResSchProcessExpress>> expMap = resSchProcessExpresses.stream().collect(Collectors.groupingBy(ResSchProcessExpress::getOperUserFlow));
+		Map<String, BigDecimal> itemMap = new HashMap<>();
+		for (String doctorFlow : doctorFlowList) {
+			if (StringUtils.isEmpty(doctorFlow)) {
+				continue;
+			}
+			itemMap = new HashMap<>();
+			itemMap.put(ll,new BigDecimal("0"));
+			itemMap.put(jn,new BigDecimal("0"));
+			List<ResSchProcessExpress> itemList = expMap.get(doctorFlow);
+			if (CollectionUtil.isEmpty(itemList)) {
+				result.put(doctorFlow,itemMap);
+				continue;
+			}
+			itemMap = new HashMap<>();
+			BigDecimal lilunScore = new BigDecimal("0");
+			int llCount = 0;
+			itemMap.put(ll,new BigDecimal("0"));
+			BigDecimal jinengScore = new BigDecimal("0");
+			int jnCount = 0;
+			itemMap.put(jn,new BigDecimal("0"));
+			for (ResSchProcessExpress item : itemList) {
+				String recContent = item.getRecContent();
+				if (StringUtils.isEmpty(recContent)) {
+					continue;
+				}
+				Map<String, Object> stringObjectMap = resRecBiz.parseRecContent(recContent);
+				if (CollectionUtil.isEmpty(stringObjectMap)) {
+					continue;
+				}
+				//理论成绩
+				Object theoreResult = stringObjectMap.get("theoreResult");
+				if (ObjectUtil.isNotEmpty(theoreResult)) {
+					try{
+						BigDecimal bigDecimal = new BigDecimal(String.valueOf(theoreResult));
+						lilunScore = lilunScore.add(bigDecimal);
+						llCount++;
+					}catch (Exception e) {
+
+					}
+				}
+				//技能成绩
+				Object score = stringObjectMap.get("score");
+				if (ObjectUtil.isNotEmpty(score)) {
+					try{
+						BigDecimal bigDecimal = new BigDecimal(String.valueOf(score));
+						jinengScore = jinengScore.add(bigDecimal);
+						jnCount++;
+					}catch (Exception e) {
+
+					}
+				}
+			}
+			if (llCount>0){
+				BigDecimal divide = lilunScore.divide(new BigDecimal(llCount), 2, BigDecimal.ROUND_HALF_DOWN);
+				itemMap.put(ll,divide);
+			}
+			if (jnCount>0){
+				BigDecimal divide = jinengScore.divide(new BigDecimal(jnCount), 2, BigDecimal.ROUND_HALF_DOWN);
+				itemMap.put(jn,divide);
+			}
+			if (itemMap.get(ll).compareTo(new BigDecimal("0"))<=0) {
+				itemMap.put(ll,new BigDecimal("0"));
+			}
+			if (itemMap.get(jn).compareTo(new BigDecimal("0"))<=0) {
+				itemMap.put(jn,new BigDecimal("0"));
+			}
+			result.put(doctorFlow,itemMap);
+		}
+		return result;
+	}
+
+	@Override
 	public List<ResOutOfficeLock> searchDocErrorResultsList(Map<String,Object> paramMap) throws ParseException {
 		List<ResOutOfficeLock> resOutOfficeLocks = resultExtMapper.searchDocErrorResultsList(paramMap);
 		if(CollectionUtils.isNotEmpty(resOutOfficeLocks)){
@@ -2343,8 +2448,742 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		return parseExcelToScheduing2(wb,rotationFlow,trainingTypeId);
 	}
 
+	@Override
+	public Map<String,Object> importSchedulingAuditExcelCache(MultipartFile file) throws IOException, InvalidFormatException {
+		Map<String, Object> result = new HashMap<>();
+		InputStream is = file.getInputStream();
+		byte[] fileData = new byte[(int) file.getSize()];
+		is.read(fileData);
+		Workbook wb =  createUserWorkbook(new ByteInputStream(fileData, (int)file.getSize() ));
+		int sheetNum = wb.getNumberOfSheets();
+		if(sheetNum<=0){
+			return result;
+		}
+		List<String> headList = new ArrayList<>();
+		Sheet sheetAt = wb.getSheetAt(0);
+		Row headRow = sheetAt.getRow(0);
+		short lastCellNum = headRow.getLastCellNum();
+		if (lastCellNum<1) {
+			return result;
+		}
+		for (int i = 0; i < lastCellNum; i++) {
+			String stringCellValue = headRow.getCell(i).getStringCellValue();
+			headList.add(stringCellValue);
+		}
+		result.put("headers",headList);
+		int lastRowNum = sheetAt.getLastRowNum();
+		if (lastRowNum <1) {
+			return result;
+		}
+		List<Map<String, String>> data = new ArrayList<>();
+		Map<String, String> dataItem = new HashMap<>();
+		for (int i = 1; i <= lastRowNum; i++) {
+			Row row = sheetAt.getRow(i);
+			if (null == row) {
+				//忽略空行
+				continue;
+			}
+			dataItem = new HashMap<>();
+			for (int j = 0; j < headList.size(); j++) {
+				String column = headList.get(j);
+				Cell cell = row.getCell(j);
+				if(null != cell){
+					cell.setCellType(Cell.CELL_TYPE_STRING);
+					String stringCellValue = cell.getStringCellValue();
+					if (StringUtil.isBlank(stringCellValue)) {
+						dataItem.put(column,null);
+						continue;
+					}
+					dataItem.put(column,stringCellValue);
+					continue;
+				}
+				dataItem.put(column,null);
+			}
+			data.add(dataItem);
+		}
+		//数据处理
+		if (CollectionUtil.isEmpty(data)) {
+			result.put("data",new ArrayList<>());
+			result.put("flag",false);
+			return result;
+		}
+		List<Map<String, ArrangTdVo>> list = new ArrayList<>();
+		Map<String, ArrangTdVo> rowItem = new HashMap<>();
+		ArrangTdVo item = new ArrangTdVo();
+		for (Map<String, String> datum : data) {
+			rowItem = new HashMap<>();
+			if (CollectionUtil.isEmpty(datum)) {
+				list.add(rowItem);
+				continue;
+			}
+			item = new ArrangTdVo();
+			item.setDisable(true);
+			rowItem.put("recurit",item);
+			for (String key : datum.keySet()) {
+				item = new ArrangTdVo();
+				item.setContext(StringUtils.isEmpty(datum.get(key))? "":datum.get(key));
+				item.setDisable(true);
+				item.setTip("");
+				rowItem.put(key,item);
+			}
+			list.add(rowItem);
+		}
+//		Map<String, Object> res = checkData(data);
+		Map<String, Object> res = checkReturnData(list);
+		result.put("data",res.get("data"));
+		result.put("flag",res.get("flag"));
+		return result;
+	}
+
+	@Override
+	public Map<String,Object> updateImportData(List<Map<String, ArrangTdVo>> data) {
+		//将data转为 List<Map<String, String>> 类型
+		Map<String, Object> resp = new HashMap<>();
+		resp.put("code",200);
+		if (CollectionUtil.isEmpty(data)) {
+			resp.put("data",data);
+			return resp;
+		}
+//		List<Map<String, String>> updateData = new ArrayList<>();
+//		Map<String, String> itemMap = new HashMap<>();
+//		for (Map<String, ArrangTdVo> datum : data) {
+//			itemMap = new HashMap<>();
+//			if (CollectionUtil.isEmpty(datum)) {
+//				continue;
+//			}
+//			for (String keyName : datum.keySet()) {
+//				itemMap.put(keyName,datum.get(keyName).getContext());
+//			}
+//			updateData.add(itemMap);
+//		}
+//		Map<String, Object> maps = checkData(updateData);
+		resp = checkReturnData(data);
+//		if (!(Boolean) resp.get("flag")) {
+//			resp.put("code",500);
+//			resp.put("msg","存在校验不通过的数据，请调整后提交");
+//		}
+		return resp;
+	}
+
+	@Override
+	public Map<String, Object> saveDbImportArrang(List<Map<String, ArrangTdVo>> data) throws ParseException {
+		Map<String, Object> resp = new HashMap<>();
+		resp.put("code",200);
+		resp.put("data",data);
+		if (CollectionUtil.isEmpty(data)) {
+			return resp;
+		}
+		List<PbImportDataVo> list = new ArrayList<>();
+		PbImportDataVo vo = new PbImportDataVo();
+		List<PbImportDataItem> itemDeptList = new ArrayList<>();
+		PbImportDataItem deptItem = new PbImportDataItem();
+		for (Map<String, ArrangTdVo> item : data) {
+			ArrangTdVo arrangTdVo1 = new ArrangTdVo();
+			arrangTdVo1.setDisable(true);
+			item.put("recurit",arrangTdVo1);
+			vo = new PbImportDataVo();
+			SysUser user = item.get("user").getUser();
+			if (ObjectUtil.isEmpty(user)) {
+				ArrangTdVo arrangTdVo = item.get("recurit");
+				arrangTdVo.setTip(StringUtils.isEmpty(arrangTdVo.getTip())? "未识别到用户信息<br/>":
+						arrangTdVo.getTip()+"未识别到用户信息<br/>");
+				item.put("recurit",arrangTdVo);
+				continue;
+			}
+			vo.setUserFlow(user.getUserFlow());
+			vo.setUserName(user.getUserName());
+			vo.setDoctorFlow(user.getUserFlow());
+			vo.setDoctorName(user.getUserName());
+			//！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！校验时需要设置这一行数据的方案id
+			if (ObjectUtil.isEmpty(item.get("rotationFlow")) || StringUtils.isEmpty(item.get("rotationFlow").getContext())){
+				ArrangTdVo arrangTdVo = item.get("recurit");
+				arrangTdVo.setTip(StringUtils.isEmpty(arrangTdVo.getTip())? "未识别到用户的轮转方案<br/>":
+						arrangTdVo.getTip()+"未识别到用户的轮转方案<br/>");
+				item.put("recurit",arrangTdVo);
+				continue;
+			}
+			SchRotation rotationInfo = rotationBiz.readSchRotation(item.get("rotationFlow").getContext());
+			if (ObjectUtil.isEmpty(rotationInfo)) {
+				ArrangTdVo arrangTdVo = item.get("recurit");
+				arrangTdVo.setTip(StringUtils.isEmpty(arrangTdVo.getTip())? "轮转方案不存在<br/>":
+						arrangTdVo.getTip()+"轮转方案不存在<br/>");
+				item.put("recurit",arrangTdVo);
+				continue;
+			}
+			vo.setRotationFlow(rotationInfo.getRotationFlow());
+			vo.setRotationName(rotationInfo.getRotationName());
+			vo.setSessionNumber(item.get("sessionNumber").getContext());
+			vo.setSchYear(item.get("schYear").getContext());
+			if (ObjectUtil.isEmpty(item.get("orgFlow")) || StringUtils.isEmpty(item.get("orgFlow").getContext())){
+				ArrangTdVo arrangTdVo = item.get("recurit");
+				arrangTdVo.setTip(StringUtils.isEmpty(arrangTdVo.getTip())? "未识别到用户的机构信息<br/>":
+						arrangTdVo.getTip()+"未识别到用户的机构信息<br/>");
+				item.put("recurit",arrangTdVo);
+				continue;
+			}
+			vo.setOrgFlow(item.get("orgFlow").getContext());
+			if (ObjectUtil.isEmpty(item.get("doctorFlow")) || StringUtils.isEmpty(item.get("doctorFlow").getContext())){
+				ArrangTdVo arrangTdVo = item.get("recurit");
+				arrangTdVo.setTip(StringUtils.isEmpty(arrangTdVo.getTip())? "未识别到用户的医师信息<br/>":
+						arrangTdVo.getTip()+"未识别到用户的医师信息<br/>");
+				item.put("recurit",arrangTdVo);
+				continue;
+			}
+			vo.setDoctorFlow(item.get("doctorFlow").getContext());
+			itemDeptList = new ArrayList<>();
+			for (String cloumnName : item.keySet()) {
+				if (StringUtils.isEmpty(cloumnName)) {
+					continue;
+				}
+				deptItem = new PbImportDataItem();
+				try{
+					DateTime parse = cn.hutool.core.date.DateUtil.parse(cloumnName, "yyyy-MM");
+					DateTime start = cn.hutool.core.date.DateUtil.beginOfMonth(parse);
+					DateTime end = cn.hutool.core.date.DateUtil.endOfMonth(parse);
+					String startDate = cn.hutool.core.date.DateUtil.formatDate(start);
+					String endDate = cn.hutool.core.date.DateUtil.formatDate(end);
+					ArrangTdVo arrangTdVo = item.get(cloumnName);
+					String schDeptName = arrangTdVo.getContext();
+					String schDeptFlow = arrangTdVo.getDeptFlow();
+					//此时schDeptName，schDeptFlow可能是多个，含,的,目前只支持最多两个
+					if (schDeptName.contains(",") && schDeptFlow.contains(",")) {
+						String[] nameSplit = StringUtils.split(schDeptName, ",");
+						String[] flowSplit = StringUtils.split(schDeptFlow, ",");
+						deptItem = new PbImportDataItem();
+						DateTime halfDate = cn.hutool.core.date.DateUtil.offsetDay(start, 15);
+						deptItem.setStartDate(startDate);
+						deptItem.setEndDate(cn.hutool.core.date.DateUtil.formatDate(halfDate));
+						if (null != flowSplit && flowSplit.length>0) {
+							deptItem.setSchDeptFlow(flowSplit[0]);
+						}
+						if (null != nameSplit && nameSplit.length>0) {
+							deptItem.setSchDeptName(nameSplit[0]);
+						}
+						itemDeptList.add(deptItem);
+						//后半月
+						deptItem = new PbImportDataItem();
+						deptItem.setStartDate(cn.hutool.core.date.DateUtil.formatDate(halfDate));
+						deptItem.setEndDate(endDate);
+						if (null != flowSplit && flowSplit.length>1) {
+							deptItem.setSchDeptFlow(flowSplit[1]);
+						}
+						if (null != nameSplit && nameSplit.length>1) {
+							deptItem.setSchDeptName(nameSplit[1]);
+						}
+						itemDeptList.add(deptItem);
+					}else {
+						deptItem = new PbImportDataItem();
+						deptItem.setStartDate(startDate);
+						deptItem.setEndDate(endDate);
+						deptItem.setSchDeptFlow(schDeptFlow);
+						deptItem.setSchDeptName(schDeptName);
+						itemDeptList.add(deptItem);
+					}
+
+				}catch (Exception e) {
+					e.printStackTrace();
+					continue;
+				}
+			}
+			vo.setSchDeptList(itemDeptList);
+			list.add(vo);
+		}
+		//数据入库
+		boolean b = saveDbImportArrangTool(list);
+		if (!b) {
+			resp.put("code",500);
+		}
+		resp.put("data",data);
+		return resp;
+	}
+
+	@Override
+	public Map<String,Object> submitImportData(List<Map<String, ArrangTdVo>> data) {
+		Map<String, Object> result = new HashMap<>();
+		result.put("code",200);
+		if (CollectionUtil.isEmpty(data)) {
+			return result;
+		}
+		List<Map<String, String>> updateData = new ArrayList<>();
+		Map<String, String> itemMap = new HashMap<>();
+		for (Map<String, ArrangTdVo> datum : data) {
+			itemMap = new HashMap<>();
+			if (CollectionUtil.isEmpty(datum)) {
+				continue;
+			}
+			for (String keyName : datum.keySet()) {
+				itemMap.put(keyName,datum.get(keyName).getContext());
+			}
+			updateData.add(itemMap);
+		}
+		Map<String, Object> res = checkData(updateData);
+		if (!(Boolean)res.get("flag")) {
+			result.put("code",500);
+			result.put("msg","数据校验未通过，存在异常数据");
+			return result;
+		}
+		//校验通过的情况
+		//开始进行db操作
+		return result;
+	}
 
 
+	/**
+	 * ~~~~~~~~~溺水的鱼~~~~~~~~
+	 * @Author: 吴强
+	 * @Date: 2024/9/19 15:29
+	 * @Description: 校验导入的数据，同时追加一些页面的信息
+	 * value字段：context:内容，统一字符类型
+	 *           hide:true/false 是否隐藏
+	 *           inputType: 'input'/'select' 只允许调整姓名和轮转科室，input是姓名，select下拉框是科室 span 显示
+	 *           color: 色值 正确-'#00B83F' 异常-'#ee0101'
+	 *           tip: 异常原因提示
+	 *           disable: 是否禁用编辑 true-禁用编辑 false-不禁用编辑
+	 */
+	private Map<String,Object> checkData(List<Map<String, String>> data){
+		Map<String, Object> resp = new HashMap<>();
+		resp.put("flag",true);
+		resp.put("data",data);
+		List<Map<String, ArrangTdVo>> result = new ArrayList<>();
+		if (CollectionUtil.isEmpty(data)) {
+			resp.put("flag",false);
+			return resp;
+		}
+		Map<String, ArrangTdVo> listItem = new HashMap<>();
+		ArrangTdVo item = new ArrangTdVo();
+		List<String> userFlowList = new ArrayList<>();
+		//提取公共的用于校验数据的查询，减少与数据库的连接创建次数
+		//根据姓名查询到的数据
+		Map<String, SysUser> userMapByName = new HashMap<>();
+		List<String> userNameList = data.stream().map(e -> e.get("学员姓名")).collect(Collectors.toList());
+		List<SysUser> sysUsers = userBiz.selectByNamesOrIdNo(userNameList, null);
+		if (CollectionUtil.isNotEmpty(sysUsers)) {
+			userMapByName = sysUsers.stream().collect(Collectors.toMap(SysUser::getUserName, Function.identity(), (k1, k2) -> k2));
+		}
+		//根据身份证号查询到数据
+		Map<String, SysUser> userMapByIdNo = new HashMap<>();
+		List<String> idNoList = data.stream().map(e -> e.get("身份证号")).collect(Collectors.toList());
+		List<SysUser> idNOs = userBiz.selectByNamesOrIdNo(null, idNoList);
+		if (CollectionUtil.isNotEmpty(idNOs)) {
+			userMapByIdNo = idNOs.stream().collect(Collectors.toMap(SysUser::getIdNo, Function.identity(), (k1, k2) -> k2));
+			userFlowList = idNOs.stream().map(SysUser::getUserFlow).collect(Collectors.toList());
+		}
+		//校验学员志愿
+		List<ResDoctorRecruit> recruitList = new ArrayList<>();
+		Map<String, List<ResDoctorRecruit>> recruitMap = new HashMap<>();
+		if (CollectionUtil.isNotEmpty(userFlowList)) {
+			ResDoctorRecruitExample example = new ResDoctorRecruitExample();
+			example.createCriteria().andRecordStatusEqualTo("Y")
+					.andAuditStatusIdEqualTo("Passed")
+					.andDoctorFlowIn(userFlowList);
+			example.setOrderByClause("CREATE_TIME DESC");
+			recruitList = resDoctorRecruitMapper.selectByExample(example);
+		}
+		if (CollectionUtil.isNotEmpty(recruitList)) {
+			recruitMap = recruitList.stream().collect(Collectors.groupingBy(ResDoctorRecruit::getDoctorFlow));
+		}
+
+		for (Map<String, String> itemMap : data) {
+			//每一行
+			listItem = new HashMap<>();
+			if (CollectionUtil.isEmpty(itemMap)) {
+				//行数据为空
+				continue;
+			}
+			item.setDisable(true);
+			listItem.put("recurit",item);
+			//学员校验,返回异常信息，空表示正常数据
+			boolean checkName = checkDataUserName(listItem, itemMap, userMapByName);
+			if (!checkName) {
+				resp.put("flag",false);
+			}
+			//校验身份证号 合规 非空
+			boolean checkIdNo = checkDataIdNo(listItem, itemMap, userMapByIdNo, idNoList);
+			if (!checkIdNo) {
+				resp.put("flag",false);
+			}
+			//此时可以获取到该条数据的orgFlow了
+			String orgFlow = "";
+			if (ObjectUtil.isNotEmpty(listItem.get("user"))) {
+				if (StringUtils.isNotEmpty(listItem.get("user").getUser().getUserFlow())) {
+					ResDoctor doctor = doctorBiz.readDoctor(listItem.get("user").getUser().getUserFlow());
+					if (ObjectUtil.isEmpty(doctor)) {
+						ArrangTdVo arrangTdVo = listItem.get("recurit");
+						arrangTdVo.setTip(StringUtils.isEmpty(arrangTdVo.getTip())? "学员不存在<br/>":
+								arrangTdVo.getTip()+"学员不存在<br/>");
+						listItem.put("recurit",arrangTdVo);
+						ArrangTdVo doctorFlow = new ArrangTdVo();
+						doctorFlow.setContext("");
+						listItem.put("dcotorFlow",doctorFlow);
+						resp.put("flag",false);
+					}else {
+						if (StringUtils.isNotEmpty(doctor.getSecondOrgFlow())) {
+							orgFlow = doctor.getSecondOrgFlow();
+						}else {
+							orgFlow = doctor.getOrgFlow();
+						}
+						ArrangTdVo arrangTdVo = new ArrangTdVo();
+						arrangTdVo.setContext(doctor.getRotationFlow());
+						listItem.put("rotationFlow",arrangTdVo);
+						ArrangTdVo arrangTdVo2 = new ArrangTdVo();
+						arrangTdVo2.setContext(orgFlow);
+						listItem.put("orgFlow",arrangTdVo2);
+						ArrangTdVo doctorFlow = new ArrangTdVo();
+						doctorFlow.setContext(doctor.getDoctorFlow());
+						listItem.put("dcotorFlow",doctorFlow);
+					}
+				}
+			}
+			if (StringUtils.isEmpty(orgFlow)) {
+				ArrangTdVo arrangTdVo = listItem.get("recurit");
+				arrangTdVo.setTip(StringUtils.isEmpty(arrangTdVo.getTip())? "未识别到该学员的机构信息<br/>":
+						arrangTdVo.getTip()+"未识别到该学员的机构信息<br/>");
+				listItem.put("recurit",arrangTdVo);
+				resp.put("flag",false);
+			}else {
+				listItem.put("orgFlow",new ArrangTdVo(orgFlow));
+			}
+			//查询系统设置最低的排班轮转时长
+			//最短排班时长限制，0表示不限制
+			int nimMonth = 0;
+			JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_" + orgFlow);
+			if (ObjectUtil.isNotEmpty(openCfg)) {
+				String openVal = openCfg.getCfgValue();
+				if (StringUtils.isNotEmpty(openVal) && "Y".equalsIgnoreCase(openVal)) {
+					//限制开启
+					JsresPowerCfg minYearNumCfg = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_process_scheduling_time");
+					if (ObjectUtil.isNotEmpty(minYearNumCfg)) {
+						String cfgValue = minYearNumCfg.getCfgValue();
+						if (StringUtils.isNotEmpty(cfgValue)) {
+							Integer yearNum = Integer.valueOf(cfgValue);
+							nimMonth = yearNum*12;
+						}else {
+							nimMonth = 12;
+						}
+					}else {
+						nimMonth = 12;
+					}
+				}
+			}
+			//校验专业 非空
+			boolean checkSpe = checkDataSpe(listItem, itemMap);
+			if (!checkSpe) {
+				resp.put("flag",false);
+			}
+			//校验年级 非空
+			boolean checkSessionNum = checkDataSessionNum(listItem, itemMap);
+			if (!checkSessionNum) {
+				resp.put("flag",false);
+			}
+			//校验年限 非空
+			boolean checkYear = checkDataYear(listItem, itemMap);
+			if (!checkYear) {
+				resp.put("flag",false);
+			}
+			//校验是否有支援填报信息 recruit
+			ArrangTdVo arrangTdVo = listItem.get("user");
+			List<SysDept> sysDepts = new ArrayList<>();
+			if (null != arrangTdVo) {
+				sysDepts = checkDataRecurit(listItem, arrangTdVo.getUser(), recruitMap);
+				//一行一个实际可轮转科室的集合
+				listItem.put("schDeptList",new ArrangTdVo(sysDepts));
+			}
+			Map<String, String> deptNameIdMap = new HashMap<>();
+			if (CollectionUtil.isNotEmpty(sysDepts)) {
+				deptNameIdMap = sysDepts.stream().collect(Collectors.toMap(SysDept::getDeptName, SysDept::getDeptFlow, (k1, k2) -> k2));
+			}
+			//处理轮转科室的数据
+			int importMonNum = 0;
+			for (String key : itemMap.keySet()) {
+				if (StringUtils.isEmpty(key)) {
+					continue;
+				}
+				try{
+					DateTime parse = cn.hutool.core.date.DateUtil.parse(key, "yyyy-MM");
+				}catch (Exception e) {
+					continue;
+				}
+				item = new ArrangTdVo();
+				item.setInputType("select");
+				item.setSchDeptList(sysDepts);
+				//key-排班年月日期  val-科室名
+				String schDeptName = itemMap.get(key);
+				if (StringUtils.isEmpty(schDeptName)) {
+					listItem.put(key,item);
+					continue;
+				}
+				String schDeptFlow = deptNameIdMap.get(schDeptName);
+				if (StringUtils.isEmpty(schDeptFlow)) {
+					//当前导入的科室不是该方案下的轮转科室或者基地管里面没有设置标准科室
+					item.setContext(schDeptName);
+					item.setTip("科室【"+schDeptName+"】不是该方案下的轮转科室<br/>");
+					listItem.put(key,item);
+					resp.put("flag",false);
+					continue;
+				}
+				item.setContext(schDeptName);
+				item.setDeptFlow(schDeptFlow);
+				//正确的也让修改
+//				item.setDisable(true);
+				listItem.put(key,item);
+				importMonNum ++;
+			}
+			if (nimMonth >0 && (importMonNum<nimMonth)) {
+				ArrangTdVo arrangTdVo1 = listItem.get("recurit");
+				arrangTdVo1.setTip(StringUtils.isEmpty(arrangTdVo1.getTip())? "当前排班不满足系统配置的最低排班时长【"+nimMonth+" 个月】要求<br/>":
+						arrangTdVo1.getTip()+"当前排班不满足系统配置的最低排班时长【"+nimMonth+" 个月】要求<br/>");
+				listItem.put("recurit",arrangTdVo1);
+				resp.put("flag",false);
+			}
+			result.add(listItem);
+		}
+		resp.put("data",result);
+		return resp;
+	}
+
+	private boolean checkDataUserName(Map<String, ArrangTdVo> listItem,
+								   Map<String, String> itemMap,
+								   Map<String, SysUser> userMapByName){
+		String userName = itemMap.get("学员姓名");
+		ArrangTdVo defItem = new ArrangTdVo();
+		defItem.setContext(userName);
+		defItem.setDisable(true);
+		if (StringUtil.isEmpty(userName)) {
+			//学员姓名不能为空
+			defItem.setTip("学员姓名不能为空<br/>");
+			defItem.setInputType("input");
+			defItem.setDisable(false);
+			listItem.put("学员姓名",defItem);
+			itemMap.remove("学员姓名");
+			return false;
+		}
+		//校验学员是否存在
+		SysUser user = userMapByName.get(userName);
+		if (ObjectUtil.isEmpty(user)) {
+			//学员姓名不存在
+			defItem.setTip("姓名为【"+userName+"】的学员不存在<br/>");
+			defItem.setInputType("input");
+			defItem.setDisable(false);
+			listItem.put("学员姓名",defItem);
+			itemMap.remove("学员姓名");
+			return false;
+		}
+		listItem.put("学员姓名",defItem);
+		itemMap.remove("学员姓名");
+		//暂存学员信息
+		listItem.put("user",new ArrangTdVo(true,user));
+		return true;
+	}
+
+
+	private boolean checkDataIdNo(Map<String, ArrangTdVo> listItem,
+							   Map<String, String> itemMap,
+							   Map<String, SysUser> idNoMap,
+							   List<String> idNoList){
+		String idNo = itemMap.get("身份证号");
+		ArrangTdVo defItem = new ArrangTdVo();
+		defItem.setContext(idNo);
+		defItem.setDisable(true);
+		//判断身份证号是否存在
+		if (StringUtil.isEmpty(idNo)) {
+			//身份证号不能为空
+			defItem.setTip("身份证号不能为空<br/>");
+			defItem.setInputType("input");
+			defItem.setDisable(false);
+			listItem.put("身份证号",defItem);
+			itemMap.remove("身份证号");
+			return false;
+		}
+		if (CollectionUtil.isEmpty(idNoList)) {
+			defItem.setTip("身份证号不能为空<br/>");
+			defItem.setInputType("input");
+			defItem.setDisable(false);
+			listItem.put("身份证号",defItem);
+			itemMap.remove("身份证号");
+			return false;
+		}
+		//判断身份证号是否重复
+		Map<String, Long> collect = idNoList.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+		if (null != collect.get(idNo) && collect.get(idNo)>1) {
+			//身份证号重复
+			defItem.setTip("身份证号重复<br/>");
+			defItem.setInputType("input");
+			defItem.setDisable(false);
+			listItem.put("身份证号",defItem);
+			itemMap.remove("身份证号");
+			return false;
+		}
+		//校验身份证号是否合法
+		boolean validCard = IdcardUtil.isValidCard(idNo);
+		if (!validCard) {
+			//身份证号输入有误
+			defItem.setTip("身份证号不正确<br/>");
+			defItem.setInputType("input");
+			defItem.setDisable(false);
+			listItem.put("身份证号",defItem);
+			itemMap.remove("身份证号");
+			return false;
+		}
+		//先过滤一遍
+		String userName = listItem.get("学员姓名").getContext();
+		if (ObjectUtil.isNotEmpty(listItem.get("user"))) {
+			//根据姓名查询到用户
+			if (idNo.equalsIgnoreCase(listItem.get("user").getUser().getIdNo())) {
+				//身份证号相同后面的就不用校验了
+				listItem.put("身份证号",defItem);
+				itemMap.remove("身份证号");
+				return true;
+			}
+		}
+		//姓名不存在或者同名不同证的情况
+		SysUser user = idNoMap.get(idNo);
+		if (ObjectUtil.isEmpty(user)) {
+			//学员姓名不存在
+			defItem.setTip("身份证号为【"+idNo+"】的学员不存在<br/>");
+			defItem.setInputType("input");
+			defItem.setDisable(false);
+			listItem.put("身份证号",defItem);
+			itemMap.remove("身份证号");
+			return false;
+		}
+		if (StringUtil.isNotEmpty(userName) &&
+		!userName.equalsIgnoreCase(user.getUserName())) {
+			//姓名和证件号都能查到，但是姓名和证件号不匹配
+			defItem.setTip("身份证号和姓名不匹配<br/>");
+			defItem.setInputType("input");
+			defItem.setDisable(false);
+			listItem.put("身份证号",defItem);
+			itemMap.remove("身份证号");
+			return false;
+		}
+		listItem.put("身份证号",defItem);
+		itemMap.remove("身份证号");
+		ArrangTdVo arrangTdVo = new ArrangTdVo(true,user);
+		listItem.put("user",arrangTdVo);
+		return true;
+	}
+
+	private boolean checkDataSpe(Map<String, ArrangTdVo> listItem,
+							   Map<String, String> itemMap){
+		String speName = itemMap.get("专业");
+		ArrangTdVo defItem = new ArrangTdVo();
+		defItem.setContext(speName);
+		defItem.setDisable(true);
+		if (StringUtil.isEmpty(speName)) {
+			//专业不能为空
+			defItem.setTip("专业不能为空<br/>");
+			listItem.put("专业",defItem);
+			itemMap.remove("专业");
+			return false;
+		}
+		listItem.put("专业",defItem);
+		itemMap.remove("专业");
+		return true;
+	}
+
+	private boolean checkDataYear(Map<String, ArrangTdVo> listItem,
+							  Map<String, String> itemMap){
+		String year = itemMap.get("年限");
+		ArrangTdVo defItem = new ArrangTdVo();
+		defItem.setContext(year);
+		defItem.setDisable(true);
+		if (StringUtil.isEmpty(year)) {
+			//专业不能为空
+			defItem.setTip("年限不能为空<br/>");
+			listItem.put("年限",defItem);
+			itemMap.remove("年限");
+			return false;
+		}
+		listItem.put("年限",defItem);
+		itemMap.remove("年限");
+		return true;
+	}
+	/**
+	 * ~~~~~~~~~溺水的鱼~~~~~~~~
+	 * @Author: 吴强
+	 * @Date: 2024/9/20 15:12
+	 * @Description:校验志愿信息，同时如果存在轮转方案，返回轮转方案内的标准科室
+	 */
+	private List<SysDept> checkDataRecurit(Map<String, ArrangTdVo> listItem,
+								  SysUser user,
+								  Map<String, List<ResDoctorRecruit>> recruitMap){
+		List<SysDept> result = new ArrayList<>();
+		ArrangTdVo item = listItem.get("recurit");
+		item.setDisable(true);
+		if (ObjectUtil.isEmpty(user)) {
+			item.setTip(StringUtils.isEmpty(item.getTip())? "系统未分配该学员的培训方案！<br/>":
+					item.getTip()+"系统未分配该学员的培训方案！<br/>");
+			listItem.put("recurit",item);
+			return result;
+		}
+		String userFlow = user.getUserFlow();
+		if (StringUtils.isEmpty(userFlow)) {
+			item.setTip(StringUtils.isEmpty(item.getTip())? "系统未分配该学员的培训方案！<br/>":
+					item.getTip()+"系统未分配该学员的培训方案！<br/>");
+			listItem.put("recurit",item);
+			return result;
+		}
+		if (CollectionUtil.isEmpty(recruitMap)) {
+			item.setTip(StringUtils.isEmpty(item.getTip())? "系统未分配该学员的培训方案！<br/>":
+					item.getTip()+"系统未分配该学员的培训方案！<br/>");
+			listItem.put("recurit",item);
+			return result;
+		}
+		List<ResDoctorRecruit> resDoctorRecruits = recruitMap.get(userFlow);
+		if (CollectionUtil.isEmpty(resDoctorRecruits)) {
+			item.setTip(StringUtils.isEmpty(item.getTip())? "系统未分配该学员的培训方案！<br/>":
+					item.getTip()+"系统未分配该学员的培训方案！<br/>");
+			listItem.put("recurit",item);
+			return result;
+		}
+		//存在志愿信息的情况下，判断是否有分配方案
+		String rotationFlow = resDoctorRecruits.get(0).getRotationFlow();
+		if (StringUtil.isEmpty(rotationFlow)) {
+			item.setTip(StringUtils.isEmpty(item.getTip())? "系统未分配该学员的培训方案！<br/>":
+					item.getTip()+"系统未分配该学员的培训方案！<br/>");
+			listItem.put("recurit",item);
+			return result;
+		}
+		//查询方案中的标准科室
+		List<SchRotationDept> bzDeptList = rotationDeptBiz.searchSchRotationDept(rotationFlow);
+		if (CollectionUtil.isEmpty(bzDeptList)) {
+			item.setTip(StringUtils.isEmpty(item.getTip())? "该轮转方案中暂未配置标准科室！<br/>":
+					item.getTip()+"该轮转方案中暂未配置标准科室！<br/>");
+			listItem.put("recurit",item);
+			return result;
+		}
+		//根据标准科室查询方案内的轮转科室
+		List<String> bzDeptIdList = bzDeptList.stream().map(SchRotationDept::getStandardDeptId).collect(Collectors.toList());
+		if (CollectionUtil.isEmpty(bzDeptIdList)) {
+			item.setTip(StringUtils.isEmpty(item.getTip())? "该轮转方案中暂未配置标准科室！<br/>":
+					item.getTip()+"该轮转方案中暂未配置标准科室！<br/>");
+			listItem.put("recurit",item);
+			return result;
+		}
+		listItem.put("recurit",item);
+		result = deptBiz.selectByDeptId(rotationFlow,user.getOrgFlow());
+		return result;
+	}
+
+
+
+	private boolean checkDataSessionNum(Map<String, ArrangTdVo> listItem,
+							   Map<String, String> itemMap){
+		String sessionNum = itemMap.get("年级");
+		ArrangTdVo defItem = new ArrangTdVo();
+		defItem.setContext(sessionNum);
+		defItem.setDisable(true);
+		if (StringUtil.isEmpty(sessionNum)) {
+			//专业不能为空
+			defItem.setTip("年级不能为空<br/>");
+			listItem.put("年级",defItem);
+			itemMap.remove("年级");
+			return false;
+		}
+		listItem.put("年级",defItem);
+		itemMap.remove("年级");
+		return true;
+	}
 	private static Workbook createUserWorkbook(InputStream inS) throws IOException, InvalidFormatException {
 		// 首先判断流是否支持mark和reset方法，最后两个if分支中的方法才能支持
 		if (!inS.markSupported()) {
@@ -2642,6 +3481,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		// 创建SimpleDateFormat对象，用于格式化日期
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
 		// 循环输出当前年月往后12个月的具体年月
+		List<String> successDocIdList = new ArrayList<>();
 		for (int i = 0; i < number; i++) {
 			// 将当前年月格式化为yyyy-MM格式
 			String yearMonth = sdf.format(new Date(calendar.getTimeInMillis()));
@@ -2786,6 +3626,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					orgFlow = doctor.getOrgFlow();
 				}
 				SysOrg sysOrg = orgBiz.readSysOrg(orgFlow);
+				//这个是查询机构下的所有的科室
 				List<SysDept> schDeptList = searchSysDeptList(orgFlow, "");
 				HashMap<String, SysDept> schDeptMap = new HashMap<>();
 				for (SysDept dept : schDeptList) {
@@ -2925,9 +3766,149 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 			}
 		}
+
 		resultMap.put("msg",msg);
 		resultMap.put("count",succCount);
 		return resultMap;
+	}
+
+
+	//处理后的数据入库保存
+	private boolean saveDbImportArrangTool(List<PbImportDataVo> dataList) throws ParseException {
+		if (CollectionUtil.isEmpty(dataList))  {
+			return true;
+		}
+		Map<Integer, String> map = new HashMap<>();
+		for (int i = 0;i<dataList.size();i++) {
+			PbImportDataVo item = dataList.get(i);
+			String doctorFlow = item.getDoctorFlow();
+			String rotationFlow = item.getRotationFlow();
+			String orgFlow = item.getOrgFlow();
+			List<String> deptIds = new ArrayList<>();
+			Map<String, SysDept> deptMap = new HashMap<>();
+			if (CollectionUtil.isNotEmpty(item.getSchDeptList())) {
+				deptIds = item.getSchDeptList().stream().map(PbImportDataItem::getSchDeptFlow).collect(Collectors.toList());
+				List<SysDept> sysDepts = deptBiz.searchDeptByFlows(deptIds);
+				if (CollectionUtil.isNotEmpty(sysDepts)) {
+					deptMap = sysDepts.stream().collect(Collectors.toMap(SysDept::getDeptFlow, Function.identity(), (k1, k2) -> k2));
+				}
+			}
+			for (PbImportDataItem deptItem : item.getSchDeptList()) {
+				String schDeptFlow = deptItem.getSchDeptFlow();
+				if (StringUtils.isEmpty(schDeptFlow)) {
+					continue;
+				}
+				SysDept sysDept = deptMap.get(schDeptFlow);
+				if (ObjectUtil.isEmpty(sysDept)) {
+					continue;
+				}
+				SysOrg org = orgBiz.readSysOrg(orgFlow);
+				SchArrangeResult result = new SchArrangeResult();
+				result.setResultFlow(PkUtil.getUUID());
+				result.setArrangeFlow(result.getResultFlow());
+				result.setDoctorFlow(doctorFlow);
+				result.setSessionNumber(item.getSessionNumber());
+				result.setSchYear(item.getSchYear());
+				result.setDoctorName(item.getDoctorName());
+				result.setOrgFlow(org.getOrgFlow());
+				result.setOrgName(org.getOrgName());
+				result.setSchStartDate(deptItem.getStartDate());
+				result.setSchEndDate(deptItem.getEndDate());
+				result.setRotationFlow(rotationFlow);
+				result.setRotationName(item.getRotationName());
+				result.setDeptFlow(sysDept.getDeptFlow());
+				result.setDeptName(sysDept.getDeptName());
+				result.setSchDeptFlow(sysDept.getDeptFlow());
+				String deptOrgFlow = sysDept.getOrgFlow();
+				String sysDeptName = sysDept.getDeptName();
+				if (StringUtil.isNotBlank(deptOrgFlow)) {
+					SysOrg so = orgBiz.readSysOrg(deptOrgFlow);
+					if (so != null && !so.getOrgFlow().equals(orgFlow)) {
+						sysDeptName += ("[" + so.getOrgName() + "]");
+					}
+				}
+				result.setSchDeptName(sysDeptName);
+				SchAndStandardDeptCfg bzCfg = paiBanImportService.getBzDeptByDeptFlow(sysDept.getDeptFlow());
+				if (ObjectUtil.isNotEmpty(bzCfg)) {
+					String standardDeptId = bzCfg.getStandardDeptId();
+					SchRotationDept rotationInfo = paiBanImportService.getRotationInfo(rotationFlow, standardDeptId);
+					if (ObjectUtil.isNotEmpty(rotationInfo)) {
+						result.setStandardDeptName(rotationInfo.getStandardDeptName());
+						result.setStandardGroupFlow(rotationInfo.getGroupFlow());
+						result.setStandardDeptId(rotationInfo.getStandardDeptId());
+						result.setIsRequired(rotationInfo.getIsRequired());
+					}
+				}
+				result.setCreateTime(DateUtil.getCurrDateTime());
+				result.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
+				result.setModifyTime(DateUtil.getCurrDateTime());
+				result.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
+				result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+				String schStartDate = result.getSchStartDate();
+				DateTime startDateTime = cn.hutool.core.date.DateUtil.parseDate(schStartDate);
+				String schEndDate = result.getSchEndDate();
+				DateTime endDateTime = cn.hutool.core.date.DateUtil.parseDate(schEndDate);
+				long dayNum = cn.hutool.core.date.DateUtil.betweenDay(startDateTime, endDateTime, true);
+				dayNum = dayNum+1;
+				BigDecimal divide = new BigDecimal(dayNum).divide(new BigDecimal("15"), 0, BigDecimal.ROUND_HALF_DOWN);
+				BigDecimal multiply = divide.multiply(new BigDecimal("0.5"));
+				double v = multiply.doubleValue();
+				String schMonth = String.valueOf(Double.parseDouble(v + ""));
+				result.setSchMonth(schMonth);
+				result.setBaseAudit("Passed");
+				//TODO:::111111
+				List<SchArrangeResult> resultList = checkResultDate(doctorFlow,
+						result.getSchStartDate(),
+						result.getSchEndDate(),
+						null,
+						rotationFlow);
+				if (null!=resultList && resultList.size()>0){
+					ArrayList<String> list = new ArrayList<>();
+					for (SchArrangeResult resultitem : resultList) {
+						list.add(resultitem.getResultFlow());
+					}
+					//基地导入会覆盖之前的数据
+					resultExtMapper.updateSchArrangeResultToDel(list);
+					resultExtMapper.updateResDoctorSchProcessToDel(list);
+				}
+				schArrangeResultMapper.insert(result);
+				logger.info("查询process信息！！！！！！！");
+
+//				ResDoctorSchProcess process = new ResDoctorSchProcess();
+//				process.setProcessFlow(PkUtil.getUUID());
+//				process.setUserFlow(item.getUserFlow());
+//				process.setOrgFlow(org.getOrgFlow());
+//				process.setOrgName(org.getOrgName());
+//				process.setDeptFlow(sysDept.getDeptFlow());
+//				process.setDeptName(sysDept.getDeptName());
+//				process.setSchDeptFlow(sysDept.getDeptFlow());
+//				process.setSchDeptName(sysDept.getDeptName());
+//				process.setSchResultFlow(result.getResultFlow());
+//				process.setSchStartDate(deptItem.getStartDate());
+//				process.setSchEndDate(deptItem.getEndDate());
+//				process.setCreateTime(DateUtil.getCurrDateTime());
+//				process.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
+//				process.setModifyTime(DateUtil.getCurrDateTime());
+//				process.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
+//				process.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+//				doctorSchProcessMapper.insertSelective(process);
+//				logger.info("查询proExample信息！！！！！！！");
+//				ResSchProcessExpressExample proExample = new ResSchProcessExpressExample();
+//				proExample.createCriteria().andOperUserFlowEqualTo(item.getUserFlow()).andSchRotationDeptFlowEqualTo(dept.getRecordFlow())
+//						.andRecTypeIdEqualTo(ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//				List<ResSchProcessExpress> recList = schProcessExpressMapper.selectByExampleWithBLOBs(proExample);
+//				String recContent = "";
+//				if (recList != null && recList.size() > 0) {
+//					recContent = recList.get(0).getRecContent();
+//				}
+//				try {
+//					updateResultHaveAfter2(dept.getRecordFlow(), item.getUserFlow(), recContent);
+//				} catch (DocumentException e) {
+//					e.printStackTrace();
+//				}
+			}
+		}
+		return true;
 	}
 
 	public void updateResultHaveAfter2(String schRotationDeptFlow, String operUserFlow, String recContent) throws DocumentException {
@@ -3083,4 +4064,536 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			}
 		}
 	}
+
+	private Map<String, Object> checkReturnData(List<Map<String,ArrangTdVo>> data){
+		Map<String, Object> resp = new HashMap<>();
+		resp.put("flag",true);
+		resp.put("data",data);
+		resp.put("code",200);
+		if (CollectionUtil.isEmpty(data))  {
+			return resp;
+		}
+		//提取公共的用于校验数据的查询，减少与数据库的连接创建次数
+		//根据姓名查询到的数据
+		Map<String, SysUser> userMapByName = new HashMap<>();
+		List<String> userNameList = data.stream().map(e -> ObjectUtil.isEmpty(e.get("学员姓名"))? "-1":e.get("学员姓名").getContext()).collect(Collectors.toList());
+		List<SysUser> sysUsers = userBiz.selectByNamesOrIdNo(userNameList, null);
+		if (CollectionUtil.isNotEmpty(sysUsers)) {
+			userMapByName = sysUsers.stream().collect(Collectors.toMap(SysUser::getUserName, Function.identity(), (k1, k2) -> k2));
+		}
+		//根据身份证号查询到数据
+		Map<String, SysUser> userMapByIdNo = new HashMap<>();
+		List<String> userFlowList = new ArrayList<>();
+		List<String> idNoList = data.stream().map(e -> ObjectUtil.isEmpty(e.get("身份证号"))? "-1":e.get("身份证号").getContext()).collect(Collectors.toList());
+		Map<String, Long> idNoCount= new HashMap<>();
+		if (CollectionUtil.isNotEmpty(idNoList)) {
+			//判断身份证号是否重复
+			idNoCount = idNoList.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+		}
+		List<SysUser> idNOs = userBiz.selectByNamesOrIdNo(null, idNoList);
+		if (CollectionUtil.isNotEmpty(idNOs)) {
+			userMapByIdNo = idNOs.stream().collect(Collectors.toMap(SysUser::getIdNo, Function.identity(), (k1, k2) -> k2));
+			userFlowList = idNOs.stream().map(SysUser::getUserFlow).collect(Collectors.toList());
+		}
+		for (Map<String, ArrangTdVo> item : data) {
+			boolean b = checkArrangTdVo(item, userMapByName, userMapByIdNo, idNoCount);
+			if (!b) {
+				resp.put("flag",false);
+				resp.put("code",500);
+				resp.put("msg","存在校验不通过的数据，请调整后提交");
+			}
+		}
+		resp.put("data",data);
+		return resp;
+	}
+
+	@Autowired
+	private PaiBanImportService paiBanImportService;
+	private boolean checkArrangTdVo(Map<String, ArrangTdVo> item,
+									Map<String, SysUser> userMapByName,
+									Map<String, SysUser> idNoMap,
+									Map<String, Long> idNoCount){
+		boolean flag = true;
+		ArrangTdVo tipVo = new ArrangTdVo();
+		tipVo.setDisable(true);
+		item.put("recurit",tipVo);
+		SysUser user = new SysUser();
+		//=========================校验学员姓名=======================================
+		ArrangTdVo userNameInfo = item.get("学员姓名");
+		if (ObjectUtil.isEmpty(userNameInfo) || StringUtils.isEmpty(userNameInfo.getContext())) {
+			//学员姓名列不能为空，检查一下数据转换是否存在问题
+			tipVo = ObjectUtil.isEmpty(tipVo)? new ArrangTdVo():tipVo;
+			tipVo.setTip(StringUtils.isEmpty(tipVo.getTip())? "学员姓名不能为空<br/>":
+					tipVo.getTip()+"学员姓名不能为空<br/>");
+			tipVo.setDisable(false);
+			item.put("recurit",tipVo);
+			flag = false;
+		}
+		else {
+			boolean nameFlag = checkUserNameItem(userNameInfo, userMapByName);
+			//暂存学员信息
+			user = userMapByName.get(userNameInfo.getContext());
+			item.put("user",new ArrangTdVo(true,user));
+			if (!nameFlag) {
+				flag = false;
+			}
+		}
+		//=========================身份证信息=======================================
+		ArrangTdVo idNoInfo = item.get("身份证号");
+		if (ObjectUtil.isEmpty(idNoInfo) || StringUtils.isEmpty(idNoInfo.getContext())) {
+			//学员姓名列不能为空，检查一下数据转换是否存在问题
+			tipVo = ObjectUtil.isEmpty(tipVo)? new ArrangTdVo():tipVo;
+			tipVo.setTip(StringUtils.isEmpty(tipVo.getTip())? "身份证号不能为空<br/>":
+					tipVo.getTip()+"身份证号不能为空<br/>");
+			tipVo.setDisable(false);
+			item.put("recurit",tipVo);
+			flag = false;
+		}
+		else {
+			boolean idNOFlag = checkIdNoItem(idNoInfo, idNoMap, idNoCount,userNameInfo.getContext());
+			//暂存学员信息
+			user = idNoMap.get(idNoInfo.getContext());
+			item.put("user",new ArrangTdVo(true,user));
+			if (!idNOFlag) {
+				flag = false;
+			}
+		}
+		//=========================专业=======================================
+		ArrangTdVo spe = item.get("专业");
+		if (ObjectUtil.isEmpty(spe) || StringUtils.isEmpty(spe.getContext())) {
+			//专业不能为空
+			tipVo = ObjectUtil.isEmpty(tipVo)? new ArrangTdVo():tipVo;
+			tipVo.setTip(StringUtils.isEmpty(tipVo.getTip())? "专业不能为空<br/>":
+					tipVo.getTip()+"; 专业不能为空<br/>");
+			tipVo.setDisable(false);
+			item.put("recurit",tipVo);
+			flag = false;
+		}
+		//=========================年级=======================================
+		ArrangTdVo sessionNumberInfo = item.get("年级");
+		if (ObjectUtil.isEmpty(sessionNumberInfo) || StringUtils.isEmpty(sessionNumberInfo.getContext())) {
+			//年级不能为空
+			tipVo = ObjectUtil.isEmpty(tipVo)? new ArrangTdVo():tipVo;
+			tipVo.setTip(StringUtils.isEmpty(tipVo.getTip())? "年级不能为空<br/>":
+					tipVo.getTip()+"; 年级不能为空<br/>");
+			tipVo.setDisable(false);
+			item.put("recurit",tipVo);
+			flag = false;
+		}else {
+			item.put("sessionNumber",sessionNumberInfo);
+		}
+		//=========================年限=======================================
+		ArrangTdVo rotationYearInfo = item.get("年限");
+		if (ObjectUtil.isEmpty(rotationYearInfo) || StringUtils.isEmpty(rotationYearInfo.getContext())) {
+			//年限不能为空
+			tipVo = ObjectUtil.isEmpty(tipVo)? new ArrangTdVo():tipVo;
+			tipVo.setTip(StringUtils.isEmpty(tipVo.getTip())? "年限不能为空<br/>":
+					tipVo.getTip()+"; 年限不能为空<br/>");
+			tipVo.setDisable(false);
+			item.put("recurit",tipVo);
+			flag = false;
+		}else {
+			item.put("schYear",rotationYearInfo);
+		}
+		//=========================校验科室:暂不支持合拼排班的=======================================
+		//TODO::还需要可轮转科室列表 和 轮转科室和标准科室对应表同时携带轮转时长sch_rotation_dept
+		ResDoctor doctor = new ResDoctor();
+		if (ObjectUtil.isNotEmpty(user)) {
+			doctor = doctorBiz.readDoctor(user.getUserFlow());
+		}
+		if (ObjectUtil.isEmpty(doctor)) {
+			tipVo = ObjectUtil.isEmpty(tipVo)? new ArrangTdVo():tipVo;
+			tipVo.setTip(StringUtils.isEmpty(tipVo.getTip())? "暂无该用户的医师信息<br/>":
+					tipVo.getTip()+"暂无该用户的医师信息<br/>");
+			tipVo.setDisable(false);
+			item.put("recurit",tipVo);
+			flag = false;
+		}else {
+			//填充入库所需的信息
+			ArrangTdVo doctorItem = new ArrangTdVo();
+			doctorItem.setContext(doctor.getDoctorFlow());
+			item.put("doctorFlow",doctorItem);
+		}
+		if (StringUtils.isEmpty(doctor.getRotationFlow())) {
+			tipVo = ObjectUtil.isEmpty(tipVo)? new ArrangTdVo():tipVo;
+			tipVo.setTip(StringUtils.isEmpty(tipVo.getTip())? "该医师暂未分配轮转方案<br/>":
+					tipVo.getTip()+"该医师暂未分配轮转方案<br/>");
+			tipVo.setDisable(false);
+			item.put("recurit",tipVo);
+		}else {
+			//填充入库所需的信息
+			ArrangTdVo rotationItem = new ArrangTdVo();
+			rotationItem.setContext(doctor.getRotationFlow());
+			item.put("rotationFlow",rotationItem);
+		}
+		//标准科室map
+		String orgFlow = "";
+		if (StringUtils.isNotEmpty(doctor.getOrgFlow())) {
+			orgFlow = doctor.getOrgFlow();
+		}else {
+			orgFlow = doctor.getSecondOrgFlow();
+		}
+		if (StringUtils.isNotEmpty(orgFlow)) {
+			//填充入库所需的信息
+			ArrangTdVo orgItem = new ArrangTdVo();
+			orgItem.setContext(orgFlow);
+			item.put("orgFlow",orgItem);
+		}
+		//最短排班时长限制，0表示不限制
+		int nimMonth = 0;
+		JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_" + orgFlow);
+		if (ObjectUtil.isNotEmpty(openCfg)) {
+			String openVal = openCfg.getCfgValue();
+			if (StringUtils.isNotEmpty(openVal) && "Y".equalsIgnoreCase(openVal)) {
+				//限制开启
+				JsresPowerCfg minYearNumCfg = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_process_scheduling_time");
+				if (ObjectUtil.isNotEmpty(minYearNumCfg)) {
+					String cfgValue = minYearNumCfg.getCfgValue();
+					if (StringUtils.isNotEmpty(cfgValue)) {
+						Integer yearNum = Integer.valueOf(cfgValue);
+						nimMonth = yearNum*12;
+					}
+				}
+			}
+		}
+		//查询方案中的标准科室
+//		List<SchRotationDept> bzDeptList = rotationDeptBiz.searchSchRotationDept(doctor.getRotationFlow());
+//		Map<String, List<SchRotationDept>> bzGroup = new HashMap<>();
+//		if (CollectionUtil.isNotEmpty(bzDeptList)) {
+//			bzGroup = bzDeptList.stream().collect(Collectors.groupingBy(SchRotationDept::getStandardDeptId));
+//		}
+//		//查询其他对我有开放科室记录的机构
+//		List<String> deptFlows = deptBiz.relToMeOrgFlow(orgFlow);
+//		//查询可轮转的科室
+//		List<SchAndStandardDeptCfg> lzDeptList = deptBiz.getSchDeptByBzIds(CollectionUtil.isEmpty(bzGroup)?
+//				new ArrayList<>():new ArrayList<>(bzGroup.keySet()), deptFlows,orgFlow);
+//		if (CollectionUtil.isNotEmpty(lzDeptList)) {
+//			lzDeptList = lzDeptList.stream().distinct().collect(Collectors.toList());
+//		}
+		List<LzDeptItem> schDeptList = paiBanImportService.getDeptListByRotationId(doctor.getRotationFlow(), orgFlow);
+		logger.info("查询出的轮转科室列表：：：：{}",schDeptList.size());
+		//定义标准科室和配置的轮转时长配置  标准科室code_i，时长月
+		Map<String, Double> peizhiSchTime = new HashMap<>();
+		List<SchRotationDept> schRotationDepts = paiBanImportService.bzDeptList(doctor.getRotationFlow());
+		if (CollectionUtil.isNotEmpty(schRotationDepts)) {
+			for (SchRotationDept bz : schRotationDepts) {
+				if (ObjectUtil.isEmpty(bz)) {
+					continue;
+				}
+				if (StringUtils.isEmpty(bz.getStandardDeptId())) {
+					continue;
+				}
+				Double schMon = peizhiSchTime.get(bz.getStandardDeptId());
+				if (null == schMon) {
+					peizhiSchTime.put(bz.getStandardDeptId(),Double.valueOf("0"));
+				}
+				if (StringUtils.isEmpty(bz.getSchMonth())) {
+					peizhiSchTime.put(bz.getStandardDeptId(),Double.valueOf("0"));
+					continue;
+				}
+				Double v = Double.valueOf(bz.getSchMonth());
+				v = null == v? 0:v;
+				peizhiSchTime.put(bz.getStandardDeptId(), peizhiSchTime.get(bz.getStandardDeptId())+v);
+			}
+		}
+		Integer pbMonCount = 0;
+		//已排标准科室的时长
+		Map<String,Double> pbBzTimeMap = new HashMap<>();
+		for (String cloumnName : item.keySet()) {
+			ArrangTdVo valInfo = item.get(cloumnName);
+			//只对表头是‘2020-01’格式的数据进行科室校验
+			try{
+				DateTime rotationMon = cn.hutool.core.date.DateUtil.parse(cloumnName, "yyyy-MM");
+				if (ObjectUtil.isEmpty(rotationMon)) {
+					continue;
+				}
+				if (ObjectUtil.isEmpty(valInfo)) {
+					continue;
+				}
+				valInfo.setPbMonthCount(0);
+				valInfo = checkDeptItem(valInfo,schDeptList,orgFlow);
+				pbMonCount += valInfo.getPbMonthCount();
+				item.put(cloumnName,valInfo);
+				if (StringUtils.isNotEmpty(valInfo.getTip())) {
+					flag = false;
+				}else {
+					String bzDeptCodeId = valInfo.getBzDeptCodeId();
+					if (StringUtils.isNotEmpty(bzDeptCodeId)) {
+						if (bzDeptCodeId.contains(",")) {
+							//包含并列关系的
+							String[] bzCodeSp = StringUtils.split(bzDeptCodeId,",");
+							if (null != bzCodeSp && bzCodeSp.length>0){
+								for (int i = 0; i < bzCodeSp.length; i++) {
+									String s = bzCodeSp[i];
+									if (null == pbBzTimeMap.get(bzDeptCodeId)) {
+										pbBzTimeMap.put(bzDeptCodeId,Double.valueOf("0.5"));
+									}else {
+										pbBzTimeMap.put(bzDeptCodeId,pbBzTimeMap.get(bzDeptCodeId)+Double.valueOf("0.5"));
+									}
+								}
+							}
+						}else {
+							//不包含并列关系
+							if (null == pbBzTimeMap.get(bzDeptCodeId)) {
+								pbBzTimeMap.put(bzDeptCodeId,Double.valueOf("1"));
+							}else {
+								pbBzTimeMap.put(bzDeptCodeId,pbBzTimeMap.get(bzDeptCodeId)+Double.valueOf("1"));
+							}
+						}
+					}
+				}
+			}catch (Exception e) {
+				//非轮转科室列直接跳过
+				continue;
+			}
+		}
+		if (nimMonth> 0 && pbMonCount<nimMonth) {
+			ArrangTdVo arrangTdVo = item.get("recurit");
+			arrangTdVo.setTip(StringUtils.isEmpty(arrangTdVo.getTip())? "排班总时长未满足系统最低排班时长要求！<br/>":
+					arrangTdVo.getTip()+"排班总时长未满足系统最低排班时长要求！<br/>");
+			item.put("recurit",arrangTdVo);
+			flag = false;
+		}
+		//标准可是轮转时长是否满足
+		List<SchRotationDept> bzDeptList = paiBanImportService.bzDeptList(doctor.getRotationFlow());
+		boolean b = checkArrangBzTime(peizhiSchTime, bzDeptList, pbBzTimeMap, item);
+		if (!b) {
+			flag = false;
+		}
+		return flag;
+	}
+
+	private boolean checkArrangBzTime(Map<String, Double> peizhiSchTime,
+								   List<SchRotationDept> bzDeptList,
+								   Map<String, Double> pbBzTimeMap,
+								   Map<String, ArrangTdVo> item) {
+		boolean result = true;
+		if (CollectionUtil.isEmpty(bzDeptList)) {
+			return false;
+		}
+		if (CollectionUtil.isEmpty(peizhiSchTime)) {
+			return false;
+		}
+		if (CollectionUtil.isEmpty(pbBzTimeMap)) {
+			ArrangTdVo tip = item.get("recurit");
+			tip.setTip(StringUtils.isEmpty(tip.getTip())? "未识别到符合该方案的排班<br/>":
+					tip.getTip()+"未识别到符合该方案的排班<br/>");
+			item.put("recurit",tip);
+			return false;
+		}
+		Map<String, String> standDeptName = bzDeptList.stream().collect(Collectors.toMap(SchRotationDept::getStandardDeptId, SchRotationDept::getStandardDeptName, (k1, k2) -> k2));
+		Map<String, List<SchRotationDept>> collect = bzDeptList.stream().collect(Collectors.groupingBy(SchRotationDept::getIsRequired));
+		//必轮的标准科室
+		List<SchRotationDept> blDeptList = collect.get("Y");
+		//非必轮科室
+		List<SchRotationDept> fblDeptList = collect.get("N");
+		for (String bzCode : pbBzTimeMap.keySet()) {
+			if (StringUtils.isEmpty(bzCode)) {
+				continue;
+			}
+			if (bzCode.contains(",")) {
+				//这个是一个月排了两个轮转科室的
+				String[] split = StringUtils.split(bzCode, ",");
+				for (int i = 0; i < split.length; i++) {
+					String bzc = split[i];
+					//方案中的轮转时长配置-标准科室
+					Double v = peizhiSchTime.get(bzc);
+					v = null == v? 0:v;
+					//实际排班的轮转时长-标准code
+					Double lzTime = pbBzTimeMap.get(bzCode);
+					lzTime = null == lzTime? Double.valueOf("0"):lzTime;
+					v = v-lzTime;
+					peizhiSchTime.put(bzCode,v);
+					if (v<0) {
+						String lzksName = standDeptName.get(split[i]);
+						ArrangTdVo tip = item.get("recurit");
+						tip.setTip(StringUtils.isEmpty(tip.getTip())? "【"+lzksName+"】科室已超出方案中配置的可轮转时长<br/>":
+								tip.getTip()+"【"+lzksName+"】科室已超出方案中配置的可轮转时长<br/>");
+						item.put("recurit",tip);
+						result = false;
+					}
+					for (int j = 0; j < blDeptList.size(); j++) {
+						if (blDeptList.get(j).getStandardDeptId().equalsIgnoreCase(bzc)) {
+							if (v<=0) {
+								blDeptList.remove(j);
+							}
+						}
+					}
+				}
+			}
+			else {
+				Double v = peizhiSchTime.get(bzCode);
+				v = null == v? 0:v;
+				//实际排班的轮转时长-标准code
+				Double lzTime = pbBzTimeMap.get(bzCode);
+				lzTime = null == lzTime? Double.valueOf("0"):lzTime;
+				v = v-lzTime;
+				peizhiSchTime.put(bzCode,v);
+				String lzksName = standDeptName.get(bzCode);
+				if (v<0) {
+					ArrangTdVo tip = item.get("recurit");
+					tip.setTip(StringUtils.isEmpty(tip.getTip())? "【"+lzksName+"】科室已超出方案中配置的可轮转时长<br/>":
+							tip.getTip()+"【"+lzksName+"】科室已超出方案中配置的可轮转时长<br/>");
+					item.put("recurit",tip);
+					result = false;
+				}
+				for (int j = 0; j < blDeptList.size(); j++) {
+					if (blDeptList.get(j).getStandardDeptId().equalsIgnoreCase(bzCode)) {
+						if (v<=0) {
+							blDeptList.remove(j);
+						}
+					}
+				}
+			}
+		}
+		if (CollectionUtil.isNotEmpty(blDeptList)) {
+			//必轮科室没有轮转完
+			for (SchRotationDept bl : blDeptList) {
+				ArrangTdVo tip = item.get("recurit");
+				tip.setTip(StringUtils.isEmpty(tip.getTip())? "标准科室【"+bl.getStandardDeptName()+"】为必轮科室，当前未排满轮转时长<br/>":
+						tip.getTip()+"标准科室【"+bl.getStandardDeptName()+"】为必轮科室，当前未排满轮转时长<br/>");
+				item.put("recurit",tip);
+				result = false;
+			}
+		}
+		return result;
+	}
+
+	private boolean checkUserNameItem(ArrangTdVo item,
+									  Map<String, SysUser> userMapByName){
+
+		item.setInputType("input");
+		item.setDisable(true);
+		String userName = item.getContext();
+		//校验学员是否存在
+		SysUser user = userMapByName.get(userName);
+		if (ObjectUtil.isEmpty(user)) {
+			//学员姓名不存在
+			item.setTip("姓名为【"+userName+"】的学员不存在<br/>");
+			item.setInputType("input");
+			item.setDisable(false);
+			return false;
+		}
+		return true;
+	}
+
+	private boolean checkIdNoItem(ArrangTdVo item,
+								  Map<String, SysUser> idNoMap,
+								  Map<String, Long> idNoCount,
+								  String userName){
+		item.setDisable(true);
+		item.setInputType("input");
+		if (null != idNoCount.get(item.getContext()) && idNoCount.get(item.getContext())>1) {
+			//身份证号重复
+			item.setTip("身份证号重复<br/>");
+			item.setInputType("input");
+			item.setDisable(false);
+			return false;
+		}
+		//校验身份证号是否合法
+		boolean validCard = IdcardUtil.isValidCard(item.getContext());
+		if (!validCard) {
+			//身份证号输入有误
+			item.setTip("身份证号不正确<br/>");
+			item.setInputType("input");
+			item.setDisable(false);
+			return false;
+		}
+		//姓名不存在或者同名不同证的情况
+		SysUser user = idNoMap.get(item.getContext());
+		if (ObjectUtil.isEmpty(user)) {
+			//学员姓名不存在
+			item.setTip("身份证号为【"+item.getContext()+"】的学员不存在<br/>");
+			item.setInputType("input");
+			item.setDisable(false);
+			return false;
+		}
+		if (StringUtil.isNotEmpty(userName) &&
+				!userName.equalsIgnoreCase(user.getUserName())) {
+			//姓名和证件号都能查到，但是姓名和证件号不匹配
+			item.setTip("身份证号和姓名不匹配<br/>");
+			item.setInputType("input");
+			item.setDisable(false);
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 校验科室
+	 * @param lzDeptList :可轮转的科室集合
+	 * */
+	private ArrangTdVo checkDeptItem(ArrangTdVo item,
+									 List<LzDeptItem> lzDeptList,
+									 String orgFlow){
+		item.setInputType("select");
+		item.setTip("");
+		item.setDisable(false);
+		if (CollectionUtil.isEmpty(lzDeptList)) {
+			item.setTip("暂未查询到该方案下可轮转的实际科室！<br/>");
+			item.setDisable(false);
+			return item;
+		}
+		if (StringUtils.isEmpty(orgFlow)) {
+			item.setTip("该医师暂无机构信息，无法进行排班！<br/>");
+			item.setDisable(false);
+			return item;
+		}
+		Map<String, LzDeptItem> lzMap = new HashMap<>();
+		List<SysDept> sysDepts = new ArrayList<>();
+		SysDept sysDept = new SysDept();
+		for (LzDeptItem schAndStandardDeptCfg : lzDeptList) {
+			String schDeptName = schAndStandardDeptCfg.getDeptName();
+			String orgName = schAndStandardDeptCfg.getOrgName();
+			if (StringUtils.isNotEmpty(orgName)) {
+				schDeptName = schDeptName+"（"+orgName+"）";
+			}
+			lzMap.put(schDeptName,schAndStandardDeptCfg);
+			sysDept = new SysDept();
+			sysDept.setDeptFlow(schAndStandardDeptCfg.getDeptFlow());
+			sysDept.setDeptName(schDeptName);
+			sysDepts.add(sysDept);
+		}
+		//设置下拉框选项
+		item.setSchDeptList(sysDepts);
+		//获取该科室是否在轮转科室内
+		String deptName = item.getContext();
+		if (StringUtils.isEmpty(deptName)) {
+			return item;
+		}
+		if (deptName.contains(",")) {
+			String[] split = deptName.split(",");
+			if (null !=  split &&  split.length>0) {
+				for (int i = 0; i < split.length; i++) {
+					LzDeptItem schAndStandardDeptCfg = lzMap.get(split[i]);
+					if (ObjectUtil.isEmpty(schAndStandardDeptCfg)) {
+						item.setTip("【"+split[i]+"】科室不是该方案下的轮转科室！<br/>");
+						item.setDisable(false);
+						return item;
+					}
+					item.setDeptFlow(StringUtils.isEmpty(item.getDeptFlow())? schAndStandardDeptCfg.getDeptFlow()
+							:item.getDeptFlow()+","+schAndStandardDeptCfg.getDeptFlow());
+					item.setBzDeptCodeId(StringUtils.isEmpty(item.getBzDeptCodeId())? schAndStandardDeptCfg.getBzDeptCode():
+							item.getBzDeptCodeId()+","+schAndStandardDeptCfg.getBzDeptCode());
+					item.setBzDeptPbMon(Double.valueOf("0.5"));
+				}
+			}
+			//校验总的轮转时长是否超过最低限制
+			item.setPbMonthCount(item.getPbMonthCount()+1);
+		}else  {
+			LzDeptItem schAndStandardDeptCfg = lzMap.get(deptName);
+			if (ObjectUtil.isEmpty(schAndStandardDeptCfg)) {
+				item.setTip("【"+deptName+"】科室不是该方案下的轮转科室！<br/>");
+				item.setDisable(false);
+				return item;
+			}
+			item.setDeptFlow(schAndStandardDeptCfg.getDeptFlow());
+			item.setBzDeptCodeId(schAndStandardDeptCfg.getBzDeptCode());
+			item.setBzDeptPbMon(Double.valueOf("1"));
+			//校验总的轮转时长是否超过最低限制
+			item.setPbMonthCount(item.getPbMonthCount()+1);
+		}
+		return item;
+	}
+	
 }

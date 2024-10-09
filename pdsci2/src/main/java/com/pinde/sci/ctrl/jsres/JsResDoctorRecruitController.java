@@ -1,6 +1,9 @@
 package com.pinde.sci.ctrl.jsres;
 
-
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.poi.word.WordUtil;
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
@@ -8,12 +11,11 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.core.util.ZipUtil;
-import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
-import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
-import com.pinde.sci.biz.jsres.IResDoctorArchiveBiz;
+import com.pinde.sci.biz.jsres.*;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.*;
+import com.pinde.sci.biz.sch.impl.PaiBanImportService;
 import com.pinde.sci.biz.sch.impl.SchRotationGroupBizImpl;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
@@ -23,6 +25,8 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
+import com.pinde.sci.common.util.ExcelUtile;
+import com.pinde.sci.ctrl.sch.plan.domain.Dept;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
 import com.pinde.sci.enums.jsres.JsResDoctorAuditStatusEnum;
@@ -36,11 +40,14 @@ import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
-import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
+import com.pinde.sci.model.jsres.*;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
+import liquibase.pro.packaged.E;
+import liquibase.pro.packaged.S;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hdf.extractor.WordDocument;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
@@ -55,15 +62,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -73,6 +78,7 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/jsres/doctorRecruit")
@@ -145,6 +151,11 @@ public class JsResDoctorRecruitController extends GeneralController {
 	private IDeptBiz deptBiz;
 	@Autowired
 	private ISchDeptExternalRelBiz deptExternalRelBiz;
+	@Autowired
+	private PaiBanImportService paiBanImportService;
+
+	@Autowired
+	private IJsResPowerCfgBiz jsResPowerCfgBiz;
 
 
 	private static Logger logger = LoggerFactory.getLogger(JsResDoctorRecruitController.class);
@@ -1746,6 +1757,13 @@ public class JsResDoctorRecruitController extends GeneralController {
 
 		logger.info("出科查询的参数：kzrFlow:{}", JSON.toJSONString(paramMap));
 		List<Map<String,Object>> docResultsList = schArrangeResultBiz.searchDocResultsListNew(paramMap);
+		//TODO::理论成绩 docResultsList
+		model.addAttribute("doctorScore",new HashMap<>());
+		if (CollectionUtil.isNotEmpty(docResultsList)) {
+			List<String> doctorFlow = docResultsList.stream().map(e -> (String)e.get("doctorFlow")).collect(Collectors.toList());
+			Map<String, Map<String, BigDecimal>> doctorScore = schArrangeResultBiz.getScoreByDoctorIds(doctorFlow);
+			model.addAttribute("doctorScore",doctorScore);
+		}
 		model.addAttribute("datas",datas);
 		model.addAttribute("docResultsList",docResultsList);
 		return "jsres/hospital/cycleResults2";
@@ -1959,6 +1977,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 			Map<String,String> MiniFlowMap = new HashMap<>();
 			Map<String,String> AfterFlowMap = new HashMap<>();
 			Map<String,String> AfterSummFlowMap = new HashMap<>();
+			String killScore = "0";
+			String thryScore = "0";
 			if(arrResultList!=null&&arrResultList.size()>0){
 				for(SchArrangeResult schArrangeResult:arrResultList){
 					String resultFlow = schArrangeResult.getResultFlow();
@@ -2002,6 +2022,31 @@ public class JsResDoctorRecruitController extends GeneralController {
 					}
 				}
 			}
+			//处理平均分
+			BigDecimal lilun = new BigDecimal("0");
+			int lilunCount = 0;
+			BigDecimal jineng = new BigDecimal("0");
+			int jinengCount = 0;
+			if (CollectionUtil.isNotEmpty(skillMap)) {
+				for (String processFlow : skillMap.keySet()) {
+					try {
+						Map<String, Object> content = (Map<String,Object>)skillMap.get(processFlow);
+						String ll = (String)content.get("theoreResult");
+						String jn = (String)content.get("score");
+						if (StringUtils.isNotEmpty(ll)) {
+							lilun = lilun.add(new BigDecimal(ll));
+							lilunCount ++;
+						}
+						if (StringUtils.isNotEmpty(jn)) {
+							jineng = jineng.add(new BigDecimal(jn));
+							jinengCount++;
+						}
+
+					}catch (Exception e) {
+
+					}
+				}
+			}
 			model.addAttribute("resultMap",resultMap);
 			model.addAttribute("skillMap",skillMap);
 			model.addAttribute("DOPSFlowMap",DOPSFlowMap);
@@ -2009,6 +2054,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 			model.addAttribute("AfterFlowMap",AfterFlowMap);
 			model.addAttribute("AfterSummFlowMap",AfterSummFlowMap);
 			model.addAttribute("deptMap",deptMap);
+			model.addAttribute("thrAvaScore",lilunCount>0? lilun.divide(new BigDecimal(lilunCount),2,BigDecimal.ROUND_HALF_DOWN):0);
+			model.addAttribute("killAvaScore",jinengCount>0? jineng.divide(new BigDecimal(jinengCount),2,BigDecimal.ROUND_HALF_DOWN):0);
 		}
 		return "jsres/hospital/cycleDetails2";
 	}
@@ -3776,8 +3823,20 @@ public class JsResDoctorRecruitController extends GeneralController {
 		List<SysDept> deptList = deptBiz.searchDept(sysDept);
 		model.addAttribute("deptList", deptList);
 		model.addAttribute("sessionNumber",DateUtil.getYear());
+		model.addAttribute("checkOpen","N");
+		//查询是否需要校验
+		JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_" + GlobalContext.getCurrentUser().getOrgFlow());
+		if (ObjectUtil.isEmpty(openCfg) || StringUtils.isEmpty(openCfg.getCfgValue())) {
+			model.addAttribute("checkOpen","N");
+		}else if ("Y".equalsIgnoreCase(openCfg.getCfgValue())) {
+			model.addAttribute("checkOpen","Y");
+		}else {
+			model.addAttribute("checkOpen","N");
+		}
 		return "jsres/hospital/schedulingAudit";
 	}
+
+
 
 	//排班审核  助理全科
 	@RequestMapping(value = "/schedulingAuditAcc")
@@ -3863,7 +3922,30 @@ public class JsResDoctorRecruitController extends GeneralController {
 		model.addAttribute("list",list);
 		return "jsres/hospital/importSchedulingAudit";
 	}
+	@RequestMapping(value = "/importSchedulingAudit2")
+	public String importSchedulingAudit2(Model model) {
+		return "jsres/hospital/importSchedulingAudit2";
+	}
+	@GetMapping(value = "/importSchedulingAudit2Dept")
+	@ResponseBody
+	public List<SysDept> importSchedulingAudit2Dept(Model model) {
+		SysDept sysDept = new SysDept();
+		sysDept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
+		List<SysDept> deptList = deptBiz.searchDept(sysDept);
+		return deptList;
+	}
 
+	@RequestMapping(value = "jumpImportSchedulingAuditCache")
+	public String jumpImportSchedulingAuditCache(Model model) {
+
+		return "jsres/hospital/importSchedulingAuditCache";
+	}
+
+	@RequestMapping(value = "/importSchedulingiImport")
+	public String importSchedulingiImport(Model model) {
+		logger.info("跳转到导入页面");
+		return "jsres/hospital/schedulingAuditImportList";
+	}
 
 	//排班  下载导入模板
 	@RequestMapping(value = "/expertSchTemp")
@@ -3934,18 +4016,33 @@ public class JsResDoctorRecruitController extends GeneralController {
 			}*/
 
 			//轮转科室下拉框填空
-			SysDept sysDept = new SysDept();
-			sysDept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-			List<SysDept> schDeptList = deptBiz.searchDept(sysDept);
-			List<SchDeptExternalRel> schDeptExternalRels = deptExternalRelBiz.readSchDeptExtRelByRelOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
+//			SysDept sysDept = new SysDept();
+//			sysDept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
+//			List<SysDept> schDeptList = deptBiz.searchDept(sysDept);
+//			List<SchDeptExternalRel> schDeptExternalRels = deptExternalRelBiz.readSchDeptExtRelByRelOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 			ArrayList<String> list = new ArrayList<>();
-			for (SysDept dept : schDeptList) {
-				list.add(dept.getDeptName().trim());
-			}
-			//对外开发科室
-			if(CollectionUtils.isNotEmpty(schDeptExternalRels)){
-				for (SchDeptExternalRel schDeptExternalRel : schDeptExternalRels) {
-					list.add(schDeptExternalRel.getDeptName());
+//			for (SysDept dept : schDeptList) {
+//				list.add(dept.getDeptName().trim());
+//			}
+//			//对外开发科室
+//			if(CollectionUtils.isNotEmpty(schDeptExternalRels)){
+//				for (SchDeptExternalRel schDeptExternalRel : schDeptExternalRels) {
+//					list.add(schDeptExternalRel.getDeptName()+"（"+schDeptExternalRel.getOrgName()+"）");
+//				}
+//			}
+			//新的获取轮转科室下拉框的方法
+			List<LzDeptItem> lzDeptItems = paiBanImportService.deptSelectData(GlobalContext.getCurrentUser().getOrgFlow());
+			if (CollectionUtil.isNotEmpty(lzDeptItems)) {
+				for (LzDeptItem lzDeptItem : lzDeptItems) {
+					if (StringUtils.isEmpty(lzDeptItem.getOrgFlow())) {
+						continue;
+					}
+					if (lzDeptItem.getOrgFlow().equalsIgnoreCase(GlobalContext.getCurrentUser().getOrgFlow())) {
+						list.add(lzDeptItem.getDeptName().trim());
+					}
+					else {
+						list.add(lzDeptItem.getDeptName()+"（"+lzDeptItem.getOrgName()+"）");
+					}
 				}
 			}
 			String[] deptArray = list.toArray(new String[list.size()]);
@@ -3957,7 +4054,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 				//一个流 两个头
 				//文件名称
 				String filename = "排班安排导入模板.xls";
-				response.setContentType("application/ms-excel");
+				response.setContentType("application/ms-excel;charset=UTF-8");
 				response.setCharacterEncoding("UTF-8");
 				String encodedFileName = null;
 				if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0) {
@@ -4058,6 +4155,52 @@ public class JsResDoctorRecruitController extends GeneralController {
 			}
 		}
 		return GlobalConstant.UPLOAD_FAIL+msg;
+	}
+
+
+	/**
+	 * ~~~~~~~~~溺水的鱼~~~~~~~~
+	 * @Author: 吴强
+	 * @Date: 2024/9/18 15:04
+	 * @Description: 解析excel数据,此处解析excel导入的文件表头和数据
+	 */
+	@RequestMapping(value = {"/parseSchedulingAuditExcelCache"}, method = {RequestMethod.POST})
+	@ResponseBody
+	public Map<String,Object> importSchedulingAuditExcelCache(MultipartFile file,Model model,HttpServletResponse response){
+		logger.info("导入文件：：：：：：：：：：：：：：：：：：：：：：：：：：");
+		Map<String, Object> map = new HashMap<>();
+		List<String> headers = new ArrayList<>();
+		List<Map<Object, Object>> data = new ArrayList<>();
+		map.put("headers",headers);
+		map.put("data",data);
+		if (file.isEmpty()) {
+			return map;
+		}
+		try {
+			map = schArrangeResultBiz.importSchedulingAuditExcelCache(file);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			return map;
+		}
+	}
+
+	@PostMapping("/updateItemImportData")
+	@ResponseBody
+	public Map<String,Object> updateItemImportData(@RequestBody List<Map<String, ArrangTdVo>> data){
+		return schArrangeResultBiz.updateImportData(data);
+	}
+
+	@PostMapping("/saveDbImportArrang")
+	@ResponseBody
+	public Map<String,Object> saveDbImportArrang(@RequestBody List<Map<String, ArrangTdVo>> data) throws ParseException {
+		return schArrangeResultBiz.saveDbImportArrang(data);
+	}
+
+	@PostMapping("/submitImportData")
+	@ResponseBody
+	public Map<String,Object> submitImportData(@RequestBody List<Map<String, ArrangTdVo>> data){
+		return schArrangeResultBiz.submitImportData(data);
 	}
 
 	@RequestMapping(value = {"/importSchedulingAuditExcelAcc"}, method = {RequestMethod.POST})

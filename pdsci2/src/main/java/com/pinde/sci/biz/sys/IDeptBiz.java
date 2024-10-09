@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.sys;
 
-import com.pinde.sci.model.mo.SysDept;
-import com.pinde.sci.model.mo.SysUserDept;
+import com.pinde.sci.model.mo.*;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 public interface IDeptBiz {
+
+    List<SysDept> selectByDeptId(String rotationFlow,String orgFlow);
+    List<SchAndStandardDeptCfg> getSchDeptByBzIds(List<String> bzDeptIds,List<String> orgFlows,String orgFlow);
+
+    List<String> relToMeOrgFlow(String myOrgFlow);
     SysDept readSysDept(String sysDeptFlow);
 
     int saveDept(SysDept sysDept);
