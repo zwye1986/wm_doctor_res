@@ -568,7 +568,12 @@ public class ExcleUtile {
 					 if(StringUtil.isBlank(paramId)){//序号
 						 result = i+1;
 					 }else if(Objects.equals("armyType",paramId)){
-						 result = ArmyTypeEnum.getNameById(getValueByAttrs(paramId,item).toString());
+						 Object ob = getValueByAttrs(paramId,item);
+						 if(null == ob || ob.equals("")){
+							 result = "";
+						 }else{
+							 result = ArmyTypeEnum.getNameById(getValueByAttrs(paramId,item).toString());
+						 }
 					 }else{
 						 result = getValueByAttrs(paramId,item);
 					 }

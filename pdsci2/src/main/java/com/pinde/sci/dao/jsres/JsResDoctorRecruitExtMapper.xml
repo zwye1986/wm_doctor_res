@@ -21,6 +21,7 @@
 			<result column="DOCTOR_TYPE_ID" jdbcType="VARCHAR" property="doctorTypeId"/>
 			<result column="DOCTOR_TYPE_NAME" jdbcType="VARCHAR" property="doctorTypeName"/>
 			<result column="WORK_ORG_ID" jdbcType="VARCHAR" property="workOrgId"/>
+			<result column="WORK_ORG_NAME" jdbcType="VARCHAR" property="workOrgName"/>
 		</association>
 	</resultMap>
 	<resultMap id="DoctorRecruitNew" type="com.pinde.sci.model.jsres.JsResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
@@ -325,6 +326,9 @@
 			<foreach collection="trainYearList" open="(" separator="," close=")" item="item">#{item}</foreach>
 		</if>
 		)
+		<if test="workOrgId != null and workOrgId !=''">
+			and ed.WORK_ORG_ID = #{workOrgId}
+		</if>
 		<if test="isArmy!=null and isArmy!='' and isArmy=='Y'.toString()">
 			AND pur.user_resume IS NOT NULL
 			AND EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') IS NOT NULL
@@ -474,6 +478,9 @@
 				 <foreach collection="trainYearList" open="(" separator="," close=")" item="item">#{item}</foreach>
 			 </if>
     		)
+		 <if test="workOrgId != null and workOrgId !=''">
+			 and ed.WORK_ORG_ID = #{workOrgId}
+		 </if>
 		 <if test="isArmy!=null and isArmy!='' and isArmy=='Y'.toString()">
 			 AND pur.user_resume IS NOT NULL
 			 AND EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') IS NOT NULL
@@ -1954,7 +1961,8 @@
 			ED.ORG_NAME AS EDORGNAME,
 			ED.DOCTOR_TYPE_NAME,
 			ED.DOCTOR_TYPE_ID,
-			ED.WORK_ORG_ID
+			ED.WORK_ORG_ID,
+			ED.WORK_ORG_NAME
 			<if test="isArmy!=null and isArmy!=''">
 				, EXTRACTVALUE(XMLTYPE(pur.user_resume), '/userResumeExtInfoForm/armyType') as ARMY_TYPE
 			</if>
@@ -1967,6 +1975,9 @@
 		</if>
 		WHERE
 			DR.RECORD_STATUS = 'Y'
+		<if test="workOrgId != null and workOrgId !=''">
+			and ED.WORK_ORG_ID = #{workOrgId}
+		</if>
 		<if test="isArmy!=null and isArmy!='' and isArmy=='Y'.toString()">
 			AND pur.user_resume IS NOT NULL
 			AND EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') IS NOT NULL
@@ -3401,13 +3412,16 @@
         u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL
         , u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID,
         u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
-        ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName,ed.doctor_type_name,ed.doctor_type_id
+        ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName,ed.doctor_type_name,ed.doctor_type_id,ed.WORK_ORG_NAME
         from pdsci.RES_DOCTOR_RECRUIT dr
         left join pdsci.SYS_USER u
         on dr.DOCTOR_FLOW = u.USER_FLOW
         left join RES_DOCTOR ed
         on dr.DOCTOR_FLOW = ed.DOCTOR_FLOW
         where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y'
+		<if test="workOrgId != null and workOrgId !=''">
+			and ed.WORK_ORG_ID = #{workOrgId}
+		</if>
 		<if test="userOrgFlow != null and userOrgFlow !=''">
 			and ed.SECOND_ORG_FLOW = #{userOrgFlow}
 		</if>
