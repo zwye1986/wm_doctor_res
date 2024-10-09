@@ -99,7 +99,7 @@ public interface IJsResDoctorRecruitBiz {
     List<JsDoctorInfoExt> searchDoctorInfoResume(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList);
     List<JsDoctorInfoExt> searchDoctorInfoResume1(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList, List<String>trainYearList,List<String> sessionNumbers,String baseFlag);
     List<JsDoctorInfoExt> searchDoctorInfoResume2(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList, List<String>trainYearList,List<String> sessionNumbers,String baseFlag);
-    List<JsDoctorInfoExt> searchDoctorInfoResume3(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList, List<String>trainYearList,List<String> sessionNumbers,String baseFlag,String isPostpone,String isArmy);
+    List<JsDoctorInfoExt> searchDoctorInfoResume3(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList, List<String>trainYearList,List<String> sessionNumbers,String baseFlag,String isPostpone,String isArmy, String workOrgId);
 
 //	List<JsDoctorInfoExt> searchDoctorInfo(ResDoctorRecruit resDoctorRecruit,ResDoctor doctor,SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList,String flag,List<String>docTypeList);
 
@@ -134,7 +134,7 @@ public interface IJsResDoctorRecruitBiz {
                                                       List<String> sessionNumbers, String baseFlag,String userOrgFlow, String newFlag,String isJointOrg);
     List<JsResDoctorRecruitExt> searchDoctorInfoExts2(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg,
                                                       List<String> jointOrgFlowList, String flag, List<String> docTypeList,List<String> trainYearList,
-                                                      List<String> sessionNumbers, String baseFlag,String userOrgFlow, String newFlag,String isJointOrg,String isPostpone,String isArmy);
+                                                      List<String> sessionNumbers, String baseFlag,String userOrgFlow, String newFlag,String isJointOrg,String isPostpone,String isArmy,String workOrgId);
 
     /**
      * 理论成绩查询
