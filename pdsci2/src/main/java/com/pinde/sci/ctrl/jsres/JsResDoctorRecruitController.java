@@ -2906,7 +2906,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 	public String doctorRecruitSun(Model model,Integer currentPage,String roleFlag, HttpServletRequest request,ResDoctor doctor,
 								   SysUser user,String baseId,String jointOrgFlag,String derateFlag,String orgLevel,String[] datas,
 								   String[] yearDatas,String graduationYear,String isPostpone,String orgCityId,String baseFlag,
-								   String flag,String isRetrain){
+								   String flag,String isRetrain,String isArmy){
 		ResDoctorRecruit resDoctorRecruit= new ResDoctorRecruit();
 		if(StringUtil.isNotBlank(graduationYear)){
 			resDoctorRecruit.setGraduationYear(graduationYear);
@@ -3095,7 +3095,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 					}
 				}
 			}
-			doctorList = jsResDoctorRecruitBiz.searchDoctorInfoExts2(resDoctorRecruit,doctor, sysUser, org, jointOrgFlowList, derateFlag,docTypeList,trainYearList,sessionNumbers,baseFlag,userOrgFlow,flag,isJointOrg,isPostpone);
+			doctorList = jsResDoctorRecruitBiz.searchDoctorInfoExts2(resDoctorRecruit,doctor, sysUser, org, jointOrgFlowList, derateFlag,docTypeList,trainYearList,sessionNumbers,baseFlag,userOrgFlow,flag,isJointOrg,isPostpone,isArmy);
 		}
 		Map<String, List<ResResponsibleteacherDoctor>> teaMap = new HashMap<>();
 		ResResponsibleteacherDoctor search = new ResResponsibleteacherDoctor();

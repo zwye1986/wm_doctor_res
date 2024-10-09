@@ -1,5 +1,6 @@
 package com.pinde.core.util;
 
+import com.pinde.core.commom.enums.ArmyTypeEnum;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -566,6 +567,8 @@ public class ExcleUtile {
 					 String paramId = paramIds.get(j);
 					 if(StringUtil.isBlank(paramId)){//序号
 						 result = i+1;
+					 }else if(Objects.equals("armyType",paramId)){
+						 result = ArmyTypeEnum.getNameById(getValueByAttrs(paramId,item).toString());
 					 }else{
 						 result = getValueByAttrs(paramId,item);
 					 }

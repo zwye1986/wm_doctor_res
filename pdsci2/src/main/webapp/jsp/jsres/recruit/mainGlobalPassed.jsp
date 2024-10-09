@@ -459,6 +459,16 @@ function exportForDetail(){
 					</td>
 
 				</tr>
+				<tr>
+					<td class="td_left">军队人员：</td>
+					<td>
+						<select name="isArmy" id="isArmy"class="select " >
+							<option value="">全部</option>
+							<option value="Y">是</option>
+							<option value="N">否</option>
+						</select>
+					</td>
+				</tr>
 				<tr id="jointOrg">
 
 					<%--<td id='jointOrg'style="display: none;" colspan="2">--%>

@@ -50,6 +50,8 @@ public class JsResDoctorRecruitExt extends ResDoctorRecruit{
 
 	private String workSchoolName;
 
+	private String armyType;
+
 	public String getWorkSchoolName() {
 		return workSchoolName;
 	}
@@ -252,5 +254,13 @@ public class JsResDoctorRecruitExt extends ResDoctorRecruit{
 
 	public void setGlobalNotice(String globalNotice) {
 		this.globalNotice = globalNotice;
+	}
+
+	public String getArmyType() {
+		return armyType;
+	}
+
+	public void setArmyType(String armyType) {
+		this.armyType = armyType;
 	}
 }

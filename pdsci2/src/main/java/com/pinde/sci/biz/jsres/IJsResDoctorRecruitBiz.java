@@ -27,7 +27,7 @@ public interface IJsResDoctorRecruitBiz {
     List<JsResDoctorRecruitExt> resDoctorRecruitExtList(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> org,List<String> docTypeList);
     List<JsResDoctorRecruitExt> resDoctorRecruitExtList1(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> org,List<String> docTypeList,List<String> sessionNumbers);
     List<JsResDoctorRecruitExt> resDoctorRecruitExtNew(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> jointOrgList,
-                                                       List<String> docTypeList,List<String> sessionNumbers,String joinOrgFlow,String isJointOrg);
+                                                       List<String> docTypeList,List<String> sessionNumbers,String joinOrgFlow,String isJointOrg,String isArmy);
     List<JsResDoctorRecruitExt> resDoctorRecruitExtList2(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> org,List<String> docTypeList,List<String> sessionNumbers,String sortType,String scoreType);
     List<JsResDoctorRecruitExt> resDoctorRecruitExtList3(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> org,List<String> docTypeList,List<String> sessionNumbers,String sortType,String scoreType);
     List<JsResDoctorRecruitExt> resDoctorRecruitExtList3New(ResDoctorRecruit resDoctorRecruit);
@@ -99,7 +99,7 @@ public interface IJsResDoctorRecruitBiz {
     List<JsDoctorInfoExt> searchDoctorInfoResume(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList);
     List<JsDoctorInfoExt> searchDoctorInfoResume1(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList, List<String>trainYearList,List<String> sessionNumbers,String baseFlag);
     List<JsDoctorInfoExt> searchDoctorInfoResume2(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList, List<String>trainYearList,List<String> sessionNumbers,String baseFlag);
-    List<JsDoctorInfoExt> searchDoctorInfoResume3(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList, List<String>trainYearList,List<String> sessionNumbers,String baseFlag,String isPostpone);
+    List<JsDoctorInfoExt> searchDoctorInfoResume3(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList, List<String>trainYearList,List<String> sessionNumbers,String baseFlag,String isPostpone,String isArmy);
 
 //	List<JsDoctorInfoExt> searchDoctorInfo(ResDoctorRecruit resDoctorRecruit,ResDoctor doctor,SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList,String flag,List<String>docTypeList);
 
@@ -134,7 +134,7 @@ public interface IJsResDoctorRecruitBiz {
                                                       List<String> sessionNumbers, String baseFlag,String userOrgFlow, String newFlag,String isJointOrg);
     List<JsResDoctorRecruitExt> searchDoctorInfoExts2(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg,
                                                       List<String> jointOrgFlowList, String flag, List<String> docTypeList,List<String> trainYearList,
-                                                      List<String> sessionNumbers, String baseFlag,String userOrgFlow, String newFlag,String isJointOrg,String isPostpone);
+                                                      List<String> sessionNumbers, String baseFlag,String userOrgFlow, String newFlag,String isJointOrg,String isPostpone,String isArmy);
 
     /**
      * 理论成绩查询

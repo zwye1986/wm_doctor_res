@@ -12,6 +12,7 @@
 		<result column="GLOBAL_REASON" jdbcType="VARCHAR" property="globalReason"/>
 		<result column="RANK_NUM" jdbcType="VARCHAR" property="rankNum"/>
 		<result column="IS_RETRAIN" jdbcType="VARCHAR" property="isRetrain"/>
+		<result column="ARMY_TYPE" jdbcType="VARCHAR" property="armyType"/>
 		<association property="sysUser" column="user_flow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
 		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" >
 			<id column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
@@ -59,6 +60,7 @@
 		</association>
 	</resultMap>
 	<resultMap id="doctorInfo" type="com.pinde.sci.model.jsres.JsDoctorInfoExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
+		<result column="ARMY_TYPE" jdbcType="VARCHAR" property="armyType"/>
 		<association property="sysUser" column="userFlow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
 		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" />
 		<association property="userResume" column="userFlow"  resultMap="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs" />
@@ -256,7 +258,10 @@
     </select>
 
 	<select id="searchDoctorInfoExts2"  parameterType="java.util.Map" resultMap="doctorInfo">
-		select *
+		select dr.*,ed.*,u.*,pur.*,so.*
+		<if test="isArmy!=null and isArmy!=''">
+			, EXTRACTVALUE(XMLTYPE(pur.user_resume), '/userResumeExtInfoForm/armyType') as ARMY_TYPE
+		</if>
 		from pdsci.RES_DOCTOR_RECRUIT dr
 		left join  RES_DOCTOR ed
 		on dr.DOCTOR_FLOW =  ed.DOCTOR_FLOW
@@ -320,6 +325,20 @@
 			<foreach collection="trainYearList" open="(" separator="," close=")" item="item">#{item}</foreach>
 		</if>
 		)
+		<if test="isArmy!=null and isArmy!='' and isArmy=='Y'.toString()">
+			AND pur.user_resume IS NOT NULL
+			AND EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') IS NOT NULL
+			AND EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') != 'NO'
+		</if>
+		<if test="isArmy!=null and isArmy!='' and isArmy=='N'.toString()">
+			AND pur.user_resume IS NOT NULL
+			AND
+			(
+			EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') = 'NO'
+			OR
+			EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') IS NULL
+			)
+		</if>
 		<if test="resDoctorRecruit!=null">
 			<if test="resDoctorRecruit.sessionNumber!=null and resDoctorRecruit.sessionNumber!=''">
 				and dr.SESSION_NUMBER = #{resDoctorRecruit.sessionNumber}
@@ -408,7 +427,10 @@
 	</select>
 
 	 <select id="searchDoctorInfoBaseExts"  parameterType="java.util.Map" resultMap="doctorInfo">
-    	select *
+    	select dr.*,ed.*,u.*,pur.*,so.*
+			 <if test="isArmy!=null and isArmy!=''">
+				 , EXTRACTVALUE(XMLTYPE(pur.user_resume), '/userResumeExtInfoForm/armyType') as ARMY_TYPE
+			 </if>
     		from pdsci.RES_DOCTOR_RECRUIT dr
 			left join  RES_DOCTOR ed
 			on dr.DOCTOR_FLOW =  ed.DOCTOR_FLOW
@@ -452,6 +474,20 @@
 				 <foreach collection="trainYearList" open="(" separator="," close=")" item="item">#{item}</foreach>
 			 </if>
     		)
+		 <if test="isArmy!=null and isArmy!='' and isArmy=='Y'.toString()">
+			 AND pur.user_resume IS NOT NULL
+			 AND EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') IS NOT NULL
+			 AND EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') != 'NO'
+		 </if>
+		 <if test="isArmy!=null and isArmy!='' and isArmy=='N'.toString()">
+			 AND pur.user_resume IS NOT NULL
+			 AND
+			 (
+			 EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') = 'NO'
+			 OR
+			 EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') IS NULL
+			 )
+		 </if>
     		<if test="resDoctorRecruit!=null">
     			<if test="resDoctorRecruit.sessionNumber!=null and resDoctorRecruit.sessionNumber!=''">
     				and dr.SESSION_NUMBER = #{resDoctorRecruit.sessionNumber}
@@ -1919,12 +1955,32 @@
 			ED.DOCTOR_TYPE_NAME,
 			ED.DOCTOR_TYPE_ID,
 			ED.WORK_ORG_ID
+			<if test="isArmy!=null and isArmy!=''">
+				, EXTRACTVALUE(XMLTYPE(pur.user_resume), '/userResumeExtInfoForm/armyType') as ARMY_TYPE
+			</if>
 		FROM
 			RES_DOCTOR_RECRUIT DR
 		LEFT JOIN PDSCI.SYS_USER U ON DR.DOCTOR_FLOW = U .USER_FLOW
 		LEFT JOIN RES_DOCTOR ED ON DR.DOCTOR_FLOW = ED.DOCTOR_FLOW
+		<if test="isArmy!=null and isArmy!=''">
+			INNER JOIN PUB_USER_RESUME pur ON DR.DOCTOR_FLOW = pur.USER_FLOW AND pur.RECORD_STATUS = 'Y'
+		</if>
 		WHERE
 			DR.RECORD_STATUS = 'Y'
+		<if test="isArmy!=null and isArmy!='' and isArmy=='Y'.toString()">
+			AND pur.user_resume IS NOT NULL
+			AND EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') IS NOT NULL
+			AND EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') != 'NO'
+		</if>
+		<if test="isArmy!=null and isArmy!='' and isArmy=='N'.toString()">
+			AND pur.user_resume IS NOT NULL
+			AND
+			(
+			EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') = 'NO'
+			OR
+			EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') IS NULL
+			)
+		</if>
 		AND U .RECORD_STATUS = 'Y'
 		AND NOT EXISTS (
 			SELECT

@@ -3686,7 +3686,7 @@ public class JsResManageController extends GeneralController {
 	 */
 	@RequestMapping(value = "/recruitList")
 	public String doctorRecruitList(ResDoctorRecruit resDoctorRecruit, SysUser sysUser,String roleFlag, Integer currentPage, HttpServletRequest request,
-									Model model, String datas[],String studentType,String joinOrgFlow,String orgFlow,String signupWay) {
+									Model model, String datas[],String studentType,String joinOrgFlow,String orgFlow,String signupWay,String isArmy) {
 		List<String> sessionNumbers = new ArrayList<String>();//年级多选
 		if (StringUtil.isNotBlank(resDoctorRecruit.getSessionNumber())) {
 			String[] numbers = resDoctorRecruit.getSessionNumber().split(",");
@@ -3794,7 +3794,7 @@ public class JsResManageController extends GeneralController {
 		}
 		PageHelper.startPage(currentPage, getPageSize(request));
 //		List<JsResDoctorRecruitExt> recruitList = jsResDoctorRecruitBiz.resDoctorRecruitExtList1(resDoctorRecruit, sysUser, jointOrgFlowList, docTypeList, sessionNumbers);
-		List<JsResDoctorRecruitExt> recruitList = jsResDoctorRecruitBiz.resDoctorRecruitExtNew(resDoctorRecruit, sysUser, jointOrgFlowList, docTypeList, sessionNumbers,joinOrgFlow,isJointOrg);
+		List<JsResDoctorRecruitExt> recruitList = jsResDoctorRecruitBiz.resDoctorRecruitExtNew(resDoctorRecruit, sysUser, jointOrgFlowList, docTypeList, sessionNumbers,joinOrgFlow,isJointOrg,isArmy);
 		for (JsResDoctorRecruitExt recruitExt : recruitList) {
 			if(StringUtil.isNotEmpty(recruitExt.getIsRetrain())){
 				if(GlobalConstant.FLAG_Y.equals(recruitExt.getIsRetrain())){
@@ -3836,7 +3836,7 @@ public class JsResManageController extends GeneralController {
 	@RequestMapping(value = "/exportRecruitList")
 	public void exportRecruitList(HttpServletResponse response,ResDoctorRecruit resDoctorRecruit,String roleFlag, SysUser sysUser,
 								  Integer currentPage, HttpServletRequest request, Model model, String datas[],
-								  String studentType,String joinOrgFlow,String orgFlow) throws Exception {
+								  String studentType,String joinOrgFlow,String orgFlow,String isArmy) throws Exception {
 		List<String> sessionNumbers = new ArrayList<String>();//年级多选
 		if (StringUtil.isNotBlank(resDoctorRecruit.getSessionNumber())) {
 			String[] numbers = resDoctorRecruit.getSessionNumber().split(",");
@@ -3926,7 +3926,7 @@ public class JsResManageController extends GeneralController {
 			isJointOrg = "Y";
 		}
 //		List<JsResDoctorRecruitExt> recruitList = jsResDoctorRecruitBiz.resDoctorRecruitExtList1(resDoctorRecruit, sysUser, null, docTypeList, sessionNumbers);
-		List<JsResDoctorRecruitExt> recruitList = jsResDoctorRecruitBiz.resDoctorRecruitExtNew(resDoctorRecruit, sysUser, jointOrgFlowList, docTypeList, sessionNumbers,joinOrgFlow,isJointOrg);
+		List<JsResDoctorRecruitExt> recruitList = jsResDoctorRecruitBiz.resDoctorRecruitExtNew(resDoctorRecruit, sysUser, jointOrgFlowList, docTypeList, sessionNumbers,joinOrgFlow,isJointOrg,isArmy);
 
 		// 增加几个导出字段 性别/年龄/ 地址/工作单位 /毕业院校/毕业时间
 		// /毕业院校/毕业时间 根据最高学历，从PubUserResume里取

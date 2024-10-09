@@ -29,6 +29,8 @@ public class UserInfoExtForm implements Serializable{
 	 */
 	private String trainEndYearMonth;
 
+	private String armyType;
+
 	private SysUser sysUser;
 	private ResDoctor doctor;
 	private UserResumeExtInfoForm userResumeExt;
@@ -80,5 +82,13 @@ public class UserInfoExtForm implements Serializable{
 
 	public void setTrainEndYearMonth(String trainEndYearMonth) {
 		this.trainEndYearMonth = trainEndYearMonth;
+	}
+
+	public String getArmyType() {
+		return armyType;
+	}
+
+	public void setArmyType(String armyType) {
+		this.armyType = armyType;
 	}
 }

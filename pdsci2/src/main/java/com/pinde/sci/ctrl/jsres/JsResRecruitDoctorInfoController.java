@@ -22,6 +22,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.SysCfgMapper;
 import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
+import com.pinde.sci.enums.res.ArmyTypeEnum;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
@@ -382,7 +383,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 					   String trainingSpeId, String sessionNumber,
 					   String graduationYear, String idNo,String doctorStatusId,String signupWay,
 					   String userName, String workOrgName, String[] datas, String[] yearDatas,
-					   String jointOrgFlag,String auditStatusId,String studentType,String joinOrgFlow){
+					   String jointOrgFlag,String auditStatusId,String studentType,String joinOrgFlow,String isArmy) throws DocumentException {
 
 		SysUser sysuser=GlobalContext.getCurrentUser();
 		SysOrg sysOrg=orgBiz.readSysOrg(sysuser.getOrgFlow());
@@ -475,7 +476,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 					}
 					List<SysOrg>exitOrgs=orgBiz.searchOrg(searchOrg);
 					for(SysOrg g:exitOrgs){
-						List<ResJointOrg> resJointOrgList=jointOrgBiz.searchResJointByOrgFlow(g.getOrgFlow());
+						List<ResJointOrg> resJointOrgList=jointOrgBiz.searchResJointByOrgFlowNotSessionYear(g.getOrgFlow());
 						if(resJointOrgList!=null&&!resJointOrgList.isEmpty()){
 							for(ResJointOrg jointOrg:resJointOrgList){
 								if(StringUtil.isNotBlank(orgCityId)) {
@@ -495,7 +496,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		}else{
 			jointOrgFlowList.add(orgFlow);
 			//选择主培训基地 直接查询主基地以及协同基地数据 2021/5/7修改
-			List<ResJointOrg> resJointOrgList=jointOrgBiz.searchResJointByOrgFlow(orgFlow);
+			List<ResJointOrg> resJointOrgList=jointOrgBiz.searchResJointByOrgFlowNotSessionYear(orgFlow);
 			if(resJointOrgList!=null&&!resJointOrgList.isEmpty()) {
 				for (ResJointOrg jointOrg : resJointOrgList) {
 					String cityId = orgBiz.readSysOrg(jointOrg.getJointOrgFlow()).getOrgCityId();
@@ -533,8 +534,23 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		param.put("jointOrgFlowList",jointOrgFlowList);
 		param.put("joinOrgFlow",joinOrgFlow);
 		param.put("signupWay",signupWay);
+		param.put("isArmy",isArmy);
 		PageHelper.startPage(currentPage,getPageSize(request));
 		List<Map<String,Object>> doctorList = recruitDoctorInfoBiz.searchRecruitDoctorInfos(param);
+
+//		for(Map<String,Object> map : doctorList){
+//			Object userResume = map.get("userResume");
+//			if(null != userResume){
+//				UserResumeExtInfoForm userResumeExt = userResumeBiz.converyToJavaBean(userResume.toString(), UserResumeExtInfoForm.class);
+//				// 是否军队人员
+//				String armyType = userResumeExt.getArmyType();
+//				String armyName = "否";
+//				if (StringUtil.isNotBlank(armyType)) {
+//					armyName = ArmyTypeEnum.getNameById(armyType);
+//				}
+//				map.put("armyName",armyName);
+//			}
+//		}
 
 		model.addAttribute("roleFlag",roleFlag);
 		model.addAttribute("doctorList",doctorList);
@@ -3690,7 +3706,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 								 String trainingSpeId, String sessionNumber,
 								 String graduationYear, String idNo,String doctorStatusId,
 								 String userName, String workOrgName,String[] datas, String[] yearDatas,
-								 String jointOrgFlag,String joinOrgFlow)throws Exception{
+								 String jointOrgFlag,String joinOrgFlow,String isArmy)throws Exception{
 
 		SysUser sysuser=GlobalContext.getCurrentUser();
 		SysOrg sysOrg=orgBiz.readSysOrg(sysuser.getOrgFlow());
@@ -3830,6 +3846,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		param.put("orgLevel",orgLevel);
 		param.put("jointOrgFlowList",jointOrgFlowList);
 		param.put("joinOrgFlow",joinOrgFlow);
+		param.put("isArmy",isArmy);
 //		List<JsRecruitDocInfoExt> doctorInfoExts= recruitDoctorInfoBiz.searchRecruitDoctorInfosByResume(param);
 //		jsResDoctorBiz.exportForRecruitDetail(doctorInfoExts,titleYear, response);
 		List<JsresDoctorInfoExt> doctorInfoExts= recruitDoctorInfoBiz.searchRecruitDoctorInfosByResume3(param);
