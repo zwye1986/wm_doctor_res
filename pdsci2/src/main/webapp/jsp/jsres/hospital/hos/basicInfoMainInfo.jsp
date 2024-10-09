@@ -584,7 +584,7 @@
 </div>
 
 <div class="div_table">
-    <h4  onclick="showTable('tj')">基本条件</h4>
+    <h4  onclick="showTable('tj')"><span class="red">*</span>基本条件</h4>
     <img id="tjdown" src="<s:url value='/jsp/jsres/images/down3.png'/>" onclick="showTable('tj');"
          style="float:right;width: 20px;height: 20px;margin-right: 40px;margin-top: -35px"/>
     <img id="tjup" src="<s:url value='/jsp/jsres/images/up3.png'/>" onclick="showTable('tj');"
@@ -678,7 +678,7 @@
                 <td>
                     <c:if test="${baseExtInfoEducationInfo.trainManageSystem eq 'Y' and not empty baseExtInfoEducationInfo.trainManageSystemUrl}">
                         <a href="${sysCfgMap['upload_base_url']}/${baseExtInfoEducationInfo.trainManageSystemUrl}"
-                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看</a>
+                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看文件</a>
                     </c:if>
                 </td>
             </tr>
@@ -687,7 +687,7 @@
                 <td>
                     <c:if test="${baseExtInfoEducationInfo.clinicalBaseTrainContract eq 'Y' and not empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl}">
                         <a href="${sysCfgMap['upload_base_url']}/${baseExtInfoEducationInfo.clinicalBaseTrainContractUrl}"
-                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看</a>
+                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看文件</a>
                     </c:if>
                 </td>
                 <th style="background-color: #f4f5f9;"><span class="red">*</span>教学门诊：</th>

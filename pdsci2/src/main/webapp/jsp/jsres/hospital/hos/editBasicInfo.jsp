@@ -45,7 +45,7 @@
 </style>
 <script type="text/javascript">
 	function saveBaseInfo(){
-		if(!$("#BaseInfoForm").validationEngine("validate") || !checkSetJointOrg()){ // 新加了协同单位相关内容，保存时校验并组织数据
+		if(!$("#BaseInfoForm").validationEngine("validate") || !checkSetJointOrg() || !checkOthers()){ // 新加了协同单位相关内容，保存时校验并组织数据
 			$("#indexBody").scrollTop("0px");
 			return false;
 		}
@@ -74,6 +74,20 @@
 				},1000);
 			}
 		} , null , true);
+	}
+
+	function checkOthers() {
+		if(!$("#hospitalLevelLicenceUrlValue").val()) {
+			jboxTip("请添加医院等级证书！");
+			return false;
+		}
+
+		if(!$("#professionLicenceUrlValue").val()) {
+			jboxTip("请添加执业许可证！");
+			return false;
+		}
+
+		return true;
 	}
 
 	function checkSetJointOrg() {
@@ -195,10 +209,6 @@
 
 	function addFile(obj) {
 		var td = obj.parentNode;
-		if($(td).find("div[class='jointContractFile']").length >= 3) {
-			jboxTip("一个协同单位最多只能上传3个协同关系协议！");
-			return;
-		}
 
 		$(td).append($("#jointContractFileTemplate div").clone());
 	}
@@ -218,6 +228,11 @@
 	}
 
 	function addJointContract() {
+		if($("#jointContractBody").find("tr").length >= 3) {
+			jboxTip("最多只能有三个协同单位！");
+			return;
+		}
+
 		$('#jointContractBody').append($("#jointContractTemplate tr:eq(0)").clone());
 	}
 
@@ -374,7 +389,7 @@
 					</td>
 					<td>
 						<select name="basicInfo.jdfzrTitleId" class="select">
-							<option></option>
+							<option value="">请选择</option>
 							<c:forEach items="${dictTypeEnumUserTitleList}" var="title">
 								<option value="${title.dictId}"
 										<c:if test='${basicInfo.jdfzrTitleId == title.dictId}'>selected="selected"</c:if>>${title.dictName}</option>
@@ -383,7 +398,7 @@
 					</td>
 					<td>
 						<select name="basicInfo.jdfzrPostId" class="select validate[required]">
-							<option></option>
+							<option value="">请选择</option>
 							<c:forEach items="${dictTypeEnumUserPostList}" var="post">
 								<option value="${post.dictId}"
 										<c:if test='${basicInfo.jdfzrPostId == post.dictId}'>selected="selected"</c:if>>${post.dictName}</option>
@@ -431,7 +446,7 @@
 						</td>
 						<td>
 							<select name="basicInfo.zpglbmfzrList[0].titleId" class="select" onchange="valueUpdate(this);">
-								<option></option>
+								<option value="">请选择</option>
 								<c:forEach items="${dictTypeEnumUserTitleList}" var="title">
 									<option value="${title.dictId}"
 											<c:if test='${basicInfo.zpglbmfzrList[0].titleId == title.dictId}'>selected="selected"</c:if>>${title.dictName}</option>
@@ -440,7 +455,7 @@
 						</td>
 						<td>
 							<select name="basicInfo.zpglbmfzrList[0].postId" class="select validate[required]" onchange="valueUpdate(this);">
-								<option></option>
+								<option value="">请选择</option>
 								<c:forEach items="${dictTypeEnumUserPostList}" var="post">
 									<option value="${post.dictId}"
 											<c:if test='${basicInfo.zpglbmfzrList[0].postId == post.dictId}'>selected="selected"</c:if>>${post.dictName}</option>
@@ -488,7 +503,7 @@
 						</td>
 						<td>
 							<select name="basicInfo.contactManList[${status.index}].titleId" class="select" onchange="valueUpdate(this);">
-								<option></option>
+								<option value="">请选择</option>
 								<c:forEach items="${dictTypeEnumUserTitleList}" var="title">
 									<option value="${title.dictId}"
 											<c:if test='${contactMan.titleId == title.dictId}'>selected="selected"</c:if>>${title.dictName}</option>
@@ -497,7 +512,7 @@
 						</td>
 						<td>
 							<select name="basicInfo.contactManList[${status.index}].postId" class="select validate[required]" onchange="valueUpdate(this);">
-								<option></option>
+								<option value="">请选择</option>
 								<c:forEach items="${dictTypeEnumUserPostList}" var="post">
 									<option value="${post.dictId}"
 											<c:if test='${contactMan.postId == post.dictId}'>selected="selected"</c:if>>${post.dictName}</option>
@@ -524,16 +539,16 @@
 					<tr>
 						<th><span class="red">*</span>类别：</th>
 						<td>
-							<input type="checkbox" name="basicInfo.lx" value="综合医院" <c:if test="${pdfn:contains(basicInfo.lx, '综合医院') }">checked="checked"</c:if>/>综合医院&nbsp;
-							<input type="checkbox" name="basicInfo.lx" value="专科医院" <c:if test="${pdfn:contains(basicInfo.lx, '专科医院') }">checked="checked"</c:if>/>专科医院&nbsp;
-							<input type="checkbox" name="basicInfo.lx" value="附属医院" <c:if test="${pdfn:contains(basicInfo.lx, '附属医院') }">checked="checked"</c:if>/>附属医院&nbsp;
-							<input type="checkbox" name="basicInfo.lx" value="教学医院" <c:if test="${pdfn:contains(basicInfo.lx, '教学医院') }">checked="checked"</c:if>/>教学医院
+							<input type="checkbox" class="validate[required]" name="basicInfo.lx" value="综合医院" <c:if test="${pdfn:contains(basicInfo.lx, '综合医院') }">checked="checked"</c:if>/>综合医院&nbsp;
+							<input type="checkbox" class="validate[required]" name="basicInfo.lx" value="专科医院" <c:if test="${pdfn:contains(basicInfo.lx, '专科医院') }">checked="checked"</c:if>/>专科医院&nbsp;
+							<input type="checkbox" class="validate[required]" name="basicInfo.lx" value="附属医院" <c:if test="${pdfn:contains(basicInfo.lx, '附属医院') }">checked="checked"</c:if>/>附属医院&nbsp;
+							<input type="checkbox" class="validate[required]" name="basicInfo.lx" value="教学医院" <c:if test="${pdfn:contains(basicInfo.lx, '教学医院') }">checked="checked"</c:if>/>教学医院
 						</td>
 					</tr>
 					<tr>
 						<th><span class="red">*</span>级别：</th>
 						<td>
-							<select style="width:207px;" class='select' name="basicInfo.levelRank">
+							<select style="width:207px;" class='select validate[required]' name="basicInfo.levelRank">
 								<option value="">请选择</option>
 								<c:forEach items="${dictTypeEnumOrgLevelRankList}" var="orgLevelRank">
 									<option value="${orgLevelRank.dictId}" <c:if test="${basicInfo.levelRank eq orgLevelRank.dictId }">selected="selected"</c:if>>${orgLevelRank.dictName}</option>
@@ -568,11 +583,11 @@
 					<tr>
 						<th><span class="red">*</span>培训基地性质：</th>
 						<td>
-							<input type="radio" name="basicInfo.zcdjlx" value="公立医院" <c:if test="${basicInfo.zcdjlx eq '公立医院' }">checked="checked"</c:if>/>公立医院&nbsp;
+							<input type="radio" class="validate[required]" name="basicInfo.zcdjlx" value="公立医院" <c:if test="${basicInfo.zcdjlx eq '公立医院' }">checked="checked"</c:if>/>公立医院&nbsp;
 							&nbsp;&nbsp;&nbsp;&nbsp; 民营：
-							<input type="radio" name="basicInfo.zcdjlx" value="私营医院" <c:if test="${basicInfo.zcdjlx eq '私营医院' }">checked="checked"</c:if>/>私营医院&nbsp;
-							<input type="radio" name="basicInfo.zcdjlx" value="联营医院" <c:if test="${basicInfo.zcdjlx eq '联营医院' }">checked="checked"</c:if>/>联营医院&nbsp;
-							<input type="radio" name="basicInfo.zcdjlx" value="外资医院" <c:if test="${basicInfo.zcdjlx eq '外资医院' }">checked="checked"</c:if>/>外资医院
+							<input type="radio" class="validate[required]" name="basicInfo.zcdjlx" value="私营医院" <c:if test="${basicInfo.zcdjlx eq '私营医院' }">checked="checked"</c:if>/>私营医院&nbsp;
+							<input type="radio" class="validate[required]" name="basicInfo.zcdjlx" value="联营医院" <c:if test="${basicInfo.zcdjlx eq '联营医院' }">checked="checked"</c:if>/>联营医院&nbsp;
+							<input type="radio" class="validate[required]" name="basicInfo.zcdjlx" value="外资医院" <c:if test="${basicInfo.zcdjlx eq '外资医院' }">checked="checked"</c:if>/>外资医院
 						</td>
 					</tr>
 					<%--<tr>
@@ -585,7 +600,7 @@
 					<tr>
 						<th><span class="red">*</span>住院医师基地获批文号：</th>
 						<td>
-							<select style="width:207px;" class='select' name="resBase.resApprovalNumberId">
+							<select style="width:207px;" class='select validate[required]' name="resBase.resApprovalNumberId">
 								<option value="">请选择</option>
 								<c:forEach items="${dictTypeEnumResidentBaseApproveNumList}" var="tra">
 									<option value="${tra.dictId}" <c:if test="${resBase.resApprovalNumberId eq tra.dictId }">selected="selected"</c:if>>${tra.dictName}</option>
@@ -595,7 +610,7 @@
 					</tr>
 					<tr>
 						<th><span class="red">*</span>培训基地统一社会信用代码：</th>
-						<td><input type="text" name="sysOrg.creditCode"  class='input' style="width: 197px;margin-left: 2px;"  value="${sysOrg.creditCode}"/></td>
+						<td><input type="text" name="sysOrg.creditCode"  class='input validate[required]' style="width: 197px;margin-left: 2px;"  value="${sysOrg.creditCode}"/></td>
 					</tr>
 					<tr>
 						<th><span class="red">*</span>执业许可证：</th>
@@ -670,7 +685,7 @@
 						</td>
 						<td style="text-align: center">
 							<select name="speIds" class="select">
-								<option></option>
+								<option value="">请选择</option>
 								<c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
 									<option value="${dict.dictId}" <c:if test="${jointContract.speId eq dict.dictId}">selected</c:if> >${dict.dictName}</option>
 								</c:forEach>
@@ -718,7 +733,7 @@
 		<tr>
 			<td style="text-align: center">
 				<select name="jointOrgFlows" class="select">
-					<option></option>
+					<option value="">请选择</option>
 					<c:forEach items="${unjointOrgList}" var="jointOrg">
 						<option value="${jointOrg.orgFlow}">${jointOrg.orgName}</option>
 					</c:forEach>
@@ -729,7 +744,7 @@
 			</td>
 			<td style="text-align: center">
 				<select name="speIds" class="select">
-					<option></option>
+					<option value="">请选择</option>
 					<c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
 						<option value="${dict.dictId}">${dict.dictName}</option>
 					</c:forEach>
@@ -762,7 +777,7 @@
 			</td>
 			<td>
 				<select name="basicInfo.ywfgfzrList[{index}].titleId" class="select" onchange="valueUpdate(this);">
-					<option></option>
+					<option value="">请选择</option>
 					<c:forEach items="${dictTypeEnumUserTitleList}" var="title">
 						<option value="${title.dictId}">${title.dictName}</option>
 					</c:forEach>
@@ -770,7 +785,7 @@
 			</td>
 			<td>
 				<select name="basicInfo.ywfgfzrList[{index}].postId" class="select" onchange="valueUpdate(this);">
-					<option></option>
+					<option value="">请选择</option>
 					<c:forEach items="${dictTypeEnumUserPostList}" var="post">
 						<option value="${post.dictId}">${post.dictName}</option>
 					</c:forEach>
@@ -797,7 +812,7 @@
 			</td>
 			<td>
 				<select name="basicInfo.zpywkslxrList[{index}].titleId" class="select" onchange="valueUpdate(this);">
-					<option></option>
+					<option value="">请选择</option>
 					<c:forEach items="${dictTypeEnumUserTitleList}" var="title">
 						<option value="${title.dictId}">${title.dictName}</option>
 					</c:forEach>
@@ -805,7 +820,7 @@
 			</td>
 			<td>
 				<select name="basicInfo.zpywkslxrList[{index}].postId" class="select" onchange="valueUpdate(this);">
-					<option></option>
+					<option value="">请选择</option>
 					<c:forEach items="${dictTypeEnumUserPostList}" var="post">
 						<option value="${post.dictId}">${post.dictName}</option>
 					</c:forEach>
@@ -836,7 +851,7 @@
 			</td>
 			<td>
 				<select name="basicInfo.zpglbmfzrList[{index}].titleId" class="select" onchange="valueUpdate(this);">
-					<option></option>
+					<option value="">请选择</option>
 					<c:forEach items="${dictTypeEnumUserTitleList}" var="title">
 						<option value="${title.dictId}">${title.dictName}</option>
 					</c:forEach>
@@ -844,7 +859,7 @@
 			</td>
 			<td>
 				<select name="basicInfo.zpglbmfzrList[{index}].postId" class="select" onchange="valueUpdate(this);">
-					<option></option>
+					<option value="">请选择</option>
 					<c:forEach items="${dictTypeEnumUserPostList}" var="post">
 						<option value="${post.dictId}">${post.dictName}</option>
 					</c:forEach>
@@ -878,7 +893,7 @@
 		</td>
 		<td>
 			<select name="basicInfo.contactManList[{index}].titleId" class="select" onchange="valueUpdate(this);">
-				<option></option>
+				<option value="">请选择</option>
 				<c:forEach items="${dictTypeEnumUserTitleList}" var="title">
 					<option value="${title.dictId}">${title.dictName}</option>
 				</c:forEach>
@@ -886,7 +901,7 @@
 		</td>
 		<td>
 			<select name="basicInfo.contactManList[{index}].postId" class="select validate[required]" onchange="valueUpdate(this);">
-				<option></option>
+				<option value="">请选择</option>
 				<c:forEach items="${dictTypeEnumUserPostList}" var="post">
 					<option value="${post.dictId}">${post.dictName}</option>
 				</c:forEach>
