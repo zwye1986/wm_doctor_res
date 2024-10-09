@@ -643,6 +643,17 @@ function showSelection(flag) {
 							</div>
 						</div>
 
+						<div class="form_item form_item_hide">
+							<div class="form_label">军队人员：</div>
+							<div class="form_content">
+								<select name="isArmy" id="isArmy"class="select " >
+									<option value="">全部</option>
+									<option value="Y">是</option>
+									<option value="N">否</option>
+								</select>
+							</div>
+						</div>
+
 						<div class="form_item" style="display: none">
 							<div class="form_label" id="isPostpone1" style="display: none">是否延期：</div>
 							<div class="form_content" id="isPostpone2" style="display: none">
@@ -1006,6 +1017,17 @@ function showSelection(flag) {
 									</option>
 								</select>
 							</td>
+							<td class="td_left" id="isArmy1">军队人员：</td>
+							<td id="isArmy2" >
+								<select class="select" id="isArmy3" name="isArmy">
+									<option value="">全部</option>
+									<option value="Y">是</option>
+									<option value="N">否</option>
+								</select>
+							</td>
+						</tr>
+
+						<tr>
 							<td id="func" colspan="4">
 								<input class="btn_green" style="margin-left: 0px;" type="button" value="查&#12288;询" onclick="toPage();"/>&nbsp;
 								<input class="btn_green" style="margin-left: 0px;" type="button" value="返&#12288;回" onclick="newDoctorList();"/>&nbsp;

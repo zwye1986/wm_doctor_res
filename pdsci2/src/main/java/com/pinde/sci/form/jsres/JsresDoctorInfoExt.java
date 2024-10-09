@@ -46,6 +46,7 @@ public class JsresDoctorInfoExt implements Serializable {
 	private String doctorTypeName;
 	private String infoOrgFlow;
 	private String userResume;
+	private String armyType;
 
 	public String getOrgName() {
 		return orgName;
@@ -365,5 +366,13 @@ public class JsresDoctorInfoExt implements Serializable {
 
 	public void setUserResume(String userResume) {
 		this.userResume = userResume;
+	}
+
+	public String getArmyType() {
+		return armyType;
+	}
+
+	public void setArmyType(String armyType) {
+		this.armyType = armyType;
 	}
 }

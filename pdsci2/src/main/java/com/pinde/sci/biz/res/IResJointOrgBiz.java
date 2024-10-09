@@ -20,6 +20,8 @@ public interface IResJointOrgBiz {
 
 	List<ResJointOrg> searchResJointByOrgFlow(String orgFlow);
 
+	List<ResJointOrg> searchResJointByOrgFlowNotSessionYear(String orgFlow);
+
 	List<ResJointOrg> readResJointOrgByExample(ResJointOrgExample example);
 
 	//查询主基地在本地市的外地协同基地

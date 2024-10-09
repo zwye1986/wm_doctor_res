@@ -23,6 +23,7 @@ import com.pinde.sci.enums.jsres.JsResDegreeCategoryEnum;
 import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
 import com.pinde.sci.enums.pub.UserNationEnum;
 import com.pinde.sci.enums.pub.UserSexEnum;
+import com.pinde.sci.enums.res.ArmyTypeEnum;
 import com.pinde.sci.enums.res.ResDocTypeEnum;
 import com.pinde.sci.enums.res.ResRecTypeEnum;
 import com.pinde.sci.enums.sys.CertificateTypeEnum;
@@ -3771,7 +3772,8 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 				"#协同医院级别",
 				"#协同医院等次",
 				"#医疗卫生机构类别",
-				"派送学校"
+				"派送学校",
+				"军队人员"
 		};
 		HSSFCell cellTitle = null;
 		for (int i = 0; i < titles.length; i++) {
@@ -4063,7 +4065,8 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 						"",
 						"",
 						"",
-						graduatedWorkOrg
+						graduatedWorkOrg,
+						ArmyTypeEnum.getNameById(doctorInfoExts.get(i).getArmyType())
 				};
 				for (int j = 0; j < titles.length; j++) {
 					HSSFCell cellFirst = rowFour.createCell(j);

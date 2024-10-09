@@ -2,6 +2,7 @@ package com.pinde.sci.biz.jsres.impl;
 
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.commom.enums.ArmyTypeEnum;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -148,7 +149,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 
 	@Override
 	public List<JsResDoctorRecruitExt> resDoctorRecruitExtNew(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> jointOrgList,
-															  List<String> docTypeList, List<String> sessionNumbers,String joinOrgFlow,String isJointOrg) {
+															  List<String> docTypeList, List<String> sessionNumbers,String joinOrgFlow,String isJointOrg,String isArmy) {
 		Map<String, Object> doctorRecruitMap=new HashMap<String, Object>();
 		doctorRecruitMap.put("resDoctorRecruit", resDoctorRecruit);
 		doctorRecruitMap.put("user", user);
@@ -157,6 +158,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		doctorRecruitMap.put("sessionNumbers", sessionNumbers);
 		doctorRecruitMap.put("joinOrgFlow", joinOrgFlow);
 		doctorRecruitMap.put("isJointOrg", isJointOrg);
+		doctorRecruitMap.put("isArmy", isArmy);
 		List<JsResDoctorRecruitExt> doctorRecruitList=jsResDoctorRecruitExtMapper.searchJsDoctorRecruitExtList(doctorRecruitMap);
 		return doctorRecruitList;
 	}
@@ -603,7 +605,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	}
 
 	@Override
-	public List<JsDoctorInfoExt> searchDoctorInfoResume3(ResDoctorRecruit recruit,ResDoctor doctor,SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList,String flag,List<String>docTypeList,List<String>trainYearList,List<String>sessionNumbers,String baseFlag,String isPostpone) {
+	public List<JsDoctorInfoExt> searchDoctorInfoResume3(ResDoctorRecruit recruit,ResDoctor doctor,SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList,String flag,List<String>docTypeList,List<String>trainYearList,List<String>sessionNumbers,String baseFlag,String isPostpone,String isArmy) {
 		Map<String,Object> paramMap=new HashMap<String,Object>();
 		paramMap.put("resDoctorRecruit", recruit);
 		paramMap.put("doctor", doctor);
@@ -615,6 +617,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		paramMap.put("trainYearList", trainYearList);
 		paramMap.put("sessionNumbers", sessionNumbers);
 		paramMap.put("isPostpone", isPostpone);
+		paramMap.put("isArmy", isArmy);
 		//判断是否为协同基地
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
@@ -903,7 +906,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	@Override
 	public List<JsResDoctorRecruitExt> searchDoctorInfoExts2(ResDoctorRecruit resDoctorRecruit,ResDoctor doctor,SysUser user, SysOrg sysOrg,
 															 List<String> jointOrgFlowList,String flag,List<String>docTypeList,List<String>trainYearList,
-															 List<String>sessionNumbers,String baseFlag,String userOrgFlow, String newFlag,String isJointOrg,String isPostpone) {
+															 List<String>sessionNumbers,String baseFlag,String userOrgFlow, String newFlag,String isJointOrg,String isPostpone,String isArmy) {
 		Map<String, Object> doctorRecruitMap=new HashMap<String, Object>();
 		if ("Y".equals(newFlag)) {
 			if (sessionNumbers == null || sessionNumbers.size() == 0) {
@@ -922,6 +925,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		doctorRecruitMap.put("trainYearList", trainYearList);
 		doctorRecruitMap.put("sessionNumbers", sessionNumbers);
 		doctorRecruitMap.put("isJointOrg", isJointOrg);
+		doctorRecruitMap.put("isArmy", isArmy);
 		List<JsResDoctorRecruitExt> doctorRecruitList = new ArrayList<JsResDoctorRecruitExt>(16);
 		if(StringUtil.isNotBlank(baseFlag))
 		{
@@ -2943,7 +2947,8 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				"地址",
 				"工作单位",
 
-				"派送学校"
+				"派送学校",
+				"军队人员"
 		};
 		HSSFCell cellTitle = null;
 		for (int i = 0; i < titles.length; i++) {
@@ -3015,7 +3020,8 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 						recruitExt.getResDoctor().getDoctorTypeName(),
 						recruitExt.getSysUser().getUserAddress(),
 						recruitExt.getWorkAddr(),
-						recruitExt.getWorkSchoolName()
+						recruitExt.getWorkSchoolName(),
+						ArmyTypeEnum.getNameById(recruitExt.getArmyType())
 				};
 				for (int j = 0; j < titles.length; j++) {
 					HSSFCell cellFirst = rowFour.createCell(j);

@@ -825,6 +825,17 @@ function exportForDetail(){
 				</div>
 
 				<div class="form_item form_item_hide">
+					<div class="form_label">军队人员：</div>
+					<div class="form_content">
+						<select name="isArmy" id="isArmy"class="select " >
+							<option value="">全部</option>
+							<option value="Y">是</option>
+							<option value="N">否</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form_item form_item_hide">
 					<div class="form_label">培训年限：</div>
 					<div class="form_content">
 						<c:forEach items="${jsResTrainYearEnumList}" var="dict">

@@ -16,6 +16,8 @@ public class JsDoctorInfoExt extends ResDoctorRecruit{
 	private ResDoctor resDoctor;
 	private PubUserResume userResume;
 
+	private String armyType;
+
 
 	public PubUserResume getUserResume() {
 		return userResume;
@@ -40,5 +42,12 @@ public class JsDoctorInfoExt extends ResDoctorRecruit{
 	public void setSysUser(SysUser sysUser) {
 		this.sysUser = sysUser;
 	}
-	
+
+	public String getArmyType() {
+		return armyType;
+	}
+
+	public void setArmyType(String armyType) {
+		this.armyType = armyType;
+	}
 }

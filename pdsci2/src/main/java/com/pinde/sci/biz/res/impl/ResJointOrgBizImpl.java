@@ -96,6 +96,13 @@ public class ResJointOrgBizImpl implements IResJointOrgBiz{
 	}
 
 	@Override
+	public List<ResJointOrg> searchResJointByOrgFlowNotSessionYear(String orgFlow){
+		ResJointOrgExample example = new ResJointOrgExample();
+		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
+		return resJointOrgMapper.selectByExample(example);
+	}
+
+	@Override
 	public List<ResJointOrg> readResJointOrgByExample(ResJointOrgExample example) {
 		return resJointOrgMapper.selectByExample(example);
 	}

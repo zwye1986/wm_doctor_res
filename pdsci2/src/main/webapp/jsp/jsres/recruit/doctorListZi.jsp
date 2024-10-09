@@ -17,10 +17,11 @@ function doctorPassedList(doctorFlow,recruitFlow,sessionNumber){
 				<col width="10%" />
 				<col width="5%" />
 				<col width="10%" />
-				<col width="20%" />
 				<col width="15%" />
 				<col width="10%" />
 				<col width="10%" />
+				<col width="10%" />
+<%--				<col width="10%" />--%>
 				<col width="10%" />
 			</colgroup>
             <tr>
@@ -32,6 +33,7 @@ function doctorPassedList(doctorFlow,recruitFlow,sessionNumber){
                 <th>届别</th>
                 <th>培训年限</th>
 				<th>招录途径</th>
+<%--				<th>军队人员</th>--%>
                 <th>操作</th>
             </tr>
              <c:forEach items="${doctorList}" var="doctor">
@@ -51,6 +53,11 @@ function doctorPassedList(doctorFlow,recruitFlow,sessionNumber){
 	    				</c:forEach>            
 	                </td>
 					 <td>${doctor.signupWay eq 'DoctorSignup' ? '招录':'报送'}</td>
+<%--					 <td>--%>
+<%--						 <c:if test="${not empty doctor.armyType}">--%>
+<%--							 ${pdfn:getArmyTypeEnumName(doctor.armyType)}--%>
+<%--						 </c:if>--%>
+<%--					 </td>--%>
 	          		<td>
 	          		<div style="width: 100%;">
 		          		<span>

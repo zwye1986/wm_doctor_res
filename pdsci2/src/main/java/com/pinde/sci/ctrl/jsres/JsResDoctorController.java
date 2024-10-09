@@ -2774,7 +2774,7 @@ public class JsResDoctorController extends GeneralController {
      * @return
      */
     @RequestMapping(value = "/exportDoctor")
-    public void exportDoctor(HttpServletRequest request, HttpServletResponse response, String sessionNumber, ResDoctor doctor, SysUser user, String baseId, String jointOrgFlag, String derateFlag, String orgLevel, String[] datas, String[] yearDatas, String graduationYear, String orgCityId, String baseFlag, String flag, String isPostpone) throws Exception {
+    public void exportDoctor(HttpServletRequest request, HttpServletResponse response, String sessionNumber, ResDoctor doctor, SysUser user, String baseId, String jointOrgFlag, String derateFlag, String orgLevel, String[] datas, String[] yearDatas, String graduationYear, String orgCityId, String baseFlag, String flag, String isPostpone,String isArmy) throws Exception {
         String titleYear = "";
         List<String> sessionNumbers = new ArrayList<String>();//年级多选
         if (StringUtil.isNotBlank(doctor.getSessionNumber())) {
@@ -2815,6 +2815,7 @@ public class JsResDoctorController extends GeneralController {
                 "recruit.trainYear:计划参训时限",
                 "trainYears:培训年限",
                 "trainEndYearMonth:计划培训结束年月",
+                "armyType:军队人员",
         };
         List<String> docTypeList = new ArrayList<String>();
         SysOrg org = new SysOrg();
@@ -2931,7 +2932,7 @@ public class JsResDoctorController extends GeneralController {
                 trainYearList.add(s);
             }
         }
-        List<JsDoctorInfoExt> doctorInfoExts = jsResDoctorRecruitBiz.searchDoctorInfoResume3(recruit, doctor, user, org, jointOrgFlowList, derateFlag, docTypeList, trainYearList, sessionNumbers, baseFlag, isPostpone);
+        List<JsDoctorInfoExt> doctorInfoExts = jsResDoctorRecruitBiz.searchDoctorInfoResume3(recruit, doctor, user, org, jointOrgFlowList, derateFlag, docTypeList, trainYearList, sessionNumbers, baseFlag, isPostpone,isArmy);
 //		List<Map<String, Object>> jointOrgs = jsResDoctorRecruitBiz.searchJointOrgList();
 //		Map<Object, Object> orgAndJointNameMap=new HashMap<Object, Object>();
 //		if(jointOrgs!=null&&!jointOrgs.isEmpty()){
@@ -2980,6 +2981,7 @@ public class JsResDoctorController extends GeneralController {
                 userInfoExtForm.setDoctor(d.getResDoctor());
                 ResDoctorRecruit recruit3 = d;
                 userInfoExtForm.setRecruit(recruit3);
+                userInfoExtForm.setArmyType(d.getArmyType());
 
                 // 计算一下 trainYearMonth，trainYears，trainEndYearMonth
                 if(StringUtils.isNotEmpty(recruit3.getRecruitDate())) {
