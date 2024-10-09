@@ -520,13 +520,30 @@
       </if>
     </trim>
   </insert>
+  <select id="listByDoctorList" resultType="com.pinde.sci.model.mo.ResSchProcessExpress">
+    select * from res_sch_process_express
+    where record_status = 'Y'
+      AND rec_type_id = 'AfterEvaluation'
+    <choose>
+      <when test="null != doctorFlowList and doctorFlowList.size() &gt; 0">
+        AND oper_user_flow in
+        <foreach collection="doctorFlowList" item="doctorFlow" open="(" separator="," close=")">
+          #{doctorFlow}
+        </foreach>
+      </when>
+      <otherwise>
+        AND 1=-1
+      </otherwise>
+    </choose>
+
+  </select>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResSchProcessExpressExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.RES_SCH_PROCESS_EXPRESS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+    <update id="updateByExampleSelective" parameterType="map" >
     update PDSCI.RES_SCH_PROCESS_EXPRESS
     <set >
       <if test="record.recFlow != null" >

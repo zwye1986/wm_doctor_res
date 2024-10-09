@@ -9,14 +9,16 @@
 	<jsp:param name="jquery_placeholder" value="true"/>
 	<jsp:param name="jquery_datePicker" value="true"/>
 </jsp:include>
+<script  src="../../js/jsonJs/json3.js"></script>
 <script type="text/javascript">
-	function importExcel(){
-		// var rotationFlow = $("#rotationFlow").val();
-		// if (rotationFlow==''){
-		// 	jboxTip("请选择要导入模板的培训方案！");
-		// 	return
-		// }
+	function setCookie(cname, cvalue, exdays) {
+		var d = new Date();
+		d.setTime(d.getTime() + (exdays*60*60*1000));
+		var expires = "expires="+d.toUTCString();
+		document.cookie = cname + "=" + cvalue + ";" + expires+";path=/";
+	}
 
+	function importExcel(){
 		if(!$("#planForm").validationEngine("validate")){
 			return false;
 		}
@@ -26,19 +28,29 @@
 			return false;
 		}
 		jboxStartLoading();
-		var url = "<s:url value='/jsres/doctorRecruit/importSchedulingAuditExcel'/>";
+		console.log(parent.$(".jbox-message-iframe").contentWindow)
+		parent.$(".jbox-message-iframe").contentWindow.haha()
+		var url = "<s:url value='/jsres/doctorRecruit/parseSchedulingAuditExcelCache'/>";
 		jboxSubmit($('#planForm'), url,
 			function(resp){
-				jboxEndLoading();
-				if (resp=='${GlobalConstant.UPLOAD_FAIL}'){
-					top.jboxInfo(resp);
-				}else if (resp.substring(0,5)=='${GlobalConstant.UPLOAD_SUCCESSED}'){
-					top.jboxInfo(resp);
-					window.parent.toPage(1);
-					top.jboxClose();
-				}else {
-					top.jboxInfo(resp);
+				let res = null;
+				if (resp) {
+					res = JSON.parse(resp);
 				}
+			    if (res && res.headers) {
+					setCookie("headers",encodeURI(JSON.stringify(res.headers)))
+				}else {
+					setCookie("headers",encodeURI(JSON.stringify([])))
+				}
+				if (res && res.data) {
+					setCookie("data",encodeURI(JSON.stringify(res.data)))
+				}else {
+					setCookie("data",encodeURI(JSON.stringify([])))
+				}
+				jboxEndLoading()
+				top.jboxClose();
+
+
 			}
 		);
 	}
@@ -64,10 +76,7 @@
 		jboxExp($("#planForm"), url);
 	}
 
-	function jumToImport() {
-		jboxClose();
-		jboxOpen("<s:url value='/jsres/doctorRecruit/importSchedulingiImport'/>", "导入前置", 1000, 500);
-	}
+
 </script>
 <div style="padding:0px 20px;margin-top:30px;">
 	<input type="hidden" id="checkFileFlag"/>
@@ -97,7 +106,7 @@
 		</table>
 	</form>
 	<div align="center" style="margin-top: 20px; margin-bottom:20px;">
-		<input type="button" class="btn_green" onclick="importExcel();" value="导&#12288;入"/>&#12288;
+		<input type="button" class="btn_green" onclick="importExcel();" value="导&#12288;入&#12288;文&#12288;件"/>&#12288;
 		<input type="button" class="btn_green" onclick="jboxClose();" value="关&#12288;闭"/>
 	</div>
 </div>

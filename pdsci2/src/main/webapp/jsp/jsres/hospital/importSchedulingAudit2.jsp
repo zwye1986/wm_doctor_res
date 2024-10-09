@@ -9,14 +9,19 @@
 	<jsp:param name="jquery_placeholder" value="true"/>
 	<jsp:param name="jquery_datePicker" value="true"/>
 </jsp:include>
+<script  src="../../js/jsonJs/json3.js"></script>
 <script type="text/javascript">
+<%--	设置cookie--%>
+	function setCookie(cname, cvalue, exdays) {
+		var d = new Date();
+		d.setTime(d.getTime() + (exdays*60*60*1000));
+		var expires = "expires="+d.toUTCString();
+		document.cookie = cname + "=" + cvalue + ";" + expires+";path=/";
+	}
+	// $(document).ready(function () {
+	// 	getDeptList();
+	// })
 	function importExcel(){
-		// var rotationFlow = $("#rotationFlow").val();
-		// if (rotationFlow==''){
-		// 	jboxTip("请选择要导入模板的培训方案！");
-		// 	return
-		// }
-
 		if(!$("#planForm").validationEngine("validate")){
 			return false;
 		}
@@ -26,19 +31,35 @@
 			return false;
 		}
 		jboxStartLoading();
-		var url = "<s:url value='/jsres/doctorRecruit/importSchedulingAuditExcel'/>";
+		var url = "<s:url value='/jsres/doctorRecruit/parseSchedulingAuditExcelCache'/>";
 		jboxSubmit($('#planForm'), url,
 			function(resp){
-				jboxEndLoading();
-				if (resp=='${GlobalConstant.UPLOAD_FAIL}'){
-					top.jboxInfo(resp);
-				}else if (resp.substring(0,5)=='${GlobalConstant.UPLOAD_SUCCESSED}'){
-					top.jboxInfo(resp);
-					window.parent.toPage(1);
-					top.jboxClose();
-				}else {
-					top.jboxInfo(resp);
+				let res = null;
+				if (resp) {
+					res = JSON.parse(resp);
 				}
+				if (res && res.headers) {
+					localStorage.setItem("headers",JSON.stringify(res.headers))
+					// setCookie("headers",encodeURI(JSON.stringify(res.headers)))
+				}else {
+					localStorage.setItem("headers",JSON.stringify([]))
+					// setCookie("headers",encodeURI(JSON.stringify([])))
+				}
+				if (res && res.data) {
+					localStorage.setItem("data",JSON.stringify(res.data))
+					// setCookie("data",encodeURI(JSON.stringify(res.data)))
+				}else {
+					localStorage.setItem("data",JSON.stringify([]))
+					// setCookie("data",encodeURI(JSON.stringify([])))
+				}
+				if (res) {
+					localStorage.setItem("flag",JSON.stringify(res.flag))
+					// setCookie("data",encodeURI(JSON.stringify(res.data)))
+				}else {
+					localStorage.setItem("flag",JSON.stringify(false))
+				}
+				jboxEndLoading();
+				window.parent.toImportCache();
 			}
 		);
 	}
@@ -67,6 +88,14 @@
 	function jumToImport() {
 		jboxClose();
 		jboxOpen("<s:url value='/jsres/doctorRecruit/importSchedulingiImport'/>", "导入前置", 1000, 500);
+	}
+
+	function getDeptList(){
+		jboxGet('<s:url value="/jsres/doctorRecruit/importSchedulingAudit2Dept"/>',null,function(resp){
+			if(resp){
+				localStorage.setItem("schDeptList",JSON.stringify(resp));
+			}
+		},null,false);
 	}
 </script>
 <div style="padding:0px 20px;margin-top:30px;">

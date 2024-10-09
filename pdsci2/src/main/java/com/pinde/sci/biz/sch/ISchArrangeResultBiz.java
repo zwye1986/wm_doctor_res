@@ -2,16 +2,26 @@ package com.pinde.sci.biz.sch;
 
 import com.pinde.sci.form.sch.SchArrangeResultForm;
 import com.pinde.sci.form.sch.SelectDept;
+import com.pinde.sci.model.jsres.ArrangTdVo;
 import com.pinde.sci.model.mo.*;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
 
 public interface ISchArrangeResultBiz {
+
+	Map<String,Object> updateImportData(List<Map<String, ArrangTdVo>> data);
+
+	Map<String,Object> saveDbImportArrang(List<Map<String, ArrangTdVo>> data) throws ParseException;
+
+	Map<String,Object> submitImportData(List<Map<String, ArrangTdVo>> data);
 	List<SchArrangeResult> searchSchArrangeResult();
 
 	int countArrangeResultBySchDeptFlow(String nextNextMonth, String schDeptFlow, String sessionNumber) throws ParseException;
@@ -197,6 +207,8 @@ public interface ISchArrangeResultBiz {
 	 */
 	List<Map<String,Object>> searchDocResultsListNew(Map<String,Object> paramMap);
 
+	Map<String,Map<String, BigDecimal>> getScoreByDoctorIds(List<String> doctorFlowList);
+
 	List<ResOutOfficeLock> searchDocErrorResultsList(Map<String,Object> paramMap) throws ParseException;
 
 	List<ResDoctorSchProcess> searchDocErrorResultInfo(String recordFlow,String orgFlow) throws ParseException;
@@ -332,6 +344,8 @@ public interface ISchArrangeResultBiz {
 	List<Map<String,Object>> schedulingSearchAuditList(Map<String, Object> paramMap);
 
 	Map<String,Object>  importSchedulingAuditExcel(MultipartFile file,String rotationFlow,String trainingTypeId) throws IOException, Exception;
+
+	Map<String,Object> importSchedulingAuditExcelCache(MultipartFile file) throws IOException, InvalidFormatException;
 
 	List<SchArrangeResult> checkResultDate(String doctorFlow, String startDate, String endDate,
 										   String subDeptFlow,String rotationFlow);

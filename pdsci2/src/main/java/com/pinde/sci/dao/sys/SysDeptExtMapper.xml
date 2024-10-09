@@ -244,4 +244,117 @@
 		WHERE record_status = 'Y'
 		AND sch_dept_Flow  in (SELECT dept_flow FROM sys_dept WHERE ORG_FLOW = #{orgFlow} AND DEPT_NAME = #{deptName})
 	</select>
+    <select id="getSchDeptByBzDeptCode" resultType="com.pinde.sci.model.mo.SysDept">
+		select distinct c.sch_dept_flow dept_flow,c.sch_dept_name dept_name,c.org_flow
+		from SCH_AND_STANDARD_DEPT_CFG c
+		left join sch_rotation_dept d  on d.standard_dept_id = c.standard_dept_id and c.org_flow = d.org_flow
+		where c.record_status  = 'Y'
+		  and c.org_flow = #{orgFlow}
+		  and d.record_status  = 'Y'
+		  and d.rotation_flow = #{rotationFlow}
+	</select>
+	<select id="getSchDeptByBzIds" resultType="com.pinde.sci.model.mo.SchAndStandardDeptCfg">
+		select distinct t.* from (
+		select * from SCH_AND_STANDARD_DEPT_CFG
+		where record_status = 'Y'
+		<if test="null == orgFlow and orgFlow.trim() != ''">
+			and org_flow = #{orgFlow}
+		</if>
+		<choose>
+			<when test="null != bzDeptIds and bzDeptIds.size() &gt; 0">
+				and standard_dept_id in
+				<foreach collection="bzDeptIds" item="deptId" open="(" separator="," close=")">
+					#{deptId}
+				</foreach>
+			</when>
+			<otherwise>
+				and 1=-1
+			</otherwise>
+		</choose>
+		union all
+		select * from SCH_AND_STANDARD_DEPT_CFG
+		where record_status = 'Y'
+		<choose>
+			<when test="null != bzDeptIds and bzDeptIds.size() &gt; 0">
+				and standard_dept_id in
+				<foreach collection="bzDeptIds" item="deptId" open="(" separator="," close=")">
+					#{deptId}
+				</foreach>
+			</when>
+			<otherwise>
+				and 1=-1
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="null != deptFlows and deptFlows.size() &gt; 0">
+				and sch_dept_flow in
+				<foreach collection="deptFlows" item="deptId" open="(" separator="," close=")">
+					#{deptId}
+				</foreach>
+			</when>
+			<otherwise>
+				and 1=-1
+			</otherwise>
+		</choose>
+
+							   ) t
+	</select>
+
+	<select id="relToMeOrgFlow" resultType="java.lang.String">
+		select distinct dept_flow from SCH_DEPT_EXTERNAL_REL
+		where record_status = 'Y'
+		and rel_org_flow = #{myOrgFlow}
+	</select>
+    <select id="deptSelectData" resultType="com.pinde.sci.model.jsres.LzDeptItem">
+		select dept_flow,dept_name,org_flow org_flow,org_name org_name,1 sort_no
+		from SCH_DEPT_EXTERNAL_REL
+		where record_status = 'Y'
+		<choose>
+			<when test="null != orgFlow and orgFlow.trim() != ''">
+				and rel_org_flow = #{orgFlow}
+			</when>
+		    <otherwise>
+				and 1=-1
+			</otherwise>
+		</choose>
+		union all
+		select dept_flow,dept_name,org_flow,'' org_name,0 sort_no
+		from sys_dept
+		where record_status = 'Y'
+		<choose>
+			<when test="null != orgFlow and orgFlow.trim() != ''">
+				and org_flow = #{orgFlow}
+			</when>
+			<otherwise>
+				and 1=-1
+			</otherwise>
+		</choose>
+		order by sort_no
+	</select>
+	<select id="getBzDeptListByLzDeptFlows" resultType="com.pinde.sci.model.mo.SchAndStandardDeptCfg">
+		select d.sch_dept_flow,d.sch_dept_name,d.standard_dept_id,d.standard_dept_name
+		from SCH_AND_STANDARD_DEPT_CFG d
+		where d.record_status = 'Y'
+		<choose>
+			<when test="null != deptFlowList and deptFlowList.size() &gt; 0">
+				and d.sch_dept_flow in
+		        <foreach collection="deptFlowList" item="deptFlow" open="(" separator="," close=")">
+					#{deptFlow}
+				</foreach>
+			</when>
+		    <otherwise>
+				and 1=-1
+			</otherwise>
+		</choose>
+	</select>
+    <select id="getBzDeptByDeptFlow" resultType="com.pinde.sci.model.mo.SchAndStandardDeptCfg">
+		select d.*
+		from SCH_AND_STANDARD_DEPT_CFG d
+		where d.record_status = 'Y'
+		and rownum &lt;= 1
+		<if test="null != deptFlow and deptFlow.trim() != '' ">
+			and d.sch_dept_flow = #{deptFlow}
+		</if>
+		order by d.create_time desc
+	</select>
 </mapper>
