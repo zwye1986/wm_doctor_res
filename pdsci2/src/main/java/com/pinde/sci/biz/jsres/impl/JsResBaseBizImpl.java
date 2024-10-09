@@ -282,6 +282,9 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 		 int remainNum = 0;
 		 if(request instanceof DefaultMultipartHttpServletRequest && ((DefaultMultipartHttpServletRequest) request).isResolved()) {
 			 files = ((DefaultMultipartHttpServletRequest) request).getMultiFileMap().get("files");
+			 if(files == null) {
+				 files = new ArrayList<>();
+			 }
 			 files = files.stream().filter(vo -> StringUtils.isNotEmpty(vo.getOriginalFilename())).collect(Collectors.toList());
 		 }
 

@@ -40,7 +40,7 @@
 				<td style="text-align: center">${t.hosYear}</td>
 				<td style="text-align: center">${t.threeHosYear}</td>--%>
 				<td style="text-align: center">
-					<c:forEach items="teachingCertLevelEnumList" var="certLevel">
+					<c:forEach items="${teachingCertLevelEnumList}" var="certLevel" varStatus="s">
 						<c:if test="${t.teachingCertLevel eq certLevel.code}">${certLevel.name}</c:if>
 					</c:forEach>
 				</td>
