@@ -36,8 +36,9 @@ function responsibleTeacherCfg(doctorFlow) {
 				<col width="10%" />
 				<col width="7%" />
 				<col width="9%" />
-				<col width="19%" />
-				<col width="12%" />
+				<col width="13%" />
+				<col width="9%" />
+				<col width="9%" />
 				<col width="9%" />
 				<col width="9%" />
 				<col width="9%" />
@@ -51,6 +52,7 @@ function responsibleTeacherCfg(doctorFlow) {
                 <th>性别</th>
                 <th>培训类别</th>
                 <th>培训基地</th>
+				<th>派送单位/学校</th>
                 <th>培训专业</th>
                 <th>年级</th>
                 <th>培训年限</th>
@@ -70,6 +72,7 @@ function responsibleTeacherCfg(doctorFlow) {
 						<c:if test="${empty doctor.jointOrgFlow}">${doctor.orgName}</c:if>
 						<c:if test="${!empty doctor.jointOrgFlow}">${doctor.jointOrgName}</c:if>
 					</td>
+					 <td>${doctor.resDoctor.workOrgName}</td>
 	                <%--<td>${doctor.orgName}</td>--%>
 	                <td>${doctor.speName}</td>
 	                <td>${doctor.sessionNumber}</td>
