@@ -1355,18 +1355,18 @@ public class JsResSpeAdminController extends GeneralController{
 		if (null!=schRotation){
 			//查询方案的必须轮转的科室
 			List<Map<String, String>> requiredList = deptCfgBiz.searchByRequired(schRotation.getRotationFlow(), "Y");
-			Integer bzzcws=0;
-			Integer syzcws=0;
-			Integer nszzybrs=0;
-			Integer bcsyl=0;
-			Integer nmzl=0;
-			Integer njzl=0;
-			Integer bczzcs=0;
-			Integer pjzyr=0;
-			Integer ncybrs=0;
-			Integer njzscls=0;
-			Integer npxzrl=0;
-			Integer sypxrl=0;
+			Integer bzzcws=null;
+			Integer syzcws=null;
+			Integer nszzybrs=null;
+			Integer bcsyl=null;
+			Integer nmzl=null;
+			Integer njzl=null;
+			Integer bczzcs=null;
+			Integer pjzyr=null;
+			Integer ncybrs=null;
+			Integer njzscls=null;
+			Integer npxzrl=null;
+			Integer sypxrl=null;
 			for (Map<String, String> map : requiredList) {
 				//查询基地与标准科室关联的 轮转科室
 				List<SchAndStandardDeptCfg> cfgList = deptCfgBiz.selectByStandardDeptId(orgFlow, map.get("standardDeptId"));
@@ -1378,39 +1378,75 @@ public class JsResSpeAdminController extends GeneralController{
 							continue;
 						}
 						if (StringUtil.isNotBlank(basicInfoForm.getBzzcws())){
+							if(bzzcws == null) {
+								bzzcws = 0;
+							}
 							bzzcws+=Integer.parseInt(basicInfoForm.getBzzcws());
 						}
 						if (StringUtil.isNotBlank(basicInfoForm.getSyzcws())){
+							if(syzcws == null) {
+								syzcws = 0;
+							}
 							syzcws+=Integer.parseInt(basicInfoForm.getSyzcws());
 						}
 						if (StringUtil.isNotBlank(basicInfoForm.getNszzybrs())){
+							if(nszzybrs == null) {
+								nszzybrs = 0;
+							}
 							nszzybrs+=Integer.parseInt(basicInfoForm.getNszzybrs());
 						}
 						if (StringUtil.isNotBlank(basicInfoForm.getBcsyl())){
+							if(bcsyl == null) {
+								bcsyl = 0;
+							}
 							bcsyl+=Integer.parseInt(basicInfoForm.getBcsyl());
 						}
 						if (StringUtil.isNotBlank(basicInfoForm.getNmzl())){
+							if(nmzl == null) {
+								nmzl = 0;
+							}
 							nmzl+=Integer.parseInt(basicInfoForm.getNmzl());
 						}
 						if (StringUtil.isNotBlank(basicInfoForm.getNjzl())){
+							if(njzl == null) {
+								njzl = 0;
+							}
 							njzl+=Integer.parseInt(basicInfoForm.getNjzl());
 						}
 						if (StringUtil.isNotBlank(basicInfoForm.getBczzcs())){
+							if(bczzcs == null) {
+								bczzcs = 0;
+							}
 							bczzcs+=Integer.parseInt(basicInfoForm.getBczzcs());
 						}
 						if (StringUtil.isNotBlank(basicInfoForm.getPjzyr())){
+							if(pjzyr == null) {
+								pjzyr = 0;
+							}
 							pjzyr+=Integer.parseInt(basicInfoForm.getPjzyr());
 						}
 						if (StringUtil.isNotBlank(basicInfoForm.getNcybrs())){
+							if(ncybrs == null) {
+								ncybrs = 0;
+							}
 							ncybrs+=Integer.parseInt(basicInfoForm.getNcybrs());
 						}
 						if (StringUtil.isNotBlank(basicInfoForm.getNjzscls())){
+							if(njzscls == null) {
+								njzscls = 0;
+							}
 							njzscls+=Integer.parseInt(basicInfoForm.getNjzscls());
 						}
 						if (StringUtil.isNotBlank(basicInfoForm.getNpxzrl())){
+							if(npxzrl == null) {
+								npxzrl = 0;
+							}
 							npxzrl+=Integer.parseInt(basicInfoForm.getNpxzrl());
 						}
 						if (StringUtil.isNotBlank(basicInfoForm.getSypxrl())){
+							if(sypxrl == null) {
+								sypxrl = 0;
+							}
 							sypxrl+=Integer.parseInt(basicInfoForm.getSypxrl());
 						}
 					}

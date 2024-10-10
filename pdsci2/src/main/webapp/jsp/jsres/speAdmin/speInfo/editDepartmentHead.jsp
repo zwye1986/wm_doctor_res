@@ -120,13 +120,13 @@
 						<tr>
 							<th><span class="red">*</span>从事住院医师规范化培训工作年限：</th>
 							<td colspan="7">
-								<input type="text"  class='input validate[custom[integer],min[0]]' style="width:100px;" name="departmentHeadForm.cszy"  value="${departmentHeadForm.cszy}"/>年
+								<input type="text"  class='input validate[required,custom[integer],min[0]]' style="width:100px;" name="departmentHeadForm.cszy"  value="${departmentHeadForm.cszy}"/>年
 							</td>
 						</tr>
 						<tr>
 							<th><span class="red">*</span>从事本专业临床医疗、科研和教学工作经验：</th>
 							<td colspan="7">
-								<input type="text"  class='input validate[custom[integer],min[0]]' style="width:100px;" name="departmentHeadForm.cspx"  value="${departmentHeadForm.cspx}"/>年
+								<input type="text"  class='input validate[required,custom[integer],min[0]]' style="width:100px;" name="departmentHeadForm.cspx"  value="${departmentHeadForm.cspx}"/>年
 							</td>
 						</tr>
 						<tr>
