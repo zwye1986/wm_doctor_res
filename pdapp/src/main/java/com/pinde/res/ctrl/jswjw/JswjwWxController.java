@@ -495,6 +495,13 @@ public class JswjwWxController extends GeneralController {
         if (userinfo == null) {
             return ResultDataThrow("用户不存在");
         }
+
+        try {
+            userPasswd = DESUtil.decryptWx(userPasswd);
+        }catch (Exception e){
+            return ResultDataThrow("用户密码错误");
+        }
+
 //        ServletContext application = request.getServletContext();
 //        if (application.getAttribute("onlineCountNum") == null) {
 //            application.setAttribute("onlineCountNum", 1);
@@ -11248,6 +11255,12 @@ public class JswjwWxController extends GeneralController {
             resultMap.put("resultId", "1002");
             resultMap.put("resultType", "未绑定手机号,请绑定手机号");
             return resultMap;
+        }
+
+        try {
+            userPasswd = DESUtil.decryptWx(userPasswd);
+        }catch (Exception e){
+            return ResultDataThrow("用户密码错误");
         }
 
 //        ServletContext application = request.getServletContext();
