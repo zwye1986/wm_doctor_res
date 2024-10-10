@@ -73,6 +73,31 @@ function coopBaseInfo(){
 function commuHospital(){
 	jboxLoad("hosContent","<s:url value='/jsp/jsres/hospital/hos/commuHospital.jsp'/>",false);
 }
+
+function hosMain(baseFlow, menu) {
+	var url = "<s:url value='/jsres/base/main'/>?baseFlow=" + baseFlow + "&menu=" + menu;
+	currentJboxLoadNoData("content", url, true);
+}
+
+function currentJboxLoadNoData(id, geturl, showLoading) {
+	currentJboxLoad(id, geturl, null, showLoading);
+}
+
+function currentJboxLoad(id, geturl, data, showLoading) {
+	if (showLoading) {
+		jboxStartLoading();
+	}
+	jboxPost(geturl, data, function (resp) {
+		if (showLoading) {
+			jboxEndLoading();
+		}
+		$('#' + id).html(resp);
+		window.scrollTo({
+			top:0,
+			behavior:'smooth'
+		});
+	}, null, false);
+}
 </script>
 <div class="main_hd" id="baseInfoManage" style="display: none">
 	<form id="baseForm" style="position:relative;">
