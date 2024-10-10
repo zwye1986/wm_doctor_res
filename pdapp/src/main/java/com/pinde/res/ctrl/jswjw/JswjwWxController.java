@@ -495,6 +495,13 @@ public class JswjwWxController extends GeneralController {
         if (userinfo == null) {
             return ResultDataThrow("用户不存在");
         }
+
+        try {
+            userPasswd = DESUtil.decryptWx(userPasswd);
+        }catch (Exception e){
+            return ResultDataThrow("用户密码错误");
+        }
+
 //        ServletContext application = request.getServletContext();
 //        if (application.getAttribute("onlineCountNum") == null) {
 //            application.setAttribute("onlineCountNum", 1);
