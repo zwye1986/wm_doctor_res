@@ -500,7 +500,7 @@
                 <td>
                     <span style="display:${!empty basicInfo.professionLicenceUrl?'':'none'} ">
                         <a href="${sysCfgMap['upload_base_url']}/${basicInfo.professionLicenceUrl}"
-                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看图片</a>
+                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看</a>
                     </span>
                 </td>
             </tr>
@@ -509,7 +509,7 @@
                 <td>
                     <span style="display:${!empty basicInfo.hospitalLevelLicenceUrl?'':'none'} ">
                         <a href="${sysCfgMap['upload_base_url']}/${basicInfo.hospitalLevelLicenceUrl}"
-                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看图片</a>
+                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看</a>
                     </span>
                 </td>
                 <!-- 这个放最后，因为后面接的是协同单位信息 -->
@@ -526,7 +526,7 @@
                             <c:if test="${not empty jointContract.jointContractUrl}">
                             <span>
                                 <a href="${sysCfgMap['upload_base_url']}/${jointContract.jointContractUrl}"
-                                   target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看图片</a>
+                                   target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看</a>
                             </span>
                             </c:if>
                             <c:if test="${empty jointContract.jointContractUrl}">
@@ -542,7 +542,7 @@
                     <td>
                             <span style="display:${!empty basicInfo.collaborativeRelationshipAgreementUrl?'':'none'} ">
                                 <a href="${sysCfgMap['upload_base_url']}/${basicInfo.collaborativeRelationshipAgreementUrl}"
-                                   target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看图片</a>
+                                   target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看</a>
                             </span>
                     </td>
                 </tr>
@@ -715,7 +715,10 @@
                     </c:if>
                 </td>
                 <th style="background-color: #f4f5f9;"><span class="red">*</span>教学门诊：</th>
-                <td>${baseExtInfoEducationInfo.teachingClinic eq 'Y' ? '有' : '无'}</td>
+                <td>
+                    <c:if test="${baseExtInfoEducationInfo.teachingClinic eq 'Y'}">有</c:if>
+                    <c:if test="${baseExtInfoEducationInfo.teachingClinic eq 'N'}">无</c:if>
+                </td>
             </tr>
             </tbody>
         </table>
