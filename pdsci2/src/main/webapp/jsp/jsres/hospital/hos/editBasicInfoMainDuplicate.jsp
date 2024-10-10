@@ -851,7 +851,7 @@
                     <th><span class="red">*</span>执业许可证：</th>
                     <td>
 							<span id="professionLicenceUrlSpan" style="display:${!empty basicInfo.professionLicenceUrl?'':'none'} ">
-								&nbsp; <a href="${sysCfgMap['upload_base_url']}/${basicInfo.professionLicenceUrl}" target="_blank">查看图片</a>&nbsp;
+								&nbsp; <a href="${sysCfgMap['upload_base_url']}/${basicInfo.professionLicenceUrl}" target="_blank">查看</a>&nbsp;
 							</span>
                         <c:if test="${resBase.baseStatusId eq baseStatusEnumNotSubmit.id or resBase.baseStatusId eq baseStatusEnumNotPassed.id or empty resBase.baseStatusId  }">
                             <a id="professionLicenceUrl" href="javascript:uploadFile('professionLicenceUrl','执业许可证图片');" style="margin-left: 2px">${empty basicInfo.professionLicenceUrl?'':'重新'}上传</a>&nbsp;
@@ -864,7 +864,7 @@
                     <th><span class="red">*</span>医院等级证书：</th>
                     <td>
 							<span id="hospitalLevelLicenceUrlSpan" style="display:${!empty basicInfo.hospitalLevelLicenceUrl?'':'none'} ">
-								&nbsp; <a href="${sysCfgMap['upload_base_url']}/${basicInfo.hospitalLevelLicenceUrl}" target="_blank">查看图片</a>&nbsp;
+								&nbsp; <a href="${sysCfgMap['upload_base_url']}/${basicInfo.hospitalLevelLicenceUrl}" target="_blank">查看</a>&nbsp;
 							</span>
                         <c:if test="${resBase.baseStatusId eq baseStatusEnumNotSubmit.id or resBase.baseStatusId eq baseStatusEnumNotPassed.id or empty resBase.baseStatusId}">
                             <a id="hospitalLevelLicenceUrl" href="javascript:uploadFile('hospitalLevelLicenceUrl','医院等级证书图片');" style="margin-left: 2px">${empty basicInfo.hospitalLevelLicenceUrl?'':'重新'}上传</a>&nbsp;
@@ -878,7 +878,7 @@
                     <th>协同关系协议：</th>
                     <td>
 							<span id="collaborativeRelationshipAgreementUrlSpan" style="display:${!empty basicInfo.collaborativeRelationshipAgreementUrl?'':'none'} ">
-								&nbsp; <a href="${sysCfgMap['upload_base_url']}/${basicInfo.collaborativeRelationshipAgreementUrl}" target="_blank">查看图片</a>&nbsp;
+								&nbsp; <a href="${sysCfgMap['upload_base_url']}/${basicInfo.collaborativeRelationshipAgreementUrl}" target="_blank">查看</a>&nbsp;
 							</span>
                         <c:if test="${resBase.baseStatusId eq baseStatusEnumNotSubmit.id or resBase.baseStatusId eq baseStatusEnumNotPassed.id or empty resBase.baseStatusId}">
                             <a id="collaborativeRelationshipAgreementUrl" href="javascript:uploadFile('collaborativeRelationshipAgreementUrl','协同关系协议图片');" style="margin-left: 2px">${empty basicInfo.collaborativeRelationshipAgreementUrl?'':'重新'}上传</a>&nbsp;
