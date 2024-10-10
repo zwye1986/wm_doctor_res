@@ -1082,7 +1082,7 @@
             </tr>
             <tr>
                 <th><span class="red">*</span>临床技能培训中心建筑面积（平米）：</th>
-                <td><input type="text" class="input1 validate[required,custom[number],min[0],max[100],maxSize[9]]" style="width:100px;"
+                <td><input type="text" class="input1 validate[required,custom[number],min[0],max[99999999],maxSize[10]]" style="width:100px;"
                            name="baseExtInfoEducationInfo.clinicalSkillsTrainingCenterM2" value="${baseExtInfoEducationInfo.clinicalSkillsTrainingCenterM2}"/>
                 </td>
                 <th><span class="red">*</span>培训管理制度：</th>
@@ -1124,6 +1124,7 @@
     </div>
     <div class="btn_info">
         <input class="btn_green" onclick="saveBaseMainInfo()" type="button" style="width: 88px" value="保&#12288;存"/>
+        <input class="btn_grey" onclick="hosMain('${sessionScope.currUser.orgFlow}', '')" type="button" style="width: 88px" value="关&#12288;闭"/>
     </div>
 </form>
 <div style="display: none">

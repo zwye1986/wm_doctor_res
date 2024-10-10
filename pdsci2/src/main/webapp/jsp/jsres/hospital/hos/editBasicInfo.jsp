@@ -717,6 +717,7 @@
 	</div>
 	<div class="btn_info">
 		<input class="btn_green" onclick="saveBaseInfo()" type="button" value="保&#12288;存"/>
+		<input class="btn_green" onclick="hosMain('${sessionScope.currUser.orgFlow}', '')" type="button" value="关&#12288;闭"/>
 	</div>
 </form>
 <div style="display: none">

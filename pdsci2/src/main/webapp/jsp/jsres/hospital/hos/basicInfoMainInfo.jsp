@@ -661,15 +661,27 @@
             </tr>
             <tr>
                 <th style="background-color: #f4f5f9;"><span class="red">*</span>演示教室：</th>
-                <td>${baseExtInfoEducationInfo.hospitalDemoClass eq 'Y' ? '有' : '无'}</td>
+                <td>
+                    <c:if test="${baseExtInfoEducationInfo.hospitalDemoClass eq 'Y'}">有</c:if>
+                    <c:if test="${baseExtInfoEducationInfo.hospitalDemoClass eq 'N'}">无</c:if>
+                </td>
                 <th style="background-color: #f4f5f9;"><span class="red">*</span>图书馆：</th>
-                <td>${baseExtInfoEducationInfo.hospitalLibrary eq 'Y' ? '有' : '无'}</td>
+                <td>
+                    <c:if test="${baseExtInfoEducationInfo.hospitalLibrary eq 'Y'}">有</c:if>
+                    <c:if test="${baseExtInfoEducationInfo.hospitalLibrary eq 'N'}">无</c:if>
+                </td>
             </tr>
             <tr>
                 <th style="background-color: #f4f5f9;"><span class="red">*</span>文献检索系统：</th>
-                <td>${baseExtInfoEducationInfo.literatureRetrievalSystem eq 'Y' ? '有' : '无'}</td>
+                <td>
+                    <c:if test="${baseExtInfoEducationInfo.literatureRetrievalSystem eq 'Y'}">有</c:if>
+                    <c:if test="${baseExtInfoEducationInfo.literatureRetrievalSystem eq 'N'}">无</c:if>
+                </td>
                 <th style="background-color: #f4f5f9;"><span class="red">*</span>网络信息管理平台：</th>
-                <td>${baseExtInfoEducationInfo.netInfoManagePlatform eq 'Y' ? '有' : '无'}</td>
+                <td>
+                    <c:if test="${baseExtInfoEducationInfo.netInfoManagePlatform eq 'Y'}">有</c:if>
+                    <c:if test="${baseExtInfoEducationInfo.netInfoManagePlatform eq 'N'}">无</c:if>
+                </td>
             </tr>
             <tr>
                 <th style="background-color: #f4f5f9;"><span class="red">*</span>临床技能培训中心建筑面积（平米）：</th>
@@ -678,7 +690,13 @@
                 <td>
                     <c:if test="${baseExtInfoEducationInfo.trainManageSystem eq 'Y' and not empty baseExtInfoEducationInfo.trainManageSystemUrl}">
                         <a href="${sysCfgMap['upload_base_url']}/${baseExtInfoEducationInfo.trainManageSystemUrl}"
-                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看文件</a>
+                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看</a>
+                    </c:if>
+                    <c:if test="${baseExtInfoEducationInfo.trainManageSystem eq 'Y' and empty baseExtInfoEducationInfo.trainManageSystemUrl}">
+                        有
+                    </c:if>
+                    <c:if test="${baseExtInfoEducationInfo.trainManageSystem eq 'N'}">
+                        无
                     </c:if>
                 </td>
             </tr>
@@ -687,7 +705,13 @@
                 <td>
                     <c:if test="${baseExtInfoEducationInfo.clinicalBaseTrainContract eq 'Y' and not empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl}">
                         <a href="${sysCfgMap['upload_base_url']}/${baseExtInfoEducationInfo.clinicalBaseTrainContractUrl}"
-                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看文件</a>
+                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">查看</a>
+                    </c:if>
+                    <c:if test="${baseExtInfoEducationInfo.clinicalBaseTrainContract eq 'Y' and empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl}">
+                        有
+                    </c:if>
+                    <c:if test="${baseExtInfoEducationInfo.clinicalBaseTrainContract eq 'N'}">
+                        无
                     </c:if>
                 </td>
                 <th style="background-color: #f4f5f9;"><span class="red">*</span>教学门诊：</th>
