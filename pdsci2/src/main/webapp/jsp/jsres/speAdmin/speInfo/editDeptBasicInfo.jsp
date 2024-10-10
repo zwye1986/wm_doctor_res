@@ -43,7 +43,7 @@
     }
 
     function saveBaseInfo() {
-        if (!$("#BaseInfoForm").validationEngine("validate")) {
+        if (!$("#BaseInfoForm").validationEngine("validate") || !checkGroupMember()) {
             $("#indexBody").scrollTop("0px");
             return false;
         }
@@ -67,6 +67,15 @@
                 },1000);
             }
         }, null, true);
+    }
+
+    function checkGroupMember() {
+        if(!$("#groupMemberTb tr").length) {
+            jboxTip("请添加教学小组成员！");
+            return false;
+        }
+
+        return true;
     }
 
     function addGroupMember(tb) {
@@ -172,9 +181,10 @@
 
             <table border="2px" cellpadding="0" cellspacing="0" class="grid" id="speRespTable" style="table-layout: fixed">
                 <tr>
-                    <th style="width: 33.3%">专业基地负责人<span class="red">*</span></th>
-                    <th style="width: 33.3%">手机号码<span class="red">*</span></th>
-                    <th style="width: 33.3%">邮箱地址<span class="red">*</span></th>
+                    <th style="width: 30%">专业基地负责人<span class="red">*</span></th>
+                    <th style="width: 30%">手机号码<span class="red">*</span></th>
+                    <th style="width: 30%">邮箱地址<span class="red">*</span></th>
+                    <th style="width: 10%"></th>
                     <%--<th>操作&nbsp;<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
                                      style="cursor: pointer;position: absolute;margin-top: 2px;" onclick="javascript:add('zpglbmfzr')" /></th>--%>
                 </tr>
@@ -199,9 +209,10 @@
 
             <table border="2px" cellpadding="0" cellspacing="0" class="grid" id="speDirTable" style="table-layout: fixed">
                 <tr>
-                    <th style="width: 33.3%">教学主任<span class="red">*</span></th>
-                    <th style="width: 33.3%">手机号码<span class="red">*</span></th>
-                    <th style="width: 33.3%">邮箱地址<span class="red">*</span></th>
+                    <th style="width: 30%">教学主任<span class="red">*</span></th>
+                    <th style="width: 30%">手机号码<span class="red">*</span></th>
+                    <th style="width: 30%">邮箱地址<span class="red">*</span></th>
+                    <th style="width: 10%"></th>
                     <%--<th>操作&nbsp;<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
                                      style="cursor: pointer;position: absolute;margin-top: 2px;" onclick="javascript:add('zpglbmfzr')" /></th>--%>
                 </tr>
@@ -226,9 +237,10 @@
 
             <table border="2px" cellpadding="0" cellspacing="0" class="grid" id="speSceTable" style="table-layout: fixed">
                 <tr>
-                    <th style="width: 33.3%">教学秘书<span class="red">*</span></th>
-                    <th style="width: 33.3%">手机号码<span class="red">*</span></th>
-                    <th style="width: 33.3%">邮箱地址<span class="red">*</span></th>
+                    <th style="width: 30%">教学秘书<span class="red">*</span></th>
+                    <th style="width: 30%">手机号码<span class="red">*</span></th>
+                    <th style="width: 30%">邮箱地址<span class="red">*</span></th>
+                    <th style="width: 10%"></th>
                     <%--<th>操作&nbsp;<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
                                      style="cursor: pointer;position: absolute;margin-top: 2px;" onclick="javascript:add('zpglbmfzr')" /></th>--%>
                 </tr>
@@ -253,9 +265,10 @@
 
             <table border="2px" cellpadding="0" cellspacing="0" class="grid" id="groupLeaderTable" style="table-layout: fixed">
                 <tr>
-                    <th style="width: 33.3%">教学小组组长<span class="red">*</span></th>
-                    <th style="width: 33.3%">手机号码<span class="red">*</span></th>
-                    <th style="width: 33.3%">邮箱地址<span class="red">*</span></th>
+                    <th style="width: 30%">教学小组组长<span class="red">*</span></th>
+                    <th style="width: 30%">手机号码<span class="red">*</span></th>
+                    <th style="width: 30%">邮箱地址<span class="red">*</span></th>
+                    <th style="width: 10%"></th>
                     <%--<th>操作&nbsp;<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
                                      style="cursor: pointer;position: absolute;margin-top: 2px;" onclick="javascript:add('zpglbmfzr')" /></th>--%>
                 </tr>
@@ -332,123 +345,123 @@
                     </td>
                 </tr>--%>
                 <tr>
-                    <th><span style="color: red">*</span>&nbsp;本年编制总床位数：</th>
+                    <th><span style="color: red">*</span>&nbsp;本年编制总床位数（张）：</th>
                     <td>
-                        <input type="text" class='input validate[custom[integer],min[0]]'
-                               name="deptBasicInfoForm.bzzcws" style="width:200px;" value="${dataIsNull?promptMap.bzzcws:deptBasicInfoForm.bzzcws}"/>张
+                        <input type="text" class='input validate[required,custom[integer],min[0]]'
+                               name="deptBasicInfoForm.bzzcws" style="width:200px;" value="${dataIsNull?promptMap.bzzcws:deptBasicInfoForm.bzzcws}"/>
                     </td>
-                    <th><span style="color: red">*</span>&nbsp;本年实有总床位数：</th>
+                    <th><span style="color: red">*</span>&nbsp;本年实有总床位数（张）：</th>
                     <td>
-                        <input type="text" class='input validate[custom[integer],min[0]]' style="width:200px;"
-                               name="deptBasicInfoForm.syzcws" value="${dataIsNull?promptMap.syzcws:deptBasicInfoForm.syzcws}"/>张
-                    </td>
-                </tr>
-                <tr>
-                    <th><span style="color: red">*</span>&nbsp;本年收治住院病人数：</th>
-                    <td>
-                        <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.nszzybrs" style="width:200px;"
-                               value="${dataIsNull?promptMap.nszzybrs:deptBasicInfoForm.nszzybrs}"/>人次
-                    </td>
-                    <th><span style="color: red">*</span>&nbsp;本年病床使用率：</th>
-                    <td>
-                        <input type="text" class='input validate[custom[number],min[0]]' style="width:200px;"
-                               name="deptBasicInfoForm.bcsyl" value="${dataIsNull?promptMap.bcsyl:deptBasicInfoForm.bcsyl}"/>%
+                        <input type="text" class='input validate[required,custom[integer],min[0]]' style="width:200px;"
+                               name="deptBasicInfoForm.syzcws" value="${dataIsNull?promptMap.syzcws:deptBasicInfoForm.syzcws}"/>
                     </td>
                 </tr>
                 <tr>
-                    <th><span style="color: red">*</span>&nbsp;本年门诊量：</th>
+                    <th><span style="color: red">*</span>&nbsp;本年收治住院病人数（人次）：</th>
                     <td>
-                        <input type="text" class='input validate[custom[integer],min[0]]'
-                               name="deptBasicInfoForm.nmzl" style="width:200px;" value="${dataIsNull?promptMap.nmzl:deptBasicInfoForm.nmzl}"/>人次
+                        <input type="text" class='input validate[required,custom[integer],min[0]]' name="deptBasicInfoForm.nszzybrs" style="width:200px;"
+                               value="${dataIsNull?promptMap.nszzybrs:deptBasicInfoForm.nszzybrs}"/>
                     </td>
-                    <th><span style="color: red">*</span>&nbsp;本年急诊量：</th>
+                    <th><span style="color: red">*</span>&nbsp;本年病床使用率（%）：</th>
                     <td>
-                        <input type="text" class='input validate[custom[integer],min[0]]' style="width:200px;"
-                               name="deptBasicInfoForm.njzl" value="${dataIsNull?promptMap.njzl:deptBasicInfoForm.njzl}"/>人次
+                        <input type="text" class='input validate[required,custom[number],min[0],max[100],maxSize[10]]' style="width:200px;"
+                               name="deptBasicInfoForm.bcsyl" value="${dataIsNull?promptMap.bcsyl:deptBasicInfoForm.bcsyl}"/>
                     </td>
                 </tr>
                 <tr>
-                    <th>
-                        <span style="color: red">*</span>
-                        本年病床周转次数：
-                    </th>
+                    <th><span style="color: red">*</span>&nbsp;本年门诊量（人次）：</th>
                     <td>
-                        <input type="text" class='input validate[custom[integer],min[0]]'
-                               name="deptBasicInfoForm.bczzcs" style="width:200px;" value="${dataIsNull?promptMap.bczzcs:deptBasicInfoForm.bczzcs}"/>次
+                        <input type="text" class='input validate[required,custom[integer],min[0]]'
+                               name="deptBasicInfoForm.nmzl" style="width:200px;" value="${dataIsNull?promptMap.nmzl:deptBasicInfoForm.nmzl}"/>
                     </td>
-                    <th>
-                        <span style="color: red">*</span>
-                        本年平均住院日：
-                    </th>
+                    <th><span style="color: red">*</span>&nbsp;本年急诊量（人次）：</th>
                     <td>
-                        <input type="text" class='input validate[custom[integer],min[0]]' style="width:200px;"
-                               name="deptBasicInfoForm.pjzyr" value="${dataIsNull?promptMap.pjzyr:deptBasicInfoForm.pjzyr}"/>天
+                        <input type="text" class='input validate[required,custom[integer],min[0]]' style="width:200px;"
+                               name="deptBasicInfoForm.njzl" value="${dataIsNull?promptMap.njzl:deptBasicInfoForm.njzl}"/>
                     </td>
                 </tr>
                 <tr>
                     <th>
                         <span style="color: red">*</span>
-                        本年出院病人数：
+                        本年病床周转次数（次）：
                     </th>
                     <td>
-                        <input type="text" class='input validate[custom[integer],min[0]]'
-                               name="deptBasicInfoForm.ncybrs" style="width:200px;" value="${dataIsNull?promptMap.ncybrs:deptBasicInfoForm.ncybrs}"/>人次
+                        <input type="text" class='input validate[required,custom[integer],min[0]]'
+                               name="deptBasicInfoForm.bczzcs" style="width:200px;" value="${dataIsNull?promptMap.bczzcs:deptBasicInfoForm.bczzcs}"/>
                     </td>
                     <th>
                         <span style="color: red">*</span>
-                        本年急诊手术例数：
+                        本年平均住院日（天）：
                     </th>
                     <td>
-                        <input type="text" class='input validate[custom[integer],min[0]]'
+                        <input type="text" class='input validate[required,custom[integer],min[0]]' style="width:200px;"
+                               name="deptBasicInfoForm.pjzyr" value="${dataIsNull?promptMap.pjzyr:deptBasicInfoForm.pjzyr}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <span style="color: red">*</span>
+                        本年出院病人数（人次）：
+                    </th>
+                    <td>
+                        <input type="text" class='input validate[required,custom[integer],min[0]]'
+                               name="deptBasicInfoForm.ncybrs" style="width:200px;" value="${dataIsNull?promptMap.ncybrs:deptBasicInfoForm.ncybrs}"/>
+                    </td>
+                    <th>
+                        <span style="color: red">*</span>
+                        本年急诊手术例数（例次）：
+                    </th>
+                    <td>
+                        <input type="text" class='input validate[required,custom[integer],min[0]]'
                                style="width:200px;" name="deptBasicInfoForm.njzscls"
-                               value="${dataIsNull?promptMap.njzscls:deptBasicInfoForm.njzscls}"/>例次
+                               value="${dataIsNull?promptMap.njzscls:deptBasicInfoForm.njzscls}"/>
                     </td>
                 </tr>
                 <tr>
                     <th>
                         <span style="color: red">*</span>
-                        近三年培训总容量：
+                        近三年培训总容量（人）：
                     </th>
                     <td>
-                        <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.npxzrl"
-                               style="width:200px;" value="${dataIsNull?promptMap.npxzrl:deptBasicInfoForm.npxzrl}"/>人
+                        <input type="text" class='input validate[required,custom[integer],min[0]]' name="deptBasicInfoForm.npxzrl"
+                               style="width:200px;" value="${dataIsNull?promptMap.npxzrl:deptBasicInfoForm.npxzrl}"/>
                     </td>
                     <th>
                         <span style="color: red">*</span>
-                        本年剩余培训容量：
+                        本年剩余培训容量（人）：
                     </th>
                     <td>
-                        <input type="text" class='input validate[custom[integer],min[0]]' style="width:200px;"
-                               name="deptBasicInfoForm.sypxrl" value="${dataIsNull?promptMap.sypxrl:deptBasicInfoForm.sypxrl}"/>人
+                        <input type="text" class='input validate[required,custom[integer],min[0]]' style="width:200px;"
+                               name="deptBasicInfoForm.sypxrl" value="${dataIsNull?promptMap.sypxrl:deptBasicInfoForm.sypxrl}"/>
                     </td>
                 </tr>
                 <c:if test="${speFlow eq '1600'}">
                 <tr>
                     <th>
                         <span style="color: red">*</span>
-                        产科本年分娩量：
+                        产科本年分娩量（人次）：
                     </th>
                     <td>
-                        <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.cknfml"
-                               style="width:200px;" value="${empty deptBasicInfoForm.cknfml?0:deptBasicInfoForm.cknfml}"/>人次
+                        <input type="text" class='input validate[required,custom[integer],min[0]]' name="deptBasicInfoForm.cknfml"
+                               style="width:200px;" value="${empty deptBasicInfoForm.cknfml?'':deptBasicInfoForm.cknfml}"/>
                     </td>
                     <th>
                         <span style="color: red">*</span>
-                        妇科本年收治病人数：
+                        妇科本年收治病人数（人次）：
                     </th>
                     <td>
-                        <input type="text" class='input validate[custom[integer],min[0]]' style="width:200px;"
-                               name="deptBasicInfoForm.fknszbrs" value="${empty deptBasicInfoForm.fknszbrs?0:deptBasicInfoForm.fknszbrs}"/>人次
+                        <input type="text" class='input validate[required,custom[integer],min[0]]' style="width:200px;"
+                               name="deptBasicInfoForm.fknszbrs" value="${empty deptBasicInfoForm.fknszbrs?'':deptBasicInfoForm.fknszbrs}"/>
                     </td>
                 </tr>
                 <tr>
                     <th>
                         <span style="color: red">*</span>
-                        产科本年收治病人数：
+                        产科本年收治病人数（人次）：
                     </th>
                     <td colspan="3">
-                        <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.cknszbrs"
-                               style="width:200px;" value="${empty deptBasicInfoForm.cknszbrs?0:deptBasicInfoForm.cknszbrs}"/>人次
+                        <input type="text" class='input validate[required,custom[integer],min[0]]' name="deptBasicInfoForm.cknszbrs"
+                               style="width:200px;" value="${empty deptBasicInfoForm.cknszbrs?'':deptBasicInfoForm.cknszbrs}"/>
                     </td>
                 </tr>
                 </c:if>
@@ -456,37 +469,37 @@
                     <tr>
                         <th>
                             <span style="color: red">*</span>
-                            本年麻醉总数：
+                            本年麻醉总数（人次）：
                         </th>
                         <td>
-                            <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.nmzzszmk"
-                                   style="width:200px;" value="${empty deptBasicInfoForm.nmzzszmk?0:deptBasicInfoForm.nmzzszmk}"/>人次
+                            <input type="text" class='input validate[required,custom[integer],min[0]]' name="deptBasicInfoForm.nmzzszmk"
+                                   style="width:200px;" value="${empty deptBasicInfoForm.nmzzszmk?'':deptBasicInfoForm.nmzzszmk}"/>
                         </td>
                         <th>
                             <span style="color: red">*</span>
-                            本年麻醉恢复室病人数：
+                            本年麻醉恢复室病人数（人次）：
                         </th>
                         <td>
-                            <input type="text" class='input validate[custom[integer],min[0]]' style="width:200px;"
-                                   name="deptBasicInfoForm.mzhfsbrs" value="${empty deptBasicInfoForm.mzhfsbrs?0:deptBasicInfoForm.mzhfsbrs}"/>人次
+                            <input type="text" class='input validate[required,custom[integer],min[0]]' style="width:200px;"
+                                   name="deptBasicInfoForm.mzhfsbrs" value="${empty deptBasicInfoForm.mzhfsbrs?'':deptBasicInfoForm.mzhfsbrs}"/>
                         </td>
                     </tr>
                     <tr>
                         <th>
                             <span style="color: red">*</span>
-                            本年疼痛门诊病人数：
+                            本年疼痛门诊病人数（人次）：
                         </th>
                         <td>
-                            <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.ttmzbrs"
-                                   style="width:200px;" value="${empty deptBasicInfoForm.ttmzbrs?0:deptBasicInfoForm.ttmzbrs}"/>人次
+                            <input type="text" class='input validate[required,custom[integer],min[0]]' name="deptBasicInfoForm.ttmzbrs"
+                                   style="width:200px;" value="${empty deptBasicInfoForm.ttmzbrs?'':deptBasicInfoForm.ttmzbrs}"/>
                         </td>
                         <th>
                             <span style="color: red">*</span>
-                            本年重症监护室收治病人数：
+                            本年重症监护室收治病人数（人次）：
                         </th>
                         <td>
-                            <input type="text" class='input validate[custom[integer],min[0]]' style="width:200px;"
-                                   name="deptBasicInfoForm.zzjhsszbrs" value="${empty deptBasicInfoForm.zzjhsszbrs?0:deptBasicInfoForm.zzjhsszbrs}"/>人次
+                            <input type="text" class='input validate[required,custom[integer],min[0]]' style="width:200px;"
+                                   name="deptBasicInfoForm.zzjhsszbrs" value="${empty deptBasicInfoForm.zzjhsszbrs?'':deptBasicInfoForm.zzjhsszbrs}"/>
                         </td>
                     </tr>
                 </c:if>
@@ -494,37 +507,37 @@
                     <tr>
                         <th>
                             <span style="color: red">*</span>
-                            本年活检标本病例数：
+                            本年活检标本病例数（例次）：
                         </th>
                         <td>
-                            <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.nhjbbbls"
-                                   style="width:200px;" value="${empty deptBasicInfoForm.nhjbbbls?0:deptBasicInfoForm.nhjbbbls}"/>例次
+                            <input type="text" class='input validate[required,custom[integer],min[0]]' name="deptBasicInfoForm.nhjbbbls"
+                                   style="width:200px;" value="${empty deptBasicInfoForm.nhjbbbls?'':deptBasicInfoForm.nhjbbbls}"/>
                         </td>
                         <th>
                             <span style="color: red">*</span>
-                            本年尸体解剖病例数：
+                            本年尸体解剖病例数（例次）：
                         </th>
                         <td>
-                            <input type="text" class='input validate[custom[integer],min[0]]' style="width:200px;"
-                                   name="deptBasicInfoForm.nstjpbls" value="${empty deptBasicInfoForm.nstjpbls?0:deptBasicInfoForm.nstjpbls}"/>例次
+                            <input type="text" class='input validate[required,custom[integer],min[0]]' style="width:200px;"
+                                   name="deptBasicInfoForm.nstjpbls" value="${empty deptBasicInfoForm.nstjpbls?'':deptBasicInfoForm.nstjpbls}"/>
                         </td>
                     </tr>
                     <tr>
                         <th>
                             <span style="color: red">*</span>
-                            本年冰冻快速诊断量：
+                            本年冰冻快速诊断量（例次）：
                         </th>
                         <td>
-                            <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.nbdkszdl"
-                                   style="width:200px;" value="${empty deptBasicInfoForm.nbdkszdl?0:deptBasicInfoForm.nbdkszdl}"/>例次
+                            <input type="text" class='input validate[required,custom[integer],min[0]]' name="deptBasicInfoForm.nbdkszdl"
+                                   style="width:200px;" value="${empty deptBasicInfoForm.nbdkszdl?'':deptBasicInfoForm.nbdkszdl}"/>
                         </td>
                         <th>
                             <span style="color: red">*</span>
-                            本年细胞学检查病例数：
+                            本年细胞学检查病例数（例次）：
                         </th>
                         <td>
-                            <input type="text" class='input validate[custom[integer],min[0]]' style="width:200px;"
-                                   name="deptBasicInfoForm.nxbxjcbls" value="${empty deptBasicInfoForm.nxbxjcbls?0:deptBasicInfoForm.nxbxjcbls}"/>例次
+                            <input type="text" class='input validate[required,custom[integer],min[0]]' style="width:200px;"
+                                   name="deptBasicInfoForm.nxbxjcbls" value="${empty deptBasicInfoForm.nxbxjcbls?'':deptBasicInfoForm.nxbxjcbls}"/>
                         </td>
                     </tr>
                 </c:if>
@@ -532,22 +545,22 @@
                 <tr>
                     <th><span class="red">*</span>本年总病例病种数（个）：</th>
                     <td>
-                        <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.annualDiseases"
-                              style="width:200px;" value="${empty deptBasicInfoForm.annualDiseases?0:deptBasicInfoForm.annualDiseases}"/>
+                        <input type="text" class='input validate[required,custom[integer],min[0]]' name="deptBasicInfoForm.annualDiseases"
+                              style="width:200px;" value="${empty deptBasicInfoForm.annualDiseases?'':deptBasicInfoForm.annualDiseases}"/>
                     </td>
                     <th>
                         <span class="red">*</span>本年收治总疾病（种）：
                     </th>
                     <td>
-                        <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.annualDiseaseCategory"
-                               style="width:200px;" value="${empty deptBasicInfoForm.annualDiseaseCategory?0:deptBasicInfoForm.annualDiseaseCategory}"/>
+                        <input type="text" class='input validate[required,custom[integer],min[0]]' name="deptBasicInfoForm.annualDiseaseCategory"
+                               style="width:200px;" value="${empty deptBasicInfoForm.annualDiseaseCategory?'':deptBasicInfoForm.annualDiseaseCategory}"/>
                     </td>
                 </tr>
                 <tr>
                     <th><span class="red">*</span>本年收治总疾病（个）：</th>
                     <td>
-                        <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.annualDiseaseNumber"
-                               style="width:200px;" value="${empty deptBasicInfoForm.annualDiseaseNumber?0:deptBasicInfoForm.annualDiseaseNumber}"/>
+                        <input type="text" class='input validate[required,custom[integer],min[0]]' name="deptBasicInfoForm.annualDiseaseNumber"
+                               style="width:200px;" value="${empty deptBasicInfoForm.annualDiseaseNumber?'':deptBasicInfoForm.annualDiseaseNumber}"/>
                     </td>
                     <th>
                         <span class="red">*</span>教学门诊：
@@ -560,15 +573,15 @@
                 <tr>
                     <th><span class="red">*</span>近三年培训人数总计（人）：</th>
                     <td>
-                        <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.threeYearTrainingCount"
-                               style="width:200px;" value="${empty deptBasicInfoForm.threeYearTrainingCount?0:deptBasicInfoForm.threeYearTrainingCount}"/>
+                        <input type="text" class='input validate[required,custom[integer],min[0]]' name="deptBasicInfoForm.threeYearTrainingCount"
+                               style="width:200px;" value="${empty deptBasicInfoForm.threeYearTrainingCount?'':deptBasicInfoForm.threeYearTrainingCount}"/>
                     </td>
                     <th>
                         <span class="red">*</span>近三年理论首考平均通过率（%）：
                     </th>
                     <td>
-                        <input type="text" class='input validate[custom[number],min[0]]' name="deptBasicInfoForm.threeYearExamPassPer"
-                               style="width:200px;" value="${empty deptBasicInfoForm.threeYearExamPassPer?0:deptBasicInfoForm.threeYearExamPassPer}"/>
+                        <input type="text" class='input validate[required,custom[number],min[0],max[100],maxSize[10]]' name="deptBasicInfoForm.threeYearExamPassPer"
+                               style="width:200px;" value="${empty deptBasicInfoForm.threeYearExamPassPer?'':deptBasicInfoForm.threeYearExamPassPer}"/>
                     </td>
                 </tr>
                 </tbody>
