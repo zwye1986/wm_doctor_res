@@ -60,6 +60,8 @@ public class JsResTeacherController extends GeneralController{
 	final static String Ssczzd = "14"; final static String Yxzdbgsxzd = "15"; final static String Lcwxyd = "16";
 	final static String Ryjy = "17"; final static String Rzyjdjy = "18"; final static String Cjbg = "19";
 	final static String Bgdfx = "20";
+	final static String Jxsj = "21";
+	final static String Sjys = "22";
 	@Autowired
 	private INoticeBiz noticeBiz;
 	@Autowired
@@ -2135,6 +2137,7 @@ public class JsResTeacherController extends GeneralController{
 			int lcblsxzd = 0; int ssczzd = 0; int yxzdbgsxzd = 0; int lcwxyd = 0;
 			int ryjy = 0; int rzyjdjy = 0; int cjbg = 0;
 			int ynbltl=0;	int wzbltl=0; int swbltl=0;  int bgdfx=0;
+			int jxsj=0;	int sjys=0;
 			List<String> recTypes=new ArrayList<String>();
 			recTypes.add(recTypeIdt);
 				List<ResRec> recs= iResRecBiz.searchRecByProcessWithBLOBs(recTypes,processFlow,operUser.getUserFlow());
@@ -2185,6 +2188,10 @@ public class JsResTeacherController extends GeneralController{
 						cjbg++;
 					} else if(Bgdfx.equals(text)){
 						bgdfx++;
+					} else if(Jxsj.equals(text)){
+						jxsj++;
+					} else if(Sjys.equals(text)){
+						sjys++;
 					}
 				}
 			}
@@ -2242,6 +2249,10 @@ public class JsResTeacherController extends GeneralController{
 						cjbg++;
 					} else if(Bgdfx.equals(text)){
 						bgdfx++;
+					} else if(Jxsj.equals(text)){
+						jxsj++;
+					} else if(Sjys.equals(text)){
+						sjys++;
 					}
 				}
 			}
@@ -2288,6 +2299,8 @@ public class JsResTeacherController extends GeneralController{
 			dataMap.put("rzyjdjy",String.valueOf(rzyjdjy));
 			dataMap.put("cjbg",String.valueOf(cjbg));
 			dataMap.put("bgdfx",String.valueOf(bgdfx));
+			dataMap.put("jxsj",String.valueOf(jxsj));
+			dataMap.put("sjys",String.valueOf(sjys));
 			ResDoctorSchProcess resDoctorSchProcess=iResDoctorProcessBiz.read(processFlow);
 			model.addAttribute("resDoctorSchProcess", resDoctorSchProcess);
 			model.addAttribute("dataMap", dataMap);
