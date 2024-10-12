@@ -31,7 +31,8 @@
                value="${empty baseSpeDept?sessionScope.currUser.orgFlow:baseSpeDept.orgFlow}"/>
         <input type="hidden" name="resBaseSpeDept.deptFlow" value="${deptFlow}"/>
         <input type="hidden" name="flag" value="${GlobalConstant.EQUIPMENT_INSTRUMENTS}"/>
-        <div class="main_bd"  <c:if test="${isJoin eq 'Y'}"> style="position: relative;overflow-y: auto;height: 625px" </c:if>  >
+        <div class="main_bd"  <c:if test="${isglobal eq 'Y'}"> style="position: relative;overflow-y: auto;height: 600px" </c:if>
+                <c:if test="${isJoin eq 'Y'}"> style="position: relative;overflow-y: auto;height: 625px" </c:if>  >
             <div class="div_table">
                 <h4>培训对象医疗工作量</h4>
                 <c:if test="${viewFlag ne 'Y'}">
@@ -86,8 +87,6 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-        <div class="main_bd"  <c:if test="${isJoin eq 'Y'}"> style="position: relative;overflow-y: auto;height: 625px" </c:if>  >
             <div class="div_table">
                 <h4>科室各种培训活动记录（可另附表）</h4>
                 <c:if test="${viewFlag ne 'Y'}">
