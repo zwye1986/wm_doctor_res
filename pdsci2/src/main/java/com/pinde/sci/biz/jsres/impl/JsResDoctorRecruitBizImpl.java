@@ -3023,7 +3023,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 						recruitExt.getSysUser().getUserAddress(),
 						recruitExt.getWorkAddr(),
 						recruitExt.getWorkSchoolName(),
-						ArmyTypeEnum.getNameById(recruitExt.getArmyType())
+						StringUtil.isBlank(recruitExt.getArmyType()) ? "" :	ArmyTypeEnum.getNameById(recruitExt.getArmyType())
 				};
 				for (int j = 0; j < titles.length; j++) {
 					HSSFCell cellFirst = rowFour.createCell(j);
