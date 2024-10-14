@@ -362,7 +362,8 @@
                         <span class="red">*</span>教学门诊：
                     </th>
                     <td>
-                        ${deptBasicInfoForm.teachingClinic eq 'Y' ? '有' : '无'}
+                         <c:if test="${deptBasicInfoForm.teachingClinic eq 'Y'}">有</c:if>
+                         <c:if test="${deptBasicInfoForm.teachingClinic eq 'N'}">无</c:if>
                     </td>
                 </tr>
                 <tr>

@@ -1272,7 +1272,7 @@ public class JsResSpeAdminController extends GeneralController{
 		mav.addObject("speFlow", speFlow);
 
 		boolean isPay=false;	//基地是否付费
-		boolean dataIsNull=false;
+//		boolean dataIsNull=false;
 		String hospitalAdmin = InitConfig.getSysCfg("res_admin_role_flow");
 		List<String> currRoleList = (List<String>) getSessionAttribute("currRoleList");
 		if(currRoleList == null || !currRoleList.contains(hospitalAdmin)) {
@@ -1294,23 +1294,23 @@ public class JsResSpeAdminController extends GeneralController{
 		}
 
 		if (GlobalConstant.DEPT_BASIC_INFO.equals(baseInfoName) &&!GlobalConstant.FLAG_Y.equals(viewFlag) && isPay) {    //基本信息
-			prompt(orgFlow,speFlow,sessionNumber,mav);	//各科室基本条件的数据汇总
+//			prompt(orgFlow,speFlow,sessionNumber,mav);	//各科室基本条件的数据汇总
 			if (null==baseSpeDept && !GlobalConstant.FLAG_Y.equals(viewFlag)){	//如果是编辑并且是付费用户，当前年的数据未填写，将前一年的数据显示出来
 				baseSpeDept = deptBasicInfoBiz.readByOrgAndSpe(orgFlow, speFlow,year.toString());
-				dataIsNull=true;
+//				dataIsNull=true;
 				if (StringUtil.isEmpty(onlyRead) || !onlyRead.equals("Y")){		//基地查看
 					editFlag=GlobalConstant.FLAG_Y;
 				}
 			}
 		}
-		mav.addObject("dataIsNull", dataIsNull);
+//		mav.addObject("dataIsNull", dataIsNull);
 		if (baseSpeDept != null) {
 			String Xml=baseSpeDept.getBaseInfo();
 			if (StringUtil.isNotBlank(Xml)) {
 				BaseSpeDeptExtForm speDeptExtForm= JaxbUtil.converyToJavaBean(Xml, BaseSpeDeptExtForm.class);
 				if (GlobalConstant.DEPT_BASIC_INFO.equals(baseInfoName)) {	//基本信息
 					//如果查询年份的数据为空，就显示去年的数据（方便用户填写）
-					if (null==speDeptExtForm.getDeptBasicInfoForm() && dataIsNull==false && isPay){		//如果查询年份的数据为空，就显示前一年的数据
+					if (null==speDeptExtForm.getDeptBasicInfoForm() && isPay){		//如果查询年份的数据为空，就显示前一年的数据
 						baseSpeDept = deptBasicInfoBiz.readByOrgAndSpe(orgFlow, speFlow,year.toString());
 						if (null!=baseSpeDept && StringUtil.isNotBlank(baseSpeDept.getBaseInfo())){
 							mav.addObject("deptBasicInfoForm",JaxbUtil.converyToJavaBean(baseSpeDept.getBaseInfo(), BaseSpeDeptExtForm.class).getDeptBasicInfoForm());
@@ -1321,7 +1321,7 @@ public class JsResSpeAdminController extends GeneralController{
 					}
 				}else if (GlobalConstant.DEPARTMENT_HEAD.equals(baseInfoName)) {	//负责人信息
 					//如果查询年份的数据为空，就显示去年的数据（方便用户填写）
-					if (null==speDeptExtForm.getDepartmentHeadForm() && dataIsNull==false && isPay){		//如果查询年份的数据为空，就显示前一年的数据
+					if (null==speDeptExtForm.getDepartmentHeadForm() && isPay){		//如果查询年份的数据为空，就显示前一年的数据
 						baseSpeDept = deptBasicInfoBiz.readByOrgAndSpe(orgFlow, speFlow,year.toString());
 						if (null!=baseSpeDept && StringUtil.isNotBlank(baseSpeDept.getBaseInfo())){
 							mav.addObject("deptBasicInfoForm",JaxbUtil.converyToJavaBean(baseSpeDept.getBaseInfo(), BaseSpeDeptExtForm.class).getDepartmentHeadForm());

@@ -339,7 +339,10 @@
                                     &nbsp; <a href="${sysCfgMap['upload_base_url']}/${baseExtInfoEducationInfo.trainManageSystemUrl}" target="_blank">查看</a>&nbsp;
                                 </span>
                                 <a id="trainManageSystemUrl" href="javascript:uploadPdfFile('trainManageSystemUrl','培训管理制度','', '.pdf');" style="margin-left: 2px">${empty baseExtInfoEducationInfo.trainManageSystemUrl?'':'重新'}上传</a>&nbsp;
-                                <a id="trainManageSystemUrlDel" href="javascript:delFile('trainManageSystemUrl');" style="${empty baseExtInfoEducationInfo.trainManageSystemUrl?'display:none':''}">删除</a>
+                                <span id="trainManageSystemUrlDel" style="${empty baseExtInfoEducationInfo.trainManageSystemUrl?'display:none':''}">
+                                    <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                                         style="cursor: pointer;" onclick="javascript:delFile('trainManageSystemUrl');" />
+                                </span>
                                 <input type="hidden" id="trainManageSystemUrlValue"  name="baseExtInfoEducationInfo.trainManageSystemUrl" value="${baseExtInfoEducationInfo.trainManageSystemUrl}" />
                             </span>
                         </td>
@@ -354,7 +357,10 @@
                                     &nbsp; <a href="${sysCfgMap['upload_base_url']}/${baseExtInfoEducationInfo.clinicalBaseTrainContractUrl}" target="_blank">查看</a>&nbsp;
                                 </span>
                                 <a id="clinicalBaseTrainContractUrl" href="javascript:uploadPdfFile('clinicalBaseTrainContractUrl','培训管理制度','', '.pdf');" style="margin-left: 2px">${empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl?'':'重新'}上传</a>&nbsp;
-                                <a id="clinicalBaseTrainContractUrlDel" href="javascript:delFile('clinicalBaseTrainContractUrl');" style="${empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl?'display:none':''}">删除</a>
+                                <span id="clinicalBaseTrainContractUrlDel" style="${empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl?'display:none':''}">
+                                    <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                                         style="cursor: pointer;" onclick="javascript:delFile('clinicalBaseTrainContractUrl');" />
+                                </span>
                                 <input type="hidden" id="clinicalBaseTrainContractUrlValue"  name="baseExtInfoEducationInfo.clinicalBaseTrainContractUrl" value="${baseExtInfoEducationInfo.clinicalBaseTrainContractUrl}" />
                             </span>
                         </td>
@@ -550,7 +556,10 @@
                 <input type="text" class="input validate[required]" style="width:90%;"
                        name="educationInfo.teachingEquipmentList[{index}].equipmentNumber"/>
             </td>
-            <td><a onclick="del(this, 'teaching');">删除</a></td>
+            <td><span>
+                <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                     style="cursor: pointer;" onclick="javascript:del(this, 'teaching');" />
+            </span></td>
         </tr>
     </table>
     <table id="centerTemplate">
@@ -568,7 +577,10 @@
                 <input type="text" class="input validate[required]" style="width:90%;"
                        name="educationInfo.centerEquipmentList[{index}].equipmentNumber"/>
             </td>
-            <td><a onclick="del(this, 'center');">删除</a></td>
+            <td><span>
+                <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                     style="cursor: pointer;" onclick="javascript:del(this, 'center');" />
+            </span></td>
         </tr>
     </table>
 </div>
