@@ -382,7 +382,7 @@ function lookSearchFile(activityFlow,role) {
 				   <th style="width:64px">活动状态</th>
 				</c:if>
                 <th>附件</th>
-                <th style="text-align: right;">操作&活动图片</th>
+                <th style="text-align: center;">操作&活动图片</th>
 				<c:if test="${param.roleFlag eq 'teach' or param.roleFlag eq 'head' or param.roleFlag eq 'secretary'}">
 					<th <%--style="display: ${param.roleFlag eq 'teach' or param.roleFlag eq 'head'?"":"none"} "--%>>是否认可</th>
 				</c:if>
@@ -468,7 +468,7 @@ function lookSearchFile(activityFlow,role) {
 						</c:if>
 					</td>
                      <%-- 操作 --%>
-	          		<td  style="text-align: left; white-space: nowrap ;" >
+	          		<td  style="text-align: center; white-space: nowrap ;" >
 						<c:set value="jsres_${sessionScope.currUser.orgFlow }_delete_activity_teacher" var="key1"/>
 						<c:set value="jsres_${sessionScope.currUser.orgFlow }_delete_activity_secretary" var="key2"/>
 						<c:set value="jsres_${sessionScope.currUser.orgFlow }_delete_activity_head" var="key3"/>
