@@ -566,7 +566,7 @@
 			<div class="form_item">
 				<div class="form_label">年&#12288;&#12288;级：</div>
 				<div class="form_content">
-					<input type="text" name="idNo" value="${param.idNo}" class="input" style="margin-left: 0px;"/>
+					<input type="text" name="sessionNumber" value="${param.sessionNumber}" class="input" style="margin-left: 0px;"/>
 				</div>
 			</div>
 
