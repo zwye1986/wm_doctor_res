@@ -90,6 +90,10 @@ function save(){
 	}
 	// 审核结果
     var status = $('input[name="szkskhxzztpj"]:checked').val();
+	if (!status) {
+		jboxInfo("请选择所在科室审核小组总体评价后审核出科！");
+		return false;
+	}
 	// 如果审核通过则判断是否需要校验出科从理论成绩
     <%--if(status == 1){--%>
         <%--if("${theoreticalCfg}" && "${theoreticalCfg.cfgValue}" == "Y"){--%>

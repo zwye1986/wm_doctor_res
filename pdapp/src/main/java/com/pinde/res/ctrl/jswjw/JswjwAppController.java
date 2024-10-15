@@ -6150,6 +6150,7 @@ public class JswjwAppController {
             model.addAttribute("resultType", "评价标识符为空");
             return "res/jswjw/showDocEval";
         }
+        SysUser sysUser = jswjwBiz.readSysUser(userFlow);
         //评价人员
         TeachingActivityResult result = activityBiz.readResult(resultFlow);
         model.addAttribute("result", result);
@@ -6158,6 +6159,16 @@ public class JswjwAppController {
             Map<String, Object> evalDetailMap = new HashMap<>();
             Map<String, Object> evalRemarksMap = new HashMap<>();
             //评价的指标
+            TeachingActivityInfo activityInfo = activityBiz.readActivityInfo(result.getActivityFlow());
+            List<TeachingActivityInfoTarget> infoTargets = activityTargeBiz.readActivityTargets(result.getActivityFlow());
+            List<TeachingActivityTarget> targetList = activityTargeBiz.readByOrgNew(activityInfo.getActivityTypeId(), sysUser.getOrgFlow());
+            List<String> targetFlowList = targetList.stream().map(TeachingActivityTarget::getTargetFlow).collect(Collectors.toList());
+            for (TeachingActivityInfoTarget infoTarget : infoTargets) {
+                if (!targetFlowList.contains(infoTarget.getTargetFlow())) {
+                    infoTarget.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                    activityTargeBiz.saveInfoTarget(infoTarget, sysUser);
+                }
+            }
             List<Map<String, Object>> targets = activityTargeBiz.readActivityTargetEvals(result.getActivityFlow());
             model.addAttribute("targets", targets);
             List<TeachingActivityEval> evals = activityBiz.readActivityResultEvals(resultFlow);

@@ -625,18 +625,20 @@ public class ResActivityBizImpl implements IResActivityBiz {
 					info.setActivityStatus("audit");
 				}
 				if("带教老师角色".equals(actCfg.getSubRoleName())){
-					subName=subName+"Teacher";
+					subName=subName+",Teacher";
 				}else if("科主任角色".equals(actCfg.getSubRoleName())){
-					subName=subName+"Head";
+					subName=subName+",Head";
 				}else if("科秘角色".equals(actCfg.getSubRoleName())){
-					subName=subName+"Seretary";
+					subName=subName+",Seretary";
 				}else if("教学主任角色".equals(actCfg.getSubRoleName())){
-					subName=subName+"TeachingHead";
+					subName=subName+",TeachingHead";
 				}else if("教学秘书角色".equals(actCfg.getSubRoleName())){
-					subName=subName+"TeachingSeretary";
+					subName=subName+",TeachingSeretary";
 				}
 			}
-			if(("undefined".equals(info.getSubmitRole())||StringUtil.isBlank(info.getSubmitRole()))&&(!subName.contains(roleId))){
+			String[] submitName = subName.split(",");
+			List<String> submitList = Arrays.asList(submitName);
+			if(("undefined".equals(info.getSubmitRole())||StringUtil.isBlank(info.getSubmitRole()))&&(!submitList.contains(roleId))){
 				return -1;
 			}
 		}
