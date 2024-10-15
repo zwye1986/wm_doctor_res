@@ -3789,7 +3789,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 				}
 				List<SysOrg>exitOrgs=orgBiz.searchOrg(searchOrg);
 				for(SysOrg g:exitOrgs){
-					List<ResJointOrg> resJointOrgList=jointOrgBiz.searchResJointByOrgFlow(g.getOrgFlow());
+					List<ResJointOrg> resJointOrgList=jointOrgBiz.searchResJointByOrgFlowNotSessionYear(g.getOrgFlow());
 					if(resJointOrgList!=null&&!resJointOrgList.isEmpty()){
 						for(ResJointOrg jointOrg:resJointOrgList){
 							if(StringUtil.isNotBlank(orgCityId)) {
@@ -3809,7 +3809,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		}else{
 			jointOrgFlowList.add(orgFlow);
 			//选择主培训基地 直接查询主基地以及协同基地数据 2021/5/7修改
-			List<ResJointOrg> resJointOrgList=jointOrgBiz.searchResJointByOrgFlow(orgFlow);
+			List<ResJointOrg> resJointOrgList=jointOrgBiz.searchResJointByOrgFlowNotSessionYear(orgFlow);
 			if(resJointOrgList!=null&&!resJointOrgList.isEmpty()) {
 				for (ResJointOrg jointOrg : resJointOrgList) {
 					String cityId = orgBiz.readSysOrg(jointOrg.getJointOrgFlow()).getOrgCityId();

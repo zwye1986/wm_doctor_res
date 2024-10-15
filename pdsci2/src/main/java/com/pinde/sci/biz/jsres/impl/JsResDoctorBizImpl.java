@@ -4083,7 +4083,7 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 		String cachePath = InitConfig.getSysCfg("upload_base_dir") + File.separator + "doctorRecruitInfo";
 		File file = new File(cachePath);
 		if (!file.exists()) {
-			file.mkdir();
+			file.mkdirs();
 		}
 		if (cachePath.endsWith("/")) {
 			cachePath += fileName;
