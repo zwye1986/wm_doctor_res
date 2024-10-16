@@ -46,7 +46,7 @@
 
 
         var orgFlow = $("#orgFlow").val();
-        var deptFlow = $("#deptFlow").val();
+        var deptFlow = $("input[name='resBaseSpeDept.deptFlow']").val();
         jboxPost("<s:url value='/jsres/kzr/saveNum'/>",{infoType:"DiagDisease",sessionNumber:"${sessionNumber}",infoFlow:infoFlow,info:num,orgFlow:orgFlow,deptFlow:deptFlow,type:"dept",speFlow:"${speFlow}"},function(resp){
             jboxTip(resp);
         },null,false);

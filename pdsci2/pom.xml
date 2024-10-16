@@ -36,6 +36,24 @@
             <groupId>com.pinde</groupId>
             <artifactId>pdcore</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-api-1.6.6</artifactId>
+                    <groupId>slf4j-api-1.6.6</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-log4j12-1.6.6</artifactId>
+                    <groupId>slf4j-log4j12-1.6.6</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>log4j-1.2.12</artifactId>
+                    <groupId>log4j-1.2.12</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>log4jdbc4-1.2</artifactId>
+                    <groupId>log4jdbc4-1.2</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- redis连接配置 -->
@@ -397,21 +415,21 @@
             <version>2.0.0-JVM8</version>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>log4j-1.2.12</groupId>
             <artifactId>log4j-1.2.12</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${lib.dir}/log4j-1.2.12.jar</systemPath>
-        </dependency>
+        </dependency>-->
 
-        <dependency>
+        <!--<dependency>
             <groupId>log4jdbc4-1.2</groupId>
             <artifactId>log4jdbc4-1.2</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${lib.dir}/log4jdbc4-1.2.jar</systemPath>
-        </dependency>
+        </dependency>-->
 
         <!--<dependency>
             <groupId>mail</groupId>
@@ -681,21 +699,21 @@
             <systemPath>${lib.dir}/simplecaptcha-1.2.1.jar</systemPath>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>slf4j-api-1.6.6</groupId>
             <artifactId>slf4j-api-1.6.6</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${lib.dir}/slf4j-api-1.6.6.jar</systemPath>
-        </dependency>
+        </dependency>-->
 
-        <dependency>
+        <!--<dependency>
             <groupId>slf4j-log4j12-1.6.6</groupId>
             <artifactId>slf4j-log4j12-1.6.6</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${lib.dir}/slf4j-log4j12-1.6.6.jar</systemPath>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>ssoClient</groupId>

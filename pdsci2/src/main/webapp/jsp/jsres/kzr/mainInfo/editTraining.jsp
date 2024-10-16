@@ -117,7 +117,9 @@ style="position: relative;overflow-y: auto;height: 600px"  >
         <input type="hidden" id="deptFlow"  name="resBaseSpeDept.deptFlow" value="${deptFlow}"/>
         <input type="hidden" id="flag" name="flag" value="${GlobalConstant.TRAINING}"/>
         <input type="hidden" name="resBaseSpeDept.sessionNumber" value="${sessionNumber}"/>
-        <div class="main_bd">
+        <div class="main_bd"
+                <c:if test="${isglobal eq 'Y'}"> style="position: relative;overflow-y: auto;height: 600px" </c:if>
+                <c:if test="${isJoin eq 'Y'}"> style="position: relative;overflow-y: auto;height: 625px" </c:if> >
             <div class="div_table">
                 <h4>培训对象医疗工作量</h4>
                 <table cellspacing="0" cellpadding="0" class="base_info">

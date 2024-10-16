@@ -108,7 +108,7 @@ function searchReset() {
 }
 
 function showDept(deptFlow, schDeptName, isJoin, speFlow) {
-	var url = "<s:url value ='/jsres/base/showDeptInfo'/>?viewFlag=Y&deptFlow=" + deptFlow + "&orgFlow=${orgFlow}&isJoin=Y&speFlow=" + speFlow+"&isglobal=Y";
+	var url = "<s:url value ='/jsres/base/showDeptInfo'/>?viewFlag=N&deptFlow=" + deptFlow + "&orgFlow=${orgFlow}&isJoin=Y&speFlow=" + speFlow+"&isglobal=N";
 	jboxOpen(url, '科室信息（' + schDeptName + '）', 1200, 700);
 }
 </script>

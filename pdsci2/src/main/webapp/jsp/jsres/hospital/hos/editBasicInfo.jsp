@@ -215,14 +215,14 @@
 
 	function delJointFile(obj) {
 		jboxConfirm("确认删除？" , function(){
-			var div = obj.parentNode;
+			var div = obj.parentNode.parentNode;
 			div.remove();
 		});
 	}
 
 	function moveTr(obj) {
 		jboxConfirm("确认删除？", function () {
-			var tr = obj.parentNode.parentNode;
+			var tr = obj.parentNode.parentNode.parentNode;
 			tr.remove();
 		});
 	}
@@ -620,7 +620,10 @@
 							</span>
 							<c:if test="${resBase.baseStatusId eq baseStatusEnumNotSubmit.id or resBase.baseStatusId eq baseStatusEnumNotPassed.id or empty resBase.baseStatusId  }">
 								<a id="professionLicenceUrl" href="javascript:uploadFile('professionLicenceUrl','执业许可证图片');" style="margin-left: 2px">${empty basicInfo.professionLicenceUrl?'':'重新'}上传</a>&nbsp;
-								<a id="professionLicenceUrlDel" href="javascript:delFile('professionLicenceUrl');" style="${empty basicInfo.professionLicenceUrl?'display:none':''}">删除</a>
+								<span id="professionLicenceUrlDel" href="javascript:void(0)" style="${empty basicInfo.professionLicenceUrl?'display:none':''}">
+									<img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+										 style="cursor: pointer;" onclick="delFile('professionLicenceUrl');" />
+								</span>
 								<input type="hidden" id="professionLicenceUrlValue"  name="basicInfo.professionLicenceUrl" value="${basicInfo.professionLicenceUrl}" />
 							</c:if>
 						</td>
@@ -633,7 +636,10 @@
 							</span>
 							<c:if test="${resBase.baseStatusId eq baseStatusEnumNotSubmit.id or resBase.baseStatusId eq baseStatusEnumNotPassed.id or empty resBase.baseStatusId}">
 								<a id="hospitalLevelLicenceUrl" href="javascript:uploadFile('hospitalLevelLicenceUrl','医院等级证书图片');" style="margin-left: 2px">${empty basicInfo.hospitalLevelLicenceUrl?'':'重新'}上传</a>&nbsp;
-								<a id="hospitalLevelLicenceUrlDel" href="javascript:delFile('hospitalLevelLicenceUrl');" style="${empty basicInfo.hospitalLevelLicenceUrl?'display:none':''}">删除</a>
+								<span id="hospitalLevelLicenceUrlDel" href="javascript:void(0)" style="${empty basicInfo.hospitalLevelLicenceUrl?'display:none':''}">
+									<img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+										 style="cursor: pointer;" onclick="delFile('hospitalLevelLicenceUrl');" />
+								</span>
 								<input type="hidden" id="hospitalLevelLicenceUrlValue"  name="basicInfo.hospitalLevelLicenceUrl" value="${basicInfo.hospitalLevelLicenceUrl}" />
 							</c:if>
 						</td>
@@ -698,7 +704,10 @@
 									<div style="text-align: center;padding: 2px;margin: 2px" class="jointContractFile">
 										<a href="${sysCfgMap['upload_base_url']}/${contractFile.filePath}"
 										   target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;width: 60%;background-color: white;color: #409eff">${contractFile.fileName}</a>
-										<a onclick="delJointFile(this);" style="background-color: white;color: #409eff">删除</a>
+										<span onclick="javascript:void(0)" style="background-color: white;color: #409eff">
+											<img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+												 style="cursor: pointer;" onclick="delJointFile(this);" />
+										</span>
 										<input type="hidden" name="jointContractFileFlows" value="${contractFile.fileFlow}" />
 									</div>
 								</c:forEach>
@@ -706,8 +715,11 @@
 							<input type="hidden" name="fileUploadNum" value="0" />
 							<input type="hidden" name="fileRemainNum" value="0" />
 						</td>
-						<td>
-							<a onclick="moveTr(this);">删除</a>
+						<td style="text-align: center">
+							<span>
+								<img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+									 style="cursor: pointer;" onclick="moveTr(this);" />
+							</span>
 						</td>
 					</tr>
 				</c:forEach>
@@ -725,7 +737,10 @@
 		<div style="text-align: center" class="jointContractFile">
 			<input type='file' name='files' class='' onchange="uploadFileCheck(this);"
 				   accept=".pdf" style="width: 60%;padding: 2px;margin: 2px"/>
-			<a onclick="delJointFile(this);" style="background-color: white;color: #409eff">删除</a>
+			<span onclick="javascript:void(0)" style="background-color: white;color: #409eff">
+				<img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+					 style="cursor: pointer;" onclick="delJointFile(this);" />
+			</span>
 			<input type="hidden" name="jointContractFileFlows" value="${contractFile.fileFlow}" />
 		</div>
 	</div>
@@ -756,8 +771,11 @@
 				<input type="hidden" name="fileUploadNum" value="0" />
 				<input type="hidden" name="fileRemainNum" value="0" />
 			</td>
-			<td>
-				<a onclick="moveTr(this);">删除</a>
+			<td style="text-align: center">
+				<span onclick="javascript:void(0)">
+					<img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+						 style="cursor: pointer;" onclick="moveTr(this);" />
+				</span>
 			</td>
 		</tr>
 	</table>
@@ -792,7 +810,10 @@
 					</c:forEach>
 				</select>
 			</td>
-			<td><a onclick="del(this, 'ywfgfzr', 'ywfgfzrList');">删除</a></td>
+			<td><span>
+				<img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+					 style="cursor: pointer;" onclick="del(this, 'ywfgfzr', 'ywfgfzrList');" />
+			</span></td>
 		</tr>
 	</table>
 </div>
@@ -827,7 +848,10 @@
 					</c:forEach>
 				</select>
 			</td>
-			<td><a onclick="del(this, 'zpywkslxr', 'zpywkslxrList');">删除</a></td>
+			<td><span>
+				<img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+					 style="cursor: pointer;" onclick="del(this, 'zpywkslxr', 'zpywkslxrList');" />
+			</span></td>
 		</tr>
 	</table>
 </div>
@@ -866,7 +890,10 @@
 					</c:forEach>
 				</select>
 			</td>
-			<td><a onclick="del(this, 'zpglbmfzr', 'zpglbmfzrList');">删除</a></td>
+			<td><span>
+				<img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+					 style="cursor: pointer;" onclick="del(this, 'zpglbmfzr', 'zpglbmfzrList');" />
+			</span></td>
 		</tr>
 	</table>
 </div>

@@ -317,14 +317,14 @@
 
     function delJointFile(obj) {
         jboxConfirm("确认删除？" , function(){
-            var div = obj.parentNode;
+            var div = obj.parentNode.parentNode;
             div.remove();
         });
     }
 
     function moveJointTr(obj) {
         jboxConfirm("确认删除？", function () {
-            var tr = obj.parentNode.parentNode;
+            var tr = obj.parentNode.parentNode.parentNode;
             tr.remove();
         });
     }
@@ -855,7 +855,10 @@
 							</span>
                         <c:if test="${resBase.baseStatusId eq baseStatusEnumNotSubmit.id or resBase.baseStatusId eq baseStatusEnumNotPassed.id or empty resBase.baseStatusId  }">
                             <a id="professionLicenceUrl" href="javascript:uploadFile('professionLicenceUrl','执业许可证图片');" style="margin-left: 2px">${empty basicInfo.professionLicenceUrl?'':'重新'}上传</a>&nbsp;
-                            <a id="professionLicenceUrlDel" href="javascript:delFile('professionLicenceUrl');" style="${empty basicInfo.professionLicenceUrl?'display:none':''}">删除</a>
+                            <span id="professionLicenceUrlDel" style="${empty basicInfo.professionLicenceUrl?'display:none':''}">
+                                <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                                     style="cursor: pointer;" onclick="javascript:delFile('professionLicenceUrl');" />
+                            </span>
                             <input type="hidden" id="professionLicenceUrlValue"  name="basicInfo.professionLicenceUrl" value="${basicInfo.professionLicenceUrl}" />
                         </c:if>
                     </td>
@@ -868,7 +871,10 @@
 							</span>
                         <c:if test="${resBase.baseStatusId eq baseStatusEnumNotSubmit.id or resBase.baseStatusId eq baseStatusEnumNotPassed.id or empty resBase.baseStatusId}">
                             <a id="hospitalLevelLicenceUrl" href="javascript:uploadFile('hospitalLevelLicenceUrl','医院等级证书图片');" style="margin-left: 2px">${empty basicInfo.hospitalLevelLicenceUrl?'':'重新'}上传</a>&nbsp;
-                            <a id="hospitalLevelLicenceUrlDel" href="javascript:delFile('hospitalLevelLicenceUrl');" style="${empty basicInfo.hospitalLevelLicenceUrl?'display:none':''}">删除</a>
+                            <span id="hospitalLevelLicenceUrlDel" style="${empty basicInfo.hospitalLevelLicenceUrl?'display:none':''}">
+                                <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                                     style="cursor: pointer;" onclick="javascript:delFile('hospitalLevelLicenceUrl');" />
+                            </span>
                             <input type="hidden" id="hospitalLevelLicenceUrlValue"  name="basicInfo.hospitalLevelLicenceUrl" value="${basicInfo.hospitalLevelLicenceUrl}" />
                         </c:if>
                     </td>
@@ -934,7 +940,10 @@
                                     <div style="text-align: center;padding: 2px;margin: 2px" class="jointContractFile">
                                         <a href="${sysCfgMap['upload_base_url']}/${contractFile.filePath}"
                                            target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;width: 60%;background-color: white;color: #409eff">${contractFile.fileName}</a>
-                                        <a onclick="delJointFile(this);" style="background-color: white;color: #409eff">删除</a>
+                                        <span style="background-color: white;color: #409eff">
+                                            <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                                                 style="cursor: pointer;" onclick="javascript:delJointFile(this);" />
+                                        </span>
                                         <input type="hidden" name="jointContractFileFlows" value="${contractFile.fileFlow}" />
                                     </div>
                                 </c:forEach>
@@ -942,8 +951,11 @@
                             <input type="hidden" name="fileUploadNum" value="0" />
                             <input type="hidden" name="fileRemainNum" value="0" />
                         </td>
-                        <td>
-                            <a onclick="moveJointTr(this);">删除</a>
+                        <td style="text-align: center">
+                            <span>
+                                <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                                     style="cursor: pointer;" onclick="javascript:moveJointTr(this);" />
+                            </span>
                         </td>
                     </tr>
                 </c:forEach>
@@ -1094,7 +1106,10 @@
                                     &nbsp; <a href="${sysCfgMap['upload_base_url']}/${baseExtInfoEducationInfo.trainManageSystemUrl}" target="_blank">查看文件</a>&nbsp;
                                 </span>
                                 <a id="trainManageSystemUrl" href="javascript:uploadPdfFile('trainManageSystemUrl','培训管理制度','', '.pdf');" style="margin-left: 2px">${empty baseExtInfoEducationInfo.trainManageSystemUrl?'':'重新'}上传</a>&nbsp;
-                                <a id="trainManageSystemUrlDel" href="javascript:delFile('trainManageSystemUrl');" style="${empty baseExtInfoEducationInfo.trainManageSystemUrl?'display:none':''}">删除</a>
+                                <span id="trainManageSystemUrlDel" style="${empty baseExtInfoEducationInfo.trainManageSystemUrl?'display:none':''}">
+                                    <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                                         style="cursor: pointer;" onclick="javascript:delFile('trainManageSystemUrl');" />
+                                </span>
                                 <input type="hidden" id="trainManageSystemUrlValue"  name="baseExtInfoEducationInfo.trainManageSystemUrl" value="${baseExtInfoEducationInfo.trainManageSystemUrl}" />
                             </span>
                 </td>
@@ -1109,7 +1124,10 @@
                                     &nbsp; <a href="${sysCfgMap['upload_base_url']}/${baseExtInfoEducationInfo.clinicalBaseTrainContractUrl}" target="_blank">查看文件</a>&nbsp;
                                 </span>
                                 <a id="clinicalBaseTrainContractUrl" href="javascript:uploadPdfFile('clinicalBaseTrainContractUrl','培训管理制度','', '.pdf');" style="margin-left: 2px">${empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl?'':'重新'}上传</a>&nbsp;
-                                <a id="clinicalBaseTrainContractUrlDel" href="javascript:delFile('clinicalBaseTrainContractUrl');" style="${empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl?'display:none':''}">删除</a>
+                                <span id="clinicalBaseTrainContractUrlDel" style="${empty baseExtInfoEducationInfo.clinicalBaseTrainContractUrl?'display:none':''}">
+                                    <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                                         style="cursor: pointer;" onclick="javascript:delFile('clinicalBaseTrainContractUrl');" />
+                                </span>
                                 <input type="hidden" id="clinicalBaseTrainContractUrlValue"  name="baseExtInfoEducationInfo.clinicalBaseTrainContractUrl" value="${baseExtInfoEducationInfo.clinicalBaseTrainContractUrl}" />
                             </span>
                 </td>
@@ -1132,7 +1150,10 @@
         <div style="text-align: center" class="jointContractFile">
             <input type='file' name='files' class='' onchange="uploadFileCheck(this);"
                    accept=".pdf" style="width: 60%;padding: 2px;margin: 2px"/>
-            <a onclick="delJointFile(this);" style="background-color: white;color: #409eff">删除</a>
+            <span style="background-color: white;color: #409eff">
+                <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                     style="cursor: pointer;" onclick="javascript:delJointFile(this);" />
+            </span>
             <input type="hidden" name="jointContractFileFlows" value="${contractFile.fileFlow}" />
         </div>
     </div>
@@ -1163,8 +1184,11 @@
                 <input type="hidden" name="fileUploadNum" value="0" />
                 <input type="hidden" name="fileRemainNum" value="0" />
             </td>
-            <td>
-                <a onclick="moveJointTr(this);">删除</a>
+            <td style="text-align: center">
+                <span>
+                    <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                         style="cursor: pointer;" onclick="javascript:moveJointTr(this);" />
+                </span>
             </td>
         </tr>
     </table>
@@ -1199,7 +1223,10 @@
                     </c:forEach>
                 </select>
             </td>
-            <td><a onclick="del(this, 'ywfgfzr', 'ywfgfzrList');">删除</a></td>
+            <td><span>
+                <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                     style="cursor: pointer;" onclick="javascript:del(this, 'ywfgfzr', 'ywfgfzrList');" />
+            </span></td>
         </tr>
     </table>
 </div>
@@ -1234,7 +1261,10 @@
                     </c:forEach>
                 </select>
             </td>
-            <td><a onclick="del(this, 'zpywkslxr', 'zpywkslxrList');">删除</a></td>
+            <td><span>
+                <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                     style="cursor: pointer;" onclick="javascript:del(this, 'zpywkslxr', 'zpywkslxrList');" />
+            </span></td>
         </tr>
     </table>
 </div>
@@ -1269,7 +1299,10 @@
                     </c:forEach>
                 </select>
             </td>
-            <td><a onclick="del(this, 'zpglbmfzr', 'zpglbmfzrList');">删除</a></td>
+            <td><span>
+                <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                     style="cursor: pointer;" onclick="javascript:del(this, 'zpglbmfzr', 'zpglbmfzrList');" />
+            </span></td>
         </tr>
     </table>
 </div>
@@ -1317,7 +1350,11 @@
                        onchange="checkTeltphone(this);"/></td>
             <td><input type="text" class="input1" style="width:80px;"
                        name="organizationManage.organizationPersonList[{index}].partOrAllJob"/></td>
-            <td><a onclick="moveTr(this);">删除</a></td>
+            <td><span>
+                <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                     style="cursor: pointer;" onclick="javascript:moveTr(this);" />
+                </span>
+            </td>
         </tr>
     </table>
     <table id="ruleTemplate">
@@ -1333,7 +1370,10 @@
                 <input type='file' name="" onchange="uploadFile(this);"
                        accept=".rar,.jpg,.png,.pdf,.doc,.docx,.xls,.xlsx,.zip,.ppt,.pptx" style="width: 100%;"/>
             </td>
-            <td><a onclick="del(this, 'rule');">删除</a></td>
+            <td><span>
+                <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                     style="cursor: pointer;" onclick="javascript:del(this, 'rule');" />
+            </span></td>
         </tr>
     </table>
     <table id="workTemplate">
@@ -1349,7 +1389,10 @@
                 <input type='file' name="" onchange="uploadFile(this);"
                        accept=".rar,.jpg,.png,.pdf,.doc,.docx,.xls,.xlsx,.zip,.ppt,.pptx" style="width: 100%;"/>
             </td>
-            <td><a onclick="del(this, 'work');">删除</a></td>
+            <td><span>
+                <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                     style="cursor: pointer;" onclick="javascript:del(this, 'work');" />
+            </span></td>
         </tr>
     </table>
 </div>
@@ -1365,7 +1408,10 @@
                 <input type="text" class="input validate[required]" style="width:90%;"
                        name="educationInfo.teachingEquipmentList[{index}].equipmentNumber"/>
             </td>
-            <td><a onclick="del(this, 'teaching');">删除</a></td>
+            <td><span>
+                <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                     style="cursor: pointer;" onclick="javascript:del(this, 'teaching');" />
+            </span></td>
         </tr>
     </table>
     <table id="centerTemplate">
@@ -1383,7 +1429,10 @@
                 <input type="text" class="input validate[required]" style="width:90%;"
                        name="educationInfo.centerEquipmentList[{index}].equipmentNumber"/>
             </td>
-            <td><a onclick="del(this, 'center');">删除</a></td>
+            <td><span>
+                <img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+                     style="cursor: pointer;" onclick="javascript:del(this, 'center');" />
+            </span></td>
         </tr>
     </table>
 </div>

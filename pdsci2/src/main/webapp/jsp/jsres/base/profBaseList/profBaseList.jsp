@@ -49,7 +49,7 @@
             <td>总计</td>
             <td></td>
             <c:if test="${sessionNumber eq pdfn:getCurrYear()}">
-                <td><span class="openSpeBasesCount"></span>人</td>
+                <td><span class="openSpeBasesCount"></span></td>
             </c:if>
             <td><span class="curInHospitalDoctorsCount"></span>人</td>
             <td><span class="curInCollegeMastersCount"></span>人</td>

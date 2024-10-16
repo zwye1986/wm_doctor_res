@@ -6,7 +6,6 @@
 			<th style="width: 20%;">科室名称</th>
 			<th style="width: 28%;">标准科室</th>
 			<th style="width: 12%;">出科考试关联</th>
-			<th style="width: 6%;">科室信息</th>
 			<th>操作</th>
 		</tr>
 		</thead>
@@ -28,10 +27,8 @@
 			</td>
 			<td>
 				<c:if test="${!empty dept.speFlow}">
-					<a href="javascript:void(0)" onclick="showDept('${dept.deptFlow}','${dept.deptName}','','${dept.speFlow}');" style="color:#59d5ff;">查看</a>
+					<a href="javascript:void(0)" onclick="showDept('${dept.deptFlow}','${dept.deptName}','','${dept.speFlow}');" class="btn">查看</a>
 				</c:if>
-			</td>
-			<td>
 				<c:if test="${dept.recordStatus == GlobalConstant.RECORD_STATUS_Y }">
 					<a href="javascript:edit('${dept.deptFlow}');" class="btn">编辑</a>
 					<a href="javascript:del('${dept.deptFlow}','${dept.deptName}','${GlobalConstant.RECORD_STATUS_N}');" class="btn">停用</a>

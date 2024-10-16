@@ -348,36 +348,36 @@
                     <th><span style="color: red">*</span>&nbsp;本年编制总床位数（张）：</th>
                     <td>
                         <input type="text" class='input validate[required,custom[integer],min[0]]'
-                               name="deptBasicInfoForm.bzzcws" style="width:200px;" value="${dataIsNull?promptMap.bzzcws:deptBasicInfoForm.bzzcws}"/>
+                               name="deptBasicInfoForm.bzzcws" style="width:200px;" value="${deptBasicInfoForm.bzzcws}"/>
                     </td>
                     <th><span style="color: red">*</span>&nbsp;本年实有总床位数（张）：</th>
                     <td>
                         <input type="text" class='input validate[required,custom[integer],min[0]]' style="width:200px;"
-                               name="deptBasicInfoForm.syzcws" value="${dataIsNull?promptMap.syzcws:deptBasicInfoForm.syzcws}"/>
+                               name="deptBasicInfoForm.syzcws" value="${deptBasicInfoForm.syzcws}"/>
                     </td>
                 </tr>
                 <tr>
                     <th><span style="color: red">*</span>&nbsp;本年收治住院病人数（人次）：</th>
                     <td>
                         <input type="text" class='input validate[required,custom[integer],min[0]]' name="deptBasicInfoForm.nszzybrs" style="width:200px;"
-                               value="${dataIsNull?promptMap.nszzybrs:deptBasicInfoForm.nszzybrs}"/>
+                               value="${deptBasicInfoForm.nszzybrs}"/>
                     </td>
                     <th><span style="color: red">*</span>&nbsp;本年病床使用率（%）：</th>
                     <td>
                         <input type="text" class='input validate[required,custom[number],min[0],max[100],maxSize[10]]' style="width:200px;"
-                               name="deptBasicInfoForm.bcsyl" value="${dataIsNull?promptMap.bcsyl:deptBasicInfoForm.bcsyl}"/>
+                               name="deptBasicInfoForm.bcsyl" value="${deptBasicInfoForm.bcsyl}"/>
                     </td>
                 </tr>
                 <tr>
                     <th><span style="color: red">*</span>&nbsp;本年门诊量（人次）：</th>
                     <td>
                         <input type="text" class='input validate[required,custom[integer],min[0]]'
-                               name="deptBasicInfoForm.nmzl" style="width:200px;" value="${dataIsNull?promptMap.nmzl:deptBasicInfoForm.nmzl}"/>
+                               name="deptBasicInfoForm.nmzl" style="width:200px;" value="${deptBasicInfoForm.nmzl}"/>
                     </td>
                     <th><span style="color: red">*</span>&nbsp;本年急诊量（人次）：</th>
                     <td>
                         <input type="text" class='input validate[required,custom[integer],min[0]]' style="width:200px;"
-                               name="deptBasicInfoForm.njzl" value="${dataIsNull?promptMap.njzl:deptBasicInfoForm.njzl}"/>
+                               name="deptBasicInfoForm.njzl" value="${deptBasicInfoForm.njzl}"/>
                     </td>
                 </tr>
                 <tr>
@@ -387,7 +387,7 @@
                     </th>
                     <td>
                         <input type="text" class='input validate[required,custom[integer],min[0]]'
-                               name="deptBasicInfoForm.bczzcs" style="width:200px;" value="${dataIsNull?promptMap.bczzcs:deptBasicInfoForm.bczzcs}"/>
+                               name="deptBasicInfoForm.bczzcs" style="width:200px;" value="${deptBasicInfoForm.bczzcs}"/>
                     </td>
                     <th>
                         <span style="color: red">*</span>
@@ -395,7 +395,7 @@
                     </th>
                     <td>
                         <input type="text" class='input validate[required,custom[integer],min[0]]' style="width:200px;"
-                               name="deptBasicInfoForm.pjzyr" value="${dataIsNull?promptMap.pjzyr:deptBasicInfoForm.pjzyr}"/>
+                               name="deptBasicInfoForm.pjzyr" value="${deptBasicInfoForm.pjzyr}"/>
                     </td>
                 </tr>
                 <tr>
@@ -405,7 +405,7 @@
                     </th>
                     <td>
                         <input type="text" class='input validate[required,custom[integer],min[0]]'
-                               name="deptBasicInfoForm.ncybrs" style="width:200px;" value="${dataIsNull?promptMap.ncybrs:deptBasicInfoForm.ncybrs}"/>
+                               name="deptBasicInfoForm.ncybrs" style="width:200px;" value="${deptBasicInfoForm.ncybrs}"/>
                     </td>
                     <th>
                         <span style="color: red">*</span>
@@ -414,7 +414,7 @@
                     <td>
                         <input type="text" class='input validate[required,custom[integer],min[0]]'
                                style="width:200px;" name="deptBasicInfoForm.njzscls"
-                               value="${dataIsNull?promptMap.njzscls:deptBasicInfoForm.njzscls}"/>
+                               value="${deptBasicInfoForm.njzscls}"/>
                     </td>
                 </tr>
                 <tr>
@@ -424,7 +424,7 @@
                     </th>
                     <td>
                         <input type="text" class='input validate[required,custom[integer],min[0]]' name="deptBasicInfoForm.npxzrl"
-                               style="width:200px;" value="${dataIsNull?promptMap.npxzrl:deptBasicInfoForm.npxzrl}"/>
+                               style="width:200px;" value="${deptBasicInfoForm.npxzrl}"/>
                     </td>
                     <th>
                         <span style="color: red">*</span>
@@ -432,7 +432,7 @@
                     </th>
                     <td>
                         <input type="text" class='input validate[required,custom[integer],min[0]]' style="width:200px;"
-                               name="deptBasicInfoForm.sypxrl" value="${dataIsNull?promptMap.sypxrl:deptBasicInfoForm.sypxrl}"/>
+                               name="deptBasicInfoForm.sypxrl" value="${deptBasicInfoForm.sypxrl}"/>
                     </td>
                 </tr>
                 <c:if test="${speFlow eq '1600'}">
