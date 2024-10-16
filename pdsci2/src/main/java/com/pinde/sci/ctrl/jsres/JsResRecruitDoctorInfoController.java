@@ -3703,7 +3703,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 	public void exportForDetail(String roleFlag,HttpServletRequest request,
 								 String orgCityId, String orgLevel, HttpServletResponse response,
 								 String orgFlow, String trainingTypeId,
-								 String trainingSpeId, String sessionNumber,
+								 String trainingSpeId, String sessionNumber,String signupWay,
 								 String graduationYear, String idNo,String doctorStatusId,
 								 String userName, String workOrgName,String[] datas, String[] yearDatas,
 								 String jointOrgFlag,String joinOrgFlow,String isArmy)throws Exception{
@@ -3756,6 +3756,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		param.put("trainYearList",trainYearList);
 		param.put("orgTypeId",OrgTypeEnum.Hospital.getId());
 		param.put("sessionNumbers",sessionNumbers);
+		param.put("signupWay",signupWay);
 
 		if(StringUtil.isNotBlank(workOrgName)){
 			List<SysDict> sendSchools = DictTypeEnum.sysListDictMap.get(DictTypeEnum.SendSchool.getId());
