@@ -33,6 +33,7 @@ import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.*;
 import com.pinde.sci.model.mo.*;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.CellRangeAddress;
 import org.dom4j.*;
@@ -4066,7 +4067,8 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 						"",
 						"",
 						graduatedWorkOrg,
-						ArmyTypeEnum.getNameById(doctorInfoExts.get(i).getArmyType())
+//						StringUtils.isBlank(doctorInfoExts.get(i).getArmyType()) ？"" : ArmyTypeEnum.getNameById(doctorInfoExts.get(i).getArmyType())
+						StringUtils.isBlank(doctorInfoExts.get(i).getArmyType()) ? "" : ArmyTypeEnum.getNameById(doctorInfoExts.get(i).getArmyType())
 				};
 				for (int j = 0; j < titles.length; j++) {
 					HSSFCell cellFirst = rowFour.createCell(j);
@@ -4083,7 +4085,7 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 		String cachePath = InitConfig.getSysCfg("upload_base_dir") + File.separator + "doctorRecruitInfo";
 		File file = new File(cachePath);
 		if (!file.exists()) {
-			file.mkdir();
+			file.mkdirs();
 		}
 		if (cachePath.endsWith("/")) {
 			cachePath += fileName;
