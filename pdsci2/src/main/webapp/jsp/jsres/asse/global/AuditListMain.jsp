@@ -472,30 +472,20 @@
 		<%--<input type="hidden" id="graduationMaterialName" name="materialName"/>--%>
 		<%--省厅市局查询条件--%>
 
-		<div class="form_search">
-
-			<div class="form_item">
-
-				<div class="form_label">结业年份：</div>
-				<div class="form_content">
+		<table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
+			<tr>
+				<td class="td_left">结业年份：</td>
+				<td>
 					<input type="text" id="graduationYear" name="graduationYear" value="${param.graduationYear}" class="input" readonly="readonly" />
-				</div>
+				</td>
 
-			</div>
-
-			<div class="form_item">
-
-				<div class="form_label">申请年份：</div>
-				<div class="form_content">
+				<td class="td_left">申请年份：</td>
+				<td>
 					<input type="text" id="applyYear" name="applyYear" class="input" readonly="readonly" value="${pdfn:getCurrYear()}" />
-				</div>
+				</td>
 
-			</div>
-
-			<div class="form_item">
-
-				<div class="form_label">培训基地：</div>
-				<div class="form_content">
+				<td class="td_left">培训基地：</td>
+				<td>
 					<input id="trainOrg" oncontextmenu="return false"  class="toggleView input" type="text" value="${orgName}"  autocomplete="off" onkeydown="changeStatus();" onkeyup="changeStatus();" />
 					<div id="pDiv" style="width: 0px;height: 0px;overflow: visible;float: left; position:relative;left :0px;top:30px;">
 						<div class="boxHome trainOrg" id="trainOrgSel" style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 185px;border-top: none;position: relative;display:none;">
@@ -512,22 +502,17 @@
 						</div>
 						<input type="text" name="orgFlow" id="orgFlow" value="${param.orgFlow}" style="display: none;"/>
 					</div>
-				</div>
+				</td>
 
-			</div>
-
-			<div class="form_item">
-				<div class="form_label">协同单位：</div>
-				<div class="form_content">
+				<td class="td_left">协同单位：</td>
+				<td>
 					<select name="joinOrgFlow" id="joinOrgFlow" class="select " >
 						<option value="">全部</option>
 					</select>
-				</div>
-			</div>
+				</td>
 
-			<div class="form_item">
-				<div class="form_label">培训专业：</div>
-				<div class="form_content">
+				<td class="td_left">培训专业：</td>
+				<td>
 					<select name="trainingSpeId" id="trainingSpeId"class="select" >
 						<option value="">全部</option>
 						<c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristList'}">
@@ -545,35 +530,27 @@
 							</c:forEach>
 						</c:if>
 					</select>
-				</div>
-			</div>
+				</td>
 
-			<div class="form_item">
-				<div class="form_label">姓&#12288;&#12288;名：</div>
-				<div class="form_content">
+				<td class="td_left">姓&#12288;&#12288;名：</td>
+				<td>
 					<input type="text" name="userName" value="${param.userName}" class="input" style="margin-left: 0px;"/>
-				</div>
-			</div>
+				</td>
+			</tr>
 
-
-			<div class="form_item">
-				<div class="form_label">证&nbsp;件&nbsp;号&nbsp;：</div>
-				<div class="form_content">
+			<tr>
+				<td class="td_left">证&nbsp;件&nbsp;号&nbsp;：</td>
+				<td>
 					<input type="text" name="idNo" value="${param.idNo}" class="input" style="margin-left: 0px;"/>
-				</div>
-			</div>
+				</td>
 
-			<div class="form_item">
-				<div class="form_label">年&#12288;&#12288;级：</div>
-				<div class="form_content">
+				<td class="td_left">年&#12288;&#12288;级：</td>
+				<td>
 					<input type="text" name="sessionNumber" value="${param.sessionNumber}" class="input" style="margin-left: 0px;"/>
-				</div>
-			</div>
+				</td>
 
-
-			<div class="form_item">
-				<div class="form_label">培训类别：</div>
-				<div class="form_content">
+				<td class="td_left">培训类别：</td>
+				<td>
 					<select name="trainingTypeId" id="trainingTypeId" class="select">
 						<%--<option value="">请选择</option>--%>
 						<c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristList'}">
@@ -585,23 +562,20 @@
 							<option value="AssiGeneral" selected="selected">助理全科</option>
 						</c:if>
 						<%--<c:forEach items="${trainCategoryEnumList}" var="trainCategory">--%>
-							<%--<option value="${trainCategory.id}"--%>
-									<%--<c:if test="${param.trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>--%>
+						<%--<option value="${trainCategory.id}"--%>
+						<%--<c:if test="${param.trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>--%>
 						<%--</c:forEach>--%>
 					</select>
-				</div>
-			</div>
+				</td>
 
-
-			<div class="form_item">
-				<div class="form_label">审核状态：</div>
-				<div class="form_content">
-				<c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristWait2'}">
+				<td class="td_left">审核状态：</td>
+				<td>
+					<c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristWait2'}">
 						<select name="auditStatusId" id="auditStatusId" class="select" >
 							<option value="WaitGlobalPass" selected>待省厅审核</option>
 						</select>
-				</c:if>
-				<c:if test="${param.tabTag ne 'FristWait' and param.tabTag ne 'FristWait2'}">
+					</c:if>
+					<c:if test="${param.tabTag ne 'FristWait' and param.tabTag ne 'FristWait2'}">
 						<select name="auditStatusId" id="auditStatusId" class="select" >
 							<option value="">请选择</option>
 								<%--<c:forEach items="${jsResAsseAuditListEnumList}" var="type">--%>
@@ -617,14 +591,11 @@
 							<option value="GlobalPassed">省厅审核通过</option>
 							<option value="Black">省厅驳回</option>
 						</select>
-				</c:if>
-				</div>
-			</div>
+					</c:if>
+				</td>
 
-
-			<div class="form_item">
-				<div class="form_label">是否延期：</div>
-				<div class="form_content">
+				<td class="td_left">是否延期：</td>
+				<td>
 					<select class="select" name="isPostpone">
 						<option value="">请选择</option>
 						<option
@@ -636,45 +607,56 @@
 								value="${GlobalConstant.FLAG_N}">否
 						</option>
 					</select>
-				</div>
-			</div>
+				</td>
 
-
-			<div class="form_item">
-				<div class="form_label">考试编号：</div>
-				<div class="form_content">
+				<td class="td_left">考试编号：</td>
+				<td>
 					<select name="testId"  class="select" >
 						<option value="">请选择</option>
 						<c:forEach items="${resTestConfigs}" var="resTest">
 							<option value="${resTest.testId}" ${param.testId eq resTest.testId?'selected':''}>${resTest.testId}</option>
 						</c:forEach>
 					</select>
-				</div>
-			</div>
+				</td>
 
-			<div class="form_item" style="width: 500px">
-				<div class="form_label">人员类型：</div>
-				<div class="form_content">
-						<c:forEach items="${jsResDocTypeEnumList}" var="type">
-							<label><input type="checkbox" id="${type.id}"value="${type.id}" checked class="docType" name="datas" />${type.name}&nbsp;</label>
-						</c:forEach>
-				</div>
-			</div>
+			</tr>
 
-		</div>
+			<tr>
+				<td class="td_left">人员类型：</td>
+				<td colspan="3">
+					<c:forEach items="${jsResDocTypeEnumList}" var="type">
+						<label><input type="checkbox" id="${type.id}"value="${type.id}" checked class="docType" name="datas" />${type.name}&nbsp;</label>
+					</c:forEach>
+				</td>
 
-			<div class="form_btn" >
-				<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>&#12288;
-				<input class="btn_green" type="button" value="导&#12288;出" onclick="exportInfo();"/>&#12288;
-				<c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristWait2'}">
-					<input class="btn_green" type="button" value="批量审核" onclick="batchApply();"/>&#12288;
-				</c:if>
-				<input class="btn_green" type="button" value="更&#12288;多" onclick="searchMore();"/>&#12288;
-				<input class="btn_green" type="button" value="重&#12288;置" onclick="freshen();"/>&#12288;
-				<input class="btn_green" type="button" value="参考人员名称导出"
-					   <c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristWait2'}">style="display: none" </c:if>
-					   onclick="exportCountryList();"/>&#12288;
-			</div>
+				<td colspan="8">
+					<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>&#12288;
+					<input class="btn_green" type="button" value="导&#12288;出" onclick="exportInfo();"/>&#12288;
+					<c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristWait2'}">
+						<input class="btn_green" type="button" value="批量审核" onclick="batchApply();"/>&#12288;
+					</c:if>
+					<input class="btn_green" type="button" value="更&#12288;多" onclick="searchMore();"/>&#12288;
+					<input class="btn_green" type="button" value="重&#12288;置" onclick="freshen();"/>&#12288;
+					<input class="btn_green" type="button" value="参考人员名称导出"
+						   <c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristWait2'}">style="display: none" </c:if>
+						   onclick="exportCountryList();"/>&#12288;
+				</td>
+			</tr>
+
+		</table>
+
+<%--			<div class="form_btn" >--%>
+<%--				<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>&#12288;--%>
+<%--				<input class="btn_green" type="button" value="导&#12288;出" onclick="exportInfo();"/>&#12288;--%>
+<%--				<c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristWait2'}">--%>
+<%--					<input class="btn_green" type="button" value="批量审核" onclick="batchApply();"/>&#12288;--%>
+<%--				</c:if>--%>
+<%--				<input class="btn_green" type="button" value="更&#12288;多" onclick="searchMore();"/>&#12288;--%>
+<%--				<input class="btn_green" type="button" value="重&#12288;置" onclick="freshen();"/>&#12288;--%>
+<%--				<input class="btn_green" type="button" value="参考人员名称导出"--%>
+<%--					   <c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristWait2'}">style="display: none" </c:if>--%>
+<%--					   onclick="exportCountryList();"/>&#12288;--%>
+<%--			</div>--%>
 
 	<div class="searchMore" style="display: none">
 		<div class="form_search" >

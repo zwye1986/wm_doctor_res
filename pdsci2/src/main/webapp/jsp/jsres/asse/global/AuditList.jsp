@@ -184,22 +184,22 @@ function showApplyImg(imgUrl1,imgUrl2)
                 <th style="min-width: 60px; max-width: 100px; " >姓名</th>
                 <th style="min-width: 60px; max-width: 100px; " >地市</th>
                 <th style="min-width: 150px; max-width: 150px; ">培训基地</th>
-                <th style="min-width: 150px; max-width: 150px; " >报考专业</th>
-                <th style="min-width: 200px; max-width: 200px; " >培训起止时间</th>
-                <th style="min-width: 150px; max-width: 150px; " >学历</th>
+                <th style="min-width: 60px; max-width: 60px; " >报考专业</th>
+                <th style="min-width: 170px; max-width: 170px; " >培训起止时间</th>
+                <th style="min-width: 100px; max-width: 100px; " >学历</th>
                 <th style="min-width: 150px; max-width: 150px; " >毕业证书编号</th>
-                <th style="min-width: 200px; max-width: 200px; " >报考资格材料</th>
-                <th style="min-width: 200px; max-width: 200px; " >报考资格材料编码</th>
-                <th style="min-width: 150px; max-width: 150px; " >培训专业</th>
-                <th style="min-width: 150px; max-width: 150px; " >执业范围</th>
+                <th style="min-width: 150px; max-width: 150px; " >报考资格材料</th>
+                <th style="min-width: 100px; max-width: 100px; " >报考资格材料编码</th>
+                <th style="min-width: 60px; max-width: 60px; " >培训专业</th>
+                <th style="min-width: 60px; max-width: 60px; " >执业范围</th>
                 <c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristWait2'}">
-                    <th style="min-width: 100px; max-width: 100px; ">审核</th>
+                    <th style="min-width: 60px; max-width: 60px; ">审核</th>
                 </c:if>
                 <c:if test="${param.tabTag ne 'FristWait' and param.tabTag ne 'FristWait2'}">
-                    <th style="min-width: 100px; max-width: 100px; " >操作</th>
+                    <th style="min-width: 60px; max-width: 60px; " >操作</th>
                 </c:if>
                 <c:if test="${param.tabTag ne 'FristWait' and param.tabTag ne 'FristWait2'}">
-                    <th style="min-width: 100px; max-width: 100px; " >审核状态</th>
+                    <th style="min-width: 60px; max-width: 60px; " >审核状态</th>
                 </c:if>
             </tr>
             </thead>
@@ -216,12 +216,12 @@ function showApplyImg(imgUrl1,imgUrl2)
                     <td style="min-width: 60px; max-width: 100px; " >${doctor.orgCityName}
                     </td>
                     <td style="min-width: 150px; max-width: 150px; " >${doctor.orgName}</td>
-                    <td style="min-width: 150px; max-width: 150px; " >${doctor.changeSpeName}</td>
-                    <td style="min-width: 200px; max-width: 200px; " ><a href="javascript:void(0);"
+                    <td style="min-width: 60px; max-width: 60px; " >${doctor.changeSpeName}</td>
+                    <td style="min-width: 170px; max-width: 170px; " ><a href="javascript:void(0);"
                                                                                    onclick="showPeiDetail('${doctor.recruitFlow}','${doctor.applyYear}')">${doctor.startDate}~${doctor.endDate}</a>
                     </td>
 
-                    <td style="min-width: 150px; max-width: 150px; " >${doctor.educationName}</td>
+                    <td style="min-width: 100px; max-width: 100px; " >${doctor.educationName}</td>
                     <td style="min-width: 150px; max-width: 150px; " >
                         <c:if test="${not empty doctor.certificateNo}">
                             <a href="javascript:void(0);"
@@ -230,7 +230,7 @@ function showApplyImg(imgUrl1,imgUrl2)
                     </td>
                         <%-- 毕业证书编号 --%>
 
-                    <td style="min-width: 200px; max-width: 200px;" ><%-- 报考资格材料 --%>
+                    <td style="min-width: 150px; max-width: 150px;" ><%-- 报考资格材料 --%>
                         <%--<c:if test="${not empty doctor.qualificationMaterialName}">--%>
                         <c:if test="${not empty doctor.materialName}">
                             <%--<a href="javascript:void(0);"--%>
@@ -243,40 +243,40 @@ function showApplyImg(imgUrl1,imgUrl2)
                             </a>
                         </c:if>
                     </td>
-                    <td style="min-width: 200px; max-width: 200px; " >${doctor.qualificationMaterialCode}</td>
+                    <td style="min-width: 100px; max-width: 100px; " >${doctor.qualificationMaterialCode}</td>
                         <%--报考资格材料编码--%>
-                    <td style="min-width: 150px; max-width: 150px; " >${doctor.speName}</td>
+                    <td style="min-width: 60px; max-width: 60px; " >${doctor.speName}</td>
                         <%-- 培训专业 --%>
-                    <td style="min-width: 150px; max-width: 150px; " >${doctor.practicingScopeName}</td>
+                    <td style="min-width: 60px; max-width: 60px; " >${doctor.practicingScopeName}</td>
                         <%-- 执业范围 --%>
                     <c:if test="${ f eq 'Y'}">
-                        <td style="min-width: 100px; max-width: 100px; " >
+                        <td style="min-width: 60px; max-width: 60px; " >
                             <c:choose>
                                 <%-- 待省厅审核 --%>
                                 <c:when test="${doctor.auditStatusId eq 'WaitGlobalPass' and (param.tabTag eq 'FristWait' or param.tabTag eq 'FristWait2')}">
                                     <a class="btn"
                                        onclick="showAllInfo('${doctor.recruitFlow}','${doctor.applyYear}','${doctor.applyFlow}','Y','${roleFlag}')"
-                                       style="margin-top: 5px;margin-bottom: 5px;">审核</a>
+                                       style="margin-top: 5px;margin-bottom: 5px;padding: 0 2px">审核</a>
                                 </c:when>
                                 <%--省厅审核通过/不通过 --%>
                                 <c:when test="${doctor.auditStatusId eq 'GlobalPassed' or doctor.auditStatusId eq 'GlobalNotPassed'}">
                                     <a class="btn"
                                        onclick="showAllInfo('${doctor.recruitFlow}','${doctor.applyYear}','${doctor.applyFlow}','Y','${roleFlag}')"
-                                       style="margin-top: 5px;margin-bottom: 5px;">更改</a>
+                                       style="margin-top: 5px;margin-bottom: 5px;padding: 0 2px">更改</a>
                                 </c:when>
                                 <c:otherwise> <%-- test="${doctor.auditStatusId ne 'WaitGlobalPass'  and doctor.auditStatusId ne 'GlobalPassed'}"--%>
                                     <a class="btn"
                                        onclick="showAllInfo('${doctor.recruitFlow}','${doctor.applyYear}','${doctor.applyFlow}','N','${roleFlag}')"
-                                       style="margin-top: 5px;margin-bottom: 5px;">查看</a>
+                                       style="margin-top: 5px;margin-bottom: 5px;padding: 0 2px">查看</a>
                                 </c:otherwise>
                             </c:choose>
                         </td>
                     </c:if>
                     <c:if test="${ f eq 'N'}">
-                        <td style="min-width: 100px; max-width: 100px; " class="by">
+                        <td style="min-width: 60px; max-width: 60px; " class="by">
                             <a class="btn"
                                onclick="showAllInfo('${doctor.recruitFlow}','${doctor.applyYear}','${doctor.applyFlow}','N','${roleFlag}')"
-                               style="margin-top: 5px;margin-bottom: 5px;">查看</a>
+                               style="margin-top: 5px;margin-bottom: 5px;padding: 0 2px">查看</a>
                         </td>
                     </c:if>
                     <c:if test="${param.tabTag ne 'FristWait' and param.tabTag ne 'FristWait2'}">
