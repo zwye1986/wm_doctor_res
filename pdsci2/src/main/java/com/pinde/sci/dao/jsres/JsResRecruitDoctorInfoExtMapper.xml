@@ -1139,9 +1139,9 @@
 		, u.EDUCATION_ID, u.user_qq, u.EDUCATION_NAME, rd.is_year_graduate, rd.foreign_skills
 		, rd.work_org_name, dr.session_number, ed.doctor_type_id
 		, ed.doctor_type_name, ed.org_flow as info_org_flow, pur.user_resume
-		<if test="isArmy!=null and isArmy!=''">
+<!--		<if test="isArmy!=null and isArmy!=''">-->
 			, EXTRACTVALUE(XMLTYPE(pur.user_resume), '/userResumeExtInfoForm/armyType') as ARMY_TYPE
-		</if>
+<!--		</if>-->
 		from pdsci.jsres_recruit_doc_info dr
 		left join  pdsci.SYS_USER u on dr.DOCTOR_FLOW =  u.USER_FLOW
 		left join  pdsci.res_doctor rd on dr.DOCTOR_FLOW =  rd.DOCTOR_FLOW

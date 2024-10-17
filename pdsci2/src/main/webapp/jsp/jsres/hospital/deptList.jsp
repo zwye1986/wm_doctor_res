@@ -6,7 +6,7 @@
 			<th style="width: 20%;">科室名称</th>
 			<th style="width: 28%;">标准科室</th>
 			<th style="width: 12%;">出科考试关联</th>
-			<th>操作</th>
+			<th colspan="4" style="width: 15%;">操作</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -27,15 +27,29 @@
 			</td>
 			<td>
 				<c:if test="${!empty dept.speFlow}">
-					<a href="javascript:void(0)" onclick="showDept('${dept.deptFlow}','${dept.deptName}','','${dept.speFlow}');" class="btn">查看</a>
+					<a href="javascript:void(0)" onclick="showDept('${dept.deptFlow}','${dept.deptName}','','${dept.speFlow}');" class="btn" style="padding: 0 2px">查看</a>
 				</c:if>
+			</td>
+
+			<td>
 				<c:if test="${dept.recordStatus == GlobalConstant.RECORD_STATUS_Y }">
-					<a href="javascript:edit('${dept.deptFlow}');" class="btn">编辑</a>
-					<a href="javascript:del('${dept.deptFlow}','${dept.deptName}','${GlobalConstant.RECORD_STATUS_N}');" class="btn">停用</a>
-					<a href="javascript:publicOpen('${dept.deptFlow}');" class="btn">对外开放</a>
+					<a href="javascript:edit('${dept.deptFlow}');" class="btn" style="padding: 0 2px">编辑</a>
 				</c:if>
+			</td>
+
+			<td>
+				<c:if test="${dept.recordStatus == GlobalConstant.RECORD_STATUS_Y }">
+					<a href="javascript:del('${dept.deptFlow}','${dept.deptName}','${GlobalConstant.RECORD_STATUS_N}');" class="btn" style="padding: 0 2px">停用</a>
+				</c:if>
+
 				<c:if test="${dept.recordStatus == GlobalConstant.RECORD_STATUS_N }">
-					<a href="javascript:del('${dept.deptFlow}','','${GlobalConstant.RECORD_STATUS_Y}');" class="btn">启用</a>
+					<a href="javascript:del('${dept.deptFlow}','','${GlobalConstant.RECORD_STATUS_Y}');" class="btn" style="padding: 0 2px">启用</a>
+				</c:if>
+			</td>
+
+			<td>
+				<c:if test="${dept.recordStatus == GlobalConstant.RECORD_STATUS_Y }">
+					<a href="javascript:publicOpen('${dept.deptFlow}');" class="btn" style="padding: 0 2px">对外开放</a>
 				</c:if>
 			</td>
 		</tr>

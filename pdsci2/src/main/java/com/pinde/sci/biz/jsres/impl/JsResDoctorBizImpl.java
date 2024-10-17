@@ -3701,6 +3701,7 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 		ResJointOrgExample example = new ResJointOrgExample();
 		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
 				.andOrgFlowEqualTo(orgFlow);
+		example.setDistinct(true);
 		return jointOrgMapper.selectByExample(example);
 	}
 
