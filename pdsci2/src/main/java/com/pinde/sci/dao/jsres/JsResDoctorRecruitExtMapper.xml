@@ -260,9 +260,7 @@
 
 	<select id="searchDoctorInfoExts2"  parameterType="java.util.Map" resultMap="doctorInfo">
 		select dr.*,ed.*,u.*,pur.*,so.*
-		<if test="isArmy!=null and isArmy!=''">
 			, EXTRACTVALUE(XMLTYPE(pur.user_resume), '/userResumeExtInfoForm/armyType') as ARMY_TYPE
-		</if>
 		from pdsci.RES_DOCTOR_RECRUIT dr
 		left join  RES_DOCTOR ed
 		on dr.DOCTOR_FLOW =  ed.DOCTOR_FLOW
@@ -432,9 +430,7 @@
 
 	 <select id="searchDoctorInfoBaseExts"  parameterType="java.util.Map" resultMap="doctorInfo">
     	select dr.*,ed.*,u.*,pur.*,so.*
-			 <if test="isArmy!=null and isArmy!=''">
 				 , EXTRACTVALUE(XMLTYPE(pur.user_resume), '/userResumeExtInfoForm/armyType') as ARMY_TYPE
-			 </if>
     		from pdsci.RES_DOCTOR_RECRUIT dr
 			left join  RES_DOCTOR ed
 			on dr.DOCTOR_FLOW =  ed.DOCTOR_FLOW
