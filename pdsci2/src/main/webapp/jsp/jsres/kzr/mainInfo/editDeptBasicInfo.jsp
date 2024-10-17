@@ -225,7 +225,7 @@
                             <span style="color: red">*</span>
                             本年病床使用率（%）：
                         </th>
-                        <td><input type="text" class='input validate[required,custom[number],min[0]]' name="deptBasicInfoForm.bcsyl"
+                        <td><input type="text" class='input validate[required,custom[number],min[0],max[100]]' name="deptBasicInfoForm.bcsyl"
                                    style="width:200px;" value="${deptBasicInfoForm.bcsyl}" />
                         </td>
                     </tr>
@@ -296,43 +296,43 @@
                     <tr>
                         <th><span class="red">*</span>本年总病例病种数（个）：</th>
                         <td>
-                            <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.annualDiseases"
-                                   style="width:200px;" value="${empty deptBasicInfoForm.annualDiseases?0:deptBasicInfoForm.annualDiseases}"/>
+                            <input type="text" class='input validate[required,custom[integer],min[0]]' name="deptBasicInfoForm.annualDiseases"
+                                   style="width:200px;" value="${empty deptBasicInfoForm.annualDiseases?'':deptBasicInfoForm.annualDiseases}"/>
                         </td>
                         <th>
                             <span class="red">*</span>本年收治总疾病（种）：
                         </th>
                         <td>
-                            <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.annualDiseaseCategory"
-                                   style="width:200px;" value="${empty deptBasicInfoForm.annualDiseaseCategory?0:deptBasicInfoForm.annualDiseaseCategory}"/>
+                            <input type="text" class='input validate[required,custom[integer],min[0]]' name="deptBasicInfoForm.annualDiseaseCategory"
+                                   style="width:200px;" value="${empty deptBasicInfoForm.annualDiseaseCategory?'':deptBasicInfoForm.annualDiseaseCategory}"/>
                         </td>
                     </tr>
                     <tr>
                         <th><span class="red">*</span>本年收治总疾病（个）：</th>
                         <td>
-                            <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.annualDiseaseNumber"
-                                   style="width:200px;" value="${empty deptBasicInfoForm.annualDiseaseNumber?0:deptBasicInfoForm.annualDiseaseNumber}"/>
+                            <input type="text" class='input validate[required,custom[integer],min[0]]' name="deptBasicInfoForm.annualDiseaseNumber"
+                                   style="width:200px;" value="${empty deptBasicInfoForm.annualDiseaseNumber?'':deptBasicInfoForm.annualDiseaseNumber}"/>
                         </td>
                         <th>
                             <span class="red">*</span>教学门诊：
                         </th>
                         <td>
-                            <input type="radio" name="deptBasicInfoForm.teachingClinic" value="Y" <c:if test="${deptBasicInfoForm.teachingClinic eq 'Y' }">checked="checked"</c:if>/>有&nbsp;
-                            <input type="radio" name="deptBasicInfoForm.teachingClinic" value="N" <c:if test="${deptBasicInfoForm.teachingClinic eq 'N' }">checked="checked"</c:if>/>无&nbsp;
+                            <input type="radio" name="deptBasicInfoForm.teachingClinic" class="validate[required]" value="Y" <c:if test="${deptBasicInfoForm.teachingClinic eq 'Y' }">checked="checked"</c:if>/>有&nbsp;
+                            <input type="radio" name="deptBasicInfoForm.teachingClinic" class="validate[required]" value="N" <c:if test="${deptBasicInfoForm.teachingClinic eq 'N' }">checked="checked"</c:if>/>无&nbsp;
                         </td>
                     </tr>
                     <tr>
                         <th><span class="red">*</span>近三年培训人数总计（人）：</th>
                         <td>
-                            <input type="text" class='input validate[custom[integer],min[0]]' name="deptBasicInfoForm.threeYearTrainingCount"
-                                   style="width:200px;" value="${empty deptBasicInfoForm.threeYearTrainingCount?0:deptBasicInfoForm.threeYearTrainingCount}"/>
+                            <input type="text" class='input validate[required,custom[integer],min[0]]' name="deptBasicInfoForm.threeYearTrainingCount"
+                                   style="width:200px;" value="${empty deptBasicInfoForm.threeYearTrainingCount?'':deptBasicInfoForm.threeYearTrainingCount}"/>
                         </td>
                         <th>
                             <span class="red">*</span>近三年理论首考平均通过率（%）：
                         </th>
                         <td>
-                            <input type="text" class='input validate[custom[number],min[0]]' name="deptBasicInfoForm.threeYearExamPassPer"
-                                   style="width:200px;" value="${empty deptBasicInfoForm.threeYearExamPassPer?0:deptBasicInfoForm.threeYearExamPassPer}"/>
+                            <input type="text" class='input validate[required,custom[number],min[0],max[100]]' name="deptBasicInfoForm.threeYearExamPassPer"
+                                   style="width:200px;" value="${empty deptBasicInfoForm.threeYearExamPassPer?'':deptBasicInfoForm.threeYearExamPassPer}"/>
                         </td>
                     </tr>
                 </tbody>
