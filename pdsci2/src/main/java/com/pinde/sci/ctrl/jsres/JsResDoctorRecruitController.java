@@ -3115,6 +3115,20 @@ public class JsResDoctorRecruitController extends GeneralController {
 			resDoctorRecruit.setIsRetrain(isRetrain);
 		}
 		List<JsResDoctorRecruitExt> doctorList=null;
+
+		String workOrgName = null;
+		ServletContext servletContext2=request.getServletContext();
+		if (servletContext2!=null) {
+			List<SysDict> sysDictList = (List<SysDict>) servletContext2.getAttribute("dictTypeEnum" + "SendSchool" + "List");
+			if(CollectionUtils.isNotEmpty(sysDictList)){
+				Map<String, String> cityRelsMap = sysDictList.stream().collect(Collectors.toMap(SysDict::getDictId, SysDict::getDictName, (key1, key2)-> key1));
+				if(StringUtils.isNotEmpty(workOrgId)){
+					workOrgName = cityRelsMap.get(workOrgId);
+				}
+			}
+		}
+
+
 		if (GlobalConstant.RES_ROLE_SCOPE_SCHOOL.equals(roleFlag)) {
 			ServletContext servletContext=request.getServletContext();
 			if (servletContext!=null) {
@@ -3142,7 +3156,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 					}
 				}
 			}
-			doctorList = jsResDoctorRecruitBiz.searchDoctorInfoExts2(resDoctorRecruit,doctor, sysUser, org, jointOrgFlowList, derateFlag,docTypeList,trainYearList,sessionNumbers,baseFlag,userOrgFlow,flag,isJointOrg,isPostpone,isArmy, workOrgId);
+			doctorList = jsResDoctorRecruitBiz.searchDoctorInfoExts2(resDoctorRecruit,doctor, sysUser, org, jointOrgFlowList, derateFlag,docTypeList,trainYearList,sessionNumbers,baseFlag,userOrgFlow,flag,isJointOrg,isPostpone,isArmy, workOrgId , workOrgName);
 		}
 		Map<String, List<ResResponsibleteacherDoctor>> teaMap = new HashMap<>();
 		ResResponsibleteacherDoctor search = new ResResponsibleteacherDoctor();
