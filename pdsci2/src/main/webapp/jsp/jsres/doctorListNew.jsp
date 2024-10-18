@@ -594,7 +594,7 @@
                                    value="${orgName}" autocomplete="off" onkeydown="changeStatus();"
                                    onkeyup="changeStatus();"/>
                             <div id="pDiv"
-                                 style="width: 0px;height: 0px;overflow: visible;float: left; position:relative;left :0px;top:30px;">
+                                 style="width: 0px;height: 0px;overflow: visible;float: left; position:relative;left :-161px;top:30px;">
                                 <div class="boxHome trainOrg" id="trainOrgSel"
                                      style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
                                     <p class="item trainOrg allOrg orgs" flow="" value="全部" type="AllOrgP"
@@ -723,8 +723,8 @@
                             <select name="workOrgName" id="workOrgName" class="select">
                                 <option value="">请选择</option>
                                 <c:forEach items="${dictTypeEnumSendSchoolList}" var="dict">
-                                    <option value="${dict.dictName}"
-                                            <c:if test="${param.dictName==dict.dictName}">selected="selected"</c:if>>${dict.dictName}</option>
+                                    <option value="${dict.dictId}"
+                                            <c:if test="${param.dictId==dict.dictId}">selected="selected"</c:if>>${dict.dictName}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -1020,7 +1020,7 @@
                                    value="${orgName}" autocomplete="off" onkeydown="changeStatus();"
                                    onkeyup="changeStatus();"/>
                             <div id="pDiv"
-                                 style="width: 0px;height: 0px;overflow: visible;float: left; position:relative;left :0px;top:30px;">
+                                 style="width: 0px;height: 0px;overflow: visible;float: left; position:relative;left :-161px;top:30px;">
                                 <div class="boxHome trainOrg" id="trainOrgSel"
                                      style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
                                     <p class="item trainOrg allOrg orgs" flow="" value="全部" type="AllOrgP"
@@ -1152,8 +1152,8 @@
                             <select name="workOrgName" id="workOrgName" class="select">
                                 <option value="">请选择</option>
                                 <c:forEach items="${dictTypeEnumSendSchoolList}" var="dict">
-                                    <option value="${dict.dictName}"
-                                            <c:if test="${param.dictName==dict.dictName}">selected="selected"</c:if>>${dict.dictName}</option>
+                                    <option value="${dict.dictId}"
+                                            <c:if test="${param.dictId==dict.dictId}">selected="selected"</c:if>>${dict.dictName}</option>
                                 </c:forEach>
                             </select>
                         </div>

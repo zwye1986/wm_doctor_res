@@ -605,7 +605,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	}
 
 	@Override
-	public List<JsDoctorInfoExt> searchDoctorInfoResume3(ResDoctorRecruit recruit,ResDoctor doctor,SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList,String flag,List<String>docTypeList,List<String>trainYearList,List<String>sessionNumbers,String baseFlag,String isPostpone,String isArmy, String workOrgId) {
+	public List<JsDoctorInfoExt> searchDoctorInfoResume3(ResDoctorRecruit recruit,ResDoctor doctor,SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList,String flag,List<String>docTypeList,List<String>trainYearList,List<String>sessionNumbers,String baseFlag,String isPostpone,String isArmy, String workOrgId,String workOrgName) {
 		Map<String,Object> paramMap=new HashMap<String,Object>();
 		paramMap.put("resDoctorRecruit", recruit);
 		paramMap.put("doctor", doctor);
@@ -619,6 +619,8 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		paramMap.put("isPostpone", isPostpone);
 		paramMap.put("isArmy", isArmy);
 		paramMap.put("workOrgId", workOrgId);
+		paramMap.put("workOrgName", workOrgName);
+
 		//判断是否为协同基地
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
@@ -907,7 +909,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	@Override
 	public List<JsResDoctorRecruitExt> searchDoctorInfoExts2(ResDoctorRecruit resDoctorRecruit,ResDoctor doctor,SysUser user, SysOrg sysOrg,
 															 List<String> jointOrgFlowList,String flag,List<String>docTypeList,List<String>trainYearList,
-															 List<String>sessionNumbers,String baseFlag,String userOrgFlow, String newFlag,String isJointOrg,String isPostpone,String isArmy,String workOrgId) {
+															 List<String>sessionNumbers,String baseFlag,String userOrgFlow, String newFlag,String isJointOrg,String isPostpone,String isArmy,String workOrgId, String workOrgName) {
 		Map<String, Object> doctorRecruitMap=new HashMap<String, Object>();
 		if ("Y".equals(newFlag)) {
 			if (sessionNumbers == null || sessionNumbers.size() == 0) {
@@ -928,6 +930,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		doctorRecruitMap.put("isJointOrg", isJointOrg);
 		doctorRecruitMap.put("isArmy", isArmy);
 		doctorRecruitMap.put("workOrgId", workOrgId);
+		doctorRecruitMap.put("workOrgName", workOrgName);
 		List<JsResDoctorRecruitExt> doctorRecruitList = new ArrayList<JsResDoctorRecruitExt>(16);
 		if(StringUtil.isNotBlank(baseFlag))
 		{

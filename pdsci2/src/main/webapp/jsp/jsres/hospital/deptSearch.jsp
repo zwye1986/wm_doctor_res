@@ -146,7 +146,7 @@ function showDept(deptFlow, schDeptName, isJoin, speFlow) {
 				<div class="form_label">出科考关联：</div>
 				<div class="form_content">
 					<select name="isUnion" class="select" style="width: 161px;" id="isUnion">
-					<option value=""></option>
+					<option value="">全部</option>
 					<option value="Y">已关联</option>
 					<option value="N">未关联</option>
 				</select>

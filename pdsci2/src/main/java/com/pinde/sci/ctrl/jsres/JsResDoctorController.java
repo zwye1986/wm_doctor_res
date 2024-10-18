@@ -2932,7 +2932,20 @@ public class JsResDoctorController extends GeneralController {
                 trainYearList.add(s);
             }
         }
-        List<JsDoctorInfoExt> doctorInfoExts = jsResDoctorRecruitBiz.searchDoctorInfoResume3(recruit, doctor, user, org, jointOrgFlowList, derateFlag, docTypeList, trainYearList, sessionNumbers, baseFlag, isPostpone,isArmy, workOrgId);
+
+        String workOrgName = null;
+        ServletContext servletContext2=request.getServletContext();
+        if (servletContext2!=null) {
+            List<SysDict> sysDictList = (List<SysDict>) servletContext2.getAttribute("dictTypeEnum" + "SendSchool" + "List");
+            if(CollectionUtils.isNotEmpty(sysDictList)){
+                Map<String, String> cityRelsMap = sysDictList.stream().collect(Collectors.toMap(SysDict::getDictId, SysDict::getDictName, (key1, key2)-> key1));
+                if(StringUtils.isNotEmpty(workOrgId)){
+                    workOrgName = cityRelsMap.get(workOrgId);
+                }
+            }
+        }
+
+        List<JsDoctorInfoExt> doctorInfoExts = jsResDoctorRecruitBiz.searchDoctorInfoResume3(recruit, doctor, user, org, jointOrgFlowList, derateFlag, docTypeList, trainYearList, sessionNumbers, baseFlag, isPostpone,isArmy, workOrgId, workOrgName);
 //		List<Map<String, Object>> jointOrgs = jsResDoctorRecruitBiz.searchJointOrgList();
 //		Map<Object, Object> orgAndJointNameMap=new HashMap<Object, Object>();
 //		if(jointOrgs!=null&&!jointOrgs.isEmpty()){

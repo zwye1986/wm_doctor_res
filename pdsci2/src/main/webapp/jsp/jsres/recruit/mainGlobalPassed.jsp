@@ -347,7 +347,7 @@ function exportForDetail(){
 		<c:if test="${sessionScope.userListScope != GlobalConstant.USER_LIST_LOCAL}">
 			<table class="searchTable">
 				<tr>
-					<td class="td_left">地&#12288;&#12288;市：</td>
+					<td class="td_left" style="min-width:100px">地&#12288;&#12288;市：</td>
 					<td>
 						<div id="native">
 							<select class="notBlank province inputText" data-value="320000" style="display: none" ></select>
@@ -367,7 +367,7 @@ function exportForDetail(){
 							</c:forEach>
 						</select>
 					</td>--%>
-					<td class="td_left">培训基地：</td>
+					<td class="td_left" style="min-width:100px">培训基地：</td>
 					<td>
 						<c:set var="orgName" value=""/>
 						<c:forEach items="${orgs}" var="org">
@@ -394,7 +394,7 @@ function exportForDetail(){
 							<input type="text" name="orgFlow" id="orgFlow" value="${param.orgFlow}" style="display: none;" />
 						</div>
 					</td>
-					<td class="td_left">培训类别：</td>
+					<td class="td_left" style="min-width:100px">培训类别：</td>
 					<td>
 						<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" >
 							<option value="DoctorTrainingSpe">住院医师</option>
@@ -405,19 +405,21 @@ function exportForDetail(){
 						</select>
 					</td>
 
-					<td class="td_left">培训专业：</td>
+					<td class="td_left" style="min-width:100px">培训专业：</td>
 					<td>
 						<select name="trainingSpeId" id="trainingSpeId"class="select" >
 							<option value="">全部</option>
 						</select>
 					</td>
-				</tr>
-				<tr>
-					<td class="td_left">届&#12288;&#12288;别：</td>
+
+					<td class="td_left" style="min-width:100px">届&#12288;&#12288;别：</td>
 					<td>
 						<input type="text" id="sessionNumber" name="sessionNumber" value="${empty param.sessionNumber?pdfn:getCurrYear():param.sessionNumber}" class="input indexNum" readonly="readonly"/>
 					</td>
-					<td class="td_left">招录途径：</td>
+				</tr>
+				<tr>
+
+					<td class="td_left" style="min-width:100px">招录途径：</td>
 					<td>
 						<select name="signupWay" id="signupWay"class="select" >
 							<option value="">全部</option>
@@ -425,27 +427,39 @@ function exportForDetail(){
 							<option value="DoctorSignup">报名</option>
 						</select>
 					</td>
-					<td class="td_left">结业考核&#12288;年&#12288;&#12288;份：</td>
+					<td class="td_left" style="min-width:100px">结业考核年份：</td>
 					<td>
 						<input type="text" id="graduationYear" name="graduationYear"value="${param.graduationYear}" class="input" readonly="readonly"/>
 					</td>
-					<td  class="td_left">证&ensp;件&ensp;号：</td>
+					<td  class="td_left" style="min-width:100px">证&ensp;件&ensp;号：</td>
 					<td>
 						<input type="text" name="idNo" value="${param.idNo}" class="input" />
 					</td>
+
+					<td class="td_left" style="min-width:100px">姓&#12288;&#12288;名：</td>
+					<td>
+						<input type="text" name="userName" value="${userName}" class="input" />
+					</td>
+
+					<td class="td_left" style="min-width:100px">军队人员：</td>
+					<td>
+						<select name="isArmy" id="isArmy"class="select " >
+							<option value="">全部</option>
+							<option value="Y">是</option>
+							<option value="N">否</option>
+						</select>
+					</td>
+
 				</tr>
 				<tr>
-					<td class="td_left">姓&#12288;&#12288;名：</td>
-					<td>
-							<input type="text" name="userName" value="${userName}" class="input" />
-					</td>
-					<td class="td_left">培训年限：</td>
+
+					<td class="td_left" style="min-width:100px">培训年限：</td>
 					<td>
 						<c:forEach items="${jsResTrainYearEnumList}" var="dict">
 							<label><input type="checkbox" id="year${dict.id}" value="${dict.id}"class="docTrainYear" name="yearDatas"/>${dict.name}&nbsp;</label>
 						</c:forEach>
 					</td>
-					<td class="td_left">人员类型：</td>
+					<td class="td_left" style="min-width:100px">人员类型：</td>
 					<td colspan="3">
 <%--						<select name="studentType" class="select" style="width: 134px">--%>
 <%--							<option  value="">全部</option>--%>
@@ -458,16 +472,6 @@ function exportForDetail(){
 	</c:forEach>
 					</td>
 
-				</tr>
-				<tr>
-					<td class="td_left">军队人员：</td>
-					<td>
-						<select name="isArmy" id="isArmy"class="select " >
-							<option value="">全部</option>
-							<option value="Y">是</option>
-							<option value="N">否</option>
-						</select>
-					</td>
 				</tr>
 				<tr id="jointOrg">
 

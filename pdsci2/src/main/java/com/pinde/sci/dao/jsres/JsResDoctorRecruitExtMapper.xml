@@ -327,6 +327,9 @@
 		<if test="workOrgId != null and workOrgId !=''">
 			and ed.WORK_ORG_ID = #{workOrgId}
 		</if>
+		<if test="workOrgName != null and workOrgName !=''">
+			and ed.WORK_ORG_NAME = #{workOrgName}
+		</if>
 		<if test="isArmy!=null and isArmy!='' and isArmy=='Y'.toString()">
 			AND pur.user_resume IS NOT NULL
 			AND EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') IS NOT NULL
@@ -476,6 +479,9 @@
     		)
 		 <if test="workOrgId != null and workOrgId !=''">
 			 and ed.WORK_ORG_ID = #{workOrgId}
+		 </if>
+		 <if test="workOrgName != null and workOrgName !=''">
+			 and ed.WORK_ORG_NAME = #{workOrgName}
 		 </if>
 		 <if test="isArmy!=null and isArmy!='' and isArmy=='Y'.toString()">
 			 AND pur.user_resume IS NOT NULL
@@ -1974,6 +1980,9 @@
 		<if test="workOrgId != null and workOrgId !=''">
 			and ED.WORK_ORG_ID = #{workOrgId}
 		</if>
+		<if test="workOrgName != null and workOrgName !=''">
+			and ED.WORK_ORG_NAME = #{workOrgName}
+		</if>
 		<if test="isArmy!=null and isArmy!='' and isArmy=='Y'.toString()">
 			AND pur.user_resume IS NOT NULL
 			AND EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') IS NOT NULL
@@ -3417,6 +3426,9 @@
         where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y'
 		<if test="workOrgId != null and workOrgId !=''">
 			and ed.WORK_ORG_ID = #{workOrgId}
+		</if>
+		<if test="workOrgName != null and workOrgName !=''">
+			and ed.WORK_ORG_NAME = #{workOrgName}
 		</if>
 		<if test="userOrgFlow != null and userOrgFlow !=''">
 			and ed.SECOND_ORG_FLOW = #{userOrgFlow}
