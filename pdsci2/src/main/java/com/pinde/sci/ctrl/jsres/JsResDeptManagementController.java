@@ -599,19 +599,23 @@ public class JsResDeptManagementController {
                 return "请求入参不完整，请检查！";
             }
             // 校验编码和名称不能与其它的科室重复
-            SysDept sysDept = new SysDept();
-            sysDept.setDeptName(deptRelStdDeptVO.getDeptName());
+            SysDeptExample example = new SysDeptExample();
+            example.createCriteria().andRecordStatusEqualTo("Y")
+                            .andDeptNameEqualTo(deptRelStdDeptVO.getDeptName())
+                    .andOrgFlowEqualTo(deptRelStdDeptVO.getOrgFlow());
             PageHelper.startPage(1, 2, false);
-            List<SysDept> sysDeptList = deptBiz.searchDept(sysDept);
+            List<SysDept> sysDeptList = deptBiz.selectByExample(example);
             for (SysDept dept : sysDeptList) {
                 if(!dept.getDeptFlow().equals(deptRelStdDeptVO.getDeptFlow())) {
                     return "存在相同的基地科室名称或基地科室编码，请检查";
                 }
             }
-            sysDept = new SysDept();
-            sysDept.setDeptCode(deptRelStdDeptVO.getDeptCode());
+            example = new SysDeptExample();
+            example.createCriteria().andRecordStatusEqualTo("Y")
+                    .andDeptNameEqualTo(deptRelStdDeptVO.getDeptCode())
+            .andOrgFlowEqualTo(deptRelStdDeptVO.getOrgFlow());
             PageHelper.startPage(1, 2, false);
-            sysDeptList = deptBiz.searchDept(sysDept);
+            sysDeptList = deptBiz.selectByExample(example);
             for (SysDept dept : sysDeptList) {
                 if(!dept.getDeptFlow().equals(deptRelStdDeptVO.getDeptFlow())) {
                     return "存在相同的基地科室名称或基地科室编码，请检查";
@@ -619,7 +623,7 @@ public class JsResDeptManagementController {
             }
 
             // 更新科室
-            sysDept = new SysDept();
+            SysDept sysDept = new SysDept();
             sysDept.setDeptFlow(deptRelStdDeptVO.getDeptFlow());
             sysDept.setDeptCode(deptRelStdDeptVO.getDeptCode());
             sysDept.setDeptName(deptRelStdDeptVO.getDeptName());
