@@ -44,6 +44,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PushbackInputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -66,6 +67,11 @@ public class DeptBizImpl implements IDeptBiz {
 	private SysLogMapper logMapper;
 	@Autowired
 	private ISchDeptBiz schDeptBiz;
+
+	@Override
+	public List<SysDept> selectByExample(SysDeptExample example) {
+		return sysDeptMapper.selectByExample(example);
+	}
 
 	@Override
 	public List<SysDept> selectByDeptId(String rotationFlow,String orgFlow) {
