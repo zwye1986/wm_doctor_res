@@ -489,7 +489,7 @@ function exportForDetail(){
 						<input class="btn_green" style="margin-left: 0px;" type="button" value="导&#12288;出" onclick="exportForDetail();"/>
 					</td>
 				</tr>
-				<tr id="notJoinOrg">
+				<tr id="notJoinOrg" style="display: none;">
 					<td colspan="8">
 						<input class="btn_green" style="margin-left: 0px;" type="button" value="查&#12288;询" onclick="toPage();"/>&nbsp;
 						<input class="btn_green" style="margin-left: 0px;" type="button" value="导&#12288;出" onclick="exportForDetail();"/>
