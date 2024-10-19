@@ -83,7 +83,7 @@
     <if test="distinct" >
       distinct
     </if>
-    JOINT_ORG_FLOW, JOINT_ORG_NAME
+    JOINT_FLOW, ORG_FLOW, ORG_NAME, JOINT_ORG_FLOW, JOINT_ORG_NAME, RECORD_STATUS,spe_id, spe_name
     from PDSCI.RES_JOINT_ORG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
