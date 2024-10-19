@@ -181,9 +181,9 @@
 
             <table border="2px" cellpadding="0" cellspacing="0" class="grid" id="speRespTable" style="table-layout: fixed">
                 <tr>
-                    <th style="width: 30%">专业基地负责人<span class="red">*</span></th>
-                    <th style="width: 30%">手机号码<span class="red">*</span></th>
-                    <th style="width: 30%">邮箱地址<span class="red">*</span></th>
+                    <th style="width: 30%"><span class="red">*</span>专业基地负责人</th>
+                    <th style="width: 30%"><span class="red">*</span>手机号码</th>
+                    <th style="width: 30%"><span class="red">*</span>邮箱地址</th>
                     <th style="width: 10%"></th>
                     <%--<th>操作&nbsp;<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
                                      style="cursor: pointer;position: absolute;margin-top: 2px;" onclick="javascript:add('zpglbmfzr')" /></th>--%>
@@ -209,9 +209,9 @@
 
             <table border="2px" cellpadding="0" cellspacing="0" class="grid" id="speDirTable" style="table-layout: fixed">
                 <tr>
-                    <th style="width: 30%">教学主任<span class="red">*</span></th>
-                    <th style="width: 30%">手机号码<span class="red">*</span></th>
-                    <th style="width: 30%">邮箱地址<span class="red">*</span></th>
+                    <th style="width: 30%"><span class="red">*</span>教学主任</th>
+                    <th style="width: 30%"><span class="red">*</span>手机号码</th>
+                    <th style="width: 30%"><span class="red">*</span>邮箱地址</th>
                     <th style="width: 10%"></th>
                     <%--<th>操作&nbsp;<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
                                      style="cursor: pointer;position: absolute;margin-top: 2px;" onclick="javascript:add('zpglbmfzr')" /></th>--%>
@@ -237,9 +237,9 @@
 
             <table border="2px" cellpadding="0" cellspacing="0" class="grid" id="speSceTable" style="table-layout: fixed">
                 <tr>
-                    <th style="width: 30%">教学秘书<span class="red">*</span></th>
-                    <th style="width: 30%">手机号码<span class="red">*</span></th>
-                    <th style="width: 30%">邮箱地址<span class="red">*</span></th>
+                    <th style="width: 30%"><span class="red">*</span>教学秘书</th>
+                    <th style="width: 30%"><span class="red">*</span>手机号码</th>
+                    <th style="width: 30%"><span class="red">*</span>邮箱地址</th>
                     <th style="width: 10%"></th>
                     <%--<th>操作&nbsp;<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
                                      style="cursor: pointer;position: absolute;margin-top: 2px;" onclick="javascript:add('zpglbmfzr')" /></th>--%>
@@ -265,9 +265,9 @@
 
             <table border="2px" cellpadding="0" cellspacing="0" class="grid" id="groupLeaderTable" style="table-layout: fixed">
                 <tr>
-                    <th style="width: 30%">教学小组组长<span class="red">*</span></th>
-                    <th style="width: 30%">手机号码<span class="red">*</span></th>
-                    <th style="width: 30%">邮箱地址<span class="red">*</span></th>
+                    <th style="width: 30%"><span class="red">*</span>教学小组组长</th>
+                    <th style="width: 30%"><span class="red">*</span>手机号码</th>
+                    <th style="width: 30%"><span class="red">*</span>邮箱地址</th>
                     <th style="width: 10%"></th>
                     <%--<th>操作&nbsp;<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
                                      style="cursor: pointer;position: absolute;margin-top: 2px;" onclick="javascript:add('zpglbmfzr')" /></th>--%>
@@ -293,9 +293,9 @@
 
             <table border="2px" cellpadding="0" cellspacing="0" class="grid" id="groupMemberTable" style="table-layout: fixed">
                 <tr>
-                    <th style="width: 30%">教学小组组员<span class="red">*</span></th>
-                    <th style="width: 30%">手机号码<span class="red">*</span></th>
-                    <th style="width: 30%">邮箱地址<span class="red">*</span></th>
+                    <th style="width: 30%"><span class="red">*</span>教学小组组员</th>
+                    <th style="width: 30%"><span class="red">*</span>手机号码</th>
+                    <th style="width: 30%"><span class="red">*</span>邮箱地址</th>
                     <th style="width: 10%"><img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
                                                 style="cursor: pointer;" onclick="javascript:addGroupMember('groupMember')" /></th>
                 </tr>
