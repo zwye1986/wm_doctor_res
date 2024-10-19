@@ -460,12 +460,12 @@
 
             <table border="2px" cellpadding="0" cellspacing="0" class="grid" id="jdfzrTable" style="table-layout: fixed">
                 <tr>
-                    <th style="width: 15%">培训基地负责人<span class="red">*</span></th>
-                    <th style="width: 15%">手机号码<span class="red">*</span></th>
-                    <th style="width: 15%">固定电话<span class="red">*</span></th>
-                    <th style="width: 15%">邮箱地址<span class="red">*</span></th>
+                    <th style="width: 15%"><span class="red">*</span>培训基地负责人</th>
+                    <th style="width: 15%"><span class="red">*</span>手机号码</th>
+                    <th style="width: 15%"><span class="red">*</span>固定电话</th>
+                    <th style="width: 15%"><span class="red">*</span>邮箱地址</th>
                     <th style="width: 15%">职称</th>
-                    <th style="width: 15%">职务<span class="red">*</span></th>
+                    <th style="width: 15%"><span class="red">*</span>职务</th>
                     <th style="width: 10%"></th>
                     <%--<th>操作&nbsp;<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
                                      style="cursor: pointer;position: absolute;margin-top: 2px;" onclick="javascript:add('zpglbmfzr')" /></th>--%>
@@ -515,12 +515,12 @@
 
             <table border="2px" cellpadding="0" cellspacing="0" class="grid" id="zpglbmfzrTable" style="table-layout: fixed">
                 <tr>
-                    <th style="width: 15%">住培管理部门负责人<span class="red">*</span></th>
-                    <th style="width: 15%">手机号码<span class="red">*</span></th>
-                    <th style="width: 15%">固定电话<span class="red">*</span></th>
-                    <th style="width: 15%">邮箱地址<span class="red">*</span></th>
+                    <th style="width: 15%"><span class="red">*</span>住培管理部门负责人</th>
+                    <th style="width: 15%"><span class="red">*</span>手机号码</th>
+                    <th style="width: 15%"><span class="red">*</span>固定电话</th>
+                    <th style="width: 15%"><span class="red">*</span>邮箱地址</th>
                     <th style="width: 15%">职称</th>
-                    <th style="width: 15%">职务<span class="red">*</span></th>
+                    <th style="width: 15%"><span class="red">*</span>职务</th>
                     <th style="width: 10%"></th>
                     <%--<th>操作&nbsp;<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
                                      style="cursor: pointer;position: absolute;margin-top: 2px;" onclick="javascript:add('zpglbmfzr')" /></th>--%>
@@ -572,12 +572,12 @@
 
             <table border="2px" cellpadding="0" cellspacing="0" class="grid" id="contactManTable" style="table-layout: fixed">
                 <tr>
-                    <th style="width: 15%">联络员<span class="red">*</span></th>
-                    <th style="width: 15%">手机号码<span class="red">*</span></th>
-                    <th style="width: 15%">固定电话<span class="red">*</span></th>
-                    <th style="width: 15%">邮箱地址<span class="red">*</span></th>
+                    <th style="width: 15%"><span class="red">*</span>联络员</th>
+                    <th style="width: 15%"><span class="red">*</span>手机号码</th>
+                    <th style="width: 15%"><span class="red">*</span>固定电话</th>
+                    <th style="width: 15%"><span class="red">*</span>邮箱地址</th>
                     <th style="width: 15%">职称</th>
-                    <th style="width: 15%">职务<span class="red">*</span></th>
+                    <th style="width: 15%"><span class="red">*</span>职务</th>
                     <th style="width: 10%">操作&nbsp;<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
                                                           style="cursor: pointer;position: absolute;margin-top: 2px;" onclick="javascript:add('contactMan')" /></th>
                 </tr>
