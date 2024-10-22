@@ -1458,8 +1458,9 @@ public class InxJsResController extends GeneralController {
     @RequestMapping(value = "/checkVerifyCode")
     @ResponseBody
     public String checkVerifyCode(String data, Model model) {
-        // 解密
-        data = RSAUtils.decryptStringByJs(data);
+        // 获取公钥系数和公钥指数
+        KeyPair defaultKeyPair = (KeyPair)getSessionAttribute("defaultKeyPairRegister");
+        data = RSAUtils.decryptStringByJs(data, defaultKeyPair);
         Map<String, String> paramMap = (Map<String, String>) JSON.parse(data);
         String userPhone = paramMap.get("userPhone");
         String verifyCode = paramMap.get("verifyCode");
@@ -1526,7 +1527,8 @@ public class InxJsResController extends GeneralController {
     @RequestMapping(value = {"/setPasswd"}, method = {RequestMethod.POST})
     public String setPasswd(String userPhone, String verifyCode, Model model) {
         // 获取公钥系数和公钥指数
-        RSAPublicKey publicKey = RSAUtils.getDefaultPublicKey();
+        KeyPair defaultKeyPair = (KeyPair)getSessionAttribute("defaultKeyPairRegister");
+        RSAPublicKey publicKey = (RSAPublicKey)defaultKeyPair.getPublic();
         if (null != publicKey) {
             //公钥-系数(n)
             model.addAttribute("pkModulus", new String(Hex.encode(publicKey.getModulus().toByteArray())));
@@ -1592,7 +1594,9 @@ public class InxJsResController extends GeneralController {
     @ResponseBody
     public String registerNew(String data) throws UnsupportedEncodingException {
         // 解密
-        data = RSAUtils.decryptStringByJs(data);
+        // 获取公钥系数和公钥指数
+        KeyPair defaultKeyPair = (KeyPair)getSessionAttribute("defaultKeyPairRegister");
+        data = RSAUtils.decryptStringByJs(data,defaultKeyPair);
         Map<String, String> paramMap = (Map<String, String>) JSON.parse(data);
         String userPhone = paramMap.get("userPhone");
         String userPasswd1 = paramMap.get("userPasswd");
