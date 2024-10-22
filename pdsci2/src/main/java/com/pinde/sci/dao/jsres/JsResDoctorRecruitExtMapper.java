@@ -10,6 +10,7 @@ import java.util.Map;
 
 public interface JsResDoctorRecruitExtMapper {
 	List<JsResDoctorRecruitExt> searchJsDoctorRecruitExtList(Map<String, Object> paramMap);
+	List<JsResDoctorRecruitExt> searchJsDoctorRecruitExtList4(Map<String, Object> paramMap);
 	List<JsResDoctorRecruitExt> searchJsDoctorRecruitExtList2(Map<String, Object> paramMap);
 	List<JsResDoctorRecruitExt> searchJsDoctorRecruitExtBaseList(Map<String, Object> paramMap);
 	//查询招录学员分组排名信息
