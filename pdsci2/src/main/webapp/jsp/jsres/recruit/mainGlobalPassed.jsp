@@ -25,7 +25,9 @@
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
-	$.checkYear("sessionNumber","",null);
+	var d = new Date();
+	var vYear = d.getFullYear();
+	$.checkYear("sessionNumber",vYear.toString(),null);
 //	$('#sessionNumber').datepicker({
 //		startView: 2,
 //		maxViewMode: 2,
