@@ -42,6 +42,7 @@ import com.pinde.sci.model.jsres.JsGraduateExt;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.RegionUtil;
@@ -160,6 +161,22 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		doctorRecruitMap.put("isJointOrg", isJointOrg);
 		doctorRecruitMap.put("isArmy", isArmy);
 		List<JsResDoctorRecruitExt> doctorRecruitList=jsResDoctorRecruitExtMapper.searchJsDoctorRecruitExtList(doctorRecruitMap);
+		return doctorRecruitList;
+	}
+
+	@Override
+	public List<JsResDoctorRecruitExt> resDoctorRecruitExtNew2(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> jointOrgList,
+															  List<String> docTypeList, List<String> sessionNumbers,String joinOrgFlow,String isJointOrg,String isArmy) {
+		Map<String, Object> doctorRecruitMap=new HashMap<String, Object>();
+		doctorRecruitMap.put("resDoctorRecruit", resDoctorRecruit);
+		doctorRecruitMap.put("user", user);
+		doctorRecruitMap.put("jointOrgFlowList", jointOrgList);
+		doctorRecruitMap.put("docTypeList", docTypeList);
+		doctorRecruitMap.put("sessionNumbers", sessionNumbers);
+		doctorRecruitMap.put("joinOrgFlow", joinOrgFlow);
+		doctorRecruitMap.put("isJointOrg", isJointOrg);
+		doctorRecruitMap.put("isArmy", isArmy);
+		List<JsResDoctorRecruitExt> doctorRecruitList=jsResDoctorRecruitExtMapper.searchJsDoctorRecruitExtList4(doctorRecruitMap);
 		return doctorRecruitList;
 	}
 
@@ -2935,7 +2952,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 
 				"培训专业",
 				"审核状态",
-				"基地",
+
 				"规培起止时间",
 				"当前学位类别",
 				"届别",
@@ -3010,12 +3027,13 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 						recruitExt.getGraduateTime(),
 						recruitExt.getSpeName(),
 						recruitExt.getAuditStatusName(),
-						recruitExt.getResDoctor().getOrgName(),
+
 						recruitExt.getRecruitDate()+"~"+ DateUtil.addYear(recruitExt.getRecruitDate(),trainStep),
 						recruitExt.getCurrDegreeCategoryName(),
 						recruitExt.getSessionNumber(),
 						recruitExt.getPlaceName(),
-						GlobalContext.getCurrentUser().getOrgName(),
+//						GlobalContext.getCurrentUser().getOrgName(),
+						StringUtils.isNotEmpty(recruitExt.getJointOrgName()) ? recruitExt.getJointOrgName() : recruitExt.getOrgName(),
 						recruitExt.getCatSpeName(),
 						trainYear,
 						yetTrainName,

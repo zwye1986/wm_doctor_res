@@ -3926,7 +3926,7 @@ public class JsResManageController extends GeneralController {
 			isJointOrg = "Y";
 		}
 //		List<JsResDoctorRecruitExt> recruitList = jsResDoctorRecruitBiz.resDoctorRecruitExtList1(resDoctorRecruit, sysUser, null, docTypeList, sessionNumbers);
-		List<JsResDoctorRecruitExt> recruitList = jsResDoctorRecruitBiz.resDoctorRecruitExtNew(resDoctorRecruit, sysUser, jointOrgFlowList, docTypeList, sessionNumbers,joinOrgFlow,isJointOrg,isArmy);
+		List<JsResDoctorRecruitExt> recruitList = jsResDoctorRecruitBiz.resDoctorRecruitExtNew2(resDoctorRecruit, sysUser, jointOrgFlowList, docTypeList, sessionNumbers,joinOrgFlow,isJointOrg,isArmy);
 
 		// 增加几个导出字段 性别/年龄/ 地址/工作单位 /毕业院校/毕业时间
 		// /毕业院校/毕业时间 根据最高学历，从PubUserResume里取
