@@ -31,6 +31,8 @@ public interface IJsResDoctorRecruitBiz {
     List<JsResDoctorRecruitExt> resDoctorRecruitExtList2(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> org,List<String> docTypeList,List<String> sessionNumbers,String sortType,String scoreType);
     List<JsResDoctorRecruitExt> resDoctorRecruitExtList3(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> org,List<String> docTypeList,List<String> sessionNumbers,String sortType,String scoreType);
     List<JsResDoctorRecruitExt> resDoctorRecruitExtList3New(ResDoctorRecruit resDoctorRecruit);
+    List<JsResDoctorRecruitExt> resDoctorRecruitExtNew2(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> jointOrgList,
+                                                       List<String> docTypeList,List<String> sessionNumbers,String joinOrgFlow,String isJointOrg,String isArmy);
     /**
      * 编辑
      *
