@@ -1198,7 +1198,7 @@
         <if test='deptFlow!=null and deptFlow!=""'>
             and rdsp.dept_flow = #{deptFlow}
         </if>
-        <if test='deptFlows!=null and deptFlows.size>0'>
+        <if test='deptFlows!=null and deptFlows.size() > 0'>
             and rdsp.dept_flow in
             <foreach collection="deptFlows" item="item" open="(" close=")" separator="," >
                 #{item}
@@ -1207,7 +1207,7 @@
         <if test='studentType!=null and studentType!=""'>
             and rd.doctor_Type_Id = #{studentType}
         </if>
-        <if test='recTypeIdList!=null and recTypeIdList!=""'>
+        <if test='recTypeIdList!=null and recTypeIdList.size() > 0 '>
             and dtgi.rec_type_id in
             <foreach collection="recTypeIdList" item="item" open="(" close=")" separator="," >
                 #{item}
