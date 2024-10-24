@@ -607,9 +607,6 @@ public class ResManagerController extends GeneralController {
 		model.addAttribute("teaMap",teaMap);
 		model.addAttribute("doctorTypeSelectMap",doctorTypeSelectMap);
 		model.addAttribute("doctorList", doctorList);
-		if ("/inx/jszy".equals(InitConfig.getSysCfg("sys_index_url"))) {
-			return "/res/manager/userList4jszy";
-		}
 		return "/res/manager/userList";
 	}
 	/**
