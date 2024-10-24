@@ -800,7 +800,18 @@
         SELECT
         R.RECORD_FLOW, R.PLAN_FLOW, P.PLAN_CONTENT, P.PLAN_START_TIME, P.PLAN_END_TIME,
         R.CERTIFICATE_NO, R.SEND_CERTIFICATE_TIME,
-        TO_CHAR(TO_DATE(R.SEND_CERTIFICATE_TIME, 'yyyy-mm-dd') + INTERVAL #{dayNum} DAY, 'yyyy-mm-dd') END_CERTIFICATE_TIME
+        TO_CHAR(TO_DATE(R.SEND_CERTIFICATE_TIME, 'yyyy-mm-dd') + INTERVAL
+
+        <choose>
+            <when test="@org.apache.commons.lang3.math.NumberUtils@isDigits(dayNum)">
+                #{dayNum}
+            </when>
+            <otherwise>
+                '0'
+            </otherwise>
+        </choose>
+
+        DAY, 'yyyy-mm-dd') END_CERTIFICATE_TIME
         FROM RES_TEACH_PLAN_DOCTOR R
         LEFT JOIN RES_TEACH_QUALIFIED_PLAN P ON P.PLAN_FLOW = R.PLAN_FLOW
         WHERE R.RECORD_STATUS = 'Y'
