@@ -123,14 +123,6 @@
         </dependency>
 
         <dependency>
-            <groupId>fastjson-1.1.36</groupId>
-            <artifactId>fastjson-1.1.36</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/fastjson-1.1.36.jar</systemPath>
-        </dependency>
-
-        <dependency>
             <groupId>flying-saucer-core-9.0.3-RC1</groupId>
             <artifactId>flying-saucer-core-9.0.3-RC1</artifactId>
             <version>1.0</version>

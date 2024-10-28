@@ -203,7 +203,7 @@ public class JswjwWxController extends GeneralController {
             return resultMap;
         }
 
-        return getUserInfo(user, resultMap, null, null, openId);
+        return getUserInfo(user, resultMap, null, null, openId,request);
     }
 
     /**
@@ -242,7 +242,7 @@ public class JswjwWxController extends GeneralController {
      */
     @RequestMapping("/bindSysUser")
     @ResponseBody
-    public Object bindSysUser(String openId, String userPhone) {
+    public Object bindSysUser(String openId, String userPhone,HttpServletRequest request) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("resultId", "200");
         resultMap.put("resultType", "绑定成功");
@@ -267,7 +267,7 @@ public class JswjwWxController extends GeneralController {
                 resultMap.put("openId", openId);
                 resultMap.put("userFlow", user.getUserFlow());
 
-                return getUserInfo(user, resultMap, null, null, openId);
+                return getUserInfo(user, resultMap, null, null, openId, request);
 
             }else {
 
@@ -296,7 +296,7 @@ public class JswjwWxController extends GeneralController {
      */
     @RequestMapping("/changePhone")
     @ResponseBody
-    public Object changePhone(String openId, String userPhone) {
+    public Object changePhone(String openId, String userPhone,HttpServletRequest request) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("resultId", "200");
         resultMap.put("resultType", "绑定成功");
@@ -313,7 +313,7 @@ public class JswjwWxController extends GeneralController {
             resultMap.put("openId", openId);
             resultMap.put("userFlow", user.getUserFlow());
 
-            return getUserInfo(user, resultMap, null, null, openId);
+            return getUserInfo(user, resultMap, null, null, openId,request);
 
         }else {
 
@@ -330,7 +330,7 @@ public class JswjwWxController extends GeneralController {
             resultMap.put("openId", openId);
             resultMap.put("userFlow", user.getUserFlow());
 
-            return getUserInfo(user, resultMap, null, null, openId);
+            return getUserInfo(user, resultMap, null, null, openId,request);
 
         }
 
@@ -508,7 +508,8 @@ public class JswjwWxController extends GeneralController {
 //        } else {
 //            application.setAttribute("onlineCountNum", (Integer) application.getAttribute("onlineCountNum") + 1);
 //        }
-        return getUserInfo(userinfo, resultMap, userPasswd, uuid, null);
+
+        return getUserInfo(userinfo, resultMap, userPasswd, uuid, null,request);
     }
 
     /**
@@ -1191,7 +1192,7 @@ public class JswjwWxController extends GeneralController {
         if (GlobalConstant.ZERO_LINE >= saveResult) {
             return ResultDataThrow("分数信息创建出错!");
         }
-        testUrl = testUrl + "?Action=ChuKeMobileExam&ExamSoluID=" + ExamSoluID + "&CardID=" + URLEncoder.encode(user.getUserCode(), "utf-8") + "&ProcessFlow=" + processFlow + "&TestNum=" + TestNum + "&Date=" + Date;
+        testUrl = testUrl + "?Action=ChuKeMobileExam&paperFlow=" + ExamSoluID + "&CardID=" + URLEncoder.encode(user.getUserCode(), "utf-8") + "&ProcessFlow=" + processFlow + "&count=" + TestNum + "&Date=" + Date + "&userFlow=" + userFlow +"&isStartExam=Y&paperType=7"+ "&token=" +request.getSession().getId();
         resultMap.put("testUrl", testUrl);
         return resultMap;
     }
@@ -2579,6 +2580,11 @@ public class JswjwWxController extends GeneralController {
         if (doctor != null && TrainCategoryEnum.DoctorTrainingSpe.getId().equals(doctor.getTrainingTypeId())) {
             resultMap.put("isPxsc", true);
         }
+
+        Map<String, Object> schMap = jswjwBiz.getDoctorSchInfo(userFlow);
+
+        resultMap.put("schMap",schMap);
+
         // 查询医师权限
         return resultMap;
     }
@@ -6380,7 +6386,7 @@ public class JswjwWxController extends GeneralController {
         return list;
     }
 
-    private Object getUserInfo(SysUser userinfo, Map<String, Object> resultMap, String userPasswd, String uuid, String openId) {
+    private Object getUserInfo(SysUser userinfo, Map<String, Object> resultMap, String userPasswd, String uuid, String openId,HttpServletRequest request) {
         //是否招录
         String isRecruit = "N";
         //超级密码
@@ -6785,6 +6791,16 @@ public class JswjwWxController extends GeneralController {
                 }
             }
         }
+
+        HttpSession session = request.getSession();
+
+        SysUser user = new SysUser();
+
+        user.setUserFlow(userinfo.getUserFlow());
+        user.setDeptFlow(userinfo.getDeptFlow());
+
+        session.setAttribute("user", JSON.toJSONString(user));
+
         resultMap.put("isRecruit", isRecruit);
 //        if("Y".equals(isRecruit)){
 //            return ResultDataThrow("用户资料不完善暂无权登录！");
@@ -11280,7 +11296,7 @@ public class JswjwWxController extends GeneralController {
 //        } else {
 //            application.setAttribute("onlineCountNum", (Integer) application.getAttribute("onlineCountNum") + 1);
 //        }
-        return getUserInfo(userinfo, resultMap, userPasswd, uuid, null);
+        return getUserInfo(userinfo, resultMap, userPasswd, uuid, null,request);
     }
 
     //测试接口

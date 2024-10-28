@@ -43,6 +43,13 @@
 
     <!-- 项目依赖 -->
     <dependencies>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.47</version>
+        </dependency>
+
         <!-- ssh tunnel 连接 -->
         <dependency>
             <groupId>com.jcraft</groupId>
