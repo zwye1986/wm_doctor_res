@@ -802,4 +802,6 @@ public interface IJswjwBiz {
 	PubFile readFile(String fileFlow);
 
     List<ResDoctorKq> kqStatisticsDetail(ResDoctorKq kq);
+
+	Map<String, Object> getDoctorSchInfo(String userFlow);
 }
