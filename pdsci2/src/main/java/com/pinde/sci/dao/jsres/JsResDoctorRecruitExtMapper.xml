@@ -2207,6 +2207,366 @@
 		</if>
 	</select>
 
+
+	<select id="searchJsDoctorRecruitExtList4"  parameterType="java.util.Map" resultMap="DoctorRecruit">
+		SELECT
+		DR.AUDITION_STATUS_ID,
+		DR.AUDITION_STATUS_NAME,
+		DR.OPER_STATUS_ID,
+		DR.OPER_STATUS_NAME,
+		DR.IN_JOINT_ORG_TRAIN,
+		DR.JOINT_ORG_FLOW,
+		DR.JOINT_ORG_NAME,
+		DR.ROTATION_FLOW,
+		DR.ROTATION_NAME,
+		DR.SPECIAL_CERT_NO,
+		DR.SPECIAL_FILE_URL,
+		DR.AVG_COMPLETE,
+		DR.AVG_AUDIT,
+		DR.MATERIAL_ID,
+		DR.PRACTICING_SCOPE_ID,
+		DR.PRACTICING_SCOPE_NAME,
+		DR.CERTIFICATE_URI,
+		DR.QUALIFICATION_MATERIAL_URI,
+		DR.SPECIAL_CERTIFICATION_URI,
+		DR.QUALIFICATION_MATERIAL_CODE,
+		DR.TYPE_ID,
+		DR.REGISTE_MANUA,
+		DR.RECRUIT_FLOW,
+		DR.DOCTOR_FLOW,
+		DR.ORG_FLOW,
+		DR.SPE_ID,
+		DR.SPE_NAME,
+		DR.SWAP_FLAG,
+		DR.RECRUIT_TYPE_ID,
+		DR.RECRUIT_TYPE_NAME,
+		DR.RECRUIT_YEAR,
+		DR.RECRUIT_DATE,
+		DR.RETEST_FLAG,
+		DR.EXAM_RESULT,
+		DR.AUDITION_RESULT,
+		DR.OPER_RESULT,
+		DR.TOTLE_RESULT,
+		DR.ADMIT_FLAG,
+		DR.RECRUIT_FLAG,
+		DR.CONFIRM_FLAG,
+		DR.SWAP_SPE_ID,
+		DR.SWAP_SPE_NAME,
+		DR.RECORD_STATUS,
+		DR.CREATE_TIME,
+		DR.CREATE_USER_FLOW,
+		DR.MODIFY_TIME,
+		DR.MODIFY_USER_FLOW,
+		DR.RETEST_NOTICE,
+		DR.ADMIT_NOTICE,
+		DR.GLOBAL_NOTICE,
+		DR.CAT_SPE_ID,
+		DR.CAT_SPE_NAME,
+		DR.SESSION_NUMBER,
+		DR.TRAIN_YEAR,
+		DR.YET_TRAIN_YEAR,
+		DR.DOCTOR_STATUS_ID,
+		DR.DOCTOR_STATUS_NAME,
+		DR.DOCTOR_STRIKE_ID,
+		DR.DOCTOR_STRIKE_NAME,
+		DR.TRAIN_NO,
+		DR.AUDIT_STATUS_ID,
+		DR.AUDIT_STATUS_NAME,
+		DR.PLACE_ID,
+		DR.PLACE_NAME,
+		DR.PROVE_FILE_URL,
+		DR.COMPLETE_CERT_NO,
+		DR.COMPLETE_FILE_URL,
+		DR.CURR_DEGREE_CATEGORY_ID,
+		DR.CURR_DEGREE_CATEGORY_NAME,
+		DR.PROV_REMARK,
+		DR.GRADUATION_YEAR,
+		DR.ADMIN_SWAP_FLAG,
+		DR.SECOND_SPE_ID,
+		DR.SECOND_SPE_NAME,
+		DR.GRADUATION_CERTIFICATE_NO,
+		DR.CERTIFICATE_DATE,
+		DR.GRADUATION_CERTIFICATE_TYPE,
+		DR.CHANGE_SPE_ID,
+		DR.CHANGE_SPE_NAME,
+		DR.RETURN_BACK_FLAG,
+		DR.RETURN_BACK_REMARK,
+		DR.IS_SEND,
+		DR.IS_CERT_SEND,
+		DR.QUALIFIED_ID,
+		DR.CERTIFICATE_ISSUING_STATUS,
+		DR.WORK_UNIT,
+		DR.WORK_UNIT_CODE,
+		DR.ARMY_HOSPITAL,
+		DR.EXAM_STATUS_ID,
+		DR.EXAM_STATUS_NAME,
+		DR.ORG_NAME,
+		DR.IS_RETRAIN,
+		DR.ORG_AUDIT,
+		DR.JOINT_ORG_AUDIT,
+		DR.SIGNUP_WAY,
+		U.USER_FLOW,
+		U.USER_CODE,
+		U.USER_NAME,
+		U.SEX_ID,
+		U.SEX_NAME,
+		U.USER_PHONE,
+		U.USER_EMAIL,
+		U.ID_NO,
+		U.USER_BIRTHDAY,
+		U.TITLE_ID,
+		U.TITLE_NAME,
+		U.DEGREE_ID,
+		U.DEGREE_NAME,
+		U.EDUCATION_ID,
+		U.EDUCATION_NAME,
+		U.POST_ID,
+		U.POST_NAME,
+		U.USER_ADDRESS,
+		ED.ORG_FLOW AS EDORGFLOW,
+		ED.ORG_NAME AS EDORGNAME,
+		ED.DOCTOR_TYPE_NAME,
+		ED.DOCTOR_TYPE_ID,
+		ED.WORK_ORG_ID,
+		ED.WORK_ORG_NAME
+			, EXTRACTVALUE(XMLTYPE(pur.user_resume), '/userResumeExtInfoForm/armyType') as ARMY_TYPE
+		FROM
+		RES_DOCTOR_RECRUIT DR
+		LEFT JOIN PDSCI.SYS_USER U ON DR.DOCTOR_FLOW = U .USER_FLOW
+		LEFT JOIN RES_DOCTOR ED ON DR.DOCTOR_FLOW = ED.DOCTOR_FLOW
+		LEFT JOIN PUB_USER_RESUME pur ON DR.DOCTOR_FLOW = pur.USER_FLOW AND pur.RECORD_STATUS = 'Y'
+		WHERE
+		DR.RECORD_STATUS = 'Y'
+		<if test="workOrgId != null and workOrgId !=''">
+			and ED.WORK_ORG_ID = #{workOrgId}
+		</if>
+		<if test="workOrgName != null and workOrgName !=''">
+			and ED.WORK_ORG_NAME = #{workOrgName}
+		</if>
+		<if test="isArmy!=null and isArmy!='' and isArmy=='Y'.toString()">
+			AND pur.user_resume IS NOT NULL
+			AND EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') IS NOT NULL
+			AND EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') != 'NO'
+		</if>
+		<if test="isArmy!=null and isArmy!='' and isArmy=='N'.toString()">
+			AND pur.user_resume IS NOT NULL
+			AND
+			(
+			EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') = 'NO'
+			OR
+			EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') IS NULL
+			)
+		</if>
+		AND U .RECORD_STATUS = 'Y'
+		AND NOT EXISTS (
+		SELECT
+		1
+		FROM
+		RES_DOCOTR_DELAY_TETURN T
+		WHERE
+		T.RECORD_STATUS = 'Y'
+		AND T.TYPE_ID = 'ReturnTraining'
+		AND T.AUDIT_STATUS_ID = '1'
+		AND T.RECRUIT_FLOW = DR.RECRUIT_FLOW
+		AND T.SESSION_NUMBER = DR.SESSION_NUMBER
+		AND T.DOCTOR_FLOW = DR.DOCTOR_FLOW
+		)
+		AND DR.AUDIT_STATUS_ID != 'NotSubmit'
+		AND EXISTS (
+		SELECT
+		1
+		FROM
+		SYS_ORG O
+		WHERE
+		O.RECORD_STATUS = 'Y'
+		AND O.ORG_FLOW = DR.ORG_FLOW
+		<if test="sysOrg!=null">
+			<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
+				AND ORG_PROV_ID = #{sysOrg.orgProvId}
+			</if>
+			<if test="sysOrg.orgCityId!=null and sysOrg.orgCityId!=''">
+				AND ORG_CITY_ID = #{sysOrg.orgCityId}
+			</if>
+			<if test="sysOrg.orgFlow!=null and sysOrg.orgFlow!=''">
+				AND ORG_FLOW = #{sysOrg.orgFlow}
+			</if>
+			<if test="sysOrg.orgLevelId!=null and sysOrg.orgLevelId!=''">
+				AND ORG_LEVEL_ID = #{sysOrg.orgLevelId}
+			</if>
+			<if test="sysOrg.orgTypeId!=null and sysOrg.orgTypeId!=''">
+				AND ORG_TYPE_ID = #{sysOrg.orgTypeId}
+			</if>
+		</if>
+		)
+		<if test="orgFlowList!=null and orgFlowList.size>0">
+			and dr.ORG_FLOW in
+			<foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="jointOrgFlowList!=null and jointOrgFlowList.size>0 and isJointOrg == 'Y'.toString()">
+			and dr.JOINT_ORG_FLOW in
+			<foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="jointOrgFlowList!=null and jointOrgFlowList.size>0 and isJointOrg == 'N'.toString()">
+			and (dr.ORG_FLOW in
+			<foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+			or dr.joint_org_flow in
+			<foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+			)
+		</if>
+		<if test="joinOrgFlow!=null and joinOrgFlow!=''">
+			and dr.ORG_FLOW = #{joinOrgFlow}
+		</if>
+		<if test="signupWay!=null and signupWay!=''">
+			and dr.SIGNUP_WAY = #{signupWay}
+		</if>
+		<if test="docTypeList!=null and docTypeList.size>0">
+			and ed.DOCTOR_TYPE_ID in
+			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="trainYearList!=null and trainYearList.size>0">
+			and dr.TRAIN_YEAR in
+			<foreach collection="trainYearList" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="sessionNumbers!=null and sessionNumbers.size>0">
+			and dr.SESSION_NUMBER in
+			<foreach collection="sessionNumbers" open="(" separator="," close=")" item="item">#{item}</foreach>
+		</if>
+		<if test="sessionNumberBefore!=null and sessionNumberBefore != ''">
+			and ed.SESSION_NUMBER >= #{sessionNumberBefore}
+		</if>
+		<if test="resDoctorRecruit!=null">
+			<if test="resDoctorRecruit.sessionNumber!=null and resDoctorRecruit.sessionNumber!=''">
+				and dr.SESSION_NUMBER = #{resDoctorRecruit.sessionNumber}
+			</if>
+			<if test="resDoctorRecruit.isRetrain!=null and resDoctorRecruit.isRetrain!=''">
+				and dr.IS_RETRAIN = #{resDoctorRecruit.isRetrain}
+			</if>
+			<if test="resDoctorRecruit.catSpeId!=null and resDoctorRecruit.catSpeId!=''">
+				and dr.CAT_SPE_ID = #{resDoctorRecruit.catSpeId}
+			</if>
+			<if test="resDoctorRecruit.speId!=null and resDoctorRecruit.speId!=''">
+				and dr.SPE_ID = #{resDoctorRecruit.speId}
+			</if>
+			<!--<if test='resDoctorRecruit.orgFlow!=null and resDoctorRecruit.orgFlow!=""'>-->
+			<!--and dr.ORG_FLOW = #{resDoctorRecruit.orgFlow}-->
+			<!--</if>-->
+			<if test="resDoctorRecruit.graduationYear!=null and resDoctorRecruit.graduationYear!=''">
+				and dr.GRADUATION_YEAR=#{resDoctorRecruit.graduationYear}
+			</if>
+			<if test="resDoctorRecruit.doctorStatusId!=null and resDoctorRecruit.doctorStatusId!=''">
+				<if test="resDoctorRecruit.doctorStatusId == 'Passed'">
+					and dr.DOCTOR_STATUS_ID != 'Auditing' and dr.DOCTOR_STATUS_ID != 'NotPassed' and dr.DOCTOR_STATUS_ID is not null
+				</if>
+				<if test="resDoctorRecruit.doctorStatusId != 'Passed'">
+					and dr.DOCTOR_STATUS_ID=#{resDoctorRecruit.doctorStatusId}
+				</if>
+			</if>
+			<if test="resDoctorRecruit.doctorStatusId == null">
+				and dr.DOCTOR_STATUS_ID in ('20','21','22','24')
+			</if>
+			<if test="resDoctorRecruit.auditStatusId!=null and resDoctorRecruit.auditStatusId!=''">
+				and dr.AUDIT_STATUS_ID=#{resDoctorRecruit.auditStatusId}
+			</if>
+			<if test="resDoctorRecruit.orgAudit!=null and resDoctorRecruit.orgAudit!=''">
+				and dr.org_audit = #{resDoctorRecruit.orgAudit}
+			</if>
+			<if test="resDoctorRecruit.jointOrgAudit!=null and resDoctorRecruit.jointOrgAudit!=''">
+				and dr.joint_org_audit = #{resDoctorRecruit.jointOrgAudit}
+			</if>
+			<if test="resDoctorRecruit.recruitFlag!=null and resDoctorRecruit.recruitFlag!=''">
+				and dr.recruit_flag =#{resDoctorRecruit.recruitFlag}
+			</if>
+			<if test="resDoctorRecruit.doctorStatusId != null and resDoctorRecruit.doctorStatusId != '' and resDoctorRecruit.doctorStatusId !='NotPassed'">
+				<if test="resDoctorRecruit.confirmFlag!=null and resDoctorRecruit.confirmFlag!=''">
+					and dr.confirm_Flag =#{resDoctorRecruit.confirmFlag}
+				</if>
+			</if>
+			<if test="resDoctorRecruit.signupWay!=null and resDoctorRecruit.signupWay!=''">
+				and dr.signup_way =#{resDoctorRecruit.signupWay}
+			</if>
+		</if>
+		<if test="derateFlag!=null and resDoctorRecruit.trainYear!=null and resDoctorRecruit.trainYear!='' ">
+			and dr.TRAIN_YEAR not in (#{resDoctorRecruit.trainYear})
+		</if>
+		<if test="user!=null">
+			<if test="user.userName!=null and user.userName!=''">
+				<bind name="userName" value="'%'+user.userName+'%'"/>
+				and u.USER_NAME like #{userName}
+			</if>
+			<if test="user.idNo!=null and user.idNo!=''">
+				<bind name="idNo" value="'%'+user.idNo+'%'"/>
+				and u.ID_NO like #{idNo}
+			</if>
+			<if test="user.nativePlaceCityId!=null and user.nativePlaceCityId!=''">
+				and u.NATIVE_PLACE_CITY_ID = #{user.nativePlaceCityId}
+			</if>
+		</if>
+		<if test="doctor!=null">
+			<if test="doctor.trainingTypeId!=null and doctor.trainingTypeId!=''">
+				and dr.CAT_SPE_ID = #{doctor.trainingTypeId}
+			</if>
+			<if test="doctor.trainingSpeId!=null and doctor.trainingSpeId!=''">
+				and dr.SPE_ID = #{doctor.trainingSpeId}
+			</if>
+			<if test="doctor.sessionNumber!=null and doctor.sessionNumber!=''">
+				and dr.SESSION_NUMBER = #{doctor.sessionNumber}
+			</if>
+			<if test="doctor.doctorTypeId!=null and doctor.doctorTypeId!=''">
+				and ed.DOCTOR_TYPE_ID = #{doctor.doctorTypeId}
+			</if>
+			<if test="doctor.workOrgLevelId!=null and doctor.workOrgLevelId!=''">
+				and ed.WORK_ORG_LEVEL_ID = #{doctor.workOrgLevelId}
+			</if>
+			<if test="doctor.isYearGraduate!=null and doctor.isYearGraduate!=''">
+				and ed.IS_YEAR_GRADUATE = #{doctor.isYearGraduate}
+			</if>
+			<if test="doctor.doctorStatusId!=null and doctor.doctorStatusId!=''">
+				and dr.doctor_Status_Id = #{doctor.doctorStatusId}
+			</if>
+			<if test="doctor.doctorStatusId == null">
+				and dr.DOCTOR_STATUS_ID in ('20','21','22')
+			</if>
+			<if test="doctor.workOrgName!=null and doctor.workOrgName!=''">
+				and (
+				<trim prefix="" prefixOverrides="OR">
+					<if test="(doctor.workOrgId != null and doctor.workOrgId != '')">OR ed.work_org_id = #{doctor.workOrgId}</if>
+					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like '%${doctor.workOrgName}%'</if>
+				</trim>
+				)
+			</if>
+		</if>
+		<if test="isPostpone != null and isPostpone != ''">
+			<if test="isPostpone == 'Y'.toString()">
+				AND EXISTS (SELECT 1
+				FROM RES_DOCOTR_DELAY_TETURN T
+				WHERE T.RECORD_STATUS = 'Y'
+				AND T.TYPE_ID = 'Delay'
+				AND T.DOCTOR_FLOW = DR.DOCTOR_FLOW)
+			</if>
+			<if test="isPostpone == 'N'.toString()">
+				AND NOT EXISTS (SELECT 1
+				FROM RES_DOCOTR_DELAY_TETURN T
+				WHERE T.RECORD_STATUS = 'Y'
+				AND T.TYPE_ID = 'Delay'
+				AND T.DOCTOR_FLOW = DR.DOCTOR_FLOW)
+			</if>
+		</if>
+		<if test="sortType != null and sortType != ''">
+			<if test="sortType == 'Interview'">
+				order by  to_number(decode(dr.AUDITION_RESULT,null,'0',dr.audition_result)) desc
+			</if>
+			<if test="sortType == 'Skill'">
+				order by  to_number(decode(dr.OPER_RESULT,null,'0',dr.OPER_RESULT)) desc
+			</if>
+			<if test="sortType == 'Total'">
+				order by  to_number(decode(dr.AUDITION_RESULT,null,'0',dr.AUDITION_RESULT))+ to_number(decode(dr.OPER_RESULT,null,'0',dr.OPER_RESULT)) desc
+			</if>
+		</if>
+		<if test="sortType == null">
+			order by dr.session_number desc,dr.org_flow,dr.spe_id,NLSSORT(u.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M'), dr.doctor_flow,dr.CREATE_TIME desc
+		</if>
+	</select>
+
 	<select id="searchResDoctorRecruitExtList"  parameterType="java.util.Map" resultMap="DoctorRecruit">
 		select dr.AUDITION_STATUS_ID,
 		dr.AUDITION_STATUS_NAME,
