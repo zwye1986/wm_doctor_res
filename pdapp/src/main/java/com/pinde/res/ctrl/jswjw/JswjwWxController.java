@@ -1192,7 +1192,7 @@ public class JswjwWxController extends GeneralController {
         if (GlobalConstant.ZERO_LINE >= saveResult) {
             return ResultDataThrow("分数信息创建出错!");
         }
-        testUrl = testUrl + "?Action=ChuKeMobileExam&paperFlow=" + ExamSoluID + "&CardID=" + URLEncoder.encode(user.getUserCode(), "utf-8") + "&ProcessFlow=" + processFlow + "&TestNum=" + TestNum + "&Date=" + Date + "&userFlow" + userFlow;
+        testUrl = testUrl + "?Action=ChuKeMobileExam&paperFlow=" + ExamSoluID + "&CardID=" + URLEncoder.encode(user.getUserCode(), "utf-8") + "&ProcessFlow=" + processFlow + "&count=" + TestNum + "&Date=" + Date + "&userFlow=" + userFlow +"&isStartExam=Y&paperType=7"+ "&token=" +request.getSession().getId();
         resultMap.put("testUrl", testUrl);
         return resultMap;
     }
