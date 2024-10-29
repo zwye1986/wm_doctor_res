@@ -1319,8 +1319,8 @@ public class JsResMessageController extends GeneralController {
             try {
                 count = speAssignBiz.importAssignInfo(param, file);
             } catch (Exception e) {
-                e.printStackTrace();
-                return e.getMessage();
+                logger.error("导入招生计划失败！", e);
+                return "导入招生计划失败" + e.getMessage();
             }
             if(count != 0){
                 return GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
