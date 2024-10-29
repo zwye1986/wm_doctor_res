@@ -21,6 +21,12 @@ public class UserLoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
 
+
+        String servletPath = httpServletRequest.getServletPath();
+        if(servletPath.contains("/getOpenId")||servletPath.contains("/webLogin")) {
+            return true;
+        }
+
         Map<String, String[]> map = httpServletRequest.getParameterMap();
         for (String key : map.keySet()) {
             String[] values = httpServletRequest.getParameterValues(key);
@@ -34,11 +40,6 @@ public class UserLoginInterceptor implements HandlerInterceptor {
                 }
             }
         }
-
-//        String servletPath = httpServletRequest.getServletPath();
-//        if(servletPath.contains("/wx/")) {
-//            return true;
-//        }
 
         String sysUser = (String) httpServletRequest.getSession().getAttribute(GlobalConstant.CURR_USER);
         if (sysUser == null) {
