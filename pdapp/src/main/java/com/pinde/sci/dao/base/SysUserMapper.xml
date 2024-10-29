@@ -2118,19 +2118,27 @@
 
   <select id="getDoctorSchInfo" resultType="java.util.Map">
     SELECT
-    r.SCH_DEPT_FLOW,
-    r.SCH_DEPT_NAME,
-    p.TEACHER_USER_FLOW,
-    p.TEACHER_USER_NAME
+    *
     FROM
-    SCH_ARRANGE_RESULT r
-    LEFT JOIN RES_DOCTOR_SCH_PROCESS p ON r.DEPT_FLOW = p.DEPT_FLOW and r.DOCTOR_FLOW = p.USER_FLOW
+    (
+      SELECT
+        r.SCH_DEPT_FLOW,
+        r.SCH_DEPT_NAME,
+        p.TEACHER_USER_FLOW,
+        p.TEACHER_USER_NAME
+      FROM
+        RES_DOCTOR_SCH_PROCESS p
+          LEFT JOIN SCH_ARRANGE_RESULT r  ON r.DEPT_FLOW = p.DEPT_FLOW and r.DOCTOR_FLOW = p.USER_FLOW
+      WHERE
+        r.RECORD_STATUS = 'Y'
+        and p.RECORD_STATUS = 'Y'
+        AND p.USER_FLOW = #{userFlow}
+        AND r.SCH_START_DATE <![CDATA[<]]>= TO_CHAR (SYSDATE, 'yyyy-mm-dd')
+        AND r.SCH_END_DATE >= TO_CHAR (SYSDATE, 'yyyy-mm-dd')
+        AND p.SCH_START_DATE <![CDATA[<]]>= TO_CHAR (SYSDATE, 'yyyy-mm-dd')
+        AND p.SCH_END_DATE >= TO_CHAR (SYSDATE, 'yyyy-mm-dd')
+    )
     WHERE
-    r.RECORD_STATUS = 'Y'
-    AND r.DOCTOR_FLOW = #{userFlow}
-    AND r.SCH_START_DATE <![CDATA[<]]>= TO_CHAR (SYSDATE, 'yyyy-mm-dd')
-    AND r.SCH_END_DATE >= TO_CHAR (SYSDATE, 'yyyy-mm-dd')
-    AND p.SCH_START_DATE <![CDATA[<]]>= TO_CHAR (SYSDATE, 'yyyy-mm-dd')
-    AND p.SCH_END_DATE >= TO_CHAR (SYSDATE, 'yyyy-mm-dd')
+    ROWNUM = 1
   </select>
 </mapper>
