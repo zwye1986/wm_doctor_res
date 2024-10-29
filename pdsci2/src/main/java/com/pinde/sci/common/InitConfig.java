@@ -170,7 +170,7 @@ public class InitConfig implements ServletContextListener {
 		String doctorAccessAuthority = prop.getProperty("doctor");//学员
 		String teacherAccessAuthority = prop.getProperty("teacher");//带教老师
 		String responsibleTeacherAccessAuthority = prop.getProperty("responsibleTeacher");//责任导师
-		String secretaryAccessAuthority = prop.getProperty("secretary");//教秘
+		String secretaryAccessAuthority = prop.getProperty("secretary");//科秘
 		String teachingSecretaryAccessAuthority = prop.getProperty("teachingSecretary");//教秘
 		String headAccessAuthority = prop.getProperty("head");//科主任
 		String schoolAccessAuthority = prop.getProperty("school");//学校
@@ -185,7 +185,7 @@ public class InitConfig implements ServletContextListener {
 		String adminAccessAuthority = prop.getProperty("admin");//医院管理员//免费医院管理员
 		String hospitalSecretaryAccessAuthority = prop.getProperty("hospitalSecretary");//医院秘书
 		String speAdminAccessAuthority = prop.getProperty("speAdmin");//专业基地管理员
-		String speAdminSecretaryAccessAuthority = prop.getProperty("speAdminSecretary");//专业基地管理员
+		String speAdminSecretaryAccessAuthority = prop.getProperty("speAdminSecretary");//专业基地秘书
 		String globalAccessAuthority = prop.getProperty("global");//省级部门
 		String qualityAccessAuthority = prop.getProperty("quality");//质控组
 		String chargeAccessAuthority = prop.getProperty("charge");//主管部门（市局）
