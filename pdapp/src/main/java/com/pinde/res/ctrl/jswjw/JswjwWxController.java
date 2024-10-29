@@ -6799,6 +6799,8 @@ public class JswjwWxController extends GeneralController {
         user.setUserFlow(userinfo.getUserFlow());
         user.setDeptFlow(userinfo.getDeptFlow());
 
+        session.setAttribute("currUser","isLogin");
+
         session.setAttribute("user", JSON.toJSONString(user));
 
         resultMap.put("isRecruit", isRecruit);
