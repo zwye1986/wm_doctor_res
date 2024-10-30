@@ -168,7 +168,7 @@
                    </if>
                    ) B WHERE RN=1
                     <if test='seachStr!=null and seachStr!=""'>
-                        and (B.user_name like '%${seachStr}%')
+                        and (B.user_name like CONCAT(CONCAT('%', #{seachStr}),'%') )
                     </if>
 	</select>
 
