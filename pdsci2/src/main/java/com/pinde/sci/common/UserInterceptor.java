@@ -74,7 +74,7 @@ public class UserInterceptor implements HandlerInterceptor {
 		}
 
 		List<String> myMenus = new ArrayList<>();
-//		List<String> allMenus = (List<String>) request.getServletContext().getAttribute("allMenus");
+		List<String> allMenus = (List<String>) request.getServletContext().getAttribute("allMenus");
 
 
 		String doctorAccessAuthority = (String) request.getServletContext().getAttribute("doctorAccessAuthority");//学员
@@ -243,7 +243,7 @@ public class UserInterceptor implements HandlerInterceptor {
 			}
 		}
 
-		/*boolean isAllow = true;
+		boolean isAllow = true;
 
 		if (allMenus.contains(servletPath)) {
 			isAllow = false;
@@ -262,12 +262,7 @@ public class UserInterceptor implements HandlerInterceptor {
 			return false;
 		}
 
-		return false;*/
-
-		response.setStatus(403);
-		response.setContentType("application/json;charset=UTF-8");
-		response.getWriter().print("系统未授权");
-		return false;
+		return true;
 	}
 
 }
