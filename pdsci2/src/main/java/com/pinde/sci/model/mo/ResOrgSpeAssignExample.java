@@ -1055,146 +1055,6 @@ public class ResOrgSpeAssignExample {
             return (Criteria) this;
         }
 
-        public Criteria andGraduateSpeIsNull() {
-            addCriterion("GRADUATE_SPE is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andGraduateSpeIsNotNull() {
-            addCriterion("GRADUATE_SPE is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andGraduateSpeEqualTo(String value) {
-            addCriterion("GRADUATE_SPE =", value, "graduateSpe");
-            return (Criteria) this;
-        }
-
-        public Criteria andGraduateSpeNotEqualTo(String value) {
-            addCriterion("GRADUATE_SPE <>", value, "graduateSpe");
-            return (Criteria) this;
-        }
-
-        public Criteria andGraduateSpeGreaterThan(String value) {
-            addCriterion("GRADUATE_SPE >", value, "graduateSpe");
-            return (Criteria) this;
-        }
-
-        public Criteria andGraduateSpeGreaterThanOrEqualTo(String value) {
-            addCriterion("GRADUATE_SPE >=", value, "graduateSpe");
-            return (Criteria) this;
-        }
-
-        public Criteria andGraduateSpeLessThan(String value) {
-            addCriterion("GRADUATE_SPE <", value, "graduateSpe");
-            return (Criteria) this;
-        }
-
-        public Criteria andGraduateSpeLessThanOrEqualTo(String value) {
-            addCriterion("GRADUATE_SPE <=", value, "graduateSpe");
-            return (Criteria) this;
-        }
-
-        public Criteria andGraduateSpeLike(String value) {
-            addCriterion("GRADUATE_SPE like", value, "graduateSpe");
-            return (Criteria) this;
-        }
-
-        public Criteria andGraduateSpeNotLike(String value) {
-            addCriterion("GRADUATE_SPE not like", value, "graduateSpe");
-            return (Criteria) this;
-        }
-
-        public Criteria andGraduateSpeIn(List<String> values) {
-            addCriterion("GRADUATE_SPE in", values, "graduateSpe");
-            return (Criteria) this;
-        }
-
-        public Criteria andGraduateSpeNotIn(List<String> values) {
-            addCriterion("GRADUATE_SPE not in", values, "graduateSpe");
-            return (Criteria) this;
-        }
-
-        public Criteria andGraduateSpeBetween(String value1, String value2) {
-            addCriterion("GRADUATE_SPE between", value1, value2, "graduateSpe");
-            return (Criteria) this;
-        }
-
-        public Criteria andGraduateSpeNotBetween(String value1, String value2) {
-            addCriterion("GRADUATE_SPE not between", value1, value2, "graduateSpe");
-            return (Criteria) this;
-        }
-
-        public Criteria andEducationIsNull() {
-            addCriterion("EDUCATION is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andEducationIsNotNull() {
-            addCriterion("EDUCATION is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andEducationEqualTo(String value) {
-            addCriterion("EDUCATION =", value, "education");
-            return (Criteria) this;
-        }
-
-        public Criteria andEducationNotEqualTo(String value) {
-            addCriterion("EDUCATION <>", value, "education");
-            return (Criteria) this;
-        }
-
-        public Criteria andEducationGreaterThan(String value) {
-            addCriterion("EDUCATION >", value, "education");
-            return (Criteria) this;
-        }
-
-        public Criteria andEducationGreaterThanOrEqualTo(String value) {
-            addCriterion("EDUCATION >=", value, "education");
-            return (Criteria) this;
-        }
-
-        public Criteria andEducationLessThan(String value) {
-            addCriterion("EDUCATION <", value, "education");
-            return (Criteria) this;
-        }
-
-        public Criteria andEducationLessThanOrEqualTo(String value) {
-            addCriterion("EDUCATION <=", value, "education");
-            return (Criteria) this;
-        }
-
-        public Criteria andEducationLike(String value) {
-            addCriterion("EDUCATION like", value, "education");
-            return (Criteria) this;
-        }
-
-        public Criteria andEducationNotLike(String value) {
-            addCriterion("EDUCATION not like", value, "education");
-            return (Criteria) this;
-        }
-
-        public Criteria andEducationIn(List<String> values) {
-            addCriterion("EDUCATION in", values, "education");
-            return (Criteria) this;
-        }
-
-        public Criteria andEducationNotIn(List<String> values) {
-            addCriterion("EDUCATION not in", values, "education");
-            return (Criteria) this;
-        }
-
-        public Criteria andEducationBetween(String value1, String value2) {
-            addCriterion("EDUCATION between", value1, value2, "education");
-            return (Criteria) this;
-        }
-
-        public Criteria andEducationNotBetween(String value1, String value2) {
-            addCriterion("EDUCATION not between", value1, value2, "education");
-            return (Criteria) this;
-        }
-
         public Criteria andAuditStatusIdIsNull() {
             addCriterion("AUDIT_STATUS_ID is null");
             return (Criteria) this;
@@ -1332,6 +1192,216 @@ public class ResOrgSpeAssignExample {
 
         public Criteria andAuditStatusNameNotBetween(String value1, String value2) {
             addCriterion("AUDIT_STATUS_NAME not between", value1, value2, "auditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEducationIsNull() {
+            addCriterion("EDUCATION is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEducationIsNotNull() {
+            addCriterion("EDUCATION is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEducationEqualTo(String value) {
+            addCriterion("EDUCATION =", value, "education");
+            return (Criteria) this;
+        }
+
+        public Criteria andEducationNotEqualTo(String value) {
+            addCriterion("EDUCATION <>", value, "education");
+            return (Criteria) this;
+        }
+
+        public Criteria andEducationGreaterThan(String value) {
+            addCriterion("EDUCATION >", value, "education");
+            return (Criteria) this;
+        }
+
+        public Criteria andEducationGreaterThanOrEqualTo(String value) {
+            addCriterion("EDUCATION >=", value, "education");
+            return (Criteria) this;
+        }
+
+        public Criteria andEducationLessThan(String value) {
+            addCriterion("EDUCATION <", value, "education");
+            return (Criteria) this;
+        }
+
+        public Criteria andEducationLessThanOrEqualTo(String value) {
+            addCriterion("EDUCATION <=", value, "education");
+            return (Criteria) this;
+        }
+
+        public Criteria andEducationLike(String value) {
+            addCriterion("EDUCATION like", value, "education");
+            return (Criteria) this;
+        }
+
+        public Criteria andEducationNotLike(String value) {
+            addCriterion("EDUCATION not like", value, "education");
+            return (Criteria) this;
+        }
+
+        public Criteria andEducationIn(List<String> values) {
+            addCriterion("EDUCATION in", values, "education");
+            return (Criteria) this;
+        }
+
+        public Criteria andEducationNotIn(List<String> values) {
+            addCriterion("EDUCATION not in", values, "education");
+            return (Criteria) this;
+        }
+
+        public Criteria andEducationBetween(String value1, String value2) {
+            addCriterion("EDUCATION between", value1, value2, "education");
+            return (Criteria) this;
+        }
+
+        public Criteria andEducationNotBetween(String value1, String value2) {
+            addCriterion("EDUCATION not between", value1, value2, "education");
+            return (Criteria) this;
+        }
+
+        public Criteria andGraduateSpeIsNull() {
+            addCriterion("GRADUATE_SPE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGraduateSpeIsNotNull() {
+            addCriterion("GRADUATE_SPE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGraduateSpeEqualTo(String value) {
+            addCriterion("GRADUATE_SPE =", value, "graduateSpe");
+            return (Criteria) this;
+        }
+
+        public Criteria andGraduateSpeNotEqualTo(String value) {
+            addCriterion("GRADUATE_SPE <>", value, "graduateSpe");
+            return (Criteria) this;
+        }
+
+        public Criteria andGraduateSpeGreaterThan(String value) {
+            addCriterion("GRADUATE_SPE >", value, "graduateSpe");
+            return (Criteria) this;
+        }
+
+        public Criteria andGraduateSpeGreaterThanOrEqualTo(String value) {
+            addCriterion("GRADUATE_SPE >=", value, "graduateSpe");
+            return (Criteria) this;
+        }
+
+        public Criteria andGraduateSpeLessThan(String value) {
+            addCriterion("GRADUATE_SPE <", value, "graduateSpe");
+            return (Criteria) this;
+        }
+
+        public Criteria andGraduateSpeLessThanOrEqualTo(String value) {
+            addCriterion("GRADUATE_SPE <=", value, "graduateSpe");
+            return (Criteria) this;
+        }
+
+        public Criteria andGraduateSpeLike(String value) {
+            addCriterion("GRADUATE_SPE like", value, "graduateSpe");
+            return (Criteria) this;
+        }
+
+        public Criteria andGraduateSpeNotLike(String value) {
+            addCriterion("GRADUATE_SPE not like", value, "graduateSpe");
+            return (Criteria) this;
+        }
+
+        public Criteria andGraduateSpeIn(List<String> values) {
+            addCriterion("GRADUATE_SPE in", values, "graduateSpe");
+            return (Criteria) this;
+        }
+
+        public Criteria andGraduateSpeNotIn(List<String> values) {
+            addCriterion("GRADUATE_SPE not in", values, "graduateSpe");
+            return (Criteria) this;
+        }
+
+        public Criteria andGraduateSpeBetween(String value1, String value2) {
+            addCriterion("GRADUATE_SPE between", value1, value2, "graduateSpe");
+            return (Criteria) this;
+        }
+
+        public Criteria andGraduateSpeNotBetween(String value1, String value2) {
+            addCriterion("GRADUATE_SPE not between", value1, value2, "graduateSpe");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeDescIsNull() {
+            addCriterion("SPE_DESC is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeDescIsNotNull() {
+            addCriterion("SPE_DESC is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeDescEqualTo(String value) {
+            addCriterion("SPE_DESC =", value, "speDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeDescNotEqualTo(String value) {
+            addCriterion("SPE_DESC <>", value, "speDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeDescGreaterThan(String value) {
+            addCriterion("SPE_DESC >", value, "speDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeDescGreaterThanOrEqualTo(String value) {
+            addCriterion("SPE_DESC >=", value, "speDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeDescLessThan(String value) {
+            addCriterion("SPE_DESC <", value, "speDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeDescLessThanOrEqualTo(String value) {
+            addCriterion("SPE_DESC <=", value, "speDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeDescLike(String value) {
+            addCriterion("SPE_DESC like", value, "speDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeDescNotLike(String value) {
+            addCriterion("SPE_DESC not like", value, "speDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeDescIn(List<String> values) {
+            addCriterion("SPE_DESC in", values, "speDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeDescNotIn(List<String> values) {
+            addCriterion("SPE_DESC not in", values, "speDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeDescBetween(String value1, String value2) {
+            addCriterion("SPE_DESC between", value1, value2, "speDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpeDescNotBetween(String value1, String value2) {
+            addCriterion("SPE_DESC not between", value1, value2, "speDesc");
             return (Criteria) this;
         }
 
@@ -1542,6 +1612,286 @@ public class ResOrgSpeAssignExample {
 
         public Criteria andIsShownNotBetween(String value1, String value2) {
             addCriterion("IS_SHOWN not between", value1, value2, "isShown");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseCapacityIsNull() {
+            addCriterion("BASE_CAPACITY is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseCapacityIsNotNull() {
+            addCriterion("BASE_CAPACITY is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseCapacityEqualTo(String value) {
+            addCriterion("BASE_CAPACITY =", value, "baseCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseCapacityNotEqualTo(String value) {
+            addCriterion("BASE_CAPACITY <>", value, "baseCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseCapacityGreaterThan(String value) {
+            addCriterion("BASE_CAPACITY >", value, "baseCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseCapacityGreaterThanOrEqualTo(String value) {
+            addCriterion("BASE_CAPACITY >=", value, "baseCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseCapacityLessThan(String value) {
+            addCriterion("BASE_CAPACITY <", value, "baseCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseCapacityLessThanOrEqualTo(String value) {
+            addCriterion("BASE_CAPACITY <=", value, "baseCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseCapacityLike(String value) {
+            addCriterion("BASE_CAPACITY like", value, "baseCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseCapacityNotLike(String value) {
+            addCriterion("BASE_CAPACITY not like", value, "baseCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseCapacityIn(List<String> values) {
+            addCriterion("BASE_CAPACITY in", values, "baseCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseCapacityNotIn(List<String> values) {
+            addCriterion("BASE_CAPACITY not in", values, "baseCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseCapacityBetween(String value1, String value2) {
+            addCriterion("BASE_CAPACITY between", value1, value2, "baseCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseCapacityNotBetween(String value1, String value2) {
+            addCriterion("BASE_CAPACITY not between", value1, value2, "baseCapacity");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendStartTimeIsNull() {
+            addCriterion("SEND_START_TIME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendStartTimeIsNotNull() {
+            addCriterion("SEND_START_TIME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendStartTimeEqualTo(String value) {
+            addCriterion("SEND_START_TIME =", value, "sendStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendStartTimeNotEqualTo(String value) {
+            addCriterion("SEND_START_TIME <>", value, "sendStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendStartTimeGreaterThan(String value) {
+            addCriterion("SEND_START_TIME >", value, "sendStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendStartTimeGreaterThanOrEqualTo(String value) {
+            addCriterion("SEND_START_TIME >=", value, "sendStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendStartTimeLessThan(String value) {
+            addCriterion("SEND_START_TIME <", value, "sendStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendStartTimeLessThanOrEqualTo(String value) {
+            addCriterion("SEND_START_TIME <=", value, "sendStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendStartTimeLike(String value) {
+            addCriterion("SEND_START_TIME like", value, "sendStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendStartTimeNotLike(String value) {
+            addCriterion("SEND_START_TIME not like", value, "sendStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendStartTimeIn(List<String> values) {
+            addCriterion("SEND_START_TIME in", values, "sendStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendStartTimeNotIn(List<String> values) {
+            addCriterion("SEND_START_TIME not in", values, "sendStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendStartTimeBetween(String value1, String value2) {
+            addCriterion("SEND_START_TIME between", value1, value2, "sendStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendStartTimeNotBetween(String value1, String value2) {
+            addCriterion("SEND_START_TIME not between", value1, value2, "sendStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendEndTimeIsNull() {
+            addCriterion("SEND_END_TIME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendEndTimeIsNotNull() {
+            addCriterion("SEND_END_TIME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendEndTimeEqualTo(String value) {
+            addCriterion("SEND_END_TIME =", value, "sendEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendEndTimeNotEqualTo(String value) {
+            addCriterion("SEND_END_TIME <>", value, "sendEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendEndTimeGreaterThan(String value) {
+            addCriterion("SEND_END_TIME >", value, "sendEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendEndTimeGreaterThanOrEqualTo(String value) {
+            addCriterion("SEND_END_TIME >=", value, "sendEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendEndTimeLessThan(String value) {
+            addCriterion("SEND_END_TIME <", value, "sendEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendEndTimeLessThanOrEqualTo(String value) {
+            addCriterion("SEND_END_TIME <=", value, "sendEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendEndTimeLike(String value) {
+            addCriterion("SEND_END_TIME like", value, "sendEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendEndTimeNotLike(String value) {
+            addCriterion("SEND_END_TIME not like", value, "sendEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendEndTimeIn(List<String> values) {
+            addCriterion("SEND_END_TIME in", values, "sendEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendEndTimeNotIn(List<String> values) {
+            addCriterion("SEND_END_TIME not in", values, "sendEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendEndTimeBetween(String value1, String value2) {
+            addCriterion("SEND_END_TIME between", value1, value2, "sendEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendEndTimeNotBetween(String value1, String value2) {
+            addCriterion("SEND_END_TIME not between", value1, value2, "sendEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPlanIsNull() {
+            addCriterion("SEND_PLAN is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPlanIsNotNull() {
+            addCriterion("SEND_PLAN is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPlanEqualTo(String value) {
+            addCriterion("SEND_PLAN =", value, "sendPlan");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPlanNotEqualTo(String value) {
+            addCriterion("SEND_PLAN <>", value, "sendPlan");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPlanGreaterThan(String value) {
+            addCriterion("SEND_PLAN >", value, "sendPlan");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPlanGreaterThanOrEqualTo(String value) {
+            addCriterion("SEND_PLAN >=", value, "sendPlan");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPlanLessThan(String value) {
+            addCriterion("SEND_PLAN <", value, "sendPlan");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPlanLessThanOrEqualTo(String value) {
+            addCriterion("SEND_PLAN <=", value, "sendPlan");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPlanLike(String value) {
+            addCriterion("SEND_PLAN like", value, "sendPlan");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPlanNotLike(String value) {
+            addCriterion("SEND_PLAN not like", value, "sendPlan");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPlanIn(List<String> values) {
+            addCriterion("SEND_PLAN in", values, "sendPlan");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPlanNotIn(List<String> values) {
+            addCriterion("SEND_PLAN not in", values, "sendPlan");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPlanBetween(String value1, String value2) {
+            addCriterion("SEND_PLAN between", value1, value2, "sendPlan");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPlanNotBetween(String value1, String value2) {
+            addCriterion("SEND_PLAN not between", value1, value2, "sendPlan");
             return (Criteria) this;
         }
     }

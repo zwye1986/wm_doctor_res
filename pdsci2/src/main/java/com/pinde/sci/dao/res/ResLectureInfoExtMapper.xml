@@ -47,7 +47,7 @@
 				  )
 			  </if>
 		  </if>
-		<if test="resLectureInfo != null and  resLectureInfo != '' ">
+		<if test="resLectureInfo != null">
 			<if test="resLectureInfo.lectureTrainDate != null and resLectureInfo.lectureTrainDate !=''">
 				AND LECTURE_TRAIN_DATE = #{resLectureInfo.lectureTrainDate}
 			</if>
