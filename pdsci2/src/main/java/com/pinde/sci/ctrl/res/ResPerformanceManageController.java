@@ -22,6 +22,8 @@ import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResAllowancePayment;
 import com.pinde.sci.model.res.ResAllowanceUserExt;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -152,13 +154,13 @@ public class ResPerformanceManageController extends GeneralController {
         HSSFWorkbook wb = new HSSFWorkbook();
         //定义将用到的样式
         HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-        styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        styleCenter.setAlignment(HorizontalAlignment.CENTER);
         HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-        styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-        styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleLeft.setAlignment(HorizontalAlignment.LEFT);
+        styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
         HSSFCellStyle styleRight = wb.createCellStyle(); //居中
-        styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-        styleRight.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleRight.setAlignment(HorizontalAlignment.RIGHT);
+        styleRight.setVerticalAlignment(VerticalAlignment.CENTER);
 
         SysUser curUser=GlobalContext.getCurrentUser();
         SysDept dept=new SysDept();
@@ -361,13 +363,13 @@ public class ResPerformanceManageController extends GeneralController {
         HSSFWorkbook wb = new HSSFWorkbook();
         //定义将用到的样式
         HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-        styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        styleCenter.setAlignment(HorizontalAlignment.CENTER);
         HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-        styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-        styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleLeft.setAlignment(HorizontalAlignment.LEFT);
+        styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
         HSSFCellStyle styleRight = wb.createCellStyle(); //居中
-        styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-        styleRight.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleRight.setAlignment(HorizontalAlignment.RIGHT);
+        styleRight.setVerticalAlignment(VerticalAlignment.CENTER);
 
         SysUser curUser=GlobalContext.getCurrentUser();
         if(StringUtil.isBlank(orgFlow)){
@@ -790,13 +792,13 @@ public class ResPerformanceManageController extends GeneralController {
         HSSFWorkbook wb = new HSSFWorkbook();
         //定义将用到的样式
         HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-        styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        styleCenter.setAlignment(HorizontalAlignment.CENTER);
         HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-        styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-        styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleLeft.setAlignment(HorizontalAlignment.LEFT);
+        styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
         HSSFCellStyle styleRight = wb.createCellStyle(); //居中
-        styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-        styleRight.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleRight.setAlignment(HorizontalAlignment.RIGHT);
+        styleRight.setVerticalAlignment(VerticalAlignment.CENTER);
 
         String[] titles = new String[]{
                 "姓名",

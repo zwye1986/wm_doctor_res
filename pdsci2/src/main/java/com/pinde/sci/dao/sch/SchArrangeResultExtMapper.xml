@@ -2572,6 +2572,21 @@
             and rotation_flow = #{rotationFlow}
         </if>
     </select>
+    <select id="getAllByDoctorFlow" resultType="com.pinde.sci.model.mo.SchArrangeResult">
+        SELECT * FROM SCH_ARRANGE_RESULT
+        WHERE DOCTOR_FLOW = #{doctorFlow}
+        <choose>
+            <when test="null != delFlag">
+                <if test="delFlag">
+                    AND RECORD_STATUS = 'Y'
+                </if>
+                <if test="!delFlag">
+                    AND RECORD_STATUS = 'N'
+                </if>
+            </when>
+        </choose>
+        order by SCH_START_DATE ASC
+    </select>
 
     <update id="updateSchArrangeResultToDel"   parameterType="java.util.List">
         UPDATE SCH_ARRANGE_RESULT SET RECORD_STATUS='N' WHERE RESULT_FLOW IN

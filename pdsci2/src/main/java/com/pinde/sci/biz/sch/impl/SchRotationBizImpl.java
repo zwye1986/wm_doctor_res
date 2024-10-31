@@ -1,13 +1,13 @@
 package com.pinde.sci.biz.sch.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResRotationOrgBiz;
 import com.pinde.sci.biz.sch.*;
-import com.pinde.sci.biz.sys.ICfgBiz;
-import com.pinde.sci.biz.sys.IOrgBiz;
-import com.pinde.sci.biz.sys.IUserBiz;
+import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.*;
@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(rollbackFor=Exception.class)
@@ -788,5 +789,31 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 			GeneralMethod.setRecordInfo(rotationCfg, true);
 			return rotationCfgMapper.insert(rotationCfg);
 		}
+	}
+
+	@Override
+	public List<String> getBzDeptNameBySpe(String speId) {
+		List<String> result = new ArrayList<>();
+		SchRotation schRotation = searchDoctorBySpeId(speId);
+		if (ObjectUtil.isEmpty(schRotation)) {
+			return result;
+		}
+		List<SchRotationDept> list = rotationDeptBiz.searchSchRotationDept(schRotation.getRotationFlow());
+		if (CollectionUtil.isEmpty(list)) {
+			return result;
+		}
+		result = list.stream().map(SchRotationDept::getStandardDeptName).collect(Collectors.toList());
+		return result;
+	}
+
+	@Override
+	public List<SchRotationDept> getAllBzDeptListBySpeId(String speId) {
+		List<SchRotationDept> result = new ArrayList<>();
+		SchRotation schRotation = searchDoctorBySpeId(speId);
+		if (ObjectUtil.isEmpty(schRotation)) {
+			return result;
+		}
+		result = rotationDeptBiz.searchSchRotationDept(schRotation.getRotationFlow());
+		return result;
 	}
 }

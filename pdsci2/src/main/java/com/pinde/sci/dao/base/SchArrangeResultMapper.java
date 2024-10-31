@@ -28,4 +28,7 @@ public interface SchArrangeResultMapper {
     int updateByPrimaryKeySelective(SchArrangeResult record);
 
     int updateByPrimaryKey(SchArrangeResult record);
+
+    int updateAfterPbRequiest(@Param("resultFlow")String resultFlow);
+    int updateAfterPbGroup(@Param("resultFlow")String resultFlow);
 }
