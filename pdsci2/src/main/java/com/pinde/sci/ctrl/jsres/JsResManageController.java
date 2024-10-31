@@ -630,6 +630,11 @@ public class JsResManageController extends GeneralController {
 			if("Y".equals(more)){
 				return "jsres/hospital/hospitalIndexNew";
 			}
+			String filter = "('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'',key:orgFlow.keyword,negate:!f" +
+					",params:(query:'" + user.getOrgFlow() + "'),type:phrase),query:(match_phrase:(orgFlow.keyword:'" + user.getOrgFlow() + "')))";
+			String iframe = "<iframe src=\"https://restest.njpdxx.com:5650/app/dashboards?auth_provider_hint=anonymous1#/view/41e46fe1-80c5-4f1b-bdba-c00822929a4b?embed=true" +
+					"&_g=(filters:!(" + filter + "),refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))&hide-filter-bar=true\"  height=\"2100\" width=\"1460\"></iframe>";
+			model.addAttribute("iframe", iframe);
 			return "jsres/hospital/hospitalIndex";
 		} else if (GlobalConstant.USER_LIST_SPELOCAL.equals(role)) { //专业基地
 			SysUser sysuser = GlobalContext.getCurrentUser();
@@ -2784,6 +2789,16 @@ public class JsResManageController extends GeneralController {
 		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 		response.setContentType("application/octet-stream;charset=UTF-8");
 		wb.write(response.getOutputStream());
+	}
+
+	/**
+	 * @Author xieyh
+	 * @Description 省厅招录统计分析报表
+	 * @Date  2024-10-25
+	 **/
+	@RequestMapping(value = {"/recruitReport"})
+	public String recruitReport(Model model) {
+		return "jsres/manage/recruitReport";
 	}
 
 	/**
@@ -16774,6 +16789,11 @@ public class JsResManageController extends GeneralController {
 			model.addAttribute("hospitalSupervisor","Y");
 		}
 		if (type.equals("phy")){	//住院医师
+			String filter = "('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'',key:orgFlow.keyword,negate:!f" +
+					",params:(query:'" + user.getOrgFlow() + "'),type:phrase),query:(match_phrase:(orgFlow.keyword:'" + user.getOrgFlow() + "')))";
+			String iframe = "<iframe src=\"https://restest.njpdxx.com:5650/app/dashboards?auth_provider_hint=anonymous1#/view/41e46fe1-80c5-4f1b-bdba-c00822929a4b?embed=true" +
+					"&_g=(filters:!(" + filter + "),refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))&hide-filter-bar=true\"  height=\"2100\" width=\"1460\"></iframe>";
+			model.addAttribute("iframe", iframe);
 			if (GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_ROLE_NAME).equals("医院秘书")) {
 				return "jsres/hospital/hospitalSecretaryIndex";
 			}
