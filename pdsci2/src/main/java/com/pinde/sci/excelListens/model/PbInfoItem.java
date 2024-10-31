@@ -98,7 +98,7 @@ public class PbInfoItem implements Serializable {
             DateTime start = DateUtil.parseDate(schStartDate);
             DateTime end = DateUtil.parseDate(schEndDate);
             DateTime half = DateUtil.offsetDay(DateUtil.beginOfMonth(start), 14);
-            while (start.compareTo(end)<=0) {
+            while (start.compareTo(end)<0) {
                 if (start.compareTo(half)<0) {
                     result.add(StringUtils.substring(DateUtil.formatDate(start),0,7)+"上");
                     start = half;

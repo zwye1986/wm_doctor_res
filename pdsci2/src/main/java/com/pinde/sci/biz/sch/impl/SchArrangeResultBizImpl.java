@@ -4939,6 +4939,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 						//替换之前排班的开头部分
 						DateTime dateTime = cn.hutool.core.date.DateUtil.offsetDay(thisEndDate, 1);
 						SchArrangeResult schArrangeResult = arrangeResultMapper.selectByPrimaryKey(history.getResultFlow());
+
 						schArrangeResult.setSchStartDate(cn.hutool.core.date.DateUtil.formatDate(dateTime));
 						DateTime end = cn.hutool.core.date.DateUtil.parseDate(schArrangeResult.getSchEndDate());
 						if (dateTime.compareTo(end)>=0) {
@@ -4952,14 +4953,13 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 						savePbWithoutHis(pbInfoItem);
 						continue;
 					}
-					if (list.indexOf(concatMon)<=(list.size()-1)) {
+					if (list.indexOf(concatMon) >0 && list.indexOf(concatMon)<=(list.size()-1)) {
 						//替换之前排班的结束时间部分
 						DateTime dateTime = cn.hutool.core.date.DateUtil.offsetDay(thisStartDate, -1);
 						SchArrangeResult schArrangeResult = arrangeResultMapper.selectByPrimaryKey(history.getResultFlow());
 						schArrangeResult.setSchEndDate(cn.hutool.core.date.DateUtil.formatDate(dateTime));
 						DateTime dateTime1 = cn.hutool.core.date.DateUtil.parseDate(schArrangeResult.getSchStartDate());
 						//把后面的接去掉
-
 						List<String> strings = list.subList(0, list.indexOf(concatMon)+1);
 						hisConcatMon = CollectionUtil.join(strings,",");
 						if (dateTime1.compareTo(dateTime)>=0) {
