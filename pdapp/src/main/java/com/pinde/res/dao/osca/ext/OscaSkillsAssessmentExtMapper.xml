@@ -131,7 +131,7 @@
         </if>
         )
         <if test='searchStr!=null and searchStr!=""'>
-            and osa.clinical_name  like '%${searchStr}%'
+            and osa.clinical_name  like CONCAT(CONCAT('%', #{searchStr}),'%')
         </if>
         <if test='speId!=null and speId!=""'>
             and osa.SPE_ID = #{speId}
@@ -234,7 +234,7 @@
             and oda.DOCTOR_FLOW = #{doctorFlow}
         </if>
         <if test='searchStr!=null and searchStr!=""'>
-            and osa.clinical_name  like '%${searchStr}%'
+            and osa.clinical_name  like CONCAT(CONCAT('%', #{searchStr}),'%')
         </if>
         <if test='isLocal!=null and isLocal!=""'>
             and osa.IS_LOCAL = #{isLocal}

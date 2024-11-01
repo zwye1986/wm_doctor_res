@@ -16,7 +16,7 @@
  		</foreach>
  		AND REC_TYPE_ID = #{recTypeId}
  		<if test="itemName != null and itemName != ''">
- 			AND ITEM_NAME LIKE '%${itemName}%'
+ 			AND ITEM_NAME LIKE CONCAT(CONCAT('%', #{itemName}),'%')
  		</if>
 		AND STANDARD_DEPT_ID IN
 		<foreach collection="schDeptFlows" item="schDeptFlow" open="(" separator="," close=")">  

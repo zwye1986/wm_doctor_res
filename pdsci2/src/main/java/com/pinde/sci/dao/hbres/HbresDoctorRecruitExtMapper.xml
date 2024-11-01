@@ -99,7 +99,7 @@
             and rdr2.confirm_flag = 'Y'
           )
           <if test='userName!=null and userName!=""'>
-              and su.user_name like '%${userName}%'
+              and su.user_name like CONCAT(CONCAT('%', #{userName}),'%')
           </if>
           <if test='userPhone!=null and userPhone!=""'>
               and su.user_phone = #{userPhone}
@@ -158,10 +158,10 @@
             and rrr.RECRUIT_YEAR = #{recruitYear}
         </if>
         <if test='userName!=null and userName!=""'>
-            and su.user_name like '%${userName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='idNo!=null and idNo!=""'>
-            and su.id_no like '%${idNo}%'
+            and su.id_no like CONCAT(CONCAT('%', #{idNo}),'%')
         </if>
         <if test='speId!=null and speId!=""'>
             and rrr.spe_id = #{speId}

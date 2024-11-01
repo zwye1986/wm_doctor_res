@@ -19,7 +19,7 @@
         rdi.doctor_flow = rd.doctor_flow and rdi.record_status = 'Y'
         where rd.record_status='Y'
         <if test='doctorName != null  and doctorName!=""'>
-            and rd.DOCTOR_NAME like '%${doctorName}%'
+            and rd.DOCTOR_NAME like CONCAT(CONCAT('%', #{doctorName}),'%')
         </if>
         <if test='orgFlow != null  and orgFlow!=""'>
             and rd.org_flow =#{orgFlow}
@@ -30,13 +30,13 @@
         <choose>
             <when test="noteTypeId != null and noteTypeId != ''">
                 and exists (select 1 from RES_DISCIPLE_NOTE_INFO WHERE RECORD_STATUS = 'Y'
-                AND NOTE_TYPE_ID = '${noteTypeId}' AND AUDIT_STATUS_ID ='${auditStatusId}'
+                AND NOTE_TYPE_ID = #{noteTypeId} AND AUDIT_STATUS_ID =#{auditStatusId}
                 AND DOCTOR_FLOW = RD.DOCTOR_FLOW
                 and RES_DISCIPLE_NOTE_INFO.TEACHER_FLOW = #{teacherFlow})
             </when >
             <otherwise>
                 and exists (select 1 from RES_ANNUAL_ASSESSMENT WHERE RECORD_STATUS = 'Y'
-                AND AUDIT_STATUS_ID ='${auditStatusId}'
+                AND AUDIT_STATUS_ID = #{auditStatusId}
                 <if test='teacherFlow != null  and teacherFlow!=""'>
                   and RES_ANNUAL_ASSESSMENT.TEACHER_FLOW = #{teacherFlow}
                 </if>
@@ -48,7 +48,7 @@
             rsdt.TEACHER_FLOW = #{teacherFlow} AND RD.DOCTOR_FLOW =RSDT.DOCTOR_FLOW)
         </if>
         <if test="discipleTeacherName != null and discipleTeacherName != ''">
-          and rd.DISCIPLE_TEACHER_NAME like '%${discipleTeacherName}%'
+          and rd.DISCIPLE_TEACHER_NAME like CONCAT(CONCAT('%', #{discipleTeacherName}),'%')
         </if>
         <if test="sessionNumber != null and sessionNumber != ''">
           and rd.SESSION_NUMBER = #{sessionNumber}

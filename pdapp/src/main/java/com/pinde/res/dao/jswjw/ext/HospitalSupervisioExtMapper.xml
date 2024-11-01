@@ -30,7 +30,7 @@
                 <foreach collection="speId" open="(" separator="," close=")" item="item">#{item}</foreach>
             </if>
             <if test='activityName!= null and activityName!= ""'>
-                and SUBJECT_NAME like '%${activityName}%'
+                and SUBJECT_NAME like CONCAT(CONCAT('%', #{activityName}),'%')
             </if>
             <if test='inspectionType!= null and inspectionType!= ""'>
                 and INSPECTION_TYPE=#{inspectionType}

@@ -106,7 +106,7 @@
 			AND ORG_FLOW = #{orgFlow}
 		</if>
 		<if test='noticeTitle!=null and noticeTitle!=""'>
-			AND info_title like '%${noticeTitle}%'
+			AND info_title like CONCAT(CONCAT('%', #{noticeTitle}),'%')
 		</if>
 		<if test='orgFlow==null or orgFlow==""'>
 			AND ORG_FLOW IS NULL

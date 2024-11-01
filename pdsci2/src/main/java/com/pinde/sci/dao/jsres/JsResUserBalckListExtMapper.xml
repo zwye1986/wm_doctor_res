@@ -77,10 +77,10 @@
 				and B.ORG_FLOW =#{jsresUserBalcklist.orgFlow}
 			</if>
 			<if test="jsresUserBalcklist.userName != null and jsresUserBalcklist.userName != ''">
-				and B.USER_NAME  like '%${jsresUserBalcklist.userName}%'
+				and B.USER_NAME  like CONCAT(CONCAT('%', #{jsresUserBalcklist.userName}),'%')
 			</if>
 			<if test="jsresUserBalcklist.trainingSpeName != null and jsresUserBalcklist.trainingSpeName != ''">
-				and B.TRAINING_SPE_NAME  like '%${jsresUserBalcklist.trainingSpeName}%'
+				and B.TRAINING_SPE_NAME  like CONCAT(CONCAT('%', #{jsresUserBalcklist.trainingSpeName}),'%')
 			</if>
 			<if test="orgFlowList !=null and orgFlowList.size>0">
 				and B.ORG_FLOW IN
@@ -116,10 +116,10 @@
 				and B.ORG_FLOW =#{jsresUserBalcklist.orgFlow}
 			</if>
 			<if test="jsresUserBalcklist.userName != null and jsresUserBalcklist.userName != ''">
-				and B.USER_NAME  like '%${jsresUserBalcklist.userName}%'
+				and B.USER_NAME  like CONCAT(CONCAT('%', #{jsresUserBalcklist.userName}),'%')
 			</if>
 			<if test="jsresUserBalcklist.trainingSpeName != null and jsresUserBalcklist.trainingSpeName != ''">
-				and B.TRAINING_SPE_NAME  like '%${jsresUserBalcklist.trainingSpeName}%'
+				and B.TRAINING_SPE_NAME  like CONCAT(CONCAT('%', #{jsresUserBalcklist.trainingSpeName}),'%')
 			</if>
 			<if test="orgFlowList !=null and orgFlowList.size>0">
 				and B.ORG_FLOW IN
