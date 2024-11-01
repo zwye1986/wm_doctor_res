@@ -74,10 +74,10 @@
             ))
         </if>
         <if test="userName !=null and userName !=''">
-            AND SU.USER_NAME LIKE '%${userName}%'
+            AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test="idNo !=null and idNo !=''">
-            AND SU.ID_NO LIKE '%${idNo}%'
+            AND SU.ID_NO LIKE CONCAT(CONCAT('%', #{idNo}),'%')
         </if>
         <if test="doctorCategoryId !=null and doctorCategoryId != ''">
             AND RD.DOCTOR_CATEGORY_ID = #{doctorCategoryId}
@@ -89,7 +89,7 @@
             AND Re.CAT_SPE_ID = #{trainingTypeId}
         </if>
         <if test="userCode !=null and userCode !='' ">
-            AND SU.USER_CODE like '%${userCode}%'
+            AND SU.USER_CODE like CONCAT(CONCAT('%', #{userCode}),'%')
         </if>
         <if test="trainingYears !=null and trainingYears !='' ">
             AND RE.TRAIN_YEAR = #{trainingYears}
@@ -161,10 +161,10 @@
             ))
         </if>
         <if test="userName !=null and userName !=''">
-            AND SU.USER_NAME LIKE '%${userName}%'
+            AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test="idNo !=null and idNo !=''">
-            AND SU.ID_NO LIKE '%${idNo}%'
+            AND SU.ID_NO LIKE CONCAT(CONCAT('%', #{idNo}),'%')
         </if>
         <if test="doctorCategoryId !=null and doctorCategoryId != ''">
             AND RD.DOCTOR_CATEGORY_ID = #{doctorCategoryId}
@@ -173,7 +173,7 @@
             AND RD.TRAINING_SPE_ID = #{trainingSpeId}
         </if>
         <if test="userCode !=null and userCode !='' ">
-            AND SU.USER_CODE like '%${userCode}%'
+            AND SU.USER_CODE like CONCAT(CONCAT('%', #{userCode}),'%')
         </if>
         <if test="trainingYears !=null and trainingYears !='' ">
             AND RD.TRAINING_YEARS = #{trainingYears}
@@ -277,10 +277,10 @@
             ))
         </if>
         <if test="userName !=null and userName !=''">
-            AND SU.USER_NAME LIKE '%${userName}%'
+            AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test="idNo !=null and idNo !=''">
-            AND SU.ID_NO LIKE '%${idNo}%'
+            AND SU.ID_NO LIKE CONCAT(CONCAT('%', #{idNo}),'%')
         </if>
         <if test="doctorCategoryId !=null and doctorCategoryId != ''">
             AND RD.DOCTOR_CATEGORY_ID = #{doctorCategoryId}
@@ -289,7 +289,7 @@
             AND RD.TRAINING_SPE_ID = #{trainingSpeId}
         </if>
         <if test="userCode !=null and userCode !='' ">
-            AND SU.USER_CODE like '%${userCode}%'
+            AND SU.USER_CODE like CONCAT(CONCAT('%', #{userCode}),'%')
         </if>
         <if test="trainingYears !=null and trainingYears !='' ">
             AND RD.TRAINING_YEARS = #{trainingYears}
@@ -402,10 +402,10 @@
             ))
         </if>
         <if test="userName !=null and userName !=''">
-            AND SU.USER_NAME LIKE '%${userName}%'
+            AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test="idNo !=null and idNo !=''">
-            AND SU.ID_NO LIKE '%${idNo}%'
+            AND SU.ID_NO LIKE CONCAT(CONCAT('%', #{idNo}),'%')
         </if>
         <if test="doctorCategoryId !=null and doctorCategoryId != ''">
             AND RD.DOCTOR_CATEGORY_ID = #{doctorCategoryId}
@@ -414,7 +414,7 @@
             AND RD.TRAINING_SPE_ID = #{trainingSpeId}
         </if>
         <if test="userCode !=null and userCode !='' ">
-            AND SU.USER_CODE like '%${userCode}%'
+            AND SU.USER_CODE like CONCAT(CONCAT('%', #{userCode}),'%')
         </if>
         <if test="trainingYears !=null and trainingYears !='' ">
             AND RD.TRAINING_YEARS = #{trainingYears}
@@ -521,10 +521,10 @@
             ))
         </if>
         <if test="userName !=null and userName !=''">
-            AND SU.USER_NAME LIKE '%${userName}%'
+            AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test="idNo !=null and idNo !=''">
-            AND SU.ID_NO LIKE '%${idNo}%'
+            AND SU.ID_NO LIKE CONCAT(CONCAT('%', #{idNo}),'%')
         </if>
         <if test="doctorCategoryId !=null and doctorCategoryId != ''">
             AND RD.DOCTOR_CATEGORY_ID = #{doctorCategoryId}
@@ -533,7 +533,7 @@
             AND RD.TRAINING_SPE_ID = #{trainingSpeId}
         </if>
         <if test="userCode !=null and userCode !='' ">
-            AND SU.USER_CODE like '%${userCode}%'
+            AND SU.USER_CODE like CONCAT(CONCAT('%', #{userCode}),'%')
         </if>
         <if test="trainingYears !=null and trainingYears !='' ">
             AND RD.TRAINING_YEARS = #{trainingYears}
@@ -593,10 +593,10 @@
             ))
         </if>
         <if test="userName !=null and userName !=''">
-            AND SU.USER_NAME LIKE '%${userName}%'
+            AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test="idNo !=null and idNo !=''">
-            AND SU.ID_NO LIKE '%${idNo}%'
+            AND SU.ID_NO LIKE CONCAT(CONCAT('%', #{idNo}),'%')
         </if>
         <if test="doctorCategoryId !=null and doctorCategoryId != ''">
             AND RD.DOCTOR_CATEGORY_ID = #{doctorCategoryId}
@@ -661,13 +661,13 @@
             AND ROLE.ROLE_FLOW =#{roleFlow}
         </if>
         <if test="userName !=null and userName !=''">
-            AND SU.USER_NAME LIKE '%${userName}%'
+            AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test="userCode !=null and userCode !=''">
-            AND SU.USER_CODE LIKE '%${userCode}%'
+            AND SU.USER_CODE LIKE CONCAT(CONCAT('%', #{userCode}),'%')
         </if>
         <if test="idNo !=null and idNo !=''">
-            AND SU.ID_NO LIKE '%${idNo}%'
+            AND SU.ID_NO LIKE CONCAT(CONCAT('%', #{idNo}),'%')
         </if>
         <if test="checkStatusId !=null and checkStatusId !='' and checkStatusId !='NotSubmit'.toString()">
             AND SU.CHECK_STATUS_ID = #{checkStatusId}

@@ -108,7 +108,7 @@
         and rd.record_status='Y'
         and rd.doctor_category_id='Scholar'
         <if test='doctorName!=null and doctorName!=""'>
-            and SU.USER_NAME LIKE '%${doctorName}%'
+            and SU.USER_NAME LIKE CONCAT(CONCAT('%', #{doctorName}),'%')
         </if>
         <if test='schStartDate!=null and schStartDate!="" and schEndDate!=null and schEndDate!=""'>
             and sar.SCH_START_DATE >= #{schStartDate}
@@ -132,7 +132,7 @@
             ar.SCH_END_DATE <![CDATA[<=]]>  #{endDate,jdbcType=VARCHAR}))
         </if>
         <if test='userName!=null and userName!=""'>
-            and u.USER_NAME like '%${userName}%'
+            and u.USER_NAME like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='trainingSpeId!=null and trainingSpeId!=""'>
             and dr.TRAINING_SPE_ID = #{trainingSpeId,jdbcType=VARCHAR}
@@ -302,7 +302,7 @@
         on dr.DOCTOR_FLOW = u.USER_FLOW
         where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y'
         <if test='userName!=null and userName!=""'>
-            and u.USER_NAME like '%${userName}%'
+            and u.USER_NAME like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
 
         <if test='trainingSpeId!=null and trainingSpeId!=""'>
@@ -383,7 +383,7 @@
             <foreach collection="deptList" open="(" separator="," close=")" item="item">#{item.deptFlow}</foreach>))
         </if>
         <if test='userName!=null and userName!=""'>
-            and u.USER_NAME like '%${userName}%'
+            and u.USER_NAME like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='idNo != null and idNo != ""'>
             AND U.ID_NO LIKE CONCAT(CONCAT('%', #{idNo}), '%')
@@ -428,7 +428,7 @@
         AND rd.RECORD_STATUS = 'Y'
         <if test="doctor != null">
             <if test='doctor.userName!=null and doctor.userName!=""'>
-                and ro.USER_NAME like '%${doctor.userName}%'
+                and ro.USER_NAME like CONCAT(CONCAT('%', #{doctor.userName}),'%')
             </if>
             <if test='doctor.trainingTypeId!=null and doctor.trainingTypeId!=""'>
                 and ro.TRAINING_TYPE_ID = #{doctor.trainingTypeId}
@@ -470,7 +470,7 @@
         and rn=1
         where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and rdr.record_status='Y'
         <if test='userName!=null and userName!=""'>
-            and u.USER_NAME like '%${userName}%'
+            and u.USER_NAME like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='trainingTypeId!=null and trainingTypeId!=""'>
             and dr.TRAINING_TYPE_ID = #{trainingTypeId}
@@ -762,7 +762,7 @@
                     AND D.GROUP_FLOW = R.STANDARD_GROUP_FLOW
                   WHERE R.RECORD_STATUS = 'Y'
                     AND D.RECORD_STATUS = 'Y'
-                    AND R.SCH_END_DATE <![CDATA[<=]]> '${applyYear}-05-31'
+                    AND R.SCH_END_DATE <![CDATA[<=]]> #{applyYear}||'-05-31'
                   GROUP BY R.DOCTOR_FLOW, R.ROTATION_FLOW, D.RECORD_FLOW
                ) IC
                ON IC.RECORD_FLOW= srd.record_flow
@@ -983,7 +983,7 @@
             and rdr.graduation_year = #{graduationTime}
         </if>
         <if test='userName!=null and userName!=""'>
-            and u.USER_NAME like '%${userName}%'
+            and u.USER_NAME like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='idNo!=null and idNo!=""'>
             and u.ID_NO = #{idNo}
@@ -1055,7 +1055,7 @@
             and rdr.graduation_year = #{graduationTime}
         </if>
         <if test='userName!=null and userName!=""'>
-            and u.USER_NAME like '%${userName}%'
+            and u.USER_NAME like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='idNo!=null and idNo!=""'>
             and u.ID_NO = #{idNo}
@@ -1161,7 +1161,7 @@
         </if>
         <if test='medicineTypeId!=null and medicineTypeId!=""'>
             and EXISTS (SELECT 1 FROM SYS_USER SU WHERE SU.USER_FLOW=DOCTOR_FLOW AND
-            instr('${medicineTypeId}',su.medicine_Type_Id)>0)
+            instr(#{medicineTypeId},su.medicine_Type_Id)>0)
         </if>
         ORDER BY sar.SCH_START_DATE DESC
     </select>
@@ -1215,7 +1215,7 @@
                 AND TRAINING_SPE_ID = #{doctor.trainingSpeId}
             </if>
             <if test='doctor.doctorName!=null and doctor.doctorName!=""'>
-                AND DOCTOR_NAME LIKE '%${doctor.doctorName}%'
+                AND DOCTOR_NAME LIKE CONCAT(CONCAT('%', #{doctor.doctorName}),'%')
             </if>
         </if>
         )
@@ -1255,7 +1255,7 @@
                 AND TRAINING_SPE_ID = #{doctor.trainingSpeId}
             </if>
             <if test='doctor.doctorName!=null and doctor.doctorName!=""'>
-                AND DOCTOR_NAME LIKE '%${doctor.doctorName}%'
+                AND DOCTOR_NAME LIKE CONCAT(CONCAT('%', #{doctor.doctorName}),'%')
             </if>
         </if>
         )
@@ -1292,7 +1292,7 @@
                 AND TRAINING_SPE_ID = #{doctor.trainingSpeId}
             </if>
             <if test='doctor.doctorName!=null and doctor.doctorName!=""'>
-                AND DOCTOR_NAME LIKE '%${doctor.doctorName}%'
+                AND DOCTOR_NAME LIKE CONCAT(CONCAT('%', #{doctor.doctorName}),'%')
             </if>
         </if>
         )
@@ -1383,7 +1383,7 @@
             )
         </if>
         <if test='doctorName != null and doctorName!=""'>
-            AND su.user_name LIKE '%${doctorName}%'
+            AND su.user_name LIKE CONCAT(CONCAT('%', #{doctorName}),'%')
         </if>
         <if test="docTypeList!=null and docTypeList.size>0">
             and rd.DOCTOR_TYPE_ID in
@@ -1816,7 +1816,7 @@
                 AND RD.ROTATION_FLOW = #{doctor.rotationFlow}
             </if>
             <if test='doctor.doctorName != null and doctor.doctorName!=""'>
-                AND RD.DOCTOR_NAME LIKE '%${doctor.doctorName}%'
+                AND RD.DOCTOR_NAME LIKE CONCAT(CONCAT('%', #{doctor.doctorName}),'%')
             </if>
         </if>
         ORDER BY SCH_DEPT_ORDER,SCH_START_DATE
@@ -2021,7 +2021,7 @@
             and rdr.graduation_year = #{graduationTime}
         </if>
         <if test='userName!=null and userName!=""'>
-            and u.USER_NAME  LIKE '%${userName}%'
+            and u.USER_NAME  LIKE CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='idNo!=null and idNo!=""'>
             and u.ID_NO = #{idNo}
@@ -2327,7 +2327,7 @@
         </if>
         <if test='medicineTypeId!=null and medicineTypeId!=""'>
             and EXISTS (SELECT 1 FROM SYS_USER SU WHERE SU.USER_FLOW=DOCTOR_FLOW AND
-            instr('${medicineTypeId}',su.medicine_Type_Id)>0)
+            instr(#{medicineTypeId},su.medicine_Type_Id)>0)
         </if>
         <if test="workOrgId!=null and workOrgId!=''">
             and rd.work_org_id = #{workOrgId}
@@ -2343,7 +2343,7 @@
         </if>
 
         <if test='doctorStatusId != null and doctorStatusId != ""'>
-            AND DOCTOR_STATUS_ID ='${doctorStatusId}'
+            AND DOCTOR_STATUS_ID = #{doctorStatusId}
         </if>
     </select>
 

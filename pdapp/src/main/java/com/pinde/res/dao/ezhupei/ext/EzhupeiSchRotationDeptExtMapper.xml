@@ -26,7 +26,7 @@
 		where srd.record_status = 'Y'
 		and srg.record_status = 'Y'
 		<if test='schDeptName!=null and schDeptName!=""'>
-			and srd.standard_dept_name like '%${schDeptName}%'
+			and srd.standard_dept_name like CONCAT(CONCAT('%', #{schDeptName}),'%')
 		</if>
 		and srd.org_flow is null
 		and srd.rotation_flow = #{rotationFlow}

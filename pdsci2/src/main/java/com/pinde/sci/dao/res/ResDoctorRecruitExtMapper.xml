@@ -214,7 +214,7 @@
 		    and dr.RECRUIT_TYPE_ID = #{recruitTypeId}
 		</if>
 		<if test='key!=null and key!=""'>
-		   AND (su.USER_NAME like '%${key}%'
+		   AND (su.USER_NAME like CONCAT(CONCAT('%', #{key}),'%')
 		   OR su.USER_PHONE=#{key}
 		   OR su.USER_EMAIL=#{key}
 		   OR su.ID_NO=#{key}
@@ -800,7 +800,7 @@
 			AND JES.TEST_ID=  #{testId}
 		</if>
 		<if test='userName != null and userName != ""'>
-			AND su.user_name LIKE '%${userName}%'
+			AND su.user_name LIKE CONCAT(CONCAT('%', #{userName}),'%')
 		</if>
 		<if test='idNo != null and idNo != ""'>
 			AND su.id_no =  #{idNo}

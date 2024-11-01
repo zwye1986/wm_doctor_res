@@ -23,7 +23,7 @@
                     and sud.dept_flow = #{sysDeptFlow})
         )
 		<if test='userName!=null and userName!=""'>
-			and (u.user_name like '%${userName}%')
+			and (u.user_name like CONCAT(CONCAT('%', #{userName}),'%'))
 		</if>
 		order by nlssort(u.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
 	</select>
@@ -58,7 +58,7 @@
                            WHERE RECORD_STATUS = 'Y'
                              AND USER_FLOW =#{userFlow}))))
             <if test='userName!=null and userName!=""'>
-                and (u.user_name like '%${userName}%')
+                and (u.user_name like CONCAT(CONCAT('%', #{userName}),'%'))
             </if>
 		order by nlssort(u.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
 	</select>
@@ -119,7 +119,7 @@
             and B.DEPT_FLOW=#{deptFlow}
         </if>
         <if test='userName!=null and userName!=""'>
-            and (B.user_name like '%${userName}%')
+            and (B.user_name like CONCAT(CONCAT('%', #{userName}),'%'))
         </if>
 		order by EVAL_SCORE ${orderBy},nlssort(user_name,'NLS_SORT=SCHINESE_PINYIN_M')
 	</select>

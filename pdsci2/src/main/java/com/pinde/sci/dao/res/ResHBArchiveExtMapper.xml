@@ -150,22 +150,22 @@
             AND rd.RECORD_STATUS = #{recordStatus}
         </if>
         <if test="specialized != null and specialized != ''">
-            AND rd.SPECIALIZED LIKE '%${specialized}%'
+            AND rd.SPECIALIZED LIKE CONCAT(CONCAT('%', #{specialized}),'%')
         </if>
         <if test="doctorCode != null and doctorCode != ''">
-            AND rd.doctor_code LIKE '%${doctorCode}%'
+            AND rd.doctor_code LIKE CONCAT(CONCAT('%', #{doctorCode}),'%')
         </if>
         <if test='doctor.doctorName != null and doctor.doctorName != ""'>
-            AND rd.doctor_name LIKE '%${doctor.doctorName}%'
+            AND rd.doctor_name LIKE CONCAT(CONCAT('%', #{doctor.doctorName}),'%')
         </if>
         <if test='tutorFlow != null and tutorFlow != ""'>
             AND rd.tutor_flow = #{tutorFlow}
         </if>
         <if test='orgName != null and orgName != ""'>
-            AND rd.org_name like '%${orgName}%'
+            AND rd.org_name like CONCAT(CONCAT('%', #{orgName}),'%')
         </if>
         <if test='sysidNo != null and sysidNo != ""'>
-            AND su.id_no like '%${sysidNo}%'
+            AND su.id_no like CONCAT(CONCAT('%', #{sysidNo}),'%')
         </if>
         <if test='doctor.orgFlow != null and doctor.orgFlow != ""'>
             AND rd.org_flow = #{doctor.orgFlow}
@@ -180,7 +180,7 @@
         AND rd.org_flow != '566c9f36cf014f63a569b453efa284d7'
         AND rd.org_flow != '00000000000000000000000000000000'
         <if test='medicineTypeId!=null and medicineTypeId!=""'>
-            and instr('${medicineTypeId}',su.medicine_Type_Id)>0
+            and instr(#{medicineTypeId},su.medicine_Type_Id)>0
         </if>
         <if test='doctorFlows!=null and doctorFlows.size()>0'>
             and rd.DOCTOR_FLOW IN
@@ -190,10 +190,10 @@
         </if>
         <if test='sysUser != null'>
             <if test='sysUser.userName != null and sysUser.userName != ""'>
-                AND su.USER_NAME like '%${sysUser.userName}%'
+                AND su.USER_NAME like CONCAT(CONCAT('%', #{sysUser.userName}),'%')
             </if>
             <if test='sysUser.statusId != null and sysUser.statusId  != ""'>
-                AND su.status_Id  = '${sysUser.statusId}'
+                AND su.status_Id  = #{sysUser.statusId}
             </if>
             <if test='sysUser.recordStatus != null and sysUser.recordStatus  != ""'>
                 AND su.RECORD_STATUS=#{recordStatus}

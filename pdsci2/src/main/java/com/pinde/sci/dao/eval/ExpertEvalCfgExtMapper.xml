@@ -10,7 +10,7 @@
             AND EVAL_YEAR=#{evalYear}
         </if>
         <if test="cfgName!=null and cfgName !=''">
-            AND CFG_NAME LIKE '%${cfgName}%'
+            AND CFG_NAME LIKE CONCAT(CONCAT('%', #{cfgName}),'%')
         </if>
         <if test="isPublish!=null and isPublish !=''">
             AND IS_PUBLISH=#{isPublish}

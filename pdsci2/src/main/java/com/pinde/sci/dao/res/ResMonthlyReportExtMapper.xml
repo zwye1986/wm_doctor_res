@@ -647,7 +647,7 @@
             and sm.sch_Dept_Flow = #{schDeptFlow}
         </if>
         <if test='teacherUserName!=null and teacherUserName!=""'>
-            and sm.teacher_user_name like '%${teacherUserName}%'
+            and sm.teacher_user_name like CONCAT(CONCAT('%', #{teacherUserName}),'%')
         </if>
         group by sm.org_flow,sm.org_name,sm.sch_dept_flow,sch_dept_name,sm.teacher_user_flow,sm.teacher_user_name,su.user_code
     </select>
