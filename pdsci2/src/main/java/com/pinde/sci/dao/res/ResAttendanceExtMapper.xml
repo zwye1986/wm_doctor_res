@@ -202,10 +202,10 @@
         where su.record_status='Y'
         and rd.record_status='Y'
         <if test='studentName != null and studentName!=""' >
-            and su.user_name like '%${studentName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{studentName}),'%')
         </if>
         <if test='teacherName != null  and teacherName!=""' >
-            and b.teacher_user_name like '%${teacherName}%'
+            and b.teacher_user_name like CONCAT(CONCAT('%', #{teacherName}),'%')
         </if>
         <if test='teacherFlow != null  and teacherFlow!=""' >
             and b.teacher_user_flow=#{teacherFlow}
@@ -263,10 +263,10 @@
         where su.record_status='Y'
         and rd.record_status='Y'
         <if test='studentName != null and studentName!=""' >
-            and su.user_name like '%${studentName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{studentName}),'%')
         </if>
         <if test='teacherName != null  and teacherName!=""' >
-            and b.teacher_user_name like '%${teacherName}%'
+            and b.teacher_user_name like CONCAT(CONCAT('%', #{teacherName}),'%')
         </if>
         <if test='teacherFlow != null  and teacherFlow!=""' >
             and b.teacher_user_flow=#{teacherFlow}
@@ -324,7 +324,7 @@
             <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
         </if>
         <if test='studentName != null and studentName!=""' >
-            and su.user_name like '%${studentName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{studentName}),'%')
         </if>
         <if test='orgFlow != null and orgFlow!=""' >
             and rd.org_flow like #{orgFlow}
@@ -333,7 +333,7 @@
             and rd.session_Number = #{sessionNumber}
         </if>
         <if test='teacherName != null  and teacherName!=""' >
-            and b.teacher_user_name like '%${teacherName}%'
+            and b.teacher_user_name like CONCAT(CONCAT('%', #{teacherName}),'%')
         </if>
         <if test='teacherFlow != null  and teacherFlow!=""' >
             and b.teacher_user_flow=#{teacherFlow}
@@ -411,7 +411,7 @@
             <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
         </if>
         <if test='studentName != null and studentName!=""' >
-            and su.user_name like '%${studentName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{studentName}),'%')
         </if>
         <if test='orgFlow != null and orgFlow!=""' >
             and rd.org_flow = #{orgFlow}
@@ -449,7 +449,7 @@
             (select t.ATTENDANCE_FLOW from JSRES_ATTENDANCE t
             where t.doctor_flow = rd.doctor_flow
             and t.record_status='Y'
-            AND t.attend_date = '${item}'
+            AND t.attend_date = #{item}
             ) AS "${item}"
         </foreach>
         from sys_user su
@@ -483,7 +483,7 @@
             <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
         </if>
         <if test='studentName != null and studentName!=""' >
-            and su.user_name like '%${studentName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{studentName}),'%')
         </if>
         <if test='orgFlow != null and orgFlow!=""' >
             and rd.org_flow = #{orgFlow}
@@ -503,7 +503,7 @@
             (select to_char(max(t.attend_status)) from JSRES_ATTENDANCE t
             where t.doctor_flow = rd.doctor_flow
             and t.record_status='Y'
-            AND t.attend_date = '${item}'
+            AND t.attend_date = #{item}
             ) AS "${item}"
         </foreach>
         from sys_user su
@@ -537,7 +537,7 @@
             <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
         </if>
         <if test='studentName != null and studentName!=""' >
-            and su.user_name like '%${studentName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{studentName}),'%')
         </if>
         <if test='orgFlow != null and orgFlow!=""' >
             and rd.org_flow = #{orgFlow}
@@ -606,13 +606,13 @@
             <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
         </if>
         <if test='studentName != null and studentName!=""' >
-            and su.user_name like '%${studentName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{studentName}),'%')
         </if>
         <if test='sessionNumber != null and sessionNumber!=""' >
             and rd.session_Number = #{sessionNumber}
         </if>
         <if test='teacherName != null  and teacherName!=""' >
-            and pp.teacher_user_name like '%${teacherName}%'
+            and pp.teacher_user_name like CONCAT(CONCAT('%', #{teacherName}),'%')
         </if>
         <if test='schDeptFlow != null and schDeptFlow!=""' >
             and sar.sch_dept_flow =#{schDeptFlow}
@@ -694,10 +694,10 @@
             and rd.TRAINING_TYPE_ID = #{trainingTypeId}
         </if>
         <if test='studentName != null and studentName!=""' >
-            and su.user_name like '%${studentName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{studentName}),'%')
         </if>
         <if test='teacherName != null  and teacherName!=""' >
-            and b.teacher_user_name like '%${teacherName}%'
+            and b.teacher_user_name like CONCAT(CONCAT('%', #{teacherName}),'%')
         </if>
         <if test='teacherFlow != null  and teacherFlow!=""' >
             and b.teacher_user_flow=#{teacherFlow}
@@ -790,10 +790,10 @@
         where su.record_status='Y'
         and rd.record_status='Y'
         <if test='studentName != null and studentName!=""' >
-            and su.user_name like '%${studentName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{studentName}),'%')
         </if>
         <if test='teacherName != null  and teacherName!=""' >
-            and b.teacher_user_name like '%${teacherName}%'
+            and b.teacher_user_name like CONCAT(CONCAT('%', #{teacherName}),'%')
         </if>
         <if test='teacherFlow != null  and teacherFlow!=""' >
             and b.teacher_user_flow=#{teacherFlow}
@@ -935,7 +935,7 @@
             and rd.training_type_id =  #{trainingTypeId}
         </if>
         <if test='studentName != null and studentName!=""' >
-            and su.user_name like '%${studentName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{studentName}),'%')
         </if>
         <if test='orgFlow != null  and orgFlow!=""' >
             and rd.org_flow=#{orgFlow}
@@ -1040,7 +1040,7 @@
             and rd.training_type_id =  #{trainingTypeId}
         </if>
         <if test='studentName != null and studentName!=""' >
-            and su.user_name like '%${studentName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{studentName}),'%')
         </if>
         <if test='orgFlow != null  and orgFlow!=""' >
             and rd.org_flow=#{orgFlow}
@@ -1086,9 +1086,9 @@
     from sys_user su
     left join res_doctor rd on su.user_flow=rd.doctor_flow
     left join (
-      SELECT level AS flow, to_char(to_date('${schStartDate}', 'yyyy-mm-dd') + level - 1, 'yyyy-mm-dd') AS date_time,'Y' record_status
+      SELECT level AS flow, to_char(to_date(#{schStartDate}, 'yyyy-mm-dd') + level - 1, 'yyyy-mm-dd') AS date_time,'Y' record_status
       FROM dual
-      CONNECT BY level <![CDATA[ <= ]]> to_date('${schEndDate}', 'yyyy-mm-dd') - to_date('${schStartDate}', 'yyyy-mm-dd') + 1
+      CONNECT BY level <![CDATA[ <= ]]> to_date(#{schEndDate}, 'yyyy-mm-dd') - to_date(#{schStartDate}, 'yyyy-mm-dd') + 1
     ) A
     on a.record_status=su.record_status
     left join JSRES_ATTENDANCE t
@@ -1162,10 +1162,10 @@
             and rd.training_type_id =  #{trainingTypeId}
         </if>
         <if test='studentName != null and studentName!=""' >
-            and su.user_name like '%${studentName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{studentName}),'%')
         </if>
         <if test='teacherName != null  and teacherName!=""' >
-            and b.teacher_user_name like '%${teacherName}%'
+            and b.teacher_user_name like CONCAT(CONCAT('%', #{teacherName}),'%')
         </if>
         <if test='teacherFlow != null  and teacherFlow!=""' >
             and b.teacher_user_flow=#{teacherFlow}
@@ -1198,7 +1198,7 @@
             (select to_char(max(t.attend_status)) from JSRES_ATTENDANCE t
             where t.doctor_flow = rd.doctor_flow
             and t.record_status='Y'
-            AND t.attend_date = '${item}'
+            AND t.attend_date = #{item}
             and exists(
             select 1 from JSRES_ATTENDANCE_DETAIL d
             where d.record_status='Y'
@@ -1247,10 +1247,10 @@
             and rd.training_type_id =  #{trainingTypeId}
         </if>
         <if test='studentName != null and studentName!=""' >
-            and su.user_name like '%${studentName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{studentName}),'%')
         </if>
         <if test='teacherName != null  and teacherName!=""' >
-            and b.teacher_user_name like '%${teacherName}%'
+            and b.teacher_user_name like CONCAT(CONCAT('%', #{teacherName}),'%')
         </if>
         <if test='teacherFlow != null  and teacherFlow!=""' >
             and b.teacher_user_flow=#{teacherFlow}
@@ -1288,7 +1288,7 @@
             (select to_char(max(t.attend_status)) from JSRES_ATTENDANCE t
             where t.doctor_flow = rd.doctor_flow
             and t.record_status='Y'
-            AND t.attend_date = '${item}'
+            AND t.attend_date = #{item}
             and exists(
             select 1 from JSRES_ATTENDANCE_DETAIL d
             where d.record_status='Y'
@@ -1344,10 +1344,10 @@
             and rd.training_type_id =  #{trainingTypeId}
         </if>
         <if test='studentName != null and studentName!=""' >
-            and su.user_name like '%${studentName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{studentName}),'%')
         </if>
 <!--        <if test='teacherName != null  and teacherName!=""' >-->
-<!--            and b.teacher_user_name like '%${teacherName}%'-->
+<!--            and b.teacher_user_name like CONCAT(CONCAT('%', #{teacherName}),'%')-->
 <!--        </if>-->
 <!--        <if test='teacherFlow != null  and teacherFlow!=""' >-->
 <!--            and b.teacher_user_flow=#{teacherFlow}-->

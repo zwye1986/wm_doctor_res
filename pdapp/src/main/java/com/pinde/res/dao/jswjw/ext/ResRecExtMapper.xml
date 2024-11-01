@@ -371,7 +371,7 @@
  			AND REC_TYPE_ID = #{recTypeId}
  		</if>
  		<if test='itemName != null and itemName != ""'>
- 			AND ITEM_NAME LIKE '%${itemName}%'
+ 			AND ITEM_NAME LIKE CONCAT(CONCAT('%', #{itemName}),'%')
  		</if>
 		AND SCH_DEPT_FLOW IN
 		<foreach collection="schDeptFlows" item="schDeptFlow" open="(" separator="," close=")">  
@@ -501,7 +501,7 @@
 		</if>
 		<if test='roleFlagMap!=null'>
 			<if test='roleFlagMap.year!=null and roleFlagMap.year!=""'>
-				AND RR.OPER_TIME LIKE '${roleFlagMap.year}%'
+				AND RR.OPER_TIME LIKE CONCAT(#{roleFlagMap.year},'%')
 			</if>
 			<if test='roleFlagMap.roleFlag!=null and roleFlagMap.roleFlag!=""'>
 				<if test='roleFlagMap.roleFlag=="teacher"'>
@@ -590,7 +590,7 @@
 	    </if>
 	    <if test='roleFlagMap!=null'>
 	    	<if test='roleFlagMap.year!=null and roleFlagMap.year!=""'>
-	    		AND RR.OPER_TIME LIKE '${roleFlagMap.year}%'
+	    		AND RR.OPER_TIME LIKE CONCAT(#{roleFlagMap.year},'%')
 	    	</if>
 		    <if test='roleFlagMap.roleFlag!=null and roleFlagMap.roleFlag!=""'>
 		    	<if test='roleFlagMap.roleFlag=="teacher"'>
@@ -659,7 +659,7 @@
    		</foreach>
 	    <if test='roleFlagMap!=null'>
 	    	<if test='roleFlagMap.year!=null and roleFlagMap.year!=""'>
-	    		AND RR.OPER_TIME LIKE '${roleFlagMap.year}%'
+	    		AND RR.OPER_TIME LIKE CONCAT(#{roleFlagMap.year},'%')
 	    	</if>
 		    <if test='roleFlagMap.roleFlag!=null and roleFlagMap.roleFlag!=""'>
 		    	<if test='roleFlagMap.roleFlag=="teacher"'>
@@ -734,7 +734,7 @@
 			and a.session_number=#{year}
 		</if>
 		<if test="speName !=null and speName !=''">
-			AND a.train_Spe like  '%${speName}%'
+			AND a.train_Spe like  CONCAT(CONCAT('%', #{speName}),'%')
 		</if>
 		group by a.org_flow, a.org_name
 	</select>
@@ -896,7 +896,7 @@
 			and rdsp.dept_flow = #{deptFlow}
 		</if>
 		<if test='deptName!=null and deptName!=""'>
-			and rdsp.dept_Name like '%${deptName}%'
+			and rdsp.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
 		</if>
 		<if test='teacherFlow!=null and teacherFlow!=""'>
 			and rdsp.teacher_user_flow = #{teacherFlow}
@@ -958,7 +958,7 @@
 			and rdsp.dept_flow = #{deptFlow}
 		</if>
 		<if test='deptName!=null and deptName!=""'>
-			and rdsp.dept_Name like '%${deptName}%'
+			and rdsp.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
 		</if>
 		<if test='teacherFlow!=null and teacherFlow!=""'>
 			and rdsp.teacher_user_flow = #{teacherFlow}
@@ -1135,7 +1135,7 @@
 					and rr.ORG_FLOW = #{resRec.orgFlow}
 				</if>
 				<if test="resRec.operUserName!=null and resRec.operUserName!=''">
-					and rr.OPER_USER_NAME like '%${resRec.operUserName}%'
+					and rr.OPER_USER_NAME like CONCAT(CONCAT('%', #{resRec.operUserName}),'%')
 				</if>
 			</if>
 			) a
@@ -1149,7 +1149,7 @@
 			)
 			and a.DOCTOR_TYPE_ID = 'Graduate'
 			<if test="resDoctor.trainingSpeName!=null and resDoctor.trainingSpeName!=''">
-				and A.TRAIN_SPE like  '%${resDoctor.trainingSpeName}%'
+				and A.TRAIN_SPE like  CONCAT(CONCAT('%', #{resDoctor.trainingSpeName}),'%')
 			</if>
 			<if test="resDoctor.trainingTypeId!=null and resDoctor.trainingTypeId!=''">
 				and A.TRAINING_TYPE_ID = #{resDoctor.trainingTypeId}
@@ -1227,7 +1227,7 @@
 					and rr.ORG_FLOW = #{resRec.orgFlow}
 				</if>
 				<if test="resRec.operUserName!=null and resRec.operUserName!=''">
-					and rr.OPER_USER_NAME like '%${resRec.operUserName}%'
+					and rr.OPER_USER_NAME like CONCAT(CONCAT('%', #{resRec.operUserName}),'%')
 				</if>
 			</if>
 			) a
@@ -1246,7 +1246,7 @@
 		</if>
 		<if test="resDoctor!=null">
 			<if test="resDoctor.trainingSpeName!=null and resDoctor.trainingSpeName!=''">
-				and A.TRAIN_SPE like  '%${resDoctor.trainingSpeName}%'
+				and A.TRAIN_SPE like  CONCAT(CONCAT('%', #{resDoctor.trainingSpeName}),'%')
 			</if>
 			<if test="resDoctor.trainingTypeId!=null and resDoctor.trainingTypeId!=''">
 				and A.TRAINING_TYPE_ID = #{resDoctor.trainingTypeId}
@@ -1402,7 +1402,7 @@
 				and r.ORG_FLOW = #{resRec.orgFlow}
 			</if>
 			<if test="resRec.operUserName!=null and resRec.operUserName!=''">
-				and r.OPER_USER_NAME like '%${resRec.operUserName}%'
+				and r.OPER_USER_NAME like CONCAT(CONCAT('%', #{resRec.operUserName}),'%')
 			</if>
 		</if>
 		<if test="resDoctor!=null">

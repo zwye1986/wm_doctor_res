@@ -21,13 +21,13 @@
             and USER_FLOW = #{userFlow}
         </if>
         <if test="userName != null and userName != ''">
-            and USER_NAME like '%${userName}%'
+            and USER_NAME like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test="speName != null and speName != ''">
             and SPE_NAME = #{speName}
         </if>
         <if test="idNo != null and idNo != ''">
-        and ID_NO like '%${idNo}%'
+        and ID_NO like CONCAT(CONCAT('%', #{idNo}),'%')
         </if>
         <if test="ticketNum != null and ticketNum != ''">
         and TICKET_NUM = #{ticketNum}
@@ -39,10 +39,10 @@
         and DOCROLE = #{docrole}
         </if>
         <if test="orgCode != null and orgCode != ''">
-        and ORG_CODE like '%${orgCode}%'
+        and ORG_CODE like CONCAT(CONCAT('%', #{orgCode}),'%')
         </if>
         <if test="orgName != null and orgName != ''">
-        and ORG_NAME like '%${orgName}%'
+        and ORG_NAME like CONCAT(CONCAT('%', #{orgName}),'%')
         </if>
         <if test="orgFlow != null and orgFlow != ''">
             and ORG_FLOW = #{orgFlow}

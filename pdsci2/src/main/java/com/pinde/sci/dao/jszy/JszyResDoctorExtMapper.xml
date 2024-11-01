@@ -25,7 +25,7 @@
 			#{trainingYear}
 		</foreach>
 		<if test='doctorName!=null and doctorName!=""'>
-			and doctor_name like '%${doctorName}%'
+			and doctor_name like CONCAT(CONCAT('%', #{doctorName}),'%')
 		</if>
 		AND NOT EXISTS (SELECT NULL
 		FROM Res_Docotr_Delay_Teturn

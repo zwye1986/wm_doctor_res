@@ -2010,7 +2010,7 @@
 			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
 		</if>
 		<if test="graduationCertificateNo!=null and graduationCertificateNo!=''">
-			and dr.graduation_Certificate_No like '%${graduationCertificateNo}%'
+			and dr.graduation_Certificate_No like CONCAT(CONCAT('%', #{graduationCertificateNo}),'%')
 		</if>
 		and dr.graduation_Certificate_No is not null
 		<if test="catSpeId!=null and catSpeId!=''">

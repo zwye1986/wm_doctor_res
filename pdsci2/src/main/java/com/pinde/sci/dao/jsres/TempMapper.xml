@@ -373,7 +373,7 @@
                             END,
                             2) * 100)
            END AUDIT_BI,
-           '${applyYear}',
+           #{applyYear},
            'Y',
            to_char(sysdate, 'YYYYMMDDHH24MISS'),
            'System',
@@ -511,7 +511,7 @@
                     AND D.GROUP_FLOW = R.STANDARD_GROUP_FLOW
                   WHERE R.RECORD_STATUS = 'Y'
                     AND D.RECORD_STATUS = 'Y'
-                    AND R.SCH_END_DATE <![CDATA[<=]]> '${applyYear}-05-31'
+                    AND R.SCH_END_DATE <![CDATA[<=]]> #{applyYear}||'-05-31'
                   GROUP BY R.DOCTOR_FLOW, R.ROTATION_FLOW, D.RECORD_FLOW
                ) IC
                ON IC.RECORD_FLOW= srd.record_flow
@@ -636,7 +636,7 @@
                             END,
                             2) * 100)
            END AUDIT_BI,
-           '${applyYear}',
+           #{applyYear},
            'Y',
            to_char(sysdate, 'YYYYMMDDHH24MISS'),
            'System',
@@ -1393,8 +1393,8 @@ COMPLETE_BI_PER=(CASE
        nvl(b.usernum, 0) user_num,
        nvl(b.auditnum, 0) audit_num,
        ROUND(nvl(b.avg_num, 0), 2) avg_num,
-       '${month}',
-       '${type}' doctor_type_id
+       #{month},
+       #{type} doctor_type_id
   from sys_org org
   left join (select so.org_level_id,
                     so.org_level_name,
@@ -1487,8 +1487,8 @@ insert into SYS_MONTHLY_APP_STATISTICS
                 b.num / a.allNum
              end),
              0), 2) * 100 per,
-           '${month}',
-           '${type}'
+           #{month},
+           #{type}
         from sys_org org
         left join (select org_flow, NVL(count(distinct doctor_flow), 0) allNUM
                      from res_doctor rd

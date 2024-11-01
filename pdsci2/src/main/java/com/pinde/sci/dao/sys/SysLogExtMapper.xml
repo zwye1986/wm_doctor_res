@@ -8,7 +8,7 @@
               and dept_flow = #{deptFlow}
            </if>
            <if test='logTime!=null and logTime!=""'>
-              and log_time like '${logTime}%'
+              and log_time like CONCAT(#{logTime},'%')
            </if>
            <if test='wsIds!=null and wsIds!=""'>
            	  and ws_id in

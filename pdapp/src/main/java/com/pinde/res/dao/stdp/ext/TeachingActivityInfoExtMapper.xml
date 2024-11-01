@@ -149,10 +149,10 @@
             </if>
         </if>
         <if test='userName!=null and userName!=""'>
-            AND SU.USER_NAME LIKE '%${userName}%'
+            AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='activityName!=null and activityName!=""'>
-            AND INFO.ACTIVITY_NAME LIKE '%${activityName}%'
+            AND INFO.ACTIVITY_NAME LIKE CONCAT(CONCAT('%', #{activityName}),'%')
         </if>
         <if test='yearMonth!=null and yearMonth!=""'>
             and SUBSTR(INFO.START_TIME,0,7) = #{yearMonth}
@@ -335,13 +335,13 @@
             </if>
         </if>
         <if test='userName!=null and userName!=""'>
-            AND SU.USER_NAME LIKE '%${userName}%'
+            AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='activityFlow!=null and activityFlow!=""'>
             AND INFO.ACTIVITY_FLOW = #{activityFlow}
         </if>
         <if test='activityName!=null and activityName!=""'>
-            AND INFO.ACTIVITY_NAME LIKE '%${activityName}%'
+            AND INFO.ACTIVITY_NAME LIKE CONCAT(CONCAT('%', #{activityName}),'%')
         </if>
         <if test='deptFlow!=null and deptFlow!=""'>
             AND INFO.DEPT_FLOW = #{deptFlow}
@@ -494,10 +494,10 @@
             </if>
         </if>
         <if test='userName!=null and userName!=""'>
-            AND SU.USER_NAME LIKE '%${userName}%'
+            AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='activityName!=null and activityName!=""'>
-            AND INFO.ACTIVITY_NAME LIKE '%${activityName}%'
+            AND INFO.ACTIVITY_NAME LIKE CONCAT(CONCAT('%', #{activityName}),'%')
         </if>
         <if test='yearMonth!=null and yearMonth!=""'>
             and SUBSTR(INFO.START_TIME,0,7) = #{yearMonth}
@@ -639,8 +639,8 @@
          AND INFO.IS_SCAN='Y'
         <if test='searchStr!=null and searchStr!=""'>
             and (
-            d.TRAINING_SPE_NAME like '%${searchStr}%'
-            OR su.USER_NAME like '%${searchStr}%'
+            d.TRAINING_SPE_NAME like CONCAT(CONCAT('%', #{searchStr}),'%')
+            OR su.USER_NAME like CONCAT(CONCAT('%', #{searchStr}),'%')
             )
         </if>
          ORDER BY EVAL_SCORE DESC,SU.USER_NAME, D.SESSION_NUMBER
@@ -678,8 +678,8 @@
         </if>
         <if test='searchStr!=null and searchStr!=""'>
             and (
-            d.TRAINING_SPE_NAME like '%${searchStr}%'
-            OR su.USER_NAME like '%${searchStr}%'
+            d.TRAINING_SPE_NAME like CONCAT(CONCAT('%', #{searchStr}),'%')
+            OR su.USER_NAME like CONCAT(CONCAT('%', #{searchStr}),'%')
             )
         </if>
          ORDER BY EVAL_SCORE DESC,SU.USER_NAME, D.SESSION_NUMBER

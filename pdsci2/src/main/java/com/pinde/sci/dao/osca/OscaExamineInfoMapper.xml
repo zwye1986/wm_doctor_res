@@ -435,7 +435,7 @@
             and su.org_Flow=#{orgFlow}
         </if>
         <if test="orgName!=null and orgName!=''">
-            and su.org_Name like '%${orgName}%'
+            and su.org_Name like CONCAT(CONCAT('%', #{orgName}),'%')
         </if>
         order by su.org_flow) A
     </select>
