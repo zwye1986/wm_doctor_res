@@ -306,6 +306,18 @@ public class SchedulingAuditCheck {
             if (CollectionUtil.isEmpty(bzSchMon)) {
                 item.setTip(item.getTip()+"【"+speName+"】专业下的最新方案暂未配置轮转方案！<br/>");
             }
+            //先把导入的数据转型
+            for (int i = 5; i < cellData.size(); i++) {
+                SchedulingDataInfo cellItem = cellData.get(i);
+                if ("lz".equalsIgnoreCase(cellItem.getDeptType())) {
+                    int bzindex = i - 1;
+                    SchedulingDataInfo schedulingDataInfo = cellData.get(bzindex);
+                    PbInfoItem byCellItem = getByCellItem(cellItem, schedulingDataInfo, item.getId(), cellData.get(0).getName(),cellData.get(3).getName());
+                    if (null != byCellItem) {
+                        this.compareList.add(byCellItem);
+                    }
+                }
+            }
 
             //根据学员的历史排班和当前排班，比较处理是否覆盖
             //1.不存在历史排班的情况下
@@ -348,18 +360,7 @@ public class SchedulingAuditCheck {
             }
 
             //stuHistoryBb不为空，这个学员存在历史的排班数据
-            //先把导入的数据转型
-            for (int i = 5; i < cellData.size(); i++) {
-                SchedulingDataInfo cellItem = cellData.get(i);
-                if ("lz".equalsIgnoreCase(cellItem.getDeptType())) {
-                    int bzindex = i - 1;
-                    SchedulingDataInfo schedulingDataInfo = cellData.get(bzindex);
-                    PbInfoItem byCellItem = getByCellItem(cellItem, schedulingDataInfo, item.getId(), cellData.get(0).getName(),cellData.get(3).getName());
-                    if (null != byCellItem) {
-                        this.compareList.add(byCellItem);
-                    }
-                }
-            }
+
             //再把历史数据转型
             getByCellItemHistory(stuHistoryBb);
             if (!checkSchMon) {
