@@ -64,15 +64,19 @@
         var url = "<s:url value='/jsres/doctorRecruit/submitPbImport'/>";
         jboxPostJson(url,JSON.stringify(window.dataList),function(resp){
             let code = JSON.parse(JSON.stringify(resp))['code'];
+            console.log(code)
             if (code == 200) {
                 jboxEndLoading();
-                jboxClose();
+                // jboxClose();
+                jboxInfo("导入成功");
+                // jboxCloseMessager();
             }else {
                 jboxEndLoading();
                 jboxError(JSON.parse(JSON.stringify(resp))['msg'])
             }
-            jboxEndLoading();
+            // jboxEndLoading();
         },null,false);
+
     }
 
     function initHead(head1,head2){
