@@ -39,6 +39,7 @@
         <module>pdcore</module>
         <module>pdsci2</module>
         <module>pdapp</module>
+        <module>excelModel</module>
     </modules>
 
     <!-- 项目依赖 -->
@@ -411,6 +412,12 @@
                 <version>2.6.14</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.pinde</groupId>
+                <artifactId>excelModel</artifactId>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

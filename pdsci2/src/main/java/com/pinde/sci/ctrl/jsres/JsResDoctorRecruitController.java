@@ -1,62 +1,38 @@
 package com.pinde.sci.ctrl.jsres;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.poi.word.WordUtil;
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.PkUtil;
-import com.pinde.core.util.StringUtil;
-import com.pinde.core.util.ZipUtil;
+import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.*;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sch.impl.PaiBanImportService;
 import com.pinde.sci.biz.sch.impl.SchRotationGroupBizImpl;
-import com.pinde.sci.biz.sys.IDeptBiz;
-import com.pinde.sci.biz.sys.IDictBiz;
-import com.pinde.sci.biz.sys.IUserBiz;
+import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
-import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.ctrl.sch.plan.domain.Dept;
+import com.pinde.sci.common.*;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
-import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
-import com.pinde.sci.enums.jsres.JsResDoctorAuditStatusEnum;
-import com.pinde.sci.enums.jsres.JsResTrainYearEnum;
-import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.res.AfterRecTypeEnum;
-import com.pinde.sci.enums.res.ResAssessTypeEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.enums.sys.OrgLevelEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
+import com.pinde.sci.enums.jsres.*;
+import com.pinde.sci.enums.res.*;
+import com.pinde.sci.enums.sys.*;
+import com.pinde.sci.excelListens.model.SchedulingDataModel;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
-import com.pinde.sci.model.jsres.*;
+import com.pinde.sci.model.jsres.ArrangTdVo;
+import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
-import liquibase.pro.packaged.E;
-import liquibase.pro.packaged.S;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.hdf.extractor.WordDocument;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.util.CellRangeAddressList;
-import org.apache.poi.ss.util.RegionUtil;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
+import org.apache.poi.ss.util.*;
+import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,12 +42,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.math.BigDecimal;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.net.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.YearMonth;
@@ -156,6 +131,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 
 	@Autowired
 	private IJsResPowerCfgBiz jsResPowerCfgBiz;
+
+
 
 
 	private static Logger logger = LoggerFactory.getLogger(JsResDoctorRecruitController.class);
@@ -1308,7 +1285,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 		HSSFCellStyle style = wb.createCellStyle();
 		style.setFont(font);
 		HSSFFont font1 = wb.createFont();
-		font1.setColor(HSSFColor.PALE_BLUE.index);
+//		font1.setColor(HSSFColor);
 		HSSFCellStyle style1 = wb.createCellStyle();
 		style1.setFont(font1);
 		HSSFFont font2 = wb.createFont();
@@ -1317,16 +1294,16 @@ public class JsResDoctorRecruitController extends GeneralController {
 		style2.setFont(font2);
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
 		sheet.setColumnWidth(0, 3000);
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		//填写工作簿内容
 		HSSFRow titleRow = sheet.createRow(0);
@@ -2196,17 +2173,17 @@ public class JsResDoctorRecruitController extends GeneralController {
 			//定义将用到的样式
 			HSSFCellStyle styleCenter = wb.createCellStyle();
 			//居中
-			styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-			styleCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+			styleCenter.setAlignment(HorizontalAlignment.CENTER);
+			styleCenter.setVerticalAlignment(VerticalAlignment.CENTER);
 			// 设置边框
-			styleCenter.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-			styleCenter.setBorderTop(HSSFCellStyle.BORDER_THIN);
-			styleCenter.setBorderRight(HSSFCellStyle.BORDER_THIN);
-			styleCenter.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+			styleCenter.setBorderBottom(BorderStyle.THIN);
+			styleCenter.setBorderTop(BorderStyle.THIN);
+			styleCenter.setBorderRight(BorderStyle.THIN);
+			styleCenter.setBorderLeft(BorderStyle.THIN);
 			//第一行 列宽自适应
 			HSSFRow rowDep = sheet.createRow(0);
 			//合并单元格
-			org.apache.poi.hssf.util.CellRangeAddress cellRowOne = new org.apache.poi.hssf.util.CellRangeAddress(0, 0, 0, 37);
+			CellRangeAddress cellRowOne = new CellRangeAddress(0, 0, 0, 37);
 			sheet.addMergedRegion(cellRowOne);
 			// 给合并单元格设置边框
 			excelSetBorderForMergeCell(wb, sheet, cellRowOne);
@@ -2216,7 +2193,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 			//第二行
 			HSSFRow rowTwo = sheet.createRow(1);
 			//合并单元格
-			org.apache.poi.hssf.util.CellRangeAddress cellRowTwo = new org.apache.poi.hssf.util.CellRangeAddress(1, 1, 11, 25);
+			CellRangeAddress cellRowTwo = new CellRangeAddress(1, 1, 11, 25);
 			sheet.addMergedRegion(cellRowTwo);
 			// 给合并单元格设置边框
 			excelSetBorderForMergeCell(wb, sheet, cellRowOne);
@@ -2224,7 +2201,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 			secCellZero.setCellStyle(styleCenter);
 			secCellZero.setCellValue("DOPS");
 			//合并单元格
-			org.apache.poi.hssf.util.CellRangeAddress cellFiveRowTwo = new org.apache.poi.hssf.util.CellRangeAddress(1, 1, 26, 36);
+			CellRangeAddress cellFiveRowTwo = new CellRangeAddress(1, 1, 26, 36);
 			sheet.addMergedRegion(cellFiveRowTwo);
 			// 给合并单元格设置边框
 			excelSetBorderForMergeCell(wb, sheet, cellRowOne);
@@ -2242,7 +2219,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 			for (int i = 0; i < titles.length; i++) {
 				if (i < 11 || i == 37){
 					// 合并单元格
-					org.apache.poi.hssf.util.CellRangeAddress cellRangePlanNo = new org.apache.poi.hssf.util.CellRangeAddress(1, 2, i, i);
+					CellRangeAddress cellRangePlanNo = new CellRangeAddress(1, 2, i, i);
 					sheet.addMergedRegion(cellRangePlanNo);
 					cellTitle = rowTwo.createCell(i);
 					// 给合并单元格设置边框
@@ -2424,15 +2401,15 @@ public class JsResDoctorRecruitController extends GeneralController {
 	 * @Author fengxf
 	 * @Date 2019/11/12
 	 */
-	private void excelSetBorderForMergeCell(HSSFWorkbook wb, HSSFSheet sheet, org.apache.poi.hssf.util.CellRangeAddress cellRangePlanNo){
+	private void excelSetBorderForMergeCell(HSSFWorkbook wb, HSSFSheet sheet, CellRangeAddress cellRangePlanNo){
 		// 下边框
-		RegionUtil.setBorderBottom(1, cellRangePlanNo, sheet, wb);
+		RegionUtil.setBorderBottom(BorderStyle.THIN, cellRangePlanNo, sheet);
 		// 左边框
-		RegionUtil.setBorderLeft(1, cellRangePlanNo, sheet, wb);
+		RegionUtil.setBorderLeft(BorderStyle.THIN, cellRangePlanNo, sheet);
 		// 右边框
-		RegionUtil.setBorderRight(1, cellRangePlanNo, sheet, wb);
+		RegionUtil.setBorderRight(BorderStyle.THIN, cellRangePlanNo, sheet);
 		// 上边框
-		RegionUtil.setBorderTop(1, cellRangePlanNo, sheet, wb);
+		RegionUtil.setBorderTop(BorderStyle.THIN, cellRangePlanNo, sheet);
 	}
 
 	@RequestMapping(value = "/exportCycleResultsByDoc")
@@ -3962,129 +3939,142 @@ public class JsResDoctorRecruitController extends GeneralController {
 	}
 
 	//排班  下载导入模板
-	@RequestMapping(value = "/expertSchTemp")
-	@ResponseBody
-	public void expertSchTemp(HttpServletRequest request, HttpServletResponse response,String rotationFlow){
-//		SchRotation rotation = rotationBiz.readSchRotation(rotationFlow);
-		try {
-			String[] titleArray = {"学员姓名","身份证号","专业","年级","年限"};
-			List<String> titles =new ArrayList<>(Arrays.asList(titleArray));
-
-			//生成当前年月往后推三年
-			int month = 3 * 12;
-			Calendar calendar = Calendar.getInstance();
-			// 创建SimpleDateFormat对象，用于格式化日期
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
-			// 循环输出当前年月往后12个月的具体年月
-			for (int i = 0; i < month; i++) {
-				// 将当前年月格式化为yyyy-MM格式
-				String yearMonth = sdf.format(new Date(calendar.getTimeInMillis()));
-//					System.out.println(yearMonth);
-				titles.add(yearMonth);
-				// 将年月递增一个月
-				calendar.add(Calendar.MONTH, 1);
-			}
-			titleArray = titles.toArray(new String[titles.size()]);
-			HSSFWorkbook workbook = new HSSFWorkbook();
-			HSSFSheet sheet = workbook.createSheet();
-			HSSFRow row = sheet.createRow(0);
-			for (int i = 0; i < titleArray.length; i++) {
-				String title = titleArray[i];
-				HSSFCell cell = row.createCell(i);
-				cell.setCellValue(title);
-			}
-
-			HSSFRow row1 = sheet.createRow(1);
-			for (int i = 0; i < 5; i++) {
-				String title = titleArray[i];
-				if("学员姓名".equals(title)){
-					HSSFCell cell = row1.createCell(i);
-					cell.setCellValue("例:张三");
-				}
-				if("身份证号".equals(title)){
-					HSSFCell cell = row1.createCell(i);
-					cell.setCellValue("例:4312211......");
-				}
-				if("专业".equals(title)){
-					HSSFCell cell = row1.createCell(i);
-					cell.setCellValue("例:内科");
-				}
-				if("年级".equals(title)){
-					HSSFCell cell = row1.createCell(i);
-					cell.setCellValue("例:2022");
-				}
-				if("年限".equals(title)){
-					HSSFCell cell = row1.createCell(i);
-					cell.setCellValue("例:三年");
-				}
-			}
-/*			//标准科室下拉框填空
-			List<SchRotationDept> standardRotationDeptList = schRotationDeptBiz.searchSchRotationDept(rotationFlow);
-			if (null!=standardRotationDeptList && standardRotationDeptList.size()>0){
-				ArrayList<String> SchRotationDept = new ArrayList<>();
-				for (SchRotationDept dept : standardRotationDeptList) {
-					SchRotationDept.add(dept.getStandardDeptName());
-				}
-				String[] SchRotationDeptArray = SchRotationDept.toArray(new String[SchRotationDept.size()]);
-				selectList(workbook, 2, 2, SchRotationDeptArray );
-			}*/
-
-			//轮转科室下拉框填空
-//			SysDept sysDept = new SysDept();
-//			sysDept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-//			List<SysDept> schDeptList = deptBiz.searchDept(sysDept);
-//			List<SchDeptExternalRel> schDeptExternalRels = deptExternalRelBiz.readSchDeptExtRelByRelOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-			ArrayList<String> list = new ArrayList<>();
-//			for (SysDept dept : schDeptList) {
-//				list.add(dept.getDeptName().trim());
+//	@RequestMapping(value = "/expertSchTemp")
+//	@ResponseBody
+//	public void expertSchTemp(HttpServletRequest request, HttpServletResponse response,String rotationFlow){
+////		SchRotation rotation = rotationBiz.readSchRotation(rotationFlow);
+//		try {
+//			String[] titleArray = {"学员姓名","身份证号","专业","年级","年限"};
+//			List<String> titles =new ArrayList<>(Arrays.asList(titleArray));
+//
+//			//生成当前年月往后推三年
+//			int month = 3 * 12;
+//			Calendar calendar = Calendar.getInstance();
+//			// 创建SimpleDateFormat对象，用于格式化日期
+//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+//			// 循环输出当前年月往后12个月的具体年月
+//			for (int i = 0; i < month; i++) {
+//				// 将当前年月格式化为yyyy-MM格式
+//				String yearMonth = sdf.format(new Date(calendar.getTimeInMillis()));
+////					System.out.println(yearMonth);
+//				titles.add(yearMonth);
+//				// 将年月递增一个月
+//				calendar.add(Calendar.MONTH, 1);
 //			}
-//			//对外开发科室
-//			if(CollectionUtils.isNotEmpty(schDeptExternalRels)){
-//				for (SchDeptExternalRel schDeptExternalRel : schDeptExternalRels) {
-//					list.add(schDeptExternalRel.getDeptName()+"（"+schDeptExternalRel.getOrgName()+"）");
+//			titleArray = titles.toArray(new String[titles.size()]);
+//			HSSFWorkbook workbook = new HSSFWorkbook();
+//			HSSFSheet sheet = workbook.createSheet();
+//			HSSFRow row = sheet.createRow(0);
+//			for (int i = 0; i < titleArray.length; i++) {
+//				String title = titleArray[i];
+//				HSSFCell cell = row.createCell(i);
+//				cell.setCellValue(title);
+//			}
+//
+//			HSSFRow row1 = sheet.createRow(1);
+//			for (int i = 0; i < 5; i++) {
+//				String title = titleArray[i];
+//				if("学员姓名".equals(title)){
+//					HSSFCell cell = row1.createCell(i);
+//					cell.setCellValue("例:张三");
+//				}
+//				if("身份证号".equals(title)){
+//					HSSFCell cell = row1.createCell(i);
+//					cell.setCellValue("例:4312211......");
+//				}
+//				if("专业".equals(title)){
+//					HSSFCell cell = row1.createCell(i);
+//					cell.setCellValue("例:内科");
+//				}
+//				if("年级".equals(title)){
+//					HSSFCell cell = row1.createCell(i);
+//					cell.setCellValue("例:2022");
+//				}
+//				if("年限".equals(title)){
+//					HSSFCell cell = row1.createCell(i);
+//					cell.setCellValue("例:三年");
 //				}
 //			}
-			//新的获取轮转科室下拉框的方法
-			List<LzDeptItem> lzDeptItems = paiBanImportService.deptSelectData(GlobalContext.getCurrentUser().getOrgFlow());
-			if (CollectionUtil.isNotEmpty(lzDeptItems)) {
-				for (LzDeptItem lzDeptItem : lzDeptItems) {
-					if (StringUtils.isEmpty(lzDeptItem.getOrgFlow())) {
-						continue;
-					}
-					if (lzDeptItem.getOrgFlow().equalsIgnoreCase(GlobalContext.getCurrentUser().getOrgFlow())) {
-						list.add(lzDeptItem.getDeptName().trim());
-					}
-					else {
-						list.add(lzDeptItem.getDeptName()+"（"+lzDeptItem.getOrgName()+"）");
-					}
-				}
-			}
-			String[] deptArray = list.toArray(new String[list.size()]);
-			selectList(workbook, 5, titles.size() -1, deptArray );
-//			selectList(workbook, 3, 3, deptArray );
+///*			//标准科室下拉框填空
+//			List<SchRotationDept> standardRotationDeptList = schRotationDeptBiz.searchSchRotationDept(rotationFlow);
+//			if (null!=standardRotationDeptList && standardRotationDeptList.size()>0){
+//				ArrayList<String> SchRotationDept = new ArrayList<>();
+//				for (SchRotationDept dept : standardRotationDeptList) {
+//					SchRotationDept.add(dept.getStandardDeptName());
+//				}
+//				String[] SchRotationDeptArray = SchRotationDept.toArray(new String[SchRotationDept.size()]);
+//				selectList(workbook, 2, 2, SchRotationDeptArray );
+//			}*/
+//
+//			//轮转科室下拉框填空
+////			SysDept sysDept = new SysDept();
+////			sysDept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
+////			List<SysDept> schDeptList = deptBiz.searchDept(sysDept);
+////			List<SchDeptExternalRel> schDeptExternalRels = deptExternalRelBiz.readSchDeptExtRelByRelOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
+//			ArrayList<String> list = new ArrayList<>();
+////			for (SysDept dept : schDeptList) {
+////				list.add(dept.getDeptName().trim());
+////			}
+////			//对外开发科室
+////			if(CollectionUtils.isNotEmpty(schDeptExternalRels)){
+////				for (SchDeptExternalRel schDeptExternalRel : schDeptExternalRels) {
+////					list.add(schDeptExternalRel.getDeptName()+"（"+schDeptExternalRel.getOrgName()+"）");
+////				}
+////			}
+//			//新的获取轮转科室下拉框的方法
+//			List<LzDeptItem> lzDeptItems = paiBanImportService.deptSelectData(GlobalContext.getCurrentUser().getOrgFlow());
+//			if (CollectionUtil.isNotEmpty(lzDeptItems)) {
+//				for (LzDeptItem lzDeptItem : lzDeptItems) {
+//					if (StringUtils.isEmpty(lzDeptItem.getOrgFlow())) {
+//						continue;
+//					}
+//					if (lzDeptItem.getOrgFlow().equalsIgnoreCase(GlobalContext.getCurrentUser().getOrgFlow())) {
+//						list.add(lzDeptItem.getDeptName().trim());
+//					}
+//					else {
+//						list.add(lzDeptItem.getDeptName()+"（"+lzDeptItem.getOrgName()+"）");
+//					}
+//				}
+//			}
+//			String[] deptArray = list.toArray(new String[list.size()]);
+//			selectList(workbook, 5, titles.size() -1, deptArray );
+////			selectList(workbook, 3, 3, deptArray );
+//
+//			workbook.setSheetName(0, "排班安排导入模板");
+//			try {
+//				//一个流 两个头
+//				//文件名称
+//				String filename = "排班安排导入模板.xls";
+//				response.setContentType("application/ms-excel;charset=UTF-8");
+//				response.setCharacterEncoding("UTF-8");
+//				String encodedFileName = null;
+//				if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0) {
+//					encodedFileName = URLEncoder.encode(filename, "UTF-8");
+//				} else {
+//					encodedFileName = new String(filename.getBytes("UTF-8"), "ISO8859-1");
+//				}
+//				response.setHeader("Content-Disposition", "attachment; filename=" + encodedFileName);//设置文件头编码方式和文件名
+//				OutputStream out = response.getOutputStream();
+//				workbook.write(out);
+//			} catch (Exception e) {
+//				logger.info("下载模板报错误:"+e);
+//			}
+//		}catch (Exception e){
+//			logger.info("下载模板报错误:"+e);
+//		}
+//	}
 
-			workbook.setSheetName(0, "排班安排导入模板");
-			try {
-				//一个流 两个头
-				//文件名称
-				String filename = "排班安排导入模板.xls";
-				response.setContentType("application/ms-excel;charset=UTF-8");
-				response.setCharacterEncoding("UTF-8");
-				String encodedFileName = null;
-				if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0) {
-					encodedFileName = URLEncoder.encode(filename, "UTF-8");
-				} else {
-					encodedFileName = new String(filename.getBytes("UTF-8"), "ISO8859-1");
-				}
-				response.setHeader("Content-Disposition", "attachment; filename=" + encodedFileName);//设置文件头编码方式和文件名
-				OutputStream out = response.getOutputStream();
-				workbook.write(out);
-			} catch (Exception e) {
-				logger.info("下载模板报错误:"+e);
-			}
-		}catch (Exception e){
-			logger.info("下载模板报错误:"+e);
-		}
+
+	/**
+	 * ~~~~~~~~~溺水的鱼~~~~~~~~
+	 * @Author: 吴强
+	 * @Date: 2024/10/24 10:43
+	 * @Description: 重构的模板导出--排班导入模板
+	 */
+	@RequestMapping(value = "/expertSchTemp")
+	@ResponseBody
+	public void expertSchTemp(HttpServletRequest request, HttpServletResponse response,String rotationFlow) throws IOException {
+		schArrangeResultBiz.expertSchTemp(request,response,rotationFlow);
 	}
 
 
@@ -4199,11 +4189,24 @@ public class JsResDoctorRecruitController extends GeneralController {
 		}
 	}
 
+//	@PostMapping("/updateItemImportData")
+//	@ResponseBody
+//	public Map<String,Object> updateItemImportData(@RequestBody List<Map<String, ArrangTdVo>> data){
+//		return schArrangeResultBiz.updateImportData(data);
+//	}
+
 	@PostMapping("/updateItemImportData")
 	@ResponseBody
-	public Map<String,Object> updateItemImportData(@RequestBody List<Map<String, ArrangTdVo>> data){
-		return schArrangeResultBiz.updateImportData(data);
+	public Map<String,Object> checkRowData(@RequestBody List<SchedulingDataModel> data){
+		return schArrangeResultBiz.checkRowData(data);
 	}
+
+	@PostMapping("/submitPbImport")
+	@ResponseBody
+	public Map<String,Object> submitPbImport(@RequestBody List<SchedulingDataModel> data){
+		return schArrangeResultBiz.submitPbImport(data);
+	}
+
 
 	@PostMapping("/saveDbImportArrang")
 	@ResponseBody

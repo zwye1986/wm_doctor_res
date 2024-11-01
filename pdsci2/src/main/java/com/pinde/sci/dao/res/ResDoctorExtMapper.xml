@@ -3124,5 +3124,40 @@
 	<select id="getSchools" resultType="string">
 		SELECT DISTINCT SCHOOL FROM RES_DOCTOR WHERE SCHOOL IS NOT NULL
 	</select>
+    <select id="listDoctorResult" resultType="com.pinde.sci.model.mo.SchArrangeResult">
+		SELECT RESULT_FLOW,DOCTOR_FLOW,DOCTOR_NAME,STANDARD_DEPT_ID,STANDARD_DEPT_NAME,SCH_START_DATE,SCH_END_DATE,SCH_DEPT_FLOW,SCH_DEPT_NAME,SCH_MONTH
+		FROM SCH_ARRANGE_RESULT
+		WHERE RECORD_STATUS = 'Y'
+		<choose>
+			<when test="null != userIds and userIds.size() &gt; 0 ">
+				AND DOCTOR_FLOW in
+				<foreach collection="userIds" item="userId" open="(" separator="," close=")">
+					#{userId}
+				</foreach>
+			</when>
+		    <otherwise>
+				AND 1=-1
+			</otherwise>
+		</choose>
+	</select>
+    <select id="resRecCount" resultType="com.pinde.sci.excelListens.model.ResRecItem">
+		SELECT count(r.REC_FLOW) COUNT_NUM,re.RESULT_FLOW RESULT_FLOW FROM RES_REC r
+		LEFT JOIN RES_DOCTOR_SCH_PROCESS p on r.PROCESS_FLOW = p.PROCESS_FLOW
+		LEFT JOIN SCH_ARRANGE_RESULT re on p.SCH_RESULT_FLOW = re.RESULT_FLOW
+		WHERE r.RECORD_STATUS = 'Y'
+		  AND p.RECORD_STATUS = 'Y'
+		  <choose>
+			  <when test="null != resultFlowList and resultFlowList.size() &gt;0">
+				  AND re.RESULT_FLOW IN
+				  <foreach collection="resultFlowList" item="id" open="(" separator="," close=")">
+					  #{id}
+				  </foreach>
+			  </when>
+		      <otherwise>
+				  AND 1=-1
+			  </otherwise>
+		  </choose>
+		GROUP BY re.RESULT_FLOW
+	</select>
 
 </mapper>

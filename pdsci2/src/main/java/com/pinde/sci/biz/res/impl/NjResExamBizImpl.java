@@ -21,13 +21,12 @@ import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.poi.POIXMLDocument;
+
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -513,16 +512,20 @@ public class NjResExamBizImpl implements INjResExamBiz {
             // 还原流信息
             inS = new PushbackInputStream(inS);
         }
-        // EXCEL2003使用的是微软的文件系统
-        if (POIFSFileSystem.hasPOIFSHeader(inS)) {
-            return new HSSFWorkbook(inS);
+        //        // EXCEL2003使用的是微软的文件系统
+//        if (POIFSFileSystem.hasPOIFSHeader(inS)) {
+//            return new HSSFWorkbook(inS);
+//        }
+//        // EXCEL2007使用的是OOM文件格式
+//        if (POIXMLDocument.hasOOXMLHeader(inS)) {
+//            // 可以直接传流参数，但是推荐使用OPCPackage容器打开
+//            return new XSSFWorkbook(OPCPackage.open(inS));
+//        }
+        try{
+            return WorkbookFactory.create(inS);
+        }catch (Exception e) {
+            throw new IOException("不能解析的excel版本");
         }
-        // EXCEL2007使用的是OOM文件格式
-        if (POIXMLDocument.hasOOXMLHeader(inS)) {
-            // 可以直接传流参数，但是推荐使用OPCPackage容器打开
-            return new XSSFWorkbook(OPCPackage.open(inS));
-        }
-        throw new IOException("不能解析的excel版本");
     }
 
     private void setRecordInfo(TjDocinfo docInfo, boolean isAdd) {
@@ -605,26 +608,26 @@ public class NjResExamBizImpl implements INjResExamBiz {
         HSSFSheet sheet = wb.createSheet("sheet1");
         //定义将用到的样式
         HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-        styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
         HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-        styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-        styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleLeft.setAlignment(HorizontalAlignment.LEFT);
+        styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
         HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-        stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        stylevwc.setAlignment(HorizontalAlignment.CENTER);
+        stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
         HSSFFont font =wb.createFont();
         font.setFontHeightInPoints((short)17);
         HSSFFont fontTwo =wb.createFont();
         fontTwo.setFontHeightInPoints((short)12);
         HSSFCellStyle style = wb.createCellStyle();
-        style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+        style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
         HSSFCellStyle styleTwo = wb.createCellStyle();
-        styleTwo.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+        styleTwo.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
         HSSFCellStyle styleThree = wb.createCellStyle();
-        styleThree.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+        styleThree.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
         String[] titles =null;
         titles= new String[]{
                 "序号",
@@ -685,26 +688,26 @@ public class NjResExamBizImpl implements INjResExamBiz {
         HSSFSheet sheet = wb.createSheet("sheet1");
         //定义将用到的样式
         HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-        styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
         HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-        styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-        styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleLeft.setAlignment(HorizontalAlignment.LEFT);
+        styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
         HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-        stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        stylevwc.setAlignment(HorizontalAlignment.CENTER);
+        stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
         HSSFFont font =wb.createFont();
         font.setFontHeightInPoints((short)17);
         HSSFFont fontTwo =wb.createFont();
         fontTwo.setFontHeightInPoints((short)12);
         HSSFCellStyle style = wb.createCellStyle();
-        style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+        style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
         HSSFCellStyle styleTwo = wb.createCellStyle();
-        styleTwo.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+        styleTwo.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
         HSSFCellStyle styleThree = wb.createCellStyle();
-        styleThree.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+        styleThree.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
         String[] titles =null;
         titles= new String[]{
                 "序号",

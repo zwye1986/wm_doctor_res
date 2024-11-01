@@ -218,4 +218,8 @@ public interface SchArrangeResultExtMapper {
 
 	int updateResDoctorSchProcessToDel(@Param("resultFlows") List<String> resultFlows);
 
+
+	List<SchArrangeResult> getAllByDoctorFlow(@Param("doctorFlow")String doctorFlow,
+											  @Param("delFlag")Boolean delFlag);
+
 }

@@ -22,15 +22,12 @@ import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.SysDeptExample.Criteria;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.POIXMLDocument;
+
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -385,16 +382,20 @@ public class DeptBizImpl implements IDeptBiz {
 			// 还原流信息
 			inS = new PushbackInputStream(inS);
 		}
-		// EXCEL2003使用的是微软的文件系统
-		if (POIFSFileSystem.hasPOIFSHeader(inS)) {
-			return new HSSFWorkbook(inS);
+//		// EXCEL2003使用的是微软的文件系统
+//		if (POIFSFileSystem.hasPOIFSHeader(inS)) {
+//			return new HSSFWorkbook(inS);
+//		}
+//		// EXCEL2007使用的是OOM文件格式
+//		if (POIXMLDocument.hasOOXMLHeader(inS)) {
+//			// 可以直接传流参数，但是推荐使用OPCPackage容器打开
+//			return new XSSFWorkbook(OPCPackage.open(inS));
+//		}
+		try{
+			return WorkbookFactory.create(inS);
+		}catch (Exception e) {
+			throw new IOException("不能解析的excel版本");
 		}
-		// EXCEL2007使用的是OOM文件格式
-		if (POIXMLDocument.hasOOXMLHeader(inS)) {
-			// 可以直接传流参数，但是推荐使用OPCPackage容器打开
-			return new XSSFWorkbook(OPCPackage.open(inS));
-		}
-		throw new IOException("不能解析的excel版本");
 	}
 
 	private int parseExcel(Workbook wb,String orgFlow){
@@ -435,7 +436,7 @@ public class DeptBizImpl implements IDeptBiz {
 					Cell cell = r.getCell(j);
 					if(cell!=null && StringUtil.isNotBlank(cell.toString().trim())){
 						if(cell!=null){
-							cell.setCellType(Cell.CELL_TYPE_STRING);
+							cell.setCellType(CellType.STRING);
 							value = cell.getStringCellValue().trim();
 						}
 					}

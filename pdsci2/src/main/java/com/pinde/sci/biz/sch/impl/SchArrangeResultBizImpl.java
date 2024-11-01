@@ -1,28 +1,26 @@
 package com.pinde.sci.biz.sch.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateTime;
-import cn.hutool.core.date.DateUnit;
-import cn.hutool.core.util.*;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
+import cn.hutool.core.util.IdcardUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.extra.pinyin.PinyinUtil;
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.write.metadata.WriteSheet;
+import com.alibaba.fastjson.JSONObject;
+import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.PkUtil;
-import com.pinde.core.util.StringUtil;
-import com.pinde.core.util.TimeUtil;
+import com.pinde.core.util.*;
+import com.pinde.excelUtils.enums.NumberEngEnum;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.*;
-import com.pinde.sci.biz.sys.ICfgBiz;
-import com.pinde.sci.biz.sys.IDeptBiz;
-import com.pinde.sci.biz.sys.IOrgBiz;
-import com.pinde.sci.biz.sys.IUserBiz;
+import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.biz.sys.impl.CfgBizImpl;
-import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.common.InitConfig;
+import com.pinde.sci.common.*;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
@@ -30,48 +28,36 @@ import com.pinde.sci.dao.sys.SysDeptExtMapper;
 import com.pinde.sci.dao.sys.SysUserExtMapper;
 import com.pinde.sci.enums.res.RecDocCategoryEnum;
 import com.pinde.sci.enums.res.ResRecTypeEnum;
-import com.pinde.sci.enums.sch.SchArrangeStatusEnum;
-import com.pinde.sci.enums.sch.SchArrangeTypeEnum;
-import com.pinde.sci.enums.sch.SchStageEnum;
-import com.pinde.sci.enums.sch.SchUnitEnum;
+import com.pinde.sci.enums.sch.*;
 import com.pinde.sci.enums.sys.DictTypeEnum;
+import com.pinde.sci.excelListens.SchedulingAuditCheck;
+import com.pinde.sci.excelListens.SchedulingAuditRead;
+import com.pinde.sci.excelListens.model.*;
 import com.pinde.sci.form.sch.SchArrangeResultForm;
 import com.pinde.sci.form.sch.SelectDept;
 import com.pinde.sci.model.jsres.*;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.SchArrangeResultExample.Criteria;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-import liquibase.pro.packaged.S;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.POIXMLDocument;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
+import org.apache.poi.ss.usermodel.*;
+import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PushbackInputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -98,8 +84,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	private ISchArrangeDoctorBiz arrdocBiz;
 	@Autowired
 	private ISchArrangeDoctorDeptBiz arrDocDeptBiz;
-	@Autowired
-	private SchArrangeResultExtMapper resultMapper;
+//	@Autowired
+//	private SchArrangeResultExtMapper resultMapper;
 	@Autowired
 	private ISchRotationDeptBiz rotationDeptBiz;
 	@Autowired
@@ -662,7 +648,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	}
 	@Override
 	public List<SchArrangeResult> searchArrangeResultByDateAndOrg1(Map<String,Object> map){
-		return resultMapper.searchArrangeResultByDateAndOrgByMapNew(map);
+		return resultExtMapper.searchArrangeResultByDateAndOrgByMapNew(map);
 	}
 
 	@Override
@@ -690,7 +676,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 	@Override
 	public List<SchArrangeResult> searchArrangeResultByDateAndDoctorFlow(String startDate,String endDate,String docFlow){
-		return resultMapper.searchArrangeResultByDateAndDoctorFlow(startDate,endDate,docFlow);
+		return resultExtMapper.searchArrangeResultByDateAndDoctorFlow(startDate,endDate,docFlow);
 	}
 
 	@Override
@@ -703,17 +689,17 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		paramMap.put("endDate",endDate);
 		paramMap.put("doctorList",doctorList);
 		paramMap.put("schDeptFlow",schDeptFlow);
-		return resultMapper.searchArrangeResultByDateAndDoctorFlows(paramMap);
+		return resultExtMapper.searchArrangeResultByDateAndDoctorFlows(paramMap);
 	}
 
 	@Override
 	public List<Map<String,Object>> searchArrangeResultNotInDates(String startDate,String endDate,String docFlow){
-		return resultMapper.searchArrangeResultNotInDates(startDate,endDate,docFlow);
+		return resultExtMapper.searchArrangeResultNotInDates(startDate,endDate,docFlow);
 	}
 
 	@Override
 	public List<SchArrangeResult> searchCycleArrangeResults(Map<String,Object> paramMap){
-		return resultMapper.searchCycleArrangeResults(paramMap);
+		return resultExtMapper.searchCycleArrangeResults(paramMap);
 	}
 
 	@Override
@@ -742,7 +728,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 	@Override
 	public List<Map<String,Object>> countResultByUser(List<String> userFlows){
-		return resultMapper.countResultByUser(userFlows);
+		return resultExtMapper.countResultByUser(userFlows);
 	}
 
 	@Override
@@ -1534,7 +1520,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 	@Override
 	public List<SchArrangeResult> schArrangeResultQuery(Map<String, Object> map) {
-		List<SchArrangeResult> arrangeResultList=resultMapper.schArrangeResultQuery(map);
+		List<SchArrangeResult> arrangeResultList=resultExtMapper.schArrangeResultQuery(map);
 		return arrangeResultList;
 	}
 
@@ -2318,7 +2304,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		if(paramMap.get("workOrgId")==null&&paramMap.get("workOrgName")==null){
 			return null;
 		}
-		return resultMapper.searchCycleArrangeResultsForUni(paramMap);
+		return resultExtMapper.searchCycleArrangeResultsForUni(paramMap);
 	}
 
 	@Override
@@ -2326,7 +2312,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		if(paramMap.get("workOrgId")==null&&paramMap.get("workOrgName")==null){
 			return null;
 		}
-		return resultMapper.searchCycleArrangeResultsForUniTwo(paramMap);
+		return resultExtMapper.searchCycleArrangeResultsForUniTwo(paramMap);
 	}
 
 	@Override
@@ -2448,92 +2434,94 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		return parseExcelToScheduing2(wb,rotationFlow,trainingTypeId);
 	}
 
-	@Override
-	public Map<String,Object> importSchedulingAuditExcelCache(MultipartFile file) throws IOException, InvalidFormatException {
-		Map<String, Object> result = new HashMap<>();
-		InputStream is = file.getInputStream();
-		byte[] fileData = new byte[(int) file.getSize()];
-		is.read(fileData);
-		Workbook wb =  createUserWorkbook(new ByteInputStream(fileData, (int)file.getSize() ));
-		int sheetNum = wb.getNumberOfSheets();
-		if(sheetNum<=0){
-			return result;
-		}
-		List<String> headList = new ArrayList<>();
-		Sheet sheetAt = wb.getSheetAt(0);
-		Row headRow = sheetAt.getRow(0);
-		short lastCellNum = headRow.getLastCellNum();
-		if (lastCellNum<1) {
-			return result;
-		}
-		for (int i = 0; i < lastCellNum; i++) {
-			String stringCellValue = headRow.getCell(i).getStringCellValue();
-			headList.add(stringCellValue);
-		}
-		result.put("headers",headList);
-		int lastRowNum = sheetAt.getLastRowNum();
-		if (lastRowNum <1) {
-			return result;
-		}
-		List<Map<String, String>> data = new ArrayList<>();
-		Map<String, String> dataItem = new HashMap<>();
-		for (int i = 1; i <= lastRowNum; i++) {
-			Row row = sheetAt.getRow(i);
-			if (null == row) {
-				//忽略空行
-				continue;
-			}
-			dataItem = new HashMap<>();
-			for (int j = 0; j < headList.size(); j++) {
-				String column = headList.get(j);
-				Cell cell = row.getCell(j);
-				if(null != cell){
-					cell.setCellType(Cell.CELL_TYPE_STRING);
-					String stringCellValue = cell.getStringCellValue();
-					if (StringUtil.isBlank(stringCellValue)) {
-						dataItem.put(column,null);
-						continue;
-					}
-					dataItem.put(column,stringCellValue);
-					continue;
-				}
-				dataItem.put(column,null);
-			}
-			data.add(dataItem);
-		}
-		//数据处理
-		if (CollectionUtil.isEmpty(data)) {
-			result.put("data",new ArrayList<>());
-			result.put("flag",false);
-			return result;
-		}
-		List<Map<String, ArrangTdVo>> list = new ArrayList<>();
-		Map<String, ArrangTdVo> rowItem = new HashMap<>();
-		ArrangTdVo item = new ArrangTdVo();
-		for (Map<String, String> datum : data) {
-			rowItem = new HashMap<>();
-			if (CollectionUtil.isEmpty(datum)) {
-				list.add(rowItem);
-				continue;
-			}
-			item = new ArrangTdVo();
-			item.setDisable(true);
-			rowItem.put("recurit",item);
-			for (String key : datum.keySet()) {
-				item = new ArrangTdVo();
-				item.setContext(StringUtils.isEmpty(datum.get(key))? "":datum.get(key));
-				item.setDisable(true);
-				item.setTip("");
-				rowItem.put(key,item);
-			}
-			list.add(rowItem);
-		}
-//		Map<String, Object> res = checkData(data);
-		Map<String, Object> res = checkReturnData(list);
-		result.put("data",res.get("data"));
-		result.put("flag",res.get("flag"));
-		return result;
-	}
+//	@Override
+//	public Map<String,Object> importSchedulingAuditExcelCache(MultipartFile file) throws IOException, InvalidFormatException {
+//		Map<String, Object> result = new HashMap<>();
+//		InputStream is = file.getInputStream();
+//		byte[] fileData = new byte[(int) file.getSize()];
+//		is.read(fileData);
+//		Workbook wb =  createUserWorkbook(new ByteInputStream(fileData, (int)file.getSize() ));
+//		int sheetNum = wb.getNumberOfSheets();
+//		if(sheetNum<=0){
+//			return result;
+//		}
+//		List<String> headList = new ArrayList<>();
+//		Sheet sheetAt = wb.getSheetAt(0);
+//		Row headRow = sheetAt.getRow(0);
+//		short lastCellNum = headRow.getLastCellNum();
+//		if (lastCellNum<1) {
+//			return result;
+//		}
+//		for (int i = 0; i < lastCellNum; i++) {
+//			String stringCellValue = headRow.getCell(i).getStringCellValue();
+//			headList.add(stringCellValue);
+//		}
+//		result.put("headers",headList);
+//		int lastRowNum = sheetAt.getLastRowNum();
+//		if (lastRowNum <1) {
+//			return result;
+//		}
+//		List<Map<String, String>> data = new ArrayList<>();
+//		Map<String, String> dataItem = new HashMap<>();
+//		for (int i = 1; i <= lastRowNum; i++) {
+//			Row row = sheetAt.getRow(i);
+//			if (null == row) {
+//				//忽略空行
+//				continue;
+//			}
+//			dataItem = new HashMap<>();
+//			for (int j = 0; j < headList.size(); j++) {
+//				String column = headList.get(j);
+//				Cell cell = row.getCell(j);
+//				if(null != cell){
+//					cell.setCellType(CellType.STRING);
+//					String stringCellValue = cell.getStringCellValue();
+//					if (StringUtil.isBlank(stringCellValue)) {
+//						dataItem.put(column,null);
+//						continue;
+//					}
+//					dataItem.put(column,stringCellValue);
+//					continue;
+//				}
+//				dataItem.put(column,null);
+//			}
+//			data.add(dataItem);
+//		}
+//		//数据处理
+//		if (CollectionUtil.isEmpty(data)) {
+//			result.put("data",new ArrayList<>());
+//			result.put("flag",false);
+//			return result;
+//		}
+//		List<Map<String, ArrangTdVo>> list = new ArrayList<>();
+//		Map<String, ArrangTdVo> rowItem = new HashMap<>();
+//		ArrangTdVo item = new ArrangTdVo();
+//		for (Map<String, String> datum : data) {
+//			rowItem = new HashMap<>();
+//			if (CollectionUtil.isEmpty(datum)) {
+//				list.add(rowItem);
+//				continue;
+//			}
+//			item = new ArrangTdVo();
+//			item.setDisable(true);
+//			rowItem.put("recurit",item);
+//			for (String key : datum.keySet()) {
+//				item = new ArrangTdVo();
+//				item.setContext(StringUtils.isEmpty(datum.get(key))? "":datum.get(key));
+//				item.setDisable(true);
+//				item.setTip("");
+//				rowItem.put(key,item);
+//			}
+//			list.add(rowItem);
+//		}
+////		Map<String, Object> res = checkData(data);
+//		Map<String, Object> res = checkReturnData(list);
+//		result.put("data",res.get("data"));
+//		result.put("flag",res.get("flag"));
+//		return result;
+//	}
+
+
 
 	@Override
 	public Map<String,Object> updateImportData(List<Map<String, ArrangTdVo>> data) {
@@ -3190,16 +3178,20 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			// 还原流信息
 			inS = new PushbackInputStream(inS);
 		}
-		// EXCEL2003使用的是微软的文件系统
-		if (POIFSFileSystem.hasPOIFSHeader(inS)) {
-			return new HSSFWorkbook(inS);
+//		// EXCEL2003使用的是微软的文件系统
+//		if (POIFSFileSystem.hasPOIFSHeader(inS)) {
+//			return new HSSFWorkbook(inS);
+//		}
+//		// EXCEL2007使用的是OOM文件格式
+//		if (POIXMLDocument.hasOOXMLHeader(inS)) {
+//			// 可以直接传流参数，但是推荐使用OPCPackage容器打开
+//			return new XSSFWorkbook(OPCPackage.open(inS));
+//		}
+		try{
+			return WorkbookFactory.create(inS);
+		}catch (Exception e) {
+			throw new IOException("不能解析的excel版本");
 		}
-		// EXCEL2007使用的是OOM文件格式
-		if (POIXMLDocument.hasOOXMLHeader(inS)) {
-			// 可以直接传流参数，但是推荐使用OPCPackage容器打开
-			return new XSSFWorkbook(OPCPackage.open(inS));
-		}
-		throw new IOException("不能解析的excel版本");
 	}
 
 	private static String _doubleTrans(double d){
@@ -3211,261 +3203,261 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	}
 
 	// 读取数据
-	private int parseExcelToScheduing(Workbook wb,String rotationFlow) throws ParseException {
-		int succCount = 0;   // 导入成功条数
-
-		HashMap<String, SchRotationDept> deptMaps = new HashMap<>();
-		List<SchRotationDept> rotationDepts = rotationDeptBiz.searchSchRotationDept(rotationFlow);
-		for (SchRotationDept dept : rotationDepts) {
-			deptMaps.put(dept.getStandardDeptName(),dept);
-		}
-		int sheetNum = wb.getNumberOfSheets();
-		if (sheetNum > 0) {
-			Sheet sheet = wb.getSheetAt(0);
-			int row_num = sheet.getLastRowNum();//获取sheet行数，索引0开始
-			if (row_num < 1) {
-				throw new RuntimeException("没有数据！");
-			}
-			Row titleR = sheet.getRow(0);//获取表头
-			int cell_num = titleR.getLastCellNum();//获取表头单元格数
-			List<String> colnames = new ArrayList<>();
-			for (int i = 0; i < cell_num; i++) {
-				colnames.add(titleR.getCell(i).getStringCellValue());
-			}
-			//数据行开始遍历
-			for (int i = 1; i <= row_num; i++) {
-				Row r = sheet.getRow(i);
-				String value = "";
-				Map<String, Object> map = new HashMap<>();
-				for (int j = 0; j < colnames.size(); j++) {
-					Cell cell = r.getCell(j);
-					if (null == cell || com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(cell.toString().trim())) {
-						continue;
-					}
-					if (r.getCell((short) j).getCellType() == 1) {
-						value = r.getCell((short) j).getStringCellValue();
-					} else {
-						value = _doubleTrans(r.getCell((short) j).getNumericCellValue());
-					}
-					if ("学员姓名".equals(colnames.get(j))) {
-						map.put("doctorName", value);
-					} else if ("身份证号".equals(colnames.get(j))) {
-						map.put("idNo", value);
-					}else if ("标准科室".equals(colnames.get(j))) {
-						map.put("deptName", value);
-					}  else if ("轮转科室(科室[基地名称])".equals(colnames.get(j))) {
-						map.put("schDeptName", value);
-					} else if ("开始时间(yyyyMMdd)".equals(colnames.get(j))) {
-						map.put("schStartDate", value);
-					} else if ("结束时间(yyyyMMdd)".equals(colnames.get(j))) {
-						map.put("schEndDate", value);
-					} else if (("科主任".equals(colnames.get(j)))){
-						map.put("headName",value);
-					} else if (("带教老师".equals(colnames.get(j)))){
-						map.put("teacherName",value);
-					}
-				}
-				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("doctorName")))) {
-					throw new RuntimeException("导入失败！第" + i + "行，学员姓名为空！");
-				}
-				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("idNo")))) {
-					throw new RuntimeException("导入失败！第" + i + "行，身份证号为空！");
-				}
-				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("deptName")))) {
-					throw new RuntimeException("导入失败！第" + i + "行，标准科室为空！");
-				}
-				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("schDeptName")))) {
-					throw new RuntimeException("导入失败！第" + i + "行，轮转科室为空！");
-				}
-				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("schStartDate")))) {
-					throw new RuntimeException("导入失败！第" + i + "行，开始时间为空！");
-				}
-				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("schEndDate")))) {
-					throw new RuntimeException("导入失败！第" + i + "行，结束时间为空！");
-				}
-				if (map.get("schStartDate").toString().compareTo(map.get("schEndDate").toString())>0){
-					throw new RuntimeException("导入失败！第" + i + "行，轮转开始时间必须早于结束时间！");
-				}
-				//禅道3299 科主任带教老师非必填
-//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("headName")))) {
-//					throw new RuntimeException("导入失败！第" + i + "行，科主任为空！");
+//	private int parseExcelToScheduing(Workbook wb,String rotationFlow) throws ParseException {
+//		int succCount = 0;   // 导入成功条数
+//
+//		HashMap<String, SchRotationDept> deptMaps = new HashMap<>();
+//		List<SchRotationDept> rotationDepts = rotationDeptBiz.searchSchRotationDept(rotationFlow);
+//		for (SchRotationDept dept : rotationDepts) {
+//			deptMaps.put(dept.getStandardDeptName(),dept);
+//		}
+//		int sheetNum = wb.getNumberOfSheets();
+//		if (sheetNum > 0) {
+//			Sheet sheet = wb.getSheetAt(0);
+//			int row_num = sheet.getLastRowNum();//获取sheet行数，索引0开始
+//			if (row_num < 1) {
+//				throw new RuntimeException("没有数据！");
+//			}
+//			Row titleR = sheet.getRow(0);//获取表头
+//			int cell_num = titleR.getLastCellNum();//获取表头单元格数
+//			List<String> colnames = new ArrayList<>();
+//			for (int i = 0; i < cell_num; i++) {
+//				colnames.add(titleR.getCell(i).getStringCellValue());
+//			}
+//			//数据行开始遍历
+//			for (int i = 1; i <= row_num; i++) {
+//				Row r = sheet.getRow(i);
+//				String value = "";
+//				Map<String, Object> map = new HashMap<>();
+//				for (int j = 0; j < colnames.size(); j++) {
+//					Cell cell = r.getCell(j);
+//					if (null == cell || com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(cell.toString().trim())) {
+//						continue;
+//					}
+//					if (r.getCell((short) j).getCellType().getCode() == 1) {
+//						value = r.getCell((short) j).getStringCellValue();
+//					} else {
+//						value = _doubleTrans(r.getCell((short) j).getNumericCellValue());
+//					}
+//					if ("学员姓名".equals(colnames.get(j))) {
+//						map.put("doctorName", value);
+//					} else if ("身份证号".equals(colnames.get(j))) {
+//						map.put("idNo", value);
+//					}else if ("标准科室".equals(colnames.get(j))) {
+//						map.put("deptName", value);
+//					}  else if ("轮转科室(科室[基地名称])".equals(colnames.get(j))) {
+//						map.put("schDeptName", value);
+//					} else if ("开始时间(yyyyMMdd)".equals(colnames.get(j))) {
+//						map.put("schStartDate", value);
+//					} else if ("结束时间(yyyyMMdd)".equals(colnames.get(j))) {
+//						map.put("schEndDate", value);
+//					} else if (("科主任".equals(colnames.get(j)))){
+//						map.put("headName",value);
+//					} else if (("带教老师".equals(colnames.get(j)))){
+//						map.put("teacherName",value);
+//					}
 //				}
-//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("teacherName")))) {
-//					throw new RuntimeException("导入失败！第" + i + "行，带教老师为空！");
+//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("doctorName")))) {
+//					throw new RuntimeException("导入失败！第" + i + "行，学员姓名为空！");
 //				}
-				SysUser user = userBiz.findByIdNo(map.get("idNo").toString());
-				if (null == user){
-					throw new RuntimeException("导入失败！第" + i + "行，查询的学员信息为空！");
-				}
-				ResDoctor doctor = doctorBiz.readDoctor(user.getUserFlow());
-				ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-				example.createCriteria().andRecordStatusEqualTo("Y").andAuditStatusIdEqualTo("Passed").andDoctorFlowEqualTo(doctor.getDoctorFlow());
-				example.setOrderByClause("CREATE_TIME DESC");
-				List<ResDoctorRecruit> recruitList = resDoctorRecruitMapper.selectByExample(example);
-				if (null== recruitList ||  recruitList.size()==0){
-					throw new RuntimeException("导入失败！第" + i + "行，系统为分配该学员的培训方案！");
-				}
-				if (!rotationFlow.equals(recruitList.get(0).getRotationFlow())){
-					throw new RuntimeException("导入失败！第" + i + "行，该学员的培训方案不是导入的方案！");
-				}
-
-				String orgFlow = "";
-				if (StringUtil.isNotBlank(doctor.getSecondOrgFlow())) {
-					orgFlow = doctor.getSecondOrgFlow();
-				} else {
-					orgFlow = doctor.getOrgFlow();
-				}
-				SysOrg sysOrg = orgBiz.readSysOrg(orgFlow);
-				List<SysDept> schDeptList = searchSysDeptList(orgFlow, "");
-				HashMap<String, SysDept> schDeptMap = new HashMap<>();
-				for (SysDept dept : schDeptList) {
-					schDeptMap.put(dept.getDeptName(),dept);
-				}
-
-
-				//检测时间是否重叠
-
-				String startDate = DateUtil.transDate(map.get("schStartDate").toString());;
-				String endDate = DateUtil.transDate(map.get("schEndDate").toString());
-				String headName = "";
-				String teacherName = "";
-				if(null != map.get("headName")){
-					headName = map.get("headName").toString();
-				}
-				if(null != map.get("teacherName")){
-					teacherName = map.get("teacherName").toString();
-				}
-				String schDeptName = map.get("schDeptName").toString();
-				if (schDeptName.contains(sysOrg.getOrgName())){
-					schDeptName=schDeptName.substring(0,schDeptName.indexOf("["));
-				}
-				SysDept sysDept = schDeptMap.get(schDeptName);
-				SchRotationDept dept = deptMaps.get(map.get("deptName").toString());
-				List<SchArrangeResult> resultList = checkResultDate(doctor.getDoctorFlow(), startDate, endDate, null, doctor.getRotationFlow());
-				if (null!=resultList && resultList.size()>0){
-					ArrayList<String> list = new ArrayList<>();
-					for (SchArrangeResult result : resultList) {
-						list.add(result.getResultFlow());
-					}
-					//基地导入会覆盖之前的数据
-					resultExtMapper.updateSchArrangeResultToDel(list);
-					resultExtMapper.updateResDoctorSchProcessToDel(list);
-				}
-				SysCfg jsres_is_process = cfgBiz.read("jsres_is_process");
-				if (null != jsres_is_process && GlobalConstant.RECORD_STATUS_Y.equals(jsres_is_process.getCfgValue())){
-					// 获取当前入科时间填写系统限制
-					CheckRotationTime(doctor.getDoctorFlow(), dept.getRecordFlow(), startDate, endDate, "1", "", dept.getSchMonth(), i);
-				}
-
-				//获取当前配置的科主任角色
-				SysUser head = null;
-				String headRole = cfgBiz.read("res_head_role_flow").getCfgValue();
-				if(StringUtil.isNotEmpty(headName)){
-					head = searchTeacherList(sysDept.getDeptFlow(), headRole, headName);
-					if (null==head){
-						throw new RuntimeException("导入失败！第" + i + "行，科主任信息错误！");
-					}
-				}
-				SysUser teacher = null;
-				if(StringUtil.isNotEmpty(teacherName)){
-					String teacherRole = cfgBiz.read("res_teacher_role_flow").getCfgValue();
-					teacher = searchTeacherList(sysDept.getDeptFlow(), teacherRole, teacherName);
-					if (null==teacher){
-						throw new RuntimeException("导入失败！第" + i + "行，带教老师信息错误！");
-					}
-				}
-				SysOrg org=orgBiz.readSysOrg(orgFlow);
-				SchArrangeResult result = new SchArrangeResult();
-				result.setResultFlow(PkUtil.getUUID());
-				result.setArrangeFlow(result.getResultFlow());
-				result.setDoctorFlow(user.getUserFlow());
-				result.setSessionNumber(doctor.getSessionNumber());
-				result.setDoctorName(doctor.getDoctorName());
-				result.setOrgFlow(orgFlow);
-				result.setOrgName(org.getOrgName());
-				result.setSchStartDate(startDate);
-				result.setSchEndDate(endDate);
-				result.setRotationFlow(dept.getRotationFlow());
-
-				result.setDeptFlow(sysDept.getDeptFlow());
-				result.setDeptName(sysDept.getDeptName());
-				result.setSchDeptFlow(sysDept.getDeptFlow());
-
-				String sysDeptName = sysDept.getDeptName();
-				String deptOrgFlow = sysDept.getOrgFlow();
-				if(StringUtil.isNotBlank(deptOrgFlow)){
-					SysOrg so = orgBiz.readSysOrg(deptOrgFlow);
-					if(so!=null && !so.getOrgFlow().equals(orgFlow)){
-						sysDeptName+=("["+so.getOrgName()+"]");
-					}
-				}
-
-				result.setSchDeptName(sysDeptName);
-				result.setStandardDeptId(dept.getStandardDeptId());
-				result.setStandardDeptName(dept.getStandardDeptName());
-				result.setStandardGroupFlow(dept.getGroupFlow());
-				result.setIsRequired(dept.getIsRequired());
-				result.setCreateTime(DateUtil.getCurrDateTime());
-				result.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-				result.setModifyTime(DateUtil.getCurrDateTime());
-				result.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-				result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-				Map<String,String> mapTime= new HashMap<>();
-				mapTime.put("startDate",result.getSchStartDate());
-				mapTime.put("endDate",result.getSchEndDate());
-				Double month = TimeUtil.getMonthsBetween(mapTime);
-				String schMonth = String.valueOf(Double.parseDouble(month+""));
-				result.setSchMonth(schMonth);
-				result.setBaseAudit("Passed");
-				schArrangeResultMapper.insert(result);
-
-
-				ResDoctorSchProcess process = new ResDoctorSchProcess();
-				process.setProcessFlow(PkUtil.getUUID());
-				process.setUserFlow(user.getUserFlow());
-				process.setOrgFlow(org.getOrgFlow());
-				process.setOrgName(org.getOrgName());
-				process.setDeptFlow(sysDept.getDeptFlow());
-				process.setDeptName(sysDept.getDeptName());
-				process.setSchDeptFlow(sysDept.getDeptFlow());
-				process.setSchDeptName(sysDept.getDeptName());
-				process.setSchResultFlow(result.getResultFlow());
-				process.setSchStartDate(startDate);
-				process.setSchEndDate(endDate);
-				if(null != teacher){
-					process.setTeacherUserFlow(teacher.getUserFlow());
-					process.setTeacherUserName(teacher.getUserName());
-				}
-				if(null != teacher){
-					process.setHeadUserFlow(head.getUserFlow());
-					process.setHeadUserName(head.getUserName());
-				}
-				process.setCreateTime(DateUtil.getCurrDateTime());
-				process.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-				process.setModifyTime(DateUtil.getCurrDateTime());
-				process.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-				process.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-
-				doctorSchProcessMapper.insertSelective(process);
-				ResSchProcessExpressExample proExample = new ResSchProcessExpressExample();
-				proExample.createCriteria().andOperUserFlowEqualTo(user.getUserFlow()).andSchRotationDeptFlowEqualTo(dept.getRecordFlow())
-						.andRecTypeIdEqualTo(ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-				List<ResSchProcessExpress> recList = schProcessExpressMapper.selectByExampleWithBLOBs(proExample);
-				String recContent="";
-				if(recList!=null&&recList.size()>0)
-				{
-					recContent=recList.get(0).getRecContent();
-				}
-				try {
-					updateResultHaveAfter2(dept.getRecordFlow(),user.getUserFlow(),recContent);
-				} catch (DocumentException e) {
-					e.printStackTrace();
-				}
-				succCount++;
-			}
-		}
-		return succCount;
-	}
+//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("idNo")))) {
+//					throw new RuntimeException("导入失败！第" + i + "行，身份证号为空！");
+//				}
+//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("deptName")))) {
+//					throw new RuntimeException("导入失败！第" + i + "行，标准科室为空！");
+//				}
+//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("schDeptName")))) {
+//					throw new RuntimeException("导入失败！第" + i + "行，轮转科室为空！");
+//				}
+//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("schStartDate")))) {
+//					throw new RuntimeException("导入失败！第" + i + "行，开始时间为空！");
+//				}
+//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("schEndDate")))) {
+//					throw new RuntimeException("导入失败！第" + i + "行，结束时间为空！");
+//				}
+//				if (map.get("schStartDate").toString().compareTo(map.get("schEndDate").toString())>0){
+//					throw new RuntimeException("导入失败！第" + i + "行，轮转开始时间必须早于结束时间！");
+//				}
+//				//禅道3299 科主任带教老师非必填
+////				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("headName")))) {
+////					throw new RuntimeException("导入失败！第" + i + "行，科主任为空！");
+////				}
+////				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("teacherName")))) {
+////					throw new RuntimeException("导入失败！第" + i + "行，带教老师为空！");
+////				}
+//				SysUser user = userBiz.findByIdNo(map.get("idNo").toString());
+//				if (null == user){
+//					throw new RuntimeException("导入失败！第" + i + "行，查询的学员信息为空！");
+//				}
+//				ResDoctor doctor = doctorBiz.readDoctor(user.getUserFlow());
+//				ResDoctorRecruitExample example = new ResDoctorRecruitExample();
+//				example.createCriteria().andRecordStatusEqualTo("Y").andAuditStatusIdEqualTo("Passed").andDoctorFlowEqualTo(doctor.getDoctorFlow());
+//				example.setOrderByClause("CREATE_TIME DESC");
+//				List<ResDoctorRecruit> recruitList = resDoctorRecruitMapper.selectByExample(example);
+//				if (null== recruitList ||  recruitList.size()==0){
+//					throw new RuntimeException("导入失败！第" + i + "行，系统为分配该学员的培训方案！");
+//				}
+//				if (!rotationFlow.equals(recruitList.get(0).getRotationFlow())){
+//					throw new RuntimeException("导入失败！第" + i + "行，该学员的培训方案不是导入的方案！");
+//				}
+//
+//				String orgFlow = "";
+//				if (StringUtil.isNotBlank(doctor.getSecondOrgFlow())) {
+//					orgFlow = doctor.getSecondOrgFlow();
+//				} else {
+//					orgFlow = doctor.getOrgFlow();
+//				}
+//				SysOrg sysOrg = orgBiz.readSysOrg(orgFlow);
+//				List<SysDept> schDeptList = searchSysDeptList(orgFlow, "");
+//				HashMap<String, SysDept> schDeptMap = new HashMap<>();
+//				for (SysDept dept : schDeptList) {
+//					schDeptMap.put(dept.getDeptName(),dept);
+//				}
+//
+//
+//				//检测时间是否重叠
+//
+//				String startDate = DateUtil.transDate(map.get("schStartDate").toString());;
+//				String endDate = DateUtil.transDate(map.get("schEndDate").toString());
+//				String headName = "";
+//				String teacherName = "";
+//				if(null != map.get("headName")){
+//					headName = map.get("headName").toString();
+//				}
+//				if(null != map.get("teacherName")){
+//					teacherName = map.get("teacherName").toString();
+//				}
+//				String schDeptName = map.get("schDeptName").toString();
+//				if (schDeptName.contains(sysOrg.getOrgName())){
+//					schDeptName=schDeptName.substring(0,schDeptName.indexOf("["));
+//				}
+//				SysDept sysDept = schDeptMap.get(schDeptName);
+//				SchRotationDept dept = deptMaps.get(map.get("deptName").toString());
+//				List<SchArrangeResult> resultList = checkResultDate(doctor.getDoctorFlow(), startDate, endDate, null, doctor.getRotationFlow());
+//				if (null!=resultList && resultList.size()>0){
+//					ArrayList<String> list = new ArrayList<>();
+//					for (SchArrangeResult result : resultList) {
+//						list.add(result.getResultFlow());
+//					}
+//					//基地导入会覆盖之前的数据
+//					resultExtMapper.updateSchArrangeResultToDel(list);
+//					resultExtMapper.updateResDoctorSchProcessToDel(list);
+//				}
+//				SysCfg jsres_is_process = cfgBiz.read("jsres_is_process");
+//				if (null != jsres_is_process && GlobalConstant.RECORD_STATUS_Y.equals(jsres_is_process.getCfgValue())){
+//					// 获取当前入科时间填写系统限制
+//					CheckRotationTime(doctor.getDoctorFlow(), dept.getRecordFlow(), startDate, endDate, "1", "", dept.getSchMonth(), i);
+//				}
+//
+//				//获取当前配置的科主任角色
+//				SysUser head = null;
+//				String headRole = cfgBiz.read("res_head_role_flow").getCfgValue();
+//				if(StringUtil.isNotEmpty(headName)){
+//					head = searchTeacherList(sysDept.getDeptFlow(), headRole, headName);
+//					if (null==head){
+//						throw new RuntimeException("导入失败！第" + i + "行，科主任信息错误！");
+//					}
+//				}
+//				SysUser teacher = null;
+//				if(StringUtil.isNotEmpty(teacherName)){
+//					String teacherRole = cfgBiz.read("res_teacher_role_flow").getCfgValue();
+//					teacher = searchTeacherList(sysDept.getDeptFlow(), teacherRole, teacherName);
+//					if (null==teacher){
+//						throw new RuntimeException("导入失败！第" + i + "行，带教老师信息错误！");
+//					}
+//				}
+//				SysOrg org=orgBiz.readSysOrg(orgFlow);
+//				SchArrangeResult result = new SchArrangeResult();
+//				result.setResultFlow(PkUtil.getUUID());
+//				result.setArrangeFlow(result.getResultFlow());
+//				result.setDoctorFlow(user.getUserFlow());
+//				result.setSessionNumber(doctor.getSessionNumber());
+//				result.setDoctorName(doctor.getDoctorName());
+//				result.setOrgFlow(orgFlow);
+//				result.setOrgName(org.getOrgName());
+//				result.setSchStartDate(startDate);
+//				result.setSchEndDate(endDate);
+//				result.setRotationFlow(dept.getRotationFlow());
+//
+//				result.setDeptFlow(sysDept.getDeptFlow());
+//				result.setDeptName(sysDept.getDeptName());
+//				result.setSchDeptFlow(sysDept.getDeptFlow());
+//
+//				String sysDeptName = sysDept.getDeptName();
+//				String deptOrgFlow = sysDept.getOrgFlow();
+//				if(StringUtil.isNotBlank(deptOrgFlow)){
+//					SysOrg so = orgBiz.readSysOrg(deptOrgFlow);
+//					if(so!=null && !so.getOrgFlow().equals(orgFlow)){
+//						sysDeptName+=("["+so.getOrgName()+"]");
+//					}
+//				}
+//
+//				result.setSchDeptName(sysDeptName);
+//				result.setStandardDeptId(dept.getStandardDeptId());
+//				result.setStandardDeptName(dept.getStandardDeptName());
+//				result.setStandardGroupFlow(dept.getGroupFlow());
+//				result.setIsRequired(dept.getIsRequired());
+//				result.setCreateTime(DateUtil.getCurrDateTime());
+//				result.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
+//				result.setModifyTime(DateUtil.getCurrDateTime());
+//				result.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
+//				result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+//				Map<String,String> mapTime= new HashMap<>();
+//				mapTime.put("startDate",result.getSchStartDate());
+//				mapTime.put("endDate",result.getSchEndDate());
+//				Double month = TimeUtil.getMonthsBetween(mapTime);
+//				String schMonth = String.valueOf(Double.parseDouble(month+""));
+//				result.setSchMonth(schMonth);
+//				result.setBaseAudit("Passed");
+//				schArrangeResultMapper.insert(result);
+//
+//
+//				ResDoctorSchProcess process = new ResDoctorSchProcess();
+//				process.setProcessFlow(PkUtil.getUUID());
+//				process.setUserFlow(user.getUserFlow());
+//				process.setOrgFlow(org.getOrgFlow());
+//				process.setOrgName(org.getOrgName());
+//				process.setDeptFlow(sysDept.getDeptFlow());
+//				process.setDeptName(sysDept.getDeptName());
+//				process.setSchDeptFlow(sysDept.getDeptFlow());
+//				process.setSchDeptName(sysDept.getDeptName());
+//				process.setSchResultFlow(result.getResultFlow());
+//				process.setSchStartDate(startDate);
+//				process.setSchEndDate(endDate);
+//				if(null != teacher){
+//					process.setTeacherUserFlow(teacher.getUserFlow());
+//					process.setTeacherUserName(teacher.getUserName());
+//				}
+//				if(null != teacher){
+//					process.setHeadUserFlow(head.getUserFlow());
+//					process.setHeadUserName(head.getUserName());
+//				}
+//				process.setCreateTime(DateUtil.getCurrDateTime());
+//				process.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
+//				process.setModifyTime(DateUtil.getCurrDateTime());
+//				process.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
+//				process.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+//
+//				doctorSchProcessMapper.insertSelective(process);
+//				ResSchProcessExpressExample proExample = new ResSchProcessExpressExample();
+//				proExample.createCriteria().andOperUserFlowEqualTo(user.getUserFlow()).andSchRotationDeptFlowEqualTo(dept.getRecordFlow())
+//						.andRecTypeIdEqualTo(ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//				List<ResSchProcessExpress> recList = schProcessExpressMapper.selectByExampleWithBLOBs(proExample);
+//				String recContent="";
+//				if(recList!=null&&recList.size()>0)
+//				{
+//					recContent=recList.get(0).getRecContent();
+//				}
+//				try {
+//					updateResultHaveAfter2(dept.getRecordFlow(),user.getUserFlow(),recContent);
+//				} catch (DocumentException e) {
+//					e.printStackTrace();
+//				}
+//				succCount++;
+//			}
+//		}
+//		return succCount;
+//	}
 
 	// 读取数据
 	private Map<String,Object> parseExcelToScheduing2(Workbook wb,String rotationFlow,String trainingTypeId) throws ParseException {
@@ -3514,7 +3506,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					if (null == cell || com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(cell.toString().trim())) {
 						continue;
 					}
-					if (r.getCell((short) j).getCellType() == 1) {
+					if (r.getCell((short) j).getCellType().getCode() == 1) {
 						value = r.getCell((short) j).getStringCellValue();
 					} else {
 						value = _doubleTrans(r.getCell((short) j).getNumericCellValue());
@@ -4595,5 +4587,650 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		}
 		return item;
 	}
-	
+
+	@Autowired
+	private Environment env;
+	@Resource
+	private ISchDeptExternalRelBiz deptExternalRelBiz;
+
+	@Override
+	public void expertSchTemp(HttpServletRequest request, HttpServletResponse response, String rotationFlow) throws IOException {
+//		String modelPath = String.valueOf(env.getProperty("excelModel.path"));
+//		String filePath = String.valueOf(env.getProperty("templateFile.path"));
+//		modelPath = modelPath+"PbImportModel.xls";
+//		URL resource = ResourceLoader.getResource("classpath:excelModel/PbImportModel.xls");
+		File file = SpringUtil.getResource("classpath:excelModel/PbImportModel.xls").getFile();
+//		System.out.println("文件模板路径1+++++"+file.getPath());
+//		System.out.println("文件模板路径：：："+ResourceLoader.getPath("PbImportModel.xls"));
+//		filePath = filePath + cn.hutool.core.date.DateUtil.format(new Date(),"yyyyMMDDHHmmss")+"-"+UUID.randomUUID().toString().replaceAll("-","")+".xls";
+		//填充模板示例
+		Map<String, Object> map = new HashMap<>();
+		map.put("userName","例:张三");
+		map.put("idNo","例:4312211......");
+		map.put("speName","例:内科");
+		map.put("sessionNumber","例:2022");
+		map.put("trainYear","例:三年");
+		//获取当前月份
+		for (int i = 0; i < 36; i++) {
+			int num = i + 1;
+            String key = "M"+ NumberEngEnum.getResult(num);
+            DateTime dateTime = cn.hutool.core.date.DateUtil.offsetMonth(new Date(), i);
+            String M = cn.hutool.core.date.DateUtil.format(dateTime, "yyyy-MM");
+            map.put(key,M);
+		}
+		//查询所有的专业并处理专业下的所有的科室
+//		Map<String, Object> speMap = new HashMap<>();
+		Map<String, String> speDeptMap = new HashMap<>();
+		List<SysDict> speList = DictTypeEnum.sysListDictMap.get(DictTypeEnum.DoctorTrainingSpe.getId());
+		List<String> bzDept = new ArrayList<>();
+		if (CollectionUtil.isNotEmpty(speList)) {
+			//根据专业和年级 年级写死是2023的查询标准科室
+			for (int i = 0; i < speList.size(); i++) {
+				String replace = StringUtils.replace(speList.get(i).getDictName(), "（", "");
+				String replace1 = StringUtils.replace(replace, "）", "");
+				String firstLetter = PinyinUtil.getFirstLetter(replace1, "");
+				bzDept = new ArrayList<>();
+				bzDept = rotationBiz.getBzDeptNameBySpe(speList.get(i).getDictId());
+				for (int j = 0; j < 100; j++) {
+					String bzDeptKey = "dept_"+firstLetter+"_"+j;
+					speDeptMap.put(bzDeptKey,"");
+					if (CollectionUtil.isEmpty(bzDept)) {
+						continue;
+					}
+					if (j>=bzDept.size()) {
+						continue;
+					}
+					String deptName = bzDept.get(j);
+					speDeptMap.put(bzDeptKey,deptName);
+				}
+			}
+		}
+
+		//查询医院下所有的实际可轮转的科室
+		SysDept sysDept = new SysDept();
+		sysDept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
+		List<SysDept> schDeptList = deptBiz.searchDept(sysDept);
+		List<SchDeptExternalRel> schDeptExternalRels = deptExternalRelBiz.readSchDeptExtRelByRelOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
+		List<JSONObject> schDeptListAll = new ArrayList<>();
+		JSONObject schDeptItem = new JSONObject();
+		for (SysDept dept : schDeptList) {
+			schDeptItem = new JSONObject();
+			schDeptItem.put("lunzhuan",dept.getDeptName().trim());
+			schDeptListAll.add(schDeptItem);
+		}
+		//对外开发科室
+		if(CollectionUtils.isNotEmpty(schDeptExternalRels)){
+			for (SchDeptExternalRel schDeptExternalRel : schDeptExternalRels) {
+				schDeptItem = new JSONObject();
+				schDeptItem.put("lunzhuan",schDeptExternalRel.getDeptName()+"（"+schDeptExternalRel.getOrgName()+"）");
+				schDeptListAll.add(schDeptItem);
+			}
+		}
+
+		try{
+			response.setContentType("application/ms-excel;charset=UTF-8");
+			response.setCharacterEncoding("UTF-8");
+			String encodedFileName = null;
+			if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0) {
+				encodedFileName = URLEncoder.encode("排班导入模板.xls", "UTF-8");
+			} else {
+				encodedFileName = new String("排班导入模板.xls".getBytes("UTF-8"), "ISO8859-1");
+			}
+			response.setHeader("Content-Disposition", "attachment; filename=" + encodedFileName);//设置文件头编码方式和文件名
+			ExcelWriter build = EasyExcel.write(response.getOutputStream()).withTemplate(file).build();
+			//主要的sheet
+			WriteSheet sheet1 = EasyExcel.writerSheet("Sheet1").build();
+			//辅助的sheet 专业和标准科室
+			WriteSheet sheet2 = EasyExcel.writerSheet("Sheet2").build();
+			//辅助的sheet 实际科室
+			WriteSheet sheet3 = EasyExcel.writerSheet("Sheet3").build();
+			build.fill(map,sheet1);
+			build.fill(speDeptMap,sheet2);
+			build.fill(schDeptListAll,sheet3);
+			build.finish();
+		}catch (Exception e) {
+			throw new RuntimeException("生成模板文件异常");
+		}
+
+	}
+
+
+
+	private List<JSONObject> updateJSONList(List<JSONObject> data,
+											List<String> deptList,
+											String keyName){
+		if (CollectionUtil.isEmpty(data)) {
+			JSONObject item = new JSONObject();
+			data.add(item);
+		}
+		if (CollectionUtil.isEmpty(deptList)) {
+			JSONObject item = data.get(0);
+			item.put(keyName,"");
+			return data;
+		}
+		for (int i = 0; i < deptList.size(); i++) {
+			if (i<data.size()) {
+				JSONObject item = data.get(i);
+				item.put(keyName,deptList.get(i));
+			}else {
+				JSONObject item = new JSONObject();
+				item.put(keyName,deptList.get(i));
+				data.add(item);
+			}
+		}
+		for (JSONObject item : data) {
+			for (int i = 0; i < 50; i++) {
+				String speDeptKey = "speDept"+i;
+				Object o = item.get(speDeptKey);
+				if (ObjectUtil.isEmpty(o)) {
+					item.put(speDeptKey,"");
+				}
+			}
+		}
+		return data;
+	}
+
+
+
+	/**
+	 * ~~~~~~~~~溺水的鱼~~~~~~~~
+	 * @Author: 吴强
+	 * @Date: 2024/10/26 13:55
+	 * @Description: 最新的导入排班的文件解析
+	 */
+	@Override
+	public Map<String, Object> importSchedulingAuditExcelCache(MultipartFile file) throws IOException, InvalidFormatException {
+		Map<String, Object> result = new HashMap<>();
+		if (null == file) {
+			throw new RuntimeException("导入的文件不能为空");
+		}
+		//查询所有专业对应的标准科室
+		Map<String, List<SchRotationDept>> allBzDept = getAllBzDept();
+		//查询所有的轮转科室
+		List<SysDept> lzDept = getAllLzDept();
+		SchedulingAuditRead listen = new SchedulingAuditRead(allBzDept,lzDept);
+		EasyExcel.read(file.getInputStream(), listen).sheet().headRowNumber(2).doRead();
+		//解析出来的表头
+		result.put("head1",listen.getOneHeaders());
+		result.put("head2",listen.getTwoHeaders());
+		//根据学员姓名、身份证号查询所有的学员信息
+		List<SysUser> sysUsers = doctorBiz.listByNameOrIdNo(listen.getExcelUserName(), listen.getExcelIdNo());
+		listen.setUserList(sysUsers);
+		if (CollectionUtil.isNotEmpty(sysUsers)) {
+			List<String> collect = sysUsers.stream().map(SysUser::getUserFlow).collect(Collectors.toList());
+			List<ResDoctor> resDoctors = doctorBiz.searchDoctorByuserFlow(collect);
+			if(CollectionUtil.isNotEmpty(resDoctors)){
+				Map<String, ResDoctor> collect1 = resDoctors.stream().collect(Collectors.toMap(ResDoctor::getDoctorFlow, Function.identity(), (k1, k2) -> k2));
+				listen.setDoctorMap(collect1);
+			}
+		}
+		//获取这些学员的历史排班数据
+		if (CollectionUtil.isNotEmpty(sysUsers)) {
+			Set<String> userIds = sysUsers.stream().map(SysUser::getUserFlow).collect(Collectors.toSet());
+			List<SchArrangeResult> schArrangeResults = doctorBiz.listDoctorResult(userIds);
+			listen.setStuResultList(schArrangeResults);
+		}
+		listen.getData(false);
+		List<PbInfoItem> compareList = listen.getCompareList();
+		if (CollectionUtil.isNotEmpty(compareList)) {
+			//根据resultFlow集合查询学员提交情况
+			Set<String> resultFlows = compareList.stream().map(PbInfoItem::getResultFlow).collect(Collectors.toSet());
+			if (CollectionUtil.isNotEmpty(resultFlows)) {
+				List<String> resultIds = resultFlows.stream().filter(e -> StringUtils.isNotEmpty(e)).collect(Collectors.toList());
+				List<ResRecItem> resRecItems = doctorBiz.resRecCount(resultIds);
+				if (CollectionUtil.isNotEmpty(resRecItems)) {
+					Map<String, Integer> collect = resRecItems.stream().collect(Collectors.toMap(ResRecItem::getResultFlow, ResRecItem::getCountNum, (k1, k2) -> k2));
+					listen.setResRecList(collect);
+				}
+			}
+		}
+		result.put("data",listen.getData(true));
+		return result;
+	}
+
+
+	public Map<String, Object> checkRowData(List<SchedulingDataModel> data) {
+		Map<String, Object> result = new HashMap<>();
+		//查询所有专业对应的标准科室
+		Map<String, List<SchRotationDept>> allBzDept = getAllBzDept();
+		//查询所有的轮转科室
+		List<SysDept> lzDept = getAllLzDept();
+		SchedulingAuditCheck entity = new SchedulingAuditCheck(allBzDept,lzDept,data);
+		//解析出来的表头
+		//根据学员姓名、身份证号查询所有的学员信息
+		List<SysUser> sysUsers = doctorBiz.listByNameOrIdNo(entity.getExcelUserName(), entity.getExcelIdNo());
+		entity.setUserList(sysUsers);
+		if (CollectionUtil.isNotEmpty(sysUsers)) {
+			List<String> collect = sysUsers.stream().map(SysUser::getUserFlow).collect(Collectors.toList());
+			List<ResDoctor> resDoctors = doctorBiz.searchDoctorByuserFlow(collect);
+			if (CollectionUtil.isNotEmpty(resDoctors)) {
+				Map<String, ResDoctor> collect1 = resDoctors.stream().collect(Collectors.toMap(ResDoctor::getDoctorFlow, Function.identity(), (k1, k2) -> k2));
+				entity.setDoctorMap(collect1);
+			}
+		}
+		//获取这些学员的历史排班数据
+		if (CollectionUtil.isNotEmpty(sysUsers)) {
+			Set<String> userIds = sysUsers.stream().map(SysUser::getUserFlow).collect(Collectors.toSet());
+			List<SchArrangeResult> schArrangeResults = doctorBiz.listDoctorResult(userIds);
+			entity.setStuResultList(schArrangeResults);
+		}
+		entity.getData(false);
+		List<PbInfoItem> compareList = entity.getCompareList();
+		if (CollectionUtil.isNotEmpty(compareList)) {
+			//根据resultFlow集合查询学员提交情况
+			Set<String> resultFlows = compareList.stream().map(PbInfoItem::getResultFlow).collect(Collectors.toSet());
+			if (CollectionUtil.isNotEmpty(resultFlows)) {
+				List<String> resultIds = resultFlows.stream().filter(e -> StringUtils.isNotEmpty(e)).collect(Collectors.toList());
+				List<ResRecItem> resRecItems = doctorBiz.resRecCount(resultIds);
+				if (CollectionUtil.isNotEmpty(resRecItems)) {
+					Map<String, Integer> collect = resRecItems.stream().collect(Collectors.toMap(ResRecItem::getResultFlow, ResRecItem::getCountNum, (k1, k2) -> k2));
+					entity.setResRecList(collect);
+				}
+			}
+		}
+		result.put("data",entity.getData(true));
+		return result;
+	}
+
+
+	/**
+	 * ~~~~~~~~~溺水的鱼~~~~~~~~
+	 * @Author: 吴强
+	 * @Date: 2024/10/30 15:09
+	 * @Description: 保存导入数据
+	 */
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Map<String,Object> submitPbImport(List<SchedulingDataModel> data){
+		Map<String, Object> result = new HashMap<>();
+		result.put("code",200);
+		if (CollectionUtil.isEmpty(data)) {
+			return result;
+		}
+		//查询所有专业对应的标准科室
+		Map<String, List<SchRotationDept>> allBzDept = getAllBzDept();
+		//查询所有的轮转科室
+		List<SysDept> lzDept = getAllLzDept();
+		SchedulingAuditCheck entity = new SchedulingAuditCheck(allBzDept,lzDept,data);
+		//解析出来的表头
+		//根据学员姓名、身份证号查询所有的学员信息
+		List<SysUser> sysUsers = doctorBiz.listByNameOrIdNo(entity.getExcelUserName(), entity.getExcelIdNo());
+		entity.setUserList(sysUsers);
+		if (CollectionUtil.isNotEmpty(sysUsers)) {
+			List<String> collect = sysUsers.stream().map(SysUser::getUserFlow).collect(Collectors.toList());
+			List<ResDoctor> resDoctors = doctorBiz.searchDoctorByuserFlow(collect);
+			if (CollectionUtil.isNotEmpty(resDoctors)) {
+				Map<String, ResDoctor> collect1 = resDoctors.stream().collect(Collectors.toMap(ResDoctor::getDoctorFlow, Function.identity(), (k1, k2) -> k2));
+				entity.setDoctorMap(collect1);
+			}
+		}
+		//获取这些学员的历史排班数据
+		if (CollectionUtil.isNotEmpty(sysUsers)) {
+			Set<String> userIds = sysUsers.stream().map(SysUser::getUserFlow).collect(Collectors.toSet());
+			List<SchArrangeResult> schArrangeResults = doctorBiz.listDoctorResult(userIds);
+			entity.setStuResultList(schArrangeResults);
+		}
+		entity.getData(false);
+
+		List<PbInfoItem> compareList = entity.getCompareList();
+		if (CollectionUtil.isEmpty(compareList)) {
+			return result;
+		}
+		if (CollectionUtil.isNotEmpty(compareList)) {
+			//根据resultFlow集合查询学员提交情况
+			Set<String> resultFlows = compareList.stream().map(PbInfoItem::getResultFlow).collect(Collectors.toSet());
+			if (CollectionUtil.isNotEmpty(resultFlows)) {
+				List<String> resultIds = resultFlows.stream().filter(e -> StringUtils.isNotEmpty(e)).collect(Collectors.toList());
+				List<ResRecItem> resRecItems = doctorBiz.resRecCount(resultIds);
+				if (CollectionUtil.isNotEmpty(resRecItems)) {
+					Map<String, Integer> collect = resRecItems.stream().collect(Collectors.toMap(ResRecItem::getResultFlow, ResRecItem::getCountNum, (k1, k2) -> k2));
+					entity.setResRecList(collect);
+				}
+			}
+		}
+		//筛选导入的数据
+		List<PbInfoItem> collect = compareList.stream().filter(e -> "import".equalsIgnoreCase(e.getType())).collect(Collectors.toList());
+		if (CollectionUtil.isEmpty(collect)) {
+			return result;
+		}
+		List<PbInfoItem> collect2 = collect.stream().sorted(Comparator.comparing(PbInfoItem::getSchStartDate)).collect(Collectors.toList());
+		for (PbInfoItem pbInfoItem : collect2) {
+			String doctorFlow = pbInfoItem.getDoctorFlow();
+			if (StringUtils.isEmpty(doctorFlow)) {
+				continue;
+			}
+			List<PbInfoItem> dbList = compareList.stream().filter(e -> "db".equalsIgnoreCase(e.getType()) && doctorFlow.equalsIgnoreCase(e.getDoctorFlow()))
+					.collect(Collectors.toList());
+			if (CollectionUtil.isEmpty(dbList)) {
+				//没有该学员的历史排班记录,直接导入
+				savePbWithoutHis(pbInfoItem);
+				continue;
+			}
+			//轮转时间
+			String concatMon = pbInfoItem.getConcatMon();
+			List<PbInfoItem> collect1 = dbList.stream().filter(e -> e.getConcatMon().contains(concatMon)).collect(Collectors.toList());
+			if (CollectionUtil.isEmpty(collect1)) {
+				//当前学员当前日期没有排班记录,直接导入
+				savePbWithoutHis(pbInfoItem);
+				continue;
+			}
+			//当前学员当前日期存在排班记录
+			DateTime thisStartDate = cn.hutool.core.date.DateUtil.parseDate(pbInfoItem.getSchStartDate());
+			DateTime thisEndDate = cn.hutool.core.date.DateUtil.parseDate(pbInfoItem.getSchEndDate());
+			for (PbInfoItem history : collect1) {
+				String hisConcatMon = history.getConcatMon();
+				String[] split = StringUtils.split(hisConcatMon, ",");
+				List<String> list = Arrays.asList(split);
+				//判断本次导入的轮转科室和历史数据的轮转科室是否一致
+				String schDeptFlow = pbInfoItem.getSchDeptFlow();
+				String historySchDeptFlow = history.getSchDeptFlow();
+				//本次导入的轮转科室和历史排班的科室不一致
+				//校验历史数据是否存在学员记录
+				String resultFlow = history.getResultFlow();
+				Integer resrecCount = entity.getResRecList().get(resultFlow);
+				if (null == resrecCount || resrecCount <=0) {
+					if (historySchDeptFlow.equals(schDeptFlow)) {
+						continue;
+					}
+					if (list.size() == 1) {
+						//作废之前的，新增本次排班
+						deletePbResult(history.getResultFlow(),true);
+						savePbWithoutHis(pbInfoItem);
+						continue;
+					}
+					if (list.indexOf(concatMon) == 0) {
+						//替换之前排班的开头部分
+						DateTime dateTime = cn.hutool.core.date.DateUtil.offsetDay(thisEndDate, 1);
+						SchArrangeResult schArrangeResult = arrangeResultMapper.selectByPrimaryKey(history.getResultFlow());
+
+						schArrangeResult.setSchStartDate(cn.hutool.core.date.DateUtil.formatDate(dateTime));
+						DateTime end = cn.hutool.core.date.DateUtil.parseDate(schArrangeResult.getSchEndDate());
+						if (dateTime.compareTo(end)>=0) {
+							deletePbResult(history.getResultFlow(),true);
+							savePbWithoutHis(pbInfoItem);
+							continue;
+						}
+						long l = cn.hutool.core.date.DateUtil.betweenDay(dateTime, end, false) + 1;
+						schArrangeResult.setSchMonth(new BigDecimal(String.valueOf(l)).divide(new BigDecimal("30"),1,BigDecimal.ROUND_HALF_DOWN).toString());
+						arrangeResultMapper.updateByPrimaryKeySelective(schArrangeResult);
+						savePbWithoutHis(pbInfoItem);
+						continue;
+					}
+					if (list.indexOf(concatMon) >0 && list.indexOf(concatMon)<=(list.size()-1)) {
+						//替换之前排班的结束时间部分
+						DateTime dateTime = cn.hutool.core.date.DateUtil.offsetDay(thisStartDate, -1);
+						SchArrangeResult schArrangeResult = arrangeResultMapper.selectByPrimaryKey(history.getResultFlow());
+						schArrangeResult.setSchEndDate(cn.hutool.core.date.DateUtil.formatDate(dateTime));
+						DateTime dateTime1 = cn.hutool.core.date.DateUtil.parseDate(schArrangeResult.getSchStartDate());
+						//把后面的接去掉
+						List<String> strings = list.subList(0, list.indexOf(concatMon)+1);
+						hisConcatMon = CollectionUtil.join(strings,",");
+						if (dateTime1.compareTo(dateTime)>=0) {
+							deletePbResult(history.getResultFlow(),true);
+							savePbWithoutHis(pbInfoItem);
+							continue;
+						}
+						long l = cn.hutool.core.date.DateUtil.betweenDay(dateTime1, dateTime, false) + 1;
+						schArrangeResult.setSchMonth(new BigDecimal(String.valueOf(l)).divide(new BigDecimal("30"),1,BigDecimal.ROUND_HALF_DOWN).toString());
+						arrangeResultMapper.updateByPrimaryKeySelective(schArrangeResult);
+						savePbWithoutHis(pbInfoItem);
+						continue;
+					}
+				}
+			}
+			//后续处理，检验排班时间是否有重合的
+			boolean b = todoCheckSchDate(doctorFlow);
+			//合并排班日期
+			boolean b1 = hebingDate(doctorFlow);
+//			//根据排班数据，更新process轮转数据
+			todoProcessData(doctorFlow);
+		}
+		return result;
+	}
+
+
+	private boolean todoCheckSchDate(String doctorFlow){
+		if (StringUtils.isEmpty(doctorFlow)) {
+			return false;
+		}
+		//获取学员所有的排班
+		List<SchArrangeResult> allByDoctorFlow = resultExtMapper.getAllByDoctorFlow(doctorFlow,true);
+		if (CollectionUtil.isEmpty(allByDoctorFlow)) {
+			return false;
+		}
+		try{
+			for (int i = 0; i < allByDoctorFlow.size(); i++) {
+				SchArrangeResult item = allByDoctorFlow.get(i);
+				//下面就是处理那些允许覆盖并且判断下时间是否重合
+				String schEndDate = item.getSchEndDate();
+				String schStartDate = item.getSchStartDate();
+				//当前元素的结束时间
+				DateTime endTime = cn.hutool.core.date.DateUtil.parseDate(schEndDate);
+				DateTime startTime = cn.hutool.core.date.DateUtil.parseDate(schStartDate);
+				SchArrangeResult afterItem = null;
+				int i1 = i + 1;
+//				while (i1<allByDoctorFlow.size()) {
+//					SchArrangeResult schArrangeResult = allByDoctorFlow.get(i1);
+//					if ("N".equalsIgnoreCase(schArrangeResult.getRecordStatus())) {
+//						i1++;
+//					}else {
+//						break;
+//					}
+//				}
+				if ((i1)>=allByDoctorFlow.size()) {
+					//最后一个就不做处理了
+					continue;
+				}
+				afterItem = allByDoctorFlow.get(i1);
+				String afterSchStartDate = afterItem.getSchStartDate();
+				DateTime afterStart = cn.hutool.core.date.DateUtil.parseDate(afterSchStartDate);
+				if (endTime.compareTo(afterStart)>=0) {
+					//当前的结束时间大于等于下一个的开始时间，需要变更当前元素的结束时间并且使其生效
+					item.setSchEndDate(cn.hutool.core.date.DateUtil.formatDate(cn.hutool.core.date.DateUtil.offsetDay(afterStart,-1)));
+					long l = cn.hutool.core.date.DateUtil.betweenDay(startTime, afterStart, false) + 1;
+					BigDecimal divide = new BigDecimal(String.valueOf(l)).divide(new BigDecimal("30"), 1, BigDecimal.ROUND_HALF_DOWN);
+					item.setSchMonth(divide.toString());
+					arrangeResultMapper.updateByPrimaryKeySelective(item);
+				}
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	private boolean hebingDate(String doctorFlow){
+		//合并连续排班并且轮转科室相同的数据
+		List<SchArrangeResult> list = resultExtMapper.getAllByDoctorFlow(doctorFlow, true);
+		if (CollectionUtil.isEmpty(list)) {
+			return false;
+		}
+		try{
+			for (int i = 0; i < list.size(); i++) {
+				SchArrangeResult thisItem = list.get(i);
+				if (thisItem.getRecordStatus().equals("N")) {
+					continue;
+				}
+				int next = i + 1;
+				while (next<list.size()) {
+					//判断轮转科室和标准科室是否一致，一致的情况下，把当前的结束时间变更一下，并且删除下一个
+					SchArrangeResult nextItem = list.get(next);
+					if (!nextItem.getSchDeptFlow().equalsIgnoreCase(thisItem.getSchDeptFlow())) {
+						break;
+					}
+					if (!nextItem.getStandardDeptId().equalsIgnoreCase(thisItem.getStandardDeptId())) {
+						break;
+					}
+					thisItem.setSchEndDate(nextItem.getSchEndDate());
+					DateTime startDate = cn.hutool.core.date.DateUtil.parseDate(thisItem.getSchStartDate());
+					DateTime endDate = cn.hutool.core.date.DateUtil.parseDate(thisItem.getSchEndDate());
+					long l = cn.hutool.core.date.DateUtil.betweenDay(startDate, endDate, false) + 1;
+					BigDecimal divide = new BigDecimal(String.valueOf(l)).divide(new BigDecimal("30"), 1, BigDecimal.ROUND_HALF_DOWN);
+					thisItem.setSchMonth(divide.toString());
+					arrangeResultMapper.updateByPrimaryKeySelective(thisItem);
+					arrangeResultMapper.deleteByPrimaryKey(nextItem.getResultFlow());
+					nextItem.setRecordStatus("N");
+					next++;
+				}
+			}
+		}catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
+
+	private void todoProcessData(String doctorFlow){
+		if (StringUtils.isEmpty(doctorFlow)) {
+			return;
+		}
+		List<SchArrangeResult> resultList = resultExtMapper.getAllByDoctorFlow(doctorFlow, true);
+		if (CollectionUtil.isEmpty(resultList)) {
+			return;
+		}
+		Map<String, SchArrangeResult> resultMap = resultList.stream().collect(Collectors.toMap(SchArrangeResult::getResultFlow, Function.identity(), (k1, k2) -> k2));
+		List<ResDoctorSchProcess> processList = docSchProcessExtMapper.listByDoctorFlow(doctorFlow);
+		if (CollectionUtil.isEmpty(processList)) {
+			ResDoctorSchProcess vo = new ResDoctorSchProcess();
+			for (SchArrangeResult item : resultList) {
+				vo = new ResDoctorSchProcess();
+				BeanUtil.copyProperties(item,vo);
+				vo.setProcessFlow(PkUtil.getUUID());
+				vo.setUserFlow(item.getDoctorFlow());
+				vo.setSchResultFlow(item.getResultFlow());
+				doctorSchProcessMapper.insertSelective(vo);
+			}
+			return;
+		}
+
+		for (ResDoctorSchProcess item : processList) {
+			SchArrangeResult schArrangeResult = resultMap.get(item.getSchResultFlow());
+			if (ObjectUtil.isEmpty(schArrangeResult)) {
+				//当前轮转数据没有对应的排班
+				item.setRecordStatus("N");
+				doctorSchProcessMapper.updateByPrimaryKeySelective(item);
+				continue;
+			}
+			//存在对应的排班，检查一下计划轮转时间和排班是否一样
+			if (!schArrangeResult.getSchStartDate().equalsIgnoreCase(item.getSchStartDate())) {
+				item.setSchStartDate(schArrangeResult.getSchStartDate());
+			}
+			if (!schArrangeResult.getSchEndDate().equalsIgnoreCase(item.getSchEndDate())) {
+				item.setSchEndDate(schArrangeResult.getSchEndDate());
+			}
+			doctorSchProcessMapper.updateByPrimaryKeySelective(item);
+			resultMap.remove(item.getSchResultFlow());
+		}
+
+		//检查一下是否有剩余的排班没有分配轮转
+		if (CollectionUtil.isEmpty(resultMap)) {
+			return;
+		}
+		ResDoctorSchProcess dbData = new ResDoctorSchProcess();
+		for (String resultFlow : resultMap.keySet()) {
+			SchArrangeResult schArrangeResult = resultMap.get(resultFlow);
+			if (ObjectUtil.isEmpty(schArrangeResult)) {
+				continue;
+			}
+			dbData = new ResDoctorSchProcess();
+			BeanUtil.copyProperties(schArrangeResult,dbData);
+			dbData.setProcessFlow(PkUtil.getUUID());
+			dbData.setUserFlow(schArrangeResult.getDoctorFlow());
+			dbData.setSchResultFlow(schArrangeResult.getResultFlow());
+			doctorSchProcessMapper.insertSelective(dbData);
+		}
+
+	}
+
+	private void savePbWithoutHis(PbInfoItem item){
+
+		SchArrangeResult result = new SchArrangeResult();
+		BeanUtil.copyProperties(item,result);
+		//TODO::填充机构信息
+		result.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
+		result.setOrgName(GlobalContext.getCurrentUser().getOrgName());
+		result.setRecordStatus("Y");
+		result.setCreateTime(DateUtil.getCurrDateTime());
+		result.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
+		result.setModifyTime(DateUtil.getCurrDateTime());
+		result.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
+		result.setBaseAudit("Passed");
+		//保存到result表
+		SchArrangeResult schArrangeResult = arrangeResultMapper.selectByPrimaryKey(result.getResultFlow());
+		boolean flag = false;
+		if (ObjectUtil.isEmpty(schArrangeResult)) {
+			int i1 = arrangeResultMapper.insertSelective(result);
+			flag = i1>0;
+		}else {
+			int i1 = arrangeResultMapper.updateByPrimaryKeySelective(result);
+			flag = i1>0;
+		}
+		if (flag) {
+			//修改排班成功，处理下相关数据
+			arrangeResultMapper.updateAfterPbRequiest(result.getResultFlow());
+			arrangeResultMapper.updateAfterPbGroup(result.getResultFlow());
+		}
+	}
+
+	private void deletePbResult(String resultFlow,boolean delete){
+		if (StringUtils.isEmpty(resultFlow)) {
+			return;
+		}
+		SchArrangeResult schArrangeResult = arrangeResultMapper.selectByPrimaryKey(resultFlow);
+		if (ObjectUtil.isEmpty(schArrangeResult)) {
+			return;
+		}
+		//delete是否物理删除
+		if (delete) {
+			arrangeResultMapper.deleteByPrimaryKey(resultFlow);
+		}else {
+			schArrangeResult.setRecordStatus("N");
+			arrangeResultMapper.updateByPrimaryKeySelective(schArrangeResult);
+		}
+	}
+
+
+
+
+
+
+	/**
+	 * ~~~~~~~~~溺水的鱼~~~~~~~~
+	 * @Author: 吴强
+	 * @Date: 2024/10/26 17:55
+	 * @Description: 查询所有专业的标准科室
+	 */
+	private Map<String,List<SchRotationDept>> getAllBzDept(){
+		Map<String,List<SchRotationDept>> result = new HashMap<>();
+		List<SysDict> speList = DictTypeEnum.sysListDictMap.get(DictTypeEnum.DoctorTrainingSpe.getId());
+		if (CollectionUtil.isEmpty(speList)) {
+			return result;
+		}
+		//根据专业和年级 年级写死是2023的查询标准科室
+		for (int i = 0; i < speList.size(); i++) {
+			List<SchRotationDept> bzDeptNameBySpe = rotationBiz.getAllBzDeptListBySpeId(speList.get(i).getDictId());
+			result.put(speList.get(i).getDictName(),bzDeptNameBySpe);
+		}
+		return result;
+	}
+
+	private List<SysDept> getAllLzDept(){
+		List<SysDept> result = new ArrayList<>();
+		SysDept sysDept = new SysDept();
+		sysDept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
+		result = deptBiz.searchDept(sysDept);
+		List<SchDeptExternalRel> schDeptExternalRels = deptExternalRelBiz.readSchDeptExtRelByRelOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
+		//对外开发科室
+		if(CollectionUtils.isNotEmpty(schDeptExternalRels)){
+			SysDept selectItem = new SysDept();
+			for (SchDeptExternalRel schDeptExternalRel : schDeptExternalRels) {
+				selectItem = new SysDept();
+				selectItem.setDeptName(schDeptExternalRel.getDeptName()+"（"+schDeptExternalRel.getOrgName()+"）");
+				selectItem.setDeptFlow(schDeptExternalRel.getDeptFlow());
+				result.add(selectItem);
+			}
+		}
+		return result;
+	}
 }
