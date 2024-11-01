@@ -3,6 +3,7 @@ package com.pinde.sci.ctrl.jsres;
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
+import com.pinde.core.pdf.utils.ObjectUtils;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
@@ -178,7 +179,18 @@ public class JsResMessageController extends GeneralController {
      * @Date 2020/6/6
      */
     @RequestMapping(value="/plan")
-    public String plan(String assignYear, Model model,Integer currentPage,HttpServletRequest request){
+    public String plan(){
+        return "jsres/message/plan";
+    }
+
+    /**
+     * @Department：研发部
+     * @Description 招录计划列表
+     * @Author xieyh
+     * @Date 2024-10-30
+     */
+    @RequestMapping(value="/planList")
+    public String planList(String assignYear, Model model,Integer currentPage,HttpServletRequest request){
         SysUser currUser = GlobalContext.getCurrentUser();
         Map<String,Object> paramMap = new HashMap<>();
         List<String> orgFlows = new ArrayList<>();
@@ -206,7 +218,51 @@ public class JsResMessageController extends GeneralController {
         PageHelper.startPage(currentPage,getPageSize(request));
         List<Map<String, Object>> resultMapList = speAssignBiz.searchAssignInfoList(paramMap);
         model.addAttribute("resultMapList",resultMapList);
-        return "jsres/message/plan";
+        return "jsres/message/planList";
+    }
+
+    /**
+     * @Department：研发部
+     * @Description 报送计划列表
+     * @Author xieyh
+     * @Date 2024-10-30
+     */
+    @RequestMapping(value="/sendList")
+    public String sendList(String assignYear, Model model,Integer currentPage,HttpServletRequest request){
+        SysUser currUser = GlobalContext.getCurrentUser();
+        Map<String,Object> paramMap = new HashMap<>();
+        List<String> orgFlows = new ArrayList<>();
+        paramMap.put("assignYear",assignYear);
+//        paramMap.put("orgFlow", currUser.getOrgFlow());
+        model.addAttribute("orgFlow",currUser.getOrgFlow());
+        orgFlows.add(currUser.getOrgFlow());
+        //判断是否是协同基地
+        String isJointOrg = "N";
+        List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currUser.getOrgFlow());
+        if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
+            isJointOrg = "Y";
+        }
+        model.addAttribute("isJointOrg", isJointOrg);
+        if(isJointOrg.equals("N")) {
+            //查询本基地下协同基地
+            List<SysOrg> orgList = orgBiz.searchJointOrgsByOrg(GlobalContext.getCurrentUser().getOrgFlow());
+            if (null != orgList && orgList.size() > 0) {
+                for (SysOrg org : orgList) {
+                    orgFlows.add(org.getOrgFlow());
+                }
+            }
+        }
+        paramMap.put("orgFlows",orgFlows);
+        PageHelper.startPage(currentPage,getPageSize(request));
+        List<Map<String, Object>> resultMapList = speAssignBiz.searchAssignInfoList(paramMap);
+        model.addAttribute("resultMapList",resultMapList);
+        for (int i = 0; i < resultMapList.size(); i++) {
+            if (ObjectUtils.isBlank(resultMapList.get(i).get("SEND_PLAN_SUM"))) {
+                resultMapList.remove(i);
+                i--;
+            }
+        }
+        return "jsres/message/sendList";
     }
 
     /**
@@ -242,6 +298,37 @@ public class JsResMessageController extends GeneralController {
 
     /**
      * @Department：研发部
+     * @Description 报送计划新增页面
+     * @Author xieyh
+     * @Date 2024-10-30
+     */
+    @RequestMapping("/addSend")
+    public String addSend(String orgFlowEdit,String assignYearEdit,String sendStartTime,String sendEndTime,String flag,Model model) {
+        SysUser currUser = GlobalContext.getCurrentUser();
+        //判断是否是协同基地
+        String isJointOrg = "N";
+        List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currUser.getOrgFlow());
+        if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
+            isJointOrg = "Y";
+        }
+        model.addAttribute("isJointOrg",isJointOrg);
+        model.addAttribute("flag",flag);
+        Map<String,String> paramMap = new HashMap<>();
+        if(StringUtil.isBlank(orgFlowEdit)){
+            orgFlowEdit = currUser.getOrgFlow();
+        }
+        paramMap.put("orgFlow", orgFlowEdit);
+        model.addAttribute("orgFlow", orgFlowEdit);
+//        List<Map<String, String>> orgList = speAssignBiz.searchOrgInfoList(paramMap);
+        SysOrg org = orgBiz.readSysOrg(currUser.getOrgFlow());
+        List<SysOrg> orgList = new ArrayList<>();
+        orgList.add(org);
+        model.addAttribute("orgList", orgList);
+        return "jsres/message/addSend";
+    }
+
+    /**
+     * @Department：研发部
      * @Description 显示基地下的专业信息
      * @Author fengxf
      * @Date 2020/6/6
@@ -268,6 +355,36 @@ public class JsResMessageController extends GeneralController {
         model.addAttribute("flag",flag);
         model.addAttribute("assignYear",assignYear);
         return "jsres/message/addPlanSpe";
+    }
+
+    /**
+     * @Department：研发部
+     * @Description 显示基地下的专业信息
+     * @Author fengxf
+     * @Date 2020/6/6
+     */
+    @RequestMapping("/addSendSpe")
+    public String addSendSpe(String orgFlow, String assignYear,String flag, Model model) {
+        Map<String,String> paramMap = new HashMap<>();
+        paramMap.put("orgFlow", orgFlow);
+        paramMap.put("assignYear", assignYear);
+        List<Map<String, String>> orgSpeListAlready = speAssignBiz.searchAssignOrgSpeListNew(paramMap);
+        if(CollectionUtils.isEmpty(orgSpeListAlready) && StringUtil.isNotBlank(assignYear)){
+            // 保存基地专业信息到招生计划表
+            speAssignBiz.insertOrgSpeAssign(paramMap);
+        }
+        // 查询主基地住院医师和助理全科专业信息
+        List<Map<String, String>> orgSpeList = speAssignBiz.searchAssignOrgSpeListNew(paramMap);
+        for (Map<String, String> orgSpe : orgSpeList) {
+            ResOrgSpe resOrgSpe = speAssignBiz.findOrgSpe(orgFlow, assignYear, orgSpe.get("SPE_ID"));
+            if (resOrgSpe != null) {
+                orgSpe.put("STATUS", resOrgSpe.getStatus());
+            }
+        }
+        model.addAttribute("orgSpeList", orgSpeList);
+        model.addAttribute("flag",flag);
+        model.addAttribute("assignYear",assignYear);
+        return "jsres/message/addSendSpe";
     }
 
     /**
@@ -322,6 +439,32 @@ public class JsResMessageController extends GeneralController {
             return GlobalConstant.SAVE_FAIL;
         }
         return speAssignBiz.updateAssignInfo(param);
+    }
+
+    /**
+     * @Department：研发部
+     * @Description 保存报送计划信息
+     * @Author xieyh
+     * @Date 2024-10-30
+     */
+    @ResponseBody
+    @RequestMapping("/saveSend")
+    public String saveSend(String orgFlow, String assignYear, String assignYearEdit, String isJointOrg,
+                             String startTime,String endTime,String assignDataStr) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("orgFlow", orgFlow);
+        param.put("assignYear", assignYear);
+        param.put("assignYearEdit", assignYearEdit);
+        param.put("sendStartTime", startTime);
+        param.put("sendEndTime", endTime);
+        param.put("isJointOrg",isJointOrg);
+        if(StringUtil.isNotBlank(assignDataStr) && !"[]".equals(assignDataStr)){
+            List<Map> assignList = JSON.parseArray(assignDataStr, Map.class);
+            param.put("assignList", assignList);
+        }else{
+            return GlobalConstant.SAVE_FAIL;
+        }
+        return speAssignBiz.updateSendInfo(param);
     }
 
     @ResponseBody
@@ -1319,8 +1462,8 @@ public class JsResMessageController extends GeneralController {
             try {
                 count = speAssignBiz.importAssignInfo(param, file);
             } catch (Exception e) {
-                e.printStackTrace();
-                return e.getMessage();
+                logger.error("导入招生计划失败！", e);
+                return "导入招生计划失败" + e.getMessage();
             }
             if(count != 0){
                 return GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";

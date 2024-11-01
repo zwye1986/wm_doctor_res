@@ -38,7 +38,7 @@ public class LicenseKey {
         machineId = "machineId=" + StringEscapeUtils.escapeJava("29ba4649-26a8-395a-ad87-622d4e3b9788");
         String workStationId = "";
 //        workStationId = "workStation=" + StringEscapeUtils.escapeJava("srm,edc,gcp,irb,sch,edu,njmuedu,erp,exam,res,test,fstu,cmis,osca,lcjn,eval,zsey,zseylcjn,portals,study");
-        workStationId = "workStation=" + StringEscapeUtils.escapeJava("srm,edc,gcp,irb,sch,edu,njmuedu,erp,exam,res,test,fstu,cmis,osca,lcjn,eval,zsey,zseylcjn,portals,study,recruit");
+        workStationId = "workStation=" + StringEscapeUtils.escapeJava("res,osca,portals");
         String validDate = "";
         validDate = "validDate=" + StringEscapeUtils.escapeJava("2031-01-01");
 

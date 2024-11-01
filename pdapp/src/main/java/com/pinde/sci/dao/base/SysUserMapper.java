@@ -3,6 +3,8 @@ package com.pinde.sci.dao.base;
 import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.mo.SysUserExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface SysUserMapper {
@@ -27,4 +29,6 @@ public interface SysUserMapper {
     int updateByPrimaryKeySelective(SysUser record);
 
     int updateByPrimaryKey(SysUser record);
+
+    Map<String, Object> getDoctorSchInfo(String userFlow);
 }

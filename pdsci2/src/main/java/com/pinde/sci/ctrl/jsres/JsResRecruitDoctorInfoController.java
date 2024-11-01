@@ -3350,6 +3350,22 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		wb.write(response.getOutputStream());
 	}
 
+	/**
+	 * @Author xieyh
+	 * @Description 基地招录统计分析图表
+	 * @Date  2024-10-28
+	 **/
+	@RequestMapping(value = {"/recruitReport"})
+	public String recruitReport(Model model) {
+		SysUser currentUser = GlobalContext.getCurrentUser();
+		String filter = "('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'',key:orgFlow.keyword,negate:!f" +
+				",params:(query:'" + currentUser.getOrgFlow() + "'),type:phrase),query:(match_phrase:(orgFlow.keyword:'" + currentUser.getOrgFlow() + "')))";
+		String iframe = "<iframe src=\"https://restest.njpdxx.com:5650/app/dashboards?auth_provider_hint=anonymous1#/view/41e46fe1-80c5-4f1b-bdba-c00822929a4b?embed=true" +
+				"&_g=(filters:!(" + filter + "),refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))&hide-filter-bar=true\"  height=\"2100\" width=\"1460\"></iframe>";
+		model.addAttribute("iframe", iframe);
+		return "jsres/zltjOrg/recruitReport";
+	}
+
 	@RequestMapping(value="/zltjOrgLocalAcc")
 	public String zltjOrgLocalAcc(Model model,String roleFlag) throws UnsupportedEncodingException {
 		model.addAttribute("trainingTypeId", TrainCategoryEnum.DoctorTrainingSpe.getId());
