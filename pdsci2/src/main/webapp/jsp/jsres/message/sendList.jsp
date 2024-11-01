@@ -83,7 +83,6 @@
 						<td style="text-align: center;width: 200px;">
 							<a class="btn" href="javascript:void(0);"
 							   onclick="edit('${result.ORG_FLOW}','${result.ASSIGN_YEAR}','${result.SEND_START_TIME}','${result.SEND_END_TIME}','edit');">编辑</a>&nbsp;
-							<a class="btn" href="javascript:void(0);" onclick="impPlan('${result.ORG_NAME}','${result.ORG_FLOW}','${result.ASSIGN_YEAR}');">导入计划</a>
 						</td>
             	</tr>
             </c:forEach>
