@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface IDeptBiz {
+    List<SysDept> selectByExample(SysDeptExample example);
 
     List<SysDept> selectByDeptId(String rotationFlow,String orgFlow);
     List<SchAndStandardDeptCfg> getSchDeptByBzIds(List<String> bzDeptIds,List<String> orgFlows,String orgFlow);

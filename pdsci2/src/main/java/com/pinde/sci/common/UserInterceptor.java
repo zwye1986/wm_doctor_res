@@ -248,6 +248,7 @@ public class UserInterceptor implements HandlerInterceptor {
 		if (allMenus.contains(servletPath)) {
 			isAllow = false;
 		}
+
 		for (String menuUrl : allMenus) {
 			if (servletPath.startsWith(menuUrl) || menuUrl.startsWith(servletPath)) {
 				isAllow = false;

@@ -536,16 +536,5 @@
       MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
     where ROLE_FLOW = #{roleFlow,jdbcType=VARCHAR}
   </update>
-  <select id="searchActvityNew" parameterType="map" resultMap="com.pinde.sci.dao.jsres.ActivityAuditCfgExtMapper.activityAuditMap">
-    select * from Activity_Audit_Cfg where record_status='Y'
-    <if test="recordFlow != null" >
-      and record_flow=#{recordFlow}
-    </if>
-    <if test="orgFlow != null" >
-      and org_flow=#{orgFlow}
-    </if>
-    <if test="addRoleFlow != null">
-      and add_role_flow=#{addRoleFlow}
-    </if>
-  </select>
+
 </mapper>

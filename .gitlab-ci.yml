@@ -2,5 +2,5 @@ build:
   stage: build
   script:
     - mvn clean package -s settings.xml -Ppro
-    - ossutil64 cp /home/gitlab-runner/builds/ez9r5Em6/0/research/jsres-doctor-pdsci/pdsci2/target/pdsci.war oss://njpdkj/upgrade/$current_date/jsres/ --update --force
-    - ossutil64 cp /home/gitlab-runner/builds/ez9r5Em6/0/research/jsres-doctor-pdsci/pdapp/target/pdapp.war oss://njpdkj/upgrade/$current_date/jsres/ --update --force
+    - ossutil64 cp /home/gitlab-runner/builds/ez9r5Em6/0/research/jsres-doctor-pdsci/pdsci2/target/pdsci.war oss://njpdkj/upgrade/$current_date/jsres/master/ --update --force
+    - ossutil64 cp /home/gitlab-runner/builds/ez9r5Em6/0/research/jsres-doctor-pdsci/pdapp/target/pdapp.war oss://njpdkj/upgrade/$current_date/jsres/master/ --update --force
