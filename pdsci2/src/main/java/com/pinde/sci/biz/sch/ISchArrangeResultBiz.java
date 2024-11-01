@@ -361,6 +361,6 @@ public interface ISchArrangeResultBiz {
 	List<SysDept> searchSysDeptList(String orgFlow, String searchStr);
 
 
-	void expertSchTemp(HttpServletRequest request, HttpServletResponse response, String rotationFlow);
+	void expertSchTemp(HttpServletRequest request, HttpServletResponse response, String rotationFlow) throws IOException;
 
 }

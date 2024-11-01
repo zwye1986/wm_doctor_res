@@ -4073,7 +4073,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 	 */
 	@RequestMapping(value = "/expertSchTemp")
 	@ResponseBody
-	public void expertSchTemp(HttpServletRequest request, HttpServletResponse response,String rotationFlow){
+	public void expertSchTemp(HttpServletRequest request, HttpServletResponse response,String rotationFlow) throws IOException {
 		schArrangeResultBiz.expertSchTemp(request,response,rotationFlow);
 	}
 

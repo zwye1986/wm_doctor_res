@@ -3,7 +3,6 @@ package com.pinde.sci.biz.sch.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateTime;
-import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.IdcardUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.extra.pinyin.PinyinUtil;
@@ -4595,11 +4594,15 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	private ISchDeptExternalRelBiz deptExternalRelBiz;
 
 	@Override
-	public void expertSchTemp(HttpServletRequest request, HttpServletResponse response, String rotationFlow) {
-		String modelPath = String.valueOf(env.getProperty("excelModel.path"));
-		String filePath = String.valueOf(env.getProperty("templateFile.path"));
-		modelPath = modelPath+"PbImportModel.xls";
-		filePath = filePath + cn.hutool.core.date.DateUtil.format(new Date(),"yyyyMMDDHHmmss")+"-"+UUID.randomUUID().toString().replaceAll("-","")+".xls";
+	public void expertSchTemp(HttpServletRequest request, HttpServletResponse response, String rotationFlow) throws IOException {
+//		String modelPath = String.valueOf(env.getProperty("excelModel.path"));
+//		String filePath = String.valueOf(env.getProperty("templateFile.path"));
+//		modelPath = modelPath+"PbImportModel.xls";
+//		URL resource = ResourceLoader.getResource("classpath:excelModel/PbImportModel.xls");
+		File file = SpringUtil.getResource("classpath:excelModel/PbImportModel.xls").getFile();
+//		System.out.println("文件模板路径1+++++"+file.getPath());
+//		System.out.println("文件模板路径：：："+ResourceLoader.getPath("PbImportModel.xls"));
+//		filePath = filePath + cn.hutool.core.date.DateUtil.format(new Date(),"yyyyMMDDHHmmss")+"-"+UUID.randomUUID().toString().replaceAll("-","")+".xls";
 		//填充模板示例
 		Map<String, Object> map = new HashMap<>();
 		map.put("userName","例:张三");
@@ -4674,7 +4677,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				encodedFileName = new String("排班导入模板.xls".getBytes("UTF-8"), "ISO8859-1");
 			}
 			response.setHeader("Content-Disposition", "attachment; filename=" + encodedFileName);//设置文件头编码方式和文件名
-			ExcelWriter build = EasyExcel.write(response.getOutputStream()).withTemplate(modelPath).build();
+			ExcelWriter build = EasyExcel.write(response.getOutputStream()).withTemplate(file).build();
 			//主要的sheet
 			WriteSheet sheet1 = EasyExcel.writerSheet("Sheet1").build();
 			//辅助的sheet 专业和标准科室
