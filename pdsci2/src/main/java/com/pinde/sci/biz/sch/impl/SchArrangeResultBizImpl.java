@@ -4600,6 +4600,9 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 //		modelPath = modelPath+"PbImportModel.xls";
 //		URL resource = ResourceLoader.getResource("classpath:excelModel/PbImportModel.xls");
 		File file = SpringUtil.getResource("classpath:excelModel/PbImportModel.xls").getFile();
+		if (!file.exists()) {
+			throw new RuntimeException("未识别到模板文件");
+		}
 //		System.out.println("文件模板路径1+++++"+file.getPath());
 //		System.out.println("文件模板路径：：："+ResourceLoader.getPath("PbImportModel.xls"));
 //		filePath = filePath + cn.hutool.core.date.DateUtil.format(new Date(),"yyyyMMDDHHmmss")+"-"+UUID.randomUUID().toString().replaceAll("-","")+".xls";
@@ -4677,7 +4680,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				encodedFileName = new String("排班导入模板.xls".getBytes("UTF-8"), "ISO8859-1");
 			}
 			response.setHeader("Content-Disposition", "attachment; filename=" + encodedFileName);//设置文件头编码方式和文件名
-			ExcelWriter build = EasyExcel.write(response.getOutputStream()).withTemplate(file).build();
+			ExcelWriter build = EasyExcel.write(response.getOutputStream()).withTemplate(file.getPath()).build();
 			//主要的sheet
 			WriteSheet sheet1 = EasyExcel.writerSheet("Sheet1").build();
 			//辅助的sheet 专业和标准科室
@@ -4845,6 +4848,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		Map<String, Object> result = new HashMap<>();
 		result.put("code",200);
 		if (CollectionUtil.isEmpty(data)) {
+			result.put("code",500);
+			result.put("msg","暂无导入数据");
 			return result;
 		}
 		//查询所有专业对应的标准科室
@@ -4873,9 +4878,6 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		entity.getData(false);
 
 		List<PbInfoItem> compareList = entity.getCompareList();
-		if (CollectionUtil.isEmpty(compareList)) {
-			return result;
-		}
 		if (CollectionUtil.isNotEmpty(compareList)) {
 			//根据resultFlow集合查询学员提交情况
 			Set<String> resultFlows = compareList.stream().map(PbInfoItem::getResultFlow).collect(Collectors.toSet());
@@ -4891,6 +4893,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		//筛选导入的数据
 		List<PbInfoItem> collect = compareList.stream().filter(e -> "import".equalsIgnoreCase(e.getType())).collect(Collectors.toList());
 		if (CollectionUtil.isEmpty(collect)) {
+			result.put("code",500);
+			result.put("msg","暂无导入数据");
 			return result;
 		}
 		List<PbInfoItem> collect2 = collect.stream().sorted(Comparator.comparing(PbInfoItem::getSchStartDate)).collect(Collectors.toList());
@@ -5060,6 +5064,12 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 						break;
 					}
 					if (!nextItem.getStandardDeptId().equalsIgnoreCase(thisItem.getStandardDeptId())) {
+						break;
+					}
+					DateTime thisSchEndDate = cn.hutool.core.date.DateUtil.parseDate(thisItem.getSchEndDate());
+					DateTime dateTime = cn.hutool.core.date.DateUtil.offsetDay(thisSchEndDate, 1);
+					if (!dateTime.toDateStr().equals(nextItem.getSchStartDate())) {
+						//日期不连续，不做处理
 						break;
 					}
 					thisItem.setSchEndDate(nextItem.getSchEndDate());
