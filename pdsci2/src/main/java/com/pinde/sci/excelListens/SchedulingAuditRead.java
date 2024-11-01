@@ -54,7 +54,7 @@ public class SchedulingAuditRead extends AnalysisEventListener<Map<Integer, Stri
     private List<PbInfoItem> compareList = new ArrayList<>();
 
     //本次导入的所有的resultFlow集合对应的学员数据提交情况
-    private Map<String, Integer> resRecList;
+    private Map<String, Integer> resRecList = new HashMap<>();
 
     //处理后合理的排班安排,可以入库的数据
     private List<SchArrangeResult> arrangeResults = new ArrayList<>();
@@ -306,6 +306,18 @@ public class SchedulingAuditRead extends AnalysisEventListener<Map<Integer, Stri
             if (CollectionUtil.isEmpty(bzSchMon)) {
                 item.setTip(item.getTip()+"【"+speName+"】专业下的最新方案暂未配置轮转方案！<br/>");
             }
+            //先把导入的数据转型
+            for (int i = 5; i < cellData.size(); i++) {
+                SchedulingDataInfo cellItem = cellData.get(i);
+                if ("lz".equalsIgnoreCase(cellItem.getDeptType())) {
+                    int bzindex = i - 1;
+                    SchedulingDataInfo schedulingDataInfo = cellData.get(bzindex);
+                    PbInfoItem byCellItem = getByCellItem(cellItem, schedulingDataInfo, item.getId(), cellData.get(0).getName(),cellData.get(3).getName());
+                    if (null != byCellItem) {
+                        this.compareList.add(byCellItem);
+                    }
+                }
+            }
 
             //根据学员的历史排班和当前排班，比较处理是否覆盖
             //1.不存在历史排班的情况下
@@ -348,18 +360,6 @@ public class SchedulingAuditRead extends AnalysisEventListener<Map<Integer, Stri
             }
 
             //stuHistoryBb不为空，这个学员存在历史的排班数据
-            //先把导入的数据转型
-            for (int i = 5; i < cellData.size(); i++) {
-                SchedulingDataInfo cellItem = cellData.get(i);
-                if ("lz".equalsIgnoreCase(cellItem.getDeptType())) {
-                    int bzindex = i - 1;
-                    SchedulingDataInfo schedulingDataInfo = cellData.get(bzindex);
-                    PbInfoItem byCellItem = getByCellItem(cellItem, schedulingDataInfo, item.getId(), cellData.get(0).getName(),cellData.get(3).getName());
-                    if (null != byCellItem) {
-                        this.compareList.add(byCellItem);
-                    }
-                }
-            }
             //再把历史数据转型
             getByCellItemHistory(stuHistoryBb);
             if (!checkSchMon) {
