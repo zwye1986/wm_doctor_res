@@ -38,25 +38,20 @@
 				if (resp) {
 					res = JSON.parse(resp);
 				}
-				if (res && res.headers) {
-					localStorage.setItem("headers",JSON.stringify(res.headers))
-					// setCookie("headers",encodeURI(JSON.stringify(res.headers)))
+				if (res && res.head1) {
+					localStorage.setItem("head1",JSON.stringify(res.head1))
 				}else {
-					localStorage.setItem("headers",JSON.stringify([]))
-					// setCookie("headers",encodeURI(JSON.stringify([])))
+					localStorage.setItem("head1",JSON.stringify([]))
+				}
+				if (res && res.head2) {
+					localStorage.setItem("head2",JSON.stringify(res.head2))
+				}else {
+					localStorage.setItem("head2",JSON.stringify([]))
 				}
 				if (res && res.data) {
 					localStorage.setItem("data",JSON.stringify(res.data))
-					// setCookie("data",encodeURI(JSON.stringify(res.data)))
 				}else {
 					localStorage.setItem("data",JSON.stringify([]))
-					// setCookie("data",encodeURI(JSON.stringify([])))
-				}
-				if (res) {
-					localStorage.setItem("flag",JSON.stringify(res.flag))
-					// setCookie("data",encodeURI(JSON.stringify(res.data)))
-				}else {
-					localStorage.setItem("flag",JSON.stringify(false))
 				}
 				jboxEndLoading();
 				window.parent.toImportCache();

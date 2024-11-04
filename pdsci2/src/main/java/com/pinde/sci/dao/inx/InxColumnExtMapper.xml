@@ -24,7 +24,7 @@
 	<!--</if>-->
 	<!--</if>-->
 	<!--<if test='columnName != null and columnName != ""'>-->
-	<!--and column_name like '%${columnName}%'-->
+	<!--and column_name like CONCAT(CONCAT('%', #{columnName}),'%')-->
 	<!--</if>-->
 	<!--</where>-->
 	<!--order by ordinal asc, create_time desc) t-->
@@ -52,7 +52,7 @@
 	<!--</if>-->
 	<!--</if>-->
 	<!--<if test='columnName != null and columnName != ""'>-->
-	<!--and column_name like '%${columnName}%'-->
+	<!--and column_name like CONCAT(CONCAT('%', #{columnName}),'%')-->
 	<!--</if>-->
 	<!--</where>-->
 	<!--</select>-->

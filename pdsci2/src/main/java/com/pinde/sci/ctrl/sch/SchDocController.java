@@ -7,26 +7,21 @@ import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.*;
-import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.common.InitConfig;
+import com.pinde.sci.common.*;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.dao.base.SchRotationGroupMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.sci.enums.res.*;
-import com.pinde.sci.enums.sch.SchRotationMedicineType;
-import com.pinde.sci.enums.sch.SchStatusEnum;
-import com.pinde.sci.enums.sch.SchUnitEnum;
+import com.pinde.sci.enums.sch.*;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
-import com.pinde.sci.form.sch.DoctorSearchForm;
-import com.pinde.sci.form.sch.SchArrangeResultForm;
-import com.pinde.sci.form.sch.SchRotationDeptForm;
+import com.pinde.sci.form.sch.*;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.hssf.util.CellRangeAddress;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -2835,15 +2830,15 @@ public class SchDocController extends GeneralController{
 
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		//列宽自适应
 		Map<Integer, Integer> colWidthAuto = new HashMap<Integer, Integer>();
@@ -3086,16 +3081,17 @@ public class SchDocController extends GeneralController{
 
 				//定义将用到的样式
 				HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-				styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+				styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
 				sheet.setColumnWidth(0, 3000);
 				HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-				styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-				styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+				styleLeft.setAlignment(HorizontalAlignment.LEFT);
+				styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
 				HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-				stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-				stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+				stylevwc.setAlignment(HorizontalAlignment.CENTER);
+				stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
+
 
 				//列宽自适应
 				Map<Integer, Integer> colWidthAuto = new HashMap<Integer, Integer>();
@@ -3290,16 +3286,16 @@ public class SchDocController extends GeneralController{
             }
             //定义将用到的样式
             HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-            styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+            styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
             sheet.setColumnWidth(0, 3000);
             HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-            styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-            styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+            styleLeft.setAlignment(HorizontalAlignment.LEFT);
+            styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
             HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-            stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-            stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+            stylevwc.setAlignment(HorizontalAlignment.CENTER);
+            stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
             // List<String> paramsId = new ArrayList<>();
             HSSFRow rowDept = sheet.createRow(0);

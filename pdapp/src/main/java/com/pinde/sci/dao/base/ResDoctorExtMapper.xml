@@ -56,16 +56,16 @@
 			AND res_doctor.RECORD_STATUS = #{recordStatus}
 		</if>
 		<if test="specialized != null and specialized != ''">
-			AND RES_DOCTOR.SPECIALIZED LIKE '%${specialized}%'
+			AND RES_DOCTOR.SPECIALIZED LIKE CONCAT(CONCAT('%', #{specialized}),'%')
 		</if>
 		<if test="doctorCode != null and doctorCode != ''">
-			AND RES_DOCTOR.doctor_code LIKE '%${doctorCode}%'
+			AND RES_DOCTOR.doctor_code LIKE CONCAT(CONCAT('%', #{doctorCode}),'%')
 		</if>
 		<if test='doctorName != null and doctorName != ""'>
-			AND RES_DOCTOR.doctor_name LIKE '%${doctorName}%'
+			AND RES_DOCTOR.doctor_name LIKE CONCAT(CONCAT('%', #{doctorName}),'%')
 		</if>
 		<if test='orgName != null and orgName != ""'>
-			AND RES_DOCTOR.org_name like '%${orgName}%'
+			AND RES_DOCTOR.org_name like CONCAT(CONCAT('%', #{orgName}),'%')
 		</if>
 		<if test='orgFlow != null and orgFlow != ""'>
 			AND RES_DOCTOR.org_flow = #{orgFlow}
@@ -73,10 +73,10 @@
 
 		<if test='sysUser != null'>
 			<if test='sysUser.userName != null and sysUser.userName != ""'>
-				AND sys_user.USER_NAME like '%${sysUser.userName}%'
+				AND sys_user.USER_NAME like CONCAT(CONCAT('%', #{sysUser.userName}),'%')
 			</if>
 			<if test='sysUser.statusId != null and sysUser.statusId  != ""'>
-				AND sys_user.status_Id  = '${sysUser.statusId}'
+				AND sys_user.status_Id  = #{sysUser.statusId}
 			</if>
 			<if test='sysUser.recordStatus != null and sysUser.recordStatus  != ""'>
 				AND sys_user.RECORD_STATUS=#{recordStatus}

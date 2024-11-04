@@ -241,4 +241,7 @@ public interface ResDoctorSchProcessExtMapper {
 	 * @Date 0015, 2021年1月14日
 	 */
 	List<Map<String, Object>> searchDocCycleListNew(Map<String, Object> paramMap);
+
+
+	List<ResDoctorSchProcess> listByDoctorFlow(@Param("doctorFlow")String doctorFlow);
 }

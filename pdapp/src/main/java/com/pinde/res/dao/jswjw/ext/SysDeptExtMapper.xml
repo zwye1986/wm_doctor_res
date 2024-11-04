@@ -20,7 +20,7 @@
 		where sd.record_status = 'Y'
 		and (sd.org_flow = #{orgFlow} or sder.rel_org_flow = #{orgFlow})
 		<if test='deptName!=null and deptName!=""'>
-			and (sd.dept_name like '%${deptName}%' or sder.rel_org_name like '%${deptName}%')
+			and (sd.dept_name like CONCAT(CONCAT('%', #{deptName}),'%') or sder.rel_org_name like CONCAT(CONCAT('%', #{deptName}),'%'))
 		</if>
 		order by sd.dept_code
 	</select>

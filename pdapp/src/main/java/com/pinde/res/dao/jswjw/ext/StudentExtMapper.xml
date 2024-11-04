@@ -43,7 +43,7 @@
             </otherwise>
         </choose>
         <if test='orgName!=null and orgName!=""'>
-            and su.org_Name like '%${orgName}%'
+            and su.org_Name like CONCAT(CONCAT('%', #{orgName}),'%')
         </if>
         <if test='deptFlow!=null and deptFlow!=""'>
             and su.dept_flow = #{deptFlow}
@@ -229,7 +229,7 @@
         left join res_doctor rd on rdk.doctor_flow = rd.doctor_flow and rd.RECORD_STATUS='Y'
         where rdk.RECORD_STATUS='Y'
         <if test="doctorName!='' and doctorName!=null">
-            and rdk.doctor_Name like '%${doctorName}%'
+            and rdk.doctor_Name like CONCAT(CONCAT('%', #{doctorName}),'%')
         </if>
         <if test="orgFlow!='' and orgFlow!=null">
             AND rdk.org_flow = #{orgFlow}

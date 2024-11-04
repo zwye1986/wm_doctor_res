@@ -18,6 +18,7 @@ import com.pinde.sci.model.mo.ResJointOrg;
 import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.mo.SysUser;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -311,7 +312,7 @@ public class JsResActivityDoctorActivityStatisticsController extends GeneralCont
 		HSSFRow row = sheet.createRow((int) 0);
 		// 第四步，创建单元格，并设置值表头 设置表头居中
 		HSSFCellStyle style = wb.createCellStyle();
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 
 		Map<Integer, Integer> columnWidth = new HashMap<>();
 

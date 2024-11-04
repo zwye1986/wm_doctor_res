@@ -301,7 +301,7 @@
             and rdsp.dept_flow = #{deptFlow}
         </if>
         <if test='deptName!=null and deptName!=""'>
-            and rdsp.dept_Name like '%${deptName}%'
+            and rdsp.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
         <if test='teacherFlow!=null and teacherFlow!=""'>
             and rdsp.teacher_user_flow = #{teacherFlow}
@@ -360,7 +360,7 @@
             and rdsp.dept_flow = #{deptFlow}
         </if>
         <if test='deptName!=null and deptName!=""'>
-            and rdsp.dept_Name like '%${deptName}%'
+            and rdsp.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
         <if test='teacherFlow!=null and teacherFlow!=""'>
             and rdsp.teacher_user_flow = #{teacherFlow}
@@ -422,13 +422,13 @@
         </if>
         )
         <if test='userName!=null and userName!=""'>
-            and su.user_name like '%${userName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='deptFlow!=null and deptFlow!=""'>
             and su.dept_flow = #{deptFlow}
         </if>
         <if test='deptName!=null and deptName!=""'>
-            and su.dept_Name like '%${deptName}%'
+            and su.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
         )
         order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M'),su.user_code
@@ -556,13 +556,13 @@
         )
         )
         <if test='userName!=null and userName!=""'>
-            and su.user_name like '%${userName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='deptFlow!=null and deptFlow!=""'>
             and su.dept_flow = #{deptFlow}
         </if>
         <if test='deptName!=null and deptName!=""'>
-            and su.dept_Name like '%${deptName}%'
+            and su.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
         order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
     </select>
@@ -655,7 +655,7 @@
             and rdsp.dept_flow = #{deptFlow}
         </if>
         <if test='deptName!=null and deptName!=""'>
-            and rdsp.dept_Name like '%${deptName}%'
+            and rdsp.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
         <if test='teacherFlow!=null and teacherFlow!=""'>
             and rdsp.teacher_user_flow = #{teacherFlow}

@@ -65,7 +65,7 @@
 		
 <!-- 		学员姓名 -->
 		<if test='doctorName!=null and doctorName!=""'>
-			and rd.doctor_name like '%${doctorName}%'
+			and rd.doctor_name like CONCAT(CONCAT('%', #{doctorName}),'%')
 		</if>
 		<if test='deptFlow!=null and deptFlow!=""'>
 			and rdsp.dept_flow =#{deptFlow}
@@ -109,7 +109,7 @@
 
 <!-- 		学员姓名 -->
 		<if test='doctorName!=null and doctorName!=""'>
-			and rd.doctor_name like '%${doctorName}%'
+			and rd.doctor_name like CONCAT(CONCAT('%', #{doctorName}),'%')
 		</if>
 		<if test='deptFlow!=null and deptFlow!=""'>
 			and rdsp.dept_flow =#{deptFlow}

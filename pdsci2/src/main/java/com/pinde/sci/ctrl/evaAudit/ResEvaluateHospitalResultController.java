@@ -26,6 +26,7 @@ import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.mo.SysUserDept;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -812,7 +813,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
 
                 //定义将用到的样式
                 HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-                styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+                styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
                 //列宽自适应
                 HSSFRow rowOne = sheet.createRow(0);//第1行
@@ -1104,7 +1105,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             HSSFSheet sheet = wb.createSheet("sheet1");
             //定义将用到的样式
             HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-            styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+            styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
             //列宽自适应
             HSSFRow rowOne = sheet.createRow(0);//第1行
@@ -1438,7 +1439,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             HSSFSheet sheet = wb.createSheet("sheet1");
             //定义将用到的样式
             HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-            styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+            styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
             //列宽自适应
             HSSFRow rowOne = sheet.createRow(0);//第1行
@@ -1785,7 +1786,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
 
             //定义将用到的样式
             HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-            styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+            styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
             //列宽自适应
             HSSFRow rowOne = sheet.createRow(0);//第1行

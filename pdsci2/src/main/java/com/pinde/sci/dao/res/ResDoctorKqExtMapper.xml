@@ -32,7 +32,7 @@
             </foreach>
         </if>
         <if test='doctorName!=null and doctorName!=""'>
-            and SU.USER_NAME LIKE  '%${doctorName}%'
+            and SU.USER_NAME LIKE  CONCAT(CONCAT('%', #{doctorName}),'%')
         </if>
         <if test='doctorFlow!=null and doctorFlow!=""'>
             and SU.USER_FLOW = #{doctorFlow}
@@ -106,7 +106,7 @@
         where SU.RECORD_STATUS = 'Y'
         AND ED.RECORD_STATUS = 'Y'
         <if test='doctorName!=null and doctorName!=""'>
-            and SU.USER_NAME LIKE  '%${doctorName}%'
+            and SU.USER_NAME LIKE  CONCAT(CONCAT('%', #{doctorName}),'%')
         </if>
         <if test='trainingYears!=null and trainingYears!=""'>
             and ed.training_Years = #{trainingYears}
@@ -154,7 +154,7 @@
             and rd.org_Flow = #{orgFlow}
         </if>
         <if test="doctorName!='' and doctorName!=null">
-            and rd.doctor_name like '%${doctorName}%'
+            and rd.doctor_name like CONCAT(CONCAT('%', #{doctorName}),'%')
         </if>
         <if test="trainingTypeId!='' and trainingTypeId!=null">
             and rd.training_type_id = #{trainingTypeId}
@@ -202,7 +202,7 @@
     left join res_doctor rd on rdk.doctor_flow = rd.doctor_flow and rd.RECORD_STATUS='Y'
     where rdk.RECORD_STATUS='Y'
     <if test="doctorName!='' and doctorName!=null">
-        and rdk.doctor_Name like '%${doctorName}%'
+        and rdk.doctor_Name like CONCAT(CONCAT('%', #{doctorName}),'%')
     </if>
     <if test="orgFlow!='' and orgFlow!=null">
         AND rdk.org_flow = #{orgFlow}
