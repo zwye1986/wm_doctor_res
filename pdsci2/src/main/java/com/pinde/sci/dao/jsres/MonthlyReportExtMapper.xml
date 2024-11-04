@@ -501,7 +501,7 @@ AND dr.AUDIT_STATUS_ID = 'Passed'
 AND dr.CAT_SPE_ID = 'DoctorTrainingSpe'
 AND dr.doctor_Status_Id = '20'
         <if test="universityName!=null and universityName!=''">
-          AND  ed.work_org_name LIKE '%${universityName}%'
+          AND  ed.work_org_name LIKE CONCAT(CONCAT('%', #{universityName}),'%')
         </if>
 ORDER BY
 	dr.session_number DESC,
@@ -1504,7 +1504,7 @@ ORDER BY
             and sm.sch_Dept_Flow = #{schDeptFlow}
         </if>
         <if test='teacherUserName!=null and teacherUserName!=""'>
-            and sm.teacher_user_name like '%${teacherUserName}%'
+            and sm.teacher_user_name like CONCAT(CONCAT('%', #{teacherUserName}),'%')
         </if>
         and EXISTS (select null from SYS_MONTHLY_DOCTOR_INFO smd
         where smd.record_status='Y' and smd.doctor_flow = sm.doctor_flow and smd.CHANGE_TYPE_ID = 'DoctorTrainingSpe')
@@ -2537,9 +2537,11 @@ ORDER BY
     </resultMap>
     <select id="searchDocCycleListOrg" parameterType="map" resultMap="docExceptionMap">
         SELECT SO.ORG_FLOW AS ID, SO.ORG_NAME,SO.ORG_CODE, TO_NUMBER(NVL(NOT_NUM, 0)) AS NOT_NUM, TO_NUMBER(NVL(NOT_TEST_NUM, 0)) AS NOT_EXAM_NUM,
-            CASE WHEN (SELECT 1 FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = SO.ORG_FLOW) = 1
-            THEN (SELECT ORG_FLOW FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = SO.ORG_FLOW)
-            ELSE NULL END AS PID
+        CASE
+        WHEN EXISTS (SELECT 1 FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = SO.ORG_FLOW)
+        THEN (SELECT MAX(ORG_FLOW) FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = SO.ORG_FLOW)
+        ELSE NULL
+        END AS PID
         FROM SYS_ORG SO
         LEFT JOIN (
             SELECT RDSP.ORG_FLOW, COUNT(RDSP.ORG_FLOW) AS not_num
@@ -2607,17 +2609,17 @@ ORDER BY
           (select count(1) from sys_log a
           left join sys_user_role b on a.user_flow = b.user_flow
           where b.role_flow = #{doctorRoleFlow} and b.record_status='Y' and a.record_status='Y'
-          and a.oper_id in('LogIn','AppLogin') and a.create_time like '${monthDate2}%') as doctor_number ,
+          and a.oper_id in('LogIn','AppLogin') and a.create_time like CONCAT(#{monthDate2},'%')) as doctor_number ,
           (select count(1) from sys_log a
           left join sys_user_role b on a.user_flow = b.user_flow
           where b.role_flow in
             <foreach collection="teacherRoleFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
           and b.record_status='Y' and a.record_status='Y'
-          and a.oper_id in('LogIn','AppLogin') and a.create_time like '${monthDate2}%') as teacher_number ,
+          and a.oper_id in('LogIn','AppLogin') and a.create_time like CONCAT(#{monthDate2},'%') as teacher_number ,
          (select count(1) from sys_log a
           left join sys_user_role b on a.user_flow = b.user_flow
           where b.role_flow = #{orgRoleFlow} and b.record_status='Y' and a.record_status='Y'
-          and a.oper_id in('LogIn','AppLogin') and a.create_time like '${monthDate2}%')  as org_number
+          and a.oper_id in('LogIn','AppLogin') and a.create_time like CONCAT(#{monthDate2},'%')  as org_number
         from dual
     </select>
 

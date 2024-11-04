@@ -35,7 +35,7 @@
             and a.session_number=#{year}
         </if>
         <if test="speName !=null and speName !=''">
-            AND a.train_Spe like  '%${speName}%'
+            AND a.train_Spe like  CONCAT(CONCAT('%', #{speName}),'%')
         </if>
         group by a.org_flow, a.org_name
     </select>
@@ -73,7 +73,7 @@
             and a.session_number=#{year}
         </if>
         <if test="speName !=null and speName !=''">
-            AND a.train_Spe like  '%${speName}%'
+            AND a.train_Spe like  CONCAT(CONCAT('%', #{speName}),'%')
         </if>
         group by a.org_flow, a.org_name
     </select>
@@ -103,7 +103,7 @@
             and a.session_number=#{year}
         </if>
         <if test="speName !=null and speName !=''">
-            AND a.train_Spe like  '%${speName}%'
+            AND a.train_Spe like  CONCAT(CONCAT('%', #{speName}),'%')
         </if>
         group by a.org_flow, a.org_name
     </select>
@@ -153,7 +153,7 @@
                 and rddt.ORG_FLOW = #{docotrDelayTeturn.orgFlow}
             </if>
             <if test="docotrDelayTeturn.doctorName != null and docotrDelayTeturn.doctorName != ''">
-                and rddt.DOCTOR_NAME like '%${docotrDelayTeturn.doctorName}%'
+                and rddt.DOCTOR_NAME like CONCAT(CONCAT('%', #{docotrDelayTeturn.doctorName}),'%')
             </if>
         </if>
         <if test="resDoctor != null">
@@ -172,7 +172,7 @@
             )
             and a.DOCTOR_TYPE_ID = 'Graduate'
             <if test="docotrDelayTeturn.trainingSpeName !=null and docotrDelayTeturn.trainingSpeName != ''">
-                and A.TRAINING_SPE_NAME like  '%${docotrDelayTeturn.trainingSpeName}%'
+                and A.TRAINING_SPE_NAME like  CONCAT(CONCAT('%', #{docotrDelayTeturn.trainingSpeName}),'%')
             </if>
             <if test="docotrDelayTeturn.trainingTypeId != null and docotrDelayTeturn.trainingTypeId != ''">
                 and A.TRAINING_TYPE_ID = #{docotrDelayTeturn.trainingTypeId}
@@ -348,13 +348,13 @@
                 and rddt.TYPE_ID = #{b.typeId}
             </if>
             <if test="b.doctorName!=null and b.doctorName!=''">
-                and rddt.doctor_NAME LIKE '%${b.doctorName}%'
+                and rddt.doctor_NAME LIKE CONCAT(CONCAT('%', #{b.doctorName}),'%')
             </if>
             <if test="b.trainingSpeName!=null and b.trainingSpeName!=''">
-                and rddt.TRAINING_SPE_NAME LIKE '%${b.trainingSpeName}%'
+                and rddt.TRAINING_SPE_NAME LIKE CONCAT(CONCAT('%', #{b.trainingSpeName}),'%')
             </if>
             <if test="b.orgName!=null and b.orgName!=''">
-                and rddt.ORG_NAME LIKE '%${b.orgName}%'
+                and rddt.ORG_NAME LIKE CONCAT(CONCAT('%', #{b.orgName}),'%')
             </if>
         </if>
         <if test="orgFlowList!=null and orgFlowList.size()>0">
@@ -370,7 +370,7 @@
         </if>
         <if test='medicineTypeId!=null and medicineTypeId!=""'>
             and exists (select 1 from sys_user su where su.user_flow=rddt.doctor_flow
-            AND instr('${medicineTypeId}',su.medicine_Type_Id)>0
+            AND instr(#{medicineTypeId},su.medicine_Type_Id)>0
             )
         </if>
         order by rddt.create_time desc
@@ -384,13 +384,13 @@
                 AND rddt.org_flow = #{rddt.orgFlow}
             </if>
             <if test="rddt.orgName!=null and rddt.orgName!=''">
-                AND rddt.org_name like '%${rddt.orgName}%'
+                AND rddt.org_name like CONCAT(CONCAT('%', #{rddt.orgName}),'%')
             </if>
             <if test="rddt.doctorFlow!=null and rddt.doctorFlow!=''">
                 AND rddt.doctor_flow = #{rddt.doctorFlow}
             </if>
             <if test="rddt.doctorName!=null and rddt.doctorName!=''">
-                AND rddt.doctor_name like '%${rddt.doctorName}%'
+                AND rddt.doctor_name like CONCAT(CONCAT('%', #{rddt.doctorName}),'%')
             </if>
             <if test="rddt.sessionNumber!=null and rddt.sessionNumber!=''">
                 AND rddt.session_number = #{rddt.sessionNumber}
@@ -402,7 +402,7 @@
                 AND rddt.training_spe_id = #{rddt.trainingSpeId}
             </if>
             <if test="rddt.trainingSpeName!=null and rddt.trainingSpeName!=''">
-                AND rddt.training_spe_name like '%${rddt.trainingSpeName}%'
+                AND rddt.training_spe_name like CONCAT(CONCAT('%', #{rddt.trainingSpeName}),'%')
             </if>
             <if test="rddt.policyId!=null and rddt.policyId!=''">
                 AND rddt.policy_id = #{rddt.policyId}

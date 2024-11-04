@@ -3008,28 +3008,28 @@
       LEFT JOIN (
         select B.ORG_FLOW,count(1) as doctor_outdept_data from EXAM_RESULTS  er
         left join RES_DOCTOR_SCH_PROCESS B on er.PROCESS_FLOW = B.PROCESS_FLOW
-        where  er.submit_time like '${monthDate}%'
+        where  er.submit_time like CONCAT(#{monthDate},'%')
         and b.user_flow in (select doctor_flow from res_doctor where record_status='Y' and doctor_type_id in('Company','CompanyEntrust','Social')  and doctor_status_id ='20')
         group by b.ORG_FLOW
       ) A ON A.ORG_FLOW = SO.ORG_FLOW
       LEFT JOIN (
         select rdsp.ORG_FLOW,count(1) as graduate_outdept_data from EXAM_RESULTS  er
         left join RES_DOCTOR_SCH_PROCESS rdsp on er.PROCESS_FLOW = rdsp.PROCESS_FLOW
-        where  er.submit_time like '${monthDate}%'
+        where  er.submit_time like CONCAT(#{monthDate},'%')
         and rdsp.user_flow in (select doctor_flow from res_doctor where record_status='Y' and doctor_type_id = 'Graduate' and doctor_status_id ='20')
         group by rdsp.ORG_FLOW
       ) b ON b.ORG_FLOW = SO.ORG_FLOW
       LEFT JOIN (
            select TAR.ORG_FLOW,count(1) AS activity_data from teaching_activity_info TAR
            left join sys_user SU on TAR.create_user_flow = SU.user_flow
-           where TAR.record_status='Y' and TAR.create_time like '${monthDate}%'
+           where TAR.record_status='Y' and TAR.create_time like CONCAT(#{monthDate},'%')
            and tar.activity_status = 'pass'
            group by TAR.ORG_FLOW
       ) C ON C.ORG_FLOW = SO.ORG_FLOW
       LEFT JOIN (
         select RD.ORG_FLOW,count(1) AS attendance_data from JSRES_ATTENDANCE_DETAIL JAD
         left join res_doctor RD on RD.doctor_flow = JAD.doctor_flow
-        where JAD.record_status='Y' and JAD.create_time like  '${monthDate}%'
+        where JAD.record_status='Y' and JAD.create_time like  CONCAT(#{monthDate},'%')
         group by RD.ORG_FLOW
       ) D ON D.ORG_FLOW = SO.ORG_FLOW
       where so.record_status = 'Y'
@@ -3054,7 +3054,7 @@
             and doctor_type_id in('Company','CompanyEntrust','Social')
             and doctor_status_id ='20'
             )
-        and create_time like '${monthDate2}%'
+        and create_time like CONCAT(#{monthDate2},'%')
         group by org_flow,oper_user_flow
        )
        group by org_flow
@@ -3063,14 +3063,14 @@
         select org_flow,count(1) as doctor_total_number from res_rec
         where record_status='Y'
         and oper_user_flow in(select doctor_flow from res_doctor where record_status='Y' and doctor_type_id in('Company','CompanyEntrust','Social')  and doctor_status_id ='20')
-        and create_time like '${monthDate2}%'
+        and create_time like CONCAT(#{monthDate2},'%')
         group by org_flow
       ) b ON b.ORG_FLOW = SO.ORG_FLOW
       LEFT JOIN (
            select org_flow,count(1) as doctor_audit_number from res_rec
            where record_status='Y'
            and oper_user_flow in(select doctor_flow from res_doctor where record_status='Y' and doctor_type_id in('Company','CompanyEntrust','Social')  and doctor_status_id ='20')
-           and create_time like '${monthDate2}%'
+           and create_time like CONCAT(#{monthDate2},'%')
            and audit_status_id ='TeacherAuditY'
            group by org_flow
       ) C ON C.ORG_FLOW = SO.ORG_FLOW
@@ -3084,7 +3084,7 @@
             and doctor_type_id ='Graduate'
             and doctor_status_id ='20'
             )
-         and create_time like '${monthDate2}%'
+         and create_time like CONCAT(#{monthDate2},'%')
         group by org_flow,oper_user_flow
        )
        group by org_flow
@@ -3093,14 +3093,14 @@
         select org_flow,count(1) as graduate_total_number from res_rec
         where record_status='Y'
         and oper_user_flow in(select doctor_flow from res_doctor where record_status='Y' and doctor_type_id = 'Graduate'  and doctor_status_id ='20')
-        and create_time like '${monthDate2}%'
+        and create_time like CONCAT(#{monthDate2},'%')
         group by org_flow
       ) e ON e.ORG_FLOW = SO.ORG_FLOW
       LEFT JOIN (
            select org_flow,count(1) as graduate_audit_number from res_rec
            where record_status='Y'
            and oper_user_flow in(select doctor_flow from res_doctor where record_status='Y' and doctor_type_id = 'Graduate'  and doctor_status_id ='20')
-           and create_time like '${monthDate2}%'
+           and create_time like CONCAT(#{monthDate2},'%')
            and audit_status_id ='TeacherAuditY'
            group by org_flow
       ) f ON f.ORG_FLOW = SO.ORG_FLOW

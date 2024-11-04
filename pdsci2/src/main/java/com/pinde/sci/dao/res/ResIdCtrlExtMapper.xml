@@ -22,7 +22,7 @@
         AND RD.org_flow != '566c9f36cf014f63a569b453efa284d7'
         AND RD.org_flow != '00000000000000000000000000000000'
         <if test="doctorName!=null and doctorName!=''">
-            and su.user_name like '%${doctorName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{doctorName}),'%')
         </if>
         <if test="sessionNumber!=null and sessionNumber!=''">
             and rd.session_Number = #{sessionNumber}

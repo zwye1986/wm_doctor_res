@@ -24,6 +24,8 @@ import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.SchProcessExt;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -542,17 +544,17 @@ public class ResHeadController extends GeneralController {
 		HSSFSheet sheet = wb.createSheet("sheet1");
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		styleCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
+		styleCenter.setVerticalAlignment(VerticalAlignment.CENTER);
 		styleCenter.setWrapText(true);
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 		styleLeft.setWrapText(true);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 		styleLeft.setWrapText(true);
 		//列宽自适应
 //		sheet.setDefaultColumnWidth((short)50);
@@ -1267,17 +1269,17 @@ public class ResHeadController extends GeneralController {
         HSSFSheet sheet = wb.createSheet("sheet1");
         //定义将用到的样式
         HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-        styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        styleCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleCenter.setAlignment(HorizontalAlignment.CENTER);
+        styleCenter.setVerticalAlignment(VerticalAlignment.CENTER);
         styleCenter.setWrapText(true);
         HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-        styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-        styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleLeft.setAlignment(HorizontalAlignment.LEFT);
+        styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
         styleLeft.setWrapText(true);
 
         HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-        stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        stylevwc.setAlignment(HorizontalAlignment.CENTER);
+        stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
         styleLeft.setWrapText(true);
         //列宽自适应
 //		sheet.setDefaultColumnWidth((short)50);

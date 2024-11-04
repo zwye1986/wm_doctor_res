@@ -1307,7 +1307,7 @@
 			AND JES.TEST_ID=  #{testId}
 		</if>
 		<if test='userName != null and userName != ""'>
-			AND su.user_name LIKE '%${userName}%'
+			AND su.user_name LIKE CONCAT(CONCAT('%', #{userName}),'%')
 		</if>
 		<if test='idNo != null and idNo != ""'>
 			AND su.id_no =  #{idNo}

@@ -33,6 +33,7 @@ import com.pinde.sci.model.osca.OscaFromCfgItemExt;
 import com.pinde.sci.model.osca.OscaFromCfgTitleExt;
 import com.pinde.sci.model.osca.OscaSkillsAssessmentExt;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -819,7 +820,7 @@ public class OscaBaseAdminController extends GeneralController {
 		HSSFSheet sheet = wb.createSheet("学员成绩信息");
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 		//列宽自适应
 		HSSFRow row = sheet.createRow(0);
 		HSSFCell cellTitle = null;

@@ -10476,4 +10476,9 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<ResDoctorKq> kqStatisticsDetail(ResDoctorKq kq) {
         return resDoctorKqExtMapper.kqStatisticsDetail(kq);
     }
+
+    @Override
+    public Map<String, Object> getDoctorSchInfo(String userFlow) {
+        return sysUserMapper.getDoctorSchInfo(userFlow);
+    }
 }

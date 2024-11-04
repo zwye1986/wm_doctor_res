@@ -717,7 +717,7 @@
     </if>
     <if test='medicineTypeId!=null and medicineTypeId!=""'>
       and EXISTS (SELECT 1 FROM SYS_USER SU WHERE SU.USER_FLOW=DOCTOR_FLOW AND
-      instr('${medicineTypeId}',su.medicine_Type_Id)>0)
+      instr(#{medicineTypeId},su.medicine_Type_Id)>0)
     </if>
     <if test="workOrgId!=null and workOrgId!=''">
       and rd.work_org_id = #{workOrgId}
@@ -733,7 +733,7 @@
     </if>
 
     <if test='doctorStatusId != null and doctorStatusId != ""'>
-      AND DOCTOR_STATUS_ID ='${doctorStatusId}'
+      AND DOCTOR_STATUS_ID = #{doctorStatusId}
     </if>
   </select>
 </mapper>

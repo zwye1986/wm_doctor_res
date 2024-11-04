@@ -24,6 +24,7 @@ import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.jsres.ResTeachQualifiedPlanExt;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
@@ -285,8 +286,8 @@ public class JsresPhyAssController extends GeneralController {
         HSSFCellStyle fontCenterStyle = wb.createCellStyle();	//粗图居中显示
         HSSFFont font = wb.createFont();	//设置字体
         fontCenterStyle.setFont(font);
-        fontCenterStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER_SELECTION);
-        fontCenterStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        fontCenterStyle.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+        fontCenterStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
         HSSFRow row0 = sheetlist.createRow(0);//第一行
         String[] titles0 = new String[]{
@@ -308,7 +309,7 @@ public class JsresPhyAssController extends GeneralController {
             cellTitle0 = row0.createCell(i);
             cellTitle0.setCellValue(titles0[i]);
             cellTitle0.setCellStyle(fontCenterStyle);
-            cellTitle0.setCellType(HSSFCell.CELL_TYPE_STRING);
+            cellTitle0.setCellType(CellType.STRING);
         }
 
         //设置培训计划的下拉列表内容

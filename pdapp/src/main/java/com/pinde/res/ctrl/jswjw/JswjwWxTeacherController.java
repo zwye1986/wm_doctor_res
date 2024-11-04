@@ -6332,6 +6332,21 @@ public class JswjwWxTeacherController extends GeneralController {
 		return resultMap;
 	}
 
+//
+//
+//	@RequestMapping(value={"/userCenter"},method={RequestMethod.GET})
+//	public Object userCenter(String userFlow, HttpServletRequest request, HttpServletResponse response){
+//		Map<String,Object> resultMap = new HashMap<>();
+//		resultMap.put("resultId", "200");
+//		resultMap.put("resultType", "success");
+//
+//
+//		return resultMap;
+//	}
+//
+
+
+
 	//base64字符串转化成图片
 	public static boolean generateImage(String imgStr, String savePath) {
 		//对字节数组字符串进行Base64解码并生成图片

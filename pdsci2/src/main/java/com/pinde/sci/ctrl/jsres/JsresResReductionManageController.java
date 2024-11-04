@@ -26,6 +26,8 @@ import com.pinde.sci.enums.jszy.JszyTrainCategoryEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -969,21 +971,21 @@ public class JsresResReductionManageController extends GeneralController {
         HSSFSheet sheet = wb.createSheet("sheet1");
         //定义将用到的样式
         HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-        styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        styleCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleCenter.setAlignment(HorizontalAlignment.CENTER);
+        styleCenter.setVerticalAlignment(VerticalAlignment.CENTER);
         styleCenter.setWrapText(true);
         HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-        styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-        styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleLeft.setAlignment(HorizontalAlignment.LEFT);
+        styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
         styleLeft.setWrapText(true);
 
         HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-        stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        stylevwc.setAlignment(HorizontalAlignment.CENTER);
+        stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
         styleLeft.setWrapText(true);
 
         HSSFRow rowDep = sheet.createRow(0);//第一行
-        sheet.addMergedRegion(new org.apache.poi.hssf.util.CellRangeAddress(0, 0, 0, 7));//合并单元格
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 7));//合并单元格
         rowDep.setHeightInPoints(20);
         HSSFCell cellOne = rowDep.createCell(0);
         cellOne.setCellStyle(styleCenter);
@@ -1170,21 +1172,21 @@ public class JsresResReductionManageController extends GeneralController {
         HSSFSheet sheet = wb.createSheet("sheet1");
         //定义将用到的样式
         HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-        styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        styleCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleCenter.setAlignment(HorizontalAlignment.CENTER);
+        styleCenter.setVerticalAlignment(VerticalAlignment.CENTER);
         styleCenter.setWrapText(true);
         HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-        styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-        styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleLeft.setAlignment(HorizontalAlignment.LEFT);
+        styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
         styleLeft.setWrapText(true);
 
         HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-        stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        stylevwc.setAlignment(HorizontalAlignment.CENTER);
+        stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
         styleLeft.setWrapText(true);
 
         HSSFRow rowDep = sheet.createRow(0);//第一行
-        sheet.addMergedRegion(new org.apache.poi.hssf.util.CellRangeAddress(0, 0, 0, 7));//合并单元格
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 7));//合并单元格
         rowDep.setHeightInPoints(20);
         HSSFCell cellOne = rowDep.createCell(0);
         cellOne.setCellStyle(styleCenter);

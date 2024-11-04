@@ -7,6 +7,7 @@ import com.pinde.core.pdf.DocumentVo;
 import com.pinde.core.pdf.PdfDocumentGenerator;
 import com.pinde.core.pdf.utils.ResourceLoader;
 import com.pinde.core.util.*;
+import com.pinde.core.util.DateUtil;
 import com.pinde.sci.biz.jsres.*;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.res.*;
@@ -47,9 +48,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.hssf.util.CellRangeAddress;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.dom4j.Document;
@@ -3752,16 +3752,16 @@ public class JsResBaseManagerController extends GeneralController {
 
 				//定义将用到的样式
 				HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-				styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+				styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
 				sheet.setColumnWidth(0, 3000);
 				HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-				styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-				styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+				styleLeft.setAlignment(HorizontalAlignment.LEFT);
+				styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
 				HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-				stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-				stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+				stylevwc.setAlignment(HorizontalAlignment.CENTER);
+				stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
 				HSSFRow titleRow = sheet.createRow(0);
 				HSSFCell cell2 = titleRow.createCell(0);
@@ -3951,16 +3951,16 @@ public class JsResBaseManagerController extends GeneralController {
 
 				//定义将用到的样式
 				HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-				styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+				styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
 				sheet.setColumnWidth(0, 3000);
 				HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-				styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-				styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+				styleLeft.setAlignment(HorizontalAlignment.LEFT);
+				styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
 				HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-				stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-				stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+				stylevwc.setAlignment(HorizontalAlignment.CENTER);
+				stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
 				HSSFRow titleRow = sheet.createRow(0);
 				HSSFCell cell2 = titleRow.createCell(0);
@@ -5635,16 +5635,16 @@ public class JsResBaseManagerController extends GeneralController {
 		HSSFWorkbook wb = new HSSFWorkbook();
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER_SELECTION);
-		styleCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+		styleCenter.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		HSSFCellStyle colorStyleCenter = wb.createCellStyle(); //居中
-		colorStyleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER_SELECTION);
-		colorStyleCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		colorStyleCenter.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+		colorStyleCenter.setVerticalAlignment(VerticalAlignment.CENTER);
 		colorStyleCenter.setFillForegroundColor(IndexedColors.SKY_BLUE.getIndex());
-		colorStyleCenter.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		HSSFFont font = wb.createFont();    //设置字体
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
+		colorStyleCenter.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		Font font = wb.createFont();    //设置字体
+		font.setBold(true);//粗体显示
 		colorStyleCenter.setFont(font);
 
 		String fileName = "培训基地清单.xls";    //文件名称
@@ -5674,7 +5674,7 @@ public class JsResBaseManagerController extends GeneralController {
 			cellTitle1 = row1.createCell(i);
 			cellTitle1.setCellValue(titles1[i]);
 			cellTitle1.setCellStyle(colorStyleCenter);
-			cellTitle1.setCellType(HSSFCell.CELL_TYPE_STRING);
+			cellTitle1.setCellType(CellType.STRING);
 		}
 		HSSFRow row2 = sheet.createRow(1);//第一行
 		String[] titles2 = new String[]{
@@ -5701,7 +5701,7 @@ public class JsResBaseManagerController extends GeneralController {
 			cellTitle2 = row2.createCell(i);
 			cellTitle2.setCellValue(titles2[i]);
 			cellTitle2.setCellStyle(colorStyleCenter);
-			cellTitle2.setCellType(HSSFCell.CELL_TYPE_STRING);
+			cellTitle2.setCellType(CellType.STRING);
 		}
 		for (int i = 0; i < 7; i++) {
 			CellRangeAddress address4 = new CellRangeAddress(0, 1, i, i);
@@ -5770,7 +5770,7 @@ public class JsResBaseManagerController extends GeneralController {
 				cellTitle = row.createCell(j);
 				cellTitle.setCellValue(titles[j]);
 				cellTitle.setCellStyle(styleCenter);
-				cellTitle.setCellType(HSSFCell.CELL_TYPE_STRING);
+				cellTitle.setCellType(CellType.STRING);
 			}
 		}
 		fileName = URLEncoder.encode(fileName, "UTF-8");
@@ -6338,13 +6338,14 @@ public class JsResBaseManagerController extends GeneralController {
 		HSSFSheet sheet = wb.createSheet(sheetName);
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 		Font headerFont = wb.createFont();
-		headerFont.setBoldweight((short) 17);
+		headerFont.setBold(true);
+//		headerFont.setBoldweight((short) 17);
 		stylevwc.setFont(headerFont);
 
 		List<String> titleList=new ArrayList<>();

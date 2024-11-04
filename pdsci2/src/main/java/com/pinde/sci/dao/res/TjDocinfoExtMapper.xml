@@ -33,7 +33,7 @@
         and USER_ID = #{userId}
         </if>
         <if test="userName != null and userName != ''">
-            and USER_NAME like '%${userName}%'
+            and USER_NAME like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test="idNo != null and idNo != ''">
         and ID_NO = #{idNo}
@@ -48,10 +48,10 @@
         and DOCROLE = #{docrole}
         </if>
         <if test="orgCode != null and orgCode != ''">
-        and ORG_CODE like '%${orgCode}%'
+        and ORG_CODE like CONCAT(CONCAT('%', #{orgCode}),'%')
         </if>
         <if test="orgName != null and orgName != ''">
-        and ORG_NAME like '%${orgName}%'
+        and ORG_NAME like CONCAT(CONCAT('%', #{orgName}),'%')
         </if>
         <if test="siteOneState != null and siteOneState != ''">
         and SITE_ONE_STATE = #{siteOneState}

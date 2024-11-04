@@ -341,7 +341,7 @@
                     AND D.GROUP_FLOW = R.STANDARD_GROUP_FLOW
                   WHERE R.RECORD_STATUS = 'Y'
                     AND D.RECORD_STATUS = 'Y'
-                    AND R.SCH_END_DATE <![CDATA[<=]]> '${applyYear}-05-31'
+                    AND R.SCH_END_DATE <![CDATA[<=]]> #{applyYear}||'-05-31'
                   GROUP BY R.DOCTOR_FLOW, R.ROTATION_FLOW, D.RECORD_FLOW
                ) IC
                ON IC.RECORD_FLOW= srd.record_flow
@@ -471,7 +471,7 @@
             <foreach collection="deptList" open="(" separator="," close=")" item="item">#{item.deptFlow}</foreach>))
         </if>
         <if test='userName!=null and userName!=""'>
-            and u.USER_NAME like '%${userName}%'
+            and u.USER_NAME like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='trainingTypeId!=null and trainingTypeId!=""'>
             and dr.TRAINING_TYPE_ID = #{trainingTypeId}

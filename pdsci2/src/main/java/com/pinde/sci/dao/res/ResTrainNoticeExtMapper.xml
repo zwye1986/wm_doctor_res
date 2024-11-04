@@ -11,12 +11,12 @@
 			AND ORG_FLOW = #{orgFlow}
 		  </if>
 		  <if test="title !=null and title !=''">
-			AND RES_NOTICE_TITLE like '%${title}%'
+			AND RES_NOTICE_TITLE like CONCAT(CONCAT('%', #{title}),'%')
 		  </if>
 		  or (
 				RECORD_STATUS = 'Y' and org_flow is null
 				<if test="title !=null and title !=''">
-					AND RES_NOTICE_TITLE like '%${title}%'
+					AND RES_NOTICE_TITLE like CONCAT(CONCAT('%', #{title}),'%')
 				</if>
 			)
 		<if test="doctor!=null">
@@ -54,7 +54,7 @@
 			AND rtn.ORG_FLOW = #{orgFlow}
 		</if>
 		<if test="resNoticeTitle !=null and resNoticeTitle !=''">
-			AND rtn.RES_NOTICE_TITLE like '%${resNoticeTitle}%'
+			AND rtn.RES_NOTICE_TITLE like CONCAT(CONCAT('%', #{resNoticeTitle}),'%')
 		</if>
 		<if test="workOrgId!=null and workOrgId!=''">
 			and rtn.ORG_FLOW in (

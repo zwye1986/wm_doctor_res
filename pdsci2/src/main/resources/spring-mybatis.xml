@@ -72,6 +72,9 @@
 		<property name="functionCheck" value="false"/>
 		<property name="multiStatementAllow" value="true" />
 		<property name="noneBaseStatementAllow" value="true" />
+		<property name="doPrivilegedAllow" value="true" />
+		<property name="selectIntoAllow" value="true" />
+		<property name="strictSyntaxCheck" value="false"/>
 	</bean>
   	<bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
       	<property name="dbType" value="oracle" />

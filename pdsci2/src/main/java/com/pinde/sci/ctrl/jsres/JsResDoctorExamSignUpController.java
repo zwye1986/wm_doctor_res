@@ -30,6 +30,8 @@ import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -1084,23 +1086,23 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         HSSFSheet sheet = wb.createSheet("sheet1");
         //定义将用到的样式
         HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-        styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        styleCenter.setAlignment(HorizontalAlignment.CENTER);
         HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-        styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-        styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleLeft.setAlignment(HorizontalAlignment.LEFT);
+        styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
         HSSFCellStyle styleRight = wb.createCellStyle(); //居中
-        styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-        styleRight.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleRight.setAlignment(HorizontalAlignment.RIGHT);
+        styleRight.setVerticalAlignment(VerticalAlignment.CENTER);
         HSSFFont font =wb.createFont();
         font.setFontHeightInPoints((short)17);
         HSSFFont fontTwo =wb.createFont();
         fontTwo.setFontHeightInPoints((short)12);
         HSSFCellStyle style = wb.createCellStyle();
-        style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+        style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
         HSSFCellStyle styleTwo = wb.createCellStyle();
-        styleTwo.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+        styleTwo.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
         HSSFCellStyle styleThree = wb.createCellStyle();
-        styleThree.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+        styleThree.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
         //表头
         HSSFRow row = sheet.createRow(0);
         HSSFCell hSSFCell0 = row.createCell(0);

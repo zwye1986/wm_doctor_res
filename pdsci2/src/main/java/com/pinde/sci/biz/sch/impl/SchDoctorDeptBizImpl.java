@@ -2,19 +2,13 @@ package com.pinde.sci.biz.sch.impl;
 
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.sch.ISchDeptBiz;
-import com.pinde.sci.biz.sch.ISchDoctorBiz;
-import com.pinde.sci.biz.sch.ISchDoctorDeptBiz;
-import com.pinde.sci.biz.sch.ISchRotationGroupBiz;
+import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.SchDoctorDeptMapper;
 import com.pinde.sci.dao.sch.SchDoctorDeptExtMapper;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.SchDept;
-import com.pinde.sci.model.mo.SchDoctorDept;
-import com.pinde.sci.model.mo.SchDoctorDeptExample;
+import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -235,4 +229,6 @@ public class SchDoctorDeptBizImpl implements ISchDoctorDeptBiz {
 	public int jszyCountReducation(String orgFlow){
 		return doctorDeptExtMapper.jszyCountReducation(orgFlow);
 	}
+
+
 }
