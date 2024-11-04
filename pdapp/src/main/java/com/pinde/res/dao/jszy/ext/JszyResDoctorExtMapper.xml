@@ -57,7 +57,7 @@
 		</if>
 <!-- 		学员姓名 -->
 		<if test='doctorName!=null and doctorName!=""'>
-			and rd.doctor_name like '%${doctorName}%'
+			and rd.doctor_name like CONCAT(CONCAT('%', #{doctorName}),'%')
 		</if>
 		
 <!-- 		入科状态 -->

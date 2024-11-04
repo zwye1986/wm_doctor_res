@@ -34,7 +34,10 @@ import com.pinde.sci.form.jszy.JszyBackTrainForm;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.hssf.util.CellRangeAddress;
+
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -532,15 +535,15 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 		HSSFSheet sheet = wb.createSheet("sheet1");
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		//列宽自适应
 		HSSFRow rowDep = sheet.createRow(0);
@@ -630,15 +633,15 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 		    HSSFSheet sheet = wb.createSheet("sheet1"); 
 		    //定义将用到的样式 
 		    HSSFCellStyle styleCenter = wb.createCellStyle(); //居中 
-		    styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		    styleCenter.setAlignment(HorizontalAlignment.CENTER);
 		    
 		    HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		    styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		    styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		    styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		    styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 		    
 		    HSSFCellStyle stylevwc = wb.createCellStyle(); //居中 
-		    stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		    stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		    stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		    stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 		    
 		    //列宽自适应
 		    HSSFRow rowDep = sheet.createRow(0);
@@ -731,26 +734,26 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 		HSSFFont font = wb.createFont();
 		font.setFontHeightInPoints((short) 12);
 		font.setColor(HSSFFont.COLOR_NORMAL);
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font.setBold(true);
 
         // 为工作簿添加sheet
         HSSFSheet sheet = wb.createSheet("sheet1");
         //定义将用到的样式
         HSSFCellStyle styleCenter2 = wb.createCellStyle(); //居中
-        styleCenter2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        styleCenter2.setAlignment(HorizontalAlignment.CENTER);
         //定义将用到的样式
         HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-        styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        styleCenter.setAlignment(HorizontalAlignment.CENTER);
 		styleCenter.setFont(font);
 
         HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-        styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-        styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleLeft.setAlignment(HorizontalAlignment.LEFT);
+        styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 		styleLeft.setFont(font);
 
         HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-        stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        stylevwc.setAlignment(HorizontalAlignment.CENTER);
+        stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 		stylevwc.setFont(font);
         //列宽自适应
         HSSFRow rowDep = sheet.createRow(0);//第一行

@@ -17,6 +17,7 @@ import com.pinde.sci.enums.osca.SignStatusEnum;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -219,7 +220,7 @@ public class OscaDoctorScoreController extends GeneralController{
         HSSFSheet sheet = wb.createSheet("学员成绩信息");
         //定义将用到的样式
         HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-        styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        styleCenter.setAlignment(HorizontalAlignment.CENTER);
         //列宽自适应
         HSSFRow row = sheet.createRow(0);
         HSSFCell cellTitle = null;
@@ -336,7 +337,7 @@ public class OscaDoctorScoreController extends GeneralController{
         HSSFSheet sheet = wb.createSheet("学员成绩信息");
         //定义将用到的样式
         HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-        styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        styleCenter.setAlignment(HorizontalAlignment.CENTER);
         //列宽自适应
         HSSFRow row = sheet.createRow(0);
         HSSFCell cellTitle = null;

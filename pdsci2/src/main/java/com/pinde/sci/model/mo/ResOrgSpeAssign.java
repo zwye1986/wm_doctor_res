@@ -1,7 +1,6 @@
 package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.MybatisObject;
-
 import java.math.BigDecimal;
 
 public class ResOrgSpeAssign extends MybatisObject {
@@ -33,13 +32,15 @@ public class ResOrgSpeAssign extends MybatisObject {
 
     private String isSend;
 
-    private String graduateSpe;
-
-    private String education;
-
     private String auditStatusId;
 
     private String auditStatusName;
+
+    private String education;
+
+    private String graduateSpe;
+
+    private String speDesc;
 
     private String startTime;
 
@@ -47,7 +48,13 @@ public class ResOrgSpeAssign extends MybatisObject {
 
     private String isShown;
 
-    private String speDesc;
+    private String baseCapacity;
+
+    private String sendStartTime;
+
+    private String sendEndTime;
+
+    private String sendPlan;
 
     public String getRecordFlow() {
         return recordFlow;
@@ -161,22 +168,6 @@ public class ResOrgSpeAssign extends MybatisObject {
         this.isSend = isSend;
     }
 
-    public String getGraduateSpe() {
-        return graduateSpe;
-    }
-
-    public void setGraduateSpe(String graduateSpe) {
-        this.graduateSpe = graduateSpe;
-    }
-
-    public String getEducation() {
-        return education;
-    }
-
-    public void setEducation(String education) {
-        this.education = education;
-    }
-
     public String getAuditStatusId() {
         return auditStatusId;
     }
@@ -191,6 +182,30 @@ public class ResOrgSpeAssign extends MybatisObject {
 
     public void setAuditStatusName(String auditStatusName) {
         this.auditStatusName = auditStatusName;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public String getGraduateSpe() {
+        return graduateSpe;
+    }
+
+    public void setGraduateSpe(String graduateSpe) {
+        this.graduateSpe = graduateSpe;
+    }
+
+    public String getSpeDesc() {
+        return speDesc;
+    }
+
+    public void setSpeDesc(String speDesc) {
+        this.speDesc = speDesc;
     }
 
     public String getStartTime() {
@@ -217,11 +232,35 @@ public class ResOrgSpeAssign extends MybatisObject {
         this.isShown = isShown;
     }
 
-    public String getSpeDesc() {
-        return speDesc;
+    public String getBaseCapacity() {
+        return baseCapacity;
     }
 
-    public void setSpeDesc(String speDesc) {
-        this.speDesc = speDesc;
+    public void setBaseCapacity(String baseCapacity) {
+        this.baseCapacity = baseCapacity;
+    }
+
+    public String getSendStartTime() {
+        return sendStartTime;
+    }
+
+    public void setSendStartTime(String sendStartTime) {
+        this.sendStartTime = sendStartTime;
+    }
+
+    public String getSendEndTime() {
+        return sendEndTime;
+    }
+
+    public void setSendEndTime(String sendEndTime) {
+        this.sendEndTime = sendEndTime;
+    }
+
+    public String getSendPlan() {
+        return sendPlan;
+    }
+
+    public void setSendPlan(String sendPlan) {
+        this.sendPlan = sendPlan;
     }
 }

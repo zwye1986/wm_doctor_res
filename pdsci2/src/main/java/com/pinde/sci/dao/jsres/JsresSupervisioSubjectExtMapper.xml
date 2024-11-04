@@ -504,7 +504,7 @@ select * from (
             AND rss.spe_id = #{speId}
         </if>
         <if test="subjectName!=null and subjectName!=''">
-            AND rss.subject_name like '%${subjectName}%'
+            AND rss.subject_name like CONCAT(CONCAT('%', #{subjectName}),'%')
         </if>
         <if test="baseCode!=null and baseCode!=''">
             AND rss.base_code = #{baseCode}
@@ -945,7 +945,7 @@ select * from (
         </if>
         AND ORG_FLOW = #{orgFlow}
         <if test="activityName!=null and activityName!=''">
-            AND SUBJECT_NAME LIKE '%${activityName}%'
+            AND SUBJECT_NAME LIKE CONCAT(CONCAT('%', #{activityName}),'%')
         </if>
         <if test="inspectionType!=null and inspectionType!=''">
             AND INSPECTION_TYPE = #{inspectionType}
@@ -966,7 +966,7 @@ select * from (
             AND END_TIME <![CDATA[<=]]> #{endTime}
         </if>
         <if test="teachName!=null and teachName!=''">
-            AND ( TEACH_NAME LIKE '%${teachName}%' OR ACTUAL_SPEAKER LIKE '%${teachName}%' )
+            AND ( TEACH_NAME LIKE CONCAT(CONCAT('%', #{teachName}),'%') OR ACTUAL_SPEAKER LIKE CONCAT(CONCAT('%', #{teachName}),'%') )
         </if>
         order by ACTIVITY_START_TIME DESC
 
@@ -979,7 +979,7 @@ select * from (
         ( LEADER_ONE_FLOW = #{userFlow} OR LEADER_TWO_FLOW = #{userFlow} OR LEADER_THREE_FLOW = #{userFlow} OR LEADER_FOUR_FLOW = #{userFlow} )
         AND RECORD_STATUS = 'Y'
         <if test="activityName!=null and activityName!=''">
-            AND ACTIVITY_NAME LIKE '%${activityName}%'
+            AND ACTIVITY_NAME LIKE CONCAT(CONCAT('%', #{activityName}),'%')
         </if>
         <if test="deptFlow!=null and deptFlow!=''">
             AND DEPT_FLOW = #{deptFlow}

@@ -23,6 +23,7 @@ import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaFromCfgItemExt;
 import com.pinde.sci.model.osca.OscaFromCfgTitleExt;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -602,7 +603,7 @@ public class OscaProvincialController extends GeneralController{
 		HSSFSheet sheet = wb.createSheet("学员成绩信息");
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 		//列宽自适应
 		HSSFRow row = sheet.createRow(0);
 		HSSFCell cellTitle = null;
@@ -820,26 +821,26 @@ public class OscaProvincialController extends GeneralController{
 		HSSFWorkbook wb = new HSSFWorkbook();
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 		HSSFCellStyle styleRight = wb.createCellStyle(); //靠右垂直居中
-		styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-		styleRight.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleRight.setAlignment(HorizontalAlignment.RIGHT);
+		styleRight.setVerticalAlignment(VerticalAlignment.CENTER);
 		HSSFCellStyle titleStyle = wb.createCellStyle();//水平垂直居中
-		titleStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER_SELECTION);
-		titleStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		titleStyle.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+		titleStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 		HSSFFont font = wb.createFont();	//设置字体
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
+		font.setBold(true);//粗体显示
 		HSSFCellStyle fontCenterStyle = wb.createCellStyle();	//粗图居中显示
 		fontCenterStyle.setFont(font);
-		fontCenterStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER_SELECTION);
-		fontCenterStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		fontCenterStyle.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+		fontCenterStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 		HSSFCellStyle fontLeftStyle = wb.createCellStyle();	//粗图居中显示
 		fontLeftStyle.setFont(font);
-		fontLeftStyle.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		fontLeftStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		fontLeftStyle.setAlignment(HorizontalAlignment.LEFT);
+		fontLeftStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		//查看表单信息
 		OscaFrom oscaFrom = formCfgBiz.readFrom(fromFlow);
@@ -873,7 +874,7 @@ public class OscaProvincialController extends GeneralController{
 			cellTitle2 = row1.createCell(i);
 			cellTitle2.setCellValue(titles1[i]);
 			cellTitle2.setCellStyle(fontLeftStyle);
-			cellTitle2.setCellType(HSSFCell.CELL_TYPE_STRING);
+			cellTitle2.setCellType(CellType.STRING);
 		}
 		CellRangeAddress address1 = new CellRangeAddress(1, 1, 0, 2);
 		sheet.addMergedRegion(address1);
@@ -893,7 +894,7 @@ public class OscaProvincialController extends GeneralController{
 			cellTitle3 = row2.createCell(i);
 			cellTitle3.setCellValue(titles2[i]);
 			cellTitle3.setCellStyle(fontCenterStyle);
-			cellTitle3.setCellType(HSSFCell.CELL_TYPE_STRING);
+			cellTitle3.setCellType(CellType.STRING);
 		}
 		CellRangeAddress address3 = new CellRangeAddress(2, 2, 0, 1);
 		sheet.addMergedRegion(address3);
@@ -911,7 +912,7 @@ public class OscaProvincialController extends GeneralController{
 			cellTitle4 = row4.createCell(i);
 			cellTitle4.setCellValue(titles3[i]);
 			cellTitle4.setCellStyle(fontCenterStyle);
-			cellTitle4.setCellType(HSSFCell.CELL_TYPE_STRING);
+			cellTitle4.setCellType(CellType.STRING);
 		}
 		CellRangeAddress address4 = new CellRangeAddress(2, 3, 2, 2);
 		sheet.addMergedRegion(address4);
@@ -950,11 +951,11 @@ public class OscaProvincialController extends GeneralController{
 						cellTitle.setCellStyle(styleLeft);
 						if (u==3){
 							cellTitle.setCellValue(Integer.parseInt(titles[u]));
-							cellTitle.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+							cellTitle.setCellType(CellType.NUMERIC);
 							cellTitle.setCellStyle(titleStyle);
 						}else {
 							cellTitle.setCellValue(titles[u]);
-							cellTitle.setCellType(HSSFCell.CELL_TYPE_STRING);
+							cellTitle.setCellType(CellType.STRING);
 						}
 
 					}
@@ -973,11 +974,11 @@ public class OscaProvincialController extends GeneralController{
 						cellTitle.setCellStyle(styleLeft);
 						if (u==3){
 							cellTitle.setCellValue(Integer.parseInt(titles[u]));
-							cellTitle.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+							cellTitle.setCellType(CellType.NUMERIC);
 							cellTitle.setCellStyle(titleStyle);
 						}else {
 							cellTitle.setCellValue(titles[u]);
-							cellTitle.setCellType(HSSFCell.CELL_TYPE_STRING);
+							cellTitle.setCellType(CellType.STRING);
 						}
 					}
 				}
@@ -1002,11 +1003,11 @@ public class OscaProvincialController extends GeneralController{
 			cellTitle5 = row5.createCell(i);
 			cellTitle5.setCellValue(titles5[i]);
 			cellTitle5.setCellStyle(styleRight);
-			cellTitle5.setCellType(HSSFCell.CELL_TYPE_STRING);
+			cellTitle5.setCellType(CellType.STRING);
 			if (i==3){
 				cellTitle5.setCellValue(decimal.doubleValue());
 				cellTitle5.setCellStyle(titleStyle);
-				cellTitle5.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+				cellTitle5.setCellType(CellType.NUMERIC);
 			}
 		}
 		CellRangeAddress address9 = new CellRangeAddress(4+num, 4+num, 0, 2);//起始行，终止行，起始列，终止列
@@ -1025,7 +1026,7 @@ public class OscaProvincialController extends GeneralController{
 			cellTitle6 = row6.createCell(i);
 			cellTitle6.setCellValue(titles6[i]);
 			cellTitle6.setCellStyle(styleLeft);
-			cellTitle6.setCellType(HSSFCell.CELL_TYPE_STRING);
+			cellTitle6.setCellType(CellType.STRING);
 		}
 		CellRangeAddress address61 = new CellRangeAddress(5+num, 5+num, 1, 4);//起始行，终止行，起始列，终止列
 		sheet.addMergedRegion(address61);
@@ -1043,7 +1044,7 @@ public class OscaProvincialController extends GeneralController{
 			cellTitle7 = row7.createCell(i);
 			cellTitle7.setCellValue(titles7[i]);
 			cellTitle7.setCellStyle(styleLeft);
-			cellTitle7.setCellType(HSSFCell.CELL_TYPE_STRING);
+			cellTitle7.setCellType(CellType.STRING);
 		}
 		CellRangeAddress address71 = new CellRangeAddress(6+num, 6+num, 1, 4);//起始行，终止行，起始列，终止列
 		sheet.addMergedRegion(address71);
@@ -1087,26 +1088,26 @@ public class OscaProvincialController extends GeneralController{
 		HSSFWorkbook wb = new HSSFWorkbook();
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 		HSSFCellStyle styleRight = wb.createCellStyle(); //靠右垂直居中
-		styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-		styleRight.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleRight.setAlignment(HorizontalAlignment.RIGHT);
+		styleRight.setVerticalAlignment(VerticalAlignment.CENTER);
 		HSSFCellStyle titleStyle = wb.createCellStyle();//水平垂直居中
-		titleStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER_SELECTION);
-		titleStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		titleStyle.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+		titleStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 		HSSFFont font = wb.createFont();	//设置字体
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
+		font.setBold(true);//粗体显示
 		HSSFCellStyle fontCenterStyle = wb.createCellStyle();	//粗图居中显示
 		fontCenterStyle.setFont(font);
-		fontCenterStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER_SELECTION);
-		fontCenterStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		fontCenterStyle.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+		fontCenterStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 		HSSFCellStyle fontLeftStyle = wb.createCellStyle();	//粗图居中显示
 		fontLeftStyle.setFont(font);
-		fontLeftStyle.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		fontLeftStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		fontLeftStyle.setAlignment(HorizontalAlignment.LEFT);
+		fontLeftStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		OscaSubjectMain subject = provincialBiz.readSubject(subjectFlow);
 		String fileName = subject.getSubjectName()+"评分表单.xls";	//文件名称
@@ -1155,7 +1156,7 @@ public class OscaProvincialController extends GeneralController{
 					cellTitle2 = row1.createCell(i);
 					cellTitle2.setCellValue(titles1[i]);
 					cellTitle2.setCellStyle(fontLeftStyle);
-					cellTitle2.setCellType(HSSFCell.CELL_TYPE_STRING);
+					cellTitle2.setCellType(CellType.STRING);
 				}
 				CellRangeAddress address1 = new CellRangeAddress(1, 1, 0, 2);
 				sheet.addMergedRegion(address1);
@@ -1175,7 +1176,7 @@ public class OscaProvincialController extends GeneralController{
 					cellTitle3 = row2.createCell(i);
 					cellTitle3.setCellValue(titles2[i]);
 					cellTitle3.setCellStyle(fontCenterStyle);
-					cellTitle3.setCellType(HSSFCell.CELL_TYPE_STRING);
+					cellTitle3.setCellType(CellType.STRING);
 				}
 				CellRangeAddress address3 = new CellRangeAddress(2, 2, 0, 1);
 				sheet.addMergedRegion(address3);
@@ -1193,7 +1194,7 @@ public class OscaProvincialController extends GeneralController{
 					cellTitle4 = row4.createCell(i);
 					cellTitle4.setCellValue(titles3[i]);
 					cellTitle4.setCellStyle(fontCenterStyle);
-					cellTitle4.setCellType(HSSFCell.CELL_TYPE_STRING);
+					cellTitle4.setCellType(CellType.STRING);
 				}
 				CellRangeAddress address4 = new CellRangeAddress(2, 3, 2, 2);
 				sheet.addMergedRegion(address4);
@@ -1232,11 +1233,11 @@ public class OscaProvincialController extends GeneralController{
 								cellTitle.setCellStyle(styleLeft);
 								if (u==3){
 									cellTitle.setCellValue(Integer.parseInt(titles[u]));
-									cellTitle.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+									cellTitle.setCellType(CellType.NUMERIC);
 									cellTitle.setCellStyle(titleStyle);
 								}else {
 									cellTitle.setCellValue(titles[u]);
-									cellTitle.setCellType(HSSFCell.CELL_TYPE_STRING);
+									cellTitle.setCellType(CellType.STRING);
 								}
 
 							}
@@ -1255,11 +1256,11 @@ public class OscaProvincialController extends GeneralController{
 								cellTitle.setCellStyle(styleLeft);
 								if (u==3){
 									cellTitle.setCellValue(Integer.parseInt(titles[u]));
-									cellTitle.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+									cellTitle.setCellType(CellType.NUMERIC);
 									cellTitle.setCellStyle(titleStyle);
 								}else {
 									cellTitle.setCellValue(titles[u]);
-									cellTitle.setCellType(HSSFCell.CELL_TYPE_STRING);
+									cellTitle.setCellType(CellType.STRING);
 								}
 							}
 						}
@@ -1284,11 +1285,11 @@ public class OscaProvincialController extends GeneralController{
 					cellTitle5 = row5.createCell(i);
 					cellTitle5.setCellValue(titles5[i]);
 					cellTitle5.setCellStyle(styleRight);
-					cellTitle5.setCellType(HSSFCell.CELL_TYPE_STRING);
+					cellTitle5.setCellType(CellType.STRING);
 					if (i==3){
 						cellTitle5.setCellValue(decimal.doubleValue());
 						cellTitle5.setCellStyle(titleStyle);
-						cellTitle5.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+						cellTitle5.setCellType(CellType.NUMERIC);
 					}
 				}
 				CellRangeAddress address9 = new CellRangeAddress(4+num, 4+num, 0, 2);//起始行，终止行，起始列，终止列
@@ -1307,7 +1308,7 @@ public class OscaProvincialController extends GeneralController{
 					cellTitle6 = row6.createCell(i);
 					cellTitle6.setCellValue(titles6[i]);
 					cellTitle6.setCellStyle(styleLeft);
-					cellTitle6.setCellType(HSSFCell.CELL_TYPE_STRING);
+					cellTitle6.setCellType(CellType.STRING);
 				}
 				CellRangeAddress address61 = new CellRangeAddress(5+num, 5+num, 1, 4);//起始行，终止行，起始列，终止列
 				sheet.addMergedRegion(address61);
@@ -1325,7 +1326,7 @@ public class OscaProvincialController extends GeneralController{
 					cellTitle7 = row7.createCell(i);
 					cellTitle7.setCellValue(titles7[i]);
 					cellTitle7.setCellStyle(styleLeft);
-					cellTitle7.setCellType(HSSFCell.CELL_TYPE_STRING);
+					cellTitle7.setCellType(CellType.STRING);
 				}
 				CellRangeAddress address71 = new CellRangeAddress(6+num, 6+num, 1, 4);//起始行，终止行，起始列，终止列
 				sheet.addMergedRegion(address71);

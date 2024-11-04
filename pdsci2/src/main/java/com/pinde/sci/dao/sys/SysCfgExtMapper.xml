@@ -6,14 +6,14 @@
         from sys_cfg
         where record_status = 'Y'
               and cfg_value = 'Y'
-              and cfg_code like '${cfgCodePre}%'
+              and cfg_code like CONCAT(#{cfgCodePre},'%')
     </select>
 
     <select id="searchByPreAndSuf" resultMap="com.pinde.sci.dao.base.SysCfgMapper.BaseResultMap">
         select cfg_code,cfg_value
         from sys_cfg
         where record_status = 'Y'
-        and cfg_code like '${cfgCodePre}%${cfgCodeSuf}'
+        and cfg_code like CONCAT(#{cfgCodePre},CONCAT('%', #{cfgCodeSuf}))
         <if test='cfgValue!=null and cfgValue!=""'>
             and cfg_value = #{cfgValue}
         </if>

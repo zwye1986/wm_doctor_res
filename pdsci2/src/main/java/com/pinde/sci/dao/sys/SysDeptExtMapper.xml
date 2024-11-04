@@ -142,10 +142,10 @@
 			and sd.record_status = #{dept.recordStatus}
 		</if>
 		<if test='dept.deptName!=null and dept.deptName!=""'>
-			and sd.dept_name like '%${dept.deptName}%'
+			and sd.dept_name like CONCAT(CONCAT('%', #{dept.deptName}),'%')
 		</if>
 		<if test='dept.deptCode!=null and dept.deptCode!=""'>
-			and sd.dept_code like '%${dept.deptCode}%'
+			and sd.dept_code like CONCAT(CONCAT('%', #{dept.deptCode}),'%')
 		</if>
 		<if test='isUnion!=null and isUnion!="" and isUnion=="Y".toString()'>
 			and cfg.RECORD_FLOW is not null
@@ -200,10 +200,10 @@
 				and sysd.org_flow = #{dept.orgFlow}
 			</if>
 			<if test='dept.deptName!=null and dept.deptName!=""'>
-				and sysd.dept_name like '%${dept.deptName}%'
+				and sysd.dept_name like CONCAT(CONCAT('%', #{dept.deptName}),'%')
 			</if>
 			<if test='dept.schDeptName!=null and dept.schDeptName!=""'>
-				and schd.sch_dept_name like '%${dept.schDeptName}%'
+				and schd.sch_dept_name like CONCAT(CONCAT('%', #{dept.schDeptName}),'%')
 			</if>
 			<if test='dept.external!=null and dept.external!="" and dept.external=="Y".toString()'>
 				and schd.external = 'Y'
@@ -228,7 +228,7 @@
 		where sd.record_status = 'Y'
 		and (sd.org_flow = #{orgFlow} or sder.rel_org_flow = #{orgFlow})
 		<if test='deptName!=null and deptName!=""'>
-			and (sd.dept_name like '%${deptName}%' or sder.rel_org_name like '%${deptName}%')
+			and (sd.dept_name like CONCAT(CONCAT('%', #{deptName}),'%') or sder.rel_org_name like CONCAT(CONCAT('%', #{deptName}),'%'))
 		</if>
 		order by sd.dept_code
 	</select>

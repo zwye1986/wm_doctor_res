@@ -96,7 +96,7 @@
 			</if>
 		</if>
 		<if test='deptName!=null and deptName!=""'>
-			and sar.sch_dept_name like '%${deptName}%'
+			and sar.sch_dept_name like CONCAT(CONCAT('%', #{deptName}),'%')
 		</if>
 		<if test="isAction2!=null and isAction2!='' and isAction2=='Y'.toString()">
 			and sar.sch_start_date is not null

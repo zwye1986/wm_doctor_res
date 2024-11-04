@@ -507,10 +507,10 @@
         WHERE 1=1
         <if test='seachStr!=null and seachStr!=""'>
             and (
-             a.spe_name like '%${seachStr}%'
-            OR a.STATUS_NAME like '%${seachStr}%'
-            OR a.USER_NAME like '%${seachStr}%'
-            OR a.TEACHER_USER_NAME like '%${seachStr}%'
+             a.spe_name like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.STATUS_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.TEACHER_USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
             )
         </if>
         <if test='typeId!=null and typeId!=""'>
@@ -669,10 +669,10 @@
     WHERE 1 = 1
         <if test='seachStr!=null and seachStr!=""'>
             and (
-             a.spe_name like '%${seachStr}%'
-            OR a.STATUS_NAME like '%${seachStr}%'
-            OR a.USER_NAME like '%${seachStr}%'
-            OR a.TEACHER_USER_NAME like '%${seachStr}%'
+             a.spe_name like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.STATUS_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.TEACHER_USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
             )
         </if>
         <if test="nowDate!=null and nowDate!=''">
@@ -838,10 +838,10 @@
         WHERE 1=1
         <if test='seachStr!=null and seachStr!=""'>
             and (
-             a.spe_name like '%${seachStr}%'
-            OR a.STATUS_NAME like '%${seachStr}%'
-            OR a.USER_NAME like '%${seachStr}%'
-            OR a.TEACHER_USER_NAME like '%${seachStr}%'
+             a.spe_name like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.STATUS_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.TEACHER_USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
             )
         </if>
         <if test='typeId!=null and typeId!=""'>
@@ -977,10 +977,10 @@
         WHERE 1=1
         <if test='seachStr!=null and seachStr!=""'>
             and (
-             a.spe_name like '%${seachStr}%'
-            <!--OR a.STATUS_NAME like '%${seachStr}%'-->
-            OR a.USER_NAME like '%${seachStr}%'
-            OR a.TEACHER_USER_NAME like '%${seachStr}%'
+             a.spe_name like CONCAT(CONCAT('%', #{seachStr}),'%')
+            <!--OR a.STATUS_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')-->
+            OR a.USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.TEACHER_USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
             )
         </if>
        GROUP BY USER_FLOW,SESSION_NUMBER,USER_NAME,SPE_NAME
@@ -1074,10 +1074,10 @@
         WHERE 1=1
         <if test='seachStr!=null and seachStr!=""'>
             and (
-            a.spe_name like '%${seachStr}%'
-            <!--OR a.STATUS_NAME like '%${seachStr}%'-->
-            OR a.USER_NAME like '%${seachStr}%'
-            OR a.TEACHER_USER_NAME like '%${seachStr}%'
+            a.spe_name like CONCAT(CONCAT('%', #{seachStr}),'%')
+            <!--OR a.STATUS_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')-->
+            OR a.USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.TEACHER_USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
             )
         </if>
         GROUP BY USER_FLOW,SESSION_NUMBER,USER_NAME,SPE_NAME,PROCESS_FLOW,SCH_DEPT_NAME,SCH_START_DATE,SCH_END_DATE
@@ -1180,10 +1180,10 @@
         WHERE 1=1
         <if test='seachStr!=null and seachStr!=""'>
             and (
-            a.spe_name like '%${seachStr}%'
-            <!--OR a.STATUS_NAME like '%${seachStr}%'-->
-            OR a.USER_NAME like '%${seachStr}%'
-            OR a.TEACHER_USER_NAME like '%${seachStr}%'
+            a.spe_name like CONCAT(CONCAT('%', #{seachStr}),'%')
+            <!--OR a.STATUS_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')-->
+            OR a.USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.TEACHER_USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
             )
         </if>
         GROUP BY USER_FLOW,SESSION_NUMBER,USER_NAME,SPE_NAME,PROCESS_FLOW,SCH_DEPT_NAME,SCH_START_DATE,SCH_END_DATE,TEMPORARY_AUDIT_STATUS_NAME,TEMPORARY_AUDIT_STATUS_ID
@@ -1348,10 +1348,10 @@
         WHERE 1=1
         <if test='seachStr!=null and seachStr!=""'>
             and (
-             a.spe_name like '%${seachStr}%'
-            OR a.STATUS_NAME like '%${seachStr}%'
-            OR a.USER_NAME like '%${seachStr}%'
-            OR a.TEACHER_USER_NAME like '%${seachStr}%'
+             a.spe_name like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.STATUS_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.TEACHER_USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
             )
         </if>
         ORDER BY  SCH_START_DATE
@@ -1506,10 +1506,10 @@
         WHERE 1=1
         <if test='seachStr!=null and seachStr!=""'>
             and (
-             a.spe_name like '%${seachStr}%'
-            OR a.STATUS_NAME like '%${seachStr}%'
-            OR a.USER_NAME like '%${seachStr}%'
-            OR a.TEACHER_USER_NAME like '%${seachStr}%'
+             a.spe_name like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.STATUS_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.TEACHER_USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
             )
         </if>
         <if test='typeId!=null and typeId!=""'>
@@ -1693,7 +1693,7 @@
         ) a
         WHERE 1=1
         <if test='seachStr!=null and seachStr!=""'>
-            and a.USER_NAME like '%${seachStr}%'
+            and a.USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
         </if>
         and a.SCH_START_DATE <![CDATA[<=]]>to_char(sysdate,'yyyy-MM-dd')
         GROUP BY USER_FLOW,SESSION_NUMBER,USER_NAME,SPE_NAME
@@ -1855,10 +1855,10 @@
         WHERE 1=1
         <if test='seachStr!=null and seachStr!=""'>
             and (
-             a.spe_name like '%${seachStr}%'
-            OR a.STATUS_NAME like '%${seachStr}%'
-            OR a.USER_NAME like '%${seachStr}%'
-            OR a.TEACHER_USER_NAME like '%${seachStr}%'
+             a.spe_name like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.STATUS_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.TEACHER_USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
             )
         </if>
         and a.SCH_START_DATE <![CDATA[<=]]>to_char(sysdate,'yyyy-MM-dd')
@@ -2171,11 +2171,11 @@
             and a.POWER_END_TIME is not null
         </if>
         <if test='seachStr!=null and seachStr!=""'>
-            and (a.session_number like '%${seachStr}%'
-            OR a.spe_name like '%${seachStr}%'
-            OR a.STATUS_NAME like '%${seachStr}%'
-            OR a.USER_NAME like '%${seachStr}%'
-            OR a.TEACHER_USER_NAME like '%${seachStr}%')
+            and (a.session_number like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.spe_name like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.STATUS_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.TEACHER_USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%'))
         </if>
         <if test='typeId!=null and typeId!=""'>
             <if test="typeId=='allDoc'">
@@ -2338,11 +2338,11 @@
             and a.POWER_END_TIME is not null
         </if>
         <if test='seachStr!=null and seachStr!=""'>
-            and (a.session_number like '%${seachStr}%'
-            OR a.spe_name like '%${seachStr}%'
-            OR a.STATUS_NAME like '%${seachStr}%'
-            OR a.USER_NAME like '%${seachStr}%'
-            OR a.TEACHER_USER_NAME like '%${seachStr}%')
+            and (a.session_number like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.spe_name like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.STATUS_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.TEACHER_USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%'))
         </if>
         <if test='typeId!=null and typeId!=""'>
             <if test="typeId=='allDoc'">
@@ -2518,7 +2518,7 @@
                 and LEVEL_ID ='4'
             </if>
             <if test='seachStr!=null and seachStr!=""'>
-                and  USER_NAME like '%${seachStr}%'
+                and  USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
             </if>
     </select>
     <select id="schDoctorSchProcessSpeCount" resultType="int">
@@ -2633,11 +2633,11 @@
             and a.POWER_END_TIME is not null
         </if>
         <if test='seachStr!=null and seachStr!=""'>
-            and (a.session_number like '%${seachStr}%'
-            OR a.spe_name like '%${seachStr}%'
-            OR a.STATUS_NAME like '%${seachStr}%'
-            OR a.USER_NAME like '%${seachStr}%'
-            OR a.TEACHER_USER_NAME like '%${seachStr}%')
+            and (a.session_number like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.spe_name like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.STATUS_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.TEACHER_USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%'))
         </if>
         <if test='typeId!=null and typeId!=""'>
             <if test="typeId=='allDoc'">
@@ -3787,8 +3787,8 @@
         </if>
         <if test='searchStr!=null and searchStr!=""'>
             and (
-            rd.session_number like '%${searchStr}%'
-            OR su.USER_NAME like '%${searchStr}%'
+            rd.session_number like CONCAT(CONCAT('%', #{searchStr}),'%')
+            OR su.USER_NAME like CONCAT(CONCAT('%', #{searchStr}),'%')
             )
         </if>
         <if test='typeId!=null and typeId!=""'>
@@ -4239,7 +4239,7 @@
         AND RDSP.USER_FLOW = RD.DOCTOR_FLOW
         <if test="doctor!=null">
             <if test='doctor.doctorName!=null and doctor.doctorName!=""'>
-                AND RD.DOCTOR_NAME LIKE '%${doctor.doctorName}%'
+                AND RD.DOCTOR_NAME LIKE CONCAT(CONCAT('%', #{doctor.doctorName}),'%')
             </if>
             <if test='doctor.trainingSpeId!=null and doctor.trainingSpeId!=""'>
                 AND RD.TRAINING_SPE_ID = #{doctor.trainingSpeId}
@@ -5360,11 +5360,11 @@
             and a.POWER_END_TIME is not null
         </if>
         <if test='seachStr!=null and seachStr!=""'>
-            and (a.session_number like '%${seachStr}%'
-            OR a.spe_name like '%${seachStr}%'
-            OR a.STATUS_NAME like '%${seachStr}%'
-            OR a.USER_NAME like '%${seachStr}%'
-            OR a.TEACHER_USER_NAME like '%${seachStr}%')
+            and (a.session_number like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.spe_name like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.STATUS_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.TEACHER_USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%'))
         </if>
         <if test='typeId!=null and typeId!=""'>
             <if test="typeId=='allDoc'">
@@ -5509,11 +5509,11 @@
             and a.POWER_END_TIME is not null
         </if>
         <if test='seachStr!=null and seachStr!=""'>
-            and (a.session_number like '%${seachStr}%'
-            OR a.spe_name like '%${seachStr}%'
-            OR a.STATUS_NAME like '%${seachStr}%'
-            OR a.USER_NAME like '%${seachStr}%'
-            OR a.TEACHER_USER_NAME like '%${seachStr}%')
+            and (a.session_number like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.spe_name like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.STATUS_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.TEACHER_USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%'))
         </if>
         <if test='typeId!=null and typeId!=""'>
             <if test="typeId=='allDoc'">
@@ -5558,7 +5558,7 @@
         and rr.audit_status_id is not null
         and RR.HEAD_AUDIT_STATUS_ID IS NULL)
         <if test='userName!=null and userName!=""'>
-            AND RD.DOCTOR_NAME LIKE '%${userName}%'
+            AND RD.DOCTOR_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='sessionNumber!=null and sessionNumber!=""'>
             AND RD.SESSION_NUMBER = #{sessionNumber}
@@ -5970,11 +5970,11 @@
             and a.POWER_END_TIME is not null
         </if>
         <if test='seachStr!=null and seachStr!=""'>
-            and (a.session_number like '%${seachStr}%'
-            OR a.spe_name like '%${seachStr}%'
-            OR a.STATUS_NAME like '%${seachStr}%'
-            OR a.USER_NAME like '%${seachStr}%'
-            OR a.TEACHER_USER_NAME like '%${seachStr}%')
+            and (a.session_number like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.spe_name like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.STATUS_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%')
+            OR a.TEACHER_USER_NAME like CONCAT(CONCAT('%', #{seachStr}),'%'))
         </if>
                 and (a.status_id='isCurrent'or a.status_id='isSch')
         ORDER BY a.SCH_START_DATE DESC,a.sch_end_date
@@ -6135,7 +6135,7 @@
         </if>
         <if test="doctor!=null">
             <if test='doctor.doctorName!=null and doctor.doctorName!=""'>
-                AND RD.DOCTOR_NAME LIKE '%${doctor.doctorName}%'
+                AND RD.DOCTOR_NAME LIKE CONCAT(CONCAT('%', #{doctor.doctorName}),'%')
             </if>
             <if test='doctor.trainingSpeId!=null and doctor.trainingSpeId!=""'>
                 AND RD.TRAINING_SPE_ID = #{doctor.trainingSpeId}

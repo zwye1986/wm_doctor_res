@@ -193,16 +193,16 @@
         r.RECORD_STATUS = 'Y'
         AND r.AUDIT_STATUS_ID = 'Passed'
         <if test="userName !=null and userName !=''">
-            AND s.USER_NAME like '%${userName}%'
+            AND s.USER_NAME like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test="idNo !=null and idNo !=''">
-            AND s.ID_NO like '%${idNo}%'
+            AND s.ID_NO like CONCAT(CONCAT('%', #{idNo}),'%')
         </if>
         <if test="startDate !=null and startDate !=''">
-            AND e.EXAM_START_TIME >= '${startDate} 00:00'
+            AND e.EXAM_START_TIME >= #{startDate}||'00:00'
         </if>
         <if test="endDate !=null and endDate !=''">
-            AND e.EXAM_START_TIME <![CDATA[<=]]> '${endDate} 23:59'
+            AND e.EXAM_START_TIME <![CDATA[<=]]> #{endDate}||'23:59'
         </if>
         <if test="recruitYear != null and recruitYear != ''">
             AND r.RECRUIT_YEAR = #{recruitYear}

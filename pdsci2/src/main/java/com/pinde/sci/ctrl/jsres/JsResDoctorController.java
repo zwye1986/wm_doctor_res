@@ -4,6 +4,7 @@ import com.pinde.core.entyties.SysDict;
 import com.pinde.core.jspform.ItemGroupData;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
+import com.pinde.core.util.DateUtil;
 import com.pinde.sci.biz.jsres.*;
 import com.pinde.sci.biz.jszy.IJszyDoctorAuthBiz;
 import com.pinde.sci.biz.jszy.IJszyDoctorReductionBiz;
@@ -43,6 +44,7 @@ import com.pinde.sci.util.jsres.ResultUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
@@ -965,21 +967,21 @@ public class JsResDoctorController extends GeneralController {
         HSSFSheet sheet = wb.createSheet("sheet1");
         //定义将用到的样式
         HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-        styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        styleCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleCenter.setAlignment(HorizontalAlignment.CENTER);
+        styleCenter.setVerticalAlignment(VerticalAlignment.CENTER);
         styleCenter.setWrapText(true);
         HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-        styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-        styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleLeft.setAlignment(HorizontalAlignment.LEFT);
+        styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
         styleLeft.setWrapText(true);
 
         HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-        stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        stylevwc.setAlignment(HorizontalAlignment.CENTER);
+        stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
         styleLeft.setWrapText(true);
 
         HSSFRow rowDep = sheet.createRow(0);//第一行
-        sheet.addMergedRegion(new org.apache.poi.hssf.util.CellRangeAddress(0, 0, 0, 6));//合并单元格
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 6));//合并单元格
         rowDep.setHeightInPoints(20);
         HSSFCell cellOne = rowDep.createCell(0);
         cellOne.setCellStyle(styleCenter);
@@ -1108,21 +1110,21 @@ public class JsResDoctorController extends GeneralController {
         HSSFSheet sheet = wb.createSheet("sheet1");
         //定义将用到的样式
         HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-        styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        styleCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleCenter.setAlignment(HorizontalAlignment.CENTER);
+        styleCenter.setVerticalAlignment(VerticalAlignment.CENTER);
         styleCenter.setWrapText(true);
         HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-        styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-        styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleLeft.setAlignment(HorizontalAlignment.LEFT);
+        styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
         styleLeft.setWrapText(true);
 
         HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-        stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        stylevwc.setAlignment(HorizontalAlignment.CENTER);
+        stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
         styleLeft.setWrapText(true);
 
         HSSFRow rowDep = sheet.createRow(0);//第一行
-        sheet.addMergedRegion(new org.apache.poi.hssf.util.CellRangeAddress(0, 0, 0, 6));//合并单元格
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 6));//合并单元格
         rowDep.setHeightInPoints(20);
         HSSFCell cellOne = rowDep.createCell(0);
         cellOne.setCellStyle(styleCenter);
@@ -8889,13 +8891,13 @@ public class JsResDoctorController extends GeneralController {
         HSSFWorkbook wb = new HSSFWorkbook();
         //定义将用到的样式
         HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-        styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        styleCenter.setAlignment(HorizontalAlignment.CENTER);
         HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-        styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-        styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleLeft.setAlignment(HorizontalAlignment.LEFT);
+        styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
         HSSFCellStyle styleRight = wb.createCellStyle(); //居中
-        styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-        styleRight.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleRight.setAlignment(HorizontalAlignment.RIGHT);
+        styleRight.setVerticalAlignment(VerticalAlignment.CENTER);
 
         // 为工作簿添加sheet
         HSSFSheet sheet = wb.createSheet("SkillRegistry");
@@ -8915,7 +8917,7 @@ public class JsResDoctorController extends GeneralController {
             cellTitle = rowOne.createCell(i);
             cellTitle.setCellValue(titles[i]);
             cellTitle.setCellStyle(styleCenter);
-            cellTitle.setCellType(HSSFCell.CELL_TYPE_STRING);
+            cellTitle.setCellType(CellType.STRING);
             sheet.setColumnWidth(i, titles[i].getBytes().length * 506);
         }
         // 为工作簿添加sheet
@@ -8961,13 +8963,13 @@ public class JsResDoctorController extends GeneralController {
         HSSFWorkbook wb = new HSSFWorkbook();
         //定义将用到的样式
         HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-        styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        styleCenter.setAlignment(HorizontalAlignment.CENTER);
         HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-        styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-        styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleLeft.setAlignment(HorizontalAlignment.LEFT);
+        styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
         HSSFCellStyle styleRight = wb.createCellStyle(); //居中
-        styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-        styleRight.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleRight.setAlignment(HorizontalAlignment.RIGHT);
+        styleRight.setVerticalAlignment(VerticalAlignment.CENTER);
 
         // 为工作簿添加sheet
         HSSFSheet sheet = wb.createSheet("DiseaseRegistry");

@@ -909,7 +909,7 @@ public class JswjwWxController extends GeneralController {
 
     @RequestMapping(value = {"/viewErrorDetail"}, method = {RequestMethod.POST})
     @ResponseBody
-    public Object viewErrorDetail(String processFlow, String resultsId) {
+    public Object viewErrorDetail(String processFlow, String resultsId,HttpServletRequest request) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("resultId", "200");
         resultMap.put("resultType", "交易成功");
@@ -932,7 +932,7 @@ public class JswjwWxController extends GeneralController {
             return ResultDataThrow("当前考试记录信息获取失败！");
         }
 
-        testUrl = testUrl + "?RequestType=pc&ProcessFlow=" + processFlow + "&SoluID=" + results.getSoluId() + "&ResultID=" + resultsId;
+        testUrl = testUrl + "?paperFlow=" + results.getSoluId() + "&studentFlow=" +results.getUserId()+"&count="+ results.getTestCount()+"&token=" +request.getSession().getId();
         resultMap.put("testUrl", testUrl);
         return resultMap;
     }
@@ -6799,7 +6799,7 @@ public class JswjwWxController extends GeneralController {
         user.setUserFlow(userinfo.getUserFlow());
         user.setDeptFlow(userinfo.getDeptFlow());
 
-        session.setAttribute("currUser","isLogin");
+        session.setAttribute(GlobalConstant.CURR_USER,"isLogin");
 
         session.setAttribute("user", JSON.toJSONString(user));
 

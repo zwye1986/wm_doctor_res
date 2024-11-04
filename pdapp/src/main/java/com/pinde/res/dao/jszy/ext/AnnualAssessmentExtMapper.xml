@@ -22,7 +22,7 @@
         rd.disciple_teacher_flow,
         rd.disciple_TEACHER_NAME,
         <if test="recordFlow == null">
-          '${recordYear}'   RECORD_YEAR,
+          #{recordYear}   RECORD_YEAR,
         </if>
         <if test="recordFlow != null">
             raa.RECORD_YEAR,
@@ -61,10 +61,10 @@
             raa.MODIFY_USER_FLOW,
         </if>
         <if test="studyStartDate != null and studyStartDate!='' and studyEndDate != null and studyEndDate!=''">
-            '${studyStartDate}' AS DISCIPLE_START_DATE,
-            '${studyEndDate}' AS DISCIPLE_END_DATE,
-            to_date('${studyEndDate}', 'yyyy-MM-dd') -
-            to_date('${studyStartDate}', 'yyyy-MM-dd')+1 day_select_count,
+            #{studyStartDate} AS DISCIPLE_START_DATE,
+            #{studyEndDate} AS DISCIPLE_END_DATE,
+            to_date(#{studyEndDate}, 'yyyy-MM-dd') -
+            to_date(#{studyStartDate}, 'yyyy-MM-dd')+1 day_select_count,
         </if>
         <if test="!(studyStartDate != null and studyStartDate!='' and studyEndDate != null and studyEndDate!='')">
             raa.STUDY_START_DATE DISCIPLE_START_DATE,

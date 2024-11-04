@@ -24,7 +24,7 @@
     			and res.BASE_PROPERTY_NAME = #{base.basePropertyName} 
     		</if>
     		<if test='org.orgName!=null and org.orgName!=""'>
-    			and org.ORG_NAME like  '%${org.orgName}%'
+    			and org.ORG_NAME like  CONCAT(CONCAT('%', #{org.orgName}),'%')
     		</if>
     		<if test='base.baseStatusName!=null and base.baseStatusName!=""'>
     			and res.BASE_STATUS_NAME= #{base.baseStatusName} 

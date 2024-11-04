@@ -11,7 +11,7 @@
                 AND ORG_FLOW = #{orgFlow}
             </if>
             <if test="resNoticeTitle !=null and resNoticeTitle !=''">
-                AND RES_NOTICE_TITLE like '%${resNoticeTitle}%'
+                AND RES_NOTICE_TITLE like CONCAT(CONCAT('%', #{resNoticeTitle}),'%')
             </if>
             <if test="doctor!=null">
                 union all
