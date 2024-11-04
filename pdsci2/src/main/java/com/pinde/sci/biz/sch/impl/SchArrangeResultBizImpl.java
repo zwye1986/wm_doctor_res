@@ -5154,7 +5154,6 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	}
 
 	private void savePbWithoutHis(PbInfoItem item){
-
 		SchArrangeResult result = new SchArrangeResult();
 		BeanUtil.copyProperties(item,result);
 		//TODO::填充机构信息
@@ -5166,6 +5165,42 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		result.setModifyTime(DateUtil.getCurrDateTime());
 		result.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 		result.setBaseAudit("Passed");
+		//查询是否有标准的方案配置
+		List<SchRotationDept> schRotationDepts = rotationDeptBiz.searchSchRotationDept(result.getRotationFlow());
+		if (CollectionUtil.isEmpty(schRotationDepts)) {
+			return;
+		}
+		Map<String, List<SchRotationDept>> standMap = schRotationDepts.stream().collect(Collectors.groupingBy(SchRotationDept::getStandardDeptId));
+		List<SchRotationDept> schRotationDepts1 = standMap.get(result.getStandardDeptId());
+		if (CollectionUtil.isEmpty(schRotationDepts1)) {
+			//没有该标准科室的配置，一般不会出现这种情况
+			return;
+		}
+		if (schRotationDepts1.size() ==1) {
+			result.setStandardGroupFlow(schRotationDepts1.get(0).getGroupFlow());
+			result.setIsRequired(schRotationDepts1.get(0).getIsRequired());
+		}
+		if (schRotationDepts1.size()>1){
+			boolean con = true;
+			for (SchRotationDept it : schRotationDepts1) {
+				if (!con) {
+					continue;
+				}
+				String standardDeptId = it.getStandardDeptId();
+				String groupFlow = it.getGroupFlow();
+				String schMonth = StringUtils.isEmpty(it.getSchMonth())? "0":it.getSchMonth();
+				Double i = arrangeResultMapper.schMon(result.getDoctorFlow(), result.getRotationFlow(), standardDeptId, groupFlow);
+				if (i<Double.valueOf(schMonth)) {
+					result.setStandardGroupFlow(groupFlow);
+					result.setIsRequired(it.getIsRequired());
+					con = false;
+				}
+			}
+			if (con) {
+				result.setStandardGroupFlow(schRotationDepts1.get(schRotationDepts1.size()-1).getGroupFlow());
+				result.setIsRequired(schRotationDepts1.get(schRotationDepts1.size()-1).getIsRequired());
+			}
+		}
 		//保存到result表
 		SchArrangeResult schArrangeResult = arrangeResultMapper.selectByPrimaryKey(result.getResultFlow());
 		boolean flag = false;
@@ -5176,11 +5211,13 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			int i1 = arrangeResultMapper.updateByPrimaryKeySelective(result);
 			flag = i1>0;
 		}
-		if (flag) {
-			//修改排班成功，处理下相关数据
-			arrangeResultMapper.updateAfterPbRequiest(result.getResultFlow());
-			arrangeResultMapper.updateAfterPbGroup(result.getResultFlow());
-		}
+//		if (flag) {
+//			//修改排班成功，处理下相关数据
+//			arrangeResultMapper.updateAfterPbGroup(result.getResultFlow());
+//			arrangeResultMapper.updateAfterPbRequiest(result.getResultFlow());
+//		}
+
+
 	}
 
 	private void deletePbResult(String resultFlow,boolean delete){

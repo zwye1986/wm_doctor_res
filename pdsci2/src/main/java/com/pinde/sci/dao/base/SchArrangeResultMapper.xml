@@ -383,6 +383,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+
   <update id="updateByExampleSelective" parameterType="map" >
     update PDSCI.SCH_ARRANGE_RESULT
     <set >
@@ -701,4 +702,14 @@
         AND d.ROTATION_FLOW = r.ROTATION_FLOW)
     WHERE r.RESULT_FLOW = #{resultFlow}
   </update>
+
+  <select id="schMon" resultType="java.lang.Double">
+    SELECT SUM(SCH_MONTH) FROM SCH_ARRANGE_RESULT
+    WHERE RECORD_STATUS = 'Y'
+      AND DOCTOR_FLOW = #{doctorFlow}
+      AND ROTATION_FLOW = #{rotationFlow}
+      AND STANDARD_DEPT_ID = #{standDeptId}
+      AND STANDARD_GROUP_FLOW = #{groupFlow}
+
+  </select>
 </mapper>
