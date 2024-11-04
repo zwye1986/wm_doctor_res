@@ -28,10 +28,12 @@
     }
 
     function editDept(deptFlow){
+        debugger;
         var target = window.event.target;
         var curTr = $(target).parents('tr');
         var deptFlow = curTr.attr('dataflow');
         var ordinal = curTr.attr('dataordinal');
+        var orgFlow = curTr.attr('orgFlow');
         var deptCode = curTr.find('.deptCode').attr('datacode');
         var deptName = curTr.find('.deptName').attr('dataname');
 
@@ -39,6 +41,7 @@
             title: '编辑科室信息',
             operType: 'edit',
             deptFlow: deptFlow,
+            orgFlow: orgFlow,
             deptCode: deptCode,
             deptName: deptName,
             ordinal: ordinal
@@ -72,6 +75,7 @@
         var html = $("#baseDeptEditTemplate").html();
         html = html.replace("\{operType}", settings.operType);
         html = html.replace("\{deptFlow}", settings.deptFlow || '');
+        html = html.replace("\{orgFlow}", settings.orgFlow || '');
         html = html.replace("\{ordinal}", settings.ordinal || '');
         html = html.replaceAll("\{deptCode}", settings.deptCode || '');
         html = html.replaceAll("\{deptName}", settings.deptName || '');
@@ -95,6 +99,7 @@
     }
 
     function editSave(operType, otherData) {
+        debugger;
         var url = '<s:url value="/jsres/dept/saveBaseDept" />';
         var data = {
             operType: operType
@@ -104,6 +109,8 @@
             data.deptName = $("input[name='baseDeptNameEdit']").last().val(),
             data.ordinal = $("input[name='baseOrdinalEdit']").last().val(),
             data.deptFlow = $(".deptFlowEdit").last().val();
+            data.orgFlow = $("#orgFlow").val(),
+            data.orgName = $("#orgName").val()
 
             if(!data.deptCode || !data.deptName || !data.ordinal) {
                 jboxTip("请求入参不完整，请检查！");
@@ -215,6 +222,7 @@
     <div class="div_table" style="padding:0 10px 10px">
         <!-- <h4>编辑科室信息</h4> -->
         <form id="editForm" style="position: relative;" method="post">
+            <input type="hidden" value="{orgFlow}">
             <input type="hidden" value="{deptFlow}" class="deptFlowEdit">
             <input type="hidden" value="{deptCode}" class="deptCodeEdit">
             <input type="hidden" value="{deptName}" class="deptNameEdit">
