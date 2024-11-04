@@ -75,6 +75,7 @@
     }
 
     function exportEval() {
+        debugger;
         var endScore = $("#endScore").val();
         var startScore = $("#startScore").val();
         if(endScore){
@@ -111,9 +112,20 @@
         }
         var gradeRole = $("#gradeRole").val();
         var role = $("#role").val();
-        var url = "<s:url value='/res/evaluateHospitalResult/exportEval?gradeRole='/>" + gradeRole + "&role=" + role;
+        <%--var url = "<s:url value='/res/evaluateHospitalResult/exportEval?gradeRole='/>" + gradeRole + "&role=" + role;--%>
+        var url = "<s:url value='/res/evaluateHospitalResult/exportEval'/>";
         jboxTip("导出中...");
-        jboxSubmit($("#gradeSearchForm"), url, null, null, false);
+        // jboxSubmit($("#gradeSearchForm"), url, null, null, false);
+
+        // jboxPost(url,$("#gradeSearchForm").serialize(),function(resp){
+        // },null,false);
+
+
+        <%--var url = "<s:url value='/jsres/manage/exportSzList?orgFlow=${sessionScope.currUser.orgFlow}'/>";--%>
+        jboxExp($("#gradeSearchForm"), url);
+
+
+
         jboxEndLoading();
     }
 

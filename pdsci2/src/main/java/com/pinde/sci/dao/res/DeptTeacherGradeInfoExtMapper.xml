@@ -1235,6 +1235,12 @@
         AND dtgi.record_status = 'Y'
         AND su.record_status = 'Y'
         and su.org_flow = #{orgFlow}
+        <if test='cfgFlows!=null and cfgFlows.size()>0'>
+            and dtgi.CFG_FLOW in
+            <foreach collection="cfgFlows" item="item" open="(" close=")" separator="," >
+                #{item}
+            </foreach>
+        </if>
         <if test='sessionNumber!=null and sessionNumber!=""'>
             and substr(dtgi.CREATE_TIME,1,4) = #{sessionNumber}
         </if>
@@ -1259,13 +1265,13 @@
         <if test='deptName!=null and deptName!=""'>
             and su.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
-        <if test='deptFlows!=null and deptFlows.size>0'>
+        <if test='deptFlows!=null and deptFlows.size()>0'>
             and rdsp.dept_flow in
             <foreach collection="deptFlows" item="item" open="(" close=")" separator="," >
                 #{item}
             </foreach>
         </if>
-        <if test='recTypeIds!=null and recTypeIds.size>0'>
+        <if test='recTypeIds!=null and recTypeIds.size()>0'>
             and dtgi.rec_type_id in
             <foreach collection="recTypeIds" item="item" open="(" close=")" separator="," >
                 #{item}
@@ -1299,7 +1305,7 @@
         <if test='recTypeId!=null and recTypeId!=""'>
             and dtgi.rec_type_id = #{recTypeId}
         </if>
-        <if test='recTypeIds!=null and recTypeIds.size>0'>
+        <if test='recTypeIds!=null and recTypeIds.size()>0'>
             and dtgi.rec_type_id in
             <foreach collection="recTypeIds" item="item" open="(" close=")" separator="," >
                 #{item}
@@ -1323,7 +1329,7 @@
         <if test='deptName!=null and deptName!=""'>
             and rdsp.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
-        <if test='deptFlows!=null and deptFlows.size>0'>
+        <if test='deptFlows!=null and deptFlows.size()>0'>
             and rdsp.dept_flow in
             <foreach collection="deptFlows" item="item" open="(" close=")" separator="," >
                 #{item}
@@ -1364,7 +1370,7 @@
         <if test='deptFlow!=null and deptFlow!=""'>
             and sd.dept_flow = #{deptFlow}
         </if>
-        <if test='deptFlows!=null and deptFlows.size>0'>
+        <if test='deptFlows!=null and deptFlows.size()>0'>
             and rdsp.dept_flow in
             <foreach collection="deptFlows" item="item" open="(" close=")" separator="," >
                 #{item}
@@ -1439,7 +1445,7 @@
         <if test='recFlow!=null and recFlow!=""'>
             and dtgi.rec_flow = #{recFlow}
         </if>
-        <if test='recTypeIdList!=null and recTypeIdList!=""'>
+        <if test='recTypeIdList!=null and recTypeIdList.size()>0'>
             and dtgi.rec_type_id in
             <foreach collection="recTypeIdList" item="item" open="(" close=")" separator="," >
                 #{item}
@@ -1504,7 +1510,7 @@
         <if test='recFlow!=null and recFlow!=""'>
             and dtgi.rec_flow = #{recFlow}
         </if>
-        <if test='recTypeIdList!=null and recTypeIdList!=""'>
+        <if test='recTypeIdList!=null and recTypeIdList.size()>0'>
             and dtgi.rec_type_id in
             <foreach collection="recTypeIdList" item="item" open="(" close=")" separator="," >
                 #{item}
@@ -1612,7 +1618,7 @@
             AND RD.SESSION_NUMBER= #{sessionNumber}
         </if>
         AND RD.DOCTOR_STATUS_NAME IN ('在培', '其他')
-        <if test="docTypeList!=null and docTypeList.size>0">
+        <if test="docTypeList!=null and docTypeList.size()>0">
             and rd.DOCTOR_TYPE_ID in
             <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
         </if>
@@ -1796,7 +1802,7 @@
                 AND P.DEPT_FLOW = #{deptFlow}
             </if>
             <if test='roleFlag!=null and roleFlag!="" and roleFlag=="kzr"'>
-                <if test="rdspDeptlist!=null and rdspDeptlist.size>0">
+                <if test="rdspDeptlist!=null and rdspDeptlist.size()>0">
                     AND P.DEPT_FLOW in
                     <foreach collection="rdspDeptlist" open="(" separator="," close=")" item="item">#{item}</foreach>
                 </if>
@@ -1804,7 +1810,7 @@
             <if test='sessionNumber!=null and sessionNumber!=""'>
                 AND RD.SESSION_NUMBER = #{sessionNumber}
             </if>
-            <if test="docTypeList!=null and docTypeList.size>0">
+            <if test="docTypeList!=null and docTypeList.size()>0">
                 and RD.DOCTOR_TYPE_ID in
                 <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
             </if>
