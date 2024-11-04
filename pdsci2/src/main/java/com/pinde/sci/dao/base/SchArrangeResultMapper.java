@@ -31,4 +31,9 @@ public interface SchArrangeResultMapper {
 
     int updateAfterPbRequiest(@Param("resultFlow")String resultFlow);
     int updateAfterPbGroup(@Param("resultFlow")String resultFlow);
+
+    Double schMon(@Param("doctorFlow")String doctorFlow,
+                   @Param("rotationFlow")String rotationFlow,
+                   @Param("standDeptId")String standDeptId,
+                   @Param("groupFlow")String groupFlow);
 }
