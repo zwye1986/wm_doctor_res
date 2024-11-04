@@ -11,7 +11,7 @@
         </thead>
         <tbody>
         <c:forEach items="${baseDeptList}" var="dept">
-            <tr dataflow="${dept.deptFlow}" dataordinal="${dept.ordinal}">
+            <tr dataflow="${dept.deptFlow}" dataordinal="${dept.ordinal}" orgFlow="${dept.orgFlow}">
                 <td class="deptCode" datacode="${dept.deptCode}">${dept.deptCode}</td>
                 <td class="deptName" dataname="${dept.deptName}">${dept.deptName}</td>
                 <td>${dept.standardDeptName}</td>
