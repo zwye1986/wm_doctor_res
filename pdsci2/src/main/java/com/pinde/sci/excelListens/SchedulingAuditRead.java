@@ -415,6 +415,22 @@ public class SchedulingAuditRead extends AnalysisEventListener<Map<Integer, Stri
             Double schMon = Double.valueOf("0");
             for (SchRotationDept val : schRotationDepts1) {
                 String schMonth = val.getSchMonth();
+                String schMaxMonth = val.getSchMaxMonth();
+                if (StringUtils.isEmpty(schMonth) || "0".equalsIgnoreCase(schMonth)){
+                    if (StringUtils.isEmpty(schMaxMonth)) {
+                        schMonth = "0";
+                    }else {
+                        schMonth = schMaxMonth;
+                    }
+                }else {
+                    if (StringUtils.isNotEmpty(schMaxMonth)) {
+                        Double v = Double.valueOf(schMaxMonth);
+                        Double v1 = Double.valueOf(schMonth);
+                        if (v>=v1) {
+                            schMonth = schMaxMonth;
+                        }
+                    }
+                }
                 Double v = StringUtils.isEmpty(schMonth) ? Double.valueOf("0") : Double.valueOf(schMonth);
                 schMon += v;
             }
