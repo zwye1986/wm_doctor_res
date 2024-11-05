@@ -227,6 +227,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                 paramMap.put("deptName", deptName);
                 List<String> recTypeIds = Lists.newArrayList(ResRecTypeEnum.TeacherAssess.getId(),ResRecTypeEnum.TeacherGradeTwo.getId());
                 paramMap.put("recTypeIds", recTypeIds);
+                paramMap.put("cfgFlows", Lists.newArrayList("f38b2734220c4b659ddb85f9b99b82ce","0ddacbf047fc4beb9b9d94246237cbe3"));
 
                 //查出当前机构的所有带教老师
                 PageHelper.startPage(currentPage, getPageSize(request));
@@ -712,7 +713,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             paramMap.put("userName", userName);
             paramMap.put("deptFlow", deptFlow);
             paramMap.put("deptName", deptName);
-
+            paramMap.put("cfgFlows", Lists.newArrayList("f38b2734220c4b659ddb85f9b99b82ce","0ddacbf047fc4beb9b9d94246237cbe3"));
             //查出当前机构的所有带教老师
             userList = resGradeBiz.getUserByRecAndAvgScore(paramMap);
         } else if ("head".equals(gradeRole)) {

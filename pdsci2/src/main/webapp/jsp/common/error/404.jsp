@@ -3,7 +3,7 @@
 <%@include file="/jsp/common/doctype.jsp" %>
 <html>
 <head>
-<jsp:include page="/jsp/common/htmlhead.jsp">
+<jsp:include page="/jsp/common/htmlhead.jsp" flush="true">
 	<jsp:param name="basic" value="true"/>
 	<jsp:param name="jbox" value="true"/>
 	<jsp:param name="jquery_form" value="false"/>

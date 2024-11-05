@@ -33,4 +33,6 @@ public interface IResActivityTargetBiz {
     List<TeachingActivityFormValue> activityFormValues(String activityFlow);
 
     List<TeachingActivityTarget> readByOrgNew(String activityTypeId, String orgFlow);
+
+    List<String> selectJointOrgFlow(String userFlow);
 }
