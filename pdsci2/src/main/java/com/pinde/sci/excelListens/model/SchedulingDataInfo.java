@@ -32,7 +32,7 @@ public class SchedulingDataInfo implements Serializable {
 
     private String schEndDate;
 
-    private String name;
+    private String name = "";
 
     //页面组件类型，输入框还是下拉框
     private String type;

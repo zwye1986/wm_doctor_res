@@ -6,6 +6,7 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.IdcardUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.extra.pinyin.PinyinUtil;
+import cn.hutool.json.JSONUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
@@ -4742,8 +4743,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	 * @Description: 最新的导入排班的文件解析
 	 */
 	@Override
-	public Map<String, Object> importSchedulingAuditExcelCache(MultipartFile file) throws IOException, InvalidFormatException {
-		Map<String, Object> result = new HashMap<>();
+	public Map<String, String> importSchedulingAuditExcelCache(MultipartFile file) throws IOException, InvalidFormatException {
+		Map<String, String> result = new HashMap<>();
 		if (null == file) {
 			throw new RuntimeException("导入的文件不能为空");
 		}
@@ -4754,8 +4755,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		SchedulingAuditRead listen = new SchedulingAuditRead(allBzDept,lzDept);
 		EasyExcel.read(file.getInputStream(), listen).sheet().headRowNumber(2).doRead();
 		//解析出来的表头
-		result.put("head1",listen.getOneHeaders());
-		result.put("head2",listen.getTwoHeaders());
+		result.put("head1",JSONUtil.toJsonStr(listen.getOneHeaders()));
+		result.put("head2",JSONUtil.toJsonStr(listen.getTwoHeaders()));
 		//根据学员姓名、身份证号查询所有的学员信息
 		List<SysUser> sysUsers = doctorBiz.listByNameOrIdNo(listen.getExcelUserName(), listen.getExcelIdNo());
 		listen.setUserList(sysUsers);
@@ -4787,7 +4788,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				}
 			}
 		}
-		result.put("data",listen.getData(true));
+		List<SchedulingDataModel> data = listen.getData(true);
+		result.put("data", JSONUtil.toJsonStr(data));
 		return result;
 	}
 
