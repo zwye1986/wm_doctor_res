@@ -3,6 +3,7 @@ package com.pinde.sci.ctrl.jsres;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -42,8 +43,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.*;
 import java.math.BigDecimal;
 import java.net.*;
@@ -3933,8 +3933,28 @@ public class JsResDoctorRecruitController extends GeneralController {
 	}
 
 	@RequestMapping(value = "/importSchedulingiImport")
-	public String importSchedulingiImport(Model model) {
-		logger.info("跳转到导入页面");
+	public String importSchedulingiImport(Model model,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Map<String,String> map = (Map)session.getAttribute("map");
+		session.removeAttribute("map");
+		if (CollectionUtil.isEmpty(map)) {
+			return "jsres/hospital/schedulingAuditImportList";
+		}
+		String headone = map.get("head1");
+		if (StringUtils.isNotEmpty(headone)) {
+			JSONArray head1 = JSONArray.parseArray(headone);
+			model.addAttribute("head1",head1);
+		}
+		String headtwo = map.get("head2");
+		if (StringUtils.isNotEmpty(headtwo)) {
+			JSONArray head2 = JSONArray.parseArray(headtwo);
+			model.addAttribute("head2",head2);
+		}
+		String datastr = map.get("data");
+		if (StringUtils.isNotEmpty(datastr)) {
+			JSONArray data = JSONArray.parseArray(datastr);
+			model.addAttribute("data",data);
+		}
 		return "jsres/hospital/schedulingAuditImportList";
 	}
 
@@ -4170,22 +4190,31 @@ public class JsResDoctorRecruitController extends GeneralController {
 	 */
 	@RequestMapping(value = {"/parseSchedulingAuditExcelCache"}, method = {RequestMethod.POST})
 	@ResponseBody
-	public Map<String,Object> importSchedulingAuditExcelCache(MultipartFile file,Model model,HttpServletResponse response){
+	public String importSchedulingAuditExcelCache(MultipartFile file,Model model,HttpServletRequest request){
 		logger.info("导入文件：：：：：：：：：：：：：：：：：：：：：：：：：：");
-		Map<String, Object> map = new HashMap<>();
+		Map<String, String> map = new HashMap<>();
 		List<String> headers = new ArrayList<>();
 		List<Map<Object, Object>> data = new ArrayList<>();
-		map.put("headers",headers);
-		map.put("data",data);
+		map.put("head1",JSONArray.toJSONString(headers));
+		map.put("head2",JSONArray.toJSONString(headers));
+		map.put("data",JSONArray.toJSONString(data));
+		HttpSession session = request.getSession();
+		session.setAttribute("map",map);
 		if (file.isEmpty()) {
-			return map;
+			return "success";
 		}
 		try {
-			map = schArrangeResultBiz.importSchedulingAuditExcelCache(file);
+			Map<String, String> stringObjectMap = schArrangeResultBiz.importSchedulingAuditExcelCache(file);
+			map.put("head1",stringObjectMap.get("head1"));
+			map.put("head2",stringObjectMap.get("head2"));
+			map.put("data",stringObjectMap.get("data"));
+			session.setAttribute("map",map);
+			return "success";
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {
-			return map;
+//			return map;
+			return "success";
 		}
 	}
 

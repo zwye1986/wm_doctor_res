@@ -20,14 +20,9 @@ public class SchedulingDataModel implements Serializable {
 
     //success-color #b3ffff
     //fial-color #ff6666
-    private String color;
+    private String color = "#b3ffff";
 
-    private String tip;
-
-    public SchedulingDataModel(){
-        this.color = "#b3ffff";
-        this.tip = "";
-    }
+    private String tip = "";
 
     //每一行的数据 key:列的下标
     //JSONObject:key value--> SchedulingDataInfo

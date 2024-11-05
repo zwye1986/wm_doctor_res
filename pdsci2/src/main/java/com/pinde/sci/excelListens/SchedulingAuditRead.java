@@ -708,10 +708,11 @@ public class SchedulingAuditRead extends AnalysisEventListener<Map<Integer, Stri
                 if (null == i1 || i1==0) {
                     //没有学员提交历史记录，可以替换
                     result.put(biaozhun.getName(),null == result.get(biaozhun.getName())? 0.5:result.get(biaozhun.getName())+0.5);
-                }else {
-                    //存在学员提交记录，不允许替换
-                    result.put(pbInfoItem.getStandardDeptName(),null == result.get(pbInfoItem.getStandardDeptName())? 0.5:result.get(pbInfoItem.getStandardDeptName())+0.5);
                 }
+//                else {
+//                    //存在学员提交记录，不允许替换
+//                    result.put(pbInfoItem.getStandardDeptName(),null == result.get(pbInfoItem.getStandardDeptName())? 0.5:result.get(pbInfoItem.getStandardDeptName())+0.5);
+//                }
             }
         }
 
