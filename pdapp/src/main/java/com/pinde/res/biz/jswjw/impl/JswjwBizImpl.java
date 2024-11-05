@@ -10481,4 +10481,10 @@ public class JswjwBizImpl implements IJswjwBiz {
     public Map<String, Object> getDoctorSchInfo(String userFlow) {
         return sysUserMapper.getDoctorSchInfo(userFlow);
     }
+
+    @Override
+    public List<String> studentList(String userFlow,String isNow) {
+
+        return resDoctorProcessExtMapper.studentList(userFlow,isNow);
+    }
 }
