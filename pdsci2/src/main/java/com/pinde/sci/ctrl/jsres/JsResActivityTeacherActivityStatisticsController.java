@@ -62,13 +62,14 @@ public class JsResActivityTeacherActivityStatisticsController extends GeneralCon
 	}
 	@RequestMapping(value="/list")
 	public String list(Model model,Integer currentPage,
-					   String userName,String deptFlow,String  roleFlag,
+					   String userName,String deptFlow,String  roleFlag,String deptName,
 					   String startTime,String endTime, HttpServletRequest request){
 		SysUser curUser=GlobalContext.getCurrentUser();
 		Map<String,Object> param=new HashMap<>();
 		List<String> roles=new ArrayList<>();
 		param.put("userName",userName);
 		param.put("deptFlow",deptFlow);
+		param.put("deptName",deptName);
 		param.put("startTime",startTime);
 		param.put("endTime",endTime);
 		param.put("roleFlag",roleFlag);
