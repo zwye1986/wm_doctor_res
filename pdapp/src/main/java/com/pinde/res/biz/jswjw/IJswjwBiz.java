@@ -804,4 +804,6 @@ public interface IJswjwBiz {
     List<ResDoctorKq> kqStatisticsDetail(ResDoctorKq kq);
 
 	Map<String, Object> getDoctorSchInfo(String userFlow);
+
+	List<String> studentList(String userFlow,String isNow);
 }
