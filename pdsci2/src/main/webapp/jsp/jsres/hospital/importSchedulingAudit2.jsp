@@ -34,26 +34,29 @@
 		var url = "<s:url value='/jsres/doctorRecruit/parseSchedulingAuditExcelCache'/>";
 		jboxSubmit($('#planForm'), url,
 			function(resp){
-				let res = null;
-				if (resp) {
-					res = JSON.parse(resp);
-				}
-				if (res && res.head1) {
-					localStorage.setItem("head1",JSON.stringify(res.head1))
-				}else {
-					localStorage.setItem("head1",JSON.stringify([]))
-				}
-				if (res && res.head2) {
-					localStorage.setItem("head2",JSON.stringify(res.head2))
-				}else {
-					localStorage.setItem("head2",JSON.stringify([]))
-				}
-				if (res && res.data) {
-					localStorage.setItem("data",JSON.stringify(res.data))
-				}else {
-					localStorage.setItem("data",JSON.stringify([]))
-				}
+				// let res = null;
+				// console.log('导入文件1',new Date().getMinutes()+":"+new Date().getSeconds())
+				// if (resp) {
+				// 	res = JSON.parse(resp);
+				// }
+				// if (res && res.head1) {
+				// 	localStorage.setItem("head1",JSON.stringify(res.head1))
+				// }else {
+				// 	localStorage.setItem("head1",JSON.stringify([]))
+				// }
+				// if (res && res.head2) {
+				// 	localStorage.setItem("head2",JSON.stringify(res.head2))
+				// }else {
+				// 	localStorage.setItem("head2",JSON.stringify([]))
+				// }
+				// if (res && res.data) {
+				// 	localStorage.setItem("data",JSON.stringify(res.data))
+				// }else {
+				// 	localStorage.setItem("data",JSON.stringify([]))
+				// }
+				// console.log('导入文件2',new Date().getMinutes()+":"+new Date().getSeconds())
 				jboxEndLoading();
+				// jboxClose();
 				window.parent.toImportCache();
 			}
 		);

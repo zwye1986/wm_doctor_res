@@ -37,15 +37,23 @@
     window.dataList = [];
     window.selectTotal = 0;
     $(document).ready(function (){
-        let head1 = localStorage.getItem("head1")
-        window.oneHead = JSON.parse(head1);
-        window.selectTotal = oneHead.length;
-        let head2 = localStorage.getItem("head2")
-        window.twoHead = JSON.parse(head2);
-        let data = localStorage.getItem("data")
-        window.dataList = JSON.parse(data);
+        console.log('从缓存中获取信息',new Date().getMinutes()+":"+new Date().getSeconds())
+        // let head1 = localStorage.getItem("head1")
+        // window.oneHead = JSON.parse(head1);
+        // window.selectTotal = oneHead.length;
+        // let head2 = localStorage.getItem("head2")
+        // window.twoHead = JSON.parse(head2);
+        // let data = localStorage.getItem("data")
+        // window.dataList = JSON.parse(data);
+        window.oneHead = ${head1};
+        window.twoHead = ${head2};
+        window.selectTotal = window.oneHead.length;
+        console.log('从缓存中获取信息2',new Date().getMinutes()+":"+new Date().getSeconds())
         initHead(window.oneHead,window.twoHead);
+        console.log('initHead2',new Date().getMinutes()+":"+new Date().getSeconds())
+        window.dataList = ${data}
         initData(window.dataList);
+        console.log('initData2',new Date().getMinutes()+":"+new Date().getSeconds())
     })
 
     function checkData(){
@@ -85,6 +93,7 @@
             let headerTr = $("#headerTr");
             headerTr.empty();
             //处理第一行的表头
+            console.log('数据渲染开始时间',new Date().getMinutes()+":"+new Date().getSeconds())
             let htmltext = "";
             for (let i = 0; i < head1.length; i++) {
                 if (i == 0) {
@@ -114,7 +123,9 @@
                     }
                 }
             }
+            console.log('数据渲染循环结束时间',new Date().getMinutes()+":"+new Date().getSeconds())
             headerTr.append(htmltext);
+            console.log('数据渲染循环append结束时间',new Date().getMinutes()+":"+new Date().getSeconds())
         }
 
 
