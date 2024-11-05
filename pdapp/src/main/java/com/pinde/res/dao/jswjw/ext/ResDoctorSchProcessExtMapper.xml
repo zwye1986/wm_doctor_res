@@ -6344,5 +6344,22 @@
         </if>
         GROUP BY DEPT_FLOW, DEPT_NAME
     </select>
+    <select id="studentList" resultType="java.lang.String">
+        SELECT
+        u.USER_FLOW
+        FROM
+        SYS_USER u
+        LEFT JOIN
+        RES_DOCTOR_SCH_PROCESS p ON u.USER_FLOW = p.USER_FLOW
+        WHERE
+        u.RECORD_STATUS = 'Y'
+        AND p.RECORD_STATUS = 'Y'
+        AND p.TEACHER_USER_FLOW = #{userFlow}
+        <if test="isNow!=null">
+            AND p.SCH_START_DATE <![CDATA[<=]]> TO_CHAR( SYSDATE, 'yyyy-mm-dd' )
+            AND p.SCH_END_DATE >= TO_CHAR( SYSDATE, 'yyyy-mm-dd' )
+        </if>
+        GROUP BY u.USER_FLOW
+    </select>
 
 </mapper>

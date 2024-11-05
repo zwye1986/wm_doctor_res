@@ -6332,18 +6332,24 @@ public class JswjwWxTeacherController extends GeneralController {
 		return resultMap;
 	}
 
-//
-//
-//	@RequestMapping(value={"/userCenter"},method={RequestMethod.GET})
-//	public Object userCenter(String userFlow, HttpServletRequest request, HttpServletResponse response){
-//		Map<String,Object> resultMap = new HashMap<>();
-//		resultMap.put("resultId", "200");
-//		resultMap.put("resultType", "success");
-//
-//
-//		return resultMap;
-//	}
-//
+
+
+	@RequestMapping(value={"/userCenter"},method={RequestMethod.GET})
+	@ResponseBody
+	public Object userCenter(String userFlow, HttpServletRequest request, HttpServletResponse response){
+		Map<String,Object> resultMap = new HashMap<>();
+		resultMap.put("resultId", "200");
+		resultMap.put("resultType", "success");
+
+		List<String> list = jswjwBiz.studentList(userFlow,null);
+		List<String> rotatinglist = jswjwBiz.studentList(userFlow,"true");
+
+		resultMap.put("teachNumCount", list.size());
+		resultMap.put("teachNum", rotatinglist.size());
+
+		return resultMap;
+	}
+
 
 
 

@@ -5655,6 +5655,20 @@ public class JswjwWxController extends GeneralController {
             TeachingActivityInfo activityInfo = activityBiz.readActivityInfo(result.getActivityFlow());
             List<TeachingActivityInfoTarget> infoTargets = activityTargeBiz.readActivityTargets(result.getActivityFlow());
             List<TeachingActivityTarget> targetList = activityTargeBiz.readByOrgNew(activityInfo.getActivityTypeId(), sysUser.getOrgFlow());
+            //查询是否有协同基地
+            List<String> jointOrgFlow = activityTargeBiz.selectJointOrgFlow(userFlow);
+
+            if(jointOrgFlow!=null&& !jointOrgFlow.isEmpty()){
+
+                for (String orgFlow : jointOrgFlow) {
+                    List<TeachingActivityTarget> jointTargetList = activityTargeBiz.readByOrgNew(activityInfo.getActivityTypeId(), orgFlow);
+                    if(!jointTargetList.isEmpty()){
+                        targetList.addAll(jointTargetList);
+                    }
+                }
+
+            }
+
             List<String> targetFlowList = targetList.stream().map(TeachingActivityTarget::getTargetFlow).collect(Collectors.toList());
             for (TeachingActivityInfoTarget infoTarget : infoTargets) {
                 if (!targetFlowList.contains(infoTarget.getTargetFlow())) {
