@@ -31,7 +31,7 @@
             AND PL.PLAN_FLOW= #{planFlow}
         </if>
         <if test="speName!=null and speName!=''">
-            AND A.SPE_NAME LIKE  '%${speName}%'
+            AND A.SPE_NAME LIKE  CONCAT(CONCAT('%', #{speName}),'%')
         </if>
         <if test="planStatusId!=null and planStatusId!='' and planStatusId=='Staging'">
             AND PL.PLAN_STATUS_ID= 'Staging'
@@ -102,7 +102,7 @@
                 AND PL.PLAN_FLOW= #{planFlow}
             </if>
             <if test="speName!=null and speName!=''">
-                AND A.SPE_NAME LIKE  '%${speName}%'
+                AND A.SPE_NAME LIKE  CONCAT(CONCAT('%', #{speName}),'%')
             </if>
             <if test="planStatusId!=null and planStatusId!='' and planStatusId=='Staging'">
                 AND PL.PLAN_STATUS_ID= 'Staging'
@@ -351,7 +351,7 @@
                 AND D.DEPT_FLOW = #{deptFlow}
             </if>
             <if test="doctorName!=null and doctorName!=''">
-                AND R.DOCTOR_NAME LIKE  '%${doctorName}%'
+                AND R.DOCTOR_NAME LIKE  CONCAT(CONCAT('%', #{doctorName}),'%')
             </if>
             <if test="type!=null and type!=''and type=='N'">
                 AND R.APPEAR_FLAG IS NULL
@@ -375,7 +375,7 @@
             AND RD.PLAN_FLOW = #{planFlow}
         </if>
         <if test="doctorName!=null and doctorName!=''">
-            AND RD.DOCTOR_NAME LIKE  '%${doctorName}%'
+            AND RD.DOCTOR_NAME LIKE  CONCAT(CONCAT('%', #{doctorName}),'%')
         </if>
         <if test="type!=null and type!=''and type=='N'">
             AND RD.APPEAR_FLAG IS NULL
@@ -473,7 +473,7 @@
                     AND PL.PLAN_FLOW= #{planFlow}
                 </if>
                 <if test="speName!=null and speName!=''">
-                    AND A.SPE_NAME LIKE  '%${speName}%'
+                    AND A.SPE_NAME LIKE  CONCAT(CONCAT('%', #{speName}),'%')
                 </if>
                 <if test="enrollStartTime!=null and enrollStartTime!=''">
                     AND PL.ENROLL_START_TIME <![CDATA[ < ]]> #{enrollStartTime}
@@ -621,7 +621,7 @@
                 AND R.SPE_ID= #{speId}
             </if>
             <if test="doctorName!=null and doctorName!=''">
-                AND R.DOCTOR_NAME LIKE  '%${doctorName}%'
+                AND R.DOCTOR_NAME LIKE  CONCAT(CONCAT('%', #{doctorName}),'%')
             </if>
             <if test="gradeId!=null and gradeId!=''">
                 AND R.GRADE_ID= #{gradeId}
@@ -694,7 +694,7 @@
                 AND R.SEND_CERTIFICATE_ID = 'Y'
                 AND R.ORG_FLOW=#{orgFlow}
                 <if test="doctorName!=null and doctorName!=''">
-                    AND R.DOCTOR_NAME LIKE  '%${doctorName}%'
+                    AND R.DOCTOR_NAME LIKE  CONCAT(CONCAT('%', #{doctorName}),'%')
                 </if>
                 <if test="planFlow!=null and planFlow!=''">
                     AND R.PLAN_FLOW= #{planFlow}
@@ -715,7 +715,7 @@
                     AND R.RECORD_FLOW IN (
                     SELECT RECORD_FLOW
                     FROM RES_TEACH_PLAN_DOCTOR
-                    WHERE TO_CHAR(TO_DATE(SEND_CERTIFICATE_TIME, 'yyyy-mm-dd') + INTERVAL '${dayNum}' DAY, 'yyyy-mm-dd') <![CDATA[ >= ]]> #{endTime}
+                    WHERE TO_CHAR(TO_DATE(SEND_CERTIFICATE_TIME, 'yyyy-mm-dd') + INTERVAL #{dayNum} DAY, 'yyyy-mm-dd') <![CDATA[ >= ]]> #{endTime}
                     )
                 </if>
             ) A
@@ -730,7 +730,7 @@
             ORDER BY A.PLAN_FLOW, A.ORG_FLOW, A.SPE_ID, A.DOCTOR_NAME
         )
         <if test="deptFlow!=null and deptFlow!=''">
-            WHERE DEPT_FLOW LIKE '%${deptFlow}%'
+            WHERE DEPT_FLOW LIKE CONCAT(CONCAT('%', #{deptFlow}),'%')
         </if>
     </select>
 
@@ -763,11 +763,11 @@
         <result property="sendCertificateTime" column="SEND_CERTIFICATE_TIME" javaType="string"/>
         <result property="endCertificateTime" column="END_CERTIFICATE_TIME" javaType="string"/>
     </resultMap>
-    <select id="phyAssDoctorList" parameterType="java.util.Map" resultMap="phyAssDoctorList">
+    <!--<select id="phyAssDoctorList" parameterType="java.util.Map" resultMap="phyAssDoctorList">
         SELECT
             R.RECORD_FLOW,R.PLAN_FLOW,P.PLAN_CONTENT,P.PLAN_START_TIME,P.PLAN_END_TIME,
             R.CERTIFICATE_NO,R.SEND_CERTIFICATE_TIME,
-            TO_CHAR(TO_DATE(SEND_CERTIFICATE_TIME, 'yyyy-mm-dd') + INTERVAL '${dayNum}' DAY, 'yyyy-mm-dd') END_CERTIFICATE_TIME
+            TO_CHAR(TO_DATE(SEND_CERTIFICATE_TIME, 'yyyy-mm-dd') + INTERVAL #{dayNum} DAY, 'yyyy-mm-dd') END_CERTIFICATE_TIME
         FROM RES_TEACH_PLAN_DOCTOR R
         LEFT JOIN RES_TEACH_QUALIFIED_PLAN P ON P.PLAN_FLOW = R.PLAN_FLOW
         WHERE R.RECORD_STATUS = 'Y'
@@ -791,8 +791,48 @@
             AND R.RECORD_FLOW IN (
                 SELECT RECORD_FLOW
                 FROM RES_TEACH_PLAN_DOCTOR
-                WHERE TO_CHAR(TO_DATE(SEND_CERTIFICATE_TIME, 'yyyy-mm-dd') + INTERVAL '${dayNum}' DAY, 'yyyy-mm-dd') <![CDATA[ >= ]]> #{endTime}
+                WHERE TO_CHAR(TO_DATE(SEND_CERTIFICATE_TIME, 'yyyy-mm-dd') + INTERVAL #{dayNum} DAY, 'yyyy-mm-dd') <![CDATA[ >= ]]> #{endTime}
             )
+        </if>
+    </select>-->
+
+    <select id="phyAssDoctorList" parameterType="java.util.Map" resultMap="phyAssDoctorList">
+        SELECT
+        R.RECORD_FLOW, R.PLAN_FLOW, P.PLAN_CONTENT, P.PLAN_START_TIME, P.PLAN_END_TIME,
+        R.CERTIFICATE_NO, R.SEND_CERTIFICATE_TIME,
+        TO_CHAR(TO_DATE(R.SEND_CERTIFICATE_TIME, 'yyyy-mm-dd') + INTERVAL
+
+        <choose>
+            <when test="@org.apache.commons.lang3.math.NumberUtils@isDigits(dayNum)">
+                #{dayNum}
+            </when>
+            <otherwise>
+                '0'
+            </otherwise>
+        </choose>
+
+        DAY, 'yyyy-mm-dd') END_CERTIFICATE_TIME
+        FROM RES_TEACH_PLAN_DOCTOR R
+        LEFT JOIN RES_TEACH_QUALIFIED_PLAN P ON P.PLAN_FLOW = R.PLAN_FLOW
+        WHERE R.RECORD_STATUS = 'Y'
+        AND R.AFFIRM_FLAG = 'Y'
+        AND P.RECORD_STATUS = 'Y'
+        AND R.GAIN_CERTIFICATE_ID = 'Y'
+        AND R.SEND_CERTIFICATE_ID = 'Y'
+        <if test="userFlow != null and userFlow != ''">
+            AND R.DOCTOR_FLOW = #{userFlow}
+        </if>
+        <if test="planFlow != null and planFlow != ''">
+            AND R.PLAN_FLOW = #{planFlow}
+        </if>
+        <if test="certificateNo != null and certificateNo != ''">
+            AND R.CERTIFICATE_NO = #{certificateNo}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            AND R.SEND_CERTIFICATE_TIME <![CDATA[ <= ]]> #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            AND TO_CHAR(TO_DATE(R.SEND_CERTIFICATE_TIME, 'yyyy-mm-dd') + INTERVAL #{dayNum} DAY, 'yyyy-mm-dd') <![CDATA[ >= ]]> #{endTime}
         </if>
     </select>
 </mapper>

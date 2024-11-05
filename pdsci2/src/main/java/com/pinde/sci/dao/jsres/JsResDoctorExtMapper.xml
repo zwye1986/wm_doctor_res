@@ -21,7 +21,7 @@
 			#{trainingYear}
 		</foreach>
 		<if test='doctorName!=null and doctorName!=""'>
-			and doctor_name like '%${doctorName}%'
+			and doctor_name like CONCAT(CONCAT('%', #{doctorName}),'%')
 		</if>
 		<if test='sessionNumber!=null and sessionNumber!=""'>
 			and session_number =#{sessionNumber}

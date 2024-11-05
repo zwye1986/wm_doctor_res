@@ -11,7 +11,7 @@
             AND ORG_LEVEL_ID=#{orgLevelId}
         </if>
         <if test=" orgName!=null and orgName !=''">
-            AND ORG_NAME LIKE '%${orgName}%'
+            AND ORG_NAME LIKE CONCAT(CONCAT('%', #{orgName}),'%')
         </if>
         <if test="joinEval!=null and joinEval !=''">
             AND EXISTS(
@@ -27,7 +27,7 @@
         FROM SYS_ORG
         WHERE RECORD_STATUS='Y'
         <if test="orgName!=null and orgName !=''">
-            AND ORG_NAME LIKE '%${orgName}%'
+            AND ORG_NAME LIKE CONCAT(CONCAT('%', #{orgName}),'%')
         </if>
         AND EXISTS(
             SELECT 1 FROM EXPERT_ORG WHERE RECORD_STATUS='Y'AND EVAL_YEAR=#{evalYear}
@@ -117,7 +117,7 @@
             AND EOS.spe_id=#{speId}
         </if>
         <if test="orgName!=null and orgName !=''">
-            AND EOS.org_name like '%${orgName}%'
+            AND EOS.org_name like CONCAT(CONCAT('%', #{orgName}),'%')
         </if>
         AND EOS.EVAL_YEAR=#{evalYear}
         order by eos.spe_id,b.order_num
@@ -151,7 +151,7 @@
         on org.org_flow=eos.org_flow
         WHERE EOS.RECORD_STATUS='Y'
         <if test="orgName!=null and orgName !=''">
-            AND EOS.org_name like '%${orgName}%'
+            AND EOS.org_name like CONCAT(CONCAT('%', #{orgName}),'%')
         </if>
         AND EOS.EVAL_YEAR=#{evalYear}
         order by b.order_num

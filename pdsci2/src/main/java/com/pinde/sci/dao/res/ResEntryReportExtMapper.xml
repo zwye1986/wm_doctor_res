@@ -32,7 +32,7 @@
             </foreach>
         </if>
         <if test='doctorName!=null and doctorName!=""'>
-            and SU.USER_NAME LIKE  '%${doctorName}%'
+            and SU.USER_NAME LIKE  CONCAT(CONCAT('%', #{doctorName}),'%')
         </if>
         <if test='trainingYears!=null and trainingYears!=""'>
             and ed.training_Years = #{trainingYears}

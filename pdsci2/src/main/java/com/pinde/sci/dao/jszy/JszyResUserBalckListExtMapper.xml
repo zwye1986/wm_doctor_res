@@ -71,10 +71,10 @@
 			and a.org_flow= #{jsresUserBalcklist.orgFlow}
 		</if>
 		<if test="jsresUserBalcklist.userName!=''and jsresUserBalcklist.userName!=null">
-			and a.user_name like '%${jsresUserBalcklist.userName}%'
+			and a.user_name like CONCAT(CONCAT('%', #{jsresUserBalcklist.userName}),'%')
 		</if>
 		<if test="jsresUserBalcklist.trainingSpeName!=''and jsresUserBalcklist.trainingSpeName!=null">
-			and a.training_spe_name like '%${jsresUserBalcklist.trainingSpeName}%'
+			and a.training_spe_name like CONCAT(CONCAT('%', #{jsresUserBalcklist.trainingSpeName}),'%')
 		</if>
 		<if test="docTypeList!=null and docTypeList.size>0">
 			and rd.DOCTOR_TYPE_ID in

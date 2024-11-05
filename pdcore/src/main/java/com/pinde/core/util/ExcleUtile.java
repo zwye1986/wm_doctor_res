@@ -2,7 +2,7 @@ package com.pinde.core.util;
 
 import com.pinde.core.commom.enums.ArmyTypeEnum;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 import javax.servlet.http.Cookie;
@@ -25,7 +25,7 @@ public class ExcleUtile {
 	     HSSFRow row = sheet.createRow((int) 0);  
 	     // 第四步，创建单元格，并设置值表头 设置表头居中  
 	     HSSFCellStyle style = wb.createCellStyle();  
-	     style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式  
+	     style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式  
 	  
 	     List<String> paramIds = new ArrayList<String>();
 	     
@@ -76,11 +76,11 @@ public class ExcleUtile {
 			 HSSFDataFormat format = wb.createDataFormat();
 			 style.setDataFormat(format.getFormat("@"));
 			 // 创建一个居中格式
-			 style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+			 style.setAlignment(HorizontalAlignment.CENTER);
 
 			 Font font = wb.createFont();
 			 font.setFontHeightInPoints((short) 12);
-			 font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+			 font.setBold(true);
 			 style.setFont(font);
 
 
@@ -92,7 +92,7 @@ public class ExcleUtile {
                  cell = row.createCell(i);
                  cell.setCellValue(title[1]);
                  cell.setCellStyle(style);
-                 cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+                 cell.setCellType(CellType.STRING);
                  paramIds.add(title[0]);
                  int length = title[1].length();
                  sheet.setColumnWidth(i, length*800);
@@ -161,10 +161,10 @@ public class ExcleUtile {
 		HSSFDataFormat format = wb.createDataFormat();
 		style.setDataFormat(format.getFormat("@"));
 		// 创建一个居中格式
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		style.setAlignment(HorizontalAlignment.CENTER);
 		Font font = wb.createFont();
 		font.setFontHeightInPoints((short) 12);
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font.setBold(true);
 		style.setFont(font);
 		List<String> paramIds = new ArrayList<String>();
 		HSSFCell cell = null;
@@ -173,7 +173,7 @@ public class ExcleUtile {
 			cell = row.createCell(i);
 			cell.setCellValue(title[1]);
 			cell.setCellStyle(style);
-			cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+			cell.setCellType(CellType.STRING);
 			paramIds.add(title[0]);
 			int length = title[1].length();
 			sheet.setColumnWidth(i, length*800);
@@ -231,14 +231,15 @@ public class ExcleUtile {
 		HSSFDataFormat format = wb.createDataFormat();
 		style.setDataFormat(format.getFormat("@"));
 		// 创建一个居中格式
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		style.setAlignment(HorizontalAlignment.CENTER);
 
 		Font font = wb.createFont();
 		font.setFontHeightInPoints((short) 12);
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font.setBold(true);
 		style.setFont(font);
 		HSSFCellStyle styleCenter = wb.createCellStyle();
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
+		
 
 		List<String> paramIds = new ArrayList<String>();
 
@@ -248,7 +249,7 @@ public class ExcleUtile {
 			cell = row.createCell(i);
 			cell.setCellValue(title[1]);
 			cell.setCellStyle(style);
-			cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+			cell.setCellType(CellType.STRING);
 			paramIds.add(title[0]);
 			int length = title[1].length();
 			sheet.setColumnWidth(i, length*800);
@@ -282,11 +283,11 @@ public class ExcleUtile {
         // 第四步，创建单元格，并设置值表头 设置表头居中
         HSSFCellStyle style = wb.createCellStyle();
         // 创建一个居中格式
-        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        style.setAlignment(HorizontalAlignment.CENTER);
 
         Font font = wb.createFont();
         font.setFontHeightInPoints((short) 12);
-        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+        font.setBold(true);
         style.setFont(font);
 
         List<String> paramIds = new ArrayList<String>();
@@ -349,7 +350,7 @@ public class ExcleUtile {
 	     HSSFRow row = sheet.createRow((int) 0);
 	     // 第四步，创建单元格，并设置值表头 设置表头居中
 	     HSSFCellStyle style = wb.createCellStyle();
-	     style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+	     style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 
 		 Map<Integer, Integer> columnWidth = new HashMap<>();
 	     List<String> paramIds = new ArrayList<String>();
@@ -404,7 +405,7 @@ public class ExcleUtile {
 		 //HSSFRow row = sheet.createRow((int) 0);  
 		 // 第四步，创建单元格，并设置值表头 设置表头居中  
 		 HSSFCellStyle style = wb.createCellStyle();  
-		 style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式  
+		 style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式  
 		 //
 		 int headLength = headLines.length;
 		 if(headLines!=null && headLength > 0){
@@ -461,7 +462,7 @@ public class ExcleUtile {
 		 //HSSFRow row = sheet.createRow((int) 0);  
 		 // 第四步，创建单元格，并设置值表头 设置表头居中  
 		 HSSFCellStyle style = wb.createCellStyle();  
-		 style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式  
+		 style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式  
 		 //
 		 int headLength = headLines.length;
 		 if(headLines!=null && headLength > 0){
@@ -516,11 +517,11 @@ public class ExcleUtile {
 		 //HSSFRow row = sheet.createRow((int) 0);  
 		 // 第四步，创建单元格，并设置值表头 设置表头居中  
 		 HSSFCellStyle style = wb.createCellStyle();  
-		 style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式  
+		 style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式  
 		 HSSFCellStyle styleTwo = wb.createCellStyle();  
-		 styleTwo.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式  
+		 styleTwo.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式  
 		 HSSFCellStyle styleThree = wb.createCellStyle();  
-		 styleThree.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式  
+		 styleThree.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式  
 		 HSSFFont font =wb.createFont();
 		 font.setFontHeightInPoints((short)17);
 		 HSSFFont fontTwo =wb.createFont();
@@ -708,7 +709,7 @@ public class ExcleUtile {
         HSSFRow row = sheet.createRow((int) 0);
         // 第四步，创建单元格，并设置值表头 设置表头居中
         HSSFCellStyle style = wb.createCellStyle();
-        style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+        style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 
         List<String> paramIds = new ArrayList<String>();
 
@@ -782,7 +783,7 @@ public class ExcleUtile {
 			HSSFRow row = sheet.createRow((int) 0);
 			// 第四步，创建单元格，并设置值表头 设置表头居中
 			HSSFCellStyle style = wb.createCellStyle();// 生成一个样式
-			style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+			style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 			// 指定当单元格内容显示不下时自动换行
 			style.setWrapText(true);
 			List<String> paramIds = new ArrayList<String>();
@@ -874,11 +875,11 @@ public class ExcleUtile {
     public static void createSimpleSheetWithHeadline(String[] headLines, String[] titles, List dataList, HSSFWorkbook wb,String sheetName) throws Exception{
         HSSFSheet sheet = wb.createSheet(sheetName);
         HSSFCellStyle style = wb.createCellStyle();
-        style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+        style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
         HSSFCellStyle styleTwo = wb.createCellStyle();
-        styleTwo.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+        styleTwo.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
         HSSFCellStyle styleThree = wb.createCellStyle();
-        styleThree.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+        styleThree.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
         HSSFFont font =wb.createFont();
         font.setFontHeightInPoints((short)17);
         HSSFFont fontTwo =wb.createFont();
@@ -968,11 +969,11 @@ public class ExcleUtile {
 			HSSFDataFormat format = wb.createDataFormat();
 			style.setDataFormat(format.getFormat("@"));
 			// 创建一个居中格式
-			style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+			style.setAlignment(HorizontalAlignment.CENTER);
 
 			Font font = wb.createFont();
 			font.setFontHeightInPoints((short) 12);
-			font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+			font.setBold(true);
 			style.setFont(font);
 
 
@@ -984,7 +985,7 @@ public class ExcleUtile {
 				cell = row.createCell(i);
 				cell.setCellValue(title[1]);
 				cell.setCellStyle(style);
-				cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+				cell.setCellType(CellType.STRING);
 				paramIds.add(title[0]);
 				int length = title[1].length();
 				sheet.setColumnWidth(i, length*1200);

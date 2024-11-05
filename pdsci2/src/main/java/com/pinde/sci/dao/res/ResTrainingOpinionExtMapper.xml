@@ -9,7 +9,7 @@
 		 WHERE RECORD_STATUS = 'Y'
 
 		<if test="content!=null and content!=''">
-			AND opinion_User_Content like '%${content}%'
+			AND opinion_User_Content like CONCAT(CONCAT('%', #{content}),'%')
 		</if>
 		  AND OPINION_USER_FLOW IN (
 				SELECT RD.DOCTOR_FLOW
@@ -60,7 +60,7 @@
 		FROM RES_TRAINING_OPINION rto
 		WHERE rto.RECORD_STATUS = 'Y'
 		<if test="opinionUserContent!=null and opinionUserContent!=''">
-			AND rto.opinion_User_Content like '%${opinionUserContent}%'
+			AND rto.opinion_User_Content like CONCAT(CONCAT('%', #{opinionUserContent}),'%')
 		</if>
 		<if test='replayStatus=="Y"'>
 			AND rto.REPLY_TIME is null
@@ -90,7 +90,7 @@
 			and rd.TRAINING_SPE_ID = #{resTrainingSpeId}
 		</if>
 		<if test="opinionUserContent!=null and opinionUserContent!=''">
-			AND rto.opinion_User_Content like '%${opinionUserContent}%'
+			AND rto.opinion_User_Content like CONCAT(CONCAT('%', #{opinionUserContent}),'%')
 		</if>
 		<if test="replayStatus =='Y'">
 			AND RTO.REPLY_TIME IS NULL

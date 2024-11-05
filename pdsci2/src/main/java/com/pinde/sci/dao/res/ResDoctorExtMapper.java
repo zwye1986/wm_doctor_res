@@ -1,16 +1,14 @@
 package com.pinde.sci.dao.res;
 
+import com.pinde.sci.excelListens.model.ResRecItem;
 import com.pinde.sci.form.hbres.ResDoctorClobForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.res.ResDoctorExt;
-import com.pinde.sci.model.res.ResDoctorScoreExt;
-import com.pinde.sci.model.res.ResExamDoctorExt;
+import com.pinde.sci.model.res.*;
 import com.pinde.sci.model.sys.SysUserResDoctorExt;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public interface ResDoctorExtMapper {
 	List<ResDoctorExt> searchResDoctorUser(ResDoctorExt resDoctorExt);
@@ -318,4 +316,8 @@ public interface ResDoctorExtMapper {
     List<String> searchRecruitListByOrgFlow(@Param("orgFlow")String orgFlow, @Param("isJointOrg")String isJointOrg);
 
 	List<String> getSchools();
+
+	List<SchArrangeResult> listDoctorResult(@Param("userIds") Set<String> userIds);
+
+	List<ResRecItem> resRecCount(@Param("resultFlowList") List<String> resultFlowList);
 }

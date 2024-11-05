@@ -176,8 +176,8 @@
         AND TSD.CLINICAL_FLOW = T.CLINICAL_FLOW)
         <if test='searchStr!=null and searchStr!=""'>
             and (
-            rd.TRAINING_SPE_NAME like '%${searchStr}%'
-            OR su.USER_NAME like '%${searchStr}%'
+            rd.TRAINING_SPE_NAME like CONCAT(CONCAT('%', #{searchStr}),'%')
+            OR su.USER_NAME like CONCAT(CONCAT('%', #{searchStr}),'%')
             )
         </if>
         AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
@@ -219,7 +219,7 @@
             </if>
         </if>
         <if test='selectDate!="" and selectDate!=null'>
-            AND OSRD.EXAM_TIME LIKE '${selectDate}%'
+            AND OSRD.EXAM_TIME LIKE CONCAT(#{selectDate},'%')
         </if>
         AND OSRD.PARTNER_FLOW = #{partnerFlow}
         ORDER BY OSRD.EXAM_TIME DESC
@@ -475,10 +475,10 @@
         ) SU
         WHERE 1=1
         <if test="searchStr!='' and searchStr !=null">AND
-            (SU.USER_NAME like '%${searchStr}%'
-            OR SU.USER_CODE like '%${searchStr}%'
-            OR SU.spe_name like '%${searchStr}%'
-            OR SU.room_name like '%${searchStr}%'
+            (SU.USER_NAME like CONCAT(CONCAT('%', #{searchStr}),'%')
+            OR SU.USER_CODE like CONCAT(CONCAT('%', #{searchStr}),'%')
+            OR SU.spe_name like CONCAT(CONCAT('%', #{searchStr}),'%')
+            OR SU.room_name like CONCAT(CONCAT('%', #{searchStr}),'%')
             )
         </if>
 
@@ -526,7 +526,7 @@
 					AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
 					AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate})
         <if test='searchStr!=null and searchStr!=""'>
-            and  SU.USER_NAME like '%${searchStr}%'
+            and  SU.USER_NAME like CONCAT(CONCAT('%', #{searchStr}),'%')
         </if>
         ORDER BY OSA.CLINICAL_FLOW,RD.SESSION_NUMBER,SU.USER_NAME,SU.USER_CODE
 	</select>
@@ -595,7 +595,7 @@
             </if>
             <if test='searchStr!=null and searchStr!=""'>
                 and (
-                 su.USER_NAME like '%${searchStr}%'
+                 su.USER_NAME like CONCAT(CONCAT('%', #{searchStr}),'%')
                 )
             </if>
             <if test='isPass!=null and isPass!=""'>
@@ -635,7 +635,7 @@
         AND SUBSTR(EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
         AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate}
         <if test='searchStr!=null and searchStr!=""'>
-            AND ROOM.DICT_NAME LIKE '%${searchStr}%'
+            AND ROOM.DICT_NAME LIKE CONCAT(CONCAT('%', #{searchStr}),'%')
         </if>
        order by ROOM.DICT_NAME,ROOM.DICT_ID
     </select>
@@ -850,7 +850,7 @@
             AND OSRC.DOCTOR_FLOW=ODA.DOCTOR_FLOW
         )
         <if test='searchStr!=null and searchStr!=""'>
-            AND (  osa.spe_name like '%${searchStr}%' )
+            AND (  osa.spe_name like CONCAT(CONCAT('%', #{searchStr}),'%') )
         </if>
         AND SUBSTR(OSAT.EXAM_START_TIME,0,10) <![CDATA[<=]]> #{selectDate}
         AND SUBSTR(OSAT.EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate}

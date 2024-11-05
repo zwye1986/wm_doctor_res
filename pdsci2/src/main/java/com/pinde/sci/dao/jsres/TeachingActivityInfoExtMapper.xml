@@ -198,13 +198,13 @@
             </if>
         </if>
         <if test='userName!=null and userName!=""'>
-            AND SU.USER_NAME LIKE '%${userName}%'
+            AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='activityFlow!=null and activityFlow!=""'>
             AND INFO.ACTIVITY_FLOW = #{activityFlow}
         </if>
         <if test='activityName!=null and activityName!=""'>
-            AND INFO.ACTIVITY_NAME LIKE '%${activityName}%'
+            AND INFO.ACTIVITY_NAME LIKE CONCAT(CONCAT('%', #{activityName}),'%')
         </if>
         <if test='deptFlow!=null and deptFlow!=""'>
             AND INFO.DEPT_FLOW = #{deptFlow}
@@ -424,10 +424,10 @@
             </if>
         </if>
         <if test='userName!=null and userName!=""'>
-            AND SU.USER_NAME LIKE '%${userName}%'
+            AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='activityName!=null and activityName!=""'>
-            AND INFO.ACTIVITY_NAME LIKE '%${activityName}%'
+            AND INFO.ACTIVITY_NAME LIKE CONCAT(CONCAT('%', #{activityName}),'%')
         </if>
         <if test='deptFlow!=null and deptFlow!=""'>
             AND INFO.DEPT_FLOW IN
@@ -791,7 +791,7 @@
                     AND SD.DEPT_FLOW= #{deptFlow}
                 </if>
                 <if test='userName!=null and userName!=""'>
-                    AND SU.USER_NAME LIKE '%${userName}%'
+                    AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
                 </if>
             GROUP BY T.SPEAKER_FLOW,SU.USER_NAME, T.DEPT_FLOW, SD.DEPT_NAME
         )A

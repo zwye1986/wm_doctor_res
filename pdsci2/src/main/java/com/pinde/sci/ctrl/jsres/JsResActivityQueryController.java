@@ -23,6 +23,7 @@ import com.pinde.sci.enums.sch.ActivityTypeEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -1252,13 +1253,13 @@ public class JsResActivityQueryController extends GeneralController {
 		HSSFWorkbook wb = new HSSFWorkbook();
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 		HSSFCellStyle styleRight = wb.createCellStyle(); //居中
-		styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-		styleRight.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleRight.setAlignment(HorizontalAlignment.CENTER);
+		styleRight.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		SysUser user = GlobalContext.getCurrentUser();
 		String[] activityFlowList = activityFlows.split(",");
@@ -1431,23 +1432,23 @@ public class JsResActivityQueryController extends GeneralController {
 		HSSFWorkbook wb = new HSSFWorkbook();
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //水平垂直居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER_SELECTION);
-		styleCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		styleCenter.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		styleCenter.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		styleCenter.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		styleCenter.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+		styleCenter.setVerticalAlignment(VerticalAlignment.CENTER);
+		styleCenter.setBorderBottom(BorderStyle.THIN);
+		styleCenter.setBorderLeft(BorderStyle.THIN);
+		styleCenter.setBorderRight(BorderStyle.THIN);
+		styleCenter.setBorderTop(BorderStyle.THIN);
 
 		HSSFCellStyle fontCenStyle = wb.createCellStyle();	//粗体居中显示
 		HSSFFont font = wb.createFont();	//设置字体
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
+		font.setBold(true);//粗体显示
 		fontCenStyle.setFont(font);
-		fontCenStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER_SELECTION);
-		fontCenStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		fontCenStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		fontCenStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-		fontCenStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		fontCenStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		fontCenStyle.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+		fontCenStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+		fontCenStyle.setBorderBottom(BorderStyle.THIN);
+		fontCenStyle.setBorderLeft(BorderStyle.THIN);
+		fontCenStyle.setBorderRight(BorderStyle.THIN);
+		fontCenStyle.setBorderTop(BorderStyle.THIN);
 
 		HSSFSheet sheet = wb.createSheet("指标评分情况表");
 		sheet.setColumnWidth(0,5000);
