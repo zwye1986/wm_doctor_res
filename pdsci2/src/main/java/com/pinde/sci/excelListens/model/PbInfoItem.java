@@ -23,6 +23,7 @@ public class PbInfoItem implements Serializable {
 
     private String resultFlow;
 
+    private String schRotationDeptFlow;
     private String arrangeFlow;
 
     private String doctorFlow;

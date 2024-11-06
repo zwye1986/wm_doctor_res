@@ -347,7 +347,7 @@ public interface ISchArrangeResultBiz {
 
 	Map<String,Object>  importSchedulingAuditExcel(MultipartFile file,String rotationFlow,String trainingTypeId) throws IOException, Exception;
 
-	Map<String,Object> importSchedulingAuditExcelCache(MultipartFile file) throws IOException, InvalidFormatException;
+	Map<String,String> importSchedulingAuditExcelCache(MultipartFile file) throws IOException, InvalidFormatException;
 	Map<String, Object> checkRowData(List<SchedulingDataModel> data);
 	Map<String,Object> submitPbImport(List<SchedulingDataModel> data);
 
