@@ -26,6 +26,7 @@
                     </c:if>
                 </td>
                 <td>
+                    <a href="javascript:void(0)" onclick="showDept('${dept.deptFlow}','${dept.deptName}','','');" class="btn" style="padding: 0 2px">查看</a>
                     <c:if test="${dept.recordStatus == GlobalConstant.RECORD_STATUS_Y }">
                         <a onclick="editDept('${dept.deptFlow}');"  style="margin: 10px">编辑</a>
                         <a onclick="editSave('toggleStatus', {recordStatus: 'N'});"  style="margin: 10px">停用</a>
