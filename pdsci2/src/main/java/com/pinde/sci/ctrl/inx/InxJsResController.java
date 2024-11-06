@@ -1176,6 +1176,12 @@ public class InxJsResController extends GeneralController {
 
         //设置当前用户
         setSessionAttribute(GlobalConstant.CURRENT_USER, user);
+
+        SysUser userInfo = new SysUser();
+        userInfo.setUserFlow(user.getUserFlow());
+        userInfo.setDeptFlow(user.getDeptFlow());
+        setSessionAttribute("user", JSON.toJSONString(userInfo));
+
         setSessionAttribute("sessionId", GlobalContext.getSession().getId());
         String clientIp = ClientIPUtils.getClientIp(request);
 //
@@ -1327,7 +1333,7 @@ public class InxJsResController extends GeneralController {
                     session.setAttribute("maintenance","Y");
                 }
                 return "redirect:" + getRoleUrl(roleFlow);
-        }
+            }
         }
         if (null != publicKey) {
             //公钥-系数(n)
