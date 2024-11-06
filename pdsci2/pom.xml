@@ -785,13 +785,13 @@
             <systemPath>${lib.dir}/xhtmlrenderer-3.0.0.jar</systemPath>
         </dependency>
 
-        <dependency>
-            <groupId>xmlbeans-2.6.0</groupId>
-            <artifactId>xmlbeans-2.6.0</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/xmlbeans-2.6.0.jar</systemPath>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>xmlbeans-2.6.0</groupId>-->
+<!--            <artifactId>xmlbeans-2.6.0</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${lib.dir}/xmlbeans-2.6.0.jar</systemPath>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>xmlgraphics-commons-1.5</groupId>

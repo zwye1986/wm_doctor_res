@@ -1,13 +1,9 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.PkUtil;
-import com.pinde.core.util.StringUtil;
+import com.pinde.core.util.*;
 import com.pinde.sci.biz.res.IResOrgSpeAssignBiz;
-import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.common.InitConfig;
+import com.pinde.sci.common.*;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;
 import com.pinde.sci.enums.jsres.BaseStatusEnum;
@@ -15,21 +11,14 @@ import com.pinde.sci.model.jsres.OrgSpeListVo;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
-
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PushbackInputStream;
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -987,6 +976,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
         try{
             return WorkbookFactory.create(inS);
         }catch (Exception e) {
+            e.printStackTrace();
             throw new IOException("不能解析的excel版本");
         }
 
