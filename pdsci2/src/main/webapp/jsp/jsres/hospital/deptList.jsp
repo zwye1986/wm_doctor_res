@@ -26,9 +26,7 @@
 				</c:if>
 			</td>
 			<td>
-				<c:if test="${!empty dept.speFlow}">
-					<a href="javascript:void(0)" onclick="showDept('${dept.deptFlow}','${dept.deptName}','','${dept.speFlow}');" class="btn" style="padding: 0 2px">查看</a>
-				</c:if>
+				<a href="javascript:void(0)" onclick="showDept('${dept.deptFlow}','${dept.deptName}','','${dept.speFlow}');" class="btn" style="padding: 0 2px">查看</a>
 			</td>
 
 			<td>
