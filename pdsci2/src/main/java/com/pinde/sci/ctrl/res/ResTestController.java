@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -66,7 +67,7 @@ public class ResTestController extends GeneralController {
 	private IExamResultsBiz examResultsBiz;
 	
 	@RequestMapping("/toTest")
-	public String toTest(String userCode,String processFlow,Model model){
+	public String toTest(String userCode, String processFlow, Model model, HttpServletRequest request){
 		String errorPage = "res/edu/student/errorView";
 
 		if(!StringUtil.isNotBlank(processFlow)){
@@ -93,8 +94,6 @@ public class ResTestController extends GeneralController {
 			return errorPage;
 		}
 
-		testUrl=testUrl+"?sessionNumber="+process.getSchStartDate().substring(0,4);
-		
 		//轮转计划信息
 		String resultFlow = process.getSchResultFlow();
 		SchArrangeResult result = resultBiz.readSchArrangeResult(resultFlow);
@@ -269,11 +268,14 @@ public class ResTestController extends GeneralController {
 		}
 		
 		model.addAttribute("ExamSoluID",ExamSoluID);
-		model.addAttribute("CardID",userCode);
-		model.addAttribute("CardType",CardType);
+//		model.addAttribute("CardID",userCode);
+//		model.addAttribute("CardType",CardType);
 		model.addAttribute("ProcessFlow",processFlow);
-		model.addAttribute("Date",Date);
+//		model.addAttribute("Date",Date);
 		model.addAttribute("TestNum",TestNum);
+		model.addAttribute("sessionNumber", process.getSchStartDate().substring(0,4));
+		model.addAttribute("token",request.getSession().getId());
+		model.addAttribute("userFlow", userFlow);
 		logger.debug("=====================考试对接参数开始========================");
 		logger.debug("=====================testUrl============："+testUrl);
 		logger.debug("=====================ExamSoluID============："+ExamSoluID);
@@ -304,7 +306,7 @@ public class ResTestController extends GeneralController {
 			return errorPage;
 		}
 		
-		return "redirect:"+testUrl;
+		return "redirect:"+testUrl + "?ExamSoluID=" + ExamSoluID + "&ProcessFlow=" + processFlow + "&TestNum=" + TestNum + "&sessionNumber=" + process.getSchStartDate().substring(0,4) + "&token=" + request.getSession().getId() + "&userFlow=" + userFlow;
 	}
 
 	private int compareDate(String Date, String sysDate) throws Exception {
