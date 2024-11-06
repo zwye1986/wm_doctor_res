@@ -93,13 +93,13 @@ public class SchedulingAuditRead extends AnalysisEventListener<Map<Integer, Stri
             for (Integer index : integerStringMap.keySet()) {
                 cellItem = new SchedulingDataInfo();
                 if (index<5){
-                    cellItem.setName(integerStringMap.get(index));
+                    cellItem.setName(StringUtils.isEmpty(integerStringMap.get(index))? "":integerStringMap.get(index));
                     cellItem.setIndex(index);
                     cellList.add(cellItem);
 //                    data.add(item);
                     continue;
                 }
-                cellItem.setName(integerStringMap.get(index));
+                cellItem.setName(StringUtils.isEmpty(integerStringMap.get(index))? "":integerStringMap.get(index));
                 cellItem.setType("select");
                 String indexName = oneHeaders.get(index);
                 if (index>4) {
@@ -282,25 +282,56 @@ public class SchedulingAuditRead extends AnalysisEventListener<Map<Integer, Stri
             }
             item.setId(userId);
             String speName = "";
+            String sessionNumber = "";
+            String trainYear = "";
             for (SchedulingDataInfo cellItem : cellData) {
                 String indexName = cellItem.getIndexName();
-                if ("专业".equalsIgnoreCase(indexName)) {
+                if ("专业".equals(indexName)) {
                     speName = cellItem.getName();
+                }
+                if ("年级".equals(indexName)) {
+                    sessionNumber = cellItem.getName();
+                }
+                if ("年限".equals(indexName)) {
+                    trainYear = cellItem.getName();
                 }
             }
             if (StringUtils.isEmpty(speName)) {
                 item.setTip(item.getTip()+"专业不能为空！请重新导入！<br/>");
                 continue;
             }
+            if (StringUtils.isEmpty(sessionNumber)) {
+                item.setTip(item.getTip()+"年级不能为空！请重新导入！<br/>");
+            }
+            if (StringUtils.isEmpty(trainYear)) {
+                item.setTip(item.getTip()+"年限不能为空！请重新导入！<br/>");
+            }
             //判断学员专业是否有正确
             if (CollectionUtil.isNotEmpty(doctorMap)) {
                 ResDoctor doctor = doctorMap.get(userId);
                 String trainingSpeName = doctor.getTrainingSpeName();
+                String sessionNumber1 = doctor.getSessionNumber();
+                String trainingYears = doctor.getTrainingYears();
                 if (!speName.equalsIgnoreCase(trainingSpeName)) {
                     //专业不对
                     item.setTip(item.getTip()+"学员专业有误，请修改后重新导入，系统识别到的专业为【"+trainingSpeName+"】！<br/>");
                 }
+                if (StringUtils.isNotEmpty(sessionNumber1)) {
+                    if (!sessionNumber1.equalsIgnoreCase(sessionNumber)) {
+                        item.setTip(item.getTip()+"学员【年级】有误，请修改后重新导入，系统识别到的年级为【"+sessionNumber1+"】！<br/>");
+                    }
+                }
+                if (StringUtils.isNotEmpty(trainingYears)) {
+                    trainingYears = trainingYears.equalsIgnoreCase("OneYear")? "一年":trainingYears;
+                    trainingYears = trainingYears.equalsIgnoreCase("TwoYear")? "两年":trainingYears;
+                    trainingYears = trainingYears.equalsIgnoreCase("ThreeYear")? "三年":trainingYears;
+                    if (!trainingYears.equalsIgnoreCase(trainYear)) {
+                        item.setTip(item.getTip()+"学员【年限】有误，请修改后重新导入，系统识别到的年限为【"+trainingYears+"】！<br/>");
+                    }
+                }
+
             }
+
             //获取方案下的各个标准科室的轮转时长 标准科室名-配置的轮转时长
             Map<String, Double> bzSchMon = schMonStandDeptMap(item, speName);
             if (CollectionUtil.isEmpty(bzSchMon)) {

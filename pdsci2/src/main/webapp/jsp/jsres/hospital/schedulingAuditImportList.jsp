@@ -37,23 +37,14 @@
     window.dataList = [];
     window.selectTotal = 0;
     $(document).ready(function (){
-        console.log('从缓存中获取信息',new Date().getMinutes()+":"+new Date().getSeconds())
-        // let head1 = localStorage.getItem("head1")
-        // window.oneHead = JSON.parse(head1);
-        // window.selectTotal = oneHead.length;
-        // let head2 = localStorage.getItem("head2")
-        // window.twoHead = JSON.parse(head2);
-        // let data = localStorage.getItem("data")
-        // window.dataList = JSON.parse(data);
         window.oneHead = ${head1};
         window.twoHead = ${head2};
+        console.log('111',${head2})
+        console.log(window.twoHead)
         window.selectTotal = window.oneHead.length;
-        console.log('从缓存中获取信息2',new Date().getMinutes()+":"+new Date().getSeconds())
         initHead(window.oneHead,window.twoHead);
-        console.log('initHead2',new Date().getMinutes()+":"+new Date().getSeconds())
         window.dataList = ${data}
         initData(window.dataList);
-        console.log('initData2',new Date().getMinutes()+":"+new Date().getSeconds())
     })
 
     function checkData(){
@@ -72,7 +63,6 @@
         var url = "<s:url value='/jsres/doctorRecruit/submitPbImport'/>";
         jboxPostJson(url,JSON.stringify(window.dataList),function(resp){
             let code = JSON.parse(JSON.stringify(resp))['code'];
-            console.log(code)
             if (code == 200) {
                 jboxEndLoading();
                 // jboxClose();
@@ -93,7 +83,6 @@
             let headerTr = $("#headerTr");
             headerTr.empty();
             //处理第一行的表头
-            console.log('数据渲染开始时间',new Date().getMinutes()+":"+new Date().getSeconds())
             let htmltext = "";
             for (let i = 0; i < head1.length; i++) {
                 if (i == 0) {
@@ -105,12 +94,12 @@
                 }else {
                     if (i == (head1.length-1)) {
                         htmltext = htmltext + "<th class='head_w'>"+head1[i]+"</th></tr>";
-                        for (let j = 5; j < head2.length; j++) {
-                            if (j == 5){
+                        for (let j = 0; j < head2.length; j++) {
+                            if (j == 0){
                                 htmltext = htmltext +"<tr><th class='head_w'>"+head2[j]+"</th>";
                             }
                             //处理第二行的表头
-                            if (j>5) {
+                            if (j>0) {
                                 if (j == (head2.length-1)) {
                                     htmltext = htmltext +"<th class='head_w'>"+head2[j]+"</th></tr>";
                                 }else {
@@ -123,9 +112,7 @@
                     }
                 }
             }
-            console.log('数据渲染循环结束时间',new Date().getMinutes()+":"+new Date().getSeconds())
             headerTr.append(htmltext);
-            console.log('数据渲染循环append结束时间',new Date().getMinutes()+":"+new Date().getSeconds())
         }
 
 
@@ -232,20 +219,17 @@
         let changeVal = document.val();
         let valuetext = id.replaceAll('dataId_','');
         let split = valuetext.split('_');
-        // console.log(window.dataList[split[0]-1]['cellData'][split[1]]['name']);
         window.dataList[split[0]-1]['cellData'][split[1]]['name'] = changeVal;
         mustHideSubmitBt();
     }
 
     //下拉框的事件
     function selectChange(id){
-        // console.log('选拉框选中的事件',id)
         let document = $("#"+id);
         let changeVal = document.val();
         let label = document.find("option:selected").attr("label");
         let valuetext = id.replaceAll('schDeptFlow_dataId_','');
         let split = valuetext.split('_');
-        // console.log(window.dataList[split[0]-1]['cellData'][split[1]]['id']);
         window.dataList[split[0]-1]['cellData'][split[1]]['id'] = changeVal;
         window.dataList[split[0]-1]['cellData'][split[1]]['name'] = label;
         mustHideSubmitBt();
