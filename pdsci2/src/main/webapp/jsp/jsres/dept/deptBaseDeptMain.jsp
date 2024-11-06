@@ -167,6 +167,11 @@
             });
         });
     }
+
+    function showDept(deptFlow, schDeptName, isJoin, speFlow) {
+        var url = "<s:url value ='/jsres/base/showDeptInfo'/>?viewFlag=N&deptFlow=" + deptFlow + "&orgFlow=${sessionScope.currUser.orgFlow}&isJoin=Y&speFlow=" + speFlow+"&isglobal=N";
+        jboxOpen(url, '科室信息（' + schDeptName + '）', 1200, 700);
+    }
 </script>
 <!-- <div class="main_hd">
 <h2 class="underline">科室维护</h2>

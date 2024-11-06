@@ -23,6 +23,7 @@ import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.dao.base.SysDeptMapper;
 import com.pinde.sci.dao.base.SysOrgBatchMapper;
 import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
+import com.pinde.sci.dao.sys.SysDeptExtMapper;
 import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
 import com.pinde.sci.enums.jsres.JsResDoctorAuditStatusEnum;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
@@ -170,6 +171,9 @@ public class JsResBaseManagerController extends GeneralController {
 
 	@Autowired
 	private JsResDoctorRecruitExtMapper jsResDoctorRecruitExtMapper;
+
+	@Autowired
+	private SysDeptExtMapper sysDeptExtMapper;
 
 	@RequestMapping("/baseAudit")
 	@ResponseBody
@@ -822,6 +826,23 @@ public class JsResBaseManagerController extends GeneralController {
 	@RequestMapping("/showDeptInfo")
 	public String showDeptInfo(String deptFlow, String speFlow, Model model, String orgFlow, String isJoin, String onlyRead, String isglobal, String viewFlag) {
 		model.addAttribute("speFlow", speFlow);
+		SysDept deptQuery = new SysDept();
+		deptQuery.setDeptFlow(deptFlow);
+		deptQuery.setOrgFlow(orgFlow);
+		List<Map<String, String>> speList = sysDeptExtMapper.searchDeptByUnionSpe(deptQuery, null);
+		speList = speList.stream().filter(map -> StringUtils.isNotEmpty(map.get("speFlow"))).collect(Collectors.toList());
+		if(CollectionUtils.isEmpty(speList) && StringUtils.isNotEmpty(speFlow)) {
+			Map<String, String> speMap = new HashMap<>();
+			speMap.put("speFlow", speFlow);
+			speList.add(speMap);
+		}
+		if(CollectionUtils.isNotEmpty(speList)) {
+			speList.forEach(map -> {
+				map.put("speName", DictTypeEnum.DoctorTrainingSpe.getDictNameById(map.get("speFlow")));
+			});
+		}
+		model.addAttribute("speList" , speList);
+
 		model.addAttribute("deptFlow", deptFlow);
 		model.addAttribute("orgFlow", orgFlow);
 		if(!"Y".equals(viewFlag)) {
