@@ -2,8 +2,6 @@ package com.pinde.sci.excelListens;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.date.DateTime;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.sci.excelListens.model.*;
@@ -12,7 +10,6 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -88,73 +85,73 @@ public class SchedulingAuditCheck {
 
 
 
-    public void invoke(Map<Integer, String> integerStringMap) {
-        log.info("excel数据：：：：{}",integerStringMap.size());
-        if (CollectionUtil.isNotEmpty(integerStringMap)) {
-            SchedulingDataModel row = new SchedulingDataModel();
-            List<SchedulingDataInfo> cellList = new ArrayList<>();
-            SchedulingDataInfo cellItem = new SchedulingDataInfo();
-            String speName = integerStringMap.get(2);
-            if (StringUtils.isNotEmpty(integerStringMap.get(0))) {
-                excelUserName.add(integerStringMap.get(0));
-            }
-            if (StringUtils.isNotEmpty(integerStringMap.get(1))) {
-                excelIdNo.add(integerStringMap.get(1));
-            }
-            for (Integer index : integerStringMap.keySet()) {
-                cellItem = new SchedulingDataInfo();
-                if (index<5){
-                    cellItem.setName(integerStringMap.get(index));
-                    cellItem.setIndex(index);
-                    cellList.add(cellItem);
-//                    data.add(item);
-                    continue;
-                }
-                cellItem.setName(integerStringMap.get(index));
-                cellItem.setType("select");
-                String indexName = oneHeaders.get(index);
-                if (index>4) {
-                    int num = index - 4;
-                    int yu = num % 2;
-                    int yu2 = num % 4;
-                    if (yu2 == 1 || yu2 == 2) {
-                        cellItem.setSchStartDate(indexName+"-01");
-                        cellItem.setSchEndDate(indexName+"-15");
-                        cellItem.setConcatMon(indexName+"上");
-                    }
-                    if (yu2 == 3 || yu2 == 0) {
-                        cellItem.setSchStartDate(indexName+"-16");
-                        cellItem.setSchEndDate(DateUtil.formatDate(DateUtil.endOfMonth(DateUtil.parseDate(indexName+"-01"))));
-                        cellItem.setConcatMon(indexName+"下");
-                    }
-                    if (yu==1){
-                        //标准科室下拉列表
-                        indexName = indexName + "_标准科室";
-                        SchRotationDept bzDeptId = getBzDeptId(speName, integerStringMap.get(index));
-                        if (null == bzDeptId) {
-                            cellItem.setId("--");
-                        }else {
-                            cellItem.setId(bzDeptId.getStandardDeptId());
-                            cellItem.setIsRequired(bzDeptId.getIsRequired());
-                        }
-                        cellItem.setSelectData(getBzSelect(speName));
-                        cellItem.setIndexName(indexName);
-                        cellItem.setDeptType("bz");
-                    }else{
-                        //实际科室的下拉列表
-                        indexName = indexName + "_轮转科室";
-                        cellItem.setId(getLzDeptId(integerStringMap.get(index)));
-                        cellItem.setSelectData(getLzSelect());
-                        cellItem.setIndexName(indexName);
-                        cellItem.setDeptType("lz");
-                    }
-                }
-                cellList.add(cellItem);
-            }
-            row.setCellData(cellList);
-            data.add(row);
-        }
-    }
+//    public void invoke(Map<Integer, String> integerStringMap) {
+//        log.info("excel数据：：：：{}",integerStringMap.size());
+//        if (CollectionUtil.isNotEmpty(integerStringMap)) {
+//            SchedulingDataModel row = new SchedulingDataModel();
+//            List<SchedulingDataInfo> cellList = new ArrayList<>();
+//            SchedulingDataInfo cellItem = new SchedulingDataInfo();
+//            String speName = integerStringMap.get(2);
+//            if (StringUtils.isNotEmpty(integerStringMap.get(0))) {
+//                excelUserName.add(integerStringMap.get(0));
+//            }
+//            if (StringUtils.isNotEmpty(integerStringMap.get(1))) {
+//                excelIdNo.add(integerStringMap.get(1));
+//            }
+//            for (Integer index : integerStringMap.keySet()) {
+//                cellItem = new SchedulingDataInfo();
+//                if (index<5){
+//                    cellItem.setName(integerStringMap.get(index));
+//                    cellItem.setIndex(index);
+//                    cellList.add(cellItem);
+////                    data.add(item);
+//                    continue;
+//                }
+//                cellItem.setName(integerStringMap.get(index));
+//                cellItem.setType("select");
+//                String indexName = oneHeaders.get(index);
+//                if (index>4) {
+//                    int num = index - 4;
+//                    int yu = num % 2;
+//                    int yu2 = num % 4;
+//                    if (yu2 == 1 || yu2 == 2) {
+//                        cellItem.setSchStartDate(indexName+"-01");
+//                        cellItem.setSchEndDate(indexName+"-15");
+//                        cellItem.setConcatMon(indexName+"上");
+//                    }
+//                    if (yu2 == 3 || yu2 == 0) {
+//                        cellItem.setSchStartDate(indexName+"-16");
+//                        cellItem.setSchEndDate(DateUtil.formatDate(DateUtil.endOfMonth(DateUtil.parseDate(indexName+"-01"))));
+//                        cellItem.setConcatMon(indexName+"下");
+//                    }
+//                    if (yu==1){
+//                        //标准科室下拉列表
+//                        indexName = indexName + "_标准科室";
+//                        SchRotationDept bzDeptId = getBzDeptId(speName, integerStringMap.get(index));
+//                        if (null == bzDeptId) {
+//                            cellItem.setId("--");
+//                        }else {
+//                            cellItem.setId(bzDeptId.getStandardDeptId());
+//                            cellItem.setIsRequired(bzDeptId.getIsRequired());
+//                        }
+//                        cellItem.setSelectData(getBzSelect(speName));
+//                        cellItem.setIndexName(indexName);
+//                        cellItem.setDeptType("bz");
+//                    }else{
+//                        //实际科室的下拉列表
+//                        indexName = indexName + "_轮转科室";
+//                        cellItem.setId(getLzDeptId(integerStringMap.get(index)));
+//                        cellItem.setSelectData(getLzSelect());
+//                        cellItem.setIndexName(indexName);
+//                        cellItem.setDeptType("lz");
+//                    }
+//                }
+//                cellList.add(cellItem);
+//            }
+//            row.setCellData(cellList);
+//            data.add(row);
+//        }
+//    }
 
 
 
@@ -166,74 +163,74 @@ public class SchedulingAuditCheck {
         this.userMap =  userList.stream().collect(Collectors.toMap(e -> e.getUserName() + "_" + e.getIdNo(), SysUser::getUserFlow, (k1, k2) -> k2));
     }
 
-    private List<SelectItem> getBzSelect(String speName){
-        List<SelectItem> result = new ArrayList<>();
-        if (StringUtils.isEmpty(speName)) {
-            return result;
-        }
-        List<SchRotationDept> schRotationDepts = this.bzMap.get(speName);
-        if (CollectionUtil.isEmpty(schRotationDepts)) {
-            return result;
-        }
-        SelectItem val = new SelectItem();
-        for (SchRotationDept item : schRotationDepts) {
-            val = new SelectItem();
-            val.setValue(item.getStandardDeptId());
-            val.setLabel(item.getStandardDeptName());
-            result.add(val);
-        }
-        return result;
-    }
+//    private List<SelectItem> getBzSelect(String speName){
+//        List<SelectItem> result = new ArrayList<>();
+//        if (StringUtils.isEmpty(speName)) {
+//            return result;
+//        }
+//        List<SchRotationDept> schRotationDepts = this.bzMap.get(speName);
+//        if (CollectionUtil.isEmpty(schRotationDepts)) {
+//            return result;
+//        }
+//        SelectItem val = new SelectItem();
+//        for (SchRotationDept item : schRotationDepts) {
+//            val = new SelectItem();
+//            val.setValue(item.getStandardDeptId());
+//            val.setLabel(item.getStandardDeptName());
+//            result.add(val);
+//        }
+//        return result;
+//    }
 
-    private List<SelectItem> getLzSelect(){
-        List<SelectItem> result = new ArrayList<>();
-        if (CollectionUtil.isEmpty(this.lzDept)) {
-            return result;
-        }
-        SelectItem val = new SelectItem();
-        for (SysDept item : this.lzDept) {
-            val = new SelectItem();
-            val.setValue(item.getDeptFlow());
-            val.setLabel(item.getDeptName());
-            result.add(val);
-        }
-        return result;
-    }
+//    private List<SelectItem> getLzSelect(){
+//        List<SelectItem> result = new ArrayList<>();
+//        if (CollectionUtil.isEmpty(this.lzDept)) {
+//            return result;
+//        }
+//        SelectItem val = new SelectItem();
+//        for (SysDept item : this.lzDept) {
+//            val = new SelectItem();
+//            val.setValue(item.getDeptFlow());
+//            val.setLabel(item.getDeptName());
+//            result.add(val);
+//        }
+//        return result;
+//    }
 
-    private SchRotationDept getBzDeptId(String speName,String bzDeptName){
-        if (StringUtils.isEmpty(speName)) {
-            return null;
-        }
-        List<SchRotationDept> schRotationDepts = this.bzMap.get(speName);
-        if (CollectionUtil.isEmpty(schRotationDepts)) {
-            return null;
-        }
-        if (StringUtils.isEmpty(bzDeptName)) {
-            return null;
-        }
-        for (SchRotationDept item : schRotationDepts) {
-            if (bzDeptName.equalsIgnoreCase(item.getStandardDeptName())) {
-                return item;
-            }
-        }
-        return null;
-    }
+//    private SchRotationDept getBzDeptId(String speName,String bzDeptName){
+//        if (StringUtils.isEmpty(speName)) {
+//            return null;
+//        }
+//        List<SchRotationDept> schRotationDepts = this.bzMap.get(speName);
+//        if (CollectionUtil.isEmpty(schRotationDepts)) {
+//            return null;
+//        }
+//        if (StringUtils.isEmpty(bzDeptName)) {
+//            return null;
+//        }
+//        for (SchRotationDept item : schRotationDepts) {
+//            if (bzDeptName.equalsIgnoreCase(item.getStandardDeptName())) {
+//                return item;
+//            }
+//        }
+//        return null;
+//    }
 
 
-    private String getLzDeptId(String deptName){
-        if (CollectionUtil.isEmpty(this.lzDept)) {
-            return "";
-        }
-        if (StringUtils.isEmpty(deptName)) {
-            return "";
-        }
-        for (SysDept item : this.lzDept) {
-            if (deptName.equalsIgnoreCase(item.getDeptName())) {
-                return item.getDeptFlow();
-            }
-        }
-        return "";
-    }
+//    private String getLzDeptId(String deptName){
+//        if (CollectionUtil.isEmpty(this.lzDept)) {
+//            return "";
+//        }
+//        if (StringUtils.isEmpty(deptName)) {
+//            return "";
+//        }
+//        for (SysDept item : this.lzDept) {
+//            if (deptName.equalsIgnoreCase(item.getDeptName())) {
+//                return item.getDeptFlow();
+//            }
+//        }
+//        return "";
+//    }
 
     /**
      * ~~~~~~~~~溺水的鱼~~~~~~~~
@@ -281,10 +278,18 @@ public class SchedulingAuditCheck {
             }
             item.setId(userId);
             String speName = "";
+            String sessionNumber = "";
+            String trainYear = "";
             for (SchedulingDataInfo cellItem : cellData) {
                 String indexName = cellItem.getIndexName();
                 if ("专业".equalsIgnoreCase(indexName)) {
                     speName = cellItem.getName();
+                }
+                if ("年级".equals(indexName)) {
+                    sessionNumber = cellItem.getName();
+                }
+                if ("年限".equals(indexName)) {
+                    trainYear = cellItem.getName();
                 }
             }
 
@@ -292,13 +297,34 @@ public class SchedulingAuditCheck {
                 item.setTip(item.getTip()+"专业不能为空！请重新导入！<br/>");
                 continue;
             }
+            if (StringUtils.isEmpty(sessionNumber)) {
+                item.setTip(item.getTip()+"年级不能为空！请重新导入！<br/>");
+            }
+            if (StringUtils.isEmpty(trainYear)) {
+                item.setTip(item.getTip()+"年限不能为空！请重新导入！<br/>");
+            }
             //判断学员专业是否有正确
             if (CollectionUtil.isNotEmpty(doctorMap)) {
                 ResDoctor doctor = doctorMap.get(userId);
                 String trainingSpeName = doctor.getTrainingSpeName();
+                String sessionNumber1 = doctor.getSessionNumber();
+                String trainingYears = doctor.getTrainingYears();
                 if (!speName.equalsIgnoreCase(trainingSpeName)) {
                     //专业不对
-                    item.setTip(item.getTip()+"学员专业有误，请修改后重新导入，系统识别到的专业为【"+trainingSpeName+"】！<br/>");
+                    item.setTip(item.getTip()+"学员【专业】有误，请修改后重新导入，系统识别到的专业为【"+trainingSpeName+"】！<br/>");
+                }
+                if (StringUtils.isNotEmpty(sessionNumber1)) {
+                    if (!sessionNumber1.equalsIgnoreCase(sessionNumber)) {
+                        item.setTip(item.getTip()+"学员【年级】有误，请修改后重新导入，系统识别到的年级为【"+sessionNumber1+"】！<br/>");
+                    }
+                }
+                if (StringUtils.isNotEmpty(trainingYears)) {
+                    trainingYears = trainingYears.equalsIgnoreCase("OneYear")? "一年":trainingYears;
+                    trainingYears = trainingYears.equalsIgnoreCase("TwoYear")? "两年":trainingYears;
+                    trainingYears = trainingYears.equalsIgnoreCase("ThreeYear")? "三年":trainingYears;
+                    if (!trainingYears.equalsIgnoreCase(trainYear)) {
+                        item.setTip(item.getTip()+"学员【年限】有误，请修改后重新导入，系统识别到的年限为【"+trainingYears+"】！<br/>");
+                    }
                 }
             }
             //获取方案下的各个标准科室的轮转时长 标准科室名-配置的轮转时长
@@ -447,35 +473,35 @@ public class SchedulingAuditCheck {
      * @Date: 2024/10/28 16:23
      * @Description: 统计各个学员的已排班+本次导入的排班（标准科室名-轮转时长）
      */
-    private Map<String, Double> schMonStudentDeptMap(SchedulingDataModel row,String speName){
-        Map<String, Double> result = new HashMap<>();
-        //该行的用户id
-        String userFlow = row.getId();
-        //该学员导入的排班安排
-        List<SchedulingDataInfo> cellData1 = row.getCellData();
-        if (CollectionUtil.isEmpty(cellData1) || cellData1.size()<=5) {
-            //本次导入，该行没有安排排班数据
-            return result;
-        }
-        if (CollectionUtil.isEmpty(stuResultList)) {
-            //如果没有历史排班信息
-            List<SchedulingDataInfo> cellData = row.getCellData();
-            for (SchedulingDataInfo item : cellData) {
-                if ("bz".equalsIgnoreCase(item.getDeptType())) {
-                    result.put(item.getName(),null == result.get(item.getName())? 0.5:result.get(item.getName())+0.5);
-                }
-            }
-            return result;
-        }
-        //存在历史排班的情况下，需要对每个标准科室进行校验
-        String s = this.oneHeaders.get(5);
-        DateTime startDate = DateUtil.beginOfMonth(DateUtil.parseDate(s + "-01"));
-        for (SchedulingDataInfo item : cellData1) {
-//            initSchArrangeResult(item,startDate);
-        }
-
-        return result;
-    }
+//    private Map<String, Double> schMonStudentDeptMap(SchedulingDataModel row,String speName){
+//        Map<String, Double> result = new HashMap<>();
+//        //该行的用户id
+//        String userFlow = row.getId();
+//        //该学员导入的排班安排
+//        List<SchedulingDataInfo> cellData1 = row.getCellData();
+//        if (CollectionUtil.isEmpty(cellData1) || cellData1.size()<=5) {
+//            //本次导入，该行没有安排排班数据
+//            return result;
+//        }
+//        if (CollectionUtil.isEmpty(stuResultList)) {
+//            //如果没有历史排班信息
+//            List<SchedulingDataInfo> cellData = row.getCellData();
+//            for (SchedulingDataInfo item : cellData) {
+//                if ("bz".equalsIgnoreCase(item.getDeptType())) {
+//                    result.put(item.getName(),null == result.get(item.getName())? 0.5:result.get(item.getName())+0.5);
+//                }
+//            }
+//            return result;
+//        }
+//        //存在历史排班的情况下，需要对每个标准科室进行校验
+//        String s = this.oneHeaders.get(5);
+//        DateTime startDate = DateUtil.beginOfMonth(DateUtil.parseDate(s + "-01"));
+//        for (SchedulingDataInfo item : cellData1) {
+////            initSchArrangeResult(item,startDate);
+//        }
+//
+//        return result;
+//    }
 
 
 
@@ -499,62 +525,62 @@ public class SchedulingAuditCheck {
     }
 
     //没有历史排班的情况下
-    private void initSchArrangeResultWithHistory(SchedulingDataModel row,
-                                                               List<SchArrangeResult> stuHistoryBb){
-        List<SchedulingDataInfo> cellData = row.getCellData();
-        if (CollectionUtil.isEmpty(cellData)) {
-            row.setTip(row.getTip()+"暂无排班信息！<br/>");
-            return;
-        }
-        Map<String, List<SchedulingDataInfo>> collect = cellData.stream().collect(Collectors.groupingBy(SchedulingDataInfo::getDeptType));
-        List<SchedulingDataInfo> bz = collect.get("bz");
-        if (CollectionUtil.isEmpty(bz)) {
-            row.setTip(row.getTip()+"暂无排班信息！<br/>");
-            return;
-        }
-        String startDate = "";
-        if (cellData.size()>5) {
-            startDate = cellData.get(5).getSchStartDate();
-        }
-        List<SchArrangeResult> resOld = new ArrayList<>();
-        List<SchArrangeResult> resAfter = new ArrayList<>();
-        startDate=startDate+"-01";
-        try{
-            DateTime start = DateUtil.beginOfMonth(DateUtil.parseDate(startDate));
-            //将历史排班按照开始时间升序
-            List<SchArrangeResult> list = stuHistoryBb.stream().sorted(Comparator.comparing(SchArrangeResult::getSchStartDate)).collect(Collectors.toList());
-            //对历史排班进行排序
-            for (SchArrangeResult vo : list) {
-                String schStartDate = vo.getSchStartDate();
-                String schEndDate = vo.getSchEndDate();
-                if (StringUtils.isEmpty(schStartDate) || StringUtils.isEmpty(schEndDate)) {
-                    continue;
-                }
-                DateTime s = DateUtil.parseDate(schStartDate);
-                DateTime e = DateUtil.parseDate(schEndDate);
-                if (e.compareTo(start)<0) {
-                    //结束时间小于本次排班最开始的时间
-                    resOld.add(vo);
-                    continue;
-                }
-                if (s.compareTo(start)<=0) {
-                    //历史排班和本次排班最开始的部分存在重合的部分
-                    vo.setSchEndDate(DateUtil.formatDate(DateUtil.offsetDay(start,-1)));
-                    long dayNum = DateUtil.betweenDay(s, DateUtil.parseDate(vo.getSchEndDate()), false);
-                    BigDecimal divide = new BigDecimal(String.valueOf(dayNum)).divide(new BigDecimal("30"), 1, BigDecimal.ROUND_HALF_DOWN);
-                    vo.setSchMonth(String.valueOf(divide));
-                    resOld.add(vo);
-                    continue;
-                }
-                resAfter.add(vo);
-            }
-        }catch (Exception e) {
-            return;
-        }
-        //存在历史排班记录的i情况下
-//        compareAfterAndImport(resAfter,bz,row);
-
-    }
+//    private void initSchArrangeResultWithHistory(SchedulingDataModel row,
+//                                                               List<SchArrangeResult> stuHistoryBb){
+//        List<SchedulingDataInfo> cellData = row.getCellData();
+//        if (CollectionUtil.isEmpty(cellData)) {
+//            row.setTip(row.getTip()+"暂无排班信息！<br/>");
+//            return;
+//        }
+//        Map<String, List<SchedulingDataInfo>> collect = cellData.stream().collect(Collectors.groupingBy(SchedulingDataInfo::getDeptType));
+//        List<SchedulingDataInfo> bz = collect.get("bz");
+//        if (CollectionUtil.isEmpty(bz)) {
+//            row.setTip(row.getTip()+"暂无排班信息！<br/>");
+//            return;
+//        }
+//        String startDate = "";
+//        if (cellData.size()>5) {
+//            startDate = cellData.get(5).getSchStartDate();
+//        }
+//        List<SchArrangeResult> resOld = new ArrayList<>();
+//        List<SchArrangeResult> resAfter = new ArrayList<>();
+//        startDate=startDate+"-01";
+//        try{
+//            DateTime start = DateUtil.beginOfMonth(DateUtil.parseDate(startDate));
+//            //将历史排班按照开始时间升序
+//            List<SchArrangeResult> list = stuHistoryBb.stream().sorted(Comparator.comparing(SchArrangeResult::getSchStartDate)).collect(Collectors.toList());
+//            //对历史排班进行排序
+//            for (SchArrangeResult vo : list) {
+//                String schStartDate = vo.getSchStartDate();
+//                String schEndDate = vo.getSchEndDate();
+//                if (StringUtils.isEmpty(schStartDate) || StringUtils.isEmpty(schEndDate)) {
+//                    continue;
+//                }
+//                DateTime s = DateUtil.parseDate(schStartDate);
+//                DateTime e = DateUtil.parseDate(schEndDate);
+//                if (e.compareTo(start)<0) {
+//                    //结束时间小于本次排班最开始的时间
+//                    resOld.add(vo);
+//                    continue;
+//                }
+//                if (s.compareTo(start)<=0) {
+//                    //历史排班和本次排班最开始的部分存在重合的部分
+//                    vo.setSchEndDate(DateUtil.formatDate(DateUtil.offsetDay(start,-1)));
+//                    long dayNum = DateUtil.betweenDay(s, DateUtil.parseDate(vo.getSchEndDate()), false);
+//                    BigDecimal divide = new BigDecimal(String.valueOf(dayNum)).divide(new BigDecimal("30"), 1, BigDecimal.ROUND_HALF_DOWN);
+//                    vo.setSchMonth(String.valueOf(divide));
+//                    resOld.add(vo);
+//                    continue;
+//                }
+//                resAfter.add(vo);
+//            }
+//        }catch (Exception e) {
+//            return;
+//        }
+//        //存在历史排班记录的i情况下
+////        compareAfterAndImport(resAfter,bz,row);
+//
+//    }
 
 
 
