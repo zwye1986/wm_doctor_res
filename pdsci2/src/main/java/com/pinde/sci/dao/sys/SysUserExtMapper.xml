@@ -498,7 +498,7 @@
 			from pdsci.res_rec rr
 			where rr.record_status = 'Y'
 			and su.user_flow = rr.oper_user_flow
-			and rr.oper_time like '${month}%'
+			and rr.oper_time like CONCAT(#{month},'%')
 		)
 		and exists(
 			select null
@@ -540,13 +540,13 @@
 				</if>
 			)
 			<if test='userName!=null and userName!=""'>
-				and su.user_name like '%${userName}%'
+				and su.user_name like CONCAT(CONCAT('%', #{userName}),'%')
 			</if>
 			<if test='deptFlow!=null and deptFlow!=""'>
 				and su.dept_flow = #{deptFlow}
 			</if>
 			<if test='deptName!=null and deptName!=""'>
-				and su.dept_Name like '%${deptName}%'
+				and su.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
 			</if>
 		)
 		order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M'),su.user_code
@@ -603,13 +603,13 @@
 			)
 		)
 		<if test='userName!=null and userName!=""'>
-			and su.user_name like '%${userName}%'
+			and su.user_name like CONCAT(CONCAT('%', #{userName}),'%')
 		</if>
 		<if test='deptFlow!=null and deptFlow!=""'>
 			and su.dept_flow = #{deptFlow}
 		</if>
 		<if test='deptName!=null and deptName!=""'>
-			and su.dept_Name like '%${deptName}%'
+			and su.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
 		</if>
 		order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
 	</select>
@@ -649,7 +649,7 @@
 			</otherwise>
 		</choose>
 		<if test='orgName!=null and orgName!=""'>
-			and su.org_Name like '%${orgName}%'
+			and su.org_Name like CONCAT(CONCAT('%', #{orgName}),'%')
 		</if>
 		<if test='deptFlow!=null and deptFlow!=""'>
 			and su.dept_flow = #{deptFlow}
@@ -929,7 +929,7 @@
 		and sur.record_status='Y'
 		and sur.role_flow in (select role_flow from sys_role where record_status='Y'and role_level_id='GateLevel')
 		<if test='orgName!=null and orgName!=""'>
-			and su.org_Name like '%${orgName}%'
+			and su.org_Name like CONCAT(CONCAT('%', #{orgName}),'%')
 		</if>
 		<if test='deptFlow!=null and deptFlow!=""'>
 			and su.dept_flow = #{deptFlow}
@@ -975,7 +975,7 @@
 		where su.RECORD_STATUS = 'Y'
 		and su.NATION_ID = 'portal'
 		<if test='orgName!=null and orgName!=""'>
-			and su.org_Name like '%${orgName}%'
+			and su.org_Name like CONCAT(CONCAT('%', #{orgName}),'%')
 		</if>
 		<if test='deptFlow!=null and deptFlow!=""'>
 			and su.dept_flow = #{deptFlow}
@@ -1198,7 +1198,7 @@
 		and sud.dept_flow = #{sysDeptFlow})
 		)
 		<if test='userName!=null and userName!=""'>
-			and (u.user_name like '%${userName}%')
+			and (u.user_name like CONCAT(CONCAT('%', #{userName}),'%'))
 		</if>
 		order by nlssort(u.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
 	</select>

@@ -60,7 +60,7 @@
             AND  oti.TRAINING_SPE_ID=#{trainingSpeId,jdbcType=VARCHAR}
         </if>
         <if test="workOrgName!=null and workOrgName!=''">
-            AND  U.work_Org_Name like '%${workOrgName}%'
+            AND  U.work_Org_Name like CONCAT(CONCAT('%', #{workOrgName}),'%')
         </if>
         order by U.USER_CODE
     </select>

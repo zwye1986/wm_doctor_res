@@ -383,6 +383,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+
   <update id="updateByExampleSelective" parameterType="map" >
     update PDSCI.SCH_ARRANGE_RESULT
     <set >
@@ -683,4 +684,32 @@
       BASE_AUDIT = #{baseAudit,jdbcType=VARCHAR}
     where RESULT_FLOW = #{resultFlow,jdbcType=VARCHAR}
   </update>
+    <update id="updateAfterPbRequiest">
+      UPDATE SCH_ARRANGE_RESULT r SET r.IS_REQUIRED = (
+        SELECT d.IS_REQUIRED FROM SCH_ROTATION_DEPT d
+        WHERE d.RECORD_STATUS = 'Y'
+          AND d.ORG_FLOW IS NULL
+          AND d.STANDARD_DEPT_ID = r.STANDARD_DEPT_ID
+          AND d.ROTATION_FLOW = r.ROTATION_FLOW)
+      WHERE r.RESULT_FLOW = #{resultFlow}
+    </update>
+  <update id="updateAfterPbGroup">
+    UPDATE SCH_ARRANGE_RESULT r SET r.STANDARD_GROUP_FLOW = (
+      SELECT d.GROUP_FLOW FROM SCH_ROTATION_DEPT d
+      WHERE d.RECORD_STATUS = 'Y'
+        AND d.ORG_FLOW IS NULL
+        AND d.STANDARD_DEPT_ID = r.STANDARD_DEPT_ID
+        AND d.ROTATION_FLOW = r.ROTATION_FLOW)
+    WHERE r.RESULT_FLOW = #{resultFlow}
+  </update>
+
+  <select id="schMon" resultType="java.lang.Double">
+    SELECT SUM(SCH_MONTH) FROM SCH_ARRANGE_RESULT
+    WHERE RECORD_STATUS = 'Y'
+      AND DOCTOR_FLOW = #{doctorFlow}
+      AND ROTATION_FLOW = #{rotationFlow}
+      AND STANDARD_DEPT_ID = #{standDeptId}
+      AND STANDARD_GROUP_FLOW = #{groupFlow}
+
+  </select>
 </mapper>

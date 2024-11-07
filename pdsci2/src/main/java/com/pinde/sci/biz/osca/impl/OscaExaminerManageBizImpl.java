@@ -22,17 +22,14 @@ import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaExaminerExt;
 import com.pinde.sci.model.osca.OscaTypeSpeExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-import org.apache.poi.POIXMLDocument;
+
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -220,8 +217,8 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
                         String value = "";
                         Cell cell = r.getCell((short) j);
                         try {
-                            cell.setCellType(HSSFCell.CELL_TYPE_STRING);
-                            if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
+                            cell.setCellType(CellType.STRING);
+                            if (cell.getCellType() == CellType.STRING) {
                                 value = r.getCell((short) j).getStringCellValue();
                             } else {
                                 value = _doubleTrans(r.getCell((short) j).getNumericCellValue());
@@ -403,8 +400,8 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
                         String value = "";
                         Cell cell = r.getCell((short) j);
                         try {
-                            cell.setCellType(HSSFCell.CELL_TYPE_STRING);
-                            if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
+                            cell.setCellType(CellType.STRING);
+                            if (cell.getCellType() == CellType.STRING) {
                                 value = r.getCell((short) j).getStringCellValue();
                             } else {
                                 value = _doubleTrans(r.getCell((short) j).getNumericCellValue());
@@ -560,16 +557,20 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
             // 还原流信息
             inS = new PushbackInputStream(inS);
         }
-        // EXCEL2003使用的是微软的文件系统
-        if (POIFSFileSystem.hasPOIFSHeader(inS)) {
-            return new HSSFWorkbook(inS);
+        //        // EXCEL2003使用的是微软的文件系统
+//        if (POIFSFileSystem.hasPOIFSHeader(inS)) {
+//            return new HSSFWorkbook(inS);
+//        }
+//        // EXCEL2007使用的是OOM文件格式
+//        if (POIXMLDocument.hasOOXMLHeader(inS)) {
+//            // 可以直接传流参数，但是推荐使用OPCPackage容器打开
+//            return new XSSFWorkbook(OPCPackage.open(inS));
+//        }
+        try{
+            return WorkbookFactory.create(inS);
+        }catch (Exception e) {
+            throw new IOException("不能解析的excel版本");
         }
-        // EXCEL2007使用的是OOM文件格式
-        if (POIXMLDocument.hasOOXMLHeader(inS)) {
-            // 可以直接传流参数，但是推荐使用OPCPackage容器打开
-            return new XSSFWorkbook(OPCPackage.open(inS));
-        }
-        throw new IOException("不能解析的excel版本");
     }
     public static String _doubleTrans(double d) {
         if ((double) Math.round(d) - d == 0.0D)

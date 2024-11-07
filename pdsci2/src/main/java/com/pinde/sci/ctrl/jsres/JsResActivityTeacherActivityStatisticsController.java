@@ -17,6 +17,7 @@ import com.pinde.sci.enums.sch.ActivityTypeEnum;
 import com.pinde.sci.model.mo.SysDept;
 import com.pinde.sci.model.mo.SysUser;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,13 +62,14 @@ public class JsResActivityTeacherActivityStatisticsController extends GeneralCon
 	}
 	@RequestMapping(value="/list")
 	public String list(Model model,Integer currentPage,
-					   String userName,String deptFlow,String  roleFlag,
+					   String userName,String deptFlow,String  roleFlag,String deptName,
 					   String startTime,String endTime, HttpServletRequest request){
 		SysUser curUser=GlobalContext.getCurrentUser();
 		Map<String,Object> param=new HashMap<>();
 		List<String> roles=new ArrayList<>();
 		param.put("userName",userName);
 		param.put("deptFlow",deptFlow);
+		param.put("deptName",deptName);
 		param.put("startTime",startTime);
 		param.put("endTime",endTime);
 		param.put("roleFlag",roleFlag);
@@ -132,7 +134,7 @@ public class JsResActivityTeacherActivityStatisticsController extends GeneralCon
 		HSSFRow row = sheet.createRow((int) 0);
 		// 第四步，创建单元格，并设置值表头 设置表头居中
 		HSSFCellStyle style = wb.createCellStyle();
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 
 		Map<Integer, Integer> columnWidth = new HashMap<>();
 
@@ -241,8 +243,8 @@ public class JsResActivityTeacherActivityStatisticsController extends GeneralCon
 
 		HSSFWorkbook wb = new HSSFWorkbook();
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		styleCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
+		styleCenter.setVerticalAlignment(VerticalAlignment.CENTER);
 		HSSFSheet sheet = wb.createSheet("师资活动统计报表");//sheet名称
 		sheet.setColumnWidth(0,2000);
 		sheet.setColumnWidth(1,4000);
@@ -270,7 +272,7 @@ public class JsResActivityTeacherActivityStatisticsController extends GeneralCon
 			cellTitle0 = row0.createCell(i);
 			cellTitle0.setCellValue(titles0[i]);
 			cellTitle0.setCellStyle(styleCenter);
-			cellTitle0.setCellType(HSSFCell.CELL_TYPE_STRING);
+			cellTitle0.setCellType(CellType.STRING);
 		}
 		HSSFRow row1 = sheet.createRow(1);	//第二行
 		String[] titles1 = new String[]{
@@ -289,7 +291,7 @@ public class JsResActivityTeacherActivityStatisticsController extends GeneralCon
 			cellTitle1 = row1.createCell(i);
 			cellTitle1.setCellValue(titles1[i]);
 			cellTitle1.setCellStyle(styleCenter);
-			cellTitle1.setCellType(HSSFCell.CELL_TYPE_STRING);
+			cellTitle1.setCellType(CellType.STRING);
 		}
 		String orgName = GlobalContext.getCurrentUser().getOrgName();
 		if (null!=list && !list.isEmpty()){
@@ -311,7 +313,7 @@ public class JsResActivityTeacherActivityStatisticsController extends GeneralCon
 					cellTitle = row.createCell(j);
 					cellTitle.setCellValue(titles[j]);
 					cellTitle.setCellStyle(styleCenter);
-					cellTitle.setCellType(HSSFCell.CELL_TYPE_STRING);
+					cellTitle.setCellType(CellType.STRING);
 				}
 			}
 		}

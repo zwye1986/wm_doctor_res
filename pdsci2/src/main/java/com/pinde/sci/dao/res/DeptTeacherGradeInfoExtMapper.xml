@@ -371,7 +371,7 @@
             and rdsp.dept_flow = #{deptFlow}
         </if>
         <if test='deptName!=null and deptName!=""'>
-            and rdsp.dept_Name like '%${deptName}%'
+            and rdsp.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
         <if test='teacherFlow!=null and teacherFlow!=""'>
             and rdsp.teacher_user_flow = #{teacherFlow}
@@ -443,7 +443,7 @@
             and rdsp.dept_flow = #{deptFlow}
         </if>
         <if test='deptName!=null and deptName!=""'>
-            and rdsp.dept_Name like '%${deptName}%'
+            and rdsp.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
         <if test='teacherFlow!=null and teacherFlow!=""'>
             and rdsp.teacher_user_flow = #{teacherFlow}
@@ -532,10 +532,10 @@
             and rdsp.dept_flow = #{deptFlow}
         </if>
         <if test='deptName!=null and deptName!=""'>
-            and rdsp.dept_Name like '%${deptName}%'
+            and rdsp.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
         <if test='userName!=null and userName!=""'>
-            AND su.user_name LIKE  '%${userName}%'
+            AND su.user_name LIKE  CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='operStartDate!=null and operStartDate!=""'>
             and dtgi.oper_time >= #{operStartDate}
@@ -587,7 +587,7 @@
             and rdsp.dept_flow = #{deptFlow}
         </if>
         <if test='deptName!=null and deptName!=""'>
-            and rdsp.dept_Name like '%${deptName}%'
+            and rdsp.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
         <if test='teacherFlow!=null and teacherFlow!=""'>
             and rdsp.teacher_user_flow = #{teacherFlow}
@@ -649,7 +649,7 @@
             and rdsp.dept_flow = #{deptFlow}
         </if>
         <if test='deptName!=null and deptName!=""'>
-            and rdsp.dept_Name like '%${deptName}%'
+            and rdsp.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
         <if test='teacherFlow!=null and teacherFlow!=""'>
             and rdsp.teacher_user_flow = #{teacherFlow}
@@ -704,13 +704,13 @@
             and dtgi.rec_type_id = #{recTypeId}
         </if>
         <if test='userName!=null and userName!=""'>
-            and su.user_name like '%${userName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='deptFlow!=null and deptFlow!=""'>
             and su.dept_flow = #{deptFlow}
         </if>
         <if test='deptName!=null and deptName!=""'>
-            and su.dept_Name like '%${deptName}%'
+            and su.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
         <if test='deptFlows!=null and deptFlows.size>0'>
             and su.dept_flow in
@@ -799,7 +799,7 @@
             </foreach>
         </if>
         <if test='deptName!=null and deptName!=""'>
-            and sd.dept_Name like '%${deptName}%'
+            and sd.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
         group by sd.dept_flow,sd.dept_name
         order by  sd.dept_flow,sd.dept_name
@@ -835,7 +835,7 @@
             </foreach>
         </if>
         <if test='deptName!=null and deptName!=""'>
-            and sd.dept_Name like '%${deptName}%'
+            and sd.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
     </select>
 
@@ -992,13 +992,13 @@
         )
         )
         <if test='userName!=null and userName!=""'>
-            and su.user_name like '%${userName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='deptFlow!=null and deptFlow!=""'>
             and su.dept_flow = #{deptFlow}
         </if>
         <if test='deptName!=null and deptName!=""'>
-            and su.dept_Name like '%${deptName}%'
+            and su.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
         order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
     </select>
@@ -1091,7 +1091,7 @@
             and rdsp.dept_flow = #{deptFlow}
         </if>
         <if test='deptName!=null and deptName!=""'>
-            and rdsp.dept_Name like '%${deptName}%'
+            and rdsp.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
         <if test='teacherFlow!=null and teacherFlow!=""'>
             and rdsp.teacher_user_flow = #{teacherFlow}
@@ -1190,7 +1190,7 @@
             and rd.session_number = #{sessionNumber}
         </if>
         <if test='userName!=null and userName!=""'>
-            and rd.DOCTOR_NAME like '%${userName}%'
+            and rd.DOCTOR_NAME like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='trainingSpeId!=null and trainingSpeId!=""'>
             and rd.TRAINING_SPE_ID = #{trainingSpeId}
@@ -1235,6 +1235,12 @@
         AND dtgi.record_status = 'Y'
         AND su.record_status = 'Y'
         and su.org_flow = #{orgFlow}
+        <if test='cfgFlows!=null and cfgFlows.size()>0'>
+            and dtgi.CFG_FLOW in
+            <foreach collection="cfgFlows" item="item" open="(" close=")" separator="," >
+                #{item}
+            </foreach>
+        </if>
         <if test='sessionNumber!=null and sessionNumber!=""'>
             and substr(dtgi.CREATE_TIME,1,4) = #{sessionNumber}
         </if>
@@ -1248,7 +1254,7 @@
             and dtgi.rec_type_id = #{recTypeId}
         </if>
         <if test='userName!=null and userName!=""'>
-            and su.user_name like '%${userName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='userFlow!=null and userFlow!=""'>
             and rdsp.teacher_user_flow = #{userFlow}
@@ -1257,15 +1263,15 @@
             and su.dept_flow = #{deptFlow}
         </if>
         <if test='deptName!=null and deptName!=""'>
-            and su.dept_Name like '%${deptName}%'
+            and su.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
-        <if test='deptFlows!=null and deptFlows.size>0'>
+        <if test='deptFlows!=null and deptFlows.size()>0'>
             and rdsp.dept_flow in
             <foreach collection="deptFlows" item="item" open="(" close=")" separator="," >
                 #{item}
             </foreach>
         </if>
-        <if test='recTypeIds!=null and recTypeIds.size>0'>
+        <if test='recTypeIds!=null and recTypeIds.size()>0'>
             and dtgi.rec_type_id in
             <foreach collection="recTypeIds" item="item" open="(" close=")" separator="," >
                 #{item}
@@ -1299,14 +1305,14 @@
         <if test='recTypeId!=null and recTypeId!=""'>
             and dtgi.rec_type_id = #{recTypeId}
         </if>
-        <if test='recTypeIds!=null and recTypeIds.size>0'>
+        <if test='recTypeIds!=null and recTypeIds.size()>0'>
             and dtgi.rec_type_id in
             <foreach collection="recTypeIds" item="item" open="(" close=")" separator="," >
                 #{item}
             </foreach>
         </if>
         <if test='userName!=null and userName!=""'>
-            and su.user_name like '%${userName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='userFlow!=null and userFlow!=""'>
             and rdsp.teacher_user_flow = #{userFlow}
@@ -1321,9 +1327,9 @@
             and rdsp.dept_flow = #{deptFlow}
         </if>
         <if test='deptName!=null and deptName!=""'>
-            and rdsp.dept_Name like '%${deptName}%'
+            and rdsp.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
-        <if test='deptFlows!=null and deptFlows.size>0'>
+        <if test='deptFlows!=null and deptFlows.size()>0'>
             and rdsp.dept_flow in
             <foreach collection="deptFlows" item="item" open="(" close=")" separator="," >
                 #{item}
@@ -1364,7 +1370,7 @@
         <if test='deptFlow!=null and deptFlow!=""'>
             and sd.dept_flow = #{deptFlow}
         </if>
-        <if test='deptFlows!=null and deptFlows.size>0'>
+        <if test='deptFlows!=null and deptFlows.size()>0'>
             and rdsp.dept_flow in
             <foreach collection="deptFlows" item="item" open="(" close=")" separator="," >
                 #{item}
@@ -1439,7 +1445,7 @@
         <if test='recFlow!=null and recFlow!=""'>
             and dtgi.rec_flow = #{recFlow}
         </if>
-        <if test='recTypeIdList!=null and recTypeIdList!=""'>
+        <if test='recTypeIdList!=null and recTypeIdList.size()>0'>
             and dtgi.rec_type_id in
             <foreach collection="recTypeIdList" item="item" open="(" close=")" separator="," >
                 #{item}
@@ -1504,7 +1510,7 @@
         <if test='recFlow!=null and recFlow!=""'>
             and dtgi.rec_flow = #{recFlow}
         </if>
-        <if test='recTypeIdList!=null and recTypeIdList!=""'>
+        <if test='recTypeIdList!=null and recTypeIdList.size()>0'>
             and dtgi.rec_type_id in
             <foreach collection="recTypeIdList" item="item" open="(" close=")" separator="," >
                 #{item}
@@ -1568,7 +1574,7 @@
             AND D.PROCESS_FLOW IS NOT NULL
         </if>
         <if test='teachName!=null and teachName!=""'>
-            AND S.TEACHER_USER_NAME LIKE '%${teachName}%'
+            AND S.TEACHER_USER_NAME LIKE CONCAT(CONCAT('%', #{teachName}),'%')
         </if>
         <if test='deptFlow!=null and deptFlow!=""'>
             AND S.DEPT_FLOW= #{deptFlow}
@@ -1612,7 +1618,7 @@
             AND RD.SESSION_NUMBER= #{sessionNumber}
         </if>
         AND RD.DOCTOR_STATUS_NAME IN ('在培', '其他')
-        <if test="docTypeList!=null and docTypeList.size>0">
+        <if test="docTypeList!=null and docTypeList.size()>0">
             and rd.DOCTOR_TYPE_ID in
             <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
         </if>
@@ -1626,7 +1632,7 @@
             </foreach>
         </if>
         <if test='userName!=null and userName!=""'>
-            AND SU.USER_NAME LIKE '%${userName}%'
+            AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='speId!=null and speId!=""'>
             AND RD.TRAINING_SPE_ID = #{speId}
@@ -1692,7 +1698,7 @@
             and RD.TRAINING_TYPE_ID = #{trainingTypeId}
         </if>
         <if test='userName!=null and userName!=""'>
-            and SU.USER_NAME like '%${userName}%'
+            and SU.USER_NAME like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         AND DTGI.REC_TYPE_ID = 'ManageDoctorAssess360'
         <if test='startScore!=null and startScore!=""and (endScore== null or endScore=="")'>
@@ -1738,7 +1744,7 @@
             AND P.DEPT_FLOW = #{deptFlow}
         </if>
         <if test='patientName!=null and patientName!=""'>
-            AND TEACHER_NAME_ONE LIKE '%${patientName}%'
+            AND TEACHER_NAME_ONE LIKE CONCAT(CONCAT('%', #{patientName}),'%')
         </if>
         ORDER BY P.SCH_START_DATE DESC,D.OPER_TIME
     </select>
@@ -1784,10 +1790,10 @@
                 AND P.TEACHER_USER_FLOW = #{userFlow}
             </if>
             <if test='patientName!=null and patientName!=""'>
-                AND D.TEACHER_NAME_ONE LIKE '%${patientName}%'
+                AND D.TEACHER_NAME_ONE LIKE CONCAT(CONCAT('%', #{patientName}),'%')
             </if>
             <if test='doctorName!=null and doctorName!=""'>
-                AND RD.DOCTOR_NAME LIKE '%${doctorName}%'
+                AND RD.DOCTOR_NAME LIKE CONCAT(CONCAT('%', #{doctorName}),'%')
             </if>
             <if test='trainingSpeId!=null and trainingSpeId!=""'>
                 AND RD.TRAINING_SPE_ID = #{trainingSpeId}
@@ -1796,7 +1802,7 @@
                 AND P.DEPT_FLOW = #{deptFlow}
             </if>
             <if test='roleFlag!=null and roleFlag!="" and roleFlag=="kzr"'>
-                <if test="rdspDeptlist!=null and rdspDeptlist.size>0">
+                <if test="rdspDeptlist!=null and rdspDeptlist.size()>0">
                     AND P.DEPT_FLOW in
                     <foreach collection="rdspDeptlist" open="(" separator="," close=")" item="item">#{item}</foreach>
                 </if>
@@ -1804,7 +1810,7 @@
             <if test='sessionNumber!=null and sessionNumber!=""'>
                 AND RD.SESSION_NUMBER = #{sessionNumber}
             </if>
-            <if test="docTypeList!=null and docTypeList.size>0">
+            <if test="docTypeList!=null and docTypeList.size()>0">
                 and RD.DOCTOR_TYPE_ID in
                 <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
             </if>

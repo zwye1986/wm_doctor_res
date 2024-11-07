@@ -133,7 +133,7 @@
 			or (a.SCH_START_DATE  <![CDATA[ >= ]]> #{startDate} AND a.SCH_START_DATE <![CDATA[ <= ]]>#{endDate})
 			or (a.SCH_END_DATE  <![CDATA[ >= ]]> #{startDate} AND a.SCH_END_DATE <![CDATA[ <= ]]>#{endDate}))
 		</if>
-		and a.TEACHER_USER_FLOW='${teacherUserFlow}'
+		and a.TEACHER_USER_FLOW= #{teacherUserFlow}
 	</select>
 	<select id="schDoctorSchProcessTeacherQuery" resultType="int">
 		select count(distinct(a.USER_FLOW)) from (
@@ -728,7 +728,7 @@
 		</if>
 		<if test="doctor!=null">
 			<if test='doctor.doctorName!=null and doctor.doctorName!=""'>
-				AND RD.DOCTOR_NAME LIKE '%${doctor.doctorName}%'
+				AND RD.DOCTOR_NAME LIKE CONCAT(CONCAT('%', #{doctor.doctorName}),'%')
 			</if>
 			<if test='doctor.trainingSpeId!=null and doctor.trainingSpeId!=""'>
 				AND RD.TRAINING_SPE_ID = #{doctor.trainingSpeId}
@@ -834,7 +834,7 @@
 		</if>
 		<if test="doctor!=null">
 			<if test='doctor.doctorName!=null and doctor.doctorName!=""'>
-				AND RD.DOCTOR_NAME LIKE '%${doctor.doctorName}%'
+				AND RD.DOCTOR_NAME LIKE CONCAT(CONCAT('%', #{doctor.doctorName}),'%')
 			</if>
 			<if test='doctor.trainingSpeId!=null and doctor.trainingSpeId!=""'>
 				AND RD.TRAINING_SPE_ID = #{doctor.trainingSpeId}
@@ -1141,7 +1141,7 @@
 		</if>
 		<if test="doctor!=null">
 			<if test='doctor.doctorName!=null and doctor.doctorName!=""'>
-				AND RD.DOCTOR_NAME LIKE '%${doctor.doctorName}%'
+				AND RD.DOCTOR_NAME LIKE CONCAT(CONCAT('%', #{doctor.doctorName}),'%')
 			</if>
 			<if test='doctor.doctorCategoryId!=null and doctor.doctorCategoryId!=""'>
 				AND RD.DOCTOR_CATEGORY_ID = #{doctor.doctorCategoryId}
@@ -1163,7 +1163,7 @@
 		<if test='roleFlagMap!=null'>
 
 			<if test='roleFlagMap.medicineTypeId!=null and roleFlagMap.medicineTypeId!=""'>
-				and instr('${roleFlagMap.medicineTypeId}',su.medicine_Type_Id)>0
+				and instr(#{roleFlagMap.medicineTypeId},su.medicine_Type_Id)>0
 			</if>
 			<if test='roleFlagMap.roleFlag!=null and roleFlagMap.roleFlag!=""
 				and roleFlagMap.val!=null and roleFlagMap.val!=""'>
@@ -1280,7 +1280,7 @@
 		AND RDSP.USER_FLOW = RD.DOCTOR_FLOW
 		<if test="doctor!=null">
 			<if test='doctor.doctorName!=null and doctor.doctorName!=""'>
-				AND RD.DOCTOR_NAME LIKE '%${doctor.doctorName}%'
+				AND RD.DOCTOR_NAME LIKE CONCAT(CONCAT('%', #{doctor.doctorName}),'%')
 			</if>
 			<if test='doctor.trainingSpeId!=null and doctor.trainingSpeId!=""'>
 				AND RD.TRAINING_SPE_ID = #{doctor.trainingSpeId}
@@ -1386,7 +1386,7 @@
 			)
 		</if>
 		<if test='doctorName!=null and doctorName!=""'>
-			and su.user_name like '%${doctorName}%'
+			and su.user_name like CONCAT(CONCAT('%', #{doctorName}),'%')
 		</if>
 		<if test="doctorProcess!=null">
 			  <if test='doctorProcess.orgFlow!=null and doctorProcess.orgFlow!="" '>
@@ -1439,7 +1439,7 @@
 			)
 		</if>
 		<if test='doctorName!=null and doctorName!=""'>
-			and su.user_name like '%${doctorName}%'
+			and su.user_name like CONCAT(CONCAT('%', #{doctorName}),'%')
 		</if>
 		<if test="doctorProcess!=null">
 			<if test='doctorProcess.orgFlow!=null and doctorProcess.orgFlow!="" '>
@@ -1540,7 +1540,7 @@
 			AND RDSP.IS_CURRENT_FLAG = #{isCurrentFlag}
 		</if>
 		<if test='doctorName!=null and doctorName!=""'>
-			AND su.user_name like '%${doctorName}%'
+			AND su.user_name like CONCAT(CONCAT('%', #{doctorName}),'%')
 		</if>
 		<if test='trainingSpeId!=null and trainingSpeId!=""'>
 			AND rd.training_Spe_Id = #{trainingSpeId}
@@ -1553,9 +1553,9 @@
 		</if>
 		<if test='workDeptName!=null and workDeptName!=""'>
 			AND (
-				rd.work_org_name like '%${workDeptName}%'
+				rd.work_org_name like CONCAT(CONCAT('%', #{workDeptName}),'%')
 			or
-				rd.DEPART_MENT_NAME like '%${workDeptName}%'
+				rd.DEPART_MENT_NAME like CONCAT(CONCAT('%', #{workDeptName}),'%')
 			)
 		</if>
 		<if test="typeList!=null and typeList.size>0">
@@ -1613,7 +1613,7 @@
 			AND RDSP.IS_CURRENT_FLAG = #{isCurrentFlag}
 		</if>
 		<if test='doctorName!=null and doctorName!=""'>
-			AND su.user_name like '%${doctorName}%'
+			AND su.user_name like CONCAT(CONCAT('%', #{doctorName}),'%')
 		</if>
 		<if test='trainingSpeId!=null and trainingSpeId!=""'>
 			AND rd.training_Spe_Id = #{trainingSpeId}
@@ -1626,9 +1626,9 @@
 		</if>
 		<if test='workDeptName!=null and workDeptName!=""'>
 			AND (
-				rd.work_org_name like '%${workDeptName}%'
+				rd.work_org_name like CONCAT(CONCAT('%', #{workDeptName}),'%')
 			or
-				rd.DEPART_MENT_NAME like '%${workDeptName}%'
+				rd.DEPART_MENT_NAME like CONCAT(CONCAT('%', #{workDeptName}),'%')
 			)
 		</if>
 		<if test="typeList!=null and typeList.size>0">
@@ -1714,7 +1714,7 @@
 			AND RDSP.IS_CURRENT_FLAG = #{isCurrentFlag}
 		</if>
 		<if test='doctorName!=null and doctorName!=""'>
-			AND su.user_name like '%${doctorName}%'
+			AND su.user_name like CONCAT(CONCAT('%', #{doctorName}),'%')
 		</if>
 		<if test='trainingSpeId!=null and trainingSpeId!=""'>
 			AND rd.training_Spe_Id = #{trainingSpeId}
@@ -2933,7 +2933,7 @@
 			</foreach>
 		</if>
 		<if test='medicineTypeId!=null and medicineTypeId!=""'>
-			and instr('${medicineTypeId}',u.medicine_Type_Id)>0
+			and instr(#{medicineTypeId},u.medicine_Type_Id)>0
 		</if>
 		order by dr.SESSION_NUMBER desc,dr.TRAINING_SPE_ID,dr.create_time,dr.doctor_flow
 	</select>
@@ -3251,7 +3251,7 @@
 			or (a.SCH_START_DATE  <![CDATA[ >= ]]> #{startDate} AND a.SCH_START_DATE <![CDATA[ <= ]]>#{endDate})
 			or (a.SCH_END_DATE  <![CDATA[ >= ]]> #{startDate} AND a.SCH_END_DATE <![CDATA[ <= ]]>#{endDate}))
 		</if>
-		and a.TEACHER_USER_FLOW='${teacherUserFlow}'
+		and a.TEACHER_USER_FLOW= #{teacherUserFlow}
 	</select>
 	<select id="jsresTeacherSchDocByDate" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
 		select * from sys_user where user_Flow in(
@@ -3295,7 +3295,7 @@
 			or (a.SCH_START_DATE  <![CDATA[ >= ]]> #{startDate} AND a.SCH_START_DATE <![CDATA[ <= ]]>#{endDate})
 			or (a.SCH_END_DATE  <![CDATA[ >= ]]> #{startDate} AND a.SCH_END_DATE <![CDATA[ <= ]]>#{endDate}))
 		</if>
-		and a.TEACHER_USER_FLOW='${teacherUserFlow}'
+		and a.TEACHER_USER_FLOW=#{teacherUserFlow}
 		)
 		order by user_name,user_flow
 	</select>
@@ -4527,7 +4527,7 @@
 			and rspe.HEAD_AUDIT_STATUS_ID is null
 		</if>
 		<if test="doctorName!=null and doctorName!=''">
-			and rd.doctor_Name like '%${doctorName}%'
+			and rd.doctor_Name like CONCAT(CONCAT('%', #{doctorName}),'%')
 		</if>
 		<if test="trainingSpeId!=null and trainingSpeId!=''">
 			and rd.training_Spe_Id = #{trainingSpeId}
@@ -4558,7 +4558,7 @@
 		and #{KqDate} >= substr(rdsp.SCH_START_DATE,0,7)
 		and substr(rdsp.SCH_end_DATE,0,7) >= #{KqDate}
 		<if test="userName!=null and userName!=''">
-			and su.user_name like '%${userName}%'
+			and su.user_name like CONCAT(CONCAT('%', #{userName}),'%')
 		</if>
 		<if test="sessionNumber!=null and sessionNumber!=''">
 			and rd.session_Number = #{sessionNumber}
@@ -4579,7 +4579,7 @@
 			and rd.GRADUATION_YEAR = #{graduationYear}
 		</if>
 		<if test="inHosDate!=null and inHosDate!=''">
-			and rd.IN_HOS_DATE like '%${inHosDate}%'
+			and rd.IN_HOS_DATE like CONCAT(CONCAT('%', #{inHosDate}),'%')
 		</if>
 		<if test="doctorTypeList!=null and doctorTypeList.size()>0">
 			and rd.doctor_Type_Id in
@@ -4642,7 +4642,7 @@
 			and rd.org_Flow = #{orgFlow}
 		</if>
 		<if test="userName!=null and userName!=''">
-			and su.user_name like '%${userName}%'
+			and su.user_name like CONCAT(CONCAT('%', #{userName}),'%')
 		</if>
 		<if test="sessionNumber!=null and sessionNumber!=''">
 			and rd.session_Number = #{sessionNumber}
@@ -4666,7 +4666,7 @@
 			and rd.GRADUATION_YEAR = #{graduationYear}
 		</if>
 		<if test="inHosDate!=null and inHosDate!=''">
-			and rd.IN_HOS_DATE like '%${inHosDate}%'
+			and rd.IN_HOS_DATE like CONCAT(CONCAT('%', #{inHosDate}),'%')
 		</if>
 		<if test="doctorTypeList!=null and doctorTypeList.size()>0">
 			and rd.doctor_Type_Id in
@@ -4719,7 +4719,7 @@
 			and rd.org_Flow = #{orgFlow}
 		</if>
 		<if test="userName!=null and userName!=''">
-			and su.user_name like '%${userName}%'
+			and su.user_name like CONCAT(CONCAT('%', #{userName}),'%')
 		</if>
 		<if test="sessionNumber!=null and sessionNumber!=''">
 			and rd.session_Number = #{sessionNumber}
@@ -4746,7 +4746,7 @@
 			and rd.GRADUATION_YEAR = #{graduationYear}
 		</if>
 		<if test="inHosDate!=null and inHosDate!=''">
-			and rd.IN_HOS_DATE like '%${inHosDate}%'
+			and rd.IN_HOS_DATE like CONCAT(CONCAT('%', #{inHosDate}),'%')
 		</if>
 		<if test="doctorTypeList!=null and doctorTypeList.size()>0">
 			and rd.doctor_Type_Id in
@@ -4811,9 +4811,9 @@
 				<if  test="endDate1 !=null and endDate1 !=''">
 					CASE
 						WHEN
-							resp.SCH_END_DATE >= '${endDate1}'
+							resp.SCH_END_DATE >= #{endDate1}
 						THEN
-							'${endDate1}'
+							#{endDate1}
 						ELSE
 							resp.SCH_END_DATE
 						END
@@ -4826,9 +4826,9 @@
 				<if  test="startDate1 !=null and startDate1 !=''">
 					CASE
 						WHEN
-							resp.SCH_START_DATE  <![CDATA[ <= ]]> '${startDate1}'
+							resp.SCH_START_DATE  <![CDATA[ <= ]]> #{startDate1}
 						THEN
-							'${startDate1}'
+							#{startDate1}
 						ELSE
 							resp.SCH_START_DATE
 						END
@@ -4995,8 +4995,8 @@
 		sum(months_between(to_date(substr(
 		<if  test="endDate1 !=null and endDate1 !=''">
 			CASE
-			WHEN resp.SCH_END_DATE >= '${endDate1}' THEN
-			'${endDate1}'
+			WHEN resp.SCH_END_DATE >= #{endDate1} THEN
+			#{endDate1}
 			ELSE
 			resp.SCH_END_DATE
 			END
@@ -5011,8 +5011,8 @@
 		to_date(substr(
 		<if  test="startDate1 !=null and startDate1 !=''">
 			CASE
-			WHEN resp.SCH_START_DATE  <![CDATA[ <= ]]> '${startDate1}' THEN
-			'${startDate1}'
+			WHEN resp.SCH_START_DATE  <![CDATA[ <= ]]> #{startDate1} THEN
+			#{startDate1}
 			ELSE
 			resp.SCH_START_DATE
 			END
@@ -5157,7 +5157,7 @@
 		</if>
 		<if test="doctor!=null">
 			<if test='doctor.doctorName!=null and doctor.doctorName!=""'>
-				AND RD.DOCTOR_NAME LIKE '%${doctor.doctorName}%'
+				AND RD.DOCTOR_NAME LIKE CONCAT(CONCAT('%', #{doctor.doctorName}),'%')
 			</if>
 			<if test='doctor.trainingSpeId!=null and doctor.trainingSpeId!=""'>
 				AND RD.TRAINING_SPE_ID = #{doctor.trainingSpeId}
@@ -5232,8 +5232,8 @@
 		sum(months_between(to_date(substr(
 		<if  test="endDate != null and endDate != ''">
 			CASE
-			WHEN resp.SCH_END_DATE >= '${endDate}' THEN
-			'${endDate}'
+			WHEN resp.SCH_END_DATE >= #{endDate} THEN
+			#{endDate}
 			ELSE
 			resp.SCH_END_DATE
 			END
@@ -5248,8 +5248,8 @@
 		to_date(substr(
 		<if test="startDate !=null and startDate != ''">
 			CASE
-			WHEN resp.SCH_START_DATE  <![CDATA[ <= ]]> '${startDate}' THEN
-			'${startDate}'
+			WHEN resp.SCH_START_DATE  <![CDATA[ <= ]]> #{startDate} THEN
+			#{startDate}
 			ELSE
 			resp.SCH_START_DATE
 			END
@@ -5517,7 +5517,7 @@
 			</foreach>
 		</if>
 		<if test='medicineTypeId!=null and medicineTypeId!=""'>
-			and instr('${medicineTypeId}',u.medicine_Type_Id)>0
+			and instr(#{medicineTypeId},u.medicine_Type_Id)>0
 		</if>
 		order by dr.SESSION_NUMBER desc,dr.TRAINING_SPE_ID,dr.create_time,dr.doctor_flow
 	</select>
@@ -5588,5 +5588,8 @@
 			AND S.SCH_DEPT_FLOW = #{deptFlow}
 			AND R.CAT_SPE_ID= #{trainingTypeId}
 		)
+	</select>
+    <select id="listByDoctorFlow" resultType="com.pinde.sci.model.mo.ResDoctorSchProcess">
+		select * from RES_DOCTOR_SCH_PROCESS where RECORD_STATUS = 'Y' and USER_FLOW = #{doctorFlow}
 	</select>
 </mapper>

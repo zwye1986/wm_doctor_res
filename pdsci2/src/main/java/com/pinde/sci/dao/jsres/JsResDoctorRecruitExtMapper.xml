@@ -250,7 +250,7 @@
 					and (
 					<trim prefix="" prefixOverrides="OR">
 						<if test="(doctor.workOrgId != null and doctor.workOrgId != '')">OR ed.work_org_id = #{doctor.workOrgId}</if>
-						<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like '%${doctor.workOrgName}%'</if>
+						<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like CONCAT(CONCAT('%', #{doctor.workOrgName}),'%')</if>
 					</trim>
 					)
 				</if>
@@ -407,7 +407,7 @@
 				and (
 				<trim prefix="" prefixOverrides="OR">
 					<if test="(doctor.workOrgId != null and doctor.workOrgId != '')">OR ed.work_org_id = #{doctor.workOrgId}</if>
-					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like '%${doctor.workOrgName}%'</if>
+					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like CONCAT(CONCAT('%', #{doctor.workOrgName}),'%')</if>
 				</trim>
 				)
 			</if>
@@ -557,7 +557,7 @@
 					and (
 					<trim prefix="" prefixOverrides="OR">
 						<if test="(doctor.workOrgId != null and doctor.workOrgId != '')">OR ed.work_org_id = #{doctor.workOrgId}</if>
-						<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like '%${doctor.workOrgName}%'</if>
+						<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like CONCAT(CONCAT('%', #{doctor.workOrgName}),'%')</if>
 					</trim>
 					)
 				</if>
@@ -2170,7 +2170,7 @@
 				and (
 				<trim prefix="" prefixOverrides="OR">
 					<if test="(doctor.workOrgId != null and doctor.workOrgId != '')">OR ed.work_org_id = #{doctor.workOrgId}</if>
-					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like '%${doctor.workOrgName}%'</if>
+					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like CONCAT(CONCAT('%', #{doctor.workOrgName}),'%')</if>
 				</trim>
 				)
 			</if>
@@ -2530,7 +2530,7 @@
 				and (
 				<trim prefix="" prefixOverrides="OR">
 					<if test="(doctor.workOrgId != null and doctor.workOrgId != '')">OR ed.work_org_id = #{doctor.workOrgId}</if>
-					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like '%${doctor.workOrgName}%'</if>
+					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like CONCAT(CONCAT('%', #{doctor.workOrgName}),'%')</if>
 				</trim>
 				)
 			</if>
@@ -2832,7 +2832,7 @@
 				and (
 				<trim prefix="" prefixOverrides="OR">
 					<if test="(doctor.workOrgId != null and doctor.workOrgId != '')">OR ed.work_org_id = #{doctor.workOrgId}</if>
-					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like '%${doctor.workOrgName}%'</if>
+					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like CONCAT(CONCAT('%', #{doctor.workOrgName}),'%')</if>
 				</trim>
 				)
 			</if>
@@ -3116,7 +3116,7 @@
 				and (
 				<trim prefix="" prefixOverrides="OR">
 					<if test="(doctor.workOrgId != null and doctor.workOrgId != '')">OR ed.work_org_id = #{doctor.workOrgId}</if>
-					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like '%${doctor.workOrgName}%'</if>
+					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like CONCAT(CONCAT('%', #{doctor.workOrgName}),'%')</if>
 				</trim>
 				)
 			</if>
@@ -3365,7 +3365,7 @@
 				and (
 				<trim prefix="" prefixOverrides="OR">
 					<if test="(doctor.workOrgId != null and doctor.workOrgId != '')">OR ed.work_org_id = #{doctor.workOrgId}</if>
-					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like '%${doctor.workOrgName}%'</if>
+					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like CONCAT(CONCAT('%', #{doctor.workOrgName}),'%')</if>
 				</trim>
 				)
 			</if>
@@ -3479,7 +3479,7 @@
 				and (
 				<trim prefix="" prefixOverrides="OR">
 					<if test="(doctor.workOrgId != null and doctor.workOrgId != '')">OR ed.work_org_id = #{doctor.workOrgId}</if>
-					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like '%${doctor.workOrgName}%'</if>
+					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like CONCAT(CONCAT('%', #{doctor.workOrgName}),'%')</if>
 				</trim>
 				)
 			</if>
@@ -3623,7 +3623,7 @@
 				and (
 				<trim prefix="" prefixOverrides="OR">
 					<if test="(doctor.workOrgId != null and doctor.workOrgId != '')">OR ed.work_org_id = #{doctor.workOrgId}</if>
-					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like '%${doctor.workOrgName}%'</if>
+					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like CONCAT(CONCAT('%', #{doctor.workOrgName}),'%')</if>
 				</trim>
 				)
 			</if>
@@ -3867,7 +3867,7 @@
 			and (
 			<trim prefix="" prefixOverrides="OR">
 				<if test="(doctor.workOrgId != null and doctor.workOrgId != '')">OR ed.work_org_id = #{doctor.workOrgId}</if>
-				<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like '%${doctor.workOrgName}%'</if>
+				<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like CONCAT(CONCAT('%', #{doctor.workOrgName}),'%')</if>
 			</trim>
 			)
 		</if>
@@ -4015,7 +4015,7 @@
 			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
 		</if>
 		<if test="graduationCertificateNo!=null and graduationCertificateNo!=''">
-			and dr.graduation_Certificate_No like '%${graduationCertificateNo}%'
+			and dr.graduation_Certificate_No like CONCAT(CONCAT('%', #{graduationCertificateNo}),'%')
 		</if>
 		 and dr.graduation_Certificate_No is not null
 		<if test="catSpeId!=null and catSpeId!=''">
@@ -4216,7 +4216,7 @@
 			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
 		</if>
 		<if test="graduationCertificateNo!=null and graduationCertificateNo!=''">
-			and dr.graduation_Certificate_No like '%${graduationCertificateNo}%'
+			and dr.graduation_Certificate_No like CONCAT(CONCAT('%', #{graduationCertificateNo}),'%')
 		</if>
 		and dr.graduation_Certificate_No is not null
 		<if test="catSpeId!=null and catSpeId!=''">
@@ -4420,7 +4420,7 @@
 			<foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
 		</if>
 		<if test="graduationCertificateNo!=null and graduationCertificateNo!=''">
-			and dr.graduation_Certificate_No like '%${graduationCertificateNo}%'
+			and dr.graduation_Certificate_No like CONCAT(CONCAT('%', #{graduationCertificateNo}),'%')
 		</if>
 		<if test="tabTag == 'CountryCertificate'.toString()">
 			and dr.graduation_Certificate_No is null
@@ -7060,7 +7060,7 @@
 				and (
 				<trim prefix="" prefixOverrides="OR">
 					<if test="(doctor.workOrgId != null and doctor.workOrgId != '')">OR ed.work_org_id = #{doctor.workOrgId}</if>
-					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like '%${doctor.workOrgName}%'</if>
+					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like CONCAT(CONCAT('%', #{doctor.workOrgName}),'%')</if>
 				</trim>
 				)
 			</if>
@@ -7078,6 +7078,8 @@
 		left join pdsci.PUB_USER_RESUME pur
 		on pur.USER_FLOW=dr.DOCTOR_FLOW
 		where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y'
+		AND dr.signup_way = 'DoctorSignup'
+		AND dr.AUDIT_STATUS_ID != 'NotSubmit'
 		and dr.org_flow in(
 		SELECT ORG_FLOW
 		FROM PDSCI.SYS_ORG
@@ -7216,7 +7218,7 @@
 				and (
 				<trim prefix="" prefixOverrides="OR">
 					<if test="(doctor.workOrgId != null and doctor.workOrgId != '')">OR ed.work_org_id = #{doctor.workOrgId}</if>
-					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like '%${doctor.workOrgName}%'</if>
+					<if test="(doctor.workOrgName != null and doctor.workOrgName != '')">OR ed.work_org_name like CONCAT(CONCAT('%', #{doctor.workOrgName}),'%')</if>
 				</trim>
 				)
 			</if>

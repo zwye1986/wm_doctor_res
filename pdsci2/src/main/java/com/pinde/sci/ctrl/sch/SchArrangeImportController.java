@@ -21,7 +21,10 @@ import com.pinde.sci.enums.sch.SchUnitEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.hssf.util.CellRangeAddress;
+
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -403,13 +406,13 @@ public class SchArrangeImportController extends GeneralController {
 		HSSFWorkbook wb = new HSSFWorkbook();
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 		HSSFCellStyle styleRight = wb.createCellStyle(); //居中
-		styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-		styleRight.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleRight.setAlignment(HorizontalAlignment.RIGHT);
+		styleRight.setVerticalAlignment(VerticalAlignment.CENTER);
 		String[] titles1 = new String[]{
 				"轮转组",
 				"轮转组代码",
@@ -573,13 +576,13 @@ public class SchArrangeImportController extends GeneralController {
 		HSSFWorkbook wb = new HSSFWorkbook();
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 		HSSFCellStyle styleRight = wb.createCellStyle(); //居中
-		styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-		styleRight.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleRight.setAlignment(HorizontalAlignment.RIGHT);
+		styleRight.setVerticalAlignment(VerticalAlignment.CENTER);
 		HSSFSheet sheet = wb.createSheet("ArrangeResult");
 		int rowNum=0;
 		HSSFRow rowOne = sheet.createRow(rowNum++);//第一行
@@ -590,7 +593,7 @@ public class SchArrangeImportController extends GeneralController {
 			cellTitle.setCellValue(title.get(i));
 			cellTitle.setCellStyle(styleCenter);
 		}
-		String name = "排班导入模板.xls";
+		String name = "PbImportModel.xls";
 		response.setHeader("Content-disposition","attachment; filename="+new String(name.getBytes("gbk"),"ISO8859-1" ) +"");
 		response.setContentType ("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
 		ExcleUtile.setCookie(response);

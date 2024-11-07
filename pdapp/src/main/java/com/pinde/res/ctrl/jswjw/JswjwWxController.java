@@ -909,7 +909,7 @@ public class JswjwWxController extends GeneralController {
 
     @RequestMapping(value = {"/viewErrorDetail"}, method = {RequestMethod.POST})
     @ResponseBody
-    public Object viewErrorDetail(String processFlow, String resultsId) {
+    public Object viewErrorDetail(String processFlow, String resultsId,HttpServletRequest request) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("resultId", "200");
         resultMap.put("resultType", "交易成功");
@@ -932,7 +932,7 @@ public class JswjwWxController extends GeneralController {
             return ResultDataThrow("当前考试记录信息获取失败！");
         }
 
-        testUrl = testUrl + "?RequestType=pc&ProcessFlow=" + processFlow + "&SoluID=" + results.getSoluId() + "&ResultID=" + resultsId;
+        testUrl = testUrl + "?paperFlow=" + results.getSoluId() + "&studentFlow=" +results.getUserId()+"&count="+ results.getTestCount()+"&token=" +request.getSession().getId();
         resultMap.put("testUrl", testUrl);
         return resultMap;
     }
@@ -5655,6 +5655,20 @@ public class JswjwWxController extends GeneralController {
             TeachingActivityInfo activityInfo = activityBiz.readActivityInfo(result.getActivityFlow());
             List<TeachingActivityInfoTarget> infoTargets = activityTargeBiz.readActivityTargets(result.getActivityFlow());
             List<TeachingActivityTarget> targetList = activityTargeBiz.readByOrgNew(activityInfo.getActivityTypeId(), sysUser.getOrgFlow());
+            //查询是否有协同基地
+            List<String> jointOrgFlow = activityTargeBiz.selectJointOrgFlow(userFlow);
+
+            if(jointOrgFlow!=null&& !jointOrgFlow.isEmpty()){
+
+                for (String orgFlow : jointOrgFlow) {
+                    List<TeachingActivityTarget> jointTargetList = activityTargeBiz.readByOrgNew(activityInfo.getActivityTypeId(), orgFlow);
+                    if(!jointTargetList.isEmpty()){
+                        targetList.addAll(jointTargetList);
+                    }
+                }
+
+            }
+
             List<String> targetFlowList = targetList.stream().map(TeachingActivityTarget::getTargetFlow).collect(Collectors.toList());
             for (TeachingActivityInfoTarget infoTarget : infoTargets) {
                 if (!targetFlowList.contains(infoTarget.getTargetFlow())) {
@@ -6798,6 +6812,8 @@ public class JswjwWxController extends GeneralController {
 
         user.setUserFlow(userinfo.getUserFlow());
         user.setDeptFlow(userinfo.getDeptFlow());
+
+        session.setAttribute(GlobalConstant.CURR_USER,"isLogin");
 
         session.setAttribute("user", JSON.toJSONString(user));
 

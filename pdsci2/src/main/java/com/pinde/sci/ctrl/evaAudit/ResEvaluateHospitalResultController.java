@@ -26,6 +26,7 @@ import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.mo.SysUserDept;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -226,6 +227,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                 paramMap.put("deptName", deptName);
                 List<String> recTypeIds = Lists.newArrayList(ResRecTypeEnum.TeacherAssess.getId(),ResRecTypeEnum.TeacherGradeTwo.getId());
                 paramMap.put("recTypeIds", recTypeIds);
+                paramMap.put("cfgFlows", Lists.newArrayList("f38b2734220c4b659ddb85f9b99b82ce","0ddacbf047fc4beb9b9d94246237cbe3"));
 
                 //查出当前机构的所有带教老师
                 PageHelper.startPage(currentPage, getPageSize(request));
@@ -711,7 +713,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             paramMap.put("userName", userName);
             paramMap.put("deptFlow", deptFlow);
             paramMap.put("deptName", deptName);
-
+            paramMap.put("cfgFlows", Lists.newArrayList("f38b2734220c4b659ddb85f9b99b82ce","0ddacbf047fc4beb9b9d94246237cbe3"));
             //查出当前机构的所有带教老师
             userList = resGradeBiz.getUserByRecAndAvgScore(paramMap);
         } else if ("head".equals(gradeRole)) {
@@ -811,7 +813,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
 
                 //定义将用到的样式
                 HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-                styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+                styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
                 //列宽自适应
                 HSSFRow rowOne = sheet.createRow(0);//第1行
@@ -1103,7 +1105,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             HSSFSheet sheet = wb.createSheet("sheet1");
             //定义将用到的样式
             HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-            styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+            styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
             //列宽自适应
             HSSFRow rowOne = sheet.createRow(0);//第1行
@@ -1437,7 +1439,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             HSSFSheet sheet = wb.createSheet("sheet1");
             //定义将用到的样式
             HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-            styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+            styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
             //列宽自适应
             HSSFRow rowOne = sheet.createRow(0);//第1行
@@ -1784,7 +1786,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
 
             //定义将用到的样式
             HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-            styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+            styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
             //列宽自适应
             HSSFRow rowOne = sheet.createRow(0);//第1行

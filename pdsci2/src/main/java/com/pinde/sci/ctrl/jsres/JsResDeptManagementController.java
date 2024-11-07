@@ -602,7 +602,7 @@ public class JsResDeptManagementController {
             SysDeptExample example = new SysDeptExample();
             example.createCriteria().andRecordStatusEqualTo("Y")
                             .andDeptNameEqualTo(deptRelStdDeptVO.getDeptName())
-                    .andOrgFlowEqualTo(deptRelStdDeptVO.getOrgFlow());
+                    .andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
             PageHelper.startPage(1, 2, false);
             List<SysDept> sysDeptList = deptBiz.selectByExample(example);
             for (SysDept dept : sysDeptList) {

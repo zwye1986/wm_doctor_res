@@ -99,4 +99,32 @@
 			  AND Res_Docotr_Delay_Teturn.doctor_flow = rd.doctor_flow
 			  AND type_id = 'ReturnTraining')
 	</select>
+    <select id="listByNameOrIdNo" resultType="com.pinde.sci.model.mo.SysUser">
+		SELECT u.USER_NAME,u.ID_NO,u.USER_FLOW FROM SYS_USER u
+		INNER JOIN RES_DOCTOR d on u.USER_FLOW = d.DOCTOR_FLOW
+		WHERE u.RECORD_STATUS = 'Y'
+		  AND d.RECORD_STATUS = 'Y'
+		  <choose>
+			  <when test="null != userName and userName.size() &gt; 0">
+				  AND u.USER_NAME IN
+				      <foreach collection="userName" item="name" open="(" separator="," close=")">
+						  #{name}
+					  </foreach>
+			  </when>
+		      <otherwise>
+				  AND 1=-1
+			  </otherwise>
+		  </choose>
+		<choose>
+			<when test="null != idNo and idNo.size() &gt; 0">
+				AND u.ID_NO IN
+				<foreach collection="idNo" item="idNoItem" open="(" separator="," close=")">
+					#{idNoItem}
+				</foreach>
+			</when>
+			<otherwise>
+				AND 1=-1
+			</otherwise>
+		</choose>
+	</select>
 </mapper>

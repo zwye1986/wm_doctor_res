@@ -1,13 +1,9 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.PkUtil;
-import com.pinde.core.util.StringUtil;
+import com.pinde.core.util.*;
 import com.pinde.sci.biz.res.IResOrgSpeAssignBiz;
-import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.common.InitConfig;
+import com.pinde.sci.common.*;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;
 import com.pinde.sci.enums.jsres.BaseStatusEnum;
@@ -15,24 +11,14 @@ import com.pinde.sci.model.jsres.OrgSpeListVo;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.poi.POIXMLDocument;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PushbackInputStream;
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -184,16 +170,21 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
             // 还原流信息
             inS = new PushbackInputStream(inS);
         }
-        // EXCEL2003使用的是微软的文件系统
-        if (POIFSFileSystem.hasPOIFSHeader(inS)) {
-            return new HSSFWorkbook(inS);
+        //        // EXCEL2003使用的是微软的文件系统
+//        if (POIFSFileSystem.hasPOIFSHeader(inS)) {
+//            return new HSSFWorkbook(inS);
+//        }
+//        // EXCEL2007使用的是OOM文件格式
+//        if (POIXMLDocument.hasOOXMLHeader(inS)) {
+//            // 可以直接传流参数，但是推荐使用OPCPackage容器打开
+//            return new XSSFWorkbook(OPCPackage.open(inS));
+//        }
+        try{
+            return WorkbookFactory.create(inS);
+        }catch (Exception e) {
+            throw new IOException("不能解析的excel版本");
         }
-        // EXCEL2007使用的是OOM文件格式
-        if (POIXMLDocument.hasOOXMLHeader(inS)) {
-            // 可以直接传流参数，但是推荐使用OPCPackage容器打开
-            return new XSSFWorkbook(OPCPackage.open(inS));
-        }
-        throw new IOException("不能解析的excel版本");
+
     }
 
     private Map<String, Object> parseExcel(Workbook wb) {
@@ -229,7 +220,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                     if (null == cell || StringUtil.isBlank(cell.toString().trim())) {
                         continue;
                     }
-                    if (r.getCell((short) j).getCellType() == 1) {
+                    if (r.getCell((short) j).getCellType().getCode() == 1) {
                         value = r.getCell((short) j).getStringCellValue();
                     } else {
                         value = _doubleTrans(r.getCell((short) j).getNumericCellValue());
@@ -263,7 +254,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                         if (null == cell || StringUtil.isBlank(cell.toString().trim())) {
                             continue;
                         }
-                        if (r.getCell((short) j).getCellType() == 1) {
+                        if (r.getCell((short) j).getCellType().getCode() == 1) {
                             value = r.getCell((short) j).getStringCellValue();
                         } else {
                             value = _doubleTrans(r.getCell((short) j).getNumericCellValue());
@@ -430,7 +421,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                     if (null == cell || StringUtil.isBlank(cell.toString().trim())) {
                         continue;
                     }
-                    if (r.getCell((short) j).getCellType() == 1) {
+                    if (r.getCell((short) j).getCellType().getCode() == 1) {
                         value = r.getCell((short) j).getStringCellValue();
                     } else {
                         value = _doubleTrans(r.getCell((short) j).getNumericCellValue());
@@ -464,7 +455,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                         if (null == cell || StringUtil.isBlank(cell.toString().trim())) {
                             continue;
                         }
-                        if (r.getCell((short) j).getCellType() == 1) {
+                        if (r.getCell((short) j).getCellType().getCode() == 1) {
                             value = r.getCell((short) j).getStringCellValue();
                         } else {
                             value = _doubleTrans(r.getCell((short) j).getNumericCellValue());
@@ -712,7 +703,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
         if (StringUtil.isBlank(String.valueOf(param.get("assignYearEdit")))) {
             count = recruitExtMapper.countAssignInfoByParam(param);
             if (count > 0) {
-                return String.valueOf(param.get("assignYear")) + "年的招生计划已存在";
+                return String.valueOf(param.get("assignYear")) + "年的报送计划已存在";
             }
         }
         SysUser currUser = GlobalContext.getCurrentUser();
@@ -973,16 +964,22 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
             // 还原流信息
             inS = new PushbackInputStream(inS);
         }
-        // EXCEL2003使用的是微软的文件系统
-        if (POIFSFileSystem.hasPOIFSHeader(inS)) {
-            return new HSSFWorkbook(inS);
+        //        // EXCEL2003使用的是微软的文件系统
+//        if (POIFSFileSystem.hasPOIFSHeader(inS)) {
+//            return new HSSFWorkbook(inS);
+//        }
+//        // EXCEL2007使用的是OOM文件格式
+//        if (POIXMLDocument.hasOOXMLHeader(inS)) {
+//            // 可以直接传流参数，但是推荐使用OPCPackage容器打开
+//            return new XSSFWorkbook(OPCPackage.open(inS));
+//        }
+        try{
+            return WorkbookFactory.create(inS);
+        }catch (Exception e) {
+            e.printStackTrace();
+            throw new IOException("不能解析的excel版本");
         }
-        // EXCEL2007使用的是OOM文件格式
-        if (POIXMLDocument.hasOOXMLHeader(inS)) {
-            // 可以直接传流参数，但是推荐使用OPCPackage容器打开
-            return new XSSFWorkbook(OPCPackage.open(inS));
-        }
-        throw new IOException("不能解析的excel版本");
+
     }
 
     // 读取数据
@@ -1017,7 +1014,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                     if (null == cell || StringUtil.isBlank(cell.toString().trim())) {
                         continue;
                     }
-                    if (r.getCell((short) j).getCellType() == 1) {
+                    if (r.getCell((short) j).getCellType().getCode() == 1) {
                         value = r.getCell((short) j).getStringCellValue();
                     } else {
                         value = _doubleTrans(r.getCell((short) j).getNumericCellValue());
@@ -1073,6 +1070,39 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
             }
         }
         return succCount;
+    }
+
+    @Override
+    public String updateSendInfo(Map<String, Object> param) {
+        int count = 0;
+        // 查询当前年份的基地招生计划是否已存在 assignYearEdit 不为空表示编辑页面 不用查询是否已存在
+        if (StringUtil.isBlank(String.valueOf(param.get("assignYearEdit")))) {
+            count = recruitExtMapper.countSendInfoByParam(param);
+            if (count > 0) {
+                return String.valueOf(param.get("assignYear")) + "年的报送计划已存在";
+            }
+        }
+        SysUser currUser = GlobalContext.getCurrentUser();
+//		param.put("modifyUserFlow", currUser.getUserFlow());
+//		param.put("modifyTime", DateUtil.getCurrDateTime());
+        for (Map<String, String> map : (List<Map>) param.get("assignList")) {
+            map.put("modifyUserFlow", currUser.getUserFlow());
+            map.put("modifyTime", DateUtil.getCurrDateTime());
+            if (GlobalConstant.RECORD_STATUS_N.equals((String) param.get("isJointOrg"))) {
+                map.put("auditStatusId", "Passed");
+                map.put("auditStatusName", "审核通过");
+            } else if (GlobalConstant.RECORD_STATUS_Y.equals((String) param.get("isJointOrg"))) {
+                map.put("auditStatusId", "Passing");
+                map.put("auditStatusName", "待审核");
+            }
+            map.put("isShown", GlobalConstant.FLAG_Y);
+            recruitExtMapper.updateAssignInfo(map);
+            count++;
+        }
+        if (count == 0) {
+            return GlobalConstant.SAVE_FAIL;
+        }
+        return GlobalConstant.SAVE_SUCCESSED;
     }
 
 }
