@@ -112,7 +112,7 @@
     }
 
     function impSkillExam(){
-    jboxOpen("<s:url value='/jsp/jsres/hospital/achievement/importSkillExam.jsp'/>", "操作成绩单导入", '600', '300');
+    jboxOpen("<s:url value='/jsres/hospital/achievement/importSkillExam'/>", "操作成绩单导入", '600', '300');
     }
 
     function confireResult(recruitFlow,userName){
@@ -298,7 +298,7 @@ function showOrHide(){
             <div style="margin-top: 15px;margin-bottom: 15px">
                 <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>
                 <input class="btn_green" type="button" value="一键审核" onclick="batchAuditOpt()"/>
-                <input class="btn_green" type="button" value="成绩导入" onclick="impInterviewExam()"/>
+                <input class="btn_green" type="button" value="成绩导入" onclick="impSkillExam()"/>
                 <input class="btn_green" type="button" value="成绩导出" onclick="exportForDetail();"/>
                 <a style="color: #54B2E5;margin: auto 0 auto 15px;" onclick="showOrHide()" id="open">展开</a>
             </div>

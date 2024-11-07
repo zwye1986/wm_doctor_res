@@ -11,4 +11,3 @@ gen
 /pdcore/target
 *.license.key
 /*.log
-/target/*
