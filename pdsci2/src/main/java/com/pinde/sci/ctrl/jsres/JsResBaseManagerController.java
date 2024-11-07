@@ -6097,6 +6097,7 @@ public class JsResBaseManagerController extends GeneralController {
 			}
 			BigDecimal[] curInHospitalDoctors = speCountMap.getOrDefault(map.get("speId"), new BigDecimal[]{BigDecimal.ZERO});
 			curInHospitalDoctors[0] = curInHospitalDoctors[0].add((BigDecimal)map.get("num"));
+			speCountMap.put((String) map.get("speId"), curInHospitalDoctors);
 			resOrgSepVO.setCurInHospitalDoctors(curInHospitalDoctors[0].toPlainString());
 		}
 		param.put("doctorType", "zxzs");
@@ -6117,6 +6118,7 @@ public class JsResBaseManagerController extends GeneralController {
 			}
 			BigDecimal[] curInCollegeMasters = speCountMap.getOrDefault(map.get("speId"), new BigDecimal[]{BigDecimal.ZERO});
 			curInCollegeMasters[0] = curInCollegeMasters[0].add((BigDecimal)map.get("num"));
+			speCountMap.put((String) map.get("speId"), curInCollegeMasters);
 			resOrgSepVO.setCurInCollegeMasters(curInCollegeMasters[0].toPlainString());
 		}
 
