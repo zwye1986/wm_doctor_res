@@ -929,11 +929,11 @@
         }
     </script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        /*$(document).ready(function () {
             canvasShow();
             canvasShow2();
             canvasShow3();
-        });
+        });*/
         function canvasShow() {
             var dom = document.getElementById('containerEchartOne');
             var myChart = echarts.init(dom, null, {
