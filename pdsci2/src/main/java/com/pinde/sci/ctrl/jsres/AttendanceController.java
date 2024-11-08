@@ -1356,7 +1356,7 @@ public class AttendanceController extends GeneralController {
         paramMap.put("schDeptFlow",schDeptFlow);
         paramMap.put("roleFlag",roleFlag);
         String auditStatusId = kq.getAuditStatusId();
-        paramMap.put("auditStatusId",auditStatusId);
+//        paramMap.put("auditStatusId",auditStatusId);
         boolean auditRoleFlag = ResDoctorKqStatusEnum.Auditing.getId().equals(auditStatusId);
         if("teacher".equals(roleFlag)){//带教
             paramMap.put("teacherFlow",currUser.getUserFlow());
@@ -1374,7 +1374,7 @@ public class AttendanceController extends GeneralController {
         }
         if("manager".equals(roleFlag)){
             paramMap.put("orgFlow",currUser.getOrgFlow());
-            paramMap.put("managerFlow",currUser.getUserFlow());
+//            paramMap.put("managerFlow",currUser.getUserFlow());
             if(auditRoleFlag){
                 //待管理员审核
                 paramMap.put("auditStatusId",ResDoctorKqStatusEnum.ManagerAuditing.getId());

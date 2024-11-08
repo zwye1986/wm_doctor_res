@@ -91,6 +91,10 @@
 	}
 
 	function checkSetJointOrg() {
+		if($('input[name="basicInfo.jointOrgFlag"]:checked').val() != 'Y') {
+			return true; // 不填就不用校验
+		}
+
 		var joints = $("#jointContractBody tr");
 		// 校验必填项是不是都填了
 		for(var i = 0; i < joints.length; i++) {
