@@ -51,6 +51,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -4748,6 +4749,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		if (null == file) {
 			throw new RuntimeException("导入的文件不能为空");
 		}
+		JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_min_mon_" + GlobalContext.getCurrentUser().getOrgFlow());
+		JsresPowerCfg minMonthCfg = jsResPowerCfgBiz.read("jsres_"+GlobalContext.getCurrentUser().getOrgFlow()+"_org_process_scheduling_time");
 		//查询所有专业对应的标准科室
 		Map<String, List<SchRotationDept>> allBzDept = getAllBzDept();
 		//查询所有的轮转科室
@@ -4774,7 +4777,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			List<SchArrangeResult> schArrangeResults = doctorBiz.listDoctorResult(userIds);
 			listen.setStuResultList(schArrangeResults);
 		}
-		listen.getData(false);
+		//查询最短排班时间的校验
+		listen.getData(false,openCfg.getCfgValue(),minMonthCfg.getCfgCode());
 		List<PbInfoItem> compareList = listen.getCompareList();
 		if (CollectionUtil.isNotEmpty(compareList)) {
 			//根据resultFlow集合查询学员提交情况
@@ -4788,7 +4792,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				}
 			}
 		}
-		List<SchedulingDataModel> data = listen.getData(true);
+		List<SchedulingDataModel> data = listen.getData(true,openCfg.getCfgValue(),minMonthCfg.getCfgValue());
 		result.put("data", JSONUtil.toJsonStr(data));
 		return result;
 	}
@@ -4796,6 +4800,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 	public Map<String, Object> checkRowData(List<SchedulingDataModel> data) {
 		Map<String, Object> result = new HashMap<>();
+		JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_min_mon_" + GlobalContext.getCurrentUser().getOrgFlow());
+		JsresPowerCfg minMonthCfg = jsResPowerCfgBiz.read("jsres_"+GlobalContext.getCurrentUser().getOrgFlow()+"_org_process_scheduling_time");
 		//查询所有专业对应的标准科室
 		Map<String, List<SchRotationDept>> allBzDept = getAllBzDept();
 		//查询所有的轮转科室
@@ -4819,7 +4825,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			List<SchArrangeResult> schArrangeResults = doctorBiz.listDoctorResult(userIds);
 			entity.setStuResultList(schArrangeResults);
 		}
-		entity.getData(false);
+		entity.getData(false,openCfg.getCfgValue(),minMonthCfg.getCfgValue());
 		List<PbInfoItem> compareList = entity.getCompareList();
 		if (CollectionUtil.isNotEmpty(compareList)) {
 			//根据resultFlow集合查询学员提交情况
@@ -4833,7 +4839,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				}
 			}
 		}
-		result.put("data",entity.getData(true));
+		result.put("data",entity.getData(true,openCfg.getCfgValue(),minMonthCfg.getCfgValue()));
 		return result;
 	}
 
@@ -4846,14 +4852,17 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public Map<String,Object> submitPbImport(List<SchedulingDataModel> data){
+	public Map<String,Object> submitPbImport(List<SchedulingDataModel> data) throws Exception {
 		Map<String, Object> result = new HashMap<>();
 		result.put("code",200);
+		result.put("msg","导入成功");
 		if (CollectionUtil.isEmpty(data)) {
 			result.put("code",500);
 			result.put("msg","暂无导入数据");
 			return result;
 		}
+		JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_min_mon_" + GlobalContext.getCurrentUser().getOrgFlow());
+		JsresPowerCfg minMonthCfg = jsResPowerCfgBiz.read("jsres_"+GlobalContext.getCurrentUser().getOrgFlow()+"_org_process_scheduling_time");
 		//查询所有专业对应的标准科室
 		Map<String, List<SchRotationDept>> allBzDept = getAllBzDept();
 		//查询所有的轮转科室
@@ -4877,7 +4886,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			List<SchArrangeResult> schArrangeResults = doctorBiz.listDoctorResult(userIds);
 			entity.setStuResultList(schArrangeResults);
 		}
-		entity.getData(false);
+		entity.getData(false,openCfg.getCfgValue(),minMonthCfg.getCfgValue());
 
 		List<PbInfoItem> compareList = entity.getCompareList();
 		if (CollectionUtil.isNotEmpty(compareList)) {
@@ -4899,12 +4908,18 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			result.put("msg","暂无导入数据");
 			return result;
 		}
+		Map<String, String> checkSchMonMap = new HashMap<>();
 		List<PbInfoItem> collect2 = collect.stream().sorted(Comparator.comparing(PbInfoItem::getSchStartDate)).collect(Collectors.toList());
 		for (PbInfoItem pbInfoItem : collect2) {
+			//遍历导入的数据
 			String doctorFlow = pbInfoItem.getDoctorFlow();
 			if (StringUtils.isEmpty(doctorFlow)) {
 				continue;
 			}
+			if (pbInfoItem.getRecordStatus().equals("N")) {
+				continue;
+			}
+			//该学员的历史排班数据
 			List<PbInfoItem> dbList = compareList.stream().filter(e -> "db".equalsIgnoreCase(e.getType()) && doctorFlow.equalsIgnoreCase(e.getDoctorFlow()))
 					.collect(Collectors.toList());
 			if (CollectionUtil.isEmpty(dbList)) {
@@ -4912,138 +4927,258 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				savePbWithoutHis(pbInfoItem);
 				continue;
 			}
-			//轮转时间
-			String concatMon = pbInfoItem.getConcatMon();
-			List<PbInfoItem> collect1 = dbList.stream().filter(e -> e.getConcatMon().contains(concatMon)).collect(Collectors.toList());
-			if (CollectionUtil.isEmpty(collect1)) {
-				//当前学员当前日期没有排班记录,直接导入
-				savePbWithoutHis(pbInfoItem);
-				continue;
-			}
-			//当前学员当前日期存在排班记录
-			DateTime thisStartDate = cn.hutool.core.date.DateUtil.parseDate(pbInfoItem.getSchStartDate());
-			DateTime thisEndDate = cn.hutool.core.date.DateUtil.parseDate(pbInfoItem.getSchEndDate());
-			for (PbInfoItem history : collect1) {
-				String hisConcatMon = history.getConcatMon();
-				String[] split = StringUtils.split(hisConcatMon, ",");
-				List<String> list = Arrays.asList(split);
-				//判断本次导入的轮转科室和历史数据的轮转科室是否一致
-				String schDeptFlow = pbInfoItem.getSchDeptFlow();
-				String historySchDeptFlow = history.getSchDeptFlow();
-				//本次导入的轮转科室和历史排班的科室不一致
-				//校验历史数据是否存在学员记录
-				String resultFlow = history.getResultFlow();
-				Integer resrecCount = entity.getResRecList().get(resultFlow);
-				if (null == resrecCount || resrecCount <=0) {
-					if (historySchDeptFlow.equals(schDeptFlow)) {
-						continue;
+			String importDeptFlow = pbInfoItem.getSchDeptFlow();
+			DateTime importStart = cn.hutool.core.date.DateUtil.parseDate(pbInfoItem.getSchStartDate());
+			DateTime importEnd = cn.hutool.core.date.DateUtil.parseDate(pbInfoItem.getSchEndDate());
+			for (PbInfoItem history : dbList) {
+				if (StringUtils.isNotEmpty(history.getRecordStatus())
+						&&"N".equals(history.getRecordStatus())) {
+					continue;
+				}
+				String dbSchDeptFlow = history.getSchDeptFlow();
+				DateTime hisStart = cn.hutool.core.date.DateUtil.parseDate(history.getSchStartDate());
+				DateTime hisEnd = cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate());
+				if (hisStart.compareTo(hisEnd)>=0){
+					//删除历史排班
+					deletePbResult(history.getResultFlow(),true);
+					//移除dbList中的本次历史数据，因为它已经被融合了
+					history.setRecordStatus("N");
+					continue;
+				}
+				//判断是否有提交记录
+				Integer resRecLog = entity.getResRecList().get(history.getResultFlow());
+				resRecLog = null == resRecLog? 0:resRecLog;
+				if ((dbSchDeptFlow.equals(importDeptFlow))) {
+					if (importStart.compareTo(hisStart) == 0 && importEnd.compareTo(hisEnd) == 0) {
+						if (resRecLog>0){
+							pbInfoItem.setRecordStatus("N");
+							continue;
+						}else {
+							pbInfoItem.setResultFlow(history.getResultFlow());
+							continue;
+						}
 					}
-					if (list.size() == 1) {
-						//作废之前的，新增本次排班
-						deletePbResult(history.getResultFlow(),true);
-						savePbWithoutHis(pbInfoItem);
-						continue;
-					}
-					if (list.indexOf(concatMon) == 0) {
-						//替换之前排班的开头部分
-						DateTime dateTime = cn.hutool.core.date.DateUtil.offsetDay(thisEndDate, 1);
-						SchArrangeResult schArrangeResult = arrangeResultMapper.selectByPrimaryKey(history.getResultFlow());
+					if (importStart.compareTo(hisEnd)==0
+							|| importStart.compareTo(cn.hutool.core.date.DateUtil.offsetDay(hisEnd,1))==0) {
+						if (resRecLog>0) {
+							//有提交记录的就不合并了,调整本次排班数据
+							pbInfoItem.setSchStartDate(cn.hutool.core.date.DateUtil.offsetDay(
+									cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
+									1).toDateStr());
+							history.setRecordStatus("N");
+						}else {
+							//导入的开始时间和历史数据的结束时间衔接上
+							//导入的开始时间内改为历史的开始时间
+							pbInfoItem.setResultFlow(history.getResultFlow());
+							pbInfoItem.setSchStartDate(history.getSchStartDate());
+							//删除历史排班
+							deletePbResult(history.getResultFlow(),true);
+							//移除dbList中的本次历史数据，因为它已经被融合了
+							history.setRecordStatus("N");
+							continue;
+						}
 
-						schArrangeResult.setSchStartDate(cn.hutool.core.date.DateUtil.formatDate(dateTime));
-						DateTime end = cn.hutool.core.date.DateUtil.parseDate(schArrangeResult.getSchEndDate());
-						if (dateTime.compareTo(end)>=0) {
+					}
+					if (importEnd.compareTo(hisStart)==0
+							|| importEnd.compareTo(cn.hutool.core.date.DateUtil.offsetDay(hisStart,-1))==0) {
+						if (resRecLog>0){
+							//有提交记录的就不合并了,调整本次排班数据
+							pbInfoItem.setSchEndDate(cn.hutool.core.date.DateUtil.offsetDay(
+									cn.hutool.core.date.DateUtil.parseDate(history.getSchStartDate()),-1).toDateStr());
+							history.setRecordStatus("N");
+						}else {
+							//导入的尾衔接
+							pbInfoItem.setResultFlow(history.getResultFlow());
+							//导入的开始时间内改为历史的开始时间
+							pbInfoItem.setSchEndDate(history.getSchEndDate());
+							//删除历史排班
 							deletePbResult(history.getResultFlow(),true);
-							savePbWithoutHis(pbInfoItem);
+							//移除dbList中的本次历史数据，因为它已经被融合了
+							history.setRecordStatus("N");
 							continue;
 						}
-						long l = cn.hutool.core.date.DateUtil.betweenDay(dateTime, end, false) + 1;
-						schArrangeResult.setSchMonth(new BigDecimal(String.valueOf(l)).divide(new BigDecimal("30"),1,BigDecimal.ROUND_HALF_DOWN).toString());
-						arrangeResultMapper.updateByPrimaryKeySelective(schArrangeResult);
-						savePbWithoutHis(pbInfoItem);
+					}
+					//处理交集
+					if (importStart.compareTo(hisStart)>=0 && importStart.compareTo(hisEnd)<0){
+						if (resRecLog>0){
+							pbInfoItem.setSchStartDate(cn.hutool.core.date.DateUtil.offsetDay(
+									cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
+									1).toDateStr());
+							history.setRecordStatus("N");
+						}else {
+							pbInfoItem.setResultFlow(history.getResultFlow());
+							//首部有交集
+							pbInfoItem.setSchStartDate(history.getSchStartDate());
+							//删除历史排班
+							deletePbResult(history.getResultFlow(),true);
+							//移除dbList中的本次历史数据，因为它已经被融合了
+							history.setRecordStatus("N");
+							continue;
+						}
+					}
+					//处理交集
+					if (importEnd.compareTo(hisStart)>0 && importEnd.compareTo(hisEnd)<=0){
+						if (resRecLog>0){
+							pbInfoItem.setSchEndDate(cn.hutool.core.date.DateUtil.offsetDay(
+									cn.hutool.core.date.DateUtil.parseDate(history.getSchStartDate()),-1).toDateStr());
+							history.setRecordStatus("N");
+						}else {
+							pbInfoItem.setResultFlow(history.getResultFlow());
+							//尾部有交集
+							pbInfoItem.setSchEndDate(history.getSchEndDate());
+							//删除历史排班
+							deletePbResult(history.getResultFlow(),true);
+							//移除dbList中的本次历史数据，因为它已经被融合了
+							history.setRecordStatus("N");
+							continue;
+						}
+					}
+					//包含历史数据
+					if (importStart.compareTo(hisStart)<=0 && importEnd.compareTo(hisEnd)>=0){
+						if (resRecLog>0){
+							//被包含的历史排班中存在学员数据
+							pbInfoItem.setChaiEnd(cn.hutool.core.date.DateUtil.offsetDay(
+									cn.hutool.core.date.DateUtil.parseDate(history.getSchStartDate()),
+									-1
+							).toDateStr());
+							pbInfoItem.setChaiNextStart(cn.hutool.core.date.DateUtil.offsetDay(
+									cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
+									1
+							).toDateStr());
+							history.setRecordStatus("N");
+						}else {
+							pbInfoItem.setResultFlow(history.getResultFlow());
+							//删除历史排班
+							deletePbResult(history.getResultFlow(),true);
+							//移除dbList中的本次历史数据，因为它已经被融合了
+							history.setRecordStatus("N");
+							continue;
+						}
+					}
+					//被包含
+					if (importStart.compareTo(hisStart)>=0 && importEnd.compareTo(hisEnd)<=0){
+						if (resRecLog>0){
+							pbInfoItem.setRecordStatus("N");
+							continue;
+						}
+						//历史数据一拆二
+						PbInfoItem newHisTory = new PbInfoItem();
+						BeanUtil.copyProperties(history,newHisTory);
+						newHisTory.setResultFlow(PkUtil.getUUID());
+						history.setSchEndDate(cn.hutool.core.date.DateUtil.offsetDay(importStart,-1).toDateStr());
+						history.setRecordStatus("N");
+						dbList.add(history);
+						newHisTory.setSchStartDate(cn.hutool.core.date.DateUtil.offsetDay(importEnd,1).toDateStr());
+						dbList.add(newHisTory);
+						savePbWithoutHis(newHisTory);
+					}
+				}
+				savePbWithoutHis(pbInfoItem);
+			}
+			//再次检验标准科室轮转时长的限制
+			Map<String, String> map = todoCheckSchDate(doctorFlow);
+			checkSchMonMap.putAll(map);
+			//合并排班日期
+//			boolean b1 = hebingDate(doctorFlow);
+//			//根据排班数据，更新process轮转数据
+			todoProcessData(doctorFlow);
+		}
+		if (CollectionUtil.isEmpty(checkSchMonMap)) {
+			//导入成功
+			return result;
+		}
+		JsresPowerCfg openCfgChek = jsResPowerCfgBiz.read("process_scheduling_check_" + GlobalContext.getCurrentUser().getOrgFlow());
+		if ("Y".equals(openCfgChek.getCfgValue())) {
+			//开启排班校验
+			boolean successFlag = true;
+			for (String doctorFlow : checkSchMonMap.keySet()) {
+				List<SchedulingDataModel> data1 = entity.getData();
+				if (CollectionUtil.isEmpty(data1)) {
+					continue;
+				}
+				for (SchedulingDataModel item : data1) {
+					String userId = item.getId();
+					if (StringUtils.isEmpty(userId)) {
 						continue;
 					}
-					if (list.indexOf(concatMon) >0 && list.indexOf(concatMon)<=(list.size()-1)) {
-						//替换之前排班的结束时间部分
-						DateTime dateTime = cn.hutool.core.date.DateUtil.offsetDay(thisStartDate, -1);
-						SchArrangeResult schArrangeResult = arrangeResultMapper.selectByPrimaryKey(history.getResultFlow());
-						schArrangeResult.setSchEndDate(cn.hutool.core.date.DateUtil.formatDate(dateTime));
-						DateTime dateTime1 = cn.hutool.core.date.DateUtil.parseDate(schArrangeResult.getSchStartDate());
-						//把后面的接去掉
-						List<String> strings = list.subList(0, list.indexOf(concatMon)+1);
-						hisConcatMon = CollectionUtil.join(strings,",");
-						if (dateTime1.compareTo(dateTime)>=0) {
-							deletePbResult(history.getResultFlow(),true);
-							savePbWithoutHis(pbInfoItem);
-							continue;
+					if (userId.equals(doctorFlow)) {
+						String msg = checkSchMonMap.get(doctorFlow);
+						if (StringUtils.isNotEmpty(msg)) {
+							successFlag = false;
+							item.setTip(item.getTip()+msg);
 						}
-						long l = cn.hutool.core.date.DateUtil.betweenDay(dateTime1, dateTime, false) + 1;
-						schArrangeResult.setSchMonth(new BigDecimal(String.valueOf(l)).divide(new BigDecimal("30"),1,BigDecimal.ROUND_HALF_DOWN).toString());
-						arrangeResultMapper.updateByPrimaryKeySelective(schArrangeResult);
-						savePbWithoutHis(pbInfoItem);
-						continue;
 					}
 				}
 			}
-			//后续处理，检验排班时间是否有重合的
-			boolean b = todoCheckSchDate(doctorFlow);
-			//合并排班日期
-			boolean b1 = hebingDate(doctorFlow);
-//			//根据排班数据，更新process轮转数据
-			todoProcessData(doctorFlow);
+			if (successFlag) {
+				return result;
+			}
+			//存在标准科室轮转时长超出限制的情况，手动回滚事物
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			result.put("code",500);
+			result.put("data",entity.getData());
+		}else {
+			//不开启轮转时长的校验，导入成功
+			return result;
 		}
 		return result;
 	}
 
 
-	private boolean todoCheckSchDate(String doctorFlow){
+
+	private Map<String,String> todoCheckSchDate(String doctorFlow){
+		Map<String, String> result = new HashMap<>();
 		if (StringUtils.isEmpty(doctorFlow)) {
-			return false;
+			result.put(doctorFlow,"学员信息不存在！<br/>");
+			return result;
+		}
+		ResDoctor doctor = doctorBiz.findByFlow(doctorFlow);
+		if (ObjectUtil.isEmpty(doctor)) {
+			result.put(doctorFlow,"学员信息不存在！<br/>");
+			return result;
 		}
 		//获取学员所有的排班
 		List<SchArrangeResult> allByDoctorFlow = resultExtMapper.getAllByDoctorFlow(doctorFlow,true);
 		if (CollectionUtil.isEmpty(allByDoctorFlow)) {
-			return false;
+			return result;
 		}
-		try{
-			for (int i = 0; i < allByDoctorFlow.size(); i++) {
-				SchArrangeResult item = allByDoctorFlow.get(i);
-				//下面就是处理那些允许覆盖并且判断下时间是否重合
-				String schEndDate = item.getSchEndDate();
-				String schStartDate = item.getSchStartDate();
-				//当前元素的结束时间
-				DateTime endTime = cn.hutool.core.date.DateUtil.parseDate(schEndDate);
-				DateTime startTime = cn.hutool.core.date.DateUtil.parseDate(schStartDate);
-				SchArrangeResult afterItem = null;
-				int i1 = i + 1;
-//				while (i1<allByDoctorFlow.size()) {
-//					SchArrangeResult schArrangeResult = allByDoctorFlow.get(i1);
-//					if ("N".equalsIgnoreCase(schArrangeResult.getRecordStatus())) {
-//						i1++;
-//					}else {
-//						break;
-//					}
-//				}
-				if ((i1)>=allByDoctorFlow.size()) {
-					//最后一个就不做处理了
-					continue;
-				}
-				afterItem = allByDoctorFlow.get(i1);
-				String afterSchStartDate = afterItem.getSchStartDate();
-				DateTime afterStart = cn.hutool.core.date.DateUtil.parseDate(afterSchStartDate);
-				if (endTime.compareTo(afterStart)>=0) {
-					//当前的结束时间大于等于下一个的开始时间，需要变更当前元素的结束时间并且使其生效
-					item.setSchEndDate(cn.hutool.core.date.DateUtil.formatDate(cn.hutool.core.date.DateUtil.offsetDay(afterStart,-1)));
-					long l = cn.hutool.core.date.DateUtil.betweenDay(startTime, afterStart, false) + 1;
-					BigDecimal divide = new BigDecimal(String.valueOf(l)).divide(new BigDecimal("30"), 1, BigDecimal.ROUND_HALF_DOWN);
-					item.setSchMonth(divide.toString());
-					arrangeResultMapper.updateByPrimaryKeySelective(item);
-				}
+		Map<String, List<SchArrangeResult>> map = allByDoctorFlow.stream().collect(Collectors.groupingBy(SchArrangeResult::getStandardDeptName));
+		List<SchRotationDept> bzDept = rotationBiz.getAllBzDeptListBySpeId(doctor.getTrainingSpeId());
+		if (CollectionUtil.isEmpty(bzDept)) {
+			result.put(doctorFlow,"【"+doctor.getTrainingSpeName()+"】专业的最新轮转方案中，未查询到相关科室的配置！<br/>");
+			return result;
+		}
+		Map<String, List<SchRotationDept>> bzMap = bzDept.stream().collect(Collectors.groupingBy(SchRotationDept::getStandardDeptName));
+		String msg = "";
+		for (String bzDeptName : map.keySet()) {
+			List<SchArrangeResult> list = map.get(bzDeptName);
+			if (CollectionUtil.isEmpty(list)) {
+				continue;
 			}
-		}catch (Exception e) {
-			e.printStackTrace();
-			return false;
+			List<SchRotationDept> bzList = bzMap.get(bzDeptName);
+			if (CollectionUtil.isEmpty(bzList)) {
+				msg = msg + "未查询到标准科室【"+bzDeptName+"】的轮转配置！<br/>";
+				continue;
+			}
+			double bzCount = 0;
+			for (SchRotationDept bz : bzList) {
+				String schMonth = bz.getSchMonth();
+				schMonth = StringUtils.isEmpty(schMonth)? "0":schMonth;
+				bzCount += Double.valueOf(schMonth);
+			}
+
+			double lzCount = 0;
+			for (SchArrangeResult lz : list) {
+				String schMonth = lz.getSchMonth();
+				schMonth = StringUtils.isEmpty(schMonth)? "0":schMonth;
+				lzCount += Double.valueOf(schMonth);
+			}
+			if (lzCount>bzCount) {
+				msg = msg + "标准科室【"+bzDeptName+"】的排班时长已超出方案配置的轮转时长！<br/>";
+			}
 		}
-		return true;
+		result.put(doctorFlow,msg);
+		return result;
 	}
 
 	private boolean hebingDate(String doctorFlow){
@@ -5093,7 +5228,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	}
 
 
-	private void todoProcessData(String doctorFlow){
+	private void todoProcessData(String doctorFlow) {
 		if (StringUtils.isEmpty(doctorFlow)) {
 			return;
 		}
@@ -5152,74 +5287,102 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			dbData.setSchResultFlow(schArrangeResult.getResultFlow());
 			doctorSchProcessMapper.insertSelective(dbData);
 		}
+		ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
+		ResDoctorSchProcessExample.Criteria criteria = example.createCriteria();
+		criteria.andRecordStatusEqualTo("N")
+				.andUserFlowEqualTo(doctorFlow);
+		doctorSchProcessMapper.deleteByExample(example);
 
 	}
 
-	private void savePbWithoutHis(PbInfoItem item){
-		SchArrangeResult result = new SchArrangeResult();
-		BeanUtil.copyProperties(item,result);
-		//TODO::填充机构信息
-		result.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-		result.setOrgName(GlobalContext.getCurrentUser().getOrgName());
-		result.setRecordStatus("Y");
-		result.setCreateTime(DateUtil.getCurrDateTime());
-		result.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-		result.setModifyTime(DateUtil.getCurrDateTime());
-		result.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-		result.setBaseAudit("Passed");
-		//查询是否有标准的方案配置
-		List<SchRotationDept> schRotationDepts = rotationDeptBiz.searchSchRotationDept(result.getRotationFlow());
-		if (CollectionUtil.isEmpty(schRotationDepts)) {
+	private void savePbWithoutHis(PbInfoItem vo){
+		if (StringUtils.isNotEmpty(vo.getRecordStatus()) && "N".equals(vo.getRecordStatus())) {
 			return;
 		}
-		Map<String, List<SchRotationDept>> standMap = schRotationDepts.stream().collect(Collectors.groupingBy(SchRotationDept::getStandardDeptId));
-		List<SchRotationDept> schRotationDepts1 = standMap.get(result.getStandardDeptId());
-		if (CollectionUtil.isEmpty(schRotationDepts1)) {
-			//没有该标准科室的配置，一般不会出现这种情况
-			return;
-		}
-		if (schRotationDepts1.size() ==1) {
-			result.setStandardGroupFlow(schRotationDepts1.get(0).getGroupFlow());
-			result.setIsRequired(schRotationDepts1.get(0).getIsRequired());
-		}
-		if (schRotationDepts1.size()>1){
-			boolean con = true;
-			for (SchRotationDept it : schRotationDepts1) {
-				if (!con) {
-					continue;
-				}
-				String standardDeptId = it.getStandardDeptId();
-				String groupFlow = it.getGroupFlow();
-				String schMonth = StringUtils.isEmpty(it.getSchMonth())? "0":it.getSchMonth();
-				Double i = arrangeResultMapper.schMon(result.getDoctorFlow(), result.getRotationFlow(), standardDeptId, groupFlow);
-				if (i<Double.valueOf(schMonth)) {
-					result.setStandardGroupFlow(groupFlow);
-					result.setIsRequired(it.getIsRequired());
-					con = false;
-				}
-			}
-			if (con) {
-				result.setStandardGroupFlow(schRotationDepts1.get(schRotationDepts1.size()-1).getGroupFlow());
-				result.setIsRequired(schRotationDepts1.get(schRotationDepts1.size()-1).getIsRequired());
-			}
-		}
-		//保存到result表
-		SchArrangeResult schArrangeResult = arrangeResultMapper.selectByPrimaryKey(result.getResultFlow());
-		boolean flag = false;
-		if (ObjectUtil.isEmpty(schArrangeResult)) {
-			int i1 = arrangeResultMapper.insertSelective(result);
-			flag = i1>0;
+		List<PbInfoItem> list = new ArrayList<>();
+		if (StringUtils.isNotEmpty(vo.getChaiEnd()) && StringUtils.isNotEmpty(vo.getChaiNextStart())) {
+			PbInfoItem v1 = new PbInfoItem();
+			PbInfoItem v2 = new PbInfoItem();
+			BeanUtil.copyProperties(vo,v1);
+			BeanUtil.copyProperties(vo,v2);
+			v2.setResultFlow(PkUtil.getUUID());
+			v1.setSchEndDate(vo.getChaiEnd());
+			list.add(v1);
+			v2.setSchStartDate(vo.getChaiNextStart());
+			list.add(v2);
 		}else {
-			int i1 = arrangeResultMapper.updateByPrimaryKeySelective(result);
-			flag = i1>0;
+			list.add(vo);
 		}
-//		if (flag) {
-//			//修改排班成功，处理下相关数据
-//			arrangeResultMapper.updateAfterPbGroup(result.getResultFlow());
-//			arrangeResultMapper.updateAfterPbRequiest(result.getResultFlow());
-//		}
 
-
+		for (PbInfoItem item : list) {
+			SchArrangeResult result = new SchArrangeResult();
+			BeanUtil.copyProperties(item,result);
+			//TODO::填充机构信息
+			result.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
+			result.setOrgName(GlobalContext.getCurrentUser().getOrgName());
+			result.setRecordStatus("Y");
+			result.setCreateTime(DateUtil.getCurrDateTime());
+			result.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
+			result.setModifyTime(DateUtil.getCurrDateTime());
+			result.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
+			result.setBaseAudit("Passed");
+			//查询是否有标准的方案配置
+			List<SchRotationDept> schRotationDepts = rotationDeptBiz.searchSchRotationDept(result.getRotationFlow());
+			if (CollectionUtil.isEmpty(schRotationDepts)) {
+				return;
+			}
+			Map<String, List<SchRotationDept>> standMap = schRotationDepts.stream().collect(Collectors.groupingBy(SchRotationDept::getStandardDeptId));
+			List<SchRotationDept> schRotationDepts1 = standMap.get(result.getStandardDeptId());
+			if (CollectionUtil.isEmpty(schRotationDepts1)) {
+				//没有该标准科室的配置，一般不会出现这种情况
+				return;
+			}
+			if (schRotationDepts1.size() ==1) {
+				result.setStandardGroupFlow(schRotationDepts1.get(0).getGroupFlow());
+				result.setIsRequired(schRotationDepts1.get(0).getIsRequired());
+			}
+			if (schRotationDepts1.size()>1){
+				boolean con = true;
+				for (SchRotationDept it : schRotationDepts1) {
+					if (!con) {
+						continue;
+					}
+					String standardDeptId = it.getStandardDeptId();
+					String groupFlow = it.getGroupFlow();
+					String schMonth = StringUtils.isEmpty(it.getSchMonth())? "0":it.getSchMonth();
+					Double i = arrangeResultMapper.schMon(result.getDoctorFlow(), result.getRotationFlow(), standardDeptId, groupFlow);
+					if (i<Double.valueOf(schMonth)) {
+						result.setStandardGroupFlow(groupFlow);
+						result.setIsRequired(it.getIsRequired());
+						con = false;
+					}
+				}
+				if (con) {
+					result.setStandardGroupFlow(schRotationDepts1.get(schRotationDepts1.size()-1).getGroupFlow());
+					result.setIsRequired(schRotationDepts1.get(schRotationDepts1.size()-1).getIsRequired());
+				}
+			}
+			//保存到result表
+			SchArrangeResult schArrangeResult = arrangeResultMapper.selectByPrimaryKey(result.getResultFlow());
+			boolean flag = false;
+			if (ObjectUtil.isEmpty(schArrangeResult)) {
+				schArrangeResult = arrangeResultMapper.infoByDeptFlowSchMon(result.getSchDeptFlow(),
+						result.getSchStartDate(),
+						result.getSchEndDate(),
+						result.getDoctorFlow());
+				if (ObjectUtil.isEmpty(schArrangeResult)) {
+					int i1 = arrangeResultMapper.insertSelective(result);
+					flag = i1>0;
+				}else {
+					result.setResultFlow(schArrangeResult.getResultFlow());
+					int i1 = arrangeResultMapper.updateByPrimaryKeySelective(result);
+					flag = i1>0;
+				}
+			}else {
+				int i1 = arrangeResultMapper.updateByPrimaryKeySelective(result);
+				flag = i1>0;
+			}
+		}
 	}
 
 	private void deletePbResult(String resultFlow,boolean delete){

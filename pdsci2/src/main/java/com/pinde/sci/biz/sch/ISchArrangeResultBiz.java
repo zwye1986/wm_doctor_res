@@ -349,7 +349,7 @@ public interface ISchArrangeResultBiz {
 
 	Map<String,String> importSchedulingAuditExcelCache(MultipartFile file) throws IOException, InvalidFormatException;
 	Map<String, Object> checkRowData(List<SchedulingDataModel> data);
-	Map<String,Object> submitPbImport(List<SchedulingDataModel> data);
+	Map<String,Object> submitPbImport(List<SchedulingDataModel> data) throws Exception;
 
 	List<SchArrangeResult> checkResultDate(String doctorFlow, String startDate, String endDate,
 										   String subDeptFlow,String rotationFlow);

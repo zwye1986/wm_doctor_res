@@ -51,20 +51,26 @@
             format:'yyyy'
         });
         $('#form_btn').empty();
-        let checkOpen = $("#checkOpen").val();
-        if (checkOpen && "Y" == checkOpen) {
-            $('#form_btn').append("" +
-                "<input class='btn_green' type='button' " +
-                "value='查&#12288;询' onclick='toPage(1);'/>" +
-                "<input class='btn_green' type='button' value='导&#12288;入' onclick='toImport2();'/>"
-            )
-        }else {
-            $('#form_btn').append("" +
-                "<input class='btn_green' type='button' " +
-                "value='查&#12288;询' onclick='toPage(1);'/>" +
-                "<input class='btn_green' type='button' value='导&#12288;入' onclick='toImport();'/>"
-            )
-        }
+        $('#form_btn').append("" +
+            "<input class='btn_green' type='button' " +
+            "value='查&#12288;询' onclick='toPage(1);'/>" +
+            "<input class='btn_green' type='button' value='导&#12288;入' onclick='toImport2();'/>"
+        )
+        // let checkOpen = $("#checkOpen").val();
+        // if (checkOpen && "Y" == checkOpen) {
+        //     $('#form_btn').append("" +
+        //         "<input class='btn_green' type='button' " +
+        //         "value='查&#12288;询' onclick='toPage(1);'/>" +
+        //         "<input class='btn_green' type='button' value='导&#12288;入' onclick='toImport2();'/>"
+        //     )
+        // }
+        // else {
+        //     $('#form_btn').append("" +
+        //         "<input class='btn_green' type='button' " +
+        //         "value='查&#12288;询' onclick='toPage(1);'/>" +
+        //         "<input class='btn_green' type='button' value='导&#12288;入' onclick='toImport();'/>"
+        //     )
+        // }
         toPage();
     });
 
@@ -91,6 +97,7 @@
     }
 
     function checkTime() {
+        var schStartDate = $("#schStartDate").val();
         var schStartDate = $("#schStartDate").val();
         var schEndDate = $("#schEndDate").val();
         if (schStartDate !="" && schEndDate!="" && schStartDate>schEndDate){

@@ -65,14 +65,19 @@
             let code = JSON.parse(JSON.stringify(resp))['code'];
             if (code == 200) {
                 jboxEndLoading();
-                // jboxClose();
                 jboxInfo("导入成功");
-                // jboxCloseMessager();
-            }else {
+            }else if (code == 500) {
+                let respData = JSON.parse(JSON.stringify(resp))['data'];
+                if (respData) {
+                    window.dataList = respData;
+                    initData(respData);
+                    hideSubmitBt();
+                }
                 jboxEndLoading();
-                jboxError(JSON.parse(JSON.stringify(resp))['msg'])
+            } else {
+                hideSubmitBt();
+                jboxEndLoading();
             }
-            // jboxEndLoading();
         },null,false);
 
     }
