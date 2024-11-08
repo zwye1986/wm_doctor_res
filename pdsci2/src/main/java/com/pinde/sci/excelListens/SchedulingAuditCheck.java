@@ -2,6 +2,8 @@ package com.pinde.sci.excelListens;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.sci.excelListens.model.*;
@@ -52,6 +54,7 @@ public class SchedulingAuditCheck {
 
     //处理后合理的排班安排,可以入库的数据
     private List<SchArrangeResult> arrangeResults = new ArrayList<>();
+
 
 
 
@@ -238,7 +241,7 @@ public class SchedulingAuditCheck {
      * @Date: 2024/10/28 15:25
      * @Description: getData的时候对标准科室的轮转时长进行校验
      */
-    public List<SchedulingDataModel> getData(boolean checkSchMon) {
+    public List<SchedulingDataModel> getData(boolean checkSchMon,String minMonthCheck,String minMonth) {
         if (CollectionUtil.isEmpty(data)) {
             return data;
         }
@@ -333,6 +336,7 @@ public class SchedulingAuditCheck {
                 item.setTip(item.getTip()+"【"+speName+"】专业下的最新方案暂未配置轮转方案！<br/>");
             }
             //先把导入的数据转型
+            double schMinmon = 0;
             for (int i = 5; i < cellData.size(); i++) {
                 SchedulingDataInfo cellItem = cellData.get(i);
                 if ("lz".equalsIgnoreCase(cellItem.getDeptType())) {
@@ -341,7 +345,18 @@ public class SchedulingAuditCheck {
                     PbInfoItem byCellItem = getByCellItem(cellItem, schedulingDataInfo, item.getId(), cellData.get(0).getName(),cellData.get(3).getName());
                     if (null != byCellItem) {
                         this.compareList.add(byCellItem);
+                        String schMonth = byCellItem.getSchMonth();
+                        schMinmon += Double.valueOf(schMonth);
                     }
+
+                }
+            }
+            if ("Y".equals(minMonthCheck)) {
+                if (StringUtils.isEmpty(minMonth)) {
+                    minMonthCheck = "1";
+                }
+                if (schMinmon < ((Integer.valueOf(minMonth))*12)){
+                    item.setTip(item.getTip()+"本次排班总时长不能低于12个月！<br/>");
                 }
             }
 
@@ -744,8 +759,50 @@ public class SchedulingAuditCheck {
         }
 
         return result;
+    }
 
+    public List<PbInfoItem> getCompareList() {
+        if (CollectionUtil.isEmpty(compareList)) {
+            return compareList;
+        }
+        List<PbInfoItem> importList = compareList.stream().filter(e -> "import".equals(e.getType())).collect(Collectors.toList());
+        List<PbInfoItem> dbList = compareList.stream().filter(e -> "db".equals(e.getType())).collect(Collectors.toList());
+        if (CollectionUtil.isEmpty(importList)) {
+            return compareList;
+        }
+        List<PbInfoItem> result = new ArrayList<>();
+        for (PbInfoItem item : importList) {
+            String type = item.getType();
+            String doctorFlow = item.getDoctorFlow();
+            if ("db".equals(type) || item.getRecordStatus().equals("N")) {
+                continue;
+            }
+            DateTime itemEnd = DateUtil.parseDate(item.getSchEndDate());
+            DateTime itemStart = DateUtil.parseDate(item.getSchStartDate());
+            String itemDeptFlow = item.getSchDeptFlow();
+            for (PbInfoItem vo : importList) {
+                if ("db".equals(vo.getType()) || vo.getRecordStatus().equals("N") || !doctorFlow.equals(vo.getDoctorFlow())) {
+                    continue;
+                }
+                DateTime voEnd = DateUtil.parseDate(vo.getSchEndDate());
+                DateTime voStart = DateUtil.parseDate(vo.getSchStartDate());
+                String voDeptFlow = vo.getSchDeptFlow();
+                if (itemDeptFlow.equals(voDeptFlow)) {
+                    if (itemStart.compareTo(voEnd)==0 || itemStart.compareTo(DateUtil.offsetDay(voEnd,1)) == 0) {
+                        item.setSchStartDate(vo.getSchStartDate());
+                        vo.setRecordStatus("N");
+                    }
+                }
+            }
+        }
 
-
+        if (CollectionUtil.isNotEmpty(importList)) {
+            List<PbInfoItem> collect = importList.stream().filter(e -> "Y".equals(e.getRecordStatus())).collect(Collectors.toList());
+            result.addAll(collect);
+        }
+        if (CollectionUtil.isNotEmpty(dbList)) {
+            result.addAll(dbList);
+        }
+        return result;
     }
 }

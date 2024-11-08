@@ -585,6 +585,19 @@
                         </td>
                     </tr>
                     <tr>
+                        <td style="text-align: right;">轮转计划排班最短时间校验开关：</td>
+                        <td style="text-align: left;padding-left: 5px" width="200px">
+                            <c:set value="process_scheduling_check_min_mon_${sessionScope.currUser.orgFlow }" var="key"/>
+                            <input type="hidden" name="cfgCode" value="${key}">&nbsp;
+                            <input type="radio" id="${key}_1" name="${key}" value="Y"
+                                   <c:if test="${pdfn:jsresPowerCfgMap(key) eq 'Y'}">checked</c:if>/>
+                            <label for="${key}_1">打开</label>&#12288;
+                            <input type="radio" id="${key}_2" name="${key}" value="N"
+                                   <c:if test="${pdfn:jsresPowerCfgMap(key) eq 'N'}">checked</c:if>/>
+                            <label for="${key}_2">关闭</label>&#12288;
+                        </td>
+                    </tr>
+                    <tr>
                         <td style="text-align: right;">轮转计划排班最短时间：</td>
                         <td style="text-align: left;padding-left: 5px" width="200px">
                             <c:set value="jsres_${sessionScope.currUser.orgFlow }_org_process_scheduling_time" var="key"/>

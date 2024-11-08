@@ -4232,7 +4232,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 
 	@PostMapping("/submitPbImport")
 	@ResponseBody
-	public Map<String,Object> submitPbImport(@RequestBody List<SchedulingDataModel> data){
+	public Map<String,Object> submitPbImport(@RequestBody List<SchedulingDataModel> data) throws Exception {
 		return schArrangeResultBiz.submitPbImport(data);
 	}
 

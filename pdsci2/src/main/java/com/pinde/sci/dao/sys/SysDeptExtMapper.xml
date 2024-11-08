@@ -298,7 +298,7 @@
 				</foreach>
 			</when>
 			<otherwise>
-				and 1=-1
+				and 1 &lt;&gt; 1
 			</otherwise>
 		</choose>
 		union all
@@ -312,7 +312,7 @@
 				</foreach>
 			</when>
 			<otherwise>
-				and 1=-1
+				and 1 &lt;&gt; 1
 			</otherwise>
 		</choose>
 		<choose>
@@ -323,7 +323,7 @@
 				</foreach>
 			</when>
 			<otherwise>
-				and 1=-1
+				and 1 &lt;&gt; 1
 			</otherwise>
 		</choose>
 
@@ -344,7 +344,7 @@
 				and rel_org_flow = #{orgFlow}
 			</when>
 		    <otherwise>
-				and 1=-1
+				and 1 &lt;&gt; 1
 			</otherwise>
 		</choose>
 		union all
@@ -356,7 +356,7 @@
 				and org_flow = #{orgFlow}
 			</when>
 			<otherwise>
-				and 1=-1
+				and 1 &lt;&gt; 1
 			</otherwise>
 		</choose>
 		order by sort_no
@@ -373,7 +373,7 @@
 				</foreach>
 			</when>
 		    <otherwise>
-				and 1=-1
+				and 1 &lt;&gt; 1
 			</otherwise>
 		</choose>
 	</select>

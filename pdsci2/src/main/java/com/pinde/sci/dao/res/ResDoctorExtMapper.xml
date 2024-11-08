@@ -3125,7 +3125,7 @@
 		SELECT DISTINCT SCHOOL FROM RES_DOCTOR WHERE SCHOOL IS NOT NULL
 	</select>
     <select id="listDoctorResult" resultType="com.pinde.sci.model.mo.SchArrangeResult">
-		SELECT RESULT_FLOW,DOCTOR_FLOW,DOCTOR_NAME,STANDARD_DEPT_ID,STANDARD_DEPT_NAME,SCH_START_DATE,SCH_END_DATE,SCH_DEPT_FLOW,SCH_DEPT_NAME,SCH_MONTH
+		SELECT RESULT_FLOW,DOCTOR_FLOW,DOCTOR_NAME,STANDARD_DEPT_ID,STANDARD_DEPT_NAME,SCH_START_DATE,SCH_END_DATE,SCH_DEPT_FLOW,SCH_DEPT_NAME,SCH_MONTH,RECORD_STATUS
 		FROM SCH_ARRANGE_RESULT
 		WHERE RECORD_STATUS = 'Y'
 		<choose>
@@ -3136,7 +3136,7 @@
 				</foreach>
 			</when>
 		    <otherwise>
-				AND 1=-1
+				AND 1 &lt;&gt; 1
 			</otherwise>
 		</choose>
 	</select>
@@ -3154,7 +3154,7 @@
 				  </foreach>
 			  </when>
 		      <otherwise>
-				  AND 1=-1
+				  AND 1 &lt;&gt; 1
 			  </otherwise>
 		  </choose>
 		GROUP BY re.RESULT_FLOW

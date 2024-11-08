@@ -112,7 +112,7 @@
 					  </foreach>
 			  </when>
 		      <otherwise>
-				  AND 1=-1
+				  AND 1 &lt;&gt; 1
 			  </otherwise>
 		  </choose>
 		<choose>
@@ -123,7 +123,7 @@
 				</foreach>
 			</when>
 			<otherwise>
-				AND 1=-1
+				AND 1 &lt;&gt; 1
 			</otherwise>
 		</choose>
 	</select>

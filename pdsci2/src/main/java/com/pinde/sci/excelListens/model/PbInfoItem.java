@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +61,11 @@ public class PbInfoItem implements Serializable {
     //数据来源类型：import导入的数据，db数据库存在（已排班的数据）
     private String type;
 
+    private String recordStatus = "Y";
+
+    private String chaiEnd;
+    private String chaiNextStart;
+
     public String getArrangeFlow() {
         return resultFlow;
     }
@@ -73,7 +79,15 @@ public class PbInfoItem implements Serializable {
             DateTime end = DateUtil.parseDate(schEndDate);
             long l = DateUtil.betweenDay(start, end, false);
             BigDecimal divide = new BigDecimal(String.valueOf(l)).divide(new BigDecimal("30"), 1, BigDecimal.ROUND_HALF_DOWN);
-            return String.valueOf(divide);
+            int multiply = divide.multiply(new BigDecimal("10")).setScale(0, RoundingMode.HALF_DOWN).intValue();
+            int yu = multiply % 5;
+            if (yu<=2) {
+                double i = 0.5 * (multiply / 5);
+                return String.valueOf(i);
+            }else {
+                double i = 0.5 * ((multiply / 5)+1);
+                return String.valueOf(i);
+            }
         }catch (Exception e) {
             return "0";
         }

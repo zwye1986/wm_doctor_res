@@ -712,4 +712,41 @@
       AND STANDARD_GROUP_FLOW = #{groupFlow}
 
   </select>
+    <select id="infoByDeptFlowSchMon" resultType="com.pinde.sci.model.mo.SchArrangeResult">
+    select * from SCH_ARRANGE_RESULT
+    where RECORD_STATUS = 'Y'
+    <choose>
+      <when test="null != schDeptFlow and schDeptFlow.trim() != ''">
+        AND SCH_DEPT_FLOW = #{schDeptFlow}
+      </when>
+      <otherwise>
+        AND 1 &lt;&gt; -1
+      </otherwise>
+    </choose>
+      <choose>
+        <when test="null != schStartDate and schStartDate.trim() != ''">
+          AND SCH_START_DATE = #{schStartDate}
+        </when>
+        <otherwise>
+          AND 1 &lt;&gt; -1
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="null != schEndDate and schEndDate.trim() != ''">
+          AND SCH_END_DATE = #{schEndDate}
+        </when>
+        <otherwise>
+          AND 1 &lt;&gt; -1
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="null != doctorFlow and doctorFlow.trim() != ''">
+          AND DOCTOR_FLOW = #{doctorFlow}
+        </when>
+        <otherwise>
+          AND 1 &lt;&gt; -1
+        </otherwise>
+      </choose>
+
+    </select>
 </mapper>

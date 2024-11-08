@@ -36,4 +36,9 @@ public interface SchArrangeResultMapper {
                    @Param("rotationFlow")String rotationFlow,
                    @Param("standDeptId")String standDeptId,
                    @Param("groupFlow")String groupFlow);
+
+    SchArrangeResult infoByDeptFlowSchMon(@Param("schDeptFlow")String schDeptFlow,
+                                          @Param("schStartDate")String schStartDate,
+                                          @Param("schEndDate")String schEndDate,
+                                          @Param("doctorFlow")String doctorFlow);
 }
