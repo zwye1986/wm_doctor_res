@@ -6,6 +6,7 @@
 </jsp:include>
 <link rel="stylesheet" type="text/css" href="<s:url value='/jsp/jsres/css/exam.css'/>?v=${applicationScope.sysCfgMap['sys_version']}"></link>
 <script type="text/javascript">
+speId = '${speList[0].speFlow}';
 $(document).ready(function(){
 	$("li").click(function(){
 		$(".tab_select").addClass("tab");
@@ -49,7 +50,7 @@ function getInfo(baseInfoName,baseFlow){
 }
 
 function editInfo(baseInfoName,deptFlow){
-    var url="<s:url value='/jsres/kzr/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&editFlag=${GlobalConstant.FLAG_Y}&baseInfoName="+baseInfoName+"&deptFlow="+deptFlow+"&orgFlow=${orgFlow}&isJoin=${isJoin}"+"&speFlow=${speFlow}&isglobal=${isglobal}";
+    var url="<s:url value='/jsres/kzr/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&editFlag=${GlobalConstant.FLAG_Y}&baseInfoName="+baseInfoName+"&deptFlow="+deptFlow+"&orgFlow=${orgFlow}&isJoin=${isJoin}"+"&speFlow=" + speId + "&isglobal=${isglobal}";
     jboxLoad("hosContent", url, false);
 
 }
@@ -59,7 +60,7 @@ function loadInfo(baseInfoName,deptFlow){
         deptFlow = $("#deptFlow").find("option:selected").val();
     }
 	var url="<s:url value='/jsres/kzr/findAllBaseInfo'/>?onlyRead=${onlyRead}&viewFlag=${viewFlag}&baseInfoName="+baseInfoName
-        +"&deptFlow="+deptFlow+"&orgFlow=${orgFlow}&isJoin=${isJoin}"+"&speFlow=${speFlow}&isglobal=${isglobal}";
+        +"&deptFlow="+deptFlow+"&orgFlow=${orgFlow}&isJoin=${isJoin}"+"&speFlow=" + speId + "&isglobal=${isglobal}";
 	jboxLoad("hosContent", url, false);
 }
 
@@ -82,50 +83,67 @@ function showTab(deptFlow){
     var baseInfoName = $(".tab_select").attr("baseInfoName");
     loadInfo(baseInfoName, deptFlow);
 }
+
+function changeSpeDept(target) {
+    speId = $(target).val();
+    <%--loadInfo('${GlobalConstant.DEPT_BASIC_INFO}','${param.deptFlow}');--%>
+    $('li').first().click();
+}
 </script>
 <div class="main_hd">
-	<input type="hidden" id="baseStatusId" name="baseStatusId" value="${resBase.baseStatusId}"/>
-	<form id="baseForm"style="position:relative;">
-    <input type="hidden" name="baseFlow" value="${sessionScope.currUser.orgFlow}"/>
-    <input type="hidden" id="resBase" value="${resBase.orgFlow}"/>
-	</form>
-<%--	<c:if test="${GlobalConstant.FLAG_Y != viewFlag}">--%>
-<%--	    <h2 style="line-height: 30px;padding: 5px 10px;color: #000000; font-size: 15px; font-family: Microsoft Yahei; font-weight: 500;">--%>
-<%--			科室信息维护--%>
-<%--	    </h2>--%>
-<%--    </c:if>--%>
-    <div class="title_tab" id="toptab" style="margin-top: 5px;">
-        <ul>
-            <li id="tab" class="tab_select" baseInfoName="${GlobalConstant.DEPT_BASIC_INFO}" cusTrigger="loadInfo('${GlobalConstant.DEPT_BASIC_INFO}','${param.deptFlow}');" style="cursor: pointer;">
-                <a style="color: #000000;font: 15px 'Microsoft Yahei';font-weight: 400;">科室基本信息</a>
-            </li>
-            <li class="tab" baseInfoName="${GlobalConstant.DIAG_DISEASE}" cusTrigger="loadInfo('${GlobalConstant.DIAG_DISEASE}','${param.deptFlow}');" style="cursor: pointer;">
-                <a style="color: #000000;font: 15px 'Microsoft Yahei';font-weight: 400;">诊疗疾病范围</a>
-            </li>
-            <li class="tab" baseInfoName="${GlobalConstant.EQUIPMENT_INSTRUMENTS}" cusTrigger="loadInfo('${GlobalConstant.EQUIPMENT_INSTRUMENTS}','${param.deptFlow}');" style="cursor: pointer;">
-                <a style="color: #000000;font: 15px 'Microsoft Yahei';font-weight: 400;">医疗设备仪器</a>
-            </li>
-            <li class="tab" baseInfoName="${GlobalConstant.GUIDING_PHYSICIAN}" cusTrigger="loadInfo('${GlobalConstant.GUIDING_PHYSICIAN}','${param.deptFlow}');" style="cursor: pointer;">
-                <a style="color: #000000;font: 15px 'Microsoft Yahei';font-weight: 400;">指导医师情况</a>
-            </li>
-            <li class="tab" baseInfoName="${GlobalConstant.DEPARTMENT_HEAD}" cusTrigger="loadInfo('${GlobalConstant.DEPARTMENT_HEAD}','${param.deptFlow}');" style="cursor: pointer;">
-                <a style="color: #000000;font: 15px 'Microsoft Yahei';font-weight: 400;">科室负责人信息</a>
-            </li>
-            <li class="tab" baseInfoName="${GlobalConstant.TRAINING}" cusTrigger="loadInfo('${GlobalConstant.TRAINING}','${param.deptFlow}');" style="cursor: pointer;">
-                <a style="color: #000000;font: 15px 'Microsoft Yahei';font-weight: 400;">培训情况</a>
-            </li>
-        </ul>
-        <div style="margin-right: 5px; float: right;<c:if test="${empty userDeptList or userDeptList.size() <= 1}">display: none;</c:if>">
-            <span style="color: #000000;font: 14px 'Microsoft Yahei';font-weight: 400;">切换科室：</span>
-            <select id="deptFlow" class="select" style="color: #000000;font: 14px 'Microsoft Yahei';font-weight: 400;" onchange="showTab(this.value);">
-                <c:forEach var="dept" items="${userDeptList}">
-                    <option style="text-align: center;" value="${dept.deptFlow}" ${deptFlow == dept.deptFlow ? 'selected' : ''}>${dept.deptName}</option>
+    <c:if test="${not empty speList}">
+        <div class="" style="margin-left: 10px">
+            专业基地：<select name="speSelect" onchange="changeSpeDept(this)" class="select">
+                <c:forEach items="${speList}" var="spe">
+                    <option value="${spe.speFlow}">${spe.speName}</option>
                 </c:forEach>
             </select>
         </div>
+    </c:if>
+    <div class="main_hd">
+        <input type="hidden" id="baseStatusId" name="baseStatusId" value="${resBase.baseStatusId}"/>
+        <form id="baseForm"style="position:relative;">
+        <input type="hidden" name="baseFlow" value="${sessionScope.currUser.orgFlow}"/>
+        <input type="hidden" id="resBase" value="${resBase.orgFlow}"/>
+        </form>
+    <%--	<c:if test="${GlobalConstant.FLAG_Y != viewFlag}">--%>
+    <%--	    <h2 style="line-height: 30px;padding: 5px 10px;color: #000000; font-size: 15px; font-family: Microsoft Yahei; font-weight: 500;">--%>
+    <%--			科室信息维护--%>
+    <%--	    </h2>--%>
+    <%--    </c:if>--%>
+        <div class="title_tab" id="toptab" style="margin-top: 5px;">
+            <ul>
+                <li id="tab" class="tab_select" baseInfoName="${GlobalConstant.DEPT_BASIC_INFO}" cusTrigger="loadInfo('${GlobalConstant.DEPT_BASIC_INFO}','${param.deptFlow}');" style="cursor: pointer;">
+                    <a style="color: #000000;font: 15px 'Microsoft Yahei';font-weight: 400;">科室基本信息</a>
+                </li>
+                <li class="tab" baseInfoName="${GlobalConstant.DIAG_DISEASE}" cusTrigger="loadInfo('${GlobalConstant.DIAG_DISEASE}','${param.deptFlow}');" style="cursor: pointer;">
+                    <a style="color: #000000;font: 15px 'Microsoft Yahei';font-weight: 400;">诊疗疾病范围</a>
+                </li>
+                <li class="tab" baseInfoName="${GlobalConstant.EQUIPMENT_INSTRUMENTS}" cusTrigger="loadInfo('${GlobalConstant.EQUIPMENT_INSTRUMENTS}','${param.deptFlow}');" style="cursor: pointer;">
+                    <a style="color: #000000;font: 15px 'Microsoft Yahei';font-weight: 400;">医疗设备仪器</a>
+                </li>
+                <li class="tab" baseInfoName="${GlobalConstant.GUIDING_PHYSICIAN}" cusTrigger="loadInfo('${GlobalConstant.GUIDING_PHYSICIAN}','${param.deptFlow}');" style="cursor: pointer;">
+                    <a style="color: #000000;font: 15px 'Microsoft Yahei';font-weight: 400;">指导医师情况</a>
+                </li>
+                <li class="tab" baseInfoName="${GlobalConstant.DEPARTMENT_HEAD}" cusTrigger="loadInfo('${GlobalConstant.DEPARTMENT_HEAD}','${param.deptFlow}');" style="cursor: pointer;">
+                    <a style="color: #000000;font: 15px 'Microsoft Yahei';font-weight: 400;">科室负责人信息</a>
+                </li>
+                <li class="tab" baseInfoName="${GlobalConstant.TRAINING}" cusTrigger="loadInfo('${GlobalConstant.TRAINING}','${param.deptFlow}');" style="cursor: pointer;">
+                    <a style="color: #000000;font: 15px 'Microsoft Yahei';font-weight: 400;">培训情况</a>
+                </li>
+            </ul>
+            <div style="margin-right: 5px; float: right;<c:if test="${empty userDeptList or userDeptList.size() <= 1}">display: none;</c:if>">
+                <span style="color: #000000;font: 14px 'Microsoft Yahei';font-weight: 400;">切换科室：</span>
+                <select id="deptFlow" class="select" style="color: #000000;font: 14px 'Microsoft Yahei';font-weight: 400;" onchange="showTab(this.value);">
+                    <c:forEach var="dept" items="${userDeptList}">
+                        <option style="text-align: center;" value="${dept.deptFlow}" ${deptFlow == dept.deptFlow ? 'selected' : ''}>${dept.deptName}</option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
     </div>
-</div>
-<div class="main_bd" id="div_table_0" >
-    <div id="hosContent" <c:if test="${param.viewFlag eq GlobalConstant.FLAG_Y }">style="height: 600px;overflow: auto;"</c:if>>
+    <div class="main_bd" id="div_table_0" >
+        <div id="hosContent" <c:if test="${param.viewFlag eq GlobalConstant.FLAG_Y }">style="height: 600px;overflow: auto;"</c:if>>
+        </div>
     </div>
 </div>

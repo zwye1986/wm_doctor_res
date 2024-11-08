@@ -35,7 +35,7 @@ import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.model.res.ResDoctorSchProcessExt;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -1219,17 +1219,17 @@ public class ResManagerController extends GeneralController {
 		HSSFSheet sheet = wb.createSheet("sheet1");
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		styleCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
+		styleCenter.setVerticalAlignment(VerticalAlignment.CENTER);
 		styleCenter.setWrapText(true);
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 		styleLeft.setWrapText(true);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 		styleLeft.setWrapText(true);
 		//列宽自适应
 //		sheet.setDefaultColumnWidth((short)50);
@@ -3250,10 +3250,10 @@ public class ResManagerController extends GeneralController {
 		// 第四步，创建单元格，并设置值表头 设置表头居中
 		HSSFCellStyle style = wb.createCellStyle();
 		// 创建一个居中格式
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		style.setAlignment(HorizontalAlignment.CENTER);
 		Font font = wb.createFont();
 		font.setFontHeightInPoints((short) 12);
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+		font.setBold(true);
 		style.setFont(font);
 		//设置背景色
 		HSSFCellStyle style2 = wb.createCellStyle();
@@ -3301,13 +3301,13 @@ public class ResManagerController extends GeneralController {
 						String color = (String)map.get(resultFlow);
 						HSSFCell hc = row.createCell(j+5);
 						if("1".equals(color)){
-							style2.setFillBackgroundColor(HSSFColor.LIGHT_GREEN.index);
+							style2.setFillBackgroundColor(HSSFColor.HSSFColorPredefined.LIGHT_GREEN.getIndex());
 						}else if("2".equals(color)){
-							style2.setFillBackgroundColor(HSSFColor.TAN.index);
+							style2.setFillBackgroundColor(HSSFColor.HSSFColorPredefined.TAN.getIndex());
 						}else if("3".equals(color)){
-							style2.setFillBackgroundColor(HSSFColor.ROSE.index);
+							style2.setFillBackgroundColor(HSSFColor.HSSFColorPredefined.ROSE.getIndex());
 						}else{
-							style2.setFillBackgroundColor(HSSFColor.SKY_BLUE.index);
+							style2.setFillBackgroundColor(HSSFColor.HSSFColorPredefined.SKY_BLUE.getIndex());
 						}
 						hc.setCellStyle(style2);
 						hc.setCellValue(schDeptName);
@@ -5113,13 +5113,13 @@ public class ResManagerController extends GeneralController {
 		HSSFWorkbook wb = new HSSFWorkbook();
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 		// 为工作簿添加sheet
 		HSSFSheet sheet = wb.createSheet("sheet1");
 		//列宽自适应
@@ -5510,13 +5510,13 @@ public class ResManagerController extends GeneralController {
 			HSSFWorkbook wb = new HSSFWorkbook();
 			//定义将用到的样式
 			HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-			styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+			styleCenter.setAlignment(HorizontalAlignment.CENTER);
 			HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-			styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-			styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+			styleLeft.setAlignment(HorizontalAlignment.LEFT);
+			styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 			HSSFCellStyle styleRight = wb.createCellStyle(); //居中
-			styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-			styleRight.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+			styleRight.setAlignment(HorizontalAlignment.RIGHT);
+			styleRight.setVerticalAlignment(VerticalAlignment.CENTER);
 			// 为工作簿添加sheet
 			HSSFSheet sheet = wb.createSheet("sheet1");
 			HSSFRow rowOne = sheet.createRow(0);//第一行
@@ -5640,13 +5640,13 @@ public class ResManagerController extends GeneralController {
 			HSSFWorkbook wb = new HSSFWorkbook();
 			//定义将用到的样式
 			HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-			styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+			styleCenter.setAlignment(HorizontalAlignment.CENTER);
 			HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-			styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-			styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+			styleLeft.setAlignment(HorizontalAlignment.LEFT);
+			styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 			HSSFCellStyle styleRight = wb.createCellStyle(); //居中
-			styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-			styleRight.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+			styleRight.setAlignment(HorizontalAlignment.RIGHT);
+			styleRight.setVerticalAlignment(VerticalAlignment.CENTER);
 			// 为工作簿添加sheet
 			HSSFSheet sheet = wb.createSheet("sheet1");
 			HSSFRow rowOne = sheet.createRow(0);//第一行
@@ -5798,13 +5798,13 @@ public class ResManagerController extends GeneralController {
 		HSSFWorkbook wb = new HSSFWorkbook();
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 		HSSFCellStyle styleRight = wb.createCellStyle(); //居中
-		styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-		styleRight.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleRight.setAlignment(HorizontalAlignment.RIGHT);
+		styleRight.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		List<String> roles=new ArrayList<>();
 

@@ -102,6 +102,16 @@ public class BasicInfoForm implements Serializable {
 
 	private String levelRankName;
 
+	private String jointOrgFlag;
+
+	public String getJointOrgFlag() {
+		return jointOrgFlag;
+	}
+
+	public void setJointOrgFlag(String jointOrgFlag) {
+		this.jointOrgFlag = jointOrgFlag;
+	}
+
 	public String getLevelRank() {
 		return levelRank;
 	}

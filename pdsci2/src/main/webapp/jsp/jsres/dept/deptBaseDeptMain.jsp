@@ -32,6 +32,7 @@
         var curTr = $(target).parents('tr');
         var deptFlow = curTr.attr('dataflow');
         var ordinal = curTr.attr('dataordinal');
+        var orgFlow = curTr.attr('orgFlow');
         var deptCode = curTr.find('.deptCode').attr('datacode');
         var deptName = curTr.find('.deptName').attr('dataname');
 
@@ -39,6 +40,7 @@
             title: '编辑科室信息',
             operType: 'edit',
             deptFlow: deptFlow,
+            orgFlow: orgFlow,
             deptCode: deptCode,
             deptName: deptName,
             ordinal: ordinal
@@ -72,6 +74,7 @@
         var html = $("#baseDeptEditTemplate").html();
         html = html.replace("\{operType}", settings.operType);
         html = html.replace("\{deptFlow}", settings.deptFlow || '');
+        html = html.replace("\{orgFlow}", settings.orgFlow || '');
         html = html.replace("\{ordinal}", settings.ordinal || '');
         html = html.replaceAll("\{deptCode}", settings.deptCode || '');
         html = html.replaceAll("\{deptName}", settings.deptName || '');
@@ -80,6 +83,9 @@
                 title: settings.title,
                 html: html,
                 buttons: {},
+                position: {
+                  width: 530
+                },
                 submit:function(e,v,m,f){
 
                 },
@@ -88,6 +94,7 @@
                 }
             }
         });
+        $('.jqi #editForm').validationEngine('attach');
     }
 
     function closeEditDialog() { // 找不到插件关闭弹窗入口，只能模拟点击一下
@@ -95,6 +102,10 @@
     }
 
     function editSave(operType, otherData) {
+        if(!$(".jqi #editForm").validationEngine("validate")) {
+            return;
+        }
+
         var url = '<s:url value="/jsres/dept/saveBaseDept" />';
         var data = {
             operType: operType
@@ -104,6 +115,8 @@
             data.deptName = $("input[name='baseDeptNameEdit']").last().val(),
             data.ordinal = $("input[name='baseOrdinalEdit']").last().val(),
             data.deptFlow = $(".deptFlowEdit").last().val();
+            data.orgFlow = $("#orgFlow").val(),
+            data.orgName = $("#orgName").val()
 
             if(!data.deptCode || !data.deptName || !data.ordinal) {
                 jboxTip("请求入参不完整，请检查！");
@@ -160,6 +173,11 @@
             });
         });
     }
+
+    function showDept(deptFlow, schDeptName, isJoin, speFlow) {
+        var url = "<s:url value ='/jsres/base/showDeptInfo'/>?viewFlag=N&deptFlow=" + deptFlow + "&orgFlow=${sessionScope.currUser.orgFlow}&isJoin=Y&speFlow=" + speFlow+"&isglobal=N";
+        jboxOpen(url, '科室信息（' + schDeptName + '）', 1200, 700);
+    }
 </script>
 <!-- <div class="main_hd">
 <h2 class="underline">科室维护</h2>
@@ -215,6 +233,7 @@
     <div class="div_table" style="padding:0 10px 10px">
         <!-- <h4>编辑科室信息</h4> -->
         <form id="editForm" style="position: relative;" method="post">
+            <input type="hidden" value="{orgFlow}">
             <input type="hidden" value="{deptFlow}" class="deptFlowEdit">
             <input type="hidden" value="{deptCode}" class="deptCodeEdit">
             <input type="hidden" value="{deptName}" class="deptNameEdit">
@@ -226,15 +245,15 @@
                 <tbody>
                     <tr>
                         <th>科室名称：</th>
-                        <td><input class="validate[required,minSize[1],maxSize[25]] input" name="baseDeptNameEdit" type="text" value="{deptName}" /></td>
+                        <td><input class="validate[required,custom[number]] input" name="baseDeptNameEdit" type="text" value="{deptName}" /></td>
                     </tr>
                     <tr>
                         <th>科室代码：</th>
-                        <td><input class="validate[required,custom[integer],maxSize[50]] input" name="baseDeptCodeEdit" type="text" value="{deptCode}" /></td>
+                        <td><input class="validate[required,minSize[1],maxSize[25]] input" name="baseDeptCodeEdit" type="text" value="{deptCode}" /></td>
                     </tr>
                     <tr>
                         <th>排序码：</th>
-                        <td><input class="validate[required,custom[integer],maxSize[50]] input" name="baseOrdinalEdit" type="text" value="{ordinal}" /></td>
+                        <td><input class="validate[required,custom[integer]] input" name="baseOrdinalEdit" type="text" value="{ordinal}" /></td>
                     </tr>
                 </tbody>
             </table>

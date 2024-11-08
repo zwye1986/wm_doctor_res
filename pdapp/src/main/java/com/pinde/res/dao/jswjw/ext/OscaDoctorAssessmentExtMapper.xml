@@ -106,10 +106,10 @@
 			and oda.is_pass = #{resultId}
 		</if>
 		<if test='idNo!=null and idNo!=""'>
-			and su.id_No like '%${idNo}%'
+			and su.id_No like CONCAT(CONCAT('%', #{idNo}),'%')
 		</if>
 		<if test='gradeDoctorName!=null and gradeDoctorName!=""'>
-			and oda.doctor_name like '%${gradeDoctorName}%'
+			and oda.doctor_name like CONCAT(CONCAT('%', #{gradeDoctorName}),'%')
 		</if>
 		<if test='orgCityId != null and orgCityId !=""'>
 			and so.org_City_Id = #{orgCityId}

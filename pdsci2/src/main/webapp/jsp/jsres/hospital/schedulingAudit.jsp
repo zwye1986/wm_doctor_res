@@ -81,11 +81,13 @@
         jboxOpen("<s:url value='/jsres/doctorRecruit/importSchedulingAudit2'/>", "导入信息", 500, 220);
     }
     function toImportCache() {
-        var width = 1200;
+        console.log('toImportCache1',new Date().getMinutes()+":"+new Date().getSeconds())
+        var width = 1500;
         var height = 800;
         var url ='<s:url value="/jsres/doctorRecruit/importSchedulingiImport"/>';
         var iframe ="<iframe name='jbox-message-iframe' id='jbox-message-iframe' width='"+width+"px' height='"+height+"px' marginheight='0' marginwidth='0' frameborder='0' scrolling='auto' src='"+url+"'></iframe>";
         jboxMessager(iframe,'导入预览',width,height);
+        console.log('toImportCach2',new Date().getMinutes()+":"+new Date().getSeconds())
     }
 
     function checkTime() {

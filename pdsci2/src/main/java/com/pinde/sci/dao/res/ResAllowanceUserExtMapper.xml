@@ -27,7 +27,7 @@
             and su.org_flow = #{orgFlow}
         </if>
         <if test='doctorName != null and doctorName != ""'>
-            and su.user_name like '%${doctorName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{doctorName}),'%')
         </if>
         <if test='roleFlow != null and roleFlow != ""'>
             and sur.role_flow = #{roleFlow}

@@ -16,16 +16,18 @@
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
     <result column="ASSIGN_PLAN_ORG" property="assignPlanOrg" jdbcType="DECIMAL" />
     <result column="IS_SEND" property="isSend" jdbcType="VARCHAR" />
-    <result column="GRADUATE_SPE" property="graduateSpe" jdbcType="VARCHAR" />
-    <result column="EDUCATION" property="education" jdbcType="VARCHAR" />
     <result column="AUDIT_STATUS_ID" property="auditStatusId" jdbcType="VARCHAR" />
     <result column="AUDIT_STATUS_NAME" property="auditStatusName" jdbcType="VARCHAR" />
+    <result column="EDUCATION" property="education" jdbcType="VARCHAR" />
+    <result column="GRADUATE_SPE" property="graduateSpe" jdbcType="VARCHAR" />
+    <result column="SPE_DESC" property="speDesc" jdbcType="VARCHAR" />
     <result column="START_TIME" property="startTime" jdbcType="VARCHAR" />
     <result column="END_TIME" property="endTime" jdbcType="VARCHAR" />
     <result column="IS_SHOWN" property="isShown" jdbcType="VARCHAR" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ResOrgSpeAssign" extends="BaseResultMap" >
-    <result column="SPE_DESC" property="speDesc" jdbcType="CLOB" />
+    <result column="BASE_CAPACITY" property="baseCapacity" jdbcType="VARCHAR" />
+    <result column="SEND_START_TIME" property="sendStartTime" jdbcType="VARCHAR" />
+    <result column="SEND_END_TIME" property="sendEndTime" jdbcType="VARCHAR" />
+    <result column="SEND_PLAN" property="sendPlan" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -88,28 +90,9 @@
   <sql id="Base_Column_List" >
     RECORD_FLOW, ORG_FLOW, SPE_ID, SPE_NAME, ASSIGN_PLAN, ASSIGN_REAL, ASSIGN_YEAR, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, ASSIGN_PLAN_ORG, IS_SEND, 
-    GRADUATE_SPE, EDUCATION, AUDIT_STATUS_ID, AUDIT_STATUS_NAME, START_TIME, END_TIME, 
-    IS_SHOWN
+    AUDIT_STATUS_ID, AUDIT_STATUS_NAME, EDUCATION, GRADUATE_SPE, SPE_DESC, START_TIME, 
+    END_TIME, IS_SHOWN, BASE_CAPACITY, SEND_START_TIME, SEND_END_TIME, SEND_PLAN
   </sql>
-  <sql id="Blob_Column_List" >
-    SPE_DESC
-  </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.ResOrgSpeAssignExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from PDSCI.RES_ORG_SPE_ASSIGN
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResOrgSpeAssignExample" >
     select
     <if test="distinct" >
@@ -124,11 +107,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from PDSCI.RES_ORG_SPE_ASSIGN
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
@@ -147,18 +128,20 @@
       SPE_NAME, ASSIGN_PLAN, ASSIGN_REAL, 
       ASSIGN_YEAR, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
-      ASSIGN_PLAN_ORG, IS_SEND, GRADUATE_SPE, 
-      EDUCATION, AUDIT_STATUS_ID, AUDIT_STATUS_NAME, 
-      START_TIME, END_TIME, IS_SHOWN, 
-      SPE_DESC)
+      ASSIGN_PLAN_ORG, IS_SEND, AUDIT_STATUS_ID, 
+      AUDIT_STATUS_NAME, EDUCATION, GRADUATE_SPE, 
+      SPE_DESC, START_TIME, END_TIME, 
+      IS_SHOWN, BASE_CAPACITY, SEND_START_TIME, 
+      SEND_END_TIME, SEND_PLAN)
     values (#{recordFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, #{speId,jdbcType=VARCHAR}, 
       #{speName,jdbcType=VARCHAR}, #{assignPlan,jdbcType=DECIMAL}, #{assignReal,jdbcType=DECIMAL}, 
       #{assignYear,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
-      #{assignPlanOrg,jdbcType=DECIMAL}, #{isSend,jdbcType=VARCHAR}, #{graduateSpe,jdbcType=VARCHAR}, 
-      #{education,jdbcType=VARCHAR}, #{auditStatusId,jdbcType=VARCHAR}, #{auditStatusName,jdbcType=VARCHAR}, 
-      #{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, #{isShown,jdbcType=VARCHAR}, 
-      #{speDesc,jdbcType=CLOB})
+      #{assignPlanOrg,jdbcType=DECIMAL}, #{isSend,jdbcType=VARCHAR}, #{auditStatusId,jdbcType=VARCHAR}, 
+      #{auditStatusName,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, #{graduateSpe,jdbcType=VARCHAR}, 
+      #{speDesc,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, 
+      #{isShown,jdbcType=VARCHAR}, #{baseCapacity,jdbcType=VARCHAR}, #{sendStartTime,jdbcType=VARCHAR}, 
+      #{sendEndTime,jdbcType=VARCHAR}, #{sendPlan,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResOrgSpeAssign" >
     insert into PDSCI.RES_ORG_SPE_ASSIGN
@@ -205,17 +188,20 @@
       <if test="isSend != null" >
         IS_SEND,
       </if>
-      <if test="graduateSpe != null" >
-        GRADUATE_SPE,
-      </if>
-      <if test="education != null" >
-        EDUCATION,
-      </if>
       <if test="auditStatusId != null" >
         AUDIT_STATUS_ID,
       </if>
       <if test="auditStatusName != null" >
         AUDIT_STATUS_NAME,
+      </if>
+      <if test="education != null" >
+        EDUCATION,
+      </if>
+      <if test="graduateSpe != null" >
+        GRADUATE_SPE,
+      </if>
+      <if test="speDesc != null" >
+        SPE_DESC,
       </if>
       <if test="startTime != null" >
         START_TIME,
@@ -226,8 +212,17 @@
       <if test="isShown != null" >
         IS_SHOWN,
       </if>
-      <if test="speDesc != null" >
-        SPE_DESC,
+      <if test="baseCapacity != null" >
+        BASE_CAPACITY,
+      </if>
+      <if test="sendStartTime != null" >
+        SEND_START_TIME,
+      </if>
+      <if test="sendEndTime != null" >
+        SEND_END_TIME,
+      </if>
+      <if test="sendPlan != null" >
+        SEND_PLAN,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -273,17 +268,20 @@
       <if test="isSend != null" >
         #{isSend,jdbcType=VARCHAR},
       </if>
-      <if test="graduateSpe != null" >
-        #{graduateSpe,jdbcType=VARCHAR},
-      </if>
-      <if test="education != null" >
-        #{education,jdbcType=VARCHAR},
-      </if>
       <if test="auditStatusId != null" >
         #{auditStatusId,jdbcType=VARCHAR},
       </if>
       <if test="auditStatusName != null" >
         #{auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateSpe != null" >
+        #{graduateSpe,jdbcType=VARCHAR},
+      </if>
+      <if test="speDesc != null" >
+        #{speDesc,jdbcType=VARCHAR},
       </if>
       <if test="startTime != null" >
         #{startTime,jdbcType=VARCHAR},
@@ -294,8 +292,17 @@
       <if test="isShown != null" >
         #{isShown,jdbcType=VARCHAR},
       </if>
-      <if test="speDesc != null" >
-        #{speDesc,jdbcType=CLOB},
+      <if test="baseCapacity != null" >
+        #{baseCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStartTime != null" >
+        #{sendStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sendEndTime != null" >
+        #{sendEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sendPlan != null" >
+        #{sendPlan,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -350,17 +357,20 @@
       <if test="record.isSend != null" >
         IS_SEND = #{record.isSend,jdbcType=VARCHAR},
       </if>
-      <if test="record.graduateSpe != null" >
-        GRADUATE_SPE = #{record.graduateSpe,jdbcType=VARCHAR},
-      </if>
-      <if test="record.education != null" >
-        EDUCATION = #{record.education,jdbcType=VARCHAR},
-      </if>
       <if test="record.auditStatusId != null" >
         AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
       </if>
       <if test="record.auditStatusName != null" >
         AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.education != null" >
+        EDUCATION = #{record.education,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduateSpe != null" >
+        GRADUATE_SPE = #{record.graduateSpe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speDesc != null" >
+        SPE_DESC = #{record.speDesc,jdbcType=VARCHAR},
       </if>
       <if test="record.startTime != null" >
         START_TIME = #{record.startTime,jdbcType=VARCHAR},
@@ -371,38 +381,19 @@
       <if test="record.isShown != null" >
         IS_SHOWN = #{record.isShown,jdbcType=VARCHAR},
       </if>
-      <if test="record.speDesc != null" >
-        SPE_DESC = #{record.speDesc,jdbcType=CLOB},
+      <if test="record.baseCapacity != null" >
+        BASE_CAPACITY = #{record.baseCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendStartTime != null" >
+        SEND_START_TIME = #{record.sendStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendEndTime != null" >
+        SEND_END_TIME = #{record.sendEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendPlan != null" >
+        SEND_PLAN = #{record.sendPlan,jdbcType=VARCHAR},
       </if>
     </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.RES_ORG_SPE_ASSIGN
-    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
-      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
-      SPE_ID = #{record.speId,jdbcType=VARCHAR},
-      SPE_NAME = #{record.speName,jdbcType=VARCHAR},
-      ASSIGN_PLAN = #{record.assignPlan,jdbcType=DECIMAL},
-      ASSIGN_REAL = #{record.assignReal,jdbcType=DECIMAL},
-      ASSIGN_YEAR = #{record.assignYear,jdbcType=VARCHAR},
-      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
-      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
-      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
-      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
-      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
-      ASSIGN_PLAN_ORG = #{record.assignPlanOrg,jdbcType=DECIMAL},
-      IS_SEND = #{record.isSend,jdbcType=VARCHAR},
-      GRADUATE_SPE = #{record.graduateSpe,jdbcType=VARCHAR},
-      EDUCATION = #{record.education,jdbcType=VARCHAR},
-      AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
-      AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
-      START_TIME = #{record.startTime,jdbcType=VARCHAR},
-      END_TIME = #{record.endTime,jdbcType=VARCHAR},
-      IS_SHOWN = #{record.isShown,jdbcType=VARCHAR},
-      SPE_DESC = #{record.speDesc,jdbcType=CLOB}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -423,13 +414,18 @@
       MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
       ASSIGN_PLAN_ORG = #{record.assignPlanOrg,jdbcType=DECIMAL},
       IS_SEND = #{record.isSend,jdbcType=VARCHAR},
-      GRADUATE_SPE = #{record.graduateSpe,jdbcType=VARCHAR},
-      EDUCATION = #{record.education,jdbcType=VARCHAR},
       AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
       AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      EDUCATION = #{record.education,jdbcType=VARCHAR},
+      GRADUATE_SPE = #{record.graduateSpe,jdbcType=VARCHAR},
+      SPE_DESC = #{record.speDesc,jdbcType=VARCHAR},
       START_TIME = #{record.startTime,jdbcType=VARCHAR},
       END_TIME = #{record.endTime,jdbcType=VARCHAR},
-      IS_SHOWN = #{record.isShown,jdbcType=VARCHAR}
+      IS_SHOWN = #{record.isShown,jdbcType=VARCHAR},
+      BASE_CAPACITY = #{record.baseCapacity,jdbcType=VARCHAR},
+      SEND_START_TIME = #{record.sendStartTime,jdbcType=VARCHAR},
+      SEND_END_TIME = #{record.sendEndTime,jdbcType=VARCHAR},
+      SEND_PLAN = #{record.sendPlan,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -476,17 +472,20 @@
       <if test="isSend != null" >
         IS_SEND = #{isSend,jdbcType=VARCHAR},
       </if>
-      <if test="graduateSpe != null" >
-        GRADUATE_SPE = #{graduateSpe,jdbcType=VARCHAR},
-      </if>
-      <if test="education != null" >
-        EDUCATION = #{education,jdbcType=VARCHAR},
-      </if>
       <if test="auditStatusId != null" >
         AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
       </if>
       <if test="auditStatusName != null" >
         AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        EDUCATION = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateSpe != null" >
+        GRADUATE_SPE = #{graduateSpe,jdbcType=VARCHAR},
+      </if>
+      <if test="speDesc != null" >
+        SPE_DESC = #{speDesc,jdbcType=VARCHAR},
       </if>
       <if test="startTime != null" >
         START_TIME = #{startTime,jdbcType=VARCHAR},
@@ -497,35 +496,19 @@
       <if test="isShown != null" >
         IS_SHOWN = #{isShown,jdbcType=VARCHAR},
       </if>
-      <if test="speDesc != null" >
-        SPE_DESC = #{speDesc,jdbcType=CLOB},
+      <if test="baseCapacity != null" >
+        BASE_CAPACITY = #{baseCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStartTime != null" >
+        SEND_START_TIME = #{sendStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sendEndTime != null" >
+        SEND_END_TIME = #{sendEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sendPlan != null" >
+        SEND_PLAN = #{sendPlan,jdbcType=VARCHAR},
       </if>
     </set>
-    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResOrgSpeAssign" >
-    update PDSCI.RES_ORG_SPE_ASSIGN
-    set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
-      SPE_ID = #{speId,jdbcType=VARCHAR},
-      SPE_NAME = #{speName,jdbcType=VARCHAR},
-      ASSIGN_PLAN = #{assignPlan,jdbcType=DECIMAL},
-      ASSIGN_REAL = #{assignReal,jdbcType=DECIMAL},
-      ASSIGN_YEAR = #{assignYear,jdbcType=VARCHAR},
-      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
-      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
-      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
-      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
-      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
-      ASSIGN_PLAN_ORG = #{assignPlanOrg,jdbcType=DECIMAL},
-      IS_SEND = #{isSend,jdbcType=VARCHAR},
-      GRADUATE_SPE = #{graduateSpe,jdbcType=VARCHAR},
-      EDUCATION = #{education,jdbcType=VARCHAR},
-      AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
-      AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
-      START_TIME = #{startTime,jdbcType=VARCHAR},
-      END_TIME = #{endTime,jdbcType=VARCHAR},
-      IS_SHOWN = #{isShown,jdbcType=VARCHAR},
-      SPE_DESC = #{speDesc,jdbcType=CLOB}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResOrgSpeAssign" >
@@ -543,13 +526,18 @@
       MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
       ASSIGN_PLAN_ORG = #{assignPlanOrg,jdbcType=DECIMAL},
       IS_SEND = #{isSend,jdbcType=VARCHAR},
-      GRADUATE_SPE = #{graduateSpe,jdbcType=VARCHAR},
-      EDUCATION = #{education,jdbcType=VARCHAR},
       AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
       AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      EDUCATION = #{education,jdbcType=VARCHAR},
+      GRADUATE_SPE = #{graduateSpe,jdbcType=VARCHAR},
+      SPE_DESC = #{speDesc,jdbcType=VARCHAR},
       START_TIME = #{startTime,jdbcType=VARCHAR},
       END_TIME = #{endTime,jdbcType=VARCHAR},
-      IS_SHOWN = #{isShown,jdbcType=VARCHAR}
+      IS_SHOWN = #{isShown,jdbcType=VARCHAR},
+      BASE_CAPACITY = #{baseCapacity,jdbcType=VARCHAR},
+      SEND_START_TIME = #{sendStartTime,jdbcType=VARCHAR},
+      SEND_END_TIME = #{sendEndTime,jdbcType=VARCHAR},
+      SEND_PLAN = #{sendPlan,jdbcType=VARCHAR}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
 </mapper>

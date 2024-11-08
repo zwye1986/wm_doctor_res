@@ -22,6 +22,7 @@
         <result column="FILE_FLOWS" property="fileFlows" jdbcType="VARCHAR" />
         <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
         <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+        <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
 
     </resultMap>
     <resultMap id="activityResultMap" type="hashmap" extends="com.pinde.sci.dao.base.TeachingActivityResultMapper.BaseResultMap">
@@ -198,13 +199,13 @@
             </if>
         </if>
         <if test='userName!=null and userName!=""'>
-            AND SU.USER_NAME LIKE '%${userName}%'
+            AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='activityFlow!=null and activityFlow!=""'>
             AND INFO.ACTIVITY_FLOW = #{activityFlow}
         </if>
         <if test='activityName!=null and activityName!=""'>
-            AND INFO.ACTIVITY_NAME LIKE '%${activityName}%'
+            AND INFO.ACTIVITY_NAME LIKE CONCAT(CONCAT('%', #{activityName}),'%')
         </if>
         <if test='deptFlow!=null and deptFlow!=""'>
             AND INFO.DEPT_FLOW = #{deptFlow}
@@ -424,10 +425,10 @@
             </if>
         </if>
         <if test='userName!=null and userName!=""'>
-            AND SU.USER_NAME LIKE '%${userName}%'
+            AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test='activityName!=null and activityName!=""'>
-            AND INFO.ACTIVITY_NAME LIKE '%${activityName}%'
+            AND INFO.ACTIVITY_NAME LIKE CONCAT(CONCAT('%', #{activityName}),'%')
         </if>
         <if test='deptFlow!=null and deptFlow!=""'>
             AND INFO.DEPT_FLOW IN
@@ -791,7 +792,7 @@
                     AND SD.DEPT_FLOW= #{deptFlow}
                 </if>
                 <if test='userName!=null and userName!=""'>
-                    AND SU.USER_NAME LIKE '%${userName}%'
+                    AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
                 </if>
             GROUP BY T.SPEAKER_FLOW,SU.USER_NAME, T.DEPT_FLOW, SD.DEPT_NAME
         )A
@@ -1017,7 +1018,7 @@
     </select>
 
     <select id="readActivity" resultMap="activityMap">
-        SELECT INFO.*, SU.USER_NAME, D.DEPT_NAME, RESULT.EVAL_SCORE,F.FILE_NAME
+        SELECT INFO.*, SU.USER_NAME,SU.ID_NO, D.DEPT_NAME, RESULT.EVAL_SCORE,F.FILE_NAME
           FROM TEACHING_ACTIVITY_INFO INFO
           LEFT JOIN SYS_USER SU
             ON INFO.SPEAKER_FLOW = SU.USER_FLOW
@@ -1166,7 +1167,7 @@
                 </if>
                 <if test='deptName!=null and deptName!=""'>
                     <bind name="deptName" value="'%'+deptName+'%'"/>
-                    and su.DEPT_NAME like #{deptName}
+                    and DEPT.DEPT_NAME like #{deptName}
                 </if>
                 <if test='idNo!=null and idNo!=""'>
                     <bind name="idNo" value="'%'+idNo+'%'"/>
@@ -1238,7 +1239,7 @@
                 </if>
                 <if test='deptName!=null and deptName!=""'>
                     <bind name="deptName" value="'%'+deptName+'%'"/>
-                    and su.DEPT_NAME like #{deptName}
+                    and DEPT.DEPT_NAME like #{deptName}
                 </if>
                 <if test='idNo!=null and idNo!=""'>
                     <bind name="idNo" value="'%'+idNo+'%'"/>

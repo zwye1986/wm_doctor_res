@@ -36,16 +36,16 @@
 	<!--RECORD_STATUS = #{recordStatus}-->
 	<!--</if>-->
 	<!--<if test='columnId != null and columnId != ""'>-->
-	<!--and COLUMN_ID like '${columnId}%'-->
+	<!--and COLUMN_ID like CONCAT(#{columnId},'%')-->
 	<!--</if>-->
 	<!--<if test='infoTitle != null and infoTitle != ""'>-->
-	<!--and INFO_TITLE like '%${infoTitle}%'-->
+	<!--and INFO_TITLE like CONCAT(CONCAT('%', #{infoTitle}),'%')-->
 	<!--</if>-->
 	<!--<if test='content != null and content != ""'>-->
-	<!--and INFO_CONTENT like '%${content}%'-->
+	<!--and INFO_CONTENT like CONCAT(CONCAT('%', #{content}),'%')-->
 	<!--</if>-->
 	<!--<if test='infoKeyword != null and infoKeyword != ""'>-->
-	<!--and (INFO_KEYWORD like '%${infoKeyword}%' or INFO_TITLE like '%${infoKeyword}%')-->
+	<!--and (INFO_KEYWORD like CONCAT(CONCAT('%', #{infoKeyword}),'%') or INFO_TITLE like CONCAT(CONCAT('%', #{infoKeyword}),'%'))-->
 	<!--</if>-->
 	<!--<if test='hasImage=="Y"'>-->
 	<!--and title_img is not null-->
@@ -71,16 +71,16 @@
 	<!--and RECORD_STATUS = #{recordStatus}-->
 	<!--</if>-->
 	<!--<if test='columnId != null and columnId != ""'>-->
-	<!--and COLUMN_ID like '${columnId}%'-->
+	<!--and COLUMN_ID like CONCAT(#{columnId},'%')-->
 	<!--</if>-->
 	<!--<if test='infoTitle != null and infoTitle != ""'>-->
-	<!--and INFO_TITLE like '%${infoTitle}%'-->
+	<!--and INFO_TITLE like CONCAT(CONCAT('%', #{infoTitle}),'%')-->
 	<!--</if>-->
 	<!--<if test='content != null and content != ""'>-->
-	<!--and INFO_CONTENT like '%${content}%'-->
+	<!--and INFO_CONTENT like CONCAT(CONCAT('%', #{content}),'%')-->
 	<!--</if>-->
 	<!--<if test='infoKeyword != null and infoKeyword != ""'>-->
-	<!--and INFO_KEYWORD like '%${infoKeyword}%'-->
+	<!--and INFO_KEYWORD like CONCAT(CONCAT('%', #{infoKeyword}),'%')-->
 	<!--</if>-->
 	<!--<if test='startDate != null and startDate != ""'>-->
 	<!--and info_time <![CDATA[>=]]> #{startDate}-->
@@ -110,16 +110,16 @@
 	<!--RECORD_STATUS = #{recordStatus}-->
 	<!--</if>-->
 	<!--<if test='columnId != null and columnId != ""'>-->
-	<!--and COLUMN_ID like '${columnId}%'-->
+	<!--and COLUMN_ID like CONCAT(#{columnId},'%')-->
 	<!--</if>-->
 	<!--<if test='infoTitle != null and infoTitle != ""'>-->
-	<!--and INFO_TITLE like '%${infoTitle}%'-->
+	<!--and INFO_TITLE like CONCAT(CONCAT('%', #{infoTitle}),'%')-->
 	<!--</if>-->
 	<!--<if test='content != null and content != ""'>-->
-	<!--and INFO_CONTENT like '%${content}%'-->
+	<!--and INFO_CONTENT like CONCAT(CONCAT('%', #{content}),'%')-->
 	<!--</if>-->
 	<!--<if test='infoKeyword != null and infoKeyword != ""'>-->
-	<!--and (INFO_KEYWORD like '%${infoKeyword}%' or INFO_TITLE like '%${infoTitle}%')-->
+	<!--and (INFO_KEYWORD like CONCAT(CONCAT('%', #{infoKeyword}),'%') or INFO_TITLE like CONCAT(CONCAT('%', #{infoTitle}),'%'))-->
 	<!--</if>-->
 	<!--<if test='hasImage=="Y"'>-->
 	<!--and title_img is not null-->
@@ -145,16 +145,16 @@
 	<!--and RECORD_STATUS = #{recordStatus}-->
 	<!--</if>-->
 	<!--<if test='columnId != null and columnId != ""'>-->
-	<!--and COLUMN_ID like '${columnId}%'-->
+	<!--and COLUMN_ID like CONCAT(#{columnId},'%')-->
 	<!--</if>-->
 	<!--<if test='infoTitle != null and infoTitle != ""'>-->
-	<!--and INFO_TITLE like '%${infoTitle}%'-->
+	<!--and INFO_TITLE like CONCAT(CONCAT('%', #{infoTitle}),'%')-->
 	<!--</if>-->
 	<!--<if test='content != null and content != ""'>-->
-	<!--and INFO_CONTENT like '%${content}%'-->
+	<!--and INFO_CONTENT like CONCAT(CONCAT('%', #{content}),'%')-->
 	<!--</if>-->
 	<!--<if test='infoKeyword != null and infoKeyword != ""'>-->
-	<!--and INFO_KEYWORD like '%${infoKeyword}%'-->
+	<!--and INFO_KEYWORD like CONCAT(CONCAT('%', #{infoKeyword}),'%')-->
 	<!--</if>-->
 	<!--order by is_top desc,info_time desc) t-->
 	<!--<where>-->
@@ -174,16 +174,16 @@
 	<!--and RECORD_STATUS = #{recordStatus}-->
 	<!--</if>-->
 	<!--<if test='columnId != null and columnId != ""'>-->
-	<!--and COLUMN_ID like '${columnId}%'-->
+	<!--and COLUMN_ID like CONCAT(#{columnId},'%')-->
 	<!--</if>-->
 	<!--<if test='infoTitle != null and infoTitle != ""'>-->
-	<!--and INFO_TITLE like '%${infoTitle}%'-->
+	<!--and INFO_TITLE like CONCAT(CONCAT('%', #{infoTitle}),'%')-->
 	<!--</if>-->
 	<!--<if test='content != null and content != ""'>-->
-	<!--and INFO_CONTENT like '%${content}%'-->
+	<!--and INFO_CONTENT like CONCAT(CONCAT('%', #{content}),'%')-->
 	<!--</if>-->
 	<!--<if test='infoKeyword != null and infoKeyword != ""'>-->
-	<!--and (INFO_KEYWORD like '%${infoKeyword}%' or INFO_TITLE like '%${infoKeyword}%')-->
+	<!--and (INFO_KEYWORD like CONCAT(CONCAT('%', #{infoKeyword}),'%') or INFO_TITLE like CONCAT(CONCAT('%', #{infoKeyword}),'%'))-->
 	<!--</if>-->
 	<!--<if test='startDate != null and startDate != ""'>-->
 	<!--and info_time <![CDATA[>=]]> #{startDate}-->
@@ -304,7 +304,7 @@
 			AND ORG_FLOW = #{orgFlow}
 		</if>
 		<if test='noticeTitle!=null and noticeTitle!=""'>
-			AND info_title like '%${noticeTitle}%'
+			AND info_title like CONCAT(CONCAT('%', #{noticeTitle}),'%')
 		</if>
 		<if test='orgFlow==null or orgFlow==""'>
 			AND ORG_FLOW IS NULL

@@ -192,4 +192,6 @@ public interface ResDoctorSchProcessExtMapper {
     List<Map<String, String>> temporaryOutSearch(Map<String, Object> map);
 
     List<Map<String, String>> schProcessStudentDistinctQuery2(Map<String, Object> map);
+
+	List<String> studentList(String userFlow,String isNow);
 }

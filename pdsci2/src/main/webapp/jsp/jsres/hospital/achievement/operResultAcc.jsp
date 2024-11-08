@@ -127,7 +127,7 @@
     }
 
     function impSkillExam(){
-    jboxOpen("<s:url value='/jsp/jsres/hospital/achievement/importSkillExam.jsp'/>", "操作成绩单导入", '600', '300');
+    jboxOpen("<s:url value='/jsres/hospital/achievement/importSkillExam'/>", "操作成绩单导入", '600', '300');
     }
 
     function confireResult(recruitFlow,userName){

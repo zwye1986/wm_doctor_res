@@ -247,7 +247,10 @@ public class InxJsResController extends GeneralController {
      */
     @RequestMapping(value = "/register")
     public String register(Model model) {
-        RSAPublicKey publicKey = RSAUtils.getDefaultPublicKey();
+        // 获取公钥系数和公钥指数
+        KeyPair defaultKeyPair = RSAUtils.getDefaultKeyPair();
+        setSessionAttribute("defaultKeyPairRegister",defaultKeyPair);
+        RSAPublicKey publicKey = (RSAPublicKey)defaultKeyPair.getPublic();
         if (null != publicKey) {
             //公钥-系数(n)
             model.addAttribute("pkModulus", new String(Hex.encode(publicKey.getModulus().toByteArray())));
@@ -1173,6 +1176,12 @@ public class InxJsResController extends GeneralController {
 
         //设置当前用户
         setSessionAttribute(GlobalConstant.CURRENT_USER, user);
+
+        SysUser userInfo = new SysUser();
+        userInfo.setUserFlow(user.getUserFlow());
+        userInfo.setDeptFlow(user.getDeptFlow());
+        setSessionAttribute("user", JSON.toJSONString(userInfo));
+
         setSessionAttribute("sessionId", GlobalContext.getSession().getId());
         String clientIp = ClientIPUtils.getClientIp(request);
 //
@@ -1324,7 +1333,7 @@ public class InxJsResController extends GeneralController {
                     session.setAttribute("maintenance","Y");
                 }
                 return "redirect:" + getRoleUrl(roleFlow);
-        }
+            }
         }
         if (null != publicKey) {
             //公钥-系数(n)
@@ -1391,7 +1400,9 @@ public class InxJsResController extends GeneralController {
     @ResponseBody
     public String checkPhone(String data, Model model, HttpServletRequest request) {
         // 解密
-        data = RSAUtils.decryptStringByJs(data);
+        // 获取公钥系数和公钥指数
+        KeyPair defaultKeyPair = (KeyPair)getSessionAttribute("defaultKeyPairRegister");
+        data = RSAUtils.decryptStringByJs(data,defaultKeyPair);
         Map<String, String> paramMap = (Map<String, String>) JSON.parse(data);
         String userPhone = paramMap.get("userPhone");
         String yzm = paramMap.get("yzm");

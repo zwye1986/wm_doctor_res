@@ -53,7 +53,7 @@
         </if>
         and su.status_id in ('Locked','Activated')
         <if test="userName!=null and userName!=''">
-            and su.user_name like '%${userName}%'
+            and su.user_name like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
         <if test="trainingTypeId!=null and trainingTypeId!=''">
             and rd.training_Type_Id = #{trainingTypeId}
@@ -65,7 +65,7 @@
             and rd.SESSION_NUMBER = #{sessionNumber}
         </if>
         <if test="idNo!=null and idNo!=''">
-            and su.id_no like '%${idNo}%'
+            and su.id_no like CONCAT(CONCAT('%', #{idNo}),'%')
         </if>
 
         <if test="statusId!=null and statusId!=''">

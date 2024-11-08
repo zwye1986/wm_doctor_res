@@ -1,0 +1,57 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+<!--    <changeSet id="call-stored-procedure" author="zhangwenyun">-->
+<!--        <createProcedure procedureName="update_res_org_spe_base_capacity">-->
+<!--            DECLARE v_column_exists NUMBER;-->
+<!--            BEGIN-->
+
+<!--            SELECT COUNT(*)-->
+<!--            INTO v_column_exists-->
+<!--            FROM USER_TAB_COLUMNS-->
+<!--            WHERE TABLE_NAME = 'RES_ORG_SPE'-->
+<!--            AND COLUMN_NAME = 'BASE_CAPACITY';-->
+
+
+<!--            IF v_column_exists = 0 THEN-->
+<!--            EXECUTE IMMEDIATE 'ALTER TABLE RES_ORG_SPE ADD base_capacity VARCHAR2(20)';-->
+<!--            END IF;-->
+<!--            END;-->
+<!--        </createProcedure>-->
+<!--    </changeSet>-->
+
+    <changeSet id="create-add-base-capacity-procedure2" author="zhangwenyun">
+            <sql endDelimiter="/">
+                CREATE OR REPLACE PROCEDURE add_base_capacity_column2 AS
+                v_column_exists NUMBER;
+                BEGIN
+                -- 检查 PDSCI.RES_ORG_SPE_ASSIGN 表中是否存在 base_capacity 字段
+                SELECT COUNT(*)
+                INTO v_column_exists
+                FROM USER_TAB_COLUMNS
+                WHERE TABLE_NAME = 'RES_ORG_SPE_ASSIGN'
+                AND COLUMN_NAME = 'BASE_CAPACITY';
+
+                -- 如果字段不存在，则添加该字段
+                IF v_column_exists = 0 THEN
+                EXECUTE IMMEDIATE 'ALTER TABLE RES_ORG_SPE_ASSIGN ADD base_capacity VARCHAR2(20)';
+                END IF;
+                END;
+                /
+            </sql>
+    </changeSet>
+
+    <changeSet id="call-add-base-capacity-procedure2" author="zhangwenyun">
+            <sql endDelimiter="/">
+                BEGIN
+                add_base_capacity_column2;
+                END;
+                /
+            </sql>
+    </changeSet>
+
+
+</databaseChangeLog>

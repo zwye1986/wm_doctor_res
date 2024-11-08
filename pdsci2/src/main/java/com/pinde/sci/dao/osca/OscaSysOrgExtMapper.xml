@@ -120,7 +120,7 @@
             and su.ORG_NAME like #{name}
         </if>
         <if test='userCode!=null and userCode!=""'>
-            and su.user_Code = '${userCode}'
+            and su.user_Code = #{userCode}
         </if>
     </select>
 </mapper>

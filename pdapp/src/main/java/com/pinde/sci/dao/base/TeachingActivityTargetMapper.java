@@ -27,4 +27,6 @@ public interface TeachingActivityTargetMapper {
     int updateByPrimaryKeySelective(TeachingActivityTarget record);
 
     int updateByPrimaryKey(TeachingActivityTarget record);
+
+    List<String> selectJointOrgFlow(String userFlow);
 }

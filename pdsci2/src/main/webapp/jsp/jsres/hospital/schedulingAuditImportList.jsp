@@ -25,233 +25,240 @@
     input{
         text-align:center;
     }
+    .backSu {
+        background-color: #0d87ba;
+    }
+
 </style>
 <script  src="../../js/jsonJs/json3.js"></script>
 <script type="text/javascript">
-    //获取cookie
-    // function getCookie(cname) {
-    //     var name = cname + "=";
-    //     var ca = document.cookie.split(';');
-    //     for(var i=0; i<ca.length; i++) {
-    //         var c = ca[i];
-    //         while (c.charAt(0)==' ') c = c.substring(1);
-    //         if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
-    //     }
-    //     return "";
-    // }
-    var headerList = [];
-    var dataList = [];
+    window.oneHead = [];
+    window.twoHead = [];
+    window.dataList = [];
+    window.selectTotal = 0;
     $(document).ready(function (){
-        let headCook = localStorage.getItem("headers")
-        let dataCook = localStorage.getItem("data")
-        let flagCook = localStorage.getItem("flag")
-        if (headCook) {
-            headerList = JSON.parse(headCook);
-        }
-        if (dataCook) {
-            dataList = JSON.parse(dataCook);
-        }
-        if (flagCook) {
-            hideSubmit(JSON.parse(flagCook));
-        }
-        initHead(headerList);
-        initData(headerList,dataList);
-        localStorage.removeItem("data");
+        window.oneHead = ${head1};
+        window.twoHead = ${head2};
+        console.log('111',${head2})
+        console.log(window.twoHead)
+        window.selectTotal = window.oneHead.length;
+        initHead(window.oneHead,window.twoHead);
+        window.dataList = ${data}
+        initData(window.dataList);
     })
 
-    function updateData(){
+    function checkData(){
+        jboxStartLoading();
         var url = "<s:url value='/jsres/doctorRecruit/updateItemImportData'/>";
-        jboxPostJson(url,JSON.stringify(dataList),function(resp){
-            let codeFlag = JSON.parse(JSON.stringify(resp))['code'];
-            console.log(codeFlag);
-            if (codeFlag == 200) {
-                //显示提交按钮
-                hideSubmit(true);
-            }else {
-                hideSubmit(false);
-            }
-            dataList = JSON.parse(JSON.stringify(resp))['data'];
-            initData(headerList,dataList);
+        jboxPostJson(url,JSON.stringify(window.dataList),function(resp){
+            window.dataList = JSON.parse(JSON.stringify(resp))['data'];
+            hideSubmitBt();
+            initData(window.dataList);
+            jboxEndLoading();
         },null,false);
     }
 
     function submitData(){
-        var url = "<s:url value='/jsres/doctorRecruit/saveDbImportArrang'/>";
-        jboxPostJson(url,JSON.stringify(dataList),function(resp){
-            let codeFlag = JSON.parse(JSON.stringify(resp))['code'];
-            if (codeFlag == 200) {
-                jboxClose();
-                top.toPage(1);
-                top.jboxCloseMessager();
-            }else{
-                dataList = JSON.parse(JSON.stringify(resp))['data'];
-                initData(headerList,dataList);
+        jboxStartLoading();
+        var url = "<s:url value='/jsres/doctorRecruit/submitPbImport'/>";
+        jboxPostJson(url,JSON.stringify(window.dataList),function(resp){
+            let code = JSON.parse(JSON.stringify(resp))['code'];
+            if (code == 200) {
+                jboxEndLoading();
+                // jboxClose();
+                jboxInfo("导入成功");
+                // jboxCloseMessager();
+            }else {
+                jboxEndLoading();
+                jboxError(JSON.parse(JSON.stringify(resp))['msg'])
             }
+            // jboxEndLoading();
         },null,false);
+
     }
 
-    function hideSubmit(flag){
-        var text = "<div class='form_btn' style='margin-bottom: 10px' id='tableMain_sub'>" +
-            "<input class='btn_green' type='button' value='提交数据' onclick='submitData()'/>" +
-            "</div>";
-        let $tableMainSub = $('#tableMain_sub');
-        if (!flag)  {
-            //隐藏掉提交按钮
-            if ($tableMainSub) {
-                $tableMainSub.remove();
-            }
-            return;
-        }
-        if ($tableMainSub) {
-            $tableMainSub.remove();
-            $('#dataTable').before(text);
-            return;
-        }
-        $('#dataTable').before(text);
-    }
-
-    function initHead(headList){
-        if (headList && headList.length >0) {
+    function initHead(head1,head2){
+        let cont = false;
+        if (head1 && head1.length >0 ) {
             let headerTr = $("#headerTr");
             headerTr.empty();
-            headerTr.append("<th class='head_w'>序号</th>");
-            for (let i = 0; i < headList.length; i++) {
-                headerTr.append("<th class='head_w'>"+headList[i]+"</th>");
+            //处理第一行的表头
+            let htmltext = "";
+            for (let i = 0; i < head1.length; i++) {
+                if (i == 0) {
+                    htmltext = htmltext+"<tr><th rowspan='2' class='head_w'>序号</th>";
+                    htmltext = htmltext+"<th rowspan='2' class='head_w'>学员姓名</th>";
+                }
+                else if(i<5){
+                    htmltext = htmltext+"<th rowspan='2' class='head_w'>"+head1[i]+"</th>";
+                }else {
+                    if (i == (head1.length-1)) {
+                        htmltext = htmltext + "<th class='head_w'>"+head1[i]+"</th></tr>";
+                        for (let j = 0; j < head2.length; j++) {
+                            if (j == 0){
+                                htmltext = htmltext +"<tr><th class='head_w'>"+head2[j]+"</th>";
+                            }
+                            //处理第二行的表头
+                            if (j>0) {
+                                if (j == (head2.length-1)) {
+                                    htmltext = htmltext +"<th class='head_w'>"+head2[j]+"</th></tr>";
+                                }else {
+                                    htmltext = htmltext +"<th class='head_w'>"+head2[j]+"</th>";
+                                }
+                            }
+                        }
+                    }else {
+                        htmltext = htmltext + "<th class='head_w'>"+head1[i]+"</th>";
+                    }
+                }
+            }
+            headerTr.append(htmltext);
+        }
+
+
+
+    }
+
+
+    function initRow(rowInfo,rowIndex){
+
+        //序号
+        rowIndex = null == rowIndex? 1:rowIndex+1;
+        let tip = rowInfo.tip;
+        let color = rowInfo.color;
+        let html = "<tr class='fixTrTd' id='fixTrTd_"+rowIndex+"' style='rowStyle' title='"+tip+"'><td>"+rowIndex+"</td>cellhtml</tr>";
+        if (color) {
+            color = "background-color:"+color+";";
+        }
+        html = html.replace("rowStyle",color);
+        let cellData = rowInfo.cellData;
+        if (cellData && cellData.length>0) {
+            let s = initCellData(cellData,rowIndex);
+            html = html.replace("cellhtml",s);
+        }
+        return html;
+
+    }
+    function initCellData(cellData,rowIndex){
+        let result = "";
+        for (let i = 0; i < cellData.length; i++) {
+            let html = "<td>cellHtml</td>";
+            let cellDataItem = cellData[i];
+            let id = "dataId_"+rowIndex+"_"+i;
+            let type = cellDataItem.type;
+            if (type == 'input') {
+                let s = initInput(cellDataItem,id);
+                html = html.replace("cellHtml",s);
+            }
+            else if (type == 'select') {
+                let s = initSelect(cellDataItem,id);
+                html = html.replace("cellHtml",s);
+            }
+            else {
+                html = html.replace("cellHtml",'');
+            }
+            result = result+html;
+        }
+        if (cellData.length == window.selectTotal-1) {
+            let html2 = "<td>cellHtml</td>";
+            let s1 = initSelect(cellData[cellData.length-1],"dataId_"+rowIndex+"_"+cellData.length);
+            html2 = html2.replace("cellHtml",s1);
+            result = result+html2;
+        }
+
+        return result;
+    }
+
+    function initInput(cellDataItem,id){
+        let inputHtml = "<input disabled id='"+id+"' value='"+cellDataItem.name+"' onchange='inputChange(\""+id+"\")'/>";
+        if (cellDataItem.disable == false) {
+            inputHtml = inputHtml.replaceAll('disabled','');
+        }
+        return inputHtml;
+    }
+
+    function initSelect(cellDataItem,id){
+        let selectHtml = "<select name='schDeptFlow_"+id+"' id='schDeptFlow_"+id+"' class='select' disabled onchange='selectChange(\"schDeptFlow_"+id+"\")'>optionHtml</select>";
+        if (!cellDataItem.disable) {
+            selectHtml = selectHtml.replaceAll('disabled','');
+        }
+        let itemHtml = "";
+        let selectData = cellDataItem.selectData;
+        if (selectData && selectData.length>0) {
+            itemHtml = itemHtml + "<option value='--' label='--'/>";
+            for (let i = 0; i < selectData.length; i++) {
+                if(cellDataItem.id == selectData[i].value){
+                    itemHtml = itemHtml + "<option value='"+selectData[i].value+"' label='"+selectData[i].label+"' selected/>";
+                }else {
+                    itemHtml = itemHtml + "<option value='"+selectData[i].value+"' label='"+selectData[i].label+"'/>";
+                }
             }
         }
+        selectHtml = selectHtml.replace('optionHtml',itemHtml);
+        return selectHtml;
+
     }
-    function initData(headList,dataList){
+
+    function initData(dataList){
         if (dataList && dataList.length >0) {
             let dataBody = $("#dataBody");
             dataBody.empty();
+            var html = "";
             for (let i = 0; i < dataList.length; i++) {
-                var vars = {};
-                dataBody.append("<tr class='fixTrTd' id='fixTrTd_"+i+"'></tr>");
-                let fixTrTd = $('#fixTrTd_'+i);
-                var indexName = 'indexName_'+i;
-                vars[indexName] = dataList[i]['recurit'];
-                var indexClazz = 'indexClazz_'+i;
-                vars[indexClazz] = "";
-                if (vars[indexName]['color']) {
-                    if (vars[indexName]['color'] ==='#00B83F') {
-                        vars[indexClazz] = vars[indexClazz]+"color_success";
-                    }
-                    if (vars[indexName]['color'] ==='#ee0101') {
-                        vars[indexClazz] = vars[indexClazz]+"color_error";
-                    }
-                }
-                fixTrTd.append("<td title='"+vars[indexName]['tip']+"' class='"+vars[indexClazz]+"' >"+(i+1)+"</td>")
-                for (let j = 0; j < headList.length; j++) {
-                    if (dataList[i][headList[j]]) {
-                        var clazz = "clazz-"+i+"-"+j;
-                        vars[clazz] = "";
-                        var colorName = 'colorName-'+i+'-'+j;
-                        vars[colorName] = dataList[i][headList[j]]['color'];
-                        if (vars[colorName]) {
-                            if (vars[colorName] ==='#00B83F') {
-                                vars[clazz] = vars[clazz]+"color_success";
-                            }
-                            if (vars[colorName] ==='#ee0101') {
-                                vars[clazz] = vars[clazz]+"color_error";
-                            }
-                        }
-                        var hideName = 'hideName-'+i+'-'+j;
-                        vars[hideName] = dataList[i][headList[j]]['hide'];
+                html = html + initRow(dataList[i],i);
+            }
+            dataBody.append(html);
 
-                        var inputTypeName = 'inputTypeName-'+i+'-'+j;
-                        vars[inputTypeName] = dataList[i][headList[j]]['inputType'];
+        }
+        hideSubmitBt();
+    }
 
-                        var tipName = 'tipName-'+i+'-'+j;
-                        vars[tipName] = dataList[i][headList[j]]['tip'];
+    //输入框变更事件
+    function inputChange(id){
+        let document = $("#"+id);
+        let changeVal = document.val();
+        let valuetext = id.replaceAll('dataId_','');
+        let split = valuetext.split('_');
+        window.dataList[split[0]-1]['cellData'][split[1]]['name'] = changeVal;
+        mustHideSubmitBt();
+    }
 
-                        var schDeptListName = 'schDeptListName-'+i+'-'+j;
-                        vars[schDeptListName] = dataList[i][headList[j]]['schDeptList'];
+    //下拉框的事件
+    function selectChange(id){
+        let document = $("#"+id);
+        let changeVal = document.val();
+        let label = document.find("option:selected").attr("label");
+        let valuetext = id.replaceAll('schDeptFlow_dataId_','');
+        let split = valuetext.split('_');
+        window.dataList[split[0]-1]['cellData'][split[1]]['id'] = changeVal;
+        window.dataList[split[0]-1]['cellData'][split[1]]['name'] = label;
+        mustHideSubmitBt();
+    }
 
-                        var deptFlowName = 'deptFlowName-'+i+'-'+j;
-                        vars[deptFlowName] = dataList[i][headList[j]]['deptFlow'];
-
-                        var disableName = 'disableName-'+i+'-'+j;
-                        vars[disableName] = dataList[i][headList[j]]['disable'];
-                        var disableStyle = 'disableStyle-'+i+'-'+j;
-                        vars[disableStyle] = "";
-                        if (vars[disableName]) {
-                            vars[disableStyle] = "disabled='true'"
-                        }
-                        if (vars[inputTypeName] && vars[inputTypeName] ==='input'){
-                            fixTrTd.append("<td onchange='clickInput("+i+",\""+headList[j]+"\","+j+")' title='"+vars[tipName]+"'>"+
-                                "<input id='inputId_"+i+"_"+j+"' class='"+vars[clazz]+"' value='"+dataList[i][headList[j]]['context']+"' "+vars[disableStyle]+">"
-                                +"</td>")
-                        }else if(vars[inputTypeName] && vars[inputTypeName] ==='select'){
-                            fixTrTd.append("<td title='"+vars[tipName]+"' >" +
-                                "<select onchange='changeSelect("+i+","+j+")' name='schDeptFlow' id='schDeptFlow_"+i+"_"+j+"' " +
-                                "class='select "+vars[clazz]+"' " +
-                                ""+vars[disableStyle]+">" +
-                                ""+getDeptOpt(vars[schDeptListName],vars[deptFlowName],dataList[i][headList[j]]['context'])+"" +
-                                "</select></td>")
-                        }else {
-                            fixTrTd.append("<td title='"+vars[tipName]+"' class='"+vars[clazz]+"' >"+dataList[i][headList[j]]['context']+"</td>")
-                        }
-
-                    }
+    function hideSubmitBt() {
+        let submitData = $('#submitData');
+        let flag = true;
+        if (window.dataList){
+            for (let i = 0; i < window.dataList.length; i++) {
+                let tip = window.dataList[i].tip;
+                if (tip && tip.length > 0){
+                    flag = false;
                 }
             }
         }
+        if (flag == true) {
+            submitData.show();
+        }else {
+            submitData.hide();
+        }
     }
 
-    function getDeptOpt(deptList,choseId,defName){
-        var result = "<option class='color_success' value=''></option>";
-        if (!deptList || deptList.length<=0) {
-            return result;
-        }
-        var flag = false;
-        for (let i = 0; i < deptList.length; i++) {
-            let s = isSelect(choseId,deptList[i]['deptFlow']);
-            if (s && s.length>=0) {
-                flag = true;
-            }
-            result = result+ "<option class='color_success' value='"+deptList[i]['deptFlow']+"'" +
-                ""+s+"" +
-                ">"+deptList[i]['deptName']+"</option>";
-        }
-        if (!flag) {
-            result = result+ "<option class='color_error' selected value='"+defName+"' >"+defName+"</option>";
-        }
-        return result;
+    function mustHideSubmitBt() {
+        let submitData = $('#submitData');
+        submitData.hide();
     }
-    function isSelect(choseId,deptFlow){
-        // color_success
-        var result = "";
-        if (!choseId) {
-            return result;
-        }
-        if (choseId === deptFlow) {
-            return " selected ";
-        }
-        return result;
-    }
-    function clickInput(rowIndex,cellName,j){
-        var changeId = "#inputId_"+rowIndex+"_"+j;
-        dataList[rowIndex][cellName]['context'] = $(changeId).val();
-        updateData();
-    }
-    function changeSelect(rowIndex,cellIndex){
-        var choseSelect = "#schDeptFlow_"+rowIndex+"_"+cellIndex;
-        var val = $(choseSelect).val();
-        if (!val || val.length<=0) {
-            dataList[rowIndex][headerList[cellIndex]]['context'] = '';
-            dataList[rowIndex][headerList[cellIndex]]['deptFlow'] = '';
-            updateData();
-            return;
-        }
-        dataList[rowIndex][headerList[cellIndex]]['deptFlow'] = val;
-        for (let i = 0; i < dataList[rowIndex][headerList[cellIndex]]['schDeptList'].length; i++) {
-            let dept = dataList[rowIndex][headerList[cellIndex]]['schDeptList'][i];
-            if (val == dept['deptFlow']) {
-                dataList[rowIndex][headerList[cellIndex]]['context'] = dept['deptName'];
-            }
-        }
-        updateData();
-    }
+
+
 </script>
     <input id="testhaha" value="1234455" hidden="hidden">
 
@@ -261,11 +268,16 @@
         <span style="background-color: #00B83F">　&nbsp;</span><span>表示:数据正常，符合排班要求</span><br>
         <span style="background-color: #ee0101">　&nbsp;</span><span>表示:通过校验，数据存在异常情况，当全部数据无异常情况后方可提交</span><br>
     </div>
+    <div class='form_btn' style='margin-bottom: 10px' id='tableMain_sub'>
+        <input class="btn_green" id="checkData" type="button" value='校验数据' onclick="checkData()"/>
+        <input class="btn_green" id="submitData" type="button" value='提交数据' onclick="submitData()"/>
+    </div>
     <table class="grid" id="dataTable">
         <thead id="headerTr">
         </thead>
         <tbody id="dataBody">
-        <tr class="fixTrTd"></tr>
+        <tr class="fixTrTd">
+        </tr>
         </tbody>
     </table>
 </div>

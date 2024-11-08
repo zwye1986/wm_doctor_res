@@ -11,7 +11,7 @@
 		and sur.record_status = 'Y'
 		and sur.role_flow = #{roleFlow}
 		<if test="userName !=null and userName !=''">
-			and su.user_name like '%${userName}%'
+			and su.user_name like CONCAT(CONCAT('%', #{userName}),'%')
 		</if>
 		and (
 		  exists(
@@ -34,7 +34,7 @@
 		and dept.org_flow=#{orgFlow}
 		and rel.standard_dept_id=#{standardDeptId}
 		<if test='deptName!=null and deptName!=""'>
-			AND dept.Dept_name like '%${deptName}%'
+			AND dept.Dept_name like CONCAT(CONCAT('%', #{deptName}),'%')
 		</if>
 		order by dept.create_time
 	</select>

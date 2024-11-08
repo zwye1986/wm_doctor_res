@@ -212,7 +212,16 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+    <select id="selectJointOrgFlow" resultType="java.lang.String">
+      SELECT
+        jo.JOINT_ORG_FLOW
+      FROM
+        sys_user u
+          LEFT JOIN RES_DOCTOR d ON u.USER_FLOW = d.DOCTOR_FLOW
+          Left Join Res_Joint_Org Jo On U.Org_Flow = Jo.Org_Flow And D.Session_Number = Jo.Session_Number
+      WHERE u.USER_FLOW = #{userFlow}
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
     update PDSCI.TEACHING_ACTIVITY_TARGET
     <set >
       <if test="record.targetFlow != null" >

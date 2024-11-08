@@ -170,7 +170,7 @@ public class InitConfig implements ServletContextListener {
 		String doctorAccessAuthority = prop.getProperty("doctor");//学员
 		String teacherAccessAuthority = prop.getProperty("teacher");//带教老师
 		String responsibleTeacherAccessAuthority = prop.getProperty("responsibleTeacher");//责任导师
-		String secretaryAccessAuthority = prop.getProperty("secretary");//教秘
+		String secretaryAccessAuthority = prop.getProperty("secretary");//科秘
 		String teachingSecretaryAccessAuthority = prop.getProperty("teachingSecretary");//教秘
 		String headAccessAuthority = prop.getProperty("head");//科主任
 		String schoolAccessAuthority = prop.getProperty("school");//学校
@@ -185,7 +185,7 @@ public class InitConfig implements ServletContextListener {
 		String adminAccessAuthority = prop.getProperty("admin");//医院管理员//免费医院管理员
 		String hospitalSecretaryAccessAuthority = prop.getProperty("hospitalSecretary");//医院秘书
 		String speAdminAccessAuthority = prop.getProperty("speAdmin");//专业基地管理员
-		String speAdminSecretaryAccessAuthority = prop.getProperty("speAdminSecretary");//专业基地管理员
+		String speAdminSecretaryAccessAuthority = prop.getProperty("speAdminSecretary");//专业基地秘书
 		String globalAccessAuthority = prop.getProperty("global");//省级部门
 		String qualityAccessAuthority = prop.getProperty("quality");//质控组
 		String chargeAccessAuthority = prop.getProperty("charge");//主管部门（市局）
@@ -194,7 +194,7 @@ public class InitConfig implements ServletContextListener {
 		String baseExpertAccessAuthority = prop.getProperty("baseExpert");//督导-专业基地专家
 		String hospitalLeaderAccessAuthority = prop.getProperty("hospitalLeader");//督导-评分专家
 		String phyAssAccessAuthority = prop.getProperty("phyAss");//督导-评分专家
-		List<String> allMenus = new ArrayList<>();
+		/*List<String> allMenus = new ArrayList<>();
 		if (StringUtil.isNotBlank(doctorAccessAuthority)) {
 			allMenus.addAll(Arrays.asList(doctorAccessAuthority.split(",")));
 		}
@@ -275,7 +275,7 @@ public class InitConfig implements ServletContextListener {
 		}
 		if(StringUtil.isNotBlank(phyAssAccessAuthority)){
 			allMenus.addAll(Arrays.asList(phyAssAccessAuthority.split(",")));
-		}
+		}*/
 		context.setAttribute("doctorAccessAuthority", doctorAccessAuthority);
 		context.setAttribute("teacherAccessAuthority", teacherAccessAuthority);
 		context.setAttribute("responsibleTeacherAccessAuthority", responsibleTeacherAccessAuthority);
@@ -303,7 +303,7 @@ public class InitConfig implements ServletContextListener {
 		context.setAttribute("baseExpertAccessAuthority", baseExpertAccessAuthority);
 		context.setAttribute("hospitalLeaderAccessAuthority", hospitalLeaderAccessAuthority);
 		context.setAttribute("phyAssAccessAuthority", phyAssAccessAuthority);
-		context.setAttribute("allMenus", allMenus);
+//		context.setAttribute("allMenus", allMenus);
 	}
 
 	public static String getWorkStationName(String workStationId) {

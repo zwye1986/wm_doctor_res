@@ -55,7 +55,7 @@
             and rd.training_Spe_Id = #{trainingSpeId}
         </if>
         <if test="doctorName!='' and doctorName!=null">
-            and rd.doctor_Name like '%${doctorName}%'
+            and rd.doctor_Name like CONCAT(CONCAT('%', #{doctorName}),'%')
         </if>
     </select>
 
@@ -90,7 +90,7 @@
             </foreach>
         </if>
         <if test='doctorName!=null and doctorName!=""'>
-            and SU.USER_NAME LIKE  '%${doctorName}%'
+            and SU.USER_NAME LIKE  CONCAT(CONCAT('%', #{doctorName}),'%')
         </if>
         <if test='doctorFlow!=null and doctorFlow!=""'>
             and SU.USER_FLOW = #{doctorFlow}

@@ -1,8 +1,7 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.form.hbres.ExtInfoForm;
-import com.pinde.sci.form.hbres.ReplenishInfoForm;
-import com.pinde.sci.form.hbres.ResDoctorClobForm;
+import com.pinde.sci.excelListens.model.ResRecItem;
+import com.pinde.sci.form.hbres.*;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
@@ -14,8 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 /**
  * @author tiger
  *
@@ -435,4 +434,15 @@ public interface IResDoctorBiz {
 
     //获取南医大院校列表
 	List<String> getSchools();
+	/**
+	 * ~~~~~~~~~溺水的鱼~~~~~~~~
+	 * @Author: 吴强
+	 * @Date: 2024/10/28 17:17
+	 * @Description:根据姓名集合和身份证集合查询人员信息
+	 */
+	List<SysUser> listByNameOrIdNo(Set<String> userName, Set<String> idNo);
+
+	List<SchArrangeResult> listDoctorResult(Set<String> userIds);
+
+	List<ResRecItem> resRecCount(List<String> resultFlowList);
 }

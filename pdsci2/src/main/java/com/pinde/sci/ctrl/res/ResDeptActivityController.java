@@ -24,8 +24,9 @@ import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.CellRangeAddress;
+
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -371,10 +372,10 @@ public class ResDeptActivityController extends GeneralController {
 
 		Font font = wb.createFont();
 		font.setFontHeightInPoints((short) 12);
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font.setBold(true);
 		CellStyle style = wb.createCellStyle();
-		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		style.setVerticalAlignment(VerticalAlignment.CENTER); // 创建一个居中格式
+		style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 		style.setFont(font);
 
 
@@ -382,8 +383,8 @@ public class ResDeptActivityController extends GeneralController {
 		fontTwo.setFontHeightInPoints((short) 12);
 
 		CellStyle styleTwo = wb.createCellStyle();
-		styleTwo.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-		styleTwo.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		styleTwo.setVerticalAlignment(VerticalAlignment.CENTER); // 创建一个居中格式
+		styleTwo.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 		styleTwo.setFont(fontTwo);
 		//
 
@@ -1078,18 +1079,18 @@ public class ResDeptActivityController extends GeneralController {
 
 		Font font = wb.createFont();
 		font.setFontHeightInPoints((short) 12);
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font.setBold(true);
 		CellStyle style = wb.createCellStyle();
-		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		style.setVerticalAlignment(VerticalAlignment.CENTER); // 创建一个居中格式
+		style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 		style.setFont(font);
 
 		Font fontTwo = wb.createFont();
 		fontTwo.setFontHeightInPoints((short) 12);
 
 		CellStyle styleTwo = wb.createCellStyle();
-		styleTwo.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-		styleTwo.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		styleTwo.setVerticalAlignment(VerticalAlignment.CENTER); // 创建一个居中格式
+		styleTwo.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 		styleTwo.setFont(fontTwo);
 		//
 		Map<Integer,Integer>  columnWidth=new HashMap<>();

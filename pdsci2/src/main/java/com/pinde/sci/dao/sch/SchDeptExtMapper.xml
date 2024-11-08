@@ -56,7 +56,7 @@
 						AND	TRAINING_SPE_ID = #{doctor.trainingSpeId}
 					</if>
 					<if test='doctor.doctorName!=null and doctor.doctorName!=""'>
-						AND	DOCTOR_NAME LIKE '%${doctor.doctorName}%'
+						AND	DOCTOR_NAME LIKE CONCAT(CONCAT('%', #{doctor.doctorName}),'%')
 					</if>
 				</if>
 			)

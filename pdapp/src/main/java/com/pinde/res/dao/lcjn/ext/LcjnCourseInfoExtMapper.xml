@@ -50,7 +50,7 @@
 		AND INFO.IS_RELEASED='Y'
 		AND INFO.APPOINT_END_TIME <![CDATA[>=]]> to_char(sysdate,'yyyy-MM-dd HH24:MI')
 		<if test='courseName!=null and courseName!=""'>
-			and INFO.COURSE_NAME like '%${courseName}%'
+			and INFO.COURSE_NAME like CONCAT(CONCAT('%', #{courseName}),'%')
 		</if>
 		order by APPOINT_START_TIME asc
 	</select>
@@ -76,7 +76,7 @@
 		 LDC.RECORD_STATUS='Y'
 		AND LDC.DOCTOR_FLOW=#{userFlow}
 		<if test='courseName!=null and courseName!=""'>
-			and INFO.COURSE_NAME like '%${courseName}%'
+			and INFO.COURSE_NAME like CONCAT(CONCAT('%', #{courseName}),'%')
 		</if>
 		order by APPOINT_START_TIME desc
 	</select>

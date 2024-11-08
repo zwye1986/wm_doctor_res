@@ -138,7 +138,7 @@ INSERT INTO HBRES_DOCTOR_DEPT_DETAIL
            ELSE
             0
          END, 2) * 100) END AUDIT_BI,
-         '${applyYear}',
+         #{applyYear},
          'Y',
          to_char(sysdate, 'YYYYMMDDHH24MISS'),
          'System',
