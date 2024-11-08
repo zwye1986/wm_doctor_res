@@ -113,6 +113,10 @@
     }
 
     function checkSetJointOrg() {
+        if($('input[name="basicInfo.jointOrgFlag"]:checked').val() != 'Y') {
+            return true; // 不填就不用校验
+        }
+
         var joints = $("#jointContractBody tr");
         // 校验必填项是不是都填了
         for(var i = 0; i < joints.length; i++) {
@@ -259,6 +263,10 @@
         if ($("#centerTb tr").length <= 0) {
             add('center');
         }
+
+        if($('input[name="basicInfo.jointOrgFlag"]:checked').val() == 'Y') {
+            $('#jointOrgTable').show();
+        }
     });
 
     $(document).ready(function () {
@@ -352,6 +360,14 @@
             $(obj).val("");
             jboxTip("请上传 pdf 格式的文件");
             return;
+        }
+    }
+
+    function handleJointOrg(target) {
+        if($(target).val() == 'Y') {
+            $('#jointOrgTable').show();
+        }else {
+            $('#jointOrgTable').hide();
         }
     }
 </script>
@@ -879,6 +895,13 @@
                         </c:if>
                     </td>
                 </tr>
+                <tr>
+                    <th><span class="red">*</span>是否具有协同单位：</th>
+                    <td>
+                        <input type="radio" class="validate[required]" name="basicInfo.jointOrgFlag" onclick="handleJointOrg(this)" value="Y" <c:if test="${basicInfo.jointOrgFlag eq 'Y' }">checked="checked"</c:if>/>有&nbsp;
+                        <input type="radio" class="validate[required]" name="basicInfo.jointOrgFlag" onclick="handleJointOrg(this)" value="N" <c:if test="${basicInfo.jointOrgFlag eq 'N' }">checked="checked"</c:if>/>无&nbsp;
+                    </td>
+                </tr>
                 <%--<c:if test="${not empty jointOrgFlag and jointOrgFlag eq 'Y'}">
                 <tr>
                     <th>协同关系协议：</th>
@@ -897,7 +920,7 @@
                 </tbody>
             </table>
 
-            <table class="base_info">
+            <table class="base_info" id="jointOrgTable" style="display: none">
                 <thead>
                 <colgroup>
                     <col width="30%"/>
