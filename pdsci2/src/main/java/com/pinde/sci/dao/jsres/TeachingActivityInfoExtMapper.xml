@@ -22,6 +22,7 @@
         <result column="FILE_FLOWS" property="fileFlows" jdbcType="VARCHAR" />
         <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
         <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+        <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
 
     </resultMap>
     <resultMap id="activityResultMap" type="hashmap" extends="com.pinde.sci.dao.base.TeachingActivityResultMapper.BaseResultMap">
@@ -1017,7 +1018,7 @@
     </select>
 
     <select id="readActivity" resultMap="activityMap">
-        SELECT INFO.*, SU.USER_NAME, D.DEPT_NAME, RESULT.EVAL_SCORE,F.FILE_NAME
+        SELECT INFO.*, SU.USER_NAME,SU.ID_NO, D.DEPT_NAME, RESULT.EVAL_SCORE,F.FILE_NAME
           FROM TEACHING_ACTIVITY_INFO INFO
           LEFT JOIN SYS_USER SU
             ON INFO.SPEAKER_FLOW = SU.USER_FLOW

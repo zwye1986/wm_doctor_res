@@ -28,7 +28,6 @@
     }
 
     function editDept(deptFlow){
-        debugger;
         var target = window.event.target;
         var curTr = $(target).parents('tr');
         var deptFlow = curTr.attr('dataflow');
@@ -84,6 +83,9 @@
                 title: settings.title,
                 html: html,
                 buttons: {},
+                position: {
+                  width: 530
+                },
                 submit:function(e,v,m,f){
 
                 },
@@ -92,6 +94,7 @@
                 }
             }
         });
+        $('.jqi #editForm').validationEngine('attach');
     }
 
     function closeEditDialog() { // 找不到插件关闭弹窗入口，只能模拟点击一下
@@ -99,7 +102,10 @@
     }
 
     function editSave(operType, otherData) {
-        debugger;
+        if(!$(".jqi #editForm").validationEngine("validate")) {
+            return;
+        }
+
         var url = '<s:url value="/jsres/dept/saveBaseDept" />';
         var data = {
             operType: operType
@@ -239,15 +245,15 @@
                 <tbody>
                     <tr>
                         <th>科室名称：</th>
-                        <td><input class="validate[required,minSize[1],maxSize[25]] input" name="baseDeptNameEdit" type="text" value="{deptName}" /></td>
+                        <td><input class="validate[required,custom[number]] input" name="baseDeptNameEdit" type="text" value="{deptName}" /></td>
                     </tr>
                     <tr>
                         <th>科室代码：</th>
-                        <td><input class="validate[required,custom[integer],maxSize[50]] input" name="baseDeptCodeEdit" type="text" value="{deptCode}" /></td>
+                        <td><input class="validate[required,minSize[1],maxSize[25]] input" name="baseDeptCodeEdit" type="text" value="{deptCode}" /></td>
                     </tr>
                     <tr>
                         <th>排序码：</th>
-                        <td><input class="validate[required,custom[integer],maxSize[50]] input" name="baseOrdinalEdit" type="text" value="{ordinal}" /></td>
+                        <td><input class="validate[required,custom[integer]] input" name="baseOrdinalEdit" type="text" value="{ordinal}" /></td>
                     </tr>
                 </tbody>
             </table>

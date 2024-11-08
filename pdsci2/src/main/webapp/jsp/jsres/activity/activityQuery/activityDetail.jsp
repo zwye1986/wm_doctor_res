@@ -123,7 +123,7 @@
                 <tr>
                     <th style="text-align: right;">身份证号：</th>
                     <td style="width: 273px;margin: 0 5px;" colspan="3">
-                        ${user.idNo==null?"-":user.idNo}
+                        ${activity.idNo==null?"-":activity.idNo}
                     </td>
                 </tr>
                 <tr>
