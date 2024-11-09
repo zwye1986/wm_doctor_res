@@ -4945,9 +4945,21 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			if (pbInfoItem.getRecordStatus().equals("N")) {
 				continue;
 			}
-			//该学员的历史排班数据
-			List<PbInfoItem> dbList = compareList.stream().filter(e -> "db".equalsIgnoreCase(e.getType()) && doctorFlow.equalsIgnoreCase(e.getDoctorFlow()))
-					.collect(Collectors.toList());
+			//该学员的历史排班数据,从数据库查询历史排班数据
+			List<PbInfoItem> dbList = new ArrayList<>();
+			Set<String> userIds = new HashSet<>();
+			userIds.add(doctorFlow);
+			List<SchArrangeResult> schArrangeResults = doctorBiz.listDoctorResult(userIds);
+			if (CollectionUtil.isNotEmpty(schArrangeResults)) {
+				PbInfoItem resItem = new PbInfoItem();
+				for (SchArrangeResult res : schArrangeResults) {
+					resItem = new PbInfoItem();
+					BeanUtil.copyProperties(res,resItem);
+					resItem.setType("db");
+
+					dbList.add(resItem);
+				}
+			}
 			if (CollectionUtil.isEmpty(dbList)) {
 				//没有该学员的历史排班记录,直接导入
 				savePbWithoutHis(pbInfoItem);
@@ -4974,8 +4986,10 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				//判断是否有提交记录
 				Integer resRecLog = entity.getResRecList().get(history.getResultFlow());
 				resRecLog = null == resRecLog? 0:resRecLog;
-				if ((dbSchDeptFlow.equals(importDeptFlow))) {
+//				(dbSchDeptFlow.equals(importDeptFlow))
+				if (true) {
 					if (importStart.compareTo(hisStart) == 0 && importEnd.compareTo(hisEnd) == 0) {
+						//覆盖
 						if (resRecLog>0){
 							pbInfoItem.setRecordStatus("N");
 							continue;
@@ -4986,100 +5000,160 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					}
 					if (importStart.compareTo(hisEnd)==0
 							|| importStart.compareTo(cn.hutool.core.date.DateUtil.offsetDay(hisEnd,1))==0) {
-						if (resRecLog>0) {
-							//有提交记录的就不合并了,调整本次排班数据
-							pbInfoItem.setSchStartDate(cn.hutool.core.date.DateUtil.offsetDay(
-									cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
-									1).toDateStr());
-							history.setRecordStatus("N");
-						}else {
-							//导入的开始时间和历史数据的结束时间衔接上
-							//导入的开始时间内改为历史的开始时间
-							pbInfoItem.setResultFlow(history.getResultFlow());
-							pbInfoItem.setSchStartDate(history.getSchStartDate());
-							//删除历史排班
-							deletePbResult(history.getResultFlow(),true);
-							//移除dbList中的本次历史数据，因为它已经被融合了
-							history.setRecordStatus("N");
-							continue;
+						if (dbSchDeptFlow.equals(importDeptFlow)) {
+							//本次的开始时间和历史的结束时间衔接，如果科室相同就合并，不相同不处理
+							if (resRecLog>0) {
+								//有提交记录的就不合并了,调整本次排班数据
+								pbInfoItem.setSchStartDate(cn.hutool.core.date.DateUtil.offsetDay(
+										cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
+										1).toDateStr());
+//								history.setRecordStatus("N");
+							}else {
+								//导入的开始时间和历史数据的结束时间衔接上
+								//导入的开始时间内改为历史的开始时间
+								pbInfoItem.setResultFlow(history.getResultFlow());
+								pbInfoItem.setSchStartDate(history.getSchStartDate());
+								//删除历史排班
+								deletePbResult(history.getResultFlow(),true);
+								//移除dbList中的本次历史数据，因为它已经被融合了
+								history.setRecordStatus("N");
+								continue;
+							}
 						}
-
 					}
 					if (importEnd.compareTo(hisStart)==0
 							|| importEnd.compareTo(cn.hutool.core.date.DateUtil.offsetDay(hisStart,-1))==0) {
-						if (resRecLog>0){
-							//有提交记录的就不合并了,调整本次排班数据
-							pbInfoItem.setSchEndDate(cn.hutool.core.date.DateUtil.offsetDay(
-									cn.hutool.core.date.DateUtil.parseDate(history.getSchStartDate()),-1).toDateStr());
-							history.setRecordStatus("N");
-						}else {
-							//导入的尾衔接
-							pbInfoItem.setResultFlow(history.getResultFlow());
-							//导入的开始时间内改为历史的开始时间
-							pbInfoItem.setSchEndDate(history.getSchEndDate());
-							//删除历史排班
-							deletePbResult(history.getResultFlow(),true);
-							//移除dbList中的本次历史数据，因为它已经被融合了
-							history.setRecordStatus("N");
-							continue;
+						//本次排班的结束时间和历史排班的开始时间衔接，如果科室相同就合并
+						if (dbSchDeptFlow.equals(importDeptFlow)) {
+							if (resRecLog>0){
+								//有提交记录的就不合并了,调整本次排班数据
+								pbInfoItem.setSchEndDate(cn.hutool.core.date.DateUtil.offsetDay(
+										cn.hutool.core.date.DateUtil.parseDate(history.getSchStartDate()),-1).toDateStr());
+//								history.setRecordStatus("N");
+							}else {
+								//导入的尾衔接
+								pbInfoItem.setResultFlow(history.getResultFlow());
+								//导入的开始时间内改为历史的开始时间
+								pbInfoItem.setSchEndDate(history.getSchEndDate());
+								//删除历史排班
+								deletePbResult(history.getResultFlow(),true);
+								//移除dbList中的本次历史数据，因为它已经被融合了
+								history.setRecordStatus("N");
+								continue;
+							}
 						}
 					}
 					//处理交集
 					if (importStart.compareTo(hisStart)>=0 && importStart.compareTo(hisEnd)<0){
-						if (resRecLog>0){
-							pbInfoItem.setSchStartDate(cn.hutool.core.date.DateUtil.offsetDay(
-									cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
-									1).toDateStr());
-							history.setRecordStatus("N");
+						//本次排班的开始部分和历史排班有重合，科室相同就合并，不相同需要覆盖重合部分
+						if (dbSchDeptFlow.equals(importDeptFlow)) {
+							if (resRecLog>0){
+								pbInfoItem.setSchStartDate(cn.hutool.core.date.DateUtil.offsetDay(
+										cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
+										1).toDateStr());
+//								history.setRecordStatus("N");
+							}else {
+								pbInfoItem.setResultFlow(history.getResultFlow());
+								//首部有交集
+								pbInfoItem.setSchStartDate(history.getSchStartDate());
+								//删除历史排班
+								deletePbResult(history.getResultFlow(),true);
+								//移除dbList中的本次历史数据，因为它已经被融合了
+								history.setRecordStatus("N");
+								continue;
+							}
 						}else {
-							pbInfoItem.setResultFlow(history.getResultFlow());
-							//首部有交集
-							pbInfoItem.setSchStartDate(history.getSchStartDate());
-							//删除历史排班
-							deletePbResult(history.getResultFlow(),true);
-							//移除dbList中的本次历史数据，因为它已经被融合了
-							history.setRecordStatus("N");
-							continue;
+							//科室不相同
+							if (resRecLog>0){
+								pbInfoItem.setSchStartDate(cn.hutool.core.date.DateUtil.offsetDay(
+										cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
+										1).toDateStr());
+//								history.setRecordStatus("N");
+							}else {
+								//首部有交集
+//								//更新历史排班
+								history.setSchEndDate(cn.hutool.core.date.DateUtil.offsetDay(importStart,-1).toDateStr());
+								updateHistoryData(history.getResultFlow(),null,history.getSchEndDate());
+								continue;
+							}
 						}
+
 					}
 					//处理交集
 					if (importEnd.compareTo(hisStart)>0 && importEnd.compareTo(hisEnd)<=0){
-						if (resRecLog>0){
-							pbInfoItem.setSchEndDate(cn.hutool.core.date.DateUtil.offsetDay(
-									cn.hutool.core.date.DateUtil.parseDate(history.getSchStartDate()),-1).toDateStr());
-							history.setRecordStatus("N");
+						//本次导入的后半部分和历史排班有交集，科室相同，整合。科室不同覆盖
+						if (dbSchDeptFlow.equals(importDeptFlow)) {
+							if (resRecLog>0){
+								pbInfoItem.setSchEndDate(cn.hutool.core.date.DateUtil.offsetDay(
+										cn.hutool.core.date.DateUtil.parseDate(history.getSchStartDate()),-1).toDateStr());
+//								history.setRecordStatus("N");
+							}else {
+								pbInfoItem.setResultFlow(history.getResultFlow());
+								//尾部有交集
+								pbInfoItem.setSchEndDate(history.getSchEndDate());
+								//删除历史排班
+								deletePbResult(history.getResultFlow(),true);
+								//移除dbList中的本次历史数据，因为它已经被融合了
+								history.setRecordStatus("N");
+								continue;
+							}
 						}else {
-							pbInfoItem.setResultFlow(history.getResultFlow());
-							//尾部有交集
-							pbInfoItem.setSchEndDate(history.getSchEndDate());
-							//删除历史排班
-							deletePbResult(history.getResultFlow(),true);
-							//移除dbList中的本次历史数据，因为它已经被融合了
-							history.setRecordStatus("N");
-							continue;
+							if (resRecLog>0){
+								pbInfoItem.setSchEndDate(cn.hutool.core.date.DateUtil.offsetDay(
+										cn.hutool.core.date.DateUtil.parseDate(history.getSchStartDate()),-1).toDateStr());
+							}else {
+								//尾部有交集
+								history.setSchStartDate(cn.hutool.core.date.DateUtil.offsetDay(importEnd,1).toDateStr());
+								//删除历史排班
+								updateHistoryData(history.getResultFlow(),history.getSchStartDate(),null);
+								continue;
+							}
 						}
+
 					}
 					//包含历史数据
 					if (importStart.compareTo(hisStart)<=0 && importEnd.compareTo(hisEnd)>=0){
-						if (resRecLog>0){
-							//被包含的历史排班中存在学员数据
-							pbInfoItem.setChaiEnd(cn.hutool.core.date.DateUtil.offsetDay(
-									cn.hutool.core.date.DateUtil.parseDate(history.getSchStartDate()),
-									-1
-							).toDateStr());
-							pbInfoItem.setChaiNextStart(cn.hutool.core.date.DateUtil.offsetDay(
-									cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
-									1
-							).toDateStr());
-							history.setRecordStatus("N");
+						if (dbSchDeptFlow.equals(importDeptFlow)) {
+							if (resRecLog>0){
+								//被包含的历史排班中存在学员数据
+								pbInfoItem.setChaiEnd(cn.hutool.core.date.DateUtil.offsetDay(
+										cn.hutool.core.date.DateUtil.parseDate(history.getSchStartDate()),
+										-1
+								).toDateStr());
+								pbInfoItem.setChaiNextStart(cn.hutool.core.date.DateUtil.offsetDay(
+										cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
+										1
+								).toDateStr());
+//								history.setRecordStatus("N");
+							}else {
+								pbInfoItem.setResultFlow(history.getResultFlow());
+								//删除历史排班
+								deletePbResult(history.getResultFlow(),true);
+								//移除dbList中的本次历史数据，因为它已经被融合了
+								history.setRecordStatus("N");
+								continue;
+							}
 						}else {
-							pbInfoItem.setResultFlow(history.getResultFlow());
-							//删除历史排班
-							deletePbResult(history.getResultFlow(),true);
-							//移除dbList中的本次历史数据，因为它已经被融合了
-							history.setRecordStatus("N");
-							continue;
+							if (resRecLog>0){
+								//被包含的历史排班中存在学员数据
+								pbInfoItem.setChaiEnd(cn.hutool.core.date.DateUtil.offsetDay(
+										cn.hutool.core.date.DateUtil.parseDate(history.getSchStartDate()),
+										-1
+								).toDateStr());
+								pbInfoItem.setChaiNextStart(cn.hutool.core.date.DateUtil.offsetDay(
+										cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
+										1
+								).toDateStr());
+//								history.setRecordStatus("N");
+							}else {
+								//删除历史排班
+								deletePbResult(history.getResultFlow(),true);
+								//移除dbList中的本次历史数据，因为它已经被融合了
+								history.setRecordStatus("N");
+								continue;
+							}
 						}
+
 					}
 					//被包含
 					if (importStart.compareTo(hisStart)>=0 && importEnd.compareTo(hisEnd)<=0){
@@ -5087,19 +5161,28 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 							pbInfoItem.setRecordStatus("N");
 							continue;
 						}
-						//历史数据一拆二
-						PbInfoItem newHisTory = new PbInfoItem();
-						BeanUtil.copyProperties(history,newHisTory);
-						newHisTory.setResultFlow(PkUtil.getUUID());
-						history.setSchEndDate(cn.hutool.core.date.DateUtil.offsetDay(importStart,-1).toDateStr());
-						history.setRecordStatus("N");
-						dbList.add(history);
-						newHisTory.setSchStartDate(cn.hutool.core.date.DateUtil.offsetDay(importEnd,1).toDateStr());
-						dbList.add(newHisTory);
-						savePbWithoutHis(newHisTory);
+						if (dbSchDeptFlow.equals(importDeptFlow)) {
+							pbInfoItem.setRecordStatus("N");
+							continue;
+						}
+						//不存在提交数据的情况下
+						if (!dbSchDeptFlow.equals(importDeptFlow)) {
+							//历史数据一拆二
+							PbInfoItem newHisTory = new PbInfoItem();
+							BeanUtil.copyProperties(history,newHisTory);
+							newHisTory.setResultFlow(PkUtil.getUUID());
+							history.setSchEndDate(cn.hutool.core.date.DateUtil.offsetDay(importStart,-1).toDateStr());
+							updateHistoryData(history.getResultFlow(),history.getSchStartDate(),history.getSchEndDate());
+							newHisTory.setSchStartDate(cn.hutool.core.date.DateUtil.offsetDay(importEnd,1).toDateStr());
+							dbList.add(newHisTory);
+							savePbWithoutHis(newHisTory);
+						}
+
 					}
 				}
-				savePbWithoutHis(pbInfoItem);
+				if (pbInfoItem.getRecordStatus().equalsIgnoreCase("Y")) {
+					savePbWithoutHis(pbInfoItem);
+				}
 			}
 			//再次检验标准科室轮转时长的限制
 			Map<String, String> map = todoCheckSchDate(doctorFlow);
@@ -5431,6 +5514,24 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			schArrangeResult.setRecordStatus("N");
 			arrangeResultMapper.updateByPrimaryKeySelective(schArrangeResult);
 		}
+	}
+
+	private void updateHistoryData(String resultFlow,String schStartDate,String endDate){
+		if (StringUtils.isEmpty(resultFlow)) {
+			return;
+		}
+		SchArrangeResult schArrangeResult = arrangeResultMapper.selectByPrimaryKey(resultFlow);
+		if (ObjectUtil.isEmpty(schArrangeResult)) {
+			return;
+		}
+		if (StringUtils.isNotEmpty(schStartDate)) {
+			schArrangeResult.setSchStartDate(schStartDate);
+		}
+		if (StringUtils.isNotEmpty(endDate)) {
+			schArrangeResult.setSchEndDate(endDate);
+		}
+		//delete是否物理删除
+		arrangeResultMapper.updateByPrimaryKeySelective(schArrangeResult);
 	}
 
 
