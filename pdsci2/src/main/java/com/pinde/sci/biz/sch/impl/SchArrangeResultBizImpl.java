@@ -4749,8 +4749,16 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		if (null == file) {
 			throw new RuntimeException("导入的文件不能为空");
 		}
+		String openFlag = "Y";
 		JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_min_mon_" + GlobalContext.getCurrentUser().getOrgFlow());
+		if (ObjectUtil.isNotEmpty(openCfg)) {
+			openFlag = StringUtils.isEmpty(openCfg.getCfgValue())? "Y":openCfg.getCfgValue();
+		}
+		String minMonthNum = "1";
 		JsresPowerCfg minMonthCfg = jsResPowerCfgBiz.read("jsres_"+GlobalContext.getCurrentUser().getOrgFlow()+"_org_process_scheduling_time");
+		if(ObjectUtil.isNotEmpty(minMonthCfg)) {
+			minMonthNum = StringUtils.isEmpty(minMonthCfg.getCfgValue())? "1":minMonthCfg.getCfgValue();
+		}
 		//查询所有专业对应的标准科室
 		Map<String, List<SchRotationDept>> allBzDept = getAllBzDept();
 		//查询所有的轮转科室
@@ -4778,7 +4786,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			listen.setStuResultList(schArrangeResults);
 		}
 		//查询最短排班时间的校验
-		listen.getData(false,openCfg.getCfgValue(),minMonthCfg.getCfgCode());
+		listen.getData(false,openFlag,minMonthNum);
 		List<PbInfoItem> compareList = listen.getCompareList();
 		if (CollectionUtil.isNotEmpty(compareList)) {
 			//根据resultFlow集合查询学员提交情况
@@ -4792,7 +4800,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				}
 			}
 		}
-		List<SchedulingDataModel> data = listen.getData(true,openCfg.getCfgValue(),minMonthCfg.getCfgValue());
+		List<SchedulingDataModel> data = listen.getData(true,openFlag,minMonthNum);
 		result.put("data", JSONUtil.toJsonStr(data));
 		return result;
 	}
@@ -4800,8 +4808,16 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 	public Map<String, Object> checkRowData(List<SchedulingDataModel> data) {
 		Map<String, Object> result = new HashMap<>();
+		String openFlag = "Y";
 		JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_min_mon_" + GlobalContext.getCurrentUser().getOrgFlow());
+		if (ObjectUtil.isNotEmpty(openCfg)) {
+			openFlag = StringUtils.isEmpty(openCfg.getCfgValue())? "Y":openCfg.getCfgValue();
+		}
+		String minMonthNum = "1";
 		JsresPowerCfg minMonthCfg = jsResPowerCfgBiz.read("jsres_"+GlobalContext.getCurrentUser().getOrgFlow()+"_org_process_scheduling_time");
+		if(ObjectUtil.isNotEmpty(minMonthCfg)) {
+			minMonthNum = StringUtils.isEmpty(minMonthCfg.getCfgValue())? "1":minMonthCfg.getCfgValue();
+		}
 		//查询所有专业对应的标准科室
 		Map<String, List<SchRotationDept>> allBzDept = getAllBzDept();
 		//查询所有的轮转科室
@@ -4825,7 +4841,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			List<SchArrangeResult> schArrangeResults = doctorBiz.listDoctorResult(userIds);
 			entity.setStuResultList(schArrangeResults);
 		}
-		entity.getData(false,openCfg.getCfgValue(),minMonthCfg.getCfgValue());
+		entity.getData(false,openFlag,minMonthNum);
 		List<PbInfoItem> compareList = entity.getCompareList();
 		if (CollectionUtil.isNotEmpty(compareList)) {
 			//根据resultFlow集合查询学员提交情况
@@ -4839,7 +4855,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				}
 			}
 		}
-		result.put("data",entity.getData(true,openCfg.getCfgValue(),minMonthCfg.getCfgValue()));
+		result.put("data",entity.getData(true,openFlag,minMonthNum));
 		return result;
 	}
 
@@ -4861,8 +4877,16 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			result.put("msg","暂无导入数据");
 			return result;
 		}
+		String openFlag = "Y";
 		JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_min_mon_" + GlobalContext.getCurrentUser().getOrgFlow());
+		if (ObjectUtil.isNotEmpty(openCfg)) {
+			openFlag = StringUtils.isEmpty(openCfg.getCfgValue())? "Y":openCfg.getCfgValue();
+		}
+		String minMonthNum = "1";
 		JsresPowerCfg minMonthCfg = jsResPowerCfgBiz.read("jsres_"+GlobalContext.getCurrentUser().getOrgFlow()+"_org_process_scheduling_time");
+		if(ObjectUtil.isNotEmpty(minMonthCfg)) {
+			minMonthNum = StringUtils.isEmpty(minMonthCfg.getCfgValue())? "1":minMonthCfg.getCfgValue();
+		}
 		//查询所有专业对应的标准科室
 		Map<String, List<SchRotationDept>> allBzDept = getAllBzDept();
 		//查询所有的轮转科室
@@ -4886,7 +4910,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			List<SchArrangeResult> schArrangeResults = doctorBiz.listDoctorResult(userIds);
 			entity.setStuResultList(schArrangeResults);
 		}
-		entity.getData(false,openCfg.getCfgValue(),minMonthCfg.getCfgValue());
+		entity.getData(false,openFlag,minMonthNum);
 
 		List<PbInfoItem> compareList = entity.getCompareList();
 		if (CollectionUtil.isNotEmpty(compareList)) {
@@ -5087,8 +5111,13 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			//导入成功
 			return result;
 		}
+		//是否开启轮转时长校验
 		JsresPowerCfg openCfgChek = jsResPowerCfgBiz.read("process_scheduling_check_" + GlobalContext.getCurrentUser().getOrgFlow());
-		if ("Y".equals(openCfgChek.getCfgValue())) {
+		String checkFlag = "N";
+		if (ObjectUtil.isNotEmpty(openCfgChek)) {
+			checkFlag = StringUtils.isEmpty(openCfgChek.getCfgValue())? "N":openCfgChek.getCfgValue();
+		}
+		if ("Y".equals(checkFlag)) {
 			//开启排班校验
 			boolean successFlag = true;
 			for (String doctorFlow : checkSchMonMap.keySet()) {
