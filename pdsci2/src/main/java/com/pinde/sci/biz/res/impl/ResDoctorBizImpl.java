@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.json.JSONUtil;
 import com.pinde.core.commom.enums.GeneralEnum;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.DateUtil;
@@ -45,6 +46,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,6 +59,7 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.net.*;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
@@ -6095,9 +6098,34 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 	@Autowired
 	private SchDoctorDeptExtMapper doctorDeptExtMapper;
 
+	@Resource
+	private RedisTemplate<String,String> redisTemplate;
+
 	@Override
 	public List<SysUser> listByNameOrIdNo(Set<String> userName, Set<String> idNo) {
-		return doctorDeptExtMapper.listByNameOrIdNo(userName,idNo);
+		String redisKey = "listByNameOrIdNo:";
+		if (CollectionUtil.isNotEmpty(userName)){
+			String userKey = StringUtils.join(userName, ",");
+			redisKey = redisKey+ userKey;
+		}else {
+			redisKey = redisKey+ "null";
+		}
+		if (CollectionUtil.isNotEmpty(idNo)){
+			String idNoKey = StringUtils.join(idNo, ",");
+			redisKey = redisKey+":"+idNoKey;
+		}else {
+			redisKey = redisKey+ ":null";
+		}
+		String s = redisTemplate.opsForValue().get(redisKey);
+		if (StringUtils.isNotEmpty(s)) {
+			List<SysUser> list = JSONUtil.toList(s, SysUser.class);
+			if (CollectionUtil.isNotEmpty(list)) {
+				return list;
+			}
+		}
+		List<SysUser> result = doctorDeptExtMapper.listByNameOrIdNo(userName, idNo);
+		redisTemplate.opsForValue().set(redisKey,JSONUtil.toJsonStr(result),3, TimeUnit.MINUTES);
+		return result;
 	}
 
 	@Override

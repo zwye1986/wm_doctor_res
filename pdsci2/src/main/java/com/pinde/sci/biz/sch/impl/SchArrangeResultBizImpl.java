@@ -49,6 +49,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -65,6 +66,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -5442,8 +5444,22 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	 * @Date: 2024/10/26 17:55
 	 * @Description: 查询所有专业的标准科室
 	 */
+	@Resource
+	private RedisTemplate<String,String> redisTemplate;
 	private Map<String,List<SchRotationDept>> getAllBzDept(){
 		Map<String,List<SchRotationDept>> result = new HashMap<>();
+		String val = redisTemplate.opsForValue().get("bzSchDeptList");
+		if (StringUtils.isNotEmpty(val)) {
+			Map parse = (Map) JSONUtil.parse(val);
+			if (CollectionUtil.isNotEmpty(parse)) {
+				for (Object key : parse.keySet()) {
+					Object mapVal = parse.get((String) key);
+					List<SchRotationDept> list = JSONUtil.toList(JSONUtil.toJsonStr(mapVal), SchRotationDept.class);
+					result.put((String) key,list);
+				}
+				return result;
+			}
+		}
 		List<SysDict> speList = DictTypeEnum.sysListDictMap.get(DictTypeEnum.DoctorTrainingSpe.getId());
 		if (CollectionUtil.isEmpty(speList)) {
 			return result;
@@ -5453,10 +5469,18 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			List<SchRotationDept> bzDeptNameBySpe = rotationBiz.getAllBzDeptListBySpeId(speList.get(i).getDictId());
 			result.put(speList.get(i).getDictName(),bzDeptNameBySpe);
 		}
+		redisTemplate.opsForValue().set("bzSchDeptList",JSONUtil.toJsonStr(result),2, TimeUnit.MINUTES);
 		return result;
 	}
 
 	private List<SysDept> getAllLzDept(){
+		String val = redisTemplate.opsForValue().get("lzSchDeptList");
+		if (StringUtils.isNotEmpty(val)) {
+			List<SysDept> list = JSONUtil.toList(val, SysDept.class);
+			if (CollectionUtil.isNotEmpty(list)) {
+				return list;
+			}
+		}
 		List<SysDept> result = new ArrayList<>();
 		SysDept sysDept = new SysDept();
 		sysDept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
@@ -5472,6 +5496,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				result.add(selectItem);
 			}
 		}
+		redisTemplate.opsForValue().set("lzSchDeptList",JSONUtil.toJsonStr(result),2, TimeUnit.MINUTES);
 		return result;
 	}
 }

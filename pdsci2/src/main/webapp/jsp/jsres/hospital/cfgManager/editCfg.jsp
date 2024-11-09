@@ -471,7 +471,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="text-align: right">是否开启轮转计划排班校验：</td>
+                        <td style="text-align: right">是否校验轮转时长：</td>
                         <td style="text-align: left;padding-left: 5px" width="200px">
                             <c:set var="key" value="process_scheduling_check_${sessionScope.currUser.orgFlow}"></c:set>
                             <input type="hidden" name="cfgCode" value="${key}">

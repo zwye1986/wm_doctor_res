@@ -50,36 +50,82 @@
     function checkData(){
         jboxStartLoading();
         var url = "<s:url value='/jsres/doctorRecruit/updateItemImportData'/>";
-        jboxPostJson(url,JSON.stringify(window.dataList),function(resp){
-            window.dataList = JSON.parse(JSON.stringify(resp))['data'];
-            hideSubmitBt();
-            initData(window.dataList);
-            jboxEndLoading();
-        },null,false);
+        //数量少于10的一次提交
+        if (window.dataList.length<=10) {
+            jboxPostJson(url,JSON.stringify(window.dataList),function(resp){
+                window.dataList = JSON.parse(JSON.stringify(resp))['data'];
+                initStartData(1,1);
+            },null,false);
+        }else {
+            //逐条提交
+            var arrayList = new Array();
+            for (let i = 0; i < window.dataList.length; i++) {
+                setTimeout(function (){
+                    var concat = arrayList.concat();
+                    concat.push(window.dataList[i]);
+                    jboxPostJson(url,JSON.stringify(concat),function(resp){
+                        let parseElement = JSON.parse(JSON.stringify(resp))['data'];
+                        window.dataList[i] = parseElement[0];
+                        initStartData(window.dataList.length,i+1);
+                    },null,false);
+                },100);
+            }
+        }
     }
 
     function submitData(){
         jboxStartLoading();
         var url = "<s:url value='/jsres/doctorRecruit/submitPbImport'/>";
-        jboxPostJson(url,JSON.stringify(window.dataList),function(resp){
-            let code = JSON.parse(JSON.stringify(resp))['code'];
-            if (code == 200) {
-                jboxEndLoading();
-                jboxInfo("导入成功");
-            }else if (code == 500) {
-                let respData = JSON.parse(JSON.stringify(resp))['data'];
-                if (respData) {
-                    window.dataList = respData;
-                    initData(respData);
+        if (window.dataList.length<=5) {
+            jboxPostJson(url,JSON.stringify(window.dataList),function(resp){
+                let code = JSON.parse(JSON.stringify(resp))['code'];
+                if (code == 200) {
+                    jboxEndLoading();
+                    jboxInfo("导入成功");
+                }else if (code == 500) {
+                    let respData = JSON.parse(JSON.stringify(resp))['data'];
+                    if (respData) {
+                        window.dataList = respData;
+                        initData(respData);
+                        hideSubmitBt();
+                    }
+                    jboxEndLoading();
+                } else {
                     hideSubmitBt();
+                    jboxEndLoading();
                 }
-                jboxEndLoading();
-            } else {
-                hideSubmitBt();
-                jboxEndLoading();
+            },null,false);
+        }else {
+            let successFlag = true;
+            let count = window.dataList.length;
+            var arrayList = new Array();
+            for (let i = 0; i < window.dataList.length; i++) {
+                var concat = arrayList.concat();
+                concat.push(window.dataList[i]);
+                jboxPostJson(url,JSON.stringify(concat),function(resp){
+                    let code = JSON.parse(JSON.stringify(resp))['code'];
+                    if (code == 500) {
+                        successFlag = false;
+                        let respData = JSON.parse(JSON.stringify(resp))['data'];
+                        if (respData) {
+                            window.dataList[i] = respData[0];
+                        }
+                        initStartData(count,(i+1));
+                    } else {
+                        initStartData(count,(i+1));
+                    }
+                },null,false);
             }
-        },null,false);
+        }
+    }
 
+    function initStartData(count,index){
+        if (index<count) {
+            return;
+        }
+        initData(window.dataList);
+        hideSubmitBt();
+        jboxEndLoading();
     }
 
     function initHead(head1,head2){
@@ -213,7 +259,6 @@
                 html = html + initRow(dataList[i],i);
             }
             dataBody.append(html);
-
         }
         hideSubmitBt();
     }
@@ -255,6 +300,7 @@
             submitData.show();
         }else {
             submitData.hide();
+            jboxInfo("请检查排班数据是否符合方案");
         }
     }
 
