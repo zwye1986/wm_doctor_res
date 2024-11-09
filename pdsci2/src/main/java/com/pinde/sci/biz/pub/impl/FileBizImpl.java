@@ -368,38 +368,6 @@ public class FileBizImpl implements IFileBiz {
 	    outputStream.close();
 	}
 
-//	@Override
-//	public int editFileList(List<PubFile> files) {
-//		if (files != null && files.size() > 0) {
-//			for (PubFile file:files) {
-//				if (file.getFileContent() != null) {
-//					file.setFileSize(new BigDecimal(file.getFileContent().length));
-//				}
-//				if(StringUtil.isNotBlank(file.getFileFlow())){//修改
-//					GeneralMethod.setRecordInfo(file, false);
-//					return this.pubFileMapper.updateByPrimaryKeySelective(file);
-//				}else{//新增
-//					file.setFileFlow(PkUtil.getUUID());
-//					GeneralMethod.setRecordInfo(file, true);
-//					return this.pubFileMapper.insertSelective(file);
-//				}
-//			}
-//		}
-//		return GlobalConstant.ZERO_LINE;
-//	}
-
-	@Override
-	public String addFileReturnFlow(PubFile file) {
-		file.setFileFlow(PkUtil.getUUID());
-		GeneralMethod.setRecordInfo(file, true);
-		int result=this.pubFileMapper.insertSelective(file);
-		if(result==GlobalConstant.ONE_LINE){
-			return file.getFileFlow();
-		}else{
-			return null;
-		}
-    }
-
     /**
      * 删除附件
      *
@@ -559,64 +527,6 @@ public class FileBizImpl implements IFileBiz {
 	}
 
 	@Override
-	public String addContractPowerFile(MultipartFile file,String fileFlow,String isTemp) {
-		//保存附件
-		PubFile pubFile = new PubFile();
-		//取得当前上传文件的文件名称
-		String oldFileName = file.getOriginalFilename();
-		//如果名称不为“”,说明该文件存在，否则说明该文件不存在
-		if (StringUtil.isNotBlank(oldFileName)) {
-
-			PubFile oldFile = readFile(fileFlow);
-			//定义上传路径
-			String dateString = DateUtil.getCurrDate2();
-			String newDir = StringUtil.defaultString(InitConfig.getSysCfg("upload_base_dir")) + File.separator + "ContractPowerFile" + File.separator + dateString;
-			if(StringUtil.isNotBlank(isTemp))
-			{
-				newDir = StringUtil.defaultString(InitConfig.getSysCfg("upload_base_dir")) + File.separator + "temp"+File.separator+"ContractPowerFile" + File.separator + dateString;
-			}
-			File fileDir = new File(newDir);
-			if (!fileDir.exists()) {
-				fileDir.mkdirs();
-			}
-			//重命名上传后的文件名
-			String originalFilename = "";
-			originalFilename = PkUtil.getUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
-			File newFile = new File(fileDir, originalFilename);
-			try {
-				file.transferTo(newFile);
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new RuntimeException("保存文件失败！");
-			}
-			String filePath = File.separator + "ContractPowerFile" + File.separator + dateString + File.separator + originalFilename;
-			if(StringUtil.isNotBlank(isTemp))
-			{
-				filePath =File.separator + "temp"+File.separator+"ContractPowerFile" + File.separator + dateString+File.separator + originalFilename;
-			}
-			pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-			pubFile.setFilePath(filePath);
-			pubFile.setFileName(oldFileName);
-			pubFile.setFileSuffix(oldFileName.substring(oldFileName.lastIndexOf(".")));
-			pubFile.setProductType("PowerFile");
-			pubFile.setFileFlow(fileFlow);
-			int c=editFile(pubFile);
-			if(c==1) {
-				if (oldFile != null) {
-					String filePath1 = StringUtil.defaultString(InitConfig.getSysCfg("upload_base_dir")) + oldFile.getFilePath();
-					File fileDir1 = new File(filePath1);
-					if (fileDir1.exists()) {
-						fileDir1.delete();
-					}
-				}
-				return pubFile.getFileFlow();
-			}else{
-				return "fail";
-			}
-		}
-		return "fail";
-	}
-	@Override
 	public String addAfterFile(MultipartFile file, String fileType, String productFlow) {
 		//保存附件
 		PubFile pubFile = new PubFile();
@@ -772,23 +682,6 @@ public class FileBizImpl implements IFileBiz {
 			FileUtil.deletefile(filePath);
 		}
     }
-
-	@Override
-	public List<PubFile> searchFiles(PubFile pubFile) {
-		PubFileExample example = new PubFileExample();
-		PubFileExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-		if(StringUtil.isNotBlank(pubFile.getProductFlow())){
-			criteria.andProductFlowEqualTo(pubFile.getProductFlow());
-		}
-		if(StringUtil.isNotBlank(pubFile.getProductType())){
-			criteria.andProductTypeEqualTo(pubFile.getProductType());
-		}
-		if(StringUtil.isNotBlank(pubFile.getFileName())){
-			criteria.andFileNameEqualTo(pubFile.getFileName());
-		}
-		example.setOrderByClause("FILE_NAME");
-		return pubFileMapper.selectByExample(example);
-	}
 
 	@Override
 	public List<PubFile> searchByProductFlowAndTypeAndNotInFileFlows(String productFlow, List<String> fileFlows, String type) {

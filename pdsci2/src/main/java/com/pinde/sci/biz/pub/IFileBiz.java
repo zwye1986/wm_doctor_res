@@ -9,27 +9,15 @@ import java.util.List;
 
 public interface IFileBiz {
 	
-	public PubFile readFile(String fileFlow);
+	PubFile readFile(String fileFlow);
 
-//	public int save(PubFileForm fileForm);
+	List<PubFile> searchFile(List<String> fileFlows);
 
-//	public List<PubFile> searchFile(PubFile file);
-//	
-	public List<PubFile> searchFile(List<String> fileFlows);
+	void down(PubFile doc,final HttpServletResponse response) throws Exception;
 
-	public void down(PubFile doc,final HttpServletResponse response) throws Exception;
+	void downPubFile(PubFile doc,final HttpServletResponse response) throws Exception;
 
-	public void downPubFile(PubFile doc,final HttpServletResponse response) throws Exception;
-
-	public void addFile(PubFile file);
-	
-	
-	/**
-	 * 用于项目基本信息的文件上传
-	 * @param projFlow
-	 * @param files
-	 */
-//	public List<String> addFiles(MultipartFile[] files); 
+	void addFile(PubFile file);
 	
 	/**
 	 * 新增文件 
@@ -42,15 +30,11 @@ public interface IFileBiz {
 	 * @param file
 	 * @return
 	 */
-	public int editFile(PubFile file);
+	int editFile(PubFile file);
 
 	void downFile(File file, HttpServletResponse response) throws Exception;
 
-//	int editFileList(List<PubFile> files);
-
 	int saveFile(PubFile file);
- 
-	String addFileReturnFlow(PubFile file);
 
     int deleteFile(List<String> fileFlow);
 
@@ -71,13 +55,9 @@ public interface IFileBiz {
 
 	void saveFiles(List<PubFile> pubFiles);
 
-	String addContractPowerFile(MultipartFile file,String fileFlow,String isTemp);
 	String addAfterFile(MultipartFile file, String fileType, String productFlow);
 
 	int deleteAfterFile(String fileFlow);
-
-	//根据条件查找文件
-	List<PubFile> searchFiles(PubFile pubFile);
 
 	List<PubFile> searchByProductFlowAndTypeAndNotInFileFlows(String recordFlow, List<String> fileFlows, String type);
 
