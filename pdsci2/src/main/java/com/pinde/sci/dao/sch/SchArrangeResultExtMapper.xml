@@ -2343,7 +2343,7 @@
         </if>
 
         <if test='doctorStatusId != null and doctorStatusId != ""'>
-            AND DOCTOR_STATUS_ID = #{doctorStatusId}
+            AND DOCTOR_STATUS_ID = TO_CHAR(#{doctorStatusId})
         </if>
     </select>
 
