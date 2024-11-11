@@ -5510,7 +5510,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					String groupFlow = it.getGroupFlow();
 					String schMonth = StringUtils.isEmpty(it.getSchMonth())? "0":it.getSchMonth();
 					Double i = arrangeResultMapper.schMon(result.getDoctorFlow(), result.getRotationFlow(), standardDeptId, groupFlow);
-					if (i<Double.valueOf(schMonth)) {
+					if (null == i || i<Double.valueOf(schMonth)) {
 						result.setStandardGroupFlow(groupFlow);
 						result.setIsRequired(it.getIsRequired());
 						con = false;
