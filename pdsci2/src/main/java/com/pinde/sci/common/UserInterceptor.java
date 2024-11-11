@@ -60,6 +60,10 @@ public class UserInterceptor implements HandlerInterceptor {
 		String servletPath = request.getServletPath();
 		logger.debug("UserInterceptor handler......{}",getPath);
 
+		if(isStaticResource(servletPath)) {
+			return true;
+		}
+
 		if("get".equalsIgnoreCase(request.getMethod())){
 			request.getSession().setAttribute("goPath", getPath);
 		}
@@ -269,6 +273,10 @@ public class UserInterceptor implements HandlerInterceptor {
 		response.setContentType("application/json;charset=UTF-8");
 		response.getWriter().print("系统未授权");
 		return false;
+	}
+
+	private boolean isStaticResource(String path) {
+		return path.endsWith(".png") || path.endsWith(".jpg") || path.endsWith(".bmp") || path.endsWith(".gif") || path.endsWith(".js") || path.endsWith(".css");
 	}
 
 }
