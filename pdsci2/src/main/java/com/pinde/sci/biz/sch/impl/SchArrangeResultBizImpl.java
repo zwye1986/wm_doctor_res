@@ -5180,7 +5180,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 					}
 				}
-				if (pbInfoItem.getRecordStatus().equalsIgnoreCase("Y")) {
+				if (pbInfoItem.getRecordStatus().equalsIgnoreCase("Y") &&
+				!pbInfoItem.getSchStartDate().equals(pbInfoItem.getSchEndDate())) {
 					savePbWithoutHis(pbInfoItem);
 				}
 			}
@@ -5246,11 +5247,36 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		if (CollectionUtil.isEmpty(allByDoctorFlow)) {
 			return;
 		}
+		for (SchArrangeResult item : allByDoctorFlow) {
+			try{
+				String schStartDate = item.getSchStartDate();
+				String schEndDate = item.getSchEndDate();
+				DateTime dateTime = cn.hutool.core.date.DateUtil.parseDate(schStartDate);
+				DateTime dateTime1 = cn.hutool.core.date.DateUtil.parseDate(schEndDate);
+				if (dateTime1.compareTo(dateTime)<=0){
+					//轮转时间异常的数据
+					SchArrangeResult info = arrangeResultMapper.selectByPrimaryKey(item.getResultFlow());
+					if (ObjectUtil.isNotEmpty(info)) {
+						arrangeResultMapper.deleteByPrimaryKey(info.getResultFlow());
+						item.setRecordStatus("N");
+					}
+				}
+			}catch (Exception e) {
+				SchArrangeResult info = arrangeResultMapper.selectByPrimaryKey(item.getResultFlow());
+				if (ObjectUtil.isNotEmpty(info)) {
+					arrangeResultMapper.deleteByPrimaryKey(info.getResultFlow());
+					item.setRecordStatus("N");
+				}
+			}
+		}
 		for (int i = 0; i < allByDoctorFlow.size(); i++) {
 			if (i == allByDoctorFlow.size()-1) {
 				continue;
 			}
 			SchArrangeResult item = allByDoctorFlow.get(i);
+			if ("N".equals(item.getRecordStatus())) {
+				continue;
+			}
 			String schStartDate = item.getSchStartDate();
 			String schEndDate = item.getSchEndDate();
 			Integer count = resRec.get(item.getResultFlow());
