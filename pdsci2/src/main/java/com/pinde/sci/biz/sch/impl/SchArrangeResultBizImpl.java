@@ -5184,11 +5184,11 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					savePbWithoutHis(pbInfoItem);
 				}
 			}
+			//排完之后可能存在重复的数据
+			todoQuChong(doctorFlow,entity.getResRecList());
 			//再次检验标准科室轮转时长的限制
 			Map<String, String> map = todoCheckSchDate(doctorFlow);
 			checkSchMonMap.putAll(map);
-			//合并排班日期
-//			boolean b1 = hebingDate(doctorFlow);
 //			//根据排班数据，更新process轮转数据
 			todoProcessData(doctorFlow);
 		}
@@ -5237,7 +5237,47 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		}
 		return result;
 	}
-
+	private void todoQuChong(String doctorFlow,Map<String, Integer> resRec){
+		if (StringUtils.isEmpty(doctorFlow)) {
+			return;
+		}
+		//获取学员所有的排班
+		List<SchArrangeResult> allByDoctorFlow = resultExtMapper.getAllByDoctorFlow(doctorFlow,true);
+		if (CollectionUtil.isEmpty(allByDoctorFlow)) {
+			return;
+		}
+		for (int i = 0; i < allByDoctorFlow.size(); i++) {
+			if (i == allByDoctorFlow.size()-1) {
+				continue;
+			}
+			SchArrangeResult item = allByDoctorFlow.get(i);
+			String schStartDate = item.getSchStartDate();
+			String schEndDate = item.getSchEndDate();
+			Integer count = resRec.get(item.getResultFlow());
+			for (int j = i+1; j < allByDoctorFlow.size(); j++) {
+				SchArrangeResult item2 = allByDoctorFlow.get(j);
+				String schStartDate2 = item2.getSchStartDate();
+				String schEndDate2 = item2.getSchEndDate();
+				Integer count2 = resRec.get(item2.getResultFlow());
+				if (schStartDate.equals(schStartDate2) && schEndDate.equals(schEndDate2)) {
+					//存在排班时间完全一致的情况，判断二者谁有提交数据
+					if (null == count || count <=0){
+						SchArrangeResult info = arrangeResultMapper.selectByPrimaryKey(item.getResultFlow());
+						if (ObjectUtil.isNotEmpty(info)) {
+							arrangeResultMapper.deleteByPrimaryKey(info.getResultFlow());
+						}
+					}else {
+						if (null == count2 || count2 <= 0) {
+							SchArrangeResult info = arrangeResultMapper.selectByPrimaryKey(item2.getResultFlow());
+							if (ObjectUtil.isNotEmpty(info)) {
+								arrangeResultMapper.deleteByPrimaryKey(info.getResultFlow());
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 
 
 	private Map<String,String> todoCheckSchDate(String doctorFlow){
@@ -5277,8 +5317,13 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			double bzCount = 0;
 			for (SchRotationDept bz : bzList) {
 				String schMonth = bz.getSchMonth();
+				String schMaxMonth = bz.getSchMaxMonth();
 				schMonth = StringUtils.isEmpty(schMonth)? "0":schMonth;
-				bzCount += Double.valueOf(schMonth);
+				schMaxMonth = StringUtils.isEmpty(schMaxMonth) ? "0" : schMaxMonth;
+				Double min = Double.valueOf(schMonth);
+				Double max = Double.valueOf(schMaxMonth);
+				min = min<=max? max:min;
+				bzCount += min;
 			}
 
 			double lzCount = 0;
@@ -5465,7 +5510,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					String groupFlow = it.getGroupFlow();
 					String schMonth = StringUtils.isEmpty(it.getSchMonth())? "0":it.getSchMonth();
 					Double i = arrangeResultMapper.schMon(result.getDoctorFlow(), result.getRotationFlow(), standardDeptId, groupFlow);
-					if (i<Double.valueOf(schMonth)) {
+					if (null == i || i<Double.valueOf(schMonth)) {
 						result.setStandardGroupFlow(groupFlow);
 						result.setIsRequired(it.getIsRequired());
 						con = false;
