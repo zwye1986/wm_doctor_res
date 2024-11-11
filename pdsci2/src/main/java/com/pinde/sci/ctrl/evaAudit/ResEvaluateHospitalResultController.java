@@ -114,17 +114,17 @@ public class ResEvaluateHospitalResultController extends GeneralController {
         paramMap.put("orgFlow", orgFlow);
         paramMap.put("sessionNumber", sessionNumber);
         if (StringUtil.isNotBlank(startTime)) {
-            if ("doctor".equals(gradeRole)) {
+            if ("doctor".equals(gradeRole) || "teacher".equals(gradeRole)) {
                 paramMap.put("startTime", startTime);
             } else {
                 paramMap.put("startTime", DateUtil.transDateTime(startTime, "yyyy-MM-dd", "yyyyMMdd"));
             }
         }
         if (StringUtil.isNotBlank(endTime)) {
-            if ("doctor".equals(gradeRole)) {
+            if ("doctor".equals(gradeRole) || "teacher".equals(gradeRole)) {
                 paramMap.put("endTime", endTime);
             } else {
-                paramMap.put("endTime", DateUtil.transDateTime(endTime, "yyyy-MM-dd", "yyyyMMdd"));
+                paramMap.put("endTime", DateUtil.transDateTime(endTime, "yyhttp://zentao.njpdxx.com:5049/zentao/bug-view-1736.htmlyy-MM-dd", "yyyyMMdd"));
             }
 
         }
