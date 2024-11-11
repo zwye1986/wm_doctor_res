@@ -366,69 +366,69 @@ public class SchedulingAuditRead extends AnalysisEventListener<Map<Integer, Stri
 
             //根据学员的历史排班和当前排班，比较处理是否覆盖
             //1.不存在历史排班的情况下
-            if (CollectionUtil.isEmpty(this.stuResultList)) {
-                Map<String, Double> stuSchMon = initSchArrangeResultNoHistory(item);
-                if (CollectionUtil.isEmpty(stuSchMon)) {
-                    item.setTip(item.getTip()+"暂无排班信息！<br/>");
-                }
-                for (String bzName : stuSchMon.keySet()) {
-                    //获取方案配置的标准科室bzName的轮转时长
-                    Double v = bzSchMon.get(bzName);
-                    //本次排班的时长
-                    Double v1 = stuSchMon.get(bzName);
-                    if (v1>v) {
-                        //本次排班的时长超出了方案配置的时长
-                        item.setTip(item.getTip()+"标准科室【"+bzName+"】的排班时长超出方案配置的轮转时长！<br/>");
-                    }
-                }
-                continue;
-            }
+//            if (CollectionUtil.isEmpty(this.stuResultList)) {
+//                Map<String, Double> stuSchMon = initSchArrangeResultNoHistory(item);
+//                if (CollectionUtil.isEmpty(stuSchMon)) {
+//                    item.setTip(item.getTip()+"暂无排班信息！<br/>");
+//                }
+//                for (String bzName : stuSchMon.keySet()) {
+//                    //获取方案配置的标准科室bzName的轮转时长
+//                    Double v = bzSchMon.get(bzName);
+//                    //本次排班的时长
+//                    Double v1 = stuSchMon.get(bzName);
+//                    if (v1>v) {
+//                        //本次排班的时长超出了方案配置的时长
+//                        item.setTip(item.getTip()+"标准科室【"+bzName+"】的排班时长超出方案配置的轮转时长！<br/>");
+//                    }
+//                }
+//                continue;
+//            }
             //存在历史排班信息，但是该学员的轮转数据没有
             Map<String, List<SchArrangeResult>> collect = this.stuResultList.stream().collect(Collectors.groupingBy(SchArrangeResult::getDoctorFlow));
             List<SchArrangeResult> stuHistoryBb = collect.get(item.getId());
-            if (CollectionUtil.isEmpty(stuHistoryBb)) {
-                Map<String, Double> stuSchMon = initSchArrangeResultNoHistory(item);
-                if (CollectionUtil.isEmpty(stuSchMon)) {
-                    item.setTip(item.getTip()+"暂无排班信息！<br/>");
-                }
-                for (String bzName : stuSchMon.keySet()) {
-                    //获取方案配置的标准科室bzName的轮转时长
-                    Double v = bzSchMon.get(bzName);
-                    //本次排班的时长
-                    Double v1 = stuSchMon.get(bzName);
-                    if (v1>v) {
-                        //本次排班的时长超出了方案配置的时长
-                        item.setTip(item.getTip()+"标准科室【"+bzName+"】的排班时长超出方案配置的轮转时长！<br/>");
-                    }
-                }
-                continue;
-            }
+//            if (CollectionUtil.isEmpty(stuHistoryBb)) {
+//                Map<String, Double> stuSchMon = initSchArrangeResultNoHistory(item);
+//                if (CollectionUtil.isEmpty(stuSchMon)) {
+//                    item.setTip(item.getTip()+"暂无排班信息！<br/>");
+//                }
+//                for (String bzName : stuSchMon.keySet()) {
+//                    //获取方案配置的标准科室bzName的轮转时长
+//                    Double v = bzSchMon.get(bzName);
+//                    //本次排班的时长
+//                    Double v1 = stuSchMon.get(bzName);
+//                    if (v1>v) {
+//                        //本次排班的时长超出了方案配置的时长
+//                        item.setTip(item.getTip()+"标准科室【"+bzName+"】的排班时长超出方案配置的轮转时长！<br/>");
+//                    }
+//                }
+//                continue;
+//            }
 
             //stuHistoryBb不为空，这个学员存在历史的排班数据
             //再把历史数据转型
             getByCellItemHistory(stuHistoryBb);
-            if (!checkSchMon) {
-                continue;
-            }
-            //对比校验数据，回填异常数据信息（轮转时长是否超出限制）
-            Map<String, Double> stringDoubleMap = checkSchMon(item);
-            for (String bzName : stringDoubleMap.keySet()) {
-                if (StringUtils.isEmpty(bzName)) {
-                    continue;
-                }
-                Double v = bzSchMon.get(bzName);
-                if (null == v || v <=0) {
-                    item.setTip(item.getTip()+"方案中的标准科室【"+bzName+"】暂未设置轮转时长！<br/>");
-                    continue;
-                }
-                Double v1 = stringDoubleMap.get(bzName);
-                if (null == v1 || v1 <=0) {
-                    continue;
-                }
-                if (v1>v) {
-                    item.setTip(item.getTip()+"标准科室【"+bzName+"】的排班时长超出方案配置的轮转时长！<br/>");
-                }
-            }
+//            if (!checkSchMon) {
+//                continue;
+//            }
+//            //对比校验数据，回填异常数据信息（轮转时长是否超出限制）
+//            Map<String, Double> stringDoubleMap = checkSchMon(item);
+//            for (String bzName : stringDoubleMap.keySet()) {
+//                if (StringUtils.isEmpty(bzName)) {
+//                    continue;
+//                }
+//                Double v = bzSchMon.get(bzName);
+//                if (null == v || v <=0) {
+//                    item.setTip(item.getTip()+"方案中的标准科室【"+bzName+"】暂未设置轮转时长！<br/>");
+//                    continue;
+//                }
+//                Double v1 = stringDoubleMap.get(bzName);
+//                if (null == v1 || v1 <=0) {
+//                    continue;
+//                }
+//                if (v1>v) {
+//                    item.setTip(item.getTip()+"标准科室【"+bzName+"】的排班时长超出方案配置的轮转时长！<br/>");
+//                }
+//            }
 //            data.add(item);
         }
         return data;
