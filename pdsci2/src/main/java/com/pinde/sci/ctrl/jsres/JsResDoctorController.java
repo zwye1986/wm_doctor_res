@@ -4425,7 +4425,7 @@ public class JsResDoctorController extends GeneralController {
                     ResDoctor doctor = resDoctorBiz.readDoctor(doctorRecruit.getDoctorFlow());
                     if (doctor != null) {
                         model.addAttribute("doctor", doctor);
-
+                        model.addAttribute("user", userBiz.findByFlow(doctor.getDoctorFlow()));
                         String degreeType = doctor.getDegreeCategoryId();
                         if (JsResDegreeCategoryEnum.ClinicMaster.getId().equals(degreeType) || JsResDegreeCategoryEnum.ClinicDoctor.getId().equals(degreeType)) {
                             PubUserResume resume = userResumeBiz.readPubUserResume(doctorRecruit.getDoctorFlow());

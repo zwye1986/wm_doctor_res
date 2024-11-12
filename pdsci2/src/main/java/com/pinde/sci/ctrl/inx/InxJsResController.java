@@ -1405,6 +1405,13 @@ public class InxJsResController extends GeneralController {
         data = RSAUtils.decryptStringByJs(data,defaultKeyPair);
         Map<String, String> paramMap = (Map<String, String>) JSON.parse(data);
         String userPhone = paramMap.get("userPhone");
+        if (StringUtil.isBlank(userPhone)) {
+            return "请输入正确的手机号码！";
+        }
+        SysUser byUserPhone = userBiz.findByUserPhone(userPhone);
+        if (null != byUserPhone) {
+            return GlobalConstant.USER_PHONE_REPEAT;
+        }
         String yzm = paramMap.get("yzm");
         String loginErrorMessage = "";
         //默认登录失败界面
@@ -1428,6 +1435,7 @@ public class InxJsResController extends GeneralController {
         }
         SMSUtil smsUtil = new SMSUtil(userPhone);
         int code = (int) ((Math.random() * 9 + 1) * 100000);
+
         SysSmsLog sSmsRecord = smsUtil.send("10001", GlobalConstant.JSRES_TEMPLATE, "R101", code);
         String currDateTime = DateUtil.getCurrDateTime2();
         userBiz.saveRegisterUser(userPhone, String.valueOf(code), currDateTime);

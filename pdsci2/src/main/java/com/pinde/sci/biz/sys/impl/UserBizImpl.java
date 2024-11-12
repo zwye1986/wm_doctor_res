@@ -517,7 +517,7 @@ public class UserBizImpl implements IUserBiz {
 	public SysUser findByUserPhone(String userPhone) {
 		SysUserExample sysUserExample=new SysUserExample();
 		SysUserExample.Criteria criteria=sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserPhoneEqualTo(userPhone);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
 		if(sysUserList.size()>0){

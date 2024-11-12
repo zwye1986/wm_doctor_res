@@ -244,12 +244,12 @@
                 </colgroup>
                 <tbody>
                     <tr>
-                        <th>科室名称：</th>
-                        <td><input class="validate[required,custom[number]] input" name="baseDeptNameEdit" type="text" value="{deptName}" /></td>
+                        <th>科室代码：</th>
+                        <td><input class="validate[required,custom[number]] input" name="baseDeptCodeEdit" type="text" value="{deptCode}" /></td>
                     </tr>
                     <tr>
-                        <th>科室代码：</th>
-                        <td><input class="validate[required,minSize[1],maxSize[25]] input" name="baseDeptCodeEdit" type="text" value="{deptCode}" /></td>
+                        <th>科室名称：</th>
+                        <td><input class="validate[required,minSize[1],maxSize[25]] input" name="baseDeptNameEdit" type="text" value="{deptName}" /></td>
                     </tr>
                     <tr>
                         <th>排序码：</th>
