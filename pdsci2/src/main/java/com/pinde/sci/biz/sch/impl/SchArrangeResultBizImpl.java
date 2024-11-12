@@ -1896,14 +1896,14 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	}
 
 	@Override
-	public Map<String,Map<String, BigDecimal>> getScoreByDoctorIds(List<String> doctorFlowList) {
+	public Map<String,Map<String, BigDecimal>> getScoreByDoctorIds(List<String> doctorFlowList, String schStartDate, String schEndDate) {
 		Map<String,Map<String, BigDecimal>> result = new HashMap<>();
 		String ll = "thryScore";
 		String jn = "killScore";
 		if (CollectionUtil.isEmpty(doctorFlowList)) {
 			return result;
 		}
-		List<ResSchProcessExpress> resSchProcessExpresses = schProcessExpressMapper.listByDoctorList(doctorFlowList);
+		List<ResSchProcessExpress> resSchProcessExpresses = schProcessExpressMapper.listByDoctorList(doctorFlowList, schStartDate, schEndDate);
 		if (CollectionUtil.isEmpty(resSchProcessExpresses)) {
 			Map<String, BigDecimal> itemMap = new HashMap<>();
 			for (String doctorFlow : doctorFlowList) {
