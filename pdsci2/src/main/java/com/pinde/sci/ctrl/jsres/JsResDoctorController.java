@@ -4420,12 +4420,13 @@ public class JsResDoctorController extends GeneralController {
 
             if (doctorRecruit != null) {
                 model.addAttribute("doctorRecruit", doctorRecruit);
+                ResDoctor doctor = resDoctorBiz.readDoctor(doctorRecruit.getDoctorFlow());
+                model.addAttribute("user", userBiz.findByFlow(doctor.getDoctorFlow()));
+                if (StringUtil.isNotBlank(doctorRecruit.getDoctorFlow()) && !StringUtil.isNotBlank(doctorRecruit.getProveFileUrl())) {
 
-                if (StringUtil.isNotBlank(doctorRecruit.getDoctorFlow()) && StringUtil.isNotBlank(doctorRecruit.getProveFileUrl())) {
-                    ResDoctor doctor = resDoctorBiz.readDoctor(doctorRecruit.getDoctorFlow());
                     if (doctor != null) {
                         model.addAttribute("doctor", doctor);
-                        model.addAttribute("user", userBiz.findByFlow(doctor.getDoctorFlow()));
+
                         String degreeType = doctor.getDegreeCategoryId();
                         if (JsResDegreeCategoryEnum.ClinicMaster.getId().equals(degreeType) || JsResDegreeCategoryEnum.ClinicDoctor.getId().equals(degreeType)) {
                             PubUserResume resume = userResumeBiz.readPubUserResume(doctorRecruit.getDoctorFlow());
