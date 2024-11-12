@@ -4421,7 +4421,7 @@ public class JsResDoctorController extends GeneralController {
             if (doctorRecruit != null) {
                 model.addAttribute("doctorRecruit", doctorRecruit);
 
-                if (StringUtil.isNotBlank(doctorRecruit.getDoctorFlow()) && !StringUtil.isNotBlank(doctorRecruit.getProveFileUrl())) {
+                if (StringUtil.isNotBlank(doctorRecruit.getDoctorFlow()) && StringUtil.isNotBlank(doctorRecruit.getProveFileUrl())) {
                     ResDoctor doctor = resDoctorBiz.readDoctor(doctorRecruit.getDoctorFlow());
                     if (doctor != null) {
                         model.addAttribute("doctor", doctor);
