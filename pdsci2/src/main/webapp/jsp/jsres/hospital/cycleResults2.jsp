@@ -189,7 +189,9 @@
         return false;
     }
     function loadDetail(doctorFlow){
-        var url="<s:url value='/jsres/doctorRecruit/doctorRecruitResultDetail'/>?roleId=${param.roleId}&doctorFlow="+doctorFlow;
+        var schStartDate = $("input[name='schStartDate']").val();
+        var schEndDate = $("input[name='schEndDate']").val();
+        var url="<s:url value='/jsres/doctorRecruit/doctorRecruitResultDetail'/>?roleId=${param.roleId}&doctorFlow="+doctorFlow + "&schStartDate=" + schStartDate + "&schEndDate=" + schEndDate;
         var iframe ="<iframe name='jbox-message-iframe' id='jbox-message-iframe' width='100%' height='550px' marginheight='0' marginwidth='0' frameborder='0' scrolling='auto' src='"+url+"'></iframe>";
         jboxMessager(iframe,"详细信息",1000,550);
     }
@@ -396,6 +398,12 @@
                             </c:forEach>
                         </td>
 
+                        <td class="td_left">轮转时间：</td>
+                        <td colspan="">
+                            <input type="text" class="input" name="schStartDate" value="${param.schStartDate}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly="readonly" style="width: 80px;">
+                            ~
+                            <input type="text" class="input" name="schEndDate" value="${param.schEndDate}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" readonly="readonly" style="width: 80px;">
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="6">
