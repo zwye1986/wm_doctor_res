@@ -1724,6 +1724,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 		paramMap.put("docTypeList",docTypeList);
 		paramMap.put("graduationYear",doctor.getGraduationYear());
 		paramMap.put("baseFlag",baseFlag);
+		paramMap.put("schStartDate", doctor.getSchStartDate());
+		paramMap.put("schEndDate", doctor.getSchEndDate());
 		if("speAdmin".equals(roleId)) {
 			paramMap.put("trainingSpeId",currentUser.getResTrainingSpeId());
 		}
@@ -1738,7 +1740,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 		model.addAttribute("doctorScore",new HashMap<>());
 		if (CollectionUtil.isNotEmpty(docResultsList)) {
 			List<String> doctorFlow = docResultsList.stream().map(e -> (String)e.get("doctorFlow")).collect(Collectors.toList());
-			Map<String, Map<String, BigDecimal>> doctorScore = schArrangeResultBiz.getScoreByDoctorIds(doctorFlow);
+			Map<String, Map<String, BigDecimal>> doctorScore = schArrangeResultBiz.getScoreByDoctorIds(doctorFlow, doctor.getSchStartDate(), doctor.getSchEndDate());
 			model.addAttribute("doctorScore",doctorScore);
 		}
 		model.addAttribute("datas",datas);
@@ -1932,10 +1934,12 @@ public class JsResDoctorRecruitController extends GeneralController {
 		return GlobalConstant.OPERATE_FAIL;
 	}
 	@RequestMapping("/doctorRecruitResultDetail")
-	public String doctorRecruitResultDetail(String doctorFlow,Model model,String roleId){
+	public String doctorRecruitResultDetail(String doctorFlow,Model model,String roleId, String schStartDate, String schEndDate){
 		if(StringUtil.isNotBlank(doctorFlow)){
 			ResDoctor doctor = resDoctorBiz.readDoctor(doctorFlow);
 			model.addAttribute("doctor",doctor);
+			model.addAttribute("schStartDate", schStartDate);
+			model.addAttribute("schEndDate", schEndDate);
 			Map<String,String> pMap = new HashMap<>();
 			if("kzr".equals(roleId)){
 				SysUser currentUser=GlobalContext.getCurrentUser();
@@ -1945,6 +1949,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 			}else {
 				pMap.put("doctorFlow",doctorFlow);
 			}
+			pMap.put("schStartDate", schStartDate);
+			pMap.put("schEndDate", schEndDate);
 			List<SchArrangeResult> arrResultList = schArrangeResultBiz.searchSchArrangeResultByMap(pMap);
 			model.addAttribute("arrResultList",arrResultList);
 			Map<String, SchRotationDept> deptMap = new HashMap<String, SchRotationDept>();
@@ -2413,8 +2419,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 	}
 
 	@RequestMapping(value = "/exportCycleResultsByDoc")
-	public void exportCycleResultsByDoc(String doctorFlow,HttpServletResponse response,String roleId)throws Exception{
-		HSSFWorkbook wb = jsResDoctorRecruitBiz.createCycleResultsByDoc(doctorFlow, roleId);
+	public void exportCycleResultsByDoc(String doctorFlow,HttpServletResponse response,String roleId, String schStartDate, String schEndDate)throws Exception{
+		HSSFWorkbook wb = jsResDoctorRecruitBiz.createCycleResultsByDoc(doctorFlow, roleId, schStartDate, schEndDate);
 		String fileName = "学员出科记录表.xls";
 		fileName = URLEncoder.encode(fileName, "UTF-8");
 		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");

@@ -180,7 +180,7 @@ public class ResExamPaperDownController extends GeneralController {
     }
 
     @RequestMapping(value="/downloadCkkPaperBatch")
-    public void downloadCkkPaperBatch(String doctorFlow, String roleId,HttpServletResponse response) throws IOException {
+    public void downloadCkkPaperBatch(String doctorFlow, String roleId,HttpServletResponse response, String schStartDate, String schEndDate) throws IOException {
         //1.获取临时文件夹
         String tempFolder = System.getProperty("java.io.tmpdir") + File.separator + PkUtil.getUUID();
         //2.获取考核试卷下载链接列表
@@ -194,6 +194,8 @@ public class ResExamPaperDownController extends GeneralController {
             } else {
                 pMap.put("doctorFlow", doctorFlow);
             }
+            pMap.put("schStartDate", schStartDate);
+            pMap.put("schEndDate", schEndDate);
         List<SchArrangeResult> arrResultList = schArrangeResultBiz.searchSchArrangeResultByMap(pMap);
         Map<String,String> downloadUrls = getDownloadUrls(arrResultList);
         //3.根据下载链接，下载试卷放入临时文件夹
@@ -202,7 +204,7 @@ public class ResExamPaperDownController extends GeneralController {
         downloadPapersByUrl(downloadUrls, dest);
         //4.生成成绩excel放入临时文件夹
         dest = tempFolder + File.separator +"papers";
-        createScoreExcel(doctorFlow,roleId,dest);
+        createScoreExcel(doctorFlow,roleId,dest, schStartDate, schEndDate);
         //5.压缩文件夹
         File directory =new File(tempFolder + File.separator +"papers");
         File zipFlie =new File(tempFolder+ File.separator + user.getUserName()+".zip");
@@ -463,8 +465,8 @@ public class ResExamPaperDownController extends GeneralController {
     }
 
 
-    private void createScoreExcel(String doctorFlow, String roleId,String dest) throws UnsupportedEncodingException {
-        HSSFWorkbook wb = jsResDoctorRecruitBiz.createCycleResultsByDoc(doctorFlow, roleId);
+    private void createScoreExcel(String doctorFlow, String roleId,String dest, String schStartDate, String schEndDate) throws UnsupportedEncodingException {
+        HSSFWorkbook wb = jsResDoctorRecruitBiz.createCycleResultsByDoc(doctorFlow, roleId, schStartDate, schEndDate);
         FileOutputStream fos = null;
         String fileName = "学员出科记录表.xls";
         try {

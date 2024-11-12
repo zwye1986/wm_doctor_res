@@ -2274,7 +2274,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	}
 
     @Override
-    public HSSFWorkbook createCycleResultsByDoc(String doctorFlow, String roleId) {
+    public HSSFWorkbook createCycleResultsByDoc(String doctorFlow, String roleId, String schStartDate, String schEndDate) {
         ResDoctor doctor = resDoctorBiz.readDoctor(doctorFlow);
         SysUser doc = userBiz.readSysUser(doctorFlow);
         Map<String,String> pMap = new HashMap<>();
@@ -2286,6 +2286,8 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
         }else {
             pMap.put("doctorFlow",doctorFlow);
         }
+		pMap.put("schStartDate", schStartDate);
+		pMap.put("schEndDate", schEndDate);
         /*
 
          */

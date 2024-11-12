@@ -209,7 +209,7 @@ public interface ISchArrangeResultBiz {
 	 */
 	List<Map<String,Object>> searchDocResultsListNew(Map<String,Object> paramMap);
 
-	Map<String,Map<String, BigDecimal>> getScoreByDoctorIds(List<String> doctorFlowList);
+	Map<String,Map<String, BigDecimal>> getScoreByDoctorIds(List<String> doctorFlowList, String schStartDate, String schEndDate);
 
 	List<ResOutOfficeLock> searchDocErrorResultsList(Map<String,Object> paramMap) throws ParseException;
 
