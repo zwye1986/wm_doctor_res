@@ -151,6 +151,13 @@
             jboxTip("请选择人员类型！");
             return false;
         }
+        var schStartDate = $("input[name='schStartDate']").val();
+        var schEndDate = $("input[name='schEndDate']").val();
+        if(schStartDate && schEndDate && schStartDate > schEndDate) {
+            jboxTip("轮转开始时间不能大于结束时间！");
+            return false;
+        }
+
         jboxStartLoading();
         if (!page) {
             page = 1;
