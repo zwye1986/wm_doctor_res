@@ -576,7 +576,7 @@
                 and #{schStartDate} &lt;=  SCH_END_DATE
               </when>
               <when test='schStartDate!=null and schStartDate!=""'>
-                  AND SCH_END_DATE >= #{schStartDate}
+                  AND SCH_START_DATE >= #{schStartDate}
               </when>
               <when test='schEndDate!=null and schEndDate!=""'>
                   AND SCH_END_DATE <![CDATA[<=]]> #{schEndDate}
