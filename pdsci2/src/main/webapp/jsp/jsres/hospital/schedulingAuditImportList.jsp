@@ -89,9 +89,11 @@
                         initData(respData);
                         hideSubmitBt();
                     }
+                    jboxInfo("导入失败，请核对异常数据");
                     jboxEndLoading();
                 } else {
                     hideSubmitBt();
+                    jboxInfo("导入失败，请核对异常数据");
                     jboxEndLoading();
                 }
             },null,false);
@@ -99,6 +101,7 @@
             let successFlag = true;
             let count = window.dataList.length;
             var arrayList = new Array();
+            let importFlag = true;
             for (let i = 0; i < window.dataList.length; i++) {
                 var concat = arrayList.concat();
                 concat.push(window.dataList[i]);
@@ -110,18 +113,23 @@
                         if (respData) {
                             window.dataList[i] = respData[0];
                         }
-                        initStartData(count,(i+1));
+                        importFlag = false;
+                        initStartData(count,(i+1),importFlag);
                     } else {
-                        initStartData(count,(i+1));
+                        initStartData(count,(i+1),importFlag);
                     }
                 },null,false);
             }
         }
     }
 
-    function initStartData(count,index){
+    function initStartData(count,index,importFlag){
+        console.log('initStartData',count,index)
         if (index<count) {
             return;
+        }
+        if (importFlag) {
+            jboxInfo("导入失败，请核对异常数据");
         }
         initData(window.dataList);
         hideSubmitBt();
