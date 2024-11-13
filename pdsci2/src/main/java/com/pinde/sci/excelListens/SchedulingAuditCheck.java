@@ -310,6 +310,12 @@ public class SchedulingAuditCheck {
             if (CollectionUtil.isNotEmpty(doctorMap)) {
                 ResDoctor doctor = doctorMap.get(userId);
                 String trainingSpeName = doctor.getTrainingSpeName();
+                if (StringUtils.isNotEmpty(trainingSpeName)) {
+                    trainingSpeName = StringUtils.replace(trainingSpeName,"（","");
+                    trainingSpeName = StringUtils.replace(trainingSpeName,"）","");
+                    trainingSpeName = StringUtils.replace(trainingSpeName,"(","");
+                    trainingSpeName = StringUtils.replace(trainingSpeName,")","");
+                }
                 String sessionNumber1 = doctor.getSessionNumber();
                 String trainingYears = doctor.getTrainingYears();
                 if (!speName.equalsIgnoreCase(trainingSpeName)) {
