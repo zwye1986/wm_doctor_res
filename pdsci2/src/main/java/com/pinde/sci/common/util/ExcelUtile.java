@@ -7,6 +7,7 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.LoggerFactory;
@@ -323,5 +324,20 @@ public class ExcelUtile extends HashMap{
         eu.put("code", "1");
         eu.put("msg", msg);
         return ExcelUtile.RETURN;
+    }
+
+    public static void addMergedRegionIfNotExists(HSSFSheet sheet, int firstRow, int lastRow, int firstCol, int lastCol) {
+        // 检查是否存在相同的合并区域
+        for (int i = 0; i < sheet.getNumMergedRegions(); i++) {
+            CellRangeAddress region = sheet.getMergedRegion(i);
+            if (region.getFirstRow() == firstRow && region.getLastRow() == lastRow &&
+                    region.getFirstColumn() == firstCol && region.getLastColumn() == lastCol) {
+                // 合并区域已存在，直接返回
+                return;
+            }
+        }
+
+        // 合并区域不存在，添加新的合并区域
+        sheet.addMergedRegion(new CellRangeAddress(firstRow, lastRow, firstCol, lastCol));
     }
 }

@@ -995,7 +995,9 @@ public class JsResDoctorController extends GeneralController {
             cellTitle.setCellStyle(styleCenter);
             sheet.setColumnWidth(i, titles.length * 2 * 256);
         }
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 6));//合并单元格
+//        sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 6));//合并单元格
+        ExcelUtile.addMergedRegionIfNotExists(sheet,0, 0, 0, 6);
+
         //行数
         int rowNum = 2;
         //存放在excel中的行数据
