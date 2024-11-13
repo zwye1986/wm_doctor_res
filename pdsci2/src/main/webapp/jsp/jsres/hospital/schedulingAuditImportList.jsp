@@ -324,8 +324,8 @@
 
 <div class="main_bd clearfix" id="tableMain">
     <div style="width:50%;margin-bottom: 10px;">
-        <span style="background-color: #00B83F">　&nbsp;</span><span>表示:数据正常，符合排班要求</span><br>
-        <span style="background-color: #ee0101">　&nbsp;</span><span>表示:通过校验，数据存在异常情况，当全部数据无异常情况后方可提交</span><br>
+        <span style="background-color: #b3ffff">　&nbsp;</span><span>表示:数据正常，符合排班要求</span><br>
+        <span style="background-color: #ff6666">　&nbsp;</span><span>表示:通过校验，数据存在异常情况，当全部数据无异常情况后方可提交</span><br>
     </div>
     <div class='form_btn' style='margin-bottom: 10px' id='tableMain_sub'>
         <input class="btn_green" id="checkData" type="button" value='校验数据' onclick="checkData()"/>
