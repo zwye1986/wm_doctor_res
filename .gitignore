@@ -12,5 +12,5 @@ gen
 *.license.key
 /*.log
 /target/*
-/excelModel/
+/excelModel/target
 *.lst
