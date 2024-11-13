@@ -5639,7 +5639,14 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		//根据专业和年级 年级写死是2023的查询标准科室
 		for (int i = 0; i < speList.size(); i++) {
 			List<SchRotationDept> bzDeptNameBySpe = rotationBiz.getAllBzDeptListBySpeId(speList.get(i).getDictId());
-			result.put(speList.get(i).getDictName(),bzDeptNameBySpe);
+			String dictName = speList.get(i).getDictName();
+			if (StringUtils.isNotEmpty(dictName)) {
+				dictName = StringUtils.replace(dictName,"（","");
+				dictName = StringUtils.replace(dictName,"）","");
+				dictName = StringUtils.replace(dictName,"(","");
+				dictName = StringUtils.replace(dictName,")","");
+			}
+			result.put(dictName,bzDeptNameBySpe);
 		}
 		redisTemplate.opsForValue().set("bzSchDeptList",JSONUtil.toJsonStr(result),2, TimeUnit.MINUTES);
 		return result;
