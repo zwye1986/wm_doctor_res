@@ -54,7 +54,7 @@
         if (window.dataList.length<=10) {
             jboxPostJson(url,JSON.stringify(window.dataList),function(resp){
                 window.dataList = JSON.parse(JSON.stringify(resp))['data'];
-                initStartData(1,1);
+                initStartData(1,1,true);
             },null,false);
         }else {
             //逐条提交
@@ -66,7 +66,7 @@
                     jboxPostJson(url,JSON.stringify(concat),function(resp){
                         let parseElement = JSON.parse(JSON.stringify(resp))['data'];
                         window.dataList[i] = parseElement[0];
-                        initStartData(window.dataList.length,i+1);
+                        initStartData(window.dataList.length,i+1,true);
                     },null,false);
                 },100);
             }
