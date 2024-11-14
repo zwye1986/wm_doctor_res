@@ -128,7 +128,7 @@
         if (index<count) {
             return;
         }
-        if (importFlag) {
+        if (!importFlag) {
             jboxInfo("导入失败，请核对异常数据");
         }
         initData(window.dataList);
