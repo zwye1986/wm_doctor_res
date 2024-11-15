@@ -1,19 +1,6 @@
-job1:
-  stage: build
-  script:
-    - mvn clean compile package -s settings.xml -Ppro
-    - ossutil64 cp /home/gitlab-runner/builds/bbPBAsMT/0/research/jsres-doctor-pdsci/pdsci2/target/pdsci.war oss://njpdkj/upgrade/jsres/master/$(date '+%Y%m%d')/ --update --force
-    - ossutil64 cp /home/gitlab-runner/builds/bbPBAsMT/0/research/jsres-doctor-pdsci/pdapp/target/pdapp.war oss://njpdkj/upgrade/jsres/master/$(date '+%Y%m%d')/ --update --force
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "master" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"'
-      when: always
-
-job2:
+build:
   stage: build
   script:
     - mvn clean compile package -s settings.xml -Ptest
     - ossutil64 cp /home/gitlab-runner/builds/bbPBAsMT/0/research/jsres-doctor-pdsci/pdsci2/target/pdsci.war oss://njpdkj/upgrade/jsres/develop/ --update --force
     - ossutil64 cp /home/gitlab-runner/builds/bbPBAsMT/0/research/jsres-doctor-pdsci/pdapp/target/pdapp.war oss://njpdkj/upgrade/jsres/develop/ --update --force
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"'
-      when: always
