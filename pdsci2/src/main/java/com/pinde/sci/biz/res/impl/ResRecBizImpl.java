@@ -1851,6 +1851,15 @@ public class ResRecBizImpl implements IResRecBiz {
 	}
 
 	@Override
+	public List<ResRec> searchRecAuditByProcessWithBLOBs(List<String> recTypeIds,String processFlow,String operUserFlow){
+		ResRecExample example = new ResRecExample();
+		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdIn(recTypeIds)
+				.andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow).andAuditStatusIdEqualTo("TeacherAuditY");
+		example.setOrderByClause("OPER_TIME");
+		return resRecMapper.selectByExampleWithBLOBs(example);
+	}
+
+	@Override
 	public List<ResRec> searchRecByProcess(String recTypeId,String rotationDeptFlow,String operUserFlow){
 //		ResRecCampaignRegistryExample campaignRegistryExample = new ResRecCampaignRegistryExample();
 //		campaignRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(rotationDeptFlow).andOperUserFlowEqualTo(operUserFlow);
@@ -7320,6 +7329,35 @@ public class ResRecBizImpl implements IResRecBiz {
 		return resRecMapper.selectByExample(recExample);
 	}
 
+	public List<ResRec> getAuditRecs(String userFlow,String processFlow,String recTypeId,String itemId){
+		int coditionCount = 0;
+
+		ResRecExample recExample = new ResRecExample();
+		com.pinde.sci.model.mo.ResRecExample.Criteria recCriteria = recExample.createCriteria()
+				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+		if(StringUtil.isNotBlank(userFlow)){
+			coditionCount++;
+			recCriteria.andOperUserFlowEqualTo(userFlow);
+		}
+		if(StringUtil.isNotBlank(processFlow)){
+			coditionCount++;
+			recCriteria.andProcessFlowEqualTo(processFlow);
+			if(StringUtil.isNotBlank(recTypeId)){
+				coditionCount++;
+				recCriteria.andRecTypeIdEqualTo(recTypeId);
+			}
+			if(StringUtil.isNotBlank(itemId)){
+				coditionCount++;
+				recCriteria.andItemIdEqualTo(itemId);
+			}
+		}
+		if(coditionCount==0){
+			return null;
+		}
+		recCriteria.andAuditStatusIdEqualTo("TeacherAuditY");
+		return resRecMapper.selectByExample(recExample);
+	}
+
 	/**
 	 * 要求数据
 	 * @param rotationFlow	轮转方案流水号
@@ -7701,6 +7739,98 @@ public class ResRecBizImpl implements IResRecBiz {
 
 		//统计登记的数据
 		List<ResRec> recs = getRecs(doctorFlow, processFlow, recTypeId, itemId);
+		Map<String,Float> recCountMap = getRecCount(recs);
+
+		//选科表数据,西医作为缩减调整
+		List<SchDoctorDept> selDepts = getSelDepts(doctorFlow,rotationFlow);
+
+		//获取所有登记数据类型 并且后台开通的数据类型
+		List<String> recTypeIds = new ArrayList<String>();
+		for(RegistryTypeEnum regType : RegistryTypeEnum.values()){
+			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_"+regType.getId()))
+					&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
+				recTypeIds.add(regType.getId());
+			}
+		}
+		//要求统计,统计的要求为缩减后的要求,同时拿出子项列表
+		List<SchRotationDeptReq> reqs = getReqs(rotationFlow,schRotationDeptFlow,recTypeId,itemId,recTypeIds);
+		Map<String,List<String>> itemsMap = new HashMap<String, List<String>>();
+		Map<String,Float> reqCountMap = getReqCount(depts,reqs,selDepts,itemsMap);
+
+
+		return getRecProgress(true,0,resultExts,recCountMap,reqCountMap,recTypeIds,itemsMap);
+	}
+
+	@Override
+	public Map<String,Object> getRecAuditProgressIn(
+			String doctorFlow,
+			String processFlow,
+			String recTypeId,
+			String itemId
+	){
+
+		if(!StringUtil.isNotBlank(doctorFlow)){
+			return null;
+		}
+
+		//读取医师信息以获取方案
+		ResDoctor doctor = resDoctorBiz.readDoctor(doctorFlow);
+		if(doctor==null){
+			return null;
+		}
+		String medicineTypeId="";
+		//读取医师信息以获取方案
+		SysUser user = userBiz.readSysUser(doctorFlow);
+		if(user==null){
+			return null;
+		}else{
+			medicineTypeId=user.getMedicineTypeId();
+		}
+
+		//获取方案
+		String rotationFlow = doctor.getRotationFlow();
+		if(!StringUtil.isNotBlank(rotationFlow)){
+			return null;
+		}
+
+		//获取该医师的计划
+		List<SchArrangeResultExt> resultExts = getResults(doctorFlow,null,processFlow);
+		if(resultExts==null || resultExts.isEmpty()){
+			return null;
+		}
+
+		//获取该方案的标准科室
+		List<SchRotationDept> depts = null;
+		String schRotationDeptFlow = null;
+
+		//process为空的情况下不支持更精确的统计
+		if(!StringUtil.isNotBlank(processFlow)){
+			recTypeId = null;
+			itemId = null;
+
+			depts = getDept(null,rotationFlow,null);
+		}else{
+			SchArrangeResultExt resultExt = resultExts.get(0);
+			if(resultExt!=null){
+				String standardGroupFlow = resultExt.getStandardGroupFlow();
+				String standardDeptId = resultExt.getStandardDeptId();
+
+				SchRotationDept dept = rotationDeptBiz.searchGroupFlowAndStandardDeptIdQuery(standardGroupFlow,standardDeptId);
+				if(dept!=null){
+					depts = new ArrayList<SchRotationDept>();
+					depts.add(dept);
+
+					schRotationDeptFlow = dept.getRecordFlow();
+				}
+			}
+		}
+
+		if(depts==null){
+			return null;
+		}
+
+		//统计登记的数据
+		List<ResRec> recs = getAuditRecs(doctorFlow, processFlow, recTypeId, itemId);
 		Map<String,Float> recCountMap = getRecCount(recs);
 
 		//选科表数据,西医作为缩减调整

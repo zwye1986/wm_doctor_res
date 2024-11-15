@@ -2094,7 +2094,7 @@ public class JsResTeacherController extends GeneralController{
 //			}
 //		}
 
-		Map<String,Object> processPerMap=iResRecBiz.getRecProgressIn(operUserFlow,processFlow,null,null);
+		Map<String,Object> processPerMap=iResRecBiz.getRecAuditProgressIn(operUserFlow,processFlow,null,null);
 		if(processPerMap == null){
 			processPerMap = new HashMap<String, Object>();
 		}
@@ -2142,7 +2142,7 @@ public class JsResTeacherController extends GeneralController{
 			int jxsj=0;	int sjys=0;
 			List<String> recTypes=new ArrayList<String>();
 			recTypes.add(recTypeIdt);
-				List<ResRec> recs= iResRecBiz.searchRecByProcessWithBLOBs(recTypes,processFlow,operUser.getUserFlow());
+				List<ResRec> recs= iResRecBiz.searchRecAuditByProcessWithBLOBs(recTypes,processFlow,operUser.getUserFlow());
 			for (ResRec resRec : recs) {
 				String content=resRec.getRecContent();
 				Document document=DocumentHelper.parseText(content);
