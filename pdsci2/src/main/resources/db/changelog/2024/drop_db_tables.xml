@@ -1,0 +1,385 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="drop-empty-edc-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'EDC_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+    <changeSet id="drop-empty-edu-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'EDU_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+    <changeSet id="drop-empty-gcp-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'GCP_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+    <changeSet id="drop-empty-gydxj-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'GYDXJ_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+    <changeSet id="drop-empty-gzzyyy-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'GZZYYY_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+    <changeSet id="drop-empty-irb-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'IRB_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+    <changeSet id="drop-empty-srm-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'SRM_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+    <changeSet id="drop-empty-zsey-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'ZSEY_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+    <changeSet id="drop-empty-xjgl-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'XJGL_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+    <changeSet id="drop-empty-erp-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'ERP_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+    <changeSet id="drop-empty-nywj-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'NYWJ_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+    <changeSet id="drop-empty-nyzl-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'NYZL_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+
+    <changeSet id="drop-empty-pub-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'PUB_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+    <changeSet id="drop-empty-nyds-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'NYDS_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+    <changeSet id="drop-empty-exam-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'EXAM_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+    <changeSet id="drop-empty-fstu-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'FSTU_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+    <changeSet id="drop-empty-expert-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'EXPERT_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+    <changeSet id="drop-empty-nydw-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'NYDW_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+    <changeSet id="drop-empty-nygo-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'NYGO_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+    <changeSet id="drop-empty-qingpu-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'QINGPU_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+    <changeSet id="drop-empty-stu-tables" author="zhangwenyun">
+        <sql endDelimiter="/">
+            DECLARE
+            v_table_name VARCHAR2(255);
+                v_row_count  NUMBER;
+            BEGIN
+            FOR rec IN (SELECT table_name FROM user_tables WHERE table_name LIKE 'STU_%') LOOP
+                    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || rec.table_name INTO v_row_count;
+
+                    IF v_row_count = 0 THEN
+                        EXECUTE IMMEDIATE 'DROP TABLE ' || rec.table_name;
+            END IF;
+            END LOOP;
+            END;
+            /
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
