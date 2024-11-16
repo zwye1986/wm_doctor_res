@@ -122,14 +122,6 @@
         </dependency>
 
         <dependency>
-            <groupId>druid-1.0.9</groupId>
-            <artifactId>druid-1.0.9</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/druid-1.0.9.jar</systemPath>
-        </dependency>
-
-        <dependency>
             <groupId>easy-captcha-1.6.2</groupId>
             <artifactId>easy-captcha-1.6.2</artifactId>
             <version>1.0</version>

@@ -16,6 +16,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.jsres.JsResUserBalckListExtMapper;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
+import lombok.extern.slf4j.Slf4j;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,10 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URLEncoder;
 import java.util.*;
 
@@ -41,6 +39,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("/jsres/blackList")
+@Slf4j
 public class JsResUserBlackListController extends GeneralController {
     @Autowired
     private IJsResUserBlackBiz blackBiz;
@@ -109,16 +108,25 @@ public class JsResUserBlackListController extends GeneralController {
         fileName = URLEncoder.encode(fileName, "UTF-8");
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
         response.setContentType("application/octet-stream;charset=UTF-8");
-        FileInputStream is = new FileInputStream(file);
-        OutputStream os = new BufferedOutputStream(response.getOutputStream());
-        byte[] b = new byte[(int) file.length()];
-        int n;
-        while ((n = is.read(b)) != -1) {
-            os.write(b, 0, n);
+        FileInputStream is = null;
+
+        OutputStream os = null;
+        try {
+            is = new FileInputStream(file);
+            os = new BufferedOutputStream(response.getOutputStream());
+            byte[] b = new byte[(int) file.length()];
+            int n;
+            while ((n = is.read(b)) != -1) {
+                os.write(b, 0, n);
+            }
+            os.flush();
+        } catch (IOException e) {
+            log.error("",e);
+        } finally {
+            if(is != null) is.close();
+            if(os != null) os.close();
         }
-        os.flush();
-        is.close();
-        os.close();
+
     }
     /**
      * 获取黑名单信息
