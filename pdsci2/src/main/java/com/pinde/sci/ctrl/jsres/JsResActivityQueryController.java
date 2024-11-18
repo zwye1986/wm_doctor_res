@@ -124,16 +124,20 @@ public class JsResActivityQueryController extends GeneralController {
 	}
 	@RequestMapping(value="/list")
 	public String list(Model model,Integer currentPage,String activityName,String  roleFlag,String  isCurrent,String orderByClo,String orderByFall,
-					   String userName,String activityTypeId,String deptFlow,String deptName,String isNew,String isEval,String isEffective,
+					   String userName,String[] activityTypeId,String deptFlow,String[] deptName,String isNew,String isEval,String isEffective,
 					   String startTime,String endTime,String activityStatus,String isUploadImg, HttpServletRequest request) throws DocumentException {
 		SysUser curUser=GlobalContext.getCurrentUser();
 		SysOrg currentOrg = orgBiz.readSysOrg(curUser.getOrgFlow());
 		Map<String,String> param=new HashMap<>();
 		param.put("activityName",activityName);
 		param.put("userName",userName);
-		param.put("activityTypeId",activityTypeId);
+		if(activityTypeId != null) {
+			param.put("activityTypeId", String.join(",", activityTypeId));
+		}
 		param.put("deptFlow",deptFlow);
-		param.put("deptName",deptName);
+		if(deptName != null) {
+			param.put("deptName", String.join(",", deptName));
+		}
 		param.put("startTime",startTime);
 		param.put("endTime",endTime);
 		param.put("isNew",isNew);//最新活动
@@ -176,7 +180,7 @@ public class JsResActivityQueryController extends GeneralController {
 			param.put("sendSchoolName", currentOrg.getSendSchoolName());
 		}
 		PageHelper.startPage(currentPage, getPageSize(request));
-		List<Map<String,Object>> list=activityBiz.findActivityList(param);
+		List<Map<String,Object>> list=activityBiz.findActivityList2(param);
 		for (Map<String,Object> obj: list) {
 			for (SysUserRole role:userRoleList) {
 				if(obj.containsKey("auditRole")) {

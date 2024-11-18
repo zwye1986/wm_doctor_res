@@ -859,24 +859,30 @@
         FROM TEACHING_ACTIVITY_RESULT T
         WHERE T.RECORD_STATUS = 'Y'
         and t.user_flow=#{userFlow}
+        and (t.IS_REGIEST='Y' or t.IS_SCAN = 'Y')
         )
         and exists (
         select 1 from TEACHING_ACTIVITY_INFO tai
         where tai.ACTIVITY_FLOW=#{activityFlow}
         and (
         (
-        INFO.START_TIME <![CDATA[<=]]> tai.START_TIME
+        INFO.START_TIME <![CDATA[<]]>. tai.START_TIME
         and INFO.END_TIME > tai.START_TIME
         )
         or
         (
         INFO.START_TIME <![CDATA[<]]> tai.END_TIME
-        and INFO.END_TIME >= tai.END_TIME
+        and INFO.END_TIME > tai.END_TIME
         )
         or
         (
-        INFO.START_TIME <![CDATA[>=]]> tai.START_TIME
-        and INFO.END_TIME <![CDATA[<=]]> tai.END_TIME
+        INFO.START_TIME <![CDATA[>]]> tai.START_TIME
+        and INFO.END_TIME <![CDATA[<]]> tai.END_TIME
+        )
+        or
+        (
+        INFO.START_TIME <![CDATA[<]]> tai.START_TIME
+        and INFO.END_TIME <![CDATA[>]]> tai.END_TIME
         )
         )
         )
@@ -1096,7 +1102,7 @@
         select ACTIVITY_FLOW
         FROM TEACHING_ACTIVITY_RESULT T
         WHERE T.RECORD_STATUS = 'Y'
-        and t.IS_REGIEST='Y'
+        and (t.IS_REGIEST='Y' or t.IS_SCAN = 'Y')
         and t.user_flow=#{userFlow}
         )
         and exists (
@@ -1104,18 +1110,23 @@
         where tai.ACTIVITY_FLOW=#{activityFlow}
         and (
         (
-        INFO.START_TIME <![CDATA[<=]]> tai.START_TIME
+        INFO.START_TIME <![CDATA[<]]> tai.START_TIME
         and INFO.END_TIME > tai.START_TIME
         )
         or
         (
         INFO.START_TIME <![CDATA[<]]> tai.END_TIME
-        and INFO.END_TIME >= tai.END_TIME
+        and INFO.END_TIME > tai.END_TIME
         )
         or
         (
-        INFO.START_TIME <![CDATA[>=]]> tai.START_TIME
-        and INFO.END_TIME <![CDATA[<=]]> tai.END_TIME
+        INFO.START_TIME <![CDATA[>]]> tai.START_TIME
+        and INFO.END_TIME <![CDATA[<]]> tai.END_TIME
+        )
+        or
+        (
+        INFO.START_TIME <![CDATA[<]]> tai.START_TIME
+        and INFO.END_TIME <![CDATA[>]]> tai.END_TIME
         )
         )
         )

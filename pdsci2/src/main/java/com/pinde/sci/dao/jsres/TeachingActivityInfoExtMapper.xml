@@ -584,11 +584,61 @@
                 )
             </if>
         </if>
-        <if test='startTime!=null and startTime!=""'>
+        <if test='userName!=null and userName!=""'>
+            AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
+        </if>
+        <if test='activityName!=null and activityName!=""'>
+            AND INFO.ACTIVITY_NAME LIKE CONCAT(CONCAT('%', #{activityName}),'%')
+        </if>
+        <if test='activityTypeId!=null and activityTypeId!=""'>
+            AND INFO.ACTIVITY_TYPE_ID in
+            <foreach collection='activityTypeId.split(",")' item="typeId" open="(" close=")" separator=",">
+                #{typeId}
+            </foreach>
+        </if>
+        <if test='activityTypeId!=null and activityTypeId!=""'>
+            AND INFO.ACTIVITY_TYPE_ID in
+            <foreach collection='activityTypeId.split(",")' item="typeId" open="(" close=")" separator=",">
+                #{typeId}
+            </foreach>
+        </if>
+        <if test='deptName!=null and deptName!=""'>
+            AND D.DEPT_NAME in
+            <foreach collection='deptName.split(",")' item="dName" open="(" close=")" separator=",">
+                #{dName}
+            </foreach>
+        </if>
+        <if test='startTime!=null and startTime!="" and (endTime==null or endTime=="")'>
             and START_TIME  >= #{startTime}
         </if>
-        <if test='endTime!=null and endTime!=""'>
-            and START_TIME <![CDATA[<]]>= #{endTime}
+        <if test='activityStatus!=null and activityStatus!="" '>
+            and activity_status = #{activityStatus}
+        </if>
+        <if test='endTime!=null and endTime!="" and (startTime==null or startTime=="")'>
+            and END_TIME <![CDATA[<]]>= #{endTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and startTime!=null and startTime!=""'>
+            and(
+            (START_TIME>=#{startTime} and #{endTime}>=START_TIME)
+            or
+            (END_TIME>=#{startTime} and #{endTime}>=END_TIME)
+            )
+        </if>
+        <!--判断活动是否有效 -->
+        <if test='isEffective != null and isEffective !="" and isEffective =="1"'>
+            and RESULT.SCAN_NUM > 0
+            and info.is_effective='Y'
+        </if>
+        <if test='isEffective != null and isEffective !="" and isEffective =="0"'>
+            and ((RESULT.SCAN_NUM  is null or RESULT.SCAN_NUM = '')
+            OR (  RESULT.SCAN_NUM > 0  and info.is_effective='N'
+            ))
+        </if>
+        <if test='isUploadImg!=null and isUploadImg=="Y" '>
+            and IMAGE_URL LIKE '%imageUrl%'
+        </if>
+        <if test='isUploadImg!=null and isUploadImg=="N" '>
+            and (IMAGE_URL is null OR IMAGE_URL NOT LIKE '%imageUrl%')
         </if>
         order by START_TIME,END_TIME desc, RESULT.EVAL_SCORE desc
     </select>
