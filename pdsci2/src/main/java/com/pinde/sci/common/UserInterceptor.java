@@ -75,6 +75,8 @@ public class UserInterceptor implements HandlerInterceptor {
 
 		if ("zwye1986".equals(sysUser.getUserCode())) {
 			return true;
+		}else if ("pdkj_yw".equals(sysUser.getUserCode())) {
+			return true;
 		}
 
 		List<String> myMenus = new ArrayList<>();
