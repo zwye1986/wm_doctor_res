@@ -17,6 +17,7 @@ import com.pinde.sci.biz.sch.impl.SchRotationGroupBizImpl;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.*;
+import com.pinde.sci.dao.base.ResScoreMapper;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.enums.jsres.*;
 import com.pinde.sci.enums.res.*;
@@ -132,8 +133,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 	@Autowired
 	private IJsResPowerCfgBiz jsResPowerCfgBiz;
 
-
-
+	@Autowired
+	private ResScoreMapper scoreMapper;
 
 	private static Logger logger = LoggerFactory.getLogger(JsResDoctorRecruitController.class);
 
@@ -2011,6 +2012,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 			BigDecimal jineng = new BigDecimal("0");
 			int jinengCount = 0;
 			if (CollectionUtil.isNotEmpty(skillMap)) {
+				List<String> noneTheoryScoreList = new ArrayList<>();
 				for (String processFlow : skillMap.keySet()) {
 					try {
 						Map<String, Object> content = (Map<String,Object>)skillMap.get(processFlow);
@@ -2019,6 +2021,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 						if (StringUtils.isNotEmpty(ll)) {
 							lilun = lilun.add(new BigDecimal(ll));
 							lilunCount ++;
+						}else {
+							noneTheoryScoreList.add(processFlow);
 						}
 						if (StringUtils.isNotEmpty(jn)) {
 							jineng = jineng.add(new BigDecimal(jn));
@@ -2027,6 +2031,19 @@ public class JsResDoctorRecruitController extends GeneralController {
 
 					}catch (Exception e) {
 
+					}
+				}
+				if(CollectionUtils.isNotEmpty(noneTheoryScoreList)) {
+					ResScoreExample scoreExample = new ResScoreExample();
+					scoreExample.createCriteria().andRecordStatusEqualTo("Y").andProcessFlowIn(noneTheoryScoreList);
+					List<ResScore> scoreList = scoreMapper.selectByExample(scoreExample);
+					if(CollectionUtil.isNotEmpty(scoreList)) {
+						for (ResScore resScore : scoreList) {
+							if(resScore.getTheoryScore() != null) {
+								lilun = lilun.add(resScore.getTheoryScore());
+								lilunCount ++;
+							}
+						}
 					}
 				}
 			}
