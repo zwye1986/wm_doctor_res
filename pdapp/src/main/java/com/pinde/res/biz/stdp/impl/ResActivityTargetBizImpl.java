@@ -160,5 +160,12 @@ criteria.andActivityFlowEqualTo(activityFlow);
 
 	}
 
+	@Override
+	public List<String> selectMainOrgFlow(String userFlow) {
+
+		return activityTargetMapper.selectMainOrgFlow(userFlow);
+
+	}
+
 
 }
