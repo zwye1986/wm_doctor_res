@@ -90,10 +90,10 @@
 					"typeName":"出科考核表附件",
 					"recType":"viewImage",
                     "reqType":"viewImage",
-                    "recFlow":"",,
+                    "recFlow":"",
                     "statusId":"<c:if test="${!(canViewImage eq 'Y')}">notAudit</c:if><c:if test="${canViewImage eq 'Y'}">isAudit</c:if>",
                     "statusName":"<c:if test="${!(canViewImage eq 'Y')}">未上传</c:if><c:if test="${canViewImage eq 'Y'}">已上传</c:if>"
 				}
-		],
+		]
     </c:if>
 }
