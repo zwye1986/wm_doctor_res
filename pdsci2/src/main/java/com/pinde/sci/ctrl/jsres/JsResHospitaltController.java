@@ -1,18 +1,14 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.page.PageHelper;
-import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.ExcleUtile;
-import com.pinde.core.util.StringUtil;
+import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
 import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
-import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.common.GlobalContext;
+import com.pinde.sci.common.*;
 import com.pinde.sci.enums.jsres.BaseStatusEnum;
 import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
 import com.pinde.sci.enums.jszy.JszyResTrainYearEnum;
@@ -21,13 +17,12 @@ import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 
+@Slf4j
 @Controller
 @RequestMapping("/jsres/hospital")
 public class JsResHospitaltController extends GeneralController{
@@ -330,6 +326,22 @@ public class JsResHospitaltController extends GeneralController{
 	public String achievementsDetailsAcc(Model model,HttpServletRequest request){
 
 		return "jsres/hospital/achievement/achievementDetailsAcc";
+	}
+
+	@RequestMapping(value="/achievement/importInterviewExam")
+	public String achievementImportInterviewExam(Model model,HttpServletRequest request){
+		log.info("打开面试成绩导入页面窗口");
+		return "jsres/hospital/achievement/importInterviewExam";
+	}
+	@RequestMapping(value="/achievement/importExamResult")
+	public String achievementImportExamResult(Model model,HttpServletRequest request){
+		log.info("打开笔试成绩导入页面窗口");
+		return "jsres/hospital/achievement/importExamResult";
+	}
+	@RequestMapping(value="/achievement/importSkillExam")
+	public String achievementImportSkillExam(Model model,HttpServletRequest request){
+		log.info("打开操作成绩导入页面窗口");
+		return "jsres/hospital/achievement/importSkillExam";
 	}
 
 	/**

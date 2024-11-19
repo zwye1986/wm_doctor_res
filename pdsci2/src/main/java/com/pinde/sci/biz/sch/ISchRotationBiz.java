@@ -78,4 +78,11 @@ public interface ISchRotationBiz {
     ResOrgRotationCfg getRotationCfg(String orgFlow, String speId, String sessionNumber);
 
     int saveRotationCfg(ResOrgRotationCfg rotationCfg);
+
+
+	List<String> getBzDeptNameBySpe(String speId);
+
+	List<SchRotationDept> getAllBzDeptListBySpeId(String speId);
+
+
 }

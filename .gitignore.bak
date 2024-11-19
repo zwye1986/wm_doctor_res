@@ -1,0 +1,16 @@
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+/pdsci2/target
+/pdapp/target
+/pdcore/target
+*.license.key
+/*.log
+/target/*
+excelModel/
+*/excelModel/*

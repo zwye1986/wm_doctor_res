@@ -31,6 +31,7 @@ import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.sys.SysOrgExt;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.*;
 import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.slf4j.Logger;
@@ -583,11 +584,11 @@ public class JsresSupervisioController extends GeneralController {
         //导出总表
         HSSFWorkbook wb = new HSSFWorkbook();
         HSSFCellStyle titleStyle = wb.createCellStyle();//水平垂直居中
-        titleStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER_SELECTION);
-        titleStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        titleStyle.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+        titleStyle.setVerticalAlignment(VerticalAlignment.CENTER);
         HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-        styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-        styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        styleLeft.setAlignment(HorizontalAlignment.LEFT);
+        styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
         HSSFSheet sheet = wb.createSheet("院级督导项目统计表");//sheet名称
         HSSFRow row0 = sheet.createRow(0);
         String[]   title0 = new String[]{
@@ -616,7 +617,7 @@ public class JsresSupervisioController extends GeneralController {
             cellTitle = row0.createCell(i);
             cellTitle.setCellValue(title0[i]);
             cellTitle.setCellStyle(titleStyle);
-            cellTitle.setCellType(HSSFCell.CELL_TYPE_STRING);
+            cellTitle.setCellType(CellType.STRING);
         }
         if (null != list && list.size()>0) {
             HashMap<String, Integer> nameMap = new HashMap<String, Integer>();//防止sheet名称重复，重复则 +1
@@ -647,7 +648,7 @@ public class JsresSupervisioController extends GeneralController {
                     cellTitle = rows.createCell(j);
                     cellTitle.setCellValue(titles[j]);
                     cellTitle.setCellStyle(titleStyle);
-                    cellTitle.setCellType(HSSFCell.CELL_TYPE_STRING);
+                    cellTitle.setCellType(CellType.STRING);
                 }
                 //如果两个专家评分都未提交，就不导出
                 if (StringUtil.isNotBlank(subject.getLeaderOneScore()) || StringUtil.isNotBlank(subject.getLeaderTwoScore())){
@@ -729,7 +730,7 @@ public class JsresSupervisioController extends GeneralController {
                         cellTitle2 = row1.createCell(k);
                         cellTitle2.setCellValue(titles1[k]);
                         cellTitle2.setCellStyle(titleStyle);
-                        cellTitle2.setCellType(HSSFCell.CELL_TYPE_STRING);
+                        cellTitle2.setCellType(CellType.STRING);
                     }
 
                     for (int j = 0; j < scoreList.size(); j++) {
@@ -748,16 +749,16 @@ public class JsresSupervisioController extends GeneralController {
                             if (k!=0){
                                 if (StringUtil.isNotBlank(infoTitle[k])){
                                     infoCell.setCellValue(Double.parseDouble(infoTitle[k]));
-                                    infoCell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+                                    infoCell.setCellType(CellType.NUMERIC);
                                 }else {
                                     infoCell.setCellValue("");
-                                    infoCell.setCellType(HSSFCell.CELL_TYPE_STRING);
+                                    infoCell.setCellType(CellType.STRING);
                                 }
                             }else {
                                 infoCell.setCellStyle(styleLeft);
                                 String s = infoTitle[k];
                                 infoCell.setCellValue(s.trim());
-                                infoCell.setCellType(HSSFCell.CELL_TYPE_STRING);
+                                infoCell.setCellType(CellType.STRING);
                             }
                         }
                     }

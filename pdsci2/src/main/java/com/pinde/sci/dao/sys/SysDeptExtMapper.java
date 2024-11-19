@@ -19,6 +19,8 @@ public interface SysDeptExtMapper {
 
 	List<Map<String,String>> searchDeptByUnion(@Param("dept") SysDept dept, @Param("isUnion") String isUnion);
 
+	List<Map<String,String>> searchDeptByUnionSpe(@Param("dept") SysDept dept, @Param("isUnion") String isUnion);
+
 	//查询科主任所属科室
 	List<Map<String,Object>> queryDeptListByFlow(@Param("userFlow") String userFlow);
 

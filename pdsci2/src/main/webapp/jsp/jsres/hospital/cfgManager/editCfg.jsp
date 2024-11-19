@@ -471,7 +471,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="text-align: right">是否开启轮转计划排班校验：</td>
+                        <td style="text-align: right">是否校验轮转时长：</td>
                         <td style="text-align: left;padding-left: 5px" width="200px">
                             <c:set var="key" value="process_scheduling_check_${sessionScope.currUser.orgFlow}"></c:set>
                             <input type="hidden" name="cfgCode" value="${key}">
@@ -582,6 +582,19 @@
                             <input type="hidden" name="${key}_ws_id" value="res">
                             <input type="hidden" name="${key}_desc" value="轮转计划排班设置-学员自行配置">
                             --%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right;">轮转计划排班最短时间校验开关：</td>
+                        <td style="text-align: left;padding-left: 5px" width="200px">
+                            <c:set value="process_scheduling_check_min_mon_${sessionScope.currUser.orgFlow }" var="key"/>
+                            <input type="hidden" name="cfgCode" value="${key}">&nbsp;
+                            <input type="radio" id="${key}_1" name="${key}" value="Y"
+                                   <c:if test="${pdfn:jsresPowerCfgMap(key) eq 'Y'}">checked</c:if>/>
+                            <label for="${key}_1">打开</label>&#12288;
+                            <input type="radio" id="${key}_2" name="${key}" value="N"
+                                   <c:if test="${pdfn:jsresPowerCfgMap(key) eq 'N'}">checked</c:if>/>
+                            <label for="${key}_2">关闭</label>&#12288;
                         </td>
                     </tr>
                     <tr>

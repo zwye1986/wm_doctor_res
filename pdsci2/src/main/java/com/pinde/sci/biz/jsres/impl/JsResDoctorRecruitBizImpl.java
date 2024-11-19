@@ -44,7 +44,8 @@ import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -2273,7 +2274,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	}
 
     @Override
-    public HSSFWorkbook createCycleResultsByDoc(String doctorFlow, String roleId) {
+    public HSSFWorkbook createCycleResultsByDoc(String doctorFlow, String roleId, String schStartDate, String schEndDate) {
         ResDoctor doctor = resDoctorBiz.readDoctor(doctorFlow);
         SysUser doc = userBiz.readSysUser(doctorFlow);
         Map<String,String> pMap = new HashMap<>();
@@ -2285,6 +2286,8 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
         }else {
             pMap.put("doctorFlow",doctorFlow);
         }
+		pMap.put("schStartDate", schStartDate);
+		pMap.put("schEndDate", schEndDate);
         /*
 
          */
@@ -2352,17 +2355,17 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			//定义将用到的样式
 			HSSFCellStyle styleCenter = wb.createCellStyle();
 			//居中
-			styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-			styleCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+			styleCenter.setAlignment(HorizontalAlignment.CENTER);
+			styleCenter.setVerticalAlignment(VerticalAlignment.CENTER);
 			// 设置边框
-			styleCenter.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-			styleCenter.setBorderTop(HSSFCellStyle.BORDER_THIN);
-			styleCenter.setBorderRight(HSSFCellStyle.BORDER_THIN);
-			styleCenter.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+			styleCenter.setBorderBottom(BorderStyle.THIN);
+			styleCenter.setBorderTop(BorderStyle.THIN);
+			styleCenter.setBorderRight(BorderStyle.THIN);
+			styleCenter.setBorderLeft(BorderStyle.THIN);
 			//第一行 列宽自适应
 			HSSFRow rowDep = sheet.createRow(0);
 			//合并单元格
-			org.apache.poi.hssf.util.CellRangeAddress cellRowOne = new org.apache.poi.hssf.util.CellRangeAddress(0, 0, 0, 35);
+			CellRangeAddress cellRowOne = new CellRangeAddress(0, 0, 0, 35);
 			sheet.addMergedRegion(cellRowOne);
 			// 给合并单元格设置边框
 			excelSetBorderForMergeCell(wb, sheet, cellRowOne);
@@ -2372,7 +2375,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			//第二行
 			HSSFRow rowTwo = sheet.createRow(1);
 			//合并单元格
-			org.apache.poi.hssf.util.CellRangeAddress cellRowTwo = new org.apache.poi.hssf.util.CellRangeAddress(1, 1, 9, 23);
+			CellRangeAddress cellRowTwo = new CellRangeAddress(1, 1, 9, 23);
 			sheet.addMergedRegion(cellRowTwo);
 			// 给合并单元格设置边框
 			excelSetBorderForMergeCell(wb, sheet, cellRowOne);
@@ -2380,7 +2383,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			secCellZero.setCellStyle(styleCenter);
 			secCellZero.setCellValue("DOPS");
 			//合并单元格
-			org.apache.poi.hssf.util.CellRangeAddress cellFiveRowTwo = new org.apache.poi.hssf.util.CellRangeAddress(1, 1, 24, 34);
+			CellRangeAddress cellFiveRowTwo = new CellRangeAddress(1, 1, 24, 34);
 			sheet.addMergedRegion(cellFiveRowTwo);
 			// 给合并单元格设置边框
 			excelSetBorderForMergeCell(wb, sheet, cellRowOne);
@@ -2398,7 +2401,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			for (int i = 0; i < titles.length; i++) {
 				if (i < 9 || i == 35){
 					// 合并单元格
-					org.apache.poi.hssf.util.CellRangeAddress cellRangePlanNo = new org.apache.poi.hssf.util.CellRangeAddress(1, 2, i, i);
+					CellRangeAddress cellRangePlanNo = new CellRangeAddress(1, 2, i, i);
 					sheet.addMergedRegion(cellRangePlanNo);
 					cellTitle = rowTwo.createCell(i);
 					// 给合并单元格设置边框
@@ -2504,15 +2507,15 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	 * @Author fengxf
 	 * @Date 2019/11/12
 	 */
-	private void excelSetBorderForMergeCell(HSSFWorkbook wb, HSSFSheet sheet, org.apache.poi.hssf.util.CellRangeAddress cellRangePlanNo){
+	private void excelSetBorderForMergeCell(HSSFWorkbook wb, HSSFSheet sheet, CellRangeAddress cellRangePlanNo){
 		// 下边框
-		RegionUtil.setBorderBottom(1, cellRangePlanNo, sheet, wb);
+		RegionUtil.setBorderBottom(BorderStyle.THIN, cellRangePlanNo, sheet);
 		// 左边框
-		RegionUtil.setBorderLeft(1, cellRangePlanNo, sheet, wb);
+		RegionUtil.setBorderLeft(BorderStyle.THIN, cellRangePlanNo, sheet);
 		// 右边框
-		RegionUtil.setBorderRight(1, cellRangePlanNo, sheet, wb);
+		RegionUtil.setBorderRight(BorderStyle.THIN, cellRangePlanNo, sheet);
 		// 上边框
-		RegionUtil.setBorderTop(1, cellRangePlanNo, sheet, wb);
+		RegionUtil.setBorderTop(BorderStyle.THIN, cellRangePlanNo, sheet);
 	}
 
     private void setColumnWidth(int length, int key, Map<Integer, Integer> columnWidth) {
@@ -2540,15 +2543,15 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		HSSFSheet sheet = wb.createSheet("sheet1");
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		//列宽自适应
 		HSSFRow rowThree = sheet.createRow(0);//第三行
@@ -2925,15 +2928,15 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		HSSFSheet sheet = wb.createSheet("sheet1");
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		//列宽自适应
 		HSSFRow rowThree = sheet.createRow(0);//第三行

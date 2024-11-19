@@ -37,5 +37,5 @@ public interface ResSchProcessExpressMapper {
 
     int updateByPrimaryKey(ResSchProcessExpress record);
 
-    List<ResSchProcessExpress> listByDoctorList(@Param("doctorFlowList")List<String> doctorFlowList);
+    List<ResSchProcessExpress> listByDoctorList(@Param("doctorFlowList")List<String> doctorFlowList, @Param("schStartDate")String schStartDate, @Param("schEndDate")String schEndDate);
 }

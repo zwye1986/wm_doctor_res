@@ -20,6 +20,7 @@ import com.pinde.sci.form.res.QingpuLectureCfgTitleExt;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -726,11 +727,11 @@ public class ResDeptActivityStatisticsController extends GeneralController {
 		HSSFDataFormat format = wb.createDataFormat();
 		style.setDataFormat(format.getFormat("@"));
 		// 创建一个居中格式
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		style.setAlignment(HorizontalAlignment.CENTER);
 
 		Font font = wb.createFont();
 		font.setFontHeightInPoints((short) 12);
-//		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font.setBold(true);
 		style.setFont(font);
 
 		HSSFCell cell = null;

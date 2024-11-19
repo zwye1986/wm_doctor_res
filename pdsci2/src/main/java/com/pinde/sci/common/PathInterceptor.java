@@ -48,15 +48,21 @@ public class PathInterceptor implements HandlerInterceptor {
 		while(paramNames.hasMoreElements()){
 			String val = paramNames.nextElement();
 			val = request.getParameter(val);
-//			logger.debug("攻击检测: " + val);
+			/*logger.debug("攻击检测: " + val);
 			if(val != null){
 				String asciiVal = new String(val.getBytes(),"ASCII");
-//				if(!checkTS(asciiVal.toLowerCase()))
-//				{
-//					logger.info("可能含有特殊符号,传入值["+val+"],拒绝服务!");
-//					request.getRequestDispatcher("/path").forward(request, response);
-//					return false;
-//				}
+				if(!checkTS(asciiVal.toLowerCase()))
+				{
+					logger.info("可能含有特殊符号,传入值["+val+"],拒绝服务!");
+					request.getRequestDispatcher("/path").forward(request, response);
+					return false;
+				}
+			}*/
+
+			if(isDangerous(val)){
+				logger.info("可能含有特殊符号,传入值["+val+"],拒绝服务!");
+				request.getRequestDispatcher("/path").forward(request, response);
+				return false;
 			}
 		}
 		return true;
@@ -84,5 +90,26 @@ public class PathInterceptor implements HandlerInterceptor {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * 判断参数是否包含危险字符或模式
+	 * 此方法用于识别输入参数中是否包含潜在的跨站脚本攻击（XSS）或其他恶意代码
+	 *
+	 * @param param 输入参数，可以是任何字符串
+	 * @return 如果参数包含危险字符或模式，则返回true；否则返回false
+	 */
+	private boolean isDangerous(String param) {
+		if (param == null) {
+			return false;
+		}
+		// 检查参数是否包含危险字符或模式
+		String[] dangerousPatterns = { "<script>", "</script>", "alert(", "onload=", "onclick=" };
+		for (String pattern : dangerousPatterns) {
+			if (param.contains(pattern)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

@@ -11,3 +11,6 @@ gen
 /pdcore/target
 *.license.key
 /*.log
+/target/*
+/excelModel/target
+*.lst

@@ -1115,17 +1115,17 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		Sheet sheet = wb.createSheet("sheet1");
 		Font font = wb.createFont();
 		font.setFontHeightInPoints((short) 12);
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font.setBold(true);
 		CellStyle style = wb.createCellStyle();
-		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		style.setVerticalAlignment(VerticalAlignment.CENTER); // 创建一个居中格式
+		style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 		style.setFont(font);
 		Font fontTwo = wb.createFont();
 		fontTwo.setFontHeightInPoints((short) 12);
 
 		CellStyle styleTwo = wb.createCellStyle();
-		styleTwo.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-		styleTwo.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		styleTwo.setVerticalAlignment(VerticalAlignment.CENTER); // 创建一个居中格式
+		styleTwo.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 		styleTwo.setFont(fontTwo);
 		//
 
@@ -1507,17 +1507,17 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		Sheet sheet = wb.createSheet("sheet1");
 		Font font = wb.createFont();
 		font.setFontHeightInPoints((short) 12);
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font.setBold(true);
 		CellStyle style = wb.createCellStyle();
-		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		style.setVerticalAlignment(VerticalAlignment.CENTER); // 创建一个居中格式
+		style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 		style.setFont(font);
 		Font fontTwo = wb.createFont();
 		fontTwo.setFontHeightInPoints((short) 12);
 
 		CellStyle styleTwo = wb.createCellStyle();
-		styleTwo.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-		styleTwo.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		styleTwo.setVerticalAlignment(VerticalAlignment.CENTER); // 创建一个居中格式
+		styleTwo.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 		styleTwo.setFont(fontTwo);
 		//
 
@@ -2165,17 +2165,17 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		Sheet sheet = wb.createSheet("sheet1");
 		Font font = wb.createFont();
 		font.setFontHeightInPoints((short) 12);
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font.setBold(true);
 		CellStyle style = wb.createCellStyle();
-		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		style.setVerticalAlignment(VerticalAlignment.CENTER); // 创建一个居中格式
+		style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 		style.setFont(font);
 		Font fontTwo = wb.createFont();
 		fontTwo.setFontHeightInPoints((short) 12);
 
 		CellStyle styleTwo = wb.createCellStyle();
-		styleTwo.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-		styleTwo.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		styleTwo.setVerticalAlignment(VerticalAlignment.CENTER); // 创建一个居中格式
+		styleTwo.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 		styleTwo.setFont(fontTwo);
 		//
 
@@ -2828,18 +2828,18 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		// 第四步，创建单元格，并设置值表头 设置表头居中
 		Font font = wb.createFont();
 		font.setFontHeightInPoints((short) 12);
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font.setBold(true);
 		CellStyle style = wb.createCellStyle();
-		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		style.setVerticalAlignment(VerticalAlignment.CENTER); // 创建一个居中格式
+		style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 		style.setFont(font);
 
 		Font fontTwo = wb.createFont();
 		fontTwo.setFontHeightInPoints((short) 12);
 
 		CellStyle styleTwo = wb.createCellStyle();
-		styleTwo.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-		styleTwo.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		styleTwo.setVerticalAlignment(VerticalAlignment.CENTER); // 创建一个居中格式
+		styleTwo.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 		styleTwo.setFont(fontTwo);
 		//
 
@@ -3221,15 +3221,15 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		HSSFSheet sheet = wb.createSheet("sheet1");
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		//列宽自适应
 		HSSFRow rowOne = sheet.createRow(0);//第1行
@@ -3348,6 +3348,24 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 		response.setContentType("application/octet-stream;charset=UTF-8");
 		wb.write(response.getOutputStream());
+	}
+
+	/**
+	 * @Author xieyh
+	 * @Description 基地招录统计分析图表
+	 * @Date  2024-10-28
+	 **/
+	@RequestMapping(value = {"/recruitReport"})
+	public String recruitReport(Model model) {
+		SysUser currentUser = GlobalContext.getCurrentUser();
+		String filter = "('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'',key:orgFlow.keyword,negate:!f" +
+				",params:(query:'" + currentUser.getOrgFlow() + "'),type:phrase),query:(match_phrase:(orgFlow.keyword:'" + currentUser.getOrgFlow() + "')))";
+//		String iframe = "<iframe src=\"https://restest.njpdxx.com:5650/app/dashboards?auth_provider_hint=anonymous1#/view/41e46fe1-80c5-4f1b-bdba-c00822929a4b?embed=true" +
+//				"&_g=(filters:!(" + filter + "),refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))&hide-filter-bar=true\"  height=\"2100\" width=\"1460\"></iframe>";
+		String iframe = "<iframe src=\"https://js.ezhupei.com:5601/app/dashboards?auth_provider_hint=anonymous1#/view/0525f6c0-e4dc-45d4-a25f-bc338e758934?embed=true" +
+				"&_g=(filters:!(" + filter + "),refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))&hide-filter-bar=true\" height=\"2100\" width=\"1460\"></iframe>";
+		model.addAttribute("iframe", iframe);
+		return "jsres/zltjOrg/recruitReport";
 	}
 
 	@RequestMapping(value="/zltjOrgLocalAcc")
@@ -3579,18 +3597,18 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		// 第四步，创建单元格，并设置值表头 设置表头居中
 		Font font = wb.createFont();
 		font.setFontHeightInPoints((short) 12);
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font.setBold(true);
 		CellStyle style = wb.createCellStyle();
-		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		style.setVerticalAlignment(VerticalAlignment.CENTER); // 创建一个居中格式
+		style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 		style.setFont(font);
 
 		Font fontTwo = wb.createFont();
 		fontTwo.setFontHeightInPoints((short) 12);
 
 		CellStyle styleTwo = wb.createCellStyle();
-		styleTwo.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-		styleTwo.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		styleTwo.setVerticalAlignment(VerticalAlignment.CENTER); // 创建一个居中格式
+		styleTwo.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 		styleTwo.setFont(fontTwo);
 		//
 		if (StringUtil.isNotBlank(trainingTypeId)) {

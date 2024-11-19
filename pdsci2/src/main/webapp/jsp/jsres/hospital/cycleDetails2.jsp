@@ -55,9 +55,9 @@
             var papersFlag = $("#exportPapers").attr("checked") == "checked";
             var url ="";
             if(papersFlag){
-                url = "<s:url value='/res/exam/paper/downloadCkkPaperBatch?roleId=${param.roleId}&doctorFlow='/>" + "${doctor.doctorFlow}";
+                url = "<s:url value='/res/exam/paper/downloadCkkPaperBatch?roleId=${param.roleId}&doctorFlow='/>" + "${doctor.doctorFlow}&schStartDate=${schStartDate}&schEndDate=${schEndDate}";
             }else{
-                url = "<s:url value='/jsres/doctorRecruit/exportCycleResultsByDoc?roleId=${param.roleId}&doctorFlow='/>" + "${doctor.doctorFlow}";
+                url = "<s:url value='/jsres/doctorRecruit/exportCycleResultsByDoc?roleId=${param.roleId}&doctorFlow='/>" + "${doctor.doctorFlow}&schStartDate=${schStartDate}&schEndDate=${schEndDate}";
             }
             jboxStartLoading();
             jboxExp(null,url);

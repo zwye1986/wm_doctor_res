@@ -146,4 +146,6 @@ public interface ResDoctorRecruitExtMapper {
 	List<Map<String,Object>> searchAssignInfoListNew(Map<String, Object> paramMap);
 
     List<Map<String,String>> searchAssignOrgSpeListNew(Map<String, String> param);
+
+    int countSendInfoByParam(Map<String, Object> param);
 }

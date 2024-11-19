@@ -440,7 +440,7 @@ public class ResSkillTimeConfigBizImpl implements IResSkillTimeConfigBiz {
                     String value = "";
                     Cell cell = r.getCell(j);
                     if (null != cell && StringUtil.isNotBlank(cell.toString().trim())) {
-                        if (cell.getCellType() == 1) {
+                        if (cell.getCellType().getCode() == 1) {
                             value = cell.getStringCellValue().trim();
                         } else {
                             value = ExcelUtile._doubleTrans(cell.getNumericCellValue()).trim();

@@ -247,7 +247,10 @@ public class InxJsResController extends GeneralController {
      */
     @RequestMapping(value = "/register")
     public String register(Model model) {
-        RSAPublicKey publicKey = RSAUtils.getDefaultPublicKey();
+        // 获取公钥系数和公钥指数
+        KeyPair defaultKeyPair = RSAUtils.getDefaultKeyPair();
+        setSessionAttribute("defaultKeyPairRegister",defaultKeyPair);
+        RSAPublicKey publicKey = (RSAPublicKey)defaultKeyPair.getPublic();
         if (null != publicKey) {
             //公钥-系数(n)
             model.addAttribute("pkModulus", new String(Hex.encode(publicKey.getModulus().toByteArray())));
@@ -1173,6 +1176,12 @@ public class InxJsResController extends GeneralController {
 
         //设置当前用户
         setSessionAttribute(GlobalConstant.CURRENT_USER, user);
+
+        SysUser userInfo = new SysUser();
+        userInfo.setUserFlow(user.getUserFlow());
+        userInfo.setDeptFlow(user.getDeptFlow());
+        setSessionAttribute("user", JSON.toJSONString(userInfo));
+
         setSessionAttribute("sessionId", GlobalContext.getSession().getId());
         String clientIp = ClientIPUtils.getClientIp(request);
 //
@@ -1324,7 +1333,7 @@ public class InxJsResController extends GeneralController {
                     session.setAttribute("maintenance","Y");
                 }
                 return "redirect:" + getRoleUrl(roleFlow);
-        }
+            }
         }
         if (null != publicKey) {
             //公钥-系数(n)
@@ -1391,9 +1400,18 @@ public class InxJsResController extends GeneralController {
     @ResponseBody
     public String checkPhone(String data, Model model, HttpServletRequest request) {
         // 解密
-        data = RSAUtils.decryptStringByJs(data);
+        // 获取公钥系数和公钥指数
+        KeyPair defaultKeyPair = (KeyPair)getSessionAttribute("defaultKeyPairRegister");
+        data = RSAUtils.decryptStringByJs(data,defaultKeyPair);
         Map<String, String> paramMap = (Map<String, String>) JSON.parse(data);
         String userPhone = paramMap.get("userPhone");
+        if (StringUtil.isBlank(userPhone)) {
+            return "请输入正确的手机号码！";
+        }
+        SysUser byUserPhone = userBiz.findByUserPhone(userPhone);
+        if (null != byUserPhone) {
+            return GlobalConstant.USER_PHONE_REPEAT;
+        }
         String yzm = paramMap.get("yzm");
         String loginErrorMessage = "";
         //默认登录失败界面
@@ -1417,6 +1435,7 @@ public class InxJsResController extends GeneralController {
         }
         SMSUtil smsUtil = new SMSUtil(userPhone);
         int code = (int) ((Math.random() * 9 + 1) * 100000);
+
         SysSmsLog sSmsRecord = smsUtil.send("10001", GlobalConstant.JSRES_TEMPLATE, "R101", code);
         String currDateTime = DateUtil.getCurrDateTime2();
         userBiz.saveRegisterUser(userPhone, String.valueOf(code), currDateTime);

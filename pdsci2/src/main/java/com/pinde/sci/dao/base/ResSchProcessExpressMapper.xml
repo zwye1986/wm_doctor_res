@@ -521,18 +521,45 @@
     </trim>
   </insert>
   <select id="listByDoctorList" resultType="com.pinde.sci.model.mo.ResSchProcessExpress">
-    select * from res_sch_process_express
+    select spe.* from res_sch_process_express spe
     where record_status = 'Y'
       AND rec_type_id = 'AfterEvaluation'
     <choose>
+      <when test="schStartDate != null and schStartDate != '' and schEndDate != null and schEndDate != ''">
+        and exists(
+        select 1 from SCH_ARRANGE_RESULT sar,
+        Res_Doctor_Sch_Process dsp
+                 where sar.doctor_flow = spe.oper_user_flow and sar.record_status = 'Y' and dsp.sch_result_flow = sar.result_flow and dsp.process_flow = spe.process_flow and dsp.record_status = 'Y'
+        and sar.sch_start_date &lt;= #{schEndDate} and #{schStartDate} &lt;= sar.sch_end_date
+        )
+      </when>
+      <when test="schStartDate != null and schStartDate != ''">
+        and exists(
+        select 1 from SCH_ARRANGE_RESULT sar,
+        Res_Doctor_Sch_Process dsp
+                 where sar.doctor_flow = spe.oper_user_flow and sar.record_status = 'Y' and dsp.sch_result_flow = sar.result_flow and dsp.process_flow = spe.process_flow and dsp.record_status = 'Y'
+        and sar.sch_start_date >= #{schStartDate}
+        )
+      </when>
+      <when test="schEndDate != null and schEndDate != ''">
+        and exists(
+        select 1 from SCH_ARRANGE_RESULT sar,
+        Res_Doctor_Sch_Process dsp
+                 where sar.doctor_flow = spe.oper_user_flow and sar.record_status = 'Y' and dsp.sch_result_flow = sar.result_flow and dsp.process_flow = spe.process_flow and dsp.record_status = 'Y'
+        and sar.sch_end_date &lt;= #{schEndDate}
+        )
+      </when>
+      <otherwise></otherwise>
+    </choose>
+    <choose>
       <when test="null != doctorFlowList and doctorFlowList.size() &gt; 0">
-        AND oper_user_flow in
+        AND spe.oper_user_flow in
         <foreach collection="doctorFlowList" item="doctorFlow" open="(" separator="," close=")">
           #{doctorFlow}
         </foreach>
       </when>
       <otherwise>
-        AND 1=-1
+        AND 1 &lt;&gt; 1
       </otherwise>
     </choose>
 

@@ -515,7 +515,10 @@
                 <!-- 这个放最后，因为后面接的是协同单位信息 -->
                 <th style="background-color: #f4f5f9;">是否具有协同单位：</th>
                 <td>
-                    ${not empty jointContractList ? "有" : "无"}
+                    <span>
+                        <c:if test="${basicInfo.jointOrgFlag == 'Y'}">有</c:if>
+                        <c:if test="${basicInfo.jointOrgFlag == 'N'}">无</c:if>
+                    </span>
                 </td>
             </tr>
             <%--<c:if test="${null ne jointContractList and jointContractList.size() gt 0}">
@@ -549,36 +552,38 @@
             </c:if>--%>
             </tbody>
         </table>
-        <c:if test="${not empty jointContractList}">
-            <table class="base_info">
-                <colgroup>
-                    <col width="40%"/>
-                    <col width="30%"/>
-                    <col width="30%"/>
-                </colgroup>
-                <tr>
-                    <th style="text-align: center"><span class="red">*</span>协同单位名称</th>
-                    <th style="text-align: center"><span class="red">*</span>专业基地</th>
-                    <th style="text-align: center"><span class="red">*</span>协同关系协议</th>
-                </tr>
-                <c:forEach var="jointContract" items="${jointContractList}" varStatus="status">
-                    <tr>
-                        <td style="text-align: center">${jointContract.orgName}</td>
-                        <td style="text-align: center">${jointContract.speName}</td>
-                        <td style="text-align: center">
-                            <c:if test="${not empty jointContract.fileList}">
-                                <c:forEach items="${jointContract.fileList}" var="contractFile">
-                                    <div style="padding: 2px;margin: 2px">
-                                        <a href="${sysCfgMap['upload_base_url']}/${contractFile.filePath}"
-                                           target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">${contractFile.fileName}</a>
-                                    </div>
-                                </c:forEach>
-                            </c:if>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </table>
-        </c:if>
+            <c:if test="${basicInfo.jointOrgFlag == 'Y'}">
+                <c:if test="${not empty jointContractList}">
+                    <table class="base_info">
+                        <colgroup>
+                            <col width="40%"/>
+                            <col width="30%"/>
+                            <col width="30%"/>
+                        </colgroup>
+                        <tr>
+                            <th style="text-align: center"><span class="red">*</span>协同单位名称</th>
+                            <th style="text-align: center"><span class="red">*</span>专业基地</th>
+                            <th style="text-align: center"><span class="red">*</span>协同关系协议</th>
+                        </tr>
+                        <c:forEach var="jointContract" items="${jointContractList}" varStatus="status">
+                            <tr>
+                                <td style="text-align: center">${jointContract.orgName}</td>
+                                <td style="text-align: center">${jointContract.speName}</td>
+                                <td style="text-align: center">
+                                    <c:if test="${not empty jointContract.fileList}">
+                                        <c:forEach items="${jointContract.fileList}" var="contractFile">
+                                            <div style="padding: 2px;margin: 2px">
+                                                <a href="${sysCfgMap['upload_base_url']}/${contractFile.filePath}"
+                                                   target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;">${contractFile.fileName}</a>
+                                            </div>
+                                        </c:forEach>
+                                    </c:if>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </c:if>
+            </c:if>
     </div>
 
 </div>

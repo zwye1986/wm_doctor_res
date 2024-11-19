@@ -211,15 +211,6 @@
             <systemPath>${lib.dir}/cos-26Dec2008.jar</systemPath>
         </dependency>
 
-
-        <dependency>
-            <groupId>druid-1.0.9</groupId>
-            <artifactId>druid-1.0.9</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/druid-1.0.9.jar</systemPath>
-        </dependency>
-
         <dependency>
             <groupId>easy-captcha-1.6.2</groupId>
             <artifactId>easy-captcha-1.6.2</artifactId>
@@ -563,53 +554,83 @@
             <systemPath>${lib.dir}/pjl-comp-filter-1.8.1.jar</systemPath>
         </dependency>
 
-        <dependency>
-            <groupId>poi-3.10-FINAL-20140208</groupId>
-            <artifactId>poi-3.10-FINAL-20140208</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/poi-3.10-FINAL-20140208.jar</systemPath>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>poi-3.10-FINAL-20140208</groupId>-->
+<!--            <artifactId>poi-3.10-FINAL-20140208</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${lib.dir}/poi-3.10-FINAL-20140208.jar</systemPath>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.apache.poi</groupId>-->
+<!--                    <artifactId>poi</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>poi-examples-3.10-FINAL-20140208</groupId>
-            <artifactId>poi-examples-3.10-FINAL-20140208</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/poi-examples-3.10-FINAL-20140208.jar</systemPath>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>poi-examples-3.10-FINAL-20140208</groupId>-->
+<!--            <artifactId>poi-examples-3.10-FINAL-20140208</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${lib.dir}/poi-examples-3.10-FINAL-20140208.jar</systemPath>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.apache.poi</groupId>-->
+<!--                    <artifactId>poi</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>poi-excelant-3.10-FINAL-20140208</groupId>
-            <artifactId>poi-excelant-3.10-FINAL-20140208</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/poi-excelant-3.10-FINAL-20140208.jar</systemPath>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>poi-excelant-3.10-FINAL-20140208</groupId>-->
+<!--            <artifactId>poi-excelant-3.10-FINAL-20140208</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${lib.dir}/poi-excelant-3.10-FINAL-20140208.jar</systemPath>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.apache.poi</groupId>-->
+<!--                    <artifactId>poi</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>poi-ooxml-3.10-FINAL-20140208</groupId>
-            <artifactId>poi-ooxml-3.10-FINAL-20140208</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/poi-ooxml-3.10-FINAL-20140208.jar</systemPath>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>poi-ooxml-3.10-FINAL-20140208</groupId>-->
+<!--            <artifactId>poi-ooxml-3.10-FINAL-20140208</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${lib.dir}/poi-ooxml-3.10-FINAL-20140208.jar</systemPath>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.apache.poi</groupId>-->
+<!--                    <artifactId>poi</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>poi-ooxml-schemas-3.10-FINAL-20140208</groupId>
-            <artifactId>poi-ooxml-schemas-3.10-FINAL-20140208</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/poi-ooxml-schemas-3.10-FINAL-20140208.jar</systemPath>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>poi-ooxml-schemas-3.10-FINAL-20140208</groupId>-->
+<!--            <artifactId>poi-ooxml-schemas-3.10-FINAL-20140208</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${lib.dir}/poi-ooxml-schemas-3.10-FINAL-20140208.jar</systemPath>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.apache.poi</groupId>-->
+<!--                    <artifactId>poi</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>poi-scratchpad-3.10-FINAL-20140208</groupId>
-            <artifactId>poi-scratchpad-3.10-FINAL-20140208</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/poi-scratchpad-3.10-FINAL-20140208.jar</systemPath>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>poi-scratchpad-3.10-FINAL-20140208</groupId>-->
+<!--            <artifactId>poi-scratchpad-3.10-FINAL-20140208</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${lib.dir}/poi-scratchpad-3.10-FINAL-20140208.jar</systemPath>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>quartz-all-1.8.6</groupId>
@@ -755,13 +776,13 @@
             <systemPath>${lib.dir}/xhtmlrenderer-3.0.0.jar</systemPath>
         </dependency>
 
-        <dependency>
-            <groupId>xmlbeans-2.6.0</groupId>
-            <artifactId>xmlbeans-2.6.0</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/xmlbeans-2.6.0.jar</systemPath>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>xmlbeans-2.6.0</groupId>-->
+<!--            <artifactId>xmlbeans-2.6.0</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${lib.dir}/xmlbeans-2.6.0.jar</systemPath>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>xmlgraphics-commons-1.5</groupId>
@@ -845,6 +866,14 @@
             <version>1.18.34</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.belerweb</groupId>
+            <artifactId>pinyin4j</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+
+
     </dependencies>
     <!-- 多项目（子父项目）中方便依赖管理，保证版本一致，父项目中使用，声明依赖，但不引用，子项目中可以不加版本，使用父项目中配置 -->
     <dependencyManagement>

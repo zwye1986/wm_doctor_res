@@ -60,6 +60,10 @@ public class UserInterceptor implements HandlerInterceptor {
 		String servletPath = request.getServletPath();
 		logger.debug("UserInterceptor handler......{}",getPath);
 
+		if(isStaticResource(servletPath)) {
+			return true;
+		}
+
 		if("get".equalsIgnoreCase(request.getMethod())){
 			request.getSession().setAttribute("goPath", getPath);
 		}
@@ -74,7 +78,7 @@ public class UserInterceptor implements HandlerInterceptor {
 		}
 
 		List<String> myMenus = new ArrayList<>();
-		List<String> allMenus = (List<String>) request.getServletContext().getAttribute("allMenus");
+//		List<String> allMenus = (List<String>) request.getServletContext().getAttribute("allMenus");
 
 
 		String doctorAccessAuthority = (String) request.getServletContext().getAttribute("doctorAccessAuthority");//学员
@@ -243,7 +247,7 @@ public class UserInterceptor implements HandlerInterceptor {
 			}
 		}
 
-		boolean isAllow = true;
+		/*boolean isAllow = true;
 
 		if (allMenus.contains(servletPath)) {
 			isAllow = false;
@@ -262,7 +266,17 @@ public class UserInterceptor implements HandlerInterceptor {
 			return false;
 		}
 
-		return true;
+		return true;*/
+
+
+		response.setStatus(403);
+		response.setContentType("application/json;charset=UTF-8");
+		response.getWriter().print("系统未授权");
+		return false;
+	}
+
+	private boolean isStaticResource(String path) {
+		return path.endsWith(".png") || path.endsWith(".jpg") || path.endsWith(".bmp") || path.endsWith(".gif") || path.endsWith(".js") || path.endsWith(".css");
 	}
 
 }

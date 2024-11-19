@@ -48,7 +48,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
@@ -630,6 +629,13 @@ public class JsResManageController extends GeneralController {
 			if("Y".equals(more)){
 				return "jsres/hospital/hospitalIndexNew";
 			}
+			String filter = "('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'',key:orgFlow.keyword,negate:!f" +
+					",params:(query:'" + user.getOrgFlow() + "'),type:phrase),query:(match_phrase:(orgFlow.keyword:'" + user.getOrgFlow() + "')))";
+//			String iframe = "<iframe src=\"https://restest.njpdxx.com:5650/app/dashboards?auth_provider_hint=anonymous1#/view/41e46fe1-80c5-4f1b-bdba-c00822929a4b?embed=true" +
+//					"&_g=(filters:!(" + filter + "),refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))&hide-filter-bar=true\"  height=\"2100\" width=\"1460\"></iframe>";
+			String iframe = "<iframe src=\"https://js.ezhupei.com:5601/app/dashboards?auth_provider_hint=anonymous1#/view/0525f6c0-e4dc-45d4-a25f-bc338e758934?embed=true" +
+					"&_g=(filters:!(" + filter + "),refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))&hide-filter-bar=true\" height=\"2100\" width=\"1460\"></iframe>";
+			model.addAttribute("iframe", iframe);
 			return "jsres/hospital/hospitalIndex";
 		} else if (GlobalConstant.USER_LIST_SPELOCAL.equals(role)) { //专业基地
 			SysUser sysuser = GlobalContext.getCurrentUser();
@@ -2467,15 +2473,15 @@ public class JsResManageController extends GeneralController {
 		HSSFSheet sheet = wb.createSheet("sheet1");
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		//列宽自适应
 		HSSFRow rowOne = sheet.createRow(0);//第1行
@@ -2645,15 +2651,15 @@ public class JsResManageController extends GeneralController {
 		HSSFSheet sheet = wb.createSheet("sheet1");
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		//列宽自适应
 		HSSFRow rowOne = sheet.createRow(0);//第1行
@@ -2787,6 +2793,16 @@ public class JsResManageController extends GeneralController {
 	}
 
 	/**
+	 * @Author xieyh
+	 * @Description 省厅招录统计分析报表
+	 * @Date  2024-10-25
+	 **/
+	@RequestMapping(value = {"/recruitReport"})
+	public String recruitReport(Model model) {
+		return "jsres/manage/recruitReport";
+	}
+
+	/**
 	 * @Description 删除选中节点的历史数据
 	 * @param photoTime 时间节点
 	 * @return 操作是否成功
@@ -2898,15 +2914,15 @@ public class JsResManageController extends GeneralController {
 		HSSFSheet sheet = wb.createSheet("sheet1");
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		//列宽自适应
 		HSSFRow rowThree = sheet.createRow(0);//第一行
@@ -3093,17 +3109,17 @@ public class JsResManageController extends GeneralController {
 		// 第四步，创建单元格，并设置值表头 设置表头居中
 		Font font = wb.createFont();
 		font.setFontHeightInPoints((short) 12);
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font.setBold(true);
 		CellStyle style = wb.createCellStyle();
-		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		style.setVerticalAlignment(VerticalAlignment.CENTER); // 创建一个居中格式
+		style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 		style.setFont(font);
 		Font fontTwo = wb.createFont();
 		fontTwo.setFontHeightInPoints((short) 12);
 
 		CellStyle styleTwo = wb.createCellStyle();
-		styleTwo.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-		styleTwo.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		styleTwo.setVerticalAlignment(VerticalAlignment.CENTER); // 创建一个居中格式
+		styleTwo.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 		styleTwo.setFont(fontTwo);
 		//
 
@@ -3412,18 +3428,18 @@ public class JsResManageController extends GeneralController {
 		// 第四步，创建单元格，并设置值表头 设置表头居中
 		Font font = wb.createFont();
 		font.setFontHeightInPoints((short) 12);
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font.setBold(true);
 		CellStyle style = wb.createCellStyle();
-		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		style.setVerticalAlignment(VerticalAlignment.CENTER); // 创建一个居中格式
+		style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 		style.setFont(font);
 
 		Font fontTwo = wb.createFont();
 		fontTwo.setFontHeightInPoints((short) 12);
 
 		CellStyle styleTwo = wb.createCellStyle();
-		styleTwo.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 创建一个居中格式
-		styleTwo.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		styleTwo.setVerticalAlignment(VerticalAlignment.CENTER); // 创建一个居中格式
+		styleTwo.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 		styleTwo.setFont(fontTwo);
 		//
 
@@ -4804,21 +4820,21 @@ public class JsResManageController extends GeneralController {
 		HSSFSheet sheet = wb.createSheet("sheet1");
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		styleCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
+		styleCenter.setVerticalAlignment(VerticalAlignment.CENTER);
 		styleCenter.setWrapText(true);
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 		styleLeft.setWrapText(true);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 		styleLeft.setWrapText(true);
 
 		HSSFRow rowDep = sheet.createRow(0);//第一行
-		sheet.addMergedRegion(new org.apache.poi.hssf.util.CellRangeAddress(0, 0, 0, 8));//合并单元格
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 8));//合并单元格
 		rowDep.setHeightInPoints(20);
 		HSSFCell cellOne = rowDep.createCell(0);
 		cellOne.setCellStyle(styleCenter);
@@ -4963,21 +4979,21 @@ public class JsResManageController extends GeneralController {
 		HSSFSheet sheet = wb.createSheet("sheet1");
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		styleCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
+		styleCenter.setVerticalAlignment(VerticalAlignment.CENTER);
 		styleCenter.setWrapText(true);
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 		styleLeft.setWrapText(true);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 		styleLeft.setWrapText(true);
 
 		HSSFRow rowDep = sheet.createRow(0);//第一行
-		sheet.addMergedRegion(new org.apache.poi.hssf.util.CellRangeAddress(0, 0, 0, 8));//合并单元格
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 8));//合并单元格
 		rowDep.setHeightInPoints(20);
 		HSSFCell cellOne = rowDep.createCell(0);
 		cellOne.setCellStyle(styleCenter);
@@ -6819,7 +6835,7 @@ public class JsResManageController extends GeneralController {
 					String value = "";
 					Cell cell = r.getCell(j);
 					if(cell!=null && StringUtil.isNotBlank(cell.toString().trim())){
-						if (cell.getCellType() == 1) {
+						if (cell.getCellType().getCode() == 1) {
 							value = cell.getStringCellValue().trim();
 						} else {
 							value = _doubleTrans(cell.getNumericCellValue()).trim();
@@ -6956,16 +6972,20 @@ public class JsResManageController extends GeneralController {
 			// 还原流信息
 			inS = new PushbackInputStream(inS);
 		}
-		// EXCEL2003使用的是微软的文件系统
-		if (POIFSFileSystem.hasPOIFSHeader(inS)) {
-			return new HSSFWorkbook(inS);
+//		// EXCEL2003使用的是微软的文件系统
+//		if (POIFSFileSystem.hasPOIFSHeader(inS)) {
+//			return new HSSFWorkbook(inS);
+//		}
+//		// EXCEL2007使用的是OOM文件格式
+//		if (POIXMLDocument.hasOOXMLHeader(inS)) {
+//			// 可以直接传流参数，但是推荐使用OPCPackage容器打开
+//			return new XSSFWorkbook(OPCPackage.open(inS));
+//		}
+		try{
+			return WorkbookFactory.create(inS);
+		}catch (Exception e) {
+			throw new IOException("不能解析的excel版本");
 		}
-		// EXCEL2007使用的是OOM文件格式
-		if (POIXMLDocument.hasOOXMLHeader(inS)) {
-			// 可以直接传流参数，但是推荐使用OPCPackage容器打开
-			return new XSSFWorkbook(OPCPackage.open(inS));
-		}
-		throw new IOException("不能解析的excel版本");
 	}
 
 	@RequestMapping(value = "/exportUser")
@@ -9263,7 +9283,7 @@ public class JsResManageController extends GeneralController {
 		HSSFRow row = sheet1.createRow((int) 0);
 		// 第四步，创建单元格，并设置值表头 设置表头居中
 		HSSFCellStyle style = wb.createCellStyle();
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+		style.setAlignment(HorizontalAlignment.CENTER); // 创建一个居中格式
 
 		List<String> paramIds = new ArrayList<String>();
 
@@ -10765,16 +10785,16 @@ public class JsResManageController extends GeneralController {
 		HSSFWorkbook wb = new HSSFWorkbook();
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 		HSSFFont font = wb.createFont();	//设置字体
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
+		font.setBold(true);//粗体显示
 		HSSFCellStyle fontLeftStyle = wb.createCellStyle();	//粗体居中显示
 		fontLeftStyle.setFont(font);
-		fontLeftStyle.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		fontLeftStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		fontLeftStyle.setAlignment(HorizontalAlignment.LEFT);
+		fontLeftStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		List<Map<String, String>> exportList = new ArrayList<>();
 		HSSFSheet sheet = wb.createSheet("双向评价数据汇总");//sheet名称
@@ -10816,7 +10836,7 @@ public class JsResManageController extends GeneralController {
 				cellTitle0 = row0.createCell(i);
 				cellTitle0.setCellValue(titles0[i]);
 				cellTitle0.setCellStyle(fontLeftStyle);
-				cellTitle0.setCellType(HSSFCell.CELL_TYPE_STRING);
+				cellTitle0.setCellType(CellType.STRING);
 			}
 
 			HSSFCell cellTitleSheet0 = null;
@@ -10824,7 +10844,7 @@ public class JsResManageController extends GeneralController {
 				cellTitleSheet0 = rowsheet2.createCell(i);
 				cellTitleSheet0.setCellValue(titleSheet2[i]);
 				cellTitleSheet0.setCellStyle(fontLeftStyle);
-				cellTitleSheet0.setCellType(HSSFCell.CELL_TYPE_STRING);
+				cellTitleSheet0.setCellType(CellType.STRING);
 			}
 			List<SysUser> userList = (List<SysUser>) waitSort;
 			//获取评分数据
@@ -10854,7 +10874,7 @@ public class JsResManageController extends GeneralController {
 						cellTitle = row.createCell(j);
 						cellTitle.setCellValue(titles[j]);
 						cellTitle.setCellStyle(styleLeft);
-						cellTitle.setCellType(HSSFCell.CELL_TYPE_STRING);
+						cellTitle.setCellType(CellType.STRING);
 					}
 				}
 				if (null!=recList && !recList.isEmpty()){
@@ -10913,7 +10933,7 @@ public class JsResManageController extends GeneralController {
 												cellTitle = row.createCell(j);
 												cellTitle.setCellValue(titleGrade[j]);
 												cellTitle.setCellStyle(styleLeft);
-												cellTitle.setCellType(HSSFCell.CELL_TYPE_STRING);
+												cellTitle.setCellType(CellType.STRING);
 											}
 											num++;
 										}
@@ -10950,7 +10970,7 @@ public class JsResManageController extends GeneralController {
 				cellTitle0 = row0.createCell(i);
 				cellTitle0.setCellValue(titles0[i]);
 				cellTitle0.setCellStyle(fontLeftStyle);
-				cellTitle0.setCellType(HSSFCell.CELL_TYPE_STRING);
+				cellTitle0.setCellType(CellType.STRING);
 			}
 			List<SysDept> depts = (List<SysDept>) waitSort;
 			for (SysDept dept : depts) {
@@ -10971,7 +10991,7 @@ public class JsResManageController extends GeneralController {
 						cellTitle = row.createCell(j);
 						cellTitle.setCellValue(titles[j]);
 						cellTitle.setCellStyle(styleLeft);
-						cellTitle.setCellType(HSSFCell.CELL_TYPE_STRING);
+						cellTitle.setCellType(CellType.STRING);
 					}
 				}
 			}
@@ -16428,13 +16448,13 @@ public class JsResManageController extends GeneralController {
 		HSSFWorkbook wb = new HSSFWorkbook();
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 		HSSFCellStyle styleRight = wb.createCellStyle(); //居中
-		styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
-		styleRight.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleRight.setAlignment(HorizontalAlignment.RIGHT);
+		styleRight.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		String fileName = "月度统计报表.xls";
 		// 为工作簿添加sheet
@@ -16452,7 +16472,7 @@ public class JsResManageController extends GeneralController {
 			cellTitle = rowOne.createCell(i);
 			cellTitle.setCellValue(titles[i]);
 			cellTitle.setCellStyle(styleCenter);
-			cellTitle.setCellType(HSSFCell.CELL_TYPE_STRING);
+			cellTitle.setCellType(CellType.STRING);
 			sheet.setColumnWidth(i, titles[i].getBytes().length * 800);
 		}
 		int rowNum = 1;
@@ -16489,7 +16509,7 @@ public class JsResManageController extends GeneralController {
 			cellTitle2 = rowOne2.createCell(i);
 			cellTitle2.setCellValue(titles2[i]);
 			cellTitle2.setCellStyle(styleCenter);
-			cellTitle2.setCellType(HSSFCell.CELL_TYPE_STRING);
+			cellTitle2.setCellType(CellType.STRING);
 			sheet2.setColumnWidth(i, titles2[i].getBytes().length * 800);
 		}
 		int rowNum2 = 1;
@@ -16522,7 +16542,7 @@ public class JsResManageController extends GeneralController {
 			cellTitle3 = rowOne3.createCell(i);
 			cellTitle3.setCellValue(titles3[i]);
 			cellTitle3.setCellStyle(styleCenter);
-			cellTitle3.setCellType(HSSFCell.CELL_TYPE_STRING);
+			cellTitle3.setCellType(CellType.STRING);
 			sheet3.setColumnWidth(i, titles3[i].getBytes().length * 800);
 		}
 		int rowNum3 = 1;
@@ -16774,6 +16794,13 @@ public class JsResManageController extends GeneralController {
 			model.addAttribute("hospitalSupervisor","Y");
 		}
 		if (type.equals("phy")){	//住院医师
+			String filter = "('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'',key:orgFlow.keyword,negate:!f" +
+					",params:(query:'" + user.getOrgFlow() + "'),type:phrase),query:(match_phrase:(orgFlow.keyword:'" + user.getOrgFlow() + "')))";
+//			String iframe = "<iframe src=\"https://restest.njpdxx.com:5650/app/dashboards?auth_provider_hint=anonymous1#/view/41e46fe1-80c5-4f1b-bdba-c00822929a4b?embed=true" +
+//					"&_g=(filters:!(" + filter + "),refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))&hide-filter-bar=true\"  height=\"2100\" width=\"1460\"></iframe>";
+			String iframe = "<iframe src=\"https://js.ezhupei.com:5601/app/dashboards?auth_provider_hint=anonymous1#/view/0525f6c0-e4dc-45d4-a25f-bc338e758934?embed=true" +
+					"&_g=(filters:!(" + filter + "),refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))&hide-filter-bar=true\" height=\"2100\" width=\"1460\"></iframe>";
+			model.addAttribute("iframe", iframe);
 			if (GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_ROLE_NAME).equals("医院秘书")) {
 				return "jsres/hospital/hospitalSecretaryIndex";
 			}

@@ -51,20 +51,26 @@
             format:'yyyy'
         });
         $('#form_btn').empty();
-        let checkOpen = $("#checkOpen").val();
-        if (checkOpen && "Y" == checkOpen) {
-            $('#form_btn').append("" +
-                "<input class='btn_green' type='button' " +
-                "value='查&#12288;询' onclick='toPage(1);'/>" +
-                "<input class='btn_green' type='button' value='导&#12288;入' onclick='toImport2();'/>"
-            )
-        }else {
-            $('#form_btn').append("" +
-                "<input class='btn_green' type='button' " +
-                "value='查&#12288;询' onclick='toPage(1);'/>" +
-                "<input class='btn_green' type='button' value='导&#12288;入' onclick='toImport();'/>"
-            )
-        }
+        $('#form_btn').append("" +
+            "<input class='btn_green' type='button' " +
+            "value='查&#12288;询' onclick='toPage(1);'/>" +
+            "<input class='btn_green' type='button' value='导&#12288;入' onclick='toImport2();'/>"
+        )
+        // let checkOpen = $("#checkOpen").val();
+        // if (checkOpen && "Y" == checkOpen) {
+        //     $('#form_btn').append("" +
+        //         "<input class='btn_green' type='button' " +
+        //         "value='查&#12288;询' onclick='toPage(1);'/>" +
+        //         "<input class='btn_green' type='button' value='导&#12288;入' onclick='toImport2();'/>"
+        //     )
+        // }
+        // else {
+        //     $('#form_btn').append("" +
+        //         "<input class='btn_green' type='button' " +
+        //         "value='查&#12288;询' onclick='toPage(1);'/>" +
+        //         "<input class='btn_green' type='button' value='导&#12288;入' onclick='toImport();'/>"
+        //     )
+        // }
         toPage();
     });
 
@@ -81,14 +87,17 @@
         jboxOpen("<s:url value='/jsres/doctorRecruit/importSchedulingAudit2'/>", "导入信息", 500, 220);
     }
     function toImportCache() {
-        var width = 1200;
+        console.log('toImportCache1',new Date().getMinutes()+":"+new Date().getSeconds())
+        var width = 1500;
         var height = 800;
         var url ='<s:url value="/jsres/doctorRecruit/importSchedulingiImport"/>';
         var iframe ="<iframe name='jbox-message-iframe' id='jbox-message-iframe' width='"+width+"px' height='"+height+"px' marginheight='0' marginwidth='0' frameborder='0' scrolling='auto' src='"+url+"'></iframe>";
         jboxMessager(iframe,'导入预览',width,height);
+        console.log('toImportCach2',new Date().getMinutes()+":"+new Date().getSeconds())
     }
 
     function checkTime() {
+        var schStartDate = $("#schStartDate").val();
         var schStartDate = $("#schStartDate").val();
         var schEndDate = $("#schEndDate").val();
         if (schStartDate !="" && schEndDate!="" && schStartDate>schEndDate){

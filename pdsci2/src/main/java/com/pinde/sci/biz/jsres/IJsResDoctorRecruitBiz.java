@@ -261,7 +261,7 @@ public interface IJsResDoctorRecruitBiz {
 
     List<Map<String,Object>> zlxytjJoint(Map<String, Object> param);
 
-    HSSFWorkbook createCycleResultsByDoc(String doctorFlow, String roleId);
+    HSSFWorkbook createCycleResultsByDoc(String doctorFlow, String roleId, String schStartDate, String schEndDate);
     /**
      * 查询当前机构下的医师
      */

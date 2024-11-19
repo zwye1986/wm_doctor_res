@@ -218,23 +218,23 @@
                 <tr>
                     <th style="text-align: right;"><font color="red" >*</font>活动名称：</th>
                     <td colspan="3">
-                        <input name="activityName"  <c:if test="${activity.activityStatus eq 'pass'}">readonly</c:if> id="activityName" style="width: 662px" class="input validate[required,maxSize[200]]" value="${activity.activityName}"  />
+                        <input name="activityName" id="activityName" style="width: 662px" class="input validate[required,maxSize[200]]" value="${activity.activityName}"  />
                     </td>
                 </tr>
                 <tr>
                     <th style="text-align: right;"><font color="red" >*</font>开始时间：</th>
                     <td>
-                        <input type="text" id="startDate" name="startTime" value="${activity.startTime}" style="width: 267px;" class="input validate[required]"  readonly="readonly" <c:if test="${activity.activityStatus eq 'audit' or empty activity.activityStatus}">onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" </c:if>>
+                        <input type="text" id="startDate" name="startTime" value="${activity.startTime}" style="width: 267px;" class="input validate[required]"  readonly="readonly" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})">
                     </td>
                     <th style="text-align: right;"><font color="red" >*</font>结束时间：</th>
                     <td>
-                        <input type="text" id="endDate" name="endTime" value="${activity.endTime}" style="width: 267px;" class="input validate[required]"  readonly="readonly" <c:if test="${activity.activityStatus eq 'audit' or empty activity.activityStatus}">onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})"</c:if>>
+                        <input type="text" id="endDate" name="endTime" value="${activity.endTime}" style="width: 267px;" class="input validate[required]"  readonly="readonly" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})">
                     </td>
                 </tr>
                 <tr>
                     <th style="text-align: right;"><font color="red" >*</font>活动形式：</th>
                     <td>
-                        <select name="activityTypeId" <c:if test="${activity.activityStatus eq 'pass'}">disabled="disabled"</c:if> style="width: 273px;margin: 0 5px;" class="select validate[required]">
+                        <select name="activityTypeId" style="width: 273px;margin: 0 5px;" class="select validate[required]">
                             <option value="">请选择</option>
                             <c:forEach items="${activityTypeEnumList}" var="a">
                                 <option value="${a.id}" ${(activity.activityTypeId eq a.id) ?'selected':''}>${a.name}</option>
@@ -243,7 +243,7 @@
                     </td>
                     <th style="text-align: right;"><font color="red" >*</font>所在科室：</th>
                     <td>
-                        <select name="deptFlow" <c:if test="${activity.activityStatus eq 'pass'}">disabled="disabled"</c:if> style="width: 273px;margin: 0 5px;" class="select validate[required]"<c:if test="${role eq 'head' or role eq 'secretary'}">onchange="loadDeptUsers(this.value)"</c:if> >
+                        <select name="deptFlow" style="width: 273px;margin: 0 5px;" class="select validate[required]"<c:if test="${role eq 'head' or role eq 'secretary'}">onchange="loadDeptUsers(this.value)"</c:if> >
                             <option value="">请选择</option>
                             <c:forEach items="${depts}" var="dept">
                                 <option value="${dept.deptFlow}" ${(activity.deptFlow eq dept.deptFlow) ?'selected':''}>${dept.deptName}</option>
@@ -255,7 +255,7 @@
                     <th style="text-align: right;"><font color="red" >*</font>主&nbsp;讲&nbsp;人&nbsp;：</th>
                     <td>
                         <c:if test="${role eq 'head' or role eq 'secretary'}">
-                            <select  <c:if test="${activity.activityStatus eq 'pass' and scanNum > 0 and editTeach ne 'Y'}">disabled="disabled"</c:if> id="speakerFlow" style="width: 273px;margin: 0 5px;" class="select validate[required]" onchange="showUserPhone(this.value)" >
+                            <select  <%--<c:if test="${activity.activityStatus eq 'pass' and scanNum > 0 and editTeach ne 'Y'}">disabled="disabled"</c:if> --%>id="speakerFlow" style="width: 273px;margin: 0 5px;" class="select validate[required]" onchange="showUserPhone(this.value)" >
                                 <option value="">请选择</option>
                                 <c:forEach items="${userList}" var="user">
                                     <option value="${user.userFlow}" phone="${user.userPhone}" ${(activity.speakerFlow eq user.userFlow) ?'selected':''}>${user.userName}</option>
@@ -268,19 +268,19 @@
                     </td>
                     <th style="text-align: right;"><font color="red" >*</font>联系方式：</th>
                     <td>
-                        <input name="speakerPhone" <c:if test="${activity.activityStatus eq 'pass' and scanNum > 0 and editTeach ne 'Y'}">readonly</c:if> id="speakerPhone"style="width: 267px;" class="input validate[required,custom[number]]" value="${activity.speakerPhone}"  />
+                        <input name="speakerPhone" <%--<c:if test="${activity.activityStatus eq 'pass' and scanNum > 0 and editTeach ne 'Y'}">readonly</c:if>--%> id="speakerPhone"style="width: 267px;" class="input validate[required,custom[number]]" value="${activity.speakerPhone}"  />
                     </td>
                 </tr>
                 <tr>
                     <th style="text-align: right;"><font color="red" >*</font>活动地点：</th>
                     <td colspan="3">
-                        <textarea type="text" <c:if test="${activity.activityStatus eq 'pass'}">readonly</c:if> name="activityAddress" class="validate[required,maxSize[500]]" style="width: 672px;margin: 5px 0;max-width:100%;height: 60px">${activity.activityAddress}</textarea>
+                        <textarea type="text" name="activityAddress" class="validate[required,maxSize[500]]" style="width: 672px;margin: 5px 0;max-width:100%;height: 60px">${activity.activityAddress}</textarea>
                     </td>
                 </tr>
                 <tr>
                     <th style="text-align: right;"><font color="red" >*</font>活动简介：</th>
                     <td colspan="3">
-                        <textarea type="text" <c:if test="${activity.activityStatus eq 'pass'}">readonly</c:if> name="activityRemark" class="validate[required,maxSize[500]]" style="width: 672px;margin: 5px 0;max-width:100%;height: 60px">${activity.activityRemark}</textarea>
+                        <textarea type="text" name="activityRemark" class="validate[required,maxSize[500]]" style="width: 672px;margin: 5px 0;max-width:100%;height: 60px">${activity.activityRemark}</textarea>
                     </td>
                 </tr>
                 <c:set value="jsres_${sessionScope.currUser.orgFlow }_activity_teach_show" var="keyinfo"/>
@@ -289,7 +289,7 @@
                     <tr>
                         <th style="text-align: right;">实际主讲人:</th>
                         <td colspan="3">
-                            <input name="realitySpeaker" id="realitySpeaker" <c:if test="${editZjr ne 'Y' and scanNum >0}">disabled="disabled"</c:if> style="width: 660px" type="text" class="input" value="${activity.realitySpeaker}"  />
+                            <input name="realitySpeaker" id="realitySpeaker" <%--<c:if test="${editZjr ne 'Y' and scanNum >0}">disabled="disabled"</c:if>--%> style="width: 660px" type="text" class="input" value="${activity.realitySpeaker}"  />
                         </td>
                     </tr>
                 </c:if>

@@ -1,28 +1,25 @@
 package com.pinde.sci.biz.res.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.json.JSONUtil;
 import com.pinde.core.commom.enums.GeneralEnum;
 import com.pinde.core.entyties.SysDict;
+import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
-import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
-import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
-import com.pinde.sci.biz.jsres.IResTestConfigBiz;
+import com.pinde.sci.biz.jsres.*;
 import com.pinde.sci.biz.pub.IMsgBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.biz.sch.ISchRotationBiz;
-import com.pinde.sci.biz.sys.IOrgBiz;
-import com.pinde.sci.biz.sys.IUserBiz;
-import com.pinde.sci.biz.sys.IUserRoleBiz;
-import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.common.InitConfig;
+import com.pinde.sci.biz.sys.*;
+import com.pinde.sci.common.*;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.JsResDoctorExtMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
+import com.pinde.sci.dao.sch.SchDoctorDeptExtMapper;
 import com.pinde.sci.enums.jsres.CertificateStatusEnum;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
 import com.pinde.sci.enums.pub.UserNationEnum;
@@ -30,11 +27,9 @@ import com.pinde.sci.enums.pub.UserSexEnum;
 import com.pinde.sci.enums.res.*;
 import com.pinde.sci.enums.sch.SchStatusEnum;
 import com.pinde.sci.enums.sys.CertificateTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.enums.sys.OrgLevelEnum;
-import com.pinde.sci.form.hbres.ExtInfoForm;
-import com.pinde.sci.form.hbres.ReplenishInfoForm;
-import com.pinde.sci.form.hbres.ResDoctorClobForm;
+import com.pinde.sci.enums.sys.*;
+import com.pinde.sci.excelListens.model.ResRecItem;
+import com.pinde.sci.form.hbres.*;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
@@ -44,23 +39,14 @@ import com.pinde.sci.model.sys.SysUserResDoctorExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.hssf.util.CellRangeAddress;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
+import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -71,10 +57,9 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.net.*;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
@@ -1207,7 +1192,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 					String currTitle=colnames.get(j);
 					Cell cell = r.getCell(j);
 					if(cell!=null && StringUtil.isNotBlank(cell.toString().trim())){
-						if(cell.getCellType() == 1){
+						if(cell.getCellType().getCode() == 1){
 							value = cell.getStringCellValue().trim();
 						}else{
 							value = _doubleTrans(cell.getNumericCellValue()).trim();
@@ -1569,7 +1554,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 					String currTitle=colnames.get(j);
 					Cell cell = r.getCell(j);
 					if(cell!=null && StringUtil.isNotBlank(cell.toString().trim())){
-						if(cell.getCellType() == 1){
+						if(cell.getCellType().getCode() == 1){
 							value = cell.getStringCellValue().trim();
 						}else{
 							value = _doubleTrans(cell.getNumericCellValue()).trim();
@@ -1883,16 +1868,20 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			// 还原流信息
 			inS = new PushbackInputStream(inS);
 		}
-		// EXCEL2003使用的是微软的文件系统
-		if (POIFSFileSystem.hasPOIFSHeader(inS)) {
-			return new HSSFWorkbook(inS);
+//		// EXCEL2003使用的是微软的文件系统
+//		if (POIFSFileSystem.hasPOIFSHeader(inS)) {
+//			return new HSSFWorkbook(inS);
+//		}
+//		// EXCEL2007使用的是OOM文件格式
+//		if (POIXMLDocument.hasOOXMLHeader(inS)) {
+//			// 可以直接传流参数，但是推荐使用OPCPackage容器打开
+//			return new XSSFWorkbook(OPCPackage.open(inS));
+//		}
+		try{
+			return WorkbookFactory.create(inS);
+		}catch (Exception e) {
+			throw new IOException("不能解析的excel版本");
 		}
-		// EXCEL2007使用的是OOM文件格式
-		if (POIXMLDocument.hasOOXMLHeader(inS)) {
-			// 可以直接传流参数，但是推荐使用OPCPackage容器打开
-			return new XSSFWorkbook(OPCPackage.open(inS));
-		}
-		throw new IOException("不能解析的excel版本");
 	}
 
 	@Override
@@ -3152,15 +3141,15 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 		HSSFSheet sheet = wb.createSheet("sheet1");
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		//列宽自适应
 		HSSFRow rowDep = sheet.createRow(0);//第一行
@@ -3607,15 +3596,15 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 		HSSFSheet sheet = wb.createSheet("sheet1");
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		//列宽自适应
 		HSSFRow rowDep = sheet.createRow(0);//第一行
@@ -4066,15 +4055,15 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 		HSSFSheet sheet = wb.createSheet("sheet1");
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		//列宽自适应
 		HSSFRow rowDep = sheet.createRow(0);//第一行
@@ -4797,15 +4786,15 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 		HSSFSheet sheet = wb.createSheet("sheet1");
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
 
 		HSSFRow rowThree = sheet.createRow(0);//第三行
@@ -4922,15 +4911,15 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 		HSSFSheet sheet = wb.createSheet("sheet1");
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
 
 		HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-		styleLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-		styleLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleLeft.setAlignment(HorizontalAlignment.LEFT);
+		styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
 
 		HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-		stylevwc.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		stylevwc.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		stylevwc.setAlignment(HorizontalAlignment.CENTER);
+		stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
 
 
 		HSSFRow rowThree = sheet.createRow(0);//第三行
@@ -5351,7 +5340,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 					String currTitle=colnames.get(j);
 					Cell cell = r.getCell(j);
 					if(cell!=null && StringUtil.isNotBlank(cell.toString().trim())){
-						if(cell.getCellType() == 1){
+						if(cell.getCellType().getCode() == 1){
 							value = cell.getStringCellValue().trim();
 						}else{
 							value = _doubleTrans(cell.getNumericCellValue()).trim();
@@ -5689,13 +5678,13 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 		//定义将用到的样式
 		HSSFCellStyle styleCenter = wb.createCellStyle();
 		//居中
-		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		styleCenter.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		styleCenter.setAlignment(HorizontalAlignment.CENTER);
+		styleCenter.setVerticalAlignment(VerticalAlignment.CENTER);
 		// 设置边框
-		styleCenter.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		styleCenter.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		styleCenter.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		styleCenter.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		styleCenter.setBorderBottom(BorderStyle.THIN);
+		styleCenter.setBorderTop(BorderStyle.THIN);
+		styleCenter.setBorderRight(BorderStyle.THIN);
+		styleCenter.setBorderLeft(BorderStyle.THIN);
 		//第一行 列宽自适应
 		HSSFRow rowDep = sheet.createRow(0);
 		//合并单元格
@@ -5897,13 +5886,13 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 	 */
 	private void excelSetBorderForMergeCell(HSSFWorkbook wb, HSSFSheet sheet, CellRangeAddress cellRangePlanNo){
 		// 下边框
-		RegionUtil.setBorderBottom(1, cellRangePlanNo, sheet, wb);
+		RegionUtil.setBorderBottom(BorderStyle.THIN, cellRangePlanNo, sheet);
 		// 左边框
-		RegionUtil.setBorderLeft(1, cellRangePlanNo, sheet, wb);
+		RegionUtil.setBorderLeft(BorderStyle.THIN, cellRangePlanNo, sheet);
 		// 右边框
-		RegionUtil.setBorderRight(1, cellRangePlanNo, sheet, wb);
+		RegionUtil.setBorderRight(BorderStyle.THIN, cellRangePlanNo, sheet);
 		// 上边框
-		RegionUtil.setBorderTop(1, cellRangePlanNo, sheet, wb);
+		RegionUtil.setBorderTop(BorderStyle.THIN, cellRangePlanNo, sheet);
 	}
 
 	/**
@@ -6106,5 +6095,49 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 		return doctorExtMapper.getSchools();
 	}
 
+	@Autowired
+	private SchDoctorDeptExtMapper doctorDeptExtMapper;
 
+	@Resource
+	private RedisTemplate<String,String> redisTemplate;
+
+	@Override
+	public List<SysUser> listByNameOrIdNo(Set<String> userName, Set<String> idNo) {
+		String redisKey = "listByNameOrIdNo:";
+		if (CollectionUtil.isNotEmpty(userName)){
+			String userKey = StringUtils.join(userName, ",");
+			redisKey = redisKey+ userKey;
+		}else {
+			redisKey = redisKey+ "null";
+		}
+		if (CollectionUtil.isNotEmpty(idNo)){
+			String idNoKey = StringUtils.join(idNo, ",");
+			redisKey = redisKey+":"+idNoKey;
+		}else {
+			redisKey = redisKey+ ":null";
+		}
+		String s = redisTemplate.opsForValue().get(redisKey);
+		if (StringUtils.isNotEmpty(s)) {
+			List<SysUser> list = JSONUtil.toList(s, SysUser.class);
+			if (CollectionUtil.isNotEmpty(list)) {
+				return list;
+			}
+		}
+		List<SysUser> result = doctorDeptExtMapper.listByNameOrIdNo(userName, idNo);
+		redisTemplate.opsForValue().set(redisKey,JSONUtil.toJsonStr(result),3, TimeUnit.MINUTES);
+		return result;
+	}
+
+	@Override
+	public List<SchArrangeResult> listDoctorResult(Set<String> userIds) {
+		return doctorExtMapper.listDoctorResult(userIds);
+	}
+
+	@Override
+	public List<ResRecItem> resRecCount(List<String> resultFlowList) {
+		if (CollectionUtil.isEmpty(resultFlowList)) {
+			return new ArrayList<>();
+		}
+		return doctorExtMapper.resRecCount(resultFlowList);
+	}
 }

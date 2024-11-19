@@ -32,6 +32,7 @@ import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.mo.*;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -1428,43 +1429,45 @@ public class JsResHeadDeptController extends GeneralController{
 
 		//诊疗疾病范围、医疗设备仪器
 		if (GlobalConstant.DIAG_DISEASE.equals(baseInfoName) || GlobalConstant.EQUIPMENT_INSTRUMENTS.equals(baseInfoName)) {
-			Map<String, String> paramMap=new HashMap<>();
-			paramMap.put("orgFlow",orgFlow);
-			paramMap.put("speFlow",speFlow);
-			paramMap.put("stype",baseInfoName);
+			if(StringUtils.isNotEmpty(speFlow)) {
+				Map<String, String> paramMap=new HashMap<>();
+				paramMap.put("orgFlow",orgFlow);
+				paramMap.put("speFlow",speFlow);
+				paramMap.put("stype",baseInfoName);
 
-			if (GlobalConstant.EQUIPMENT_INSTRUMENTS.equals(baseInfoName)){
-				paramMap.put("standardDeptId",speFlow);
-			}else {
-				SchAndStandardDeptCfg schAndStandardDeptCfg = schAndStandardDeptCfgBiz.readBySchDeptFlowAndOrgFlow(deptFlow, orgFlow);
-				if (null!=schAndStandardDeptCfg){
-					paramMap.put("standardDeptId",schAndStandardDeptCfg.getStandardDeptId());
+				if (GlobalConstant.EQUIPMENT_INSTRUMENTS.equals(baseInfoName)){
+					paramMap.put("standardDeptId",speFlow);
+				}else {
+					SchAndStandardDeptCfg schAndStandardDeptCfg = schAndStandardDeptCfgBiz.readBySchDeptFlowAndOrgFlow(deptFlow, orgFlow);
+					if (null!=schAndStandardDeptCfg){
+						paramMap.put("standardDeptId",schAndStandardDeptCfg.getStandardDeptId());
+					}
 				}
-			}
-			paramMap.put("dtype","dept");
-			paramMap.put("deptFlow",deptFlow);
-			paramMap.put("sessionNumber",sessionNumber);
-			List<Map<String, String>> infoList = deptBasicInfoBiz.searchResBaseSpeDeptInfoData(paramMap);
-			//如果没有数据，就将前一年的数据显示出来，方便用户填写
-			paramMap.put("infoType",baseInfoName);
-			int size = deptBasicInfoBiz.countResBaseSpeDeptInfoData(paramMap);
-			if (isPay && size==0){
-				paramMap.put("sessionNumber",year.toString());
-				infoList = deptBasicInfoBiz.searchResBaseSpeDeptInfoData(paramMap);
-				editFlag=GlobalConstant.FLAG_Y;
+				paramMap.put("dtype","dept");
+				paramMap.put("deptFlow",deptFlow);
+				paramMap.put("sessionNumber",sessionNumber);
+				List<Map<String, String>> infoList = deptBasicInfoBiz.searchResBaseSpeDeptInfoData(paramMap);
+				//如果没有数据，就将前一年的数据显示出来，方便用户填写
+				paramMap.put("infoType",baseInfoName);
+				int size = deptBasicInfoBiz.countResBaseSpeDeptInfoData(paramMap);
+				if (isPay && size==0){
+					paramMap.put("sessionNumber",year.toString());
+					infoList = deptBasicInfoBiz.searchResBaseSpeDeptInfoData(paramMap);
+					editFlag=GlobalConstant.FLAG_Y;
 
-			}
-			if (null!=infoList && infoList.size()>0){
-				mav.addObject("tableAllArrNum", infoList.get(0).get("arrNum"));
-			}
+				}
+				if (null!=infoList && infoList.size()>0){
+					mav.addObject("tableAllArrNum", infoList.get(0).get("arrNum"));
+				}
 
-			mav.addObject("infoList", infoList);
-			if ("3500".equals(speFlow) && GlobalConstant.EQUIPMENT_INSTRUMENTS.equals(baseInfoName)){
-				paramMap.put("standardDeptId","350001");
-				List<Map<String, String>> infoList2 = deptBasicInfoBiz.searchResBaseSpeDeptInfoData(paramMap);
-				if (null!=infoList2 && infoList2.size()>0){
-					mav.addObject("infoList2", infoList2);
-					mav.addObject("tableAllArrNum2", infoList2.get(0).get("arrNum"));
+				mav.addObject("infoList", infoList);
+				if ("3500".equals(speFlow) && GlobalConstant.EQUIPMENT_INSTRUMENTS.equals(baseInfoName)){
+					paramMap.put("standardDeptId","350001");
+					List<Map<String, String>> infoList2 = deptBasicInfoBiz.searchResBaseSpeDeptInfoData(paramMap);
+					if (null!=infoList2 && infoList2.size()>0){
+						mav.addObject("infoList2", infoList2);
+						mav.addObject("tableAllArrNum2", infoList2.get(0).get("arrNum"));
+					}
 				}
 			}
 		}

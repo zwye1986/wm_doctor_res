@@ -272,6 +272,26 @@ public class ResDoctor extends MybatisObject {
     // 自定义字段开始
     private List<String> trainingSpeIdList;
 
+    private String schStartDate;
+
+    private String schEndDate;
+
+    public String getSchStartDate() {
+        return schStartDate;
+    }
+
+    public void setSchStartDate(String schStartDate) {
+        this.schStartDate = schStartDate;
+    }
+
+    public String getSchEndDate() {
+        return schEndDate;
+    }
+
+    public void setSchEndDate(String schEndDate) {
+        this.schEndDate = schEndDate;
+    }
+
     public String getDoctorFlow() {
         return doctorFlow;
     }

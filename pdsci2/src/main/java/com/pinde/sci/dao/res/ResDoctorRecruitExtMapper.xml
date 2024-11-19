@@ -835,7 +835,10 @@
 			S.AUDIT_STATUS_NAME,
 		    S.START_TIME,
 			S.END_TIME,
-			SUM (S.ASSIGN_PLAN) AS ASSIGN_PLAN_SUM
+			S.SEND_START_TIME,
+			S.SEND_END_TIME,
+			SUM (S.ASSIGN_PLAN) AS ASSIGN_PLAN_SUM,
+			SUM (S.SEND_PLAN) AS SEND_PLAN_SUM
 		FROM
 			RES_ORG_SPE_ASSIGN S,
 			(
@@ -890,7 +893,7 @@
 		AND S.IS_SHOWN = 'Y'
 		GROUP BY
 			S.ASSIGN_YEAR,
-			T.ORG_FLOW,T.ORG_NAME,T.ORG_TYPE,S.AUDIT_STATUS_ID,S.AUDIT_STATUS_NAME,S.START_TIME,S.END_TIME
+			T.ORG_FLOW,T.ORG_NAME,T.ORG_TYPE,S.AUDIT_STATUS_ID,S.AUDIT_STATUS_NAME,S.START_TIME,S.END_TIME,S.SEND_START_TIME,S.SEND_END_TIME
 		ORDER BY S.ASSIGN_YEAR DESC
 	</select>
 
@@ -1101,11 +1104,15 @@
 		S.ASSIGN_YEAR,
 		S.START_TIME,
 		S.END_TIME,
+		S.SEND_PLAN,
+		S.SEND_START_TIME,
+		S.SEND_END_TIME,
 		S.SPE_DESC,
 		S.GRADUATE_SPE,
 		S.EDUCATION
 		<if test="assignYear != null and assignYear != ''">
-			,T.ASSIGN_REAL
+			,T.ASSIGN_REAL,
+			T2.SEND_REAL
 		</if>
 		FROM
 		RES_ORG_SPE_ASSIGN S
@@ -1146,6 +1153,42 @@
 			T1.SPE_ID,
 			T1.ORG_FLOW
 			) T ON T.ORG_FLOW = S.ORG_FLOW AND T.SPE_ID = S.SPE_ID
+			LEFT JOIN (
+			SELECT
+			T1.SPE_ID,
+			T1.ORG_FLOW,
+			COUNT (1) AS SEND_REAL
+			FROM
+			(
+			SELECT DISTINCT
+			SPE_ID,RECRUIT_FLOW,
+			CASE
+			WHEN IN_JOINT_ORG_train = 'Y' THEN
+			JOINT_ORG_FLOW
+			ELSE
+			ORG_FLOW
+			END
+			AS ORG_FLOW
+			FROM
+			RES_DOCTOR_RECRUIT
+			WHERE
+			RECORD_STATUS = 'Y'
+			AND RECRUIT_FLAG = 'Y'
+			AND SIGNUP_WAY = 'DoctorSend'
+			AND (
+			CASE
+			WHEN IN_JOINT_ORG_train = 'Y' THEN
+			JOINT_ORG_FLOW
+			ELSE
+			ORG_FLOW
+			END
+			) = #{orgFlow}
+			AND SESSION_NUMBER = #{assignYear}
+			) T1
+			GROUP BY
+			T1.SPE_ID,
+			T1.ORG_FLOW
+			) T2 ON T2.ORG_FLOW = S.ORG_FLOW AND T2.SPE_ID = S.SPE_ID
 		</if>
 		,SYS_ORG O
 		WHERE
@@ -1252,9 +1295,16 @@
 		UPDATE RES_ORG_SPE_ASSIGN
 		SET
 			ASSIGN_YEAR = #{assignYear,jdbcType=VARCHAR},
-		    START_TIME = #{startTime,jdbcType=VARCHAR},
-		    END_TIME = #{endTime,jdbcType=VARCHAR},
-			ASSIGN_PLAN = #{assignPlan,jdbcType=VARCHAR},
+			<if test="startTime != null and startTime != ''">
+				START_TIME = #{startTime,jdbcType=VARCHAR},
+				END_TIME = #{endTime,jdbcType=VARCHAR},
+				ASSIGN_PLAN = #{assignPlan,jdbcType=VARCHAR},
+			</if>
+			<if test="sendStartTime != null and sendStartTime != ''">
+				SEND_START_TIME = #{sendStartTime,jdbcType=VARCHAR},
+				SEND_END_TIME = #{sendEndTime,jdbcType=VARCHAR},
+				SEND_PLAN = #{sendPlan,jdbcType=VARCHAR},
+			</if>
 			GRADUATE_SPE = #{graduateSpe,jdbcType=VARCHAR},
 			EDUCATION = #{education,jdbcType=VARCHAR},
 			MODIFY_TIME = #{modifyTime},
@@ -1278,6 +1328,22 @@
 		AND ASSIGN_YEAR = #{assignYear}
 		AND IS_SHOWN = 'Y'
 		AND ORG_FLOW = #{orgFlow}
+		<if test="speName != null and speName != ''">
+			AND SPE_NAME = #{speName}
+		</if>
+	</select>
+
+	<select id="countSendInfoByParam" parameterType="map" resultType="int">
+		SELECT
+		COUNT (1)
+		FROM
+		RES_ORG_SPE_ASSIGN
+		WHERE
+		RECORD_STATUS = 'Y'
+		AND ASSIGN_YEAR = #{assignYear}
+		AND IS_SHOWN = 'Y'
+		AND ORG_FLOW = #{orgFlow}
+		AND SEND_START_TIME is not null
 		<if test="speName != null and speName != ''">
 			AND SPE_NAME = #{speName}
 		</if>

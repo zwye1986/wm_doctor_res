@@ -129,11 +129,11 @@
 	</resultMap>
 	<!--  -->
 	<select id="searchDeptByUnion" resultMap="UnionMap">
-		select sd.DEPT_FLOW, sd.ORG_FLOW, sd.DEPT_CODE, sd.DEPT_NAME, sd.ORDINAL, sd.RECORD_STATUS,cfg.record_flow,cfg.STANDARD_DEPT_NAME,bst.SPE_BASE_ID SPE_FLOW
+		select sd.DEPT_FLOW, sd.ORG_FLOW, sd.DEPT_CODE, sd.DEPT_NAME, sd.ORDINAL, sd.RECORD_STATUS,cfg.record_flow,cfg.STANDARD_DEPT_NAME
 		from pdsci.sys_dept sd
-		left join SCH_and_Standard_Dept_cfg cfg on sd.dept_flow=cfg.sch_dept_flow and cfg.record_status='Y'
-		left join pdsci.RES_DEPT_REL_STD_DEPT rd on sd.org_flow = rd.org_flow and sd.dept_code = rd.dept_code and rd.record_status = 'Y'
-		left join pdsci.RES_SPE_BASE_STD_DEPT bst on bst.standard_dept_flow = rd.standard_dept_flow and bst.record_status = 'Y'
+		left join SCH_and_Standard_Dept_cfg cfg
+		on sd.dept_flow=cfg.sch_dept_flow
+		and cfg.record_status='Y'
 		where sd.org_flow = #{dept.orgFlow}
 		<if test='dept.deptFlow!=null and dept.deptFlow!=""'>
 			and sd.dept_flow = #{dept.deptFlow}
@@ -155,6 +155,36 @@
 		</if>
 		order by RECORD_STATUS DESC,ORDINAL
 	</select>
+
+	<select id="searchDeptByUnionSpe" resultMap="UnionMap">
+		select sd.DEPT_FLOW, sd.ORG_FLOW, sd.DEPT_CODE, sd.DEPT_NAME, sd.ORDINAL, sd.RECORD_STATUS,cfg.record_flow,cfg.STANDARD_DEPT_NAME,
+		       bst.SPE_BASE_ID SPE_FLOW
+		from pdsci.sys_dept sd
+		left join SCH_and_Standard_Dept_cfg cfg on sd.dept_flow=cfg.sch_dept_flow and cfg.record_status='Y'
+		left join pdsci.RES_DEPT_REL_STD_DEPT rd on sd.org_flow = rd.org_flow and sd.dept_code = rd.dept_code and rd.record_status = 'Y'
+		left join pdsci.RES_SPE_BASE_STD_DEPT bst on bst.standard_dept_flow = rd.standard_dept_flow and bst.record_status = 'Y'
+		where sd.record_status = 'Y'
+		<if test='dept.deptFlow!=null and dept.deptFlow!=""'>
+			and sd.dept_flow = #{dept.deptFlow}
+		</if>
+		<if test='dept.recordStatus!=null and dept.recordStatus!=""'>
+			and sd.record_status = #{dept.recordStatus}
+		</if>
+		<if test='dept.deptName!=null and dept.deptName!=""'>
+			and sd.dept_name like CONCAT(CONCAT('%', #{dept.deptName}),'%')
+		</if>
+		<if test='dept.deptCode!=null and dept.deptCode!=""'>
+			and sd.dept_code like CONCAT(CONCAT('%', #{dept.deptCode}),'%')
+		</if>
+		<if test='isUnion!=null and isUnion!="" and isUnion=="Y".toString()'>
+			and cfg.RECORD_FLOW is not null
+		</if>
+		<if test='isUnion!=null and isUnion!="" and isUnion=="N".toString()'>
+			and cfg.RECORD_FLOW is null
+		</if>
+		order by RECORD_STATUS DESC,ORDINAL
+	</select>
+
 	<resultMap id="deptMap" type="map">
 		<result column="DEPT_FLOW" jdbcType="VARCHAR" property="deptFlow" />
 		<result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
@@ -268,7 +298,7 @@
 				</foreach>
 			</when>
 			<otherwise>
-				and 1=-1
+				and 1 &lt;&gt; 1
 			</otherwise>
 		</choose>
 		union all
@@ -282,7 +312,7 @@
 				</foreach>
 			</when>
 			<otherwise>
-				and 1=-1
+				and 1 &lt;&gt; 1
 			</otherwise>
 		</choose>
 		<choose>
@@ -293,7 +323,7 @@
 				</foreach>
 			</when>
 			<otherwise>
-				and 1=-1
+				and 1 &lt;&gt; 1
 			</otherwise>
 		</choose>
 
@@ -314,7 +344,7 @@
 				and rel_org_flow = #{orgFlow}
 			</when>
 		    <otherwise>
-				and 1=-1
+				and 1 &lt;&gt; 1
 			</otherwise>
 		</choose>
 		union all
@@ -326,7 +356,7 @@
 				and org_flow = #{orgFlow}
 			</when>
 			<otherwise>
-				and 1=-1
+				and 1 &lt;&gt; 1
 			</otherwise>
 		</choose>
 		order by sort_no
@@ -343,7 +373,7 @@
 				</foreach>
 			</when>
 		    <otherwise>
-				and 1=-1
+				and 1 &lt;&gt; 1
 			</otherwise>
 		</choose>
 	</select>

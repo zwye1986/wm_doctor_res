@@ -416,7 +416,27 @@
                 <foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>)
             </when>
         </choose>
-
+          <choose>
+              <when test="schStartDate != null and schStartDate != '' and schEndDate != null and schEndDate != ''">
+                  and exists(
+                  select 1 from SCH_ARRANGE_RESULT sar where sar.doctor_flow = dr.doctor_flow and sar.record_status = 'Y'
+                  and sar.sch_start_date &lt;= #{schEndDate} and #{schStartDate} &lt;= sar.sch_end_date
+                  )
+              </when>
+              <when test="schStartDate != null and schStartDate != ''">
+                    and exists(
+                    select 1 from SCH_ARRANGE_RESULT sar where sar.doctor_flow = dr.doctor_flow and sar.record_status = 'Y'
+                    and sar.sch_start_date >= #{schStartDate}
+                  )
+              </when>
+              <when test="schEndDate != null and schEndDate != ''">
+                  and exists(
+                  select 1 from SCH_ARRANGE_RESULT sar where sar.doctor_flow = dr.doctor_flow and sar.record_status = 'Y'
+                  and sar.sch_end_date &lt;= #{schEndDate}
+                  )
+              </when>
+              <otherwise></otherwise>
+          </choose>
         order by dr.SESSION_NUMBER desc,dr.TRAINING_Type_ID,dr.TRAINING_SPE_ID,u.user_flow
     </select>
 
@@ -550,12 +570,19 @@
         FROM PDSCI.SCH_ARRANGE_RESULT sar
         WHERE RECORD_STATUS = 'Y'
         AND DOCTOR_FLOW = #{doctorFlow}
-        <if test='schStartDate!=null and schStartDate!=""'>
-            AND SCH_END_DATE >= #{schStartDate}
-        </if>
-        <if test='schEndDate!=null and schEndDate!=""'>
-            AND SCH_END_DATE <![CDATA[<=]]> #{schEndDate}
-        </if>
+          <choose>
+              <when test="schStartDate !=null and schStartDate!='' and schEndDate!=null and schEndDate != ''">
+                and sch_start_date &lt;= #{schEndDate}
+                and #{schStartDate} &lt;=  SCH_END_DATE
+              </when>
+              <when test='schStartDate!=null and schStartDate!=""'>
+                  AND SCH_END_DATE >= #{schStartDate}
+              </when>
+              <when test='schEndDate!=null and schEndDate!=""'>
+                  AND SCH_END_DATE <![CDATA[<=]]> #{schEndDate}
+              </when>
+              <otherwise></otherwise>
+          </choose>
         <if test='deptFlow!=null and deptFlow!=""'>
             AND (EXISTS
             (SELECT NULL
@@ -2343,7 +2370,7 @@
         </if>
 
         <if test='doctorStatusId != null and doctorStatusId != ""'>
-            AND DOCTOR_STATUS_ID = #{doctorStatusId}
+            AND DOCTOR_STATUS_ID = TO_CHAR(#{doctorStatusId})
         </if>
     </select>
 
@@ -2571,6 +2598,21 @@
         <if test='rotationFlow!=null and rotationFlow!=""'>
             and rotation_flow = #{rotationFlow}
         </if>
+    </select>
+    <select id="getAllByDoctorFlow" resultType="com.pinde.sci.model.mo.SchArrangeResult">
+        SELECT * FROM SCH_ARRANGE_RESULT
+        WHERE DOCTOR_FLOW = #{doctorFlow}
+        <choose>
+            <when test="null != delFlag">
+                <if test="delFlag">
+                    AND RECORD_STATUS = 'Y'
+                </if>
+                <if test="!delFlag">
+                    AND RECORD_STATUS = 'N'
+                </if>
+            </when>
+        </choose>
+        order by SCH_START_DATE ASC
     </select>
 
     <update id="updateSchArrangeResultToDel"   parameterType="java.util.List">

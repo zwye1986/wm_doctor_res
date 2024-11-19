@@ -1,13 +1,15 @@
 package com.pinde.sci.biz.sch;
 
+import com.pinde.sci.excelListens.model.SchedulingDataModel;
 import com.pinde.sci.form.sch.SchArrangeResultForm;
 import com.pinde.sci.form.sch.SelectDept;
 import com.pinde.sci.model.jsres.ArrangTdVo;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -207,7 +209,7 @@ public interface ISchArrangeResultBiz {
 	 */
 	List<Map<String,Object>> searchDocResultsListNew(Map<String,Object> paramMap);
 
-	Map<String,Map<String, BigDecimal>> getScoreByDoctorIds(List<String> doctorFlowList);
+	Map<String,Map<String, BigDecimal>> getScoreByDoctorIds(List<String> doctorFlowList, String schStartDate, String schEndDate);
 
 	List<ResOutOfficeLock> searchDocErrorResultsList(Map<String,Object> paramMap) throws ParseException;
 
@@ -345,7 +347,9 @@ public interface ISchArrangeResultBiz {
 
 	Map<String,Object>  importSchedulingAuditExcel(MultipartFile file,String rotationFlow,String trainingTypeId) throws IOException, Exception;
 
-	Map<String,Object> importSchedulingAuditExcelCache(MultipartFile file) throws IOException, InvalidFormatException;
+	Map<String,String> importSchedulingAuditExcelCache(MultipartFile file) throws IOException, InvalidFormatException;
+	Map<String, Object> checkRowData(List<SchedulingDataModel> data);
+	Map<String,Object> submitPbImport(List<SchedulingDataModel> data) throws Exception;
 
 	List<SchArrangeResult> checkResultDate(String doctorFlow, String startDate, String endDate,
 										   String subDeptFlow,String rotationFlow);
@@ -355,5 +359,8 @@ public interface ISchArrangeResultBiz {
 	SysUser searchTeacherList(String sysDeptFlow, String roleId,String userName);
 
 	List<SysDept> searchSysDeptList(String orgFlow, String searchStr);
+
+
+	void expertSchTemp(HttpServletRequest request, HttpServletResponse response, String rotationFlow) throws IOException;
 
 }

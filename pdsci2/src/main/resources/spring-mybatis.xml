@@ -31,7 +31,7 @@
 	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
 	    <property name="slowSqlMillis" value="3000" />
 	    <property name="logSlowSql" value="true" />
-	    <property name="mergeSql" value="true" />
+	    <property name="mergeSql" value="false" />
 	</bean>
 	<bean id="log-filter" class="com.alibaba.druid.filter.logging.Log4jFilter">
 	
@@ -72,6 +72,10 @@
 		<property name="functionCheck" value="false"/>
 		<property name="multiStatementAllow" value="true" />
 		<property name="noneBaseStatementAllow" value="true" />
+		<property name="doPrivilegedAllow" value="true" />
+		<property name="selectIntoAllow" value="true" />
+		<property name="strictSyntaxCheck" value="false"/>
+		<property name="commentAllow" value="true"/>
 	</bean>
   	<bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
       	<property name="dbType" value="oracle" />

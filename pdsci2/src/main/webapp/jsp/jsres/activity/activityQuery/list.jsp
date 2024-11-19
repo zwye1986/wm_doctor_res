@@ -487,7 +487,7 @@ function lookSearchFile(activityFlow,role) {
 
 							<c:if test="${(fn:length(resultMap[b.activityFlow])+0)<=0 }">
 								<c:if test="${(param.roleFlag eq 'teach' && pdfn:jsresPowerCfgMap(key1) eq 'Y') || (param.roleFlag eq 'head' && pdfn:jsresPowerCfgMap(key3) eq 'Y') || (param.roleFlag eq 'secretary' && pdfn:jsresPowerCfgMap(key2) eq 'Y')}">
-<%--									<img class="img" style="cursor:pointer" onclick="delActivity('${b.activityFlow}','${currentPage}')" title="删除" src="<s:url value='/jsp/jsres/activity/img/del.png'/>"></a>--%>
+									<img class="img" style="cursor:pointer" onclick="delActivity('${b.activityFlow}','${currentPage}','${b.scanNum}')" title="删除" src="<s:url value='/jsp/jsres/activity/img/del.png'/>"></a>
 								</c:if>
 							</c:if>
 							<img class="img" style="cursor:pointer" onclick="signUrl('${b.activityFlow}')" title="二维码" src="<s:url value='/jsp/jsres/activity/img/code.png'/>"></a>

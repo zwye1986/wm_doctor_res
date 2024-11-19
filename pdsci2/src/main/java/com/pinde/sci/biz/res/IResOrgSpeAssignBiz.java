@@ -179,4 +179,6 @@ public interface IResOrgSpeAssignBiz {
     ResOrgSpe findOrgSpe(String orgFlow, String assignYear, String speId);
 
 	List<ResOrgSpe> findOrgSpeByExample(ResOrgSpeExample example);
+
+    String updateSendInfo(Map<String, Object> param);
 }

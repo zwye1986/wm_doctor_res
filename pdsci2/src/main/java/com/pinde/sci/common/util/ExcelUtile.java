@@ -1,16 +1,13 @@
 package com.pinde.sci.common.util;
 
 import com.pinde.core.util.StringUtil;
-import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.LoggerFactory;
@@ -67,16 +64,20 @@ public class ExcelUtile extends HashMap{
             // 还原流信息
             inS = new PushbackInputStream(inS);
         }
-        // EXCEL2003使用的是微软的文件系统
-        if (POIFSFileSystem.hasPOIFSHeader(inS)) {
-            return new HSSFWorkbook(inS);
+//        // EXCEL2003使用的是微软的文件系统
+//        if (POIFSFileSystem.hasPOIFSHeader(inS)) {
+//            return new HSSFWorkbook(inS);
+//        }
+//        // EXCEL2007使用的是OOM文件格式
+//        if (POIXMLDocument.hasOOXMLHeader(inS)) {
+//            // 可以直接传流参数，但是推荐使用OPCPackage容器打开
+//            return new XSSFWorkbook(OPCPackage.open(inS));
+//        }
+        try{
+            return WorkbookFactory.create(inS);
+        }catch (Exception e) {
+            throw new IOException("不能解析的excel版本");
         }
-        // EXCEL2007使用的是OOM文件格式
-        if (POIXMLDocument.hasOOXMLHeader(inS)) {
-            // 可以直接传流参数，但是推荐使用OPCPackage容器打开
-            return new XSSFWorkbook(OPCPackage.open(inS));
-        }
-        throw new IOException("不能解析的excel版本");
     }
 	 /**
 	  * @param <T>
@@ -147,7 +148,7 @@ public class ExcelUtile extends HashMap{
 //                                break;
 //                            }
 //                            // 如果当前Cell的Type为STRIN
-//                            case HSSFCell.CELL_TYPE_STRING:
+//                            case CellType.STRING:
 //                                // 取得当前的Cell字符串
 //                                value = cell.getStringCellValue().trim();
 //                                break;
@@ -163,7 +164,7 @@ public class ExcelUtile extends HashMap{
 //                        value = "";
 //                    }
                     if (cell != null && StringUtil.isNotBlank(cell.toString().trim())) {
-                            if (cell.getCellType() == 1) {
+                            if (cell.getCellType().getCode() == 1) {
                                 value = cell.getStringCellValue().trim();
                             } else {
                                 value = _doubleTrans(cell.getNumericCellValue()).trim();
@@ -262,7 +263,7 @@ public class ExcelUtile extends HashMap{
                     String value = "";
                     Cell cell = r.getCell(j);
                     if (cell != null && StringUtil.isNotBlank(cell.toString().trim())) {
-                            if (cell.getCellType() == 1) {
+                            if (cell.getCellType().getCode() == 1) {
                                 value = cell.getStringCellValue().trim();
                             } else {
                                 value = _doubleTrans(cell.getNumericCellValue()).trim();
@@ -323,5 +324,20 @@ public class ExcelUtile extends HashMap{
         eu.put("code", "1");
         eu.put("msg", msg);
         return ExcelUtile.RETURN;
+    }
+
+    public static void addMergedRegionIfNotExists(HSSFSheet sheet, int firstRow, int lastRow, int firstCol, int lastCol) {
+        // 检查是否存在相同的合并区域
+        for (int i = 0; i < sheet.getNumMergedRegions(); i++) {
+            CellRangeAddress region = sheet.getMergedRegion(i);
+            if (region.getFirstRow() == firstRow && region.getLastRow() == lastRow &&
+                    region.getFirstColumn() == firstCol && region.getLastColumn() == lastCol) {
+                // 合并区域已存在，直接返回
+                return;
+            }
+        }
+
+        // 合并区域不存在，添加新的合并区域
+        sheet.addMergedRegion(new CellRangeAddress(firstRow, lastRow, firstCol, lastCol));
     }
 }
