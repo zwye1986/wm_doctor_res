@@ -5668,6 +5668,18 @@ public class JswjwWxController extends GeneralController {
                 }
 
             }
+            //查询主基地
+            List<String>  mainOrgFlow = activityTargeBiz.selectMainOrgFlow(userFlow);
+            if(mainOrgFlow!=null&& !mainOrgFlow.isEmpty()){
+
+                for (String orgFlow : mainOrgFlow) {
+                    List<TeachingActivityTarget> jointTargetList = activityTargeBiz.readByOrgNew(activityInfo.getActivityTypeId(), orgFlow);
+                    if(!jointTargetList.isEmpty()){
+                        targetList.addAll(jointTargetList);
+                    }
+                }
+
+            }
 
             List<String> targetFlowList = targetList.stream().map(TeachingActivityTarget::getTargetFlow).collect(Collectors.toList());
             for (TeachingActivityInfoTarget infoTarget : infoTargets) {

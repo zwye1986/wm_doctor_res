@@ -2009,11 +2009,12 @@ public class JsResTeacherController extends GeneralController{
 		String recTypeId=ResRecTypeEnum.AfterEvaluation.getId();
 		ResDoctor doctor=null;
 		SysUser operUser=null;
-
+		// 由于有对外开放的情况，orgFlow用当前操作用户orgFlow
+		String orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
 		ResDoctorSchProcess process = iResDoctorProcessBiz.read(processFlow);
 		model.addAttribute("currRegProcess",process);
 		//查询科室是否配置出科设置
-		JsresPowerCfg jsresPowerCfg= jsResPowerCfgBiz.read("out_test_check_" + process.getOrgFlow());
+		JsresPowerCfg jsresPowerCfg= jsResPowerCfgBiz.read("out_test_check_" + orgFlow);
 		if(StringUtil.isNotBlank(operUserFlow)){
 			doctor  = doctorBiz.readDoctor(operUserFlow);
 			model.addAttribute("doctor", doctor);
@@ -2043,14 +2044,14 @@ public class JsResTeacherController extends GeneralController{
 		boolean teacherWrite = false;
 		if(GlobalConstant.RECORD_STATUS_Y.equals(jsresPowerCfg.getCfgValue())){
 			//查询科室是否配置
-			JsresDeptConfig deptConfig = jsResPowerCfgBiz.searchDeptCfg(process.getOrgFlow(),process.getSchDeptFlow());
+			JsresDeptConfig deptConfig = jsResPowerCfgBiz.searchDeptCfg(orgFlow,process.getSchDeptFlow());
 			if(null != deptConfig){
 				theoryScorePass = deptConfig.getScorePass();
 				if(GlobalConstant.RECORD_STATUS_Y.equals(deptConfig.getTeacherWrite())){
 					teacherWrite = true;
 				}
 			}else{
-				deptConfig = jsResPowerCfgBiz.searchBaseDeptConfig(process.getOrgFlow());
+				deptConfig = jsResPowerCfgBiz.searchBaseDeptConfig(orgFlow);
 				theoryScorePass = deptConfig.getScorePass();
 				if(GlobalConstant.RECORD_STATUS_Y.equals(deptConfig.getTeacherWrite())){
 					teacherWrite = true;
@@ -2099,7 +2100,7 @@ public class JsResTeacherController extends GeneralController{
 			processPerMap = new HashMap<String, Object>();
 		}
 		//填写百分比限制
-		JsresPowerCfg jsresPowerCfg1= jsResPowerCfgBiz.read("out_filling_check_" + process.getOrgFlow());
+		JsresPowerCfg jsresPowerCfg1= jsResPowerCfgBiz.read("out_filling_check_" + orgFlow);
 		if(null != jsresPowerCfg1){
 			model.addAttribute("checkProcess",jsresPowerCfg1.getCfgValue());
 		}else{
@@ -2198,7 +2199,7 @@ public class JsResTeacherController extends GeneralController{
 				}
 			}
 			List<TeachingActivityInfo> infos=new ArrayList<>();
-			String orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
+//			String orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
 			JsresPowerCfg orgApprove = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_ctrl_approve_activity");//教学活动评价配置
 			JsresPowerCfg approve = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_approve_activity");//教学活动评价配置评审类型
 			if (null!=orgApprove && null!=approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(),orgApprove.getCfgValue(),"Y")) {        //开启必评

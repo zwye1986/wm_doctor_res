@@ -59,7 +59,7 @@
     }
 
     function operDetailByCfgFlow(name,keyCode,date,cfgFlow){
-        var url = "<s:url value='/res/evaluateHospitalResult/gradeSearchDoc'/>?gradeRole=${param.gradeRole}&keyCode="+keyCode+"&date="+date+"&cfgFlow="+cfgFlow+"&role=${role}";
+        var url = "<s:url value='/res/evaluateHospitalResult/gradeSearchDoc'/>?gradeRole=${param.gradeRole}&keyCode="+keyCode+"&date="+date+"&cfgFlow="+cfgFlow+"&role=${role}&schStartDate=${schStartDate}&schEndDate=${schEndDate}";
         jboxOpen(url,name+"评分详情",800,500);
     }
 
