@@ -1457,6 +1457,12 @@
                 #{df}
             </foreach>
         </if>
+        <if test='schStartDate!=null and schStartDate!=""'>
+            and rdsp.SCH_START_DATE <![CDATA[>=]]> #{schStartDate}
+        </if>
+        <if test='schEndDate!=null and schEndDate!=""'>
+            and rdsp.SCH_END_DATE <![CDATA[<=]]> #{schEndDate}
+        </if>
         order by rdsp.sch_start_date DESC,nlssort(dtgi.OPER_USER_NAME,'NLS_SORT=SCHINESE_PINYIN_M')
     </select>
     <select id="getRecContentByProcess3"  parameterType="java.util.Map" resultMap="gradeContentMap">

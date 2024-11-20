@@ -124,7 +124,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             if ("doctor".equals(gradeRole) || "teacher".equals(gradeRole)) {
                 paramMap.put("endTime", endTime);
             } else {
-                paramMap.put("endTime", DateUtil.transDateTime(endTime, "yyhttp://zentao.njpdxx.com:5049/zentao/bug-view-1736.htmlyy-MM-dd", "yyyyMMdd"));
+                paramMap.put("endTime", DateUtil.transDateTime(endTime, "yyyy-MM-dd", "yyyyMMdd"));
             }
 
         }
@@ -148,6 +148,9 @@ public class ResEvaluateHospitalResultController extends GeneralController {
         model.addAttribute("trainingSpeId", trainingSpeId);
         model.addAttribute("deptFlow", deptFlow);
         model.addAttribute("deptName", deptName);
+        model.addAttribute("schStartDate", startTime);
+        model.addAttribute("achEndDate", endTime);
+
         if ("360doctor".equals(gradeRole) || "360teacher".equals(gradeRole)) {
             model.addAttribute("allScore", "5");
         } else {
@@ -404,7 +407,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             String gradeRole,
             String keyCode,
             String date,
-            String role, String tdFlag, String deptFlow, String processFlow, String recFlow, String cfgFlow,
+            String role, String tdFlag, String deptFlow, String processFlow, String recFlow, String cfgFlow, String schStartDate, String schEndDate,
             Model model) {
         model.addAttribute("gradeRole", gradeRole);
         SysUser currentUser = GlobalContext.getCurrentUser();
@@ -441,6 +444,9 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             paramMap.put("recTypeIdList", recTypeIds);
 
             paramMap.put("cfgFlow",cfgFlow);
+
+            paramMap.put("schStartDate", schStartDate);
+            paramMap.put("schEndDate", schEndDate);
         } else if ("head".equals(gradeRole)) {
             recType = ResRecTypeEnum.DeptGrade.getId();
             paramMap.put("recTypeId", recType);

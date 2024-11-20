@@ -334,6 +334,9 @@ public interface IResRecBiz {
 	 */
 	List<ResRec> searchRecByProcessWithBLOBs(List<String> recTypeIds,
 			String processFlow, String operUserFlow);
+
+	List<ResRec> searchRecAuditByProcessWithBLOBs(List<String> recTypeIds,
+											 String processFlow, String operUserFlow);
 	
 	/**
 	 * 计算该用户的登记进度
@@ -409,7 +412,9 @@ public interface IResRecBiz {
 	 */
 	Map<String, Object> getRecProgressIn(String doctorFlow, String processFlow,
 			String recTypeId, String itemId);
-	
+
+	Map<String, Object> getRecAuditProgressIn(String doctorFlow, String processFlow,
+										 String recTypeId, String itemId);
 	/**
 	 * 获取某类型的登记数据
 	 * @param recTypeId

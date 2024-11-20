@@ -76,6 +76,7 @@ import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
+import java.security.KeyPair;
 import java.security.interfaces.RSAPublicKey;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -12736,7 +12737,9 @@ public class JsResManageController extends GeneralController {
 	//	学员认证手机号
 	@RequestMapping(value = {"/authenPhone"})
 	public String authenPhone(String userFlow,Model model) {
-		RSAPublicKey publicKey = RSAUtils.getDefaultPublicKey();
+		KeyPair defaultKeyPair = RSAUtils.getDefaultKeyPair();
+		setSessionAttribute("defaultKeyPairAuthenPhone",defaultKeyPair);
+		RSAPublicKey publicKey = (RSAPublicKey)defaultKeyPair.getPublic();
 		if (null != publicKey) {
 			//公钥-系数(n)
 			model.addAttribute("pkModulus", new String(Hex.encode(publicKey.getModulus().toByteArray())));

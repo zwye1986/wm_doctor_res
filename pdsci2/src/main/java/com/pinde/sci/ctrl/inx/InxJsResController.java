@@ -1787,7 +1787,9 @@ public class InxJsResController extends GeneralController {
     @ResponseBody
     public String authenPhone(String data, Model model, HttpServletRequest request) {
         // 解密
-        data = RSAUtils.decryptStringByJs(data);
+        // 获取公钥系数和公钥指数
+        KeyPair defaultKeyPair = (KeyPair)getSessionAttribute("defaultKeyPairAuthenPhone");
+        data = RSAUtils.decryptStringByJs(data,defaultKeyPair);
         Map<String, String> paramMap = (Map<String, String>) JSON.parse(data);
         String userPhone = paramMap.get("userPhone");
         List<SysUser> sysUsers = userBiz.selectByUserPhoneAndIsVerify(userPhone);

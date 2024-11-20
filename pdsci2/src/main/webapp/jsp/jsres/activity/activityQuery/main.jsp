@@ -6,22 +6,73 @@
 	<jsp:param name="jquery_form" value="true"/>
 	<jsp:param name="jquery_cxselect" value="true"/>
 	<jsp:param name="jquery_datePicker" value="true"/>
+	<jsp:param name="bootstrapSelect" value="true"/>
 	<jsp:param name="jquery_placeholder" value="true"/>
 	<jsp:param name="jquery_validation" value="true"/>
 	<jsp:param name="jquery_ui_tooltip" value="true"/>
 </jsp:include>
 <script type="text/javascript" src="<s:url value='/js/ajaxfileupload.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <style type="text/css">
-.boxHome .item:HOVER{background-color: #eee;}
 .cur{color:red;}
 .title_tab{
 	margin-top: 0;
 }
 
-
+ .text{
+	 margin-left: 0;
+	 width: auto;
+	 height: auto;
+	 line-height: inherit;
+	 color: black;
+ }
+.selected a{
+	padding: 0;
+	background: none;
+}
+.dropdown-menu > .active > a,.dropdown-menu > .active > a:hover{
+	background-color: inherit;
+	color: inherit;
+}
+.btn{
+	/*height: 28px !important;*/
+	border: 1px solid #e7e7eb !important;
+	padding: 0px;
+}
+.body{
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0 0 88px;
+}
+.container{
+	padding-left: 0;
+	padding-right: 0;
+}
+.btn-default{
+	background-color: #fff;
+}
+.form-control,.input{
+	height: 28px;
+	padding: 0;
+}
+.bootstrap-select{
+	width: 182px !important;
+}
+.search-div{
+	float: left;
+	margin-bottom: 18px;
+	margin-right: 8px;
+}
+.clearfix {
+	clear: both;
+	height: 0;
+}
+.bootstrap-select>.dropdown-toggle{
+	width: 160px !important;
+}
 </style>
 <script type="text/javascript">
-	(function($){
+	/*(function($){
 		$.fn.likeSearchInit = function(option){
 			option.clickActive = option.clickActive || null;
 
@@ -63,13 +114,20 @@
 // 			$("#"+input.attr("id")+"Div").append(content);
 			});
 		};
-	})(jQuery);
+	})(jQuery);*/
 $(document).ready(function(){
 	toPage(1);
-	$("#ksmc").likeSearchInit({
+	/*$("#ksmc").likeSearchInit({
 		clickActive:function(flow){
 			$("."+flow).show();
 		}
+	});*/
+
+	$("#activityTypeId,#deptName").selectpicker({
+		deselectAllText: "全不选",
+		selectAllText: "全选",
+		noneResultsText: "没有匹配{0}的选项",
+		noneSelectedText: "未选中",
 	});
 });
 function toPage(page) {
@@ -178,8 +236,8 @@ function selTag(tag,type,flag){
 						活动形式：
 					</td>
 					<td class="td_right">
-						<select name="activityTypeId" class="select">
-							<option value="">全部</option>
+						<select name="activityTypeId" id="activityTypeId" class="show-menu-arrow" multiple title="请选择" data-live-search="true"
+								data-live-search-placeholder="搜索" data-actions-box="true">
 							<c:forEach items="${activityTypeEnumList}" var="a">
 								<option value="${a.id}" >${a.name}</option>
 							</c:forEach>
@@ -201,14 +259,13 @@ function selTag(tag,type,flag){
 <%--							</select>--%>
 <%--						</c:if>--%>
 <%--					</td>--%>
-					<td class="td_right"><input type="text" id="ksmc" name="deptName" value="${param.deptName}" class="select" autocomplete="off"/>
-						<div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; left:0px; top:30px;">
-							<div class="boxHome ksmc" id="ksmcSel" style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
-								<c:forEach items="${depts}" var="dept" >
-									<p  class="item ksmc" flow="${dept.deptFlow}" value="${dept.deptName}" style="line-height: 25px; padding:0px 0;cursor: default;width: 100% ">${dept.deptName}</p>
-								</c:forEach>
-							</div>
-						</div>
+					<td class="td_right">
+						<select name="deptName" id="deptName" class="show-menu-arrow" multiple title="请选择" data-live-search="true"
+								data-live-search-placeholder="搜索" data-actions-box="true">
+							<c:forEach items="${depts}" var="dept">
+								<option value="${dept.deptName}" >${dept.deptName}</option>
+							</c:forEach>
+						</select>
 					</td>
 					<td class="td_left">
 						开始时间：
@@ -246,8 +303,10 @@ function selTag(tag,type,flag){
 							<option value="over">已过期</option>
 						</select>
 					</td>
-					<td colspan="2">
+					<td>
 						是否上传活动图片：
+					</td>
+					<td>
 						<select name="isUploadImg" class="select">
 							<option value="">全部</option>
 							<option value="Y">是</option>
