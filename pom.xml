@@ -357,10 +357,10 @@
                     <groupId>org.apache.tomcat</groupId>
                     <artifactId>tomcat-jdbc</artifactId>
                 </exclusion>
-                <exclusion>
+                <!--<exclusion>
                     <artifactId>HikariCP</artifactId>
                     <groupId>com.zaxxer</groupId>
-                </exclusion>
+                </exclusion>-->
             </exclusions>
         </dependency>
 

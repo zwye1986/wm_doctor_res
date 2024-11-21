@@ -120,7 +120,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-	<filter>
+	<!--<filter>
 	    <filter-name>DruidWebStatFilter</filter-name>
 	    <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
 	    <init-param>
@@ -147,7 +147,7 @@
 	<filter-mapping>
 	    <filter-name>DruidWebStatFilter</filter-name>
 	    <url-pattern>/*</url-pattern>
-  	</filter-mapping>
+  	</filter-mapping>-->
 
 	<filter>
 		<filter-name>AnyChart Resources</filter-name>
@@ -251,14 +251,14 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>	
 	<!-- Druid Sql 监控 -->
-	<servlet>
+	<!--<servlet>
       	<servlet-name>DruidStatView</servlet-name>
       	<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
-      	<!-- <init-param>
+      	&lt;!&ndash; <init-param>
 	        <param-name>allow</param-name>
 	        <param-value>127.0.0.1</param-value>
 	    </init-param>
-	    -->
+	    &ndash;&gt;
 		<init-param>
 			<param-name>loginUsername</param-name>
 			<param-value>pdma</param-value>
@@ -271,7 +271,7 @@
   	<servlet-mapping>
       	<servlet-name>DruidStatView</servlet-name>
       	<url-pattern>/druid/*</url-pattern>
-  	</servlet-mapping>
+  	</servlet-mapping>-->
 	<jsp-config>
 		<taglib>  
 	        <taglib-uri>http://www.njpdkj.com/pdfn</taglib-uri>  
