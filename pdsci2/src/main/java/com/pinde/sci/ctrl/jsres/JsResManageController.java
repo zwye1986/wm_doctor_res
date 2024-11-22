@@ -1364,6 +1364,8 @@ public class JsResManageController extends GeneralController {
 	@RequestMapping(value = {"/modPasswd"})
 	public String modPasswd(Model model) {
 		// 获取公钥系数和公钥指数
+		KeyPair defaultKeyPair = RSAUtils.getDefaultKeyPair();
+		setSessionAttribute("defaultKeyPairModPasswd",defaultKeyPair);
 		RSAPublicKey publicKey = RSAUtils.getDefaultPublicKey();
 		if(null != publicKey){
 			//公钥-系数(n)

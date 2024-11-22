@@ -570,12 +570,19 @@
         FROM PDSCI.SCH_ARRANGE_RESULT sar
         WHERE RECORD_STATUS = 'Y'
         AND DOCTOR_FLOW = #{doctorFlow}
-      <if test='schStartDate!=null and schStartDate!=""'>
-          AND SCH_START_DATE >= #{schStartDate}
-      </if>
-      <if test='schEndDate!=null and schEndDate!=""'>
-          AND SCH_END_DATE <![CDATA[<=]]> #{schEndDate}
-      </if>
+        <choose>
+            <when test='schStartDate!=null and schStartDate!="" and schEndDate!=null and schEndDate!=""'>
+                AND SCH_START_DATE <![CDATA[<=]]> #{schEndDate}
+                AND SCH_END_DATE <![CDATA[>=]]> #{schStartDate}
+            </when>
+            <when test='schStartDate!=null and schStartDate!=""'>
+                AND SCH_START_DATE <![CDATA[>=]]> #{schStartDate}
+            </when>
+            <when test='schEndDate!=null and schEndDate!=""'>
+                AND SCH_END_DATE <![CDATA[<=]]> #{schEndDate}
+            </when>
+            <otherwise></otherwise>
+        </choose>
         <if test='deptFlow!=null and deptFlow!=""'>
             AND (EXISTS
             (SELECT NULL
