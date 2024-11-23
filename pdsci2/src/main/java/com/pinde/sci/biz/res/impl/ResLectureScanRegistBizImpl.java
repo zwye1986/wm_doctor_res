@@ -26,7 +26,7 @@ import java.io.File;
 import java.util.*;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
     @Autowired
     private ResLectureScanRegistMapper lectureScanRegistMapper;

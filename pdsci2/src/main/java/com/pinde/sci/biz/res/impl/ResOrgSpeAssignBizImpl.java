@@ -25,7 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
     @Autowired
     private ResOrgSpeAssignMapper speAssignMapper;

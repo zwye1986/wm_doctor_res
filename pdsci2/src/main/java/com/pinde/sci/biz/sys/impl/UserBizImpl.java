@@ -54,7 +54,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class UserBizImpl implements IUserBiz {
 
 	private static Logger logger = LoggerFactory.getLogger(UserBizImpl.class);

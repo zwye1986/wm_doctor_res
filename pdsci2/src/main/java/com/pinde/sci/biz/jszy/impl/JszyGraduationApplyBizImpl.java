@@ -30,7 +30,7 @@ import java.util.Map;
  * Created by pdkj on 2018/3/9.
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class JszyGraduationApplyBizImpl implements IJszyGraduationApplyBiz{
     @Autowired
     private JsresGraduationApplyMapper graduationApplyMapper;

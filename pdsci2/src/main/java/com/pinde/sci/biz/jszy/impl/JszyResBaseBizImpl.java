@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class JszyResBaseBizImpl implements IJszyResBaseBiz {
 
 	@Autowired

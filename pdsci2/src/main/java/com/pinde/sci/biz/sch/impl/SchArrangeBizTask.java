@@ -41,7 +41,7 @@ public class SchArrangeBizTask {
 		_processDoctor(arrange, doctorList, currUser, exact);
 	}
 	
-	@Transactional(rollbackFor=Exception.class)
+	//@Transactional(rollbackFor=Exception.class)
 	private void _processDoctor(SchArrange arrange,List<ResDoctor> doctorList,SysUser currUser,boolean exact){
 		for(int d=0;d<doctorList.size();d++){
 			ResDoctor doctor = doctorList.get(d);
@@ -143,7 +143,7 @@ public class SchArrangeBizTask {
 	}
 	
 
-	@Transactional(rollbackFor=Exception.class)
+	//@Transactional(rollbackFor=Exception.class)
 	private double [][] _arrageDept(SchArrange arrange,ResDoctor doctor,
 			List<SchArrangeDoctorDept> arrangeDoctorDeptList,List<String> allSchDeptList,
 			List<String> allSchDateList,
@@ -256,7 +256,7 @@ public class SchArrangeBizTask {
 		return result;
 	}
 
-	@Transactional(rollbackFor=Exception.class)
+	//@Transactional(rollbackFor=Exception.class)
 	private String _processDoctorDept(SchArrange arrange,ResDoctor doctor,String schStartDate,int startInterval,
 			List<SchArrangeDoctorDept> arrDocDeptList,List<String> allSchDeptList,List<String> allSchDateList,
 			SysUser currUser,double [][] old,boolean exact){

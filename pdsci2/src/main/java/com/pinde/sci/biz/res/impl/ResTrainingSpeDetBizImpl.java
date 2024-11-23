@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ResTrainingSpeDetBizImpl implements IResTrainingSpeDeptBiz {
     @Autowired
     private ResTrainingSpeDeptMapper trainingSpeDeptMapper;

@@ -26,7 +26,7 @@ import java.util.Map;
  * Created by www.0001.Ga on 2016-10-19.
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class AnnualAssessmentBizImpl implements IAnnualAssessmentBiz {
 
     @Autowired

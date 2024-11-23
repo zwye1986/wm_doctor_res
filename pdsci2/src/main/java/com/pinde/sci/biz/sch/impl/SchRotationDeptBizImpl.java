@@ -53,7 +53,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	@Autowired
 	private SchRotationDeptMapper rotationDeptMapper;

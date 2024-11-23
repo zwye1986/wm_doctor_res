@@ -51,7 +51,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class JszyResDoctorRecruitBizImpl implements IJszyResDoctorRecruitBiz {
 	@Autowired
 	private IResDoctorBiz resDoctorBiz;

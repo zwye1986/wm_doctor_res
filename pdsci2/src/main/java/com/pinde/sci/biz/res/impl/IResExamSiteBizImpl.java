@@ -18,7 +18,7 @@ import java.util.List;
  *
  */
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class IResExamSiteBizImpl implements IResExamSiteBiz{
 	@Autowired
 	private ResExamSiteMapper examSiteMapper;

@@ -46,7 +46,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class DeptBizImpl implements IDeptBiz {
 	private static Logger logger = LoggerFactory.getLogger(DeptBizImpl.class);
 	

@@ -24,7 +24,7 @@ import java.util.Map;
  * Created by pdkj on 2016/10/14.
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class ResTypicalCasesBizImpl implements IResTypicalCasesBiz {
     @Autowired
     private ResTypicalCasesMapper resTypicalCasesMapper;

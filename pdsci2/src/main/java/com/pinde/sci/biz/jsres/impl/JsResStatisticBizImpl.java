@@ -54,7 +54,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 
 	@Autowired

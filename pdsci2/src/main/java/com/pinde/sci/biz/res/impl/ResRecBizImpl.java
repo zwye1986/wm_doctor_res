@@ -62,7 +62,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ResRecBizImpl implements IResRecBiz {
 	private static Logger logger = LoggerFactory.getLogger(ResRecBizImpl.class);
 	/**

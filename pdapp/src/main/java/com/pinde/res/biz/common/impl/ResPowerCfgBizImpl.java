@@ -17,7 +17,7 @@ import java.util.Map;
  * Created by pdkj on 2017/5/16.
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class ResPowerCfgBizImpl implements IResPowerCfgBiz {
 
     @Autowired

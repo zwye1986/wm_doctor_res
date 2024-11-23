@@ -71,7 +71,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 	@Autowired
@@ -4887,7 +4887,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	 * @Description: 保存导入数据
 	 */
 	@Override
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public Map<String,Object> submitPbImport(List<SchedulingDataModel> data) throws Exception {
 		Map<String, Object> result = new HashMap<>();
 		result.put("code",200);

@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class InfoBizImpl implements IInfoBiz {
 	@Resource
 	private SysUserMapper sysUserMapper;

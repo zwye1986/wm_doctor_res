@@ -20,7 +20,7 @@ import java.io.File;
 import java.util.*;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class JszyDoctorAuthBizImpl implements IJszyDoctorAuthBiz {
 
     @Autowired

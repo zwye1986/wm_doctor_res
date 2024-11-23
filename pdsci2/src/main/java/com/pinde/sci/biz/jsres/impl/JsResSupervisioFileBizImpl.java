@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class JsResSupervisioFileBizImpl implements IJsResSupervisioFileBiz {
     @Autowired
     private JsresSupervisioFileMapper supervisioFileMapper;

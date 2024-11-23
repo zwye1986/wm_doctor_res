@@ -33,7 +33,7 @@ import java.io.PushbackInputStream;
 import java.util.*;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class RecruitInterviewInfoBizImpl implements IRecruitInterviewInfoBiz {
 
     @Autowired

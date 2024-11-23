@@ -39,7 +39,7 @@ import java.util.*;
  * Created by pdkj on 2016/12/23.
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
 
     @Autowired

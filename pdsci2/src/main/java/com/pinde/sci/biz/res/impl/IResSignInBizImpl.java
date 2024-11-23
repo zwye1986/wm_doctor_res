@@ -16,7 +16,7 @@ import java.util.Map;
  *
  */
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class IResSignInBizImpl implements IResSignInBiz{
 	@Autowired
 	private ResDoctorExtMapper doctorExtMapper;

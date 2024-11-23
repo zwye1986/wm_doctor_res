@@ -42,7 +42,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ResScoreBizImpl implements IResScoreBiz{
 	@Autowired
 	private ResScoreMapper scoreMapper;

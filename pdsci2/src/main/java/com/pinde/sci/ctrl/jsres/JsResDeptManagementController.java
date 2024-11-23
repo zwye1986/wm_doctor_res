@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/jsres/dept")
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class JsResDeptManagementController {
     private Logger logger = LoggerFactory.getLogger(JsResDeptManagementController.class);
 

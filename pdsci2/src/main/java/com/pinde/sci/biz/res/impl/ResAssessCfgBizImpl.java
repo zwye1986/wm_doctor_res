@@ -32,7 +32,7 @@ import java.util.Map;
  *
  */
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ResAssessCfgBizImpl implements IResAssessCfgBiz {
 	@Autowired
 	private ResAssessCfgMapper assessCfgMapper;

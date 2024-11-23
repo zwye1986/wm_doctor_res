@@ -30,7 +30,7 @@ import java.util.Set;
  *
  */
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
     @Autowired
     private ResEvaluationCfgMapper evaluationCfgMapper;

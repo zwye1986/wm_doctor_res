@@ -21,7 +21,7 @@ import java.util.Map;
  * Created by pdkj on 2017/12/28.
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class JszyAuditLogBizImpl implements IJszyAuditLogBiz {
 
     @Autowired

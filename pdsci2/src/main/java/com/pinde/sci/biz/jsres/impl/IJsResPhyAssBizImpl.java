@@ -35,7 +35,7 @@ import java.io.*;
 import java.util.*;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
 
     @Autowired
