@@ -23,7 +23,7 @@ import java.util.Map;
  * Created by pdkj on 2016/8/31.
  */
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class JszyResUserBlackBizImpl implements IJszyResUserBlackBiz {
 
     @Autowired

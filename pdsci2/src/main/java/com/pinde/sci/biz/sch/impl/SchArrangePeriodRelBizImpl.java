@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class SchArrangePeriodRelBizImpl implements ISchArrangePeriodRelBiz {
 	@Autowired
 	private SchArrangePeriodRelMapper periodRelMapper;

@@ -23,7 +23,7 @@ import java.util.Map;
  * Created by Administrator on 2016/10/11.
  */
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ResDiscipleInfoBizImpl implements IResDiscipleInfoBiz {
     @Autowired
     private ResDiscipleInfoMapper resDiscipleInfoMapper;

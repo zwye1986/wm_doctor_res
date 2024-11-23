@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class IjsresLoginInfoBizImpl implements IjsresLoginInfoBiz{
 	@Autowired
 	private JsresLoginInfoMapper jsresLoginInfoMapper;

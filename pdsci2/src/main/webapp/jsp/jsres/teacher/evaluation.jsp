@@ -846,6 +846,14 @@ function save(){
 								<input type="hidden" class="inputText  validate[required]"  name="sjys" value="${dataMap['sjys']}"/>
 								次
 							</label>
+
+							&#12288;&#12288;
+							<label style="margin-left: 70px;">
+								技能培训：
+								<lable>${dataMap['jnpx']}</lable>
+								<input type="hidden" class="inputText  validate[required]"  name="jnpx" value="${dataMap['jnpx']}"/>
+								次
+							</label>
 						</td>
 					</tr>
 

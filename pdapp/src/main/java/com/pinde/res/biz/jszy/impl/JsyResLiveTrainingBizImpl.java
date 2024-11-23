@@ -17,7 +17,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class JsyResLiveTrainingBizImpl implements IJszyResLiveTrainingBiz {
     @Autowired
     private ResTrainingOpinionMapper trainingOpinionMapper;

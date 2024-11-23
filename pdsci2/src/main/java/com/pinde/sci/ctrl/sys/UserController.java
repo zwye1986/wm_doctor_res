@@ -50,6 +50,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.*;
 import java.net.URLEncoder;
+import java.security.KeyPair;
 import java.security.interfaces.RSAPublicKey;
 import java.util.List;
 import java.util.*;
@@ -1064,7 +1065,8 @@ public class UserController extends GeneralController{
 	@ResponseBody
 	public String savePasswd(String data,String userFlow, HttpServletRequest request) throws UnsupportedEncodingException {
 		// 解密
-		data = RSAUtils.decryptStringByJs(data);
+		KeyPair defaultKeyPair = (KeyPair)getSessionAttribute("defaultKeyPairModPasswd");
+		data = RSAUtils.decryptStringByJs(data,defaultKeyPair);
 		Map<String, String> paramMap = (Map<String, String>)JSON.parse(data);
 		String userPasswd1 = paramMap.get("userPasswd");
 		String userPasswd = java.net.URLDecoder.decode(userPasswd1, "UTF-8");

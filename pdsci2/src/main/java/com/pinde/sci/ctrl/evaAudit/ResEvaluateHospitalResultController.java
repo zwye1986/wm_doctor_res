@@ -1129,7 +1129,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                 cellTitleOne.setCellStyle(styleCenter);
             }
 
-            cellRangeAddress = new CellRangeAddress(0, 0, 9, 11);
+            cellRangeAddress = new CellRangeAddress(0, 1, 9, 11);
             sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowOne.createCell(9);
             cellTitleOne.setCellValue(titleList.get(9));

@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class LcjnEvaluateBizImpl implements ILcjnEvaluateBiz {
     @Autowired
     private LcjnCourseEvaluateMapper courseEvaluateMapper;

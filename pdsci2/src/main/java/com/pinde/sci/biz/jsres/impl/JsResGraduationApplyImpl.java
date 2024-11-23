@@ -46,7 +46,7 @@ import java.util.Map;
  * Created by czz on 2017/2/27.
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
     @Autowired
     private JsresGraduationApplyMapper graduationApplyMapper;

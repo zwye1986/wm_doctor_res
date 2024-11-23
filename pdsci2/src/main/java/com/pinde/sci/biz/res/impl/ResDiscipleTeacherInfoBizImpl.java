@@ -18,7 +18,7 @@ import java.util.List;
  * Created by Administrator on 2016/10/11.
  */
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ResDiscipleTeacherInfoBizImpl implements IResDiscipleTeacherInfoBiz {
     @Autowired
     private ResDiscipleTeacherInfoMapper teacherInfoMapper;

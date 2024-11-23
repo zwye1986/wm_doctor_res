@@ -23,7 +23,7 @@ import java.util.Map;
  * Created by www.0001.Ga on 2017-05-22.
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class ResHBArchiveBizImpl implements IResHBArchiveBiz {
     @Autowired
     private ResArchiveSequenceMapper archiveSequenceMapper;

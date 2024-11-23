@@ -55,7 +55,7 @@ import java.net.URLEncoder;
 import java.util.*;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 
 	private static Logger logger = LoggerFactory.getLogger(JsResDoctorBizImpl.class);

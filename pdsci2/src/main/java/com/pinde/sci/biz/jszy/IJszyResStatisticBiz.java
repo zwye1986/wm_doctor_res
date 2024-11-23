@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 //@Service
-//@Transactional(rollbackFor = Exception.class)
+////@Transactional(rollbackFor = Exception.class)
 public interface IJszyResStatisticBiz {
     /**
      * 统计国家基地的数量

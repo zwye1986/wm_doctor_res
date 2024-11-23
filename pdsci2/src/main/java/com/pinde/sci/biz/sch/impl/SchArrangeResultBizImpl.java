@@ -71,7 +71,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 	@Autowired
@@ -143,6 +143,9 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 	@Autowired
 	private IResRecBiz resRecBiz;
+
+	@Autowired
+	private ResScoreMapper scoreMapper;
 
 	private static Logger logger = LoggerFactory.getLogger(SchArrangeResultBizImpl.class);
 
@@ -1904,6 +1907,14 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			return result;
 		}
 		List<ResSchProcessExpress> resSchProcessExpresses = schProcessExpressMapper.listByDoctorList(doctorFlowList, schStartDate, schEndDate);
+		List<String> processFlowList = resSchProcessExpresses.stream().map(vo -> vo.getProcessFlow()).collect(Collectors.toList());
+		List<ResScore> scoreList = new ArrayList<>();
+		if(CollectionUtils.isNotEmpty(processFlowList)) {
+			ResScoreExample scoreExample = new ResScoreExample();
+			scoreExample.createCriteria().andRecordStatusEqualTo("Y").andProcessFlowIn(processFlowList);
+			scoreList = scoreMapper.selectByExample(scoreExample);
+		}
+		Map<String, ResScore> processFlowToEntityMap = scoreList.stream().collect(Collectors.toMap(vo -> vo.getProcessFlow(), vo -> vo, (vo1, vo2) -> vo1));
 		if (CollectionUtil.isEmpty(resSchProcessExpresses)) {
 			Map<String, BigDecimal> itemMap = new HashMap<>();
 			for (String doctorFlow : doctorFlowList) {
@@ -1953,6 +1964,13 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 						llCount++;
 					}catch (Exception e) {
 
+					}
+				}else {
+					ResScore processItem = processFlowToEntityMap.getOrDefault(item.getProcessFlow(), new ResScore());
+					BigDecimal theoryScore = processItem.getTheoryScore();
+					if (theoryScore != null) {
+						lilunScore = lilunScore.add(theoryScore);
+						llCount++;
 					}
 				}
 				//技能成绩
@@ -4869,7 +4887,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	 * @Description: 保存导入数据
 	 */
 	@Override
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public Map<String,Object> submitPbImport(List<SchedulingDataModel> data) throws Exception {
 		Map<String, Object> result = new HashMap<>();
 		result.put("code",200);

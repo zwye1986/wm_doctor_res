@@ -26,7 +26,7 @@ import java.util.Map;
  * Created by pdkj on 2016/10/13.
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class ResFolowTeacherRecordBizImpl implements IResFolowTeacherRecordBiz {
 
     @Autowired

@@ -22,7 +22,7 @@ import java.util.List;
  *
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class StudyCourseBizImpl implements IStudyCourseBiz {
 	@Autowired
 	private StudyCourseMapper courseMapper;

@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class UserRoleBizImpl implements IUserRoleBiz{
 	@Autowired
 	private SysRoleMapper sysRoleMapper;
