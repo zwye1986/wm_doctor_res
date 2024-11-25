@@ -129,7 +129,7 @@ public class SchMonthlyReportBizImpl implements ISchMonthlyReportBiz {
             }
         }
         HSSFRow rowFoot = sheet.createRow(rowNum);
-        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 0));//合并单元格
+//        sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 0));//合并单元格
         HSSFCell cellTotal1 = rowFoot.createCell(0);
         cellTotal1.setCellStyle(styleCenter);
         cellTotal1.setCellValue("总计");
@@ -231,7 +231,7 @@ public class SchMonthlyReportBizImpl implements ISchMonthlyReportBiz {
             }
         }
         HSSFRow rowFoot1 = sheet2.createRow(rowNum1);
-        sheet2.addMergedRegion(new CellRangeAddress(rowNum1, rowNum1, 0, 0));//合并单元格
+//        sheet2.addMergedRegion(new CellRangeAddress(rowNum1, rowNum1, 0, 0));//合并单元格
         HSSFCell cellTotal2 = rowFoot1.createCell(0);
         cellTotal2.setCellStyle(styleCenter);
         cellTotal2.setCellValue("总计");
