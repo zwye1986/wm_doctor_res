@@ -222,4 +222,5 @@ public interface SchArrangeResultExtMapper {
 	List<SchArrangeResult> getAllByDoctorFlow(@Param("doctorFlow")String doctorFlow,
 											  @Param("delFlag")Boolean delFlag);
 
+	List<SchArrangeResult> selectDoctorSchDate(@Param("doctorFlowList") List<String> doctorFlowList, @Param("schStartDate") String schStartDate, @Param("schEndDate") String schEndDate);
 }
