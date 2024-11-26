@@ -11,6 +11,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.fastjson.JSONObject;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
@@ -51,7 +52,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -2895,7 +2895,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_" + orgFlow);
 			if (ObjectUtil.isNotEmpty(openCfg)) {
 				String openVal = openCfg.getCfgValue();
-				if (StringUtils.isNotEmpty(openVal) && "Y".equalsIgnoreCase(openVal)) {
+				if (StringUtils.isNotEmpty(openVal) && GlobalConstant.FLAG_Y.equalsIgnoreCase(openVal)) {
 					//限制开启
 					JsresPowerCfg minYearNumCfg = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_process_scheduling_time");
 					if (ObjectUtil.isNotEmpty(minYearNumCfg)) {
@@ -4294,7 +4294,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_" + orgFlow);
 		if (ObjectUtil.isNotEmpty(openCfg)) {
 			String openVal = openCfg.getCfgValue();
-			if (StringUtils.isNotEmpty(openVal) && "Y".equalsIgnoreCase(openVal)) {
+			if (StringUtils.isNotEmpty(openVal) && GlobalConstant.FLAG_Y.equalsIgnoreCase(openVal)) {
 				//限制开启
 				JsresPowerCfg minYearNumCfg = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_process_scheduling_time");
 				if (ObjectUtil.isNotEmpty(minYearNumCfg)) {
@@ -5024,7 +5024,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			DateTime importEnd = cn.hutool.core.date.DateUtil.parseDate(pbInfoItem.getSchEndDate());
 			for (PbInfoItem history : dbList) {
 				if (StringUtils.isNotEmpty(history.getRecordStatus())
-						&&"N".equals(history.getRecordStatus())) {
+						&&GlobalConstant.FLAG_N.equals(history.getRecordStatus())) {
 					continue;
 				}
 				String dbSchDeptFlow = history.getSchDeptFlow();
@@ -5257,7 +5257,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		if (ObjectUtil.isNotEmpty(openCfgChek)) {
 			checkFlag = StringUtils.isEmpty(openCfgChek.getCfgValue())? "N":openCfgChek.getCfgValue();
 		}
-		if ("Y".equals(checkFlag)) {
+		if (GlobalConstant.FLAG_Y.equals(checkFlag)) {
 			//开启排班校验
 			boolean successFlag = true;
 			for (String doctorFlow : checkSchMonMap.keySet()) {
@@ -5328,7 +5328,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				continue;
 			}
 			SchArrangeResult item = allByDoctorFlow.get(i);
-			if ("N".equals(item.getRecordStatus())) {
+			if (GlobalConstant.FLAG_N.equals(item.getRecordStatus())) {
 				continue;
 			}
 			String schStartDate = item.getSchStartDate();
@@ -5535,7 +5535,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	}
 
 	private void savePbWithoutHis(PbInfoItem vo){
-		if (StringUtils.isNotEmpty(vo.getRecordStatus()) && "N".equals(vo.getRecordStatus())) {
+		if (StringUtils.isNotEmpty(vo.getRecordStatus()) && GlobalConstant.FLAG_N.equals(vo.getRecordStatus())) {
 			return;
 		}
 		List<PbInfoItem> list = new ArrayList<>();

@@ -1,17 +1,16 @@
 package com.pinde.res.biz.stdp.impl;
 
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.stdp.IResOrgTimeBiz;
 import com.pinde.sci.dao.base.ResOrgAddressMapper;
 import com.pinde.sci.dao.base.ResOrgTimeMapper;
-import com.pinde.sci.model.mo.ResOrgAddress;
-import com.pinde.sci.model.mo.ResOrgAddressExample;
-import com.pinde.sci.model.mo.ResOrgTime;
-import com.pinde.sci.model.mo.ResOrgTimeExample;
+import com.pinde.core.model.ResOrgAddress;
+import com.pinde.core.model.ResOrgAddressExample;
+import com.pinde.core.model.ResOrgTime;
+import com.pinde.core.model.ResOrgTimeExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

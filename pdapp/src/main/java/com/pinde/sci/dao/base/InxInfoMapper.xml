@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.InxInfoMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.InxInfo">
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.InxInfo">
     <id column="INFO_FLOW" jdbcType="VARCHAR" property="infoFlow" />
     <result column="INFO_TITLE" jdbcType="VARCHAR" property="infoTitle" />
     <result column="TITLE_IMG" jdbcType="VARCHAR" property="titleImg" />
@@ -30,7 +30,7 @@
     <result column="BACK_COLUMN_ID" jdbcType="VARCHAR" property="backColumnId" />
     <result column="BACK_COLUMN_NAME" jdbcType="VARCHAR" property="backColumnName" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.InxInfo">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pinde.core.model.InxInfo">
     <result column="INFO_CONTENT" jdbcType="CLOB" property="infoContent" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -100,7 +100,7 @@
   <sql id="Blob_Column_List">
     INFO_CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.pinde.sci.model.mo.InxInfoExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExampleWithBLOBs" parameterType="com.pinde.core.model.InxInfoExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -116,7 +116,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.InxInfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.pinde.core.model.InxInfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -142,13 +142,13 @@
     delete from PDSCI.INX_INFO
     where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.InxInfoExample">
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.InxInfoExample">
     delete from PDSCI.INX_INFO
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.InxInfo">
+  <insert id="insert" parameterType="com.pinde.core.model.InxInfo">
     insert into PDSCI.INX_INFO (INFO_FLOW, INFO_TITLE, TITLE_IMG, 
       COLUMN_ID, COLUMN_NAME, INFO_STATUS_ID, 
       INFO_STATUS_NAME, INFO_TIME, PASS_TIME, 
@@ -170,7 +170,7 @@
       #{roleFlow,jdbcType=VARCHAR}, #{backColumnId,jdbcType=VARCHAR}, #{backColumnName,jdbcType=VARCHAR}, 
       #{infoContent,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.InxInfo">
+  <insert id="insertSelective" parameterType="com.pinde.core.model.InxInfo">
     insert into PDSCI.INX_INFO
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="infoFlow != null">
@@ -345,7 +345,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.InxInfoExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.pinde.core.model.InxInfoExample" resultType="java.lang.Integer">
     select count(*) from PDSCI.INX_INFO
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -510,7 +510,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.InxInfo">
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.InxInfo">
     update PDSCI.INX_INFO
     <set>
       <if test="infoTitle != null">
@@ -597,7 +597,7 @@
     </set>
     where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.InxInfo">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.InxInfo">
     update PDSCI.INX_INFO
     set INFO_TITLE = #{infoTitle,jdbcType=VARCHAR},
       TITLE_IMG = #{titleImg,jdbcType=VARCHAR},
@@ -628,7 +628,7 @@
       INFO_CONTENT = #{infoContent,jdbcType=CLOB}
     where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.InxInfo">
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.InxInfo">
     update PDSCI.INX_INFO
     set INFO_TITLE = #{infoTitle,jdbcType=VARCHAR},
       TITLE_IMG = #{titleImg,jdbcType=VARCHAR},

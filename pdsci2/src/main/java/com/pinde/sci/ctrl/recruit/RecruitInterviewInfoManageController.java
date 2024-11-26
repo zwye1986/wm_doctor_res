@@ -6,7 +6,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInterviewInfoBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.model.mo.RecruitInfo;
@@ -87,7 +86,7 @@ public class RecruitInterviewInfoManageController extends GeneralController {
         {
             return "未选择面试信息";
         }
-        if("Y".equals(recruitInfoExt.getAdmitFlag()))
+        if(GlobalConstant.FLAG_Y.equals(recruitInfoExt.getAdmitFlag()))
         {
             return "已发录取通知，无法审核！";
         }
@@ -199,7 +198,7 @@ public class RecruitInterviewInfoManageController extends GeneralController {
             }
         }
         RecruitInfoExt recruitInfoExt=recruitInfoBiz.searchRecruitInfoByFlow(recruitInfo.getRecruitFlow());
-        if("Y".equals(recruitInfoExt.getAdmitFlag()))
+        if(GlobalConstant.FLAG_Y.equals(recruitInfoExt.getAdmitFlag()))
         {
             return "已发录取通知，无法修改成绩！";
         }

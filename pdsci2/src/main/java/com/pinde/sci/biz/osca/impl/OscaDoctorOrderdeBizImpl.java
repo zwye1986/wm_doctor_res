@@ -2,7 +2,6 @@ package com.pinde.sci.biz.osca.impl;
 
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaDoctorOrderdeBiz;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.OscaDoctorAssessmentMapper;
 import com.pinde.sci.dao.base.OscaSkillsAssessmentMapper;
 import com.pinde.sci.dao.base.OscaSkillsAssessmentTimeMapper;
@@ -14,7 +13,6 @@ import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaSkillsAssessmentExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;

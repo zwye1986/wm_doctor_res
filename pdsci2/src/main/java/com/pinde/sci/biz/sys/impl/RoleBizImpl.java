@@ -4,7 +4,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.model.jsres.ActivityCfgExt;
 import com.pinde.sci.model.mo.*;
@@ -12,7 +11,6 @@ import com.pinde.sci.model.mo.SysRoleExample.Criteria;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;

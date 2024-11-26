@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResJointOrgMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResJointOrg" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResJointOrg" >
     <id column="JOINT_FLOW" property="jointFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
@@ -75,7 +75,7 @@
     JOINT_FLOW, ORG_FLOW, ORG_NAME, JOINT_ORG_FLOW, JOINT_ORG_NAME, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResJointOrgExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResJointOrgExample" >
     select
     <if test="distinct" >
       distinct
@@ -99,13 +99,13 @@
     delete from PDSCI.RES_JOINT_ORG
     where JOINT_FLOW = #{jointFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResJointOrgExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResJointOrgExample" >
     delete from PDSCI.RES_JOINT_ORG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResJointOrg" >
+  <insert id="insert" parameterType="com.pinde.core.model.ResJointOrg" >
     insert into PDSCI.RES_JOINT_ORG (JOINT_FLOW, ORG_FLOW, ORG_NAME, 
       JOINT_ORG_FLOW, JOINT_ORG_NAME, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -115,7 +115,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResJointOrg" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ResJointOrg" >
     insert into PDSCI.RES_JOINT_ORG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="jointFlow != null" >
@@ -182,7 +182,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResJointOrgExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.ResJointOrgExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.RES_JOINT_ORG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -242,7 +242,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResJointOrg" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResJointOrg" >
     update PDSCI.RES_JOINT_ORG
     <set >
       <if test="orgFlow != null" >
@@ -275,7 +275,7 @@
     </set>
     where JOINT_FLOW = #{jointFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResJointOrg" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResJointOrg" >
     update PDSCI.RES_JOINT_ORG
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},

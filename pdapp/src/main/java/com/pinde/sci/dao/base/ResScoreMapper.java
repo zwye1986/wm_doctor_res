@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResScore;
-import com.pinde.sci.model.mo.ResScoreExample;
+import com.pinde.core.model.ResScore;
+import com.pinde.core.model.ResScoreExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

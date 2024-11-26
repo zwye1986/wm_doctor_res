@@ -15,7 +15,6 @@ import com.pinde.sci.biz.res.IResOrgSpeAssignBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
@@ -27,8 +26,6 @@ import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -854,13 +851,13 @@ public class JsResCertificateManageController extends GeneralController {
 		if (StringUtil.isNotBlank(recruitFlow)) {
 			ResDoctorRecruitWithBLOBs resDoctorRecruitWithBLOBs = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
 			if (resDoctorRecruitWithBLOBs != null) {
-				if ("Y".equals(certificateIssuingStatusId)) {
+				if (GlobalConstant.FLAG_Y.equals(certificateIssuingStatusId)) {
 					resDoctorRecruitWithBLOBs.setCertificateIssuingStatus("已发放");
 					//证书发放  学员结业
 					resDoctorRecruitWithBLOBs.setDoctorStatusId("21");
 					resDoctorRecruitWithBLOBs.setDoctorStatusName("结业");
 				}
-				if ("N".equals(certificateIssuingStatusId)) {
+				if (GlobalConstant.FLAG_N.equals(certificateIssuingStatusId)) {
 					resDoctorRecruitWithBLOBs.setCertificateIssuingStatus("未发放");
 					resDoctorRecruitWithBLOBs.setDoctorStatusId("20");
 					resDoctorRecruitWithBLOBs.setDoctorStatusName("在培");
@@ -1141,7 +1138,7 @@ public class JsResCertificateManageController extends GeneralController {
 		String originalFilename =recruitFlow+ ".png";
 		String filePath=fileDir+  File.separator +originalFilename;
 
-		if("Y".equals(isDown)) {
+		if(GlobalConstant.FLAG_Y.equals(isDown)) {
 			byte[] data = null;
 			long dataLength = 0;
 			/*文件是否存在*/

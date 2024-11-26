@@ -8,7 +8,6 @@ import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.OscaDoctorRegistMapper;
 import com.pinde.sci.dao.osca.OscaDoctorRegistExtMapper;
 import com.pinde.sci.enums.osca.AuditStatusEnum;
@@ -19,7 +18,6 @@ import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;

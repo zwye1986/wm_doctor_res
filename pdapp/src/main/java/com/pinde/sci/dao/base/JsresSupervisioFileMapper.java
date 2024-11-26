@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JsresSupervisioFile;
-import com.pinde.sci.model.mo.JsresSupervisioFileExample;
+import com.pinde.core.model.JsresSupervisioFile;
+import com.pinde.core.model.JsresSupervisioFileExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

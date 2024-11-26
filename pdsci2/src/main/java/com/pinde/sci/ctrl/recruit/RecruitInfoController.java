@@ -6,7 +6,6 @@ import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoLogBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.recruit.RecruitOperEnum;
 import com.pinde.sci.enums.recruit.RecruitStatusEnum;

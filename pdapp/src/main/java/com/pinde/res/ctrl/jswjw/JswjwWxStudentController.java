@@ -1,11 +1,12 @@
 package com.pinde.res.ctrl.jswjw;
 
 import com.pinde.app.common.GeneralController;
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.commom.enums.RecDocCategoryEnum;
-import com.pinde.core.commom.enums.RecStatusEnum;
-import com.pinde.core.commom.enums.ResDoctorKqStatusEnum;
-import com.pinde.core.commom.enums.ResRecTypeEnum;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.RecDocCategoryEnum;
+import com.pinde.core.common.enums.RecStatusEnum;
+import com.pinde.core.common.enums.ResDoctorKqStatusEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -14,7 +15,6 @@ import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.jswjw.IIeaveAppBiz;
 import com.pinde.res.biz.jswjw.IJswjwBiz;
 import com.pinde.res.biz.stdp.IResGradeBiz;
-import com.pinde.res.enums.lcjn.DictTypeEnum;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgItemForm;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgTitleForm;
 import com.pinde.res.model.jswjw.mo.ResDoctorKqExt;
@@ -22,7 +22,6 @@ import com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper;
 import com.pinde.sci.dao.base.ResDoctorMapper;
 import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;
 import com.pinde.sci.dao.base.SysUserMapper;
-import com.pinde.sci.model.mo.*;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -410,7 +409,7 @@ public class JswjwWxStudentController extends GeneralController {
 
             String auditRoleNow  = "";
             kq.setTeacherFlow(process.getTeacherUserFlow());
-            if ("Y".equals(greater.getTeacherFlag())) {
+            if (GlobalConstant.FLAG_Y.equals(greater.getTeacherFlag())) {
                 // teacher 带教
                 auditRoleNow  = GlobalConstant.RES_ROLE_SCOPE_TEACHER;
                 kq.setTeacherName(process.getTeacherUserName());
@@ -418,7 +417,7 @@ public class JswjwWxStudentController extends GeneralController {
                 kq.setTeacherName("-");
             }
             kq.setHeadFlow(process.getHeadUserFlow());
-            if ("Y".equals(greater.getHeadFlag())) {
+            if (GlobalConstant.FLAG_Y.equals(greater.getHeadFlag())) {
                 if (StringUtil.isBlank(auditRoleNow)) {
                     auditRoleNow  = GlobalConstant.RES_ROLE_SCOPE_HEAD;
                 }
@@ -427,7 +426,7 @@ public class JswjwWxStudentController extends GeneralController {
                 kq.setHeadName("-");
             }
             kq.setTutorFlow(doctor.getTutorFlow());
-            if ("Y".equals(greater.getTutorFlag())) {
+            if (GlobalConstant.FLAG_Y.equals(greater.getTutorFlag())) {
                 kq.setTutorName(doctor.getTutorName());
             } else {
                 kq.setTutorName("-");
@@ -444,7 +443,7 @@ public class JswjwWxStudentController extends GeneralController {
             }
             if (admin != null) {
                 kq.setManagerFlow(admin.getUserFlow());
-                if ("Y".equals(greater.getManagerFlag())) {
+                if (GlobalConstant.FLAG_Y.equals(greater.getManagerFlag())) {
                     if (StringUtil.isBlank(auditRoleNow)) {
                         auditRoleNow  = GlobalConstant.RES_ROLE_SCOPE_ADMIN;
                     }
@@ -600,8 +599,8 @@ public class JswjwWxStudentController extends GeneralController {
         if(!"Revoke".equals(kq.getAuditStatusId())){
             logMap = new HashMap<>();
             logMap.put("isShow","-".equals(kq.getTeacherName()) ? "N" : "Y");
-            logMap.put("statusId",StringUtil.isBlank(kq.getTeacherAgreeFlag()) ? "Auditing" : "Y".equals(kq.getTeacherAgreeFlag()) ? "Passed" : "UnPassed");
-            logMap.put("statusName",StringUtil.isBlank(kq.getTeacherAgreeFlag()) ? "待审核" : "Y".equals(kq.getTeacherAgreeFlag()) ? "审核通过" : "审核不通过");
+            logMap.put("statusId",StringUtil.isBlank(kq.getTeacherAgreeFlag()) ? "Auditing" : GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag()) ? "Passed" : "UnPassed");
+            logMap.put("statusName",StringUtil.isBlank(kq.getTeacherAgreeFlag()) ? "待审核" : GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag()) ? "审核通过" : "审核不通过");
             logMap.put("operUserName",kq.getTeacherName());
             logMap.put("operTime",kq.getTeacherAuditTime());
             logMap.put("auditInfo",kq.getTeacherAuditInfo());
@@ -616,7 +615,7 @@ public class JswjwWxStudentController extends GeneralController {
                 if("-".equals(kq.getTeacherName())){
                     audit = true;
                 }else if(!"-".equals(kq.getTeacherName())){
-                    if(StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && "Y".equals(kq.getTeacherAgreeFlag())){
+                    if(StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag())){
                         audit = true;
                     }
                     if(StringUtil.isBlank(kq.getTeacherAgreeFlag())){
@@ -628,8 +627,8 @@ public class JswjwWxStudentController extends GeneralController {
         if(audit){
             logMap = new HashMap<>();
             logMap.put("isShow","-".equals(kq.getHeadName()) ? "N" : "Y");
-            logMap.put("statusId",StringUtil.isBlank(kq.getHeadAgreeFlag()) ? "Auditing" : "Y".equals(kq.getHeadAgreeFlag()) ? "Passed" : "UnPassed");
-            logMap.put("statusName",StringUtil.isBlank(kq.getHeadAgreeFlag()) ? "待审核" : "Y".equals(kq.getHeadAgreeFlag()) ? "审核通过" : "审核不通过");
+            logMap.put("statusId",StringUtil.isBlank(kq.getHeadAgreeFlag()) ? "Auditing" : GlobalConstant.FLAG_Y.equals(kq.getHeadAgreeFlag()) ? "Passed" : "UnPassed");
+            logMap.put("statusName",StringUtil.isBlank(kq.getHeadAgreeFlag()) ? "待审核" : GlobalConstant.FLAG_Y.equals(kq.getHeadAgreeFlag()) ? "审核通过" : "审核不通过");
             logMap.put("operUserName",kq.getHeadName());
             logMap.put("operTime",kq.getHeadAuditTime());
             logMap.put("auditInfo",kq.getHeadAuditInfo());
@@ -645,7 +644,7 @@ public class JswjwWxStudentController extends GeneralController {
                     audit = true;
                 }
                 if("-".equals(kq.getHeadName()) && "-".equals(kq.getTutorName()) && !"-".equals(kq.getTeacherName())){
-                    if(StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && "Y".equals(kq.getTeacherAgreeFlag())) {
+                    if(StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag())) {
                         audit = true;
                     }
                     if(StringUtil.isBlank(kq.getTeacherAgreeFlag())){
@@ -653,7 +652,7 @@ public class JswjwWxStudentController extends GeneralController {
                     }
                 }
                 if("-".equals(kq.getTeacherName()) && "-".equals(kq.getTutorName()) && !"-".equals(kq.getHeadName())){
-                    if(StringUtil.isNotBlank(kq.getHeadAgreeFlag()) && "Y".equals(kq.getHeadAgreeFlag())) {
+                    if(StringUtil.isNotBlank(kq.getHeadAgreeFlag()) && GlobalConstant.FLAG_Y.equals(kq.getHeadAgreeFlag())) {
                         audit = true;
                     }
                     if(StringUtil.isBlank(kq.getHeadAgreeFlag())){
@@ -661,7 +660,7 @@ public class JswjwWxStudentController extends GeneralController {
                     }
                 }
                 if("-".equals(kq.getTeacherName()) && "-".equals(kq.getHeadName()) && !"-".equals(kq.getTutorName())){
-                    if(StringUtil.isNotBlank(kq.getTutorAgreeFlag()) && "Y".equals(kq.getTutorAgreeFlag())) {
+                    if(StringUtil.isNotBlank(kq.getTutorAgreeFlag()) && GlobalConstant.FLAG_Y.equals(kq.getTutorAgreeFlag())) {
                         audit = true;
                     }
                     if(StringUtil.isBlank(kq.getTutorAgreeFlag())){
@@ -669,9 +668,9 @@ public class JswjwWxStudentController extends GeneralController {
                     }
                 }
                 if(!"-".equals(kq.getTeacherName()) && !"-".equals(kq.getHeadName()) && !"-".equals(kq.getTutorName())){
-                    if(StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && "Y".equals(kq.getTeacherAgreeFlag())){
-                        if(StringUtil.isNotBlank(kq.getHeadAgreeFlag()) && "Y".equals(kq.getHeadAgreeFlag())){
-                            if(StringUtil.isNotBlank(kq.getTutorAgreeFlag()) && "Y".equals(kq.getTutorAgreeFlag())){
+                    if(StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag())){
+                        if(StringUtil.isNotBlank(kq.getHeadAgreeFlag()) && GlobalConstant.FLAG_Y.equals(kq.getHeadAgreeFlag())){
+                            if(StringUtil.isNotBlank(kq.getTutorAgreeFlag()) && GlobalConstant.FLAG_Y.equals(kq.getTutorAgreeFlag())){
                                 audit = true;
                             }
                             if(StringUtil.isBlank(kq.getTutorAgreeFlag())){
@@ -687,8 +686,8 @@ public class JswjwWxStudentController extends GeneralController {
                     }
                 }
                 if("-".equals(kq.getTutorName()) && !"-".equals(kq.getHeadName()) && !"-".equals(kq.getTeacherName())){
-                    if(StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && "Y".equals(kq.getTeacherAgreeFlag())){
-                        if(StringUtil.isNotBlank(kq.getHeadAgreeFlag()) && "Y".equals(kq.getHeadAgreeFlag())){
+                    if(StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag())){
+                        if(StringUtil.isNotBlank(kq.getHeadAgreeFlag()) && GlobalConstant.FLAG_Y.equals(kq.getHeadAgreeFlag())){
                             audit = true;
                         }
                         if(StringUtil.isBlank(kq.getHeadAgreeFlag())){
@@ -700,8 +699,8 @@ public class JswjwWxStudentController extends GeneralController {
                     }
                 }
                 if("-".equals(kq.getHeadName()) && !"-".equals(kq.getTutorName()) && !"-".equals(kq.getTeacherName())){
-                    if(StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && "Y".equals(kq.getTeacherAgreeFlag())){
-                        if(StringUtil.isNotBlank(kq.getTutorAgreeFlag()) && "Y".equals(kq.getTutorAgreeFlag())){
+                    if(StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag())){
+                        if(StringUtil.isNotBlank(kq.getTutorAgreeFlag()) && GlobalConstant.FLAG_Y.equals(kq.getTutorAgreeFlag())){
                             audit = true;
                         }
                         if(StringUtil.isBlank(kq.getTutorAgreeFlag())){
@@ -713,8 +712,8 @@ public class JswjwWxStudentController extends GeneralController {
                     }
                 }
                 if("-".equals(kq.getTeacherName()) && !"-".equals(kq.getTutorName()) && !"-".equals(kq.getHeadName())){
-                    if(StringUtil.isNotBlank(kq.getHeadAgreeFlag()) && "Y".equals(kq.getHeadAgreeFlag())){
-                        if(StringUtil.isNotBlank(kq.getTutorAgreeFlag()) && "Y".equals(kq.getTutorAgreeFlag())){
+                    if(StringUtil.isNotBlank(kq.getHeadAgreeFlag()) && GlobalConstant.FLAG_Y.equals(kq.getHeadAgreeFlag())){
+                        if(StringUtil.isNotBlank(kq.getTutorAgreeFlag()) && GlobalConstant.FLAG_Y.equals(kq.getTutorAgreeFlag())){
                             audit = true;
                         }
                         if(StringUtil.isBlank(kq.getTutorAgreeFlag())){
@@ -730,8 +729,8 @@ public class JswjwWxStudentController extends GeneralController {
         if(audit){
             logMap = new HashMap<>();
             logMap.put("isShow","-".equals(kq.getManagerName()) ? "N" : "Y");
-            logMap.put("statusId",StringUtil.isBlank(kq.getManagerAgreeFlag()) ? "Auditing" : "Y".equals(kq.getManagerAgreeFlag()) ? "Passed" : "UnPassed");
-            logMap.put("statusName",StringUtil.isBlank(kq.getManagerAgreeFlag()) ? "待审核" : "Y".equals(kq.getManagerAgreeFlag()) ? "审核通过" : "审核不通过");
+            logMap.put("statusId",StringUtil.isBlank(kq.getManagerAgreeFlag()) ? "Auditing" : GlobalConstant.FLAG_Y.equals(kq.getManagerAgreeFlag()) ? "Passed" : "UnPassed");
+            logMap.put("statusName",StringUtil.isBlank(kq.getManagerAgreeFlag()) ? "待审核" : GlobalConstant.FLAG_Y.equals(kq.getManagerAgreeFlag()) ? "审核通过" : "审核不通过");
             logMap.put("operUserName",kq.getManagerName());
             logMap.put("operTime",kq.getManagerAuditTime());
             logMap.put("auditInfo",kq.getManagerAuditInfo());

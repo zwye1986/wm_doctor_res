@@ -9,7 +9,6 @@ import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.sch.SchSelYearEnum;
 import com.pinde.sci.form.sch.SchRotationOrgGroupForm;

@@ -3,7 +3,6 @@ package com.pinde.sci.biz.jsres.impl;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.sci.biz.jsres.IResScheduleScoreBiz;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
 import com.pinde.sci.dao.base.ResScheduleScoreMapper;
@@ -12,7 +11,6 @@ import com.pinde.sci.model.mo.ResScheduleScoreExample;
 import com.pinde.sci.model.mo.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

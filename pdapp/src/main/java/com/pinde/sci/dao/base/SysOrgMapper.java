@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.sci.model.mo.SysOrgExample;
+import com.pinde.core.model.SysOrg;
+import com.pinde.core.model.SysOrgExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

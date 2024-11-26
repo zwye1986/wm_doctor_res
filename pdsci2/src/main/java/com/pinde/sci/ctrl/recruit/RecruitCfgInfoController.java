@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.pinde.sci.biz.recruit.IRecruitCfgInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitExamMainBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.RecruitCfgInfo;
 import org.springframework.beans.factory.annotation.Autowired;

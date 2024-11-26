@@ -10,7 +10,6 @@ import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.res.IResSchProcessExpressBiz;
 import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.JsresDoctorDeptDetailMapper;
 import com.pinde.sci.dao.base.JsresGraduationApplyLogMapper;
 import com.pinde.sci.dao.base.JsresGraduationApplyMapper;
@@ -32,7 +31,6 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -147,7 +145,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
 //            double avgInComBi=0;//平均正常比例
 //            double avgAuditComBi=0;//平均审核比例
 //            for (JsresDoctorDeptDetail d : details) {
-//                if("Y".equals(d.getIsShort())) {
+//                if(GlobalConstant.FLAG_Y.equals(d.getIsShort())) {
 //                    shortYCount++;
 //                    shortYCBSum+=StringUtil.isBlank(d.getCompleteBi())?0:"-".equals(d.getCompleteBi())?0:Double.valueOf(d.getCompleteBi());
 //                    shortYOCBSum+=StringUtil.isBlank(d.getOutCompleteBi())?0:"-".equals(d.getOutCompleteBi())?0:Double.valueOf(d.getOutCompleteBi());
@@ -157,7 +155,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
 //                        isShortY = 1;
 //                    }
 //                }
-//                if("N".equals(d.getIsShort())) {
+//                if(GlobalConstant.FLAG_N.equals(d.getIsShort())) {
 //                    shortNCount++;
 //                    shortNCBSum+=StringUtil.isBlank(d.getCompleteBi())?0:"-".equals(d.getCompleteBi())?0:Double.valueOf(d.getCompleteBi());
 //                    shortNOCBSum+=StringUtil.isBlank(d.getOutCompleteBi())?0:"-".equals(d.getOutCompleteBi())?0:Double.valueOf(d.getOutCompleteBi());
@@ -422,7 +420,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
             styleTwo.setFont(fontTwo);
             hSSFCell1.setCellStyle(styleThree);
         String[] titles =null;
-        if("Y".equals(isWaitAudit)) {
+        if(GlobalConstant.FLAG_Y.equals(isWaitAudit)) {
             sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(0, (short) 0, 0, (short) 37));
             sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(1, (short)1, 0, (short)37));
                titles= new String[]{
@@ -661,7 +659,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 cell18.setCellValue((String) sd.get("auditReason"));
                 cell18.setCellStyle(styleCenter);
 
-               /* if(!"Y".equals(isWaitAudit)) {
+               /* if(!GlobalConstant.FLAG_Y.equals(isWaitAudit)) {
                     HSSFCell cell19 = rowDepts.createCell(20);
                     cell19.setCellValue((String) sd.get("auditStatusName"));
                     cell19.setCellStyle(styleCenter);
@@ -807,7 +805,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         styleTwo.setFont(fontTwo);
         hSSFCell1.setCellStyle(styleThree);
         String[] titles =null;
-        if("Y".equals(isWaitAudit)) {
+        if(GlobalConstant.FLAG_Y.equals(isWaitAudit)) {
             sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(0, (short) 0, 0, (short) 18));
             sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(1, (short)1, 0, (short)18));
             titles= new String[]{
@@ -1364,7 +1362,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         styleTwo.setFont(fontTwo);
         hSSFCell1.setCellStyle(styleThree);
         String[] titles =null;
-        if("Y".equals(isWaitAudit)) {
+        if(GlobalConstant.FLAG_Y.equals(isWaitAudit)) {
             sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(0, (short) 0, 0, (short) 37));
             sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(1, (short)1, 0, (short)37));
             titles= new String[]{

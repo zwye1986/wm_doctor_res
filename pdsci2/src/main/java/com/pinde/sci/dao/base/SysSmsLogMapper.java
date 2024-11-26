@@ -1,6 +1,5 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysSmsLog;
 import com.pinde.sci.model.mo.SysSmsLogExample;
 import org.apache.ibatis.annotations.Param;
 

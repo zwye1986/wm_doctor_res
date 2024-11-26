@@ -3,14 +3,12 @@ package com.pinde.sci.biz.res.impl;
 import com.pinde.core.util.PkUtil;
 import com.pinde.sci.biz.res.IStudentUntiedRecordingBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
 import com.pinde.sci.dao.base.DoctorUntiedRecordingMapper;
 import com.pinde.sci.model.mo.DoctorUntiedRecording;
 import com.pinde.sci.model.mo.DoctorUntiedRecordingExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

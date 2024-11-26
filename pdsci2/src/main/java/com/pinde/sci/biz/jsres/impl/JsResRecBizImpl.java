@@ -9,7 +9,6 @@ import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.res.IResRecBiz;
 import com.pinde.sci.biz.sch.ISchRotationBiz;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.enums.osca.AuditStatusEnum;
 import com.pinde.sci.enums.res.ResDoctorAuditStatusEnum;
 import com.pinde.sci.enums.res.ResRecTypeEnum;
@@ -21,7 +20,6 @@ import com.pinde.sci.model.mo.ResRec;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;

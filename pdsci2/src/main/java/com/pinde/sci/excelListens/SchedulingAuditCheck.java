@@ -357,7 +357,7 @@ public class SchedulingAuditCheck {
 
                 }
             }
-            if ("Y".equals(minMonthCheck)) {
+            if (GlobalConstant.FLAG_Y.equals(minMonthCheck)) {
                 if (StringUtils.isEmpty(minMonth)) {
                     minMonthCheck = "1";
                 }
@@ -802,7 +802,7 @@ public class SchedulingAuditCheck {
         }
 
         if (CollectionUtil.isNotEmpty(importList)) {
-            List<PbInfoItem> collect = importList.stream().filter(e -> "Y".equals(e.getRecordStatus())).collect(Collectors.toList());
+            List<PbInfoItem> collect = importList.stream().filter(e -> GlobalConstant.FLAG_Y.equals(e.getRecordStatus())).collect(Collectors.toList());
             result.addAll(collect);
         }
         if (CollectionUtil.isNotEmpty(dbList)) {

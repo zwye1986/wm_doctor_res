@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResLectureRandomSign extends MybatisObject {
+public class ResLectureRandomSign extends TeachingActivitySpeakerExample.MybatisObject {
     private String randomFlow;
 
     private String lectureFlow;

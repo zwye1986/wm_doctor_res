@@ -1,9 +1,10 @@
 package com.pinde.res.biz.osca.impl;
 
 
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.app.common.GlobalUtil;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
+import com.pinde.core.util.GlobalUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.osca.IOscaAppBiz;
@@ -21,9 +22,7 @@ import com.pinde.res.enums.osca.ScoreStatusEnum;
 import com.pinde.res.model.jswjw.mo.FromItem;
 import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.mo.SysUserExample.Criteria;
-import com.pinde.sci.util.PasswordHelper;
+import com.pinde.core.model.SysUserExample.Criteria;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -32,7 +31,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;

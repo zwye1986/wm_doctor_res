@@ -10,7 +10,6 @@ import com.pinde.sci.biz.sys.ICfgBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.res.EvaluationTypeEnum;
 import com.pinde.sci.form.res.ResEvaluationCfgForm;

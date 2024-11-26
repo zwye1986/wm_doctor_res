@@ -7,7 +7,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaOrgMenuBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.OscaOrgMenu;
 import com.pinde.sci.model.mo.SysOrg;
@@ -86,7 +85,7 @@ public class OscaOrgMenuController extends GeneralController {
         oscaOrgMenu.setOrgName(orgName);
         oscaOrgMenu.setMenuId(menuId);
         oscaOrgMenu.setMenuName(menuName);
-        if ("N".equals(isChecked)){
+        if (GlobalConstant.FLAG_N.equals(isChecked)){
             List<OscaOrgMenu> oscaOrgMenuTemp=oscaOrgMenuBiz.searchAllOrgMenu(oscaOrgMenu);
             if (oscaOrgMenuTemp!=null&&oscaOrgMenuTemp.size()>0){
                 oscaOrgMenu.setRecordFlow(oscaOrgMenuTemp.get(0).getRecordFlow());

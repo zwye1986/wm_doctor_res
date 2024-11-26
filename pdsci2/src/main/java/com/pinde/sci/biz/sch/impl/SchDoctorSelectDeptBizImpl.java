@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.sch.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorProcessBiz;
@@ -8,7 +9,6 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
@@ -28,7 +28,6 @@ import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -194,9 +193,9 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
             schResultExtMapper.delSchInfoByCycle(doctor.getDoctorFlow(),doctor.getOrgFlow(),doctor.getSessionNumber(),doctor.getRotationFlow(),form.getCycleYear());
             schResultExtMapper.updateDoctorSchFlag(doctor.getDoctorFlow(),form.getCycleYear());
             doctor=doctorMapper.selectByPrimaryKey(doctorForm.getUserFlow());
-            if("N".equals(doctor.getSchOneFlag())&&
-                    "N".equals(doctor.getSchTwoFlag())&&
-                    "N".equals(doctor.getSchThreeFlag()))
+            if(GlobalConstant.FLAG_N.equals(doctor.getSchOneFlag())&&
+                    GlobalConstant.FLAG_N.equals(doctor.getSchTwoFlag())&&
+                    GlobalConstant.FLAG_N.equals(doctor.getSchThreeFlag()))
             {
                 doctor.setSchAllFlag("N");
             }
@@ -273,9 +272,9 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
                     doctor.setSchTwoFlag("Y");
                     doctor.setSchThreeFlag("Y");
                 }
-                if("Y".equals(doctor.getSchOneFlag())||
-                        "Y".equals(doctor.getSchTwoFlag())||
-                        "Y".equals(doctor.getSchThreeFlag()))
+                if(GlobalConstant.FLAG_Y.equals(doctor.getSchOneFlag())||
+                        GlobalConstant.FLAG_Y.equals(doctor.getSchTwoFlag())||
+                        GlobalConstant.FLAG_Y.equals(doctor.getSchThreeFlag()))
                 {
                     doctor.setSchAllFlag("Y");
                 }

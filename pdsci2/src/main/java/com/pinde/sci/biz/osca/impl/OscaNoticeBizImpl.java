@@ -6,14 +6,12 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaNoticeBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.InxInfoMapper;
 import com.pinde.sci.dao.osca.OscaNoticeExtMapper;
 import com.pinde.sci.model.mo.InxInfo;
 import com.pinde.sci.model.mo.InxInfoExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

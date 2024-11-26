@@ -16,7 +16,6 @@ import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.dao.base.SysLogMapper;

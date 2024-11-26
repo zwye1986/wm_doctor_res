@@ -6,7 +6,7 @@
         <id column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
         <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
         <result column="DOCTOR_TYPE_NAME" property="doctorTypeName" jdbcType="VARCHAR" />
-        <association property="jsresAttendance" column="ATTENDANCE_FLOW" javaType="com.pinde.sci.model.mo.JsresAttendance">
+        <association property="jsresAttendance" column="ATTENDANCE_FLOW" javaType="com.pinde.core.model.JsresAttendance">
             <id column="ATTENDANCE_FLOW" property="attendanceFlow" jdbcType="VARCHAR" />
             <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
             <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
@@ -27,7 +27,7 @@
             <result column="AUDIT_STATUS_ID" property="auditStatusId" jdbcType="VARCHAR" />
             <result column="AUDIT_STATUS_NAME" property="auditStatusName" jdbcType="VARCHAR" />
         </association>
-        <association property="sysDept" column="deptFlow" javaType="com.pinde.sci.model.mo.SysDept">
+        <association property="sysDept" column="deptFlow" javaType="com.pinde.core.model.SysDept">
             <id column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
             <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
             <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
@@ -40,7 +40,7 @@
             <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
         </association>
     </resultMap>
-    <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.JsresAttendanceDetail" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresAttendanceDetail" >
         <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
         <result column="ATTENDANCE_FLOW" property="attendanceFlow" jdbcType="VARCHAR" />
         <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />

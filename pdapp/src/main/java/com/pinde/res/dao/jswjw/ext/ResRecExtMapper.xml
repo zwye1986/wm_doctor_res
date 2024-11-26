@@ -17,7 +17,7 @@
 		<result property="auditCount" column="AUDIT_COUNT" javaType="java.math.BigDecimal"/>
 	</resultMap>
 
-	<resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResRec" >
+	<resultMap id="BaseResultMap" type="com.pinde.core.model.ResRec" >
 		<id column="REC_FLOW" property="recFlow" jdbcType="VARCHAR" />
 		<result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
 		<result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
@@ -76,7 +76,7 @@
 			   </if>
 			   GROUP BY REC_TYPE_ID
 	</select>
-	<select id="selectByExampleTwo" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResRecExample" >
+	<select id="selectByExampleTwo" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResRecExample" >
 		select
 		<if test="distinct" >
 			distinct

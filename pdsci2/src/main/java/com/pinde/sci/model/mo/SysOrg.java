@@ -1,10 +1,10 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
 import java.util.List;
 
-public class SysOrg extends MybatisObject {
+public class SysOrg extends TeachingActivitySpeakerExample.MybatisObject {
     private String orgFlow;
 
     private String orgCode;

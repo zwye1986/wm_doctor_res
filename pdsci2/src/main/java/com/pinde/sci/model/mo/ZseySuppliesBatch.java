@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ZseySuppliesBatch extends MybatisObject {
+public class ZseySuppliesBatch extends TeachingActivitySpeakerExample.MybatisObject {
     private String batchFlow;
 
     private String suppliesFlow;

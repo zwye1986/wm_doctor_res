@@ -1,8 +1,9 @@
 package com.pinde.res.ctrl.jswjw;
 
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.commom.enums.RecDocCategoryEnum;
-import com.pinde.core.commom.enums.ResDoctorKqStatusEnum;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.RecDocCategoryEnum;
+import com.pinde.core.common.enums.ResDoctorKqStatusEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -10,12 +11,10 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.jswjw.IIeaveAppBiz;
 import com.pinde.res.biz.jswjw.IJswjwBiz;
-import com.pinde.res.enums.lcjn.DictTypeEnum;
 import com.pinde.res.model.jswjw.mo.ResDoctorKqExt;
 import com.pinde.sci.dao.base.ResDoctorMapper;
 import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;
 import com.pinde.sci.dao.base.SysUserMapper;
-import com.pinde.sci.model.mo.*;
 import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -442,7 +441,7 @@ public class JswjwStudentController {
 
             String auditRoleNow  = "";
             kq.setTeacherFlow(process.getTeacherUserFlow());
-            if ("Y".equals(greater.getTeacherFlag())) {
+            if (GlobalConstant.FLAG_Y.equals(greater.getTeacherFlag())) {
                 // teacher 带教
                 auditRoleNow  = GlobalConstant.RES_ROLE_SCOPE_TEACHER;
                 kq.setTeacherName(process.getTeacherUserName());
@@ -450,7 +449,7 @@ public class JswjwStudentController {
                 kq.setTeacherName("-");
             }
             kq.setHeadFlow(process.getHeadUserFlow());
-            if ("Y".equals(greater.getHeadFlag())) {
+            if (GlobalConstant.FLAG_Y.equals(greater.getHeadFlag())) {
                 if (StringUtil.isBlank(auditRoleNow)) {
                     auditRoleNow  = GlobalConstant.RES_ROLE_SCOPE_HEAD;
                 }
@@ -459,7 +458,7 @@ public class JswjwStudentController {
                 kq.setHeadName("-");
             }
             kq.setTutorFlow(doctor.getTutorFlow());
-            if ("Y".equals(greater.getTutorFlag())) {
+            if (GlobalConstant.FLAG_Y.equals(greater.getTutorFlag())) {
                 kq.setTutorName(doctor.getTutorName());
             } else {
                 kq.setTutorName("-");
@@ -476,7 +475,7 @@ public class JswjwStudentController {
             }
             if (admin != null) {
                 kq.setManagerFlow(admin.getUserFlow());
-                if ("Y".equals(greater.getManagerFlag())) {
+                if (GlobalConstant.FLAG_Y.equals(greater.getManagerFlag())) {
                     if (StringUtil.isBlank(auditRoleNow)) {
                         auditRoleNow  = GlobalConstant.RES_ROLE_SCOPE_ADMIN;
                     }
@@ -1387,7 +1386,7 @@ public class JswjwStudentController {
                 model.addAttribute("resultType", "此销假信息已审核，请刷新列表页");
                 return successUrl;
             }
-            if ("Y".equals(status)) {
+            if (GlobalConstant.FLAG_Y.equals(status)) {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.RevokeHeadAuditing.getId());
                 kq.setAuditStatusName(ResDoctorKqStatusEnum.RevokeHeadAuditing.getName());
                 if ("-".equals(kq.getHeadName())) {
@@ -1431,7 +1430,7 @@ public class JswjwStudentController {
                 model.addAttribute("resultType", "此销假信息已审核，请刷新列表页");
                 return successUrl;
             }
-            if ("Y".equals(status)) {
+            if (GlobalConstant.FLAG_Y.equals(status)) {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.RevokeManagerAuditing.getId());
                 kq.setAuditStatusName(ResDoctorKqStatusEnum.RevokeManagerAuditing.getName());
                 if ("-".equals(kq.getManagerName())) {
@@ -1456,7 +1455,7 @@ public class JswjwStudentController {
                 model.addAttribute("resultType", "此销假信息已审核，请刷新列表页");
                 return successUrl;
             }
-            if ("Y".equals(status)) {
+            if (GlobalConstant.FLAG_Y.equals(status)) {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.RevokeManagerPass.getId());
                 kq.setAuditStatusName(ResDoctorKqStatusEnum.RevokeManagerPass.getName());
                 kq.setAuditRoleNow("Pass");
@@ -1474,7 +1473,7 @@ public class JswjwStudentController {
             model.addAttribute("resultType", "该数据无法审核");
             return successUrl;
         }
-        if(!"Y".equals(status)) {
+        if(!GlobalConstant.FLAG_Y.equals(status)) {
             // 销假审核不通过，状态变更为请假审核通过
             kq.setAuditStatusId(ResDoctorKqStatusEnum.ManagerPass.getId());
             kq.setAuditStatusName(ResDoctorKqStatusEnum.ManagerPass.getName());
@@ -1816,7 +1815,7 @@ public class JswjwStudentController {
                 model.addAttribute("resultType", "此请假信息已审核，请刷新列表页！");
                 return successUrl;
             }
-            if ("Y".equals(status)) {
+            if (GlobalConstant.FLAG_Y.equals(status)) {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.HeadAuditing.getId());
                 kq.setAuditStatusName(ResDoctorKqStatusEnum.HeadAuditing.getName());
                 if ("-".equals(kq.getHeadName())) {
@@ -1862,7 +1861,7 @@ public class JswjwStudentController {
                 model.addAttribute("resultType", "此请假信息已审核，请刷新列表页！");
                 return successUrl;
             }
-            if ("Y".equals(status)) {
+            if (GlobalConstant.FLAG_Y.equals(status)) {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.ManagerAuditing.getId());
                 kq.setAuditStatusName(ResDoctorKqStatusEnum.ManagerAuditing.getName());
                 if ("-".equals(kq.getManagerName())) {
@@ -1887,7 +1886,7 @@ public class JswjwStudentController {
                 model.addAttribute("resultType", "此请假信息已审核，请刷新列表页！");
                 return successUrl;
             }
-            if ("Y".equals(status)) {
+            if (GlobalConstant.FLAG_Y.equals(status)) {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.ManagerPass.getId());
                 kq.setAuditStatusName(ResDoctorKqStatusEnum.ManagerPass.getName());
                 kq.setAuditRoleNow("Pass");

@@ -10,7 +10,6 @@ import com.pinde.sci.biz.res.ISysMonthlyStatisticsBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.enums.jszy.JszyResDocTypeEnum;
 import com.pinde.sci.enums.jszy.JszyTrainCategoryEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;

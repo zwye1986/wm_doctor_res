@@ -4,11 +4,10 @@ package com.pinde.res.biz.stdp.impl;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.stdp.IExamResultsBiz;
 import com.pinde.sci.dao.base.ExamResultsMapper;
-import com.pinde.sci.model.mo.ExamResults;
-import com.pinde.sci.model.mo.ExamResultsExample;
+import com.pinde.core.model.ExamResults;
+import com.pinde.core.model.ExamResultsExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;

@@ -8,7 +8,6 @@ import com.pinde.sci.biz.sch.ISchDeptBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysDeptMapper;
@@ -23,17 +22,12 @@ import com.pinde.sci.model.mo.SysDeptExample.Criteria;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.lang3.StringUtils;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +35,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PushbackInputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -481,7 +474,7 @@ public class DeptBizImpl implements IDeptBiz {
 					sysDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
 				}
 				String permissionAddSysDeptFlow = InitConfig.getSysCfg("permission_add_sys_dept");
-				if("Y".equals(permissionAddSysDeptFlow)){
+				if(GlobalConstant.FLAG_Y.equals(permissionAddSysDeptFlow)){
 					saveDept(sysDept);
 				}else {
 					if(StringUtil.isBlank(sysDept.getDeptFlow())) {

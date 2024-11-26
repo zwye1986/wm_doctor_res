@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.sch.impl;
 
 import com.pinde.sci.biz.sch.ISchExamScoreQueryBiz;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResScoreMapper;
 import com.pinde.sci.dao.base.SchExamDoctorArrangementMapper;
@@ -15,7 +14,6 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

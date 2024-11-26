@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.LcjnCourseSupplies;
-import com.pinde.sci.model.mo.LcjnCourseSuppliesExample;
+import com.pinde.core.model.LcjnCourseSupplies;
+import com.pinde.core.model.LcjnCourseSuppliesExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

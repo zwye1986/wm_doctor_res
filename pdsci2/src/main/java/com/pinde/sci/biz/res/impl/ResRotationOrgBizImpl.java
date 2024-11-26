@@ -5,14 +5,12 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResRotationOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResRotationOrgMapper;
 import com.pinde.sci.model.mo.ResRotationOrg;
 import com.pinde.sci.model.mo.ResRotationOrgExample;
 import com.pinde.sci.model.mo.ResRotationOrgExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

@@ -9,7 +9,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.res.QingpuLectureTypeEnum;
@@ -415,11 +414,11 @@ public class ResLecture4qingpuController extends GeneralController {
 				//判断结束
 				if(GlobalConstant.RECORD_STATUS_Y.equals(lectureInfo.getRecordStatus())&&((lectureEndTime.compareTo(currTime)<0&&lectureTrainDate.compareTo(currDate)==0)||(lectureTrainDate.compareTo(currDate)<0))){
 					lectureInfos.add(lectureInfo);
-					if("Y".equals(isScan))
+					if(GlobalConstant.FLAG_Y.equals(isScan))
 					{
 						scanMap.put(lectureFlow,"Y");
 					}
-					if("Y".equals(isScan2)) {
+					if(GlobalConstant.FLAG_Y.equals(isScan2)) {
 						scan2Map.put(lectureFlow, "Y");
 					}
 					evaMap.put(lectureFlow,dateFlag);

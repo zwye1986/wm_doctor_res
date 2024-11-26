@@ -1,7 +1,8 @@
 package com.pinde.res.biz.jswjw.impl;
 
 
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -12,10 +13,8 @@ import com.pinde.res.dao.jswjw.ext.OscaSkillRoomExtMapper;
 import com.pinde.res.dao.jswjw.ext.OscaSubjectMainExtMapper;
 import com.pinde.res.model.jswjw.mo.OscaSkillRoomExt;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;

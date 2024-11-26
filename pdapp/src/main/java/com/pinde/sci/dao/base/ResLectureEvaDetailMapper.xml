@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResLectureEvaDetailMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResLectureEvaDetail" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResLectureEvaDetail" >
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="LECTURE_FLOW" property="lectureFlow" jdbcType="VARCHAR" />
     <result column="OPER_USER_FLOW" property="operUserFlow" jdbcType="VARCHAR" />
@@ -20,7 +20,7 @@
     <result column="TARGET_NAME" property="targetName" jdbcType="VARCHAR" />
     <result column="ORDINAL" property="ordinal" jdbcType="DECIMAL" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ResLectureEvaDetail" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.ResLectureEvaDetail" extends="BaseResultMap" >
     <result column="EVAL_FORM_CONTENT" property="evalFormContent" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -89,7 +89,7 @@
   <sql id="Blob_Column_List" >
     EVAL_FORM_CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.ResLectureEvaDetailExample" >
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.core.model.ResLectureEvaDetailExample" >
     select
     <if test="distinct" >
       distinct
@@ -105,7 +105,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResLectureEvaDetailExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResLectureEvaDetailExample" >
     select
     <if test="distinct" >
       distinct
@@ -131,13 +131,13 @@
     delete from PDSCI.RES_LECTURE_EVA_DETAIL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResLectureEvaDetailExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResLectureEvaDetailExample" >
     delete from PDSCI.RES_LECTURE_EVA_DETAIL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResLectureEvaDetail" >
+  <insert id="insert" parameterType="com.pinde.core.model.ResLectureEvaDetail" >
     insert into PDSCI.RES_LECTURE_EVA_DETAIL (RECORD_FLOW, LECTURE_FLOW, OPER_USER_FLOW, 
       OPER_USER_NAME, EVA_CONTENT, EVA_SCORE, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -153,7 +153,7 @@
       #{targetName,jdbcType=VARCHAR}, #{ordinal,jdbcType=DECIMAL}, #{evalFormContent,jdbcType=CLOB}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResLectureEvaDetail" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ResLectureEvaDetail" >
     insert into PDSCI.RES_LECTURE_EVA_DETAIL
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -268,7 +268,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResLectureEvaDetailExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.ResLectureEvaDetailExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.RES_LECTURE_EVA_DETAIL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -383,7 +383,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResLectureEvaDetail" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResLectureEvaDetail" >
     update PDSCI.RES_LECTURE_EVA_DETAIL
     <set >
       <if test="lectureFlow != null" >
@@ -440,7 +440,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResLectureEvaDetail" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ResLectureEvaDetail" >
     update PDSCI.RES_LECTURE_EVA_DETAIL
     set LECTURE_FLOW = #{lectureFlow,jdbcType=VARCHAR},
       OPER_USER_FLOW = #{operUserFlow,jdbcType=VARCHAR},
@@ -461,7 +461,7 @@
       EVAL_FORM_CONTENT = #{evalFormContent,jdbcType=CLOB}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResLectureEvaDetail" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResLectureEvaDetail" >
     update PDSCI.RES_LECTURE_EVA_DETAIL
     set LECTURE_FLOW = #{lectureFlow,jdbcType=VARCHAR},
       OPER_USER_FLOW = #{operUserFlow,jdbcType=VARCHAR},

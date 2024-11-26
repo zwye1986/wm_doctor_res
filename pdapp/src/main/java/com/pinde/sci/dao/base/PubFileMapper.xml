@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.PubFileMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PubFile" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.PubFile" >
     <id column="FILE_FLOW" property="fileFlow" jdbcType="VARCHAR" />
     <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
     <result column="FILE_REMARK" property="fileRemark" jdbcType="VARCHAR" />
@@ -18,7 +18,7 @@
     <result column="PRODUCT_TYPE" property="productType" jdbcType="VARCHAR" />
     <result column="PRODUCT_FLOW" property="productFlow" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.PubFile" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.PubFile" extends="BaseResultMap" >
     <result column="FILE_CONTENT" property="fileContent" jdbcType="BLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -87,7 +87,7 @@
   <sql id="Blob_Column_List" >
     FILE_CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.PubFileExample" >
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.core.model.PubFileExample" >
     select
     <if test="distinct" >
       distinct
@@ -103,7 +103,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.PubFileExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.PubFileExample" >
     select
     <if test="distinct" >
       distinct
@@ -129,13 +129,13 @@
     delete from PDSCI.PUB_FILE
     where FILE_FLOW = #{fileFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PubFileExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.PubFileExample" >
     delete from PDSCI.PUB_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.PubFile" >
+  <insert id="insert" parameterType="com.pinde.core.model.PubFile" >
     insert into PDSCI.PUB_FILE (FILE_FLOW, FILE_NAME, FILE_REMARK, 
       FILE_TYPE, FILE_SUFFIX, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -149,7 +149,7 @@
       #{filePath,jdbcType=VARCHAR}, #{productType,jdbcType=VARCHAR}, #{productFlow,jdbcType=VARCHAR}, 
       #{fileContent,jdbcType=BLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PubFile" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.PubFile" >
     insert into PDSCI.PUB_FILE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="fileFlow != null" >
@@ -252,7 +252,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PubFileExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.PubFileExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.PUB_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -357,7 +357,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PubFile" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubFile" >
     update PDSCI.PUB_FILE
     <set >
       <if test="fileName != null" >
@@ -408,7 +408,7 @@
     </set>
     where FILE_FLOW = #{fileFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.PubFile" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.PubFile" >
     update PDSCI.PUB_FILE
     set FILE_NAME = #{fileName,jdbcType=VARCHAR},
       FILE_REMARK = #{fileRemark,jdbcType=VARCHAR},
@@ -427,7 +427,7 @@
       FILE_CONTENT = #{fileContent,jdbcType=BLOB}
     where FILE_FLOW = #{fileFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PubFile" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubFile" >
     update PDSCI.PUB_FILE
     set FILE_NAME = #{fileName,jdbcType=VARCHAR},
       FILE_REMARK = #{fileRemark,jdbcType=VARCHAR},

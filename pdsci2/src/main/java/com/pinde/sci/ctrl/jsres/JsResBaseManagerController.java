@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
@@ -401,7 +402,7 @@ public class JsResBaseManagerController extends GeneralController {
 				List<PubFile> teachConditionList = pubFileBiz.findFileByTypeFlow(GlobalConstant.TEACH_CONDITION, baseFlow + sessionNumber);
 				files.addAll(teachConditionList);
 				Map<String, PubFile> fileMap = new HashMap<>();
-				if (GlobalConstant.ORG_MANAGE.equals(productType) || (GlobalConstant.BASIC_INFO.equals(productType) && !"Y".equals(editFlag))) {
+				if (GlobalConstant.ORG_MANAGE.equals(productType) || (GlobalConstant.BASIC_INFO.equals(productType) && !GlobalConstant.FLAG_Y.equals(editFlag))) {
 					//组织管理
 					List<PubFile> orgManageList = pubFileBiz.findFileByTypeFlow(GlobalConstant.ORG_MANAGE, baseFlow + sessionNumber);
 					if (orgManageList != null && orgManageList.size() > 0) {
@@ -490,7 +491,7 @@ public class JsResBaseManagerController extends GeneralController {
 			if (GlobalConstant.BASIC_MAIN_ALL.equals(baseInfoName)) {
 				mav.setViewName("jsres/hospital/hos/editBasicInfoMainDuplicate");
 				baseInfoEditSet(sessionNumber, baseFlow, mav);
-			} else if ("Y".equals(baseInfoMain)) {
+			} else if (GlobalConstant.FLAG_Y.equals(baseInfoMain)) {
 				mav.setViewName("jsres/hospital/hos/basicInfoMainInfo");
 			} else if ((StringUtil.isBlank(resBase.getBaseStatusId()) || GlobalConstant.FLAG_Y.equals(editFlag)) && !GlobalConstant.FLAG_Y.equals(viewFlag)) {
 				mav.setViewName("jsres/hospital/hos/edit" + baseInfoName);
@@ -510,7 +511,7 @@ public class JsResBaseManagerController extends GeneralController {
 			if (GlobalConstant.BASIC_MAIN_ALL.equals(baseInfoName)) {
 				mav.setViewName("jsres/hospital/hos/editBasicInfoMainDuplicate");
 				baseInfoEditSet(sessionNumber, baseFlow, mav);
-			} else if ("Y".equals(baseInfoMain)) {
+			} else if (GlobalConstant.FLAG_Y.equals(baseInfoMain)) {
 				mav.setViewName("jsres/hospital/hos/basicInfoMainInfo");
 			} else if (GlobalConstant.FLAG_Y.equals(editFlag)) {
 				mav.setViewName("jsres/hospital/hos/edit" + baseInfoName);
@@ -845,7 +846,7 @@ public class JsResBaseManagerController extends GeneralController {
 
 		model.addAttribute("deptFlow", deptFlow);
 		model.addAttribute("orgFlow", orgFlow);
-		if(!"Y".equals(viewFlag)) {
+		if(!GlobalConstant.FLAG_Y.equals(viewFlag)) {
 			model.addAttribute("viewFlag", "N");
 		}else {
 			model.addAttribute("viewFlag", "Y");
@@ -1020,7 +1021,7 @@ public class JsResBaseManagerController extends GeneralController {
 			return "jsres/hospital/hos/" + menu;
 		}
 
-		if("Y".equals(ishos) || "Y".equals(isJoin)) { // 省厅用原来的页面，有专业基地的， 协同单位管理也用原来的有专业基地的页面
+		if(GlobalConstant.FLAG_Y.equals(ishos) || GlobalConstant.FLAG_Y.equals(isJoin)) { // 省厅用原来的页面，有专业基地的， 协同单位管理也用原来的有专业基地的页面
 			return "jsres/hospital/hos/mainKjc";
 		}else {
 			return "jsres/hospital/hos/main";

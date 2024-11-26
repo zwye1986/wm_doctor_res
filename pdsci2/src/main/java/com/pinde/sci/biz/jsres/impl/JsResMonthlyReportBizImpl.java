@@ -3,14 +3,12 @@ package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResMonthlyReportBiz;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

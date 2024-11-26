@@ -10,7 +10,6 @@ import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.jsres.JsResUserBalckListExtMapper;
@@ -337,7 +336,7 @@ public class JsResUserBlackListController extends GeneralController {
         List<String> orgFlowList=new ArrayList<String>();
         if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(jsresUserBalcklist.getOrgFlow())) {
             for (SysOrg tempOrg : orgs) {
-                if("Y".equals(jointOrgFlag)){
+                if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -350,7 +349,7 @@ public class JsResUserBlackListController extends GeneralController {
         }
         if(StringUtil.isNotBlank(jsresUserBalcklist.getOrgFlow())){
             orgFlowList.add(jsresUserBalcklist.getOrgFlow());
-            if("Y".equals(jointOrgFlag)){
+            if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
                 List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(jsresUserBalcklist.getOrgFlow());
                 if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                     for (ResJointOrg jointOrg : resJointOrgList) {
@@ -426,7 +425,7 @@ public class JsResUserBlackListController extends GeneralController {
         List<String> orgFlowList=new ArrayList<String>();
         if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(jsresUserBalcklist.getOrgFlow())) {
             for (SysOrg tempOrg : orgs) {
-                if("Y".equals(jointOrgFlag)){
+                if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -439,7 +438,7 @@ public class JsResUserBlackListController extends GeneralController {
         }
         if(StringUtil.isNotBlank(jsresUserBalcklist.getOrgFlow())){
             orgFlowList.add(jsresUserBalcklist.getOrgFlow());
-            if("Y".equals(jointOrgFlag)){
+            if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
                 List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(jsresUserBalcklist.getOrgFlow());
                 if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                     for (ResJointOrg jointOrg : resJointOrgList) {
@@ -509,7 +508,7 @@ public class JsResUserBlackListController extends GeneralController {
         List<String> orgFlowList=new ArrayList<String>();
         if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(jsresUserBalcklist.getOrgFlow())) {
             for (SysOrg tempOrg : orgs) {
-                if("Y".equals(jointOrgFlag)){
+                if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -522,7 +521,7 @@ public class JsResUserBlackListController extends GeneralController {
         }
         if(StringUtil.isNotBlank(jsresUserBalcklist.getOrgFlow())){
             orgFlowList.add(jsresUserBalcklist.getOrgFlow());
-            if("Y".equals(jointOrgFlag)){
+            if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
                 List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(jsresUserBalcklist.getOrgFlow());
                 if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                     for (ResJointOrg jointOrg : resJointOrgList) {
@@ -596,7 +595,7 @@ public class JsResUserBlackListController extends GeneralController {
         List<String> orgFlowList=new ArrayList<String>();
         if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(jsresUserBalcklist.getOrgFlow())) {
             for (SysOrg tempOrg : orgs) {
-                if("Y".equals(jointOrgFlag)){
+                if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -609,7 +608,7 @@ public class JsResUserBlackListController extends GeneralController {
         }
         if(StringUtil.isNotBlank(jsresUserBalcklist.getOrgFlow())){
             orgFlowList.add(jsresUserBalcklist.getOrgFlow());
-            if("Y".equals(jointOrgFlag)){
+            if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
                 List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(jsresUserBalcklist.getOrgFlow());
                 if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                     for (ResJointOrg jointOrg : resJointOrgList) {

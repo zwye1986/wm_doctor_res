@@ -1,6 +1,6 @@
 package com.pinde.res.biz.common;
 
-import com.pinde.sci.model.mo.SysDict;
+import com.pinde.core.model.SysDict;
 
 import java.util.List;
 

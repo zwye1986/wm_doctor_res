@@ -1,24 +1,24 @@
 package com.pinde.res.biz.jszy.impl;
 
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.app.common.GlobalUtil;
-import com.pinde.core.commom.enums.*;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.JszyResTrainYearEnum;
+import com.pinde.core.common.enums.JszyTrainCategoryEnum;
+import com.pinde.core.common.enums.RegistryTypeEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
+import com.pinde.core.util.GlobalUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.core.util.TimeUtil;
 import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.jszy.IJszyAppBiz;
 import com.pinde.res.biz.jszy.IJszyStudentBiz;
-import com.pinde.res.dao.jszy.ext.*;
-import com.pinde.res.model.jszy.mo.AnnualAssessmentExt;
-import com.pinde.res.model.jszy.mo.ResGraduationAssessmentExt;
+import com.pinde.res.dao.jszy.ext.AnnualAssessmentExtMapper;
+import com.pinde.res.dao.jszy.ext.JszySchArrangeResultExtMapper;
+import com.pinde.res.dao.jszy.ext.ResDiscipleInfoExtMapper;
 import com.pinde.res.model.jszy.mo.UploadFileForm;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import sun.misc.BASE64Decoder;
 
 import javax.annotation.Resource;
@@ -27,7 +27,6 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,18 +51,13 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 	@Resource
 	private IJszyAppBiz jszyAppBiz;
 	@Resource
-	private JszySchRotationDeptExtMapper rotationDeptExtMapper;
+	private ResBookStudyRecordMapper bookStudyRecordMapper;
 	@Resource
 	private SchRotationGroupMapper rotationGroupMapper;
 	@Resource
 	private SchRotationMapper rotationMapper;
 	@Autowired
 	private ResDoctorSchProcessMapper  resDoctorProcessMapper;
-	//读取学员的排班数据
-	@Override
-	public List<Map<String,Object>> searchResult(Map<String,Object> paramMap){
-		return resultExtMapper.searchResult(paramMap);
-	}
 	
 	//根据result获取peocess
 	@Override
@@ -81,15 +75,6 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 		return null;
 	}
 
-	@Override
-	public SchRotationDept readRotationDept(String rotationDeptFlow){
-		return rotationDeptMapper.selectByPrimaryKey(rotationDeptFlow);
-	}
-
-	@Override
-	public SchRotationGroup readRotationGroup(String groupFlow){
-		return rotationGroupMapper.selectByPrimaryKey(groupFlow);
-	}
 
 	@Override
 	public SchRotation readRotation(String rotationFlow){
@@ -451,33 +436,6 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 		}
 		
 		return (T)rotationDeptMapper.selectByExample(example);
-	}
-	
-	/**获取该学员的轮转登记比例,完成数和要求
-	 * f:float,i:int
-	 * Map<doctorFlow,f> 整个轮转登记进度
-	 * Map<doctorFlow+'reqNum',i> 整个轮转要求数
-	 * Map<doctorFlow+'finished',i> 整个轮转完成数
-	 * Map<processFlow/resultFlow,f> 当前科室登记进度
-	 * Map<processFlow/resultFlow+'ReqNum',i> 当前科室要求数
-	 * Map<processFlow/resultFlow+'Finished',i> 当前科室完成数
-	 * Map<processFlow/resultFlow+recTypeId,f> 该科室某一登记类型登记进度
-	 * Map<processFlow/resultFlow+recTypeId+'ReqNum',i> 该科室某一登记类型要求数
-	 * Map<processFlow/resultFlow+recTypeId+'Finished',i> 该科室某一登记类型完成数
-	 * Map<processFlow/resultFlow+recTypeId+itemId,f> 该科室某一登记类型某一子项登记进度
-	 * Map<processFlow/resultFlow+recTypeId+itemId+'ReqNum',i> 该科室某一登记类型某一子项要求数
-	 * Map<processFlow/resultFlow+recTypeId+itemId+'Finished',i> 该科室某一登记类型某一子项完成数
-	 * */
-	
-	/**
-	 * 获取这个人的所有科室类型等细分比例和完成数等
-	 * @param format
-	 * @param userFlow
-	 * @return
-	 */
-	@Override
-	public Map<String,Object> getRegPer(int format,String userFlow){
-		return getRegPer(format,userFlow,null);
 	}
 	
 	/**
@@ -878,10 +836,6 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 	}
 	/************************************** 计算登记百分比END****************************************************/
 
-	@Override
-	public List<Map<String,Object>> getDoctorRotationDept(Map<String,Object> paramMap){
-		return rotationDeptExtMapper.getDoctorRotationDept(paramMap);
-	}
 
 	@Override
 	public List<SchArrangeResult> checkResultDate(String doctorFlow, String startDate, String endDate, String resultFlow, String rotationFlow, String secondRotationFlow){
@@ -900,254 +854,24 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 	}
 
 	@Override
-	public int editDoctorResult(
-			String userFlow,
-			String standardDeptFlow,
-			String schDeptFlow,
-			String schStartDate,
-			String schEndDate,
-			String teacherUserFlow,
-			String headUserFlow,
-			String deptFlow
-	) throws ParseException {
-		boolean isNew = deptFlow==null;
-		SchArrangeResult result ;
-		ResDoctorSchProcess process ;
-		ResDoctor doctor = jszyAppBiz.readResDoctor(userFlow);
-		if(isNew){
-			result = new SchArrangeResult();
-			process = new ResDoctorSchProcess();
-
-
-			if(doctor!=null){
-				result.setResultFlow(PkUtil.getUUID());
-				result.setArrangeFlow(PkUtil.getUUID());
-				result.setDoctorFlow(userFlow);
-				result.setDoctorName(doctor.getDoctorName());
-				result.setSessionNumber(doctor.getSessionNumber());
-				result.setOrgFlow(doctor.getOrgFlow());
-				result.setOrgName(doctor.getOrgName());
-				result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-				result.setCreateUserFlow(userFlow);
-				result.setCreateTime(DateUtil.getCurrentTime());
-				result.setModifyUserFlow(userFlow);
-				result.setModifyTime(DateUtil.getCurrentTime());
-
-				process.setProcessFlow(PkUtil.getUUID());
-				process.setUserFlow(userFlow);
-				process.setOrgFlow(doctor.getOrgFlow());
-				process.setOrgName(doctor.getOrgName());
-				process.setSchResultFlow(result.getResultFlow());
-				process.setSchFlag(GlobalConstant.FLAG_N);
-				process.setIsCurrentFlag(GlobalConstant.FLAG_N);
-				process.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-				process.setCreateUserFlow(userFlow);
-				process.setCreateTime(DateUtil.getCurrentTime());
-				process.setModifyUserFlow(userFlow);
-				process.setModifyTime(DateUtil.getCurrentTime());
-
-			}
-		}else{
-			result = searcheDocResult(null,deptFlow);
-			result.setModifyUserFlow(userFlow);
-			result.setModifyTime(DateUtil.getCurrentTime());
-
-			process = getProcessByResult(deptFlow);
-			if(process==null)
-			{
-				process=new ResDoctorSchProcess();
-				process.setUserFlow(userFlow);
-				process.setOrgFlow(doctor.getOrgFlow());
-				process.setOrgName(doctor.getOrgName());
-				process.setSchResultFlow(result.getResultFlow());
-				process.setSchFlag(GlobalConstant.FLAG_N);
-				process.setIsCurrentFlag(GlobalConstant.FLAG_N);
-				process.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-				process.setCreateUserFlow(userFlow);
-				process.setCreateTime(DateUtil.getCurrentTime());
-			}
-			process.setModifyUserFlow(userFlow);
-			process.setModifyTime(DateUtil.getCurrentTime());
-		}
-
-		SchRotationDept rotationDept = readRotationDept(standardDeptFlow);
-		if(rotationDept!=null){
-			Integer ordi = rotationDept.getOrdinal();
-			BigDecimal ord = null;
-			if(ordi!=null){
-				ord = BigDecimal.valueOf(ordi);
-			}
-			result.setSchDeptOrder(ord);
-			//result.setSchMonth(rotationDept.getSchMonth());
-			result.setIsRequired(rotationDept.getIsRequired());
-			result.setStandardDeptId(rotationDept.getStandardDeptId());
-			result.setStandardDeptName(rotationDept.getStandardDeptName());
-			result.setStandardGroupFlow(rotationDept.getGroupFlow());
-
-			String rotationFlow = rotationDept.getRotationFlow();
-			if(StringUtil.isNotBlank(rotationFlow)){
-				SchRotation rotation = readRotation(rotationFlow);
-				result.setRotationFlow(rotation.getRotationFlow());
-				result.setRotationName(rotation.getRotationName());
-				result.setSchYear(rotation.getRotationYear());
-			}
-		}
-
-		SchDept schDept = jszyAppBiz.readSchDept(schDeptFlow);
-		if(schDept!=null){
-			result.setDeptFlow(schDept.getDeptFlow());
-			result.setDeptName(schDept.getDeptName());
-			result.setSchDeptFlow(schDeptFlow);
-			result.setSchDeptName(schDept.getSchDeptName());
-
-			process.setDeptFlow(schDept.getDeptFlow());
-			process.setDeptName(schDept.getDeptName());
-			process.setSchDeptFlow(schDeptFlow);
-			process.setSchDeptName(schDept.getSchDeptName());
-		}
-
-		SysUser teacher = jszyAppBiz.readSysUser(teacherUserFlow);
-		if(teacher!=null){
-			process.setTeacherUserFlow(teacherUserFlow);
-			process.setTeacherUserName(teacher.getUserName());
-		}
-
-		SysUser head = jszyAppBiz.readSysUser(headUserFlow);
-		if(head!=null){
-			process.setHeadUserFlow(headUserFlow);
-			process.setHeadUserName(head.getUserName());
-		}
-
-		result.setSchStartDate(schStartDate);
-		result.setSchEndDate(schEndDate);
-		//读取是否开启自主增加轮转计划开关 res_custom_result_flag
-		String isManualFlag = jszyAppBiz.getCfgByCode("res_custom_result_flag");
-		//读取是否允许学员自己入科开关 res_custom_result_flag
-		String isInBySelfFlag = jszyAppBiz.getCfgByCode("res_doc_in_by_self");
-		if(GlobalConstant.FLAG_Y.equals(isInBySelfFlag)&&!GlobalConstant.FLAG_Y.equals(isManualFlag)){
-			if(DateUtil.getCurrDate().compareTo(schStartDate)>=0) {
-				process.setIsCurrentFlag(GlobalConstant.FLAG_Y);
-			}
-		}
-		String startDate = result.getSchStartDate();
-		String endDate = result.getSchEndDate();
-		process.setSchStartDate(startDate);
-		process.setSchEndDate(endDate);
-		//轮转计划单位
-		String unit = jszyAppBiz.getCfgByCode("res_rotation_unit");
-		//默认按月计算
-		int step = 30;
-		if (SchUnitEnum.Week.getId().equals(unit)) {
-			//如果是周按7天算/没配置或者选择月按30天
-			step = 7;
-			BigDecimal realMonth = BigDecimal.valueOf(0);
-			long realDays = DateUtil.signDaysBetweenTowDate(result.getSchEndDate(), result.getSchStartDate())+1;
-			if (realDays != 0) {
-				//计算实际轮转的月/周数
-				double realMonthF = (realDays / (step * 1.0));
-				realMonth = BigDecimal.valueOf(realMonthF);
-				realMonth = realMonth.setScale(1, BigDecimal.ROUND_HALF_UP);
-			}
-			String schMonth = String.valueOf(realMonth.doubleValue());
-			result.setSchMonth(schMonth);
-		}else{
-			Map<String,String> map= new HashMap<>();
-			map.put("startDate",result.getSchStartDate());
-			map.put("endDate",result.getSchEndDate());
-			Double month = TimeUtil.getMonthsBetween(map);
-			String schMonth = String.valueOf(Double.parseDouble(month + ""));
-			result.setSchMonth(schMonth);
-		}
-
-		process.setSchStartDate(schStartDate);
-		process.setSchEndDate(schEndDate);
-		process.setStartDate(schStartDate);
-		process.setEndDate(schEndDate);
-
-		if(isNew){
-			resultMapper.insertSelective(result);
-			processMapper.insertSelective(process);
-		}else{
-			resultMapper.updateByPrimaryKeySelective(result);
-			if(StringUtil.isNotBlank(process.getProcessFlow())) {
-				processMapper.updateByPrimaryKeySelective(process);
-			}else{
-				process.setProcessFlow(PkUtil.getUUID());
-				processMapper.insertSelective(process);
-			}
-		}
-		if(!GlobalConstant.FLAG_Y.equals(doctor.getSchFlag())||!GlobalConstant.FLAG_Y.equals(doctor.getSelDeptFlag()))
-		{
-			doctor.setSchFlag(GlobalConstant.FLAG_Y);
-			doctor.setSelDeptFlag(GlobalConstant.FLAG_Y);
-			jszyAppBiz.editResDoctor(doctor);
-		}
-		return 1;
-	}
-
-	@Override
-	public int delDoctorResult(String deptFlow){
-		SchArrangeResult result = searcheDocResult(null,deptFlow);
-		result.setModifyTime(DateUtil.getCurrentTime());
-		result.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
-		resultMapper.updateByPrimaryKeySelective(result);
-
-		ResDoctorSchProcess process = getProcessByResult(deptFlow);
-		process.setModifyTime(DateUtil.getCurrentTime());
-		process.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
-		processMapper.updateByPrimaryKeySelective(process);
-
-		return 1;
-	}
-
-	@Override
-	public int updateProcess(ResDoctorSchProcess process){
-		if(process!=null && StringUtil.isNotBlank(process.getProcessFlow())){
-			process.setModifyTime(DateUtil.getCurrentTime());
-			return processMapper.updateByPrimaryKeySelective(process);
-		}
-		return 0;
-	}
-
-	@Override
 	public List<ResDoctorSchProcess> searchProcessByDoctor(String doctorFlow){
 		ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
 		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(doctorFlow);
 		return resDoctorProcessMapper.selectByExample(example);
 	}
-
-	@Autowired
-	private ResDiscipleInfoMapper resDiscipleInfoMapper;
 	@Autowired
 	private ResDiscipleInfoExtMapper resDiscipleInfoExtMapper;
 	@Autowired
-	private ResDiscipleTeacherInfoMapper teacherInfoMapper;
-	@Autowired
-	private ResStudentDiscipleTeacherMapper resStudentDiscipleTeacherMapper;
-	@Autowired
-	private ResDiscipleRecordInfoMapper resDiscipleRecordInfoMapper;
-	@Autowired
-	private ResFollowTeacherRecordExtMapper resFollowTeacherRecordExtMapper;
-	@Autowired
-	private ResDiscipleNoteInfoMapper noteInfoMapper;
-	@Autowired
 	private ResGraduationAssessmentMapper graduationAssessmentMapper;
-	@Autowired
-	private ResAnnualAssessmentMapper annualAssessmentMapper;
-	@Autowired
-	private ResTypicalCasesMapper typicalCasesMapper;
-	@Override
-	public ResDiscipleInfo readResDiscipleInfo(String userFlow) {
-		ResDiscipleInfoExample example=new ResDiscipleInfoExample();
-		example.createCriteria().andDoctorFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-		List<ResDiscipleInfo>list= resDiscipleInfoMapper.selectByExample(example);
-		if(list!=null&&list.size()>0)
-		{
-			return list.get(0);
-		}
-		return null;
-	}
 
+
+	@Autowired
+	private AnnualAssessmentExtMapper assessmentExtMapper;
+
+	@Autowired
+	private IFileBiz pubFileBiz;
+	@Autowired
+	private PubFileMapper pubFileMapper;
 	@Override
 	public String getTeacherName(String userFlow) {
 		Map<String,String> map=resDiscipleInfoExtMapper.getTeacherNames(userFlow);
@@ -1159,470 +883,10 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 	}
 
 	@Override
-	public int savaResDiscipleInfo(ResDiscipleInfo bean,SysUser user) {
-
-		if(StringUtil.isBlank(bean.getDiscipleFlow())) {
-			bean.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-			bean.setCreateUserFlow(user.getUserFlow());
-			bean.setCreateTime(DateUtil.getCurrDateTime());
-			bean.setModifyUserFlow(user.getUserFlow());
-			bean.setModifyTime(DateUtil.getCurrDateTime());
-			bean.setDiscipleFlow(PkUtil.getUUID());
-			return resDiscipleInfoMapper.insert(bean);
-		}else{
-			bean.setModifyUserFlow(user.getUserFlow());
-			bean.setModifyTime(DateUtil.getCurrDateTime());
-			return resDiscipleInfoMapper.updateByPrimaryKeySelective(bean);
-		}
-	}
-	@Override
-	public ResDiscipleTeacherInfo readResDiscipleTeacherInfo(String userFlow) {
-		ResDiscipleTeacherInfoExample example=new ResDiscipleTeacherInfoExample();
-		example.createCriteria().andDoctorFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-		List<ResDiscipleTeacherInfo> list= teacherInfoMapper.selectByExampleWithBLOBs(example);
-		if(list!=null&&list.size()>0)
-		{
-			return list.get(0);
-		}
-		return null;
-	}
-
-	@Override
-	public int savaResDiscipleTeacherInfo(ResDiscipleTeacherInfo bean,SysUser user) {
-		if(StringUtil.isBlank(bean.getRecordFlow())) {
-			bean.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-			bean.setCreateUserFlow(user.getUserFlow());
-			bean.setCreateTime(DateUtil.getCurrDateTime());
-			bean.setModifyUserFlow(user.getUserFlow());
-			bean.setModifyTime(DateUtil.getCurrDateTime());
-			bean.setRecordFlow(PkUtil.getUUID());
-			return teacherInfoMapper.insert(bean);
-		}else{
-			bean.setModifyUserFlow(user.getUserFlow());
-			bean.setModifyTime(DateUtil.getCurrDateTime());
-			return teacherInfoMapper.updateByPrimaryKeySelective(bean);
-		}
-	}
-
-	@Override
-	public ResDiscipleTeacherInfo readResDiscipleTeacherInfoByFlow(String infoFlow) {
-		return teacherInfoMapper.selectByPrimaryKey(infoFlow);
-	}
-
-	@Override
-	public List<ResStudentDiscipleTeacher> searchResStudentDiscipleTeacher(ResStudentDiscipleTeacher resStudentDiscipleTeacher) {
-		ResStudentDiscipleTeacherExample example = new ResStudentDiscipleTeacherExample();
-		ResStudentDiscipleTeacherExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-		if(resStudentDiscipleTeacher!=null){
-			if(StringUtil.isNotBlank(resStudentDiscipleTeacher.getDoctorFlow())){
-				criteria.andDoctorFlowEqualTo(resStudentDiscipleTeacher.getDoctorFlow());
-			}
-			if(StringUtil.isNotBlank(resStudentDiscipleTeacher.getDoctorName())){
-				criteria.andDoctorNameLike("%"+resStudentDiscipleTeacher.getDoctorName()+"%");
-			}
-			if(StringUtil.isNotBlank(resStudentDiscipleTeacher.getTeacherFlow())){
-				criteria.andTeacherFlowEqualTo(resStudentDiscipleTeacher.getTeacherFlow());
-			}
-
-		}
-		example.setOrderByClause("DOCTOR_NAME desc");
-		return resStudentDiscipleTeacherMapper.selectByExample(example);
-	}
-
-	@Override
-	public int saveResDiscipleRecordInfo(ResDiscipleRecordInfo resDiscipleRecordInfo,SysUser user) {
-		if(resDiscipleRecordInfo!=null){
-			if(StringUtil.isNotBlank(resDiscipleRecordInfo.getRecordFlow())){
-				resDiscipleRecordInfo.setModifyUserFlow(user.getUserFlow());
-				resDiscipleRecordInfo.setModifyTime(DateUtil.getCurrDateTime());
-				return resDiscipleRecordInfoMapper.updateByPrimaryKeySelective(resDiscipleRecordInfo);
-			}else{
-				resDiscipleRecordInfo.setRecordFlow(PkUtil.getUUID());
-				resDiscipleRecordInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-				resDiscipleRecordInfo.setCreateUserFlow(user.getUserFlow());
-				resDiscipleRecordInfo.setCreateTime(DateUtil.getCurrDateTime());
-				resDiscipleRecordInfo.setModifyUserFlow(user.getUserFlow());
-				resDiscipleRecordInfo.setModifyTime(DateUtil.getCurrDateTime());
-				return resDiscipleRecordInfoMapper.insert(resDiscipleRecordInfo);
-			}
-		}
-		return 0;
-	}
-
-	@Override
-	public List<ResDiscipleRecordInfo> searchFolowTeacherRecord(ResDiscipleRecordInfo resDiscipleRecordInfo) {
-		ResDiscipleRecordInfoExample example = new ResDiscipleRecordInfoExample();
-		ResDiscipleRecordInfoExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-		if(resDiscipleRecordInfo!=null){
-			if(StringUtil.isNotBlank(resDiscipleRecordInfo.getDoctorFlow())){
-				criteria.andDoctorFlowEqualTo(resDiscipleRecordInfo.getDoctorFlow());
-			}
-			if(StringUtil.isNotBlank(resDiscipleRecordInfo.getTeacherFlow())){
-				criteria.andTeacherFlowEqualTo(resDiscipleRecordInfo.getTeacherFlow());
-			}
-			if(StringUtil.isNotBlank(resDiscipleRecordInfo.getRecordFlow())){
-				criteria.andRecordFlowEqualTo(resDiscipleRecordInfo.getRecordFlow());
-			}
-			if(StringUtil.isNotBlank(resDiscipleRecordInfo.getAuditStatusId())&& DiscipleStatusEnum.Submit.getId().equals(resDiscipleRecordInfo.getAuditStatusId())){
-				List<String> values= new ArrayList<>();
-				values.add(DiscipleStatusEnum.Submit.getId());
-				values.add(DiscipleStatusEnum.DiscipleAudit.getId());
-				values.add(DiscipleStatusEnum.DiscipleBack.getId());
-				values.add(DiscipleStatusEnum.AdminAudit.getId());
-				values.add(DiscipleStatusEnum.AdminBack.getId());
-				values.add(DiscipleStatusEnum.PendingAudit.getId());
-				values.add(DiscipleStatusEnum.Qualified.getId());
-				values.add(DiscipleStatusEnum.UnQualified.getId());
-				criteria.andAuditStatusIdIn(values);
-				resDiscipleRecordInfo.setAuditStatusId("");
-				resDiscipleRecordInfo.setAuditStatusName("");
-			}
-			if(StringUtil.isNotBlank(resDiscipleRecordInfo.getAuditStatusId())){
-				criteria.andAuditStatusIdEqualTo(resDiscipleRecordInfo.getAuditStatusId());
-			}
-			if(StringUtil.isNotBlank(resDiscipleRecordInfo.getAuditStatusName())){
-				criteria.andAuditStatusNameEqualTo(resDiscipleRecordInfo.getAuditStatusName());
-			}
-			if(StringUtil.isNotBlank(resDiscipleRecordInfo.getDoctorName())){
-				criteria.andDoctorNameLike("%"+resDiscipleRecordInfo.getDoctorName()+"%");
-			}
-		}
-		example.setOrderByClause("CREATE_TIME desc");
-		return resDiscipleRecordInfoMapper.selectByExample(example);
-	}
-
-	@Override
-	public List<ResDiscipleRecordInfo> searchFolowTeacherRecordByType(String userFlow, String typeId) {
-		return resFollowTeacherRecordExtMapper.searchFolowTeacherRecordByType(userFlow,typeId);
-	}
-	@Override
-	public Map<String,Object> folowTeacherRecordFinishMap(String userFlow) {
-		return resFollowTeacherRecordExtMapper.folowTeacherRecordFinishMap(userFlow);
-	}
-	@Override
-	public Map<String,Object> discipleNoteInfoFinishMap(String userFlow,String noteTypeId) {
-		return resFollowTeacherRecordExtMapper.discipleNoteInfoFinishMap(userFlow,noteTypeId);
-	}
-
-	@Override
-	public Map<String,Object> typicalCasesFinishMap(String userFlow) {
-		return resFollowTeacherRecordExtMapper.typicalCasesFinishMap(userFlow);
-	}
-
-	@Override
-	public ResDiscipleRecordInfo readFollowTeacherRecord(String recordFlow) {
-		return resDiscipleRecordInfoMapper.selectByPrimaryKey(recordFlow);
-	}
-
-	@Override
-	public List<ResDiscipleNoteInfo> findResDiscipleNoteInfo(ResDiscipleNoteInfo discipleNoteInfo,List<String> auditStatusList) {
-		ResDiscipleNoteInfoExample example = new ResDiscipleNoteInfoExample();
-		ResDiscipleNoteInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-		if(StringUtil.isNotBlank(discipleNoteInfo.getDoctorFlow())){
-			criteria.andDoctorFlowEqualTo(discipleNoteInfo.getDoctorFlow());
-		}
-		if(StringUtil.isNotBlank(discipleNoteInfo.getTeacherFlow())){
-			criteria.andTeacherFlowEqualTo(discipleNoteInfo.getTeacherFlow());
-		}
-		if(StringUtil.isNotBlank(discipleNoteInfo.getStudyTimeId())){
-			criteria.andStudyTimeIdEqualTo(discipleNoteInfo.getStudyTimeId());
-		}
-		if(StringUtil.isNotBlank(discipleNoteInfo.getNoteTypeId())){
-			criteria.andNoteTypeIdEqualTo(discipleNoteInfo.getNoteTypeId());
-		}
-		if(StringUtil.isNotBlank(discipleNoteInfo.getAuditStatusId())){
-			criteria.andAuditStatusIdEqualTo(discipleNoteInfo.getAuditStatusId());
-		}
-		if(StringUtil.isNotBlank(discipleNoteInfo.getStudyStartDate())){
-			criteria.andStudyStartDateEqualTo(discipleNoteInfo.getStudyStartDate());
-		}
-		if(null != auditStatusList && auditStatusList.size()>0){
-			criteria.andAuditStatusIdIn(auditStatusList);
-		}
-		example.setOrderByClause("CREATE_TIME DESC");
-		return noteInfoMapper.selectByExample(example);
-	}
-
-	@Override
-	public ResDiscipleNoteInfoWithBLOBs findResDiscipleNoteInfoWithBLOBs(String recordFlow) {
-		return noteInfoMapper.selectByPrimaryKey(recordFlow);
-	}
-
-	@Override
-	public int updateResDiscipleNoteInfoWithBLOBs(ResDiscipleNoteInfoWithBLOBs discipleNoteInfo, SysUser user, ResDiscipleNoteInfoWithBLOBs old, List<String> fileFlows, List<UploadFileForm> members) {
-		int i=0;
-		if(old!=null&&old.getRecordFlow().equals(discipleNoteInfo.getRecordFlow())){
-			discipleNoteInfo.setModifyUserFlow(user.getUserFlow());
-			discipleNoteInfo.setModifyTime(DateUtil.getCurrDateTime());
-			i= noteInfoMapper.updateByPrimaryKeySelective(discipleNoteInfo);
-		}else {
-			discipleNoteInfo.setRecordFlow(PkUtil.getUUID());
-			discipleNoteInfo.setCreateUserFlow(user.getUserFlow());
-			discipleNoteInfo.setCreateTime(DateUtil.getCurrDateTime());
-			discipleNoteInfo.setModifyUserFlow(user.getUserFlow());
-			discipleNoteInfo.setModifyTime(DateUtil.getCurrDateTime());
-			discipleNoteInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-			i= noteInfoMapper.insertSelective(discipleNoteInfo);
-		}
-		if(i==1)
-		{
-			uploadFile(discipleNoteInfo.getRecordFlow(),discipleNoteInfo.getNoteTypeId(),fileFlows,members);
-		}
-		return i;
-	}
-
-	@Override
-	public int delResDiscipleNoteInfo(String recordFlow) {
-		ResDiscipleNoteInfo resDiscipleNoteInfo = new ResDiscipleNoteInfo();
-		resDiscipleNoteInfo.setRecordFlow(recordFlow);
-		resDiscipleNoteInfo.setRecordStatus(GlobalConstant.FLAG_N);
-		return noteInfoMapper.updateByPrimaryKey(resDiscipleNoteInfo);
-	}
-
-	@Autowired
-	private ResBookStudyRecordMapper bookStudyRecordMapper;
-
-	@Override
-	public List<ResBookStudyRecord> getBookStudyRecords(String doctorFlow,String teacherFlow) {
-		ResBookStudyRecordExample example=new ResBookStudyRecordExample();
-		ResBookStudyRecordExample.Criteria criteria=example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
-		if(StringUtil.isNotBlank(teacherFlow))
-		{
-			criteria.andTeacherFlowEqualTo(teacherFlow);
-		}
-		return bookStudyRecordMapper.selectByExampleWithBLOBs(example);
-	}
-
-	@Override
 	public ResBookStudyRecord getBookStudyRecord(String recordFlow) {
 		return bookStudyRecordMapper.selectByPrimaryKey(recordFlow);
 	}
 
-	@Override
-	public int savaRecord(ResBookStudyRecord record,SysUser user) {
-		ResBookStudyRecord old=getBookStudyRecord(record.getRecordFlow());
-		if(old==null){
-			record.setRecordFlow(PkUtil.getUUID());
-			record.setCreateUserFlow(user.getUserFlow());
-			record.setCreateTime(DateUtil.getCurrDateTime());
-			record.setModifyUserFlow(user.getUserFlow());
-			record.setModifyTime(DateUtil.getCurrDateTime());
-			record.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-			return bookStudyRecordMapper.insert(record);
-		}else{
-			record.setModifyUserFlow(user.getUserFlow());
-			record.setModifyTime(DateUtil.getCurrDateTime());
-			return bookStudyRecordMapper.updateByPrimaryKeySelective(record);
-		}
-	}
-
-	@Override
-	public ResGraduationAssessment findResGraduationAssessment(String recordFlow) {
-		return graduationAssessmentMapper.selectByPrimaryKey(recordFlow);
-	}
-
-	@Override
-	public ResAnnualAssessment findResAnnualAssessment(String recordFlow) {
-		return annualAssessmentMapper.selectByPrimaryKey(recordFlow);
-	}
-
-	@Override
-	public ResTypicalCases findTypicalCases(String recordFlow) {
-		return typicalCasesMapper.selectByPrimaryKey(recordFlow);
-	}
-
-	@Override
-	public List<ResTypicalCases> searchTypicalCases(ResTypicalCases resTypicalCases) {
-		ResTypicalCasesExample example = new ResTypicalCasesExample();
-		ResTypicalCasesExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-		if(resTypicalCases!=null){
-			if(StringUtil.isNotBlank(resTypicalCases.getDoctorFlow())){
-				criteria.andDoctorFlowEqualTo(resTypicalCases.getDoctorFlow());
-			}
-			if(StringUtil.isNotBlank(resTypicalCases.getTeacherFlow())){
-				criteria.andTeacherFlowEqualTo(resTypicalCases.getTeacherFlow());
-			}
-			if(StringUtil.isNotBlank(resTypicalCases.getRecordFlow())){
-				criteria.andRecordFlowEqualTo(resTypicalCases.getRecordFlow());
-			}
-			if(StringUtil.isNotBlank(resTypicalCases.getAuditStatusId())&& DiscipleStatusEnum.Submit.getId().equals(resTypicalCases.getAuditStatusId())){
-				List<String> values= new ArrayList<>();
-				values.add(DiscipleStatusEnum.Submit.getId());
-				values.add(DiscipleStatusEnum.DiscipleAudit.getId());
-				values.add(DiscipleStatusEnum.DiscipleBack.getId());
-				values.add(DiscipleStatusEnum.AdminAudit.getId());
-				values.add(DiscipleStatusEnum.AdminBack.getId());
-				values.add(DiscipleStatusEnum.PendingAudit.getId());
-				values.add(DiscipleStatusEnum.Qualified.getId());
-				values.add(DiscipleStatusEnum.UnQualified.getId());
-				criteria.andAuditStatusIdIn(values);
-				resTypicalCases.setAuditStatusId("");
-				resTypicalCases.setAuditStatusName("");
-			}
-			if(StringUtil.isNotBlank(resTypicalCases.getAuditStatusId())){
-				criteria.andAuditStatusIdEqualTo(resTypicalCases.getAuditStatusId());
-			}
-			if(StringUtil.isNotBlank(resTypicalCases.getAuditStatusName())){
-				criteria.andAuditStatusNameEqualTo(resTypicalCases.getAuditStatusName());
-			}
-		}
-		example.setOrderByClause("CREATE_TIME DESC");
-		return typicalCasesMapper.selectByExample(example);
-	}
-	@Override
-	public List<ResTypicalCases> searchTypicalCases(ResTypicalCases resTypicalCases, List<String> auditStatusList) {
-		ResTypicalCasesExample example = new ResTypicalCasesExample();
-		ResTypicalCasesExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-		if(resTypicalCases!=null){
-			if(StringUtil.isNotBlank(resTypicalCases.getDoctorFlow())){
-				criteria.andDoctorFlowEqualTo(resTypicalCases.getDoctorFlow());
-			}
-			if(StringUtil.isNotBlank(resTypicalCases.getTeacherFlow())){
-				criteria.andTeacherFlowEqualTo(resTypicalCases.getTeacherFlow());
-			}
-			if(StringUtil.isNotBlank(resTypicalCases.getRecordFlow())){
-				criteria.andRecordFlowEqualTo(resTypicalCases.getRecordFlow());
-			}
-			if(auditStatusList!=null&&auditStatusList.size()>0){
-				criteria.andAuditStatusIdIn(auditStatusList);
-			}
-			if(StringUtil.isNotBlank(resTypicalCases.getAuditStatusId())){
-				criteria.andAuditStatusIdEqualTo(resTypicalCases.getAuditStatusId());
-			}
-			if(StringUtil.isNotBlank(resTypicalCases.getAuditStatusName())){
-				criteria.andAuditStatusNameEqualTo(resTypicalCases.getAuditStatusName());
-			}
-		}
-		example.setOrderByClause("CREATE_TIME DESC");
-		return typicalCasesMapper.selectByExample(example);
-	}
-
-	@Override
-	public int saveResTypicalCases(ResTypicalCases resTypicalCases, SysUser user, ResTypicalCases old, List<String> fileFlows, List<UploadFileForm> members) {
-		if(resTypicalCases!=null){
-			int i=0;
-			if(old!=null){
-				resTypicalCases.setModifyUserFlow(user.getUserFlow());
-				resTypicalCases.setModifyTime(DateUtil.getCurrDateTime());
-				i= typicalCasesMapper.updateByPrimaryKeyWithBLOBs(resTypicalCases);
-			}else {
-				resTypicalCases.setRecordFlow(PkUtil.getUUID());
-				resTypicalCases.setCreateUserFlow(user.getUserFlow());
-				resTypicalCases.setCreateTime(DateUtil.getCurrDateTime());
-				resTypicalCases.setModifyUserFlow(user.getUserFlow());
-				resTypicalCases.setModifyTime(DateUtil.getCurrDateTime());
-				resTypicalCases.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-				i= typicalCasesMapper.insert(resTypicalCases);
-			}
-			if(i==1)
-			{
-				uploadFile(resTypicalCases.getRecordFlow(),"TypicalCases",fileFlows,members);
-			}
-			return i;
-		}
-		return 0;
-	}
-	@Override
-	public int delResTypicalCases(ResTypicalCases resTypicalCases, SysUser user, ResTypicalCases old) {
-		if(resTypicalCases!=null){
-			if(old!=null){
-				resTypicalCases.setModifyUserFlow(user.getUserFlow());
-				resTypicalCases.setModifyTime(DateUtil.getCurrDateTime());
-				return typicalCasesMapper.updateByPrimaryKeyWithBLOBs(resTypicalCases);
-			}else {
-				resTypicalCases.setRecordFlow(PkUtil.getUUID());
-				resTypicalCases.setCreateUserFlow(user.getUserFlow());
-				resTypicalCases.setCreateTime(DateUtil.getCurrDateTime());
-				resTypicalCases.setModifyUserFlow(user.getUserFlow());
-				resTypicalCases.setModifyTime(DateUtil.getCurrDateTime());
-				resTypicalCases.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-				return typicalCasesMapper.insert(resTypicalCases);
-			}
-
-		}
-		return 0;
-	}
-
-	@Override
-	public ResTypicalCases findResTypicalCases(String caseFlow) {
-		return typicalCasesMapper.selectByPrimaryKey(caseFlow);
-	}
-
-	@Autowired
-	private AnnualAssessmentExtMapper assessmentExtMapper;
-
-	@Override
-	public AnnualAssessmentExt initAnnualAssessmentExt(ResAnnualAssessment assessment) {
-		return assessmentExtMapper.initAnnualAssessmentExt(assessment);
-	}
-
-	@Override
-	public List<ResAnnualAssessment> findAnnualAssessmentList(ResAnnualAssessment assessment,List<String> statusIdList) {
-		ResAnnualAssessmentExample example = new ResAnnualAssessmentExample();
-		ResAnnualAssessmentExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-		if (StringUtil.isNotBlank(assessment.getDoctorFlow())) {
-			criteria.andDoctorFlowEqualTo(assessment.getDoctorFlow());
-		}
-		if (StringUtil.isNotBlank(assessment.getTeacherFlow())) {
-			criteria.andTeacherFlowEqualTo(assessment.getTeacherFlow());
-		}
-		if(StringUtil.isNotBlank(assessment.getAuditStatusId())){
-			criteria.andAuditStatusIdEqualTo(assessment.getAuditStatusId());
-		}
-		if(statusIdList != null && statusIdList.size()>0){
-			criteria.andAuditStatusIdIn(statusIdList);
-		}
-		if(StringUtil.isNotBlank(assessment.getRecordYear())){
-			criteria.andRecordYearEqualTo(assessment.getRecordYear());
-		}
-		example.setOrderByClause("DOCTOR_NAME,CREATE_TIME DESC");
-		return annualAssessmentMapper.selectByExample(example);
-	}
-
-	@Override
-	public int editAnnualAssessment(ResAnnualAssessmentWithBLOBs assessmentWithBLOBs, SysUser user, ResAnnualAssessment old, List<String> fileFlows, List<UploadFileForm> members) {
-		int i=0;
-		if (old!=null) {
-			assessmentWithBLOBs.setModifyUserFlow(user.getUserFlow());
-			assessmentWithBLOBs.setModifyTime(DateUtil.getCurrDateTime());
-			i= annualAssessmentMapper.updateByPrimaryKeySelective(assessmentWithBLOBs);
-
-		} else {
-			assessmentWithBLOBs.setCompleleSignTime(DateUtil.getCurrDateTime());
-			assessmentWithBLOBs.setExperienceSignTime(DateUtil.getCurrDateTime());
-			assessmentWithBLOBs.setRecordFlow(PkUtil.getUUID());
-			assessmentWithBLOBs.setCreateUserFlow(user.getUserFlow());
-			assessmentWithBLOBs.setCreateTime(DateUtil.getCurrDateTime());
-			assessmentWithBLOBs.setModifyUserFlow(user.getUserFlow());
-			assessmentWithBLOBs.setModifyTime(DateUtil.getCurrDateTime());
-			assessmentWithBLOBs.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-			i= annualAssessmentMapper.insertSelective(assessmentWithBLOBs);
-		}
-		if(1==1) {
-			uploadFile(assessmentWithBLOBs.getRecordFlow(), "AnnualAssessment", fileFlows, members);
-		}
-		return i;
-	}
-
-	@Override
-	public int delAnnualAssessment(String recordFlow) {
-		ResAnnualAssessmentWithBLOBs assessment = new ResAnnualAssessmentWithBLOBs();
-		assessment.setRecordFlow(recordFlow);
-		assessment.setRecordStatus("N");
-		return annualAssessmentMapper.updateByPrimaryKeySelective(assessment);
-	}
-	@Autowired
-	private ResGraduationAssessmentExtMapper graduationAssessmentExtMapper;
-
-	@Autowired
-	private IFileBiz pubFileBiz;
-	@Autowired
-	private PubFileMapper pubFileMapper;
-	@Override
-	public ResGraduationAssessmentExt getDocGraduationAssessment(String userFlow) {
-		return graduationAssessmentExtMapper.getDocGraduationAssessment(userFlow);
-	}
 
 	@Override
 	public int save(ResGraduationAssessmentWithBLOBs bean, SysUser user, List<String> fileFlows, List<UploadFileForm> members) {
@@ -1745,31 +1009,5 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 		pubFileMapper.updateByExampleSelective(pubFile,example);
 	}
 
-	@Override
-	public ResGraduationAssessmentWithBLOBs getGraduationAssessmentWithBlobByFlow(String recordFlow) {
-		return graduationAssessmentMapper.selectByPrimaryKey(recordFlow);
-	}
-	@Override
-	public ResGraduationAssessmentWithBLOBs findResGraduationAssessmentByDoctorFlow(String doctorFlow) {
-		ResGraduationAssessmentExample example=new ResGraduationAssessmentExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-				.andDoctorFlowEqualTo(doctorFlow);
-		example.setOrderByClause("CREATE_TIME DESC");
-		List<ResGraduationAssessmentWithBLOBs>list= graduationAssessmentMapper.selectByExampleWithBLOBs(example);
-		if (list!=null&&list.size()>0)
-		{
-			return list.get(0);
-		}
-		return null;
-	}
-
-	@Override
-	public int checkAnnualDate(String userFlow, String startTime, String endTime) {
-		Map<String,Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("doctorFlow",userFlow);
-		paramMap.put("startDate",startTime);
-		paramMap.put("endDate",endTime);
-		return assessmentExtMapper.checkAnnualDate(paramMap);
-	}
 
 }

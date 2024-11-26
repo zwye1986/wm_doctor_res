@@ -10,7 +10,6 @@ import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.res.RecDocCategoryEnum;
@@ -148,7 +147,7 @@ public class ResResponsibleTeacherController extends GeneralController {
 	public String saveResponsibleTeacher(ResResponsibleteacherDoctor resResponsibleteacherDoctor){
 		SysUser user=GlobalContext.getCurrentUser();
 		String recordStatus = resResponsibleteacherDoctor.getRecordStatus();
-		if("Y".equals(recordStatus)){
+		if(GlobalConstant.FLAG_Y.equals(recordStatus)){
 			resResponsibleteacherDoctor.setOrgFlow(user.getOrgFlow());
 			ResDoctor doctor=doctorBiz.readDoctor(resResponsibleteacherDoctor.getDoctorFlow());
 			if(doctor!=null)

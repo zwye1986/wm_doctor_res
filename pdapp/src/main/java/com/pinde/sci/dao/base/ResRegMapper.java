@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResReg;
-import com.pinde.sci.model.mo.ResRegExample;
+import com.pinde.core.model.ResReg;
+import com.pinde.core.model.ResRegExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

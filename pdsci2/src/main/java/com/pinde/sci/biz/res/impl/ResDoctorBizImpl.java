@@ -2,7 +2,8 @@ package com.pinde.sci.biz.res.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.json.JSONUtil;
-import com.pinde.core.commom.enums.GeneralEnum;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.GeneralEnum;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
@@ -48,7 +49,6 @@ import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -360,7 +360,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			ResReg recentReg = resRegBiz.searchRecentYearResReg(user.getUserFlow());
 			if (null != exitDoctor && null != recentReg && regYear.equals(recentReg.getRegYear()) && !RegStatusEnum.UnSubmit.getId().equals(exitDoctor.getDoctorStatusId())
 					&& !(RegStatusEnum.UnPassed.getId().equals(exitDoctor.getDoctorStatusId()) && GlobalConstant.FLAG_Y.equals(exitDoctor.getReeditFlag()))//省厅可让其重填
-					&& !"Y".equals(exitDoctor.getIsUnderLine())//线下招录人员
+					&& !GlobalConstant.FLAG_Y.equals(exitDoctor.getIsUnderLine())//线下招录人员
 				) {//已提交
 				return GlobalConstant.ZERO_LINE;
 			}
@@ -3124,7 +3124,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			}else {
 				ckk = GlobalConstant.FLAG_N;
 			}
-			if(StringUtil.isNotBlank(ckk) && "Y".equals(ckk)) {
+			if(StringUtil.isNotBlank(ckk) && GlobalConstant.FLAG_Y.equals(ckk)) {
 				f = true;
 			}
 			return f;

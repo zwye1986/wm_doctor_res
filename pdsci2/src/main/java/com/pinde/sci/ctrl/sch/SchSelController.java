@@ -12,7 +12,6 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.sch.SchCycleTypeEnum;
 import com.pinde.sci.enums.sch.SchSelYearEnum;
@@ -76,7 +75,7 @@ public class SchSelController extends GeneralController {
 			return "sch/sel/selDeptError";
 		}
 		String orgFlow = doctor.getOrgFlow();
-		if(!"Y".equals(doctor.getSelDeptFlag())) {
+		if(!GlobalConstant.FLAG_Y.equals(doctor.getSelDeptFlag())) {
 			if (StringUtil.isBlank(orgFlow)) {
 				model.addAttribute("result", "无法读取基地信息，请联系管理员！");
 				return "sch/sel/selDeptError";

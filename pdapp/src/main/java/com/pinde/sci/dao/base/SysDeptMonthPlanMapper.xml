@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SysDeptMonthPlanMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysDeptMonthPlan" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.SysDeptMonthPlan" >
     <id column="PLAN_FLOW" property="planFlow" jdbcType="VARCHAR" />
     <result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
     <result column="PLAN_DATE" property="planDate" jdbcType="VARCHAR" />
@@ -86,7 +86,7 @@
     RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, AUDIT_REASON, 
     SKILL_OR_THEORY
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysDeptMonthPlanExample" >
     select
     <if test="distinct" >
       distinct
@@ -110,13 +110,13 @@
     delete from PDSCI.SYS_DEPT_MONTH_PLAN
     where PLAN_FLOW = #{planFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.SysDeptMonthPlanExample" >
     delete from PDSCI.SYS_DEPT_MONTH_PLAN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlan" >
+  <insert id="insert" parameterType="com.pinde.core.model.SysDeptMonthPlan" >
     insert into PDSCI.SYS_DEPT_MONTH_PLAN (PLAN_FLOW, DEPT_FLOW, PLAN_DATE, 
       PLAN_TYPE_ID, PLAN_TYPE_NAME, PLAN_DEMO, 
       AUDIT_STATUS_ID, AUDIT_STATUS_NAME, AUDIT_USER_FLOW, 
@@ -132,7 +132,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{auditReason,jdbcType=VARCHAR}, 
       #{skillOrTheory,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlan" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.SysDeptMonthPlan" >
     insert into PDSCI.SYS_DEPT_MONTH_PLAN
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="planFlow != null" >
@@ -253,7 +253,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.SysDeptMonthPlanExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.SYS_DEPT_MONTH_PLAN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -349,7 +349,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlan" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysDeptMonthPlan" >
     update PDSCI.SYS_DEPT_MONTH_PLAN
     <set >
       <if test="deptFlow != null" >
@@ -409,7 +409,7 @@
     </set>
     where PLAN_FLOW = #{planFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlan" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysDeptMonthPlan" >
     update PDSCI.SYS_DEPT_MONTH_PLAN
     set DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
       PLAN_DATE = #{planDate,jdbcType=VARCHAR},

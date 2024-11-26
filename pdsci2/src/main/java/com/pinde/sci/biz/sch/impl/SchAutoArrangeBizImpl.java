@@ -11,7 +11,6 @@ import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.biz.sch.ISchAutoArrangeBiz;
 import com.pinde.sci.biz.sch.ISchRotationGroupBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.SchArrangeResultMapper;
 import com.pinde.sci.dao.base.SchAutoArrangeCfgMapper;
 import com.pinde.sci.dao.base.SchAutoArrangeMapper;
@@ -19,7 +18,6 @@ import com.pinde.sci.dao.sch.SchAutoArrangeExtMapper;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.util.ArrayList;

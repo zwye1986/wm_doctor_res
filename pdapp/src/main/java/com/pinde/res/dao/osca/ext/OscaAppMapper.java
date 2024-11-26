@@ -1,7 +1,7 @@
 package com.pinde.res.dao.osca.ext;
 
+import com.pinde.core.model.*;
 import com.pinde.res.model.osca.mo.*;
-import com.pinde.sci.model.mo.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

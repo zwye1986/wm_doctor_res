@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class GcpCfg extends MybatisObject {
+public class GcpCfg extends TeachingActivitySpeakerExample.MybatisObject {
     private String cfgCode;
 
     private String cfgDesc;

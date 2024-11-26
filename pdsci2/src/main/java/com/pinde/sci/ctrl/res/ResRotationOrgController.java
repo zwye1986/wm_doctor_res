@@ -3,7 +3,6 @@ package com.pinde.sci.ctrl.res;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResRotationOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.model.mo.ResRotationOrg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -4,7 +4,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyGraduationApplyBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.JsresGraduationApplyLogMapper;
 import com.pinde.sci.dao.base.JsresGraduationApplyMapper;
 import com.pinde.sci.dao.jszy.JszyGraduationApplyExtMapper;
@@ -18,7 +17,6 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -163,7 +161,7 @@ public class JszyGraduationApplyBizImpl implements IJszyGraduationApplyBiz{
         styleTwo.setFont(fontTwo);
         hSSFCell1.setCellStyle(styleThree);
         String[] titles =null;
-        if("Y".equals(isWaitAudit)) {
+        if(GlobalConstant.FLAG_Y.equals(isWaitAudit)) {
             sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(0, (short) 0, 0, (short) 20));
             sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(1, (short) 1, 0, (short) 20));
             titles= new String[]{
@@ -307,43 +305,43 @@ public class JszyGraduationApplyBizImpl implements IJszyGraduationApplyBiz{
                 }
                 cell14.setCellStyle(styleCenter);
                 String makeUp="";
-                if("Y".equals(sd.get("makeUp")))
+                if(GlobalConstant.FLAG_Y.equals(sd.get("makeUp")))
                 {
                     makeUp="是";
                 }
-                if("N".equals(sd.get("makeUp")))
+                if(GlobalConstant.FLAG_N.equals(sd.get("makeUp")))
                 {
                     makeUp="否";
                 }
                 String examType="";
-                if("Y".equals(sd.get("makeUp")))
+                if(GlobalConstant.FLAG_Y.equals(sd.get("makeUp")))
                 {
 
-                    if("Y".equals(sd.get("isTheroy")))
+                    if(GlobalConstant.FLAG_Y.equals(sd.get("isTheroy")))
                     {
                         examType+="理论补考";
-                    }if("Y".equals(sd.get("isTheroy"))&&"Y".equals(sd.get("isSkill")))
+                    }if(GlobalConstant.FLAG_Y.equals(sd.get("isTheroy"))&&GlobalConstant.FLAG_Y.equals(sd.get("isSkill")))
                     {
                         examType+="/";
                     }
-                    if("Y".equals(sd.get("isSkill")))
+                    if(GlobalConstant.FLAG_Y.equals(sd.get("isSkill")))
                     {
                         examType+="技能补考";
                     }
                 }
                 String examTime="";
-                    if("Y".equals(sd.get("isFive")))
+                    if(GlobalConstant.FLAG_Y.equals(sd.get("isFive")))
                     {
                         examTime+="五月";
-                    }if("Y".equals(sd.get("isFive"))&&"Y".equals(sd.get("isTen")))
+                    }if(GlobalConstant.FLAG_Y.equals(sd.get("isFive"))&&GlobalConstant.FLAG_Y.equals(sd.get("isTen")))
                     {
                         examTime+="/";
                     }
-                    if("Y".equals(sd.get("isTen")))
+                    if(GlobalConstant.FLAG_Y.equals(sd.get("isTen")))
                     {
                         examTime+="十月";
                     }
-                if(!"Y".equals(isWaitAudit)) {
+                if(!GlobalConstant.FLAG_Y.equals(isWaitAudit)) {
                     HSSFCell cell16= rowDepts.createCell(17);//状态
                     cell16.setCellValue((String) sd.get("auditStatusName"));
                     cell16.setCellStyle(styleCenter);

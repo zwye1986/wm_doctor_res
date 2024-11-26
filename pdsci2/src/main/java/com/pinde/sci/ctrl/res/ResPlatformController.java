@@ -9,7 +9,6 @@ import com.pinde.sci.biz.sch.ISchDoctorAbsenceBiz;
 import com.pinde.sci.biz.sch.ISchRotationBiz;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.inx.InxInfoExtMapper;
@@ -358,7 +357,7 @@ public class ResPlatformController extends GeneralController {
 		}else{
 			SysUser user = GlobalContext.getCurrentUser();
 			String userOrgFlow= user.getOrgFlow();
-			if("Y".equals(InitConfig.getSysCfg("zy_hospital_zcfg"))){
+			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("zy_hospital_zcfg"))){
 				infos = this.inxInfoExtMapper.searchInfoByOrg2(userOrgFlow,GlobalConstant.RES_NOTICE_SYS_ID);
 			}else {
 				infos = this.noticeBiz.searchInfoByOrg(userOrgFlow,GlobalConstant.RES_NOTICE_TYPE_ID,GlobalConstant.RES_NOTICE_SYS_ID);

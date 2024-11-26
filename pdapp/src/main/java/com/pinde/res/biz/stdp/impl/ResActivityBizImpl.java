@@ -1,11 +1,8 @@
 package com.pinde.res.biz.stdp.impl;
 
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.app.common.GlobalUtil;
-import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.PkUtil;
-import com.pinde.core.util.SpringUtil;
-import com.pinde.core.util.StringUtil;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.*;
+import com.pinde.core.util.*;
 import com.pinde.res.biz.eval.IEvalAppBiz;
 import com.pinde.res.biz.jswjw.IJswjwHospitalSupervisioBiz;
 import com.pinde.res.biz.stdp.ICfgBiz;
@@ -14,11 +11,9 @@ import com.pinde.res.biz.stdp.IResActivityTargetBiz;
 import com.pinde.res.ctrl.hbres.ActivityImageFileForm;
 import com.pinde.res.dao.stdp.ext.TeachingActivityInfoExtMapper;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.model.mo.*;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import sun.misc.BASE64Decoder;
 
 import javax.annotation.Resource;

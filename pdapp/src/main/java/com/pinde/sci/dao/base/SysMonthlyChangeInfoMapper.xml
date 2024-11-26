@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SysMonthlyChangeInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysMonthlyChangeInfo" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.SysMonthlyChangeInfo" >
     <id column="SMCI_FLOW" property="smciFlow" jdbcType="VARCHAR" />
     <result column="DATE_MONTH" property="dateMonth" jdbcType="VARCHAR" />
     <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
@@ -105,7 +105,7 @@
     HISTORY_SECOND_SPE_NAME, IS_ONLY_SECOND, CHANGE_STATUS_ID, CHANGE_STATUS_NAME, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysMonthlyChangeInfoExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysMonthlyChangeInfoExample" >
     select
     <if test="distinct" >
       distinct
@@ -129,13 +129,13 @@
     delete from PDSCI.SYS_MONTHLY_CHANGE_INFO
     where SMCI_FLOW = #{smciFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysMonthlyChangeInfoExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.SysMonthlyChangeInfoExample" >
     delete from PDSCI.SYS_MONTHLY_CHANGE_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysMonthlyChangeInfo" >
+  <insert id="insert" parameterType="com.pinde.core.model.SysMonthlyChangeInfo" >
     insert into PDSCI.SYS_MONTHLY_CHANGE_INFO (SMCI_FLOW, DATE_MONTH, DOCTOR_FLOW, 
       RECRUIT_FLOW, SESSION_NUMBER, DOCTOR_TYPE_ID, 
       DOCTOR_TYPE_NAME, CHANGE_TYPE_ID, CHANGE_TYPE_NAME, 
@@ -163,7 +163,7 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysMonthlyChangeInfo" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.SysMonthlyChangeInfo" >
     insert into PDSCI.SYS_MONTHLY_CHANGE_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="smciFlow != null" >
@@ -380,7 +380,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysMonthlyChangeInfoExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.SysMonthlyChangeInfoExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.SYS_MONTHLY_CHANGE_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -540,7 +540,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysMonthlyChangeInfo" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysMonthlyChangeInfo" >
     update PDSCI.SYS_MONTHLY_CHANGE_INFO
     <set >
       <if test="dateMonth != null" >
@@ -648,7 +648,7 @@
     </set>
     where SMCI_FLOW = #{smciFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysMonthlyChangeInfo" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysMonthlyChangeInfo" >
     update PDSCI.SYS_MONTHLY_CHANGE_INFO
     set DATE_MONTH = #{dateMonth,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResOrgCkxz;
-import com.pinde.sci.model.mo.ResOrgCkxzExample;
+import com.pinde.core.model.ResOrgCkxz;
+import com.pinde.core.model.ResOrgCkxzExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

@@ -11,7 +11,6 @@ import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.biz.sch.ISchDeptBiz;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.PasswordHelper;
@@ -28,12 +27,8 @@ import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -263,7 +258,7 @@ public class ResNurseController extends GeneralController {
                 // 基地是否开通过程
                 String orgCfgCode = "jsres_" + sysUser.getOrgFlow() + "_guocheng";
                 JsresPowerCfg jsresPowerCfg = jsResPowerCfgBiz.read(orgCfgCode);
-                if(null != jsresPowerCfg && "Y".equals(jsresPowerCfg.getCfgValue()) && "Passed".equals(jsresPowerCfg.getCheckStatusId())){
+                if(null != jsresPowerCfg && GlobalConstant.FLAG_Y.equals(jsresPowerCfg.getCfgValue()) && "Passed".equals(jsresPowerCfg.getCheckStatusId())){
                     // 带教默认APP登录权限
                     String cfgCode = "jsres_teacher_app_login_"+ sysUser.getUserFlow();
                     JsresPowerCfg jsresCfg = new JsresPowerCfg();

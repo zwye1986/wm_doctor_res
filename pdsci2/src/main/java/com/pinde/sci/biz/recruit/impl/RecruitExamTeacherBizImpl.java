@@ -5,14 +5,12 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.recruit.IRecruitExamTeacherBiz;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.RecruitExamTeacherMapper;
 import com.pinde.sci.model.mo.RecruitExamTeacher;
 import com.pinde.sci.model.mo.RecruitExamTeacherExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

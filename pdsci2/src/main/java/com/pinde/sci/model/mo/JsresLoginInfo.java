@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class JsresLoginInfo extends MybatisObject {
+public class JsresLoginInfo extends TeachingActivitySpeakerExample.MybatisObject {
     private String reocrdFlow;
 
     private String loginDomain;

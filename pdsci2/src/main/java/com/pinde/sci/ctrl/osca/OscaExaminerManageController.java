@@ -9,7 +9,6 @@ import com.pinde.sci.biz.osca.ISiteInformationBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.pub.UserStatusEnum;

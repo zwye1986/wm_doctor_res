@@ -4,7 +4,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResOrgAddressBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.form.res.ResOrgAddressForm;
 import com.pinde.sci.model.mo.ResOrgAddress;

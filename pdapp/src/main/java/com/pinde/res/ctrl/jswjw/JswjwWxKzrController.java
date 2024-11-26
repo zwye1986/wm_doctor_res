@@ -1,9 +1,10 @@
 package com.pinde.res.ctrl.jswjw;
 
 import com.pinde.app.common.GeneralController;
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.enums.*;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.app.common.InitConfig;
-import com.pinde.core.commom.enums.*;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -17,7 +18,6 @@ import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgItemForm;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgTitleForm;
 import com.pinde.sci.dao.base.JsresPowerCfgMapper;
-import com.pinde.sci.model.mo.*;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -3341,7 +3341,7 @@ public class JswjwWxKzrController extends GeneralController {
 		resultMap.put("doctorFlow",doctorFlow);
 		resultMap.put("recordFlow",recordFlow);
 
-		if("Y".equals(IsForm) && null != titleList && titleList.size()>0){
+		if(GlobalConstant.FLAG_Y.equals(IsForm) && null != titleList && titleList.size()>0){
 			List<Map<String,Object>> titleMapList = new ArrayList<>();
 			for (FromTitle title:titleList) {
 				Map<String,Object> titelMap = new HashMap<>();
@@ -4223,9 +4223,9 @@ public class JswjwWxKzrController extends GeneralController {
 					}
 					map.put("targets",targetList);
 				}
-				if(activity.get("speakerFlow").equals(userinfo.getUserFlow()) && "Y".equals(activity.get("IS_EFFECTIVE"))){
-					map.put("operId","Y".equals(m.get("isEffective")) ? "N" : "Y");
-					map.put("operName","Y".equals(m.get("isEffective")) ? "不认可" : "认可");
+				if(activity.get("speakerFlow").equals(userinfo.getUserFlow()) && GlobalConstant.FLAG_Y.equals(activity.get("IS_EFFECTIVE"))){
+					map.put("operId",GlobalConstant.FLAG_Y.equals(m.get("isEffective")) ? "N" : "Y");
+					map.put("operName",GlobalConstant.FLAG_Y.equals(m.get("isEffective")) ? "不认可" : "认可");
 				}
 				resultMapList.add(map);
 			}
@@ -4254,7 +4254,7 @@ public class JswjwWxKzrController extends GeneralController {
 		if(StringUtil.isBlank(typeId)){
 			return ResultDataThrow("typeId标识符为空");
 		}
-		if(!"Y".equals(typeId)&&!"N".equals(typeId)){
+		if(!GlobalConstant.FLAG_Y.equals(typeId)&&!GlobalConstant.FLAG_N.equals(typeId)){
 			return ResultDataThrow("typeId只能是Y或N");
 		}
 		if(!roleId.equals("Head")&&!roleId.equals("Seretary")&&!roleId.equals("TeachingHead")&&!roleId.equals("TeachingSeretary")){
@@ -4325,7 +4325,7 @@ public class JswjwWxKzrController extends GeneralController {
 		if(StringUtil.isBlank(isEffective)){
 			return ResultDataThrow("isEffective为空");
 		}
-		if(!"Y".equals(isEffective)&&!"N".equals(isEffective))
+		if(!GlobalConstant.FLAG_Y.equals(isEffective)&&!GlobalConstant.FLAG_N.equals(isEffective))
 		{
 			return ResultDataThrow("isEffective只能是Y或N");
 		}
@@ -4800,7 +4800,7 @@ public class JswjwWxKzrController extends GeneralController {
 			if (StringUtil.isNotBlank(kq.getTeacherAgreeFlag())) {
 				return ResultDataThrow("此请假信息已审核，请刷新列表页");
 			}
-			if ("Y".equals(status)) {
+			if (GlobalConstant.FLAG_Y.equals(status)) {
 				kq.setAuditStatusId(ResDoctorKqStatusEnum.HeadAuditing.getId());
 				kq.setAuditStatusName(ResDoctorKqStatusEnum.HeadAuditing.getName());
 				if ("-".equals(kq.getHeadName())) {
@@ -4844,7 +4844,7 @@ public class JswjwWxKzrController extends GeneralController {
 			if (StringUtil.isNotBlank(kq.getHeadAgreeFlag())) {
 				return ResultDataThrow("此请假信息已审核，请刷新列表页");
 			}
-			if ("Y".equals(status)) {
+			if (GlobalConstant.FLAG_Y.equals(status)) {
 				kq.setAuditStatusId(ResDoctorKqStatusEnum.ManagerAuditing.getId());
 				kq.setAuditStatusName(ResDoctorKqStatusEnum.ManagerAuditing.getName());
 				if ("-".equals(kq.getManagerName())) {
@@ -4867,7 +4867,7 @@ public class JswjwWxKzrController extends GeneralController {
 			if (StringUtil.isNotBlank(kq.getManagerAgreeFlag())) {
 				return ResultDataThrow("此请假信息已审核，请刷新列表页");
 			}
-			if ("Y".equals(status)) {
+			if (GlobalConstant.FLAG_Y.equals(status)) {
 				kq.setAuditStatusId(ResDoctorKqStatusEnum.ManagerPass.getId());
 				kq.setAuditStatusName(ResDoctorKqStatusEnum.ManagerPass.getName());
 				kq.setAuditRoleNow("Pass");
@@ -5012,7 +5012,7 @@ public class JswjwWxKzrController extends GeneralController {
 			if (StringUtil.isNotBlank(kq.getTeacherAgreeFlag())) {
 				return ResultDataThrow("此销假信息已审核，请刷新列表页");
 			}
-			if ("Y".equals(status)) {
+			if (GlobalConstant.FLAG_Y.equals(status)) {
 				kq.setAuditStatusId(ResDoctorKqStatusEnum.RevokeHeadAuditing.getId());
 				kq.setAuditStatusName(ResDoctorKqStatusEnum.RevokeHeadAuditing.getName());
 				if ("-".equals(kq.getHeadName())) {
@@ -5054,7 +5054,7 @@ public class JswjwWxKzrController extends GeneralController {
 			if (StringUtil.isNotBlank(kq.getHeadAgreeFlag())) {
 				return ResultDataThrow("此销假信息已审核，请刷新列表页");
 			}
-			if ("Y".equals(status)) {
+			if (GlobalConstant.FLAG_Y.equals(status)) {
 				kq.setAuditStatusId(ResDoctorKqStatusEnum.RevokeManagerAuditing.getId());
 				kq.setAuditStatusName(ResDoctorKqStatusEnum.RevokeManagerAuditing.getName());
 				if ("-".equals(kq.getManagerName())) {
@@ -5077,7 +5077,7 @@ public class JswjwWxKzrController extends GeneralController {
 			if (StringUtil.isNotBlank(kq.getManagerAgreeFlag())) {
 				return ResultDataThrow("此请假信息已审核，请刷新列表页");
 			}
-			if ("Y".equals(status)) {
+			if (GlobalConstant.FLAG_Y.equals(status)) {
 				kq.setAuditStatusId(ResDoctorKqStatusEnum.RevokeManagerPass.getId());
 				kq.setAuditStatusName(ResDoctorKqStatusEnum.RevokeManagerPass.getName());
 				kq.setAuditRoleNow("Pass");
@@ -5093,7 +5093,7 @@ public class JswjwWxKzrController extends GeneralController {
 		} else {
 			return ResultDataThrow("该数据无法审核！");
 		}
-		if(!"Y".equals(status)) {
+		if(!GlobalConstant.FLAG_Y.equals(status)) {
 			// 销假审核不通过，状态变更为请假审核通过
 			kq.setAuditStatusId(ResDoctorKqStatusEnum.ManagerPass.getId());
 			kq.setAuditStatusName(ResDoctorKqStatusEnum.ManagerPass.getName());

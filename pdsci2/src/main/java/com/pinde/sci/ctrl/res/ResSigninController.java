@@ -9,7 +9,6 @@ import com.pinde.sci.biz.res.IResOrgDateBiz;
 import com.pinde.sci.biz.sch.ISchDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.JsresAttendanceDetail;
@@ -353,11 +352,11 @@ public class ResSigninController extends GeneralController{
 				if(StringUtil.isNotBlank(processFlow)&&StringUtil.isNotBlank(teacherUserName))
 				{
 					teaName=teacherUserName;
-					if("Y".equals(schFlag))
+					if(GlobalConstant.FLAG_Y.equals(schFlag))
 					{
 						schStatusName="已出科";
 					}else{
-						if("Y".equals(isCurrentFlag))
+						if(GlobalConstant.FLAG_Y.equals(isCurrentFlag))
 						{
 							schStatusName="轮转中";
 						}else{

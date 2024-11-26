@@ -12,7 +12,6 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.DateUtil;
@@ -853,7 +852,7 @@ public class JsresPhyAssController extends GeneralController {
         String originalFilename =recruitFlow+ ".png";
         String filePath=fileDir+  File.separator +originalFilename;
 
-        if("Y".equals(isDown)) {
+        if(GlobalConstant.FLAG_Y.equals(isDown)) {
             byte[] data = null;
             long dataLength = 0;
             /*文件是否存在*/

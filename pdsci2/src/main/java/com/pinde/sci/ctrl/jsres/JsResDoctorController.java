@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.jspform.ItemGroupData;
 import com.pinde.core.page.PageHelper;
@@ -17,7 +18,6 @@ import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
@@ -586,7 +586,7 @@ public class JsResDoctorController extends GeneralController {
         if (StringUtil.isNotBlank(userFlow)) {
             docotrDelayTeturn.setDoctorFlow(userFlow);
         }
-        if ("Y".equals(seeFlag)) {
+        if (GlobalConstant.FLAG_Y.equals(seeFlag)) {
             orgFlowList = null;
             docotrDelayTeturn.setOrgFlow("");
         }
@@ -684,7 +684,7 @@ public class JsResDoctorController extends GeneralController {
         if (StringUtil.isNotBlank(userFlow)) {
             docotrDelayTeturn.setDoctorFlow(userFlow);
         }
-        if ("Y".equals(seeFlag)) {
+        if (GlobalConstant.FLAG_Y.equals(seeFlag)) {
             orgFlowList = null;
             docotrDelayTeturn.setOrgFlow("");
         }
@@ -752,7 +752,7 @@ public class JsResDoctorController extends GeneralController {
         model.addAttribute("orgs", orgs);
         if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(docotrDelayTeturn.getOrgFlow())) {
             for (SysOrg tempOrg : orgs) {
-                if ("Y".equals(jointOrgFlag)) {
+                if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -765,7 +765,7 @@ public class JsResDoctorController extends GeneralController {
         }
         if (StringUtil.isNotBlank(docotrDelayTeturn.getOrgFlow())) {
             orgFlowList.add(docotrDelayTeturn.getOrgFlow());
-            if ("Y".equals(jointOrgFlag)) {
+            if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                 List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(docotrDelayTeturn.getOrgFlow());
                 if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                     for (ResJointOrg jointOrg : resJointOrgList) {
@@ -781,7 +781,7 @@ public class JsResDoctorController extends GeneralController {
         if (StringUtil.isNotBlank(userFlow)) {
             docotrDelayTeturn.setDoctorFlow(userFlow);
         }
-//		if("Y".equals(seeFlag)) {
+//		if(GlobalConstant.FLAG_Y.equals(seeFlag)) {
 //			orgFlowList=null;
 //			docotrDelayTeturn.setOrgFlow("");
 //		}
@@ -826,7 +826,7 @@ public class JsResDoctorController extends GeneralController {
         model.addAttribute("orgs", orgs);
         if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(docotrDelayTeturn.getOrgFlow())) {
             for (SysOrg tempOrg : orgs) {
-                if ("Y".equals(jointOrgFlag)) {
+                if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -839,7 +839,7 @@ public class JsResDoctorController extends GeneralController {
         }
         if (StringUtil.isNotBlank(docotrDelayTeturn.getOrgFlow())) {
             orgFlowList.add(docotrDelayTeturn.getOrgFlow());
-            if ("Y".equals(jointOrgFlag)) {
+            if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                 List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(docotrDelayTeturn.getOrgFlow());
                 if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                     for (ResJointOrg jointOrg : resJointOrgList) {
@@ -855,7 +855,7 @@ public class JsResDoctorController extends GeneralController {
         if (StringUtil.isNotBlank(userFlow)) {
             docotrDelayTeturn.setDoctorFlow(userFlow);
         }
-//		if("Y".equals(seeFlag)) {
+//		if(GlobalConstant.FLAG_Y.equals(seeFlag)) {
 //			orgFlowList=null;
 //			docotrDelayTeturn.setOrgFlow("");
 //		}
@@ -900,7 +900,7 @@ public class JsResDoctorController extends GeneralController {
 
         if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(docotrDelayTeturn.getOrgFlow())) {
             for (SysOrg tempOrg : orgs) {
-                if ("Y".equals(jointOrgFlag)) {
+                if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -913,7 +913,7 @@ public class JsResDoctorController extends GeneralController {
         }
         if (StringUtil.isNotBlank(docotrDelayTeturn.getOrgFlow())) {
             orgFlowList.add(docotrDelayTeturn.getOrgFlow());
-            if ("Y".equals(jointOrgFlag)) {
+            if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                 List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(docotrDelayTeturn.getOrgFlow());
                 if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                     for (ResJointOrg jointOrg : resJointOrgList) {
@@ -929,7 +929,7 @@ public class JsResDoctorController extends GeneralController {
         if (StringUtil.isNotBlank(userFlow)) {
             docotrDelayTeturn.setDoctorFlow(userFlow);
         }
-//		if("Y".equals(seeFlag)) {
+//		if(GlobalConstant.FLAG_Y.equals(seeFlag)) {
 //			orgFlowList=null;
 //			docotrDelayTeturn.setOrgFlow("");
 //		}
@@ -1045,7 +1045,7 @@ public class JsResDoctorController extends GeneralController {
 
         if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(docotrDelayTeturn.getOrgFlow())) {
             for (SysOrg tempOrg : orgs) {
-                if ("Y".equals(jointOrgFlag)) {
+                if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -1058,7 +1058,7 @@ public class JsResDoctorController extends GeneralController {
         }
         if (StringUtil.isNotBlank(docotrDelayTeturn.getOrgFlow())) {
             orgFlowList.add(docotrDelayTeturn.getOrgFlow());
-            if ("Y".equals(jointOrgFlag)) {
+            if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                 List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(docotrDelayTeturn.getOrgFlow());
                 if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                     for (ResJointOrg jointOrg : resJointOrgList) {
@@ -1074,7 +1074,7 @@ public class JsResDoctorController extends GeneralController {
         if (StringUtil.isNotBlank(userFlow)) {
             docotrDelayTeturn.setDoctorFlow(userFlow);
         }
-//		if("Y".equals(seeFlag)) {
+//		if(GlobalConstant.FLAG_Y.equals(seeFlag)) {
 //			orgFlowList=null;
 //			docotrDelayTeturn.setOrgFlow("");
 //		}
@@ -1641,7 +1641,7 @@ public class JsResDoctorController extends GeneralController {
         List<String> orgFlowList = new ArrayList<String>();
         if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(docotrDelayTeturn.getOrgFlow())) {
             for (SysOrg tempOrg : orgs) {
-                if ("Y".equals(jointOrgFlag)) {
+                if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -1654,7 +1654,7 @@ public class JsResDoctorController extends GeneralController {
         }
         if (StringUtil.isNotBlank(docotrDelayTeturn.getOrgFlow())) {
             orgFlowList.add(docotrDelayTeturn.getOrgFlow());
-            if ("Y".equals(jointOrgFlag)) {
+            if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                 List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(docotrDelayTeturn.getOrgFlow());
                 if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                     for (ResJointOrg jointOrg : resJointOrgList) {
@@ -1841,7 +1841,7 @@ public class JsResDoctorController extends GeneralController {
         List<String> orgFlowList = new ArrayList<String>();
         if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(docotrDelayTeturn.getOrgFlow())) {
             for (SysOrg tempOrg : orgs) {
-                if ("Y".equals(jointOrgFlag)) {
+                if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -1854,7 +1854,7 @@ public class JsResDoctorController extends GeneralController {
         }
         if (StringUtil.isNotBlank(docotrDelayTeturn.getOrgFlow())) {
             orgFlowList.add(docotrDelayTeturn.getOrgFlow());
-            if ("Y".equals(jointOrgFlag)) {
+            if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                 List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(docotrDelayTeturn.getOrgFlow());
                 if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                     for (ResJointOrg jointOrg : resJointOrgList) {
@@ -2193,7 +2193,7 @@ public class JsResDoctorController extends GeneralController {
         List<String> orgFlowList = new ArrayList<String>();
         if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(docotrDelayTeturn.getOrgFlow())) {
             for (SysOrg tempOrg : orgs) {
-                if ("Y".equals(jointOrgFlag)) {
+                if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -2206,7 +2206,7 @@ public class JsResDoctorController extends GeneralController {
         }
         if (StringUtil.isNotBlank(docotrDelayTeturn.getOrgFlow())) {
             orgFlowList.add(docotrDelayTeturn.getOrgFlow());
-            if ("Y".equals(jointOrgFlag)) {
+            if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                 List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(docotrDelayTeturn.getOrgFlow());
                 if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                     for (ResJointOrg jointOrg : resJointOrgList) {
@@ -2286,7 +2286,7 @@ public class JsResDoctorController extends GeneralController {
         List<String> orgFlowList = new ArrayList<String>();
         if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(docotrDelayTeturn.getOrgFlow())) {
             for (SysOrg tempOrg : orgs) {
-                if ("Y".equals(jointOrgFlag)) {
+                if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -2299,7 +2299,7 @@ public class JsResDoctorController extends GeneralController {
         }
         if (StringUtil.isNotBlank(docotrDelayTeturn.getOrgFlow())) {
             orgFlowList.add(docotrDelayTeturn.getOrgFlow());
-            if ("Y".equals(jointOrgFlag)) {
+            if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                 List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(docotrDelayTeturn.getOrgFlow());
                 if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                     for (ResJointOrg jointOrg : resJointOrgList) {
@@ -2572,7 +2572,7 @@ public class JsResDoctorController extends GeneralController {
         List<String> orgFlowList = new ArrayList<String>();
         if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(docotrDelayTeturn.getOrgFlow())) {
             for (SysOrg tempOrg : orgs) {
-                if ("Y".equals(jointOrgFlag)) {
+                if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -2585,7 +2585,7 @@ public class JsResDoctorController extends GeneralController {
         }
         if (StringUtil.isNotBlank(docotrDelayTeturn.getOrgFlow())) {
             orgFlowList.add(docotrDelayTeturn.getOrgFlow());
-            if ("Y".equals(jointOrgFlag)) {
+            if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                 List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(docotrDelayTeturn.getOrgFlow());
                 if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                     for (ResJointOrg jointOrg : resJointOrgList) {
@@ -2687,7 +2687,7 @@ public class JsResDoctorController extends GeneralController {
         List<String> orgFlowList = new ArrayList<String>();
         if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(docotrDelayTeturn.getOrgFlow())) {
             for (SysOrg tempOrg : orgs) {
-                if ("Y".equals(jointOrgFlag)) {
+                if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -2700,7 +2700,7 @@ public class JsResDoctorController extends GeneralController {
         }
         if (StringUtil.isNotBlank(docotrDelayTeturn.getOrgFlow())) {
             orgFlowList.add(docotrDelayTeturn.getOrgFlow());
-            if ("Y".equals(jointOrgFlag)) {
+            if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                 List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(docotrDelayTeturn.getOrgFlow());
                 if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                     for (ResJointOrg jointOrg : resJointOrgList) {
@@ -2871,7 +2871,7 @@ public class JsResDoctorController extends GeneralController {
                         searchOrg.setOrgLevelId(orgLevel);
                         searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
                     }
-                    if ("Y".equals(flag)) {
+                    if (GlobalConstant.FLAG_Y.equals(flag)) {
                         searchOrg.setOrgLevelId("CountryOrg");
                         searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
                     }
@@ -2894,7 +2894,7 @@ public class JsResDoctorController extends GeneralController {
                         org.setOrgLevelId(orgLevel);
                         org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
                     }
-                    if ("Y".equals(flag)) {
+                    if (GlobalConstant.FLAG_Y.equals(flag)) {
 //						org.setOrgLevelId("CountryOrg");
                         org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
                     }
@@ -3195,7 +3195,7 @@ public class JsResDoctorController extends GeneralController {
                         searchOrg.setOrgLevelId(orgLevel);
                         searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
                     }
-                    if ("Y".equals(flag)) {
+                    if (GlobalConstant.FLAG_Y.equals(flag)) {
                         searchOrg.setOrgLevelId("CountryOrg");
                         searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
                     }
@@ -3218,7 +3218,7 @@ public class JsResDoctorController extends GeneralController {
                         org.setOrgLevelId(orgLevel);
                         org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
                     }
-                    if ("Y".equals(flag)) {
+                    if (GlobalConstant.FLAG_Y.equals(flag)) {
                         org.setOrgLevelId("CountryOrg");
                         org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
                     }
@@ -3361,8 +3361,8 @@ public class JsResDoctorController extends GeneralController {
         if (GlobalConstant.FLAG_Y.equals(viewFlag)) {
             return "jsres/doctorInfo";
         }
-        //"N".equals(canSave) 含义为有一条培训记录，结业考核年份是当前年，并且结业资格审查省厅通过的。学员无法修改个人信息 并且审核期间学员是否修改个人信息为否时
-        if (!GlobalConstant.FLAG_Y.equals(editFlag) && "N".equals(canSave)) {
+        //GlobalConstant.FLAG_N.equals(canSave) 含义为有一条培训记录，结业考核年份是当前年，并且结业资格审查省厅通过的。学员无法修改个人信息 并且审核期间学员是否修改个人信息为否时
+        if (!GlobalConstant.FLAG_Y.equals(editFlag) && GlobalConstant.FLAG_N.equals(canSave)) {
             model.addAttribute("isDoctor", "Y");
             return "jsres/doctorInfo";
         }
@@ -3468,8 +3468,8 @@ public class JsResDoctorController extends GeneralController {
 		if(GlobalConstant.FLAG_Y.equals(viewFlag)){
 			return "jsres/doctorInfo";
 		}*/
-        //"N".equals(canSave) 含义为有一条培训记录，结业考核年份是当前年，并且结业资格审查省厅通过的。学员无法修改个人信息 并且审核期间学员是否修改个人信息为否时
-        if (!GlobalConstant.FLAG_Y.equals(editFlag) && "N".equals(canSave)) {
+        //GlobalConstant.FLAG_N.equals(canSave) 含义为有一条培训记录，结业考核年份是当前年，并且结业资格审查省厅通过的。学员无法修改个人信息 并且审核期间学员是否修改个人信息为否时
+        if (!GlobalConstant.FLAG_Y.equals(editFlag) && GlobalConstant.FLAG_N.equals(canSave)) {
             doctorInfoVo.setIsDoctor("Y");
             return ResultUtil.exec(true, "不可编辑页面", doctorInfoVo);
         }
@@ -3576,8 +3576,8 @@ public class JsResDoctorController extends GeneralController {
 //		if(GlobalConstant.FLAG_Y.equals(viewFlag)){
 //			return "jsres/doctorInfo";
 //		}
-//		//"N".equals(canSave) 含义为有一条培训记录，结业考核年份是当前年，并且结业资格审查省厅通过的。学员无法修改个人信息 并且审核期间学员是否修改个人信息为否时
-//		if(!GlobalConstant.FLAG_Y.equals(editFlag)&&"N".equals(canSave)){
+//		//GlobalConstant.FLAG_N.equals(canSave) 含义为有一条培训记录，结业考核年份是当前年，并且结业资格审查省厅通过的。学员无法修改个人信息 并且审核期间学员是否修改个人信息为否时
+//		if(!GlobalConstant.FLAG_Y.equals(editFlag)&&GlobalConstant.FLAG_N.equals(canSave)){
 //			model.addAttribute("isDoctor","Y");
 //			return "jsres/doctorInfo";
 //		}
@@ -3867,7 +3867,7 @@ public class JsResDoctorController extends GeneralController {
                     } else if (JsResAsseAuditListEnum.GlobalPassed.getId().equals(apply.getAuditStatusId())) {
                         canSave = "N";
                     }
-                    if ("Y".equals(canSave)) {
+                    if (GlobalConstant.FLAG_Y.equals(canSave)) {
                         tempMapper.updateRecruitAsseInfoByApplyYear(apply.getApplyFlow(), sysUser.getUserFlow());
                     }
                 }
@@ -4604,7 +4604,7 @@ public class JsResDoctorController extends GeneralController {
         resOrgSpe.setSessionYear(sessionNumber);
         int year = Integer.parseInt(sessionNumber);
         if (year >= 2015) {
-            if ("Y".equals(speFlag)) {
+            if (GlobalConstant.FLAG_Y.equals(speFlag)) {
                 speList = resBaseSpeBiz.searchResOrgSpeListNew(resOrgSpe, trainCategoryTypeId, speFlag);
             } else {
                 speList = resBaseSpeBiz.searchResOrgSpeListNew(resOrgSpe, trainCategoryTypeId, speFlag);
@@ -5707,7 +5707,7 @@ public class JsResDoctorController extends GeneralController {
                 }
             }
             // 需求变更2018（不含）届以前学员 不做该判断  未参加过考核也可以补考
-            if ("2018".compareTo(doctor.getSessionNumber()) <= 0 && "N".equals(isSkill) && "N".equals(isTheory)) {
+            if ("2018".compareTo(doctor.getSessionNumber()) <= 0 && GlobalConstant.FLAG_N.equals(isSkill) && GlobalConstant.FLAG_N.equals(isTheory)) {
                 // 2019/2018/2017级助理全科全走补考报名
                 if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
                         isAllowApply = "Y";
@@ -5716,7 +5716,7 @@ public class JsResDoctorController extends GeneralController {
                     isAllowApply = "N";
                 }
             }
-            if ("Y".equals(isSkillQualifed) && "Y".equals(isTheoryQualifed)) {
+            if (GlobalConstant.FLAG_Y.equals(isSkillQualifed) && GlobalConstant.FLAG_Y.equals(isTheoryQualifed)) {
                 //3年内理论成绩和技能成绩都合格
                 isAllowApply = "N";
             }
@@ -5815,10 +5815,10 @@ public class JsResDoctorController extends GeneralController {
                         String isPassQualifyingExamination = userResumeExt.getIsPassQualifyingExamination();//是否通过医师资格考试
                         String isHaveQualificationCertificate = userResumeExt.getIsHaveQualificationCertificate();//是否获得医师资格证书
                         String isHavePracticingCategory = userResumeExt.getIsHavePracticingCategory();//是否获得医师执业证书
-                        if ("Y".equals(isPassQualifyingExamination)) {
-                            if ("Y".equals(isHaveQualificationCertificate)) {
+                        if (GlobalConstant.FLAG_Y.equals(isPassQualifyingExamination)) {
+                            if (GlobalConstant.FLAG_Y.equals(isHaveQualificationCertificate)) {
 
-                                if ("Y".equals(isHavePracticingCategory)) {
+                                if (GlobalConstant.FLAG_Y.equals(isHavePracticingCategory)) {
 
                                     practicingMap.put("graduationMaterialId", "176");//报考资格材料
                                     practicingMap.put("graduationMaterialName", "医师执业证书");//报考资格材料
@@ -6148,10 +6148,10 @@ public class JsResDoctorController extends GeneralController {
                         String isPassQualifyingExamination = userResumeExt.getIsPassQualifyingExamination();//是否通过医师资格考试
                         String isHaveQualificationCertificate = userResumeExt.getIsHaveQualificationCertificate();//是否获得医师资格证书
                         String isHavePracticingCategory = userResumeExt.getIsHavePracticingCategory();//是否获得医师执业证书
-                        if ("Y".equals(isPassQualifyingExamination)) {
-                            if ("Y".equals(isHaveQualificationCertificate)) {
+                        if (GlobalConstant.FLAG_Y.equals(isPassQualifyingExamination)) {
+                            if (GlobalConstant.FLAG_Y.equals(isHaveQualificationCertificate)) {
 
-                                if ("Y".equals(isHavePracticingCategory)) {
+                                if (GlobalConstant.FLAG_Y.equals(isHavePracticingCategory)) {
 
                                     practicingMap.put("graduationMaterialId", "176");//报考资格材料
                                     practicingMap.put("graduationMaterialName", "医师执业证书");//报考资格材料
@@ -6308,7 +6308,7 @@ public class JsResDoctorController extends GeneralController {
             model.addAttribute("recruitFlow", recruitFlow);
 
             //证书申请确认前学员数据比例重新计算
-            if (null != jsresGraduationApply && "Y".equals(jsresGraduationApply.getDoctorIsApply())) {
+            if (null != jsresGraduationApply && GlobalConstant.FLAG_Y.equals(jsresGraduationApply.getDoctorIsApply())) {
                 jsresGraduationApplyBiz.updatePer(jsresGraduationApply.getApplyFlow(), recruitFlow, "", recruit.getDoctorFlow(), applyYear);
                 //更新数据填写度一天内及一小时内比例
 //				jsresGraduationApplyBiz.deleteResRecPer(recruit.getDoctorFlow(),applyYear);
@@ -6495,10 +6495,10 @@ public class JsResDoctorController extends GeneralController {
                     String isPassQualifyingExamination = userResumeExt.getIsPassQualifyingExamination();//是否通过医师资格考试
                     String isHaveQualificationCertificate = userResumeExt.getIsHaveQualificationCertificate();//是否获得医师资格证书
                     String isHavePracticingCategory = userResumeExt.getIsHavePracticingCategory();//是否获得医师执业证书
-                    if ("Y".equals(isPassQualifyingExamination)) {
-                        if ("Y".equals(isHaveQualificationCertificate)) {
+                    if (GlobalConstant.FLAG_Y.equals(isPassQualifyingExamination)) {
+                        if (GlobalConstant.FLAG_Y.equals(isHaveQualificationCertificate)) {
 
-                            if ("Y".equals(isHavePracticingCategory)) {
+                            if (GlobalConstant.FLAG_Y.equals(isHavePracticingCategory)) {
 
                                 practicingMap.put("graduationMaterialId", "176");//报考资格材料
                                 practicingMap.put("graduationMaterialName", "医师执业证书");//报考资格材料
@@ -6967,8 +6967,8 @@ public class JsResDoctorController extends GeneralController {
                     double avgAuditComBi = 0;//平均审核比例
                     for (JsresDoctorDeptDetail d : details) {
                         biMap.put(d.getSchStandardDeptFlow(), d);
-                        if ("Y".equals(d.getIsAdd())) {
-                            if ("Y".equals(d.getIsShort())) {
+                        if (GlobalConstant.FLAG_Y.equals(d.getIsAdd())) {
+                            if (GlobalConstant.FLAG_Y.equals(d.getIsShort())) {
                                 if (!"-".equals(d.getCompleteBi())) {
                                     shortYCount++;
                                     shortYCBSum += StringUtil.isBlank(d.getCompleteBi()) ? 0 : "-".equals(d.getCompleteBi()) ? 0 : Double.valueOf(d.getCompleteBi());
@@ -6979,7 +6979,7 @@ public class JsResDoctorController extends GeneralController {
                                     isShortY = 1;
                                 }
                             }
-                            if ("N".equals(d.getIsShort())) {
+                            if (GlobalConstant.FLAG_N.equals(d.getIsShort())) {
                                 if (!"-".equals(d.getCompleteBi())) {
                                     shortNCount++;
                                     shortNCBSum += StringUtil.isBlank(d.getCompleteBi()) ? 0 : "-".equals(d.getCompleteBi()) ? 0 : Double.valueOf(d.getCompleteBi());
@@ -7278,10 +7278,10 @@ public class JsResDoctorController extends GeneralController {
                         String isPassQualifyingExamination = userResumeExt.getIsPassQualifyingExamination();//是否通过医师资格考试
                         String isHaveQualificationCertificate = userResumeExt.getIsHaveQualificationCertificate();//是否获得医师资格证书
                         String isHavePracticingCategory = userResumeExt.getIsHavePracticingCategory();//是否获得医师执业证书
-                        if ("Y".equals(isPassQualifyingExamination)) {
-                            if ("Y".equals(isHaveQualificationCertificate)) {
+                        if (GlobalConstant.FLAG_Y.equals(isPassQualifyingExamination)) {
+                            if (GlobalConstant.FLAG_Y.equals(isHaveQualificationCertificate)) {
 
-                                if ("Y".equals(isHavePracticingCategory)) {
+                                if (GlobalConstant.FLAG_Y.equals(isHavePracticingCategory)) {
 
                                     practicingMap.put("graduationMaterialId", "176");//报考资格材料
                                     practicingMap.put("graduationMaterialName", "医师执业证书");//报考资格材料
@@ -7377,7 +7377,7 @@ public class JsResDoctorController extends GeneralController {
                 ResTestConfig resTestConfig = resTestConfigList.get(0);
                 jsresGraduationApply.setTestId(resTestConfig.getTestId());
                 //判断需不需要基地审核，需要则是待基地审核，不要要再判断需不需要市局审核，需要则是待市局审核，都不需要则是待省厅审核
-                if (StringUtil.isNotBlank(recruit.getJointOrgFlow()) && "Y".equals(resTestConfig.getJointLocalAudit())) {
+                if (StringUtil.isNotBlank(recruit.getJointOrgFlow()) && GlobalConstant.FLAG_Y.equals(resTestConfig.getJointLocalAudit())) {
                     if ("DoctorTrainingSpe".equals(recruit.getCatSpeId())) {
                         jsresGraduationApply.setAuditStatusId("JointAuditing");
                         jsresGraduationApply.setAuditStatusName("待协同基地审核");
@@ -7385,10 +7385,10 @@ public class JsResDoctorController extends GeneralController {
                         jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.Auditing.getId());
                         jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.Auditing.getName());
                     }
-                } else if ("Y".equals(resTestConfig.getLocalAudit())) {
+                } else if (GlobalConstant.FLAG_Y.equals(resTestConfig.getLocalAudit())) {
                     jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.Auditing.getId());
                     jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.Auditing.getName());
-                } else if ("Y".equals(resTestConfig.getChargeAudit())) {
+                } else if (GlobalConstant.FLAG_Y.equals(resTestConfig.getChargeAudit())) {
                     jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.WaitChargePass.getId());
                     jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.WaitChargePass.getName());
                 } else {
@@ -7485,10 +7485,10 @@ public class JsResDoctorController extends GeneralController {
                     String isPassQualifyingExamination = userResumeExt.getIsPassQualifyingExamination();//是否通过医师资格考试
                     String isHaveQualificationCertificate = userResumeExt.getIsHaveQualificationCertificate();//是否获得医师资格证书
                     String isHavePracticingCategory = userResumeExt.getIsHavePracticingCategory();//是否获得医师执业证书
-                    if ("Y".equals(isPassQualifyingExamination)) {
-                        if ("Y".equals(isHaveQualificationCertificate)) {
+                    if (GlobalConstant.FLAG_Y.equals(isPassQualifyingExamination)) {
+                        if (GlobalConstant.FLAG_Y.equals(isHaveQualificationCertificate)) {
 
-                            if ("Y".equals(isHavePracticingCategory)) {
+                            if (GlobalConstant.FLAG_Y.equals(isHavePracticingCategory)) {
 
                                 practicingMap.put("graduationMaterialId", "176");//报考资格材料
                                 practicingMap.put("graduationMaterialName", "医师执业证书");//报考资格材料
@@ -7646,7 +7646,7 @@ public class JsResDoctorController extends GeneralController {
                 double avgOutComBi = 0;//平均补填比例
                 double avgAuditComBi = 0;//平均审核比例
                 for (JsresDoctorDeptDetail d : details) {
-                    if ("Y".equals(d.getIsShort())) {
+                    if (GlobalConstant.FLAG_Y.equals(d.getIsShort())) {
                         shortYCount++;
                         shortYCBSum += StringUtil.isBlank(d.getCompleteBi()) ? 0 : "-".equals(d.getCompleteBi()) ? 0 : Double.valueOf(d.getCompleteBi());
                         shortYOCBSum += StringUtil.isBlank(d.getOutCompleteBi()) ? 0 : "-".equals(d.getOutCompleteBi()) ? 0 : Double.valueOf(d.getOutCompleteBi());
@@ -7655,7 +7655,7 @@ public class JsResDoctorController extends GeneralController {
                             isShortY = 1;
                         }
                     }
-                    if ("N".equals(d.getIsShort())) {
+                    if (GlobalConstant.FLAG_N.equals(d.getIsShort())) {
                         shortNCount++;
                         shortNCBSum += StringUtil.isBlank(d.getCompleteBi()) ? 0 : "-".equals(d.getCompleteBi()) ? 0 : Double.valueOf(d.getCompleteBi());
                         shortNOCBSum += StringUtil.isBlank(d.getOutCompleteBi()) ? 0 : "-".equals(d.getOutCompleteBi()) ? 0 : Double.valueOf(d.getOutCompleteBi());
@@ -8082,7 +8082,7 @@ public class JsResDoctorController extends GeneralController {
                 double avgOutComBi = 0;//平均补填比例
                 double avgAuditComBi = 0;//平均审核比例
                 for (JsresDoctorDeptDetail d : details) {
-                    if ("Y".equals(d.getIsShort())) {
+                    if (GlobalConstant.FLAG_Y.equals(d.getIsShort())) {
                         shortYCount++;
                         shortYCBSum += StringUtil.isBlank(d.getCompleteBi()) ? 0 : "-".equals(d.getCompleteBi()) ? 0 : Double.valueOf(d.getCompleteBi());
                         shortYOCBSum += StringUtil.isBlank(d.getOutCompleteBi()) ? 0 : "-".equals(d.getOutCompleteBi()) ? 0 : Double.valueOf(d.getOutCompleteBi());
@@ -8091,7 +8091,7 @@ public class JsResDoctorController extends GeneralController {
                             isShortY = 1;
                         }
                     }
-                    if ("N".equals(d.getIsShort())) {
+                    if (GlobalConstant.FLAG_N.equals(d.getIsShort())) {
                         shortNCount++;
                         shortNCBSum += StringUtil.isBlank(d.getCompleteBi()) ? 0 : "-".equals(d.getCompleteBi()) ? 0 : Double.valueOf(d.getCompleteBi());
                         shortNOCBSum += StringUtil.isBlank(d.getOutCompleteBi()) ? 0 : "-".equals(d.getOutCompleteBi()) ? 0 : Double.valueOf(d.getOutCompleteBi());

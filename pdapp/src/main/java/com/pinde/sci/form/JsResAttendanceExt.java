@@ -1,9 +1,9 @@
 package com.pinde.sci.form;
 
 
-import com.pinde.sci.model.mo.JsresAttendance;
-import com.pinde.sci.model.mo.SysDept;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.JsresAttendance;
+import com.pinde.core.model.SysDept;
+import com.pinde.core.model.SysUser;
 
 public class JsResAttendanceExt extends SysUser{
 

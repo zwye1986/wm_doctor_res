@@ -1,9 +1,10 @@
 package com.pinde.res.ctrl.jswjw;
 
 import com.pinde.app.common.GeneralController;
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.enums.*;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.app.common.InitConfig;
-import com.pinde.core.commom.enums.*;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -13,7 +14,6 @@ import com.pinde.res.biz.jswjw.IResLiveTrainingBiz;
 import com.pinde.res.model.jswjw.mo.JsResDoctorOrgHistoryExt;
 import com.pinde.sci.dao.base.SysDeptMapper;
 import com.pinde.sci.dao.base.TeachingActivitySpeakerMapper;
-import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -1381,7 +1381,7 @@ public class JswjwWxAdminController extends GeneralController {
 	 **/
 	@RequestMapping("/kqStatisticsDetail")
 	@ResponseBody
-	public Object kqStatisticsDetail(String userFlow, ResDoctorKq kq, Integer pageIndex,Integer pageSize){
+	public Object kqStatisticsDetail(String userFlow, ResDoctorKq kq, Integer pageIndex, Integer pageSize){
 		Map<String,Object> resultMap = new HashMap<>();
 		resultMap.put("resultId", "200");
 		resultMap.put("resultType", "交易成功");
@@ -1410,7 +1410,7 @@ public class JswjwWxAdminController extends GeneralController {
 	//临时出科查询 住院医师
 	@RequestMapping(value="/temporaryOutSearch",method = {RequestMethod.POST})
 	@ResponseBody
-	public Object temporaryOutSearch(String userFlow, Integer pageIndex,Integer pageSize, SchArrangeResult arrangeResult, String roleId, String temporaryAuditStatusId, String biaoJi, String datas){
+	public Object temporaryOutSearch(String userFlow, Integer pageIndex, Integer pageSize, SchArrangeResult arrangeResult, String roleId, String temporaryAuditStatusId, String biaoJi, String datas){
 		Map<String,Object> resultMap = new HashMap<>();
 		resultMap.put("resultId", "200");
 		resultMap.put("resultType", "交易成功");
@@ -1491,7 +1491,7 @@ public class JswjwWxAdminController extends GeneralController {
 			}
 			List<SchArrangeResult> arrResultList = jswjwBiz.searchSchArrangeResultByMap(pMap);
 			Map<String, SchRotationDept> deptMap = new HashMap<String, SchRotationDept>();
-			Map<String,ResDoctorSchProcess> resultMap = new HashMap<>();
+			Map<String, ResDoctorSchProcess> resultMap = new HashMap<>();
 			Map<String,Map<String,Object>> skillMap = new HashMap<>();
 			Map<String,String> DOPSFlowMap = new HashMap<>();
 			Map<String,String> MiniFlowMap = new HashMap<>();
@@ -2002,7 +2002,7 @@ public class JswjwWxAdminController extends GeneralController {
 			{
 				return "请选择需要审核的类型！";
 			}
-			if(!"Y".equals(isAccept)&&!"N".equals(isAccept))
+			if(!GlobalConstant.FLAG_Y.equals(isAccept)&&!GlobalConstant.FLAG_N.equals(isAccept))
 			{
 				return "请选择【认可】还是【不认可】！";
 			}

@@ -1,7 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.SysUser;
 import org.slf4j.Logger;

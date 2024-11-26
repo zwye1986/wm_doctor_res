@@ -1,8 +1,8 @@
 package com.pinde.res.biz.jswjw;
 
-import com.pinde.sci.model.mo.ResDoctorGraduationExam;
-import com.pinde.sci.model.mo.SchExamArrangement;
-import com.pinde.sci.model.mo.SchExamDoctorArrangement;
+import com.pinde.core.model.ResDoctorGraduationExam;
+import com.pinde.core.model.SchExamArrangement;
+import com.pinde.core.model.SchExamDoctorArrangement;
 
 import java.util.List;
 import java.util.Map;

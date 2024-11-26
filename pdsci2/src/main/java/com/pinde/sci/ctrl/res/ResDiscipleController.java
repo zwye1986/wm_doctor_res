@@ -6,7 +6,6 @@ import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.pub.UserSexEnum;
 import com.pinde.sci.enums.res.DiscipleStatusEnum;

@@ -1,10 +1,10 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
 import java.math.BigDecimal;
 
-public class PubProjFundPlan extends MybatisObject {
+public class PubProjFundPlan extends TeachingActivitySpeakerExample.MybatisObject {
     private String fundPlanFlow;
 
     private String projFlow;

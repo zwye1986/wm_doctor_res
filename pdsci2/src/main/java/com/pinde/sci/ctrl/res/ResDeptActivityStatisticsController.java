@@ -11,7 +11,6 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.res.DeptActivityItemTypeEnum;
@@ -670,7 +669,7 @@ public class ResDeptActivityStatisticsController extends GeneralController {
 	}
 
 	private void createExcle(SysDeptMonthPlanItem item, List<QingpuLectureCfgTitleExt> titleFormList, Map<String, Object> gradeAllMap, List<SysDeptMonthPlanItemEval> evals, HttpServletResponse response, String isList, HttpServletRequest request) throws IOException {
-		if("Y".equals(isList))
+		if(GlobalConstant.FLAG_Y.equals(isList))
 		{
 			OutputStream out=response.getOutputStream();
 			File zip = new File(request.getRealPath("/files") + "/评价表.zip");// 压缩文件

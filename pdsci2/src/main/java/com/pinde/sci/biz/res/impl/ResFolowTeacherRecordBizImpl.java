@@ -4,7 +4,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResFolowTeacherRecordBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResDiscipleRecordInfoMapper;
 import com.pinde.sci.dao.base.ResStudentDiscipleTeacherMapper;
 import com.pinde.sci.dao.res.ResFollowTeacherRecordExtMapper;
@@ -16,7 +15,6 @@ import com.pinde.sci.model.mo.ResStudentDiscipleTeacherExample;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;

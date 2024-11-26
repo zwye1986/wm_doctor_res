@@ -3,13 +3,11 @@ package com.pinde.sci.biz.sys.impl;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.IWsCfgBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.SysWsConfigMapper;
 import com.pinde.sci.model.mo.SysWsConfig;
 import com.pinde.sci.model.mo.SysWsConfigExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

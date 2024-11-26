@@ -2,7 +2,6 @@ package com.pinde.sci.ctrl.sch;
 
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.sch.SchArrangeStatusEnum;
 import com.pinde.sci.enums.sch.SchArrangeTypeEnum;

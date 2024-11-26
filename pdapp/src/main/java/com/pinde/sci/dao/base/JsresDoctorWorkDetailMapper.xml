@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.JsresDoctorWorkDetailMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.JsresDoctorWorkDetail">
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresDoctorWorkDetail">
     <id column="DETAIL_FLOW" jdbcType="VARCHAR" property="detailFlow" />
     <result column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
     <result column="ROTATION_FLOW" jdbcType="VARCHAR" property="rotationFlow" />
@@ -98,7 +98,7 @@
     REQ_NUM, COMPLETE_NUM, AUDIT_NUM, EVALUATION_NUM, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW, RECRUIT_FLOW, GROUP_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.JsresDoctorWorkDetailExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.pinde.core.model.JsresDoctorWorkDetailExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -122,13 +122,13 @@
     delete from PDSCI.JSRES_DOCTOR_WORK_DETAIL
     where DETAIL_FLOW = #{detailFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.JsresDoctorWorkDetailExample">
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresDoctorWorkDetailExample">
     delete from PDSCI.JSRES_DOCTOR_WORK_DETAIL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.JsresDoctorWorkDetail">
+  <insert id="insert" parameterType="com.pinde.core.model.JsresDoctorWorkDetail">
     insert into PDSCI.JSRES_DOCTOR_WORK_DETAIL (DETAIL_FLOW, DOCTOR_FLOW, ROTATION_FLOW, 
       RECORD_FLOW, STANDARD_DEPT_ID, STANDARD_DEPT_NAME, 
       SCH_MONTH, SCH_DEPT_FLOW, SCH_DEPT_NAME, 
@@ -152,7 +152,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{recruitFlow,jdbcType=VARCHAR}, #{groupFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.JsresDoctorWorkDetail">
+  <insert id="insertSelective" parameterType="com.pinde.core.model.JsresDoctorWorkDetail">
     insert into PDSCI.JSRES_DOCTOR_WORK_DETAIL
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="detailFlow != null">
@@ -339,7 +339,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.JsresDoctorWorkDetailExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.pinde.core.model.JsresDoctorWorkDetailExample" resultType="java.lang.Integer">
     select count(*) from PDSCI.JSRES_DOCTOR_WORK_DETAIL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -479,7 +479,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.JsresDoctorWorkDetail">
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresDoctorWorkDetail">
     update PDSCI.JSRES_DOCTOR_WORK_DETAIL
     <set>
       <if test="doctorFlow != null">
@@ -572,7 +572,7 @@
     </set>
     where DETAIL_FLOW = #{detailFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.JsresDoctorWorkDetail">
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresDoctorWorkDetail">
     update PDSCI.JSRES_DOCTOR_WORK_DETAIL
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},

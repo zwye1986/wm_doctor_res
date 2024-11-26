@@ -18,7 +18,6 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.jszy.JszyResDocTypeEnum;
@@ -31,8 +30,6 @@ import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
 import com.pinde.sci.model.mo.*;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -838,7 +835,7 @@ public class JszyResStatisticController extends GeneralController {
                     }
                     cityOrgMap.put(o.getOrgCityId(),orgFlows);
 
-                    if("Y".equals(joint))
+                    if(GlobalConstant.FLAG_Y.equals(joint))
                     {
                         List<String> jointOrgFlowList=new ArrayList<>();
                         List<SysOrg>jointOrgList=orgBiz.searchJointOrgsByOrg(o.getOrgFlow());//查询每家基地的协同基地
@@ -888,7 +885,7 @@ public class JszyResStatisticController extends GeneralController {
                 sum2+=(Integer) map.get("num");
                 typeNumMap.put(speId,sum2);
 
-                if("Y".equals(joint))
+                if(GlobalConstant.FLAG_Y.equals(joint))
                 {
                     param.put("orgFlow",orgFlow);
                     List<Map<String,Object>> list2=doctorRecruitBiz.zlxytjJoint(param);
@@ -1004,7 +1001,7 @@ public class JszyResStatisticController extends GeneralController {
         if (orgs != null) {
             for (SysOrg o : orgs) {
                 if (OrgLevelEnum.CountryOrg.getId().equals(o.getOrgLevelId())) {
-                    if ("Y".equals(joint)) {
+                    if (GlobalConstant.FLAG_Y.equals(joint)) {
                         List<String> jointOrgFlowList = new ArrayList<>();
                         List<SysOrg> jointOrgList = orgBiz.searchJointOrgsByOrg(o.getOrgFlow());//查询每家基地的协同基地
                         if (jointOrgList != null && !jointOrgList.isEmpty()) {
@@ -1386,7 +1383,7 @@ public class JszyResStatisticController extends GeneralController {
                     }
                     cityOrgMap.put(o.getOrgCityId(),orgFlows);
 
-                    if("Y".equals(joint))
+                    if(GlobalConstant.FLAG_Y.equals(joint))
                     {
                         List<String> jointOrgFlowList=new ArrayList<>();
                         List<SysOrg>jointOrgList=orgBiz.searchJointOrgsByOrg(o.getOrgFlow());//查询每家基地的协同基地

@@ -1,6 +1,6 @@
 package com.pinde.res.dao.jswjw.ext;
 
-import com.pinde.sci.model.mo.JsresGraduationInfo;
+import com.pinde.core.model.JsresGraduationInfo;
 
 import java.util.List;
 import java.util.Map;

@@ -14,7 +14,6 @@ import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.model.mo.PubFile;
 import org.dom4j.*;
@@ -290,7 +289,7 @@ public class JspFormUtil {
 			        		String fileTempId = fileParamName[1];
 			        		//已确认文件不再更新
 							String confirm = dataMap.get("confirm_"+fileTempId) == null?"":dataMap.get("confirm_"+fileTempId)[0];
-							if ("Y".equals(confirm)) {
+							if (GlobalConstant.FLAG_Y.equals(confirm)) {
 								continue;
 							}
 							PubFile pubFile = new PubFile();

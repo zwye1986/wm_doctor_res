@@ -4,7 +4,6 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.sci.biz.recruit.IRecruitInfoLogBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.RecruitInfoLogMapper;
 import com.pinde.sci.enums.recruit.RecruitOperEnum;
@@ -12,7 +11,6 @@ import com.pinde.sci.model.mo.RecruitInfoLog;
 import com.pinde.sci.model.mo.RecruitInfoLogExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

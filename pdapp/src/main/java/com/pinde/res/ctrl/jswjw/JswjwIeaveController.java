@@ -1,16 +1,16 @@
 package com.pinde.res.ctrl.jswjw;
 
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.commom.enums.ResDoctorKqStatusEnum;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.ResDoctorKqStatusEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.jswjw.IIeaveAppBiz;
 import com.pinde.sci.dao.base.SysUserMapper;
-import com.pinde.sci.model.mo.PubFile;
-import com.pinde.sci.model.mo.ResDoctorKq;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.PubFile;
+import com.pinde.core.model.ResDoctorKq;
+import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -199,12 +199,12 @@ public class JswjwIeaveController {
             model.addAttribute("resultType", "审核状态为空");
             return successUrl;
         }
-        if (isTeacher && !"Y".equals(teacherAgreeFlag) && !"N".equals(teacherAgreeFlag)) {
+        if (isTeacher && !GlobalConstant.FLAG_Y.equals(teacherAgreeFlag) && !GlobalConstant.FLAG_N.equals(teacherAgreeFlag)) {
             model.addAttribute("resultId", "3011101");
             model.addAttribute("resultType", "审核状态只能是Y通过或N不通过");
             return successUrl;
         }
-        if ("N".equals(teacherAgreeFlag) && StringUtil.isBlank(auditInfo)) {
+        if (GlobalConstant.FLAG_N.equals(teacherAgreeFlag) && StringUtil.isBlank(auditInfo)) {
             model.addAttribute("resultId", "3011101");
             model.addAttribute("resultType", "审核信息为空");
             return successUrl;
@@ -223,7 +223,7 @@ public class JswjwIeaveController {
                 model.addAttribute("resultType", "此请假信息已审核，请刷新列表页");
                 return successUrl;
             }
-            if ("Y".equals(teacherAgreeFlag)) {
+            if (GlobalConstant.FLAG_Y.equals(teacherAgreeFlag)) {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.TeacherPass.getId());
                 kq.setAuditStatusName(ResDoctorKqStatusEnum.TeacherPass.getName());
                 if ("-".equals(kq.getHeadName())) {
@@ -263,7 +263,7 @@ public class JswjwIeaveController {
                 model.addAttribute("resultType", "此请假信息已审核，请刷新列表页");
                 return successUrl;
             }
-            if ("Y".equals(teacherAgreeFlag)) {
+            if (GlobalConstant.FLAG_Y.equals(teacherAgreeFlag)) {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.HeadPass.getId());
                 kq.setAuditStatusName(ResDoctorKqStatusEnum.HeadPass.getName());
                 if ("-".equals(kq.getManagerName())) {

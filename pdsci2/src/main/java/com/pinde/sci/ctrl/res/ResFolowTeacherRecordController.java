@@ -5,7 +5,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResFolowTeacherRecordBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.res.DiscipleStatusEnum;
 import com.pinde.sci.model.mo.ResDiscipleRecordInfo;
@@ -234,7 +233,7 @@ public class ResFolowTeacherRecordController extends GeneralController {
             return GlobalConstant.OPERATE_SUCCESSED;
         } else {
             //批量通过
-            if ("Y".equals(batch)) {
+            if (GlobalConstant.FLAG_Y.equals(batch)) {
 
                 Map<String, String> paramMap = new HashMap<>();
                 SysUser currentUser = GlobalContext.getCurrentUser();

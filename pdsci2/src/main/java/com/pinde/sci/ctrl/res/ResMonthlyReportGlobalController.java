@@ -14,7 +14,6 @@ import com.pinde.sci.biz.res.IResSchProcessExpressBiz;
 import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
@@ -1307,10 +1306,10 @@ if("isContain".equals(isContain)){
 		param.put("monthDate",monthDate);
 		param.put("sortFlag",sortFlag);
 		String doctorTypeId = "All";
-		if("Y".equals(notGraduate) && !"Y".equals(graduate)){
+		if(GlobalConstant.FLAG_Y.equals(notGraduate) && !GlobalConstant.FLAG_Y.equals(graduate)){
 			doctorTypeId = "Doctor";
 		}
-		if("Y".equals(graduate) && !"Y".equals(notGraduate)){
+		if(GlobalConstant.FLAG_Y.equals(graduate) && !GlobalConstant.FLAG_Y.equals(notGraduate)){
 			doctorTypeId = "Graduate";
 		}
 		param.put("doctorTypeId",doctorTypeId);

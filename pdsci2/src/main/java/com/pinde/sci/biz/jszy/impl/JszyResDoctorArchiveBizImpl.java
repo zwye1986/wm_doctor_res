@@ -4,7 +4,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyResDoctorArchiveBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResArchiveSequenceMapper;
 import com.pinde.sci.dao.base.ResDoctorLogMapper;
 import com.pinde.sci.dao.base.ResUserResumeLogMapper;
@@ -17,7 +16,6 @@ import com.pinde.sci.model.mo.*;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;

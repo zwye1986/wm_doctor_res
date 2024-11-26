@@ -5,7 +5,6 @@ import com.pinde.core.page.PageHelper;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.JsresPowerCfg;
 import org.slf4j.Logger;
@@ -84,7 +83,7 @@ public class JsresSendSchoolCfgController extends GeneralController{
 				Map<String,Object> map = new HashMap<>();
 				map.put("dictFlow",dictFlow);
 				JsresPowerCfg cfg = jsResPowerCfgBiz.read(Arrays.asList(cfgCodes).get(0));
-				if(null != cfg && "Y".equals(cfg.getCfgValue())){
+				if(null != cfg && GlobalConstant.FLAG_Y.equals(cfg.getCfgValue())){
 					map.put("isSubmitId","Y");
 				}else{
 					map.put("isSubmitId","N");

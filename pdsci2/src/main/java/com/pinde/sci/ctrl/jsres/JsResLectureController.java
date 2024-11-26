@@ -14,7 +14,6 @@ import com.pinde.sci.biz.res.IResLectureScanRegistBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.sch.SchUnitEnum;
@@ -371,11 +370,11 @@ public class JsResLectureController extends GeneralController {
                 //判断结束
                 if((lectureEndTime.compareTo(currTime)<0&&lectureTrainDate.compareTo(currDate)==0)||(lectureTrainDate.compareTo(currDate)<0)){
                     lectureInfos.add(lectureInfo);
-                    if("Y".equals(isScan))
+                    if(GlobalConstant.FLAG_Y.equals(isScan))
                     {
                         scanMap.put(lectureFlow,"Y");
                     }
-                    if("Y".equals(isScan2)) {
+                    if(GlobalConstant.FLAG_Y.equals(isScan2)) {
                         scan2Map.put(lectureFlow, "Y");
                     }
                     evaMap.put(lectureFlow,dateFlag);
@@ -657,7 +656,7 @@ public class JsResLectureController extends GeneralController {
 
         //随机签到
         List<ResLectureRandomSign> randomSignList = new ArrayList<>();
-        if("Y".equals(flag)) {
+        if(GlobalConstant.FLAG_Y.equals(flag)) {
             randomSignList = randomSignBiz.searchRandomByLectureFlow(lectureFlow);
         }
         model.addAttribute("randomSignList", randomSignList);
@@ -1156,10 +1155,10 @@ public class JsResLectureController extends GeneralController {
     @RequestMapping("/saveRandomSign")
     @ResponseBody
     public String saveRandomSign(ResLectureRandomSign randomSign){
-        if("N".equals(randomSign.getCodeStatusType())){
+        if(GlobalConstant.FLAG_N.equals(randomSign.getCodeStatusType())){
             randomSign.setCodeStatusName("静态二维码");
         }
-        if("Y".equals(randomSign.getCodeStatusType())){
+        if(GlobalConstant.FLAG_Y.equals(randomSign.getCodeStatusType())){
             randomSign.setCodeStatusName("动态二维码");
         }
         int i = randomSignBiz.saveRandom(randomSign);

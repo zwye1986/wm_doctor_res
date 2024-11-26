@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.JsresUserBalcklistMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.JsresUserBalcklist">
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresUserBalcklist">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow" />
     <result column="USER_CODE" jdbcType="VARCHAR" property="userCode" />
@@ -88,7 +88,7 @@
     OPER_TYPE_NAME, REASON_YJ, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
     MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.JsresUserBalcklistExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.pinde.core.model.JsresUserBalcklistExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -112,13 +112,13 @@
     delete from PDSCI.JSRES_USER_BALCKLIST
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.JsresUserBalcklistExample">
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresUserBalcklistExample">
     delete from PDSCI.JSRES_USER_BALCKLIST
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.JsresUserBalcklist">
+  <insert id="insert" parameterType="com.pinde.core.model.JsresUserBalcklist">
     insert into PDSCI.JSRES_USER_BALCKLIST (RECORD_FLOW, USER_FLOW, USER_CODE, 
       USER_NAME, USER_PHONE, USER_EMAIL, 
       ORG_FLOW, ORG_NAME, ID_NO, 
@@ -136,7 +136,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.JsresUserBalcklist">
+  <insert id="insertSelective" parameterType="com.pinde.core.model.JsresUserBalcklist">
     insert into PDSCI.JSRES_USER_BALCKLIST
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
@@ -269,7 +269,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.JsresUserBalcklistExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.pinde.core.model.JsresUserBalcklistExample" resultType="java.lang.Integer">
     select count(*) from PDSCI.JSRES_USER_BALCKLIST
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -373,7 +373,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.JsresUserBalcklist">
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresUserBalcklist">
     update PDSCI.JSRES_USER_BALCKLIST
     <set>
       <if test="userFlow != null">
@@ -439,7 +439,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.JsresUserBalcklist">
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresUserBalcklist">
     update PDSCI.JSRES_USER_BALCKLIST
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       USER_CODE = #{userCode,jdbcType=VARCHAR},

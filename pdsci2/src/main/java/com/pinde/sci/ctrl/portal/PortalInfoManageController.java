@@ -10,7 +10,6 @@ import com.pinde.sci.biz.sys.ICfgBiz;
 import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.PortalSuggestMapper;
 import com.pinde.sci.enums.inx.InfoStatusEnum;
@@ -453,7 +452,7 @@ public class PortalInfoManageController extends GeneralController {
 	@RequestMapping("/changeShowFlag")
 	@ResponseBody
 	public int changeShowFlag(PortalSuggest suggest){
-		if("Y".equals(suggest.getShowFlag())){
+		if(GlobalConstant.FLAG_Y.equals(suggest.getShowFlag())){
 			PortalSuggestExample example = new PortalSuggestExample();
 			example.createCriteria().andRecordStatusEqualTo("Y").andShowFlagEqualTo("Y");
 			int count = portalSuggestMapper.countByExample(example);

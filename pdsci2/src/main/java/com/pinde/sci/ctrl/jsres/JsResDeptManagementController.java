@@ -13,7 +13,6 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
@@ -27,7 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -135,7 +133,7 @@ public class JsResDeptManagementController {
         }
 
         // 专业基地关联标准科室，增加专业基地信息
-        if("Y".equals(standardDeptVO.getWithSpeBaseFlag()) && StringUtils.isNotEmpty(standardDeptVO.getSpeBaseId())) {
+        if(GlobalConstant.FLAG_Y.equals(standardDeptVO.getWithSpeBaseFlag()) && StringUtils.isNotEmpty(standardDeptVO.getSpeBaseId())) {
             ResSpeBaseStdDeptVO speBaseStdDeptVO = new ResSpeBaseStdDeptVO();
             speBaseStdDeptVO.setSpeBaseId(standardDeptVO.getSpeBaseId());
             // 1:必选，2：可选
@@ -152,7 +150,7 @@ public class JsResDeptManagementController {
             }
         }
         // 基地科室关联标准科室，增加基地科室信息
-        if("Y".equals(standardDeptVO.getWithBaseDeptFlag()) && StringUtils.isNotEmpty(standardDeptVO.getDeptFlow())) {
+        if(GlobalConstant.FLAG_Y.equals(standardDeptVO.getWithBaseDeptFlag()) && StringUtils.isNotEmpty(standardDeptVO.getDeptFlow())) {
             SysDeptVO sysDeptVO = new SysDeptVO();
             sysDeptVO.setDeptFlow(standardDeptVO.getDeptFlow());
             List<SysDeptVO> sysDeptVOList = deptManagementBiz.selectSysDeptRelStdDept(sysDeptVO);
@@ -353,7 +351,7 @@ public class JsResDeptManagementController {
             }
 
             // 当禁用时，与删除一样的校验
-            if("N".equals(standardDeptVO.getDeptStatus())) {
+            if(GlobalConstant.FLAG_N.equals(standardDeptVO.getDeptStatus())) {
                 // 当前标准科室不应关联有基地科室
                 ResDeptRelStdDeptVO deptRelStdDeptVO = new ResDeptRelStdDeptVO();
                 deptRelStdDeptVO.setStandardDeptFlow(standardDeptVO.getStandardDeptFlow());

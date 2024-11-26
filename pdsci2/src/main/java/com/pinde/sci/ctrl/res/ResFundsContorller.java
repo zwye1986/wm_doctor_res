@@ -9,7 +9,6 @@ import com.pinde.sci.biz.res.IFundsBiz;
 import com.pinde.sci.biz.sys.ICfgBiz;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
@@ -90,7 +89,7 @@ public class ResFundsContorller extends GeneralController {
         model.addAttribute("role", role);
         // 查询是否需要省厅审核
         SysCfg fundingRudit = jswjwBiz.read("funding_Report_audit");
-        if("Y".equals(fundingRudit.getCfgValue())){
+        if(GlobalConstant.FLAG_Y.equals(fundingRudit.getCfgValue())){
             model.addAttribute("fundingRudit","Y");
         } else {
             model.addAttribute("fundingRudit","N");
@@ -136,7 +135,7 @@ public class ResFundsContorller extends GeneralController {
         model.addAttribute("role",role);
         // 查询是否需要省厅审核
         SysCfg fundingRudit = jswjwBiz.read("funding_Report_audit");
-        if("Y".equals(fundingRudit.getCfgValue())){
+        if(GlobalConstant.FLAG_Y.equals(fundingRudit.getCfgValue())){
             model.addAttribute("fundingRudit","Y");
         } else {
             model.addAttribute("fundingRudit","N");

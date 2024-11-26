@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.VerificationCodeRecord;
-import com.pinde.sci.model.mo.VerificationCodeRecordExample;
+import com.pinde.core.model.VerificationCodeRecord;
+import com.pinde.core.model.VerificationCodeRecordExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

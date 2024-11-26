@@ -13,7 +13,6 @@ import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
@@ -32,7 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -368,7 +366,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 		}
 		if(StringUtil.isNotBlank(activity.getActivityTypeId()))
 		{
-			if("Y".equals(isRes)) {
+			if(GlobalConstant.FLAG_Y.equals(isRes)) {
 				activity.setActivityTypeName(DictTypeEnum.ActivityType.getDictNameById(activity.getActivityTypeId()));
 			}else{
 				activity.setActivityTypeName(ActivityTypeEnum.getNameById(activity.getActivityTypeId()));
@@ -787,7 +785,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 //			activity.setFileFlow("");
 //		}
 		if(StringUtil.isNotBlank(activity.getActivityTypeId())) {
-			if("Y".equals(isRes)) {
+			if(GlobalConstant.FLAG_Y.equals(isRes)) {
 				activity.setActivityTypeName(DictTypeEnum.ActivityType.getDictNameById(activity.getActivityTypeId()));
 			}else{
 				activity.setActivityTypeName(ActivityTypeEnum.getNameById(activity.getActivityTypeId()));
@@ -979,7 +977,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 //			activity.setFileFlow("");
 //		}
 		if(StringUtil.isNotBlank(activity.getActivityTypeId())) {
-			if("Y".equals(isRes)) {
+			if(GlobalConstant.FLAG_Y.equals(isRes)) {
 				activity.setActivityTypeName(DictTypeEnum.ActivityType.getDictNameById(activity.getActivityTypeId()));
 			}else{
 				activity.setActivityTypeName(ActivityTypeEnum.getNameById(activity.getActivityTypeId()));

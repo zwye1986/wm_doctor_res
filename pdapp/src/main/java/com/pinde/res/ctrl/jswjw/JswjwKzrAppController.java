@@ -1,7 +1,8 @@
 package com.pinde.res.ctrl.jswjw;
 
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.commom.enums.*;
+import com.pinde.core.common.enums.*;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -16,7 +17,6 @@ import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgItemForm;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgTitleForm;
 import com.pinde.sci.dao.base.JsresPowerCfgMapper;
-import com.pinde.sci.model.mo.*;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -3197,7 +3197,7 @@ public class JswjwKzrAppController {
 			model.addAttribute("resultType", "typeId标识符为空");
 			return "res/jswjw/kzr/activityStuList";
 		}
-		if(!"Y".equals(typeId)&&!"N".equals(typeId)){
+		if(!GlobalConstant.FLAG_Y.equals(typeId)&&!GlobalConstant.FLAG_N.equals(typeId)){
 			model.addAttribute("resultId", "3011101");
 			model.addAttribute("resultType", "typeId只能是Y或N");
 			return "res/jswjw/kzr/activityStuList";
@@ -3271,7 +3271,7 @@ public class JswjwKzrAppController {
 			model.addAttribute("resultType", "isEffective");
 			return "res/jswjw/success";
 		}
-		if(!"Y".equals(isEffective)&&!"N".equals(isEffective))
+		if(!GlobalConstant.FLAG_Y.equals(isEffective)&&!GlobalConstant.FLAG_N.equals(isEffective))
 		{
 			model.addAttribute("resultId", "3011101");
 			model.addAttribute("resultType", "isEffective只能是Y或N");

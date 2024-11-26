@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SchRotationDeptAfterMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SchRotationDeptAfter" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.SchRotationDeptAfter" >
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="SCH_ROTATION_DEPT_FLOW" property="schRotationDeptFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
@@ -11,7 +11,7 @@
     <result column="THUMB_URLS_BACK" property="thumbUrlsBack" jdbcType="VARCHAR" />
     <result column="APPLY_YEAR" property="applyYear" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.SchRotationDeptAfterWithBLOBs" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.SchRotationDeptAfterWithBLOBs" extends="BaseResultMap" >
     <result column="IMAGE_URLS" property="imageUrls" jdbcType="CLOB" />
     <result column="THUMB_URLS" property="thumbUrls" jdbcType="CLOB" />
   </resultMap>
@@ -80,7 +80,7 @@
   <sql id="Blob_Column_List" >
     IMAGE_URLS, THUMB_URLS
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.SchRotationDeptAfterExample" >
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.core.model.SchRotationDeptAfterExample" >
     select
     <if test="distinct" >
       distinct
@@ -96,7 +96,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SchRotationDeptAfterExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SchRotationDeptAfterExample" >
     select
     <if test="distinct" >
       distinct
@@ -122,13 +122,13 @@
     delete from PDSCI.SCH_ROTATION_DEPT_AFTER
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchRotationDeptAfterExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.SchRotationDeptAfterExample" >
     delete from PDSCI.SCH_ROTATION_DEPT_AFTER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SchRotationDeptAfterWithBLOBs" >
+  <insert id="insert" parameterType="com.pinde.core.model.SchRotationDeptAfterWithBLOBs" >
     insert into PDSCI.SCH_ROTATION_DEPT_AFTER (RECORD_FLOW, SCH_ROTATION_DEPT_FLOW, 
       DOCTOR_FLOW, RECORD_STATUS, MODFIY_TIME, 
       IMAGE_URLS_BACK, THUMB_URLS_BACK, APPLY_YEAR, 
@@ -138,7 +138,7 @@
       #{imageUrlsBack,jdbcType=VARCHAR}, #{thumbUrlsBack,jdbcType=VARCHAR}, #{applyYear,jdbcType=VARCHAR}, 
       #{imageUrls,jdbcType=CLOB}, #{thumbUrls,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchRotationDeptAfterWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.SchRotationDeptAfterWithBLOBs" >
     insert into PDSCI.SCH_ROTATION_DEPT_AFTER
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -205,7 +205,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchRotationDeptAfterExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.SchRotationDeptAfterExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.SCH_ROTATION_DEPT_AFTER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -279,7 +279,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchRotationDeptAfterWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SchRotationDeptAfterWithBLOBs" >
     update PDSCI.SCH_ROTATION_DEPT_AFTER
     <set >
       <if test="schRotationDeptFlow != null" >
@@ -312,7 +312,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.SchRotationDeptAfterWithBLOBs" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.SchRotationDeptAfterWithBLOBs" >
     update PDSCI.SCH_ROTATION_DEPT_AFTER
     set SCH_ROTATION_DEPT_FLOW = #{schRotationDeptFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
@@ -325,7 +325,7 @@
       THUMB_URLS = #{thumbUrls,jdbcType=CLOB}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchRotationDeptAfter" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SchRotationDeptAfter" >
     update PDSCI.SCH_ROTATION_DEPT_AFTER
     set SCH_ROTATION_DEPT_FLOW = #{schRotationDeptFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},

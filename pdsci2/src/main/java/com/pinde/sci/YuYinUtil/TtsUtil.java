@@ -2,7 +2,6 @@ package com.pinde.sci.YuYinUtil;
 
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 
 import javax.sound.sampled.*;

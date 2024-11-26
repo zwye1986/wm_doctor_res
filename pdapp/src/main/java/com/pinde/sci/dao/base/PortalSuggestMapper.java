@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.PortalSuggest;
-import com.pinde.sci.model.mo.PortalSuggestExample;
+import com.pinde.core.model.PortalSuggest;
+import com.pinde.core.model.PortalSuggestExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

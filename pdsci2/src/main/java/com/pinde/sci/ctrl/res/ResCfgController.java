@@ -9,7 +9,6 @@ import com.pinde.sci.biz.sch.ISchDeptBiz;
 import com.pinde.sci.biz.sys.ICfgBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.res.ResAssessScoreTypeEnum;
 import com.pinde.sci.enums.res.ResAssessTypeEnum;

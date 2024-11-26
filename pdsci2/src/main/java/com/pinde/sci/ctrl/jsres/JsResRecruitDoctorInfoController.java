@@ -17,12 +17,10 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.SysCfgMapper;
 import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.res.ArmyTypeEnum;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
@@ -2924,7 +2922,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 								String key =  orgFlow2 + e.getDictId();
 								String flow =  orgFlow2 + trainingTypeId +e.getDictId();
 								String result="--";
-								if("Y".equals(orgSpeFlagMap.get(flow)))
+								if(GlobalConstant.FLAG_Y.equals(orgSpeFlagMap.get(flow)))
 								{
 									Integer num = (Integer) cityOrgNumMap.get(key);
 									if (num == null)
@@ -2968,7 +2966,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 											String key =  jointOrgFlow + e.getDictId();
 											String flow = jointOrgFlow + trainingTypeId + e.getDictId();
 											String result = "--";
-											if ("Y".equals(orgSpeFlagMap.get(flow))) {
+											if (GlobalConstant.FLAG_Y.equals(orgSpeFlagMap.get(flow))) {
 												Integer num = (Integer) cityOrgNumMap.get(key);
 												if (num == null)
 													num = 0;

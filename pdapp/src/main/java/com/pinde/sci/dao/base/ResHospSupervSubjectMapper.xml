@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResHospSupervSubjectMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResHospSupervSubject" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResHospSupervSubject" >
     <result column="SUBJECT_FLOW" property="subjectFlow" jdbcType="VARCHAR" />
     <result column="SUBJECT_NAME" property="subjectName" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
@@ -111,7 +111,7 @@
     LEADER_ONE_END_TIME, LEADER_TWO_START_TIME, LEADER_TWO_END_TIME, LEADER_SUB_NUM, 
     ACTUAL_SPEAKER, ACTIVITY_START_TIME, ACTIVITY_END_TIME, MATCHING, REVIEW_CONFIG
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResHospSupervSubjectExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResHospSupervSubjectExample" >
     select
     <if test="distinct" >
       distinct
@@ -125,13 +125,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResHospSupervSubjectExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResHospSupervSubjectExample" >
     delete from PDSCI.RES_HOSP_SUPERV_SUBJECT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResHospSupervSubject" >
+  <insert id="insert" parameterType="com.pinde.core.model.ResHospSupervSubject" >
     insert into PDSCI.RES_HOSP_SUPERV_SUBJECT (SUBJECT_FLOW, SUBJECT_NAME, ORG_FLOW, 
       ORG_NAME, BASE_CODE, SPE_ID, 
       SPE_NAME, RECORD_STATUS, ORDER_ACTION, 
@@ -161,7 +161,7 @@
       #{actualSpeaker,jdbcType=VARCHAR}, #{activityStartTime,jdbcType=VARCHAR}, #{activityEndTime,jdbcType=VARCHAR}, 
       #{matching,jdbcType=VARCHAR}, #{reviewConfig,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResHospSupervSubject" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ResHospSupervSubject" >
     insert into PDSCI.RES_HOSP_SUPERV_SUBJECT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="subjectFlow != null" >
@@ -414,7 +414,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResHospSupervSubjectExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.ResHospSupervSubjectExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.RES_HOSP_SUPERV_SUBJECT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />

@@ -4,7 +4,6 @@ package com.pinde.sci.ctrl.pubedu;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pubedu.IStudyCourseBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.pubedu.CourseDetailTypeEnum;
 import com.pinde.sci.model.mo.StudyCourse;

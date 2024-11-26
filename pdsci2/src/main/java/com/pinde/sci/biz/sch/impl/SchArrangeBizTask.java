@@ -5,7 +5,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StatisticsUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResDoctorMapper;
 import com.pinde.sci.dao.base.SchArrangeDoctorDeptMapper;
@@ -19,7 +18,6 @@ import org.apache.commons.collections4.iterators.PermutationIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;

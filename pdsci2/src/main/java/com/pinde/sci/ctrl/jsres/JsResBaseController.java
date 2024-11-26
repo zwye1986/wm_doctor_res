@@ -5,7 +5,6 @@ import com.pinde.sci.biz.jsres.IResDoctorArchiveBiz;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
@@ -101,7 +100,7 @@ public class JsResBaseController  extends GeneralController {
             model.addAttribute("archiveSequenceList",archiveSequenceList);
             return  "jsres/archiveDoctorList";
         }
-        if(StringUtil.isNotBlank(userName) && "Y".equals(isBack)){
+        if(StringUtil.isNotBlank(userName) && GlobalConstant.FLAG_Y.equals(isBack)){
             userName = java.net.URLDecoder.decode(userName,"UTF-8");
             model.addAttribute("isBack",isBack);
         }

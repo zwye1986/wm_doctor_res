@@ -6,7 +6,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysRoleMapper;
@@ -17,7 +16,6 @@ import com.pinde.sci.model.mo.SysUserRoleExample.Criteria;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -122,7 +120,7 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 					// 基地是否开通过程
 					String orgCfgCode = "jsres_" + orgFlow + "_guocheng";
 					JsresPowerCfg jsresPowerCfg = jsResPowerCfgBiz.read(orgCfgCode);
-					if(null != jsresPowerCfg && "Y".equals(jsresPowerCfg.getCfgValue()) && "Passed".equals(jsresPowerCfg.getCheckStatusId())){
+					if(null != jsresPowerCfg && GlobalConstant.FLAG_Y.equals(jsresPowerCfg.getCfgValue()) && "Passed".equals(jsresPowerCfg.getCheckStatusId())){
 						// 带教默认APP登录权限
 						String cfgCode = "jsres_teacher_app_login_"+userFlow;
 						JsresPowerCfg jsresCfg = new JsresPowerCfg();

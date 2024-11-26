@@ -4,7 +4,6 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.sci.biz.jsres.IResSkillConfigBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
 import com.pinde.sci.dao.base.ResDoctorSkillMapper;
@@ -14,7 +13,6 @@ import com.pinde.sci.dao.jsres.ResSkillOrgExtMapper;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.HashMap;

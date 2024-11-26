@@ -2,7 +2,6 @@ package com.pinde.sci.biz.sys.impl;
 
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.ILogBiz;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.SysLogMapper;
 import com.pinde.sci.dao.sys.SysLogExtMapper;
 import com.pinde.sci.model.mo.SysLog;
@@ -10,7 +9,6 @@ import com.pinde.sci.model.mo.SysLogExample;
 import com.pinde.sci.model.mo.SysLogExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;

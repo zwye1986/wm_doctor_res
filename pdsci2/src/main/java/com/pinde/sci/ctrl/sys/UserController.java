@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.sys;
 
 import com.alibaba.fastjson.JSON;
-import com.google.common.base.Strings;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
@@ -32,7 +32,6 @@ import nl.captcha.gimpy.DropShadowGimpyRenderer;
 import nl.captcha.text.producer.DefaultTextProducer;
 import nl.captcha.text.renderer.DefaultWordRenderer;
 import nl.captcha.text.renderer.WordRenderer;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.util.encoders.Hex;
 import org.dom4j.DocumentException;

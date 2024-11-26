@@ -1,8 +1,7 @@
 package com.pinde.sci.enums.res;
 
-import com.pinde.core.commom.enums.GeneralEnum;
+import com.pinde.core.common.enums.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
-import com.pinde.sci.common.GlobalConstant;
 
 public enum GlobalRecTypeEnum implements GeneralEnum<String> {//需与ResRecTypeEnum同步添加
 	

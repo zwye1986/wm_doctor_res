@@ -1,7 +1,8 @@
 package com.pinde.res.biz.jszy.impl;
 
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.commom.enums.RecStatusEnum;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.RecStatusEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jszy.IJszyTeacherBiz;
@@ -10,10 +11,8 @@ import com.pinde.sci.dao.base.ResRecMapper;
 import com.pinde.sci.dao.base.ResScoreMapper;
 import com.pinde.sci.dao.base.SchArrangeResultMapper;
 import com.pinde.sci.dao.base.SysUserMapper;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;

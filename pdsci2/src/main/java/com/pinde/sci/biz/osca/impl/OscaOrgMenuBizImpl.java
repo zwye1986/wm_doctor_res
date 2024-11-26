@@ -2,7 +2,6 @@ package com.pinde.sci.biz.osca.impl;
 
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaOrgMenuBiz;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.OscaOrgMenuMapper;
 import com.pinde.sci.dao.osca.OscaOrgMenuExtMapper;
 import com.pinde.sci.dao.osca.OscaSysOrgExtMapper;
@@ -11,7 +10,6 @@ import com.pinde.sci.model.mo.OscaOrgMenuExample;
 import com.pinde.sci.model.osca.OscaOrgMenuExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;

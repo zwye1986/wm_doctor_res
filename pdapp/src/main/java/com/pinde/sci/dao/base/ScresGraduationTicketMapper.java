@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ScresGraduationTicket;
-import com.pinde.sci.model.mo.ScresGraduationTicketExample;
+import com.pinde.core.model.ScresGraduationTicket;
+import com.pinde.core.model.ScresGraduationTicketExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

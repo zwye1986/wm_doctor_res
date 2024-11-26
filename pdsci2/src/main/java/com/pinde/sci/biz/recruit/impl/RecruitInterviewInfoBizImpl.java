@@ -4,7 +4,6 @@ import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoLogBiz;
 import com.pinde.sci.biz.recruit.IRecruitInterviewInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.RecruitInfoMapper;
 import com.pinde.sci.dao.base.RecruitInterviewInfoMapper;
 import com.pinde.sci.dao.recruit.RecruitInfoExtMapper;
@@ -16,15 +15,10 @@ import com.pinde.sci.model.mo.RecruitInterviewInfoExample;
 import com.pinde.sci.model.recruit.RecruitInfoExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

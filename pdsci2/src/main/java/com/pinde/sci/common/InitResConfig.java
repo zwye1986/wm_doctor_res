@@ -1,6 +1,6 @@
 package com.pinde.sci.common;
 
-import com.pinde.core.commom.enums.GeneralEnum;
+import com.pinde.core.common.enums.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.XmlParse;

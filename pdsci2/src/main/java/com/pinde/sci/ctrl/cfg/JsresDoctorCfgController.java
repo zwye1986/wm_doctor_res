@@ -6,7 +6,6 @@ import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sch.ISchManualBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.model.mo.JsresPowerCfg;
 import com.pinde.sci.model.mo.ResDoctor;
@@ -149,19 +148,19 @@ public class JsresDoctorCfgController extends GeneralController{
 						doctor.setCheckStatusId("");
 						doctor.setCheckStatusName("");
 						JsresPowerCfg jpc = jsResPowerCfgBiz.read("jsres_doctor_app_login_"+userFlow);
-						if(null != jpc && "N".equals(jpc.getCfgValue())){
+						if(null != jpc && GlobalConstant.FLAG_N.equals(jpc.getCfgValue())){
 							jpc = jsResPowerCfgBiz.read("jsres_doctor_app_menu_"+userFlow);
 						}
-						if(null != jpc && "N".equals(jpc.getCfgValue())){
+						if(null != jpc && GlobalConstant.FLAG_N.equals(jpc.getCfgValue())){
 							jpc = jsResPowerCfgBiz.read("jsres_doctor_exam_"+userFlow);
 						}
-						if(null != jpc && "N".equals(jpc.getCfgValue())){
+						if(null != jpc && GlobalConstant.FLAG_N.equals(jpc.getCfgValue())){
 							jpc = jsResPowerCfgBiz.read("jsres_doctor_graduation_exam_"+userFlow);
 						}
-						if(null != jpc && "N".equals(jpc.getCfgValue())){
+						if(null != jpc && GlobalConstant.FLAG_N.equals(jpc.getCfgValue())){
 							jpc = jsResPowerCfgBiz.read("jsres_doctor_manual_"+userFlow);
 						}
-						if(null != jpc && "Y".equals(jpc.getCfgValue())){
+						if(null != jpc && GlobalConstant.FLAG_Y.equals(jpc.getCfgValue())){
 							doctor.setIsSubmitId("NotSubmit");
 							doctor.setIsSubmitName("未提交");
 						}else{
@@ -225,10 +224,10 @@ public class JsresDoctorCfgController extends GeneralController{
 						doctor.setCheckStatusId("");
 						doctor.setCheckStatusName("");
 						JsresPowerCfg jpc = jsResPowerCfgBiz.read("jsres_doctor_app_menu_"+userFlow);
-						if(null != jpc && "N".equals(jpc.getCfgValue())){
+						if(null != jpc && GlobalConstant.FLAG_N.equals(jpc.getCfgValue())){
 							jpc = jsResPowerCfgBiz.read("jsres_doctor_manual_"+userFlow);
 						}
-						if(null != jpc && "Y".equals(jpc.getCfgValue())){
+						if(null != jpc && GlobalConstant.FLAG_Y.equals(jpc.getCfgValue())){
 							doctor.setIsSubmitId("NotSubmit");
 							doctor.setIsSubmitName("未提交");
 						}else{

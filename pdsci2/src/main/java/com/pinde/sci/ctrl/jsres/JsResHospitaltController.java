@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
@@ -803,9 +804,9 @@ public class JsResHospitaltController extends GeneralController{
 //			List<JsResDoctorRecruitExt> recruitList = jsResDoctorRecruitBiz.resDoctorRecruitExtList2(resDoctorRecruit, sysUser, null, docTypeList, sessionNumbers,sortType, scoreType);
 			List<JsResDoctorRecruitExt> recruitList = jsResDoctorRecruitBiz.resDoctorRecruitExtList3(resDoctorRecruit, sysUser, null, docTypeList, sessionNumbers,sortType, scoreType);
 			for (JsResDoctorRecruitExt jsResDoctorRecruitExt : recruitList) {
-				if("Y".equals(jsResDoctorRecruitExt.getRecruitFlag())){
+				if(GlobalConstant.FLAG_Y.equals(jsResDoctorRecruitExt.getRecruitFlag())){
 					jsResDoctorRecruitExt.setRecruitFlag("已录取");
-				}else if("N".equals(jsResDoctorRecruitExt.getRecruitFlag())){
+				}else if(GlobalConstant.FLAG_N.equals(jsResDoctorRecruitExt.getRecruitFlag())){
 					jsResDoctorRecruitExt.setRecruitFlag("未录取");
 				}else{
 					jsResDoctorRecruitExt.setRecruitFlag("待审核");
@@ -1057,7 +1058,7 @@ public class JsResHospitaltController extends GeneralController{
 	public String changeUseStatus(String signFlow,String useStatusId){
 		SysUser user = GlobalContext.getCurrentUser();
 		JsresSign sign = speAssignBiz.searchSignByPrimaryKey(signFlow);
-		if("Y".equals(useStatusId)) {
+		if(GlobalConstant.FLAG_Y.equals(useStatusId)) {
 			//启用前查询是否有启用的签名
 			List<JsresSign> signList = speAssignBiz.searchSignListByOrgFlow(user.getOrgFlow(), "Y");
 			if (null != signList && signList.size() > 0) {

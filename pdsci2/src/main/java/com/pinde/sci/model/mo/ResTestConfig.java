@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResTestConfig extends MybatisObject {
+public class ResTestConfig extends TeachingActivitySpeakerExample.MybatisObject {
     private String testFlow;
 
     private String testId;

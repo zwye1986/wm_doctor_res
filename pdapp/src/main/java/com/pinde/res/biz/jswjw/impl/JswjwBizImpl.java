@@ -2,11 +2,11 @@ package com.pinde.res.biz.jswjw.impl;
 
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.app.common.GlobalUtil;
 import com.pinde.app.common.InitConfig;
 import com.pinde.app.common.UserResumeExtInfoForm;
-import com.pinde.core.commom.enums.*;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.*;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.res.biz.jswjw.IJswjwBiz;
@@ -18,13 +18,10 @@ import com.pinde.res.dao.jswjw.ext.*;
 import com.pinde.res.dao.sctcm120.ext.ResDoctorKqExtMapper;
 import com.pinde.res.dao.stdp.ext.StdpResDoctorExtMapper;
 import com.pinde.res.dao.stdp.ext.TeachingActivityInfoExtMapper;
-import com.pinde.res.enums.lcjn.DictTypeEnum;
 import com.pinde.res.model.jswjw.mo.*;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.mo.SysUserExample.Criteria;
+import com.pinde.core.model.SysUserExample.Criteria;
 import com.pinde.sci.util.FtpHelperUtil;
-import com.pinde.sci.util.PasswordHelper;
 import com.pinde.sci.util.PicZoom;
 import com.pinde.sci.util.WeixinQiYeUtil;
 import com.sun.image.codec.jpeg.JPEGCodec;
@@ -33,7 +30,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Decoder;
@@ -1203,7 +1199,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
         } else {
             ResRecExample recExample = new ResRecExample();
-            com.pinde.sci.model.mo.ResRecExample.Criteria criteria = recExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(userFlow).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(deptFlow);
+            ResRecExample.Criteria criteria = recExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(userFlow).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(deptFlow);
             if ("disease".equals(dataType) || "skill".equals(dataType) || "operation".equals(dataType) || "languageTeaching".equals(dataType)) {
                 criteria.andItemIdEqualTo(cataFlow);
             }
@@ -1299,7 +1295,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 break;
         }
         SchRotationDeptReqExample reqExample = new SchRotationDeptReqExample();
-        com.pinde.sci.model.mo.SchRotationDeptReqExample.Criteria criteria = reqExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).
+        SchRotationDeptReqExample.Criteria criteria = reqExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).
                 andRelRecordFlowEqualTo(deptFlow).andRecTypeIdEqualTo(recTypeId);
         if (StringUtil.isNotBlank(catFlow)) {
             criteria.andItemIdEqualTo(catFlow);
@@ -3827,7 +3823,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 
             //获取所有当前方案下的轮转规则
             SchRotationDeptExample rotationDeptExample = new SchRotationDeptExample();
-            com.pinde.sci.model.mo.SchRotationDeptExample.Criteria rotationDeptCriteria = rotationDeptExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            SchRotationDeptExample.Criteria rotationDeptCriteria = rotationDeptExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
                     .andOrgFlowIsNull().andRotationFlowEqualTo(rotationFlow);
             if (StringUtil.isNotBlank(relRecordFlow)) {
                 rotationDeptCriteria.andRecordFlowEqualTo(relRecordFlow);
@@ -3869,7 +3865,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 
                 //获取所有当前方案下的要求
                 SchRotationDeptReqExample reqExample = new SchRotationDeptReqExample();
-                com.pinde.sci.model.mo.SchRotationDeptReqExample.Criteria reqCriteria = reqExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                SchRotationDeptReqExample.Criteria reqCriteria = reqExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
                         .andRotationFlowEqualTo(rotationFlow);
                 if (StringUtil.isNotBlank(relRecordFlow)) {
                     reqCriteria.andRelRecordFlowEqualTo(relRecordFlow);
@@ -3952,7 +3948,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 //						ResRecSkillRegistryExample skillRegistryExample = new ResRecSkillRegistryExample();
 //						ResRecSkillRegistryExample.Criteria skillRegistryCriteria = skillRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
                         ResRecExample recExample = new ResRecExample();
-                        com.pinde.sci.model.mo.ResRecExample.Criteria recCriteria = recExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
+                        ResRecExample.Criteria recCriteria = recExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
                         if (StringUtil.isNotBlank(relRecordFlow)) {
 //							campaignRegistryCriteria.andSchRotationDeptFlowEqualTo(relRecordFlow);
 //							caseRegistryCriteria.andSchRotationDeptFlowEqualTo(relRecordFlow);
@@ -5328,7 +5324,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public ResAssessCfg getGradeTemplate(String assessType) {
         if (StringUtil.isNotBlank(assessType)) {
             ResAssessCfgExample example = new ResAssessCfgExample();
-            com.pinde.sci.model.mo.ResAssessCfgExample.Criteria criteria = example.createCriteria()
+            ResAssessCfgExample.Criteria criteria = example.createCriteria()
                     .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
                     .andCfgCodeIdEqualTo(assessType);
 
@@ -6696,7 +6692,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 //			}
             ResDoctor doctor = readResDoctor(doctorFlow);
             String ckk = getJsResCfgCode("jsres_doctor_exam_" + doctorFlow);
-            if (StringUtil.isNotBlank(ckk) && "Y".equals(ckk) && "Passed".equals(doctor.getCheckStatusId())) {
+            if (StringUtil.isNotBlank(ckk) && GlobalConstant.FLAG_Y.equals(ckk) && "Passed".equals(doctor.getCheckStatusId())) {
                 f = true;
             }
             return f;
@@ -6710,7 +6706,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             boolean f = false;
             ResDoctor doctor = readResDoctor(doctorFlow);
             String ckk = getJsResCfgCode("jsres_doctor_manual_" + doctorFlow);
-            if (StringUtil.isNotBlank(ckk) && "Y".equals(ckk) && "Passed".equals(doctor.getCheckStatusId())) {
+            if (StringUtil.isNotBlank(ckk) && GlobalConstant.FLAG_Y.equals(ckk) && "Passed".equals(doctor.getCheckStatusId())) {
                 f = true;
             }
             return f;
@@ -7047,7 +7043,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 //		ResRecSkillRegistryExample.Criteria skillRegistryCriteria = skillRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
 
         ResRecExample recExample = new ResRecExample();
-        com.pinde.sci.model.mo.ResRecExample.Criteria recCriteria = recExample.createCriteria()
+        ResRecExample.Criteria recCriteria = recExample.createCriteria()
                 .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
 
         if (StringUtil.isNotBlank(userFlow)) {
@@ -7152,7 +7148,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         int coditionCount = 0;
 
         SchRotationDeptReqExample reqExample = new SchRotationDeptReqExample();
-        com.pinde.sci.model.mo.SchRotationDeptReqExample.Criteria reqCriteria = reqExample.createCriteria()
+        SchRotationDeptReqExample.Criteria reqCriteria = reqExample.createCriteria()
                 .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
 
         if (StringUtil.isNotBlank(rotationFlow)) {
@@ -7229,7 +7225,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         int coditionCount = 0;
 
         SchRotationDeptExample deptExample = new SchRotationDeptExample();
-        com.pinde.sci.model.mo.SchRotationDeptExample.Criteria deptCriteria = deptExample.createCriteria()
+        SchRotationDeptExample.Criteria deptCriteria = deptExample.createCriteria()
                 .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
 
         if (StringUtil.isNotBlank(orgFlow)) {
@@ -7266,7 +7262,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         int coditionCount = 0;
 
         SchDoctorDeptExample docDeptExample = new SchDoctorDeptExample();
-        com.pinde.sci.model.mo.SchDoctorDeptExample.Criteria docDeptCriteria = docDeptExample.createCriteria()
+        SchDoctorDeptExample.Criteria docDeptCriteria = docDeptExample.createCriteria()
                 .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
 
         if (StringUtil.isNotBlank(doctorFlow)) {
@@ -7504,7 +7500,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResAssessCfg> selectResByExampleWithBLOBs(ResAssessCfg assessCfg) {
         ResAssessCfgExample example = new ResAssessCfgExample();
-        com.pinde.sci.model.mo.ResAssessCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResAssessCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
         if (assessCfg != null) {
             if (StringUtil.isNotBlank(assessCfg.getCfgCodeId())) {
                 criteria.andCfgCodeIdEqualTo(assessCfg.getCfgCodeId());
@@ -7710,7 +7706,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResDoctorRecruit> searchResDoctorRecruitList(ResDoctorRecruit recruit, String orderByClause) {
         ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-        com.pinde.sci.model.mo.ResDoctorRecruitExample.Criteria criteria = example.createCriteria();
+        ResDoctorRecruitExample.Criteria criteria = example.createCriteria();
         if (StringUtil.isNotBlank(recruit.getDoctorFlow())) {
             criteria.andDoctorFlowEqualTo(recruit.getDoctorFlow());
         }
@@ -9226,7 +9222,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResOrgSpe> searchResOrgSpeList(ResOrgSpe resOrgSpe) {
         ResOrgSpeExample example = new ResOrgSpeExample();
-        com.pinde.sci.model.mo.ResOrgSpeExample.Criteria criteria = example.createCriteria();
+        ResOrgSpeExample.Criteria criteria = example.createCriteria();
         if (StringUtil.isNotBlank(resOrgSpe.getOrgFlow())) {
             criteria.andOrgFlowEqualTo(resOrgSpe.getOrgFlow());
         }
@@ -9436,7 +9432,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResOrgSpe> searchResOrgSpeListNew(ResOrgSpe resOrgSpe, String trainCategoryTypeId, String speFlag) {
         ResOrgSpeExample example = new ResOrgSpeExample();
-        com.pinde.sci.model.mo.ResOrgSpeExample.Criteria criteria = example.createCriteria();
+        ResOrgSpeExample.Criteria criteria = example.createCriteria();
         if (GlobalConstant.RECORD_STATUS_Y.equals(speFlag)) {
             criteria.andSpeNameEqualTo("全科");
         }
@@ -10107,7 +10103,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<SysUserDept> getUserDept(SysUser user) {
         SysUserDeptExample example = new SysUserDeptExample();
-        com.pinde.sci.model.mo.SysUserDeptExample.Criteria criteria = example.createCriteria().andUserFlowEqualTo(user.getUserFlow())
+        SysUserDeptExample.Criteria criteria = example.createCriteria().andUserFlowEqualTo(user.getUserFlow())
                 .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(user.getOrgFlow())) {
             criteria.andOrgFlowEqualTo(user.getOrgFlow());
@@ -10410,7 +10406,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                                             String recTypeId) {
         ResSchProcessExpress rec=null;
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
-        com.pinde.sci.model.mo.ResSchProcessExpressExample.Criteria create=example.createCriteria();
+        ResSchProcessExpressExample.Criteria create=example.createCriteria();
         create.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(processFlow)) {
             create.andSchRotationDeptFlowEqualTo(processFlow);

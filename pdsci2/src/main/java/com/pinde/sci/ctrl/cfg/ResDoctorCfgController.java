@@ -6,7 +6,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResPowerCfgBiz;
 import com.pinde.sci.biz.sch.ISchManualBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.ResPowerCfgMapper;

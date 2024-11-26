@@ -12,7 +12,6 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.OscaOrgMenu;
@@ -361,7 +360,7 @@ public class OscaOrgSpeGlobalController extends GeneralController {
     @ResponseBody
     public String saveManager(SysUser sysUser,String newFlag){
         SysUser user = null;
-        if("Y".equals(newFlag)){
+        if(GlobalConstant.FLAG_Y.equals(newFlag)){
             user = userBiz.findByUserCode(sysUser.getUserCode());
             if(user != null){
                 return "用户名重复！";

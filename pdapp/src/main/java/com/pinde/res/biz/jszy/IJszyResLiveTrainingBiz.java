@@ -1,9 +1,9 @@
 package com.pinde.res.biz.jszy;
 
 
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResTarinNotice;
-import com.pinde.sci.model.mo.ResTrainingOpinion;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResTarinNotice;
+import com.pinde.core.model.ResTrainingOpinion;
 
 import java.util.List;
 

@@ -11,7 +11,6 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.res.DeptActivityItemTypeEnum;
@@ -21,8 +20,6 @@ import com.pinde.sci.enums.res.DeptActivityUserTypeEnum;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.res.ResDeptPlanForm;
 import com.pinde.sci.model.mo.*;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import org.apache.poi.ss.usermodel.*;

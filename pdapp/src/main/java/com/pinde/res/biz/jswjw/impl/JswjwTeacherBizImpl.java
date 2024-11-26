@@ -1,8 +1,9 @@
 package com.pinde.res.biz.jswjw.impl;
 
 
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.commom.enums.ResRecTypeEnum;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.ResRecTypeEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IJswjwBiz;
@@ -11,11 +12,9 @@ import com.pinde.res.biz.jswjw.IResDoctorProcessBiz;
 import com.pinde.res.dao.jswjw.ext.*;
 import com.pinde.res.dao.stdp.ext.StdpResDoctorExtMapper;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.model.mo.*;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -118,7 +117,7 @@ public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 		return resDoctorSchProcesseList;
 	}
 	@Override
-	public List<ResRec> searchRecByProcess(String processFlow,String doctorFlow) {
+	public List<ResRec> searchRecByProcess(String processFlow, String doctorFlow) {
 //		ResRecCampaignRegistryExample campaignRegistryExample = new ResRecCampaignRegistryExample();
 //		campaignRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
 //		campaignRegistryExample.setOrderByClause("OPER_TIME");

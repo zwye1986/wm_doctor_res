@@ -3,7 +3,6 @@ package com.pinde.sci.ctrl.pub;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.model.mo.PubFile;
 import org.slf4j.Logger;

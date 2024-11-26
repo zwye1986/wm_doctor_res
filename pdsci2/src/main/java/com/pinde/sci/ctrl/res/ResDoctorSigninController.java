@@ -5,16 +5,11 @@ import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.inx.INoticeBiz;
-import com.pinde.sci.biz.jsres.IJsResUserBlackBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
-import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.*;
-import com.pinde.sci.biz.test.ITestResultBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysUserDeptMapper;
@@ -545,21 +540,21 @@ public class ResDoctorSigninController extends GeneralController{
 		if(greater!=null)
 		{
 			kq.setTeacherFlow(process.getTeacherUserFlow());
-			if("Y".equals(greater.getTeacherFlag()))
+			if(GlobalConstant.FLAG_Y.equals(greater.getTeacherFlag()))
 			{
 				kq.setTeacherName(process.getTeacherUserName());
 			}else{
 				kq.setTeacherName("-");
 			}
 			kq.setHeadFlow(process.getHeadUserFlow());
-			if("Y".equals(greater.getHeadFlag()))
+			if(GlobalConstant.FLAG_Y.equals(greater.getHeadFlag()))
 			{
 				kq.setHeadName(process.getHeadUserName());
 			}else{
 				kq.setHeadName("-");
 			}
 			kq.setTutorFlow(doctor.getTutorFlow());
-			if("Y".equals(greater.getTutorFlag()))
+			if(GlobalConstant.FLAG_Y.equals(greater.getTutorFlag()))
 			{
 				kq.setTutorName(doctor.getTutorName());
 			}else{
@@ -579,7 +574,7 @@ public class ResDoctorSigninController extends GeneralController{
 			if(admin!=null)
 			{
 				kq.setManagerFlow(admin.getUserFlow());
-				if("Y".equals(greater.getManagerFlag()))
+				if(GlobalConstant.FLAG_Y.equals(greater.getManagerFlag()))
 				{
 					kq.setManagerName(admin.getUserName());
 				}else{
@@ -796,7 +791,7 @@ public class ResDoctorSigninController extends GeneralController{
 			{
 				if(StringUtil.isNotBlank(kq.getManagerAgreeFlag())){
 					kq.setManagerAuditTime(time);
-					if("Y".equals(kq.getManagerAgreeFlag())){
+					if(GlobalConstant.FLAG_Y.equals(kq.getManagerAgreeFlag())){
 						kq.setAuditStatusId(ResDoctorKqStatusEnum.ManagerPass.getId());
 						kq.setAuditStatusName(ResDoctorKqStatusEnum.ManagerPass.getName());
 					}else{
@@ -807,7 +802,7 @@ public class ResDoctorSigninController extends GeneralController{
 			}else{
 				if(StringUtil.isNotBlank(kq.getTeacherAgreeFlag())){
 					kq.setTeacherAuditTime(time);
-					if("Y".equals(kq.getTeacherAgreeFlag())){
+					if(GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag())){
 						kq.setAuditStatusId(ResDoctorKqStatusEnum.TeacherPass.getId());
 						kq.setAuditStatusName(ResDoctorKqStatusEnum.TeacherPass.getName());
 					}else{
@@ -817,7 +812,7 @@ public class ResDoctorSigninController extends GeneralController{
 				}
 				if(StringUtil.isNotBlank(kq.getTutorAgreeFlag())){
 					kq.setTutorAuditTime(time);
-					if("Y".equals(kq.getTutorAgreeFlag())){
+					if(GlobalConstant.FLAG_Y.equals(kq.getTutorAgreeFlag())){
 						kq.setAuditStatusId(ResDoctorKqStatusEnum.TutorPass.getId());
 						kq.setAuditStatusName(ResDoctorKqStatusEnum.TutorPass.getName());
 					}else{
@@ -827,7 +822,7 @@ public class ResDoctorSigninController extends GeneralController{
 				}
 				if(StringUtil.isNotBlank(kq.getHeadAgreeFlag())){
 					kq.setHeadAuditTime(time);
-					if("Y".equals(kq.getHeadAgreeFlag())){
+					if(GlobalConstant.FLAG_Y.equals(kq.getHeadAgreeFlag())){
 						kq.setAuditStatusId(ResDoctorKqStatusEnum.HeadPass.getId());
 						kq.setAuditStatusName(ResDoctorKqStatusEnum.HeadPass.getName());
 					}else{
@@ -837,7 +832,7 @@ public class ResDoctorSigninController extends GeneralController{
 				}
 				if(StringUtil.isNotBlank(kq.getManagerAgreeFlag())){
 					kq.setManagerAuditTime(time);
-					if("Y".equals(kq.getManagerAgreeFlag())){
+					if(GlobalConstant.FLAG_Y.equals(kq.getManagerAgreeFlag())){
 						kq.setAuditStatusId(ResDoctorKqStatusEnum.ManagerPass.getId());
 						kq.setAuditStatusName(ResDoctorKqStatusEnum.ManagerPass.getName());
 					}else{

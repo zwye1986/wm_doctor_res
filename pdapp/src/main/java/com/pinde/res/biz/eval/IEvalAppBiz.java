@@ -1,13 +1,9 @@
 package com.pinde.res.biz.eval;
 
-import com.pinde.res.ctrl.eval.EvalResultBean;
-import com.pinde.res.ctrl.upload.FileForm;
-import com.pinde.sci.model.mo.*;
-import org.dom4j.DocumentException;
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserRole;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 public interface IEvalAppBiz {
 	/**

@@ -9,7 +9,6 @@ import com.pinde.sci.biz.res.IResRotationOrgBiz;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sch.SchRotationExtMapper;
 import com.pinde.sci.enums.res.RecDocCategoryEnum;
@@ -21,7 +20,6 @@ import com.pinde.sci.model.mo.SchRotationExample.Criteria;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;

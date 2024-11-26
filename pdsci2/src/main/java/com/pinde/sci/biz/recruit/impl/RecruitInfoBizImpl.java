@@ -7,7 +7,6 @@ import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoLogBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.dao.base.RecruitInfoMapper;
@@ -24,7 +23,6 @@ import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -66,7 +64,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
             log.setRecruitFlow(recruitInfo.getRecruitFlow());
             log.setOperTypeId(RecruitOperEnum.ExamResult.getId());
             log.setOperTypeName(RecruitOperEnum.ExamResult.getName());
-            if("Y".equals(recordStatus)){
+            if(GlobalConstant.FLAG_Y.equals(recordStatus)){
                 log.setAuditStatusId(RecruitStatusEnum.Passed.getId());
                 log.setAuditStatusName(RecruitStatusEnum.Passed.getName());
             }else{
@@ -92,7 +90,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
             log.setRecruitFlow(recruitInfo.getRecruitFlow());
             log.setOperTypeId(RecruitOperEnum.InterViewResult.getId());
             log.setOperTypeName(RecruitOperEnum.InterViewResult.getName());
-            if("Y".equals(recordStatus)){
+            if(GlobalConstant.FLAG_Y.equals(recordStatus)){
                 log.setAuditStatusId(RecruitStatusEnum.Passed.getId());
                 log.setAuditStatusName(RecruitStatusEnum.Passed.getName());
             }else{
@@ -118,7 +116,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
             log.setRecruitFlow(recruitInfo.getRecruitFlow());
             log.setOperTypeId(RecruitOperEnum.AdmitResult.getId());
             log.setOperTypeName(RecruitOperEnum.AdmitResult.getName());
-            if("Y".equals(recordStatus)){
+            if(GlobalConstant.FLAG_Y.equals(recordStatus)){
                 log.setAuditStatusId(RecruitStatusEnum.Passed.getId());
                 log.setAuditStatusName(RecruitStatusEnum.Passed.getName());
             }else{
@@ -265,7 +263,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                             log.setRecruitFlow(recruitInfo.getRecruitFlow());
                             log.setOperTypeId(RecruitOperEnum.ExamResult.getId());
                             log.setOperTypeName(RecruitOperEnum.ExamResult.getName());
-                            if("Y".equals(recruitInfo.getExamIsPass())){
+                            if(GlobalConstant.FLAG_Y.equals(recruitInfo.getExamIsPass())){
                                 log.setAuditStatusId(RecruitStatusEnum.Passed.getId());
                                 log.setAuditStatusName(RecruitStatusEnum.Passed.getName());
                             }else{
@@ -312,7 +310,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                                 return ExcelUtile.errorMsg(eu, "导入文件第" + (rowNum + 1) + "行证件号为【"+value+"】的学员未填写招录或招录未审核通过，请确认后提交！！");
                             }
                             RecruitInfoExt recruitInfoExt2=searchRecruitInfoByFlow(recruitInfoExt.getRecruitFlow());
-                            if("Y".equals(recruitInfoExt.getInterviewFlag()))
+                            if(GlobalConstant.FLAG_Y.equals(recruitInfoExt.getInterviewFlag()))
                             {
                                 return ExcelUtile.errorMsg(eu, "导入文件第" + (rowNum + 1) + "行学员已发面试通知，无法修改，请确认后提交！！");
                             }
@@ -422,7 +420,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                             log.setRecruitFlow(recruitInfo.getRecruitFlow());
                             log.setOperTypeId(RecruitOperEnum.InterViewResult.getId());
                             log.setOperTypeName(RecruitOperEnum.InterViewResult.getName());
-                            if("Y".equals(recruitInfo.getInterviewIsPass())){
+                            if(GlobalConstant.FLAG_Y.equals(recruitInfo.getInterviewIsPass())){
                                 log.setAuditStatusId(RecruitStatusEnum.Passed.getId());
                                 log.setAuditStatusName(RecruitStatusEnum.Passed.getName());
                             }else{
@@ -469,11 +467,11 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                                 return ExcelUtile.errorMsg(eu, "导入文件第" + (rowNum + 1) + "行证件号为【"+value+"】的学员未填写招录或招录未审核通过，请确认后提交！！");
                             }
                             RecruitInfoExt recruitInfoExt2=searchRecruitInfoByFlow(recruitInfoExt.getRecruitFlow());
-                            if(!"Y".equals(recruitInfoExt.getInterviewFlag()))
+                            if(!GlobalConstant.FLAG_Y.equals(recruitInfoExt.getInterviewFlag()))
                             {
                                 return ExcelUtile.errorMsg(eu, "导入文件第" + (rowNum + 1) + "行学员未发送面试通知，无法添加成绩，请确认后提交！！");
                             }
-                            if("Y".equals(recruitInfoExt.getAdmitFlag()))
+                            if(GlobalConstant.FLAG_Y.equals(recruitInfoExt.getAdmitFlag()))
                             {
                                 return ExcelUtile.errorMsg(eu, "导入文件第" + (rowNum + 1) + "行学员已发录取通知，无法修改，请确认后提交！！");
                             }
@@ -581,7 +579,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                             log.setRecruitFlow(recruitInfo.getRecruitFlow());
                             log.setOperTypeId(RecruitOperEnum.AdmitResult.getId());
                             log.setOperTypeName(RecruitOperEnum.AdmitResult.getName());
-                            if("Y".equals(recruitInfo.getAdmitFlag())){
+                            if(GlobalConstant.FLAG_Y.equals(recruitInfo.getAdmitFlag())){
                                 log.setAuditStatusId(RecruitStatusEnum.Passed.getId());
                                 log.setAuditStatusName(RecruitStatusEnum.Passed.getName());
                             }else{
@@ -627,7 +625,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                                 return ExcelUtile.errorMsg(eu, "导入文件第" + (rowNum + 1) + "行证件号为【"+value+"】的学员未填写招录或招录未审核通过，请确认后提交！！");
                             }
                             RecruitInfoExt recruitInfoExt2=searchRecruitInfoByFlow(recruitInfoExt.getRecruitFlow());
-                            if(!"Y".equals(recruitInfoExt.getAdmitFlag()))
+                            if(!GlobalConstant.FLAG_Y.equals(recruitInfoExt.getAdmitFlag()))
                             {
                                 return ExcelUtile.errorMsg(eu, "导入文件第" + (rowNum + 1) + "行学员未发录取通知，无法修改，请确认后提交！！");
                             }

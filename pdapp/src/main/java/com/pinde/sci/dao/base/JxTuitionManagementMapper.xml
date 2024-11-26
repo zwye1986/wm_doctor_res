@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.JxTuitionManagementMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.JxTuitionManagement">
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.JxTuitionManagement">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="COST_CATEGORY" jdbcType="VARCHAR" property="costCategory" />
     <result column="COST_VALUE" jdbcType="VARCHAR" property="costValue" />
@@ -73,7 +73,7 @@
     RECORD_FLOW, COST_CATEGORY, COST_VALUE, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.JxTuitionManagementExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.pinde.core.model.JxTuitionManagementExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -97,13 +97,13 @@
     delete from PDSCI.JX_TUITION_MANAGEMENT
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.JxTuitionManagementExample">
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.JxTuitionManagementExample">
     delete from PDSCI.JX_TUITION_MANAGEMENT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.JxTuitionManagement">
+  <insert id="insert" parameterType="com.pinde.core.model.JxTuitionManagement">
     insert into PDSCI.JX_TUITION_MANAGEMENT (RECORD_FLOW, COST_CATEGORY, COST_VALUE, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
@@ -111,7 +111,7 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.JxTuitionManagement">
+  <insert id="insertSelective" parameterType="com.pinde.core.model.JxTuitionManagement">
     insert into PDSCI.JX_TUITION_MANAGEMENT
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
@@ -166,7 +166,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.JxTuitionManagementExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.pinde.core.model.JxTuitionManagementExample" resultType="java.lang.Integer">
     select count(*) from PDSCI.JX_TUITION_MANAGEMENT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -218,7 +218,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.JxTuitionManagement">
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JxTuitionManagement">
     update PDSCI.JX_TUITION_MANAGEMENT
     <set>
       <if test="costCategory != null">
@@ -245,7 +245,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.JxTuitionManagement">
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JxTuitionManagement">
     update PDSCI.JX_TUITION_MANAGEMENT
     set COST_CATEGORY = #{costCategory,jdbcType=VARCHAR},
       COST_VALUE = #{costValue,jdbcType=VARCHAR},

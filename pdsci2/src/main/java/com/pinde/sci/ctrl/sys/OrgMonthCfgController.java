@@ -4,7 +4,6 @@ import com.pinde.core.page.PageHelper;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.ISpePracticeBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.JsresSpeContrastPractice;
 import com.pinde.sci.model.mo.SysOrg;

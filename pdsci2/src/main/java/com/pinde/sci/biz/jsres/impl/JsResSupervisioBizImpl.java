@@ -5,7 +5,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.PojoUtils;
 import com.pinde.sci.biz.jsres.IJsResSupervisioBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
@@ -14,7 +13,6 @@ import com.pinde.sci.dao.jsres.JsresSupervisioSubjectExtMapper;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;

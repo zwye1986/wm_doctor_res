@@ -9,7 +9,6 @@ import com.pinde.sci.biz.osca.IOscaDoctorScoreBiz;
 import com.pinde.sci.biz.osca.ISiteInformationBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.osca.AuditStatusEnum;
 import com.pinde.sci.enums.osca.DoctorScoreEnum;
@@ -167,7 +166,7 @@ public class OscaDoctorScoreController extends GeneralController{
            oscaSkillsAssessment.setIsReleased(GlobalConstant.RECORD_STATUS_Y);
            oscaSkillsAssessment.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
            if("city".equals(flag)){
-               if(StringUtil.isNotBlank(isLocal)&&"N".equals(isLocal)){
+               if(StringUtil.isNotBlank(isLocal)&&GlobalConstant.FLAG_N.equals(isLocal)){
                    oscaSkillsAssessment.setIsGradeReleased(GlobalConstant.IS_EXAM_TEA_N);
                }
                oscaSkillsAssessment.setOrgFlow(orgFlow2);
@@ -328,7 +327,7 @@ public class OscaDoctorScoreController extends GeneralController{
         titleLst.add("第九站");
         titleLst.add("总分");
         titleLst.add("考试结果");
-        String typeName="Y".equals(isLocal)?"院内考核":"结业考核";
+        String typeName=GlobalConstant.FLAG_Y.equals(isLocal)?"院内考核":"结业考核";
         String fileName = clinicalYear+typeName+"学员成绩信息.xls";
         String[] titles = titleLst.toArray(new String[titleLst.size()]);
         //创建工作簿

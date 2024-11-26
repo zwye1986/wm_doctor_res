@@ -2,7 +2,6 @@ package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.sci.biz.jsres.IResTestConfigBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.util.DateUtil;
 import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
 import com.pinde.sci.model.mo.ResTestConfig;
@@ -37,7 +36,7 @@ public class JsResTestConfigController extends GeneralController {
         String addFlag = "Y";
         if(null != resTestConfigs && resTestConfigs.size()>0){
             List<ResTestConfig> testList = resTestConfigs.stream().filter(testConfig -> DateUtil.getYear().equals(testConfig.getTestId().substring(0, 4))
-                    && "Y".equals(testConfig.getRecordStatus())).collect(Collectors.toList());
+                    && GlobalConstant.FLAG_Y.equals(testConfig.getRecordStatus())).collect(Collectors.toList());
             if(testList.size()>=2){
                 addFlag = "N";
             }
@@ -78,7 +77,7 @@ public class JsResTestConfigController extends GeneralController {
         //当前年设置考试次数
         if(null != resTestConfigs && resTestConfigs.size()>0){
             List<ResTestConfig> testList = resTestConfigs.stream().filter(testConfig -> DateUtil.getYear().equals(testConfig.getTestId().substring(0, 4))
-                    && "Y".equals(testConfig.getRecordStatus())).collect(Collectors.toList());
+                    && GlobalConstant.FLAG_Y.equals(testConfig.getRecordStatus())).collect(Collectors.toList());
             if(testList.size()==0){
                 testName = DateUtil.getYear()+"年上半年考试";
             }else if(testList.size()==1){

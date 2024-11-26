@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.login.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -10,7 +11,6 @@ import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.PasswordHelper;
@@ -20,7 +20,6 @@ import com.pinde.sci.enums.pub.UserStatusEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -216,7 +215,7 @@ public class LoginBizImpl implements ILoginBiz{
 			SysOrg sysOrg=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 			SysUser user=userBiz.findByFlow(userFlow);
 			String isAdmin="";
-			if(sysOrg!=null&&"Y".equals(sysOrg.getIsExamOrg())){
+			if(sysOrg!=null&&GlobalConstant.FLAG_Y.equals(sysOrg.getIsExamOrg())){
 				for(int i=0;i<currUserMenuIdList.size();i++){
 					if(!GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())){
 						if("osca-xy".equals(InitConfig.getModuleIdByMenuId(currUserMenuIdList.get(i)))||
@@ -267,7 +266,7 @@ public class LoginBizImpl implements ILoginBiz{
 
 			/*****  osca非考点的基地管理员登录拦截 ****/
 			if(sysOrg!=null){
-				if("N".equals(sysOrg.getIsExamOrg())||StringUtil.isBlank(sysOrg.getIsExamOrg())){
+				if(GlobalConstant.FLAG_N.equals(sysOrg.getIsExamOrg())||StringUtil.isBlank(sysOrg.getIsExamOrg())){
 					if(!GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())&&
 							currUserModuleIdList!=null&&currUserModuleIdList.size()>0){
 						for(int i=0;i<currUserModuleIdList.size();i++){

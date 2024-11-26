@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class SysWsConfig extends MybatisObject {
+public class SysWsConfig extends TeachingActivitySpeakerExample.MybatisObject {
     private String wsId;
 
     private String wsName;

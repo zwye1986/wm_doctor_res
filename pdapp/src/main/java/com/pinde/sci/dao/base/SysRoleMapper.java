@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysRole;
-import com.pinde.sci.model.mo.SysRoleExample;
+import com.pinde.core.model.SysRole;
+import com.pinde.core.model.SysRoleExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

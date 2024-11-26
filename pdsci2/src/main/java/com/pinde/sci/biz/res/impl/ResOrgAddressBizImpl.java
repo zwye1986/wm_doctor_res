@@ -4,14 +4,12 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResOrgAddressBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResOrgAddressMapper;
 import com.pinde.sci.form.res.ResOrgAddressForm;
 import com.pinde.sci.model.mo.ResOrgAddress;
 import com.pinde.sci.model.mo.ResOrgAddressExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;

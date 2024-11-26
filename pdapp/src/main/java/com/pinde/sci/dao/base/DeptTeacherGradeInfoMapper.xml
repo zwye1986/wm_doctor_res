@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.DeptTeacherGradeInfo" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.DeptTeacherGradeInfo" >
     <id column="REC_FLOW" property="recFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
@@ -34,7 +34,7 @@
     <result column="TEACHER_NAME_THREE" property="teacherNameThree" jdbcType="VARCHAR" />
     <result column="TEACHER_FLOW_THREE" property="teacherFlowThree" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.DeptTeacherGradeInfo" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.DeptTeacherGradeInfo" extends="BaseResultMap" >
     <result column="REC_CONTENT" property="recContent" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -105,7 +105,7 @@
   <sql id="Blob_Column_List" >
     REC_CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.DeptTeacherGradeInfoExample" >
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.core.model.DeptTeacherGradeInfoExample" >
     select
     <if test="distinct" >
       distinct
@@ -121,7 +121,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.DeptTeacherGradeInfoExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.DeptTeacherGradeInfoExample" >
     select
     <if test="distinct" >
       distinct
@@ -147,13 +147,13 @@
     delete from PDSCI.DEPT_TEACHER_GRADE_INFO
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.DeptTeacherGradeInfoExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.DeptTeacherGradeInfoExample" >
     delete from PDSCI.DEPT_TEACHER_GRADE_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.DeptTeacherGradeInfo" >
+  <insert id="insert" parameterType="com.pinde.core.model.DeptTeacherGradeInfo" >
     insert into PDSCI.DEPT_TEACHER_GRADE_INFO (REC_FLOW, ORG_FLOW, ORG_NAME, 
       DEPT_FLOW, DEPT_NAME, SCH_DEPT_FLOW, 
       SCH_DEPT_NAME, REC_TYPE_ID, REC_TYPE_NAME, 
@@ -177,7 +177,7 @@
       #{teacherNameTwo,jdbcType=VARCHAR}, #{teacherFlowTwo,jdbcType=VARCHAR}, #{teacherNameThree,jdbcType=VARCHAR}, 
       #{teacherFlowThree,jdbcType=VARCHAR}, #{recContent,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.DeptTeacherGradeInfo" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.DeptTeacherGradeInfo" >
     insert into PDSCI.DEPT_TEACHER_GRADE_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recFlow != null" >
@@ -376,7 +376,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.DeptTeacherGradeInfoExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.DeptTeacherGradeInfoExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.DEPT_TEACHER_GRADE_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -561,7 +561,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.DeptTeacherGradeInfo" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.DeptTeacherGradeInfo" >
     update PDSCI.DEPT_TEACHER_GRADE_INFO
     <set >
       <if test="orgFlow != null" >
@@ -660,7 +660,7 @@
     </set>
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.DeptTeacherGradeInfo" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.DeptTeacherGradeInfo" >
     update PDSCI.DEPT_TEACHER_GRADE_INFO
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
@@ -695,7 +695,7 @@
       REC_CONTENT = #{recContent,jdbcType=CLOB}
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.DeptTeacherGradeInfo" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.DeptTeacherGradeInfo" >
     update PDSCI.DEPT_TEACHER_GRADE_INFO
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},

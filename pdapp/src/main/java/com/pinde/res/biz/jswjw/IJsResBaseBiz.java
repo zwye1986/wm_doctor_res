@@ -1,6 +1,6 @@
 package com.pinde.res.biz.jswjw;
 
-import com.pinde.sci.model.mo.ResPassScoreCfg;
+import com.pinde.core.model.ResPassScoreCfg;
 
 public interface IJsResBaseBiz {
 

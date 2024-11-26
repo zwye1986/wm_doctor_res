@@ -1,6 +1,6 @@
 package com.pinde.res.dao.sctcm120.ext;
 
-import com.pinde.sci.model.mo.ResDoctorKq;
+import com.pinde.core.model.ResDoctorKq;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

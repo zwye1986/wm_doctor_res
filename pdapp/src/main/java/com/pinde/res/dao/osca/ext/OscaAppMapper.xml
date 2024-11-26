@@ -278,7 +278,7 @@
 
     <resultMap id="SelectDateDocSkills" type="com.pinde.res.model.osca.mo.OscaDoctorSkillsExt"
                extends="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap">
-        <collection property="doctorAssessments" ofType="com.pinde.sci.model.mo.OscaDoctorAssessment"
+        <collection property="doctorAssessments" ofType="com.pinde.core.model.OscaDoctorAssessment"
                     resultMap="com.pinde.sci.dao.base.OscaDoctorAssessmentMapper.BaseResultMap"/>
     </resultMap>
     <select id="getSelectDateDocSkills" resultMap="SelectDateDocSkills">
@@ -339,7 +339,7 @@
 	</select>
     <resultMap id="SelectDateSkillRooms" type="com.pinde.res.model.osca.mo.OscaSkillsRoomExt"
                extends="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap">
-        <collection property="skillRooms" ofType="com.pinde.sci.model.mo.OscaSkillRoom"
+        <collection property="skillRooms" ofType="com.pinde.core.model.OscaSkillRoom"
                     resultMap="com.pinde.sci.dao.base.OscaSkillRoomMapper.BaseResultMap"/>
     </resultMap>
     <select id="getSelectDateSkillRooms" resultMap="SelectDateSkillRooms">
@@ -359,7 +359,7 @@
 	</select>
     <resultMap id="SelectDateSkillPartners" type="com.pinde.res.model.osca.mo.OscaSkillsPartnerExt"
                extends="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap">
-        <collection property="roomTeas" ofType="com.pinde.sci.model.mo.OscaSkillRoomTea"
+        <collection property="roomTeas" ofType="com.pinde.core.model.OscaSkillRoomTea"
                     resultMap="com.pinde.sci.dao.base.OscaSkillRoomTeaMapper.BaseResultMap"/>
     </resultMap>
     <select id="getSelectDateSkillPartners" resultMap="SelectDateSkillPartners">
@@ -379,7 +379,7 @@
 	</select>
     <resultMap id="SelectDateSkillTimes" type="com.pinde.res.model.osca.mo.OscaSkillsTimeExt"
                extends="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap">
-        <collection property="times" ofType="com.pinde.sci.model.mo.OscaSkillsAssessmentTime"
+        <collection property="times" ofType="com.pinde.core.model.OscaSkillsAssessmentTime"
                     resultMap="com.pinde.sci.dao.base.OscaSkillsAssessmentTimeMapper.BaseResultMap"/>
     </resultMap>
     <select id="getSelectDateSkillTimes" resultMap="SelectDateSkillTimes">

@@ -15,7 +15,7 @@
         <result column="CHECK_STATUS_ID" property="checkStatusId" jdbcType="VARCHAR"/>
         <result column="CHECK_STATUS_NAME" property="checkStatusName" jdbcType="VARCHAR"/>
     </resultMap>
-    <resultMap id="cfgMap" type="com.pinde.sci.model.mo.JsresPowerCfg">
+    <resultMap id="cfgMap" type="com.pinde.core.model.JsresPowerCfg">
         <result column="CFG_CODE" property="cfgCode" jdbcType="VARCHAR"/>
         <result column="CFG_VALUE" property="cfgValue" jdbcType="VARCHAR"/>
         <result column="CFG_DESC" property="cfgDesc" jdbcType="VARCHAR"/>

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResUserBindMacid;
-import com.pinde.sci.model.mo.ResUserBindMacidExample;
+import com.pinde.core.model.ResUserBindMacid;
+import com.pinde.core.model.ResUserBindMacidExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

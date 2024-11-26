@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.DoctorAuth;
-import com.pinde.sci.model.mo.DoctorAuthExample;
+import com.pinde.core.model.DoctorAuth;
+import com.pinde.core.model.DoctorAuthExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

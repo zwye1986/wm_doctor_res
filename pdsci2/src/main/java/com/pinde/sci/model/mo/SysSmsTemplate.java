@@ -1,10 +1,10 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
 import java.math.BigDecimal;
 
-public class SysSmsTemplate extends MybatisObject {
+public class SysSmsTemplate extends TeachingActivitySpeakerExample.MybatisObject {
     private String smsTempFlow;
 
     private String wsId;

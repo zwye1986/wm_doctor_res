@@ -7,7 +7,6 @@ import com.pinde.sci.biz.sch.ISchManualBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.model.mo.JsresPowerCfg;
 import com.pinde.sci.model.mo.SysDept;
@@ -89,7 +88,7 @@ public class JsresTeacherCfgController extends GeneralController{
 						user.setCheckStatusId("");
 						user.setCheckStatusName("");
 						JsresPowerCfg jpc = jsResPowerCfgBiz.read("jsres_teacher_app_login_"+userFlow);
-						if(null != jpc && "Y".equals(jpc.getCfgValue())){
+						if(null != jpc && GlobalConstant.FLAG_Y.equals(jpc.getCfgValue())){
 							user.setIsSubmitId("NotSubmit");
 							user.setIsSubmitName("未提交");
 						}else{
@@ -146,7 +145,7 @@ public class JsresTeacherCfgController extends GeneralController{
 				user.setCheckStatusId("");
 				user.setCheckStatusName("");
 				JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_teacher_app_login_"+userFlow);
-				if(null != cfg && "Y".equals(cfg.getCfgValue())){
+				if(null != cfg && GlobalConstant.FLAG_Y.equals(cfg.getCfgValue())){
 					user.setIsSubmitId("NotSubmit");
 					user.setIsSubmitName("未提交");
 				}else{

@@ -4,7 +4,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sch.ISchRotationGroupBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.dao.base.SchRotationGroupMapper;
 import com.pinde.sci.dao.sch.SchRotationGroupExtMapper;
@@ -15,7 +14,6 @@ import com.pinde.sci.model.mo.SchRotationGroupExample;
 import com.pinde.sci.model.mo.SchRotationGroupExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;

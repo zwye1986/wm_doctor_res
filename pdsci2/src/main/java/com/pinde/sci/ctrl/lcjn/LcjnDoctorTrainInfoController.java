@@ -9,7 +9,6 @@ import com.pinde.sci.biz.lcjn.ILcjnDoctorOrderInfoBiz;
 import com.pinde.sci.biz.lcjn.ILcjnDoctorSignBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.lcjn.LcjnAuditStatusEnum;
 import com.pinde.sci.enums.lcjn.LcjnDoctorScoreEnum;

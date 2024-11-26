@@ -1,15 +1,15 @@
 package com.pinde.res.ctrl.jswjw;
 
 import com.pinde.app.common.GeneralController;
-import com.pinde.core.commom.enums.TrainCategoryEnum;
+import com.pinde.core.common.enums.TrainCategoryEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IJswjwBiz;
 import com.pinde.res.biz.jswjw.IJswjwChargeBiz;
-import com.pinde.sci.model.mo.SysDict;
-import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysOrg;
+import com.pinde.core.model.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

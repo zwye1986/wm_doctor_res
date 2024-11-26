@@ -1,7 +1,8 @@
 package com.pinde.res.biz.lcjn.impl;
 
 
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -9,11 +10,8 @@ import com.pinde.res.biz.lcjn.ILcjnBiz;
 import com.pinde.res.dao.jswjw.ext.SysUserExtMapper;
 import com.pinde.res.dao.lcjn.ext.LcjnCourseInfoExtMapper;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.model.mo.*;
-import com.pinde.sci.util.PasswordHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;

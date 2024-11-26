@@ -5,12 +5,11 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IResScheduleScoreBiz;
 import com.pinde.sci.dao.base.ResScheduleScoreMapper;
-import com.pinde.sci.model.mo.ResScheduleScore;
-import com.pinde.sci.model.mo.ResScheduleScoreExample;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.ResScheduleScore;
+import com.pinde.core.model.ResScheduleScoreExample;
+import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

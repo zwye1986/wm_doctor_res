@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResPassScoreCfg extends MybatisObject {
+public class ResPassScoreCfg extends TeachingActivitySpeakerExample.MybatisObject {
     private String cfgYear;
 
     private String cfgPassScore;

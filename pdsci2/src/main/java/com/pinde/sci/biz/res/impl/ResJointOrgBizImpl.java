@@ -5,7 +5,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.util.DateUtil;
 import com.pinde.sci.dao.base.ResJointOrgMapper;
 import com.pinde.sci.dao.base.SysOrgMapper;
@@ -20,7 +19,6 @@ import com.pinde.sci.model.mo.SysOrgExample;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

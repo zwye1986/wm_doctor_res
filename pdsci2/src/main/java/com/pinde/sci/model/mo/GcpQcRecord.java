@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class GcpQcRecord extends MybatisObject {
+public class GcpQcRecord extends TeachingActivitySpeakerExample.MybatisObject {
     private String qcFlow;
 
     private String orgFlow;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.JsresExamSignupMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.JsresExamSignup" extends="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs">
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresExamSignup" extends="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs">
     <id column="SIGNUP_FLOW" property="signupFlow" jdbcType="VARCHAR" />
     <result column="SIGNUP_YEAR" property="signupYear" jdbcType="VARCHAR" />
     <result column="SIGNUP_TYPE_ID" property="signupTypeId" jdbcType="VARCHAR" />
@@ -109,7 +109,7 @@
     CITY_AUDIT_STATUS_NAME, CITY_REASON, GLOBAL_AUDIT_STATUS_ID, GLOBAL_AUDIT_STATUS_NAME,
     GLOBAL_REASON, TEST_ID
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.JsresExamSignupExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.JsresExamSignupExample" >
     select
     <if test="distinct" >
       distinct
@@ -133,13 +133,13 @@
     delete from PDSCI.JSRES_EXAM_SIGNUP
     where SIGNUP_FLOW = #{signupFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.JsresExamSignupExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresExamSignupExample" >
     delete from PDSCI.JSRES_EXAM_SIGNUP
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.JsresExamSignup" >
+  <insert id="insert" parameterType="com.pinde.core.model.JsresExamSignup" >
     insert into PDSCI.JSRES_EXAM_SIGNUP (SIGNUP_FLOW, SIGNUP_YEAR, SIGNUP_TYPE_ID,
       SIGNUP_TYPE_NAME, DOCTOR_FLOW, DOCTOR_TYPE_ID,
       DOCTOR_TYPE_NAME, ORG_FLOW, ORG_NAME,
@@ -167,7 +167,7 @@
       #{cityReason,jdbcType=VARCHAR}, #{globalAuditStatusId,jdbcType=VARCHAR}, #{globalAuditStatusName,jdbcType=VARCHAR},
       #{globalReason,jdbcType=VARCHAR}, #{testId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.JsresExamSignup" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.JsresExamSignup" >
     insert into PDSCI.JSRES_EXAM_SIGNUP
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="signupFlow != null" >
@@ -402,7 +402,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.JsresExamSignupExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.JsresExamSignupExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.JSRES_EXAM_SIGNUP
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -574,7 +574,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.JsresExamSignup" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresExamSignup" >
     update PDSCI.JSRES_EXAM_SIGNUP
     <set >
       <if test="signupYear != null" >
@@ -691,7 +691,7 @@
     </set>
     where SIGNUP_FLOW = #{signupFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.JsresExamSignup" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresExamSignup" >
     update PDSCI.JSRES_EXAM_SIGNUP
     set SIGNUP_YEAR = #{signupYear,jdbcType=VARCHAR},
       SIGNUP_TYPE_ID = #{signupTypeId,jdbcType=VARCHAR},

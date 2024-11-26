@@ -1,10 +1,10 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResAttendanceBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.JsresAttendanceDetailMapper;
 import com.pinde.sci.dao.base.JsresAttendanceMapper;
 import com.pinde.sci.dao.base.SysUserMapper;

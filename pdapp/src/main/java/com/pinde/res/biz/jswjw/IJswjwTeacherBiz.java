@@ -1,6 +1,6 @@
 package com.pinde.res.biz.jswjw;
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -38,7 +38,7 @@ public interface IJswjwTeacherBiz {
      * @param doctorFlow
      * @return
      */
-    List<ResRec> searchRecByProcess(String processFlow,String doctorFlow);
+    List<ResRec> searchRecByProcess(String processFlow, String doctorFlow);
 
     /**
      * 排班

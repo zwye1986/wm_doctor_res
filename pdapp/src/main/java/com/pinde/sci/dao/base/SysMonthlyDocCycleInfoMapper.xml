@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SysMonthlyDocCycleInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysMonthlyDocCycleInfo" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.SysMonthlyDocCycleInfo" >
     <id column="SMDCI_FLOW" property="smdciFlow" jdbcType="VARCHAR" />
     <result column="DATE_MONTH" property="dateMonth" jdbcType="VARCHAR" />
     <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
@@ -145,7 +145,7 @@
     SCH_STATUS_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
     PROCESS_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysMonthlyDocCycleInfoExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysMonthlyDocCycleInfoExample" >
     select
     <if test="distinct" >
       distinct
@@ -169,13 +169,13 @@
     delete from PDSCI.SYS_MONTHLY_DOC_CYCLE_INFO
     where SMDCI_FLOW = #{smdciFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysMonthlyDocCycleInfoExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.SysMonthlyDocCycleInfoExample" >
     delete from PDSCI.SYS_MONTHLY_DOC_CYCLE_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysMonthlyDocCycleInfo" >
+  <insert id="insert" parameterType="com.pinde.core.model.SysMonthlyDocCycleInfo" >
     insert into PDSCI.SYS_MONTHLY_DOC_CYCLE_INFO (SMDCI_FLOW, DATE_MONTH, DOCTOR_FLOW, 
       DOCTOR_NAME, ID_NO, USER_EMAIL, 
       USER_PHONE, DOCTOR_TYPE_ID, DOCTOR_TYPE_NAME, 
@@ -225,7 +225,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
       #{processFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysMonthlyDocCycleInfo" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.SysMonthlyDocCycleInfo" >
     insert into PDSCI.SYS_MONTHLY_DOC_CYCLE_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="smdciFlow != null" >
@@ -646,7 +646,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysMonthlyDocCycleInfoExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.SysMonthlyDocCycleInfoExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.SYS_MONTHLY_DOC_CYCLE_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -942,7 +942,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysMonthlyDocCycleInfo" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysMonthlyDocCycleInfo" >
     update PDSCI.SYS_MONTHLY_DOC_CYCLE_INFO
     <set >
       <if test="dateMonth != null" >
@@ -1152,7 +1152,7 @@
     </set>
     where SMDCI_FLOW = #{smdciFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysMonthlyDocCycleInfo" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysMonthlyDocCycleInfo" >
     update PDSCI.SYS_MONTHLY_DOC_CYCLE_INFO
     set DATE_MONTH = #{dateMonth,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},

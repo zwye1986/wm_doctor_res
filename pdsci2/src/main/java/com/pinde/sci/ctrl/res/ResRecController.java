@@ -2268,7 +2268,7 @@ public class ResRecController extends GeneralController {
 			String cfg13=InitConfig.getSysCfg("jswjw_"+doctor.getOrgFlow()+"_P013");
 			String f=InitConfig.getSysCfg("res_isGlobalSch_flag");
 			model.addAttribute("cfg13",cfg13);
-			if(!"Y".equals(cfg13)&& !"Y".equals(f)|| "Y".equals(f)) {
+			if(!GlobalConstant.FLAG_Y.equals(cfg13)&& !GlobalConstant.FLAG_Y.equals(f)|| GlobalConstant.FLAG_Y.equals(f)) {
 				//评价带教老师,评价科室
 				List<String> recTypeIds = new ArrayList<String>();
 				recTypeIds.add(ResRecTypeEnum.DeptGrade.getId());

@@ -2,9 +2,10 @@ package com.pinde.res.ctrl.jswjw;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GeneralController;
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.enums.*;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.app.common.InitConfig;
-import com.pinde.core.commom.enums.*;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -19,7 +20,6 @@ import com.pinde.res.biz.stdp.*;
 import com.pinde.res.model.jswjw.mo.FromItem;
 import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.sci.dao.base.JsresPowerCfgMapper;
-import com.pinde.sci.model.mo.*;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -146,7 +146,7 @@ public class JswjwWxTeacherController extends GeneralController {
 
 		List<Map<String,String>> typeList = new ArrayList<>();
 		Map<String,String> typeMap = new HashMap<>();
-		typeMap.put("doctorTypeId",JsRecDocTypeEnum.Company.getId());
+		typeMap.put("doctorTypeId", JsRecDocTypeEnum.Company.getId());
 		typeMap.put("doctorTypeName",JsRecDocTypeEnum.Company.getName());
 		typeList.add(typeMap);
 		typeMap = new HashMap<>();
@@ -1452,7 +1452,7 @@ public class JswjwWxTeacherController extends GeneralController {
 		resultMap.put("doctorFlow",doctorFlow);
 		resultMap.put("recordFlow",recordFlow);
 
-		if("Y".equals(IsForm) && null != titleList && titleList.size()>0){
+		if(GlobalConstant.FLAG_Y.equals(IsForm) && null != titleList && titleList.size()>0){
 			List<Map<String,Object>> titleMapList = new ArrayList<>();
 			for (FromTitle title:titleList) {
 				Map<String,Object> titelMap = new HashMap<>();
@@ -1516,7 +1516,7 @@ public class JswjwWxTeacherController extends GeneralController {
 		if(eval!=null) {
 			return ResultDataThrow("已打过月度考评表，不得重复评分");
 		}
-		if("Y".equals(haveForm)) {
+		if(GlobalConstant.FLAG_Y.equals(haveForm)) {
 			eval2.setIsForm("Y");
 			if(StringUtil.isBlank(configFlow)) {
 				return ResultDataThrow("表单标识符为空");
@@ -5772,9 +5772,9 @@ public class JswjwWxTeacherController extends GeneralController {
 					}
 					map.put("targets",targetList);
 				}
-				if(activity.get("speakerFlow").equals(userinfo.getUserFlow()) && "Y".equals(activity.get("IS_EFFECTIVE"))){
-					map.put("operId","Y".equals(m.get("isEffective")) ? "N" : "Y");
-					map.put("operName","Y".equals(m.get("isEffective")) ? "不认可" : "认可");
+				if(activity.get("speakerFlow").equals(userinfo.getUserFlow()) && GlobalConstant.FLAG_Y.equals(activity.get("IS_EFFECTIVE"))){
+					map.put("operId",GlobalConstant.FLAG_Y.equals(m.get("isEffective")) ? "N" : "Y");
+					map.put("operName",GlobalConstant.FLAG_Y.equals(m.get("isEffective")) ? "不认可" : "认可");
 				}
 				resultMapList.add(map);
 			}
@@ -5804,7 +5804,7 @@ public class JswjwWxTeacherController extends GeneralController {
 		if(StringUtil.isBlank(typeId)){
 			return ResultDataThrow("typeId标识符为空");
 		}
-		if(!"Y".equals(typeId)&&!"N".equals(typeId)){
+		if(!GlobalConstant.FLAG_Y.equals(typeId)&&!GlobalConstant.FLAG_N.equals(typeId)){
 			return ResultDataThrow("typeId只能是Y或N");
 		}
 		if(!roleId.equals("Teacher")){
@@ -5876,7 +5876,7 @@ public class JswjwWxTeacherController extends GeneralController {
 		if(StringUtil.isBlank(isEffective)){
 			return ResultDataThrow( "isEffective为空");
 		}
-		if(!"Y".equals(isEffective)&&!"N".equals(isEffective))
+		if(!GlobalConstant.FLAG_Y.equals(isEffective)&&!GlobalConstant.FLAG_N.equals(isEffective))
 		{
 			return ResultDataThrow( "isEffective只能是Y或N");
 		}

@@ -1,6 +1,6 @@
 package com.pinde.sci.enums.res;
 
-import com.pinde.core.commom.enums.GeneralEnum;
+import com.pinde.core.common.enums.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
 public enum PersonnelAttributeEnum implements GeneralEnum<String> {

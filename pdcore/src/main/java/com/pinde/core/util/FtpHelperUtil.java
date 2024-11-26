@@ -1,5 +1,7 @@
 package com.pinde.core.util;
 
+import com.pinde.core.common.GlobalConstant;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -36,7 +38,7 @@ public class FtpHelperUtil {
     public void uploadFile(String localFilePath, String ftpDir, String ftpFileName) {
         try {
             init();
-            if(initFlag&&"Y".equals(ftp.ftpSwitch)) {
+            if(initFlag && GlobalConstant.FLAG_Y.equals(ftp.ftpSwitch)) {
                 System.out.println("ftp.ftpUrl:"+ftp.ftpUrl);
                 System.out.println("ftp.ftpPort:"+ftp.ftpPort);
                 ftpLogin();
@@ -62,7 +64,7 @@ public class FtpHelperUtil {
     public void downloadFile(String localFilePath, String ftpDir, String ftpFileName) {
         try {
             init();
-            if(initFlag&&"Y".equals(ftp.ftpSwitch)) {
+            if(initFlag&&GlobalConstant.FLAG_Y.equals(ftp.ftpSwitch)) {
                 ftpLogin();
                 if (loginFlag) {
                     long time = System.currentTimeMillis();

@@ -3,7 +3,7 @@ package com.pinde.res.ctrl.pushExam;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.pushExam.IPushExamBiz;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

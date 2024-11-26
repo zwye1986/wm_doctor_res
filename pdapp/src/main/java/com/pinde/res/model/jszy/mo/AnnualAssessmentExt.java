@@ -1,6 +1,6 @@
 package com.pinde.res.model.jszy.mo;
 
-import com.pinde.sci.model.mo.ResAnnualAssessmentWithBLOBs;
+import com.pinde.core.model.ResAnnualAssessmentWithBLOBs;
 
 /**
  * Created by www.0001.Ga on 2016-10-18.

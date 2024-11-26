@@ -5,7 +5,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResBookStudyRecordBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.ResBookStudyRecord;
 import com.pinde.sci.model.mo.ResDoctor;

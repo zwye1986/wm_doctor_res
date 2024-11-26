@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysAppUserInfo;
-import com.pinde.sci.model.mo.SysAppUserInfoExample;
+import com.pinde.core.model.SysAppUserInfo;
+import com.pinde.core.model.SysAppUserInfoExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

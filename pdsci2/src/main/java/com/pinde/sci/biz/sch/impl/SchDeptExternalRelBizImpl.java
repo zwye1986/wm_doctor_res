@@ -4,14 +4,12 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sch.ISchDeptExternalRelBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.SchDeptExternalRelMapper;
 import com.pinde.sci.dao.sch.SchDeptExtMapper;
 import com.pinde.sci.model.mo.SchDeptExternalRel;
 import com.pinde.sci.model.mo.SchDeptExternalRelExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;

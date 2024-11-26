@@ -2,7 +2,6 @@ package com.pinde.sci.ctrl.jszy;
 
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.model.mo.SysCfg;
 import com.pinde.sci.thread.RefreshMemThread;

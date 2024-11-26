@@ -1,15 +1,13 @@
 package com.pinde.app.common;
 
-import com.pinde.core.commom.enums.GeneralEnum;
-import com.pinde.core.util.ClassUtil;
-import com.pinde.core.util.EnumUtil;
-import com.pinde.core.util.SpringUtil;
-import com.pinde.core.util.StringUtil;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.common.enums.GeneralEnum;
+import com.pinde.core.util.*;
 import com.pinde.res.biz.common.IDictBiz;
 import com.pinde.res.biz.stdp.ICfgBiz;
-import com.pinde.res.enums.lcjn.DictTypeEnum;
-import com.pinde.sci.model.mo.SysCfg;
-import com.pinde.sci.model.mo.SysDict;
+import com.pinde.core.model.SysCfg;
+import com.pinde.core.model.SysDict;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +27,6 @@ public class InitConfig implements ServletContextListener {
     private final static Logger logger = LoggerFactory.getLogger(InitConfig.class);
 
     private static ServletContextEvent servletContext;
-    //住院医师
-    public static IrbFormRequestUtil resFormRequestUtil;
 
     private static Map<String,Map<String,String>> sysDictNameMap;
     private static Map<String, String> sysCfgMap = new HashMap<String, String>();

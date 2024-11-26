@@ -2,7 +2,6 @@ package com.pinde.sci.ctrl.util;
 
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.PasswordHelper;
 import org.slf4j.Logger;

@@ -3,7 +3,6 @@ package com.pinde.sci.ctrl.res;
 import com.pinde.core.page.PageHelper;
 import com.pinde.sci.biz.res.IGzzyyyAssessmentBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.GzzyyyAnnualAssessment;
 import com.pinde.sci.model.mo.GzzyyyQuarterlyAssessment;

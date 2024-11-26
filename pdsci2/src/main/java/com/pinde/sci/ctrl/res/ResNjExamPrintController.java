@@ -1,12 +1,11 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.commom.enums.OrgTypeEnum;
+import com.pinde.core.common.enums.OrgTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.INjResExamBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.dao.base.SysOrgMapper;

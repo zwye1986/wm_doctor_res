@@ -11,7 +11,6 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.pub.UserSexEnum;
@@ -137,7 +136,7 @@ public class SchManagerController extends GeneralController {
 			SysUser user = userBiz.readSysUser(doctorFlow);
 			model.addAttribute("user", user);
 		}
-		if("Y".equals(InitConfig.getSysCfg("sch_inRes_flag")))
+		if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sch_inRes_flag")))
 		{
 			model.addAttribute("roleFlag", roleFlag);
 			model.addAttribute("doctorFlow", doctorFlow);
@@ -157,7 +156,7 @@ public class SchManagerController extends GeneralController {
 			SysUser user = userBiz.readSysUser(doctorFlow);
 			model.addAttribute("user", user);
 		}
-		if("Y".equals(InitConfig.getSysCfg("sch_inRes_flag")))
+		if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sch_inRes_flag")))
 		{
 			return "redirect:/sys/user/view?editFlag=Y";
 		}

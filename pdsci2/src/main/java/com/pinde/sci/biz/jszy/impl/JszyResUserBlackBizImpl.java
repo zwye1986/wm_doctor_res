@@ -4,7 +4,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyResUserBlackBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.JsresUserBalcklistMapper;
 import com.pinde.sci.dao.jszy.JszyResUserBalckListExtMapper;
 import com.pinde.sci.model.mo.JsresUserBalcklist;
@@ -12,7 +11,6 @@ import com.pinde.sci.model.mo.JsresUserBalcklistExample;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;

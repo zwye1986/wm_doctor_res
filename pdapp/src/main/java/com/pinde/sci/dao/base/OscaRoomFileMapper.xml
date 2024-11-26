@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.OscaRoomFileMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.OscaRoomFile" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.OscaRoomFile" >
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="ROOM_FLOW" property="roomFlow" jdbcType="VARCHAR" />
     <result column="FILE_FLOW" property="fileFlow" jdbcType="VARCHAR" />
@@ -76,7 +76,7 @@
     RECORD_FLOW, ROOM_FLOW, FILE_FLOW, ORG_NAME, ORG_FLOW, ORDINAL, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.OscaRoomFileExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.OscaRoomFileExample" >
     select
     <if test="distinct" >
       distinct
@@ -100,13 +100,13 @@
     delete from PDSCI.OSCA_ROOM_FILE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.OscaRoomFileExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaRoomFileExample" >
     delete from PDSCI.OSCA_ROOM_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.OscaRoomFile" >
+  <insert id="insert" parameterType="com.pinde.core.model.OscaRoomFile" >
     insert into PDSCI.OSCA_ROOM_FILE (RECORD_FLOW, ROOM_FLOW, FILE_FLOW, 
       ORG_NAME, ORG_FLOW, ORDINAL, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -116,7 +116,7 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.OscaRoomFile" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.OscaRoomFile" >
     insert into PDSCI.OSCA_ROOM_FILE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -189,7 +189,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.OscaRoomFileExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.OscaRoomFileExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.OSCA_ROOM_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -253,7 +253,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.OscaRoomFile" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaRoomFile" >
     update PDSCI.OSCA_ROOM_FILE
     <set >
       <if test="roomFlow != null" >
@@ -289,7 +289,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.OscaRoomFile" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaRoomFile" >
     update PDSCI.OSCA_ROOM_FILE
     set ROOM_FLOW = #{roomFlow,jdbcType=VARCHAR},
       FILE_FLOW = #{fileFlow,jdbcType=VARCHAR},

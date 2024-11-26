@@ -6,7 +6,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IinxColumnManageBiz;
 import com.pinde.sci.biz.inx.IinxInfoManageBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.InxInfoMapper;
 import com.pinde.sci.dao.inx.InxInfoExtMapper;
@@ -19,7 +18,6 @@ import com.pinde.sci.model.mo.InxInfoExample;
 import com.pinde.sci.model.mo.InxInfoExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 

@@ -6,7 +6,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.res.IResGraduationAssessmentBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResGraduationAssessmentMapper;
 import com.pinde.sci.dao.res.ResGraduationAssessmentExtMapper;
@@ -16,7 +15,6 @@ import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.res.ResGraduationAssessmentExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;

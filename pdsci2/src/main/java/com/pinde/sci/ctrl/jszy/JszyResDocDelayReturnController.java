@@ -8,7 +8,6 @@ import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.res.ResBaseStatusEnum;
 import com.pinde.sci.enums.res.ResRecTypeEnum;

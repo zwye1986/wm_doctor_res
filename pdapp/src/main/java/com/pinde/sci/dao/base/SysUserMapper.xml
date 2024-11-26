@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SysUserMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysUser" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.SysUser" >
     <id column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
     <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
     <result column="USER_PASSWD" property="userPasswd" jdbcType="VARCHAR" />
@@ -210,7 +210,7 @@
     APP_LOGIN_ERROR_COUNT, AUDIT_STATUS, ORG_FLOW_GX, SCHOOL, USER_LEVEL_ID, USER_LEVEL_NAME, 
     USER_SIGN_URL, BANK_OF_DEPOSIT, BANK_ACCOUNT_NUMBER, OPEN_ID, UN_LOCK_TIME
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysUserExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysUserExample" >
     select
     <if test="distinct" >
       distinct
@@ -234,13 +234,13 @@
     delete from PDSCI.SYS_USER
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysUserExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.SysUserExample" >
     delete from PDSCI.SYS_USER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysUser" >
+  <insert id="insert" parameterType="com.pinde.core.model.SysUser" >
     insert into PDSCI.SYS_USER (USER_FLOW, USER_CODE, USER_PASSWD, 
       USER_NAME, SEX_ID, SEX_NAME, 
       STATUS_ID, STATUS_DESC, USER_PHONE, 
@@ -330,7 +330,7 @@
       #{bankOfDeposit,jdbcType=VARCHAR}, #{bankAccountNumber,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, 
       #{unLockTime,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysUser" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.SysUser" >
     insert into PDSCI.SYS_USER
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userFlow != null" >
@@ -1087,7 +1087,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysUserExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.SysUserExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.SYS_USER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -1608,7 +1608,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysUser" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysUser" >
     update PDSCI.SYS_USER
     <set >
       <if test="userCode != null" >
@@ -1986,7 +1986,7 @@
     </set>
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysUser" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysUser" >
     update PDSCI.SYS_USER
     set USER_CODE = #{userCode,jdbcType=VARCHAR},
       USER_PASSWD = #{userPasswd,jdbcType=VARCHAR},

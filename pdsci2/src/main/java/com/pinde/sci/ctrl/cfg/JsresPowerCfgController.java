@@ -8,7 +8,6 @@ import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.JsresPowerCfgMapper;
 import com.pinde.sci.enums.jsres.CheckStatusEnum;
 import com.pinde.sci.model.mo.JsresPowerCfg;
@@ -76,19 +75,19 @@ public class JsresPowerCfgController extends GeneralController{
 				doctor.setCheckStatusId("");
 				doctor.setCheckStatusName("");
 				JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_doctor_app_login_"+userFlow);
-				if(null != cfg && "N".equals(cfg.getCfgValue())){
+				if(null != cfg && GlobalConstant.FLAG_N.equals(cfg.getCfgValue())){
 					cfg = jsResPowerCfgBiz.read("jsres_doctor_app_menu_"+userFlow);
 				}
-				if(null != cfg && "N".equals(cfg.getCfgValue())){
+				if(null != cfg && GlobalConstant.FLAG_N.equals(cfg.getCfgValue())){
 					cfg = jsResPowerCfgBiz.read("jsres_doctor_exam_"+userFlow);
 				}
-				if(null != cfg && "N".equals(cfg.getCfgValue())){
+				if(null != cfg && GlobalConstant.FLAG_N.equals(cfg.getCfgValue())){
 					cfg = jsResPowerCfgBiz.read("jsres_doctor_graduation_exam_"+userFlow);
 				}
-				if(null != cfg && "N".equals(cfg.getCfgValue())){
+				if(null != cfg && GlobalConstant.FLAG_N.equals(cfg.getCfgValue())){
 					cfg = jsResPowerCfgBiz.read("jsres_doctor_manual_"+userFlow);
 				}
-				if(null != cfg && "Y".equals(cfg.getCfgValue())){
+				if(null != cfg && GlobalConstant.FLAG_Y.equals(cfg.getCfgValue())){
 					doctor.setIsSubmitId("NotSubmit");
 					doctor.setIsSubmitName("未提交");
 					doctor.setSubmitTime("");

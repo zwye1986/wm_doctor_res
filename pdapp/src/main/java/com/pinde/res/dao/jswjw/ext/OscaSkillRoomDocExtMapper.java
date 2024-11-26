@@ -1,7 +1,7 @@
 package com.pinde.res.dao.jswjw.ext;
 
-import com.pinde.sci.model.mo.OscaSkillRoomDoc;
-import com.pinde.sci.model.mo.OscaTeaScanDoc;
+import com.pinde.core.model.OscaSkillRoomDoc;
+import com.pinde.core.model.OscaTeaScanDoc;
 
 import java.util.List;
 import java.util.Map;

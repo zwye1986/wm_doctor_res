@@ -1,6 +1,6 @@
 package com.pinde.res.model.jswjw.mo;
 
-import com.pinde.sci.model.mo.TeachingActivityEval;
+import com.pinde.core.model.TeachingActivityEval;
 
 import java.util.List;
 

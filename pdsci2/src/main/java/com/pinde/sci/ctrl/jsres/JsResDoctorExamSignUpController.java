@@ -18,7 +18,6 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.jsres.JsResAuditStatusEnum;
 import com.pinde.sci.enums.jsres.JsResTrainYearEnum;
@@ -177,7 +176,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
                 }
             }
             // 需求变更2018（不含）届以前学员 不做该判断  未参加过考核也可以补考
-            if("2018".compareTo(doctor.getSessionNumber()) <= 0 && "N".equals(isSkill) && "N".equals(isTheory)){
+            if("2018".compareTo(doctor.getSessionNumber()) <= 0 && GlobalConstant.FLAG_N.equals(isSkill) && GlobalConstant.FLAG_N.equals(isTheory)){
                 // 2019/2018/2017级助理全科全走补考报名
                 if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
                     isAllowApply = "Y";
@@ -186,7 +185,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
                     isAllowApply = "N";
                 }
             }
-            if ("Y".equals(isSkillQualifed) && "Y".equals(isTheoryQualifed)) {
+            if (GlobalConstant.FLAG_Y.equals(isSkillQualifed) && GlobalConstant.FLAG_Y.equals(isTheoryQualifed)) {
                 //3年内理论成绩和技能成绩都合格
                 isAllowApply = "N";
             }
@@ -320,7 +319,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
                     //基地审核通过后判断需不需要市局审核
                     if (resTestConfigList.size() > 0) {
                         ResTestConfig resTestConfig = resTestConfigList.get(0);
-                        if ("Y".equals(resTestConfig.getChargeAudit())) {
+                        if (GlobalConstant.FLAG_Y.equals(resTestConfig.getChargeAudit())) {
                             signup.setAuditStatusId(JsResAuditStatusEnum.WaitChargePass.getId());
                             signup.setAuditStatusName(JsResAuditStatusEnum.WaitChargePass.getName());
                         } else {
@@ -346,7 +345,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
             if (resTestConfigList.size() > 0) {
                 f = "Y";
             }
-            if ("N".equals(f)) {
+            if (GlobalConstant.FLAG_N.equals(f)) {
                 return "当前时间不在审核时间段内，无法审核！";
             }
             JsresExamSignupLog log = new JsresExamSignupLog();
@@ -385,7 +384,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
             {
                 return "选择审核状态！";
             }
-            if("N".equals(flag)&&StringUtil.isBlank(auditInfo))
+            if(GlobalConstant.FLAG_N.equals(flag)&&StringUtil.isBlank(auditInfo))
             {
                 return "请输入审核意见！";
             }
@@ -393,7 +392,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
             signup.setAuditUserFlow(currentUser.getUserFlow());
             signup.setAuditUserName(currentUser.getUserName());
             signup.setAuditTime(DateUtil.getCurrentTime());
-            if("N".equals(flag))
+            if(GlobalConstant.FLAG_N.equals(flag))
             {
                 signup.setAuditStatusId("GlobalNotPassed");
                 signup.setAuditStatusName("审核不通过");
@@ -441,10 +440,10 @@ public class JsResDoctorExamSignUpController extends GeneralController {
             ResTestConfig resTestConfig = resTestConfigList.get(0);
             signup.setTestId(resTestConfig.getTestId());
             //判断需不需要基地审核，需要则是待基地审核，不要要再判断需不需要市局审核，需要则是待市局审核，都不需要则是待省厅审核
-            if ("Y".equals(resTestConfig.getLocalAudit())) {
+            if (GlobalConstant.FLAG_Y.equals(resTestConfig.getLocalAudit())) {
                 signup.setAuditStatusId(JsResAuditStatusEnum.Auditing.getId());
                 signup.setAuditStatusName(JsResAuditStatusEnum.Auditing.getName());
-            } else if ("Y".equals(resTestConfig.getChargeAudit())) {
+            } else if (GlobalConstant.FLAG_Y.equals(resTestConfig.getChargeAudit())) {
                 signup.setAuditStatusId(JsResAuditStatusEnum.WaitChargePass.getId());
                 signup.setAuditStatusName(JsResAuditStatusEnum.WaitChargePass.getName());
             } else {
@@ -510,13 +509,13 @@ public class JsResDoctorExamSignUpController extends GeneralController {
             signup.setSignupTypeId(signupTypeId);
             if ("Theory".equals(signupTypeId)) {
                 signup.setSignupTypeName("理论补考");
-                if ("Y".equals(isTheoryQualifed)) {
+                if (GlobalConstant.FLAG_Y.equals(isTheoryQualifed)) {
                     return "您的历史成绩中，有报名科目的合格记录，请勿重复报名";
                 }
             }
             if ("Skill".equals(signupTypeId)) {
                 signup.setSignupTypeName("技能补考");
-                if ("Y".equals(isSkillQualifed)) {
+                if (GlobalConstant.FLAG_Y.equals(isSkillQualifed)) {
                     return "您的历史成绩中，有报名科目的合格记录，请勿重复报名";
                 }
             }

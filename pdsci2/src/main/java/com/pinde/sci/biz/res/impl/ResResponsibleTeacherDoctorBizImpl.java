@@ -4,13 +4,11 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResResponsibleTeacherDoctorBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResResponsibleteacherDoctorMapper;
 import com.pinde.sci.model.mo.ResResponsibleteacherDoctor;
 import com.pinde.sci.model.mo.ResResponsibleteacherDoctorExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

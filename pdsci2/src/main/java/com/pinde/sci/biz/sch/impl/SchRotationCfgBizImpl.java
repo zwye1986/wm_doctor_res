@@ -7,7 +7,6 @@ import com.pinde.sci.biz.sch.ISchDeptBiz;
 import com.pinde.sci.biz.sch.ISchRotationCfgBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.SchRotationOrgCfgMapper;
 import com.pinde.sci.dao.base.SchRotationOrgDeptMapper;
 import com.pinde.sci.dao.base.SchRotationOrgGroupMapper;
@@ -21,7 +20,6 @@ import com.pinde.sci.form.sch.SchRotationOrgSchDeptForm;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;

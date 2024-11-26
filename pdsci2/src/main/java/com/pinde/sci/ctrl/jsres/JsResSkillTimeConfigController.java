@@ -795,7 +795,7 @@ public class JsResSkillTimeConfigController extends GeneralController {
         map.put("speId",speId);
         map.put("speIdList",speIdList);
         map.put("isLocal",isLocal);
-        if("Y".equals(isLocal)){
+        if(GlobalConstant.FLAG_Y.equals(isLocal)){
             map.put("orgFlow",orgFlow);
         }
         PageHelper.startPage(currentPage,getPageSize(request));

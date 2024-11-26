@@ -1,7 +1,7 @@
 package com.pinde.res.biz.stdp.impl;
 
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.commom.enums.InfoStatusEnum;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.InfoStatusEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -10,14 +10,13 @@ import com.pinde.res.model.stdp.mo.InxInfoForm;
 import com.pinde.sci.dao.base.InxColumnMapper;
 import com.pinde.sci.dao.base.InxInfoMapper;
 import com.pinde.sci.dao.base.ResReadInfoMapper;
-import com.pinde.sci.model.mo.InxInfo;
-import com.pinde.sci.model.mo.InxInfoExample;
-import com.pinde.sci.model.mo.InxInfoExample.Criteria;
-import com.pinde.sci.model.mo.ResReadInfo;
-import com.pinde.sci.model.mo.ResReadInfoExample;
+import com.pinde.core.model.InxInfo;
+import com.pinde.core.model.InxInfoExample;
+import com.pinde.core.model.InxInfoExample.Criteria;
+import com.pinde.core.model.ResReadInfo;
+import com.pinde.core.model.ResReadInfoExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

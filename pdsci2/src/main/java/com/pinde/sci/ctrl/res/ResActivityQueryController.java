@@ -18,7 +18,6 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.TeachingActivityResultMapper;
@@ -285,7 +284,7 @@ public class ResActivityQueryController extends GeneralController {
 			{
 				return "请选择需要审核的类型！";
 			}
-			if(!"Y".equals(isEffective)&&!"N".equals(isEffective))
+			if(!GlobalConstant.FLAG_Y.equals(isEffective)&&!GlobalConstant.FLAG_N.equals(isEffective))
 			{
 				return "请选择【认可】还是【不认可】！";
 			}
@@ -310,7 +309,7 @@ public class ResActivityQueryController extends GeneralController {
 			{
 				return "请选择需要审核的类型！";
 			}
-			if(!"Y".equals(isEffective)&&!"N".equals(isEffective))
+			if(!GlobalConstant.FLAG_Y.equals(isEffective)&&!GlobalConstant.FLAG_N.equals(isEffective))
 			{
 				return "请选择【认可】还是【不认可】！";
 			}

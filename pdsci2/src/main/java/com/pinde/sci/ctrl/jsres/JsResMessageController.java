@@ -17,7 +17,6 @@ import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitResConfig;
 import com.pinde.sci.dao.base.SysCfgMapper;
@@ -819,11 +818,11 @@ public class JsResMessageController extends GeneralController {
         List<ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(docRecWithBLOBs,"");
         boolean recruitFlag = false;
         if(null != recruitList && recruitList.size() >= 0){
-            recruitFlag = "Y".equalsIgnoreCase(recruitList.get(0).getRecruitFlag())?true:false;
+            recruitFlag = GlobalConstant.FLAG_Y.equalsIgnoreCase(recruitList.get(0).getRecruitFlag())?true:false;
             if (!recruitFlag) {
                 return "需要等待基地确认录取，学员方可确认报到";
             }
-            boolean confirmFlag = "Y".equalsIgnoreCase(recruitList.get(0).getConfirmFlag())?true:false;
+            boolean confirmFlag = GlobalConstant.FLAG_Y.equalsIgnoreCase(recruitList.get(0).getConfirmFlag())?true:false;
             if (confirmFlag) {
                 return "已经报到过了，无需重复确认";
             }

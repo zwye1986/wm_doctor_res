@@ -1,6 +1,6 @@
 package com.pinde.res.biz.jswjw.impl;
 
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.ISchExamCfgBiz;
@@ -8,13 +8,12 @@ import com.pinde.sci.dao.base.ResDoctorGraduationExamMapper;
 import com.pinde.sci.dao.base.SchExamArrangementExtMapper;
 import com.pinde.sci.dao.base.SchExamArrangementMapper;
 import com.pinde.sci.dao.base.SchExamDoctorArrangementMapper;
-import com.pinde.sci.model.mo.ResDoctorGraduationExam;
-import com.pinde.sci.model.mo.SchExamArrangement;
-import com.pinde.sci.model.mo.SchExamArrangementExample;
-import com.pinde.sci.model.mo.SchExamDoctorArrangement;
+import com.pinde.core.model.ResDoctorGraduationExam;
+import com.pinde.core.model.SchExamArrangement;
+import com.pinde.core.model.SchExamArrangementExample;
+import com.pinde.core.model.SchExamDoctorArrangement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;

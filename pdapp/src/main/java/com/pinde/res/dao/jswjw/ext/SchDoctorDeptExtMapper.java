@@ -1,7 +1,7 @@
 package com.pinde.res.dao.jswjw.ext;
 
-import com.pinde.sci.model.mo.SchDoctorDept;
-import com.pinde.sci.model.mo.SchDoctorDeptExample;
+import com.pinde.core.model.SchDoctorDept;
+import com.pinde.core.model.SchDoctorDeptExample;
 
 import java.util.List;
 

@@ -1,21 +1,19 @@
 package com.pinde.res.biz.jswjw.impl;
 
 
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.commom.enums.NoticeStatusEnum;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.NoticeStatusEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IJswjwAdminBiz;
 import com.pinde.res.biz.stdp.IResErrorSchNoticeBiz;
 import com.pinde.res.dao.jswjw.ext.ResDoctorSchProcessExtMapper;
 import com.pinde.res.dao.jswjw.ext.SysDeptExtMapper;
-import com.pinde.res.enums.lcjn.DictTypeEnum;
 import com.pinde.res.model.jswjw.mo.JsResDoctorOrgHistoryExt;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -97,7 +95,7 @@ public class JswjwAdminBizImpl implements IJswjwAdminBiz {
 	}
 
 	@Override
-	public List<ResDocotrDelayTeturn> getOrgDelayReturnInfo(Map<String, Object> param,List<String> flags) {
+	public List<ResDocotrDelayTeturn> getOrgDelayReturnInfo(Map<String, Object> param, List<String> flags) {
 
 		ResDocotrDelayTeturnExample example = new ResDocotrDelayTeturnExample();
 		ResDocotrDelayTeturnExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);

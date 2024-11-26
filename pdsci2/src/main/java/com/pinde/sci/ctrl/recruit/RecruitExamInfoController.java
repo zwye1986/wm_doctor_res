@@ -6,7 +6,6 @@ import com.pinde.sci.biz.recruit.IRecruitExamMainBiz;
 import com.pinde.sci.biz.recruit.IRecruitExamRoomBiz;
 import com.pinde.sci.biz.recruit.IRecruitExamRoomInfoBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
 import com.pinde.sci.form.recruit.ExamInfoForm;

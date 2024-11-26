@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.google.common.collect.Lists;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.jspform.ItemGroupData;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.pub.IFileBiz;
@@ -44,7 +45,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 

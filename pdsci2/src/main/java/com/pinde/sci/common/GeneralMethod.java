@@ -203,7 +203,7 @@ public class GeneralMethod {
             result = "global".equals(InitConfig.getSysCfg("srm_for_use"));
         }
         if ("charge".equals(version)) {
-            result = "global".equals(InitConfig.getSysCfg("srm_for_use")) && "Y".equals(InitConfig.getSysCfg("srm_for_charge_use"));
+            result = "global".equals(InitConfig.getSysCfg("srm_for_use")) && GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("srm_for_charge_use"));
         }
         if ("local".equals(version)) {
             result = "local".equals(InitConfig.getSysCfg("srm_for_use"));
@@ -217,7 +217,7 @@ public class GeneralMethod {
         }
         //徐州中心医院版科研系统
         if("local_xzzxyy".equals(version)){
-            if( "local".equals(InitConfig.getSysCfg("srm_for_use")) && "Y".equals(InitConfig.getSysCfg("srm_local_type"))){
+            if( "local".equals(InitConfig.getSysCfg("srm_for_use")) && GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("srm_local_type"))){
                 result = true;
             }
         }

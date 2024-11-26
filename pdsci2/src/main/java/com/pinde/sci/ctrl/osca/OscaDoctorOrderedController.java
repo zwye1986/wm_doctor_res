@@ -16,7 +16,6 @@ import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.jsres.JsResAsseAuditListEnum;
 import com.pinde.sci.enums.osca.AuditStatusEnum;
@@ -164,14 +163,14 @@ public class OscaDoctorOrderedController extends GeneralController {
         map.put("speId",speId);
         map.put("speIdList",speIdList);
         map.put("isLocal",isLocal);
-        if("Y".equals(isLocal)){
+        if(GlobalConstant.FLAG_Y.equals(isLocal)){
             map.put("orgFlow",orgFlow);
         }else {
             map.put("orgList",orgList);
         }
         PageHelper.startPage(currentPage,getPageSize(request));
         List<OscaSkillsAssessmentExt> skillsAssessmentList=oscaDoctorOrderdeBiz.skillsAssessmentList(map);
-        if("N".equals(isLocal) && "secondLi".equals(liId)){
+        if(GlobalConstant.FLAG_N.equals(isLocal) && "secondLi".equals(liId)){
             if(StringUtil.isNotEmpty(recruitFlow)){
                 JsresGraduationApply graduationApply = resGraduationApplyBiz.searchByRecruitFlow(recruitFlow,DateUtil.getYear());
                 if(null != graduationApply && !JsResAsseAuditListEnum.GlobalPassed.getId().equals(graduationApply.getAuditStatusId())){
@@ -309,7 +308,7 @@ public class OscaDoctorOrderedController extends GeneralController {
         model.addAttribute("graduationYear",graduationYear);
         if(resDoctor!=null){
         model.addAttribute("oscaStudentSubmit",resDoctor.getOscaStudentSubmit());//通过OSCE注册学员
-            if("Y".equals(resDoctor.getOscaStudentSubmit())){
+            if(GlobalConstant.FLAG_Y.equals(resDoctor.getOscaStudentSubmit())){
                 model.addAttribute("graduationYear",resDoctor.getGraduationYear());
             }
         }

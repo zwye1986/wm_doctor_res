@@ -5,7 +5,6 @@ import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResScoreBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.enums.res.ResScoreTypeEnum;
 import com.pinde.sci.enums.sch.SchStatusEnum;
 import com.pinde.sci.model.mo.ResScore;

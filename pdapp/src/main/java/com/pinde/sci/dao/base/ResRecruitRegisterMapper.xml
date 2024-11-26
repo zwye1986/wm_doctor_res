@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResRecruitRegisterMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResRecruitRegister" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResRecruitRegister" >
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
     <result column="RECRUIT_YEAR" property="recruitYear" jdbcType="VARCHAR" />
@@ -83,7 +83,7 @@
     TUTOR_NAME, AUDIT_INFO, AUDIT_STATUS_ID, AUDIT_STATUS_NAME, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResRecruitRegisterExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResRecruitRegisterExample" >
     select
     <if test="distinct" >
       distinct
@@ -107,13 +107,13 @@
     delete from PDSCI.RES_RECRUIT_REGISTER
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResRecruitRegisterExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResRecruitRegisterExample" >
     delete from PDSCI.RES_RECRUIT_REGISTER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResRecruitRegister" >
+  <insert id="insert" parameterType="com.pinde.core.model.ResRecruitRegister" >
     insert into PDSCI.RES_RECRUIT_REGISTER (RECORD_FLOW, DOCTOR_FLOW, RECRUIT_YEAR, 
       ORG_FLOW, ORG_NAME, SPE_ID, 
       SPE_NAME, TRAIN_YEAR, TUTOR_NAME, 
@@ -127,7 +127,7 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResRecruitRegister" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ResRecruitRegister" >
     insert into PDSCI.RES_RECRUIT_REGISTER
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -236,7 +236,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResRecruitRegisterExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.ResRecruitRegisterExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.RES_RECRUIT_REGISTER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -324,7 +324,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResRecruitRegister" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResRecruitRegister" >
     update PDSCI.RES_RECRUIT_REGISTER
     <set >
       <if test="doctorFlow != null" >
@@ -378,7 +378,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResRecruitRegister" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResRecruitRegister" >
     update PDSCI.RES_RECRUIT_REGISTER
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       RECRUIT_YEAR = #{recruitYear,jdbcType=VARCHAR},

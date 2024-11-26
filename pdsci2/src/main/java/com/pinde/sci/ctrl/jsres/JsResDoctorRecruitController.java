@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -208,7 +209,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 			model.addAttribute("archiveSequenceList",archiveSequenceList);
 			return  "jsres/archiveDoctorList";
 		}
-		if(StringUtil.isNotBlank(userName) && "Y".equals(isBack)){
+		if(StringUtil.isNotBlank(userName) && GlobalConstant.FLAG_Y.equals(isBack)){
 			userName = java.net.URLDecoder.decode(userName,"UTF-8");
 			model.addAttribute("isBack",isBack);
 		}
@@ -280,7 +281,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 			model.addAttribute("archiveSequenceList",archiveSequenceList);
 			return  "jsres/archiveDoctorList";
 		}
-		if(StringUtil.isNotBlank(userName) && "Y".equals(isBack)){
+		if(StringUtil.isNotBlank(userName) && GlobalConstant.FLAG_Y.equals(isBack)){
 			userName = java.net.URLDecoder.decode(userName,"UTF-8");
 			model.addAttribute("isBack",isBack);
 		}
@@ -331,7 +332,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 			model.addAttribute("isJointOrg", "1");
 		}
 		model.addAttribute("datas", datas);
-		if (StringUtil.isNotBlank(userName) && "Y".equals(isBack)) {
+		if (StringUtil.isNotBlank(userName) && GlobalConstant.FLAG_Y.equals(isBack)) {
 			userName = java.net.URLDecoder.decode(userName, "UTF-8");
 			model.addAttribute("isBack", isBack);
 		}
@@ -387,7 +388,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 			model.addAttribute("isJointOrg", "1");
 		}
 		model.addAttribute("datas", datas);
-		if (StringUtil.isNotBlank(userName) && "Y".equals(isBack)) {
+		if (StringUtil.isNotBlank(userName) && GlobalConstant.FLAG_Y.equals(isBack)) {
 			userName = java.net.URLDecoder.decode(userName, "UTF-8");
 			model.addAttribute("isBack", isBack);
 		}
@@ -1387,9 +1388,9 @@ public class JsResDoctorRecruitController extends GeneralController {
 							Date schEndDate = dateFormat.parse(result.getSchEndDate());
 							if((schStartDate.compareTo(currDate) < 0 || schStartDate.compareTo(currDate) == 0) && schEndDate.compareTo(currDate) > 0){
 								deptCell2.setCellStyle(style1);
-							}else if("Y".equals(result.getHaveAfterPic()) && (schStartDate.compareTo(currDate) < 0 || schEndDate.compareTo(currDate) == 0)){
+							}else if(GlobalConstant.FLAG_Y.equals(result.getHaveAfterPic()) && (schStartDate.compareTo(currDate) < 0 || schEndDate.compareTo(currDate) == 0)){
 								deptCell2.setCellStyle(style2);
-							}else if("N".equals(result.getHaveAfterPic()) && (schStartDate.compareTo(currDate) < 0 || schEndDate.compareTo(currDate) == 0)){
+							}else if(GlobalConstant.FLAG_N.equals(result.getHaveAfterPic()) && (schStartDate.compareTo(currDate) < 0 || schEndDate.compareTo(currDate) == 0)){
 								deptCell2.setCellStyle(style);
 							}
 							data += result.getSchDeptName() + ";";
@@ -2365,7 +2366,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 									skillScore = obj1.get("score").toString();
 								}
 							}
-							if ("Y".equals(schArrangeResult.getHaveAfterPic())) {
+							if (GlobalConstant.FLAG_Y.equals(schArrangeResult.getHaveAfterPic())) {
 								haveAfterPic = "已上传";
 							} else {
 								haveAfterPic = "未上传";
@@ -3020,7 +3021,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 						searchOrg.setOrgLevelId(orgLevel);
 //						searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
 					}
-					if ("Y".equals(flag)) {
+					if (GlobalConstant.FLAG_Y.equals(flag)) {
 						searchOrg.setOrgLevelId("CountryOrg");
 //						searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
 					}
@@ -3051,7 +3052,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 						org.setOrgLevelId(orgLevel);
 //						org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
 					}
-					if ("Y".equals(flag)) {
+					if (GlobalConstant.FLAG_Y.equals(flag)) {
 						org.setOrgLevelId("CountryOrg");
 //						org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
 					}
@@ -3849,7 +3850,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 		JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_" + GlobalContext.getCurrentUser().getOrgFlow());
 		if (ObjectUtil.isEmpty(openCfg) || StringUtils.isEmpty(openCfg.getCfgValue())) {
 			model.addAttribute("checkOpen","N");
-		}else if ("Y".equalsIgnoreCase(openCfg.getCfgValue())) {
+		}else if (GlobalConstant.FLAG_Y.equalsIgnoreCase(openCfg.getCfgValue())) {
 			model.addAttribute("checkOpen","Y");
 		}else {
 			model.addAttribute("checkOpen","N");

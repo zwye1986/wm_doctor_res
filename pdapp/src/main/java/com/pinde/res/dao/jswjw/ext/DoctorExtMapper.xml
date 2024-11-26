@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.res.dao.jswjw.ext.DoctorExtMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResDoctor" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResDoctor" >
     <id column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_CODE" property="doctorCode" jdbcType="VARCHAR" />
     <result column="DOCTOR_HEAD_IMG" property="doctorHeadImg" jdbcType="VARCHAR" />

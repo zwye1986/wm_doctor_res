@@ -1,7 +1,5 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
-
 public class SysUser implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 

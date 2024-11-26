@@ -15,7 +15,6 @@ import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.TeachingActivitySpeakerMapper;
@@ -367,7 +366,7 @@ public class JsResActivityQueryController extends GeneralController {
 			{
 				return "请选择需要审核的类型！";
 			}
-			if(!"Y".equals(isEffective)&&!"N".equals(isEffective))
+			if(!GlobalConstant.FLAG_Y.equals(isEffective)&&!GlobalConstant.FLAG_N.equals(isEffective))
 			{
 				return "请选择【认可】还是【不认可】！";
 			}
@@ -375,7 +374,7 @@ public class JsResActivityQueryController extends GeneralController {
 			if(info==null)
 				return "活动信息不存在，请刷新列表页面！";
 			info.setIsEffective(isEffective);
-			if ("Y".equals(isEffective))
+			if (GlobalConstant.FLAG_Y.equals(isEffective))
 				info.setReasonForDisagreement("");
 			int c=activityBiz.saveActivity(info);
 			if(c==0)
@@ -432,7 +431,7 @@ public class JsResActivityQueryController extends GeneralController {
 			{
 				return "请选择需要审核的类型！";
 			}
-			if(!"Y".equals(isEffective)&&!"N".equals(isEffective))
+			if(!GlobalConstant.FLAG_Y.equals(isEffective)&&!GlobalConstant.FLAG_N.equals(isEffective))
 			{
 				return "请选择【认可】还是【不认可】！";
 			}

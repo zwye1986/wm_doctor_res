@@ -1,9 +1,10 @@
 package com.pinde.res.ctrl.jswjw;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.app.common.PasswordUtil;
-import com.pinde.core.commom.enums.*;
+import com.pinde.core.common.enums.*;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.*;
+import com.pinde.core.util.PasswordUtil;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -16,8 +17,6 @@ import com.pinde.res.biz.stdp.*;
 import com.pinde.res.model.jswjw.mo.FromItem;
 import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.sci.dao.base.JsresPowerCfgMapper;
-import com.pinde.sci.model.mo.*;
-import com.pinde.sci.util.PasswordHelper;
 import org.apache.commons.collections4.CollectionUtils;
 import org.dom4j.*;
 import org.slf4j.Logger;
@@ -1427,7 +1426,7 @@ public class JswjwTeacherAppController{
 			model.addAttribute("resultType", "已打过月度考评表，不得重复评分");
 			return "res/jswjw/teacher/saveMonthEval";
 		}
-		if("Y".equals(haveForm))
+		if(GlobalConstant.FLAG_Y.equals(haveForm))
 		{
 			eval2.setIsForm("Y");
 			if(StringUtil.isBlank(configFlow))
@@ -3069,7 +3068,7 @@ public class JswjwTeacherAppController{
 			model.addAttribute("resultType", "typeId标识符为空");
 			return "res/jswjw/teacher/activityStuList";
 		}
-		if(!"Y".equals(typeId)&&!"N".equals(typeId)){
+		if(!GlobalConstant.FLAG_Y.equals(typeId)&&!GlobalConstant.FLAG_N.equals(typeId)){
 			model.addAttribute("resultId", "3011101");
 			model.addAttribute("resultType", "typeId只能是Y或N");
 			return "res/jswjw/teacher/activityStuList";
@@ -3143,7 +3142,7 @@ public class JswjwTeacherAppController{
 			model.addAttribute("resultType", "isEffective");
 			return "res/jswjw/success";
 		}
-		if(!"Y".equals(isEffective)&&!"N".equals(isEffective))
+		if(!GlobalConstant.FLAG_Y.equals(isEffective)&&!GlobalConstant.FLAG_N.equals(isEffective))
 		{
 			model.addAttribute("resultId", "3011101");
 			model.addAttribute("resultType", "isEffective只能是Y或N");

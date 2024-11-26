@@ -8,7 +8,6 @@ import com.pinde.sci.biz.sch.ISchManualBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;

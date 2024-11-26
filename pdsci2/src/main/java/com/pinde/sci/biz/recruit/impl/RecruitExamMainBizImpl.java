@@ -8,7 +8,6 @@ import com.pinde.sci.biz.recruit.IRecruitExamMainBiz;
 import com.pinde.sci.biz.recruit.IRecruitExamRoomInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.RecruitExamMainMapper;
 import com.pinde.sci.dao.base.RecruitInfoMapper;
@@ -19,7 +18,6 @@ import com.pinde.sci.form.recruit.ExamInfoForm;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;

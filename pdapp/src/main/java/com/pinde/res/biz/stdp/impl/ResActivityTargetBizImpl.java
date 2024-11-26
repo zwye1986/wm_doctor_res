@@ -1,6 +1,7 @@
 package com.pinde.res.biz.stdp.impl;
 
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -9,12 +10,9 @@ import com.pinde.res.dao.stdp.ext.TeachingActivityInfoExtMapper;
 import com.pinde.sci.dao.base.TeachingActivityFormValueMapper;
 import com.pinde.sci.dao.base.TeachingActivityInfoTargetMapper;
 import com.pinde.sci.dao.base.TeachingActivityTargetMapper;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 

@@ -1,7 +1,5 @@
 package com.pinde.sci.model.res;
 
-import com.pinde.sci.common.GlobalConstant;
-
 import java.io.Serializable;
 
 public class HospitalDoctorExportInfo implements Serializable{
@@ -132,7 +130,7 @@ public class HospitalDoctorExportInfo implements Serializable{
 	}
 
 	public void setDoctorLicenseFlag(String doctorLicenseFlag) {
-		this.doctorLicenseFlag = "Y".equals(doctorLicenseFlag)?"是":"否";
+		this.doctorLicenseFlag = GlobalConstant.FLAG_Y.equals(doctorLicenseFlag)?"是":"否";
 	}
 
 	public String getMedicalHeaithOrgName() {
@@ -180,7 +178,7 @@ public class HospitalDoctorExportInfo implements Serializable{
 	}
 
 	public void setIsYearGraduate(String isYearGraduate) {
-		this.isYearGraduate = "Y".equals(isYearGraduate)?"是":"否";
+		this.isYearGraduate = GlobalConstant.FLAG_Y.equals(isYearGraduate)?"是":"否";
 	}
 
 	public String getIsGeneralOrderOrientationTrainee() {
@@ -188,7 +186,7 @@ public class HospitalDoctorExportInfo implements Serializable{
 	}
 
 	public void setIsGeneralOrderOrientationTrainee(String isGeneralOrderOrientationTrainee) {
-		this.isGeneralOrderOrientationTrainee = "Y".equals(isGeneralOrderOrientationTrainee)?"是":"否";
+		this.isGeneralOrderOrientationTrainee = GlobalConstant.FLAG_Y.equals(isGeneralOrderOrientationTrainee)?"是":"否";
 	}
 
 	public String getHasTakenMasterExam() {
@@ -212,7 +210,7 @@ public class HospitalDoctorExportInfo implements Serializable{
 	}
 
 	public void setIsMaster(String isMaster) {
-		this.isMaster = "Y".equals(isMaster)?"是":"否";
+		this.isMaster = GlobalConstant.FLAG_Y.equals(isMaster)?"是":"否";
 	}
 
 	public String getMasterGraSchoolName() {
@@ -260,7 +258,7 @@ public class HospitalDoctorExportInfo implements Serializable{
 	}
 
 	public void setIsDoctor(String isDoctor) {
-		this.isDoctor = "Y".equals(isDoctor)?"是":"否";
+		this.isDoctor = GlobalConstant.FLAG_Y.equals(isDoctor)?"是":"否";
 	}
 
 	public String getDoctorGraSchoolName() {

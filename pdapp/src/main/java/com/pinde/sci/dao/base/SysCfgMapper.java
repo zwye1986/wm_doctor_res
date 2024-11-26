@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysCfg;
-import com.pinde.sci.model.mo.SysCfgExample;
+import com.pinde.core.model.SysCfg;
+import com.pinde.core.model.SysCfgExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

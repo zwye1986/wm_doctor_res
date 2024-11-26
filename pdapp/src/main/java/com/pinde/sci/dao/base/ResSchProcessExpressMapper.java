@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResSchProcessExpress;
-import com.pinde.sci.model.mo.ResSchProcessExpressExample;
+import com.pinde.core.model.ResSchProcessExpress;
+import com.pinde.core.model.ResSchProcessExpressExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

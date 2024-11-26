@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.pinde.app.common.*;
-import com.pinde.core.commom.enums.*;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.*;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.utils.ObjectUtils;
 import com.pinde.core.util.*;
@@ -16,15 +18,12 @@ import com.pinde.res.biz.osca.IOscaAppBiz;
 import com.pinde.res.biz.stdp.*;
 import com.pinde.res.dao.jswjw.ext.JsResUserBalckListExtMapper;
 import com.pinde.res.dao.jswjw.ext.TempMapper;
-import com.pinde.res.enums.lcjn.DictTypeEnum;
 import com.pinde.res.enums.osca.*;
 import com.pinde.res.model.jswjw.mo.*;
 import com.pinde.sci.dao.base.ResOrgCkxzMapper;
 import com.pinde.sci.dao.base.SysCfgMapper;
 import com.pinde.sci.dao.base.SysDictMapper;
 import com.pinde.sci.dao.base.VerificationCodeRecordMapper;
-import com.pinde.sci.model.mo.*;
-import com.pinde.sci.util.PasswordHelper;
 import com.pinde.sci.util.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -223,7 +222,7 @@ public class JswjwWxController extends GeneralController {
 //        if (sysUsers != null && sysUsers.size() > 0) {
             SMSUtil smsUtil = new SMSUtil(userPhone);
             int code = (int) ((Math.random() * 9 + 1) * 1000);
-            SysSmsLog sSmsRecord = smsUtil.send("10001", "516946", "R101", code);
+            TestPaperExample.SysSmsLog sSmsRecord = smsUtil.send("10001", "516946", "R101", code);
             if (!"100".equals(sSmsRecord.getStatusCode())) {
                 return ResultDataThrow(sSmsRecord.getStatusName());
             }
@@ -787,7 +786,7 @@ public class JswjwWxController extends GeneralController {
 
         String isChargeOrg = jswjwBiz.getJsResCfgAppMenu(doctor.getDoctorFlow());
         boolean f = false;
-        if (StringUtil.isNotBlank(isChargeOrg) && "Y".equals(isChargeOrg) && "Passed".equals(doctor.getCheckStatusId())) {
+        if (StringUtil.isNotBlank(isChargeOrg) && GlobalConstant.FLAG_Y.equals(isChargeOrg) && "Passed".equals(doctor.getCheckStatusId())) {
             f = true;
         }
 
@@ -1228,7 +1227,7 @@ public class JswjwWxController extends GeneralController {
         }
         //是否开启考试
         String lectureTest = jswjwBiz.getCfgCode("res_lecture_test");
-        if (!"Y".equals(lectureTest)) {
+        if (!GlobalConstant.FLAG_Y.equals(lectureTest)) {
             return ResultDataThrow("暂未开启考试!");
         }
         SysUser user = jswjwBiz.readSysUser(userFlow);
@@ -1277,7 +1276,7 @@ public class JswjwWxController extends GeneralController {
         }
         //权限
         String cfgv = jswjwBiz.getJsResCfgCodeNew("jsres_doctor_graduation_exam_" + userFlow);
-        if (!"Y".equals(cfgv)) {
+        if (!GlobalConstant.FLAG_Y.equals(cfgv)) {
             return ResultDataThrow("无权限参加考试!");
         }
         //考试地址
@@ -1359,7 +1358,7 @@ public class JswjwWxController extends GeneralController {
         }
         String addActivity = jswjwBiz.getJsResCfgCode("jsres_" + orgFlow + "_org_stu_add_activity");
         boolean f = false;
-        if (StringUtil.isNotBlank(isChargeOrg) && "Y".equals(isChargeOrg)) {
+        if (StringUtil.isNotBlank(isChargeOrg) && GlobalConstant.FLAG_Y.equals(isChargeOrg)) {
             f = true;
         }
 
@@ -1540,7 +1539,7 @@ public class JswjwWxController extends GeneralController {
         }
         ResDoctor doctor = jswjwBiz.readResDoctor(userFlow);
         String ckxz = jswjwBiz.getJsResCfgCode("jsres_" + doctor.getOrgFlow() + "_org_ckxz");
-        if (null!=ckxz && "Y".equals(ckxz)){
+        if (null!=ckxz && GlobalConstant.FLAG_Y.equals(ckxz)){
             ResOrgCkxzExample example = new ResOrgCkxzExample();
             example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
                     .andOrgFlowEqualTo(doctor.getOrgFlow())
@@ -1725,7 +1724,7 @@ public class JswjwWxController extends GeneralController {
 //            orgFlow = doctor.getOrgFlow();
 //        }
 //        String ckxz = jswjwBiz.getJsResCfgCode("jsres_" + orgFlow + "_org_ckxz");
-//        if ("Y".equals(ckxz)) {
+//        if (GlobalConstant.FLAG_Y.equals(ckxz)) {
 //            List<SchArrangeResult> resultList = jswjwBiz.searchSchArrangeResults(userFlow, doctor.getRotationFlow(), startDate);
 //            if (resultList != null) {
 //                for (SchArrangeResult result : resultList) {
@@ -2136,7 +2135,7 @@ public class JswjwWxController extends GeneralController {
             String limitMonth = "";
             //禅道3300当设置为是时,不论是否出科，学员都可以添加多个轮转科室,但是只有当前科室出科后,才可以添加下个轮转科室的轮转数据；
             String ckxz = jswjwBiz.getJsResCfgCode("jsres_" + doctor.getOrgFlow() + "_org_ckxz");
-            if (null!=ckxz && "Y".equals(ckxz)){
+            if (null!=ckxz && GlobalConstant.FLAG_Y.equals(ckxz)){
                 ResOrgCkxzExample example = new ResOrgCkxzExample();
                 example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
                         .andOrgFlowEqualTo(doctor.getOrgFlow())
@@ -2149,13 +2148,13 @@ public class JswjwWxController extends GeneralController {
                     ckxz=GlobalConstant.FLAG_N;
                 }
             }
-            if ("Y".equals(ckxz)) {
+            if (GlobalConstant.FLAG_Y.equals(ckxz)) {
                 List<SchArrangeResult> resultListNew = jswjwBiz.searchSchArrangeResults(userFlow, doctor.getRotationFlow(), process.getSchStartDate());
                 if (resultListNew != null) {
                     for (SchArrangeResult result : resultListNew) {
                         ResDoctorSchProcess process1 = jswjwBiz.getProcessByResultFlow(result.getResultFlow());
                         if(null != process1 && StringUtil.isNotBlank(limitMonth) && process1.getSchEndDate().substring(0, 7).compareTo(limitMonth) >= 0){
-                            if(!"Y".equals(process1.getTemporaryOut()) || ("Y".equals(process1.getTemporaryOut()) && !"Passed".equals(process1.getTemporaryAuditStatusId())) ){
+                            if(!GlobalConstant.FLAG_Y.equals(process1.getTemporaryOut()) || (GlobalConstant.FLAG_Y.equals(process1.getTemporaryOut()) && !"Passed".equals(process1.getTemporaryAuditStatusId())) ){
                                 ResSchProcessExpress rec = expressBiz.getExpressByRecType(process1.getProcessFlow(), "AfterEvaluation");
                                 if (rec == null) {
                                     resultMap.put("resultId", "30506");
@@ -2546,8 +2545,8 @@ public class JswjwWxController extends GeneralController {
 //            // 组装成map
 //            Map<String, String> codeMap = cfgs.stream().collect(Collectors.toMap(JsresPowerCfg::getCfgCode, JsresPowerCfg::getCfgValue));
 //            if (codeMap != null) {
-//                boolean code2Flag = "Y".equals(codeMap.get(code2));
-//                boolean code3Flag = "Y".equals(codeMap.get(code3));
+//                boolean code2Flag = GlobalConstant.FLAG_Y.equals(codeMap.get(code2));
+//                boolean code3Flag = GlobalConstant.FLAG_Y.equals(codeMap.get(code3));
 //                //设置为基地配置时
 //                if (code2Flag) {
 //                    resultMap.put("tipFlag", GlobalConstant.FLAG_Y);
@@ -2876,15 +2875,15 @@ public class JswjwWxController extends GeneralController {
                     registNumMap.put(lectureFlow, 0);
                 }
 
-                if ((null == lectureScanRegist || (null != lectureScanRegist && !"Y".equals(lectureScanRegist.getIsRegist()))) &&
+                if ((null == lectureScanRegist || (null != lectureScanRegist && !GlobalConstant.FLAG_Y.equals(lectureScanRegist.getIsRegist()))) &&
                         (StringUtil.isBlank(lectureInfo.getLimitNum()) || (StringUtil.isNotBlank(lectureInfo.getLimitNum()) && lectureInfo.getLimitNum().compareTo(registNumMap.get(lectureInfo.getLectureFlow()).toString()) > 0))
                 ) {
                     map.put("operId", "NoSign");
                     map.put("operName", "报名");
                 }
 
-                if (null != lectureScanRegist && "Y".equals(lectureScanRegist.getIsRegist())) {
-                    if (!"Y".equals(lectureScanRegist.getIsScan())) {
+                if (null != lectureScanRegist && GlobalConstant.FLAG_Y.equals(lectureScanRegist.getIsRegist())) {
+                    if (!GlobalConstant.FLAG_Y.equals(lectureScanRegist.getIsScan())) {
                         map.put("operId", "NoScan");
                         map.put("operName", "取消报名");
                     } else {
@@ -2964,10 +2963,10 @@ public class JswjwWxController extends GeneralController {
                 int dateFlag = endDate.compareTo(currentDate);
                 //判断结束
                 if ((lectureEndTime.compareTo(currTime) < 0 && lectureTrainDate.compareTo(currDate) == 0) || (lectureTrainDate.compareTo(currDate) < 0)) {
-                    if ("Y".equals(isScan)) {
+                    if (GlobalConstant.FLAG_Y.equals(isScan)) {
                         scanMap.put(lectureFlow, "Y");
                     }
-                    if ("Y".equals(isScan2)) {
+                    if (GlobalConstant.FLAG_Y.equals(isScan2)) {
                         scan2Map.put(lectureFlow, "Y");
                     }
                     evaMap.put(lectureFlow, dateFlag);
@@ -3827,7 +3826,7 @@ public class JswjwWxController extends GeneralController {
             }
 
             ResLectureScanRegist lectureScanRegist = jswjwBiz.searchByUserFlowAndLectureFlow(userFlow, lectureFlow);
-            if (lectureScanRegist == null || !"Y".equals(lectureScanRegist.getIsRegist())) {
+            if (lectureScanRegist == null || !GlobalConstant.FLAG_Y.equals(lectureScanRegist.getIsRegist())) {
                 return ResultDataThrow("您还没有报名，请先报名！");
             }
             ResLectureInfo info = jswjwBiz.read(lectureFlow);
@@ -4013,7 +4012,7 @@ public class JswjwWxController extends GeneralController {
                 //扫码报名
                 ResLectureScanRegist regist = jswjwBiz.searchByUserFlowAndLectureFlow(userFlow, lectureFlow);
                 if (regist != null) {
-                    if (!"Y".equals(regist.getIsScan())) {
+                    if (!GlobalConstant.FLAG_Y.equals(regist.getIsScan())) {
                         return ResultDataThrow("你未签到参加该讲座，无法进行签退！");
                     }
                     if (regist.getIsScan2().equals(GlobalConstant.FLAG_Y)) {
@@ -4299,7 +4298,7 @@ public class JswjwWxController extends GeneralController {
             if (result == null) {
                 return ResultDataThrow("你未参加该活动，无法进行签退！");
             }
-            if (!"Y".equals(result.getIsScan())) {
+            if (!GlobalConstant.FLAG_Y.equals(result.getIsScan())) {
                 return ResultDataThrow("你未签到参加该活动，无法进行签退！");
             }
             String nowDate = DateUtil.getCurrDateTime("yyyy-MM-dd HH:mm");
@@ -4463,14 +4462,14 @@ public class JswjwWxController extends GeneralController {
 				return "res/jswjw/qrCode";
 			}*/
             ResLectureScanRegist regist = jswjwBiz.searchByUserFlowAndLectureFlow(userFlow, sign.getLectureFlow());
-            if (regist == null || !"Y".equals(regist.getIsScan())) {
+            if (regist == null || !GlobalConstant.FLAG_Y.equals(regist.getIsScan())) {
                 return ResultDataThrow("讲座未签到无法进行随机签到！");
             }
             ResLectureRandomScan scan = jswjwBiz.readLectureRandomScan(userFlow, randomFlow);
             if (scan != null) {
                 return ResultDataThrow("此次随机签到，你已完成！");
             }
-            if ("Y".equals(sign.getCodeStatusType())) {
+            if (GlobalConstant.FLAG_Y.equals(sign.getCodeStatusType())) {
                 String signTime = paramMap.get("time");
                 if (StringUtil.isBlank(signTime)) {
                     return ResultDataThrow("无效二维码！");
@@ -5526,21 +5525,21 @@ public class JswjwWxController extends GeneralController {
                 map.put("isScan", isScan);
                 String isScan2 = (String) m.get("isScan2");
                 map.put("isScan2", isScan2);
-                if ("isNew".equals(typeId) && startTime.compareTo(DateUtil.getCurrDateTime("yyyy-MM-dd HH:mm")) >= 0 && !"Y".equals(isRegiest)) {
+                if ("isNew".equals(typeId) && startTime.compareTo(DateUtil.getCurrDateTime("yyyy-MM-dd HH:mm")) >= 0 && !GlobalConstant.FLAG_Y.equals(isRegiest)) {
                     map.put("operId", "Regiest");
                     map.put("operName", "报名");
                 }
                 BigDecimal evalScore2 = (BigDecimal) m.get("evalScore2");
-                if ("isEval".equals(typeId) && "Y".equals(isScan) && "Y".equals(isScan2) && null == evalScore2) {
+                if ("isEval".equals(typeId) && GlobalConstant.FLAG_Y.equals(isScan) && GlobalConstant.FLAG_Y.equals(isScan2) && null == evalScore2) {
                     map.put("operId", "Evaluate");
                     map.put("operName", "评价");
                     map.put("evalScore", "0");
                 }
-                if ("isEval".equals(typeId) && "Y".equals(isScan) && "Y".equals(isScan2) && null != evalScore2) {
+                if ("isEval".equals(typeId) && GlobalConstant.FLAG_Y.equals(isScan) && GlobalConstant.FLAG_Y.equals(isScan2) && null != evalScore2) {
                     map.put("operId", "ShowEvaluate");
                     map.put("operName", "查看评价");
                 }
-                if (StringUtil.isNotBlank(resultFlow) && "Y".equals(isRegiest) && !"Y".equals(isScan)) {
+                if (StringUtil.isNotBlank(resultFlow) && GlobalConstant.FLAG_Y.equals(isRegiest) && !GlobalConstant.FLAG_Y.equals(isScan)) {
                     map.put("operId", "CannelRegiest");
                     map.put("operName", "取消报名");
                 }
@@ -6148,7 +6147,7 @@ public class JswjwWxController extends GeneralController {
         }
         SMSUtil smsUtil = new SMSUtil(userPhone);
         int code = (int) ((Math.random() * 9 + 1) * 100000);
-        SysSmsLog sSmsRecord = new SysSmsLog();
+        TestPaperExample.SysSmsLog sSmsRecord = new TestPaperExample.SysSmsLog();
         if ("tjres".equals(systemFlag)) {
             sSmsRecord = smsUtil.send("10001", "516954", "R101", code);
         }
@@ -6325,7 +6324,7 @@ public class JswjwWxController extends GeneralController {
         }
         SMSUtil smsUtil = new SMSUtil(userPhone);
         int code = (int) ((Math.random() * 9 + 1) * 1000);
-        SysSmsLog sSmsRecord = new SysSmsLog();
+        TestPaperExample.SysSmsLog sSmsRecord = new TestPaperExample.SysSmsLog();
         if ("tjres".equals(systemFlag)) {
             sSmsRecord = smsUtil.send("10001", "516954", "R101", code);
         }
@@ -6683,7 +6682,7 @@ public class JswjwWxController extends GeneralController {
                             orgFlow = doctor.getOrgFlow();
                         }
 //                        String key1 = jswjwBiz.getJsResCfgCode(orgFlow + "_bind");
-//                        if ("Y".equals(key1)) {
+//                        if (GlobalConstant.FLAG_Y.equals(key1)) {
 //                            if (StringUtil.isBlank(uuid)) {
 //                                return ResultDataThrow("请输入手机uuid");
 //                            }
@@ -6830,7 +6829,7 @@ public class JswjwWxController extends GeneralController {
         session.setAttribute("user", JSON.toJSONString(user));
 
         resultMap.put("isRecruit", isRecruit);
-//        if("Y".equals(isRecruit)){
+//        if(GlobalConstant.FLAG_Y.equals(isRecruit)){
 //            return ResultDataThrow("用户资料不完善暂无权登录！");
 //        }
         resultMap.put("token", PkUtil.getUUID());
@@ -6940,7 +6939,7 @@ public class JswjwWxController extends GeneralController {
                 }
             }
             // 需求变更2018（不含）届以前学员 不做该判断  未参加过考核也可以补考
-            if ("2018".compareTo(doctor.getSessionNumber()) <= 0 && "N".equals(isSkill) && "N".equals(isTheory)) {
+            if ("2018".compareTo(doctor.getSessionNumber()) <= 0 && GlobalConstant.FLAG_N.equals(isSkill) && GlobalConstant.FLAG_N.equals(isTheory)) {
                 // 2019/2018/2017级助理全科全走补考报名
                 if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
                     isAllowApply = "Y";
@@ -6949,7 +6948,7 @@ public class JswjwWxController extends GeneralController {
                     isAllowApply = "N";
                 }
             }
-            if ("Y".equals(isSkillQualifed) && "Y".equals(isTheoryQualifed)) {
+            if (GlobalConstant.FLAG_Y.equals(isSkillQualifed) && GlobalConstant.FLAG_Y.equals(isTheoryQualifed)) {
                 //3年内理论成绩和技能成绩都合格
                 isAllowApply = "N";
             }
@@ -7104,10 +7103,10 @@ public class JswjwWxController extends GeneralController {
                         String isPassQualifyingExamination = userResumeExt.getIsPassQualifyingExamination();//是否通过医师资格考试
                         String isHaveQualificationCertificate = userResumeExt.getIsHaveQualificationCertificate();//是否获得医师资格证书
                         String isHavePracticingCategory = userResumeExt.getIsHavePracticingCategory();//是否获得医师执业证书
-                        if ("Y".equals(isPassQualifyingExamination)) {
-                            if ("Y".equals(isHaveQualificationCertificate)) {
+                        if (GlobalConstant.FLAG_Y.equals(isPassQualifyingExamination)) {
+                            if (GlobalConstant.FLAG_Y.equals(isHaveQualificationCertificate)) {
 
-                                if ("Y".equals(isHavePracticingCategory)) {
+                                if (GlobalConstant.FLAG_Y.equals(isHavePracticingCategory)) {
 
                                     practicingMap.put("graduationMaterialId", "176");//报考资格材料
                                     practicingMap.put("graduationMaterialName", "医师执业证书");//报考资格材料
@@ -7390,10 +7389,10 @@ public class JswjwWxController extends GeneralController {
                         String isPassQualifyingExamination = userResumeExt.getIsPassQualifyingExamination();//是否通过医师资格考试
                         String isHaveQualificationCertificate = userResumeExt.getIsHaveQualificationCertificate();//是否获得医师资格证书
                         String isHavePracticingCategory = userResumeExt.getIsHavePracticingCategory();//是否获得医师执业证书
-                        if ("Y".equals(isPassQualifyingExamination)) {
-                            if ("Y".equals(isHaveQualificationCertificate)) {
+                        if (GlobalConstant.FLAG_Y.equals(isPassQualifyingExamination)) {
+                            if (GlobalConstant.FLAG_Y.equals(isHaveQualificationCertificate)) {
 
-                                if ("Y".equals(isHavePracticingCategory)) {
+                                if (GlobalConstant.FLAG_Y.equals(isHavePracticingCategory)) {
 
                                     practicingMap.put("graduationMaterialId", "176");//报考资格材料
                                     practicingMap.put("graduationMaterialName", "医师执业证书");//报考资格材料
@@ -7493,10 +7492,10 @@ public class JswjwWxController extends GeneralController {
                 ResTestConfig resTestConfig = resTestConfigList.get(0);
                 jsresGraduationApply.setTestId(resTestConfig.getTestId());
                 //判断需不需要基地审核，需要则是待基地审核，不要要再判断需不需要市局审核，需要则是待市局审核，都不需要则是待省厅审核
-                if ("Y".equals(resTestConfig.getLocalAudit())) {
+                if (GlobalConstant.FLAG_Y.equals(resTestConfig.getLocalAudit())) {
                     jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.Auditing.getId());
                     jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.Auditing.getName());
-                } else if ("Y".equals(resTestConfig.getChargeAudit())) {
+                } else if (GlobalConstant.FLAG_Y.equals(resTestConfig.getChargeAudit())) {
                     jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.WaitChargePass.getId());
                     jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.WaitChargePass.getName());
                 } else {
@@ -7574,10 +7573,10 @@ public class JswjwWxController extends GeneralController {
                     String isPassQualifyingExamination = userResumeExt.getIsPassQualifyingExamination();//是否通过医师资格考试
                     String isHaveQualificationCertificate = userResumeExt.getIsHaveQualificationCertificate();//是否获得医师资格证书
                     String isHavePracticingCategory = userResumeExt.getIsHavePracticingCategory();//是否获得医师执业证书
-                    if ("Y".equals(isPassQualifyingExamination)) {
-                        if ("Y".equals(isHaveQualificationCertificate)) {
+                    if (GlobalConstant.FLAG_Y.equals(isPassQualifyingExamination)) {
+                        if (GlobalConstant.FLAG_Y.equals(isHaveQualificationCertificate)) {
 
-                            if ("Y".equals(isHavePracticingCategory)) {
+                            if (GlobalConstant.FLAG_Y.equals(isHavePracticingCategory)) {
 
                                 practicingMap.put("graduationMaterialId", "176");//报考资格材料
                                 practicingMap.put("graduationMaterialName", "医师执业证书");//报考资格材料
@@ -7680,10 +7679,10 @@ public class JswjwWxController extends GeneralController {
             ResTestConfig resTestConfig = resTestConfigList.get(0);
             jsresGraduationApply.setTestId(resTestConfig.getTestId());
             //更新之后从头开始审核，判断需不需要基地审核，需要则是待基地审核，不要要再判断需不需要市局审核，需要则是待市局审核，都不需要则是待省厅审核
-            if ("Y".equals(resTestConfig.getLocalAudit())) {
+            if (GlobalConstant.FLAG_Y.equals(resTestConfig.getLocalAudit())) {
                 jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.Auditing.getId());
                 jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.Auditing.getName());
-            } else if ("Y".equals(resTestConfig.getChargeAudit())) {
+            } else if (GlobalConstant.FLAG_Y.equals(resTestConfig.getChargeAudit())) {
                 jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.WaitChargePass.getId());
                 jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.WaitChargePass.getName());
             } else {
@@ -7868,8 +7867,8 @@ public class JswjwWxController extends GeneralController {
                     double avgAuditComBi = 0;//平均审核比例
                     for (JsresDoctorDeptDetail d : details) {
                         biMap.put(d.getSchStandardDeptFlow(), d);
-                        if ("Y".equals(d.getIsAdd())) {
-                            if ("Y".equals(d.getIsShort())) {
+                        if (GlobalConstant.FLAG_Y.equals(d.getIsAdd())) {
+                            if (GlobalConstant.FLAG_Y.equals(d.getIsShort())) {
                                 if (!"-".equals(d.getCompleteBi())) {
                                     shortYCount++;
                                     shortYCBSum += StringUtil.isBlank(d.getCompleteBi()) ? 0 : "-".equals(d.getCompleteBi()) ? 0 : Double.valueOf(d.getCompleteBi());
@@ -7880,7 +7879,7 @@ public class JswjwWxController extends GeneralController {
                                     isShortY = 1;
                                 }
                             }
-                            if ("N".equals(d.getIsShort())) {
+                            if (GlobalConstant.FLAG_N.equals(d.getIsShort())) {
                                 if (!"-".equals(d.getCompleteBi())) {
                                     shortNCount++;
                                     shortNCBSum += StringUtil.isBlank(d.getCompleteBi()) ? 0 : "-".equals(d.getCompleteBi()) ? 0 : Double.valueOf(d.getCompleteBi());
@@ -8170,7 +8169,7 @@ public class JswjwWxController extends GeneralController {
                 }
             }
             // 需求变更2018（不含）届以前学员 不做该判断  未参加过考核也可以补考
-            if ("2018".compareTo(doctor.getSessionNumber()) <= 0 && "N".equals(isSkill) && "N".equals(isTheory)) {
+            if ("2018".compareTo(doctor.getSessionNumber()) <= 0 && GlobalConstant.FLAG_N.equals(isSkill) && GlobalConstant.FLAG_N.equals(isTheory)) {
                 // 2019/2018/2017级助理全科全走补考报名
                 if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
                     isAllowApply = "Y";
@@ -8179,7 +8178,7 @@ public class JswjwWxController extends GeneralController {
                     isAllowApply = "N";
                 }
             }
-            if ("Y".equals(isSkillQualifed) && "Y".equals(isTheoryQualifed)) {
+            if (GlobalConstant.FLAG_Y.equals(isSkillQualifed) && GlobalConstant.FLAG_Y.equals(isTheoryQualifed)) {
                 //3年内理论成绩和技能成绩都合格
                 isAllowApply = "N";
             }
@@ -8249,10 +8248,10 @@ public class JswjwWxController extends GeneralController {
             ResTestConfig resTestConfig = resTestConfigList.get(0);
             signup.setTestId(resTestConfig.getTestId());
             //判断需不需要基地审核，需要则是待基地审核，不要要再判断需不需要市局审核，需要则是待市局审核，都不需要则是待省厅审核
-            if ("Y".equals(resTestConfig.getLocalAudit())) {
+            if (GlobalConstant.FLAG_Y.equals(resTestConfig.getLocalAudit())) {
                 signup.setAuditStatusId(JsResAuditStatusEnum.Auditing.getId());
                 signup.setAuditStatusName(JsResAuditStatusEnum.Auditing.getName());
-            } else if ("Y".equals(resTestConfig.getChargeAudit())) {
+            } else if (GlobalConstant.FLAG_Y.equals(resTestConfig.getChargeAudit())) {
                 signup.setAuditStatusId(JsResAuditStatusEnum.WaitChargePass.getId());
                 signup.setAuditStatusName(JsResAuditStatusEnum.WaitChargePass.getName());
             } else {
@@ -8324,13 +8323,13 @@ public class JswjwWxController extends GeneralController {
             signup.setSignupTypeId(signupTypeId);
             if ("Theory".equals(signupTypeId)) {
                 signup.setSignupTypeName("理论补考");
-                if ("Y".equals(isTheoryQualifed)) {
+                if (GlobalConstant.FLAG_Y.equals(isTheoryQualifed)) {
                     return ResultDataThrow("您的历史成绩中，有报名科目的合格记录，请勿重复报名");
                 }
             }
             if ("Skill".equals(signupTypeId)) {
                 signup.setSignupTypeName("技能补考");
-                if ("Y".equals(isSkillQualifed)) {
+                if (GlobalConstant.FLAG_Y.equals(isSkillQualifed)) {
                     return ResultDataThrow("您的历史成绩中，有报名科目的合格记录，请勿重复报名");
                 }
             }
@@ -8502,7 +8501,7 @@ public class JswjwWxController extends GeneralController {
         String currDateTime2 = DateUtil.getCurrDateTime2();
         resultMap.put("verifyCodeTime", "");
         session.setAttribute("verifyCodeTime", currDateTime2);
-        SysSmsLog sSmsRecord = new SysSmsLog();
+        TestPaperExample.SysSmsLog sSmsRecord = new TestPaperExample.SysSmsLog();
         if ("tjres".equals(systemFlag)) {
             sSmsRecord = smsUtil.send("10001", "516954", "R101", code);
         }
@@ -8691,8 +8690,8 @@ public class JswjwWxController extends GeneralController {
 //        if (GlobalConstant.FLAG_Y.equals(viewFlag)) {
 //            return "jsres/doctorInfo";
 //        }
-//        //"N".equals(canSave) 含义为有一条培训记录，结业考核年份是当前年，并且结业资格审查省厅通过的。学员无法修改个人信息 并且审核期间学员是否修改个人信息为否时
-//        if (!GlobalConstant.FLAG_Y.equals(editFlag) && "N".equals(canSave)) {
+//        //GlobalConstant.FLAG_N.equals(canSave) 含义为有一条培训记录，结业考核年份是当前年，并且结业资格审查省厅通过的。学员无法修改个人信息 并且审核期间学员是否修改个人信息为否时
+//        if (!GlobalConstant.FLAG_Y.equals(editFlag) && GlobalConstant.FLAG_N.equals(canSave)) {
 //            model.addAttribute("isDoctor", "Y");
 //            return "jsres/doctorInfo";
 //        }
@@ -8831,7 +8830,7 @@ public class JswjwWxController extends GeneralController {
                     } else if (JsResAsseAuditListEnum.GlobalPassed.getId().equals(apply.getAuditStatusId())) {
                         canSave = "N";
                     }
-                    if ("Y".equals(canSave)) {
+                    if (GlobalConstant.FLAG_Y.equals(canSave)) {
                         tempMapper.updateRecruitAsseInfoByApplyYear(apply.getApplyFlow(), sysUser.getUserFlow());
                     }
                 }
@@ -9394,11 +9393,11 @@ public class JswjwWxController extends GeneralController {
         List<ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(docRecWithBLOBs, "");
         boolean recruitFlag = false;
         if (null != recruitList && recruitList.size() >= 0) {
-            recruitFlag = "Y".equalsIgnoreCase(recruitList.get(0).getRecruitFlag()) ? true : false;
+            recruitFlag = GlobalConstant.FLAG_Y.equalsIgnoreCase(recruitList.get(0).getRecruitFlag()) ? true : false;
             if (!recruitFlag) {
                 return ResultDataThrow("需要等待基地确认录取，学员方可确认报到");
             }
-            boolean confirmFlag = "Y".equalsIgnoreCase(recruitList.get(0).getConfirmFlag()) ? true : false;
+            boolean confirmFlag = GlobalConstant.FLAG_Y.equalsIgnoreCase(recruitList.get(0).getConfirmFlag()) ? true : false;
             if (confirmFlag) {
                 return ResultDataThrow("已经报到过了，无需重复确认");
             }
@@ -9647,8 +9646,8 @@ public class JswjwWxController extends GeneralController {
         resultMap.put("startDate", startDate.getCfgValue());
         resultMap.put("endDate", endDate.getCfgValue());
         String isButton = "N";
-        if (null == sysCfg || "Y".equals(sysCfg.getCfgValue())) {
-            if (CollectionUtils.isEmpty(recruitList) || "21".equals(recruitList.get(recruitList.size() - 1).getDoctorStatusId()) || "Y".equals(isRetrain)) {
+        if (null == sysCfg || GlobalConstant.FLAG_Y.equals(sysCfg.getCfgValue())) {
+            if (CollectionUtils.isEmpty(recruitList) || "21".equals(recruitList.get(recruitList.size() - 1).getDoctorStatusId()) || GlobalConstant.FLAG_Y.equals(isRetrain)) {
                 isButton = "Y";
             }
         }
@@ -9710,7 +9709,7 @@ public class JswjwWxController extends GeneralController {
         if (StringUtil.isNotBlank(sessionNumber)) {
             int year = Integer.parseInt(sessionNumber);
             if (year >= 2015) {
-                if ("Y".equals(speFlag)) {
+                if (GlobalConstant.FLAG_Y.equals(speFlag)) {
                     speList = jswjwBiz.searchResOrgSpeListNew(resOrgSpe, trainCategoryTypeId, speFlag);
                 } else {
                     speList = jswjwBiz.searchResOrgSpeListNew(resOrgSpe, trainCategoryTypeId, speFlag);
@@ -10482,18 +10481,18 @@ public class JswjwWxController extends GeneralController {
                     String completeBi = "";
                     String outCompleteBi = "";
                     String auditBi = "";
-                    if ("Y".equals(rotation.getIsStage())) {
+                    if (GlobalConstant.FLAG_Y.equals(rotation.getIsStage())) {
                         rotationType = rotationType + schRotationGroup.getSchStageName();
                     }
                     rotationType = rotationType + schRotationGroup.getGroupName();
-                    if ("N".equals(dept.getIsRequired())) {
+                    if (GlobalConstant.FLAG_N.equals(dept.getIsRequired())) {
                         rotationType = rotationType + "【选科】";
                     }
-                    if ("Y".equals(dept.getIsRequired())) {
+                    if (GlobalConstant.FLAG_Y.equals(dept.getIsRequired())) {
                         rotationType = rotationType + "【必轮】";
                     }
                     rotationType = rotationType + "(轮转时间" + schRotationGroup.getSchMonth() + "月";
-                    if ("N".equals(schRotationGroup.getIsRequired())) {
+                    if (GlobalConstant.FLAG_N.equals(schRotationGroup.getIsRequired())) {
                         rotationType = rotationType + schRotationGroup.getSelTypeName() + ":" + schRotationGroup.getDeptNum() + ")";
                     }
                     if ("Free".equals(schRotationGroup.getIsRequired())) {

@@ -4,7 +4,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResLectureEvaDetailBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.LectureInfoTargetMapper;
 import com.pinde.sci.dao.base.ResLectureEvaDetailMapper;
 import com.pinde.sci.dao.res.ResLectureEvaDetailExtMapper;
@@ -14,7 +13,6 @@ import com.pinde.sci.model.mo.ResLectureEvaDetail;
 import com.pinde.sci.model.mo.ResLectureEvaDetailExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;

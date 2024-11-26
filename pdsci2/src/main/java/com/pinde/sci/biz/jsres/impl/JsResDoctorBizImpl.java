@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
@@ -10,7 +11,6 @@ import com.pinde.sci.biz.res.IResDoctorProcessBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.JsresUserBalcklistMapper;
@@ -43,7 +43,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;

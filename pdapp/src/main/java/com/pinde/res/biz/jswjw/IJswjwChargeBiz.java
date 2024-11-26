@@ -1,7 +1,7 @@
 package com.pinde.res.biz.jswjw;
 
-import com.pinde.sci.model.mo.SysDict;
-import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysOrg;
 
 import java.util.List;
 import java.util.Map;

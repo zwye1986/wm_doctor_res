@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResHospScoreTable extends MybatisObject {
+public class ResHospScoreTable extends TeachingActivitySpeakerExample.MybatisObject {
     private String tableFlow;
 
     private String tableName;

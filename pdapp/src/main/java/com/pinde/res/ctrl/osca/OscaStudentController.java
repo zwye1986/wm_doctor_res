@@ -1,9 +1,10 @@
 package com.pinde.res.ctrl.osca;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.commom.enums.CertificateTypeEnum;
-import com.pinde.core.commom.enums.UserSexEnum;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.CertificateTypeEnum;
+import com.pinde.core.common.enums.UserSexEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -11,12 +12,9 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.jswjw.IJsResBaseBiz;
 import com.pinde.res.biz.osca.*;
-import com.pinde.res.enums.lcjn.DictTypeEnum;
 import com.pinde.res.enums.osca.*;
 import com.pinde.res.model.jswjw.mo.OscaSkillRoomExt;
 import com.pinde.res.model.osca.mo.OscaSkillsAssessmentExt;
-import com.pinde.sci.model.mo.*;
-import com.pinde.sci.util.PasswordHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -320,7 +318,7 @@ public class OscaStudentController {
 			model.addAttribute("resultType", "用户不是学员，无权限使用！");
 			return "/res/osca/success";
 		}
-		if("Y".equals(isNew)) {
+		if(GlobalConstant.FLAG_Y.equals(isNew)) {
 			if (StringUtil.isBlank(userImg)) {
 				model.addAttribute("resultId", "010000");
 				model.addAttribute("resultType", "请上传头像图片");
@@ -1469,7 +1467,7 @@ public class OscaStudentController {
 		model.addAttribute("graduationYear",graduationYear);
 		if(resDoctor!=null){
 			model.addAttribute("oscaStudentSubmit",resDoctor.getOscaStudentSubmit());//通过OSCE注册学员
-			if("Y".equals(resDoctor.getOscaStudentSubmit())){
+			if(GlobalConstant.FLAG_Y.equals(resDoctor.getOscaStudentSubmit())){
 				model.addAttribute("graduationYear",resDoctor.getGraduationYear());
 			}
 		}

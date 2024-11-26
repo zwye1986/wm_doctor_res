@@ -6,7 +6,6 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.enums.sys.RoleLevelEnum;
 import com.pinde.sci.model.mo.SysRole;

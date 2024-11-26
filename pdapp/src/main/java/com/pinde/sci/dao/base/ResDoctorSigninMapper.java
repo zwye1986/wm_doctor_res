@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResDoctorSignin;
-import com.pinde.sci.model.mo.ResDoctorSigninExample;
+import com.pinde.core.model.ResDoctorSignin;
+import com.pinde.core.model.ResDoctorSigninExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

@@ -8,7 +8,6 @@ import com.pinde.sci.biz.res.IResIdCtrlBiz;
 import com.pinde.sci.biz.res.IResPowerCfgBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResIdctrlDetailMapper;
 import com.pinde.sci.dao.base.ResIdctrlMainMapper;
@@ -17,7 +16,6 @@ import com.pinde.sci.model.mo.*;
 import net.sourceforge.pinyin4j.PinyinHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -179,7 +177,7 @@ public class ResIdCtrlBizImpl implements IResIdCtrlBiz {
     public int bindingID(ResIdctrlDetail detail) {
         //ResIdctrlDetail表数据
         ResIdctrlDetail oldDetail = readDetail(detail.getRecordFlow());
-        if(oldDetail!=null&&"Y".equals(oldDetail.getIsBinding())){
+        if(oldDetail!=null&&GlobalConstant.FLAG_Y.equals(oldDetail.getIsBinding())){
             return -1;
         }
         detail.setIsBinding("Y");

@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class SysSupervisioUser extends MybatisObject {
+public class SysSupervisioUser extends TeachingActivitySpeakerExample.MybatisObject {
     private String userFlow;
 
     private String userPasswd;

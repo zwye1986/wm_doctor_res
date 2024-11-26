@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JsszportalCommunicationMain;
-import com.pinde.sci.model.mo.JsszportalCommunicationMainExample;
+import com.pinde.core.model.JsszportalCommunicationMain;
+import com.pinde.core.model.JsszportalCommunicationMainExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

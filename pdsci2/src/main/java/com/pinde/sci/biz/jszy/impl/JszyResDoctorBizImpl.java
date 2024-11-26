@@ -14,7 +14,6 @@ import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.JsresUserBalcklistMapper;
@@ -43,7 +42,6 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -327,7 +325,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 			doctor.setDoctorTypeName("");
 		}
 		//是否是对口支援
-		if("N".equals(doctor.getIsPartner())){
+		if(GlobalConstant.FLAG_N.equals(doctor.getIsPartner())){
 			doctor.setSourceProvincesId("");//生源省份
 			doctor.setSourceProvincesName("");
 		}

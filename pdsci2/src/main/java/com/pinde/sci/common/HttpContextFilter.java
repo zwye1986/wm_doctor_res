@@ -41,7 +41,7 @@ public class HttpContextFilter implements Filter {
 		GlobalContext.setRequest((HttpServletRequest) request);
 		GlobalContext.setResponse((HttpServletResponse) response);
 		if("get".equalsIgnoreCase(httpRequest.getMethod())){
-			if("Y".equals(request.getParameter("isMainFrame"))){
+			if(GlobalConstant.FLAG_Y.equals(request.getParameter("isMainFrame"))){
 				String mainFrameSrc = httpRequest.getRequestURL().toString();
 				if(StringUtil.isNotBlank(httpRequest.getQueryString()) ){
 					mainFrameSrc = mainFrameSrc+"?"+httpRequest.getQueryString()+"&isMainFrame=Y";

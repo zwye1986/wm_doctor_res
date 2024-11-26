@@ -2,8 +2,8 @@ package com.pinde.sci.ctrl.jsres;
 
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.Page;
 import com.pinde.core.page.PageHelper;
@@ -36,7 +36,6 @@ import com.pinde.sci.enums.pub.UserSexEnum;
 import com.pinde.sci.enums.pub.UserStatusEnum;
 import com.pinde.sci.enums.res.*;
 import com.pinde.sci.enums.sys.*;
-import com.pinde.sci.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
@@ -46,15 +45,11 @@ import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.bouncycastle.util.encoders.Hex;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -82,7 +77,6 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -558,11 +552,11 @@ public class JsResManageController extends GeneralController {
 			model.addAttribute("passCount", passCount);
 			//待审核
 			recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Auditing.getId());
-			if("Y".equals(isJointOrg)){
+			if(GlobalConstant.FLAG_Y.equals(isJointOrg)){
 				recruit.setJointOrgFlow(recruit.getOrgFlow());
 				recruit.setOrgFlow("");
 				recruit.setJointOrgAudit("Auditing");
-			}else if("N".equals(isJointOrg)){
+			}else if(GlobalConstant.FLAG_N.equals(isJointOrg)){
 				recruit.setJointOrgAudit("Passed");
 			}
 			model.addAttribute("isJointOrg", isJointOrg);
@@ -627,7 +621,7 @@ public class JsResManageController extends GeneralController {
 			if (GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_ROLE_NAME).equals("医院秘书")) {
 				return "jsres/hospital/hospitalSecretaryIndex";
 			}
-			if("Y".equals(more)){
+			if(GlobalConstant.FLAG_Y.equals(more)){
 				return "jsres/hospital/hospitalIndexNew";
 			}
 			String filter = "('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'',key:orgFlow.keyword,negate:!f" +
@@ -1832,7 +1826,7 @@ public class JsResManageController extends GeneralController {
 					}
 					cityOrgMap.put(o.getOrgCityId(), orgFlows);
 
-					if ("Y".equals(joint)) {
+					if (GlobalConstant.FLAG_Y.equals(joint)) {
 						List<String> jointOrgFlowList = new ArrayList<>();
 						List<SysOrg> jointOrgList = orgBiz.searchJointOrgsByOrg(o.getOrgFlow());//查询每家基地的协同基地
 						if (jointOrgList != null && !jointOrgList.isEmpty()) {
@@ -1877,7 +1871,7 @@ public class JsResManageController extends GeneralController {
 				sum2 += (Integer) map.get("num");
 				typeNumMap.put(speId, sum2);
 
-				if ("Y".equals(joint)) {
+				if (GlobalConstant.FLAG_Y.equals(joint)) {
 					param.put("orgFlow", orgFlow);
 					List<Map<String, Object>> list2 = jsResDoctorRecruitBiz.zlxytjJoint(param);
 					if (list2 != null) {
@@ -3358,7 +3352,7 @@ public class JsResManageController extends GeneralController {
 					}
 					cityOrgMap.put(o.getOrgCityId(), orgFlows);
 
-					if ("Y".equals(joint)) {
+					if (GlobalConstant.FLAG_Y.equals(joint)) {
 						List<String> jointOrgFlowList = new ArrayList<>();
 						List<SysOrg> jointOrgList = orgBiz.searchJointOrgsByOrg(o.getOrgFlow());//查询每家基地的协同基地
 						if (jointOrgList != null && !jointOrgList.isEmpty()) {
@@ -3404,7 +3398,7 @@ public class JsResManageController extends GeneralController {
 				sum2 += (Integer) map.get("num");
 				typeNumMap.put(speId, sum2);
 
-				if ("Y".equals(joint)) {
+				if (GlobalConstant.FLAG_Y.equals(joint)) {
 					param.put("orgFlow", orgFlow);
 					List<Map<String, Object>> list2 = jsResDoctorRecruitBiz.zlxytjJoint(param);
 					if (list2 != null) {
@@ -3514,7 +3508,7 @@ public class JsResManageController extends GeneralController {
 								String key = cityId + orgFlow + e.getDictId();
 								String flow = orgFlow + trainTypeId + e.getDictId();
 								String result = "--";
-								if ("Y".equals(orgSpeFlagMap.get(flow))) {
+								if (GlobalConstant.FLAG_Y.equals(orgSpeFlagMap.get(flow))) {
 									Integer num = (Integer) cityOrgNumMap.get(key);
 									if (num == null)
 										num = 0;
@@ -3552,7 +3546,7 @@ public class JsResManageController extends GeneralController {
 										String key = cityId + jointOrgFlow + e.getDictId();
 										String flow = jointOrgFlow + trainTypeId + e.getDictId();
 										String result = "--";
-										if ("Y".equals(orgSpeFlagMap.get(flow))) {
+										if (GlobalConstant.FLAG_Y.equals(orgSpeFlagMap.get(flow))) {
 											Integer num = (Integer) cityOrgNumMap.get(key);
 											if (num == null)
 												num = 0;
@@ -4519,7 +4513,7 @@ public class JsResManageController extends GeneralController {
 			model.addAttribute("orgs", orgs);
 			if(StringUtil.isBlank(doctor.getOrgFlow())) {
 				for (SysOrg tempOrg : orgs) {
-					if("Y".equals(jointOrgFlag)){
+					if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 						List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
 						if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 							for (ResJointOrg jointOrg : resJointOrgList) {
@@ -4531,7 +4525,7 @@ public class JsResManageController extends GeneralController {
 				}
 			}else{
 				orgFlowList.add(doctor.getOrgFlow());
-				if("Y".equals(jointOrgFlag)){
+				if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 					List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(doctor.getOrgFlow());
 					if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 						for (ResJointOrg jointOrg : resJointOrgList) {
@@ -4638,7 +4632,7 @@ public class JsResManageController extends GeneralController {
 			model.addAttribute("orgs", orgs);
 			if(StringUtil.isBlank(doctor.getOrgFlow())) {
 				for (SysOrg tempOrg : orgs) {
-					if("Y".equals(jointOrgFlag)){
+					if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 						List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
 						if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 							for (ResJointOrg jointOrg : resJointOrgList) {
@@ -4650,7 +4644,7 @@ public class JsResManageController extends GeneralController {
 				}
 			}else{
 				orgFlowList.add(doctor.getOrgFlow());
-				if("Y".equals(jointOrgFlag)){
+				if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 					List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(doctor.getOrgFlow());
 					if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 						for (ResJointOrg jointOrg : resJointOrgList) {
@@ -4756,7 +4750,7 @@ public class JsResManageController extends GeneralController {
 			orgs=orgBiz.searchOrgListNew(org);
 			if(StringUtil.isBlank(doctor.getOrgFlow())) {
 				for (SysOrg tempOrg : orgs) {
-					if("Y".equals(jointOrgFlag)){
+					if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 						List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
 						if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 							for (ResJointOrg jointOrg : resJointOrgList) {
@@ -4768,7 +4762,7 @@ public class JsResManageController extends GeneralController {
 				}
 			}else{
 				orgFlowList.add(doctor.getOrgFlow());
-				if("Y".equals(jointOrgFlag)){
+				if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 					List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(doctor.getOrgFlow());
 					if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 						for (ResJointOrg jointOrg : resJointOrgList) {
@@ -4915,7 +4909,7 @@ public class JsResManageController extends GeneralController {
 			orgs=orgBiz.searchOrgListNew(org);
 			if(StringUtil.isBlank(doctor.getOrgFlow())) {
 				for (SysOrg tempOrg : orgs) {
-					if("Y".equals(jointOrgFlag)){
+					if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 						List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
 						if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 							for (ResJointOrg jointOrg : resJointOrgList) {
@@ -4927,7 +4921,7 @@ public class JsResManageController extends GeneralController {
 				}
 			}else{
 				orgFlowList.add(doctor.getOrgFlow());
-				if("Y".equals(jointOrgFlag)){
+				if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 					List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(doctor.getOrgFlow());
 					if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 						for (ResJointOrg jointOrg : resJointOrgList) {
@@ -5608,7 +5602,7 @@ public class JsResManageController extends GeneralController {
 		model.addAttribute("orgs", orgs);
 		if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(doctor.getOrgFlow())) {
 			for (SysOrg tempOrg : orgs) {
-				if("Y".equals(jointOrgFlag)){
+				if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 					List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
 					if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 						for (ResJointOrg jointOrg : resJointOrgList) {
@@ -5621,7 +5615,7 @@ public class JsResManageController extends GeneralController {
 		}
 		if(StringUtil.isNotBlank(doctor.getOrgFlow())){
 			orgFlowList.add(doctor.getOrgFlow());
-			if("Y".equals(jointOrgFlag)){
+			if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 				List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(doctor.getOrgFlow());
 				if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 					for (ResJointOrg jointOrg : resJointOrgList) {
@@ -5689,7 +5683,7 @@ public class JsResManageController extends GeneralController {
 		model.addAttribute("orgs", orgs);
 		if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(doctor.getOrgFlow())) {
 			for (SysOrg tempOrg : orgs) {
-				if("Y".equals(jointOrgFlag)){
+				if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 					List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
 					if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 						for (ResJointOrg jointOrg : resJointOrgList) {
@@ -5702,7 +5696,7 @@ public class JsResManageController extends GeneralController {
 		}
 		if(StringUtil.isNotBlank(doctor.getOrgFlow())){
 			orgFlowList.add(doctor.getOrgFlow());
-			if("Y".equals(jointOrgFlag)){
+			if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 				List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(doctor.getOrgFlow());
 				if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 					for (ResJointOrg jointOrg : resJointOrgList) {
@@ -11357,7 +11351,7 @@ public class JsResManageController extends GeneralController {
 		model.addAttribute("orgs", orgs);
 		if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(doctor.getOrgFlow())) {
 			for (SysOrg tempOrg : orgs) {
-				if("Y".equals(jointOrgFlag)){
+				if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 					List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
 					if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 						for (ResJointOrg jointOrg : resJointOrgList) {
@@ -11370,7 +11364,7 @@ public class JsResManageController extends GeneralController {
 		}
 		if(StringUtil.isNotBlank(doctor.getOrgFlow())){
 			orgFlowList.add(doctor.getOrgFlow());
-			if("Y".equals(jointOrgFlag)){
+			if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 				List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(doctor.getOrgFlow());
 				if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 					for (ResJointOrg jointOrg : resJointOrgList) {
@@ -11459,7 +11453,7 @@ public class JsResManageController extends GeneralController {
 		model.addAttribute("orgs", orgs);
 		if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(doctor.getOrgFlow())) {
 			for (SysOrg tempOrg : orgs) {
-				if("Y".equals(jointOrgFlag)){
+				if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 					List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
 					if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 						for (ResJointOrg jointOrg : resJointOrgList) {
@@ -11472,7 +11466,7 @@ public class JsResManageController extends GeneralController {
 		}
 		if(StringUtil.isNotBlank(doctor.getOrgFlow())){
 			orgFlowList.add(doctor.getOrgFlow());
-			if("Y".equals(jointOrgFlag)){
+			if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 				List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(doctor.getOrgFlow());
 				if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 					for (ResJointOrg jointOrg : resJointOrgList) {
@@ -11663,7 +11657,7 @@ public class JsResManageController extends GeneralController {
 		orgs = orgBiz.searchOrg(sysorg4Search);
 		if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(doctor.getOrgFlow())) {
 			for (SysOrg tempOrg : orgs) {
-				if("Y".equals(jointOrgFlag)){
+				if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 					List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
 					if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 						for (ResJointOrg jointOrg : resJointOrgList) {
@@ -11676,7 +11670,7 @@ public class JsResManageController extends GeneralController {
 		}
 		if(StringUtil.isNotBlank(doctor.getOrgFlow())){
 			orgFlowList.add(doctor.getOrgFlow());
-			if("Y".equals(jointOrgFlag)){
+			if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 				List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(doctor.getOrgFlow());
 				if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 					for (ResJointOrg jointOrg : resJointOrgList) {
@@ -11753,7 +11747,7 @@ public class JsResManageController extends GeneralController {
 		orgs = orgBiz.searchOrg(sysorg4Search);
 		if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(doctor.getOrgFlow())) {
 			for (SysOrg tempOrg : orgs) {
-				if("Y".equals(jointOrgFlag)){
+				if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 					List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
 					if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 						for (ResJointOrg jointOrg : resJointOrgList) {
@@ -11766,7 +11760,7 @@ public class JsResManageController extends GeneralController {
 		}
 		if(StringUtil.isNotBlank(doctor.getOrgFlow())){
 			orgFlowList.add(doctor.getOrgFlow());
-			if("Y".equals(jointOrgFlag)){
+			if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 				List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(doctor.getOrgFlow());
 				if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 					for (ResJointOrg jointOrg : resJointOrgList) {
@@ -11874,10 +11868,10 @@ public class JsResManageController extends GeneralController {
 		}
 		paramMap.put("monthDate",monthDate);
 		String doctorTypeId = "All";
-		if("Y".equals(inSchool) && !"Y".equals(resident)){//在校专硕
+		if(GlobalConstant.FLAG_Y.equals(inSchool) && !GlobalConstant.FLAG_Y.equals(resident)){//在校专硕
 			doctorTypeId = "Graduate";
 		}
-		if("Y".equals(resident) && !"Y".equals(inSchool)){//住院医师
+		if(GlobalConstant.FLAG_Y.equals(resident) && !GlobalConstant.FLAG_Y.equals(inSchool)){//住院医师
 			doctorTypeId = "Doctor";
 		}
 		paramMap.put("doctorTypeId",doctorTypeId);
@@ -12801,10 +12795,10 @@ public class JsResManageController extends GeneralController {
 		}
 		paramMap.put("monthDate",monthDate);
 		String doctorTypeId = "All";
-		if("Y".equals(inSchool) && !"Y".equals(resident)){//在校专硕
+		if(GlobalConstant.FLAG_Y.equals(inSchool) && !GlobalConstant.FLAG_Y.equals(resident)){//在校专硕
 			doctorTypeId = "Graduate";
 		}
-		if("Y".equals(resident) && !"Y".equals(inSchool)){//住院医师
+		if(GlobalConstant.FLAG_Y.equals(resident) && !GlobalConstant.FLAG_Y.equals(inSchool)){//住院医师
 			doctorTypeId = "Doctor";
 		}
 		paramMap.put("doctorTypeId",doctorTypeId);
@@ -12825,7 +12819,7 @@ public class JsResManageController extends GeneralController {
 		}else {
 			List<String> orgFlows = new ArrayList<>();
 			orgFlows.add(user.getOrgFlow());
-			if("Y".equals(isContain)) {
+			if(GlobalConstant.FLAG_Y.equals(isContain)) {
 				List<ResJointOrg> jointOrgList = jointOrgBiz.searchResJointByOrgFlow(user.getOrgFlow());
 				if (null != jointOrgList && jointOrgList.size() > 0) {
 					for (ResJointOrg org : jointOrgList) {
@@ -13339,7 +13333,7 @@ public class JsResManageController extends GeneralController {
 		List<String> orgFlows = new ArrayList<>();
 		orgFlows.add(currOrg.getOrgFlow());
 		List<ResJointOrg> jointOrgList = jointOrgBiz.searchResJointByOrgFlow(currOrg.getOrgFlow());
-		if("Y".equals(isContain)){
+		if(GlobalConstant.FLAG_Y.equals(isContain)){
 			if(null != jointOrgList && jointOrgList.size()>0){
 				for (ResJointOrg jointOrg:jointOrgList) {
 					orgFlows.add(jointOrg.getJointOrgFlow());
@@ -13423,7 +13417,7 @@ public class JsResManageController extends GeneralController {
 						bList.add(doctorLunZhuanExceptionParam2);
 
 						//包含协同基地
-						if("Y".equals(isContain)){
+						if(GlobalConstant.FLAG_Y.equals(isContain)){
 							if(null != jointOrgList && jointOrgList.size()>0) {
 								for (int k = 0; k < jointOrgList.size(); k++) {
 									param2.put("orgFlow",jointOrgList.get(k).getJointOrgFlow());
@@ -13487,9 +13481,9 @@ public class JsResManageController extends GeneralController {
 		}
 		List<String> orgFlows = new ArrayList<>();
 		orgFlows.add(orgFlow);
-		if("Y".equals(isContain)) {
+		if(GlobalConstant.FLAG_Y.equals(isContain)) {
 			List<ResJointOrg> jointOrgList = jointOrgBiz.searchResJointByOrgFlow(orgFlow);
-			if ("Y".equals(isContain)) {
+			if (GlobalConstant.FLAG_Y.equals(isContain)) {
 				if (null != jointOrgList && jointOrgList.size() > 0) {
 					for (ResJointOrg jointOrg : jointOrgList) {
 						orgFlows.add(jointOrg.getJointOrgFlow());
@@ -13531,9 +13525,9 @@ public class JsResManageController extends GeneralController {
 		}
 		List<String> orgFlows = new ArrayList<>();
 		orgFlows.add(orgFlow);
-		if("Y".equals(isContain)) {
+		if(GlobalConstant.FLAG_Y.equals(isContain)) {
 			List<ResJointOrg> jointOrgList = jointOrgBiz.searchResJointByOrgFlow(orgFlow);
-			if ("Y".equals(isContain)) {
+			if (GlobalConstant.FLAG_Y.equals(isContain)) {
 				if (null != jointOrgList && jointOrgList.size() > 0) {
 					for (ResJointOrg jointOrg : jointOrgList) {
 						orgFlows.add(jointOrg.getJointOrgFlow());
@@ -13693,7 +13687,7 @@ public class JsResManageController extends GeneralController {
 						}
 					}
 					//出科异常
-					if("Y".equals(isPayCurrentOrg)){
+					if(GlobalConstant.FLAG_Y.equals(isPayCurrentOrg)){
 						if(resRecList.size()==0 || null == resRecList || StringUtil.isBlank(content)){
 							if(!outExceptionDoctorflowCount.contains(schr.getDoctorFlow())){
 								outExceptionDoctorflowCount.add(schr.getDoctorFlow());
@@ -13785,7 +13779,7 @@ public class JsResManageController extends GeneralController {
 							}
 						}
 						//出科异常
-						if("Y".equals(isPayCurrentOrg)){
+						if(GlobalConstant.FLAG_Y.equals(isPayCurrentOrg)){
 							if(resRecList.size()==0 || null == resRecList || StringUtil.isBlank(content)){
 								if(!outExceptionDoctorflowCount1.contains(schr.getDoctorFlow())){
 									outExceptionDoctorflowCount1.add(schr.getDoctorFlow());
@@ -13866,7 +13860,7 @@ public class JsResManageController extends GeneralController {
 									}
 								}
 								//出科异常
-								if("Y".equals(isPayCurrentOrg2)){
+								if(GlobalConstant.FLAG_Y.equals(isPayCurrentOrg2)){
 									if(resRecList.size()==0 || null == resRecList || StringUtil.isBlank(content)){
 										if(!outExceptionDoctorflowCount2.contains(schr.getDoctorFlow())){
 											outExceptionDoctorflowCount2.add(schr.getDoctorFlow());
@@ -15251,7 +15245,7 @@ public class JsResManageController extends GeneralController {
 		}else {
 			List<String> orgFlows = new ArrayList<>();
 			orgFlows.add(user.getOrgFlow());
-			if("Y".equals(isContain)) {
+			if(GlobalConstant.FLAG_Y.equals(isContain)) {
 				List<ResJointOrg> jointOrgList = jointOrgBiz.searchResJointByOrgFlow(user.getOrgFlow());
 				if (null != jointOrgList && jointOrgList.size() > 0) {
 					for (ResJointOrg org : jointOrgList) {
@@ -15288,10 +15282,10 @@ public class JsResManageController extends GeneralController {
 			monthDate = DateUtil.addMonth(DateUtil.getMonth(),-1);
 		}
 		String doctorTypeId = "All";
-		if("Y".equals(notGraduate) && !"Y".equals(graduate)){
+		if(GlobalConstant.FLAG_Y.equals(notGraduate) && !GlobalConstant.FLAG_Y.equals(graduate)){
 			doctorTypeId = "Doctor";
 		}
-		if("Y".equals(graduate) && !"Y".equals(notGraduate)){
+		if(GlobalConstant.FLAG_Y.equals(graduate) && !GlobalConstant.FLAG_Y.equals(notGraduate)){
 			doctorTypeId = "Graduate";
 		}
 		List<JsresActivityStatistics> li  = null;
@@ -15313,7 +15307,7 @@ public class JsResManageController extends GeneralController {
 		}else {
 			List<String> orgFlows = new ArrayList<>();
 			orgFlows.add(user.getOrgFlow());
-			if("Y".equals(isContain)) {
+			if(GlobalConstant.FLAG_Y.equals(isContain)) {
 				List<ResJointOrg> jointOrgList = jointOrgBiz.searchResJointByOrgFlow(user.getOrgFlow());
 				if (null != jointOrgList && jointOrgList.size() > 0) {
 					for (ResJointOrg org : jointOrgList) {
@@ -15350,10 +15344,10 @@ public class JsResManageController extends GeneralController {
 			monthDate = DateUtil.addMonth(DateUtil.getMonth(),-1);
 		}
 		String doctorTypeId = "All";
-		if("Y".equals(notGraduate) && !"Y".equals(graduate)){
+		if(GlobalConstant.FLAG_Y.equals(notGraduate) && !GlobalConstant.FLAG_Y.equals(graduate)){
 			doctorTypeId = "Doctor";
 		}
-		if("Y".equals(graduate) && !"Y".equals(notGraduate)){
+		if(GlobalConstant.FLAG_Y.equals(graduate) && !GlobalConstant.FLAG_Y.equals(notGraduate)){
 			doctorTypeId = "Graduate";
 		}
 		List<JsresOutDeptStatistics> li  = null;
@@ -15375,7 +15369,7 @@ public class JsResManageController extends GeneralController {
 		}else {
 			List<String> orgFlows = new ArrayList<>();
 			orgFlows.add(user.getOrgFlow());
-			if("Y".equals(isContain)) {
+			if(GlobalConstant.FLAG_Y.equals(isContain)) {
 				List<ResJointOrg> jointOrgList = jointOrgBiz.searchResJointByOrgFlow(user.getOrgFlow());
 				if (null != jointOrgList && jointOrgList.size() > 0) {
 					for (ResJointOrg org : jointOrgList) {
@@ -16728,11 +16722,11 @@ public class JsResManageController extends GeneralController {
 		model.addAttribute("passCount", passCount);
 		//待审核
 		recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Auditing.getId());
-		if("Y".equals(isJointOrg)){
+		if(GlobalConstant.FLAG_Y.equals(isJointOrg)){
 			recruit.setJointOrgFlow(recruit.getOrgFlow());
 			recruit.setOrgFlow("");
 			recruit.setJointOrgAudit("Auditing");
-		}else if("N".equals(isJointOrg)){
+		}else if(GlobalConstant.FLAG_N.equals(isJointOrg)){
 			recruit.setJointOrgAudit("Passed");
 		}
 		Calendar date = Calendar.getInstance();

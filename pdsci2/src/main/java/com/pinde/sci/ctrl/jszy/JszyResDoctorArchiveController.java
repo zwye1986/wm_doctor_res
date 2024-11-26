@@ -15,7 +15,6 @@ import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.jszy.*;
@@ -593,8 +592,8 @@ public class JszyResDoctorArchiveController extends GeneralController {
 			String recruitFlow=recruits.get(0).getRecruitFlow();
 		}
 		model.addAttribute("canSave",canSave);
-		//"N".equals(canSave) 含义为有一条培训记录，结业考核年份是当前年，并且结业资格审查省厅通过的。学员无法修改个人信息
-		if(GlobalConstant.FLAG_Y.equals(viewFlag)||"N".equals(canSave)){
+		//GlobalConstant.FLAG_N.equals(canSave) 含义为有一条培训记录，结业考核年份是当前年，并且结业资格审查省厅通过的。学员无法修改个人信息
+		if(GlobalConstant.FLAG_Y.equals(viewFlag)||GlobalConstant.FLAG_N.equals(canSave)){
 			return "jszy/archiveDoctorInfo";
 		}
 		return "jszy/doctor/editDoctorInfo";

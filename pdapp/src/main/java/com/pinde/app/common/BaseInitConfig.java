@@ -1,5 +1,6 @@
 package com.pinde.app.common;
 
+import com.pinde.core.util.GlobalUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,9 +14,6 @@ public class BaseInitConfig implements ServletContextListener {
     private final static Logger logger = LoggerFactory.getLogger(BaseInitConfig.class);
 
     private static ServletContextEvent servletContext;
-    //住院医师
-    public static IrbFormRequestUtil resFormRequestUtil;
-
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         servletContext = servletContextEvent;

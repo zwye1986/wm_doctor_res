@@ -1,7 +1,7 @@
 package com.pinde.sci.enums.recruit;
 
 
-import com.pinde.core.commom.enums.GeneralEnum;
+import com.pinde.core.common.enums.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
 public enum RecruitOperEnum implements GeneralEnum<String> {

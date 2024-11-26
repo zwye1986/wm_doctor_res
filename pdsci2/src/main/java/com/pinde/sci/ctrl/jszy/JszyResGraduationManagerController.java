@@ -350,7 +350,7 @@ public class JszyResGraduationManagerController extends GeneralController {
         String originalFilename =recordFlow+ ".png";
         String filePath=fileDir+  File.separator +originalFilename;
 
-        if("Y".equals(isDown))
+        if(GlobalConstant.FLAG_Y.equals(isDown))
         {
             byte[] data = null;
             long dataLength = 0;

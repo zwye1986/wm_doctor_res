@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.DictForm;
-import com.pinde.sci.model.mo.DictFormExample;
+import com.pinde.core.model.DictForm;
+import com.pinde.core.model.DictFormExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

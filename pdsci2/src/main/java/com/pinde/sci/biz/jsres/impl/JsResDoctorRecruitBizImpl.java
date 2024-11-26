@@ -2,7 +2,7 @@ package com.pinde.sci.biz.jsres.impl;
 
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.commom.enums.ArmyTypeEnum;
+import com.pinde.core.common.enums.ArmyTypeEnum;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -19,7 +19,6 @@ import com.pinde.sci.biz.sch.ISchRotationDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
@@ -54,7 +53,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -483,13 +481,13 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 
 		}
 
-		if("Y".equals(recWithBLOBs.getRecruitFlag())){
+		if(GlobalConstant.FLAG_Y.equals(recWithBLOBs.getRecruitFlag())){
 			if(StringUtil.isNotBlank(recWithBLOBs.getAdmitNotice())){
 				msgContent = "您的培训信息基地已录取("+recWithBLOBs.getAdmitNotice()+")，";
 			}else {
 				msgContent = "您的培训信息基地已录取，";
 			}
-		}else if("N".equals(recWithBLOBs.getRecruitFlag())){
+		}else if(GlobalConstant.FLAG_N.equals(recWithBLOBs.getRecruitFlag())){
 			if(StringUtil.isNotBlank(recWithBLOBs.getAdmitNotice())){
 				msgContent = "您的培训信息基地未录取("+recWithBLOBs.getAdmitNotice()+")，";
 			}else {
@@ -891,7 +889,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 															 List<String> jointOrgFlowList,String flag,List<String>docTypeList,List<String>trainYearList,
 															 List<String>sessionNumbers,String baseFlag,String userOrgFlow, String newFlag,String isJointOrg) {
 		Map<String, Object> doctorRecruitMap=new HashMap<String, Object>();
-		if ("Y".equals(newFlag)) {
+		if (GlobalConstant.FLAG_Y.equals(newFlag)) {
 			if (sessionNumbers == null || sessionNumbers.size() == 0) {
 				String sessionNumberBefore = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 6);
 				doctorRecruitMap.put("sessionNumberBefore", sessionNumberBefore);
@@ -929,7 +927,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 															 List<String> jointOrgFlowList,String flag,List<String>docTypeList,List<String>trainYearList,
 															 List<String>sessionNumbers,String baseFlag,String userOrgFlow, String newFlag,String isJointOrg,String isPostpone,String isArmy,String workOrgId, String workOrgName) {
 		Map<String, Object> doctorRecruitMap=new HashMap<String, Object>();
-		if ("Y".equals(newFlag)) {
+		if (GlobalConstant.FLAG_Y.equals(newFlag)) {
 			if (sessionNumbers == null || sessionNumbers.size() == 0) {
 				String sessionNumberBefore = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 6);
 				doctorRecruitMap.put("sessionNumberBefore", sessionNumberBefore);
@@ -1525,16 +1523,16 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 					jykhForm.setYszgType(resume.getPracticingCategoryName());
 					jykhForm.setYszgCertNo(resume.getQualificationMaterialCode());
 					//是否全科订单定向学员
-					if("Y".equals(resume.getIsGeneralOrderOrientationTrainee())){
+					if(GlobalConstant.FLAG_Y.equals(resume.getIsGeneralOrderOrientationTrainee())){
 						jykhForm.setIsQkdddxxy("是");
-					}else if("N".equals(resume.getIsGeneralOrderOrientationTrainee())){
+					}else if(GlobalConstant.FLAG_N.equals(resume.getIsGeneralOrderOrientationTrainee())){
 						jykhForm.setIsQkdddxxy("否");
 					}
-					if("Y".equals(resume.getIsDoctor())){
+					if(GlobalConstant.FLAG_Y.equals(resume.getIsDoctor())){
 						jykhForm.setSchoolName(resume.getDoctorGraSchoolName());//毕业/在读院校
 						jykhForm.setSchoolSpeName(resume.getDoctorMajor());//毕业（在读）专业/二级学科
 						jykhForm.setDegreeName(resume.getDoctorDegreeName());//学位
-					}else if("Y".equals(resume.getIsMaster())){
+					}else if(GlobalConstant.FLAG_Y.equals(resume.getIsMaster())){
 						jykhForm.setSchoolName(resume.getMasterGraSchoolName());
 						jykhForm.setSchoolSpeName(resume.getMasterMajor());
 						jykhForm.setDegreeName(resume.getMasterDegreeName());
@@ -1562,9 +1560,9 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				}
 				jykhForm.setRyAttributes("地方人员");
 				jykhForm.setRyType(ext.getDoctorTypeName());
-				if("Y".equals(ext.getIsYearGraduate())){
+				if(GlobalConstant.FLAG_Y.equals(ext.getIsYearGraduate())){
 					jykhForm.setThisPastYear("应届");
-				}else if("N".equals(ext.getIsYearGraduate())){
+				}else if(GlobalConstant.FLAG_N.equals(ext.getIsYearGraduate())){
 					jykhForm.setThisPastYear("往届");
 				}
 				jykhForm.setSessionNumber(ext.getSessionNumber());
@@ -2443,7 +2441,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
                                     skillScore = obj1.get("score").toString();
                                 }
                             }
-                            if ("Y".equals(arrResultList.get(i).getHaveAfterPic())) {
+                            if (GlobalConstant.FLAG_Y.equals(arrResultList.get(i).getHaveAfterPic())) {
                                 haveAfterPic = "已上传";
                             } else {
                                 haveAfterPic = "未上传";

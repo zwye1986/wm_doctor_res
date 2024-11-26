@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JxNationalHolidaysRegister;
-import com.pinde.sci.model.mo.JxNationalHolidaysRegisterExample;
+import com.pinde.core.model.JxNationalHolidaysRegister;
+import com.pinde.core.model.JxNationalHolidaysRegisterExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

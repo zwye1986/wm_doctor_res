@@ -14,7 +14,6 @@ import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
@@ -525,7 +524,7 @@ public class ResManagerController extends GeneralController {
             if(StringUtil.isBlank(doctor.getDoctorCategoryId())){
 				for(RecDocCategoryEnum e:RecDocCategoryEnum.values())
 				{
-					if("Y".equals(InitConfig.getSysCfg("res_doctor_category_"+e.getId())))
+					if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_doctor_category_"+e.getId())))
 					{
 						doctor.setDoctorCategoryId(e.getId());
 						break;
@@ -623,7 +622,7 @@ public class ResManagerController extends GeneralController {
             if(StringUtil.isBlank(doctor.getDoctorCategoryId())){
 				for(RecDocCategoryEnum e:RecDocCategoryEnum.values())
 				{
-					if("Y".equals(InitConfig.getSysCfg("res_doctor_category_"+e.getId())))
+					if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_doctor_category_"+e.getId())))
 					{
 						doctor.setDoctorCategoryId(e.getId());
 						break;
@@ -892,7 +891,7 @@ public class ResManagerController extends GeneralController {
 			if(StringUtil.isBlank(doctor.getDoctorCategoryId())){
 				for(RecDocCategoryEnum e:RecDocCategoryEnum.values())
 				{
-					if("Y".equals(InitConfig.getSysCfg("res_doctor_category_"+e.getId())))
+					if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_doctor_category_"+e.getId())))
 					{
 						doctor.setDoctorCategoryId(e.getId());
 						break;
@@ -3908,7 +3907,7 @@ public class ResManagerController extends GeneralController {
 		model.addAttribute("lectureInfo",lectureInfo);
 		//随机签到
 		List<ResLectureRandomSign> randomSignList = new ArrayList<>();
-		if("Y".equals(flag)) {
+		if(GlobalConstant.FLAG_Y.equals(flag)) {
 			randomSignList = randomSignBiz.searchRandomByLectureFlow(lectureFlow);
 		}
 		model.addAttribute("randomSignList", randomSignList);
@@ -3980,7 +3979,7 @@ public class ResManagerController extends GeneralController {
 	public String evaList2(String lectureFlow,Model model,String flag){
 		//随机签到
 		List<ResLectureRandomSign> randomSignList = new ArrayList<>();
-		if ("Y".equals(flag)) {
+		if (GlobalConstant.FLAG_Y.equals(flag)) {
 			randomSignList = randomSignBiz.searchRandomByLectureFlow(lectureFlow);
 		}
 		model.addAttribute("randomSignList", randomSignList);
@@ -4166,10 +4165,10 @@ public class ResManagerController extends GeneralController {
 	@RequestMapping("/saveRandomSign")
 	@ResponseBody
 	public String saveRandomSign(ResLectureRandomSign randomSign){
-		if("N".equals(randomSign.getCodeStatusType())){
+		if(GlobalConstant.FLAG_N.equals(randomSign.getCodeStatusType())){
 			randomSign.setCodeStatusName("静态二维码");
 		}
-		if("Y".equals(randomSign.getCodeStatusType())){
+		if(GlobalConstant.FLAG_Y.equals(randomSign.getCodeStatusType())){
 			randomSign.setCodeStatusName("动态二维码");
 		}
 		int i = randomSignBiz.saveRandom(randomSign);
@@ -4323,11 +4322,11 @@ public class ResManagerController extends GeneralController {
 				//判断结束
 				if(GlobalConstant.RECORD_STATUS_Y.equals(lectureInfo.getRecordStatus())&&((lectureEndTime.compareTo(currTime)<0&&lectureTrainDate.compareTo(currDate)==0)||(lectureTrainDate.compareTo(currDate)<0))){
 					lectureInfos.add(lectureInfo);
-					if("Y".equals(isScan))
+					if(GlobalConstant.FLAG_Y.equals(isScan))
 					{
 						scanMap.put(lectureFlow,"Y");
 					}
-					if("Y".equals(isScan2)) {
+					if(GlobalConstant.FLAG_Y.equals(isScan2)) {
 						scan2Map.put(lectureFlow, "Y");
 					}
 					evaMap.put(lectureFlow,dateFlag);

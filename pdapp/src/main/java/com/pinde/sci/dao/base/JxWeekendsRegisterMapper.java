@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JxWeekendsRegister;
-import com.pinde.sci.model.mo.JxWeekendsRegisterExample;
+import com.pinde.core.model.JxWeekendsRegister;
+import com.pinde.core.model.JxWeekendsRegisterExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

@@ -1,9 +1,10 @@
 package com.pinde.res.ctrl.osca;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.app.common.PasswordUtil;
-import com.pinde.core.commom.enums.UserStatusEnum;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.*;
+import com.pinde.core.util.PasswordUtil;
+import com.pinde.core.common.enums.UserStatusEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -15,9 +16,7 @@ import com.pinde.res.enums.osca.ScanDocStatusEnum;
 import com.pinde.res.enums.osca.ScoreStatusEnum;
 import com.pinde.res.enums.osca.SignStatusEnum;
 import com.pinde.res.model.jswjw.mo.FromTitle;
-import com.pinde.sci.model.mo.*;
 import com.pinde.sci.util.FtpHelperUtil;
-import com.pinde.sci.util.PasswordHelper;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -158,7 +157,7 @@ public class OscaAppController {
 			}
 			if(isExamTea)
 			{
-				if(StringUtil.isBlank(userinfo.getRecordStatus())||"N".equals(userinfo.getRecordStatus())){
+				if(StringUtil.isBlank(userinfo.getRecordStatus())||GlobalConstant.FLAG_N.equals(userinfo.getRecordStatus())){
 					model.addAttribute("resultId", "30197");
 					model.addAttribute("resultType", "您的帐号已被停用，请联系考点进行启用");
 					return "res/osca/login";
@@ -177,7 +176,7 @@ public class OscaAppController {
 				model.addAttribute("codeInfo",codeInfo);
 				model.addAttribute("roleFlow","ExamTea");
 				model.addAttribute("roleName","考官");
-				if("N".equals(isPad))
+				if(GlobalConstant.FLAG_N.equals(isPad))
 				{
 					model.addAttribute("resultId", "30197");
 					model.addAttribute("resultType", "此为学员app端，你无权限登录");
@@ -187,7 +186,7 @@ public class OscaAppController {
 			}else {
 
 				//验证用户是否有角色
-				if(StringUtil.isBlank(userinfo.getRecordStatus())||"N".equals(userinfo.getRecordStatus())){
+				if(StringUtil.isBlank(userinfo.getRecordStatus())||GlobalConstant.FLAG_N.equals(userinfo.getRecordStatus())){
 					model.addAttribute("resultId", "30197");
 					model.addAttribute("resultType", "您的帐号已被停用，请联系系统管理员进行启用");
 					return "res/osca/login";
@@ -206,7 +205,7 @@ public class OscaAppController {
 					model.addAttribute("roleFlow","Student");
 					model.addAttribute("roleName","学员");
 
-					if(!"N".equals(isPad))
+					if(!GlobalConstant.FLAG_N.equals(isPad))
 					{
 						model.addAttribute("resultId", "30197");
 						model.addAttribute("resultType", "此为管理员pad端，你无权限登录");
@@ -220,14 +219,14 @@ public class OscaAppController {
 						model.addAttribute("resultType", "您暂无考点信息，无权限登录");
 						return "res/osca/login";
 					}
-					if (!"Y".equals(org.getIsExamOrg())) {
+					if (!GlobalConstant.FLAG_Y.equals(org.getIsExamOrg())) {
 						model.addAttribute("resultId", "30197");
 						model.addAttribute("resultType", "您的帐号不是考点帐号，无权限登录");
 						return "res/osca/login";
 					}
 					model.addAttribute("roleFlow", "Admin");
 					model.addAttribute("roleName", "管理员");
-					if("N".equals(isPad))
+					if(GlobalConstant.FLAG_N.equals(isPad))
 					{
 						model.addAttribute("resultId", "30197");
 						model.addAttribute("resultType", "此为学员app端，你无权限登录");
@@ -1849,7 +1848,7 @@ public class OscaAppController {
 			model.addAttribute("resultType", "必选标识符为空");
 			return "res/osca/success";
 		}
-		if(!"Y".equals(isRequired)&&!"N".equals(isRequired)){
+		if(!GlobalConstant.FLAG_Y.equals(isRequired)&&!GlobalConstant.FLAG_N.equals(isRequired)){
 			model.addAttribute("resultId", "3011101");
 			model.addAttribute("resultType", "必选标识符只能是Y或N");
 			return "res/osca/success";
@@ -1909,7 +1908,7 @@ public class OscaAppController {
 			score = oscaAppBiz.getNoFromScoreByParam(param);
 		}
 		//如果没有打分无表单的分数，并且是选填的话，则查询非必选的
-		if("N".equals(isRequired)) {
+		if(GlobalConstant.FLAG_N.equals(isRequired)) {
 			if (score == null) {
 				score = oscaAppBiz.getNotRequiredFromScoreByParam(param);
 			}
@@ -2178,7 +2177,7 @@ public class OscaAppController {
 			model.addAttribute("resultType", "必选标识符为空");
 			return "res/osca/selectStationFrom";
 		}
-		if(!"Y".equals(isRequired)&&!"N".equals(isRequired)){
+		if(!GlobalConstant.FLAG_Y.equals(isRequired)&&!GlobalConstant.FLAG_N.equals(isRequired)){
 			model.addAttribute("resultId", "3011101");
 			model.addAttribute("resultType", "必选标识符只能是Y或N");
 			return "res/osca/selectStationFrom";

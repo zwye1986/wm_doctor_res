@@ -10,7 +10,6 @@ import com.pinde.sci.biz.sch.ISchDeptBiz;
 import com.pinde.sci.biz.sch.ISchDoctorAbsenceBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.PubFileMapper;
 import com.pinde.sci.dao.base.SchDoctorAbsenceMapper;
@@ -19,7 +18,6 @@ import com.pinde.sci.enums.res.AbsenceTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

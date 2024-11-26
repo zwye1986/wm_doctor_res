@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResDoctorOrgHistory;
-import com.pinde.sci.model.mo.ResDoctorOrgHistoryExample;
+import com.pinde.core.model.ResDoctorOrgHistory;
+import com.pinde.core.model.ResDoctorOrgHistoryExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

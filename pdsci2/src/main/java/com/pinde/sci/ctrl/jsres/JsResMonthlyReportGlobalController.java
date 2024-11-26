@@ -8,7 +8,6 @@ import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResBaseMapper;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;

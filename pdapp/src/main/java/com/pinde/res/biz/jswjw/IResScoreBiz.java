@@ -1,7 +1,7 @@
 package com.pinde.res.biz.jswjw;
 
-import com.pinde.sci.model.mo.ResPassScoreCfg;
-import com.pinde.sci.model.mo.ResScore;
+import com.pinde.core.model.ResPassScoreCfg;
+import com.pinde.core.model.ResScore;
 
 import java.util.List;
 

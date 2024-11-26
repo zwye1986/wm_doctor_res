@@ -3,12 +3,11 @@ package com.pinde.res.biz.common.impl;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.common.IDictBiz;
 import com.pinde.sci.dao.base.SysDictMapper;
-import com.pinde.sci.model.mo.SysDict;
-import com.pinde.sci.model.mo.SysDictExample;
-import com.pinde.sci.model.mo.SysDictExample.Criteria;
+import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysDictExample;
+import com.pinde.core.model.SysDictExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

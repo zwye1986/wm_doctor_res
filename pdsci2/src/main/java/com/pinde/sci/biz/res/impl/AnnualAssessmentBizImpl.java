@@ -1,11 +1,11 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.util.DateUtil;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IAnnualAssessmentBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResAnnualAssessmentMapper;
 import com.pinde.sci.dao.res.AnnualAssessmentExtMapper;
@@ -17,7 +17,6 @@ import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.res.AnnualAssessmentExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;

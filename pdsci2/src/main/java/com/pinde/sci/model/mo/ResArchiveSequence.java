@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResArchiveSequence extends MybatisObject {
+public class ResArchiveSequence extends TeachingActivitySpeakerExample.MybatisObject {
     private String archiveFlow;
 
     private String archiveTime;

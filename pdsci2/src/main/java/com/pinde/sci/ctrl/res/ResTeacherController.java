@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
@@ -131,7 +132,7 @@ public class ResTeacherController extends GeneralController {
 				int l=schArrangeResultBiz.saveSchArrangeResult(result1);
 				if(l==1)
 				{
-					map.put("result",GlobalConstant.UPLOAD_SUCCESSED);
+					map.put("result", GlobalConstant.UPLOAD_SUCCESSED);
 					map.put("fileFlow",result);
 				}
 			}
@@ -2930,8 +2931,8 @@ public class ResTeacherController extends GeneralController {
 
 			//判断是否需要保存考勤记录并保存
 			SchDoctorAbsence doctorAbsence = schDoctorAbsenceBiz.readSchDoctorAbsence(doctorAbsence0.getAbsenceFlow());
-			if((doctorAbsence.getAbsenceTypeId().equals(AbsenceTypeEnum.Yearleave.getId())&&doctorAbsence.getIntervalDay().equals("1")&&"Y".equals(doctorAbsence0.getTeacherAgreeFlag()))
-				||("Y".equals(doctorAbsence0.getManagerAgreeFlag()))){//年假小于1天通过 或者  管理员通过
+			if((doctorAbsence.getAbsenceTypeId().equals(AbsenceTypeEnum.Yearleave.getId())&&doctorAbsence.getIntervalDay().equals("1")&&GlobalConstant.FLAG_Y.equals(doctorAbsence0.getTeacherAgreeFlag()))
+				||(GlobalConstant.FLAG_Y.equals(doctorAbsence0.getManagerAgreeFlag()))){//年假小于1天通过 或者  管理员通过
 				SysUser user = userBiz.findByFlow(doctorAbsence.getDoctorFlow());
 				ResDoctor resDoctor = doctorBiz.readDoctor(doctorAbsence.getDoctorFlow());
 				//获得两个日期间所有日期
@@ -3727,7 +3728,7 @@ public class ResTeacherController extends GeneralController {
 			recTypeIds.add(AfterRecTypeEnum.AfterEvaluation.getId());
 			recTypeIds2.add(AfterRecTypeEnum.AfterEvaluation.getId());
 		}
-		if("Y".equals(cfg13)&& !"Y".equals(f)) {
+		if(GlobalConstant.FLAG_Y.equals(cfg13)&& !GlobalConstant.FLAG_Y.equals(f)) {
 			recTypeIds.add(ResRecTypeEnum.DeptEval.getId());
 			recTypeIds2.add(ResRecTypeEnum.DeptEval.getId());
 		}

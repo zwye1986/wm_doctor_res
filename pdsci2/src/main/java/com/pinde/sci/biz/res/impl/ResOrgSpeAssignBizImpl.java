@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.res.IResOrgSpeAssignBiz;
@@ -15,7 +16,6 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -525,7 +525,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                             if (null != operResult && !GlobalConstant.FLAG_Y.equals(skillExam)) {
                                 totalResult = totalResult.add(operResult);
                             }
-                            if ("Y".equals(recruitTemp.getRecruitFlag())) {//该学员已录取，不可修改成绩
+                            if (GlobalConstant.FLAG_Y.equals(recruitTemp.getRecruitFlag())) {//该学员已录取，不可修改成绩
                                 flag = GlobalConstant.UPLOAD_FAIL;
                                 problemsMap.put(i + 1, p6);
                             } else {

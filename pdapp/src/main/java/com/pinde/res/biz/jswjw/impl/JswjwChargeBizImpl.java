@@ -1,17 +1,16 @@
 package com.pinde.res.biz.jswjw.impl;
 
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.res.biz.jswjw.IJswjwChargeBiz;
 import com.pinde.res.dao.jswjw.ext.ResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.base.SysDictMapper;
 import com.pinde.sci.dao.base.SysOrgMapper;
-import com.pinde.sci.model.mo.SysDict;
-import com.pinde.sci.model.mo.SysDictExample;
-import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.sci.model.mo.SysOrgExample;
+import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysDictExample;
+import com.pinde.core.model.SysOrg;
+import com.pinde.core.model.SysOrgExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;

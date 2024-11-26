@@ -14,7 +14,6 @@ import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.FileUtil;
@@ -562,7 +561,7 @@ public class JsresResReductionManageController extends GeneralController {
             model.addAttribute("orgs", orgs);
             if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(doctor.getOrgFlow())) {
                 for (SysOrg tempOrg : orgs) {
-                    if("Y".equals(jointOrgFlag)){
+                    if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
                         List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                         if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                             for (ResJointOrg jointOrg : resJointOrgList) {
@@ -575,7 +574,7 @@ public class JsresResReductionManageController extends GeneralController {
             }
             if(StringUtil.isNotBlank(doctor.getOrgFlow())){
                 orgFlowList.add(doctor.getOrgFlow());
-                if("Y".equals(jointOrgFlag)){
+                if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(doctor.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -722,7 +721,7 @@ public class JsresResReductionManageController extends GeneralController {
             model.addAttribute("orgs", orgs);
             if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(doctor.getOrgFlow())) {
                 for (SysOrg tempOrg : orgs) {
-                    if("Y".equals(jointOrgFlag)){
+                    if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
                         List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                         if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                             for (ResJointOrg jointOrg : resJointOrgList) {
@@ -735,7 +734,7 @@ public class JsresResReductionManageController extends GeneralController {
             }
             if(StringUtil.isNotBlank(doctor.getOrgFlow())){
                 orgFlowList.add(doctor.getOrgFlow());
-                if("Y".equals(jointOrgFlag)){
+                if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(doctor.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -881,7 +880,7 @@ public class JsresResReductionManageController extends GeneralController {
             model.addAttribute("orgs", orgs);
             if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(doctor.getOrgFlow())) {
                 for (SysOrg tempOrg : orgs) {
-                    if("Y".equals(jointOrgFlag)){
+                    if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
                         List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                         if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                             for (ResJointOrg jointOrg : resJointOrgList) {
@@ -894,7 +893,7 @@ public class JsresResReductionManageController extends GeneralController {
             }
             if(StringUtil.isNotBlank(doctor.getOrgFlow())){
                 orgFlowList.add(doctor.getOrgFlow());
-                if("Y".equals(jointOrgFlag)){
+                if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(doctor.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -1082,7 +1081,7 @@ public class JsresResReductionManageController extends GeneralController {
             model.addAttribute("orgs", orgs);
             if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(doctor.getOrgFlow())) {
                 for (SysOrg tempOrg : orgs) {
-                    if("Y".equals(jointOrgFlag)){
+                    if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
                         List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                         if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                             for (ResJointOrg jointOrg : resJointOrgList) {
@@ -1095,7 +1094,7 @@ public class JsresResReductionManageController extends GeneralController {
             }
             if(StringUtil.isNotBlank(doctor.getOrgFlow())){
                 orgFlowList.add(doctor.getOrgFlow());
-                if("Y".equals(jointOrgFlag)){
+                if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(doctor.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {

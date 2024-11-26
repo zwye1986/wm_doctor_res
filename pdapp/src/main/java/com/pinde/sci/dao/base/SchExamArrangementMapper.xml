@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SchExamArrangementMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SchExamArrangement" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.SchExamArrangement" >
     <id column="ARRANGE_FLOW" property="arrangeFlow" jdbcType="VARCHAR" />
     <result column="TRAINING_TYPE_ID" property="trainingTypeId" jdbcType="VARCHAR" />
     <result column="TRAINING_TYPE_NAME" property="trainingTypeName" jdbcType="VARCHAR" />
@@ -93,7 +93,7 @@
     MODIFY_TIME, MODIFY_USER_FLOW, EXAM_DURATION, EXAM_START_TIME, EXAM_END_TIME, IS_APP, 
     IS_WEB, IS_OPEN_RESULT
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SchExamArrangementExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SchExamArrangementExample" >
     select
     <if test="distinct" >
       distinct
@@ -117,13 +117,13 @@
     delete from PDSCI.SCH_EXAM_ARRANGEMENT
     where ARRANGE_FLOW = #{arrangeFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchExamArrangementExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.SchExamArrangementExample" >
     delete from PDSCI.SCH_EXAM_ARRANGEMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SchExamArrangement" >
+  <insert id="insert" parameterType="com.pinde.core.model.SchExamArrangement" >
     insert into PDSCI.SCH_EXAM_ARRANGEMENT (ARRANGE_FLOW, TRAINING_TYPE_ID, TRAINING_TYPE_NAME, 
       TRAINING_SPE_ID, TRAINING_SPE_NAME, SESSION_NUMBER, 
       ASSESSMENT_YEAR, EXAMPAPER_TYPE, ORG_FLOW, 
@@ -143,7 +143,7 @@
       #{examEndTime,jdbcType=VARCHAR}, #{isApp,jdbcType=VARCHAR}, #{isWeb,jdbcType=VARCHAR}, 
       #{isOpenResult,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchExamArrangement" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.SchExamArrangement" >
     insert into PDSCI.SCH_EXAM_ARRANGEMENT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="arrangeFlow != null" >
@@ -300,7 +300,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchExamArrangementExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.SchExamArrangementExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.SCH_EXAM_ARRANGEMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -420,7 +420,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchExamArrangement" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SchExamArrangement" >
     update PDSCI.SCH_EXAM_ARRANGEMENT
     <set >
       <if test="trainingTypeId != null" >
@@ -498,7 +498,7 @@
     </set>
     where ARRANGE_FLOW = #{arrangeFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchExamArrangement" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SchExamArrangement" >
     update PDSCI.SCH_EXAM_ARRANGEMENT
     set TRAINING_TYPE_ID = #{trainingTypeId,jdbcType=VARCHAR},
       TRAINING_TYPE_NAME = #{trainingTypeName,jdbcType=VARCHAR},

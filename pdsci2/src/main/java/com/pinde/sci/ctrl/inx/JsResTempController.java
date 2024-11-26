@@ -18,7 +18,6 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.PasswordHelper;
@@ -446,12 +445,12 @@ public class JsResTempController extends GeneralController{
 					String isPassQualifyingExamination=userResumeExt.getIsPassQualifyingExamination();//是否通过医师资格考试
 					String isHaveQualificationCertificate=userResumeExt.getIsHaveQualificationCertificate();//是否获得医师资格证书
 					String isHavePracticingCategory=userResumeExt.getIsHavePracticingCategory();//是否获得医师执业证书
-					if("Y".equals(isPassQualifyingExamination))
+					if(GlobalConstant.FLAG_Y.equals(isPassQualifyingExamination))
 					{
-						if("Y".equals(isHaveQualificationCertificate))
+						if(GlobalConstant.FLAG_Y.equals(isHaveQualificationCertificate))
 						{
 
-							if("Y".equals(isHavePracticingCategory))
+							if(GlobalConstant.FLAG_Y.equals(isHavePracticingCategory))
 							{
 
 								practicingMap.put("graduationMaterialId","176");//报考资格材料
@@ -549,7 +548,7 @@ public class JsResTempController extends GeneralController{
 				ResTestConfig resTestConfig = resTestConfigList.get(0);
 				jsresGraduationApply.setTestId(resTestConfig.getTestId());
 				//判断需不需要基地审核，需要则是待基地审核，不要要再判断需不需要市局审核，需要则是待市局审核，都不需要则是待省厅审核
-				if(StringUtil.isNotBlank(recruit.getJointOrgFlow()) && "Y".equals(resTestConfig.getJointLocalAudit())){
+				if(StringUtil.isNotBlank(recruit.getJointOrgFlow()) && GlobalConstant.FLAG_Y.equals(resTestConfig.getJointLocalAudit())){
 					if("DoctorTrainingSpe".equals(recruit.getCatSpeId())) {
 						jsresGraduationApply.setAuditStatusId("JointAuditing");
 						jsresGraduationApply.setAuditStatusName("待协同基地审核");
@@ -560,10 +559,10 @@ public class JsResTempController extends GeneralController{
 						jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.Auditing.getId());
 						jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.Auditing.getName());
 					}
-				}else if ("Y".equals(resTestConfig.getLocalAudit())) {
+				}else if (GlobalConstant.FLAG_Y.equals(resTestConfig.getLocalAudit())) {
 					jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.Auditing.getId());
 					jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.Auditing.getName());
-				} else if ("Y".equals(resTestConfig.getChargeAudit())) {
+				} else if (GlobalConstant.FLAG_Y.equals(resTestConfig.getChargeAudit())) {
 					jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.WaitChargePass.getId());
 					jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.WaitChargePass.getName());
 				} else {
@@ -571,10 +570,10 @@ public class JsResTempController extends GeneralController{
 					jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.WaitGlobalPass.getName());
 				}
 				//更新之后从头开始审核，判断需不需要基地审核，需要则是待基地审核，不要要再判断需不需要市局审核，需要则是待市局审核，都不需要则是待省厅审核
-//				if ("Y".equals(resTestConfig.getLocalAudit())) {
+//				if (GlobalConstant.FLAG_Y.equals(resTestConfig.getLocalAudit())) {
 //					jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.Auditing.getId());
 //					jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.Auditing.getName());
-//				} else if ("Y".equals(resTestConfig.getChargeAudit())) {
+//				} else if (GlobalConstant.FLAG_Y.equals(resTestConfig.getChargeAudit())) {
 //					jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.WaitChargePass.getId());
 //					jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.WaitChargePass.getName());
 //				} else {

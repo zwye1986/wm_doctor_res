@@ -6,7 +6,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.INoticeBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.InxInfoMapper;
 import com.pinde.sci.dao.base.ResInfoRoleMapper;
 import com.pinde.sci.dao.base.ResReadInfoMapper;
@@ -16,7 +15,6 @@ import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.InxInfoExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;

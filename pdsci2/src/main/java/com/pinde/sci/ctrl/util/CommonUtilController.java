@@ -4,7 +4,6 @@ import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.core.util.XmlParse;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.common.CommonQueryMapper;
 import org.dom4j.Element;
 import org.slf4j.Logger;

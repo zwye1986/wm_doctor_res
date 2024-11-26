@@ -7,7 +7,6 @@ import com.pinde.sci.biz.pub.IMsgBiz;
 import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.JsresExamSignupLogMapper;
 import com.pinde.sci.dao.base.JsresExamSignupMapper;
@@ -22,7 +21,6 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

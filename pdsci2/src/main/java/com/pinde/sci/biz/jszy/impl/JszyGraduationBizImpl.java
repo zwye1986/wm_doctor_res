@@ -6,7 +6,6 @@ import com.pinde.sci.biz.jszy.IJszyGraduationBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.GraduationExamResultsMapper;
 import com.pinde.sci.dao.base.ResDoctorGraduationInfoMapper;
 import com.pinde.sci.dao.res.ResDoctorGraduationInfoExtMapper;
@@ -17,7 +16,6 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

@@ -6,7 +6,7 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.ctrl.jswjw.ImageFileForm;
 import com.pinde.sci.dao.base.SysCfgMapper;
-import com.pinde.sci.model.mo.SysCfg;
+import com.pinde.core.model.SysCfg;
 import com.pinde.sci.util.PicZoom;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;

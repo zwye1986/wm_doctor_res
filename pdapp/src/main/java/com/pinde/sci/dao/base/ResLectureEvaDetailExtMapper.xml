@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResLectureEvaDetailExtMapper">
 
-    <resultMap id="evalDetailMap" type="com.pinde.sci.model.mo.ResLectureEvaDetail" extends="com.pinde.sci.dao.base.ResLectureEvaDetailMapper.BaseResultMap">
+    <resultMap id="evalDetailMap" type="com.pinde.core.model.ResLectureEvaDetail" extends="com.pinde.sci.dao.base.ResLectureEvaDetailMapper.BaseResultMap">
         <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
         <result column="LECTURE_FLOW" property="lectureFlow" jdbcType="VARCHAR" />
         <result column="OPER_USER_FLOW" property="operUserFlow" jdbcType="VARCHAR" />

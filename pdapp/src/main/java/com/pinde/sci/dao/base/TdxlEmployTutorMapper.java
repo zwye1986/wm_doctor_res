@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.TdxlEmployTutor;
-import com.pinde.sci.model.mo.TdxlEmployTutorExample;
+import com.pinde.core.model.TdxlEmployTutor;
+import com.pinde.core.model.TdxlEmployTutorExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

@@ -7,7 +7,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyDoctorReductionBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.FileUtil;
 import com.pinde.sci.dao.base.PubFileMapper;
@@ -16,7 +15,6 @@ import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.PubFileExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;

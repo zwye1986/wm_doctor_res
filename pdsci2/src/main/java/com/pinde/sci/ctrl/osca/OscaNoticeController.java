@@ -4,7 +4,6 @@ package com.pinde.sci.ctrl.osca;
 import com.pinde.core.page.PageHelper;
 import com.pinde.sci.biz.osca.IOscaNoticeBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.InxInfo;
 import com.pinde.sci.model.mo.SysUser;

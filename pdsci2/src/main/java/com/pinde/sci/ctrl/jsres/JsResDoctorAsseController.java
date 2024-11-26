@@ -15,7 +15,6 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
@@ -1243,7 +1242,7 @@ public class JsResDoctorAsseController extends GeneralController {
                     f="Y";
                 }
             }
-            if("N".equals(f))
+            if(GlobalConstant.FLAG_N.equals(f))
             {
                 return "当前时间不在审核时间段内，无法审核！";
             }
@@ -1337,7 +1336,7 @@ public class JsResDoctorAsseController extends GeneralController {
                     if("AssiGeneral".equals(recruit.getCatSpeId())){//助理全科只需要培训基地审核
                         if (resTestConfigList.size() > 0) {
                             ResTestConfig resTestConfig = resTestConfigList.get(0);
-                            if ("Y".equals(resTestConfig.getChargeAudit())) {
+                            if (GlobalConstant.FLAG_Y.equals(resTestConfig.getChargeAudit())) {
                                 apply.setAuditStatusId(JsResAuditStatusEnum.WaitChargePass.getId());
                                 apply.setAuditStatusName(JsResAuditStatusEnum.WaitChargePass.getName());
                             } else {
@@ -1349,12 +1348,12 @@ public class JsResDoctorAsseController extends GeneralController {
                         //如果协同基地审核通过判断这场考试需不需要主基地审核
                         if (resTestConfigList.size() > 0) {
                             ResTestConfig resTestConfig = resTestConfigList.get(0);
-                            if ("Y".equals(resTestConfig.getLocalAudit())) {
+                            if (GlobalConstant.FLAG_Y.equals(resTestConfig.getLocalAudit())) {
                                 apply.setAuditStatusId(JsResAuditStatusEnum.Auditing.getId());
                                 apply.setAuditStatusName(JsResAuditStatusEnum.Auditing.getName());
                             } else {
                                 //判断是否需要市局审核
-                                if ("Y".equals(resTestConfig.getChargeAudit())) {
+                                if (GlobalConstant.FLAG_Y.equals(resTestConfig.getChargeAudit())) {
                                     apply.setAuditStatusId(JsResAuditStatusEnum.WaitChargePass.getId());
                                     apply.setAuditStatusName(JsResAuditStatusEnum.WaitChargePass.getName());
                                 } else {
@@ -1368,7 +1367,7 @@ public class JsResDoctorAsseController extends GeneralController {
                     //如果基地审核通过判断这场考试需不需要市局审核
                     if (resTestConfigList.size() > 0) {
                         ResTestConfig resTestConfig = resTestConfigList.get(0);
-                        if ("Y".equals(resTestConfig.getChargeAudit())) {
+                        if (GlobalConstant.FLAG_Y.equals(resTestConfig.getChargeAudit())) {
                             apply.setAuditStatusId(JsResAuditStatusEnum.WaitChargePass.getId());
                             apply.setAuditStatusName(JsResAuditStatusEnum.WaitChargePass.getName());
                         } else {
@@ -1398,7 +1397,7 @@ public class JsResDoctorAsseController extends GeneralController {
             if (resTestConfigList.size() > 0) {
                 f = "Y";
             }
-            if("N".equals(f))
+            if(GlobalConstant.FLAG_N.equals(f))
             {
                 return "当前时间不在审核时间段内，无法审核！";
             }

@@ -8,7 +8,6 @@ import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sch.ISchManualBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.JsresPowerCfg;
 import com.pinde.sci.model.mo.ResJointOrg;
@@ -85,16 +84,16 @@ public class JsresHospitalCfgController extends GeneralController{
 				Map<String,Object> map = new HashMap<>();
 				map.put("orgFlow",orgFlow);
 				JsresPowerCfg jpc = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_guocheng");
-				if(null != jpc && "N".equals(jpc.getCfgValue())){
+				if(null != jpc && GlobalConstant.FLAG_N.equals(jpc.getCfgValue())){
 					jpc = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_daoru");
 				}
-				if(null != jpc && "N".equals(jpc.getCfgValue())){
+				if(null != jpc && GlobalConstant.FLAG_N.equals(jpc.getCfgValue())){
 					jpc = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_downExamFile");
 				}
-				if(null != jpc && "N".equals(jpc.getCfgValue())){
+				if(null != jpc && GlobalConstant.FLAG_N.equals(jpc.getCfgValue())){
 					jpc = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_createExam");
 				}
-				if(null != jpc && "Y".equals(jpc.getCfgValue())){
+				if(null != jpc && GlobalConstant.FLAG_Y.equals(jpc.getCfgValue())){
 					map.put("isSubmitId","Y");
 				}else{
 					map.put("isSubmitId","N");

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysUser;
-import com.pinde.sci.model.mo.SysUserExample;
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserExample;
 import java.util.List;
 import java.util.Map;
 
