@@ -15,7 +15,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.pub.UserSexEnum;
 import com.pinde.sci.enums.res.RecDocCategoryEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.dom4j.DocumentException;

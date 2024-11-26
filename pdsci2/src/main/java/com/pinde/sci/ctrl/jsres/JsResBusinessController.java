@@ -20,7 +20,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.dao.base.SysLogMapper;
 import com.pinde.sci.dao.jsres.TempMapper;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;

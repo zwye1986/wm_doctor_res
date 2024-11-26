@@ -6,7 +6,6 @@ import com.pinde.sci.biz.res.IResUserSpeBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.ResUserSpeMapper;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.ResUserSpe;
 import com.pinde.sci.model.mo.ResUserSpeExample;
 import com.pinde.sci.model.mo.ResUserSpeExample.Criteria;

@@ -12,7 +12,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jszy.JszyResBaseExtMapper;
 import com.pinde.sci.enums.jszy.JszyResDoctorAuditStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.jszy.JszyBaseExtInfoForm;
 import com.pinde.sci.form.jszy.JszyBaseInfoForm;
 import com.pinde.sci.form.jszy.JszyCountryOrgExtInfoForm;

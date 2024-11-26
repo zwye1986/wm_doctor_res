@@ -12,7 +12,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaExaminerExt;
 import com.pinde.sci.model.osca.OscaOrgSpeExt;

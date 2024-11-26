@@ -9,7 +9,6 @@ import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.*;
 import com.pinde.sci.enums.res.*;
 import com.pinde.sci.enums.sch.*;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.sch.*;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;

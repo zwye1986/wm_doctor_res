@@ -12,7 +12,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.enums.jszy.JszyResTrainYearEnum;
 import com.pinde.sci.enums.jszy.JszyTrainCategoryEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.jszy.JszyResDoctorRecruitExt;

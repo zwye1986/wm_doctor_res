@@ -26,7 +26,6 @@ import com.pinde.sci.enums.jszy.JszyTrainCategoryEnum;
 import com.pinde.sci.enums.res.AfterRecTypeEnum;
 import com.pinde.sci.enums.res.ResAssessTypeEnum;
 import com.pinde.sci.enums.res.ResRecTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;

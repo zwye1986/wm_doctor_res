@@ -17,7 +17,6 @@ import com.pinde.sci.dao.jsres.JsresGraduationApplyExtMapper;
 import com.pinde.sci.dao.jsres.TempMapper;
 import com.pinde.sci.enums.res.AfterRecTypeEnum;
 import com.pinde.sci.enums.res.ArmyTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.CollectionUtils;

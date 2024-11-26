@@ -21,7 +21,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.SysCfgMapper;
 import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;

@@ -14,7 +14,6 @@ import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.util.RegionUtil;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.enums.BaseEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;

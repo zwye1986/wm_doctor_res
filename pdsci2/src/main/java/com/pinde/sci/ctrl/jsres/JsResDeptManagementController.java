@@ -14,7 +14,6 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.vo.ResDeptRelStdDeptVO;
 import com.pinde.sci.model.vo.ResSpeBaseStdDeptVO;

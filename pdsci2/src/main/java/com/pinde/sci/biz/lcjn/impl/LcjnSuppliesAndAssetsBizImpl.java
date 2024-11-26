@@ -12,7 +12,6 @@ import com.pinde.sci.dao.base.LcjnSuppliesBatchMapper;
 import com.pinde.sci.dao.base.LcjnSuppliesMapper;
 import com.pinde.sci.dao.lcjn.LcjnSuppliesAndAssetsExtMapper;
 import com.pinde.sci.enums.lcjn.LcjnFixedAssetsStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 

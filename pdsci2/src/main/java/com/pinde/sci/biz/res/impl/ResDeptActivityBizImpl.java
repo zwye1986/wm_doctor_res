@@ -12,7 +12,6 @@ import com.pinde.sci.enums.res.DeptActivityItemTypeEnum;
 import com.pinde.sci.enums.res.DeptActivityStatusEnum;
 import com.pinde.sci.enums.res.DeptActivityTypeEnum;
 import com.pinde.sci.enums.res.DeptActivityUserTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.res.ResDeptPlanForm;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -15,7 +15,6 @@ import com.pinde.sci.dao.inx.InxInfoExtMapper;
 import com.pinde.sci.enums.res.RecDocCategoryEnum;
 import com.pinde.sci.enums.res.ResDoctorStatusEnum;
 import com.pinde.sci.enums.sch.SchStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.sch.DoctorSearchForm;
 import com.pinde.sci.model.mo.*;

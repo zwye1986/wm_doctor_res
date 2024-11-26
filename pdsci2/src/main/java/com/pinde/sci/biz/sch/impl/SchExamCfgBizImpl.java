@@ -7,7 +7,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sch.SchExamArrangementExtMapper;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

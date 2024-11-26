@@ -17,7 +17,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.ResBaseExtMapper;
 import com.pinde.sci.enums.jsres.JsResDoctorAuditStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.jsres.*;
 import com.pinde.sci.model.jsres.ResBaseExt;
 import com.pinde.sci.model.mo.*;

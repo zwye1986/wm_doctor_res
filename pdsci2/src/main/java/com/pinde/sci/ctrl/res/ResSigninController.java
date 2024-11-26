@@ -10,7 +10,6 @@ import com.pinde.sci.biz.sch.ISchDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.JsresAttendanceDetail;
 import com.pinde.sci.model.mo.ResOrgSigninDate;
 import com.pinde.sci.model.mo.SchDept;

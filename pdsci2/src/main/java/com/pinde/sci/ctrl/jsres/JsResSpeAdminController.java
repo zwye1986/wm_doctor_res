@@ -25,7 +25,6 @@ import com.pinde.sci.dao.base.SchAndStandardDeptCfgMapper;
 import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
 import com.pinde.sci.enums.res.ResAssessTypeEnum;
 import com.pinde.sci.enums.res.ResRecTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptExtForm;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptForm;

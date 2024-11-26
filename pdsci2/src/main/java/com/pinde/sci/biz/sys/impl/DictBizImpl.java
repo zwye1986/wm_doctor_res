@@ -9,7 +9,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.DictFormMapper;
 import com.pinde.sci.dao.base.SysDictMapper;
 import com.pinde.sci.dao.sys.SysCfgExtMapper;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.sys.SubDictEditForm;
 import com.pinde.sci.model.mo.DictForm;
 import com.pinde.sci.model.mo.DictFormExample;

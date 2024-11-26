@@ -21,7 +21,6 @@ import com.pinde.sci.dao.jsres.SchdualTaskMapper;
 import com.pinde.sci.dao.res.ResMonthlyReportExtMapper;
 import com.pinde.sci.enums.res.AfterRecTypeEnum;
 import com.pinde.sci.enums.res.RecStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;

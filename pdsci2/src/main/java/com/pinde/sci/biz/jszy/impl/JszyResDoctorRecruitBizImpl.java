@@ -24,7 +24,6 @@ import com.pinde.sci.enums.osca.AuditStatusEnum;
 import com.pinde.sci.enums.res.CertificateTypeEnum;
 import com.pinde.sci.enums.res.RecDocCategoryEnum;
 import com.pinde.sci.enums.res.ResScoreTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
 import com.pinde.sci.model.jszy.JszyDoctorInfoLogExt;

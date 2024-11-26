@@ -14,14 +14,16 @@ public enum DictTypeEnum implements GeneralEnum<String> {
 	UserPost("UserPost","人员.职务","sys"),
 	Certificatelevel("Certificatelevel","师资证书级别","sys"),
 	TeachersType("TeachersType","师资类型","sys"),
+	CertificateTermValidity("CertificateTermValidity","师资证书有效期","sys"),
 	LeaveType("LeaveType","请假类型","sys"),
 	AppealType("AppealType","申述类型","sys"),
-	// 个人信息数据采集新增
-	Nationality("Nationality","国籍","res"),
-	EnglishAbility("EnglishAbility","英语能力","res"),
-	EnglishGradeExamType("EnglishGradeExamType"," 外语等级考试类型","res"),
-	WorkOrg("WorkOrg","江苏.派送单位","res"),
-
+	ConsultType("ConsultType","咨询类型","res",2),
+//	SysWorkStation("SysWorkStation","系统.工作站","sys"),
+//	SysModule("SysModule","系统.模块菜单","sys",3),
+//	Region("Region","系统.行政区域代码","sys",3),
+//	SysMenuSet("SysMenuSet","系统.一级菜单","sys",2),
+//	SysMenu("SysMenu","系统.二级菜单","sys",3),
+	ProjTypeSource("ProjTypeSource","项目来源类型","srm",2),
 	ProjType("ProjType","科研项目类型","srm"),//科研项目
 	ManageType("ManageType","项目管理类型","srm"),//项目管理
 	EdusType("EdusType","科教强卫类型","srm"),//科教强卫
@@ -41,17 +43,6 @@ public enum DictTypeEnum implements GeneralEnum<String> {
 
 	LaborPay("LaborPay" , "专家.劳务支付方式" , "srm"),
 	ExpertScoreResult("ExpertScoreResult" , "专家.评审结果" , "srm"),
-
-//	PersonalInfo("PersonalInfo","人才.个人情况","srm"),
-//	PostgraduateTeacher("PostgraduateTeacher","人才.研究生导师","srm"),
-//	TalentsDevelop("TalentsDevelop","人才.人才培养","srm"),
-//	AcademicHonour("AcademicHonour","人才.学术荣誉","srm"),
-	
-//	LanSkillful("LanSkillful","医学新技术.外语熟练程度","srm"),
-	
-//    DiscussType("DiscussType","研究类别","sys"),
-//    TrueAndFalse("TrueAndFalse","是与否","sys"),
-//    SubjectInfo("SubjectInfo","学科情况","sys"),
 
 	ProjAuthorRank("ProjAuthorRank","课题参与人员排名","srm"),
 	OrgBelong("OrgBelong","成果.所属单位","srm"),
@@ -197,6 +188,7 @@ public enum DictTypeEnum implements GeneralEnum<String> {
 	SalesImplement("SalesImplement","售中实施","erp"),
 	Service("Service","售后服务","erp"),
 
+	InspectionType("InspectionType","院级督导检查类型","res"),
 	ActivityType("ActivityType","教学活动类型","res"),
 	TrainingType("TrainingType","培训类别","res,recruit"),
 	TrainingYears("TrainingYears","培养年限","sch,res,recruit"),
@@ -403,7 +395,8 @@ public enum DictTypeEnum implements GeneralEnum<String> {
 
 	DigestiveDiseasesType("DigestiveDiseasesType","消化疾病类型","portals"),
 	CourseType("CourseType","课程类型","study"),
-	CatSpeType("CatSpeType","培训类型","study",2)
+	CatSpeType("CatSpeType","培训类型","study",2),
+	OrgLevelRank("OrgLevelRank","级别","ws"),
 			;
 
 	public static Map<String,String> sysDictIdMap ;

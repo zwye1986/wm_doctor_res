@@ -20,7 +20,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.enums.jsres.JsResTrainYearEnum;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;

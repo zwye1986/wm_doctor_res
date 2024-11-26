@@ -20,7 +20,6 @@ import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.TeachingActivityInfoExtMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.sci.enums.sch.ActivityTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.sys.SysOrgExt;
 import org.dom4j.Document;

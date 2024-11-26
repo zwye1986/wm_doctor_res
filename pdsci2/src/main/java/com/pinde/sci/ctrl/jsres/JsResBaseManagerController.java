@@ -32,7 +32,6 @@ import com.pinde.sci.enums.res.AfterRecTypeEnum;
 import com.pinde.sci.enums.res.RegistryTypeEnum;
 import com.pinde.sci.enums.res.ResRecTypeEnum;
 import com.pinde.sci.enums.sch.SchUnitEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jsres.*;

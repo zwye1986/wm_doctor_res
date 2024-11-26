@@ -16,7 +16,6 @@ import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.PhyAssExtMapper;
 import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.jsres.ResTeachQualifiedPlanExt;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;

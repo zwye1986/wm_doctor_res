@@ -16,7 +16,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.jsres.*;
 import com.pinde.sci.enums.res.ResRecTypeEnum;
 import com.pinde.sci.enums.sys.CertificateTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jsres.UserInfoExtLogForm;

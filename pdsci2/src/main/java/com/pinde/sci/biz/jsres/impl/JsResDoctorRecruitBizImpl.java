@@ -32,7 +32,6 @@ import com.pinde.sci.enums.res.ResBaseStatusEnum;
 import com.pinde.sci.enums.res.ResDocTypeEnum;
 import com.pinde.sci.enums.res.ResScoreTypeEnum;
 import com.pinde.sci.enums.sys.CertificateTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.form.jsres.JykhInfoForm;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;

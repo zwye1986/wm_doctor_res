@@ -7,7 +7,6 @@ import com.pinde.sci.biz.jszy.IJszyResOrgSpeBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.ResOrgSpeMapper;
 import com.pinde.sci.enums.jszy.JszyTrainCategoryTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.ResOrgSpe;
 import com.pinde.sci.model.mo.ResOrgSpeExample;
 import com.pinde.sci.model.mo.ResOrgSpeExample.Criteria;

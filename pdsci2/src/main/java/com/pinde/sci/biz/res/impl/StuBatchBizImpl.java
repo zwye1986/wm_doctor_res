@@ -7,7 +7,6 @@ import com.pinde.sci.biz.res.IStuBatchBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.StuBatchMapper;
 import com.pinde.sci.dao.res.StuBatchExtMapper;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.StuBatch;
 import com.pinde.sci.model.mo.StuBatchExample;
 import org.springframework.beans.factory.annotation.Autowired;

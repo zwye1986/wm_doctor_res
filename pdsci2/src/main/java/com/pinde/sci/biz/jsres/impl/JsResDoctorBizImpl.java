@@ -27,7 +27,6 @@ import com.pinde.sci.enums.res.ArmyTypeEnum;
 import com.pinde.sci.enums.res.ResDocTypeEnum;
 import com.pinde.sci.enums.res.ResRecTypeEnum;
 import com.pinde.sci.enums.sys.CertificateTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.jsres.BackTrainForm;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;

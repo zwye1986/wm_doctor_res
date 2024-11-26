@@ -34,7 +34,6 @@ import com.pinde.sci.enums.pub.UserStatusEnum;
 import com.pinde.sci.enums.res.ResBaseStatusEnum;
 import com.pinde.sci.enums.res.ResDoctorAuditStatusEnum;
 import com.pinde.sci.enums.res.ResRecTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;

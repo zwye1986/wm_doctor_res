@@ -13,7 +13,6 @@ import com.pinde.sci.common.*;
 import com.pinde.sci.dao.base.SysUserDeptMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.sci.enums.res.*;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;

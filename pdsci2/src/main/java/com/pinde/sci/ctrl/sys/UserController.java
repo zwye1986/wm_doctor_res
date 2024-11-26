@@ -20,7 +20,6 @@ import com.pinde.sci.dao.base.SysUserSchoolMapper;
 import com.pinde.sci.enums.jsres.JsResTeacherLevelEnum;
 import com.pinde.sci.enums.pub.UserSexEnum;
 import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.RoleLevelEnum;
 import com.pinde.sci.enums.sys.UserEmailStatusEnum;
 import com.pinde.sci.enums.sys.UserPhoneStatusEnum;

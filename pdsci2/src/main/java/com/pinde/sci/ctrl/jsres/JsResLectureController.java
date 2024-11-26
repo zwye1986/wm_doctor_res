@@ -17,7 +17,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.sch.SchUnitEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.jsres.ParticipateInfoExt;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;

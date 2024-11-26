@@ -12,7 +12,6 @@ import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.JsresSupervisioSubjectExtMapper;
 import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 

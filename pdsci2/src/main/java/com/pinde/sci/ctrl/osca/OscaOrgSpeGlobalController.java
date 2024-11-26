@@ -13,7 +13,6 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.OscaOrgMenu;
 import com.pinde.sci.model.mo.OscaOrgSpe;
 import com.pinde.sci.model.mo.SysOrg;

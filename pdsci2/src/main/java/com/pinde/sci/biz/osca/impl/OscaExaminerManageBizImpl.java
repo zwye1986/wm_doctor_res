@@ -16,7 +16,6 @@ import com.pinde.sci.dao.base.SysOrgMapper;
 import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.osca.OscaExaminerMapper;
 import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaExaminerExt;
 import com.pinde.sci.model.osca.OscaTypeSpeExt;

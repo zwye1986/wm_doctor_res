@@ -15,7 +15,6 @@ import com.pinde.sci.dao.base.SchRotationGroupMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.sci.enums.res.*;
 import com.pinde.sci.enums.sch.*;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.sch.*;
 import com.pinde.sci.model.mo.*;

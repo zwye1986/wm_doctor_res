@@ -19,7 +19,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.sci.enums.res.DiscipleStatusEnum;
 import com.pinde.sci.enums.res.NoteTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorDiscioleExt;

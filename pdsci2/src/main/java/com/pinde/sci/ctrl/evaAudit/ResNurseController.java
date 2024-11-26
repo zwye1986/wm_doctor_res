@@ -21,7 +21,6 @@ import com.pinde.sci.enums.res.RecStatusEnum;
 import com.pinde.sci.enums.res.ResAssessTypeEnum;
 import com.pinde.sci.enums.res.ResRecTypeEnum;
 import com.pinde.sci.enums.srm.AchScoreEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.mo.*;

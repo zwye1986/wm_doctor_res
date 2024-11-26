@@ -23,7 +23,6 @@ import com.pinde.sci.enums.jsres.JsResTrainYearEnum;
 import com.pinde.sci.enums.res.AfterRecTypeEnum;
 import com.pinde.sci.enums.res.ResRecTypeEnum;
 import com.pinde.sci.enums.res.ResScoreTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.mo.*;

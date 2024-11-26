@@ -8,7 +8,6 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.SchDept;
 import com.pinde.sci.model.mo.SchDeptRel;
 import com.pinde.sci.model.mo.SchExternalDept;

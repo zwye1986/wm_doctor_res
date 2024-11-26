@@ -26,7 +26,6 @@ import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
 import com.pinde.sci.enums.jszy.JszyResTrainYearEnum;
 import com.pinde.sci.enums.jszy.JszyTrainCategoryEnum;
 import com.pinde.sci.enums.res.*;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.res.ResRecForm;
 import com.pinde.sci.keyUtil.PdUtil;
 import com.pinde.sci.model.mo.*;

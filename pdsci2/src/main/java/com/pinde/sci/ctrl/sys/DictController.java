@@ -8,7 +8,6 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.InitResConfig;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.sys.SubDictEditForm;
 import com.pinde.sci.model.mo.DictForm;
 import com.pinde.sci.model.mo.TeachingActivityFormValue;

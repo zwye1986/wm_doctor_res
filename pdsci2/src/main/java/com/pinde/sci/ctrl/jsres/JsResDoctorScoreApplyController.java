@@ -19,7 +19,6 @@ import com.pinde.sci.enums.jsres.CertificateStatusEnum;
 import com.pinde.sci.enums.jsres.JsResDoctorAuditStatusEnum;
 import com.pinde.sci.enums.jsres.JsResTrainYearEnum;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;

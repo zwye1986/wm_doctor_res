@@ -22,7 +22,6 @@ import com.pinde.sci.enums.jsres.TrainCategoryEnum;
 import com.pinde.sci.enums.res.*;
 import com.pinde.sci.enums.sch.SchStatusEnum;
 import com.pinde.sci.enums.sch.SchUnitEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;

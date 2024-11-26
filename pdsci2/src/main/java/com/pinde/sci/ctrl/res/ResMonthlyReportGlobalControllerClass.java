@@ -15,7 +15,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.ctrl.jsres.JsResManageController;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import com.pinde.sci.dao.res.ResMonthlyReportExtMapper;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.BeanUtils;

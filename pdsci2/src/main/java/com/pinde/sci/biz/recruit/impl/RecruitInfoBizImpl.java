@@ -13,7 +13,6 @@ import com.pinde.sci.dao.base.RecruitInfoMapper;
 import com.pinde.sci.dao.recruit.RecruitInfoExtMapper;
 import com.pinde.sci.enums.recruit.RecruitOperEnum;
 import com.pinde.sci.enums.recruit.RecruitStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.RecruitInfo;
 import com.pinde.sci.model.mo.RecruitInfoExample;
 import com.pinde.sci.model.mo.RecruitInfoLog;

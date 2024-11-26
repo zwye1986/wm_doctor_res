@@ -27,7 +27,6 @@ import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
 import com.pinde.sci.enums.jsres.JsResTeacherLevelEnum;
 import com.pinde.sci.enums.pub.UserStatusEnum;
 import com.pinde.sci.enums.sys.CertificateTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;

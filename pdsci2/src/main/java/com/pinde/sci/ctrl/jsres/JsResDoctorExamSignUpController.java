@@ -23,7 +23,6 @@ import com.pinde.sci.enums.jsres.JsResAuditStatusEnum;
 import com.pinde.sci.enums.jsres.JsResTrainYearEnum;
 import com.pinde.sci.enums.res.ArmyTypeEnum;
 import com.pinde.sci.enums.res.ResScoreTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;

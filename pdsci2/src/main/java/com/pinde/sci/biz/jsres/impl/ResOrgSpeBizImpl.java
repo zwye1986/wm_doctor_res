@@ -9,7 +9,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResOrgSpeMapper;
 import com.pinde.sci.dao.base.SysCfgMapper;
 import com.pinde.sci.enums.jsres.TrainCategoryTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.ResOrgSpeExample.Criteria;
 import org.apache.commons.beanutils.BeanUtils;

@@ -27,7 +27,6 @@ import com.pinde.sci.enums.pub.UserSexEnum;
 import com.pinde.sci.enums.res.ResDocTypeEnum;
 import com.pinde.sci.enums.res.ResRecTypeEnum;
 import com.pinde.sci.enums.sys.CertificateTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.jszy.JszyBackTrainForm;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;

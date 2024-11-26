@@ -26,7 +26,6 @@ import com.pinde.sci.enums.osca.AuditStatusEnum;
 import com.pinde.sci.enums.osca.DoctorScoreEnum;
 import com.pinde.sci.enums.osca.ExamStatusEnum;
 import com.pinde.sci.enums.osca.SignStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaCheckInfoExt;
 import com.pinde.sci.model.osca.OscaFromCfgItemExt;
