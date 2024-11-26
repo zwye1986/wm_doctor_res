@@ -1,7 +1,9 @@
 package com.pinde.sci.ctrl.jsres;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -20,9 +22,9 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.enums.jsres.JsResAuditStatusEnum;
 import com.pinde.sci.enums.jsres.JsResTrainYearEnum;
-import com.pinde.sci.enums.res.AfterRecTypeEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
-import com.pinde.sci.enums.res.ResScoreTypeEnum;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
+import com.pinde.core.common.enums.ResScoreTypeEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.mo.*;
@@ -274,9 +276,9 @@ public class JsResDoctorAsseController extends GeneralController {
         String isAssiGeneral = "";
         if("0700".equals(recruit.getSpeId())||"51".equals(recruit.getSpeId())||"52".equals(recruit.getSpeId())
                 ||"18".equals(recruit.getSpeId())||"50".equals(recruit.getSpeId())){
-            isAssiGeneral = "Y";
+            isAssiGeneral = GlobalConstant.FLAG_Y;
         }else {
-            isAssiGeneral = "N";
+            isAssiGeneral = GlobalConstant.FLAG_N;
         }
         model.addAttribute("isAssiGeneral",isAssiGeneral);
 
@@ -632,10 +634,10 @@ public class JsResDoctorAsseController extends GeneralController {
             model.addAttribute("signNum", signupLists.size());
         }
         //是否是全科、助理全科、全科方向（中医）、全科方向（西医）
-        String isAssiGeneral = "N";
+        String isAssiGeneral = GlobalConstant.FLAG_N;
         if("0700".equals(recruit.getSpeId())||"51".equals(recruit.getSpeId())||"52".equals(recruit.getSpeId())
                 ||"18".equals(recruit.getSpeId())||"50".equals(recruit.getSpeId())){
-            isAssiGeneral = "Y";
+            isAssiGeneral = GlobalConstant.FLAG_Y;
         }
         List<PubFile> files = fileBiz.findFileByTypeFlow("asseApplication",recruitFlow);
         PubFile file = null;
@@ -950,10 +952,10 @@ public class JsResDoctorAsseController extends GeneralController {
         PageHelper.startPage(currentPage,getPageSize(request));
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
         model.addAttribute("list",list);
-        String f="N";
+        String f = GlobalConstant.FLAG_N;
         List<ResTestConfig> testConfigList = resTestConfigBiz.findChargeEffective(DateUtil.getCurrDateTime2());
         if (testConfigList.size() > 0) {
-            f = "Y";
+            f = GlobalConstant.FLAG_Y;
         }
         model.addAttribute("f",f);
         model.addAttribute("roleFlag", roleFlag);
@@ -1026,10 +1028,10 @@ public class JsResDoctorAsseController extends GeneralController {
         PageHelper.startPage(currentPage,getPageSize(request));
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
         model.addAttribute("list",list);
-        String f="N";
+        String f = GlobalConstant.FLAG_N;
         List<ResTestConfig> testConfigList = resTestConfigBiz.findChargeEffective(DateUtil.getCurrDateTime2());
         if (testConfigList.size() > 0) {
-            f = "Y";
+            f = GlobalConstant.FLAG_Y;
         }
         model.addAttribute("f",f);
         model.addAttribute("roleFlag", roleFlag);
@@ -1119,11 +1121,11 @@ public class JsResDoctorAsseController extends GeneralController {
         String nowTime=DateUtil.transDateTime(DateUtil.getCurrentTime());
         String startDate=InitConfig.getSysCfg("charge_submit_start_time");
         String endDate=InitConfig.getSysCfg("charge_submit_end_time");
-        String f="N";
+        String f = GlobalConstant.FLAG_N;
         if (StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate)) {
             if(startDate.compareTo(nowTime)<=0&&endDate.compareTo(nowTime)>=0)
             {
-                f="Y";
+                f = GlobalConstant.FLAG_Y;
             }
         }
         model.addAttribute("f",f);
@@ -1234,11 +1236,11 @@ public class JsResDoctorAsseController extends GeneralController {
             String nowTime=DateUtil.transDateTime(DateUtil.getCurrentTime());
             String startDate=InitConfig.getSysCfg("charge_submit_start_time");
             String endDate=InitConfig.getSysCfg("charge_submit_end_time");
-            String f="N";
+            String f = GlobalConstant.FLAG_N;
             if (StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate)) {
                 if(startDate.compareTo(nowTime)<=0&&endDate.compareTo(nowTime)>=0)
                 {
-                    f="Y";
+                    f = GlobalConstant.FLAG_Y;
                 }
             }
             if(GlobalConstant.FLAG_N.equals(f))
@@ -1387,14 +1389,14 @@ public class JsResDoctorAsseController extends GeneralController {
                 apply.setAuditStatusName("省厅驳回");
             }
             String nowTime=DateUtil.transDateTime(DateUtil.getCurrentTime());
-            String f="N";
+            String f = GlobalConstant.FLAG_N;
             if (GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
                 resTestConfigList = resTestConfigBiz.findChargeEffective(DateUtil.getCurrDateTime2());
             } else if (GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
                 resTestConfigList = resTestConfigBiz.findGlobalEffective(DateUtil.getCurrDateTime2());
             }
             if (resTestConfigList.size() > 0) {
-                f = "Y";
+                f = GlobalConstant.FLAG_Y;
             }
             if(GlobalConstant.FLAG_N.equals(f))
             {

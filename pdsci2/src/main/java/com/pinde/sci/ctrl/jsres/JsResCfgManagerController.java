@@ -102,7 +102,7 @@ public class JsResCfgManagerController extends GeneralController {
         param.put("recordFlow",recordFlow);
         param.put("submitRole",roleFlow);
         param.put("auditRole",auditRoleFlow);
-        param.put("recordStatus","Y");
+        param.put("recordStatus", GlobalConstant.FLAG_Y);
         param.put("createTime",PdUtil.getCurrDateTime2());
         param.put("orgFlow",GlobalContext.getCurrentUser().getOrgFlow());
         param.put("subRoleName",subRoleName);
@@ -190,8 +190,8 @@ public class JsResCfgManagerController extends GeneralController {
                         config.setOrgFlow(orgFlow);
                         config.setTestNum("5");
                         config.setScorePass("60");
-                        config.setIsTestOut("Y");
-                        config.setTeacherWrite("N");
+                        config.setIsTestOut(GlobalConstant.FLAG_Y);
+                        config.setTeacherWrite(GlobalConstant.FLAG_N);
                         jsResPowerCfgBiz.saveDeptConfig(config);
                     }
                 }

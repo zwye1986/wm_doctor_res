@@ -14,7 +14,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResBaseMapper;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.res.ResDocTypeEnum;
+import com.pinde.core.common.enums.ResDocTypeEnum;
 import com.pinde.sci.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
@@ -205,7 +205,7 @@ public class JsResMonthlyReportUniversityController extends GeneralController {
 		Map<String,Object> paramMap = new HashMap<>();
 		paramMap.put("monthDate",monthDate);
 		paramMap.put("doctorTypeId",isGraduate);
-		paramMap.put("sendSchoolFlag","Y");
+        paramMap.put("sendSchoolFlag", GlobalConstant.FLAG_Y);
 		paramMap.put("sendSchoolId",StringUtil.defaultIfEmpty(org.getSendSchoolId(), PkUtil.getUUID()));
 		paramMap.put("sendSchoolName",StringUtil.defaultIfEmpty(org.getSendSchoolName(), PkUtil.getUUID()));
 
@@ -271,7 +271,7 @@ public class JsResMonthlyReportUniversityController extends GeneralController {
 		Map<String,Object> paramMap = new HashMap<>();
 		paramMap.put("monthDate",monthDate);
 		paramMap.put("doctorTypeId",isGraduate);
-		paramMap.put("sendSchoolFlag","Y");
+        paramMap.put("sendSchoolFlag", GlobalConstant.FLAG_Y);
 		paramMap.put("sendSchoolId",StringUtil.defaultIfEmpty(org.getSendSchoolId(), PkUtil.getUUID()));
 		paramMap.put("sendSchoolName",StringUtil.defaultIfEmpty(org.getSendSchoolName(), PkUtil.getUUID()));
 
@@ -288,7 +288,7 @@ public class JsResMonthlyReportUniversityController extends GeneralController {
 		Map<String,Object> paramMap = new HashMap<>();
 		paramMap.put("monthDate",monthDate);
 		paramMap.put("doctorTypeId",isGraduate);
-		paramMap.put("sendSchoolFlag","Y");
+        paramMap.put("sendSchoolFlag", GlobalConstant.FLAG_Y);
 		paramMap.put("sendSchoolId",StringUtil.defaultIfEmpty(org.getSendSchoolId(), PkUtil.getUUID()));
 		paramMap.put("sendSchoolName",StringUtil.defaultIfEmpty(org.getSendSchoolName(), PkUtil.getUUID()));
 
@@ -815,7 +815,7 @@ public class JsResMonthlyReportUniversityController extends GeneralController {
 		Map<String,Object> paramMap = new HashMap<>();
 		paramMap.put("monthDate",monthDate);
 		paramMap.put("doctorTypeId",isGraduate);
-		paramMap.put("sendSchoolFlag","Y");
+        paramMap.put("sendSchoolFlag", GlobalConstant.FLAG_Y);
 		paramMap.put("sendSchoolId",StringUtil.defaultIfEmpty(org.getSendSchoolId(), PkUtil.getUUID()));
 		paramMap.put("sendSchoolName",StringUtil.defaultIfEmpty(org.getSendSchoolName(), PkUtil.getUUID()));
 		List<SysMonthlyChangeInfo> SysMonthlyChangeInfoFinal = monthlyReportExtMapper.getSysMonthlyChangeInfo(paramMap);

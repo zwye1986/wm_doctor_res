@@ -180,7 +180,7 @@ public class ResIdCtrlBizImpl implements IResIdCtrlBiz {
         if(oldDetail!=null&&GlobalConstant.FLAG_Y.equals(oldDetail.getIsBinding())){
             return -1;
         }
-        detail.setIsBinding("Y");
+        detail.setIsBinding(GlobalConstant.FLAG_Y);
         String endDate = detail.getEndDate();
         if(StringUtil.isNotBlank(endDate)){
             detail.setStartDate(endDate);
@@ -201,7 +201,7 @@ public class ResIdCtrlBizImpl implements IResIdCtrlBiz {
         String webCfgCode = "res_doctor_web_"+detail.getDoctorFlow();
         ResPowerCfg webCfg = powerCfgBiz.read(webCfgCode);
         if(webCfg!=null){
-            webCfg.setCfgValue("Y");
+            webCfg.setCfgValue(GlobalConstant.FLAG_Y);
             if(StringUtil.isBlank(webCfg.getPowerStartTime())){
                 webCfg.setPowerStartTime(detail.getStartDate());
             }
@@ -210,7 +210,7 @@ public class ResIdCtrlBizImpl implements IResIdCtrlBiz {
         }else{
             ResPowerCfg saveCfg = new ResPowerCfg();
             saveCfg.setCfgCode(webCfgCode);
-            saveCfg.setCfgValue("Y");
+            saveCfg.setCfgValue(GlobalConstant.FLAG_Y);
             saveCfg.setPowerStartTime(detail.getStartDate());
             saveCfg.setPowerEndTime(detail.getEndDate());
             saveCfg.setCfgDesc("是否开放学员web登录权限");
@@ -219,7 +219,7 @@ public class ResIdCtrlBizImpl implements IResIdCtrlBiz {
         String appCfgCode = "res_doctor_app_login_"+detail.getDoctorFlow();
         ResPowerCfg appCfg = powerCfgBiz.read(appCfgCode);
         if(appCfg!=null){
-            appCfg.setCfgValue("Y");
+            appCfg.setCfgValue(GlobalConstant.FLAG_Y);
             if(StringUtil.isBlank(appCfg.getPowerStartTime())){
                 appCfg.setPowerStartTime(detail.getStartDate());
             }
@@ -228,7 +228,7 @@ public class ResIdCtrlBizImpl implements IResIdCtrlBiz {
         }else{
             ResPowerCfg saveCfg = new ResPowerCfg();
             saveCfg.setCfgCode(appCfgCode);
-            saveCfg.setCfgValue("Y");
+            saveCfg.setCfgValue(GlobalConstant.FLAG_Y);
             saveCfg.setPowerStartTime(detail.getStartDate());
             saveCfg.setPowerEndTime(detail.getEndDate());
             saveCfg.setCfgDesc("是否开放学员app登录权限");

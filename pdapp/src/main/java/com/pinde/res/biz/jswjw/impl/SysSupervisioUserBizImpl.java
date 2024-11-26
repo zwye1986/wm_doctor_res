@@ -81,7 +81,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 	@Override
 	public int addSupervisioUser(SysSupervisioUser user) {
 		user.setCreateTime(DateUtil.getCurrDateTime());
-		user.setRecordStatus("Y");
+        user.setRecordStatus(GlobalConstant.FLAG_Y);
 		return supervisioUserMapper.insert(user);
 	}
 
@@ -331,7 +331,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 			evaluationScore.setScoreFlow(PkUtil.getUUID());
 			evaluationScore.setCreateUserFlow(userFlow);
 			evaluationScore.setCreateTime(DateUtil.getCurrDateTime());
-			evaluationScore.setRecordStatus("Y");
+            evaluationScore.setRecordStatus(GlobalConstant.FLAG_Y);
 			return evaluationScoreMapper.insert(evaluationScore);
 		}
 	}
@@ -442,7 +442,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 			subject.setSubjectFlow(PkUtil.getUUID());
 			subject.setCreateUserFlow(userFlow);
 			subject.setCreateTime(DateUtil.getCurrDateTime());
-			subject.setRecordStatus("Y");
+            subject.setRecordStatus(GlobalConstant.FLAG_Y);
 			return subjectMapper.insert(subject);
 		}
 	}
@@ -457,7 +457,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 			subjectUser.setRecordFlow(PkUtil.getUUID());
 			subjectUser.setCreateUserFlow(userFlow);
 			subjectUser.setCreateTime(DateUtil.getCurrDateTime());
-			subjectUser.setRecordStatus("Y");
+            subjectUser.setRecordStatus(GlobalConstant.FLAG_Y);
 			return subjectUserMapper.insert(subjectUser);
 		}
 	}

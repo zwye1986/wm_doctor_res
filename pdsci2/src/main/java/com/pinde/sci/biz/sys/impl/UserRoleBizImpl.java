@@ -125,7 +125,7 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 						String cfgCode = "jsres_teacher_app_login_"+userFlow;
 						JsresPowerCfg jsresCfg = new JsresPowerCfg();
 						jsresCfg.setCfgCode(cfgCode);
-						jsresCfg.setCfgValue("Y");
+                        jsresCfg.setCfgValue(GlobalConstant.FLAG_Y);
 						jsresCfg.setCfgDesc("是否开放带教app权限");
 						jsresCfg.setCheckStatusId("Passed");
 						jsresCfg.setCheckStatusName("审核通过");

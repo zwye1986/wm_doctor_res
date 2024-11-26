@@ -5,7 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
@@ -21,7 +21,7 @@ import com.pinde.sci.common.*;
 import com.pinde.sci.dao.base.ResScoreMapper;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.enums.jsres.*;
-import com.pinde.sci.enums.res.*;
+import com.pinde.core.common.enums.*;
 import com.pinde.sci.enums.sys.*;
 import com.pinde.sci.excelListens.model.SchedulingDataModel;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
@@ -340,7 +340,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 		model.addAttribute("yearDatas", StringUtil.isNotBlank(yearStr) ? yearStr.split(",") : null);
 		List<String> currRoleList = (List<String>) request.getSession().getAttribute(GlobalConstant.CURRENT_ROLE_LIST);
 		if (currRoleList != null && currRoleList.contains(InitConfig.getSysCfg("res_quality_control_role_flow"))) {
-			model.addAttribute("isQuality", "Y");
+            model.addAttribute("isQuality", GlobalConstant.FLAG_Y);
 		}
 		if (StringUtil.isNotBlank(roleFlag) && roleFlag.equals("speAdmin")){
 			return "jsres/doctorListSpeAdmin";
@@ -396,7 +396,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 		model.addAttribute("yearDatas", StringUtil.isNotBlank(yearStr) ? yearStr.split(",") : null);
 		List<String> currRoleList = (List<String>) request.getSession().getAttribute(GlobalConstant.CURRENT_ROLE_LIST);
 		if (currRoleList != null && currRoleList.contains(InitConfig.getSysCfg("res_quality_control_role_flow"))) {
-			model.addAttribute("isQuality", "Y");
+            model.addAttribute("isQuality", GlobalConstant.FLAG_Y);
 		}
 		return "jsres/doctorListNewAcc";
 	}
@@ -833,13 +833,13 @@ public class JsResDoctorRecruitController extends GeneralController {
 		}
 		SysUser currUser=GlobalContext.getCurrentUser();
 		String orgFlow = currUser.getOrgFlow();
-		String isQuality = "N";//是否为质控组
+        String isQuality = GlobalConstant.FLAG_N;//是否为质控组
 		List<String> currRoleList = (List<String>) request.getSession().getAttribute(GlobalConstant.CURRENT_ROLE_LIST);
 		if (currRoleList != null && currRoleList.contains(InitConfig.getSysCfg("res_quality_control_role_flow"))) {
 			trainingSpeId = GlobalContext.getCurrentUser().getResTrainingSpeId();
 			orgFlow = "";
-			isQuality = "Y";
-			model.addAttribute("isQuality", "Y");
+            isQuality = GlobalConstant.FLAG_Y;
+            model.addAttribute("isQuality", GlobalConstant.FLAG_Y);
 		}
 		if (GlobalConstant.USER_LIST_SPELOCAL.equals(roleFlag) || GlobalConstant.USER_LIST_SPELOCALSECRETARY.equals(roleFlag)) {
 			trainingSpeId = GlobalContext.getCurrentUser().getResTrainingSpeId();
@@ -1012,13 +1012,13 @@ public class JsResDoctorRecruitController extends GeneralController {
 		}
 		SysUser currUser=GlobalContext.getCurrentUser();
 		String orgFlow = currUser.getOrgFlow();
-		String isQuality = "N";//是否为质控组
+        String isQuality = GlobalConstant.FLAG_N;//是否为质控组
 		List<String> currRoleList = (List<String>) request.getSession().getAttribute(GlobalConstant.CURRENT_ROLE_LIST);
 		if (currRoleList != null && currRoleList.contains(InitConfig.getSysCfg("res_quality_control_role_flow"))) {
 			trainingSpeId = GlobalContext.getCurrentUser().getResTrainingSpeId();
 			orgFlow = "";
-			isQuality = "Y";
-			model.addAttribute("isQuality", "Y");
+            isQuality = GlobalConstant.FLAG_Y;
+            model.addAttribute("isQuality", GlobalConstant.FLAG_Y);
 		}
 		if (GlobalConstant.USER_LIST_SPELOCAL.equals(roleFlag) || GlobalConstant.USER_LIST_SPELOCALSECRETARY.equals(roleFlag)) {
 			trainingSpeId = GlobalContext.getCurrentUser().getResTrainingSpeId();
@@ -1189,12 +1189,12 @@ public class JsResDoctorRecruitController extends GeneralController {
 		}
 		SysUser currUser=GlobalContext.getCurrentUser();
 		String orgFlow = currUser.getOrgFlow();
-		String isQuality = "N";//是否为质控组
+        String isQuality = GlobalConstant.FLAG_N;//是否为质控组
 		List<String> currRoleList = (List<String>) request.getSession().getAttribute(GlobalConstant.CURRENT_ROLE_LIST);
 		if (currRoleList != null && currRoleList.contains(InitConfig.getSysCfg("res_quality_control_role_flow"))) {
 			trainingSpeId = GlobalContext.getCurrentUser().getResTrainingSpeId();
 			orgFlow = "";
-			isQuality = "Y";
+            isQuality = GlobalConstant.FLAG_Y;
 		}
 		if (GlobalConstant.USER_LIST_SPELOCAL.equals(roleFlag) || GlobalConstant.USER_LIST_SPELOCALSECRETARY.equals(roleFlag)) {
 			trainingSpeId = GlobalContext.getCurrentUser().getResTrainingSpeId();
@@ -2043,7 +2043,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 				}
 				if(CollectionUtils.isNotEmpty(noneTheoryScoreList)) {
 					ResScoreExample scoreExample = new ResScoreExample();
-					scoreExample.createCriteria().andRecordStatusEqualTo("Y").andProcessFlowIn(noneTheoryScoreList);
+                    scoreExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andProcessFlowIn(noneTheoryScoreList);
 					List<ResScore> scoreList = scoreMapper.selectByExample(scoreExample);
 					if (CollectionUtil.isNotEmpty(scoreList)) {
 						for (ResScore resScore : scoreList) {
@@ -2992,10 +2992,10 @@ public class JsResDoctorRecruitController extends GeneralController {
 			userOrgFlow = sysuser.getOrgFlow();
 		}
 		//当前基地是否为协同基地
-		String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(sysuser.getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
-			isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
 		}
 
 		SysUser sysUser =new SysUser();
@@ -3004,7 +3004,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 		}
 		if (StringUtil.isBlank(doctor.getOrgFlow())) {
 			if (getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_LOCAL)) {
-				jointOrgFlowList=searchJointOrgList("Y",sysuser.getOrgFlow());
+                jointOrgFlowList = searchJointOrgList(GlobalConstant.FLAG_Y, sysuser.getOrgFlow());
 				jointOrgFlowList.add(sysuser.getOrgFlow());
 			}
 			if (getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)||getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_GLOBAL)
@@ -3845,15 +3845,15 @@ public class JsResDoctorRecruitController extends GeneralController {
 		List<SysDept> deptList = deptBiz.searchDept(sysDept);
 		model.addAttribute("deptList", deptList);
 		model.addAttribute("sessionNumber",DateUtil.getYear());
-		model.addAttribute("checkOpen","N");
+        model.addAttribute("checkOpen", GlobalConstant.FLAG_N);
 		//查询是否需要校验
 		JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_" + GlobalContext.getCurrentUser().getOrgFlow());
 		if (ObjectUtil.isEmpty(openCfg) || StringUtils.isEmpty(openCfg.getCfgValue())) {
-			model.addAttribute("checkOpen","N");
+            model.addAttribute("checkOpen", GlobalConstant.FLAG_N);
 		}else if (GlobalConstant.FLAG_Y.equalsIgnoreCase(openCfg.getCfgValue())) {
-			model.addAttribute("checkOpen","Y");
+            model.addAttribute("checkOpen", GlobalConstant.FLAG_Y);
 		}else {
-			model.addAttribute("checkOpen","N");
+            model.addAttribute("checkOpen", GlobalConstant.FLAG_N);
 		}
 		return "jsres/hospital/schedulingAudit";
 	}

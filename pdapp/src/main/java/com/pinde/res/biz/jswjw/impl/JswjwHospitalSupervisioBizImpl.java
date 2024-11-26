@@ -239,7 +239,7 @@ public class JswjwHospitalSupervisioBizImpl implements IJswjwHospitalSupervisioB
 
     @Override
     public int editSupervisioUser(SysUser user) {
-        user.setRecordStatus("Y");
+        user.setRecordStatus(GlobalConstant.FLAG_Y);
         user.setModifyTime(DateUtil.getCurrDateTime());
         user.setModifyUserFlow(user.getUserFlow());
         return sysUserMapper.updateByPrimaryKeySelective(user);

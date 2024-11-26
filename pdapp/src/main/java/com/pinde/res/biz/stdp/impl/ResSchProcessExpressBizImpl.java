@@ -1,11 +1,11 @@
 package com.pinde.res.biz.stdp.impl;
 
+import com.pinde.app.common.GlobalUtil;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.RecStatusEnum;
 import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.GlobalUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.common.IResPowerCfgBiz;
@@ -21,7 +21,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 @Service
 //@Transactional(rollbackFor=Exception.class)
@@ -178,7 +179,7 @@ public class ResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
         rec.setRecContent(recContent);
         if(StringUtil.isBlank(recFlow)) {
             if (GlobalConstant.FLAG_Y.equals(cksh)) {
-                rec.setManagerAuditUserFlow("Y");
+                rec.setManagerAuditUserFlow(GlobalConstant.FLAG_Y);
             }
         }
         //System.out.println(recContent);

@@ -2,7 +2,7 @@ package com.pinde.sci.ctrl.jszy;
 
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
 import com.pinde.core.pdf.PdfDocumentGenerator;
@@ -31,9 +31,9 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysLogMapper;
 import com.pinde.sci.enums.jszy.*;
 import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.res.ResBaseStatusEnum;
-import com.pinde.sci.enums.res.ResDoctorAuditStatusEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.ResBaseStatusEnum;
+import com.pinde.core.common.enums.ResDoctorAuditStatusEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
@@ -1016,7 +1016,7 @@ public class JszyResManageController extends GeneralController {
 		}
 		SysOrg org =orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-			model.addAttribute("countryOrgFlag","Y");
+            model.addAttribute("countryOrgFlag", GlobalConstant.FLAG_Y);
 			if(null != jointOrg && jointOrg.equals("checked")){
 				orgFlowList.add(orgHistory.getOrgFlow());
 				orgHistory.setOrgFlow("");
@@ -1599,7 +1599,7 @@ public class JszyResManageController extends GeneralController {
 				}
 				model.addAttribute("countMap",countMap);
 				model.addAttribute("orgs",orgs);
-				model.addAttribute("seeFlag","Y");
+                model.addAttribute("seeFlag", GlobalConstant.FLAG_Y);
 			}else {
 				for (SysOrg o : orgs) {
 					orgFlowList=new ArrayList<String>();
@@ -1628,7 +1628,7 @@ public class JszyResManageController extends GeneralController {
 					//只有当基地orgLevel为空且trainTypeId为空时才统计图内展示三类学员数量
 					if(StringUtil.isBlank(orgLevel)&&StringUtil.isBlank(trainTypeId)){
 						recruit.setCatSpeId("countByTrainTypeId");
-						model.addAttribute("countByTrainTypeId","Y");
+                        model.addAttribute("countByTrainTypeId", GlobalConstant.FLAG_Y);
 						doctorCountList=resStatisticBiz.statisticJointCount(recruit,orgFlowList,doctor,docTypeList);
 					}else {
 						doctorCountList=resStatisticBiz.statisticJointCount(recruit,orgFlowList,doctor,docTypeList);
@@ -1647,7 +1647,7 @@ public class JszyResManageController extends GeneralController {
 						}
 					}
 				}
-				model.addAttribute("seeFlag","N");
+                model.addAttribute("seeFlag", GlobalConstant.FLAG_N);
 			}
 		}
 		model.addAttribute("totalCountMap", totalCountMap);
@@ -1688,7 +1688,7 @@ public class JszyResManageController extends GeneralController {
 				}
 			}
 			model.addAttribute("schools",schools);
-			model.addAttribute("seeFlag","Y");
+            model.addAttribute("seeFlag", GlobalConstant.FLAG_Y);
 		}else {
 			graduates=jsResDoctorBiz.searchGraduates(paramMap);
 			if(graduates!=null&&graduates.size()>0){
@@ -1696,7 +1696,7 @@ public class JszyResManageController extends GeneralController {
 					graduatesMap.put(map.get("TRAININGSPEID").toString(),map.get("GRADUATESCOUNT"));
 				}
 			}
-			model.addAttribute("seeFlag","N");
+            model.addAttribute("seeFlag", GlobalConstant.FLAG_N);
 		}
 		model.addAttribute("graduatesMap",graduatesMap);
 		return "jszy/global/report/graduateNumSearch";
@@ -1819,7 +1819,7 @@ public class JszyResManageController extends GeneralController {
 		List<String> orgFlowList = new ArrayList<String>();
 		SysOrg org =orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-			model.addAttribute("countryOrgFlag","Y");
+            model.addAttribute("countryOrgFlag", GlobalConstant.FLAG_Y);
 			if(null != jointOrg && jointOrg.equals("checked")){
 				orgFlowList.add(org.getOrgFlow());
 				docOrgHistory.setHistoryOrgFlow("");
@@ -1874,7 +1874,7 @@ public class JszyResManageController extends GeneralController {
 		List<String> orgFlowList = new ArrayList<String>();
 		SysOrg org =orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-			model.addAttribute("countryOrgFlag","Y");
+            model.addAttribute("countryOrgFlag", GlobalConstant.FLAG_Y);
 			if(null != jointOrg && jointOrg.equals("checked")){
 				orgFlowList.add(docOrgHistory.getOrgFlow());
 				docOrgHistory.setOrgFlow("");

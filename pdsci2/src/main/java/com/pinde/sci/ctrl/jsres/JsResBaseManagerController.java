@@ -2,7 +2,7 @@ package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
 import com.pinde.core.pdf.PdfDocumentGenerator;
@@ -28,9 +28,9 @@ import com.pinde.sci.dao.sys.SysDeptExtMapper;
 import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
 import com.pinde.sci.enums.jsres.JsResDoctorAuditStatusEnum;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.res.AfterRecTypeEnum;
-import com.pinde.sci.enums.res.RegistryTypeEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.enums.RegistryTypeEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.enums.sch.SchUnitEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
@@ -338,18 +338,18 @@ public class JsResBaseManagerController extends GeneralController {
 				if (StringUtil.isNotBlank(userRole.getRoleFlow()) && (
 						userRole.getRoleFlow().equals(InitConfig.getSysCfg("res_global_role_flow")) ||
 								userRole.getRoleFlow().equals(InitConfig.getSysCfg("res_maintenance_role_flow")))) {
-					mav.addObject("isglobal", "Y");
-					viewFlag = "Y";
+					mav.addObject("isglobal", GlobalConstant.FLAG_Y);
+					viewFlag = GlobalConstant.FLAG_Y;
 				}
 			}
 		}
 
 		SysOrg sysOrg = orgBiz.readSysOrg(baseFlow);
-		mav.addObject("viewFlag", "Y");
+		mav.addObject("viewFlag", GlobalConstant.FLAG_Y);
 		mav.addObject("sysOrg", sysOrg);
 		mav.addObject("ishos", ishos);
 		if (!GlobalContext.getCurrentUser().getOrgFlow().equals(baseFlow)) {
-			mav.addObject("isJoin", "Y");
+			mav.addObject("isJoin", GlobalConstant.FLAG_Y);
 		}
 
 		if (StringUtil.isBlank(sessionNumber)) {
@@ -432,9 +432,9 @@ public class JsResBaseManagerController extends GeneralController {
 					.andJointOrgFlowEqualTo(baseFlow).andSessionNumberEqualTo(sessionNumber);
 			List<ResJointOrg> resJointOrgList = jointOrgBiz.readResJointOrgByExample(jointOrgExample);
 			// 自身是协同单位
-			String jointOrgFlag = "N";
+			String jointOrgFlag = GlobalConstant.FLAG_N;
 			if (CollectionUtils.isNotEmpty(resJointOrgList)) {
-				jointOrgFlag = "Y";
+				jointOrgFlag = GlobalConstant.FLAG_Y;
 			}
 			mav.addObject("jointOrgFlag", jointOrgFlag);
 			if (GlobalConstant.FLAG_Y.equals(editFlag) || GlobalConstant.BASIC_MAIN_ALL.equals(baseInfoName)) {
@@ -693,7 +693,7 @@ public class JsResBaseManagerController extends GeneralController {
 	public String orgShowSpeInfo(String speFlow, Model model, String orgFlow, String isJoin, String sessionNumber, String onlyRead, String ishos) {
 		model.addAttribute("speFlow", speFlow);
 		model.addAttribute("orgFlow", orgFlow);
-		model.addAttribute("viewFlag", "Y");
+		model.addAttribute("viewFlag", GlobalConstant.FLAG_Y);
 		model.addAttribute("isJoin", isJoin);
 		if (StringUtil.isBlank(sessionNumber)) {
 			sessionNumber = DateUtil.getYear();
@@ -709,7 +709,7 @@ public class JsResBaseManagerController extends GeneralController {
 	public String showSpeInfo(String speFlow, Model model, String orgFlow, String isJoin, String sessionNumber) {
 		model.addAttribute("speFlow", speFlow);
 		model.addAttribute("orgFlow", orgFlow);
-		model.addAttribute("viewFlag", "N");
+		model.addAttribute("viewFlag", GlobalConstant.FLAG_N);
 		model.addAttribute("isJoin", isJoin);
 		model.addAttribute("sessionNumber", sessionNumber);
 		return "jsres/speAdmin/speInfo/main";
@@ -721,7 +721,7 @@ public class JsResBaseManagerController extends GeneralController {
 		model.addAttribute("speFlow", speFlow);
 		model.addAttribute("deptFlow", deptFlow);
 		model.addAttribute("orgFlow", orgFlow);
-		model.addAttribute("viewFlag", "Y");
+		model.addAttribute("viewFlag", GlobalConstant.FLAG_Y);
 		model.addAttribute("isJoin", isJoin);
 		model.addAttribute("onlyRead", onlyRead);
 		model.addAttribute("isglobal", isglobal);
@@ -759,7 +759,7 @@ public class JsResBaseManagerController extends GeneralController {
 		model.addAttribute("speFlow", speFlow);
 		model.addAttribute("deptFlow", deptFlow);
 		model.addAttribute("orgFlow", orgFlow);
-		model.addAttribute("viewFlag", "Y");
+		model.addAttribute("viewFlag", GlobalConstant.FLAG_Y);
 		model.addAttribute("isJoin", isJoin);
 		model.addAttribute("onlyRead", onlyRead);
 		model.addAttribute("isglobal", isglobal);
@@ -788,7 +788,7 @@ public class JsResBaseManagerController extends GeneralController {
 		model.addAttribute("speFlow", speFlow);
 		model.addAttribute("deptFlow", deptFlow);
 		model.addAttribute("orgFlow", orgFlow);
-		model.addAttribute("viewFlag", "Y");
+		model.addAttribute("viewFlag", GlobalConstant.FLAG_Y);
 		model.addAttribute("isJoin", isJoin);
 		model.addAttribute("onlyRead", onlyRead);
 		model.addAttribute("isglobal", isglobal);
@@ -846,9 +846,9 @@ public class JsResBaseManagerController extends GeneralController {
 		model.addAttribute("deptFlow", deptFlow);
 		model.addAttribute("orgFlow", orgFlow);
 		if(!GlobalConstant.FLAG_Y.equals(viewFlag)) {
-			model.addAttribute("viewFlag", "N");
+			model.addAttribute("viewFlag", GlobalConstant.FLAG_N);
 		}else {
-			model.addAttribute("viewFlag", "Y");
+			model.addAttribute("viewFlag", GlobalConstant.FLAG_Y);
 		}
 		model.addAttribute("isJoin", isJoin);
 		model.addAttribute("onlyRead", onlyRead);
@@ -861,7 +861,7 @@ public class JsResBaseManagerController extends GeneralController {
 	public String showStandardDeptInfo(String standardDeptFlow, String speFlow, Model model, String orgFlow, String isJoin, String onlyRead, String isglobal) {
 		model.addAttribute("speFlow", speFlow);
 		model.addAttribute("orgFlow", orgFlow);
-		model.addAttribute("viewFlag", "N");
+		model.addAttribute("viewFlag", GlobalConstant.FLAG_N);
 		model.addAttribute("isJoin", isJoin);
 		model.addAttribute("onlyRead", onlyRead);
 		model.addAttribute("isglobal", isglobal);
@@ -870,7 +870,7 @@ public class JsResBaseManagerController extends GeneralController {
 		SysDeptVO sysDeptVO = new SysDeptVO();
 		sysDeptVO.setStandardDeptFlow(standardDeptFlow);
 		sysDeptVO.setOrgFlow(orgFlow);
-		sysDeptVO.setRecordStatus("Y");
+		sysDeptVO.setRecordStatus(GlobalConstant.FLAG_Y);
 		List<SysDeptVO> sysDeptVOList = deptManagementBiz.selectSysDeptRelStdDept(sysDeptVO);
 
 		model.addAttribute("resDeptRelStdDeptVOList", sysDeptVOList);
@@ -881,7 +881,7 @@ public class JsResBaseManagerController extends GeneralController {
 	public String showTrainingInfo(String standardDeptFlow, String speFlow, Model model, String orgFlow, String isJoin, String onlyRead, String isglobal, String sessionNumber) {
 		model.addAttribute("speFlow", speFlow);
 		model.addAttribute("orgFlow", orgFlow);
-		model.addAttribute("viewFlag", "N");
+		model.addAttribute("viewFlag", GlobalConstant.FLAG_N);
 		model.addAttribute("isJoin", isJoin);
 		model.addAttribute("onlyRead", onlyRead);
 		model.addAttribute("isglobal", isglobal);
@@ -890,7 +890,7 @@ public class JsResBaseManagerController extends GeneralController {
 		// 查未被禁用的基地科室
 		SysDeptVO sysDeptVO = new SysDeptVO();
 		sysDeptVO.setStandardDeptFlow(standardDeptFlow);
-		sysDeptVO.setRecordStatus("Y");
+		sysDeptVO.setRecordStatus(GlobalConstant.FLAG_Y);
 		sysDeptVO.setOrgFlow(orgFlow);
 		List<SysDeptVO> sysDeptVOList = deptManagementBiz.selectSysDeptRelStdDept(sysDeptVO);
 		model.addAttribute("resDeptRelStdDeptVOList", sysDeptVOList);
@@ -901,7 +901,7 @@ public class JsResBaseManagerController extends GeneralController {
 	public String showDiagDiseaseInfo(String standardDeptFlow, String speFlow, Model model, String orgFlow, String isJoin, String onlyRead, String isglobal, String sessionNumber) {
 		model.addAttribute("speFlow", speFlow);
 		model.addAttribute("orgFlow", orgFlow);
-		model.addAttribute("viewFlag", "N");
+		model.addAttribute("viewFlag", GlobalConstant.FLAG_N);
 		model.addAttribute("isJoin", isJoin);
 		model.addAttribute("onlyRead", onlyRead);
 		model.addAttribute("isglobal", isglobal);
@@ -912,7 +912,7 @@ public class JsResBaseManagerController extends GeneralController {
 		SysDeptVO sysDeptVO = new SysDeptVO();
 		sysDeptVO.setStandardDeptFlow(standardDeptFlow);
 		sysDeptVO.setOrgFlow(orgFlow);
-		sysDeptVO.setRecordStatus("Y");
+		sysDeptVO.setRecordStatus(GlobalConstant.FLAG_Y);
 		List<SysDeptVO> sysDeptVOList = deptManagementBiz.selectSysDeptRelStdDept(sysDeptVO);
 		model.addAttribute("resDeptRelStdDeptVOList", sysDeptVOList);
 		return "jsres/kzr/mainInfo/diagDiseaseInfo";
@@ -922,7 +922,7 @@ public class JsResBaseManagerController extends GeneralController {
 	public String showEquipmentInstrumentsInfo(String standardDeptFlow, String speFlow, Model model, String orgFlow, String isJoin, String onlyRead, String isglobal, String sessionNumber) {
 		model.addAttribute("speFlow", speFlow);
 		model.addAttribute("orgFlow", orgFlow);
-		model.addAttribute("viewFlag", "N");
+		model.addAttribute("viewFlag", GlobalConstant.FLAG_N);
 		model.addAttribute("isJoin", isJoin);
 		model.addAttribute("onlyRead", onlyRead);
 		model.addAttribute("isglobal", isglobal);
@@ -932,7 +932,7 @@ public class JsResBaseManagerController extends GeneralController {
 		SysDeptVO sysDeptVO = new SysDeptVO();
 		sysDeptVO.setStandardDeptFlow(standardDeptFlow);
 		sysDeptVO.setOrgFlow(orgFlow);
-		sysDeptVO.setRecordStatus("Y");
+		sysDeptVO.setRecordStatus(GlobalConstant.FLAG_Y);
 		List<SysDeptVO> sysDeptVOList = deptManagementBiz.selectSysDeptRelStdDept(sysDeptVO);
 		model.addAttribute("resDeptRelStdDeptVOList", sysDeptVOList);
 		return "jsres/kzr/mainInfo/equipmentInstrumentsInfo";
@@ -944,8 +944,8 @@ public class JsResBaseManagerController extends GeneralController {
 		model.addAttribute("speFlow", speFlow);
 		model.addAttribute("orgFlow", orgFlow);
 		model.addAttribute("isJoin", isJoin);
-		model.addAttribute("viewFlag", "N");
-		model.addAttribute("editFlag", "Y");
+		model.addAttribute("viewFlag", GlobalConstant.FLAG_N);
+		model.addAttribute("editFlag", GlobalConstant.FLAG_Y);
 		return "jsres/speAdmin/speInfo/main";
 	}
 
@@ -1799,7 +1799,7 @@ public class JsResBaseManagerController extends GeneralController {
 			String orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
 			JsresPowerCfg orgApprove = jsResPowerCfgBiz.read("jsres_" + orgFlow + "_org_ctrl_approve_activity");//教学活动评价配置
 			JsresPowerCfg approve = jsResPowerCfgBiz.read("jsres_" + orgFlow + "_org_approve_activity");//教学活动评价配置评审类型
-			if (null != orgApprove && null != approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(), orgApprove.getCfgValue(), "Y")) {        //开启必评
+			if (null != orgApprove && null != approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(), orgApprove.getCfgValue(), GlobalConstant.FLAG_Y)) {        //开启必评
 				infos = resRecBiz.searchJoinActivityByProcessFlownotScore(processFlow);
 			} else {
 				infos = resRecBiz.searchJoinActivityByProcessFlow(processFlow);
@@ -3030,7 +3030,7 @@ public class JsResBaseManagerController extends GeneralController {
 		String orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
 		JsresPowerCfg orgApprove = jsResPowerCfgBiz.read("jsres_" + orgFlow + "_org_ctrl_approve_activity");//教学活动评价配置
 		JsresPowerCfg approve = jsResPowerCfgBiz.read("jsres_" + orgFlow + "_org_approve_activity");//教学活动评价配置评审类型
-		if (null != orgApprove && null != approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(), orgApprove.getCfgValue(), "Y")) {    //开启必评
+		if (null != orgApprove && null != approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(), orgApprove.getCfgValue(), GlobalConstant.FLAG_Y)) {    //开启必评
 			infos = resRecBiz.searchJoinActivityByStrandDeptFlowAndNotScore(doctor.getDoctorFlow(), recordFlow);
 		} else {
 			infos = resRecBiz.searchJoinActivityByStrandDeptFlow(doctor.getDoctorFlow(), recordFlow);
@@ -5993,7 +5993,7 @@ public class JsResBaseManagerController extends GeneralController {
 			doctorRecruitMap.put("trainYearList", Arrays.asList("OneYear", "TwoYear", "ThreeYear"));
 			doctorRecruitMap.put("docTypeList", Arrays.asList("Company", "CompanyEntrust", "Social"));
 			doctorRecruitMap.put("speIdList", speIdList);
-			doctorRecruitMap.put("orgGroup", "Y");
+			doctorRecruitMap.put("orgGroup", GlobalConstant.FLAG_Y);
 			// 查医院全部在培人员，sql来自【学员信息查询】页面列表sql
 			List<Map<String, Object>> speTrainCountList = jsResDoctorRecruitExtMapper.countTrainingDoctor(doctorRecruitMap);
 			Map<String, List<Map<String, Object>>> speTrainCountMap = speTrainCountList.stream().collect(Collectors.groupingBy(vo -> (String)vo.get("SPEID")));
@@ -6027,7 +6027,7 @@ public class JsResBaseManagerController extends GeneralController {
 			doctorRecruitMap.put("trainYearList", Arrays.asList("OneYear", "TwoYear", "ThreeYear"));
 			doctorRecruitMap.put("docTypeList", Arrays.asList("Graduate"));
 			doctorRecruitMap.put("speIdList", speIdList);
-			doctorRecruitMap.put("orgGroup", "Y");
+			doctorRecruitMap.put("orgGroup", GlobalConstant.FLAG_Y);
 			// 查医院全部在校专硕，sql来自【学员信息查询】页面列表sql
 			speTrainCountList = jsResDoctorRecruitExtMapper.countTrainingDoctor(doctorRecruitMap);
 			speTrainCountMap = speTrainCountList.stream().collect(Collectors.groupingBy(vo -> (String)vo.get("SPEID")));
@@ -6079,7 +6079,7 @@ public class JsResBaseManagerController extends GeneralController {
 		param.put("doctorType", "zyys");
 		param.put("sessionNumber", sessionNumber);
 		param.put("speIdList", String.join(",", profDept));
-		param.put("orgGroup", "Y");
+		param.put("orgGroup", GlobalConstant.FLAG_Y);
 		List<Map<String, Object>> zyysDoctorList = deptBasicInfoBiz.countDoctorNum(param);
 		Map<String, BigDecimal[]> speCountMap = new HashMap<>();
 		for (Map<String, Object> map : zyysDoctorList) {
@@ -6181,7 +6181,7 @@ public class JsResBaseManagerController extends GeneralController {
 			doctorRecruitMap.put("trainYearList", Arrays.asList("OneYear", "TwoYear", "ThreeYear"));
 			doctorRecruitMap.put("docTypeList", Arrays.asList("Company", "CompanyEntrust", "Social"));
 			doctorRecruitMap.put("speIdList", speIdList);
-			doctorRecruitMap.put("orgGroup", "Y");
+			doctorRecruitMap.put("orgGroup", GlobalConstant.FLAG_Y);
 			// 查医院全部在培人员，sql来自【学员信息查询】页面列表sql
 			List<Map<String, Object>> speTrainCountList = jsResDoctorRecruitExtMapper.countTrainingDoctor(doctorRecruitMap);
 			Map<String, Map<String, Object>> speTrainCountMap = speTrainCountList.stream().collect(Collectors.toMap(vo -> (String) vo.get("ORG_FLOW"), vo -> vo, (vo1, vo2) -> vo1));
@@ -6207,7 +6207,7 @@ public class JsResBaseManagerController extends GeneralController {
 			doctorRecruitMap.put("trainYearList", Arrays.asList("OneYear", "TwoYear", "ThreeYear"));
 			doctorRecruitMap.put("docTypeList", Arrays.asList("Graduate"));
 			doctorRecruitMap.put("speIdList", speIdList);
-			doctorRecruitMap.put("orgGroup", "Y");
+			doctorRecruitMap.put("orgGroup", GlobalConstant.FLAG_Y);
 			// 查医院全部在培人员，sql来自【学员信息查询】页面列表sql
 			speTrainCountList = jsResDoctorRecruitExtMapper.countTrainingDoctor(doctorRecruitMap);
 			speTrainCountMap = speTrainCountList.stream().collect(Collectors.toMap(vo -> (String) vo.get("ORG_FLOW"), vo -> vo, (vo1, vo2) -> vo1));
@@ -6255,7 +6255,7 @@ public class JsResBaseManagerController extends GeneralController {
 		param.put("doctorType", "zyys");
 		param.put("sessionNumber", sessionNumber);
 		param.put("speIdList", String.join(",", speIdList));
-		param.put("orgGroup", "Y");
+		param.put("orgGroup", GlobalConstant.FLAG_Y);
 		List<Map<String, Object>> zyysDoctorList = deptBasicInfoBiz.countDoctorNum(param);
 		for (Map<String, Object> map : zyysDoctorList) {
 			ResOrgSepVO resOrgSepVO = orgToOrgSpeVOMap.get(map.get("orgFlow"));

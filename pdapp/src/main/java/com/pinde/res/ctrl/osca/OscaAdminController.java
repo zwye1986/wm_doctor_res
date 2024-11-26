@@ -1214,15 +1214,15 @@ public class OscaAdminController {
 			param.put("scoreFlow", scoreFlow);
 			model.addAttribute("paramMap",param);
 			//如果是没有表单的成绩就直接返回页面
-			if(score.getIsHaveFrom().equals("N")){
-				model.addAttribute("haveFrom","N");
+            if (score.getIsHaveFrom().equals(GlobalConstant.FLAG_N)) {
+                model.addAttribute("haveFrom", GlobalConstant.FLAG_N);
 				return "res/osca/admin/selectStationFrom";
 			}
 			//表单内容
 			OscaFrom from = oscaAppBiz.getFromByScoreFlow(scoreFlow);
 			model.addAttribute("from", from);
 			//固定表单
-			model.addAttribute("haveFrom","Y");
+            model.addAttribute("haveFrom", GlobalConstant.FLAG_Y);
 			//固定表单
 			if(score.getFromTypeId().equals("1")){
 				String url=score.getFromUrl();

@@ -1,21 +1,30 @@
 package com.pinde.core.common.enums;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.EnumUtil;
 
 /**
  * Created by pdkj on 2018/1/3.
  */
 public enum PracticRegistryTypeEnum implements GeneralEnum<String> {
-    PatientsAndDisease("PatientsAndDisease","病人病种","Y","N","N"),
-    HomeVisits("HomeVisits", "家庭随访","Y","N","N"),
-    HypertensionMonitoring("HypertensionMonitoring","高血压监测","Y","N","N"),
-    Type2DiabetesMonitoring("Type2DiabetesMonitoring","2型糖尿病监测","Y","N","N"),
-    ChildHealthCare("ChildHealthCare","儿童保健","Y","N","N"),
-    ElderHealthCare("ElderHealthCare","老年保健","Y","N","N"),
-    WomenHealthCare("WomenHealthCare","妇女保健","Y","N","N"),
-    DisableHealthCare("DisableHealthCare","残疾人保健","Y","N","N"),
-    ImportantHealthCare("ImportantHealthCare","重点人群保健","Y","N","N"),
-    CommunityLearning("CommunityLearning","社区学习","Y","N","N"),
+    PatientsAndDisease("PatientsAndDisease", "病人病种", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
+    HomeVisits("HomeVisits", "家庭随访", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
+    HypertensionMonitoring("HypertensionMonitoring", "高血压监测", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
+    Type2DiabetesMonitoring("Type2DiabetesMonitoring", "2型糖尿病监测", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
+    ChildHealthCare("ChildHealthCare", "儿童保健", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
+    ElderHealthCare("ElderHealthCare", "老年保健", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
+    WomenHealthCare("WomenHealthCare", "妇女保健", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
+    DisableHealthCare("DisableHealthCare", "残疾人保健", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
+    ImportantHealthCare("ImportantHealthCare", "重点人群保健", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
+    CommunityLearning("CommunityLearning", "社区学习", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
+    SocialPractice("SocialPractice", "社区实践", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
+    Glmzbrhsjbzdj("Glmzbrhsjbzdj", "管理门诊病人和所见病种登记", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
+    Cjjfsqdcjkjy("Cjjfsqdcjkjy", "参加家访社区调查健康教育", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
+    Cjjnczdj("Cjjnczdj", "参加技能操作登记", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
+    Cjkyjl("Cjkyjl", "参加科研记录", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
+    Fblwzsgabdzw("Fblwzsgabdzw", "发表论文综述个案报道泽文", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
+    Hjqk("Hjqk", "获奖情况", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
+    Qtdj("Qtdj", "其他登记", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
     ;
     private final String id;
     private final String name;

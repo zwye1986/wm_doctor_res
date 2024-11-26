@@ -12,7 +12,7 @@ import com.pinde.sci.biz.sch.ISchRotationBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.ResDocotrDelayTeturnMapper;
 import com.pinde.sci.enums.jszy.JszyResDoctorAuditStatusEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.form.jszy.JszyBackTrainForm;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.Document;

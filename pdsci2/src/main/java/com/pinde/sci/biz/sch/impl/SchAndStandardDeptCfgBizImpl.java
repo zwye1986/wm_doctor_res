@@ -111,7 +111,7 @@ public class SchAndStandardDeptCfgBizImpl implements ISchAndStandardDeptCfgBiz {
 	public SchAndStandardDeptCfg readBySchDeptFlowAndOrgFlow(String schDeptFlow, String orgFlow) {
 		SchAndStandardDeptCfgExample example=new SchAndStandardDeptCfgExample();
 		SchAndStandardDeptCfgExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
 		if (StringUtil.isNotBlank(schDeptFlow)){
 			criteria.andSchDeptFlowEqualTo(schDeptFlow);
 		}
@@ -129,7 +129,7 @@ public class SchAndStandardDeptCfgBizImpl implements ISchAndStandardDeptCfgBiz {
 	public List<SchAndStandardDeptCfg> selectByStandardDeptId(String orgFlow, String standardDeptId) {
 		SchAndStandardDeptCfgExample example=new SchAndStandardDeptCfgExample();
 		SchAndStandardDeptCfgExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
 		if (StringUtil.isNotBlank(standardDeptId)){
 			criteria.andStandardDeptIdEqualTo(standardDeptId);
 		}
@@ -147,7 +147,7 @@ public class SchAndStandardDeptCfgBizImpl implements ISchAndStandardDeptCfgBiz {
 	public List<SchAndStandardDeptCfg> getListByOrgFlow(String orgFlow, List<String> schDeptFlowList) {
 		SchAndStandardDeptCfgExample example = new SchAndStandardDeptCfgExample();
 		SchAndStandardDeptCfgExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
 		if (StringUtil.isNotBlank(orgFlow)) {
 			criteria.andOrgFlowEqualTo(orgFlow);
 		}

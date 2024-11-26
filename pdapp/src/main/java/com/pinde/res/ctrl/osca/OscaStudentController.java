@@ -978,7 +978,7 @@ public class OscaStudentController {
 		//查询是否是有成功  预约考核信息
 		OscaDoctorAssessment oscaDoctorAssessment=oscaStudentBiz.getAuditOscaDocInfo(userFlow);
 		model.addAttribute("oscaDoctorAssessment",oscaDoctorAssessment);
-		String canClick="Y";
+        String canClick = GlobalConstant.FLAG_Y;
 		//如果有查询有几站并且查询有哪些房间及相应信息
 		if(oscaDoctorAssessment!=null)
 		{
@@ -1020,7 +1020,7 @@ public class OscaStudentController {
 						}else{
 							if(roomExt.getExamStatusId().equals(ExamStatusEnum.Waiting.getId())||roomExt.getExamStatusId().equals(ExamStatusEnum.AssessIng.getId()))
 							{
-								canClick="N";
+                                canClick = GlobalConstant.FLAG_N;
 							}
 						}
 						roomMap.put("roomExt",roomExt);
@@ -1077,7 +1077,7 @@ public class OscaStudentController {
 			model.addAttribute("resultType", "排队标识符为空");
 			return "/res/osca/success";
 		}
-		if(!waitingFlag.equals("Y")&&!waitingFlag.equals("N"))
+        if (!waitingFlag.equals(GlobalConstant.FLAG_Y) && !waitingFlag.equals(GlobalConstant.FLAG_N))
 		{
 			model.addAttribute("resultId", "3011101");
 			model.addAttribute("resultType", "排队状态只能是排队或取消排队");
@@ -1094,7 +1094,7 @@ public class OscaStudentController {
 		param.put("roomRecordFlow",roomRecordFlow);
 		param.put("clinicalFlow",clinicalFlow);
 		param.put("stationFlow",stationFlow);
-		if(waitingFlag.equals("Y")) {
+        if (waitingFlag.equals(GlobalConstant.FLAG_Y)) {
 			//校验是否已经在排队 或正在考核中
 			int count = oscaStudentBiz.checkIsWait(param);
 			if(count>0){
@@ -1151,7 +1151,7 @@ public class OscaStudentController {
 			model.addAttribute("resultType", "读取站点信息失败！");
 			return "/res/osca/success";
 		}
-		if(waitingFlag.equals("Y")) {
+        if (waitingFlag.equals(GlobalConstant.FLAG_Y)) {
 			docStation.setExamStatusId(ExamStatusEnum.Waiting.getId());
 			docStation.setExamStatusName(ExamStatusEnum.Waiting.getName());
 			docStation.setWaitingTime(DateUtil.getCurrentTime());
@@ -1212,13 +1212,13 @@ public class OscaStudentController {
 		OscaSubjectStation station=oscaStudentBiz.getOscaSubjectStationsByFlow(stationFlow);
 		model.addAttribute("station",station);
 		List<OscaSkillRoomDoc> skillRoomDocs=oscaStudentBiz.getDocAllStation(param);
-		String canClick="Y";
+        String canClick = GlobalConstant.FLAG_Y;
 		if(skillRoomDocs!=null){
 			for(OscaSkillRoomDoc rd:skillRoomDocs)
 			{
 				if(rd.getExamStatusId().equals(ExamStatusEnum.Waiting.getId())||rd.getExamStatusId().equals(ExamStatusEnum.AssessIng.getId()))
 				{
-					canClick="N";
+                    canClick = GlobalConstant.FLAG_N;
 				}
 			}
 		}
@@ -1226,7 +1226,7 @@ public class OscaStudentController {
 		if(roomExt!=null)
 		{
 			roomRecordFlow=roomExt.getRecordFlow();
-			model.addAttribute("isSelect","Y");
+            model.addAttribute("isSelect", GlobalConstant.FLAG_Y);
 		}
 		model.addAttribute("canClick",canClick);
 		param.put("roomRecordFlow",roomRecordFlow);

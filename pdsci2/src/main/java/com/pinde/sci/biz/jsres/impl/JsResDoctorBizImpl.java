@@ -1,7 +1,10 @@
 package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.enums.ArmyTypeEnum;
+import com.pinde.core.common.enums.ResDocTypeEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
@@ -23,9 +26,6 @@ import com.pinde.sci.enums.jsres.JsResDegreeCategoryEnum;
 import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
 import com.pinde.sci.enums.pub.UserNationEnum;
 import com.pinde.sci.enums.pub.UserSexEnum;
-import com.pinde.sci.enums.res.ArmyTypeEnum;
-import com.pinde.sci.enums.res.ResDocTypeEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
 import com.pinde.sci.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.form.jsres.BackTrainForm;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
@@ -893,7 +893,7 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 		rec.setRecContent(recContent);
 		if(StringUtil.isBlank(recFlow)) {
 			if (GlobalConstant.FLAG_Y.equals(cksh)) {
-				rec.setManagerAuditUserFlow("Y");
+                rec.setManagerAuditUserFlow(GlobalConstant.FLAG_Y);
 			}
 		}
 		return rec;
@@ -2288,7 +2288,7 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 			userBalck.setReason(docotrDelayTeturn.getPolicy());
 			userBalck.setAuditStatusId("Auditing");
 			userBalck.setAuditStatusName("待审核");
-			userBalck.setIsSystem("Y");
+            userBalck.setIsSystem(GlobalConstant.FLAG_Y);
 			userBalck.setReasonYj("您的信息已被纳入我省医务人员诚信系统，5年内不得进入我省培训基地接受住院医师规范化培训。如有相关疑问，请与相关管理部门联系。");
 			userBalck.setOperTypeId("1");
 			userBalck.setOperTypeName("自动");

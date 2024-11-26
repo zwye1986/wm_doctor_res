@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.jspform.ItemGroupData;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
@@ -30,7 +30,7 @@ import com.pinde.sci.enums.jsres.*;
 import com.pinde.sci.enums.pub.UserNationEnum;
 import com.pinde.sci.enums.pub.UserSexEnum;
 import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.res.*;
+import com.pinde.core.common.enums.*;
 import com.pinde.sci.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.enums.sys.*;
 import com.pinde.sci.form.jsres.JsResDoctorInfoForm;
@@ -186,7 +186,7 @@ public class JsResDoctorController extends GeneralController {
         if (read != null) {
             model.addAttribute("cfgValue", read.getCfgValue());
         } else {
-            model.addAttribute("cfgValue", "N");
+            model.addAttribute("cfgValue", GlobalConstant.FLAG_N);
         }
         List<String> titleList = new ArrayList<>();
         titleList.add("培训信息审核结果");
@@ -302,7 +302,7 @@ public class JsResDoctorController extends GeneralController {
      */
     @RequestMapping(value = "/main")
     public String main(Model model) throws ParseException {
-        String isRetrain = "N";
+        String isRetrain = GlobalConstant.FLAG_N;
         //获取培训记录
         SysUser currUser = GlobalContext.getCurrentUser();
         String doctorFlow = currUser.getUserFlow();
@@ -570,7 +570,7 @@ public class JsResDoctorController extends GeneralController {
             model.addAttribute("orgList", orgList);
         }
 //		if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-//			model.addAttribute("countryOrgFlag","Y");
+//			model.addAttribute("countryOrgFlag",GlobalConstant.FLAG_Y);
 //			if(null != jointOrg && jointOrg.equals("checked")){
 //				orgFlowList.add(docotrDelayTeturn.getOrgFlow());
 //				docotrDelayTeturn.setOrgFlow("");
@@ -668,7 +668,7 @@ public class JsResDoctorController extends GeneralController {
             model.addAttribute("orgList", orgList);
         }
 //		if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-//			model.addAttribute("countryOrgFlag","Y");
+//			model.addAttribute("countryOrgFlag",GlobalConstant.FLAG_Y);
 //			if(null != jointOrg && jointOrg.equals("checked")){
 //				orgFlowList.add(docotrDelayTeturn.getOrgFlow());
 //				docotrDelayTeturn.setOrgFlow("");
@@ -1221,7 +1221,7 @@ public class JsResDoctorController extends GeneralController {
         SysOrg org = orgBiz.readSysOrg(user.getOrgFlow());
         orgList.add(0, org);
 //		if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-//			model.addAttribute("countryOrgFlag","Y");
+//			model.addAttribute("countryOrgFlag",GlobalConstant.FLAG_Y);
 //			if(null != jointOrg && jointOrg.equals("checked")){
 //				orgFlowList.add(docotrDelayTeturn.getOrgFlow());
 //				docotrDelayTeturn.setOrgFlow("");
@@ -1414,7 +1414,7 @@ public class JsResDoctorController extends GeneralController {
         SysOrg org = orgBiz.readSysOrg(user.getOrgFlow());
         orgList.add(0, org);
 //		if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-//			model.addAttribute("countryOrgFlag","Y");
+//			model.addAttribute("countryOrgFlag",GlobalConstant.FLAG_Y);
 //			if(null != jointOrg && jointOrg.equals("checked")){
 //				orgFlowList.add(docotrDelayTeturn.getOrgFlow());
 //				docotrDelayTeturn.setOrgFlow("");
@@ -3338,17 +3338,17 @@ public class JsResDoctorController extends GeneralController {
         recruit.setDoctorFlow(sysUser.getUserFlow());
         recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
         List<ResDoctorRecruit> recruits = jsResDoctorRecruitBiz.readDoctorRecruits(recruit);
-        String canSave = "Y";
+        String canSave = GlobalConstant.FLAG_Y;
         if (recruits != null && recruits.size() > 0) {
             String recruitFlow = recruits.get(0).getRecruitFlow();
             JsresGraduationApply apply = jsresGraduationApplyBiz.searchByRecruitFlow(recruitFlow, recruits.get(0).getGraduationYear());
             if (apply != null) {
                 if (JsResAsseAuditListEnum.WaitChargePass.getId().equals(apply.getAuditStatusId())) {
-                    canSave = "N";
+                    canSave = GlobalConstant.FLAG_N;
                 } else if (JsResAsseAuditListEnum.WaitGlobalPass.getId().equals(apply.getAuditStatusId())) {
-                    canSave = "N";
+                    canSave = GlobalConstant.FLAG_N;
                 } else if (JsResAsseAuditListEnum.GlobalPassed.getId().equals(apply.getAuditStatusId())) {
-                    canSave = "N";
+                    canSave = GlobalConstant.FLAG_N;
                 }
             }
         }
@@ -3363,7 +3363,7 @@ public class JsResDoctorController extends GeneralController {
         }
         //GlobalConstant.FLAG_N.equals(canSave) 含义为有一条培训记录，结业考核年份是当前年，并且结业资格审查省厅通过的。学员无法修改个人信息 并且审核期间学员是否修改个人信息为否时
         if (!GlobalConstant.FLAG_Y.equals(editFlag) && GlobalConstant.FLAG_N.equals(canSave)) {
-            model.addAttribute("isDoctor", "Y");
+            model.addAttribute("isDoctor", GlobalConstant.FLAG_Y);
             return "jsres/doctorInfo";
         }
         return "jsres/doctor/editDoctorInfo";
@@ -3445,17 +3445,17 @@ public class JsResDoctorController extends GeneralController {
         recruit.setDoctorFlow(sysUser.getUserFlow());
         recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
         List<ResDoctorRecruit> recruits = jsResDoctorRecruitBiz.readDoctorRecruits(recruit);
-        String canSave = "Y";
+        String canSave = GlobalConstant.FLAG_Y;
         if (recruits != null && recruits.size() > 0) {
             String recruitFlow = recruits.get(0).getRecruitFlow();
             JsresGraduationApply apply = jsresGraduationApplyBiz.searchByRecruitFlow(recruitFlow, recruits.get(0).getGraduationYear());
             if (apply != null) {
                 if (JsResAsseAuditListEnum.WaitChargePass.getId().equals(apply.getAuditStatusId())) {
-                    canSave = "N";
+                    canSave = GlobalConstant.FLAG_N;
                 } else if (JsResAsseAuditListEnum.WaitGlobalPass.getId().equals(apply.getAuditStatusId())) {
-                    canSave = "N";
+                    canSave = GlobalConstant.FLAG_N;
                 } else if (JsResAsseAuditListEnum.GlobalPassed.getId().equals(apply.getAuditStatusId())) {
-                    canSave = "N";
+                    canSave = GlobalConstant.FLAG_N;
                 }
             }
         }
@@ -3470,7 +3470,7 @@ public class JsResDoctorController extends GeneralController {
 		}*/
         //GlobalConstant.FLAG_N.equals(canSave) 含义为有一条培训记录，结业考核年份是当前年，并且结业资格审查省厅通过的。学员无法修改个人信息 并且审核期间学员是否修改个人信息为否时
         if (!GlobalConstant.FLAG_Y.equals(editFlag) && GlobalConstant.FLAG_N.equals(canSave)) {
-            doctorInfoVo.setIsDoctor("Y");
+            doctorInfoVo.setIsDoctor(GlobalConstant.FLAG_Y);
             return ResultUtil.exec(true, "不可编辑页面", doctorInfoVo);
         }
         return ResultUtil.exec(true, "可编辑页面", doctorInfoVo);
@@ -3549,7 +3549,7 @@ public class JsResDoctorController extends GeneralController {
 //		recruit.setDoctorFlow(sysUser.getUserFlow());
 //		recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
 //		List<ResDoctorRecruit> recruits=jsResDoctorRecruitBiz.readDoctorRecruits(recruit);
-//		String canSave="Y";
+//		String canSave=GlobalConstant.FLAG_Y;
 //		if(recruits!=null&&recruits.size()>0)
 //		{
 //			String recruitFlow=recruits.get(0).getRecruitFlow();
@@ -3557,13 +3557,13 @@ public class JsResDoctorController extends GeneralController {
 //			if(apply!=null){
 //				if(JsResAsseAuditListEnum.WaitChargePass.getId().equals(apply.getAuditStatusId()))
 //				{
-//					canSave="N";
+//					canSave=GlobalConstant.FLAG_N;
 //				}else if(JsResAsseAuditListEnum.WaitGlobalPass.getId().equals(apply.getAuditStatusId()))
 //				{
-//					canSave="N";
+//					canSave=GlobalConstant.FLAG_N;
 //				}else if(JsResAsseAuditListEnum.GlobalPassed.getId().equals(apply.getAuditStatusId()))
 //				{
-//					canSave="N";
+//					canSave=GlobalConstant.FLAG_N;
 //				}
 //			}
 //		}
@@ -3578,7 +3578,7 @@ public class JsResDoctorController extends GeneralController {
 //		}
 //		//GlobalConstant.FLAG_N.equals(canSave) 含义为有一条培训记录，结业考核年份是当前年，并且结业资格审查省厅通过的。学员无法修改个人信息 并且审核期间学员是否修改个人信息为否时
 //		if(!GlobalConstant.FLAG_Y.equals(editFlag)&&GlobalConstant.FLAG_N.equals(canSave)){
-//			model.addAttribute("isDoctor","Y");
+//			model.addAttribute("isDoctor",GlobalConstant.FLAG_Y);
 //			return "jsres/doctorInfo";
 //		}
         return "jsres/doctorInfo4edit";
@@ -3738,9 +3738,9 @@ public class JsResDoctorController extends GeneralController {
         if (uploadFile != null && !uploadFile.isEmpty()) {
             resultPath = userBiz.uploadImg(userFlow, uploadFile);
             if (resultPath.length() > 8 && resultPath.indexOf("success:") != -1) {
-                model.addAttribute("Msg", "Y");
+                model.addAttribute("Msg", GlobalConstant.FLAG_Y);
             } else {
-                model.addAttribute("Msg", "N");
+                model.addAttribute("Msg", GlobalConstant.FLAG_N);
             }
         }
         model.addAttribute("result", resultPath);
@@ -3855,17 +3855,17 @@ public class JsResDoctorController extends GeneralController {
             recruit.setDoctorFlow(sysUser.getUserFlow());
             recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
             List<ResDoctorRecruit> recruits = jsResDoctorRecruitBiz.readDoctorRecruits(recruit);
-            String canSave = "Y";
+            String canSave = GlobalConstant.FLAG_Y;
             if (recruits != null && recruits.size() > 0) {
                 String recruitFlow = recruits.get(0).getRecruitFlow();
                 JsresGraduationApply apply = jsresGraduationApplyBiz.searchByRecruitFlow(recruitFlow, recruits.get(0).getGraduationYear());
                 if (apply != null) {
                     if (JsResAsseAuditListEnum.WaitChargePass.getId().equals(apply.getAuditStatusId())) {
-                        canSave = "N";
+                        canSave = GlobalConstant.FLAG_N;
                     } else if (JsResAsseAuditListEnum.WaitGlobalPass.getId().equals(apply.getAuditStatusId())) {
-                        canSave = "N";
+                        canSave = GlobalConstant.FLAG_N;
                     } else if (JsResAsseAuditListEnum.GlobalPassed.getId().equals(apply.getAuditStatusId())) {
-                        canSave = "N";
+                        canSave = GlobalConstant.FLAG_N;
                     }
                     if (GlobalConstant.FLAG_Y.equals(canSave)) {
                         tempMapper.updateRecruitAsseInfoByApplyYear(apply.getApplyFlow(), sysUser.getUserFlow());
@@ -4223,7 +4223,7 @@ public class JsResDoctorController extends GeneralController {
             model.addAttribute("catSpeId", doctorRecruit.getCatSpeId());
             model.addAttribute("catSpeName", doctorRecruit.getCatSpeName());
             model.addAttribute("doctorRecruit", doctorRecruit);
-            model.addAttribute("addRecord", "Y");//添加新的培训记录标识
+            model.addAttribute("addRecord", GlobalConstant.FLAG_Y);//添加新的培训记录标识
         }
         //已审核通过
         ResDoctorRecruit passedRec = new ResDoctorRecruit();
@@ -4295,7 +4295,7 @@ public class JsResDoctorController extends GeneralController {
          List<Map<String,String>> resRecList = resRecBiz.searchInfo2(resRec2, currdoctor, userFlowList, null);
          if(resRecList!=null&&!resRecList.isEmpty())
          {
-         model.addAttribute("haveReturn","Y");
+         model.addAttribute("haveReturn",GlobalConstant.FLAG_Y);
          }
          **/
 //		ResDocotrDelayTeturn docotrDelayTeturn = new ResDocotrDelayTeturn();
@@ -4305,13 +4305,13 @@ public class JsResDoctorController extends GeneralController {
 //		List<ResDocotrDelayTeturn> resRecList = resDoctorDelayTeturnBiz.searchInfo(docotrDelayTeturn,null,null,null);
 //		if(resRecList!=null&&!resRecList.isEmpty())
 //		{
-//			model.addAttribute("haveReturn","Y");
+//			model.addAttribute("haveReturn",GlobalConstant.FLAG_Y);
 //		}
 
         ResDocotrDelayTeturn ret = resDoctorDelayTeturnBiz.findTeturnInfo(recruitFlow);
         model.addAttribute("ret", ret);
         if (ret != null) {
-            model.addAttribute("haveReturn", "Y");
+            model.addAttribute("haveReturn", GlobalConstant.FLAG_Y);
         }
         String applyYear = "";
         if (StringUtil.isNotBlank(recruitFlow)) {
@@ -4524,7 +4524,7 @@ public class JsResDoctorController extends GeneralController {
             orgList = orgBiz.searchOrgNotJointOrg(sysOrg, orgLevelList);
         } else {
             sysOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-            sysOrg.setIsAcc("Y");
+            sysOrg.setIsAcc(GlobalConstant.FLAG_Y);
             orgList = orgBiz.searchOrgIsAcc(sysOrg);
         }
         return orgList;
@@ -4583,7 +4583,7 @@ public class JsResDoctorController extends GeneralController {
         List<ResOrgSpe> speList = null;
         Map<String, List> resultMap = new HashMap<>();
         resOrgSpe.setRecordStatus(GlobalConstant.FLAG_Y);
-        String speFlag = "N";
+        String speFlag = GlobalConstant.FLAG_N;
         SysUser sysUser = GlobalContext.getCurrentUser();
 //		List<JsresDoctorSpe> docSpeList = speAssignBiz.searchDoctorSpe();
         List<Map<String, String>> docSpeList = resDoctorBiz.searchDoctorSpe();
@@ -4592,7 +4592,7 @@ public class JsResDoctorController extends GeneralController {
                 String idNo = spe.get("ID_NO");
                 String doctorTypeId = spe.get("DOCTOR_TYPE_ID");
                 if (idNo.equals(sysUser.getIdNo()) && !"Graduate".equals(doctorTypeId)) {
-                    speFlag = "Y";
+                    speFlag = GlobalConstant.FLAG_Y;
                     break;
                 }
             }
@@ -4747,7 +4747,7 @@ public class JsResDoctorController extends GeneralController {
         if (TrainCategoryEnum.AssiGeneral.getId().equals(catSpeId) || RecDocCategoryEnum.WMFirst.getId().equals(catSpeId)) {
             rotation.setDoctorCategoryId(catSpeId);
         }
-        rotation.setPublishFlag("Y");
+        rotation.setPublishFlag(GlobalConstant.FLAG_Y);
         List<SchRotation> rotationList = schRotationtBiz.searchOrgStandardRotation(rotation);
         if (null != rotationList && rotationList.size() > 0) {
             docRecWithBLOBs.setRotationFlow(rotationList.get(0).getRotationFlow());
@@ -5321,7 +5321,7 @@ public class JsResDoctorController extends GeneralController {
     public String owenScore(Model model, String hideApprove, String doctorFlow, String roleFlag) throws DocumentException {
         SysUser currUser = GlobalContext.getCurrentUser();
         String operUserFlow = currUser.getUserFlow();
-        String flag = "Y";
+        String flag = GlobalConstant.FLAG_Y;
         //List<Map<String,Object>> datas=resScoreBiz.getALLScoreByDoctoFlow(operUserFlow);
 //		List<ResScore> scorelist=resScoreBiz.selectByExampleWithBLOBs(operUserFlow);
         List<ResScore> scorelist = resScoreBiz.selectByExampleWithBLOBs2(operUserFlow, flag);
@@ -5435,7 +5435,7 @@ public class JsResDoctorController extends GeneralController {
                     List<JsresExamSignup> examSignups = signups.stream().filter(jsresExamSignup -> "Skill".equals(jsresExamSignup.getSignupTypeId()) &&
                             resScore.getScorePhaseId().equals(jsresExamSignup.getSignupYear()) && StringUtil.isNotBlank(resScore.getTestId()) &&
                             resScore.getTestId().equals(jsresExamSignup.getTestId())).collect(Collectors.toList());
-                    isExamSign.put(resScore.getScoreFlow(), examSignups.size() > 0 ? "Y" : "N");
+                    isExamSign.put(resScore.getScoreFlow(), examSignups.size() > 0 ? GlobalConstant.FLAG_Y : GlobalConstant.FLAG_N);
                 }
             }
             model.addAttribute("nearestSkill", skillList.get(0));
@@ -5447,7 +5447,7 @@ public class JsResDoctorController extends GeneralController {
                     List<JsresExamSignup> examSignups = signups.stream().filter(jsresExamSignup -> "Theory".equals(jsresExamSignup.getSignupTypeId()) &&
                             resScore.getScorePhaseId().equals(jsresExamSignup.getSignupYear()) && StringUtil.isNotBlank(resScore.getTestId()) &&
                             resScore.getTestId().equals(jsresExamSignup.getTestId())).collect(Collectors.toList());
-                    isExamSign.put(resScore.getScoreFlow(), examSignups.size() > 0 ? "Y" : "N");
+                    isExamSign.put(resScore.getScoreFlow(), examSignups.size() > 0 ? GlobalConstant.FLAG_Y : GlobalConstant.FLAG_N);
                 }
             }
             model.addAttribute("nearestTheory", theoryList.get(0));
@@ -5640,10 +5640,10 @@ public class JsResDoctorController extends GeneralController {
         List<JsresExamSignup> signups = doctorRecruitBiz.readDoctorExanSignUps(user.getUserFlow());
         model.addAttribute("signups", signups);
         //是否有补考报名的资格（在系统中有资格审核记录且学员为非合格人员才有资格）
-        String isAllowApply = "Y";
+        String isAllowApply = GlobalConstant.FLAG_Y;
         // 已结业学员 不允许补考报名 禅道bug：2648
         if (doctor != null && "21".equals(doctor.getDoctorStatusId())) {
-            isAllowApply = "N";
+            isAllowApply = GlobalConstant.FLAG_N;
         }
         // isAllowApply为N 不能参加补考，无需在做结业申请判断
         if (!GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
@@ -5659,9 +5659,9 @@ public class JsResDoctorController extends GeneralController {
                     if (apply == null || (apply != null && !"GlobalPassed".equals(apply.getAuditStatusId()))) {
                         // 2019/2018/2017级助理全科全走补考报名
                         if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
-                            isAllowApply = "Y";
+                            isAllowApply = GlobalConstant.FLAG_Y;
                         }else{
-                            isAllowApply = "N";
+                            isAllowApply = GlobalConstant.FLAG_N;
                         }
                     }
                 }
@@ -5669,10 +5669,10 @@ public class JsResDoctorController extends GeneralController {
         }
         // isAllowApply为N 不能参加补考，无需在做成绩判断
         if (!GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
-            String isSkillQualifed = "N";
-            String isTheoryQualifed = "N";
-            String isSkill = "Y";
-            String isTheory = "Y";
+            String isSkillQualifed = GlobalConstant.FLAG_N;
+            String isTheoryQualifed = GlobalConstant.FLAG_N;
+            String isSkill = GlobalConstant.FLAG_Y;
+            String isTheory = GlobalConstant.FLAG_Y;
             String validYear = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 3);
             List<ResScore> resScoreList = doctorRecruitBiz.selectAllScore(user.getUserFlow(), null);
             if (resScoreList != null && resScoreList.size() > 0) {
@@ -5684,12 +5684,12 @@ public class JsResDoctorController extends GeneralController {
                     for (ResScore resScore : skillList) {
                         if ("1".equals(String.valueOf(resScore.getSkillScore()))) {
                             //3年内的技能成绩有合格的
-                            isSkillQualifed = "Y";
+                            isSkillQualifed = GlobalConstant.FLAG_Y;
                             break;
                         }
                     }
                 } else {
-                    isSkill = "N";
+                    isSkill = GlobalConstant.FLAG_N;
                 }
                 // 如果技能考试没有合格记录 无需在判断理论成绩
                 if (theoryList.size() > 0) {
@@ -5697,28 +5697,28 @@ public class JsResDoctorController extends GeneralController {
                         for (ResScore resScore : theoryList) {
                             if ("1".equals(String.valueOf(resScore.getTheoryScore()))) {
                                 //3年内的理论成绩有合格的
-                                isTheoryQualifed = "Y";
+                                isTheoryQualifed = GlobalConstant.FLAG_Y;
                                 break;
                             }
                         }
                     }
                 } else {
-                    isTheory = "N";
+                    isTheory = GlobalConstant.FLAG_N;
                 }
             }
             // 需求变更2018（不含）届以前学员 不做该判断  未参加过考核也可以补考
             if ("2018".compareTo(doctor.getSessionNumber()) <= 0 && GlobalConstant.FLAG_N.equals(isSkill) && GlobalConstant.FLAG_N.equals(isTheory)) {
                 // 2019/2018/2017级助理全科全走补考报名
                 if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
-                        isAllowApply = "Y";
+                    isAllowApply = GlobalConstant.FLAG_Y;
                 }else{
                     //从未参加过考核
-                    isAllowApply = "N";
+                    isAllowApply = GlobalConstant.FLAG_N;
                 }
             }
             if (GlobalConstant.FLAG_Y.equals(isSkillQualifed) && GlobalConstant.FLAG_Y.equals(isTheoryQualifed)) {
                 //3年内理论成绩和技能成绩都合格
-                isAllowApply = "N";
+                isAllowApply = GlobalConstant.FLAG_N;
             }
         }
         model.addAttribute("isAllowApply", isAllowApply);
@@ -5953,7 +5953,7 @@ public class JsResDoctorController extends GeneralController {
                 model.addAttribute("startDate", startTime);
                 model.addAttribute("endDate", endTime);
             }
-            String apply = "N";
+            String apply = GlobalConstant.FLAG_N;
             //判断为当前年，当前提交时间段内，学员非二阶段，且未提交的可以提交
             String currYear = DateUtil.getYear();
             Integer yearNew = Integer.valueOf(currYear) - 6;
@@ -5975,12 +5975,12 @@ public class JsResDoctorController extends GeneralController {
             List<ResTestConfig> resTestConfigList = resTestConfigBiz.findEffective(currDateTime, sysOrg.getOrgCityId());
             //当前城市的学员有没有正在进行的考试
             Boolean inTime = resTestConfigList.size() > 0 ? true : false;
-            String inApplyTime = resTestConfigList.size() > 0 ? "Y" : "N";
+            String inApplyTime = resTestConfigList.size() > 0 ? GlobalConstant.FLAG_Y : GlobalConstant.FLAG_N;
             // 判断学员有没有重新提交
             if (null != jsresGraduationApply) {
                 // 查询结业申请创建时间内的考试时间没有结束的考试信息
                 resTestConfigList = resTestConfigBiz.findEffectiveByParam(currDateTime, DateUtil.transDateTime(jsresGraduationApply.getCreateTime()), sysOrg.getOrgCityId());
-                inApplyTime = resTestConfigList.size() > 0 ? "Y" : "N";
+                inApplyTime = resTestConfigList.size() > 0 ? GlobalConstant.FLAG_Y : GlobalConstant.FLAG_N;
             }
             Boolean isWaitAudit = false;//是否待审核
             if (jsresGraduationApply != null && StringUtil.isNotBlank(jsresGraduationApply.getAuditStatusId())
@@ -5992,15 +5992,15 @@ public class JsResDoctorController extends GeneralController {
             if (recruit != null && applyFlag && inTime
                     && !TrainCategoryEnum.WMSecond.getId().equals(recruit.getCatSpeId())
                     && !isWaitAudit) {
-                apply = "Y";
+                apply = GlobalConstant.FLAG_Y;
             }
             //是否是全科、助理全科、全科方向（中医）、全科方向（西医）
             String isAssiGeneral = "";
             if (recruit != null && ("0700".equals(recruit.getSpeId()) || "51".equals(recruit.getSpeId()) || "52".equals(recruit.getSpeId())
                     || "18".equals(recruit.getSpeId()) || "50".equals(recruit.getSpeId()))) {
-                isAssiGeneral = "Y";
+                isAssiGeneral = GlobalConstant.FLAG_Y;
             } else {
-                isAssiGeneral = "N";
+                isAssiGeneral = GlobalConstant.FLAG_N;
             }
             List<PubFile> files = fileBiz.findFileByTypeFlow("asseApplication", recruitFlow);
             PubFile file = null;
@@ -6029,16 +6029,16 @@ public class JsResDoctorController extends GeneralController {
                 spes = speMap.get(recruit.getSpeId());
             }
             if (spes != null && spes.size() > 0) {
-                model.addAttribute("needChange", "Y");
+                model.addAttribute("needChange", GlobalConstant.FLAG_Y);
                 model.addAttribute("spes", spes);
             } else {
-                model.addAttribute("needChange", "N");
+                model.addAttribute("needChange", GlobalConstant.FLAG_N);
             }
             // 2019级以前的助理全科学员只能走补考报名
             if("2019".compareTo(resDoctor.getSessionNumber()) >= 0 && "50".equals(resDoctor.getTrainingSpeId())){
-                model.addAttribute("submitBtnShow", "N");
+                model.addAttribute("submitBtnShow", GlobalConstant.FLAG_N);
             }else{
-                model.addAttribute("submitBtnShow", "Y");
+                model.addAttribute("submitBtnShow", GlobalConstant.FLAG_Y);
             }
         }
         return "jsres/doctor/asseApplicationMain";
@@ -6291,9 +6291,9 @@ public class JsResDoctorController extends GeneralController {
             String isAssiGeneral = "";
             if (recruit != null && ("0700".equals(recruit.getSpeId()) || "51".equals(recruit.getSpeId()) || "52".equals(recruit.getSpeId())
                     || "18".equals(recruit.getSpeId()) || "50".equals(recruit.getSpeId()))) {
-                isAssiGeneral = "Y";
+                isAssiGeneral = GlobalConstant.FLAG_Y;
             } else {
-                isAssiGeneral = "N";
+                isAssiGeneral = GlobalConstant.FLAG_N;
             }
             List<PubFile> files = fileBiz.findFileByTypeFlow("asseApplication", recruitFlow);
             PubFile file = null;
@@ -6322,13 +6322,13 @@ public class JsResDoctorController extends GeneralController {
                 spes = speMap.get(recruit.getSpeId());
             }
             if (spes != null && spes.size() > 0) {
-                model.addAttribute("needChange", "Y");
+                model.addAttribute("needChange", GlobalConstant.FLAG_Y);
                 model.addAttribute("spes", spes);
             } else {
-                model.addAttribute("needChange", "N");
+                model.addAttribute("needChange", GlobalConstant.FLAG_N);
             }
             //结业成绩
-            scorelist = resScoreBiz.selectByExampleWithBLOBs2(operUserFlow, "Y");
+            scorelist = resScoreBiz.selectByExampleWithBLOBs2(operUserFlow, GlobalConstant.FLAG_Y);
             List<ResScore> skillList = new ArrayList<ResScore>();
             List<ResScore> theoryList = new ArrayList<ResScore>();
             if (null != scorelist && scorelist.size() > 0) {
@@ -6362,7 +6362,7 @@ public class JsResDoctorController extends GeneralController {
                         List<JsresExamSignup> examSignups = signups.stream().filter(jsresExamSignup -> "Skill".equals(jsresExamSignup.getSignupTypeId()) &&
                                 resScore.getScorePhaseId().equals(jsresExamSignup.getSignupYear()) && StringUtil.isNotBlank(resScore.getTestId()) &&
                                 resScore.getTestId().equals(jsresExamSignup.getTestId())).collect(Collectors.toList());
-                        isExamSign.put(resScore.getScoreFlow(), examSignups.size() > 0 ? "Y" : "N");
+                        isExamSign.put(resScore.getScoreFlow(), examSignups.size() > 0 ? GlobalConstant.FLAG_Y : GlobalConstant.FLAG_N);
                     }
                 }
             }
@@ -6373,7 +6373,7 @@ public class JsResDoctorController extends GeneralController {
                         List<JsresExamSignup> examSignups = signups.stream().filter(jsresExamSignup -> "Theory".equals(jsresExamSignup.getSignupTypeId()) &&
                                 resScore.getScorePhaseId().equals(jsresExamSignup.getSignupYear()) && StringUtil.isNotBlank(resScore.getTestId()) &&
                                 resScore.getTestId().equals(jsresExamSignup.getTestId())).collect(Collectors.toList());
-                        isExamSign.put(resScore.getScoreFlow(), examSignups.size() > 0 ? "Y" : "N");
+                        isExamSign.put(resScore.getScoreFlow(), examSignups.size() > 0 ? GlobalConstant.FLAG_Y : GlobalConstant.FLAG_N);
                     }
                 }
             }
@@ -6388,7 +6388,7 @@ public class JsResDoctorController extends GeneralController {
     @ResponseBody
     public String saveCertificateApply(String applyFlow) {
         JsresGraduationApply apply = jsresGraduationApplyBiz.readByFlow(applyFlow);
-        apply.setDoctorIsApply("Y");
+        apply.setDoctorIsApply(GlobalConstant.FLAG_Y);
         jsresGraduationApplyBiz.editGraduationApply(apply);
         return GlobalConstant.OPERATE_SUCCESSED;
     }
@@ -6633,7 +6633,7 @@ public class JsResDoctorController extends GeneralController {
             model.addAttribute("startDate", startTime);
             model.addAttribute("endDate", endTime);
         }
-        String apply = "N";
+        String apply = GlobalConstant.FLAG_N;
         //判断为当前年，当前提交时间段内，学员非二阶段，且未提交的可以提交
         String currYear = DateUtil.getYear();
         String currTime = DateUtil.getCurrDateTime();
@@ -6650,12 +6650,12 @@ public class JsResDoctorController extends GeneralController {
         List<ResTestConfig> resTestConfigList = resTestConfigBiz.findEffective(currDateTime, sysOrg.getOrgCityId());
         //当前城市的学员有没有正在进行的考试
         Boolean inTime = resTestConfigList.size() > 0 ? true : false;
-        String inApplyTime = resTestConfigList.size() > 0 ? "Y" : "N";
+        String inApplyTime = resTestConfigList.size() > 0 ? GlobalConstant.FLAG_Y : GlobalConstant.FLAG_N;
         // 判断学员有没有重新提交
         if (null != jsresGraduationApply) {
             // 查询结业申请创建时间内的考试时间没有结束的考试信息
             resTestConfigList = resTestConfigBiz.findEffectiveByParam(currDateTime, DateUtil.transDateTime(jsresGraduationApply.getCreateTime()), sysOrg.getOrgCityId());
-            inApplyTime = resTestConfigList.size() > 0 ? "Y" : "N";
+            inApplyTime = resTestConfigList.size() > 0 ? GlobalConstant.FLAG_Y : GlobalConstant.FLAG_N;
         }
         Boolean isWaitAudit = false;//是否待审核
         if (jsresGraduationApply != null && StringUtil.isNotBlank(jsresGraduationApply.getAuditStatusId())) {
@@ -6664,15 +6664,15 @@ public class JsResDoctorController extends GeneralController {
         if (recruit != null && currYear.equals(recruit.getGraduationYear()) && inTime
                 && !TrainCategoryEnum.WMSecond.getId().equals(recruit.getCatSpeId())
                 && !isWaitAudit) {
-            apply = "Y";
+            apply = GlobalConstant.FLAG_Y;
         }
         //是否是全科、助理全科、全科方向（中医）、全科方向（西医）
         String isAssiGeneral = "";
         if (recruit != null && ("0700".equals(recruit.getSpeId()) || "51".equals(recruit.getSpeId()) || "52".equals(recruit.getSpeId())
                 || "18".equals(recruit.getSpeId()) || "50".equals(recruit.getSpeId()))) {
-            isAssiGeneral = "Y";
+            isAssiGeneral = GlobalConstant.FLAG_Y;
         } else {
-            isAssiGeneral = "N";
+            isAssiGeneral = GlobalConstant.FLAG_N;
         }
         List<PubFile> files = fileBiz.findFileByTypeFlow("asseApplication", recruitFlow);
         PubFile file = null;
@@ -6694,10 +6694,10 @@ public class JsResDoctorController extends GeneralController {
             spes = speMap.get(recruit.getSpeId());
         }
         if (spes != null && spes.size() > 0) {
-            model.addAttribute("needChange", "Y");
+            model.addAttribute("needChange", GlobalConstant.FLAG_Y);
             model.addAttribute("spes", spes);
         } else {
-            model.addAttribute("needChange", "N");
+            model.addAttribute("needChange", GlobalConstant.FLAG_N);
         }
         return "jsres/doctor/asseApplication";
     }
@@ -7734,7 +7734,7 @@ public class JsResDoctorController extends GeneralController {
         Map<String, Object> avgBiMap = new HashMap<>();
         avgBiMap = avgBiMapAll;
         model.addAttribute("avgBiMap", avgBiMap);
-        String apply = "N";
+        String apply = GlobalConstant.FLAG_N;
         //判断为当前年，当前提交时间段内，学员非二阶段，且未提交的可以提交
         String currYear = DateUtil.getYear();
         String currTime = DateUtil.getCurrDateTime();
@@ -7760,15 +7760,15 @@ public class JsResDoctorController extends GeneralController {
         if (currYear.equals(recruit.getGraduationYear()) && inTime
                 && !TrainCategoryEnum.WMSecond.getId().equals(recruit.getCatSpeId())
                 && !isWaitAudit) {
-            apply = "Y";
+            apply = GlobalConstant.FLAG_Y;
         }
         //是否是全科、助理全科、全科方向（中医）、全科方向（西医）
         String isAssiGeneral = "";
         if ("0700".equals(recruit.getSpeId()) || "51".equals(recruit.getSpeId()) || "52".equals(recruit.getSpeId())
                 || "18".equals(recruit.getSpeId()) || "50".equals(recruit.getSpeId())) {
-            isAssiGeneral = "Y";
+            isAssiGeneral = GlobalConstant.FLAG_Y;
         } else {
-            isAssiGeneral = "N";
+            isAssiGeneral = GlobalConstant.FLAG_N;
         }
         List<PubFile> files = fileBiz.findFileByTypeFlow("asseApplication", recruitFlow);
         PubFile file = null;
@@ -7790,10 +7790,10 @@ public class JsResDoctorController extends GeneralController {
         Map<String, List<Map<String, String>>> speMap = setSpeMap(model);
         List<Map<String, String>> spes = speMap.get(recruit.getSpeId());
         if (spes != null && spes.size() > 0) {
-            model.addAttribute("needChange", "Y");
+            model.addAttribute("needChange", GlobalConstant.FLAG_Y);
             model.addAttribute("spes", spes);
         } else {
-            model.addAttribute("needChange", "N");
+            model.addAttribute("needChange", GlobalConstant.FLAG_N);
         }
         return "jsres/asse/hospital/printApplication";
     }
@@ -8482,7 +8482,7 @@ public class JsResDoctorController extends GeneralController {
                 }
                 //仅当学员上传出科考核才显示，未上传不显示 基地，市局，高校，省厅
                 if (StringUtil.isNotBlank(hideApprove)) {
-                    afterMap.put(dept.getRecordFlow(), "N");
+                    afterMap.put(dept.getRecordFlow(), GlobalConstant.FLAG_N);
                     List<Map<String, Object>> imagelist = new ArrayList<Map<String, Object>>();
 //						ResRec rec =resRecBiz.queryResRec(dept.getRecordFlow(),doctorFlow, AfterRecTypeEnum.AfterSummary.getId());
                     ResSchProcessExpress rec = expressBiz.queryResRec(dept.getRecordFlow(), doctorFlow, AfterRecTypeEnum.AfterSummary.getId());
@@ -8506,7 +8506,7 @@ public class JsResDoctorController extends GeneralController {
                         }
                     }
                     if (imagelist.size() > 0) {
-                        afterMap.put(dept.getRecordFlow(), "Y");
+                        afterMap.put(dept.getRecordFlow(), GlobalConstant.FLAG_Y);
                     }
                 }
             }
@@ -8588,7 +8588,7 @@ public class JsResDoctorController extends GeneralController {
             // 是否开通过程
             cfgCode = "jsres_doctor_app_menu_" + doctor.getDoctorFlow();
             cfg = jsResPowerCfgBiz.read(cfgCode);
-            String appMenu = "N";
+            String appMenu = GlobalConstant.FLAG_N;
             if (cfg != null) {
                 appMenu = cfg.getCfgValue();
             }
@@ -8600,7 +8600,7 @@ public class JsResDoctorController extends GeneralController {
             } else {
                 orgFlow = doctor.getOrgFlow();
             }
-            String daoRu = "N";
+            String daoRu = GlobalConstant.FLAG_N;
 
             String key1 = "jsres_" + orgFlow + "_daoru";
             JsresPowerCfg dr = jsResPowerCfgBiz.read(key1);
@@ -8722,7 +8722,7 @@ public class JsResDoctorController extends GeneralController {
                 }
                 //仅当学员上传出科考核才显示，未上传不显示 基地，市局，高校，省厅
                 if (StringUtil.isNotBlank(hideApprove)) {
-                    afterMap.put(dept.getRecordFlow(), "N");
+                    afterMap.put(dept.getRecordFlow(), GlobalConstant.FLAG_N);
                     List<Map<String, Object>> imagelist = new ArrayList<Map<String, Object>>();
                     ResSchProcessExpress rec = expressBiz.queryResRec(dept.getRecordFlow(), doctorFlow, AfterRecTypeEnum.AfterSummary.getId());
                     String content = null == rec ? "" : rec.getRecContent();
@@ -8745,7 +8745,7 @@ public class JsResDoctorController extends GeneralController {
                         }
                     }
                     if (imagelist.size() > 0) {
-                        afterMap.put(dept.getRecordFlow(), "Y");
+                        afterMap.put(dept.getRecordFlow(), GlobalConstant.FLAG_Y);
                     }
                 }
             }
@@ -8827,7 +8827,7 @@ public class JsResDoctorController extends GeneralController {
             // 是否开通过程
             cfgCode = "jsres_doctor_app_menu_" + doctor.getDoctorFlow();
             cfg = jsResPowerCfgBiz.read(cfgCode);
-            String appMenu = "N";
+            String appMenu = GlobalConstant.FLAG_N;
             if (cfg != null) {
                 appMenu = cfg.getCfgValue();
             }
@@ -8839,7 +8839,7 @@ public class JsResDoctorController extends GeneralController {
             } else {
                 orgFlow = doctor.getOrgFlow();
             }
-            String daoRu = "N";
+            String daoRu = GlobalConstant.FLAG_N;
 
             String key1 = "jsres_" + orgFlow + "_daoru";
             JsresPowerCfg dr = jsResPowerCfgBiz.read(key1);

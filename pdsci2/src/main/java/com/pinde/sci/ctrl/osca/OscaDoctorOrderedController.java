@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.osca;
 
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -73,7 +74,7 @@ public class OscaDoctorOrderedController extends GeneralController {
             Integer currentPage, HttpServletRequest request,Model model){
         String orgName="";
         String searchNotFull="";
-        String searchFlag="N";
+        String searchFlag = GlobalConstant.FLAG_N;
         if(oscaSkillsAssessmentExt!=null){
             orgName=oscaSkillsAssessmentExt.getOrgName();
             searchNotFull=oscaSkillsAssessmentExt.getSearchNotFull();
@@ -210,7 +211,7 @@ public class OscaDoctorOrderedController extends GeneralController {
                 }
             }
             if("on".equals(searchNotFull)){
-                searchFlag="Y";
+                searchFlag = GlobalConstant.FLAG_Y;
                 List<OscaSkillsAssessmentExt> skillsAssessmentListTemp=new ArrayList<>();
                 for (OscaSkillsAssessmentExt osae:skillsAssessmentList) {
                     if(osae!=null&&osae.getOverplus()!=null&&Integer.parseInt(osae.getOverplus())>0){
@@ -326,9 +327,9 @@ public class OscaDoctorOrderedController extends GeneralController {
                 OscaDoctorRegist doctorRegist = doctorRegistList.get(0);
                 String showTip = doctorRegist.getShowTip();
                 if(StringUtil.isBlank(showTip)){
-                    doctorRegist.setShowTip("Y");
+                    doctorRegist.setShowTip(GlobalConstant.FLAG_Y);
                     oscaDoctorRegistBiz.edit(doctorRegist);
-                    model.addAttribute("showTip","Y");
+                    model.addAttribute("showTip", GlobalConstant.FLAG_Y);
                 }
             }
         }

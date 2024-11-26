@@ -1,7 +1,9 @@
 package com.pinde.sci.ctrl.res;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.Docx4jUtil;
@@ -17,8 +19,8 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.enums.res.DiscipleStatusEnum;
-import com.pinde.sci.enums.res.NoteTypeEnum;
+import com.pinde.core.common.enums.DiscipleStatusEnum;
+import com.pinde.core.common.enums.NoteTypeEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorDiscioleExt;
@@ -86,15 +88,6 @@ public class ResDiscipleNoteController extends GeneralController {
         }
 
         List<String> auditStatusList = new ArrayList<>();
-        if (GlobalConstant.RES_ROLE_SCOPE_DISCIPLE.equals(roleScope)) {
-            discipleNoteInfo.setTeacherFlow(currUser.getUserFlow());
-            if (!GlobalConstant.FLAG_Y.equals(operaFlag)) {
-                auditStatusList.add(DiscipleStatusEnum.Qualified.getId());
-                auditStatusList.add(DiscipleStatusEnum.UnQualified.getId());
-            }
-            auditStatusList.add(DiscipleStatusEnum.Submit.getId());
-            model.addAttribute("doctorFlow", doctorFlow);
-        }
         if (GlobalConstant.RES_ROLE_SCOPE_ADMIN.equals(roleScope)) {
             if (!GlobalConstant.FLAG_Y.equals(operaFlag)) {
                 auditStatusList.add(DiscipleStatusEnum.Qualified.getId());
@@ -255,16 +248,6 @@ public class ResDiscipleNoteController extends GeneralController {
                 discipleNoteInfo.setAuditStatusName(DiscipleStatusEnum.Apply.getName());
             }
         }
-        if (roleScope.equals(GlobalConstant.RES_ROLE_SCOPE_DISCIPLE)) {
-            discipleNoteInfo.setAuditTime(DateUtil.getCurrDateTime());
-            if (GlobalConstant.FLAG_Y.equals(flag)) {
-                discipleNoteInfo.setAuditStatusId(DiscipleStatusEnum.Qualified.getId());
-                discipleNoteInfo.setAuditStatusName(DiscipleStatusEnum.Qualified.getName());
-            } else {
-                discipleNoteInfo.setAuditStatusId(DiscipleStatusEnum.UnQualified.getId());
-                discipleNoteInfo.setAuditStatusName(DiscipleStatusEnum.UnQualified.getName());
-            }
-        }
         int i = discipleBiz.updateResDiscipleNoteInfoWithBLOBs(discipleNoteInfo);
 //        学员端多图片上传
         if (roleScope.equals(GlobalConstant.RES_ROLE_SCOPE_DOCTOR)) {
@@ -361,17 +344,6 @@ public class ResDiscipleNoteController extends GeneralController {
                 }
             }
         }
-        if (roleScope.equals(GlobalConstant.RES_ROLE_SCOPE_DISCIPLE)) {
-            if (GlobalConstant.FLAG_Y.equals(flag)) {
-                assessmentWithBLOBs.setAuditStatusId(DiscipleStatusEnum.DiscipleAudit.getId());
-                assessmentWithBLOBs.setAuditStatusName(DiscipleStatusEnum.DiscipleAudit.getName());
-                assessmentWithBLOBs.setAuditTime(DateUtil.getCurrDateTime());
-            } else {
-                assessmentWithBLOBs.setAuditTime(DateUtil.getCurrDateTime());
-                assessmentWithBLOBs.setAuditStatusId(DiscipleStatusEnum.DiscipleBack.getId());
-                assessmentWithBLOBs.setAuditStatusName(DiscipleStatusEnum.DiscipleBack.getName());
-            }
-        }
         if (roleScope.equals(GlobalConstant.RES_ROLE_SCOPE_ADMIN)) {
             if (GlobalConstant.FLAG_Y.equals(flag)) {
                 assessmentWithBLOBs.setAdminTime(DateUtil.getCurrDateTime());
@@ -438,13 +410,6 @@ public class ResDiscipleNoteController extends GeneralController {
         }
         if(StringUtil.isNotBlank(doctor.getSessionNumber())){
             map.put("sessionNumber",doctor.getSessionNumber());
-        }
-        if (roleScope.equals(GlobalConstant.RES_ROLE_SCOPE_DISCIPLE)) {
-            map.put("auditStatusId", DiscipleStatusEnum.Submit.getId());
-            map.put("teacherFlow", currUser.getUserFlow());
-            if (NoteTypeEnum.Note.getId().equals(scope) || NoteTypeEnum.Experience.getId().equals(scope) || NoteTypeEnum.BookExperience.getId().equals(scope)) {
-                map.put("noteTypeId", scope);
-            }
         }
         if (roleScope.equals(GlobalConstant.RES_ROLE_SCOPE_ADMIN)) {
             map.put("auditStatusId", DiscipleStatusEnum.DiscipleAudit.getId());

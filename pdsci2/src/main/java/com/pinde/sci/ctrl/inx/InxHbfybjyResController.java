@@ -553,7 +553,7 @@ public class InxHbfybjyResController extends GeneralController{
 //
 //		int result = resDoctorBiz.editDocUserFromRegister(doctor, user, extInfo);
 //		if(GlobalConstant.ZERO_LINE!=result){
-//			model.addAttribute("useCompleteUserInfo" , "Y");
+//			model.addAttribute("useCompleteUserInfo" , GlobalConstant.FLAG_Y);
 //			doctor = this.resDoctorBiz.readDoctor(user.getUserFlow());
 //			user = this.userBiz.readSysUser(user.getUserFlow());
 //			model.addAttribute("user" , user);

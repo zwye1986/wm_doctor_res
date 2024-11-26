@@ -733,7 +733,7 @@ public class UserController extends GeneralController{
 						if(null == resDoctor || !"21".equals(resDoctor.getDoctorStatusId())){
 							return GlobalConstant.USER_PHONE_REPETE;
 						}
-						oldUser.setRecordStatus("N");
+                        oldUser.setRecordStatus(GlobalConstant.FLAG_N);
 						oldUser.setUserPhone(oldUser.getUserPhone() + "_x"); // 因为手机号不允许重复，这里把手机号做个标记
 						userBiz.edit(oldUser);
 					}else {
@@ -751,7 +751,7 @@ public class UserController extends GeneralController{
 				if(null == resDoctor || !"21".equals(resDoctor.getDoctorStatusId())){
 					return GlobalConstant.USER_CODE_REPETE;
 				}
-				old.setRecordStatus("N");
+                old.setRecordStatus(GlobalConstant.FLAG_N);
 				userBiz.edit(old);
 
 			}
@@ -802,7 +802,7 @@ public class UserController extends GeneralController{
 			teacherTraining.setSexName(user.getSexName());
 			teacherTraining.setOrgFlow(user.getOrgFlow());
 			teacherTraining.setOrgName(user.getOrgName());
-			teacherTraining.setRecordStatus("Y");
+            teacherTraining.setRecordStatus(GlobalConstant.FLAG_Y);
 			if (JsResTeacherLevelEnum.GeneralFaculty.getName().equals(user.getTeacherLevel())) {
 				teacherTraining.setTeacherLevelId(JsResTeacherLevelEnum.GeneralFaculty.getId());
 			}
@@ -820,7 +820,7 @@ public class UserController extends GeneralController{
 			record.setSexName(user.getSexName());
 			record.setOrgFlow(user.getOrgFlow());
 			record.setOrgName(user.getOrgName());
-			record.setRecordStatus("Y");
+            record.setRecordStatus(GlobalConstant.FLAG_Y);
 			if (JsResTeacherLevelEnum.GeneralFaculty.getName().equals(user.getTeacherLevel())) {
 				record.setTeacherLevelId(JsResTeacherLevelEnum.GeneralFaculty.getId());
 			}
@@ -883,7 +883,7 @@ public class UserController extends GeneralController{
 
 		//打开app权限
 		String cfgCode = "jsres_teacher_app_login_"+user.getUserFlow();
-		String cfgValue = "Y";
+        String cfgValue = GlobalConstant.FLAG_Y;
 		String cfgDesc = "是否开放带教app权限";
 		JsresPowerCfg cfg = new JsresPowerCfg();
 		cfg.setCfgCode(cfgCode);
@@ -984,7 +984,7 @@ public class UserController extends GeneralController{
 		//存在师资信息也生效师资
 		ResTeacherTraining teacherTraining = new ResTeacherTraining();
 		teacherTraining.setRecordFlow(user.getUserFlow());
-		teacherTraining.setRecordStatus("Y");
+        teacherTraining.setRecordStatus(GlobalConstant.FLAG_Y);
 		resStatisticBiz.save(teacherTraining);
 		return GlobalConstant.OPERATE_SUCCESSED;
 	}
@@ -1024,7 +1024,7 @@ public class UserController extends GeneralController{
 		//存在师资信息也生效师资
 		ResTeacherTraining teacherTraining = new ResTeacherTraining();
 		teacherTraining.setRecordFlow(user.getUserFlow());
-		teacherTraining.setRecordStatus("N");
+        teacherTraining.setRecordStatus(GlobalConstant.FLAG_N);
 		resStatisticBiz.save(teacherTraining);
 		return GlobalConstant.LOCK_SUCCESSED;
 	}
@@ -1038,7 +1038,7 @@ public class UserController extends GeneralController{
 		//存在师资信息也生效师资
 		ResTeacherTraining teacherTraining = new ResTeacherTraining();
 		teacherTraining.setRecordFlow(user.getUserFlow());
-		teacherTraining.setRecordStatus("N");
+        teacherTraining.setRecordStatus(GlobalConstant.FLAG_N);
 		resStatisticBiz.save(teacherTraining);
 		return GlobalConstant.STOP_USE_SUCCESSED;
 	}

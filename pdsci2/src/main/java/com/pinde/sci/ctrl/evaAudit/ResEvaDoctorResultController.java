@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.evaAudit;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -9,8 +10,8 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.res.RecStatusEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.RecStatusEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.enums.srm.AchScoreEnum;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
@@ -68,11 +69,11 @@ public class ResEvaDoctorResultController extends GeneralController {
         paramMap.put("endTime",endTime);
         paramMap.put("deptFlow",deptFlow);
         if (GlobalConstant.RECORD_STATUS_Y.equals(status)){
-            paramMap.put("schFlag","N");
-            paramMap.put("isCurrentFlag","Y");
+            paramMap.put("schFlag", GlobalConstant.FLAG_N);
+            paramMap.put("isCurrentFlag", GlobalConstant.FLAG_Y);
         }else if (GlobalConstant.RECORD_STATUS_N.equals(status)){
-            paramMap.put("schFlag","Y");
-            paramMap.put("isCurrentFlag","N");
+            paramMap.put("schFlag", GlobalConstant.FLAG_Y);
+            paramMap.put("isCurrentFlag", GlobalConstant.FLAG_N);
         }
         String doctorRoleFlow = InitConfig.getSysCfg("res_doctor_role_flow");
         paramMap.put("roleFlow",doctorRoleFlow);
@@ -110,7 +111,7 @@ public class ResEvaDoctorResultController extends GeneralController {
         //查询该基地的科室
         SysDept sysDept = new SysDept();
         sysDept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-        sysDept.setRecordStatus("Y");
+        sysDept.setRecordStatus(GlobalConstant.FLAG_Y);
         List<SysDept> deptList = deptBiz.searchDept(sysDept);
         model.addAttribute("deptList",deptList);
 
@@ -375,7 +376,7 @@ public class ResEvaDoctorResultController extends GeneralController {
         //查询该基地的科室
         SysDept sysDept = new SysDept();
         sysDept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-        sysDept.setRecordStatus("Y");
+        sysDept.setRecordStatus(GlobalConstant.FLAG_Y);
         List<SysDept> deptList = deptBiz.searchDept(sysDept);
         model.addAttribute("deptList",deptList);
 
@@ -453,7 +454,7 @@ public class ResEvaDoctorResultController extends GeneralController {
         //查询该基地的科室
         SysDept sysDept = new SysDept();
         sysDept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-        sysDept.setRecordStatus("Y");
+        sysDept.setRecordStatus(GlobalConstant.FLAG_Y);
         List<SysDept> deptList = deptBiz.searchDept(sysDept);
         model.addAttribute("deptList",deptList);
 

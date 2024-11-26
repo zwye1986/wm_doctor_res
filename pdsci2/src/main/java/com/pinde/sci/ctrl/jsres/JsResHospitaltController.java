@@ -977,7 +977,7 @@ public class JsResHospitaltController extends GeneralController{
 		sign.setAuditStatusId(auditStatusId);
 		sign.setAuditStatusName(AuditStatusEnum.getNameById(auditStatusId));
 		if("UnPassed".equals(auditStatusId)){
-			sign.setUseStatusId("N");
+            sign.setUseStatusId(GlobalConstant.FLAG_N);
 			sign.setUseStatusName("停用");
 		}
 		if("Passed".equals(auditStatusId)){
@@ -1005,7 +1005,7 @@ public class JsResHospitaltController extends GeneralController{
 		PageHelper.startPage(currentPage, getPageSize(request));
 		if(StringUtil.isNotBlank(sign.getAuditStatusId()) && sign.getAuditStatusId().equals("NotUse")){
 			sign.setAuditStatusId("");
-			sign.setUseStatusId("N");
+            sign.setUseStatusId(GlobalConstant.FLAG_N);
 		}
 		model.addAttribute("orgFlow",sign.getOrgFlow());
 		model.addAttribute("orgName",sign.getOrgName());
@@ -1044,7 +1044,7 @@ public class JsResHospitaltController extends GeneralController{
 			sign.setAuditStatusName("未启用");
 			sign.setPresidentName(presidentName);
 			sign.setSignUrl(resultPath);
-			sign.setUseStatusId("N");
+            sign.setUseStatusId(GlobalConstant.FLAG_N);
 			sign.setUseStatusName("停用");
 			speAssignBiz.saveJsresSign(sign);
 		}else{
@@ -1060,16 +1060,16 @@ public class JsResHospitaltController extends GeneralController{
 		JsresSign sign = speAssignBiz.searchSignByPrimaryKey(signFlow);
 		if(GlobalConstant.FLAG_Y.equals(useStatusId)) {
 			//启用前查询是否有启用的签名
-			List<JsresSign> signList = speAssignBiz.searchSignListByOrgFlow(user.getOrgFlow(), "Y");
+            List<JsresSign> signList = speAssignBiz.searchSignListByOrgFlow(user.getOrgFlow(), GlobalConstant.FLAG_Y);
 			if (null != signList && signList.size() > 0) {
 				return "已有启用或审核中数据，请先停用！";
 			}
-			sign.setUseStatusId("Y");
+            sign.setUseStatusId(GlobalConstant.FLAG_Y);
 			sign.setUseStatusName("启用");
 			sign.setAuditStatusId("Auditing");
 			sign.setAuditStatusName("待审核");
 		}else{
-			sign.setUseStatusId("N");
+            sign.setUseStatusId(GlobalConstant.FLAG_N);
 			sign.setUseStatusName("停用");
 			sign.setStopTime(DateUtil.getCurrDateTime2());
 		}

@@ -9,6 +9,15 @@ public enum AbsenceTypeEnum implements GeneralEnum<String> {
 	Maternityleave("Maternityleave","产假","11"),
 	Marriage("Marriage","婚假","10"),
 	Yearleave("Yearleave","年假","06"),
+    Retake("Retake", "补休", "08"),
+    Maternity("Maternity", "产假", "11"),
+    Paternity("Paternity ", "陪产假", "12"),
+    PlannedBirth("PlannedBirth", "计生假", "13"),
+    Funeral("Funeral", "丧假", "14"),
+    GoAbroad("GoAbroad", "出国", "15"),
+    Study("Study", "进修", "16"),
+    FulltimeGraduate("FulltimeGraduate", "脱产读研", "18"),
+    Radiation("Radiation", "放射假", "19"),
 	Absenteeism("Absenteeism","旷工","20")
 	;
 

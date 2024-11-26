@@ -262,7 +262,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 				schExamArrangement.setSessionNumber(sessionNumber);
 				schExamArrangement.setTrainingSpeId(speId);
 				schExamArrangement.setTrainingSpeName(DictTypeEnum.getDictName(e,speId));
-				c+=updateArrangement(schExamArrangement,standardDeptId,"N");
+                c += updateArrangement(schExamArrangement, standardDeptId, GlobalConstant.FLAG_N);
 			}
 		}
 		return c;

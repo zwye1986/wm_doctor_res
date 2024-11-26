@@ -89,9 +89,9 @@ public class ResFundsContorller extends GeneralController {
         // 查询是否需要省厅审核
         SysCfg fundingRudit = jswjwBiz.read("funding_Report_audit");
         if(GlobalConstant.FLAG_Y.equals(fundingRudit.getCfgValue())){
-            model.addAttribute("fundingRudit","Y");
+            model.addAttribute("fundingRudit", GlobalConstant.FLAG_Y);
         } else {
-            model.addAttribute("fundingRudit","N");
+            model.addAttribute("fundingRudit", GlobalConstant.FLAG_N);
         }
         return "/res/Funding/baseAllocationDetailsList";
     }
@@ -135,9 +135,9 @@ public class ResFundsContorller extends GeneralController {
         // 查询是否需要省厅审核
         SysCfg fundingRudit = jswjwBiz.read("funding_Report_audit");
         if(GlobalConstant.FLAG_Y.equals(fundingRudit.getCfgValue())){
-            model.addAttribute("fundingRudit","Y");
+            model.addAttribute("fundingRudit", GlobalConstant.FLAG_Y);
         } else {
-            model.addAttribute("fundingRudit","N");
+            model.addAttribute("fundingRudit", GlobalConstant.FLAG_N);
         }
         // 审核
         if(StringUtil.isNotBlank(auditBase)){
@@ -444,7 +444,7 @@ public class ResFundsContorller extends GeneralController {
         HashMap<String, Object> map = new HashMap<>();
         if(provinceFundDetailList != null ){
             for (ResProvinceFundDetail fundDetail: provinceFundDetailList) {
-                map.put(fundDetail.getMainFlow(),"Y");
+                map.put(fundDetail.getMainFlow(), GlobalConstant.FLAG_Y);
             }
         }
         model.addAttribute("provinceFundList",provinceFundList);

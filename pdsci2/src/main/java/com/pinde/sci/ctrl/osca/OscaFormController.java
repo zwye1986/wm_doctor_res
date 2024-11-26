@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.osca;
 
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -42,7 +43,7 @@ public class OscaFormController extends GeneralController{
 			model.addAttribute("froms",froms);
 		}
 		if(roleFlag.equals("hospital")){
-			from.setIsReleased("Y");
+            from.setIsReleased(GlobalConstant.FLAG_Y);
 			PageHelper.startPage(currentPage,getPageSize(request));
 			List<OscaFrom> froms = formCfgBiz.searchHospitalFrom(from);
 			model.addAttribute("froms",froms);
@@ -62,13 +63,13 @@ public class OscaFormController extends GeneralController{
 			from.setOrgName("江苏省厅");
 		}
 		if("disable".equals(type)){
-			from.setIsReleased("N");
+            from.setIsReleased(GlobalConstant.FLAG_N);
 		}
 		if("delete".equals(type)){
 			from.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
 		}
 		if("undisable".equals(type)){
-			from.setIsReleased("Y");
+            from.setIsReleased(GlobalConstant.FLAG_Y);
 		}
 		return formCfgBiz.editForm(from);
 	}
@@ -95,7 +96,7 @@ public class OscaFormController extends GeneralController{
 	public String copyForm(String fromFlow,String fromName,String type,Model model){
 
 		for (int i = 1; i < 10000; i++) {
-			if (formCfgBiz.checkFromName(fromName+i).equals("Y")){
+            if (formCfgBiz.checkFromName(fromName + i).equals(GlobalConstant.FLAG_Y)) {
 				fromName=fromName+i;
 				break;
 			}
@@ -132,7 +133,7 @@ public class OscaFormController extends GeneralController{
 			}else if (type.equals("hospital")){
 				oscaFrom.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 				oscaFrom.setOrgName(GlobalContext.getCurrentUser().getOrgName());
-				oscaFrom.setIsReleased("Y");
+                oscaFrom.setIsReleased(GlobalConstant.FLAG_Y);
 			}
 		}
 		if (formCfgBiz.editForm(oscaFrom)>0){

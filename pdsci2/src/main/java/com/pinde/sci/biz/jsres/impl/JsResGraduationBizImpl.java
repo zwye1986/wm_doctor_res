@@ -45,13 +45,13 @@ public class JsResGraduationBizImpl implements IJsResGraduationBiz {
 //    @Override
 //    public int clearScore(List<String> userFlows, String sessionNumber, String assessmentYear, String orgFlow) {
 //        SchExamDoctorArrangement record = new SchExamDoctorArrangement();
-//        record.setRecordStatus("N");
+//        record.setRecordStatus(GlobalConstant.FLAG_N);
 //        record.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 //        record.setModifyTime(DateUtil.getCurrentTime());
 //
 //        SchExamDoctorArrangementExample example = new SchExamDoctorArrangementExample();
 //        SchExamDoctorArrangementExample.Criteria criteria = example.createCriteria();
-//        criteria.andSessionNumberEqualTo(sessionNumber).andOrgFlowEqualTo(orgFlow).andAssessmentYearEqualTo(assessmentYear).andDoctorFlowIn(userFlows).andRecordStatusEqualTo("Y");
+//        criteria.andSessionNumberEqualTo(sessionNumber).andOrgFlowEqualTo(orgFlow).andAssessmentYearEqualTo(assessmentYear).andDoctorFlowIn(userFlows).andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
 //        return doctorArrangementMapper.updateByExampleSelective(record, example);
 //    }
 //

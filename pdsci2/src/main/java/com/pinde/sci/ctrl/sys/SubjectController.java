@@ -37,7 +37,7 @@ public class SubjectController extends GeneralController {
 	public
 	@ResponseBody
 	String getAllDataJson() {
-		List<SysSubjCode> subjList = subjectBiz.getAll("Y");//获取所有已启用学科代码
+        List<SysSubjCode> subjList = subjectBiz.getAll(GlobalConstant.FLAG_Y);//获取所有已启用学科代码
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
 		sb.append("{\"id\":0, \"pId\":-1, \"name\":\"学科代码\",\"open\":true,\"t\":\"根节点\"},");
@@ -92,7 +92,7 @@ public class SubjectController extends GeneralController {
 			subj.setOrdinal(ordinal);
 			subj.setCreateTime(DateUtil.getCurrDateTime());
 			subj.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-			subj.setRecordStatus("Y");//默认启用
+            subj.setRecordStatus(GlobalConstant.FLAG_Y);//默认启用
 			return this.subjectBiz.save(subj);
 		}
 		return 0;

@@ -17,7 +17,7 @@ import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.enums.jszy.JszyBaseStatusEnum;
 import com.pinde.sci.enums.jszy.JszyTrainCategoryEnum;
 import com.pinde.sci.enums.osca.AuditStatusEnum;
-import com.pinde.sci.enums.res.RecDocCategoryEnum;
+import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
@@ -109,7 +109,7 @@ public class JszyResGraduationManagerController extends GeneralController {
         ResDoctorGraduationInfo resDoctorGraduationInfo =new ResDoctorGraduationInfo();
         resDoctorGraduationInfo.setDoctorFlow(sysuser.getUserFlow());
         Map<String, Object> param = new HashMap<>();
-        param.put("certificateNumber", "Y");
+        param.put("certificateNumber", GlobalConstant.FLAG_Y);
         param.put("order", "certificate_Number asc");
         param.put("resDoctorGraduationInfo", resDoctorGraduationInfo);
         List<ResDoctorGraduationInfo> graduationInfos = graduationBiz.searchGraduationInfoByMap(param);
@@ -178,7 +178,7 @@ public class JszyResGraduationManagerController extends GeneralController {
             }
             param.put("order", "TRAINING_BASE_NAME,DOCTOR_NAME,create_time desc");
         } else if ("Query".equals(pageType)) {
-            param.put("certificateNumber", "Y");
+            param.put("certificateNumber", GlobalConstant.FLAG_Y);
             param.put("order", "modify_Time asc");
         }
 
@@ -527,7 +527,7 @@ public class JszyResGraduationManagerController extends GeneralController {
             }
             param.put("order", "create_time desc");
         } else if ("Query".equals(pageType)) {
-            param.put("certificateNumber", "Y");
+            param.put("certificateNumber", GlobalConstant.FLAG_Y);
             param.put("order", "modify_Time asc");
         }
 

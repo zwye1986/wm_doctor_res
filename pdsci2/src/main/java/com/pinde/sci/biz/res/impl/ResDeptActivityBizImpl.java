@@ -1,6 +1,8 @@
 package com.pinde.sci.biz.res.impl;
 
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDeptActivityBiz;
@@ -8,10 +10,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.res.ResDeptActivityExtMapper;
-import com.pinde.sci.enums.res.DeptActivityItemTypeEnum;
-import com.pinde.sci.enums.res.DeptActivityStatusEnum;
-import com.pinde.sci.enums.res.DeptActivityTypeEnum;
-import com.pinde.sci.enums.res.DeptActivityUserTypeEnum;
 import com.pinde.sci.form.res.ResDeptPlanForm;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,7 +110,7 @@ public class ResDeptActivityBizImpl implements IResDeptActivityBiz {
 		plan.setPlanTypeName(DictTypeEnum.DeptActivityType.getDictNameById(plan.getPlanTypeId()));
 		plan.setAuditStatusId(DeptActivityStatusEnum.Save.getId());
 		plan.setAuditStatusName(DeptActivityStatusEnum.Save.getName());
-		plan.setIsReport("N");
+        plan.setIsReport(GlobalConstant.FLAG_N);
 		GeneralMethod.setRecordInfo(plan,true);
 		int c=0;
 		if(isNew)
@@ -141,7 +139,7 @@ public class ResDeptActivityBizImpl implements IResDeptActivityBiz {
 			String typeCfg = InitConfig.getSysCfg("dept_activity_type");
 			if(DeptActivityTypeEnum.Dept.getId().equals(plan.getPlanTypeId())) {
 				for (DeptActivityItemTypeEnum e : DeptActivityItemTypeEnum.values()) {
-					if (e.getIsCfg().equals("Y")) {
+                    if (e.getIsCfg().equals(GlobalConstant.FLAG_Y)) {
 						QingpuLectureEvalCfg cfg = cfgMap.get(e.getId());
 						if (cfg == null) {
 							throw new RuntimeException("请维护【" + e.getName() + "】活动评价指标");
@@ -152,7 +150,7 @@ public class ResDeptActivityBizImpl implements IResDeptActivityBiz {
 			}else if(GlobalConstant.FLAG_Y.equals(typeCfg)){
 				for(DeptActivityItemTypeEnum e:DeptActivityItemTypeEnum.values())
 				{
-					if(e.getIsCfg().equals("N")&&!DeptActivityItemTypeEnum.CKKHAP.getId().equals(e.getId())
+                    if (e.getIsCfg().equals(GlobalConstant.FLAG_N) && !DeptActivityItemTypeEnum.CKKHAP.getId().equals(e.getId())
 							&&!DeptActivityItemTypeEnum.DSBGHAP.getId().equals(e.getId())
 							&&!DeptActivityItemTypeEnum.JYSKHAP.getId().equals(e.getId()))
 					{

@@ -588,7 +588,7 @@ public class JswjwWxStudentController extends GeneralController {
 
         List<Map<String,String>> logList = new ArrayList<>();
         Map<String,String> logMap = new HashMap<>();
-        logMap.put("isShow","Y");
+        logMap.put("isShow", GlobalConstant.FLAG_Y);
         logMap.put("statusId","Revoke".equals(kq.getAuditStatusId()) ? "Revoke" : "Start");
         logMap.put("statusName","Revoke".equals(kq.getAuditStatusId()) ? "已撤销" : "发起审核");
         logMap.put("operUserName",kq.getDoctorName());
@@ -598,7 +598,7 @@ public class JswjwWxStudentController extends GeneralController {
 
         if(!"Revoke".equals(kq.getAuditStatusId())){
             logMap = new HashMap<>();
-            logMap.put("isShow","-".equals(kq.getTeacherName()) ? "N" : "Y");
+            logMap.put("isShow", "-".equals(kq.getTeacherName()) ? GlobalConstant.FLAG_N : GlobalConstant.FLAG_Y);
             logMap.put("statusId",StringUtil.isBlank(kq.getTeacherAgreeFlag()) ? "Auditing" : GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag()) ? "Passed" : "UnPassed");
             logMap.put("statusName",StringUtil.isBlank(kq.getTeacherAgreeFlag()) ? "待审核" : GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag()) ? "审核通过" : "审核不通过");
             logMap.put("operUserName",kq.getTeacherName());
@@ -626,7 +626,7 @@ public class JswjwWxStudentController extends GeneralController {
         }
         if(audit){
             logMap = new HashMap<>();
-            logMap.put("isShow","-".equals(kq.getHeadName()) ? "N" : "Y");
+            logMap.put("isShow", "-".equals(kq.getHeadName()) ? GlobalConstant.FLAG_N : GlobalConstant.FLAG_Y);
             logMap.put("statusId",StringUtil.isBlank(kq.getHeadAgreeFlag()) ? "Auditing" : GlobalConstant.FLAG_Y.equals(kq.getHeadAgreeFlag()) ? "Passed" : "UnPassed");
             logMap.put("statusName",StringUtil.isBlank(kq.getHeadAgreeFlag()) ? "待审核" : GlobalConstant.FLAG_Y.equals(kq.getHeadAgreeFlag()) ? "审核通过" : "审核不通过");
             logMap.put("operUserName",kq.getHeadName());
@@ -728,7 +728,7 @@ public class JswjwWxStudentController extends GeneralController {
         }
         if(audit){
             logMap = new HashMap<>();
-            logMap.put("isShow","-".equals(kq.getManagerName()) ? "N" : "Y");
+            logMap.put("isShow", "-".equals(kq.getManagerName()) ? GlobalConstant.FLAG_N : GlobalConstant.FLAG_Y);
             logMap.put("statusId",StringUtil.isBlank(kq.getManagerAgreeFlag()) ? "Auditing" : GlobalConstant.FLAG_Y.equals(kq.getManagerAgreeFlag()) ? "Passed" : "UnPassed");
             logMap.put("statusName",StringUtil.isBlank(kq.getManagerAgreeFlag()) ? "待审核" : GlobalConstant.FLAG_Y.equals(kq.getManagerAgreeFlag()) ? "审核通过" : "审核不通过");
             logMap.put("operUserName",kq.getManagerName());
@@ -894,9 +894,9 @@ public class JswjwWxStudentController extends GeneralController {
         }
         resultMap.put("deptList",deptList);
         //是否可以新增请假
-        String isAddLeave = "N";
+        String isAddLeave = GlobalConstant.FLAG_N;
         if(null != deptList && deptList.size() > 0){
-            isAddLeave = "Y";
+            isAddLeave = GlobalConstant.FLAG_Y;
         }
         resultMap.put("isAddLeave",isAddLeave);
         //请假类型

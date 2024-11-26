@@ -938,7 +938,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
         }
         // 查询招录信息
         ResDoctorRecruitExample doctorRecruitExample = new ResDoctorRecruitExample();
-        doctorRecruitExample.createCriteria().andRecordStatusEqualTo("Y").andDoctorFlowEqualTo(sysUser.getUserFlow()).andDoctorStatusIdNotIn(Arrays.asList("21", "23", "24"));
+        doctorRecruitExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(sysUser.getUserFlow()).andDoctorStatusIdNotIn(Arrays.asList("21", "23", "24"));
         doctorRecruitExample.setOrderByClause("create_time desc");
         List<ResDoctorRecruit> doctorRecruitList = this.recruitMapper.selectByExample(doctorRecruitExample);
         if (null != doctorRecruitList && 0 < doctorRecruitList.size()) {

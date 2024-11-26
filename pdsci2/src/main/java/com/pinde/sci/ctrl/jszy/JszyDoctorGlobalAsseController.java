@@ -175,12 +175,12 @@ public class JszyDoctorGlobalAsseController extends GeneralController {
             param.put("auditStatusId", JszyResAsseAuditListEnum.WaitGlobalPass.getId());
             String startDate=InitConfig.getSysCfg("jszy_global_submit_start_time");
             String endDate=InitConfig.getSysCfg("jszy_global_submit_end_time");
-            String f="N";
+            String f = GlobalConstant.FLAG_N;
             if (StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate)) {
                 if(startDate.compareTo(nowTime)<=0&&endDate.compareTo(nowTime)>=0)
                 {
                     if(applyYear.equals(DateUtil.getYear())){
-                        f="Y";
+                        f = GlobalConstant.FLAG_Y;
                     }
                 }
             }
@@ -189,12 +189,12 @@ public class JszyDoctorGlobalAsseController extends GeneralController {
             param.put("auditStatusId", JszyResAsseAuditListEnum.WaitChargePass.getId());
             String startDate=InitConfig.getSysCfg("jszy_charge_submit_start_time");
             String endDate=InitConfig.getSysCfg("jszy_charge_submit_end_time");
-            String f="N";
+            String f = GlobalConstant.FLAG_N;
             if (StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate)) {
                 if(startDate.compareTo(nowTime)<=0&&endDate.compareTo(nowTime)>=0)
                 {
                     if(applyYear.equals(DateUtil.getYear())){
-                        f="Y";
+                        f = GlobalConstant.FLAG_Y;
                     }
                 }
             }
@@ -203,12 +203,12 @@ public class JszyDoctorGlobalAsseController extends GeneralController {
 
             String startDate=InitConfig.getSysCfg("jszy_local_submit_start_time");
             String endDate=InitConfig.getSysCfg("jszy_local_submit_end_time");
-            String f="N";
+            String f = GlobalConstant.FLAG_N;
             if (StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate)) {
                 if(startDate.compareTo(nowTime)<=0&&endDate.compareTo(nowTime)>=0)
                 {
                     if(applyYear.equals(DateUtil.getYear())){
-                        f="Y";
+                        f = GlobalConstant.FLAG_Y;
                     }
                 }
             }
@@ -295,12 +295,12 @@ public class JszyDoctorGlobalAsseController extends GeneralController {
         if(GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
             String startDate=InitConfig.getSysCfg("jszy_global_submit_start_time");
             String endDate=InitConfig.getSysCfg("jszy_global_submit_end_time");
-            String f="N";
+            String f = GlobalConstant.FLAG_N;
             if (StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate)) {
                 if(startDate.compareTo(nowTime)<=0&&endDate.compareTo(nowTime)>=0)
                 {
                     if(applyYear.equals(DateUtil.getYear())){
-                        f="Y";
+                        f = GlobalConstant.FLAG_Y;
                     }
                 }
             }
@@ -308,12 +308,12 @@ public class JszyDoctorGlobalAsseController extends GeneralController {
         }else if(GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
             String startDate=InitConfig.getSysCfg("jszy_charge_submit_start_time");
             String endDate=InitConfig.getSysCfg("jszy_charge_submit_end_time");
-            String f="N";
+            String f = GlobalConstant.FLAG_N;
             if (StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate)) {
                 if(startDate.compareTo(nowTime)<=0&&endDate.compareTo(nowTime)>=0)
                 {
                     if(applyYear.equals(DateUtil.getYear())){
-                        f="Y";
+                        f = GlobalConstant.FLAG_Y;
                     }
                 }
             }
@@ -321,12 +321,12 @@ public class JszyDoctorGlobalAsseController extends GeneralController {
         }else{
             String startDate=InitConfig.getSysCfg("jszy_local_submit_start_time");
             String endDate=InitConfig.getSysCfg("jszy_local_submit_end_time");
-            String f="N";
+            String f = GlobalConstant.FLAG_N;
             if (StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate)) {
                 if(startDate.compareTo(nowTime)<=0&&endDate.compareTo(nowTime)>=0)
                 {
                     if(applyYear.equals(DateUtil.getYear())){
-                        f="Y";
+                        f = GlobalConstant.FLAG_Y;
                     }
                 }
             }
@@ -560,11 +560,11 @@ public class JszyDoctorGlobalAsseController extends GeneralController {
                 String nowTime=DateUtil.transDateTime(DateUtil.getCurrentTime());
                 String startDate=InitConfig.getSysCfg("jszy_local_submit_start_time");
                 String endDate=InitConfig.getSysCfg("jszy_local_submit_end_time");
-                String f="N";
+                String f = GlobalConstant.FLAG_N;
                 if (StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate)) {
                     if(startDate.compareTo(nowTime)<=0&&endDate.compareTo(nowTime)>=0)
                     {
-                        f="Y";
+                        f = GlobalConstant.FLAG_Y;
                     }
                 }
                 if(GlobalConstant.FLAG_N.equals(f))

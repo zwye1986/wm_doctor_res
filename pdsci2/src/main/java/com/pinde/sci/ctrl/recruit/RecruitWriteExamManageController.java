@@ -47,7 +47,7 @@ public class RecruitWriteExamManageController extends GeneralController {
         param.put("idNo",idNo);
         param.put("startDate",beginDate);
         param.put("endDate",endDate);
-        param.put("writeExamFlag","Y");
+        param.put("writeExamFlag", GlobalConstant.FLAG_Y);
         List<RecruitInfoExt> recruitInfoExts = recruitInfoBiz.searchCanExamRecruitInfo(param);
 
         model.addAttribute("recruitInfoExts",recruitInfoExts);
@@ -125,7 +125,7 @@ public class RecruitWriteExamManageController extends GeneralController {
             Map<String,String> param=new HashMap<>();
             param.put("orgFlow",orgFlow);
             param.put("recruitYear",recruitYear);
-            param.put("writeExamFlag","Y");
+            param.put("writeExamFlag", GlobalConstant.FLAG_Y);
             List<RecruitInfoExt> recruitInfoExts = recruitInfoBiz.searchCanExamRecruitInfo(param);
             if(recruitInfoExts==null||recruitInfoExts.size()==0)
             {

@@ -1,9 +1,9 @@
 package com.pinde.res.ctrl.jswjw;
 
 import com.pinde.app.common.GeneralController;
-import com.pinde.core.common.enums.*;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.app.common.InitConfig;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.*;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -1045,7 +1045,7 @@ public class JswjwWxAdminController extends GeneralController {
 			param.put("orgFlow1",orgFlow);
 		}else {
 			param.put("orgFlow1",jointOrgList.get(0).getOrgFlow());
-			param.put("isJointOrg","Y");
+            param.put("isJointOrg", GlobalConstant.FLAG_Y);
 		}
 //		List<Map<String,Object>> list=recruitDoctorInfoBiz.zltjOrgLocalList(param);
 		List<Map<String,Object>> list=jswjwBiz.zltjOrgLocalListNew(param);
@@ -1446,7 +1446,7 @@ public class JswjwWxAdminController extends GeneralController {
 			}
 		}
 		schArrangeResultMap.put("docTypeList", docTypeList);
-		schArrangeResultMap.put("isAfter", "Y");
+        schArrangeResultMap.put("isAfter", GlobalConstant.FLAG_Y);
 		schArrangeResultMap.put("biaoJi", biaoJi);
 		schArrangeResultMap.put("trainingTypeId", TrainCategoryEnum.DoctorTrainingSpe.getId());
 		if(pageIndex==null){
@@ -1908,7 +1908,7 @@ public class JswjwWxAdminController extends GeneralController {
 			for (SysUserRole role:userRoleList) {
 				if(obj.containsKey("auditRole")) {
 					if (obj.get("auditRole").toString().contains(role.getRoleFlow())) {
-						obj.put("audit", "Y");
+                        obj.put("audit", GlobalConstant.FLAG_Y);
 					}
 				}
 			}
@@ -1917,7 +1917,7 @@ public class JswjwWxAdminController extends GeneralController {
 		if(list!=null) {
 			for (Map<String,Object> info:list )
 			{
-				info.put("HaveImg","N");
+                info.put("HaveImg", GlobalConstant.FLAG_N);
 				String imageUrl= (String) info.get("imageUrl");
 				List<Map<String, String>> imageList = new ArrayList<>();
 				if(StringUtil.isNotBlank(imageUrl))
@@ -1933,7 +1933,7 @@ public class JswjwWxAdminController extends GeneralController {
 					}
 					if(ec!=null&&ec.size()>0)
 					{
-						info.put("HaveImg","Y");
+                        info.put("HaveImg", GlobalConstant.FLAG_Y);
 					}
 				}
 				info.put("imageList", imageList);
@@ -2373,10 +2373,10 @@ public class JswjwWxAdminController extends GeneralController {
 
 		param.put("isPostpone",isPostpone);
 		//判断是否是协同基地
-		String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
 		List<ResJointOrg> tempJoinOrgs = jswjwBiz.searchResJointByJointOrgFlow(sysuser.getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
-			isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
 		}else{
 			if(null != orgFlowList && orgFlowList.size()==0){
 				orgFlowList.add(sysuser.getOrgFlow());
@@ -2405,15 +2405,15 @@ public class JswjwWxAdminController extends GeneralController {
        /* String nowTime=DateUtil.transDateTime(DateUtil.getCurrentTime());
         String startDate=InitConfig.getSysCfg("local_submit_start_time");
         String endDate=InitConfig.getSysCfg("local_submit_end_time");*/
-		String f="N";
+        String f = GlobalConstant.FLAG_N;
 		List<ResTestConfig> testConfigList = jswjwBiz.findLocalEffective(DateUtil.getCurrDateTime2());
 		if (testConfigList.size() > 0) {
-			f = "Y";
+            f = GlobalConstant.FLAG_Y;
 		}
         /*if (StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate)) {
             if(startDate.compareTo(nowTime)<=0&&endDate.compareTo(nowTime)>=0)
             {
-                f="Y";
+                f=GlobalConstant.FLAG_Y;
             }
         }*/
 		resultMap.put("f",f);
@@ -2442,7 +2442,7 @@ public class JswjwWxAdminController extends GeneralController {
 		//查询条件
 		Map<String,Object> param=new HashMap<>();
 		List<String> orgFlowList=new ArrayList<String>();
-		String f = "N";
+        String f = GlobalConstant.FLAG_N;
 		if(GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			SysOrg currentOrg = jswjwBiz.readSysOrg(currentUser.getOrgFlow());
 			orgFlowList.add(currentOrg.getOrgFlow());
@@ -2459,21 +2459,21 @@ public class JswjwWxAdminController extends GeneralController {
 			List<ResTestConfig> localEffective = jswjwBiz.findLocalEffective(DateUtil.getCurrDateTime2());
 			if (localEffective.size() > 0) {
 				if (DateUtil.getYear().equals(signupYear)) {
-					f = "Y";
+                    f = GlobalConstant.FLAG_Y;
 				}
 			}
 		}else if(GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 			List<ResTestConfig> chargeEffective = jswjwBiz.findChargeEffective(DateUtil.getCurrDateTime2());
 			if (chargeEffective.size() > 0) {
 				if (DateUtil.getYear().equals(signupYear)) {
-					f = "Y";
+                    f = GlobalConstant.FLAG_Y;
 				}
 			}
 		}else if(GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
 			List<ResTestConfig> globalEffective = jswjwBiz.findGlobalEffective(DateUtil.getCurrDateTime2());
 			if (globalEffective.size() > 0) {
 				if (DateUtil.getYear().equals(signupYear)) {
-					f = "Y";
+                    f = GlobalConstant.FLAG_Y;
 				}
 			}
 		}

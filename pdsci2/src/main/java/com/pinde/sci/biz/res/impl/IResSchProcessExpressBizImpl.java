@@ -16,10 +16,10 @@ import com.pinde.sci.common.util.JspFormUtil;
 import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;
 import com.pinde.sci.dao.base.ResSchProcessExpressMapper;
 import com.pinde.sci.dao.res.ResRecExtMapper;
-import com.pinde.sci.enums.res.GlobalRecTypeEnum;
-import com.pinde.sci.enums.res.JszyTCMPracticEnum;
-import com.pinde.sci.enums.res.RecStatusEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.GlobalRecTypeEnum;
+import com.pinde.core.common.enums.JszyTCMPracticEnum;
+import com.pinde.core.common.enums.RecStatusEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -992,7 +992,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
         if(StringUtil.isNotBlank(id))
         {
             ResSchProcessExpressExample example=new ResSchProcessExpressExample();
-            example.createCriteria().andRecTypeIdEqualTo(id).andRecordStatusEqualTo("Y");
+            example.createCriteria().andRecTypeIdEqualTo(id).andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
             example.setOrderByClause("create_time asc");
             return expressMapper.selectByExampleWithBLOBs(example);
         }

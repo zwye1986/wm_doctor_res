@@ -267,7 +267,7 @@ public class OscaFormCfgBizImpl implements IOscaFormCfgBiz{
     public String checkFromName(String fromName) {
         if (StringUtil.isNotBlank(fromName)){
             OscaFromExample example = new OscaFromExample();
-            example.createCriteria().andFromNameEqualTo(fromName).andRecordStatusEqualTo("Y");
+            example.createCriteria().andFromNameEqualTo(fromName).andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
             List<OscaFrom> list = fromMapper.selectByExample(example);
             if (list==null || list.size()==0){
                 return GlobalConstant.FLAG_Y;

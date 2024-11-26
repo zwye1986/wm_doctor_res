@@ -1,6 +1,8 @@
 package com.pinde.sci.ctrl.osca;
 
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -73,7 +75,7 @@ public class OscaExaminerManageController extends GeneralController{
         SysOrg sysOrg=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
         Map<String, Object> map=new HashMap<>();
         map.put("orgProvId",sysOrg.getOrgProvId());
-        map.put("isExamOrg",GlobalConstant.RECORD_STATUS_Y);
+        map.put("isExamOrg", GlobalConstant.RECORD_STATUS_Y);
         List<OscaOrgSpeExt> orgSpeList=new ArrayList();
         orgSpeList=siteInformationBiz.searchAllOrg(map);
         Map<String, Object> examMap=new HashMap<>();

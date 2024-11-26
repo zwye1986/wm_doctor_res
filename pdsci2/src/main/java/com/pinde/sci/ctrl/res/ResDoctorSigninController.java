@@ -1,6 +1,8 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -13,7 +15,7 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysUserDeptMapper;
-import com.pinde.sci.enums.res.ResDoctorKqStatusEnum;
+import com.pinde.core.common.enums.ResDoctorKqStatusEnum;
 import com.pinde.sci.form.res.TimeSetFrom;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,7 +120,7 @@ public class ResDoctorSigninController extends GeneralController{
 		Object val="";
 		if(val==null)
 		{
-			return "N";
+			return GlobalConstant.FLAG_N;
 		}
 		return val;
 	}
@@ -599,7 +601,7 @@ public class ResDoctorSigninController extends GeneralController{
 				return "此信息已被审核，请刷新列表页！";
 			}
 		}
-		kq.setRecordStatus("N");
+		kq.setRecordStatus(GlobalConstant.FLAG_N);
 		resDoctorKqBiz.editResDoctorKq(kq);
 		return "1";
 	}

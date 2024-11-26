@@ -2,7 +2,7 @@ package com.pinde.sci.ctrl.res;
 
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -147,7 +147,7 @@ public class ResActivityQueryController extends GeneralController {
 		if(list!=null) {
 			for (Map<String,Object> info:list )
 			{
-				info.put("HaveImg","N");
+                info.put("HaveImg", GlobalConstant.FLAG_N);
 				String imageUrl= (String) info.get("imageUrl");
 				if(StringUtil.isNotBlank(imageUrl))
 				{
@@ -156,7 +156,7 @@ public class ResActivityQueryController extends GeneralController {
 					List<Element> ec = elem.elements("image");
 					if(ec!=null&&ec.size()>0)
 					{
-						info.put("HaveImg","Y");
+                        info.put("HaveImg", GlobalConstant.FLAG_Y);
 					}
 				}
 				if(!"doctor".equals(roleFlag))
@@ -421,7 +421,7 @@ public class ResActivityQueryController extends GeneralController {
 	@RequestMapping(value="/saveActivity")
 	@ResponseBody
 	public String saveActivity(TeachingActivityInfo activity,MultipartFile file,String isRe, String data,String role){
-		return activityBiz.editActivity(activity,file,isRe,"Y", data,role);
+        return activityBiz.editActivity(activity, file, isRe, GlobalConstant.FLAG_Y, data, role);
 	}
 	@RequestMapping(value="/saveActivityFile")
 	@ResponseBody

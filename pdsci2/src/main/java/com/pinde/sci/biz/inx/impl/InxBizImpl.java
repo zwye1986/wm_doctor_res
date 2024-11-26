@@ -236,7 +236,7 @@ public class InxBizImpl implements IInxBiz{
 		}
 		userMapper.insert(user);
 		doctor.setDoctorFlow(userFlow);
-		doctor.setOscaStudentSubmit("Y");
+        doctor.setOscaStudentSubmit(GlobalConstant.FLAG_Y);
 		GeneralMethod.setRecordInfo(doctor,true);
 		resDoctorMapper.insert(doctor);
 	}
@@ -279,9 +279,9 @@ public class InxBizImpl implements IInxBiz{
 		GeneralMethod.setRecordInfo(user, false);
 		userMapper.updateByPrimaryKeySelective(user);
 		doctor.setDoctorFlow(user.getUserFlow());
-		doctor.setOscaStudentSubmit("Y");
+        doctor.setOscaStudentSubmit(GlobalConstant.FLAG_Y);
 		ResDoctorExample example = new ResDoctorExample();
-		ResDoctorExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo("Y").andDoctorFlowEqualTo(user.getUserFlow());
+        ResDoctorExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(user.getUserFlow());
 		int count = resDoctorMapper.countByExample(example);
 		if(count>0){
 			GeneralMethod.setRecordInfo(doctor,false);

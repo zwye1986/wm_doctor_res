@@ -11,13 +11,23 @@ public enum RecDocCategoryEnum implements GeneralEnum<String> {
 	Graduate("Graduate","研究生"),
 	Intern("Intern","实习生"),
 	Scholar("Scholar","进修生"),
+    AssistantGeneral("AssistantGeneral", "助理全科"),
 //	EightYear("EightYear","八年制"),
 //	UnderGrad("UnderGrad","本科生"),
 	Specialist("Specialist","专科医师"),
 	GeneralDoctor("GeneralDoctor","培训学员"),
 	WMFirst("WMFirst","江苏西医.一阶段"),
 	WMSecond("WMSecond","江苏西医.二阶段"),
-	AssiGeneral("AssiGeneral","江苏西医.助理全科")
+    AssiGeneral("AssiGeneral", "江苏西医.助理全科"),
+    ChineseMedicine("ChineseMedicine", "中医"),
+    TCMGeneral("TCMGeneral", "中医全科"),
+    TCMAssiGeneral("TCMAssiGeneral", "中医助理全科"),
+    GeneralPractitioner("GeneralPractitioner", "全科医师"),
+    AssistantGeneralDoc("AssistantGeneralDoc", "助理全科医生"),
+    GPractitionerTransf("GPractitionerTransf", "全科医生转岗"),
+    GPractitionerStat("GPractitionerStat", "全科医生岗位"),
+    PediatricianTransf("PediatricianTransf", "儿科医师转岗"),
+    ObstetricianTransf("ObstetricianTransf", "产科医师转岗")
 	;
 	private final String id;
 	private final String name;

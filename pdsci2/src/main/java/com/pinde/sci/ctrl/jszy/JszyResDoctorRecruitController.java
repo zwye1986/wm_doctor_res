@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.jszy;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -23,9 +23,9 @@ import com.pinde.sci.enums.jszy.JszyResDocTypeEnum;
 import com.pinde.sci.enums.jszy.JszyResDoctorAuditStatusEnum;
 import com.pinde.sci.enums.jszy.JszyResTrainYearEnum;
 import com.pinde.sci.enums.jszy.JszyTrainCategoryEnum;
-import com.pinde.sci.enums.res.AfterRecTypeEnum;
-import com.pinde.sci.enums.res.ResAssessTypeEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.enums.ResAssessTypeEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;

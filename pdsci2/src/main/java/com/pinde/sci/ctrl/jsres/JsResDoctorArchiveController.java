@@ -1,6 +1,6 @@
 package com.pinde.sci.ctrl.jsres;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -14,7 +14,7 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.jsres.*;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
@@ -100,7 +100,7 @@ public class JsResDoctorArchiveController extends GeneralController {
 		SysUser sysUser =new SysUser();
 		if (StringUtil.isBlank(doctor.getOrgFlow())) {
 			if (getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_LOCAL)) {
-				jointOrgFlowList=searchJointOrgList("Y",sysuser.getOrgFlow());
+                jointOrgFlowList = searchJointOrgList(GlobalConstant.FLAG_Y, sysuser.getOrgFlow());
 				jointOrgFlowList.add(sysuser.getOrgFlow());
 			}
 			if (getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)||getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_GLOBAL)
@@ -295,7 +295,7 @@ public class JsResDoctorArchiveController extends GeneralController {
 		docotrDelayTeturn.setDoctorFlow(doctorFlow);
 		List<ResDocotrDelayTeturn> resRecList = resDoctorDelayTeturnBiz.searchInfo(docotrDelayTeturn,null,null,null);
 		if(resRecList!=null&&!resRecList.isEmpty()) {
-			model.addAttribute("haveReturn","Y");
+            model.addAttribute("haveReturn", GlobalConstant.FLAG_Y);
 		}
 		if(StringUtil.isNotBlank(recruitFlow)){
 			ResDoctorRecruitLog doctorRecruitLog = new ResDoctorRecruitLog();
@@ -453,7 +453,7 @@ public class JsResDoctorArchiveController extends GeneralController {
 		recruit.setArchiveFlow(archiveFlow);
 		recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
 		List<ResDoctorRecruitLogWithBLOBs> recruits=archiveBiz.searchResDoctorRecruitList(recruit,null);
-		String canSave="Y";
+        String canSave = GlobalConstant.FLAG_Y;
 		if(recruits!=null&&recruits.size()>0)
 		{
 			String recruitFlow=recruits.get(0).getRecruitFlow();
@@ -461,13 +461,13 @@ public class JsResDoctorArchiveController extends GeneralController {
 			if(apply!=null){
 				if(JsResAsseAuditListEnum.WaitChargePass.getId().equals(apply.getAuditStatusId()))
 				{
-					canSave="N";
+                    canSave = GlobalConstant.FLAG_N;
 				}else if(JsResAsseAuditListEnum.WaitGlobalPass.getId().equals(apply.getAuditStatusId()))
 				{
-					canSave="N";
+                    canSave = GlobalConstant.FLAG_N;
 				}else if(JsResAsseAuditListEnum.GlobalPassed.getId().equals(apply.getAuditStatusId()))
 				{
-					canSave="N";
+                    canSave = GlobalConstant.FLAG_N;
 				}
 			}
 		}

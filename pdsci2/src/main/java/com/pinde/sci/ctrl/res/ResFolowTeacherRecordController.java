@@ -6,7 +6,7 @@ import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResFolowTeacherRecordBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.res.DiscipleStatusEnum;
+import com.pinde.core.common.enums.DiscipleStatusEnum;
 import com.pinde.sci.model.mo.ResDiscipleRecordInfo;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResStudentDiscipleTeacher;

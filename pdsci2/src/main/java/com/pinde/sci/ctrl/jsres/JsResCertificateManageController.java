@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -764,7 +764,7 @@ public class JsResCertificateManageController extends GeneralController {
 			model.addAttribute("completeStartDate",startTime);
 			model.addAttribute("completeEndDate",endTime);
 		}else{
-			model.addAttribute("notHave","Y");
+            model.addAttribute("notHave", GlobalConstant.FLAG_Y);
 		}
 		return "jsres/global/showCertificate/info";
 	}
@@ -1028,16 +1028,16 @@ public class JsResCertificateManageController extends GeneralController {
 			}
 			//根据年份查询基地院长签名图片
 			if(StringUtil.isNotEmpty(recruit.getGraduationYear())){
-				List<JsresSign> signList = speAssignBiz.searchSignListByOrgFlowNew(recruit.getOrgFlow(),"Y",recruit.getGraduationYear());
+                List<JsresSign> signList = speAssignBiz.searchSignListByOrgFlowNew(recruit.getOrgFlow(), GlobalConstant.FLAG_Y, recruit.getGraduationYear());
 				if(CollectionUtils.isEmpty(signList)){
-					signList = speAssignBiz.searchSignListByOrgFlow(recruit.getOrgFlow(),"Y");
+                    signList = speAssignBiz.searchSignListByOrgFlow(recruit.getOrgFlow(), GlobalConstant.FLAG_Y);
 				}
 				if(null != signList && signList.size() > 0){
 					model.addAttribute("signUrl",signList.get(0).getSignUrl());
 				}
 			}else{
 				//查询基地院长前面图片
-				List<JsresSign> signList = speAssignBiz.searchSignListByOrgFlow(recruit.getOrgFlow(),"Y");
+                List<JsresSign> signList = speAssignBiz.searchSignListByOrgFlow(recruit.getOrgFlow(), GlobalConstant.FLAG_Y);
 				if(null != signList && signList.size() > 0){
 					model.addAttribute("signUrl",signList.get(0).getSignUrl());
 				}
@@ -1117,7 +1117,7 @@ public class JsResCertificateManageController extends GeneralController {
 			model.addAttribute("completeStartDate",startTime);
 			model.addAttribute("completeEndDate",endTime);
 		}else{
-			model.addAttribute("notHave","Y");
+            model.addAttribute("notHave", GlobalConstant.FLAG_Y);
 		}
 		return "jsres/global/showCertificate/infoNew";
 	}

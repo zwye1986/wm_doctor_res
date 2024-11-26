@@ -12,7 +12,7 @@ import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.fastjson.JSONObject;
 import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
 import com.pinde.excelUtils.enums.NumberEngEnum;
@@ -28,8 +28,8 @@ import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
 import com.pinde.sci.dao.sys.SysDeptExtMapper;
 import com.pinde.sci.dao.sys.SysUserExtMapper;
-import com.pinde.sci.enums.res.RecDocCategoryEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.RecDocCategoryEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.enums.sch.*;
 import com.pinde.sci.excelListens.SchedulingAuditCheck;
 import com.pinde.sci.excelListens.SchedulingAuditRead;
@@ -1912,14 +1912,14 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		List<ResDoctorSchProcess> processList = new ArrayList<>();
 		if(CollectionUtils.isNotEmpty(resultFlowList)) {
 			ResDoctorSchProcessExample processExample = new ResDoctorSchProcessExample();
-			processExample.createCriteria().andRecordStatusEqualTo("Y").andSchResultFlowIn(resultFlowList);
+            processExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andSchResultFlowIn(resultFlowList);
 			processList = processBiz.readResDoctorSchProcessByExample(processExample);
 		}
 		List<String> processFlowList = processList.stream().map(vo -> vo.getProcessFlow()).collect(Collectors.toList());
 		List<ResScore> scoreList = new ArrayList<>();
 		if(CollectionUtils.isNotEmpty(processFlowList)) {
 			ResScoreExample scoreExample = new ResScoreExample();
-			scoreExample.createCriteria().andRecordStatusEqualTo("Y").andProcessFlowIn(processFlowList);
+            scoreExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andProcessFlowIn(processFlowList);
 			scoreList = scoreMapper.selectByExample(scoreExample);
 		}
 		Map<String, ResScore> processFlowToEntityMap = scoreList.stream().collect(Collectors.toMap(vo -> vo.getProcessFlow(), vo -> vo, (vo1, vo2) -> vo1));
@@ -2077,15 +2077,15 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		ResOutOfficeLock resOutOfficeLock = outsOutOfficeLockMapper.selectByPrimaryKey(recordFlow);
 		String userFlow = resOutOfficeLock.getUserFlow();
 		//是否付费用户
-		String isChargeOrg = "Y";
+        String isChargeOrg = GlobalConstant.FLAG_Y;
 		JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_doctor_app_menu_"+userFlow);
 		if (null == cfg || GlobalConstant.FLAG_N.equals(cfg.getCfgValue())){
-			isChargeOrg = "N";
+            isChargeOrg = GlobalConstant.FLAG_N;
 		}
 		List<ResDoctorSchProcess> resDoctorSchProcesses = processBiz.searchProcessByDoctor(userFlow);
 		List<ResDoctorSchProcess> outTimeProcesses = new ArrayList<>();
 		if(CollectionUtils.isNotEmpty(resDoctorSchProcesses)){
-			if(isChargeOrg.equals("Y")){
+            if (isChargeOrg.equals(GlobalConstant.FLAG_Y)) {
 				for (ResDoctorSchProcess resDoctorSchProcess : resDoctorSchProcesses) {
 					if(StringUtil.isNotEmpty(resDoctorSchProcess.getOutDate())){
 						//找超时的科室信息 计算超时时间 当前时间 - 出科时间
@@ -2818,7 +2818,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		Map<String, List<ResDoctorRecruit>> recruitMap = new HashMap<>();
 		if (CollectionUtil.isNotEmpty(userFlowList)) {
 			ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-			example.createCriteria().andRecordStatusEqualTo("Y")
+            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
 					.andAuditStatusIdEqualTo("Passed")
 					.andDoctorFlowIn(userFlowList);
 			example.setOrderByClause("CREATE_TIME DESC");
@@ -3348,7 +3348,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 //				}
 //				ResDoctor doctor = doctorBiz.readDoctor(user.getUserFlow());
 //				ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-//				example.createCriteria().andRecordStatusEqualTo("Y").andAuditStatusIdEqualTo("Passed").andDoctorFlowEqualTo(doctor.getDoctorFlow());
+//				example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andAuditStatusIdEqualTo("Passed").andDoctorFlowEqualTo(doctor.getDoctorFlow());
 //				example.setOrderByClause("CREATE_TIME DESC");
 //				List<ResDoctorRecruit> recruitList = resDoctorRecruitMapper.selectByExample(example);
 //				if (null== recruitList ||  recruitList.size()==0){
@@ -3649,7 +3649,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				logger.info("查询学员医师信息！！！！！！！");
 				ResDoctor doctor = doctorBiz.readDoctor(user.getUserFlow());
 				ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-				example.createCriteria().andRecordStatusEqualTo("Y").andAuditStatusIdEqualTo("Passed").andDoctorFlowEqualTo(doctor.getDoctorFlow());
+                example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andAuditStatusIdEqualTo("Passed").andDoctorFlowEqualTo(doctor.getDoctorFlow());
 				example.setOrderByClause("CREATE_TIME DESC");
 				logger.info("查询学员志愿信息！！！！！！！");
 				List<ResDoctorRecruit> recruitList = resDoctorRecruitMapper.selectByExample(example);
@@ -3961,7 +3961,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	}
 
 	public void updateResultHaveAfter2(String schRotationDeptFlow, String operUserFlow, String recContent) throws DocumentException {
-		String haveAfterPic="N";
+        String haveAfterPic = GlobalConstant.FLAG_N;
 		if(StringUtil.isNotBlank(recContent))
 		{
 			Document document= DocumentHelper.parseText(recContent);
@@ -3970,7 +3970,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				List<Object> elem=element.elements("image");
 				if(elem!=null&&elem.size()>0)
 				{
-					haveAfterPic="Y";
+                    haveAfterPic = GlobalConstant.FLAG_Y;
 				}
 			}
 		}
@@ -4433,9 +4433,9 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		Map<String, String> standDeptName = bzDeptList.stream().collect(Collectors.toMap(SchRotationDept::getStandardDeptId, SchRotationDept::getStandardDeptName, (k1, k2) -> k2));
 		Map<String, List<SchRotationDept>> collect = bzDeptList.stream().collect(Collectors.groupingBy(SchRotationDept::getIsRequired));
 		//必轮的标准科室
-		List<SchRotationDept> blDeptList = collect.get("Y");
+        List<SchRotationDept> blDeptList = collect.get(GlobalConstant.FLAG_Y);
 		//非必轮科室
-		List<SchRotationDept> fblDeptList = collect.get("N");
+        List<SchRotationDept> fblDeptList = collect.get(GlobalConstant.FLAG_N);
 		for (String bzCode : pbBzTimeMap.keySet()) {
 			if (StringUtils.isEmpty(bzCode)) {
 				continue;
@@ -4804,10 +4804,10 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		if (null == file) {
 			throw new RuntimeException("导入的文件不能为空");
 		}
-		String openFlag = "Y";
+        String openFlag = GlobalConstant.FLAG_Y;
 		JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_min_mon_" + GlobalContext.getCurrentUser().getOrgFlow());
 		if (ObjectUtil.isNotEmpty(openCfg)) {
-			openFlag = StringUtils.isEmpty(openCfg.getCfgValue())? "Y":openCfg.getCfgValue();
+            openFlag = StringUtils.isEmpty(openCfg.getCfgValue()) ? GlobalConstant.FLAG_Y : openCfg.getCfgValue();
 		}
 		String minMonthNum = "1";
 		JsresPowerCfg minMonthCfg = jsResPowerCfgBiz.read("jsres_"+GlobalContext.getCurrentUser().getOrgFlow()+"_org_process_scheduling_time");
@@ -4863,10 +4863,10 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 	public Map<String, Object> checkRowData(List<SchedulingDataModel> data) {
 		Map<String, Object> result = new HashMap<>();
-		String openFlag = "Y";
+        String openFlag = GlobalConstant.FLAG_Y;
 		JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_min_mon_" + GlobalContext.getCurrentUser().getOrgFlow());
 		if (ObjectUtil.isNotEmpty(openCfg)) {
-			openFlag = StringUtils.isEmpty(openCfg.getCfgValue())? "Y":openCfg.getCfgValue();
+            openFlag = StringUtils.isEmpty(openCfg.getCfgValue()) ? GlobalConstant.FLAG_Y : openCfg.getCfgValue();
 		}
 		String minMonthNum = "1";
 		JsresPowerCfg minMonthCfg = jsResPowerCfgBiz.read("jsres_"+GlobalContext.getCurrentUser().getOrgFlow()+"_org_process_scheduling_time");
@@ -4932,10 +4932,10 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			result.put("msg","暂无导入数据");
 			return result;
 		}
-		String openFlag = "Y";
+        String openFlag = GlobalConstant.FLAG_Y;
 		JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_min_mon_" + GlobalContext.getCurrentUser().getOrgFlow());
 		if (ObjectUtil.isNotEmpty(openCfg)) {
-			openFlag = StringUtils.isEmpty(openCfg.getCfgValue())? "Y":openCfg.getCfgValue();
+            openFlag = StringUtils.isEmpty(openCfg.getCfgValue()) ? GlobalConstant.FLAG_Y : openCfg.getCfgValue();
 		}
 		String minMonthNum = "1";
 		JsresPowerCfg minMonthCfg = jsResPowerCfgBiz.read("jsres_"+GlobalContext.getCurrentUser().getOrgFlow()+"_org_process_scheduling_time");
@@ -4995,7 +4995,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			if (StringUtils.isEmpty(doctorFlow)) {
 				continue;
 			}
-			if (pbInfoItem.getRecordStatus().equals("N")) {
+            if (pbInfoItem.getRecordStatus().equals(GlobalConstant.FLAG_N)) {
 				continue;
 			}
 			//该学员的历史排班数据,从数据库查询历史排班数据
@@ -5033,7 +5033,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					//删除历史排班
 					deletePbResult(history.getResultFlow(),true);
 					//移除dbList中的本次历史数据，因为它已经被融合了
-					history.setRecordStatus("N");
+                    history.setRecordStatus(GlobalConstant.FLAG_N);
 					continue;
 				}
 				//判断是否有提交记录
@@ -5044,7 +5044,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					if (importStart.compareTo(hisStart) == 0 && importEnd.compareTo(hisEnd) == 0) {
 						//覆盖
 						if (resRecLog>0){
-							pbInfoItem.setRecordStatus("N");
+                            pbInfoItem.setRecordStatus(GlobalConstant.FLAG_N);
 							continue;
 						}else {
 							pbInfoItem.setResultFlow(history.getResultFlow());
@@ -5060,7 +5060,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								pbInfoItem.setSchStartDate(cn.hutool.core.date.DateUtil.offsetDay(
 										cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
 										1).toDateStr());
-//								history.setRecordStatus("N");
+//								history.setRecordStatus(GlobalConstant.FLAG_N);
 							}else {
 								//导入的开始时间和历史数据的结束时间衔接上
 								//导入的开始时间内改为历史的开始时间
@@ -5069,7 +5069,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								//删除历史排班
 								deletePbResult(history.getResultFlow(),true);
 								//移除dbList中的本次历史数据，因为它已经被融合了
-								history.setRecordStatus("N");
+                                history.setRecordStatus(GlobalConstant.FLAG_N);
 								continue;
 							}
 						}
@@ -5082,7 +5082,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								//有提交记录的就不合并了,调整本次排班数据
 								pbInfoItem.setSchEndDate(cn.hutool.core.date.DateUtil.offsetDay(
 										cn.hutool.core.date.DateUtil.parseDate(history.getSchStartDate()),-1).toDateStr());
-//								history.setRecordStatus("N");
+//								history.setRecordStatus(GlobalConstant.FLAG_N);
 							}else {
 								//导入的尾衔接
 								pbInfoItem.setResultFlow(history.getResultFlow());
@@ -5091,7 +5091,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								//删除历史排班
 								deletePbResult(history.getResultFlow(),true);
 								//移除dbList中的本次历史数据，因为它已经被融合了
-								history.setRecordStatus("N");
+                                history.setRecordStatus(GlobalConstant.FLAG_N);
 								continue;
 							}
 						}
@@ -5104,7 +5104,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								pbInfoItem.setSchStartDate(cn.hutool.core.date.DateUtil.offsetDay(
 										cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
 										1).toDateStr());
-//								history.setRecordStatus("N");
+//								history.setRecordStatus(GlobalConstant.FLAG_N);
 							}else {
 								pbInfoItem.setResultFlow(history.getResultFlow());
 								//首部有交集
@@ -5112,7 +5112,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								//删除历史排班
 								deletePbResult(history.getResultFlow(),true);
 								//移除dbList中的本次历史数据，因为它已经被融合了
-								history.setRecordStatus("N");
+                                history.setRecordStatus(GlobalConstant.FLAG_N);
 								continue;
 							}
 						}else {
@@ -5121,7 +5121,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								pbInfoItem.setSchStartDate(cn.hutool.core.date.DateUtil.offsetDay(
 										cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
 										1).toDateStr());
-//								history.setRecordStatus("N");
+//								history.setRecordStatus(GlobalConstant.FLAG_N);
 							}else {
 								//首部有交集
 //								//更新历史排班
@@ -5139,7 +5139,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 							if (resRecLog>0){
 								pbInfoItem.setSchEndDate(cn.hutool.core.date.DateUtil.offsetDay(
 										cn.hutool.core.date.DateUtil.parseDate(history.getSchStartDate()),-1).toDateStr());
-//								history.setRecordStatus("N");
+//								history.setRecordStatus(GlobalConstant.FLAG_N);
 							}else {
 								pbInfoItem.setResultFlow(history.getResultFlow());
 								//尾部有交集
@@ -5147,7 +5147,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								//删除历史排班
 								deletePbResult(history.getResultFlow(),true);
 								//移除dbList中的本次历史数据，因为它已经被融合了
-								history.setRecordStatus("N");
+                                history.setRecordStatus(GlobalConstant.FLAG_N);
 								continue;
 							}
 						}else {
@@ -5177,13 +5177,13 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 										cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
 										1
 								).toDateStr());
-//								history.setRecordStatus("N");
+//								history.setRecordStatus(GlobalConstant.FLAG_N);
 							}else {
 								pbInfoItem.setResultFlow(history.getResultFlow());
 								//删除历史排班
 								deletePbResult(history.getResultFlow(),true);
 								//移除dbList中的本次历史数据，因为它已经被融合了
-								history.setRecordStatus("N");
+                                history.setRecordStatus(GlobalConstant.FLAG_N);
 								continue;
 							}
 						}else {
@@ -5197,12 +5197,12 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 										cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
 										1
 								).toDateStr());
-//								history.setRecordStatus("N");
+//								history.setRecordStatus(GlobalConstant.FLAG_N);
 							}else {
 								//删除历史排班
 								deletePbResult(history.getResultFlow(),true);
 								//移除dbList中的本次历史数据，因为它已经被融合了
-								history.setRecordStatus("N");
+                                history.setRecordStatus(GlobalConstant.FLAG_N);
 								continue;
 							}
 						}
@@ -5211,11 +5211,11 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					//被包含
 					if (importStart.compareTo(hisStart)>=0 && importEnd.compareTo(hisEnd)<=0){
 						if (resRecLog>0){
-							pbInfoItem.setRecordStatus("N");
+                            pbInfoItem.setRecordStatus(GlobalConstant.FLAG_N);
 							continue;
 						}
 						if (dbSchDeptFlow.equals(importDeptFlow)) {
-							pbInfoItem.setRecordStatus("N");
+                            pbInfoItem.setRecordStatus(GlobalConstant.FLAG_N);
 							continue;
 						}
 						//不存在提交数据的情况下
@@ -5233,7 +5233,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 					}
 				}
-				if (pbInfoItem.getRecordStatus().equalsIgnoreCase("Y") &&
+                if (pbInfoItem.getRecordStatus().equalsIgnoreCase(GlobalConstant.FLAG_Y) &&
 				!pbInfoItem.getSchStartDate().equals(pbInfoItem.getSchEndDate())) {
 					savePbWithoutHis(pbInfoItem);
 				}
@@ -5252,9 +5252,9 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		}
 		//是否开启轮转时长校验
 		JsresPowerCfg openCfgChek = jsResPowerCfgBiz.read("process_scheduling_check_" + GlobalContext.getCurrentUser().getOrgFlow());
-		String checkFlag = "N";
+        String checkFlag = GlobalConstant.FLAG_N;
 		if (ObjectUtil.isNotEmpty(openCfgChek)) {
-			checkFlag = StringUtils.isEmpty(openCfgChek.getCfgValue())? "N":openCfgChek.getCfgValue();
+            checkFlag = StringUtils.isEmpty(openCfgChek.getCfgValue()) ? GlobalConstant.FLAG_N : openCfgChek.getCfgValue();
 		}
 		if (GlobalConstant.FLAG_Y.equals(checkFlag)) {
 			//开启排班校验
@@ -5311,14 +5311,14 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					SchArrangeResult info = arrangeResultMapper.selectByPrimaryKey(item.getResultFlow());
 					if (ObjectUtil.isNotEmpty(info)) {
 						arrangeResultMapper.deleteByPrimaryKey(info.getResultFlow());
-						item.setRecordStatus("N");
+                        item.setRecordStatus(GlobalConstant.FLAG_N);
 					}
 				}
 			}catch (Exception e) {
 				SchArrangeResult info = arrangeResultMapper.selectByPrimaryKey(item.getResultFlow());
 				if (ObjectUtil.isNotEmpty(info)) {
 					arrangeResultMapper.deleteByPrimaryKey(info.getResultFlow());
-					item.setRecordStatus("N");
+                    item.setRecordStatus(GlobalConstant.FLAG_N);
 				}
 			}
 		}
@@ -5428,7 +5428,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		try{
 			for (int i = 0; i < list.size(); i++) {
 				SchArrangeResult thisItem = list.get(i);
-				if (thisItem.getRecordStatus().equals("N")) {
+                if (thisItem.getRecordStatus().equals(GlobalConstant.FLAG_N)) {
 					continue;
 				}
 				int next = i + 1;
@@ -5455,7 +5455,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					thisItem.setSchMonth(divide.toString());
 					arrangeResultMapper.updateByPrimaryKeySelective(thisItem);
 					arrangeResultMapper.deleteByPrimaryKey(nextItem.getResultFlow());
-					nextItem.setRecordStatus("N");
+                    nextItem.setRecordStatus(GlobalConstant.FLAG_N);
 					next++;
 				}
 			}
@@ -5493,7 +5493,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			SchArrangeResult schArrangeResult = resultMap.get(item.getSchResultFlow());
 			if (ObjectUtil.isEmpty(schArrangeResult)) {
 				//当前轮转数据没有对应的排班
-				item.setRecordStatus("N");
+                item.setRecordStatus(GlobalConstant.FLAG_N);
 				doctorSchProcessMapper.updateByPrimaryKeySelective(item);
 				continue;
 			}
@@ -5527,7 +5527,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		}
 		ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
 		ResDoctorSchProcessExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo("N")
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_N)
 				.andUserFlowEqualTo(doctorFlow);
 		doctorSchProcessMapper.deleteByExample(example);
 
@@ -5558,7 +5558,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			//TODO::填充机构信息
 			result.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 			result.setOrgName(GlobalContext.getCurrentUser().getOrgName());
-			result.setRecordStatus("Y");
+            result.setRecordStatus(GlobalConstant.FLAG_Y);
 			result.setCreateTime(DateUtil.getCurrDateTime());
 			result.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 			result.setModifyTime(DateUtil.getCurrDateTime());
@@ -5635,7 +5635,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		if (delete) {
 			arrangeResultMapper.deleteByPrimaryKey(resultFlow);
 		}else {
-			schArrangeResult.setRecordStatus("N");
+            schArrangeResult.setRecordStatus(GlobalConstant.FLAG_N);
 			arrangeResultMapper.updateByPrimaryKeySelective(schArrangeResult);
 		}
 	}

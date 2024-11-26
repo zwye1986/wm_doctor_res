@@ -11,8 +11,8 @@ import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sch.SchRotationExtMapper;
-import com.pinde.sci.enums.res.RecDocCategoryEnum;
-import com.pinde.sci.enums.res.ResTrainCategoryEnum;
+import com.pinde.core.common.enums.RecDocCategoryEnum;
+import com.pinde.core.common.enums.ResTrainCategoryEnum;
 import com.pinde.sci.enums.sch.SchSelTypeEnum;
 import com.pinde.sci.enums.sch.SchStageEnum;
 import com.pinde.sci.model.mo.*;
@@ -753,7 +753,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 		Criteria criteria = example.createCriteria()
 				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
 				.andDoctorCategoryIdEqualTo("Doctor")
-				.andPublishFlagEqualTo("Y");
+                .andPublishFlagEqualTo(GlobalConstant.FLAG_Y);
 		if (StringUtil.isNotBlank(speId)){
 			criteria.andSpeIdEqualTo(speId);
 		}

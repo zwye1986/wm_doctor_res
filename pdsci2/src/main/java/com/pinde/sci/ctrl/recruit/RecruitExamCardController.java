@@ -43,7 +43,7 @@ public class RecruitExamCardController extends GeneralController {
         param.put("idNo",idNo);
         param.put("startDate",startDate);
         param.put("endDate",endDate);
-        param.put("writeExamFlag","Y");
+        param.put("writeExamFlag", GlobalConstant.FLAG_Y);
         List<RecruitInfoExt> recruitInfoExts = recruitInfoBiz.searchCanExamRecruitInfo(param);
         model.addAttribute("recruitInfoExts",recruitInfoExts);
         return "recruit/examCard/main";

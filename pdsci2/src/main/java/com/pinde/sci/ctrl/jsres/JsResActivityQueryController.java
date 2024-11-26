@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.jsres;
 
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -85,7 +86,7 @@ public class JsResActivityQueryController extends GeneralController {
 			List<Map<String, Object>> depts = deptBiz.queryDeptListByFlow(GlobalContext.getCurrentUser().getUserFlow());
 			model.addAttribute("depts",depts);
 			//判断角色是否可以新增
-			String addFlag = "N"; //是否可以新增标识，‘N’ 不可以新增
+			String addFlag = GlobalConstant.FLAG_N; //是否可以新增标识，‘N’ 不可以新增
 			String roleFlow = "";
 			if("teach".equals(roleFlag)){
 				roleFlow = InitConfig.getSysCfg("res_teacher_role_flow");
@@ -96,7 +97,7 @@ public class JsResActivityQueryController extends GeneralController {
 			}
 			List<TeachActivityCfg> cfgList = activityBiz.searchActivityCfgs(roleFlow,GlobalContext.getCurrentUser().getOrgFlow());
 			if(null != cfgList && cfgList.size()>0){
-				addFlag = "Y";
+				addFlag = GlobalConstant.FLAG_Y;
 			}
 			model.addAttribute("addFlag",addFlag);
 		}else if("doctor".equals(roleFlag)) {
@@ -184,7 +185,7 @@ public class JsResActivityQueryController extends GeneralController {
 			for (SysUserRole role:userRoleList) {
 				if(obj.containsKey("auditRole")) {
 					if (obj.get("auditRole").toString().contains(role.getRoleFlow())) {
-						obj.put("audit", "Y");
+						obj.put("audit", GlobalConstant.FLAG_Y);
 					}
 				}
 			}
@@ -193,7 +194,7 @@ public class JsResActivityQueryController extends GeneralController {
 		if(list!=null) {
 			for (Map<String,Object> info:list )
 			{
-				info.put("HaveImg","N");
+				info.put("HaveImg", GlobalConstant.FLAG_N);
 				String imageUrl= (String) info.get("imageUrl");
 				if(StringUtil.isNotBlank(imageUrl))
 				{
@@ -202,7 +203,7 @@ public class JsResActivityQueryController extends GeneralController {
 					List<Element> ec = elem.elements("image");
 					if(ec!=null&&ec.size()>0)
 					{
-						info.put("HaveImg","Y");
+						info.put("HaveImg", GlobalConstant.FLAG_Y);
 					}
 				}
 				if(!"doctor".equals(roleFlag))
@@ -265,9 +266,9 @@ public class JsResActivityQueryController extends GeneralController {
 
 		for (Map<String, Object> map : list) {
 			if (map.containsKey("IS_EFFECTIVE")) {
-				if (map.get("IS_EFFECTIVE").equals("Y")) {
+				if (map.get("IS_EFFECTIVE").equals(GlobalConstant.FLAG_Y)) {
 					map.put("effectiveName", "认可");
-				} else if (map.get("IS_EFFECTIVE").equals("N")) {
+				} else if (map.get("IS_EFFECTIVE").equals(GlobalConstant.FLAG_N)) {
 					map.put("effectiveName", "不认可");
 				} else {
 					map.put("effectiveName", "未操作");
@@ -625,7 +626,7 @@ public class JsResActivityQueryController extends GeneralController {
 	@RequestMapping(value="/saveActivity")
 	@ResponseBody
 	public String saveActivity(TeachingActivityInfo activity,MultipartFile file,String isRe,String role,Integer currentPage){
-		return activityBiz.editActivity(activity,file,isRe, "N",null,role);
+		return activityBiz.editActivity(activity, file, isRe, GlobalConstant.FLAG_N, null, role);
 	}
 
 	@RequestMapping(value="/saveActivityNew")
@@ -651,7 +652,7 @@ public class JsResActivityQueryController extends GeneralController {
 			}
 			fileMap.put(s,fileList);
 		}
-		return activityBiz.editActivityNew2(activity,"N", fileMap,data,fileFlow);
+		return activityBiz.editActivityNew2(activity, GlobalConstant.FLAG_N, fileMap, data, fileFlow);
 	}
 
 	@RequestMapping(value="/saveActivityForAdmin")
@@ -865,8 +866,8 @@ public class JsResActivityQueryController extends GeneralController {
 		String orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
 		JsresPowerCfg orgApprove = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_ctrl_approve_activity");//教学活动评价配置
 		JsresPowerCfg approve = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_approve_activity");//教学活动评价配置评审类型
-		if (null!=orgApprove && null!=approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(),orgApprove.getCfgValue(),"Y")){
-			model.addAttribute("approve","Y");
+		if (null != orgApprove && null != approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(), orgApprove.getCfgValue(), GlobalConstant.FLAG_Y)) {
+			model.addAttribute("approve", GlobalConstant.FLAG_Y);
 		}
 		return "jsres/activity/activityQuery/showEval";
 	}
@@ -1184,7 +1185,7 @@ public class JsResActivityQueryController extends GeneralController {
 			Date dt = sdf.parse(month);
 			Calendar time = Calendar.getInstance();
 			time.setTime(dt);
-			if(flag.equals("Y")){
+			if (flag.equals(GlobalConstant.FLAG_Y)) {
 				time.add(Calendar.MONTH, 1);
 			}else{
 				time.add(Calendar.MONTH, -1);

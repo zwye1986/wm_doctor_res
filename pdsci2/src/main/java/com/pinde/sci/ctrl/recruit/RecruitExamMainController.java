@@ -53,7 +53,7 @@ public class RecruitExamMainController extends GeneralController {
                 List<RecruitInfo> recruitInfos=recruitExamMainBiz.readMainRecruitInfos(main.getMainFlow());
                 if(recruitInfos!=null&&recruitInfos.size()>0)
                 {
-                    fenPeiMap.put(main.getMainFlow(),"Y");
+                    fenPeiMap.put(main.getMainFlow(), GlobalConstant.FLAG_Y);
                 }
             }
         }

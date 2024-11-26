@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSONArray;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -108,7 +108,7 @@ public class JsResConsultController extends GeneralController {
             map.put("isAnswer",isAnswer);
         }
         //问答专区
-        map.put("isPolicy","N");
+        map.put("isPolicy", GlobalConstant.FLAG_N);
 
         //管理员所在地区
         map.put("orgCityId",sysOrg.getOrgCityId());
@@ -142,7 +142,7 @@ public class JsResConsultController extends GeneralController {
         HashMap<String, String> map = new HashMap<>();
         map.put("consultQuestion",consultQuestion);
         //政策专区
-        map.put("isPolicy","Y");
+        map.put("isPolicy", GlobalConstant.FLAG_Y);
 
         //管理员所在地区
         map.put("orgCityId",sysOrg.getOrgCityId());
@@ -181,7 +181,7 @@ public class JsResConsultController extends GeneralController {
         if (StringUtil.isNotBlank(consultInfo.getConsultTypeSonId())) {
             consultInfo.setConsultTypeSonName(DictTypeEnum.ConsultType.getDictNameById(consultInfo.getConsultTypeId()+"."+consultInfo.getConsultTypeSonId()));
         }
-        consultInfo.setIsAnswer("Y");
+        consultInfo.setIsAnswer(GlobalConstant.FLAG_Y);
         int c = consultInfoBiz.saveConsultInfo(consultInfo);
         if (c == 1){
             return GlobalConstant.SAVE_SUCCESSED;
@@ -241,8 +241,8 @@ public class JsResConsultController extends GeneralController {
             SysOrg sysOrg = orgBiz.readSysOrg(currentUser.getOrgFlow());
             consultInfo.setOrgCityId(sysOrg.getOrgCityId());
             consultInfo.setOrgCityName(sysOrg.getOrgCityName());
-            consultInfo.setIsPolicy("Y");
-            consultInfo.setIsAnswer("Y");
+            consultInfo.setIsPolicy(GlobalConstant.FLAG_Y);
+            consultInfo.setIsAnswer(GlobalConstant.FLAG_Y);
             consultInfo.setChargeName(currentUser.getUserName());
         } else {
             return "当前登录身份角色异常";
@@ -303,11 +303,11 @@ public class JsResConsultController extends GeneralController {
         HashMap<String, String> map = new HashMap<>();
         map.put("consultQuestion",consultQuestion);
         //问答专区
-        map.put("isPolicy","N");
+        map.put("isPolicy", GlobalConstant.FLAG_N);
 
         //管理员所在地区
         map.put("orgCityName",orgCityName);
-        map.put("isAnswer","Y");
+        map.put("isAnswer", GlobalConstant.FLAG_Y);
         map.put("orderBy",orderBy);
         PageHelper.startPage(currentPage,getPageSize(request));
         List<ConsultInfo> consultInfos = consultInfoBiz.search2(map);
@@ -328,11 +328,11 @@ public class JsResConsultController extends GeneralController {
         HashMap<String, String> map = new HashMap<>();
         map.put("consultQuestion",consultQuestion);
         //政策专区
-        map.put("isPolicy","Y");
+        map.put("isPolicy", GlobalConstant.FLAG_Y);
 
         //管理员所在地区
         map.put("orgCityName",orgCityName);
-        map.put("isAnswer","Y");
+        map.put("isAnswer", GlobalConstant.FLAG_Y);
         map.put("orderBy",orderBy);
         PageHelper.startPage(currentPage,getPageSize(request));
         List<ConsultInfo> consultInfos = consultInfoBiz.search2(map);

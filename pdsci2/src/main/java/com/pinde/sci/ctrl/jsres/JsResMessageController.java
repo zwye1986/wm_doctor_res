@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.utils.ObjectUtils;
 import com.pinde.core.util.DateUtil;
@@ -21,8 +21,8 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitResConfig;
 import com.pinde.sci.dao.base.SysCfgMapper;
 import com.pinde.sci.enums.jsres.*;
-import com.pinde.sci.enums.res.RecDocCategoryEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.RecDocCategoryEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.*;
@@ -197,13 +197,13 @@ public class JsResMessageController extends GeneralController {
         model.addAttribute("orgFlow",currUser.getOrgFlow());
         orgFlows.add(currUser.getOrgFlow());
         //判断是否是协同基地
-        String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
         List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currUser.getOrgFlow());
         if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
-            isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
         }
         model.addAttribute("isJointOrg", isJointOrg);
-        if(isJointOrg.equals("N")) {
+        if (isJointOrg.equals(GlobalConstant.FLAG_N)) {
             //查询本基地下协同基地
             List<SysOrg> orgList = orgBiz.searchJointOrgsByOrg(GlobalContext.getCurrentUser().getOrgFlow());
             if (null != orgList && orgList.size() > 0) {
@@ -235,13 +235,13 @@ public class JsResMessageController extends GeneralController {
         model.addAttribute("orgFlow",currUser.getOrgFlow());
         orgFlows.add(currUser.getOrgFlow());
         //判断是否是协同基地
-        String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
         List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currUser.getOrgFlow());
         if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
-            isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
         }
         model.addAttribute("isJointOrg", isJointOrg);
-        if(isJointOrg.equals("N")) {
+        if (isJointOrg.equals(GlobalConstant.FLAG_N)) {
             //查询本基地下协同基地
             List<SysOrg> orgList = orgBiz.searchJointOrgsByOrg(GlobalContext.getCurrentUser().getOrgFlow());
             if (null != orgList && orgList.size() > 0) {
@@ -273,10 +273,10 @@ public class JsResMessageController extends GeneralController {
     public String addPlan(String orgFlowEdit,String assignYearEdit,String startTime,String endTime,String flag,Model model) {
         SysUser currUser = GlobalContext.getCurrentUser();
         //判断是否是协同基地
-        String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
         List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currUser.getOrgFlow());
         if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
-            isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
         }
         model.addAttribute("isJointOrg",isJointOrg);
         model.addAttribute("flag",flag);
@@ -304,10 +304,10 @@ public class JsResMessageController extends GeneralController {
     public String addSend(String orgFlowEdit,String assignYearEdit,String sendStartTime,String sendEndTime,String flag,Model model) {
         SysUser currUser = GlobalContext.getCurrentUser();
         //判断是否是协同基地
-        String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
         List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currUser.getOrgFlow());
         if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
-            isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
         }
         model.addAttribute("isJointOrg",isJointOrg);
         model.addAttribute("flag",flag);
@@ -591,7 +591,7 @@ public class JsResMessageController extends GeneralController {
         model.addAttribute("orgSpeList", orgSpeList);
         model.addAttribute("sysOrg", sysOrg);
         //判断招录计划是否开始
-        String signupFlag = "N";//不可报名
+        String signupFlag = GlobalConstant.FLAG_N;//不可报名
         if(null != orgSpeList && orgSpeList.size()>0){
             String currDate = DateUtil.getCurrDate();
             Map<String,String> map = orgSpeList.get(0);
@@ -599,9 +599,9 @@ public class JsResMessageController extends GeneralController {
             String endTime = map.get("END_TIME");
             if(startTime.compareTo(currDate)>0 || currDate.compareTo(endTime)>0){
                 model.addAttribute("signupMsg", "招录时间未到！");
-                model.addAttribute("signupBtnFlag", "N");
+                model.addAttribute("signupBtnFlag", GlobalConstant.FLAG_N);
             }else{
-                signupFlag = "Y";
+                signupFlag = GlobalConstant.FLAG_Y;
             }
         }
         if(GlobalConstant.FLAG_Y.equals(signupFlag)){
@@ -609,19 +609,19 @@ public class JsResMessageController extends GeneralController {
             String signupMsg = speAssignBiz.doctorSignupFlagNew();
             if (StringUtil.isNotBlank(signupMsg)) {
                 model.addAttribute("signupMsg", signupMsg);
-                model.addAttribute("signupBtnFlag", "N");
+                model.addAttribute("signupBtnFlag", GlobalConstant.FLAG_N);
             } else {
-                model.addAttribute("signupBtnFlag", "Y");
+                model.addAttribute("signupBtnFlag", GlobalConstant.FLAG_Y);
             }
         }
         //2021级 jsres_doctor_spe 只能报全科
-        String speFlag = "N";
+        String speFlag = GlobalConstant.FLAG_N;
         SysUser sysUser = GlobalContext.getCurrentUser();
 //        List<JsresDoctorSpe> docSpeList = speAssignBiz.searchDoctorSpe();
 //        if(null != docSpeList && docSpeList.size()>0){
 //            for (JsresDoctorSpe spe:docSpeList) {
 //                if(spe.getIdNo().equals(sysUser.getIdNo())){
-//                    speFlag = "Y";
+//                    speFlag = GlobalConstant.FLAG_Y;
 //                    break;
 //                }
 //            }
@@ -632,7 +632,7 @@ public class JsResMessageController extends GeneralController {
                 String idNo = spe.get("ID_NO");
                 String doctorTypeId = spe.get("DOCTOR_TYPE_ID");
                 if(idNo.equals(sysUser.getIdNo()) && !"Graduate".equals(doctorTypeId)){
-                    speFlag = "Y";
+                    speFlag = GlobalConstant.FLAG_Y;
                     break;
                 }
             }
@@ -661,9 +661,9 @@ public class JsResMessageController extends GeneralController {
         String signupMsg = speAssignBiz.doctorSignupFlag2();
         if(StringUtil.isNotBlank(signupMsg)){
             planInfoVo.setSignupMsg(signupMsg);
-            planInfoVo.setSignupBtnFlag("N");
+            planInfoVo.setSignupBtnFlag(GlobalConstant.FLAG_N);
         }else{
-            planInfoVo.setSignupBtnFlag("Y");
+            planInfoVo.setSignupBtnFlag(GlobalConstant.FLAG_Y);
         }
         return ResultUtil.exec(true,"OK",planInfoVo);
     }
@@ -678,10 +678,10 @@ public class JsResMessageController extends GeneralController {
     public String localSignupConfirm(Model model) {
         SysUser currUser = GlobalContext.getCurrentUser();
         //判断是否是协同基地
-        String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
         List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currUser.getOrgFlow());
         if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
-            isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
         }
         model.addAttribute("isJointOrg",isJointOrg);
         return "jsres/message/signupConfirm";
@@ -691,10 +691,10 @@ public class JsResMessageController extends GeneralController {
     public String localSignupConfirmAcc(Model model) {
         SysUser currUser = GlobalContext.getCurrentUser();
         //判断是否是协同基地
-        String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
         List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currUser.getOrgFlow());
         if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
-            isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
         }
         model.addAttribute("isJointOrg",isJointOrg);
         return "jsres/message/signupConfirmAcc";
@@ -827,7 +827,7 @@ public class JsResMessageController extends GeneralController {
             }
         }
         //confirmFlag字段 当学员确认报到 置为Y 表示学员已报到
-        docRecWithBLOBs.setConfirmFlag("Y");
+        docRecWithBLOBs.setConfirmFlag(GlobalConstant.FLAG_Y);
 
 //        //查询专业轮转方案 设置学员轮转方案
 //        String catSpeId = recruit.getCatSpeId();
@@ -924,7 +924,7 @@ public class JsResMessageController extends GeneralController {
         ResDoctorRecruit doctorRecruit = null;
         doctorRecruit = jsResDoctorRecruitBiz.readResDoctorRecruit(recruitFlow);
         model.addAttribute("doctorRecruit", doctorRecruit);
-        model.addAttribute("addRecord", "Y");//添加新的培训记录标识
+        model.addAttribute("addRecord", GlobalConstant.FLAG_Y);//添加新的培训记录标识
         //根据专业ID speId ,机构流水号 orgFlow 查询对应的名称
         SysOrgExample example = new SysOrgExample();
         SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
@@ -955,7 +955,7 @@ public class JsResMessageController extends GeneralController {
         if (joinOrgs.size() == 0) {
             jointOrgFlow = "";
             jointOrgName = "";
-            inJointOrgTrain = "N";
+            inJointOrgTrain = GlobalConstant.FLAG_N;
             if (orgList.size() == 0){
                 placeId  = "";
                 placeName  = "";
@@ -972,7 +972,7 @@ public class JsResMessageController extends GeneralController {
             //从关联表中查询主基地名称与ID
             orgFlow = joinOrgs.get(0).getOrgFlow();
             orgName = joinOrgs.get(0).getOrgName();
-            inJointOrgTrain = "Y";
+            inJointOrgTrain = GlobalConstant.FLAG_Y;
         }
 
         model.addAttribute("speId", speId);
@@ -1039,7 +1039,7 @@ public class JsResMessageController extends GeneralController {
         ResDoctorRecruit doctorRecruit = null;
         doctorRecruit = jsResDoctorRecruitBiz.readResDoctorRecruit(recruitFlow);
         recruitVo.setDoctorRecruit(doctorRecruit);
-        recruitVo.setAddRecord("Y");//添加新的培训记录标识
+        recruitVo.setAddRecord(GlobalConstant.FLAG_Y);//添加新的培训记录标识
         //根据专业ID speId ,机构流水号 orgFlow 查询对应的名称
         SysOrgExample example = new SysOrgExample();
         SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
@@ -1070,7 +1070,7 @@ public class JsResMessageController extends GeneralController {
         if (joinOrgs.size() == 0) {
             jointOrgFlow = "";
             jointOrgName = "";
-            inJointOrgTrain = "N";
+            inJointOrgTrain = GlobalConstant.FLAG_N;
             if (orgList.size() == 0){
                 placeId  = "";
                 placeName  = "";
@@ -1087,7 +1087,7 @@ public class JsResMessageController extends GeneralController {
             //从关联表中查询主基地名称与ID
             orgFlow = joinOrgs.get(0).getOrgFlow();
             orgName = joinOrgs.get(0).getOrgName();
-            inJointOrgTrain = "Y";
+            inJointOrgTrain = GlobalConstant.FLAG_Y;
         }
         recruitVo.setSpeId(speId);
         recruitVo.setSpeName(speName);

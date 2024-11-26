@@ -79,7 +79,7 @@ public class ResEntryReportController extends GeneralController {
         Object val="";
         if(val==null)
         {
-            return "N";
+            return GlobalConstant.FLAG_N;
         }
         return val;
     }

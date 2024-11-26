@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.osca;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
@@ -88,7 +89,7 @@ public class OscaPersonnelController extends GeneralController {
         }
         List<SysOrg> orgList = sysOrgBiz.queryAllSysOrg(null);
         model.addAttribute("orgList",orgList);
-        model.addAttribute("auditFlag","Y");
+        model.addAttribute("auditFlag", GlobalConstant.FLAG_Y);
         return "osca/base/audit";
     }
 

@@ -204,9 +204,9 @@ public class LcjnStudentBizImpl implements ILcjnStudentBiz {
                     }
                     if("*是否本院".equals(currTitle)){
                         if("是".equals(value)){
-                            user.setIsOwnerStu("Y");
+                            user.setIsOwnerStu(GlobalConstant.FLAG_Y);
                         }else if("否".equals(value)){
-                            user.setIsOwnerStu("N");
+                            user.setIsOwnerStu(GlobalConstant.FLAG_N);
                         }
                     }
                     if("所在单位".equals(currTitle)){

@@ -2,11 +2,11 @@ package com.pinde.res.ctrl.osca;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.model.*;
-import com.pinde.core.util.PasswordUtil;
 import com.pinde.core.common.enums.UserStatusEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
+import com.pinde.core.util.PasswordUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.hbres.IFileBiz;
@@ -197,10 +197,10 @@ public class OscaAppController {
 					return "res/osca/login";
 				}
 				if(isDoctor) {
-					model.addAttribute("isNew","N");
+                    model.addAttribute("isNew", GlobalConstant.FLAG_N);
 					//如果是注册未审核通过的学员，进入个人信息填写页面
 					if("OSCE_NEW".equals(userinfo.getStatusId())){
-						model.addAttribute("isNew","Y");
+                        model.addAttribute("isNew", GlobalConstant.FLAG_Y);
 					}
 					model.addAttribute("roleFlow","Student");
 					model.addAttribute("roleName","学员");
@@ -441,9 +441,9 @@ public class OscaAppController {
 				//查询当前站点下，本机构是否配置了试卷
 				List<PubFile> files=oscaAppBiz.findStationFiles(s.getStationFlow(),tea.getOrgFlow());
 				if(files!=null&&files.size()>0) {
-					stationMap.put(s.getStationFlow() + "ExamFiles","Y" );
+                    stationMap.put(s.getStationFlow() + "ExamFiles", GlobalConstant.FLAG_Y);
 				}else{
-					stationMap.put(s.getStationFlow() + "ExamFiles","N" );
+                    stationMap.put(s.getStationFlow() + "ExamFiles", GlobalConstant.FLAG_N);
 				}
 			}
 			//看看考场
@@ -471,9 +471,9 @@ public class OscaAppController {
 			b.setPartnerName(user.getUserName());
 			b.setCodeInfo(codeInfo);//保存学员二维码信息
 			int num=oscaAppBiz.editTeaScanDoc(b,user);
-			model.addAttribute("showSubmit","N");
+            model.addAttribute("showSubmit", GlobalConstant.FLAG_N);
 			if(count<=stations.size()&&count>0){
-				model.addAttribute("showSubmit","Y");
+                model.addAttribute("showSubmit", GlobalConstant.FLAG_Y);
 			}
 			model.addAttribute("stationMap",stationMap);
 			oscaAppBiz.updateTeaScanDocStatus(doctorFlow,clinicalFlow,user);
@@ -670,9 +670,9 @@ public class OscaAppController {
 			//查询当前站点下，本机构是否配置了试卷
 			List<PubFile> files=oscaAppBiz.findStationFiles(s.getStationFlow(),tea.getOrgFlow());
 			if(files!=null&&files.size()>0) {
-				stationMap.put(s.getStationFlow() + "ExamFiles","Y" );
+                stationMap.put(s.getStationFlow() + "ExamFiles", GlobalConstant.FLAG_Y);
 			}else{
-				stationMap.put(s.getStationFlow() + "ExamFiles","N" );
+                stationMap.put(s.getStationFlow() + "ExamFiles", GlobalConstant.FLAG_N);
 			}
 		}
 		//看看考场
@@ -700,9 +700,9 @@ public class OscaAppController {
 		b.setPartnerName(user.getUserName());
 		b.setCodeInfo(doctorAssessment.getCodeInfo());//保存学员二维码信息
 		int num = oscaAppBiz.editTeaScanDoc(b, user);
-		model.addAttribute("showSubmit", "N");
+        model.addAttribute("showSubmit", GlobalConstant.FLAG_N);
 		if(count<=stations.size()&&count>0){
-			model.addAttribute("showSubmit","Y");
+            model.addAttribute("showSubmit", GlobalConstant.FLAG_Y);
 		}
 		model.addAttribute("stationMap", stationMap);
 		//获取访问路径前缀
@@ -927,14 +927,14 @@ public class OscaAppController {
 				//查询当前站点下，本机构是否配置了试卷
 				List<PubFile> files=oscaAppBiz.findStationFiles(s.getStationFlow(),tea.getOrgFlow());
 				if(files!=null&&files.size()>0) {
-					stationMap.put(s.getStationFlow() + "ExamFiles","Y" );
+                    stationMap.put(s.getStationFlow() + "ExamFiles", GlobalConstant.FLAG_Y);
 				}else{
-					stationMap.put(s.getStationFlow() + "ExamFiles","N" );
+                    stationMap.put(s.getStationFlow() + "ExamFiles", GlobalConstant.FLAG_N);
 				}
 			}
-			model.addAttribute("showSubmit","N");
+        model.addAttribute("showSubmit", GlobalConstant.FLAG_N);
 			if(count<=stations.size()&&count>0){
-				model.addAttribute("showSubmit","Y");
+                model.addAttribute("showSubmit", GlobalConstant.FLAG_Y);
 			}
 			model.addAttribute("stationMap",stationMap);
 			return "res/osca/assessRefresh";
@@ -1426,9 +1426,9 @@ public class OscaAppController {
 		model.addAttribute("requiredFroms",requiredFroms);
 
 		if(froms!=null&&froms.size()>0){
-			model.addAttribute("haveFrom","Y");
+            model.addAttribute("haveFrom", GlobalConstant.FLAG_Y);
 			if(froms.size()==1){
-				model.addAttribute("haveOne","Y");
+                model.addAttribute("haveOne", GlobalConstant.FLAG_Y);
 				OscaSubjectStationFrom b=froms.get(0);
 				OscaFrom from=null;
 				if("NotExam".equals(b.getRecordFlow()))//未考核的话取原来的表单内容
@@ -1496,8 +1496,8 @@ public class OscaAppController {
 			}
 		}else {
 			//没有配置表单直接查询成绩
-			model.addAttribute("haveFrom","N");
-			model.addAttribute("haveOne","N");
+            model.addAttribute("haveFrom", GlobalConstant.FLAG_N);
+            model.addAttribute("haveOne", GlobalConstant.FLAG_N);
 			model.addAttribute("stationScore",station.getStationScore());
 		}
 		model.addAttribute("paramMap",param);
@@ -1715,8 +1715,8 @@ public class OscaAppController {
 		score.setStationName(station.getStationName());
 		score.setStatusId(ScoreStatusEnum.Save.getId());
 		score.setStatusName(ScoreStatusEnum.Save.getName());
-		score.setIsHaveFrom("N");
-		score.setFromTypeId("N");
+        score.setIsHaveFrom(GlobalConstant.FLAG_N);
+        score.setFromTypeId(GlobalConstant.FLAG_N);
 		score.setFromUrl("NotHavaFrom");
 		score.setPartnerFlow(userFlow);
 		score.setPartnerName(tea.getUserName());
@@ -1961,7 +1961,7 @@ public class OscaAppController {
 		score.setStationName(station.getStationName());
 		score.setStatusId(ScoreStatusEnum.Save.getId());
 		score.setStatusName(ScoreStatusEnum.Save.getName());
-		score.setIsHaveFrom("Y");
+        score.setIsHaveFrom(GlobalConstant.FLAG_Y);
 		score.setIsRequired(isRequired);
 		score.setFromFlow(from.getFromFlow());
 		score.setFromName(from.getFromName());
@@ -2301,8 +2301,8 @@ public class OscaAppController {
 			param.put("scoreFlow", scoreFlow);
 			model.addAttribute("paramMap",param);
 			//如果是没有表单的成绩就直接返回页面
-			if(score.getIsHaveFrom().equals("N")){
-	            model.addAttribute("haveFrom","N");
+            if (score.getIsHaveFrom().equals(GlobalConstant.FLAG_N)) {
+                model.addAttribute("haveFrom", GlobalConstant.FLAG_N);
 				return "res/osca/selectStationFrom";
 			}else if(StringUtil.isBlank(fromFlow)){
 				model.addAttribute("resultId", "3011101");
@@ -2313,7 +2313,7 @@ public class OscaAppController {
 			OscaFrom from = oscaAppBiz.getFromByFlow(fromFlow);
 			model.addAttribute("from", from);
 			//固定表单
-            model.addAttribute("haveFrom","Y");
+            model.addAttribute("haveFrom", GlobalConstant.FLAG_Y);
 			//固定表单
 			if(score.getFromTypeId().equals("1")){
 				String url=score.getFromUrl();

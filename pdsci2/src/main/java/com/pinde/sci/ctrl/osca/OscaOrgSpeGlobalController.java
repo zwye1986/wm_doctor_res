@@ -1,7 +1,9 @@
 package com.pinde.sci.ctrl.osca;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -80,7 +82,7 @@ public class OscaOrgSpeGlobalController extends GeneralController {
         map.put("orgName",orgName);
         map.put("orgProvId",orgProvId);
         map.put("orgCityId",orgCityId);
-        map.put("withN","Y");
+        map.put("withN", GlobalConstant.FLAG_Y);
         if(oscaOrgSpeExt!=null&&oscaOrgSpeExt.isSearchSite()){
             map.put("isExamOrg",GlobalConstant.IS_EXAM_TEA_Y);
         }
@@ -346,7 +348,7 @@ public class OscaOrgSpeGlobalController extends GeneralController {
             SysOrg sysOrg = orgBiz.readSysOrg(currentUser.getOrgFlow());
             String provId = sysOrg.getOrgProvId();
             SysOrg search = new SysOrg();
-            search.setIsExamOrg("Y");
+            search.setIsExamOrg(GlobalConstant.FLAG_Y);
             search.setOrgProvId(provId);
             search.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
             List<SysOrg> sysOrgList = orgBiz.searchOrg(search);

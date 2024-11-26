@@ -14,8 +14,8 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.res.ResAssessTypeEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.ResAssessTypeEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.hbres.teacherRec;
@@ -378,7 +378,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             //查询该基地的科室
             SysDept sysDept = new SysDept();
             sysDept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-            sysDept.setRecordStatus("Y");
+            sysDept.setRecordStatus(GlobalConstant.FLAG_Y);
             List<SysDept> deptList = deptBiz.searchDept(sysDept);
             model.addAttribute("deptList",deptList);
 

@@ -1,6 +1,6 @@
 package com.pinde.sci.ctrl.jszy;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyResDoctorRecruitBiz;
@@ -598,7 +598,7 @@ public class JszyResCertificateManageController extends GeneralController {
             model.addAttribute("completeStartDate",startTime);
             model.addAttribute("completeEndDate",endTime);
         }else{
-            model.addAttribute("notHave","Y");
+            model.addAttribute("notHave", GlobalConstant.FLAG_Y);
         }
         return "jszy/global/showCertificate/info";
     }

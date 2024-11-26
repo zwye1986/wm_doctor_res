@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.portal;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IinxColumnManageBiz;

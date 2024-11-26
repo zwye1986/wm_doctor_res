@@ -1,6 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.jsres.IJsResStatisticBiz;
@@ -152,7 +152,7 @@ public class ResMonthlyReportGlobalControllerClass extends GeneralController {
                         outOfficeDoctorMap.put("docTypeList", docTypeList);
                         List<Map<String, Object>> outOfficeDoctorInfoList = monthlyReportExtMapper2.findOutOfficeDoctorInfo(outOfficeDoctorMap);
                         outOfficeDoctorInfoList= getUniversityInOrgStudentInfo(doctorOutOfficeParamPO,outOfficeDoctorInfoList);
-                        String cksh = "N";
+                        String cksh = GlobalConstant.FLAG_N;
                         JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_" + orgFlow + "_org_cksh");
                         if (cfg != null) {
                             cksh = cfg.getCfgValue();
@@ -232,7 +232,7 @@ public class ResMonthlyReportGlobalControllerClass extends GeneralController {
                         outOfficeDoctorMap.put("docTypeList", docTypeList);
                         List<Map<String, Object>> outOfficeDoctorInfoList = monthlyReportExtMapper2.findOutOfficeDoctorInfo(outOfficeDoctorMap);
                         outOfficeDoctorInfoList = getUniversityInOrgStudentInfo(doctorOutOfficeParamPO, outOfficeDoctorInfoList);/*获取当前搞笑在该基地的学生*/
-                        String cksh = "N";
+                        String cksh = GlobalConstant.FLAG_N;
                         JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_" + orgFlow + "_org_cksh");
                         if (cfg != null) {
                             cksh = cfg.getCfgValue();

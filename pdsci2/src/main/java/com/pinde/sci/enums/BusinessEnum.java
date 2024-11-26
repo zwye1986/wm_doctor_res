@@ -1,4 +1,4 @@
-package com.pinde.sci.enums;
+package com.pinde.core.common.enums;
 
 public interface BusinessEnum extends BaseEnum{
 

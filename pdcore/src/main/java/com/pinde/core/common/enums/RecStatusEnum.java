@@ -8,14 +8,14 @@ public enum RecStatusEnum implements GeneralEnum<String> {
 	Submit("Submit","提交"),
 	TeacherAuditY("TeacherAuditY","带教老师审核通过"),
 	TeacherAuditN("TeacherAuditN","带教老师审核不通过"),
-	SecretaryAuditY("SecretaryAuditY","科室秘书审核通过"),
-	SecretaryAuditN("SecretaryAuditN","科室秘书审核不通过"),
-	HeadAuditY("HeadAuditY","科主任审核通过"),
+    SecretaryAuditY("SecretaryAuditY", "科室秘书审核通过"),
+    SecretaryAuditN("SecretaryAuditN", "科室秘书审核不通过"),
+    HeadAuditY("HeadAuditY", "科主任审核通过"),
 	HeadAuditN("HeadAuditN","科主任审核不通过"),
 	ManagerAuditY("ManagerAuditY","基地主任审核通过"),
 	ManagerAuditN("ManagerAuditN","基地主任审核不通过"),
 	AdminAuditY("AdminAuditY","管理员审核通过"),
-	AdminAuditN("AdminAuditN","管理员审核不通过"),
+    AdminAuditN("AdminAuditN", "管理员审核不通过")
 	;
 
 	private final String id;

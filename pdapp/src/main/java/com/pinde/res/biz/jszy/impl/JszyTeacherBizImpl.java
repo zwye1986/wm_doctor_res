@@ -63,7 +63,7 @@ public class JszyTeacherBizImpl implements IJszyTeacherBiz {
         if(StringUtil.isNotBlank(userFlow) && StringUtil.isNotBlank(dataFlow)){
             ResRec rec = new ResRec();
             rec.setRecFlow(dataFlow);
-            if(statusId.equals("Y")) {
+            if (statusId.equals(GlobalConstant.FLAG_Y)) {
                 rec.setAuditStatusId(RecStatusEnum.TeacherAuditY.getId());
                 rec.setAuditStatusName(RecStatusEnum.TeacherAuditY.getName());
             }else{

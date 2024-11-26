@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -17,8 +17,8 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.enums.jsres.*;
-import com.pinde.sci.enums.res.AfterRecTypeEnum;
-import com.pinde.sci.enums.res.ResScoreTypeEnum;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.enums.ResScoreTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
@@ -1926,10 +1926,10 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
     public String asseMain(Model model,String roleFlag,String tabTag){
         SysUser currentUser = GlobalContext.getCurrentUser();
         //判断是否是协同基地
-        String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
         List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currentUser.getOrgFlow());
         if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
-            isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
          //   return "jsres/asse/hospital/auditMainForJoint";
         }
         model.addAttribute("isJointOrg", isJointOrg);
@@ -2028,11 +2028,11 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         String nowTime = DateUtil.transDateTime(DateUtil.getCurrentTime());
         String startDate = InitConfig.getSysCfg("local_submit_start_time");
         String endDate = InitConfig.getSysCfg("local_submit_end_time");
-        String f="N";
+        String f = GlobalConstant.FLAG_N;
         if (StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate)) {
             if(startDate.compareTo(nowTime) <= 0 && endDate.compareTo(nowTime)>=0)
             {
-                f="Y";
+                f = GlobalConstant.FLAG_Y;
             }
         }
         model.addAttribute("f",f);
@@ -2071,10 +2071,10 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         }
         param.put("docTypeList",docTypeList);
         //判断是否是协同基地
-        String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
         List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currentUser.getOrgFlow());
         if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
-            isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
         }
         param.put("isJointOrg",isJointOrg);
         param.put("trainingTypeId",trainingTypeId);
@@ -2136,10 +2136,10 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         }
         param.put("docTypeList",docTypeList);
         //判断是否是协同基地
-        String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
         List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currentUser.getOrgFlow());
         if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
-            isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
         }
         param.put("isJointOrg",isJointOrg);
         param.put("trainingTypeId",trainingTypeId);
@@ -2196,10 +2196,10 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         }
         param.put("docTypeList",docTypeList);
         //判断是否是协同基地
-        String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
         List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currentUser.getOrgFlow());
         if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
-            isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
         }
         param.put("isJointOrg",isJointOrg);
         param.put("trainingTypeId",trainingTypeId);
@@ -2319,10 +2319,10 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
 
         param.put("isPostpone",isPostpone);
         //判断是否是协同基地
-        String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
         List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currentUser.getOrgFlow());
         if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
-            isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
         }else{
             if(null != orgFlowList && orgFlowList.size()==0){
                 if(!"AssiGeneral".equals(trainingTypeId)){
@@ -2346,15 +2346,15 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
        /* String nowTime=DateUtil.transDateTime(DateUtil.getCurrentTime());
         String startDate=InitConfig.getSysCfg("local_submit_start_time");
         String endDate=InitConfig.getSysCfg("local_submit_end_time");*/
-        String f="N";
+        String f = GlobalConstant.FLAG_N;
         List<ResTestConfig> testConfigList = resTestConfigBiz.findLocalEffective(DateUtil.getCurrDateTime2());
         if (testConfigList.size() > 0) {
-            f = "Y";
+            f = GlobalConstant.FLAG_Y;
         }
         /*if (StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate)) {
             if(startDate.compareTo(nowTime)<=0&&endDate.compareTo(nowTime)>=0)
             {
-                f="Y";
+                f=GlobalConstant.FLAG_Y;
             }
         }*/
         model.addAttribute("f",f);
@@ -2779,7 +2779,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         param.put("userName",userName);
         param.put("graduationYear",graduationYear);
         param.put("trainingYears",trainingYears);
-        param.put("skillIsHege","Y");
+        param.put("skillIsHege", GlobalConstant.FLAG_Y);
         param.put("scoreYear",scoreYear);
         param.put("isHege","1");
         param.put("theroyScoreYear",theroyScoreYear);
@@ -2829,7 +2829,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         param.put("userName",userName);
         param.put("graduationYear",graduationYear);
         param.put("trainingYears",trainingYears);
-        param.put("skillIsHege","Y");
+        param.put("skillIsHege", GlobalConstant.FLAG_Y);
         param.put("scoreYear",scoreYear);
         param.put("isHege","1");
         param.put("theroyScoreYear",theroyScoreYear);

@@ -188,7 +188,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 		//添加提交记录
 		ResSupervisioSubjectRecords records = new ResSupervisioSubjectRecords();
 		records.setRecordFlow(PkUtil.getUUID());
-		records.setRecordStatus("Y");
+        records.setRecordStatus(GlobalConstant.FLAG_Y);
 		records.setCreateTime(DateUtil.getCurrDateTime());
 		records.setCreateUserFlow(userFlow);
 		records.setRoleFlag(roleFlag);
@@ -232,7 +232,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 		if (StringUtil.isNotBlank(userFlow)){
 			criteria.andUserFlowEqualTo(userFlow);
 		}
-		criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
 		example.setOrderByClause("CREATE_TIME DESC");
 		List<ResSupervisioSubjectRecords> list = subjectRecordsMapper.selectByExample(example);
 		if (null != list  && list.size()>0){
@@ -647,7 +647,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 	public List<ResHospSupervSubject> readHospSuperBySubjectName(String subjectName) {
 		ResHospSupervSubjectExample example = new ResHospSupervSubjectExample();
 		if (StringUtil.isNotBlank(subjectName)){
-			example.createCriteria().andSubjectNameEqualTo(subjectName).andRecordStatusEqualTo("Y");
+            example.createCriteria().andSubjectNameEqualTo(subjectName).andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
 		}
 
 		return hospSupervSubjectMapper.selectByExample(example);
@@ -682,7 +682,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 		List<ResHospSupervSubject> list = hospSupervSubjectMapper.selectByExample(example);
 		if (null !=list && !list.isEmpty()){
 			ResHospSupervSubject subject = list.get(0);
-			subject.setRecordStatus("N");
+            subject.setRecordStatus(GlobalConstant.FLAG_N);
 			return hospSupervSubjectMapper.updateByExample(subject, example);
 		}
 		return 0;
@@ -718,7 +718,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 		if (StringUtil.isNotBlank(subject.getOrgFlow())){
 			criteria.andOrgFlowEqualTo(subject.getOrgFlow());
 		}
-		criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
 		return subjectMapper.selectByExample(example);
 	}
 

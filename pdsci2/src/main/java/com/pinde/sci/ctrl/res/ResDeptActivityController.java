@@ -1,5 +1,7 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
@@ -13,10 +15,6 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.res.DeptActivityItemTypeEnum;
-import com.pinde.sci.enums.res.DeptActivityStatusEnum;
-import com.pinde.sci.enums.res.DeptActivityTypeEnum;
-import com.pinde.sci.enums.res.DeptActivityUserTypeEnum;
 import com.pinde.sci.form.res.ResDeptPlanForm;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -151,7 +149,7 @@ public class ResDeptActivityController extends GeneralController {
 		{
 			for(DeptActivityItemTypeEnum e:DeptActivityItemTypeEnum.values())
 			{
-				if(e.getIsCfg().equals("Y"))
+				if (e.getIsCfg().equals(GlobalConstant.FLAG_Y))
 				{
 					QingpuLectureEvalCfg searchCfg = new QingpuLectureEvalCfg();
 					searchCfg.setTypeId(e.getId());
@@ -167,7 +165,7 @@ public class ResDeptActivityController extends GeneralController {
 		}else if(GlobalConstant.FLAG_Y.equals(typeCfg)){
 			for(DeptActivityItemTypeEnum e:DeptActivityItemTypeEnum.values())
 			{
-				if(e.getIsCfg().equals("N")&&!DeptActivityItemTypeEnum.CKKHAP.getId().equals(e.getId())
+				if (e.getIsCfg().equals(GlobalConstant.FLAG_N) && !DeptActivityItemTypeEnum.CKKHAP.getId().equals(e.getId())
 						&&!DeptActivityItemTypeEnum.DSBGHAP.getId().equals(e.getId())
 						&&!DeptActivityItemTypeEnum.JYSKHAP.getId().equals(e.getId()))
 				{

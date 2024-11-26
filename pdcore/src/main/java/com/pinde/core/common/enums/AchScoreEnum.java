@@ -1,10 +1,11 @@
 package com.pinde.core.common.enums;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.EnumUtil;
 
 public enum AchScoreEnum implements GeneralEnum<String> {
-    Enable("Y","启用"),
-    Disable("N","停用");
+    Enable(GlobalConstant.FLAG_Y, "启用"),
+    Disable(GlobalConstant.FLAG_N, "停用");
 
     private final String id;
     private final String name;

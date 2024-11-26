@@ -1,6 +1,8 @@
 package com.pinde.sci.biz.jszy.impl;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.PkUtil;
@@ -24,8 +26,8 @@ import com.pinde.sci.enums.jszy.JszyResDegreeCategoryEnum;
 import com.pinde.sci.enums.jszy.JszyResDocTypeEnum;
 import com.pinde.sci.enums.pub.UserNationEnum;
 import com.pinde.sci.enums.pub.UserSexEnum;
-import com.pinde.sci.enums.res.ResDocTypeEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.ResDocTypeEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.jszy.JszyBackTrainForm;

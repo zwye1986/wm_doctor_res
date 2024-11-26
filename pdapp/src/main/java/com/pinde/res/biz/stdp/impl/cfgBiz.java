@@ -1,12 +1,12 @@
 package com.pinde.res.biz.stdp.impl;
 
+import com.pinde.app.common.GlobalUtil;
 import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.util.GlobalUtil;
+import com.pinde.core.model.SysCfg;
+import com.pinde.core.model.SysCfgExample;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.stdp.ICfgBiz;
 import com.pinde.sci.dao.base.SysCfgMapper;
-import com.pinde.core.model.SysCfg;
-import com.pinde.core.model.SysCfgExample;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

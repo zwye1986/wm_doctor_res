@@ -1,13 +1,13 @@
 package com.pinde.res.biz.pushExam.impl;
 
 
-import com.pinde.core.util.GlobalUtil;
+import com.pinde.app.common.GlobalUtil;
+import com.pinde.core.model.SysCfg;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.pushExam.IPushExamBiz;
 import com.pinde.sci.dao.base.SysCfgMapper;
 import com.pinde.sci.dao.base.SysUserMapper;
-import com.pinde.core.model.SysCfg;
-import com.pinde.core.model.SysUser;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

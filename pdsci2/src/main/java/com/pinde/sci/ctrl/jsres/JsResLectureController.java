@@ -371,10 +371,10 @@ public class JsResLectureController extends GeneralController {
                     lectureInfos.add(lectureInfo);
                     if(GlobalConstant.FLAG_Y.equals(isScan))
                     {
-                        scanMap.put(lectureFlow,"Y");
+                        scanMap.put(lectureFlow, GlobalConstant.FLAG_Y);
                     }
                     if(GlobalConstant.FLAG_Y.equals(isScan2)) {
-                        scan2Map.put(lectureFlow, "Y");
+                        scan2Map.put(lectureFlow, GlobalConstant.FLAG_Y);
                     }
                     evaMap.put(lectureFlow,dateFlag);
                 }
@@ -475,7 +475,7 @@ public class JsResLectureController extends GeneralController {
         ResLectureScanRegist regist=resLectureScanRegistBiz.searchByUserFlowAndLectureFlow(userFlow,lectureFlow);
         if(regist!=null&&GlobalConstant.FLAG_Y.equals(regist.getIsRegist()))
         {
-            model.addAttribute("isRegiest", "N");
+            model.addAttribute("isRegiest", GlobalConstant.FLAG_N);
             model.addAttribute("msg", "已经报过名了！！请刷新列表");
             return "jsres/doctor/lectureRegist";
         }
@@ -488,20 +488,20 @@ public class JsResLectureController extends GeneralController {
             if(infos!=null&&infos.size()>0)
             {
                 ResLectureInfo resLectureInfo=infos.get(0);
-                model.addAttribute("isRegiest", "N");
+                model.addAttribute("isRegiest", GlobalConstant.FLAG_N);
                 model.addAttribute("msg", "已报名同一时间【"+resLectureInfo.getLectureContent()+"】，不能报名！");
                 return "jsres/doctor/lectureRegist";
             }
            int count= resLectureScanRegistBiz.editLectureScanRegist(lectureFlow);
             if(count<0)
             {
-                model.addAttribute("isRegiest", "N");
+                model.addAttribute("isRegiest", GlobalConstant.FLAG_N);
                 model.addAttribute("msg", "该讲座报名人数已满，请刷新列表页面！");
                 return "jsres/doctor/lectureRegist";
             }
             if(count==0)
             {
-                model.addAttribute("isRegiest", "N");
+                model.addAttribute("isRegiest", GlobalConstant.FLAG_N);
                 model.addAttribute("msg", "报名失败，请刷新列表页面！");
                 return "jsres/doctor/lectureRegist";
             }
@@ -517,9 +517,9 @@ public class JsResLectureController extends GeneralController {
             model.addAttribute("hour", hour);
             String min = lectureStartTime.substring(3, 5);
             model.addAttribute("min", min);
-            model.addAttribute("isRegiest", "Y");
+            model.addAttribute("isRegiest", GlobalConstant.FLAG_Y);
         }else{
-            model.addAttribute("isRegiest", "N");
+            model.addAttribute("isRegiest", GlobalConstant.FLAG_N);
             model.addAttribute("msg", "该讲座报名人数已满，请刷新列表页面！");
         }
         return "jsres/doctor/lectureRegist";
@@ -767,13 +767,13 @@ public class JsResLectureController extends GeneralController {
                     for(SysUserRole userRole:userRoles)
                     {
                         if (StringUtil.isNotBlank(roleTeacher)&&roleTeacher.equals(userRole.getRoleFlow())) {
-                            teaMap.put(user.getUserFlow(),"Y");
+                            teaMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
                         }
                         if (StringUtil.isNotBlank(roleHead)&&roleHead.equals(userRole.getRoleFlow())) {
-                            headMap.put(user.getUserFlow(),"Y");
+                            headMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
                         }
                         if (StringUtil.isNotBlank(roleSecretary) && roleSecretary.equals(userRole.getRoleFlow())) {
-                            secretaryMap.put(user.getUserFlow(),"Y");
+                            secretaryMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
                         }
                     }
                 }
@@ -827,13 +827,13 @@ public class JsResLectureController extends GeneralController {
                     for(SysUserRole userRole:userRoles)
                     {
                         if (StringUtil.isNotBlank(roleTeacher)&&roleTeacher.equals(userRole.getRoleFlow())) {
-                           teaMap.put(user.getUserFlow(),"Y");
+                            teaMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
                         }
                         if (StringUtil.isNotBlank(roleHead)&&roleHead.equals(userRole.getRoleFlow())) {
-                            headMap.put(user.getUserFlow(),"Y");
+                            headMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
                         }
                         if (StringUtil.isNotBlank(roleSecretary) && roleSecretary.equals(userRole.getRoleFlow())) {
-                            secretaryMap.put(user.getUserFlow(),"Y");
+                            secretaryMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
                         }
                     }
                 }
@@ -1239,7 +1239,7 @@ public class JsResLectureController extends GeneralController {
         if (StringUtil.isNotBlank(doctorRoleFlow)) {
             roles.add(doctorRoleFlow);
         }
- //       if(flag.equals("N")) {
+        //       if(flag.equals(GlobalConstant.FLAG_N)) {
         List<ResLectureScanRegist> lectureScanRegists = resLectureScanRegistBiz.searchIsScan(lectureFlow, roles);
         Map<String, ResLectureEvaDetail> evaDetailMap = new HashMap<>();
         if (lectureScanRegists != null && lectureScanRegists.size() > 0) {

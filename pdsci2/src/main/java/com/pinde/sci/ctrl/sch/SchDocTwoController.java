@@ -1,13 +1,14 @@
 package com.pinde.sci.ctrl.sch;
 
 import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.*;
-import com.pinde.sci.enums.res.*;
+import com.pinde.core.common.enums.*;
 import com.pinde.sci.enums.sch.*;
 import com.pinde.sci.form.sch.*;
 import com.pinde.sci.model.mo.*;
@@ -1584,7 +1585,7 @@ public class SchDocTwoController extends GeneralController{
 
 					List<Map<String, String>> mapList = TimeUtil.getNewTimes(times);
 					if(mapList.size()>1){
-						model.addAttribute("series","N");
+                        model.addAttribute("series", GlobalConstant.FLAG_N);
 					}
 					model.addAttribute("processMap",processMap);
 				}

@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.Docx4jUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -216,9 +216,9 @@ public class JsresPhyAssController extends GeneralController {
         paramMap.put("enrollStartTime",enrollStartTime);
         paramMap.put("enrollEndTime",enrollEndTime);
         paramMap.put("nowData",DateUtil.getCurrDateTime2());
-        paramMap.put("local","Y");
+        paramMap.put("local", GlobalConstant.FLAG_Y);
         if (StringUtil.isNotBlank(type) && type.equals("import")){
-            paramMap.put("importPlan","Y");
+            paramMap.put("importPlan", GlobalConstant.FLAG_Y);
             PageHelper.startPage(currentPage,getPageSize(request));
             List<Map<String, Object>> list = phyAssExtMapper.searchOrgPlanInfoList(paramMap);
             model.addAttribute("list",list);
@@ -574,7 +574,7 @@ public class JsresPhyAssController extends GeneralController {
     @ResponseBody
     public String deleteCerfiticateImg(String fileFlow) {
         PubFile pubFile = pubFileMapper.selectByPrimaryKey(fileFlow);
-        pubFile.setRecordStatus("N");
+        pubFile.setRecordStatus(GlobalConstant.FLAG_N);
         int count = pubFileMapper.updateByPrimaryKey(pubFile);
         if (count>0){
             return GlobalConstant.DELETE_SUCCESSED;
@@ -775,7 +775,7 @@ public class JsresPhyAssController extends GeneralController {
             paramMap.put("gradeId",gradeId.toString());
         }
         if (StringUtil.isNotBlank(tabTag) && tabTag.equals("certificateSend")){
-            gainCertificateId="Y";
+            gainCertificateId = GlobalConstant.FLAG_Y;
         }
         paramMap.put("gainCertificateId",gainCertificateId);
         paramMap.put("sendCertificateId",sendCertificateId);
@@ -902,7 +902,7 @@ public class JsresPhyAssController extends GeneralController {
                     String num = phyAssExtMapper.gainPlanCertificateNo(doctor.getPlanFlow());
                     String phyNo=DateUtil.getYear()+"32"+doctor.getSpeId()+num;
                     doctor.setCertificateNo(phyNo);
-                    doctor.setGainCertificateId("Y");
+                    doctor.setGainCertificateId(GlobalConstant.FLAG_Y);
                     doctor.setGainCertificateName("已生成");
                     doctor.setGradeId(gradeId);
                     doctor.setGradeName(gradeName);
@@ -965,7 +965,7 @@ public class JsresPhyAssController extends GeneralController {
         if (StringUtil.isNotBlank(gradeId)){
             paramMap.put("gradeId",gradeId.toString());
         }
-        paramMap.put("gainCertificateId","Y");
+        paramMap.put("gainCertificateId", GlobalConstant.FLAG_Y);
         paramMap.put("gradeStatus",gradeStatus);
         paramMap.put("sendCertificateId",sendCertificateId);
         List<Map<String, Object>> list = phyAssExtMapper.phyAssCertificateList(paramMap);
@@ -1009,7 +1009,7 @@ public class JsresPhyAssController extends GeneralController {
             if (null !=list && list.size()>0){
                 for (String s : list) {
                     ResTeachPlanDoctor doctor = planDoctorMapper.selectByPrimaryKey(s);
-                    doctor.setSendCertificateId("Y");
+                    doctor.setSendCertificateId(GlobalConstant.FLAG_Y);
                     doctor.setSendCertificateName("已发放");
                     doctor.setSendCertificateTime(DateUtil.getCurrDate());
                     planDoctorMapper.updateByPrimaryKey(doctor);
@@ -1076,8 +1076,8 @@ public class JsresPhyAssController extends GeneralController {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("planFlow",planFlow);
         paramMap.put("speId",speId);
-        paramMap.put("gainCertificateId","Y");
-        paramMap.put("sendCertificateId","Y");
+        paramMap.put("gainCertificateId", GlobalConstant.FLAG_Y);
+        paramMap.put("sendCertificateId", GlobalConstant.FLAG_Y);
         paramMap.put("enrollStartTime",enrollStartTime);
         paramMap.put("enrollEndTime",enrollEndTime);
 
@@ -1137,8 +1137,8 @@ public class JsresPhyAssController extends GeneralController {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("planFlow",planFlow);
         paramMap.put("speId",speId);
-        paramMap.put("gainCertificateId","Y");
-        paramMap.put("sendCertificateId","Y");
+        paramMap.put("gainCertificateId", GlobalConstant.FLAG_Y);
+        paramMap.put("sendCertificateId", GlobalConstant.FLAG_Y);
         paramMap.put("enrollStartTime",enrollStartTime);
         paramMap.put("enrollEndTime",enrollEndTime);
         List<Map<String, Object>> list = phyAssExtMapper.phyAssCertificateList(paramMap);
@@ -1238,8 +1238,8 @@ public class JsresPhyAssController extends GeneralController {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("planFlow",planFlow);
         paramMap.put("certificateNo",certificateNo);
-        paramMap.put("gainCertificateId","Y");
-        paramMap.put("sendCertificateId","Y");
+        paramMap.put("gainCertificateId", GlobalConstant.FLAG_Y);
+        paramMap.put("sendCertificateId", GlobalConstant.FLAG_Y);
         paramMap.put("startTime",startTime);
         paramMap.put("endTime",endTime);
         List<SysDict> dictList = dictBiz.searchDictListByDictTypeId("CertificateTermValidity");
@@ -1262,8 +1262,8 @@ public class JsresPhyAssController extends GeneralController {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("planFlow",planFlow);
         paramMap.put("certificateNo",certificateNo);
-        paramMap.put("gainCertificateId","Y");
-        paramMap.put("sendCertificateId","Y");
+        paramMap.put("gainCertificateId", GlobalConstant.FLAG_Y);
+        paramMap.put("sendCertificateId", GlobalConstant.FLAG_Y);
         paramMap.put("startTime",startTime);
         paramMap.put("endTime",endTime);
         List<SysDict> dictList = dictBiz.searchDictListByDictTypeId("CertificateTermValidity");

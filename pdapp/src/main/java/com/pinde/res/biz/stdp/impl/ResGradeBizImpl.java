@@ -1,12 +1,12 @@
 package com.pinde.res.biz.stdp.impl;
 
+import com.pinde.app.common.GlobalUtil;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.RecStatusEnum;
 import com.pinde.core.common.enums.ResAssessTypeEnum;
 import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.GlobalUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.stdp.IResGradeBiz;
@@ -316,7 +316,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
     public List<ResAssessCfg> getAssCfg(String cfgCodeId) {
         ResAssessCfgExample example = new ResAssessCfgExample();
         ResAssessCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-        criteria.andFormStatusIdEqualTo("Y");
+        criteria.andFormStatusIdEqualTo(GlobalConstant.FLAG_Y);
         if (StringUtil.isNotBlank(cfgCodeId)) {
           criteria.andCfgCodeIdEqualTo(cfgCodeId);
         }

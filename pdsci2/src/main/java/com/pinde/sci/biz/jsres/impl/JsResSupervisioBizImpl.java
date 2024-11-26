@@ -389,7 +389,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	public List<ResEvaluationIndicators> searchAll() {
 		ResEvaluationIndicatorsExample example = new ResEvaluationIndicatorsExample();
 		ResEvaluationIndicatorsExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
 		example.setOrderByClause("TABLE_PATH_NAME, CAST(ORDER_NUM AS INTEGER)");
 		return indicatorsMapper.selectByExample(example);
 	}
@@ -426,7 +426,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 
 	private Integer searchAssessmentBySessionNumber(String sessionNumber){
 		HospSelfAssessmentExample example=new HospSelfAssessmentExample();
-		HospSelfAssessmentExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo("Y");
+        HospSelfAssessmentExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
 		if (StringUtil.isNotBlank(sessionNumber)) {
 			criteria.andSessionNumberEqualTo(sessionNumber);
 		}
@@ -507,7 +507,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	public ResEvaluationScore findHospSelfAssessmentScore(ResEvaluationScore score) {
 
 		ResEvaluationScoreExample example=new ResEvaluationScoreExample();
-		ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo("Y");
+        ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
 		if (null!=score){
 			if (StringUtil.isNotBlank(score.getSubjectFlow())){
 				criteria.andSubjectFlowEqualTo(score.getSubjectFlow());
@@ -544,7 +544,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 		}
 		if (null==evaluationScore){
 			score.setScoreFlow(PkUtil.getUUID());
-			score.setRecordStatus("Y");
+            score.setRecordStatus(GlobalConstant.FLAG_Y);
 			score.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 			score.setOrgName(GlobalContext.getCurrentUser().getOrgName());
 			GeneralMethod.setRecordInfo(score,true);
@@ -559,7 +559,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	@Override
 	public List<ResEvaluationScore> findHospSelfAssessmentAllScore(ResEvaluationScore score,String subjectType) {
 		ResEvaluationScoreExample example=new ResEvaluationScoreExample();
-		ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo("Y");
+        ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
 		if (null!=score){
 			if (StringUtil.isNotBlank(score.getSubjectFlow())){
 				criteria.andSubjectFlowEqualTo(score.getSubjectFlow());
@@ -612,7 +612,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	public int findCoreIndicatorsNum(String cfgFlow,String orgFlow,String speId,String subjectType) {
 
 		ResEvaluationScoreExample example=new ResEvaluationScoreExample();
-		ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo("Y")
+        ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
 				.andCoreIndicatorsEqualTo("0");
 
 		if (null!=cfgFlow && StringUtil.isNotBlank(cfgFlow)){

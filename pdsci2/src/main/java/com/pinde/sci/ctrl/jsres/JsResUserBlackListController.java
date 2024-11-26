@@ -173,7 +173,7 @@ public class JsResUserBlackListController extends GeneralController {
         SysOrg org =orgBiz.readSysOrg(user.getOrgFlow());
         orgList.add(0,org);
 //        if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-//            model.addAttribute("countryOrgFlag","Y");
+//            model.addAttribute("countryOrgFlag",GlobalConstant.FLAG_Y);
 //            if(null != jointOrg && jointOrg.equals("checked")){
 //                orgFlowList.add(jsresUserBalcklist.getOrgFlow());
 //                jsresUserBalcklist.setOrgFlow("");
@@ -246,7 +246,7 @@ public class JsResUserBlackListController extends GeneralController {
         SysOrg org =orgBiz.readSysOrg(user.getOrgFlow());
         orgList.add(0,org);
 //        if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-//            model.addAttribute("countryOrgFlag","Y");
+//            model.addAttribute("countryOrgFlag",GlobalConstant.FLAG_Y);
 //            if(null != jointOrg && jointOrg.equals("checked")){
 //                orgFlowList.add(jsresUserBalcklist.getOrgFlow());
 //                jsresUserBalcklist.setOrgFlow("");
@@ -799,11 +799,11 @@ public class JsResUserBlackListController extends GeneralController {
             black.setUserCode(sysUser.getUserCode());
             black.setUserPhone(sysUser.getUserPhone());
             black.setUserEmail(sysUser.getUserEmail());
-            black.setIsSystem("Y");
+            black.setIsSystem(GlobalConstant.FLAG_Y);
         }else{
             black.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
             black.setOrgName(GlobalContext.getCurrentUser().getOrgName());
-            black.setIsSystem("N");
+            black.setIsSystem(GlobalConstant.FLAG_N);
         }
         if(doctor!=null) {
             black.setOrgFlow(doctor.getOrgFlow());
@@ -825,7 +825,7 @@ public class JsResUserBlackListController extends GeneralController {
         black.setOperTypeId("2");
         black.setOperTypeName("手动");
         black.setReasonYj("您的信息已被纳入我省医务人员诚信系统，5年内不得进入我省培训基地接受住院医师规范化培训。如有相关疑问，请与相关管理部门联系。");
-        black.setRecordStatus("Y");
+        black.setRecordStatus(GlobalConstant.FLAG_Y);
        return blackBiz.saveBlack(black);
     }
 
@@ -839,7 +839,7 @@ public class JsResUserBlackListController extends GeneralController {
         if("Remove".equals(type)){
             //是否移除黑名单
             if("Passed".equals(auditStatusId)){
-                jsresUserBalcklist.setRecordStatus("N");
+                jsresUserBalcklist.setRecordStatus(GlobalConstant.FLAG_N);
             }else if("NotPassed".equals(auditStatusId)){
                 //审核不通过  状态改为移除前的审核通过状态
                 jsresUserBalcklist.setAuditStatusId("Passed");
@@ -849,7 +849,7 @@ public class JsResUserBlackListController extends GeneralController {
             if ("Passed".equals(auditStatusId)) {
                 jsresUserBalcklist.setAuditStatusName("审核通过");
             } else if ("NotPassed".equals(auditStatusId)) {
-                jsresUserBalcklist.setRecordStatus("N");
+                jsresUserBalcklist.setRecordStatus(GlobalConstant.FLAG_N);
             }
         }
         blackBiz.saveBlack(jsresUserBalcklist);

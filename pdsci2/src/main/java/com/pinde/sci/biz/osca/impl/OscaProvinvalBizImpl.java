@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.osca.impl;
 
 import com.alibaba.fastjson.JSONArray;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -60,7 +60,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
     public List<OscaSkillsAssessment> searchSkillsAssessment(OscaSkillsAssessment skillsAssessment,List<SysDict> dictList) {
         OscaSkillsAssessmentExample example = new OscaSkillsAssessmentExample();
         OscaSkillsAssessmentExample.Criteria criteria = example.createCriteria().
-                andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andIsReleasedEqualTo("Y");
+                andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andIsReleasedEqualTo(GlobalConstant.FLAG_Y);
         if(skillsAssessment!=null){
             if(StringUtil.isNotBlank(skillsAssessment.getSpeId())){
                 criteria.andSpeIdEqualTo(skillsAssessment.getSpeId());
@@ -71,7 +71,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
             if(StringUtil.isNotBlank(skillsAssessment.getOrgFlow())){
                 criteria.andOrgFlowEqualTo(skillsAssessment.getOrgFlow());
             }
-                criteria.andIsLocalEqualTo("N");
+            criteria.andIsLocalEqualTo(GlobalConstant.FLAG_N);
         }
         if(dictList!=null&&dictList.size()>0){
         List<String> speList = new ArrayList<>();
@@ -532,7 +532,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
     public int savePassedInfo(OscaSubjectMain m, String allScore, JSONArray stationScoreList, JSONArray partScoreList) {
         if(m!=null)
         {
-            m.setIsResave("N");
+            m.setIsResave(GlobalConstant.FLAG_N);
             if(StringUtil.isNotBlank(allScore)) {
                 m.setAllScore(Integer.valueOf(allScore));
             }else

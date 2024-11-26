@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.lcjn;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
@@ -318,7 +318,7 @@ public class LcjnBaseManagerController extends GeneralController {
 	@RequestMapping(value="/teacherOption")
 	@ResponseBody
 	public String teacherOption(String userFlow, String recordStatus) {
-		int num = baseManagerBiz.teacherOption(userFlow,recordStatus.equals("Y")?"N":"Y");
+        int num = baseManagerBiz.teacherOption(userFlow, recordStatus.equals(GlobalConstant.FLAG_Y) ? GlobalConstant.FLAG_N : GlobalConstant.FLAG_Y);
 		if (num == GlobalConstant.ONE_LINE) {
 			return GlobalConstant.OPRE_SUCCESSED;
 		}

@@ -11,7 +11,7 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.dao.base.ResBaseMapper;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.res.ResDocTypeEnum;
+import com.pinde.core.common.enums.ResDocTypeEnum;
 import com.pinde.sci.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;

@@ -2,9 +2,9 @@ package com.pinde.res.ctrl.jswjw;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GeneralController;
-import com.pinde.core.common.enums.*;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.app.common.InitConfig;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.*;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -517,7 +517,7 @@ public class JswjwWxTeacherController extends GeneralController {
 
 				ResReadInfo resReadInfo=inxInfoBiz.getReadInfoByFlow(info.get("infoFlow"),userFlow);
 //				isReadMap.put(info.get("infoFlow"),resReadInfo);
-				map.put("isRead",null == resReadInfo?"N" : "Y");
+                map.put("isRead", null == resReadInfo ? GlobalConstant.FLAG_N : GlobalConstant.FLAG_Y);
 				resultMapList.add(map);
 			}
 		}
@@ -1135,7 +1135,7 @@ public class JswjwWxTeacherController extends GeneralController {
 		param.put("docFlow",docFlow);
 		param.put("processFlow",processFlow);
 		param.put("attendType",attendType);
-		param.put("biaoJi","Y");
+        param.put("biaoJi", GlobalConstant.FLAG_Y);
 		param.put("nowDate",DateUtil.getCurrDate());
 		List<Map<String,Object>> list=jswjwTeacherBiz.dayAttendList(param);
 		if(list==null||list.isEmpty())
@@ -1261,7 +1261,7 @@ public class JswjwWxTeacherController extends GeneralController {
 			jsresAttendance=new JsresAttendance();
 			 attendanceFlow= PkUtil.getUUID();
 			jsresAttendance.setAttendanceFlow(attendanceFlow);
-			jsresAttendance.setRecordStatus("Y");
+            jsresAttendance.setRecordStatus(GlobalConstant.FLAG_Y);
 			jsresAttendance.setDoctorFlow(docFlow);
 			jsresAttendance.setDoctorFlow(docFlow);
 			jsresAttendance.setDoctorName(docUser.getUserName());
@@ -1419,7 +1419,7 @@ public class JswjwWxTeacherController extends GeneralController {
 		List<FromTitle> titleList=null;
 		String configXml="";
 		String configFlow="";
-		String IsForm="N";
+        String IsForm = GlobalConstant.FLAG_N;
 		Map<String, Object> valueMap = null;
 		if(eval!=null)
 		{
@@ -1433,16 +1433,16 @@ public class JswjwWxTeacherController extends GeneralController {
 			ResDoctorProcessEvalConfig config=jswjwBiz.getProcessEvalConfig(userinfo.getOrgFlow());
 			if(config!=null) {
 				configXml = config.getFormCfg();
-				IsForm="Y";
+                IsForm = GlobalConstant.FLAG_Y;
 				configFlow=config.getConfigFlow();
 			}
 		}
 //		resultMap.put("isAudit",eval!=null);
 		titleList=jswjwBiz.parseFromXmlForList(configXml);
 		if(titleList!=null&&titleList.size()>0){
-			IsForm="Y";
+            IsForm = GlobalConstant.FLAG_Y;
 		}else{
-			IsForm="N";
+            IsForm = GlobalConstant.FLAG_N;
 		}
 //		resultMap.put("titleList",titleList);
 //		resultMap.put("IsForm",IsForm);
@@ -1517,7 +1517,7 @@ public class JswjwWxTeacherController extends GeneralController {
 			return ResultDataThrow("已打过月度考评表，不得重复评分");
 		}
 		if(GlobalConstant.FLAG_Y.equals(haveForm)) {
-			eval2.setIsForm("Y");
+            eval2.setIsForm(GlobalConstant.FLAG_Y);
 			if(StringUtil.isBlank(configFlow)) {
 				return ResultDataThrow("表单标识符为空");
 			}
@@ -1557,7 +1557,7 @@ public class JswjwWxTeacherController extends GeneralController {
 			}
 			eval2.setEvalResult(doc.asXML());
 		}else{
-			eval2.setIsForm("N");
+            eval2.setIsForm(GlobalConstant.FLAG_N);
 		}
 		ResDoctorSchProcess process=iResDoctorProcessBiz.read(eval2.getProcessFlow());
 		if (process!=null) {
@@ -1691,7 +1691,7 @@ public class JswjwWxTeacherController extends GeneralController {
 			return ResultDataThrow("用户不存在");
 		}
 
-		List<ResRec> recList=jswjwTeacherBiz.searchRecByProcessAndRecType(processFlow,docFlow,recType,"Y");
+        List<ResRec> recList = jswjwTeacherBiz.searchRecByProcessAndRecType(processFlow, docFlow, recType, GlobalConstant.FLAG_Y);
 		if(null != recList && recList.size() > 0){
             ResRec resRec = recList.get(0);
             String appMenu = jswjwBiz.getJsResCfgCodeNew("jsres_doctor_app_menu_" + resRec.getOperUserFlow());
@@ -1877,7 +1877,7 @@ public class JswjwWxTeacherController extends GeneralController {
 		}
 //		resultMap.put("dataList", dataList);
 		resultMap.put("dataCount", PageHelper.total);
-		List<ResRec> noAuditList=jswjwTeacherBiz.searchRecByProcessAndRecType(processFlow,docFlow,recTypeId,"Y");
+        List<ResRec> noAuditList = jswjwTeacherBiz.searchRecByProcessAndRecType(processFlow, docFlow, recTypeId, GlobalConstant.FLAG_Y);
 		int count=0;
 		if(noAuditList!=null){
 			count=noAuditList.size();
@@ -2206,30 +2206,30 @@ public class JswjwWxTeacherController extends GeneralController {
 //		resultMap.put("f",f);
 
 		String theoryScorePass = "";
-		String teacherWrite = "N";
+        String teacherWrite = GlobalConstant.FLAG_N;
 		if(GlobalConstant.RECORD_STATUS_Y.equals(jsresPowerCfg.getCfgValue())) {
 			//查询科室是否配置
 			JsresDeptConfig deptConfig = jswjwBiz.searchDeptCfg(p.getOrgFlow(), p.getSchDeptFlow());
 			if (null != deptConfig) {
 				theoryScorePass = deptConfig.getScorePass();
 				if (GlobalConstant.RECORD_STATUS_Y.equals(deptConfig.getTeacherWrite())) {
-					teacherWrite = "Y";
+                    teacherWrite = GlobalConstant.FLAG_Y;
 				}
 			} else {
 				deptConfig = jswjwBiz.searchBaseDeptConfig(p.getOrgFlow());
 				theoryScorePass = deptConfig.getScorePass();
 				if (GlobalConstant.RECORD_STATUS_Y.equals(deptConfig.getTeacherWrite())) {
-					teacherWrite = "Y";
+                    teacherWrite = GlobalConstant.FLAG_Y;
 				}
 			}
 		}
-		resultMap.put("teacherWrite", StringUtil.isBlank(teacherWrite) ? "N" : teacherWrite);
+        resultMap.put("teacherWrite", StringUtil.isBlank(teacherWrite) ? GlobalConstant.FLAG_N : teacherWrite);
 		resultMap.put("theoryScorePass", theoryScorePass);
 
 		SysDept dept=jswjwBiz.readSysDept(p.getDeptFlow());
 		String cksh = jswjwBiz.getJsResCfgCode("jsres_"+dept.getOrgFlow()+"_org_cksh");
 		if(StringUtil.isBlank(cksh)) {
-			cksh="N";
+            cksh = GlobalConstant.FLAG_N;
 		}
 //		resultMap.put("cksh",cksh);
 		//获取不同类型并定义接受
@@ -2327,7 +2327,7 @@ public class JswjwWxTeacherController extends GeneralController {
 			String orgFlow = currUser.getOrgFlow();
 			JsresPowerCfg orgApprove = jsresPowerCfgMapper.selectByPrimaryKey("jsres_"+orgFlow+"_org_ctrl_approve_activity");//教学活动评价配置
 			JsresPowerCfg approve = jsresPowerCfgMapper.selectByPrimaryKey("jsres_"+orgFlow+"_org_approve_activity");//教学活动评价配置评审类型
-			if (null!=orgApprove && null!=approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(),orgApprove.getCfgValue(),"Y")) {        //开启必评
+            if (null != orgApprove && null != approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(), orgApprove.getCfgValue(), GlobalConstant.FLAG_Y)) {        //开启必评
 				infos=jswjwTeacherBiz.searchJoinActivityByProcessFlowNotScore(processFlow);
 			}else {
 				infos=jswjwTeacherBiz.searchJoinActivityByProcessFlow(processFlow);
@@ -2455,8 +2455,8 @@ public class JswjwWxTeacherController extends GeneralController {
 			String roleFlag = "teacher";
 			resultMap.put("roleFlag", roleFlag);
 
-			boolean showEdit = (roleFlag.equals("teacher") && (null == rec || StringUtil.isBlank(rec.getAuditStatusId())) || (roleFlag.equals("teacher") && (!cksh.equals("Y") || ((null == rec || StringUtil.isBlank(rec.getManagerAuditStatusId()))))))
-								|| (roleFlag.equals("Head") || roleFlag.equals("Seretary")) && (cksh.equals("Y") || (null != rec && StringUtil.isNotBlank(rec.getManagerAuditStatusId())));
+            boolean showEdit = (roleFlag.equals("teacher") && (null == rec || StringUtil.isBlank(rec.getAuditStatusId())) || (roleFlag.equals("teacher") && (!cksh.equals(GlobalConstant.FLAG_Y) || ((null == rec || StringUtil.isBlank(rec.getManagerAuditStatusId()))))))
+                    || (roleFlag.equals("Head") || roleFlag.equals("Seretary")) && (cksh.equals(GlobalConstant.FLAG_Y) || (null != rec && StringUtil.isNotBlank(rec.getManagerAuditStatusId())));
 			boolean showSave = false;
 			if(null == rec){
 				if(roleFlag.equals("teacher")){
@@ -2476,7 +2476,7 @@ public class JswjwWxTeacherController extends GeneralController {
 
 			boolean readonly = false;
 			if(null == rec){
-				if(roleFlag.equals("teacher") && cksh.equals("Y")){
+                if (roleFlag.equals("teacher") && cksh.equals(GlobalConstant.FLAG_Y)) {
 					readonly = true;
 				}
 			}else{
@@ -3047,7 +3047,7 @@ public class JswjwWxTeacherController extends GeneralController {
 				if (departureCfg != null) {
 					map.put("isSub", departureCfg.getCfgValue());	//是否必填   必填
 				}else {
-					map.put("isSub", "N");
+                    map.put("isSub", GlobalConstant.FLAG_N);
 				}
 				resultMapList.add(map);
 			}
@@ -5401,7 +5401,7 @@ public class JswjwWxTeacherController extends GeneralController {
 			for (SysUserRole role:userRoleList) {
 				if(obj.containsKey("auditRole")) {
 					if (obj.get("auditRole").toString().contains(role.getRoleFlow())) {
-						obj.put("audit", "Y");
+                        obj.put("audit", GlobalConstant.FLAG_Y);
 					}
 				}
 			}
@@ -5586,7 +5586,7 @@ public class JswjwWxTeacherController extends GeneralController {
 			activity.put("opinion","");
 		}
 		resultMap.put("activity", activity);
-		resultMap.put("isUpload",activity.get("speakerFlow").equals(userinfo.getUserFlow()) && StringUtil.isNotBlank((String)activity.get("activityFlow")) ? "Y" : "N");
+        resultMap.put("isUpload", activity.get("speakerFlow").equals(userinfo.getUserFlow()) && StringUtil.isNotBlank((String) activity.get("activityFlow")) ? GlobalConstant.FLAG_Y : GlobalConstant.FLAG_N);
 //		resultMap.put("user",userinfo);
 //		List<Map<String,Object>>  results=activityBiz.readActivityResults(activityFlow,"");
 //		if(!(results!=null&&results.size()>0))
@@ -5623,7 +5623,7 @@ public class JswjwWxTeacherController extends GeneralController {
 		}
 		resultMap.put("activityFile",fileList);
 		String is_hide_resSpeaker = jswjwBiz.getJsResCfgCode("jsres_" + userinfo.getOrgFlow() + "_activity_teach_show");
-		if (null !=is_hide_resSpeaker && StringUtil.isNotBlank(is_hide_resSpeaker) && is_hide_resSpeaker.equals("N")){
+        if (null != is_hide_resSpeaker && StringUtil.isNotBlank(is_hide_resSpeaker) && is_hide_resSpeaker.equals(GlobalConstant.FLAG_N)) {
 			is_hide_resSpeaker=GlobalConstant.FLAG_N;
 		}else {
 			is_hide_resSpeaker=GlobalConstant.FLAG_Y;
@@ -5773,7 +5773,7 @@ public class JswjwWxTeacherController extends GeneralController {
 					map.put("targets",targetList);
 				}
 				if(activity.get("speakerFlow").equals(userinfo.getUserFlow()) && GlobalConstant.FLAG_Y.equals(activity.get("IS_EFFECTIVE"))){
-					map.put("operId",GlobalConstant.FLAG_Y.equals(m.get("isEffective")) ? "N" : "Y");
+                    map.put("operId", GlobalConstant.FLAG_Y.equals(m.get("isEffective")) ? GlobalConstant.FLAG_N : GlobalConstant.FLAG_Y);
 					map.put("operName",GlobalConstant.FLAG_Y.equals(m.get("isEffective")) ? "不认可" : "认可");
 				}
 				resultMapList.add(map);
@@ -5957,7 +5957,7 @@ public class JswjwWxTeacherController extends GeneralController {
 		resultMap.put("prefabricateFlow", PkUtil.getUUID());
 
 		String is_hide_resSpeaker = jswjwBiz.getJsResCfgCode("jsres_" + userinfo.getOrgFlow() + "_activity_teach_show");
-		if (null !=is_hide_resSpeaker && StringUtil.isNotBlank(is_hide_resSpeaker) && is_hide_resSpeaker.equals("N")){
+        if (null != is_hide_resSpeaker && StringUtil.isNotBlank(is_hide_resSpeaker) && is_hide_resSpeaker.equals(GlobalConstant.FLAG_N)) {
 			is_hide_resSpeaker=GlobalConstant.FLAG_N;
 		}else {
 			is_hide_resSpeaker=GlobalConstant.FLAG_Y;

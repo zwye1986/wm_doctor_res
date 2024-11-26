@@ -13,8 +13,8 @@ public enum ResTrainCategoryEnum implements GeneralEnum<String> {
 	private final String id;
 	private final String name;
 	private final String typeId;
-	
-	ResTrainCategoryEnum(String id, String name, String typeId) {
+
+    ResTrainCategoryEnum(String id, String name, String typeId) {
 		this.id = id;
 		this.name = name;
 		this.typeId = typeId;

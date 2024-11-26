@@ -11,7 +11,7 @@ public enum NoteTypeEnum implements GeneralEnum<String> {
     Experience("Experience","跟师心得"),
     BookRecord("BookRecord","医籍学习记录"),
     BookExperience("BookExperience","医籍学习体会"),
-    TypicalCases("TypicalCases","经典医案"),
+    TypicalCases("TypicalCases", "跟师医案"),
     AnnualAssessment("AnnualAssessment","年度考核表"),
     GraduationAssessment("GraduationAssessment","结业考核表"),
     ;

@@ -94,9 +94,9 @@ public class JsresHospitalCfgController extends GeneralController{
 					jpc = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_createExam");
 				}
 				if(null != jpc && GlobalConstant.FLAG_Y.equals(jpc.getCfgValue())){
-					map.put("isSubmitId","Y");
+                    map.put("isSubmitId", GlobalConstant.FLAG_Y);
 				}else{
-					map.put("isSubmitId","N");
+                    map.put("isSubmitId", GlobalConstant.FLAG_N);
 				}
 				orgBiz.updateOrgSubmit(map);
 				return GlobalConstant.SAVE_SUCCESSED;
@@ -180,10 +180,10 @@ public class JsresHospitalCfgController extends GeneralController{
 		int result = jsResPowerCfgBiz.save(cfg);
 		if(GlobalConstant.ZERO_LINE != result){
 			//判断基地是否为协同基地
-			String isJointOrg = "N";
+            String isJointOrg = GlobalConstant.FLAG_N;
 			List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(orgFlow);
 			if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
-				isJointOrg = "Y";
+                isJointOrg = GlobalConstant.FLAG_Y;
 			}
 			List<String> doctorFlowList = resDoctorBiz.searchRecruitListByOrgFlow(orgFlow,isJointOrg);
 			Map<String,String> param = new HashMap<>();
@@ -246,10 +246,10 @@ public class JsresHospitalCfgController extends GeneralController{
 
 			if(GlobalConstant.ZERO_LINE != result) {
 				//判断基地是否为协同基地
-				String isJointOrg = "N";
+                String isJointOrg = GlobalConstant.FLAG_N;
 				List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(orgFlow);
 				if (!tempJoinOrgs.isEmpty() && tempJoinOrgs.size() > 0) {//是协同基地
-					isJointOrg = "Y";
+                    isJointOrg = GlobalConstant.FLAG_Y;
 				}
 				List<String> doctorFlowList = resDoctorBiz.searchRecruitListByOrgFlow(orgFlow, isJointOrg);
 				Map<String, String> param = new HashMap<>();

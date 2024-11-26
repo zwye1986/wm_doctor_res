@@ -8,7 +8,7 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.pub.UserSexEnum;
-import com.pinde.sci.enums.res.DiscipleStatusEnum;
+import com.pinde.core.common.enums.DiscipleStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.AnnualAssessmentExt;
 import com.pinde.sci.model.res.ResGraduationAssessmentExt;

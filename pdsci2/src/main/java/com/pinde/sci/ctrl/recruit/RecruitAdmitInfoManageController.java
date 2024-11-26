@@ -53,9 +53,9 @@ public class RecruitAdmitInfoManageController extends GeneralController {
         param.put("idNo",idNo);
         param.put("startDate",beginDate);
         param.put("endDate",endDate);
-        param.put("writeExamFlag","Y");
-        param.put("examIsPass","Y");//笔试通过
-        param.put("interviewIsPass","Y");//面试通过
+        param.put("writeExamFlag", GlobalConstant.FLAG_Y);
+        param.put("examIsPass", GlobalConstant.FLAG_Y);//笔试通过
+        param.put("interviewIsPass", GlobalConstant.FLAG_Y);//面试通过
         List<RecruitInfoExt> recruitInfoExts = recruitInfoBiz.searchCanExamRecruitInfo(param);
         if(recruitInfoExts!=null)
         {
@@ -196,9 +196,9 @@ public class RecruitAdmitInfoManageController extends GeneralController {
             Map<String,String> param=new HashMap<>();
             param.put("orgFlow",orgFlow);
             param.put("recruitYear",recruitYear);
-            param.put("writeExamFlag","Y");
-            param.put("examIsPass","Y");//笔试通过
-            param.put("interviewIsPass","Y");//面试通过
+            param.put("writeExamFlag", GlobalConstant.FLAG_Y);
+            param.put("examIsPass", GlobalConstant.FLAG_Y);//笔试通过
+            param.put("interviewIsPass", GlobalConstant.FLAG_Y);//面试通过
             List<RecruitInfoExt> recruitInfoExts = recruitInfoBiz.searchCanExamRecruitInfo(param);
             if(recruitInfoExts==null||recruitInfoExts.size()==0)
             {

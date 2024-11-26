@@ -349,7 +349,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
             TjDocinfoExample example = new TjDocinfoExample();
             TjDocinfoExample.Criteria criteria = example.createCriteria();
             criteria.andIdNoEqualTo(docInfo.getIdNo());
-            criteria.andRecordStatusEqualTo("Y");
+            criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
             List<TjDocinfo> tjDocinfos = docinfoMapper.selectByExample(example);
             if (tjDocinfos != null && tjDocinfos.size()> 0){
                 userFlow = tjDocinfos.get(0).getUserFlow();
@@ -374,7 +374,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
         TjDocinfoExample example = new TjDocinfoExample();
         TjDocinfoExample.Criteria criteria = example.createCriteria();
         criteria.andIdNoEqualTo(idNo);
-        criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
         List<TjDocinfo> tjDocinfos = docinfoMapper.selectByExample(example);
         if(tjDocinfos!= null && tjDocinfos.size() >0){
             return tjDocinfos.get(0);

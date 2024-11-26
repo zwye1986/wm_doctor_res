@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.sci.model.mo.SysDictExample;
 import org.apache.ibatis.annotations.Param;
 

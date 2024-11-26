@@ -1,10 +1,11 @@
 package com.pinde.res.biz.osca.impl;
 
 
+import com.pinde.app.common.GlobalUtil;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.model.*;
+import com.pinde.core.model.SysUserExample.Criteria;
 import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.GlobalUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.osca.IOscaAppBiz;
@@ -22,7 +23,6 @@ import com.pinde.res.enums.osca.ScoreStatusEnum;
 import com.pinde.res.model.jswjw.mo.FromItem;
 import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.sci.dao.base.*;
-import com.pinde.core.model.SysUserExample.Criteria;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -213,7 +213,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 				if (stations != null) {
 					//如果学员所有站点都没有考核完，直接是不通过
 					if (roomDocs.size() < stations.size()) {
-						doctorAssessment.setIsSavePass("N");
+                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
 						doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
 						doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
 						f=true;
@@ -242,7 +242,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 						//如果合格总分配置了 并且 考核 总分小于合格总分 直接不通过
 						if(allScore!=null&&allScore>examAllScore)
 						{
-							doctorAssessment.setIsSavePass("N");
+                            doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
 							doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
 							doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
 							f=true;
@@ -279,18 +279,18 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 										}
 									}
 									if(stationPassCount==stations.size()) {
-										doctorAssessment.setIsSavePass("Y");
+                                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_Y);
 										doctorAssessment.setIsPass(DoctorScoreEnum.Passed.getId());
 										doctorAssessment.setIsPassName(DoctorScoreEnum.Passed.getName());
 										f = true;
 									}else{
-										doctorAssessment.setIsSavePass("N");
+                                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
 										doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
 										doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
 										f=true;
 									}
 								}else{
-									doctorAssessment.setIsSavePass("N");
+                                    doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
 									doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
 									doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
 									f=true;
@@ -345,7 +345,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 				if (stations != null) {
 					//如果学员所有站点都没有考核完，直接是不通过
 					if (roomDocs.size() < stations.size()) {
-						doctorAssessment.setIsSavePass("N");
+                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
 						f=true;
 					}else {
 						//每部分的站点数量
@@ -372,7 +372,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 						//如果合格总分配置了 并且 考核 总分小于合格总分 直接不通过
 						if(allScore!=null&&allScore>examAllScore)
 						{
-							doctorAssessment.setIsSavePass("N");
+                            doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
 							f=true;
 						}else {
 							//有几部分
@@ -409,14 +409,14 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 										}
 									}
 									if(stationPassCount==stations.size()) {
-										doctorAssessment.setIsSavePass("Y");
+                                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_Y);
 										f = true;
 									}else{
-										doctorAssessment.setIsSavePass("N");
+                                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
 										f=true;
 									}
 								}else{
-									doctorAssessment.setIsSavePass("N");
+                                    doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
 									f=true;
 								}
 							}
@@ -476,7 +476,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 
 				if (stations != null) {
 					if (roomDocs.size() < stations.size()) {
-						doctorAssessment.setIsSavePass("N");
+                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
 						doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
 						doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
 						f=true;
@@ -534,19 +534,19 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 					//通过的部分为0
 					if(partPassCount==0)
 					{
-						doctorAssessment.setIsSavePass("N");
+                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
 						doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
 						doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
 						f=true;
 					}else if(partCount==partPassCount)
 					{
-						doctorAssessment.setIsSavePass("Y");
+                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_Y);
 						doctorAssessment.setIsPass(DoctorScoreEnum.Passed.getId());
 						doctorAssessment.setIsPassName(DoctorScoreEnum.Passed.getName());
 						f=true;
 					}else if(partCount>partPassCount)
 					{
-						doctorAssessment.setIsSavePass("N");
+                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
 						doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
 						doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
 						f=true;
@@ -1141,9 +1141,9 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 		user.setModifyTime(DateUtil.getCurrDateTime());
 		sysUserMapper.updateByPrimaryKeySelective(user);
 		doctor.setDoctorFlow(user.getUserFlow());
-		doctor.setOscaStudentSubmit("Y");
+        doctor.setOscaStudentSubmit(GlobalConstant.FLAG_Y);
 		ResDoctorExample example = new ResDoctorExample();
-		ResDoctorExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo("Y").andDoctorFlowEqualTo(user.getUserFlow());
+        ResDoctorExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(user.getUserFlow());
 		int count = doctorMapper.countByExample(example);
 		if(count>0){
 			doctor.setModifyUserFlow(user.getUserFlow());

@@ -3,7 +3,9 @@ package com.pinde.res.ctrl.jswjw;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.pinde.app.common.*;
+import com.pinde.app.common.GeneralController;
+import com.pinde.app.common.InitConfig;
+import com.pinde.app.common.UserResumeExtInfoForm;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.model.*;
@@ -18,7 +20,10 @@ import com.pinde.res.biz.osca.IOscaAppBiz;
 import com.pinde.res.biz.stdp.*;
 import com.pinde.res.dao.jswjw.ext.JsResUserBalckListExtMapper;
 import com.pinde.res.dao.jswjw.ext.TempMapper;
-import com.pinde.res.enums.osca.*;
+import com.pinde.res.enums.osca.AuditStatusEnum;
+import com.pinde.res.enums.osca.DoctorScoreEnum;
+import com.pinde.res.enums.osca.ScanDocStatusEnum;
+import com.pinde.res.enums.osca.SignStatusEnum;
 import com.pinde.res.model.jswjw.mo.*;
 import com.pinde.sci.dao.base.ResOrgCkxzMapper;
 import com.pinde.sci.dao.base.SysCfgMapper;
@@ -703,7 +708,7 @@ public class JswjwWxController extends GeneralController {
 
         //查看轮转计划排班设置是否开启
         JsresPowerCfg cfg = jswjwBiz.readPowerCfg("jsres_"+doctor.getOrgFlow()+"_org_process_scheduling_N");
-        if (null !=cfg && StringUtil.isNotBlank(cfg.getCfgValue()) && cfg.getCfgValue().equals("N")){
+        if (null != cfg && StringUtil.isNotBlank(cfg.getCfgValue()) && cfg.getCfgValue().equals(GlobalConstant.FLAG_N)) {
             //查看轮转计划排班最短时间
             JsresPowerCfg cfgTime = jswjwBiz.readPowerCfg("jsres_"+doctor.getOrgFlow()+"_org_process_scheduling_time");
             if (null!=cfgTime && StringUtil.isNotBlank(cfgTime.getCfgValue())){
@@ -736,7 +741,7 @@ public class JswjwWxController extends GeneralController {
                 //只要有待审核的，就提示，并且不给填写数据
                 List<SchArrangeResult> results = jswjwBiz.searchSchArrangeResultPassing(doctor.getDoctorFlow(), rotationFlow);
                 if (results!=null && results.size()>0){
-                    resultMap.put("edit","N");
+                    resultMap.put("edit", GlobalConstant.FLAG_N);
                     resultMap.put("cfgValue","尚有需要审核的轮转科室数据");
                     flag=false;
                 }
@@ -748,14 +753,14 @@ public class JswjwWxController extends GeneralController {
                     //需求：入科后，要求学员把至少n年(基地设置)的科室轮转情况填写完成，到时间后，继续要求学员填写下一阶段的轮转情况，包括轮转科室、轮转时间
                     String monthNum = jswjwBiz.searchByDoctorAndRotationFlow(userFlow, rotationFlow);
                     if (null == monthNum || StringUtil.isEmpty(monthNum)){ //没有填写，提示需要填写数据
-                        resultMap.put("edit","N");
+                        resultMap.put("edit", GlobalConstant.FLAG_N);
                         resultMap.put("cfgValue","请至少填写未来"+cfgValue+"年的科室轮转情况");
                     }else {
                         double num = Double.parseDouble(monthNum);
                         //基地最短时间只能选择1年、2年、3年
                         //判断学员填写的总月份是否超过基地设置的时间
                         if (num<cfgValue*12){
-                            resultMap.put("edit","N");
+                            resultMap.put("edit", GlobalConstant.FLAG_N);
                             resultMap.put("cfgValue","请至少填写未来"+cfgValue+"年的科室轮转情况");
                         }else {
                             //超过了基地设置的时间
@@ -766,13 +771,13 @@ public class JswjwWxController extends GeneralController {
                             if (month>cfgValue*12){
                                 if (month>12 && month <24){
                                     if (num<cfgValue*24){   //学员填写的轮转计划总月份小于 基地设置的轮转最短时间
-                                        resultMap.put("edit","N");
+                                        resultMap.put("edit", GlobalConstant.FLAG_N);
                                         cfgValue=years-1<cfgValue?cfgValue=years-1:cfgValue;
                                         resultMap.put("cfgValue", "请至少填写未来"+cfgValue+"年的科室轮转情况");
                                     }
                                 }else {
                                     if (num<cfgValue*36){   //学员填写的轮转计划总月份小于 基地设置的轮转最短时间
-                                        resultMap.put("edit","N");
+                                        resultMap.put("edit", GlobalConstant.FLAG_N);
                                         cfgValue=years-2<cfgValue?cfgValue=years-2:cfgValue;
                                         resultMap.put("cfgValue", "请至少填写未来"+cfgValue+"年的科室轮转情况");
                                     }
@@ -863,12 +868,12 @@ public class JswjwWxController extends GeneralController {
                     String count = countMap.get(result.getOrgFlow());
                     String count1 = countMap.get(process.getProcessFlow());
                     if (StringUtil.isBlank(count) || (StringUtil.isNotBlank(count) && count1.compareTo(count) < 0)) {
-                        map.put("canJoinExam", "Y");
+                        map.put("canJoinExam", GlobalConstant.FLAG_Y);
                     } else {
-                        map.put("canJoinExam", "N");
+                        map.put("canJoinExam", GlobalConstant.FLAG_N);
                     }
                 } else {
-                    map.put("canJoinExam", "N");
+                    map.put("canJoinExam", GlobalConstant.FLAG_N);
                 }
                 ResScore score = scoreMap.get(result.getResultFlow());
                 if (null != score) {
@@ -1002,12 +1007,12 @@ public class JswjwWxController extends GeneralController {
                     String count = countMap.get(result.getOrgFlow());
                     String count1 = countMap.get(process.getProcessFlow());
                     if (StringUtil.isBlank(count) || (StringUtil.isNotBlank(count) && count1.compareTo(count) < 0)) {
-                        map.put("canJoinExam", "Y");
+                        map.put("canJoinExam", GlobalConstant.FLAG_Y);
                     } else {
-                        map.put("canJoinExam", "N");
+                        map.put("canJoinExam", GlobalConstant.FLAG_N);
                     }
                 } else {
-                    map.put("canJoinExam", "N");
+                    map.put("canJoinExam", GlobalConstant.FLAG_N);
                 }
                 ResScore score = scoreMap.get(result.getResultFlow());
                 if (null != score) {
@@ -1520,12 +1525,12 @@ public class JswjwWxController extends GeneralController {
             List<ResDoctorSchProcess> processList = jswjwBiz.searchSchProcess(userFlow, deptFlow);
             Map<String, ResDoctorSchProcess> processMap = new HashMap<String, ResDoctorSchProcess>();
             for (ResDoctorSchProcess process : processList) {
-                process.setRecordStatus("N");
+                process.setRecordStatus(GlobalConstant.FLAG_N);
                 //判断是否已经出科 借用recordStatus字段
                 ResSchProcessExpress rec = expressBiz.getExpressByRecType(process.getProcessFlow(), "AfterEvaluation");
                 if(null != rec){
                     if (StringUtil.isNotBlank(rec.getManagerAuditUserFlow()) && StringUtil.isNotBlank(rec.getHeadAuditStatusId())) {
-                        process.setRecordStatus("Y");
+                        process.setRecordStatus(GlobalConstant.FLAG_Y);
                     }
                 }
                 processMap.put(process.getSchResultFlow(), process);
@@ -2964,10 +2969,10 @@ public class JswjwWxController extends GeneralController {
                 //判断结束
                 if ((lectureEndTime.compareTo(currTime) < 0 && lectureTrainDate.compareTo(currDate) == 0) || (lectureTrainDate.compareTo(currDate) < 0)) {
                     if (GlobalConstant.FLAG_Y.equals(isScan)) {
-                        scanMap.put(lectureFlow, "Y");
+                        scanMap.put(lectureFlow, GlobalConstant.FLAG_Y);
                     }
                     if (GlobalConstant.FLAG_Y.equals(isScan2)) {
-                        scan2Map.put(lectureFlow, "Y");
+                        scan2Map.put(lectureFlow, GlobalConstant.FLAG_Y);
                     }
                     evaMap.put(lectureFlow, dateFlag);
                 }
@@ -3330,7 +3335,7 @@ public class JswjwWxController extends GeneralController {
         // 保存评分用到的参数
         Map<String, Object> paramMap = new HashMap<String, Object>();
         SysUser currUser = jswjwBiz.readSysUser(userFlow);
-        paramMap.put("recordStatus", "Y");
+        paramMap.put("recordStatus", GlobalConstant.FLAG_Y);
         paramMap.put("operUserFlow", currUser.getUserFlow());
         paramMap.put("operUserName", currUser.getUserName());
         paramMap.put("createTime", DateUtil.getCurrDateTime());
@@ -4605,7 +4610,7 @@ public class JswjwWxController extends GeneralController {
         //查询是否是有成功  预约考核信息
         OscaDoctorAssessment oscaDoctorAssessment = jswjwStudentBiz.getAuditOscaDocInfo(userFlow);
         resultMap.put("oscaDoctorAssessment", oscaDoctorAssessment);
-        String canClick = "Y";
+        String canClick = GlobalConstant.FLAG_Y;
         //如果有查询有几站并且查询有哪些房间及相应信息
         if (oscaDoctorAssessment != null) {
             OscaSkillsAssessment oscaSkillsAssessment = jswjwStudentBiz.getOscaSkillsAssessmentByFlow(oscaDoctorAssessment.getClinicalFlow());
@@ -4653,7 +4658,7 @@ public class JswjwWxController extends GeneralController {
                             roomExt = jswjwStudentBiz.getStationBestRoom(s.getStationFlow(), oscaSkillsAssessment.getClinicalFlow());
                         } else {
                             if (roomExt.getExamStatusId().equals(ExamStatusEnum.Waiting.getId()) || roomExt.getExamStatusId().equals(ExamStatusEnum.AssessIng.getId())) {
-                                canClick = "N";
+                                canClick = GlobalConstant.FLAG_N;
                             }
                         }
 //                        roomMap.put("roomExt", roomExt);
@@ -4665,7 +4670,7 @@ public class JswjwWxController extends GeneralController {
                         map.put("examStatusId", roomExt.getExamStatusId());
                         map.put("examStatusName", roomExt.getExamStatusName());
                         map.put("examScore", roomExt.getExamScore());
-                        map.put("showBtn", "N");
+                        map.put("showBtn", GlobalConstant.FLAG_N);
                         map.put("canClick", canClick);
                     }
 //                    stationRoomMap.put(key, roomMap);
@@ -4710,7 +4715,7 @@ public class JswjwWxController extends GeneralController {
         if (StringUtil.isBlank(waitingFlag)) {
             return ResultDataThrow("排队标识符为空");
         }
-        if (!waitingFlag.equals("Y") && !waitingFlag.equals("N")) {
+        if (!waitingFlag.equals(GlobalConstant.FLAG_Y) && !waitingFlag.equals(GlobalConstant.FLAG_N)) {
             return ResultDataThrow("排队状态只能是排队或取消排队");
         }
         if (!roleId.equals("Student")) {
@@ -4722,7 +4727,7 @@ public class JswjwWxController extends GeneralController {
         param.put("roomRecordFlow", roomRecordFlow);
         param.put("clinicalFlow", clinicalFlow);
         param.put("stationFlow", stationFlow);
-        if (waitingFlag.equals("Y")) {
+        if (waitingFlag.equals(GlobalConstant.FLAG_Y)) {
             //校验是否已经在排队 或正在考核中
             int count = jswjwStudentBiz.checkIsWait(param);
             if (count > 0) {
@@ -4768,7 +4773,7 @@ public class JswjwWxController extends GeneralController {
         } else {
             return ResultDataThrow("读取站点信息失败！");
         }
-        if (waitingFlag.equals("Y")) {
+        if (waitingFlag.equals(GlobalConstant.FLAG_Y)) {
             docStation.setExamStatusId(ExamStatusEnum.Waiting.getId());
             docStation.setExamStatusName(ExamStatusEnum.Waiting.getName());
             docStation.setWaitingTime(DateUtil.getCurrentTime());
@@ -4817,11 +4822,11 @@ public class JswjwWxController extends GeneralController {
         OscaSubjectStation station = jswjwStudentBiz.getOscaSubjectStationsByFlow(stationFlow);
 //        resultMap.put("station", station);
         List<OscaSkillRoomDoc> skillRoomDocs = jswjwStudentBiz.getDocAllStation(param);
-        String canClick = "Y";
+        String canClick = GlobalConstant.FLAG_Y;
         if (skillRoomDocs != null) {
             for (OscaSkillRoomDoc rd : skillRoomDocs) {
                 if (rd.getExamStatusId().equals(ExamStatusEnum.Waiting.getId()) || rd.getExamStatusId().equals(ExamStatusEnum.AssessIng.getId())) {
-                    canClick = "N";
+                    canClick = GlobalConstant.FLAG_N;
                 }
             }
         }
@@ -4830,7 +4835,7 @@ public class JswjwWxController extends GeneralController {
         String roomRecordFlow = "";
         if (roomExt != null) {
             roomRecordFlow = roomExt.getRecordFlow();
-            resultMap.put("isSelect", "Y");
+            resultMap.put("isSelect", GlobalConstant.FLAG_Y);
 
             map.put("stationFlow", roomExt.getStationFlow());
             map.put("stationName", roomExt.getStationName());
@@ -4846,7 +4851,7 @@ public class JswjwWxController extends GeneralController {
             map.put("examStatusId", roomExt.getExamStatusId());
             map.put("examStatusName", roomExt.getExamStatusName());
             map.put("examScore", roomExt.getExamScore());
-            map.put("showBtn", "N");
+            map.put("showBtn", GlobalConstant.FLAG_N);
             map.put("canClick", canClick);
         }
 //        resultMap.put("canClick", canClick);
@@ -4881,7 +4886,7 @@ public class JswjwWxController extends GeneralController {
                 map.put("examStatusId", ext.getExamStatusId());
                 map.put("examStatusName", ext.getExamStatusName());
                 map.put("examScore", ext.getExamScore());
-                map.put("showBtn", "N");
+                map.put("showBtn", GlobalConstant.FLAG_N);
                 map.put("canClick", canClick);
                 resultMapList.add(map);
             }
@@ -5142,7 +5147,7 @@ public class JswjwWxController extends GeneralController {
                 recruit.setOrgName(jointOrgs.get(0).getOrgName());
             }
          /*   //查询基地院长前面图片
-            List<JsresSign> signList = jswjwBiz.searchSignListByOrgFlow(recruit.getOrgFlow(),"Y");
+            List<JsresSign> signList = jswjwBiz.searchSignListByOrgFlow(recruit.getOrgFlow(),GlobalConstant.FLAG_Y);
             if(null != signList && signList.size() > 0){
                 resultMap.put("signUrl",uploadBaseUrl+"/" + signList.get(0).getSignUrl());
             }*/
@@ -5469,10 +5474,10 @@ public class JswjwWxController extends GeneralController {
         }
         Map<String, String> param = new HashMap<>();
         if ("isNew".equals(typeId)) {
-            param.put("isNew", "Y");//最新活动
+            param.put("isNew", GlobalConstant.FLAG_Y);//最新活动
         }
         if ("isEval".equals(typeId)) {
-            param.put("isEval", "Y");//活动评价
+            param.put("isEval", GlobalConstant.FLAG_Y);//活动评价
         }
         param.put("roleFlag", "doctor");
         param.put("userFlow", userFlow);
@@ -5704,7 +5709,7 @@ public class JswjwWxController extends GeneralController {
                     map.put("targetFlow", m.get("targetFlow"));
                     map.put("targetName", m.get("targetName"));
                     map.put("isText", m.get("isText"));
-                    if (m.get("isText").equals("Y")){
+                    if (m.get("isText").equals(GlobalConstant.FLAG_Y)) {
                         map.put("evalScore", "1");
                     }else {
                         map.put("evalScore", evalDetailMap.get(resultFlow + m.get("targetFlow")));
@@ -5767,7 +5772,7 @@ public class JswjwWxController extends GeneralController {
     @RequestMapping(value = {"/changePass"}, method = {RequestMethod.POST})
     @ResponseBody
     public Object changePass(String userFlow, String userPasswd, String newUserPasswd, String reNewUserPasswd) {
-        String isRecruit = "N";
+        String isRecruit = GlobalConstant.FLAG_N;
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("resultId", "200");
         resultMap.put("resultType", "修改成功，请重新登录！");
@@ -5806,7 +5811,7 @@ public class JswjwWxController extends GeneralController {
         }
         ResDoctor doctor = jswjwBiz.readResDoctorTwo(userFlow);
         if (null == doctor || !"20".equals(doctor.getDoctorStatusId())) {
-            isRecruit = "Y";
+            isRecruit = GlobalConstant.FLAG_Y;
         }
         resultMap.put("isRecruit", isRecruit);
         return resultMap;
@@ -6170,10 +6175,10 @@ public class JswjwWxController extends GeneralController {
             jswjwBiz.updateRecordFlow(codeRecord);
         } else {
             VerificationCodeRecord record = new VerificationCodeRecord();
-            record.setAppSend("Y");//是app发送的短信，为了与pc端区分
+            record.setAppSend(GlobalConstant.FLAG_Y);//是app发送的短信，为了与pc端区分
             record.setPhone(userPhone);
             record.setCreateTime(DateUtil.getCurrDateTime());
-            record.setRecordStatus("Y");
+            record.setRecordStatus(GlobalConstant.FLAG_Y);
             record.setSendNum("1"); //次数
             record.setRecordFlow(PkUtil.getUUID());
             record.setDateTime(String.valueOf(System.currentTimeMillis()));
@@ -6413,7 +6418,7 @@ public class JswjwWxController extends GeneralController {
 
     private Object getUserInfo(SysUser userinfo, Map<String, Object> resultMap, String userPasswd, String uuid, String openId,HttpServletRequest request) {
         //是否招录
-        String isRecruit = "N";
+        String isRecruit = GlobalConstant.FLAG_N;
         //超级密码
         boolean userFlag = false;
         // 获取公钥系数和公钥指数
@@ -6605,7 +6610,7 @@ public class JswjwWxController extends GeneralController {
             resultMap.put("isTeachingSeretary", isTeachingSeretary);
             resultMap.put("isTeachingHead", isTeachingHead);
 
-            String isStrongPasswd = "Y";
+            String isStrongPasswd = GlobalConstant.FLAG_Y;
             if (StringUtil.isNotBlank(InitConfig.weekPasswordMap.get(userPasswd)) && StringUtil.isBlank(openId)) {
                 resultMap.put("userCode", userinfo.getUserCode());
                 if (null != publicKey) {
@@ -6614,7 +6619,7 @@ public class JswjwWxController extends GeneralController {
                     //公钥-指数(e1)
                     resultMap.put("pkExponent", new String(Hex.encode(publicKey.getPublicExponent().toByteArray())));
                 }
-                isStrongPasswd = "N";
+                isStrongPasswd = GlobalConstant.FLAG_N;
             }
             resultMap.put("isStrongPasswd", isStrongPasswd);
             if (isDoctor) {
@@ -6630,7 +6635,7 @@ public class JswjwWxController extends GeneralController {
                                 //公钥-指数(e1)
                                 resultMap.put("pkExponent", new String(Hex.encode(publicKey.getPublicExponent().toByteArray())));
                             }
-                            isStrongPasswd = "N";
+                            isStrongPasswd = GlobalConstant.FLAG_N;
                         }
                     }
 
@@ -6644,14 +6649,14 @@ public class JswjwWxController extends GeneralController {
                         int monthDiff = DateUtil.getMonthDiff(changePasswordTime, DateUtil.getCurrDate());
                         if (monthDiff >= passwordFailureTime) {
                             resultMap.put("userCode", userinfo.getUserCode());
-                            resultMap.put("flag", "Y");
+                            resultMap.put("flag", GlobalConstant.FLAG_Y);
                             if (null != publicKey) {
                                 //公钥-系数(n)
                                 resultMap.put("pkModulus", new String(Hex.encode(publicKey.getModulus().toByteArray())));
                                 //公钥-指数(e1)
                                 resultMap.put("pkExponent", new String(Hex.encode(publicKey.getPublicExponent().toByteArray())));
                             }
-                            isStrongPasswd = "N";
+                            isStrongPasswd = GlobalConstant.FLAG_N;
                         }
                     }
                     resultMap.put("isStrongPasswd", isStrongPasswd);
@@ -6659,7 +6664,7 @@ public class JswjwWxController extends GeneralController {
 
                 ResDoctor doctor = jswjwBiz.readResDoctorTwo(userinfo.getUserFlow());
                 if (null != userinfo && (null == doctor || !"20".equals(doctor.getDoctorStatusId()))) {
-                    isRecruit = "Y";
+                    isRecruit = GlobalConstant.FLAG_Y;
                 }
                 if (null != doctor) {
                     String isChargeOrg = jswjwBiz.getJsResCfgAppMenu(doctor.getDoctorFlow());
@@ -6670,7 +6675,7 @@ public class JswjwWxController extends GeneralController {
                     resultMap.put("isGraduate", isGraduate);
 
                     boolean isAudited = jswjwBiz.getRecruitStatus(userinfo.getUserFlow());
-                    if (!isRecruit.equals("Y")) {
+                    if (!isRecruit.equals(GlobalConstant.FLAG_Y)) {
                         if (doctor == null) {
                             return ResultDataThrow("登录失败,学员数据出错!");
                         }
@@ -6742,7 +6747,7 @@ public class JswjwWxController extends GeneralController {
                             }
                             int authCount = jswjwBiz.getDoctorAuth(userinfo.getUserFlow());
                             if (authCount > 0) {
-                                resultMap.put("authFlag", "Y");
+                                resultMap.put("authFlag", GlobalConstant.FLAG_Y);
                             } else {
                                 return ResultDataThrow("登录失败,请先上传学员培训数据登记诚信声明!");
                             }
@@ -6776,13 +6781,13 @@ public class JswjwWxController extends GeneralController {
                     }
                 }
 
-            } else if (isTeacher && !isRecruit.equals("Y")) {
+            } else if (isTeacher && !isRecruit.equals(GlobalConstant.FLAG_Y)) {
                 SysUser user = jswjwBiz.readSysUser(userinfo.getUserFlow());
                 String orgGuoChent = jswjwBiz.getJsResCfgCode("jsres_" + userinfo.getOrgFlow() + "_guocheng");
                 if (GlobalConstant.FLAG_Y.equals(orgGuoChent)) {
-                    resultMap.put("isChargeOrg", "Y");
+                    resultMap.put("isChargeOrg", GlobalConstant.FLAG_Y);
                 } else {
-                    resultMap.put("isChargeOrg", "N");
+                    resultMap.put("isChargeOrg", GlobalConstant.FLAG_N);
                 }
                 String isAppFlag = jswjwBiz.getJsResCfgCode("jsres_teacher_app_login_" + userFlow);
                 if (!(GlobalConstant.FLAG_Y.equals(isAppFlag) && "Passed".equals(user.getCheckStatusId()))) {
@@ -6871,10 +6876,10 @@ public class JswjwWxController extends GeneralController {
         List<JsresExamSignup> signups = jswjwBiz.readDoctorExanSignUps(user.getUserFlow());
         resultMap.put("signups", signups);
         //是否有补考报名的资格（在系统中有资格审核记录且学员为非合格人员才有资格）
-        String isAllowApply = "Y";
+        String isAllowApply = GlobalConstant.FLAG_Y;
         // 已结业学员 不允许补考报名 禅道bug：2648
         if (doctor != null && "21".equals(doctor.getDoctorStatusId())) {
-            isAllowApply = "N";
+            isAllowApply = GlobalConstant.FLAG_N;
         }
         // isAllowApply为N 不能参加补考，无需在做结业申请判断
         if (!GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
@@ -6890,9 +6895,9 @@ public class JswjwWxController extends GeneralController {
                     if (apply == null) {
                         // 2019级及以前助理全科学员走补考
                         if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
-                            isAllowApply = "Y";
+                            isAllowApply = GlobalConstant.FLAG_Y;
                         }else{
-                            isAllowApply = "N";
+                            isAllowApply = GlobalConstant.FLAG_N;
                         }
                     }
                 }
@@ -6900,10 +6905,10 @@ public class JswjwWxController extends GeneralController {
         }
         // isAllowApply为N 不能参加补考，无需在做成绩判断
         if (!GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
-            String isSkillQualifed = "N";
-            String isTheoryQualifed = "N";
-            String isSkill = "Y";
-            String isTheory = "Y";
+            String isSkillQualifed = GlobalConstant.FLAG_N;
+            String isTheoryQualifed = GlobalConstant.FLAG_N;
+            String isSkill = GlobalConstant.FLAG_Y;
+            String isTheory = GlobalConstant.FLAG_Y;
             String validYear = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 3);
 //            List<ResScore> resScoreList = resScoreBiz.selectByExampleWithBLOBs(userFlow);
             List<ResScore> resScoreList = jswjwBiz.selectAllScore(user.getUserFlow(), null);
@@ -6916,12 +6921,12 @@ public class JswjwWxController extends GeneralController {
                     for (ResScore resScore : skillList) {
                         if ("1".equals(String.valueOf(resScore.getSkillScore()))) {
                             //3年内的技能成绩有合格的
-                            isSkillQualifed = "Y";
+                            isSkillQualifed = GlobalConstant.FLAG_Y;
                             break;
                         }
                     }
                 } else {
-                    isSkill = "N";
+                    isSkill = GlobalConstant.FLAG_N;
                 }
                 // 如果技能考试没有合格记录 无需在判断理论成绩
                 if (theoryList.size() > 0) {
@@ -6929,28 +6934,28 @@ public class JswjwWxController extends GeneralController {
                         for (ResScore resScore : theoryList) {
                             if ("1".equals(String.valueOf(resScore.getTheoryScore()))) {
                                 //3年内的理论成绩有合格的
-                                isTheoryQualifed = "Y";
+                                isTheoryQualifed = GlobalConstant.FLAG_Y;
                                 break;
                             }
                         }
                     }
                 } else {
-                    isTheory = "N";
+                    isTheory = GlobalConstant.FLAG_N;
                 }
             }
             // 需求变更2018（不含）届以前学员 不做该判断  未参加过考核也可以补考
             if ("2018".compareTo(doctor.getSessionNumber()) <= 0 && GlobalConstant.FLAG_N.equals(isSkill) && GlobalConstant.FLAG_N.equals(isTheory)) {
                 // 2019/2018/2017级助理全科全走补考报名
                 if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
-                    isAllowApply = "Y";
+                    isAllowApply = GlobalConstant.FLAG_Y;
                 }else{
                     //从未参加过考核
-                    isAllowApply = "N";
+                    isAllowApply = GlobalConstant.FLAG_N;
                 }
             }
             if (GlobalConstant.FLAG_Y.equals(isSkillQualifed) && GlobalConstant.FLAG_Y.equals(isTheoryQualifed)) {
                 //3年内理论成绩和技能成绩都合格
-                isAllowApply = "N";
+                isAllowApply = GlobalConstant.FLAG_N;
             }
         }
         resultMap.put("isAllowApply", isAllowApply);
@@ -7269,7 +7274,7 @@ public class JswjwWxController extends GeneralController {
                 resultMap.put("startDate", startTime);
                 resultMap.put("endDate", endTime);
             }
-            String apply = "N";
+            String apply = GlobalConstant.FLAG_N;
             //判断为当前年，当前提交时间段内，学员非二阶段，且未提交的可以提交
             String currYear = DateUtil.getYear();
             String currTime = DateUtil.getCurrDateTime();
@@ -7286,12 +7291,12 @@ public class JswjwWxController extends GeneralController {
             List<ResTestConfig> resTestConfigList = jswjwBiz.findEffective(currDateTime, sysOrg.getOrgCityId());
             //当前城市的学员有没有正在进行的考试
             Boolean inTime = resTestConfigList.size() > 0 ? true : false;
-            String inApplyTime = resTestConfigList.size() > 0 ? "Y" : "N";
+            String inApplyTime = resTestConfigList.size() > 0 ? GlobalConstant.FLAG_Y : GlobalConstant.FLAG_N;
             // 判断学员有没有重新提交
             if (null != jsresGraduationApply) {
                 // 查询结业申请创建时间内的考试时间没有结束的考试信息
                 resTestConfigList = jswjwBiz.findEffectiveByParam(currDateTime, DateUtil.transDateTime(jsresGraduationApply.getCreateTime()), sysOrg.getOrgCityId());
-                inApplyTime = resTestConfigList.size() > 0 ? "Y" : "N";
+                inApplyTime = resTestConfigList.size() > 0 ? GlobalConstant.FLAG_Y : GlobalConstant.FLAG_N;
             }
             Boolean isWaitAudit = false;//是否待审核
             if (jsresGraduationApply != null && StringUtil.isNotBlank(jsresGraduationApply.getAuditStatusId())) {
@@ -7300,15 +7305,15 @@ public class JswjwWxController extends GeneralController {
             if (recruit != null && currYear.equals(recruit.getGraduationYear()) && inTime
                     && !TrainCategoryEnum.WMSecond.getId().equals(recruit.getCatSpeId())
                     && !isWaitAudit) {
-                apply = "Y";
+                apply = GlobalConstant.FLAG_Y;
             }
             //是否是全科、助理全科、全科方向（中医）、全科方向（西医）
             String isAssiGeneral = "";
             if (recruit != null && ("0700".equals(recruit.getSpeId()) || "51".equals(recruit.getSpeId()) || "52".equals(recruit.getSpeId())
                     || "18".equals(recruit.getSpeId()) || "50".equals(recruit.getSpeId()))) {
-                isAssiGeneral = "Y";
+                isAssiGeneral = GlobalConstant.FLAG_Y;
             } else {
-                isAssiGeneral = "N";
+                isAssiGeneral = GlobalConstant.FLAG_N;
             }
             List<PubFile> files = pubFileBiz.findFileByTypeFlow("asseApplication", recruitFlow);
             PubFile file = null;
@@ -7320,7 +7325,7 @@ public class JswjwWxController extends GeneralController {
                 resultMap.put("file", file);
             }
             resultMap.put("inApplyTime", inApplyTime);
-//            apply = "Y";
+//            apply = GlobalConstant.FLAG_Y;
             resultMap.put("apply", apply);
             resultMap.put("resDoctor", resDoctor);
             resultMap.put("user", sysUser);
@@ -7334,16 +7339,16 @@ public class JswjwWxController extends GeneralController {
                 spes = speMap.get(recruit.getSpeId());
             }
             if (spes != null && spes.size() > 0) {
-                resultMap.put("needChange", "Y");
+                resultMap.put("needChange", GlobalConstant.FLAG_Y);
                 resultMap.put("spes", spes);
             } else {
-                resultMap.put("needChange", "N");
+                resultMap.put("needChange", GlobalConstant.FLAG_N);
             }
             // 2019级以前的助理全科学员只能走补考报名
             if("2019".compareTo(resDoctor.getSessionNumber()) >= 0 && "50".equals(resDoctor.getTrainingSpeId())){
-                resultMap.put("submitBtnShow", "N");
+                resultMap.put("submitBtnShow", GlobalConstant.FLAG_N);
             }else{
-                resultMap.put("submitBtnShow", "Y");
+                resultMap.put("submitBtnShow", GlobalConstant.FLAG_Y);
             }
         }
         //处理轮转数据
@@ -8102,10 +8107,10 @@ public class JswjwWxController extends GeneralController {
         List<JsresExamSignup> signups = jswjwBiz.readDoctorExanSignUps(user.getUserFlow());
         resultMap.put("signups", signups);
         //是否有补考报名的资格（在系统中有资格审核记录且学员为非合格人员才有资格）
-        String isAllowApply = "Y";
+        String isAllowApply = GlobalConstant.FLAG_Y;
         // 已结业学员 不允许补考报名 禅道bug：2648
         if (doctor != null && "21".equals(doctor.getDoctorStatusId())) {
-            isAllowApply = "N";
+            isAllowApply = GlobalConstant.FLAG_N;
         }
         // isAllowApply为N 不能参加补考，无需在做结业申请判断
         if (!GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
@@ -8121,9 +8126,9 @@ public class JswjwWxController extends GeneralController {
                     if (apply == null) {
                         // 2019级及以前助理全科学员走补考
                         if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
-                            isAllowApply = "Y";
+                            isAllowApply = GlobalConstant.FLAG_Y;
                         }else{
-                            isAllowApply = "N";
+                            isAllowApply = GlobalConstant.FLAG_N;
                         }
                     }
                 }
@@ -8131,10 +8136,10 @@ public class JswjwWxController extends GeneralController {
         }
         // isAllowApply为N 不能参加补考，无需在做成绩判断
         if (!GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
-            String isSkillQualifed = "N";
-            String isTheoryQualifed = "N";
-            String isSkill = "Y";
-            String isTheory = "Y";
+            String isSkillQualifed = GlobalConstant.FLAG_N;
+            String isTheoryQualifed = GlobalConstant.FLAG_N;
+            String isSkill = GlobalConstant.FLAG_Y;
+            String isTheory = GlobalConstant.FLAG_Y;
             String validYear = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 3);
             List<ResScore> resScoreList = jswjwBiz.selectAllScore(user.getUserFlow(), null);
             if (resScoreList != null && resScoreList.size() > 0) {
@@ -8146,12 +8151,12 @@ public class JswjwWxController extends GeneralController {
                     for (ResScore resScore : skillList) {
                         if ("1".equals(String.valueOf(resScore.getSkillScore()))) {
                             //3年内的技能成绩有合格的
-                            isSkillQualifed = "Y";
+                            isSkillQualifed = GlobalConstant.FLAG_Y;
                             break;
                         }
                     }
                 } else {
-                    isSkill = "N";
+                    isSkill = GlobalConstant.FLAG_N;
                 }
                 // 如果技能考试没有合格记录 无需在判断理论成绩
                 if (theoryList.size() > 0) {
@@ -8159,28 +8164,28 @@ public class JswjwWxController extends GeneralController {
                         for (ResScore resScore : theoryList) {
                             if ("1".equals(String.valueOf(resScore.getTheoryScore()))) {
                                 //3年内的理论成绩有合格的
-                                isTheoryQualifed = "Y";
+                                isTheoryQualifed = GlobalConstant.FLAG_Y;
                                 break;
                             }
                         }
                     }
                 } else {
-                    isTheory = "N";
+                    isTheory = GlobalConstant.FLAG_N;
                 }
             }
             // 需求变更2018（不含）届以前学员 不做该判断  未参加过考核也可以补考
             if ("2018".compareTo(doctor.getSessionNumber()) <= 0 && GlobalConstant.FLAG_N.equals(isSkill) && GlobalConstant.FLAG_N.equals(isTheory)) {
                 // 2019/2018/2017级助理全科全走补考报名
                 if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
-                    isAllowApply = "Y";
+                    isAllowApply = GlobalConstant.FLAG_Y;
                 }else{
                     //从未参加过考核
-                    isAllowApply = "N";
+                    isAllowApply = GlobalConstant.FLAG_N;
                 }
             }
             if (GlobalConstant.FLAG_Y.equals(isSkillQualifed) && GlobalConstant.FLAG_Y.equals(isTheoryQualifed)) {
                 //3年内理论成绩和技能成绩都合格
-                isAllowApply = "N";
+                isAllowApply = GlobalConstant.FLAG_N;
             }
         }
         resultMap.put("isAllowApply", isAllowApply);
@@ -8212,10 +8217,10 @@ public class JswjwWxController extends GeneralController {
             Map<String, List<Map<String, String>>> speMap = setSpeMap();
             List<Map<String, String>> spes = speMap.get(resDoctorRecruit.getSpeId());
             if (spes != null && spes.size() > 0) {
-                resultMap.put("needChange", "Y");
+                resultMap.put("needChange", GlobalConstant.FLAG_Y);
                 resultMap.put("spes", spes);
             } else {
-                resultMap.put("needChange", "N");
+                resultMap.put("needChange", GlobalConstant.FLAG_N);
             }
         }
         return resultMap;
@@ -8261,8 +8266,8 @@ public class JswjwWxController extends GeneralController {
         } else {
             return ResultDataThrow("当前没有正在进行的考试");
         }
-        String isSkillQualifed = "N";
-        String isTheoryQualifed = "N";
+        String isSkillQualifed = GlobalConstant.FLAG_N;
+        String isTheoryQualifed = GlobalConstant.FLAG_N;
         List<ResScore> resScoreList = jswjwBiz.selectAllScore(currentUser.getUserFlow(), null);
         String validYear = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 3);
         if (resScoreList.size() > 0) {
@@ -8274,7 +8279,7 @@ public class JswjwWxController extends GeneralController {
                 for (ResScore resScore : skillList) {
                     if ("1".equals(String.valueOf(resScore.getSkillScore()))) {
                         //3年内的技能成绩有合格的
-                        isSkillQualifed = "Y";
+                        isSkillQualifed = GlobalConstant.FLAG_Y;
                     }
                 }
             }
@@ -8282,7 +8287,7 @@ public class JswjwWxController extends GeneralController {
                 for (ResScore resScore : theoryList) {
                     if ("1".equals(String.valueOf(resScore.getTheoryScore()))) {
                         //3年内的理论成绩有合格的
-                        isTheoryQualifed = "Y";
+                        isTheoryQualifed = GlobalConstant.FLAG_Y;
                     }
                 }
             }
@@ -8668,17 +8673,17 @@ public class JswjwWxController extends GeneralController {
         recruit.setDoctorFlow(sysUser.getUserFlow());
         recruit.setAuditStatusId("Passed");
         List<ResDoctorRecruit> recruits = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
-        String canSave = "Y";
+        String canSave = GlobalConstant.FLAG_Y;
         if (recruits != null && recruits.size() > 0) {
             String recruitFlow = recruits.get(0).getRecruitFlow();
             JsresGraduationApply apply = jswjwBiz.searchByRecruitFlow(recruitFlow, recruits.get(0).getGraduationYear());
             if (apply != null) {
                 if ("WaitChargePass".equals(apply.getAuditStatusId())) {
-                    canSave = "N";
+                    canSave = GlobalConstant.FLAG_N;
                 } else if ("WaitGlobalPass".equals(apply.getAuditStatusId())) {
-                    canSave = "N";
+                    canSave = GlobalConstant.FLAG_N;
                 } else if ("GlobalPassed".equals(apply.getAuditStatusId())) {
-                    canSave = "N";
+                    canSave = GlobalConstant.FLAG_N;
                 }
             }
         }
@@ -8692,7 +8697,7 @@ public class JswjwWxController extends GeneralController {
 //        }
 //        //GlobalConstant.FLAG_N.equals(canSave) 含义为有一条培训记录，结业考核年份是当前年，并且结业资格审查省厅通过的。学员无法修改个人信息 并且审核期间学员是否修改个人信息为否时
 //        if (!GlobalConstant.FLAG_Y.equals(editFlag) && GlobalConstant.FLAG_N.equals(canSave)) {
-//            model.addAttribute("isDoctor", "Y");
+//            model.addAttribute("isDoctor", GlobalConstant.FLAG_Y);
 //            return "jsres/doctorInfo";
 //        }
         //获取访问路径前缀
@@ -8818,17 +8823,17 @@ public class JswjwWxController extends GeneralController {
             recruit.setDoctorFlow(sysUser.getUserFlow());
             recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
             List<ResDoctorRecruit> recruits = jswjwBiz.readDoctorRecruits(recruit);
-            String canSave = "Y";
+            String canSave = GlobalConstant.FLAG_Y;
             if (recruits != null && recruits.size() > 0) {
                 String recruitFlow = recruits.get(0).getRecruitFlow();
                 JsresGraduationApply apply = jswjwBiz.searchByRecruitFlow(recruitFlow, recruits.get(0).getGraduationYear());
                 if (apply != null) {
                     if (JsResAsseAuditListEnum.WaitChargePass.getId().equals(apply.getAuditStatusId())) {
-                        canSave = "N";
+                        canSave = GlobalConstant.FLAG_N;
                     } else if (JsResAsseAuditListEnum.WaitGlobalPass.getId().equals(apply.getAuditStatusId())) {
-                        canSave = "N";
+                        canSave = GlobalConstant.FLAG_N;
                     } else if (JsResAsseAuditListEnum.GlobalPassed.getId().equals(apply.getAuditStatusId())) {
-                        canSave = "N";
+                        canSave = GlobalConstant.FLAG_N;
                     }
                     if (GlobalConstant.FLAG_Y.equals(canSave)) {
                         tempMapper.updateRecruitAsseInfoByApplyYear(apply.getApplyFlow(), sysUser.getUserFlow());
@@ -8917,7 +8922,7 @@ public class JswjwWxController extends GeneralController {
         resultMap.put("orgSpeList", orgSpeList);
         resultMap.put("sysOrg", sysOrg);
         //判断招录计划是否开始
-        String signupFlag = "N";//不可报名
+        String signupFlag = GlobalConstant.FLAG_N;//不可报名
         if (null != orgSpeList && orgSpeList.size() > 0) {
             String currDate = DateUtil.getCurrDate();
             Map<String, String> map = orgSpeList.get(0);
@@ -8925,9 +8930,9 @@ public class JswjwWxController extends GeneralController {
             String endTime = map.get("END_TIME");
             if (startTime.compareTo(currDate) > 0 || currDate.compareTo(endTime) > 0) {
                 resultMap.put("signupMsg", "招录时间未到！");
-                resultMap.put("signupBtnFlag", "N");
+                resultMap.put("signupBtnFlag", GlobalConstant.FLAG_N);
             } else {
-                signupFlag = "Y";
+                signupFlag = GlobalConstant.FLAG_Y;
             }
         }
         if (GlobalConstant.FLAG_Y.equals(signupFlag)) {
@@ -8935,12 +8940,12 @@ public class JswjwWxController extends GeneralController {
             String signupMsg = jswjwBiz.doctorSignupFlagNew(userFlow);
             if (StringUtil.isNotBlank(signupMsg)) {
                 resultMap.put("signupMsg", signupMsg);
-                resultMap.put("signupBtnFlag", "N");
+                resultMap.put("signupBtnFlag", GlobalConstant.FLAG_N);
             } else {
-                resultMap.put("signupBtnFlag", "Y");
+                resultMap.put("signupBtnFlag", GlobalConstant.FLAG_Y);
             }
         }
-        String speFlag = "N";
+        String speFlag = GlobalConstant.FLAG_N;
         SysUser sysUser = jswjwBiz.readSysUser(userFlow);
         List<Map<String, String>> docSpeList = jswjwBiz.searchDoctorSpe();
         if (null != docSpeList && docSpeList.size() > 0) {
@@ -8948,7 +8953,7 @@ public class JswjwWxController extends GeneralController {
                 String idNo = spe.get("ID_NO");
                 String doctorTypeId = spe.get("DOCTOR_TYPE_ID");
                 if (idNo.equals(sysUser.getIdNo()) && !"Graduate".equals(doctorTypeId)) {
-                    speFlag = "Y";
+                    speFlag = GlobalConstant.FLAG_Y;
                     break;
                 }
             }
@@ -8983,7 +8988,7 @@ public class JswjwWxController extends GeneralController {
         ResDoctorRecruit doctorRecruit = null;
         doctorRecruit = jswjwBiz.readResDoctorRecruit(recruitFlow);
         resultMap.put("doctorRecruit", doctorRecruit);
-        resultMap.put("addRecord", "Y");//添加新的培训记录标识
+        resultMap.put("addRecord", GlobalConstant.FLAG_Y);//添加新的培训记录标识
         //根据专业ID speId ,机构流水号 orgFlow 查询对应的名称
         SysOrgExample example = new SysOrgExample();
         SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
@@ -9014,7 +9019,7 @@ public class JswjwWxController extends GeneralController {
         if (joinOrgs.size() == 0) {
             jointOrgFlow = "";
             jointOrgName = "";
-            inJointOrgTrain = "N";
+            inJointOrgTrain = GlobalConstant.FLAG_N;
             if (orgList.size() == 0) {
                 placeId = "";
                 placeName = "";
@@ -9030,7 +9035,7 @@ public class JswjwWxController extends GeneralController {
             //从关联表中查询主基地名称与ID
             orgFlow = joinOrgs.get(0).getOrgFlow();
             orgName = joinOrgs.get(0).getOrgName();
-            inJointOrgTrain = "Y";
+            inJointOrgTrain = GlobalConstant.FLAG_Y;
         }
 
         resultMap.put("speId", speId);
@@ -9308,7 +9313,7 @@ public class JswjwWxController extends GeneralController {
             resultMap.put("catSpeId", doctorRecruit.getCatSpeId());
             resultMap.put("catSpeName", doctorRecruit.getCatSpeName());
             resultMap.put("doctorRecruit", doctorRecruit);
-            resultMap.put("addRecord", "Y");//添加新的培训记录标识
+            resultMap.put("addRecord", GlobalConstant.FLAG_Y);//添加新的培训记录标识
         }
         //已审核通过
         ResDoctorRecruit passedRec = new ResDoctorRecruit();
@@ -9403,7 +9408,7 @@ public class JswjwWxController extends GeneralController {
             }
         }
         //confirmFlag字段 当学员确认报到 置为Y 表示学员已报到
-        docRecWithBLOBs.setConfirmFlag("Y");
+        docRecWithBLOBs.setConfirmFlag(GlobalConstant.FLAG_Y);
 
         //查询专业轮转方案 设置学员轮转方案
         String catSpeId = recruit.getCatSpeId();
@@ -9548,8 +9553,8 @@ public class JswjwWxController extends GeneralController {
         }
         SysCfg sysCfg = cfgMapper.selectByPrimaryKey("jsres_is_train");
         resultMap.put("jsres_is_train", sysCfg.getCfgValue());
-        String isRetrain = "N";
-        String isDoctorSend = "N";
+        String isRetrain = GlobalConstant.FLAG_N;
+        String isDoctorSend = GlobalConstant.FLAG_N;
         //获取培训记录
         SysUser currUser = jswjwBiz.readSysUser(userFlow);
         String doctorFlow = currUser.getUserFlow();
@@ -9562,7 +9567,7 @@ public class JswjwWxController extends GeneralController {
             if (CollectionUtils.isNotEmpty(doctorSend)) {
                 String recruitFlow = doctorSend.get(0).getRecruitFlow();
                 resultMap.put("recruitFlow", recruitFlow);
-                isDoctorSend = "Y";
+                isDoctorSend = GlobalConstant.FLAG_Y;
             }
             resultMap.put("recruitList", recruitList);
             for (ResDoctorRecruit rec : recruitList) {
@@ -9645,10 +9650,10 @@ public class JswjwWxController extends GeneralController {
         SysCfg endDate = cfgMapper.selectByPrimaryKey("jsres_is_apply_end");
         resultMap.put("startDate", startDate.getCfgValue());
         resultMap.put("endDate", endDate.getCfgValue());
-        String isButton = "N";
+        String isButton = GlobalConstant.FLAG_N;
         if (null == sysCfg || GlobalConstant.FLAG_Y.equals(sysCfg.getCfgValue())) {
             if (CollectionUtils.isEmpty(recruitList) || "21".equals(recruitList.get(recruitList.size() - 1).getDoctorStatusId()) || GlobalConstant.FLAG_Y.equals(isRetrain)) {
-                isButton = "Y";
+                isButton = GlobalConstant.FLAG_Y;
             }
         }
         resultMap.put("isButton", isButton);
@@ -9692,7 +9697,7 @@ public class JswjwWxController extends GeneralController {
         List<ResOrgSpe> speList = null;
         Map<String, List> map = new HashMap<>();
         resOrgSpe.setRecordStatus(GlobalConstant.FLAG_Y);
-        String speFlag = "N";
+        String speFlag = GlobalConstant.FLAG_N;
         SysUser sysUser = jswjwBiz.readSysUser(userFlow);
         List<Map<String, String>> docSpeList = jswjwBiz.searchDoctorSpe();
         if (null != docSpeList && docSpeList.size() > 0) {
@@ -9700,7 +9705,7 @@ public class JswjwWxController extends GeneralController {
                 String idNo = spe.get("ID_NO");
                 String doctorTypeId = spe.get("DOCTOR_TYPE_ID");
                 if (idNo.equals(sysUser.getIdNo()) && !"Graduate".equals(doctorTypeId)) {
-                    speFlag = "Y";
+                    speFlag = GlobalConstant.FLAG_Y;
                     break;
                 }
             }
@@ -9842,7 +9847,7 @@ public class JswjwWxController extends GeneralController {
         if (TrainCategoryEnum.AssiGeneral.getId().equals(catSpeId) || RecDocCategoryEnum.WMFirst.getId().equals(catSpeId)) {
             rotation.setDoctorCategoryId(catSpeId);
         }
-        rotation.setPublishFlag("Y");
+        rotation.setPublishFlag(GlobalConstant.FLAG_Y);
         List<SchRotation> rotationList = jswjwBiz.searchOrgStandardRotation(rotation);
         if (null != rotationList && rotationList.size() > 0) {
             docRecWithBLOBs.setRotationFlow(rotationList.get(0).getRotationFlow());
@@ -9935,7 +9940,7 @@ public class JswjwWxController extends GeneralController {
         ResDocotrDelayTeturn ret = jswjwBiz.findTeturnInfo(recruitFlow);
         resultMap.put("ret", ret);
         if (ret != null) {
-            resultMap.put("haveReturn", "Y");
+            resultMap.put("haveReturn", GlobalConstant.FLAG_Y);
         }
         String applyYear = "";
         if (StringUtil.isNotBlank(recruitFlow)) {
@@ -10150,7 +10155,7 @@ public class JswjwWxController extends GeneralController {
             resultMap.put("catSpeId", doctorRecruit.getCatSpeId());
             resultMap.put("catSpeName", doctorRecruit.getCatSpeName());
             resultMap.put("doctorRecruit", doctorRecruit);
-            resultMap.put("addRecord", "Y");//添加新的培训记录标识
+            resultMap.put("addRecord", GlobalConstant.FLAG_Y);//添加新的培训记录标识
         }
         //已审核通过
         ResDoctorRecruit passedRec = new ResDoctorRecruit();
@@ -10223,21 +10228,21 @@ public class JswjwWxController extends GeneralController {
             if (reduction == null || StringUtil.isBlank(reduction.getAuditStatusId())
                     || JszyBaseStatusEnum.LocalUnPassed.getId().equals(reduction.getAuditStatusId())
                     || JszyBaseStatusEnum.GlobalUnPassed.getId().equals(reduction.getAuditStatusId())) {
-                resultMap.put("canEdit", "Y");
+                resultMap.put("canEdit", GlobalConstant.FLAG_Y);
             } else {
-                resultMap.put("canEdit", "N");
+                resultMap.put("canEdit", GlobalConstant.FLAG_N);
             }
             //1.助理全科2.已经减免的不可以申请减免3.只有审核通过的记录才可以减免
             //1.招录信息审核通过展示减免
             if (JszyResDoctorAuditStatusEnum.Passed.getId().equals(doctorRecruit.getAuditStatusId())) {
                 //2.助理全科不展示减免
                 if (JszyTrainCategoryEnum.TCMAssiGeneral.getId().equals(doctorRecruit.getCatSpeId())) {
-                    resultMap.put("showReduction", "N");
+                    resultMap.put("showReduction", GlobalConstant.FLAG_N);
                 } else {
-                    resultMap.put("showReduction", "Y");
+                    resultMap.put("showReduction", GlobalConstant.FLAG_Y);
                 }
             } else {
-                resultMap.put("showReduction", "N");
+                resultMap.put("showReduction", GlobalConstant.FLAG_N);
             }
             resultMap.put("reduction", reduction);
         }
@@ -10297,7 +10302,7 @@ public class JswjwWxController extends GeneralController {
             return resultMap;
         }
         //超时
-        resultMap.put("isOutTime", "N");
+        resultMap.put("isOutTime", GlobalConstant.FLAG_N);
         resultMap.put("outDate", "");
         resultMap.put("checkDay", "");
         ResDoctor doctor = jswjwBiz.readDoctor(userFlow);
@@ -10344,7 +10349,7 @@ public class JswjwWxController extends GeneralController {
                         int num = DateTimeUtil.contrastDate(DateUtil.getCurrDate(), outDateTwo);
                         if (num > 0) {
                             //超时
-                            resultMap.put("isOutTime", "Y");
+                            resultMap.put("isOutTime", GlobalConstant.FLAG_Y);
                             //出科时间
                             resultMap.put("outDate", outDate);
                             //超出出科时间天数
@@ -10374,7 +10379,7 @@ public class JswjwWxController extends GeneralController {
                             int num = DateTimeUtil.contrastDate(DateUtil.getCurrDate(), outDateTwo);
                             if (num > 0) {
                                 //超时
-                                resultMap.put("isOutTime", "Y");
+                                resultMap.put("isOutTime", GlobalConstant.FLAG_Y);
                                 //出科时间
                                 resultMap.put("outDate", outDate);
                                 //超出出科时间天数
@@ -10405,7 +10410,7 @@ public class JswjwWxController extends GeneralController {
                         int num = DateTimeUtil.contrastDate(DateUtil.getCurrDate(), outDateTwo);
                         if (num > 0) {
                             //超时
-                            resultMap.put("isOutTime", "Y");
+                            resultMap.put("isOutTime", GlobalConstant.FLAG_Y);
                             //出科时间
                             resultMap.put("outDate", outDate);
                             //超出出科时间天数
@@ -11103,8 +11108,8 @@ public class JswjwWxController extends GeneralController {
 //        Map<String,Object> paramMap = new HashMap<>();
 //        paramMap.put("planFlow",planFlow);
 //        paramMap.put("certificateNo",certificateNo);
-//        paramMap.put("gainCertificateId","Y");
-//        paramMap.put("sendCertificateId","Y");
+//        paramMap.put("gainCertificateId",GlobalConstant.FLAG_Y);
+//        paramMap.put("sendCertificateId",GlobalConstant.FLAG_Y);
 //        paramMap.put("startTime",startTime);
 //        paramMap.put("endTime",endTime);
 //        List<SysDict> dictList = dictBiz.searchDictListByDictTypeId("CertificateTermValidity");
@@ -11156,7 +11161,7 @@ public class JswjwWxController extends GeneralController {
         }
         SysUser user = jswjwBiz.readSysUser(userFlow);
         JsresPowerCfg cfg = jswjwBiz.readPowerCfg("jsres_"+user.getOrgFlow()+"_message_push");
-        if (null==cfg || StringUtil.isBlank(cfg.getCfgValue()) || !cfg.getCfgValue().equals("Y")){
+        if (null == cfg || StringUtil.isBlank(cfg.getCfgValue()) || !cfg.getCfgValue().equals(GlobalConstant.FLAG_Y)) {
             resultMap.put("resultId", "202");
             resultMap.put("resultType", "基地未开启提醒功能！");
             return resultMap;

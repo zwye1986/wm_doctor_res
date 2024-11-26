@@ -2,8 +2,9 @@ package com.pinde.sci.biz.sys.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.common.enums.GeneralEnum;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.sci.biz.pub.IMsgBiz;
@@ -94,7 +95,7 @@ public class UserBizImpl implements IUserBiz {
 	public List<SysUser> selectByNamesOrIdNo(List<String> userNameList, List<String> idNoList) {
 		SysUserExample sysUserExample = new SysUserExample();
 		SysUserExample.Criteria criteria = sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo("Y")
+		criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
 				.andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
 		if (CollectionUtil.isNotEmpty(userNameList)) {
 			criteria.andUserNameIn(userNameList);
@@ -654,17 +655,6 @@ public class UserBizImpl implements IUserBiz {
 		user.setStatusDesc(UserStatusEnum.Activated.getName());
 		user.setUnLockTime(DateUtil.getCurrDateTime());
 		saveUser(user);
-//		if (GlobalConstant.EDU_WS_ID.equals(GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_WS_ID))) {
-//			/*edu 插入必修课*/
-//			EduCourse course = new EduCourse();
-//			course.setCourseTypeId(ResEduCourseTypeEnum.Required.getId());
-//			List<EduCourse> courseList = this.eduCourseBiz.searchCourseList(course);
-//			if(courseList!=null&&!courseList.isEmpty()){
-//				String userFlow = user.getUserFlow();
-//				for (EduCourse ec : courseList) {
-//					this.eduCourseBiz.chooseCourse(userFlow, ec.getCourseFlow());
-//				}
-//			}
 //		}
 	}
 
@@ -1085,7 +1075,7 @@ public class UserBizImpl implements IUserBiz {
 	public int saveRegisterUser(String userPhone,String code,String codeTime) {
 		SysUser user = new SysUser();
 		user.setUserPhone(userPhone);
-		user.setIsVerify("N");
+		user.setIsVerify(GlobalConstant.FLAG_N);
 		user.setVerifyCode(code);
 		user.setVerifyCodeTime(codeTime);
 		SysUserExample sysUserExample = new SysUserExample();
@@ -1131,7 +1121,7 @@ public class UserBizImpl implements IUserBiz {
 	@Override
 	public int saveForgetPasswdUser(String userPhone, String code, String codeTime) {
 		SysUserExample sysUserExample = new SysUserExample();
-		sysUserExample.createCriteria().andUserPhoneEqualTo(userPhone).andIsVerifyEqualTo("Y").andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+		sysUserExample.createCriteria().andUserPhoneEqualTo(userPhone).andIsVerifyEqualTo(GlobalConstant.FLAG_Y).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
 		List<SysUser> sysUsers = sysUserMapper.selectByExample(sysUserExample);
 		if(sysUsers != null && sysUsers.size() > 0){
 			SysUser record = sysUsers.get(0);
@@ -1144,7 +1134,7 @@ public class UserBizImpl implements IUserBiz {
 
 	@Override
 	public int saveAuthenSuccessUser(SysUser currentUser) {
-		currentUser.setIsVerify("Y");
+		currentUser.setIsVerify(GlobalConstant.FLAG_Y);
 		return sysUserMapper.updateByPrimaryKey(currentUser);
 	}
 
@@ -1203,7 +1193,7 @@ public class UserBizImpl implements IUserBiz {
 	public boolean userISRole(String userFlow, String roleFlow) {
 		SysUserRoleExample example=new SysUserRoleExample();
 		SysUserRoleExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo("Y").andWsIdEqualTo("res");
+		criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andWsIdEqualTo("res");
 		if (StringUtil.isNotBlank(userFlow)){
 			criteria.andUserFlowEqualTo(userFlow);
 		}
@@ -1333,7 +1323,7 @@ public class UserBizImpl implements IUserBiz {
 						}else if("学历".equals(currTitle)){
 							sysUser.setEducationName(value);
 							if(StringUtil.isBlank(sysUser.getEducationId())){
-								sysUser.setEducationId(getDictId(value,DictTypeEnum.UserEducation.getId()));
+								sysUser.setEducationId(getDictId(value, DictTypeEnum.UserEducation.getId()));
 							}
 						}else if("学位".equals(currTitle)){
 							sysUser.setDegreeName(value);
@@ -2245,7 +2235,7 @@ public class UserBizImpl implements IUserBiz {
 		map.put("roleFlow",roleFlow);
 		map.put("userCode",user.getUserCode());
 		map.put("certificateLevelId",user.getCertificateLevelId());
-		map.put("isAll","Y");
+		map.put("isAll", GlobalConstant.FLAG_Y);
 		if(roleList!=null && roleList.size()>0){
 			map.put("roleList", roleList);
 		}
@@ -2270,7 +2260,7 @@ public class UserBizImpl implements IUserBiz {
 		map.put("roleFlow",roleFlow);
 		map.put("userCode",user.getUserCode());
 		map.put("certificateLevelId",user.getCertificateLevelId());
-		map.put("isAll","Y");
+		map.put("isAll", GlobalConstant.FLAG_Y);
 		if(roleList!=null && roleList.size()>0){
 			map.put("roleList", roleList);
 		}
@@ -2292,7 +2282,7 @@ public class UserBizImpl implements IUserBiz {
 		map.put("orgFlow", user.getOrgFlow());
 		map.put("userFlow",user.getUserFlow());
 		map.put("userCode",user.getUserCode());
-		map.put("isAll","Y");
+		map.put("isAll", GlobalConstant.FLAG_Y);
 		if(roleList!=null && roleList.size()>0){
 			map.put("roleList", roleList);
 		}

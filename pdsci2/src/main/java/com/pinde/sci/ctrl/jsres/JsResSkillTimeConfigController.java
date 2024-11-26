@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
 import com.pinde.core.pdf.PdfDocumentGenerator;
@@ -153,14 +153,14 @@ public class JsResSkillTimeConfigController extends GeneralController {
         ResSkillTimeConfig skillTimeConfig = skillTimeConfigBiz.findOneByCurrDate(DateUtil.getCurrDateTime2());
         model.addAttribute("skillTimeConfig",skillTimeConfig);
         if(null == skillTimeConfig){
-            model.addAttribute("addFlag","N");
+            model.addAttribute("addFlag", GlobalConstant.FLAG_N);
         }else{
             String[] split = skillTimeConfig.getCitysId().split(",");
             List<String> cityList = Arrays.asList(split);
             if(cityList.contains(cityId)) {
-                model.addAttribute("addFlag", "Y");
+                model.addAttribute("addFlag", GlobalConstant.FLAG_Y);
             }else{
-                model.addAttribute("addFlag","N");
+                model.addAttribute("addFlag", GlobalConstant.FLAG_N);
             }
         }
         return "jsres/city/skillConfig/skillList";
@@ -176,14 +176,14 @@ public class JsResSkillTimeConfigController extends GeneralController {
         ResSkillTimeConfig skillTimeConfig = skillTimeConfigBiz.findOneByCurrDate(DateUtil.getCurrDateTime2());
         model.addAttribute("skillTimeConfig",skillTimeConfig);
         if(null == skillTimeConfig){
-            model.addAttribute("flag","N");
+            model.addAttribute("flag", GlobalConstant.FLAG_N);
         }else{
             String[] split = skillTimeConfig.getCitysId().split(",");
             List<String> cityList = Arrays.asList(split);
             if(cityList.contains(cityId)) {
-                model.addAttribute("flag", "Y");
+                model.addAttribute("flag", GlobalConstant.FLAG_Y);
             }else{
-                model.addAttribute("flag","N");
+                model.addAttribute("flag", GlobalConstant.FLAG_N);
             }
         }
         if (StringUtil.isNotBlank(skillFlow)) {
@@ -261,9 +261,9 @@ public class JsResSkillTimeConfigController extends GeneralController {
             String[] split = skillTimeConfig.getCitysId().split(",");
             List<String> cityList = Arrays.asList(split);
             if(cityList.contains(cityId)) {
-                model.addAttribute("flag", "Y");
+                model.addAttribute("flag", GlobalConstant.FLAG_Y);
             }else{
-                model.addAttribute("flag","N");
+                model.addAttribute("flag", GlobalConstant.FLAG_N);
             }
         }
         return  "jsres/city/skillConfig/doctorList";
@@ -387,17 +387,17 @@ public class JsResSkillTimeConfigController extends GeneralController {
         //查询当天市局技能考核配置
         ResSkillConfig skillConfig = skillConfigBiz.findOneByCurrDate(DateUtil.getCurrDateTime2(),org.getOrgCityId());
         if(null == skillConfig){
-            model.addAttribute("addFlag","N");
+            model.addAttribute("addFlag", GlobalConstant.FLAG_N);
         }else{
             //如果是导入方式  则市局下所有基地都能新增技能考核
             if("export".equals(skillConfig.getSkillWay())){
-                model.addAttribute("addFlag","Y");
+                model.addAttribute("addFlag", GlobalConstant.FLAG_Y);
             }else {
                 ResSkillOrg skillOrg = skillConfigBiz.searchSkillOrg(skillConfig.getSkillFlow(), orgFlow);
                 if (null == skillOrg) {
-                    model.addAttribute("addFlag", "N");
+                    model.addAttribute("addFlag", GlobalConstant.FLAG_N);
                 } else {
-                    model.addAttribute("addFlag", "Y");
+                    model.addAttribute("addFlag", GlobalConstant.FLAG_Y);
                 }
             }
         }
@@ -516,7 +516,7 @@ public class JsResSkillTimeConfigController extends GeneralController {
         }else{
             examStartTime = startTime;
             examEndTime = endTime;
-            isNewTime = "Y";
+            isNewTime = GlobalConstant.FLAG_Y;
         }
         if(file.getSize() > 0){
             try{
@@ -718,7 +718,7 @@ public class JsResSkillTimeConfigController extends GeneralController {
                                     Integer currentPage, HttpServletRequest request,Model model){
         String orgName="";
         String searchNotFull="";
-        String searchFlag="N";
+        String searchFlag = GlobalConstant.FLAG_N;
         if(oscaSkillsAssessmentExt!=null){
             orgName=oscaSkillsAssessmentExt.getOrgName();
             searchNotFull=oscaSkillsAssessmentExt.getSearchNotFull();
@@ -821,7 +821,7 @@ public class JsResSkillTimeConfigController extends GeneralController {
                 }
             }
             if("on".equals(searchNotFull)){
-                searchFlag="Y";
+                searchFlag = GlobalConstant.FLAG_Y;
                 List<OscaSkillsAssessmentExt> skillsAssessmentListTemp=new ArrayList<>();
                 for (OscaSkillsAssessmentExt osae:skillsAssessmentList) {
                     if(osae!=null&&osae.getOverplus()!=null&&Integer.parseInt(osae.getOverplus())>0){
@@ -928,23 +928,23 @@ public class JsResSkillTimeConfigController extends GeneralController {
     @ResponseBody
     public String ordered(String clinicalFlow,String doctorFlow,String appointNum,String flag){
         doctorFlow = GlobalContext.getCurrentUser().getUserFlow();
-        String isAllowApply = "Y";//结业资格审核
+        String isAllowApply = GlobalConstant.FLAG_Y;//结业资格审核
         ResDoctorRecruit recruit = new ResDoctorRecruit();
         recruit.setDoctorFlow(doctorFlow);
         recruit.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
         List<ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
         //在系统中是否有资格审核记录
-        String signupFlag = "Y";
+        String signupFlag = GlobalConstant.FLAG_Y;
         if (recruitList != null && recruitList.size() > 0) {
             ResDoctorRecruit resDoctorRecruit = recruitList.get(0);
             JsresGraduationApply apply = jsresGraduationApplyBiz.searchByRecruitFlow(resDoctorRecruit.getRecruitFlow(), "");
             if (apply == null) {
-                isAllowApply = "N";
+                isAllowApply = GlobalConstant.FLAG_N;
             }else{
                 //如果不是当前年的资格审核记录，则需要当前年补考审核记录
                 if(!DateUtil.getYear().equals(apply.getApplyYear())){
-                    isAllowApply = "N";
-                    signupFlag = "N";
+                    isAllowApply = GlobalConstant.FLAG_N;
+                    signupFlag = GlobalConstant.FLAG_N;
                 }
             }
         }
@@ -958,8 +958,8 @@ public class JsResSkillTimeConfigController extends GeneralController {
             examSignup.setAuditStatusId("GlobalPassed");//省厅审核通过
             JsresExamSignup signup = skillTimeConfigBiz.findExamSignup(examSignup);
             if(null != signup){
-                isAllowApply = "Y";
-                signupFlag = "Y";
+                isAllowApply = GlobalConstant.FLAG_Y;
+                signupFlag = GlobalConstant.FLAG_Y;
             }
         }
         if(GlobalConstant.RECORD_STATUS_N.equals(isAllowApply) || GlobalConstant.RECORD_STATUS_N.equals(signupFlag)){

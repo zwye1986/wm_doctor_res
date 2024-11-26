@@ -21,7 +21,7 @@ import com.pinde.sci.enums.jszy.JszyResChangeApplySpeEnum;
 import com.pinde.sci.enums.jszy.JszyResChangeApplyStatusEnum;
 import com.pinde.sci.enums.jszy.JszyResTrainYearEnum;
 import com.pinde.sci.enums.jszy.JszyTrainCategoryEnum;
-import com.pinde.sci.enums.res.RecDocCategoryEnum;
+import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.sci.model.jszy.JszyResDoctorOrgHistoryExt;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.ResDoctorOrgHistoryExample.Criteria;

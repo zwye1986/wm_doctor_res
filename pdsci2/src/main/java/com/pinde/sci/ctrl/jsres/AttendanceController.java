@@ -16,7 +16,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResDoctorKqMapper;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.res.ResDoctorKqStatusEnum;
+import com.pinde.core.common.enums.ResDoctorKqStatusEnum;
 import com.pinde.sci.form.res.ResOrgAddressForm;
 import com.pinde.sci.form.res.TimeSetFrom;
 import com.pinde.sci.model.mo.*;
@@ -608,9 +608,9 @@ public class AttendanceController extends GeneralController {
         List<ResDoctorSchProcess> deptList = resDoctorKqBiz.searchProcessByDoctorFlow(currentUser.getUserFlow());
         model.addAttribute("deptList",deptList);
         //是否可以新增请假
-        String isLeaveFlag = "N";
+        String isLeaveFlag = GlobalConstant.FLAG_N;
         if(null != deptList && deptList.size() > 0){
-            isLeaveFlag = "Y";
+            isLeaveFlag = GlobalConstant.FLAG_Y;
         }
         model.addAttribute("isLeaveFlag",isLeaveFlag);
         return "jsres/doctor/leave/doctorleaveVerifyMain";

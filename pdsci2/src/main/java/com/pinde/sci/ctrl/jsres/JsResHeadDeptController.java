@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.inx.INoticeBiz;
@@ -25,8 +25,8 @@ import com.pinde.sci.common.util.FileUtil;
 import com.pinde.sci.dao.base.JsresPowerCfgMapper;
 import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.res.ResAssessTypeEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.ResAssessTypeEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptExtForm;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
@@ -147,7 +147,7 @@ public class JsResHeadDeptController extends GeneralController{
 		if(null != read){
 			model.addAttribute("cfgValue",read.getCfgValue());
 		}else{
-			model.addAttribute("cfgValue","N");
+            model.addAttribute("cfgValue", GlobalConstant.FLAG_N);
 		}
         GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_ROLE, GlobalConstant.RES_ROLE_SCOPE_HEAD);
 		return "jsres/kzr/index";
@@ -492,7 +492,7 @@ public class JsResHeadDeptController extends GeneralController{
 			}
 		}
 		schArrangeResultMap.put("docTypeList", docTypeList);
-		schArrangeResultMap.put("isAfter", "Y");
+        schArrangeResultMap.put("isAfter", GlobalConstant.FLAG_Y);
 		schArrangeResultMap.put("biaoJi", biaoJi);
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<Map<String, String>> schArrangeResult=iResDoctorProcessBiz.jsresSchDoctorSchProcessHead(schArrangeResultMap);
@@ -870,7 +870,7 @@ public class JsResHeadDeptController extends GeneralController{
 									rec.get("activityRemark")==null?"":String.valueOf(rec.get("activityRemark"));
 							formDataMap.put("activity_content", activity_content);
 							formDataMap.put("activity_address", rec.get("activityAddress")==null?"":String.valueOf(rec.get("activityAddress")));
-							formDataMap.put("isJoin","Y");
+                            formDataMap.put("isJoin", GlobalConstant.FLAG_Y);
 						}
 						formDataMap.put("recFlow", String.valueOf(rec.get("recFlow")));
 						dataList.add(formDataMap);
@@ -1322,7 +1322,7 @@ public class JsResHeadDeptController extends GeneralController{
 		model.addAttribute("deptFlow", deptFlow);
 		//查看基地是否付费 如果基地是非付费，科室不可以填写数据
 		JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_baseInfo_maintenance_" + GlobalContext.getCurrentUser().getOrgFlow());
-		if (null==cfg || StringUtil.isBlank(cfg.getCfgValue()) || !cfg.getCfgValue().equals("Y")){
+        if (null == cfg || StringUtil.isBlank(cfg.getCfgValue()) || !cfg.getCfgValue().equals(GlobalConstant.FLAG_Y)) {
 			model.addAttribute("viewFlag", GlobalConstant.FLAG_Y);
 		}
 		// 查询用户科室信息
@@ -1363,8 +1363,8 @@ public class JsResHeadDeptController extends GeneralController{
 				if (StringUtil.isNotBlank(userRole.getRoleFlow()) &&(
 						userRole.getRoleFlow().equals(InitConfig.getSysCfg("res_global_role_flow")) ||
 								userRole.getRoleFlow().equals(InitConfig.getSysCfg("res_maintenance_role_flow")))){
-					isglobal="Y";
-					viewFlag="Y";
+                    isglobal = GlobalConstant.FLAG_Y;
+                    viewFlag = GlobalConstant.FLAG_Y;
 				}
 			}
 		}
@@ -1414,7 +1414,7 @@ public class JsResHeadDeptController extends GeneralController{
 			if(currRoleList == null || !currRoleList.contains(hospitalAdmin)) {
 				JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_baseInfo_maintenance_" + orgFlow);
 				//基地是付费用户，科主任可以填写信息，如果不是就不可以填写，只能由基地填写
-				if (null != cfg && StringUtil.isNotBlank(cfg.getCfgValue()) && cfg.getCfgValue().equals("Y")) {
+                if (null != cfg && StringUtil.isNotBlank(cfg.getCfgValue()) && cfg.getCfgValue().equals(GlobalConstant.FLAG_Y)) {
 					isPay = true;    //是付费用户
 					viewFlag = GlobalConstant.FLAG_N;
 				} else {
@@ -1541,7 +1541,7 @@ public class JsResHeadDeptController extends GeneralController{
 				mav.addObject("fileMap", fileMap);
 				mav.addObject("files", files);
 			}
-			if (StringUtil.isNotBlank(onlyRead) && onlyRead.equals("Y")) {        //基地查看
+            if (StringUtil.isNotBlank(onlyRead) && onlyRead.equals(GlobalConstant.FLAG_Y)) {        //基地查看
 				viewFlag=GlobalConstant.FLAG_Y;
 			}
 			if((GlobalConstant.FLAG_Y.equals(editFlag))&&!GlobalConstant.FLAG_Y.equals(viewFlag)) {
@@ -1551,7 +1551,7 @@ public class JsResHeadDeptController extends GeneralController{
 				mav.setViewName("jsres/kzr/mainInfo/"+baseInfoName.substring(0,1).toLowerCase()+baseInfoName.substring(1, baseInfoName.length()));
 			}
 		}else{//无记录
-			if (StringUtil.isNotBlank(onlyRead) && onlyRead.equals("Y")) {        //基地查看
+            if (StringUtil.isNotBlank(onlyRead) && onlyRead.equals(GlobalConstant.FLAG_Y)) {        //基地查看
 				viewFlag=GlobalConstant.FLAG_Y;
 			}
 			if(GlobalConstant.FLAG_Y.equals(viewFlag)){
@@ -1685,7 +1685,7 @@ public class JsResHeadDeptController extends GeneralController{
 			}
 		}
 		schArrangeResultMap.put("docTypeList", docTypeList);
-		schArrangeResultMap.put("isAfter", "Y");
+        schArrangeResultMap.put("isAfter", GlobalConstant.FLAG_Y);
 		schArrangeResultMap.put("biaoJi", biaoJi);
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<Map<String, String>> schArrangeResult=iResDoctorProcessBiz.temporaryOutSearch(schArrangeResultMap);
@@ -1724,7 +1724,7 @@ public class JsResHeadDeptController extends GeneralController{
 			}
 		}
 		schArrangeResultMap.put("docTypeList", docTypeList);
-		schArrangeResultMap.put("isAfter", "Y");
+        schArrangeResultMap.put("isAfter", GlobalConstant.FLAG_Y);
 		schArrangeResultMap.put("biaoJi", biaoJi);
 		List<Map<String, String>> schArrangeResult=iResDoctorProcessBiz.temporaryOutSearch(schArrangeResultMap);
 		String fileName = "临时出科信息.xls";
@@ -1772,7 +1772,7 @@ public class JsResHeadDeptController extends GeneralController{
 			}
 		}
 		schArrangeResultMap.put("docTypeList", docTypeList);
-		schArrangeResultMap.put("isAfter", "Y");
+        schArrangeResultMap.put("isAfter", GlobalConstant.FLAG_Y);
 		schArrangeResultMap.put("biaoJi", biaoJi);
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<Map<String, String>> schArrangeResult=iResDoctorProcessBiz.temporaryOutAuditSearch(schArrangeResultMap);

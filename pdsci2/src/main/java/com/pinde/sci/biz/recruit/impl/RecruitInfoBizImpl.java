@@ -338,12 +338,12 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
 
                             if("通过".equals(value))
                             {
-                                examIsPass="Y";
+                                examIsPass = GlobalConstant.FLAG_Y;
                             }
                             if("不通过".equals(value))
                             {
 
-                                examIsPass="N";
+                                examIsPass = GlobalConstant.FLAG_N;
                             }
                         }
                     }
@@ -499,11 +499,11 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
 
                             if("通过".equals(value))
                             {
-                                interviewIsPass="Y";
+                                interviewIsPass = GlobalConstant.FLAG_Y;
                             }
                             if("不通过".equals(value))
                             {
-                                interviewIsPass="N";
+                                interviewIsPass = GlobalConstant.FLAG_N;
                             }
                         }
                     }
@@ -641,11 +641,11 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
 
                             if("是".equals(value))
                             {
-                                admitIsPass="Y";
+                                admitIsPass = GlobalConstant.FLAG_Y;
                             }
                             if("否".equals(value))
                             {
-                                admitIsPass="N";
+                                admitIsPass = GlobalConstant.FLAG_N;
                             }
                         }
                     }

@@ -1,11 +1,11 @@
 package com.pinde.res.biz.common.impl;
 
-import com.pinde.core.util.StringUtil;
-import com.pinde.res.biz.common.IDictBiz;
-import com.pinde.sci.dao.base.SysDictMapper;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysDictExample;
 import com.pinde.core.model.SysDictExample.Criteria;
+import com.pinde.core.util.StringUtil;
+import com.pinde.res.biz.common.IDictBiz;
+import com.pinde.sci.dao.base.SysDictMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -110,7 +110,7 @@ public class DictBizImpl implements IDictBiz {
 		Criteria criteria  = example.createCriteria();
 		criteria.andDictTypeIdEqualTo(dictTypeId);
 		if(!isShowAll){
-			criteria.andRecordStatusEqualTo("Y");
+            criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
 		}
 		example.setOrderByClause(" ORDINAL");
 		return this.sysDictMapper.selectByExample(example);
@@ -120,7 +120,7 @@ public class DictBizImpl implements IDictBiz {
 	@Override
 	public List<SysDict> searchDictListByDictTypeId(String dictTypeId) {
 		SysDictExample example = new SysDictExample();
-		example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andRecordStatusEqualTo("Y");
+        example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
 		example.setOrderByClause("ORDINAL");
 		return this.sysDictMapper.selectByExample(example);
 		
@@ -130,7 +130,7 @@ public class DictBizImpl implements IDictBiz {
     public List<SysDict> searchDictListByDictTypeIdAndDictName(String dictTypeId, String dictName) {
         SysDictExample example = new SysDictExample();
         example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andDictNameEqualTo(dictName)
-                .andRecordStatusEqualTo("Y");
+                .andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
         example.setOrderByClause("ORDINAL");
         return this.sysDictMapper.selectByExample(example);
 
@@ -139,7 +139,7 @@ public class DictBizImpl implements IDictBiz {
     @Override
 	public List<SysDict> searchDictListByDictTypeIdAndDictId(String dictTypeId,String dictId) {
 		SysDictExample example = new SysDictExample();
-		Criteria criteria= example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andRecordStatusEqualTo("Y");
+        Criteria criteria = example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
 		if(StringUtil.isNotBlank(dictId))
 		{
 			criteria.andDictIdEqualTo(dictId);

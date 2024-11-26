@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.json.JSONUtil;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.GeneralEnum;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.*;
@@ -25,7 +25,7 @@ import com.pinde.sci.enums.jsres.CertificateStatusEnum;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
 import com.pinde.sci.enums.pub.UserNationEnum;
 import com.pinde.sci.enums.pub.UserSexEnum;
-import com.pinde.sci.enums.res.*;
+import com.pinde.core.common.enums.*;
 import com.pinde.sci.enums.sch.SchStatusEnum;
 import com.pinde.sci.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.enums.sys.*;
@@ -3006,7 +3006,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			city.put("321000","K");
 			city.put("321100","L");
 			city.put("321200","M");
-			city.put("321300","N");
+            city.put("321300", GlobalConstant.FLAG_N);
 			String year=DateUtil.getYear();
 			SysOrg org = orgBiz.readSysOrg(resDoctor.getOrgFlow());
 			String dishiCode= (String) city.get(org.getOrgCityId());
@@ -3992,7 +3992,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						doctor.getPractPhysicianCertificateNo(),
 						doctor.getSessionNumber(),
 						trainYear,
-						StringUtil.isNotBlank(extInfo.getIsAssistance())?(("Y").equals(extInfo.getIsAssistance())?"是":"否"):"",
+                        StringUtil.isNotBlank(extInfo.getIsAssistance()) ? ((GlobalConstant.FLAG_Y).equals(extInfo.getIsAssistance()) ? "是" : "否") : "",
 						extInfo.getAssistanceProvince(),
 						extInfo.getAssistanceCode(),
 						recruitDate,
@@ -4624,9 +4624,9 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						sysUser.getUserPhone(),
 						sysUser.getUserQq(),
 						sysUser.getUserEmail(),
-						StringUtil.isNotBlank(extInfo.getIsPassQualifyingExamination())?(("Y").equals(extInfo.getIsPassQualifyingExamination())?"是":"否"):"",
+                        StringUtil.isNotBlank(extInfo.getIsPassQualifyingExamination()) ? ((GlobalConstant.FLAG_Y).equals(extInfo.getIsPassQualifyingExamination()) ? "是" : "否") : "",
 						extInfo.getPassQualifyingExaminationTime(),
-						StringUtil.isNotBlank(doctor.getDoctorLicenseFlag())?(("Y").equals(doctor.getDoctorLicenseFlag())?"是":"否"):"",
+                        StringUtil.isNotBlank(doctor.getDoctorLicenseFlag()) ? ((GlobalConstant.FLAG_Y).equals(doctor.getDoctorLicenseFlag()) ? "是" : "否") : "",
 						extInfo.getHaveQualificationCertificateTime(),
 						StringUtil.isNotBlank(extInfo.getPhysicianQualificationLevel())?(("zyys").equals(extInfo.getPhysicianQualificationLevel())?"执业医师":"助理执业医师"):"",
 						extInfo.getPhysicianQualificationClassName(),
@@ -4657,7 +4657,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						"",
 						"",
 						"",
-						StringUtil.isNotBlank(extInfo.getIsCollegeDegree())?(("Y").equals(extInfo.getIsCollegeDegree())?"是":"否"):"",
+                        StringUtil.isNotBlank(extInfo.getIsCollegeDegree()) ? ((GlobalConstant.FLAG_Y).equals(extInfo.getIsCollegeDegree()) ? "是" : "否") : "",
 						"",
 						"",
 						"",
@@ -4678,7 +4678,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						"",
 						"",
 						"",
-						StringUtil.isNotBlank(extInfo.getIsUndergraduateDegree())?(("Y").equals(extInfo.getIsUndergraduateDegree())?"是":"否"):"",
+                        StringUtil.isNotBlank(extInfo.getIsUndergraduateDegree()) ? ((GlobalConstant.FLAG_Y).equals(extInfo.getIsUndergraduateDegree()) ? "是" : "否") : "",
 						"",
 						"",
 						"",
@@ -4699,7 +4699,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						"",
 						"",
 						"",
-						StringUtil.isNotBlank(extInfo.getIsMaster())?(("Y").equals(extInfo.getIsMaster())?"是":"否"):"",
+                        StringUtil.isNotBlank(extInfo.getIsMaster()) ? ((GlobalConstant.FLAG_Y).equals(extInfo.getIsMaster()) ? "是" : "否") : "",
 						"",
 						"",
 						"",
@@ -4722,7 +4722,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						extInfo.getMasterDegreeTypeName(),
 						"",
 						"",
-						StringUtil.isNotBlank(extInfo.getIsDoctor())?(("Y").equals(extInfo.getIsDoctor())?"是":"否"):"",
+                        StringUtil.isNotBlank(extInfo.getIsDoctor()) ? ((GlobalConstant.FLAG_Y).equals(extInfo.getIsDoctor()) ? "是" : "否") : "",
 						"",
 						"",
 						"",
@@ -4753,16 +4753,16 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						"",
 						"",
 						isYearGraduate,
-						StringUtil.isNotBlank(extInfo.getIsGeneralOrderOrientationTrainee())?(("Y").equals(extInfo.getIsGeneralOrderOrientationTrainee())?"是":"否"):"",
+                        StringUtil.isNotBlank(extInfo.getIsGeneralOrderOrientationTrainee()) ? ((GlobalConstant.FLAG_Y).equals(extInfo.getIsGeneralOrderOrientationTrainee()) ? "是" : "否") : "",
 						doctor.getSessionNumber(),
 						"湖北",
 						doctor.getTrainingSpeName(),
 						doctor.getTrainingYears(),
 						"",
-						StringUtil.isNotBlank(extInfo.getIsAssistance())?(("Y").equals(extInfo.getIsAssistance())?"是":"否"):"",
+                        StringUtil.isNotBlank(extInfo.getIsAssistance()) ? ((GlobalConstant.FLAG_Y).equals(extInfo.getIsAssistance()) ? "是" : "否") : "",
 						extInfo.getAssistanceProvince(),
 						extInfo.getWesternSupportResidentsSendWorkUnit(),
-						StringUtil.isNotBlank(extInfo.getIsMilitary())?(("Y").equals(extInfo.getIsMilitary())?"是":"否"):"",
+                        StringUtil.isNotBlank(extInfo.getIsMilitary()) ? ((GlobalConstant.FLAG_Y).equals(extInfo.getIsMilitary()) ? "是" : "否") : "",
 						extInfo.getAssistanceCode()
 				};
 				for (int j = 0; j < titles.length; j++) {
@@ -5018,13 +5018,13 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 		doctor.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
 		SchDoctorSelectDept selectDept=new SchDoctorSelectDept();
 		SchDoctorSelectDeptExample example=new SchDoctorSelectDeptExample();
-		example.createCriteria().andRecordStatusEqualTo("Y").andDoctorFlowEqualTo(userFlow);
+        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(userFlow);
 		selectDept.setDoctorFlow(userFlow);
 		selectDept.setModifyUserFlow("delete");
 		selectDept.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
 		SchOrgArrangeResult result=new SchOrgArrangeResult();
 		SchOrgArrangeResultExample example1=new SchOrgArrangeResultExample();
-		example1.createCriteria().andRecordStatusEqualTo("Y").andDoctorFlowEqualTo(userFlow);
+        example1.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(userFlow);
 		result.setDoctorFlow(userFlow);
 		result.setModifyUserFlow("delete");
 		result.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
@@ -5049,7 +5049,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 		ResUserBindMacid old=readBindMacidByFlow(macid.getUserFlow());
 		if(old==null)
 		{
-			macid.setRecordStatus("Y");
+            macid.setRecordStatus(GlobalConstant.FLAG_Y);
 			return macidMapper.insertSelective(macid);
 		}else{
 			return macidMapper.updateByPrimaryKeySelective(macid);

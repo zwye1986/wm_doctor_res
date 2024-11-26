@@ -1,9 +1,9 @@
 package com.pinde.res.ctrl.pushExam;
 
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.pushExam.IPushExamBiz;
-import com.pinde.core.model.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +45,10 @@ public class AppPushExamController {
 			SysUser user=pushExamBiz.readUserByFlow(userFlow);
 			String thisDay= DateUtil.getCurrDate();
 			//是否每日第一天登录
-			String isFirst="N";
+            String isFirst = GlobalConstant.FLAG_N;
 			if(StringUtil.isBlank(user.getAppLoginTime())||!thisDay.equals(user.getAppLoginTime()))
 			{
-				isFirst="Y";
+                isFirst = GlobalConstant.FLAG_Y;
 				user.setAppLoginTime(thisDay);
 				pushExamBiz.updateUser(user);
 			}

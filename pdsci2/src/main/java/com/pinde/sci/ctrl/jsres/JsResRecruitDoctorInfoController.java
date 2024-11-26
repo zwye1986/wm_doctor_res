@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -210,7 +210,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		SysCfg sysCfg = sysCfgMapper.selectByPrimaryKey("jsres_is_train");
 		if (null !=sysCfg && StringUtil.isNotBlank(sysCfg.getCfgValue())){	//查看省厅是否开启招录
 			String cfgValue = sysCfg.getCfgValue();
-			if (cfgValue.equals("Y")){		//省厅开启招录（关闭时无数据：院级招录流程优化 ）
+            if (cfgValue.equals(GlobalConstant.FLAG_Y)) {        //省厅开启招录（关闭时无数据：院级招录流程优化 ）
 				PageHelper.startPage(currentPage,getPageSize(request));
 				recruitList = recruitDoctorInfoBiz.searchRecruitExtList(param);
 				for (JsResDoctorRecruitExt recruitExt : recruitList) {
@@ -456,7 +456,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		List<String> jointOrgFlowList=new ArrayList<String>();
 		if (StringUtil.isBlank(orgFlow)) {
 			if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
-				jointOrgFlowList=searchJointOrgList("Y",sysuser.getOrgFlow());
+                jointOrgFlowList = searchJointOrgList(GlobalConstant.FLAG_Y, sysuser.getOrgFlow());
 				jointOrgFlowList.add(sysuser.getOrgFlow());
 			}
 			if (GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)
@@ -3458,7 +3458,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 				param.put("orgFlow1",orgFlow);
 			}else {
 				param.put("orgFlow1",jointOrgList.get(0).getOrgFlow());
-				param.put("isJointOrg","Y");
+                param.put("isJointOrg", GlobalConstant.FLAG_Y);
 			}
 		}
 //		List<Map<String,Object>> list=recruitDoctorInfoBiz.zltjOrgLocalList(param);
@@ -3788,7 +3788,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		List<String> jointOrgFlowList=new ArrayList<String>();
 		if (StringUtil.isBlank(orgFlow)) {
 			if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
-				jointOrgFlowList=searchJointOrgList("Y",sysuser.getOrgFlow());
+                jointOrgFlowList = searchJointOrgList(GlobalConstant.FLAG_Y, sysuser.getOrgFlow());
 				jointOrgFlowList.add(sysuser.getOrgFlow());
 			}
 			if (GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)

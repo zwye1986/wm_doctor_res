@@ -9,7 +9,7 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResAnnualAssessmentMapper;
 import com.pinde.sci.dao.res.AnnualAssessmentExtMapper;
-import com.pinde.sci.enums.res.DiscipleStatusEnum;
+import com.pinde.core.common.enums.DiscipleStatusEnum;
 import com.pinde.sci.model.mo.ResAnnualAssessment;
 import com.pinde.sci.model.mo.ResAnnualAssessmentExample;
 import com.pinde.sci.model.mo.ResAnnualAssessmentWithBLOBs;
@@ -85,7 +85,7 @@ public class AnnualAssessmentBizImpl implements IAnnualAssessmentBiz {
     public int delAnnualAssessment(String recordFlow) {
         ResAnnualAssessmentWithBLOBs assessment = new ResAnnualAssessmentWithBLOBs();
         assessment.setRecordFlow(recordFlow);
-        assessment.setRecordStatus("N");
+        assessment.setRecordStatus(GlobalConstant.FLAG_N);
         return assessmentMapper.updateByPrimaryKeySelective(assessment);
     }
 
@@ -112,7 +112,7 @@ public class AnnualAssessmentBizImpl implements IAnnualAssessmentBiz {
     }
     public List<ResAnnualAssessment> findAnnualAssessmentByDocFlow(String doctorFlow){
         ResAnnualAssessmentExample example = new ResAnnualAssessmentExample();
-        example.createCriteria().andDoctorFlowEqualTo(doctorFlow).andRecordStatusEqualTo("Y");
+        example.createCriteria().andDoctorFlowEqualTo(doctorFlow).andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
         return assessmentMapper.selectByExample(example);
     }
 }

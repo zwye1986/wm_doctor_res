@@ -3,8 +3,8 @@ package com.pinde.sci.biz.jsres.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.util.*;
 import com.pinde.core.util.DateUtil;
+import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResPhyAssBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
@@ -89,7 +89,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
         int msgCount=0;
         if (type.equals("add")){ //新增
             plan.setPlanFlow(planFlow);
-            plan.setRecordStatus("Y");
+            plan.setRecordStatus(GlobalConstant.FLAG_Y);
             plan.setCreateTime(DateUtil.getCurrDateTime2());
             plan.setCreateUserFlow(user.getUserFlow());
             planCount = planMapper.insert(plan);
@@ -101,7 +101,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
             planCount = planMapper.updateByPrimaryKey(qualifiedPlan);
             List<ResQualifiedPlanMsg> oldMsgList = searchByPlanFlow(planFlow); //删除之前的记录
             for (ResQualifiedPlanMsg msg : oldMsgList) {
-                msg.setRecordStatus("N");
+                msg.setRecordStatus(GlobalConstant.FLAG_N);
                 planMsgMapper.updateByPrimaryKey(msg);
             }
         }
@@ -111,7 +111,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
             msg.setPlanFlow(planFlow);
             msg.setCreateTime(DateUtil.getCurrDateTime2());
             msg.setCreateUserFlow(user.getUserFlow());
-            msg.setRecordStatus("Y");
+            msg.setRecordStatus(GlobalConstant.FLAG_Y);
             msgCount=msgCount+planMsgMapper.insert(msg);
         }
         if (planCount>0 && msgCount==msgList.size()){
@@ -133,8 +133,8 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
                 List<PubFile> phyAssUser = pubFileBiz.findFileByTypeFlow("phyAssUser", planFlow);
                 if (null != phyAssUser && phyAssUser.size()>0){
                      pubFile = phyAssUser.get(0);
-                    if (StringUtil.isNotBlank(fileFlow) && fileFlow.equals("Y")){
-                        pubFile.setRecordStatus("N");
+                    if (StringUtil.isNotBlank(fileFlow) && fileFlow.equals(GlobalConstant.FLAG_Y)) {
+                        pubFile.setRecordStatus(GlobalConstant.FLAG_N);
                         GeneralMethod.setRecordInfo(pubFile, false);
                         pubFileMapper.updateByPrimaryKeySelective(pubFile);
                         return true;
@@ -192,7 +192,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
         if (StringUtil.isNotBlank(planFlow)){
             criteria.andPlanFlowEqualTo(planFlow);
         }
-        criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
         return planMsgMapper.selectByExample(example);
     }
 
@@ -201,12 +201,12 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
     @Override
     public boolean delPhyAss(String planFlow) {
         ResTeachQualifiedPlan plan = planMapper.selectByPrimaryKey(planFlow);
-        plan.setRecordStatus("N");
+        plan.setRecordStatus(GlobalConstant.FLAG_N);
         int planCount = planMapper.updateByPrimaryKey(plan);
         List<ResQualifiedPlanMsg> msgList = searchByPlanFlow(planFlow);
         int msgCount=0;
         for (ResQualifiedPlanMsg msg : msgList) {
-            msg.setRecordStatus("N");
+            msg.setRecordStatus(GlobalConstant.FLAG_N);
             msgCount =msgCount+ planMsgMapper.updateByPrimaryKey(msg);
         }
         pubFileBiz.deleteFileByTypeFlow("phyAss",planFlow);
@@ -220,7 +220,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
     @Override
     public int checkPlanContent(String planContent) {
         ResTeachQualifiedPlanExample example = new ResTeachQualifiedPlanExample();
-        ResTeachQualifiedPlanExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo("Y");
+        ResTeachQualifiedPlanExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
         if (StringUtil.isNotBlank(planContent)){
             criteria.andPlanContentEqualTo(planContent);
         }
@@ -277,9 +277,9 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
             planDoctor.setDoctorName(user[2]);
             planDoctor.setDoctorRoleFlow(user[3]);
             planDoctor.setDoctorRoleName(user[4]);
-            planDoctor.setGainCertificateId("N");
+            planDoctor.setGainCertificateId(GlobalConstant.FLAG_N);
             planDoctor.setGainCertificateName("未生成");
-            planDoctor.setSendCertificateId("N");
+            planDoctor.setSendCertificateId(GlobalConstant.FLAG_N);
             planDoctor.setSendCertificateName("未发放");
             planCount =planCount+ planDoctorMapper.insert(planDoctor);
         }
@@ -294,7 +294,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
     public List<ResTeachPlanDoctor> searchPlanDoctorByPlanFlow(String planFlow,String speId,String orgFlow) {
         ResTeachPlanDoctorExample example = new ResTeachPlanDoctorExample();
         ResTeachPlanDoctorExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
         if (StringUtil.isNotBlank(planFlow)){
             criteria.andPlanFlowEqualTo(planFlow);
         }
@@ -311,7 +311,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
     @Override
     public List<ResTeachPlanDoctor> searchPlanDoctor(ResTeachPlanDoctor doctor) {
         ResTeachPlanDoctorExample example = new ResTeachPlanDoctorExample();
-        ResTeachPlanDoctorExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo("Y");
+        ResTeachPlanDoctorExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
         if (null !=doctor){
             if (StringUtil.isNotBlank(doctor.getRecordFlow())){
                 criteria.andRecordFlowEqualTo(doctor.getRecordFlow());
@@ -404,7 +404,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
                     userDept.setDeptName(sysDept.getDeptName());
                     userDept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
                     userDept.setOrgName(GlobalContext.getCurrentUser().getOrgName());
-                    userDept.setRecordStatus("Y");
+                    userDept.setRecordStatus(GlobalConstant.FLAG_Y);
                     userDept.setCreateTime(DateUtil.getCurrDateTime());
                     userDept.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
                     deptSuccess=deptSuccess+sysUserDeptMapper.insert(userDept);
@@ -647,7 +647,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
     private SysUser searchByUserCode(String userCode){
         SysUserExample example = new SysUserExample();
         SysUserExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
         if (StringUtil.isNotBlank(userCode)){
             criteria.andUserCodeEqualTo(userCode);
         }
@@ -725,13 +725,13 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
         if (null != doctorList && doctorList.size()>0){
             if (type.equals("del")){    //删除
                 for (ResTeachPlanDoctor doctor : doctorList) {
-                    doctor.setPlanRemove("Y");
+                    doctor.setPlanRemove(GlobalConstant.FLAG_Y);
                     planDoctorMapper.updateByPrimaryKey(doctor);
                     count++;
                 }
             }else { //确认
                 for (ResTeachPlanDoctor doctor : doctorList) {
-                    doctor.setAffirmFlag("Y");
+                    doctor.setAffirmFlag(GlobalConstant.FLAG_Y);
                     planDoctorMapper.updateByPrimaryKey(doctor);
                     count++;
                 }

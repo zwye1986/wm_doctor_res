@@ -1,6 +1,8 @@
 package com.pinde.sci.ctrl.osca;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -75,7 +77,7 @@ public class OscaExamineInfoController extends GeneralController {
         map.put("userOrgFlow",userOrgFlow);
         map.put("orgCityId",orgCityId);
         SysDict searchDict = new SysDict();
-        searchDict.setRecordStatus("Y");
+        searchDict.setRecordStatus(GlobalConstant.FLAG_Y);
         searchDict.setDictTypeId(DictTypeEnum.OscaTrainingType.getId()+"."+trainingTypeId);
         List<SysDict> dictList = dictBiz.searchDictList(searchDict);
         map.put("dictList",dictList);
@@ -158,7 +160,7 @@ public class OscaExamineInfoController extends GeneralController {
         map.put("orgCityId",orgCityId);
         map.put("flag",flag);
         SysDict searchDict = new SysDict();
-        searchDict.setRecordStatus("Y");
+        searchDict.setRecordStatus(GlobalConstant.FLAG_Y);
         searchDict.setDictTypeId(DictTypeEnum.OscaTrainingType.getId()+"."+trainingTypeId);
         List<SysDict> dictList = dictBiz.searchDictList(searchDict);
         map.put("dictList",dictList);
@@ -291,7 +293,7 @@ public class OscaExamineInfoController extends GeneralController {
         map.put("isLocal",isLocal);
         map.put("clinicalName",clinicalName);
         SysDict searchDict = new SysDict();
-        searchDict.setRecordStatus("Y");
+        searchDict.setRecordStatus(GlobalConstant.FLAG_Y);
         searchDict.setDictTypeId(DictTypeEnum.OscaTrainingType.getId()+"."+trainingTypeId);
         List<SysDict> dictList = dictBiz.searchDictList(searchDict);
         map.put("dictList",dictList);
@@ -434,7 +436,7 @@ public class OscaExamineInfoController extends GeneralController {
             clinicalYear = DateUtil.getYear();
         }
         if(StringUtil.isBlank(isLocal)){
-            isLocal = "Y";
+            isLocal = GlobalConstant.FLAG_Y;
         }
         Map<String, Object> paraMap=new HashMap<>();
         paraMap.put("clinicalYear",clinicalYear);

@@ -20,7 +20,7 @@ public enum ResScoreTypeEnum implements GeneralEnum<String> {
 	private final String name;
 
 
-	ResScoreTypeEnum(String id, String name) {
+    ResScoreTypeEnum(String id, String name) {
 		this.id = id;
 		this.name = name;
 	}

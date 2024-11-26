@@ -4,7 +4,7 @@ package com.pinde.sci.ctrl.jsres;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.Page;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
@@ -34,7 +34,7 @@ import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;
 import com.pinde.sci.enums.jsres.*;
 import com.pinde.sci.enums.pub.UserSexEnum;
 import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.res.*;
+import com.pinde.core.common.enums.*;
 import com.pinde.sci.enums.sys.*;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
@@ -263,12 +263,12 @@ public class JsResManageController extends GeneralController {
 			}
 		}
 		//基地
-		String isJointOrg = "Y";
+        String isJointOrg = GlobalConstant.FLAG_Y;
 		if (GlobalConstant.USER_LIST_LOCAL.equals(role) || GlobalConstant.USER_LIST_SPELOCAL.equals(role) || GlobalConstant.USER_LIST_SPELOCALSECRETARY.equals(role)) {
 			SysUser sysuser = GlobalContext.getCurrentUser();
 			SysOrg org = orgBiz.readSysOrg(sysuser.getOrgFlow());
 			if (OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
-				isJointOrg = "N";
+                isJointOrg = GlobalConstant.FLAG_N;
 				List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(sysuser.getOrgFlow());
 				if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 					for (ResJointOrg jointOrg : resJointOrgList) {
@@ -445,7 +445,7 @@ public class JsResManageController extends GeneralController {
 		} else if ("quality".equals(role)) { //质控组
 			SysUser sysuser = GlobalContext.getCurrentUser();
 			if (StringUtil.isBlank(sysuser.getResTrainingSpeId())) {
-				model.addAttribute("isHaveDept", "N");
+                model.addAttribute("isHaveDept", GlobalConstant.FLAG_N);
 			}
 			String evalRoleFlow = InitConfig.getSysCfg("eval_global_role_flow");
 			if (StringUtil.isNotBlank(evalRoleFlow)) {
@@ -615,8 +615,8 @@ public class JsResManageController extends GeneralController {
 			}
 			//院级督导 -- 管理员配置功能权限
 			JsresPowerCfg powerCfg = jsResPowerCfgBiz.read("jsres_hospital_yjdd_"+user.getOrgFlow());
-			if (null != powerCfg && powerCfg.getCfgValue().equals("Y")){
-				model.addAttribute("hospitalSupervisor","Y");
+            if (null != powerCfg && powerCfg.getCfgValue().equals(GlobalConstant.FLAG_Y)) {
+                model.addAttribute("hospitalSupervisor", GlobalConstant.FLAG_Y);
 			}
 			if (GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_ROLE_NAME).equals("医院秘书")) {
 				return "jsres/hospital/hospitalSecretaryIndex";
@@ -635,14 +635,14 @@ public class JsResManageController extends GeneralController {
 		} else if (GlobalConstant.USER_LIST_SPELOCAL.equals(role)) { //专业基地
 			SysUser sysuser = GlobalContext.getCurrentUser();
 			if (StringUtil.isBlank(sysuser.getResTrainingSpeId())) {
-				model.addAttribute("isHaveDept", "N");
+                model.addAttribute("isHaveDept", GlobalConstant.FLAG_N);
 			}
 			model.addAttribute("speFlow",sysuser.getResTrainingSpeId());
 			return "jsres/speAdmin/index";
 		}else if (GlobalConstant.USER_LIST_SPELOCALSECRETARY.equals(role)) { //专业基地秘书
 			SysUser sysuser = GlobalContext.getCurrentUser();
 			if (StringUtil.isBlank(sysuser.getResTrainingSpeId())) {
-				model.addAttribute("isHaveDept", "N");
+                model.addAttribute("isHaveDept", GlobalConstant.FLAG_N);
 			}
 			return "jsres/speAdminSecretary/index";
 		}else if (GlobalConstant.USER_LIST_PERSONAL.equals(role)) {
@@ -846,7 +846,7 @@ public class JsResManageController extends GeneralController {
 			org.setOrgProvId("320000");
 			org.setOrgTypeId("Hospital");
 			org.setOrgLevelId("CountryOrg");
-			org.setRecordStatus("Y");
+            org.setRecordStatus(GlobalConstant.FLAG_Y);
 			List<SysOrg> orgList = orgBiz.searchOrgByClause(org, "ORDINAL, ORG_CODE, RECORD_STATUS DESC, ORG_FLOW DESC");
 			model.addAttribute("orgList",orgList);
 			List<Map<String, Object>> list = jsResDoctorRecruitBiz.searchDoctorTrainingNum(sessionNumber,statisticsType,catSpeId);
@@ -894,7 +894,7 @@ public class JsResManageController extends GeneralController {
 			org.setOrgProvId("320000");
 			org.setOrgTypeId("Hospital");
 			org.setOrgLevelId("CountryOrg");
-			org.setRecordStatus("Y");
+            org.setRecordStatus(GlobalConstant.FLAG_Y);
 			List<SysOrg> orgList = orgBiz.searchOrgByClause(org, "ORDINAL, ORG_CODE, RECORD_STATUS DESC, ORG_FLOW DESC");
 			model.addAttribute("orgList",orgList);
 			List<Map<String, Object>> list = jsResDoctorRecruitBiz.searchDoctorTrainingNum(sessionNumber,statisticsType,catSpeId);
@@ -958,7 +958,7 @@ public class JsResManageController extends GeneralController {
 			org.setOrgProvId("320000");
 			org.setOrgTypeId("Hospital");
 			org.setOrgLevelId("CountryOrg");
-			org.setRecordStatus("Y");
+            org.setRecordStatus(GlobalConstant.FLAG_Y);
 			List<SysOrg> orgList = orgBiz.searchOrgByClause(org, "ORDINAL, ORG_CODE, RECORD_STATUS DESC, ORG_FLOW DESC");
 			model.addAttribute("orgList",orgList);
 
@@ -1008,7 +1008,7 @@ public class JsResManageController extends GeneralController {
 			org.setOrgProvId("320000");
 			org.setOrgTypeId("Hospital");
 			org.setOrgLevelId("CountryOrg");
-			org.setRecordStatus("Y");
+            org.setRecordStatus(GlobalConstant.FLAG_Y);
 			List<SysOrg> orgList = orgBiz.searchOrgByClause(org, "ORDINAL, ORG_CODE, RECORD_STATUS DESC, ORG_FLOW DESC");
 			model.addAttribute("orgList",orgList);
 
@@ -1580,10 +1580,10 @@ public class JsResManageController extends GeneralController {
 	public String recruitAuditList(@PathVariable String role,Model model) {
 		SysUser user = GlobalContext.getCurrentUser();
 		//当前基地是否为协同基地
-		String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(user.getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
-			isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
 		}
 		model.addAttribute("isJointOrg",isJointOrg);
 		model.addAttribute("roleFlag",role);
@@ -1601,10 +1601,10 @@ public class JsResManageController extends GeneralController {
 	public String recruitAuditListAcc(@PathVariable String role,Model model) {
 		SysUser user = GlobalContext.getCurrentUser();
 		//当前基地是否为协同基地
-		String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(user.getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
-			isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
 		}
 		model.addAttribute("isJointOrg",isJointOrg);
 		model.addAttribute("roleFlag",role);
@@ -3635,10 +3635,10 @@ public class JsResManageController extends GeneralController {
 		}
 		SysUser currUser = GlobalContext.getCurrentUser();
 		//判断是否是协同基地
-		String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currUser.getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
-			isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
 		}
 		model.addAttribute("isJointOrg",isJointOrg);
 		resDoctorRecruit.setOrgFlow(currUser.getOrgFlow());
@@ -3729,10 +3729,10 @@ public class JsResManageController extends GeneralController {
 //			}
 //		}
 		//当前基地是否为协同基地
-		String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(sysuser.getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
-			isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
 			if(StringUtil.isNotBlank(resDoctorRecruit.getJointOrgAudit()) && "OrgAudit".equals(resDoctorRecruit.getJointOrgAudit())){
 				resDoctorRecruit.setOrgAudit("Auditing");
 				resDoctorRecruit.setJointOrgAudit("Passed");
@@ -3754,7 +3754,7 @@ public class JsResManageController extends GeneralController {
 		List<String> jointOrgFlowList=new ArrayList<String>();
 		if (StringUtil.isBlank(orgFlow)) {
 			if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
-				jointOrgFlowList=searchJointOrgList("Y",sysuser.getOrgFlow());
+                jointOrgFlowList = searchJointOrgList(GlobalConstant.FLAG_Y, sysuser.getOrgFlow());
 				jointOrgFlowList.add(sysuser.getOrgFlow());
 			}
 			if (GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)
@@ -3882,7 +3882,7 @@ public class JsResManageController extends GeneralController {
 		List<String> jointOrgFlowList=new ArrayList<String>();
 		if (StringUtil.isBlank(orgFlow)) {
 			if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
-				jointOrgFlowList=searchJointOrgList("Y",sysuser.getOrgFlow());
+                jointOrgFlowList = searchJointOrgList(GlobalConstant.FLAG_Y, sysuser.getOrgFlow());
 				jointOrgFlowList.add(sysuser.getOrgFlow());
 			}
 			if (GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)
@@ -3933,10 +3933,10 @@ public class JsResManageController extends GeneralController {
 			}
 		}
 		//当前基地是否为协同基地
-		String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(sysuser.getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
-			isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
 		}
 //		List<JsResDoctorRecruitExt> recruitList = jsResDoctorRecruitBiz.resDoctorRecruitExtList1(resDoctorRecruit, sysUser, null, docTypeList, sessionNumbers);
 		List<JsResDoctorRecruitExt> recruitList = jsResDoctorRecruitBiz.resDoctorRecruitExtNew2(resDoctorRecruit, sysUser, jointOrgFlowList, docTypeList, sessionNumbers,joinOrgFlow,isJointOrg,isArmy);
@@ -4129,7 +4129,7 @@ public class JsResManageController extends GeneralController {
 
 		if (null !=sysCfg && StringUtil.isNotBlank(sysCfg.getCfgValue())){	//查看省厅是否开启招录
 			String cfgValue = sysCfg.getCfgValue();
-			if (cfgValue.equals("Y")){		//省厅开启招录（关闭时无数据：院级招录流程优化 ）
+            if (cfgValue.equals(GlobalConstant.FLAG_Y)) {        //省厅开启招录（关闭时无数据：院级招录流程优化 ）
 				List<JsResDoctorRecruitExt> recruitList = recruitDoctorInfoBiz.searchRecruitExtList(param);
 				if (null!=recruitList && recruitList.size()>0){
 					int result=0;
@@ -4226,7 +4226,7 @@ public class JsResManageController extends GeneralController {
 						recruitWithBLOBs.setOrgAudit("Passed");
 					} else if ("NotPassed".equals(recruitWithBLOBs.getAuditStatusId())) {
 						//学员报道不通过，学员自行修改相关资料，再次提交，基地进行学员报道审核即可
-					/*	recruitWithBLOBs.setRecruitFlag("Y");
+					/*	recruitWithBLOBs.setRecruitFlag(GlobalConstant.FLAG_Y);
 						recruitWithBLOBs.setConfirmFlag("");*/
 						recruitWithBLOBs.setAuditStatusId("NotPassed");
 						recruitWithBLOBs.setOrgAudit("UnPassed");
@@ -4259,7 +4259,7 @@ public class JsResManageController extends GeneralController {
 //						String cfgCode = "jsres_doctor_app_login_" + doctor.getDoctorFlow();
 //						JsresPowerCfg jsresCfg = new JsresPowerCfg();
 //						jsresCfg.setCfgCode(cfgCode);
-//						jsresCfg.setCfgValue("Y");
+//						jsresCfg.setCfgValue(GlobalConstant.FLAG_Y);
 //						jsresCfg.setCfgDesc("app登录权限");
 //						jsresCfg.setCheckStatusId("Passed");
 //						jsresCfg.setCheckStatusName("审核通过");
@@ -4382,7 +4382,7 @@ public class JsResManageController extends GeneralController {
 		SysOrg org = orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		orgList.add(0, org);
 //		if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-//			model.addAttribute("countryOrgFlag","Y");
+//			model.addAttribute("countryOrgFlag",GlobalConstant.FLAG_Y);
 //			if(null != jointOrg && jointOrg.equals("checked")){
 //				orgFlowList.add(orgHistory.getOrgFlow());
 //				orgHistory.setOrgFlow("");
@@ -5062,7 +5062,7 @@ public class JsResManageController extends GeneralController {
 			orgHistory.setChangeStatusId(JsResChangeApplySpeEnum.BaseWaitingAudit.getId());
 
 			if (StringUtil.isBlank(doctor.getOrgFlow())) {
-				jointOrgFlowList = searchJointOrgList("Y", sysUser.getOrgFlow());
+                jointOrgFlowList = searchJointOrgList(GlobalConstant.FLAG_Y, sysUser.getOrgFlow());
 				jointOrgFlowList.add(sysUser.getOrgFlow());
 			}else{
 				jointOrgFlowList.add(doctor.getOrgFlow());
@@ -5201,7 +5201,7 @@ public class JsResManageController extends GeneralController {
 			orgHistory.setChangeStatusId(JsResChangeApplySpeEnum.BaseWaitingAudit.getId());
 
 			if (StringUtil.isBlank(doctor.getOrgFlow())) {
-				jointOrgFlowList = searchJointOrgList("Y", sysUser.getOrgFlow());
+                jointOrgFlowList = searchJointOrgList(GlobalConstant.FLAG_Y, sysUser.getOrgFlow());
 				jointOrgFlowList.add(sysUser.getOrgFlow());
 			}else{
 				jointOrgFlowList.add(doctor.getOrgFlow());
@@ -5312,7 +5312,7 @@ public class JsResManageController extends GeneralController {
 			orgHistory.setChangeStatusId(JsResChangeApplySpeEnum.BaseWaitingAudit.getId());
 
 			if (StringUtil.isBlank(doctor.getOrgFlow())) {
-				jointOrgFlowList = searchJointOrgList("Y", sysUser.getOrgFlow());
+                jointOrgFlowList = searchJointOrgList(GlobalConstant.FLAG_Y, sysUser.getOrgFlow());
 				jointOrgFlowList.add(sysUser.getOrgFlow());
 			}else{
 				jointOrgFlowList.add(doctor.getOrgFlow());
@@ -6944,7 +6944,7 @@ public class JsResManageController extends GeneralController {
 				}
 				//打开app权限
 				String cfgCode = "jsres_teacher_app_login_"+sysUser.getUserFlow();
-				String cfgValue = "Y";
+                String cfgValue = GlobalConstant.FLAG_Y;
 				String cfgDesc = "是否开放带教app权限";
 				JsresPowerCfg cfg = new JsresPowerCfg();
 				cfg.setCfgCode(cfgCode);
@@ -6992,19 +6992,19 @@ public class JsResManageController extends GeneralController {
 		String roleScretary = null;
 		List<String> roleList = new ArrayList<String>();
 
-		String isSelect = "N";
+        String isSelect = GlobalConstant.FLAG_N;
 		if (GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(teacher)) {
-			isSelect = "Y";
+            isSelect = GlobalConstant.FLAG_Y;
 			roleTeacher = InitConfig.getSysCfg("res_teacher_role_flow");
 			roleList.add(roleTeacher);
 		}
 		if (GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(head)) {
-			isSelect = "Y";
+            isSelect = GlobalConstant.FLAG_Y;
 			roleHead = InitConfig.getSysCfg("res_head_role_flow");
 			roleList.add(roleHead);
 		}
 		if (GlobalConstant.RES_ROLE_SCOPE_SECRETARY.equals(secretary)) {
-			isSelect = "Y";
+            isSelect = GlobalConstant.FLAG_Y;
 			roleScretary = InitConfig.getSysCfg("res_secretary_role_flow");
 			roleList.add(roleScretary);
 		}
@@ -7232,9 +7232,9 @@ public class JsResManageController extends GeneralController {
 		String roleHead = null;
 		String roleScretary = null;
 		List<String> roleList = new ArrayList<String>();
-		String isSelect = "N";
+        String isSelect = GlobalConstant.FLAG_N;
 		if(ArrayUtils.isNotEmpty(userRoleList)) {
-			isSelect = "Y";
+            isSelect = GlobalConstant.FLAG_Y;
 			roleList = Arrays.stream(userRoleList).collect(Collectors.toList());
 		}else {
 			roleList.add(InitConfig.getSysCfg("res_teacher_role_flow"));
@@ -7245,17 +7245,17 @@ public class JsResManageController extends GeneralController {
 			roleList.add(InitConfig.getSysCfg("res_hospitalLeader_role_flow"));
 		}
 		/*if (GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(teacher)) {
-			isSelect = "Y";
+			isSelect = GlobalConstant.FLAG_Y;
 			roleTeacher = InitConfig.getSysCfg("res_teacher_role_flow");
 			roleList.add(roleTeacher);
 		}
 		if (GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(head)) {
-			isSelect = "Y";
+			isSelect = GlobalConstant.FLAG_Y;
 			roleHead = InitConfig.getSysCfg("res_head_role_flow");
 			roleList.add(roleHead);
 		}
 		if (GlobalConstant.RES_ROLE_SCOPE_SECRETARY.equals(secretary)) {
-			isSelect = "Y";
+			isSelect = GlobalConstant.FLAG_Y;
 			roleScretary = InitConfig.getSysCfg("res_secretary_role_flow");
 			roleList.add(roleScretary);
 		}
@@ -7329,7 +7329,7 @@ public class JsResManageController extends GeneralController {
 		}
 //		resTeacherTraining.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 //		resTeacherTraining.setTeacherLevelName(JsResTeacherLevelEnum.getNameById(resTeacherTraining.getTeacherLevelId()));
-		resTeacherTraining.setRecordStatus("Y");
+        resTeacherTraining.setRecordStatus(GlobalConstant.FLAG_Y);
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<ResTeacherTraining> sysUserList = teacherTrainingMapper.selectByCondition(resTeacherTraining);
 		model.addAttribute("sysUserList", sysUserList);
@@ -7386,14 +7386,14 @@ public class JsResManageController extends GeneralController {
 		if(null == resTeacherTraining){
 			resTeacherTraining = new ResTeacherTraining();
 		}
-		resTeacherTraining.setRecordStatus("Y");
+        resTeacherTraining.setRecordStatus(GlobalConstant.FLAG_Y);
 		List<ResTeacherTraining> sysUserList = teacherTrainingMapper.selectByConditionAddUserDept(resTeacherTraining);
 		model.addAttribute("sysUserList", sysUserList);
 
 		String fileName;
 		String[] titles;
 		SysOrg org = orgBiz.readSysOrg(resTeacherTraining.getOrgFlow());
-		if(Objects.equals(isQueryTutor,"Y")){
+        if (Objects.equals(isQueryTutor, GlobalConstant.FLAG_Y)) {
 			fileName = "责任导师信息.xls";
 		}else{
 			fileName = "师资信息.xls";
@@ -8552,7 +8552,7 @@ public class JsResManageController extends GeneralController {
 					String orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
 					JsresPowerCfg orgApprove = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_ctrl_approve_activity");//教学活动评价配置
 					JsresPowerCfg approve = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_approve_activity");//教学活动评价配置评审类型
-					if (null!=orgApprove && null!=approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(),orgApprove.getCfgValue(),"Y")) {        //开启必评
+                    if (null != orgApprove && null != approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(), orgApprove.getCfgValue(), GlobalConstant.FLAG_Y)) {        //开启必评
 						infos = resRecBiz.searchJoinActivityByProcessFlownotScore(processFlow);
 					}else {
 						infos = resRecBiz.searchJoinActivityByProcessFlow(processFlow);
@@ -9511,7 +9511,7 @@ public class JsResManageController extends GeneralController {
 				}
 				model.addAttribute("countMap", countMap);
 				model.addAttribute("orgs", orgs);
-				model.addAttribute("seeFlag", "Y");
+                model.addAttribute("seeFlag", GlobalConstant.FLAG_Y);
 			} else {
 				for (SysOrg o : orgs) {
 					orgFlowList = new ArrayList<String>();
@@ -9543,7 +9543,7 @@ public class JsResManageController extends GeneralController {
 						}
 					}
 				}
-				model.addAttribute("seeFlag", "N");
+                model.addAttribute("seeFlag", GlobalConstant.FLAG_N);
 			}
 		}
 		model.addAttribute("totalCountMap", totalCountMap);
@@ -9703,7 +9703,7 @@ public class JsResManageController extends GeneralController {
 				}
 			}
 			model.addAttribute("schools", schools);
-			model.addAttribute("seeFlag", "Y");
+            model.addAttribute("seeFlag", GlobalConstant.FLAG_Y);
 		} else {
 			graduates = jsResDoctorBiz.searchGraduates(paramMap);
 			if (graduates != null && graduates.size() > 0) {
@@ -9711,7 +9711,7 @@ public class JsResManageController extends GeneralController {
 					graduatesMap.put(map.get("TRAININGSPEID").toString(), map.get("GRADUATESCOUNT"));
 				}
 			}
-			model.addAttribute("seeFlag", "N");
+            model.addAttribute("seeFlag", GlobalConstant.FLAG_N);
 		}
 		model.addAttribute("graduatesMap", graduatesMap);
 		return "jsres/global/report/graduateNumSearch";
@@ -11894,22 +11894,22 @@ public class JsResManageController extends GeneralController {
 				Map<String,Object> paramMap = new HashMap<>();
 				paramMap.put("monthDate",monthDate);
 				if(null==isContain){
-					isContain="N";
+                    isContain = GlobalConstant.FLAG_N;
 				}else{
-					isContain="Y";
+                    isContain = GlobalConstant.FLAG_Y;
 				}
 				paramMap.put("isContain",isContain);
 
 				if(StringUtil.isNotBlank(inSchool) && StringUtil.isNotBlank(resident)){
-					paramMap.put("notGraduate","Y");
-					paramMap.put("graduate","Y");
+                    paramMap.put("notGraduate", GlobalConstant.FLAG_Y);
+                    paramMap.put("graduate", GlobalConstant.FLAG_Y);
 				}else{
 					if(StringUtil.isNotBlank(inSchool)){
-						paramMap.put("notGraduate","N");
-						paramMap.put("graduate","Y");
+                        paramMap.put("notGraduate", GlobalConstant.FLAG_N);
+                        paramMap.put("graduate", GlobalConstant.FLAG_Y);
 					}else{
-						paramMap.put("notGraduate","Y");
-						paramMap.put("graduate","N");
+                        paramMap.put("notGraduate", GlobalConstant.FLAG_Y);
+                        paramMap.put("graduate", GlobalConstant.FLAG_N);
 					}
 				}
 				SysOrg currOrg=orgBiz.readSysOrg(user.getOrgFlow());
@@ -12311,9 +12311,9 @@ public class JsResManageController extends GeneralController {
 				paramMap.put("monthDate",monthDate);
 				paramMap2.put("monthDate",lastMonthdateStr);
 				if(null==isContain){
-					isContain="N";
+                    isContain = GlobalConstant.FLAG_N;
 				}else{
-					isContain="Y";
+                    isContain = GlobalConstant.FLAG_Y;
 				}
 				paramMap.put("isContain",isContain);
 				paramMap2.put("isContain",isContain);
@@ -12692,10 +12692,10 @@ public class JsResManageController extends GeneralController {
 	public void exportForDetailByOrg(HttpServletResponse response, ResDoctorRecruit resDoctorRecruit, SysUser sysUser, String datas[]) throws Exception {
 		SysUser currUser = GlobalContext.getCurrentUser();
 		//判断是否是协同基地
-		String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currUser.getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
-			isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
 		}
 		resDoctorRecruit.setOrgFlow(currUser.getOrgFlow());
 //		resDoctorRecruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Auditing.getId());
@@ -12770,10 +12770,10 @@ public class JsResManageController extends GeneralController {
 	@RequestMapping("/localDoctorDataMonthReport")
 	public String PageTolocalDoctorDataMonthReport(Model model) {
 		SysUser user = GlobalContext.getCurrentUser();
-		String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(user.getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
-			isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
 		}
 		model.addAttribute("isJointOrg",isJointOrg);
 		return "jsres/hospital/localDoctorDataMonthReport";
@@ -13293,10 +13293,10 @@ public class JsResManageController extends GeneralController {
 	@RequestMapping("/localDoctorExceptionNew")
 	public String localDoctorExceptionNew(Model model) {
 		SysUser user = GlobalContext.getCurrentUser();
-		String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(user.getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
-			isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
 		}
 		model.addAttribute("isJointOrg",isJointOrg);
 		return "jsres/hospital/localDoctorExceptionNew";
@@ -15203,10 +15203,10 @@ public class JsResManageController extends GeneralController {
 	@RequestMapping("/localAppUseNew")
 	public String localAppUseNew(Model model){
 		SysUser user = GlobalContext.getCurrentUser();
-		String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(user.getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
-			isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
 		}
 		model.addAttribute("isJointOrg",isJointOrg);
 		return "jsres/hospital/localAppUseInfoNew";
@@ -15223,7 +15223,7 @@ public class JsResManageController extends GeneralController {
 	public List initAppUserInfoNew(String monthDate,String isContain,String roleFlag){
 		SysUser user = GlobalContext.getCurrentUser();
 		if(StringUtil.isBlank(isContain)){
-			isContain="N";
+            isContain = GlobalConstant.FLAG_N;
 		}
 		if(StringUtil.isBlank(monthDate)){
 			monthDate = DateUtil.addMonth(DateUtil.getMonth(),-1);
@@ -15262,10 +15262,10 @@ public class JsResManageController extends GeneralController {
 	@RequestMapping("/localActivity")
 	public String localActivity(Model model){
 		SysUser user = GlobalContext.getCurrentUser();
-		String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(user.getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
-			isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
 		}
 		model.addAttribute("isJointOrg",isJointOrg);
 		return "jsres/hospital/localJiaoxueActive";
@@ -15276,7 +15276,7 @@ public class JsResManageController extends GeneralController {
 	public List initJiaoxueActiveNew(String monthDate,String isContain,String notGraduate,String graduate,String orderBy){
 		SysUser user = GlobalContext.getCurrentUser();
 		if(StringUtil.isBlank(isContain)){
-			isContain="N";
+            isContain = GlobalConstant.FLAG_N;
 		}
 		if(StringUtil.isBlank(monthDate)){
 			monthDate = DateUtil.addMonth(DateUtil.getMonth(),-1);
@@ -15324,10 +15324,10 @@ public class JsResManageController extends GeneralController {
 	@RequestMapping("/doctorOutDept")
 	public String doctorOutDept(Model model) {
 		SysUser user = GlobalContext.getCurrentUser();
-		String isJointOrg = "N";
+        String isJointOrg = GlobalConstant.FLAG_N;
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(user.getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
-			isJointOrg = "Y";
+            isJointOrg = GlobalConstant.FLAG_Y;
 		}
 		model.addAttribute("isJointOrg",isJointOrg);
 		return "jsres/hospital/doctorOutDept";
@@ -15338,7 +15338,7 @@ public class JsResManageController extends GeneralController {
 	public List initDoctorOutDept(String monthDate,String isContain,String notGraduate,String graduate,String sortFlag){
 		SysUser user = GlobalContext.getCurrentUser();
 		if(StringUtil.isBlank(isContain)){
-			isContain="N";
+            isContain = GlobalConstant.FLAG_N;
 		}
 		if(StringUtil.isBlank(monthDate)){
 			monthDate = DateUtil.addMonth(DateUtil.getMonth(),-1);
@@ -16685,12 +16685,12 @@ public class JsResManageController extends GeneralController {
 	@RequestMapping("/localChangePhyAcc")
 	public String localChangePhyAcc(String type,Model model, HttpServletRequest request) {
 		List<String> list = new ArrayList<String>();
-		String isJointOrg = "Y";
+        String isJointOrg = GlobalConstant.FLAG_Y;
 
 		SysUser sysuser = GlobalContext.getCurrentUser();
 		SysOrg org = orgBiz.readSysOrg(sysuser.getOrgFlow());
 		if (OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
-			isJointOrg = "N";
+            isJointOrg = GlobalConstant.FLAG_N;
 			List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(sysuser.getOrgFlow());
 			if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
 				for (ResJointOrg jointOrg : resJointOrgList) {
@@ -16789,8 +16789,8 @@ public class JsResManageController extends GeneralController {
 		}
 		//院级督导 -- 管理员配置功能权限
 		JsresPowerCfg powerCfg = jsResPowerCfgBiz.read("jsres_hospital_yjdd_"+user.getOrgFlow());
-		if (null != powerCfg && powerCfg.getCfgValue().equals("Y")){
-			model.addAttribute("hospitalSupervisor","Y");
+        if (null != powerCfg && powerCfg.getCfgValue().equals(GlobalConstant.FLAG_Y)) {
+            model.addAttribute("hospitalSupervisor", GlobalConstant.FLAG_Y);
 		}
 		if (type.equals("phy")){	//住院医师
 			String filter = "('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'',key:orgFlow.keyword,negate:!f" +
@@ -16927,7 +16927,7 @@ public class JsResManageController extends GeneralController {
 						if(null == resDoctor || !"21".equals(resDoctor.getDoctorStatusId())){
 							return GlobalConstant.USER_PHONE_REPETE;
 						}
-						oldUser.setRecordStatus("N");
+                        oldUser.setRecordStatus(GlobalConstant.FLAG_N);
 						oldUser.setUserPhone(oldUser.getUserPhone() + "_x"); // 因为手机号不允许重复，这里把手机号做个标记
 						userBiz.edit(oldUser);
 					}else {
@@ -16992,7 +16992,7 @@ public class JsResManageController extends GeneralController {
 
 		//打开app权限
 		String cfgCode = "jsres_teacher_app_login_"+user.getUserFlow();
-		String cfgValue = "Y";
+        String cfgValue = GlobalConstant.FLAG_Y;
 		String cfgDesc = "是否开放带教app权限";
 		JsresPowerCfg cfg = new JsresPowerCfg();
 		cfg.setCfgCode(cfgCode);
@@ -17017,7 +17017,7 @@ public class JsResManageController extends GeneralController {
 	@RequestMapping(value = {"/attachment"})
 	public String attachment(Model model,String recFlow,String readonly,String recType){
 		if(StringUtils.isEmpty(readonly)){
-			readonly = "N";
+            readonly = GlobalConstant.FLAG_N;
 		}
 		model.addAttribute("readonly",readonly);
 		model.addAttribute("recFlow",recFlow);

@@ -1,6 +1,6 @@
 package com.pinde.sci.ctrl.jsres;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -158,7 +158,7 @@ public class JsResDeptManagementController {
                 if(StringUtils.isNotEmpty(tempVO.getStandardDeptFlow())) {
                     for (ResStandardDeptVO resStandardDeptVO : resStandardDeptVOList) {
                         if(resStandardDeptVO.getStandardDeptFlow().equals(tempVO.getStandardDeptFlow())) {
-                            resStandardDeptVO.setCurRelStandardDeptFlag("Y");
+                            resStandardDeptVO.setCurRelStandardDeptFlag(GlobalConstant.FLAG_Y);
                             break;
                         }
                     }
@@ -408,8 +408,8 @@ public class JsResDeptManagementController {
         insertingDeptVO.setDeptLevel(deptLevel);
         insertingDeptVO.setParentDeptCode(parentDeptVO.getStandardDeptCode());
         insertingDeptVO.setTopLevelDeptCode(parentDeptVO.getTopLevelDeptCode());
-        insertingDeptVO.setRecordStatus("Y");
-        insertingDeptVO.setDeptStatus("Y");
+        insertingDeptVO.setRecordStatus(GlobalConstant.FLAG_Y);
+        insertingDeptVO.setDeptStatus(GlobalConstant.FLAG_Y);
         GeneralMethod.setRecordInfo(insertingDeptVO, true);
         deptManagementBiz.saveStandardDept(insertingDeptVO);
         return GlobalConstant.SAVE_SUCCESSED;
@@ -433,8 +433,8 @@ public class JsResDeptManagementController {
         standardDeptVO.setDeptLevelName("一级");
         standardDeptVO.setParentDeptCode(standardDeptVO.getStandardDeptCode());
         standardDeptVO.setTopLevelDeptCode(standardDeptVO.getStandardDeptCode());
-        standardDeptVO.setRecordStatus("Y");
-        standardDeptVO.setDeptStatus("Y");
+        standardDeptVO.setRecordStatus(GlobalConstant.FLAG_Y);
+        standardDeptVO.setDeptStatus(GlobalConstant.FLAG_Y);
         standardDeptVO.setStandardDeptFlow(PkUtil.getUUID());
         GeneralMethod.setRecordInfo(standardDeptVO, true);
         deptManagementBiz.saveStandardDept(standardDeptVO);
@@ -597,7 +597,7 @@ public class JsResDeptManagementController {
             }
             // 校验编码和名称不能与其它的科室重复
             SysDeptExample example = new SysDeptExample();
-            example.createCriteria().andRecordStatusEqualTo("Y")
+            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
                             .andDeptNameEqualTo(deptRelStdDeptVO.getDeptName())
                     .andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
             PageHelper.startPage(1, 2, false);
@@ -608,7 +608,7 @@ public class JsResDeptManagementController {
                 }
             }
             example = new SysDeptExample();
-            example.createCriteria().andRecordStatusEqualTo("Y")
+            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
                     .andDeptNameEqualTo(deptRelStdDeptVO.getDeptCode())
             .andOrgFlowEqualTo(deptRelStdDeptVO.getOrgFlow());
             PageHelper.startPage(1, 2, false);

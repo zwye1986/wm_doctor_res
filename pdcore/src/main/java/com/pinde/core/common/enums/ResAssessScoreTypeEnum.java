@@ -6,6 +6,7 @@ public enum ResAssessScoreTypeEnum implements GeneralEnum<String> {
 	
 	Percentile("Percentile","百分制"),
 	Nine("Nine","九分制"),
+    Five("Five", "五分制")
 	;
 
 	private final String id;

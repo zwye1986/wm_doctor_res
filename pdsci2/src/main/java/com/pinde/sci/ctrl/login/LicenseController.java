@@ -72,14 +72,14 @@ public class LicenseController extends GeneralController {
 			cfg.setWsId("sys");
 			cfg.setCfgDesc("授权文件");
 			GeneralMethod.setRecordInfo(cfg, true);
-			cfg.setRecordStatus("Y");
+            cfg.setRecordStatus(GlobalConstant.FLAG_Y);
 			sysCfgMapper.insert(cfg);
 		} else {
 			cfg.setCfgBigValue(content);
 			cfg.setWsId("sys");
 			cfg.setCfgDesc("授权文件");
 			GeneralMethod.setRecordInfo(cfg, false);
-			cfg.setRecordStatus("Y");
+            cfg.setRecordStatus(GlobalConstant.FLAG_Y);
 			sysCfgMapper.updateByPrimaryKeySelective(cfg);
 		}
 		InitConfig.refresh(request.getServletContext());

@@ -1,10 +1,11 @@
 package com.pinde.sci.common;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.XmlParse;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.res;
 
 import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.pub.IFileBiz;
@@ -12,7 +12,7 @@ import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.*;
 import com.pinde.sci.dao.base.SysUserDeptMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.enums.res.*;
+import com.pinde.core.common.enums.*;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
@@ -344,7 +344,7 @@ public class ResTeacherController extends GeneralController {
 
 
 				}else if(GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleFlag)){
-					process.setIsCurrentFlag("Y");
+                    process.setIsCurrentFlag(GlobalConstant.FLAG_Y);
 					process.setHeadUserFlow(user.getUserFlow());
 					//带教老师审核情况
 					List<Map<String,Object>> auditMapList = resRecBiz.searchTeacherAuditCount(user.getUserFlow(),GlobalConstant.FLAG_Y);
@@ -432,7 +432,7 @@ public class ResTeacherController extends GeneralController {
 
 
 				}else if(GlobalConstant.RES_ROLE_SCOPE_MANAGER.equals(roleFlag)){
-					process.setIsCurrentFlag("Y");
+                    process.setIsCurrentFlag(GlobalConstant.FLAG_Y);
 					processList = doctorProcessBiz.searchProcessByUserSpe(user.getUserFlow(),process.getIsCurrentFlag());
 				}
 
@@ -1119,7 +1119,7 @@ public class ResTeacherController extends GeneralController {
 
 
 			}else if(GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleFlag)){
-				process.setIsCurrentFlag("Y");
+                process.setIsCurrentFlag(GlobalConstant.FLAG_Y);
 				process.setHeadUserFlow(user.getUserFlow());
 				//带教老师审核情况
 				//带教审核过的数据
@@ -1210,7 +1210,7 @@ public class ResTeacherController extends GeneralController {
 
 
 			}else if(GlobalConstant.RES_ROLE_SCOPE_MANAGER.equals(roleFlag)){
-				process.setIsCurrentFlag("Y");
+                process.setIsCurrentFlag(GlobalConstant.FLAG_Y);
 				processList = doctorProcessBiz.searchProcessByUserSpe(user.getUserFlow(),process.getIsCurrentFlag());
 			}
 
@@ -3641,11 +3641,11 @@ public class ResTeacherController extends GeneralController {
 		String cfg13= InitConfig.getSysCfg("jswjw_"+GlobalContext.getCurrentUser().getOrgFlow()+"_P013");
 		String f=InitConfig.getSysCfg("res_isGlobalSch_flag");
 		model.addAttribute("cfg13",cfg13);
-		String haveMonth="N";
+        String haveMonth = GlobalConstant.FLAG_N;
 		String monthFlag = InitConfig.getSysCfg("jswjw_"+ GlobalContext.getCurrentUser().getOrgFlow()+"_M001");
 		if(GlobalConstant.FLAG_Y.equals(monthFlag))
 		{
-			haveMonth="Y";
+            haveMonth = GlobalConstant.FLAG_Y;
 		}
 		model.addAttribute("isMonthOpen",haveMonth);
 
@@ -3676,7 +3676,7 @@ public class ResTeacherController extends GeneralController {
 				recTypeIds3.add(AfterRecTypeEnum.AfterSummary.getId());
 				recTypeIds2.add(AfterRecTypeEnum.AfterSummary.getId());
 			}
-			if(haveMonth.equals("Y"))
+            if (haveMonth.equals(GlobalConstant.FLAG_Y))
 			{
 				if(GlobalConstant.FLAG_Y.equals(
 						InitConfig.getSysCfg("res_"+AfterRecTypeEnum.MonthlyAssessment_clinic.getId()+"_form_flag"))) {
@@ -3708,7 +3708,7 @@ public class ResTeacherController extends GeneralController {
 				recTypeIds.add(AfterRecTypeEnum.AfterSummary.getId());
 				recTypeIds2.add(AfterRecTypeEnum.AfterSummary.getId());
 			}
-			if(haveMonth.equals("Y"))
+            if (haveMonth.equals(GlobalConstant.FLAG_Y))
 			{
 				if(GlobalConstant.FLAG_Y.equals(
 						InitConfig.getSysCfg("res_"+AfterRecTypeEnum.MonthlyAssessment_clinic.getId()+"_form_flag"))) {

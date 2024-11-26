@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.sch;
 
 import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
@@ -13,7 +13,7 @@ import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.dao.base.SchRotationGroupMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.enums.res.*;
+import com.pinde.core.common.enums.*;
 import com.pinde.sci.enums.sch.*;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.sch.*;
@@ -1471,7 +1471,7 @@ public class SchDocController extends GeneralController{
 
 					ResDoctorSchProcess searchProcess = new ResDoctorSchProcess();
 					searchProcess.setUserFlow(doctorFlow);
-					searchProcess.setSchFlag("Y");
+                    searchProcess.setSchFlag(GlobalConstant.FLAG_Y);
 					List<ResDoctorSchProcess> schProcessList = processBiz.searchProcessByDoctor(searchProcess);
 					List<Map<String, String>> times = new ArrayList<>();
 					if(schProcessList!=null&&schProcessList.size()>0){
@@ -1485,7 +1485,7 @@ public class SchDocController extends GeneralController{
 						}
 						List<Map<String, String>> mapList = TimeUtil.getNewTimes(times);
 						if(mapList.size()>1){
-							model.addAttribute("series","N");
+                            model.addAttribute("series", GlobalConstant.FLAG_N);
 						}
 					}
 
@@ -3550,7 +3550,7 @@ public class SchDocController extends GeneralController{
 	public String removeDept(String recordFlow){
 		SchRotationDept schRotationDept = rotationDeptMapper.selectByPrimaryKey(recordFlow);
 		if(null != schRotationDept){
-			if(StringUtil.isNotEmpty(schRotationDept.getIsRequired()) && schRotationDept.getIsRequired().equals("Y")){
+            if (StringUtil.isNotEmpty(schRotationDept.getIsRequired()) && schRotationDept.getIsRequired().equals(GlobalConstant.FLAG_Y)) {
 				SchRotationGroup schRotationGroup = rotationGroupMapper.selectByPrimaryKey(schRotationDept.getGroupFlow());
 				if(null != schRotationGroup){
 					int month = Integer.parseInt(schRotationGroup.getSchMonth()) - Integer.parseInt(schRotationDept.getSchMonth());

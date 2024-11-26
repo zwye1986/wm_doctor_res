@@ -23,8 +23,8 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.JsresPowerCfgMapper;
 import com.pinde.sci.dao.base.SchAndStandardDeptCfgMapper;
 import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
-import com.pinde.sci.enums.res.ResAssessTypeEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.ResAssessTypeEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptExtForm;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptForm;
@@ -228,7 +228,7 @@ public class JsResSpeAdminController extends GeneralController{
 			for (SysUserRole role:userRoleList) {
 				if(obj.containsKey("auditRole")) {
 					if (obj.get("auditRole").toString().contains(role.getRoleFlow())) {
-						obj.put("audit", "Y");
+                        obj.put("audit", GlobalConstant.FLAG_Y);
 					}
 				}
 			}
@@ -237,7 +237,7 @@ public class JsResSpeAdminController extends GeneralController{
 		if(list!=null) {
 			for (Map<String,Object> info:list )
 			{
-				info.put("HaveImg","N");
+                info.put("HaveImg", GlobalConstant.FLAG_N);
 				String imageUrl= (String) info.get("imageUrl");
 				if(StringUtil.isNotBlank(imageUrl))
 				{
@@ -246,7 +246,7 @@ public class JsResSpeAdminController extends GeneralController{
 					List<Element> ec = elem.elements("image");
 					if(ec!=null&&ec.size()>0)
 					{
-						info.put("HaveImg","Y");
+                        info.put("HaveImg", GlobalConstant.FLAG_Y);
 					}
 				}
 				List<Map<String,Object>>  results=activityBiz.readActivityResults((String) info.get("activityFlow"));
@@ -356,8 +356,8 @@ public class JsResSpeAdminController extends GeneralController{
 		String orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
 		JsresPowerCfg orgApprove = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_ctrl_approve_activity");//教学活动评价配置
 		JsresPowerCfg approve = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_approve_activity");//教学活动评价配置评审类型
-		if (null!=orgApprove && null!=approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(),orgApprove.getCfgValue(),"Y")){
-			model.addAttribute("approve","Y");
+        if (null != orgApprove && null != approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(), orgApprove.getCfgValue(), GlobalConstant.FLAG_Y)) {
+            model.addAttribute("approve", GlobalConstant.FLAG_Y);
 		}
 		return "jsres/speAdmin/showEval";
 	}
@@ -455,7 +455,7 @@ public class JsResSpeAdminController extends GeneralController{
 									rec.get("activityRemark")==null?"":String.valueOf(rec.get("activityRemark"));
 							formDataMap.put("activity_content", activity_content);
 							formDataMap.put("activity_address", rec.get("activityAddress")==null?"":String.valueOf(rec.get("activityAddress")));
-							formDataMap.put("isJoin","Y");
+                            formDataMap.put("isJoin", GlobalConstant.FLAG_Y);
 						}
 						formDataMap.put("recFlow", String.valueOf(rec.get("recFlow")));
 						dataList.add(formDataMap);
@@ -1083,7 +1083,7 @@ public class JsResSpeAdminController extends GeneralController{
 		model.addAttribute("speFlow", speFlow);
 		//查看基地是否付费 如果基地是非付费，科室不可以填写数据
 		JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_baseInfo_maintenance_" + GlobalContext.getCurrentUser().getOrgFlow());
-		if (null==cfg || StringUtil.isBlank(cfg.getCfgValue()) || !cfg.getCfgValue().equals("Y")){
+        if (null == cfg || StringUtil.isBlank(cfg.getCfgValue()) || !cfg.getCfgValue().equals(GlobalConstant.FLAG_Y)) {
 			model.addAttribute("viewFlag", GlobalConstant.FLAG_Y);
 		}
 		return "jsres/speAdmin/speInfo/main";
@@ -1100,8 +1100,8 @@ public class JsResSpeAdminController extends GeneralController{
 	@RequestMapping("/findAllBaseInfo")
 	public ModelAndView findAllBaseInfo(String speFlow, String baseInfoName, String editFlag, String viewFlag,String ishos,
 										String orgFlow,String isJoin,String sessionNumber,String onlyRead){
-		if (StringUtil.isNotBlank(ishos) && ishos.equals("Y")){
-			onlyRead="Y";	//省厅只能查看
+        if (StringUtil.isNotBlank(ishos) && ishos.equals(GlobalConstant.FLAG_Y)) {
+            onlyRead = GlobalConstant.FLAG_Y;    //省厅只能查看
 		}
 		if (StringUtil.isEmpty(sessionNumber)){
 			sessionNumber=DateUtil.getYear();
@@ -1137,8 +1137,8 @@ public class JsResSpeAdminController extends GeneralController{
 				if (StringUtil.isNotBlank(userRole.getRoleFlow()) &&(
 						userRole.getRoleFlow().equals(InitConfig.getSysCfg("res_global_role_flow")) ||
 								userRole.getRoleFlow().equals(InitConfig.getSysCfg("res_maintenance_role_flow")))){
-					mav.addObject("isglobal", "Y");
-					viewFlag="Y";
+                    mav.addObject("isglobal", GlobalConstant.FLAG_Y);
+                    viewFlag = GlobalConstant.FLAG_Y;
 				}
 				if (StringUtil.isNotBlank(userRole.getRoleFlow()) &&(
 						userRole.getRoleFlow().equals(InitConfig.getSysCfg("res_admin_role_flow")))){
@@ -1175,8 +1175,8 @@ public class JsResSpeAdminController extends GeneralController{
 					List<ResSpeBaseStdDeptVO> notRequiredList = resSpeBaseStdDeptVOList.stream().filter(vo -> "2".equals(vo.getRotationRequireStatus())).sorted(Comparator.comparing(ResSpeBaseStdDeptVO::getStandardDeptCode)).collect(Collectors.toList());
 
 
-				/*List<Map<String,String>> requiredList = deptCfgBiz.searchByLastRotationBySpe(orgFlow,speFlow,"Y");	//轮转科室
-				List<Map<String,String>> notRequiredList = deptCfgBiz.searchByLastRotationBySpe(orgFlow,speFlow,"N");
+				/*List<Map<String,String>> requiredList = deptCfgBiz.searchByLastRotationBySpe(orgFlow,speFlow,GlobalConstant.FLAG_Y);	//轮转科室
+				List<Map<String,String>> notRequiredList = deptCfgBiz.searchByLastRotationBySpe(orgFlow,speFlow,GlobalConstant.FLAG_N);
 
 				// 根据轮转科室查询标准科室并实现去重
 				List<SchAndStandardDeptCfg> standardDeptCfgRequiredList = new ArrayList<>();
@@ -1248,7 +1248,7 @@ public class JsResSpeAdminController extends GeneralController{
 				}
 
 				/*//查询方案的必须轮转的科室
-				List<Map<String, String>> requiredList = deptCfgBiz.searchByRequired(schRotation.getRotationFlow(), "Y");
+				List<Map<String, String>> requiredList = deptCfgBiz.searchByRequired(schRotation.getRotationFlow(), GlobalConstant.FLAG_Y);
 				for (Map<String, String> map : requiredList) {
 					//查询基地与标准科室关联的 轮转科室
 					List<SchAndStandardDeptCfg> cfgList = deptCfgBiz.selectByStandardDeptId(orgFlow, map.get("standardDeptId"));
@@ -1276,9 +1276,9 @@ public class JsResSpeAdminController extends GeneralController{
 		if(currRoleList == null || !currRoleList.contains(hospitalAdmin)) {
 			JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_baseInfo_maintenance_" + orgFlow);
 			//基地是付费用户，科主任可以填写信息，如果不是就不可以填写，只能由基地填写
-			if (null != cfg && StringUtil.isNotBlank(cfg.getCfgValue()) && cfg.getCfgValue().equals("Y")) {
+            if (null != cfg && StringUtil.isNotBlank(cfg.getCfgValue()) && cfg.getCfgValue().equals(GlobalConstant.FLAG_Y)) {
 				isPay = true;    //是付费用户
-				if (StringUtil.isEmpty(onlyRead) || !onlyRead.equals("Y")) {        //基地查看
+                if (StringUtil.isEmpty(onlyRead) || !onlyRead.equals(GlobalConstant.FLAG_Y)) {        //基地查看
 					viewFlag = GlobalConstant.FLAG_N;
 				}
 			} else {
@@ -1296,7 +1296,7 @@ public class JsResSpeAdminController extends GeneralController{
 			if (null==baseSpeDept && !GlobalConstant.FLAG_Y.equals(viewFlag)){	//如果是编辑并且是付费用户，当前年的数据未填写，将前一年的数据显示出来
 				baseSpeDept = deptBasicInfoBiz.readByOrgAndSpe(orgFlow, speFlow,year.toString());
 //				dataIsNull=true;
-				if (StringUtil.isEmpty(onlyRead) || !onlyRead.equals("Y")){		//基地查看
+                if (StringUtil.isEmpty(onlyRead) || !onlyRead.equals(GlobalConstant.FLAG_Y)) {        //基地查看
 					editFlag=GlobalConstant.FLAG_Y;
 				}
 			}
@@ -1352,7 +1352,7 @@ public class JsResSpeAdminController extends GeneralController{
 		SchRotation schRotation = schRotationtBiz.searchDoctorBySpeId(speFlow);
 		if (null!=schRotation){
 			//查询方案的必须轮转的科室
-			List<Map<String, String>> requiredList = deptCfgBiz.searchByRequired(schRotation.getRotationFlow(), "Y");
+            List<Map<String, String>> requiredList = deptCfgBiz.searchByRequired(schRotation.getRotationFlow(), GlobalConstant.FLAG_Y);
 			Integer bzzcws=null;
 			Integer syzcws=null;
 			Integer nszzybrs=null;

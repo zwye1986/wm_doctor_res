@@ -111,10 +111,10 @@ public class ResIdCtrlController extends GeneralController {
 				if(StringUtil.isNotBlank((String)map.get("END_DATE"))){
 					String year = ((String)map.get("END_DATE")).split("-")[0];
 					if(currentYear.equals(year)&&currentMonth.equals("08")){
-						bindFlagMap.put(userFlow,"Y");
+                        bindFlagMap.put(userFlow, GlobalConstant.FLAG_Y);
 					}
 				}else {
-					bindFlagMap.put(userFlow,"Y");
+                    bindFlagMap.put(userFlow, GlobalConstant.FLAG_Y);
 				}
 			}
 		}

@@ -127,12 +127,12 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
             if (StringUtil.isNotBlank(currUser.getUserName())) {
                 lectureScanRegist.setOperUserName(currUser.getUserName());
             }
-            lectureScanRegist.setIsRegist("Y");
+            lectureScanRegist.setIsRegist(GlobalConstant.FLAG_Y);
             return lectureScanRegistMapper.insertSelective(lectureScanRegist);
         }
         else{
             GeneralMethod.setRecordInfo(lectureScanRegist, false);
-            lectureScanRegist.setIsRegist("Y");
+            lectureScanRegist.setIsRegist(GlobalConstant.FLAG_Y);
             return lectureScanRegistMapper.updateByPrimaryKeySelective(lectureScanRegist);
         }
 
@@ -189,7 +189,7 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
                         andOperUserFlowEqualTo(userFlow).andIsRegistIsNull();
         ResLectureScanRegistExample.Criteria criteria3 = example.createCriteria()
                 .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).
-                        andOperUserFlowEqualTo(userFlow).andIsScanEqualTo("Y");
+                andOperUserFlowEqualTo(userFlow).andIsScanEqualTo(GlobalConstant.FLAG_Y);
         example.or(criteria2);
         example.or(criteria3);
         example.setOrderByClause("CREATE_TIME");

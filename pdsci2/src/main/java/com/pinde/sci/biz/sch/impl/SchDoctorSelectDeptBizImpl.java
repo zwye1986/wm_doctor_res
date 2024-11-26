@@ -161,10 +161,10 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
         }
         doctor =new ResDoctor();
         doctor.setDoctorFlow(doctorFlow);
-        doctor.setSelAllFlag("Y");
-        doctor.setSelOneFlag("Y");
-        doctor.setSelTwoFlag("Y");
-        doctor.setSelThreeFlag("Y");
+        doctor.setSelAllFlag(GlobalConstant.FLAG_Y);
+        doctor.setSelOneFlag(GlobalConstant.FLAG_Y);
+        doctor.setSelTwoFlag(GlobalConstant.FLAG_Y);
+        doctor.setSelThreeFlag(GlobalConstant.FLAG_Y);
         doctorMapper.updateByPrimaryKeySelective(doctor);
     }
 
@@ -197,7 +197,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
                     GlobalConstant.FLAG_N.equals(doctor.getSchTwoFlag())&&
                     GlobalConstant.FLAG_N.equals(doctor.getSchThreeFlag()))
             {
-                doctor.setSchAllFlag("N");
+                doctor.setSchAllFlag(GlobalConstant.FLAG_N);
             }
             doctorMapper.updateByPrimaryKeySelective(doctor);
         }
@@ -257,26 +257,26 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
             for(String doctorFlow:doctorflows) {
                 ResDoctor doctor = doctorBiz.readDoctor(doctorFlow);
                 if (SchSelYearEnum.One.getId().equals(form.getCycleYear())) {
-                    doctor.setSchOneFlag("Y");
+                    doctor.setSchOneFlag(GlobalConstant.FLAG_Y);
                 }
                 if (SchSelYearEnum.Two.getId().equals(form.getCycleYear())) {
-                    doctor.setSchTwoFlag("Y");
+                    doctor.setSchTwoFlag(GlobalConstant.FLAG_Y);
                 }
                 if (SchSelYearEnum.Three.getId().equals(form.getCycleYear())) {
-                    doctor.setSchThreeFlag("Y");
+                    doctor.setSchThreeFlag(GlobalConstant.FLAG_Y);
                 }
                 if("All".equals(form.getCycleYear()))
                 {
-                    doctor.setSchAllFlag("Y");
-                    doctor.setSchOneFlag("Y");
-                    doctor.setSchTwoFlag("Y");
-                    doctor.setSchThreeFlag("Y");
+                    doctor.setSchAllFlag(GlobalConstant.FLAG_Y);
+                    doctor.setSchOneFlag(GlobalConstant.FLAG_Y);
+                    doctor.setSchTwoFlag(GlobalConstant.FLAG_Y);
+                    doctor.setSchThreeFlag(GlobalConstant.FLAG_Y);
                 }
                 if(GlobalConstant.FLAG_Y.equals(doctor.getSchOneFlag())||
                         GlobalConstant.FLAG_Y.equals(doctor.getSchTwoFlag())||
                         GlobalConstant.FLAG_Y.equals(doctor.getSchThreeFlag()))
                 {
-                    doctor.setSchAllFlag("Y");
+                    doctor.setSchAllFlag(GlobalConstant.FLAG_Y);
                 }
                 doctorMapper.updateByPrimaryKeySelective(doctor);
             }
@@ -344,7 +344,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
 
                         //不是方案配置下的轮转记录
                         result.setIsRotation(GlobalConstant.FLAG_N);
-                        doctor.setIsSchFlag("Y");
+                        doctor.setIsSchFlag(GlobalConstant.FLAG_Y);
                         doctorBiz.editDoctor(doctor);
                        return schArrangeResultBiz.saveSchArrangeResult(result);
                     }
@@ -449,7 +449,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
                         ResDoctor resDoctor=doctorMap.get(doctorFlow);
                         schResultExtMapper.delCycleResultByYear(doctorFlow,resDoctor.getOrgFlow(),resDoctor.getSessionNumber(),resDoctor.getRotationFlow(),"");
                         schResultExtMapper.delCycleProcessByResult(doctorFlow,resDoctor.getOrgFlow(),resDoctor.getSessionNumber(),resDoctor.getRotationFlow(),"");
-                        resDoctor.setIsSchFlag("Y");
+                        resDoctor.setIsSchFlag(GlobalConstant.FLAG_Y);
                         doctorMapper.updateByPrimaryKeySelective(resDoctor);
                     }
                     for(int i=0;i<datas.size();i++)
@@ -1078,7 +1078,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
                         List<Map<String,String>> schDeptDates= (List<Map<String, String>>) data.get("schDeptDates");
                         if(schDeptDates!=null)
                         {
-                            resDoctor.setIsSchFlag("Y");
+                            resDoctor.setIsSchFlag(GlobalConstant.FLAG_Y);
                             doctorMapper.updateByPrimaryKeySelective(resDoctor);
                             for(Map<String,String> schDeptDate:schDeptDates)
                             {

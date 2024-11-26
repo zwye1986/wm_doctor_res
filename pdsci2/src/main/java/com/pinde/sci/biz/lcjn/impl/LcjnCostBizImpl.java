@@ -183,7 +183,7 @@ public class LcjnCostBizImpl implements ILcjnCostBiz {
         }
         paramMap.put("startTime",startTime);
         paramMap.put("endTime",endTime);
-        paramMap.put("isReleased","Y");
+        paramMap.put("isReleased", GlobalConstant.FLAG_Y);
         return baseManagerExtMapper.searchCourse(paramMap);
     }
 

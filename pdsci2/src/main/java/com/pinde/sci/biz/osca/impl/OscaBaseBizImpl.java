@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.osca.impl;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -294,7 +294,7 @@ public class OscaBaseBizImpl implements IOscaBaseBiz{
 
     List<OscaDoctorAssessment> searchOda(String clinicalFlow){
         OscaDoctorAssessmentExample example = new OscaDoctorAssessmentExample();
-        example.createCriteria().andRecordStatusEqualTo("Y").andAuditStatusIdEqualTo(AuditStatusEnum.Passed.getId())
+        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andAuditStatusIdEqualTo(AuditStatusEnum.Passed.getId())
                 .andClinicalFlowEqualTo(clinicalFlow);
         example.setOrderByClause("TICKET_NUMBER");
         return odaMapper.selectByExample(example);
@@ -557,8 +557,8 @@ public class OscaBaseBizImpl implements IOscaBaseBiz{
                 osa.setIsGradeReleased("C");
             }
             else if("province".equals(isShow)){
-                osa.setIsGradeReleased("Y");
-                osa.setIsShow("Y");
+                osa.setIsGradeReleased(GlobalConstant.FLAG_Y);
+                osa.setIsShow(GlobalConstant.FLAG_Y);
             }
             else{//学生能否查看成绩
                 osa.setIsShow(isShow);
@@ -593,7 +593,7 @@ public class OscaBaseBizImpl implements IOscaBaseBiz{
         OscaDoctorAssessment oda = new OscaDoctorAssessment();
         oda.setIsPass(resultId);
         if("Passed".equals(resultId)){
-            oda.setIsSavePass("Y");
+            oda.setIsSavePass(GlobalConstant.FLAG_Y);
         }
         oda.setIsPassName(DoctorScoreEnum.getNameById(resultId));
         OscaDoctorAssessmentExample example = new OscaDoctorAssessmentExample();
@@ -827,7 +827,7 @@ public class OscaBaseBizImpl implements IOscaBaseBiz{
             for(int i = 1;i < row_num; i++) {
                 SysUser user = new SysUser();//建立bean
                 ResDoctor doctor = new ResDoctor();
-                doctor.setOscaStudentSubmit("Y");
+                doctor.setOscaStudentSubmit(GlobalConstant.FLAG_Y);
                 OscaDoctorAssessment assessment = new OscaDoctorAssessment();
 
                 Row r = sheet.getRow(i);
@@ -908,7 +908,7 @@ public class OscaBaseBizImpl implements IOscaBaseBiz{
                 if(num <= 0){//新增
                     user.setUserFlow(PkUtil.getUUID());//新增user表
                     user.setUserPasswd(PasswordHelper.encryptPassword(user.getUserFlow(),"123456"));
-                    user.setIsOsca("Y");
+                    user.setIsOsca(GlobalConstant.FLAG_Y);
                     user.setStatusId(UserStatusEnum.Activated.getId());
                     GeneralMethod.setRecordInfo(user,true);
                     userMapper.insertSelective(user);
@@ -999,7 +999,7 @@ public class OscaBaseBizImpl implements IOscaBaseBiz{
             }
             //更新OSCA_SKILLS_ASSESSMENT_TIME表
             OscaSkillsAssessmentTime skillsAssessmentTime = new OscaSkillsAssessmentTime();
-            if(isNewTime.equals("Y")){
+            if (isNewTime.equals(GlobalConstant.FLAG_Y)) {
                 OscaSkillsAssessment skillsAssessment = queryDataByFlow(clinicalFlow);//开始时间不能在预约结束时间之前
                 String appointEndTime = skillsAssessment.getAppointEndTime();
                 if(appointEndTime.compareTo(examStartTime)>=0){
@@ -1176,7 +1176,7 @@ public class OscaBaseBizImpl implements IOscaBaseBiz{
                 if (stations != null) {
                     //如果学员所有站点都没有考核完，直接是不通过
                     if (roomDocs.size() < stations.size()) {
-                        doctorAssessment.setIsSavePass("N");
+                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
                         doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
                         doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
                         f=true;
@@ -1205,7 +1205,7 @@ public class OscaBaseBizImpl implements IOscaBaseBiz{
                         //如果合格总分配置了 并且 考核 总分小于合格总分 直接不通过
                         if(allScore!=null&&allScore>examAllScore)
                         {
-                            doctorAssessment.setIsSavePass("N");
+                            doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
                             doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
                             doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
                             f=true;
@@ -1242,18 +1242,18 @@ public class OscaBaseBizImpl implements IOscaBaseBiz{
                                         }
                                     }
                                     if(stationPassCount==stations.size()) {
-                                        doctorAssessment.setIsSavePass("Y");
+                                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_Y);
                                         doctorAssessment.setIsPass(DoctorScoreEnum.Passed.getId());
                                         doctorAssessment.setIsPassName(DoctorScoreEnum.Passed.getName());
                                         f = true;
                                     }else{
-                                        doctorAssessment.setIsSavePass("N");
+                                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
                                         doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
                                         doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
                                         f=true;
                                     }
                                 }else{
-                                    doctorAssessment.setIsSavePass("N");
+                                    doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
                                     doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
                                     doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
                                     f=true;
@@ -1314,7 +1314,7 @@ public class OscaBaseBizImpl implements IOscaBaseBiz{
 
                 if (stations != null) {
                     if (roomDocs.size() < stations.size()) {
-                        doctorAssessment.setIsSavePass("N");
+                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
                         doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
                         doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
                         f=true;
@@ -1372,19 +1372,19 @@ public class OscaBaseBizImpl implements IOscaBaseBiz{
                     //通过的部分为0
                     if(partPassCount==0)
                     {
-                        doctorAssessment.setIsSavePass("N");
+                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
                         doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
                         doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
                         f=true;
                     }else if(partCount==partPassCount)
                     {
-                        doctorAssessment.setIsSavePass("Y");
+                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_Y);
                         doctorAssessment.setIsPass(DoctorScoreEnum.Passed.getId());
                         doctorAssessment.setIsPassName(DoctorScoreEnum.Passed.getName());
                         f=true;
                     }else if(partCount>partPassCount)
                     {
-                        doctorAssessment.setIsSavePass("N");
+                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
                         doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
                         doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
                         f=true;
@@ -1774,7 +1774,7 @@ public class OscaBaseBizImpl implements IOscaBaseBiz{
             for(int i = 1;i < row_num; i++) {
                 SysUser user = new SysUser();//建立bean
                 ResDoctor doctor = new ResDoctor();
-//                doctor.setOscaStudentSubmit("Y");
+//                doctor.setOscaStudentSubmit(GlobalConstant.FLAG_Y);
                 OscaDoctorAssessment assessment = new OscaDoctorAssessment();
 
                 Row r = sheet.getRow(i);
@@ -1863,7 +1863,7 @@ public class OscaBaseBizImpl implements IOscaBaseBiz{
                 if(num <= 0){//新增
                     user.setUserFlow(PkUtil.getUUID());//新增user表
                     user.setUserPasswd(PasswordHelper.encryptPassword(user.getUserFlow(),"123456"));
-                    user.setIsOsca("Y");
+                    user.setIsOsca(GlobalConstant.FLAG_Y);
                     user.setStatusId(UserStatusEnum.Activated.getId());
                     GeneralMethod.setRecordInfo(user,true);
                     userMapper.insertSelective(user);
@@ -1954,7 +1954,7 @@ public class OscaBaseBizImpl implements IOscaBaseBiz{
             }
             //更新OSCA_SKILLS_ASSESSMENT_TIME表
             OscaSkillsAssessmentTime skillsAssessmentTime = new OscaSkillsAssessmentTime();
-            if(isNewTime.equals("Y")){
+            if (isNewTime.equals(GlobalConstant.FLAG_Y)) {
                 OscaSkillsAssessment skillsAssessment = queryDataByFlow(clinicalFlow);//开始时间不能在预约结束时间之前
                 String appointEndTime = skillsAssessment.getAppointEndTime();
                 if(appointEndTime.compareTo(examStartTime)>=0){

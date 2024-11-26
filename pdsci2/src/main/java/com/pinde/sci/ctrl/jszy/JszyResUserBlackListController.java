@@ -101,7 +101,7 @@ public class JszyResUserBlackListController extends GeneralController {
         }
         SysOrg org =orgBiz.readSysOrg(user.getOrgFlow());
         if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-            model.addAttribute("countryOrgFlag","Y");
+            model.addAttribute("countryOrgFlag", GlobalConstant.FLAG_Y);
             if(null != jointOrg && jointOrg.equals("checked")){
                 orgFlowList.add(jsresUserBalcklist.getOrgFlow());
                 jsresUserBalcklist.setOrgFlow("");
@@ -232,7 +232,7 @@ public class JszyResUserBlackListController extends GeneralController {
         black.setOperTypeId("2");
         black.setOperTypeName("手动");
         black.setReasonYj("您的信息已被纳入我省医务人员诚信系统，5年内不得进入我省培训基地接受住院医师规范化培训。如有相关疑问，请与相关管理部门联系。");
-        black.setRecordStatus("Y");
+        black.setRecordStatus(GlobalConstant.FLAG_Y);
        return blackBiz.saveBlack(black);
     }
 

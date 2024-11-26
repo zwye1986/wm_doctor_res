@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -22,7 +22,7 @@ import com.pinde.sci.enums.jsres.JsResDoctorAuditStatusEnum;
 import com.pinde.sci.enums.jsres.JsResTeacherLevelEnum;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
 import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
@@ -2201,7 +2201,7 @@ public class JsResStatisticController extends GeneralController {
 				}
 				//打开app权限
 				String cfgCode = "jsres_teacher_app_login_"+teacherTraining.getRecordFlow();
-				String cfgValue = "Y";
+                String cfgValue = GlobalConstant.FLAG_Y;
 				String cfgDesc = "是否开放带教app权限";
 				JsresPowerCfg cfg = new JsresPowerCfg();
 				cfg.setCfgCode(cfgCode);
@@ -2278,7 +2278,7 @@ public class JsResStatisticController extends GeneralController {
 						}
 						//打开app权限
 						String cfgCode = "jsres_teacher_app_login_"+teacherTraining.getRecordFlow();
-						String cfgValue = "Y";
+                        String cfgValue = GlobalConstant.FLAG_Y;
 						String cfgDesc = "是否开放带教app权限";
 						JsresPowerCfg cfg = new JsresPowerCfg();
 						cfg.setCfgCode(cfgCode);
@@ -2689,7 +2689,7 @@ public class JsResStatisticController extends GeneralController {
 		}
 		//打开app权限
 		String cfgCode = "jsres_teacher_app_login_"+user.getUserFlow();
-		String cfgValue = "Y";
+        String cfgValue = GlobalConstant.FLAG_Y;
 		String cfgDesc = "是否开放带教app权限";
 		JsresPowerCfg cfg = new JsresPowerCfg();
 		cfg.setCfgCode(cfgCode);

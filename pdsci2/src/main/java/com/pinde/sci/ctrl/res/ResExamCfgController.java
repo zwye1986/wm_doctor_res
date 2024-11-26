@@ -2,7 +2,7 @@ package com.pinde.sci.ctrl.res;
 
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -18,7 +18,7 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.enums.res.ResScoreTypeEnum;
+import com.pinde.core.common.enums.ResScoreTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.dom4j.Document;
@@ -117,7 +117,7 @@ public class ResExamCfgController extends GeneralController {
                 return "cannotInsert";
             }
         }
-        int result = examCfgBiz.updateArrangement(schExamArrangement,standardDeptId,"Y");
+        int result = examCfgBiz.updateArrangement(schExamArrangement, standardDeptId, GlobalConstant.FLAG_Y);
         if(result == 0)
         {
             return "操作失败！";

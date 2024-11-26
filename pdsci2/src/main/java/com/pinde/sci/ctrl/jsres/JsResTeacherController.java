@@ -19,8 +19,8 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.JsresPowerCfgMapper;
 import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.res.RecStatusEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.RecStatusEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.model.jsres.JsEvalCfgItemExt;
 import com.pinde.sci.model.jsres.JsEvalCfgTitleExt;
 import com.pinde.sci.model.jsres.JsResAttendanceExt;
@@ -147,7 +147,7 @@ public class JsResTeacherController extends GeneralController{
 		schArrangeResultMap.put("schStartDate", doctorSchProcess.getSchStartDate());
 		schArrangeResultMap.put("schEndDate", doctorSchProcess.getSchEndDate());
 		schArrangeResultMap.put("biaoJi", biaoJi);
-		schArrangeResultMap.put("data", "Y");
+        schArrangeResultMap.put("data", GlobalConstant.FLAG_Y);
 		List<String>docTypeList=new ArrayList<String>();
 		model.addAttribute("datas", datas);
 		if(datas!=null&&datas.length>0){
@@ -1794,7 +1794,7 @@ public class JsResTeacherController extends GeneralController{
 			schArrangeResultMap.put("schStartDate", doctorSchProcess.getSchStartDate());
 			schArrangeResultMap.put("schEndDate", doctorSchProcess.getSchEndDate());
 			schArrangeResultMap.put("biaoJi", biaoJi);
-			schArrangeResultMap.put("data", "N");
+        schArrangeResultMap.put("data", GlobalConstant.FLAG_N);
 			List<String>docTypeList=new ArrayList<String>();
 			model.addAttribute("datas", datas);
 			if(datas!=null&&datas.length>0){
@@ -2077,7 +2077,7 @@ public class JsResTeacherController extends GeneralController{
 
 
 		SysDept dept=deptBiz.readSysDept(process.getDeptFlow());
-		String cksh="N";
+        String cksh = GlobalConstant.FLAG_N;
 		JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_"+dept.getOrgFlow()+"_org_cksh");
 		if(cfg!=null)
 		{
@@ -2201,7 +2201,7 @@ public class JsResTeacherController extends GeneralController{
 //			String orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
 			JsresPowerCfg orgApprove = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_ctrl_approve_activity");//教学活动评价配置
 			JsresPowerCfg approve = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_approve_activity");//教学活动评价配置评审类型
-			if (null!=orgApprove && null!=approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(),orgApprove.getCfgValue(),"Y")) {        //开启必评
+            if (null != orgApprove && null != approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(), orgApprove.getCfgValue(), GlobalConstant.FLAG_Y)) {        //开启必评
 				infos=iResRecBiz.searchJoinActivityByProcessFlownotScore(processFlow);
 			}else {
 				infos=iResRecBiz.searchJoinActivityByProcessFlow(processFlow);

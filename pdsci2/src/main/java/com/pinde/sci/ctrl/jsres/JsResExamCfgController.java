@@ -70,7 +70,7 @@ public class JsResExamCfgController extends GeneralController {
         SysDept dept=new SysDept();
         dept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
         dept.setOrgFlow(currentUser.getOrgFlow());
-        List<Map<String,String>> list=deptBiz.searchDeptByUnion(dept,"Y");
+        List<Map<String, String>> list = deptBiz.searchDeptByUnion(dept, GlobalConstant.FLAG_Y);
         model.addAttribute("all",list);
         if(StringUtil.isBlank(arrangeFlow))
         {
@@ -97,7 +97,7 @@ public class JsResExamCfgController extends GeneralController {
         {
             return "cannotInsert";
         }
-        int result=examCfgBiz.updateArrangement(schExamArrangement,standardDeptId,"N");
+        int result = examCfgBiz.updateArrangement(schExamArrangement, standardDeptId, GlobalConstant.FLAG_N);
         if(result==0)
         {
             return "操作失败！";

@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.sys.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -248,7 +249,7 @@ public class OrgBizImpl implements IOrgBiz {
 		if(StringUtil.isNotBlank(sysOrg.getIsExamOrg())){
 			criteria.andIsExamOrgEqualTo(sysOrg.getIsExamOrg());
 		}
-		criteria.andRecordStatusEqualTo("Y");
+		criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
 		example.setOrderByClause("ORG_CODE");
 		return sysOrgMapper.selectByExample(example);
 	}

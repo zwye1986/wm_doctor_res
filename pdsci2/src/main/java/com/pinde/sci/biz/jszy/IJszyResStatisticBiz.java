@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.jszy;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
 import com.pinde.sci.model.mo.*;

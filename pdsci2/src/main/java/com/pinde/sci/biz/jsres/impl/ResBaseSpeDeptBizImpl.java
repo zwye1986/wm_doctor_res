@@ -25,7 +25,7 @@ public class ResBaseSpeDeptBizImpl implements IResBaseSpeDeptBiz {
     public ResBaseSpeDept readBaseByDeptFlow(String deptFlow) {
         if (StringUtil.isNotBlank(deptFlow)) {
             ResBaseSpeDeptExample example = new ResBaseSpeDeptExample();
-            example.createCriteria().andRecordStatusEqualTo("Y").andDeptFlowEqualTo(deptFlow).andTypeEqualTo("dept");
+            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andDeptFlowEqualTo(deptFlow).andTypeEqualTo("dept");
             List<ResBaseSpeDept> list = speDeptMapper.selectByExampleWithBLOBs(example);
             if (null != list && list.size() > 0) {
                 return list.get(0);
@@ -38,7 +38,7 @@ public class ResBaseSpeDeptBizImpl implements IResBaseSpeDeptBiz {
     public ResBaseSpeDept readBaseBySpeFlow(String speFlow) {
         if (StringUtil.isNotBlank(speFlow)) {
             ResBaseSpeDeptExample example = new ResBaseSpeDeptExample();
-            example.createCriteria().andRecordStatusEqualTo("Y").andSpeFlowEqualTo(speFlow).andTypeEqualTo("spe");
+            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andSpeFlowEqualTo(speFlow).andTypeEqualTo("spe");
             List<ResBaseSpeDept> list = speDeptMapper.selectByExampleWithBLOBs(example);
             if (null != list && list.size() > 0) {
                 return list.get(0);

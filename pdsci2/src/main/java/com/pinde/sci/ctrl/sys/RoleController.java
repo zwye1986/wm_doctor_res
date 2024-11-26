@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.sys;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.portal.IPortalColumnManageBiz;
 import com.pinde.sci.biz.sys.IDictBiz;

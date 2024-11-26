@@ -741,9 +741,9 @@ public class JswjwStudentController {
         }
         model.addAttribute("deptList",deptList);
         //是否可以新增请假
-        String isAddLeave = "N";
+        String isAddLeave = GlobalConstant.FLAG_N;
         if(null != deptList && deptList.size() > 0){
-            isAddLeave = "Y";
+            isAddLeave = GlobalConstant.FLAG_Y;
         }
         model.addAttribute("isAddLeave",isAddLeave);
         //请假类型

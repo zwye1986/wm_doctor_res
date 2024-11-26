@@ -1,11 +1,12 @@
 package com.pinde.core.common.enums;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.EnumUtil;
 
 public enum JszyTrainCategoryEnum implements GeneralEnum<String> {
-	ChineseMedicine("ChineseMedicine","中医","Independent","Y"),
-	TCMGeneral("TCMGeneral","中医全科","Independent","Y"),
-	TCMAssiGeneral("TCMAssiGeneral","中医助理全科","Independent","N")
+    ChineseMedicine("ChineseMedicine", "中医", "Independent", GlobalConstant.FLAG_Y),
+    TCMGeneral("TCMGeneral", "中医全科", "Independent", GlobalConstant.FLAG_Y),
+    TCMAssiGeneral("TCMAssiGeneral", "中医助理全科", "Independent", GlobalConstant.FLAG_N)
 	;
 
 	private final String id;

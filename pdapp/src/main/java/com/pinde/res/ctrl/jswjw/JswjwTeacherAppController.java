@@ -1,12 +1,12 @@
 package com.pinde.res.ctrl.jswjw;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.common.enums.*;
 import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.*;
 import com.pinde.core.model.*;
-import com.pinde.core.util.PasswordUtil;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
+import com.pinde.core.util.PasswordUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.eval.IEvalAppBiz;
@@ -1053,7 +1053,7 @@ public class JswjwTeacherAppController{
 		param.put("docFlow",docFlow);
 		param.put("processFlow",processFlow);
 		param.put("attendType",attendType);
-		param.put("biaoJi","Y");
+        param.put("biaoJi", GlobalConstant.FLAG_Y);
 		param.put("nowDate",DateUtil.getCurrDate());
 		List<Map<String,Object>> list=jswjwTeacherBiz.dayAttendList(param);
 		if(list==null||list.isEmpty())
@@ -1199,7 +1199,7 @@ public class JswjwTeacherAppController{
 			jsresAttendance=new JsresAttendance();
 			 attendanceFlow= PkUtil.getUUID();
 			jsresAttendance.setAttendanceFlow(attendanceFlow);
-			jsresAttendance.setRecordStatus("Y");
+            jsresAttendance.setRecordStatus(GlobalConstant.FLAG_Y);
 			jsresAttendance.setDoctorFlow(docFlow);
 			jsresAttendance.setDoctorFlow(docFlow);
 			jsresAttendance.setDoctorName(docUser.getUserName());
@@ -1341,7 +1341,7 @@ public class JswjwTeacherAppController{
 		List<FromTitle> titleList=null;
 		String configXml="";
 		String configFlow="";
-		String IsForm="N";
+        String IsForm = GlobalConstant.FLAG_N;
 		if(eval!=null)
 		{
 			IsForm=eval.getIsForm();
@@ -1354,16 +1354,16 @@ public class JswjwTeacherAppController{
 			ResDoctorProcessEvalConfig config=jswjwBiz.getProcessEvalConfig(userinfo.getOrgFlow());
 			if(config!=null) {
 				configXml = config.getFormCfg();
-				IsForm="Y";
+                IsForm = GlobalConstant.FLAG_Y;
 				configFlow=config.getConfigFlow();
 			}
 		}
 		model.addAttribute("isAudit",eval!=null);
 		titleList=jswjwBiz.parseFromXmlForList(configXml);
 		if(titleList!=null&&titleList.size()>0){
-			IsForm="Y";
+            IsForm = GlobalConstant.FLAG_Y;
 		}else{
-			IsForm="N";
+            IsForm = GlobalConstant.FLAG_N;
 		}
 		model.addAttribute("titleList",titleList);
 		model.addAttribute("IsForm",IsForm);
@@ -1428,7 +1428,7 @@ public class JswjwTeacherAppController{
 		}
 		if(GlobalConstant.FLAG_Y.equals(haveForm))
 		{
-			eval2.setIsForm("Y");
+            eval2.setIsForm(GlobalConstant.FLAG_Y);
 			if(StringUtil.isBlank(configFlow))
 			{
 				model.addAttribute("resultId", "3011101");
@@ -1479,7 +1479,7 @@ public class JswjwTeacherAppController{
 			}
 			eval2.setEvalResult(doc.asXML());
 		}else{
-			eval2.setIsForm("N");
+            eval2.setIsForm(GlobalConstant.FLAG_N);
 		}
 		ResDoctorSchProcess process=iResDoctorProcessBiz.read(eval2.getProcessFlow());
 		if (process!=null) {
@@ -1630,7 +1630,7 @@ public class JswjwTeacherAppController{
 			return "res/jswjw/success";
 		}
 
-		List<ResRec> recList=jswjwTeacherBiz.searchRecByProcessAndRecType(processFlow,docFlow,recType,"Y");
+        List<ResRec> recList = jswjwTeacherBiz.searchRecByProcessAndRecType(processFlow, docFlow, recType, GlobalConstant.FLAG_Y);
 		if(null != recList && recList.size() > 0){
             ResRec resRec = recList.get(0);
             String appMenu = jswjwBiz.getJsResCfgCodeNew("jsres_doctor_app_menu_" + resRec.getOperUserFlow());
@@ -1854,7 +1854,7 @@ public class JswjwTeacherAppController{
 		}
 		model.addAttribute("dataList", dataList);
 		model.addAttribute("dataCount", PageHelper.total);
-		List<ResRec> noAuditList=jswjwTeacherBiz.searchRecByProcessAndRecType(processFlow,docFlow,recTypeId,"Y");
+        List<ResRec> noAuditList = jswjwTeacherBiz.searchRecByProcessAndRecType(processFlow, docFlow, recTypeId, GlobalConstant.FLAG_Y);
 		int count=0;
 		if(noAuditList!=null){
 			count=noAuditList.size();
@@ -2142,20 +2142,20 @@ public class JswjwTeacherAppController{
 		model.addAttribute("f",f);
 
 		String theoryScorePass = "";
-		String teacherWrite = "N";
+        String teacherWrite = GlobalConstant.FLAG_N;
 		if(GlobalConstant.RECORD_STATUS_Y.equals(jsresPowerCfg.getCfgValue())) {
 			//查询科室是否配置
 			JsresDeptConfig deptConfig = jswjwBiz.searchDeptCfg(p.getOrgFlow(), p.getSchDeptFlow());
 			if (null != deptConfig) {
 				theoryScorePass = deptConfig.getScorePass();
 				if (GlobalConstant.RECORD_STATUS_Y.equals(deptConfig.getTeacherWrite())) {
-					teacherWrite = "Y";
+                    teacherWrite = GlobalConstant.FLAG_Y;
 				}
 			} else {
 				deptConfig = jswjwBiz.searchBaseDeptConfig(p.getOrgFlow());
 				theoryScorePass = deptConfig.getScorePass();
 				if (GlobalConstant.RECORD_STATUS_Y.equals(deptConfig.getTeacherWrite())) {
-					teacherWrite = "Y";
+                    teacherWrite = GlobalConstant.FLAG_Y;
 				}
 			}
 		}
@@ -2166,7 +2166,7 @@ public class JswjwTeacherAppController{
 		String cksh = jswjwBiz.getJsResCfgCode("jsres_"+dept.getOrgFlow()+"_org_cksh");
 		if(StringUtil.isBlank(cksh))
 		{
-			cksh="N";
+            cksh = GlobalConstant.FLAG_N;
 		}
 		model.addAttribute("cksh",cksh);
 		//获取不同类型并定义接受
@@ -2265,7 +2265,7 @@ public class JswjwTeacherAppController{
 			String orgFlow = currUser.getOrgFlow();
 			JsresPowerCfg orgApprove = jsresPowerCfgMapper.selectByPrimaryKey("jsres_"+orgFlow+"_org_ctrl_approve_activity");//教学活动评价配置
 			JsresPowerCfg approve = jsresPowerCfgMapper.selectByPrimaryKey("jsres_"+orgFlow+"_org_approve_activity");//教学活动评价配置评审类型
-			if (null!=orgApprove && null!=approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(),orgApprove.getCfgValue(),"Y")) {        //开启必评
+            if (null != orgApprove && null != approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(), orgApprove.getCfgValue(), GlobalConstant.FLAG_Y)) {        //开启必评
 				infos=jswjwTeacherBiz.searchJoinActivityByProcessFlowNotScore(processFlow);
 			}else {
 				infos=jswjwTeacherBiz.searchJoinActivityByProcessFlow(processFlow);
@@ -2402,7 +2402,7 @@ public class JswjwTeacherAppController{
 				if (departureCfg != null) {
 					model.addAttribute("subEvaluation", departureCfg.getCfgValue());
 				}else {
-					model.addAttribute("subEvaluation", "N");
+                    model.addAttribute("subEvaluation", GlobalConstant.FLAG_N);
 				}
 			}
 		}
@@ -2711,7 +2711,7 @@ public class JswjwTeacherAppController{
 			for (SysUserRole role:userRoleList) {
 				if(obj.containsKey("auditRole")) {
 					if (obj.get("auditRole").toString().contains(role.getRoleFlow())) {
-						obj.put("audit", "Y");
+                        obj.put("audit", GlobalConstant.FLAG_Y);
 					}
 				}
 			}

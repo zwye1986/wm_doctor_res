@@ -1,6 +1,7 @@
 package com.pinde.core.common.enums;
 
 import com.pinde.core.util.EnumUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +40,9 @@ public enum ArmyTypeEnum implements GeneralEnum<String> {
     }
 
     public static String getNameById(String id) {
+        if (StringUtils.isEmpty(id)) {
+            return "";
+        }
         return EnumUtil.getById(id, ArmyTypeEnum.class).getName();
     }
     public static final Map<String, String> map = new HashMap();

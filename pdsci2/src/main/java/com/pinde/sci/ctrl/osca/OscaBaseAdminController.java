@@ -4,7 +4,8 @@ package com.pinde.sci.ctrl.osca;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
 import com.pinde.core.pdf.PdfDocumentGenerator;
@@ -85,7 +86,7 @@ public class OscaBaseAdminController extends GeneralController {
 		model.addAttribute("count",count);
 		model.addAttribute("dataList",dataList);
 		if(count > 0 && null != dataList && dataList.size() == 0){
-			return checkInfoList(null,null,null,null,null,"Y",request,model,"Y");
+            return checkInfoList(null, null, null, null, null, GlobalConstant.FLAG_Y, request, model, GlobalConstant.FLAG_Y);
 		}
 		return "osca/base/guideInfo";
 	}
@@ -102,7 +103,7 @@ public class OscaBaseAdminController extends GeneralController {
 		param.put("clinicalName",clinicalName);
 		param.put("isLocal",isLocal);
 		SysDict searchDict = new SysDict();
-		searchDict.setRecordStatus("Y");
+        searchDict.setRecordStatus(GlobalConstant.FLAG_Y);
 		searchDict.setDictTypeId(DictTypeEnum.OscaTrainingType.getId()+"."+trainingTypeId);
 		List<SysDict> dictList = dictBiz.searchDictList(searchDict);
 		param.put("dictList",dictList);
@@ -1010,7 +1011,7 @@ public class OscaBaseAdminController extends GeneralController {
 		if (stations != null) {
 			//如果学员所有站点都没有考核完，直接是不通过
 			if (stationScoreList.size() < stations.size()) {
-				return "N";
+                return GlobalConstant.FLAG_N;
 			}else {
 				//每部分的站点数量
 				Map<String, List<OscaSubjectStation>> partMap = new HashMap<>();
@@ -1035,7 +1036,7 @@ public class OscaBaseAdminController extends GeneralController {
 				//如果合格总分配置了 并且 考核 总分小于合格总分 直接不通过
 				if(allScore!=null&&allScore>examAllScore)
 				{
-					return "N";
+                    return GlobalConstant.FLAG_N;
 				}else {
 					//有几部分
 					int partCount = partMap.size();
@@ -1070,19 +1071,19 @@ public class OscaBaseAdminController extends GeneralController {
 							}
 							if(stationPassCount==stations.size()) {
 
-								return "Y";
+                                return GlobalConstant.FLAG_Y;
 							}else{
-								return "N";
+                                return GlobalConstant.FLAG_N;
 							}
 						}else{
-							return "N";
+                            return GlobalConstant.FLAG_N;
 						}
 					}
 				}
 
 			}
 		}
-		return "N";
+        return GlobalConstant.FLAG_N;
 	}
 
 	/**
@@ -1132,7 +1133,7 @@ public class OscaBaseAdminController extends GeneralController {
 		}else{
 			examStartTime = startTime;
 			examEndTime = endTime;
-			isNewTime = "Y";
+            isNewTime = GlobalConstant.FLAG_Y;
 		}
 		if(file.getSize() > 0){
 			try{
@@ -1215,7 +1216,7 @@ public class OscaBaseAdminController extends GeneralController {
 			}
 		}
 		model.addAttribute("score",score);
-		model.addAttribute("view","Y");//标识表单只可查看
+        model.addAttribute("view", GlobalConstant.FLAG_Y);//标识表单只可查看
 		return "/osca/base/formScoreDetail";
 	}
 

@@ -7,7 +7,7 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.ResTypicalCasesMapper;
 import com.pinde.sci.dao.res.DiscipleDoctorExtMapper;
 import com.pinde.sci.dao.res.ResFollowTeacherRecordExtMapper;
-import com.pinde.sci.enums.res.DiscipleStatusEnum;
+import com.pinde.core.common.enums.DiscipleStatusEnum;
 import com.pinde.sci.model.mo.ResTypicalCases;
 import com.pinde.sci.model.mo.ResTypicalCasesExample;
 import com.pinde.sci.model.res.ResDoctorExt;

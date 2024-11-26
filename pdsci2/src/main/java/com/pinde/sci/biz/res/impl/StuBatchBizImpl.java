@@ -61,7 +61,7 @@ public class StuBatchBizImpl implements IStuBatchBiz{
 			stuBatch.setBatchNo(DictTypeEnum.getDictName(DictTypeEnum.DwjxBatch,batchFlow));
 			stuBatch.setBatchRegDate(registerTime);
 			stuBatch.setMonthFee(new BigDecimal(fee));
-			stuBatch.setIsDefault("N");
+            stuBatch.setIsDefault(GlobalConstant.FLAG_N);
 			GeneralMethod.setRecordInfo(stuBatch,true);
 			count = stuBatchMapper.insert(stuBatch);
 		}
@@ -80,7 +80,7 @@ public class StuBatchBizImpl implements IStuBatchBiz{
 			stuBatch.setMonthFee(new BigDecimal(fee));
 			if(!"报名中".equals(batchStatus))
 			{
-				stuBatch.setIsDefault("N");
+                stuBatch.setIsDefault(GlobalConstant.FLAG_N);
 			}
 			stuBatch.setBatchStatus(batchStatus);
 			GeneralMethod.setRecordInfo(stuBatch,false);
@@ -93,7 +93,7 @@ public class StuBatchBizImpl implements IStuBatchBiz{
 			stuBatch.setBatchStatus(batchStatus);
 			stuBatch.setBatchRegDate(registerTime);
 			stuBatch.setMonthFee(new BigDecimal(fee));
-			stuBatch.setIsDefault("N");
+            stuBatch.setIsDefault(GlobalConstant.FLAG_N);
 			GeneralMethod.setRecordInfo(stuBatch,true);
 			count = stuBatchMapper.insert(stuBatch);
 		}

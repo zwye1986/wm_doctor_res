@@ -3,11 +3,14 @@ package com.pinde.app.common;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.common.enums.GeneralEnum;
-import com.pinde.core.util.*;
-import com.pinde.res.biz.common.IDictBiz;
-import com.pinde.res.biz.stdp.ICfgBiz;
 import com.pinde.core.model.SysCfg;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.util.ClassUtil;
+import com.pinde.core.util.EnumUtil;
+import com.pinde.core.util.SpringUtil;
+import com.pinde.core.util.StringUtil;
+import com.pinde.res.biz.common.IDictBiz;
+import com.pinde.res.biz.stdp.ICfgBiz;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +36,9 @@ public class InitConfig implements ServletContextListener {
     private static Map<String, String> sysCfgDescMap;
 
     public static Map<String,String> weekPasswordMap;
+
+    //住院医师
+    public static IrbFormRequestUtil resFormRequestUtil;
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {

@@ -61,7 +61,7 @@ public class PbInfoItem implements Serializable {
     //数据来源类型：import导入的数据，db数据库存在（已排班的数据）
     private String type;
 
-    private String recordStatus = "Y";
+    private String recordStatus = GlobalConstant.FLAG_Y;
 
     private String chaiEnd;
     private String chaiNextStart;

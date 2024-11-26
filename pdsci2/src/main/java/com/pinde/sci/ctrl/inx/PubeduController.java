@@ -9,7 +9,7 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.*;
 import com.pinde.sci.dao.base.SysLogMapper;
-import com.pinde.sci.enums.res.ResDoctorAuditStatusEnum;
+import com.pinde.core.common.enums.ResDoctorAuditStatusEnum;
 import com.pinde.sci.enums.sys.OperTypeEnum;
 import com.pinde.sci.model.mo.ResDoctorRecruit;
 import com.pinde.sci.model.mo.SysLog;

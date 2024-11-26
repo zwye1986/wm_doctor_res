@@ -33,12 +33,12 @@ public class JsResTestConfigController extends GeneralController {
     public String main(Model model) {
         List<ResTestConfig> resTestConfigs = resTestConfigBiz.findAll();
         //当前年设置考试次数
-        String addFlag = "Y";
+        String addFlag = GlobalConstant.FLAG_Y;
         if(null != resTestConfigs && resTestConfigs.size()>0){
             List<ResTestConfig> testList = resTestConfigs.stream().filter(testConfig -> DateUtil.getYear().equals(testConfig.getTestId().substring(0, 4))
                     && GlobalConstant.FLAG_Y.equals(testConfig.getRecordStatus())).collect(Collectors.toList());
             if(testList.size()>=2){
-                addFlag = "N";
+                addFlag = GlobalConstant.FLAG_N;
             }
         }
         model.addAttribute("addFlag",addFlag);

@@ -3,7 +3,7 @@ package com.pinde.sci.biz.jsres.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.common.enums.ArmyTypeEnum;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -27,10 +27,10 @@ import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
 import com.pinde.sci.enums.jsres.*;
 import com.pinde.sci.enums.osca.AuditStatusEnum;
-import com.pinde.sci.enums.res.AfterRecTypeEnum;
-import com.pinde.sci.enums.res.ResBaseStatusEnum;
-import com.pinde.sci.enums.res.ResDocTypeEnum;
-import com.pinde.sci.enums.res.ResScoreTypeEnum;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.enums.ResBaseStatusEnum;
+import com.pinde.core.common.enums.ResDocTypeEnum;
+import com.pinde.core.common.enums.ResScoreTypeEnum;
 import com.pinde.sci.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.form.jsres.JykhInfoForm;
@@ -346,10 +346,10 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		try {
 			SysUser currUser = GlobalContext.getCurrentUser();
 			//判断是否是协同基地
-			String isJointOrg = "N";
+            String isJointOrg = GlobalConstant.FLAG_N;
 			List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currUser.getOrgFlow());
 			if (!tempJoinOrgs.isEmpty() && tempJoinOrgs.size() > 0) {
-				isJointOrg = "Y";
+                isJointOrg = GlobalConstant.FLAG_Y;
 			}
 			if (GlobalConstant.RECORD_STATUS_N.equals(isJointOrg)) {//主基地审核后  省厅审核
 				if (StringUtil.isNotBlank(recruitWithBLOBs.getDoctorStatusId())) {
@@ -434,7 +434,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 						if(cfg==null)
 							cfg=new JsresPowerCfg();
 						cfg.setCfgCode(key);
-						cfg.setCfgValue("Y");
+                        cfg.setCfgValue(GlobalConstant.FLAG_Y);
 						cfg.setCheckStatusId("Passed");
 						cfg.setCheckStatusName("审核通过");
 						cfg.setCfgDesc("是否开放学员app登录权限");
@@ -494,7 +494,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			}
 		}
 		if (StringUtil.isNotBlank(auditStatusId) && auditStatusId.equals("NotPassed")){
-			recWithBLOBs.setRecruitFlag("Y");
+            recWithBLOBs.setRecruitFlag(GlobalConstant.FLAG_Y);
 		}
 		int result = saveDoctorRecruit(recWithBLOBs);
 		if(result==1 && JsResDoctorAuditStatusEnum.Passed.getId().equals(auditStatusId))
@@ -604,9 +604,9 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		//判断是否为协同基地
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
-			paramMap.put("isJointOrg", "Y");
+            paramMap.put("isJointOrg", GlobalConstant.FLAG_Y);
 		}else{
-			paramMap.put("isJointOrg", "N");
+            paramMap.put("isJointOrg", GlobalConstant.FLAG_N);
 		}
 		List<JsDoctorInfoExt> JsDoctorInfoExtList = new ArrayList<JsDoctorInfoExt>(16);
 		if(StringUtil.isNotBlank(baseFlag))
@@ -639,9 +639,9 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		//判断是否为协同基地
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
-			paramMap.put("isJointOrg", "Y");
+            paramMap.put("isJointOrg", GlobalConstant.FLAG_Y);
 		}else{
-			paramMap.put("isJointOrg", "N");
+            paramMap.put("isJointOrg", GlobalConstant.FLAG_N);
 		}
 		List<JsDoctorInfoExt> JsDoctorInfoExtList = new ArrayList<JsDoctorInfoExt>(16);
 		if(StringUtil.isNotBlank(baseFlag))
@@ -1857,7 +1857,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			city.put("321000","K");
 			city.put("321100","L");
 			city.put("321200","M");
-			city.put("321300","N");
+            city.put("321300", GlobalConstant.FLAG_N);
 			String year=DateUtil.getYear();
 			SysOrg org = orgBiz.readSysOrg(recruit.getOrgFlow());
 			String dishiCode= (String) city.get(org.getOrgCityId());
@@ -2703,7 +2703,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 //					qualificationFlag = "否";
 //					userResumeExt.setQualificationMaterialCode("");
 //				}
-				if (userResumeExt.getIsPassQualifyingExamination().equals("Y")) {
+                if (userResumeExt.getIsPassQualifyingExamination().equals(GlobalConstant.FLAG_Y)) {
 					qualificationFlag = "是";
 				} else {
 					qualificationFlag = "否";

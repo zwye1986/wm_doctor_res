@@ -31,7 +31,7 @@ public class IResMessageBizImpl implements IResMessageBiz {
 		ResMessageExample example = new ResMessageExample();
 		ResMessageExample.Criteria criteria = example.createCriteria();
 		example.setOrderByClause("MODIFY_TIME DESC");
-		criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
 		if(StringUtil.isNotBlank(orgFlow)){
 			criteria.andOrgFlowEqualTo(orgFlow);
 		}
@@ -45,7 +45,7 @@ public class IResMessageBizImpl implements IResMessageBiz {
 	public ResMessage findMessageByFlow(String messageFlow) {
 		ResMessageExample example = new ResMessageExample();
 		ResMessageExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
 		if(StringUtil.isNotBlank(messageFlow)){
 			criteria.andMessageFlowEqualTo(messageFlow);
 			return messageMapper.selectByPrimaryKey(messageFlow);

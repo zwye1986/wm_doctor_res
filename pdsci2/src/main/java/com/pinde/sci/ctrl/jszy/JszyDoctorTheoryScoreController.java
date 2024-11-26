@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.jszy;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -20,8 +20,8 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.enums.jsres.*;
-import com.pinde.sci.enums.res.AfterRecTypeEnum;
-import com.pinde.sci.enums.res.ResScoreTypeEnum;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.enums.ResScoreTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
@@ -1691,11 +1691,11 @@ public class JszyDoctorTheoryScoreController extends GeneralController {
         String nowTime = DateUtil.transDateTime(DateUtil.getCurrentTime());
         String startDate = InitConfig.getSysCfg("local_submit_start_time");
         String endDate = InitConfig.getSysCfg("local_submit_end_time");
-        String f="N";
+        String f = GlobalConstant.FLAG_N;
         if (StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate)) {
             if(startDate.compareTo(nowTime) <= 0 && endDate.compareTo(nowTime)>=0)
             {
-                f="Y";
+                f = GlobalConstant.FLAG_Y;
             }
         }
         model.addAttribute("f",f);
@@ -1828,11 +1828,11 @@ public class JszyDoctorTheoryScoreController extends GeneralController {
         String nowTime=DateUtil.transDateTime(DateUtil.getCurrentTime());
         String startDate=InitConfig.getSysCfg("local_submit_start_time");
         String endDate=InitConfig.getSysCfg("local_submit_end_time");
-        String f="N";
+        String f = GlobalConstant.FLAG_N;
         if (StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate)) {
             if(startDate.compareTo(nowTime)<=0&&endDate.compareTo(nowTime)>=0)
             {
-                f="Y";
+                f = GlobalConstant.FLAG_Y;
             }
         }
         model.addAttribute("f",f);

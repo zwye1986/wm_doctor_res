@@ -119,7 +119,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 			criteria.andDoctorFlowEqualTo(doctorFlow);
 		}
 		if(StringUtil.isNotBlank(flag) && GlobalConstant.FLAG_Y.equals(flag)){
-			criteria.andIsAffirmIdEqualTo("Y");
+            criteria.andIsAffirmIdEqualTo(GlobalConstant.FLAG_Y);
 		}
 		return scoreMapper.selectByExampleWithBLOBs(example);
 	}

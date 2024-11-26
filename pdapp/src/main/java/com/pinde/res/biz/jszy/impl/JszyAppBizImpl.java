@@ -1,13 +1,13 @@
 package com.pinde.res.biz.jszy.impl;
 
 
+import com.pinde.app.common.GlobalUtil;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.core.common.enums.SigninTypeEnum;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.GlobalUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.common.IResPowerCfgBiz;
@@ -30,7 +30,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 //@Transactional(rollbackFor=Exception.class)
@@ -568,11 +571,11 @@ public class JszyAppBizImpl implements IJszyAppBiz {
 			if (StringUtil.isNotBlank(currUser.getUserName())) {
 				lectureScanRegist.setOperUserName(currUser.getUserName());
 			}
-			lectureScanRegist.setIsRegist("Y");
+            lectureScanRegist.setIsRegist(GlobalConstant.FLAG_Y);
 			return lectureScanRegistMapper.insertSelective(lectureScanRegist);
 		}else{
 			lectureScanRegist=regist;
-			lectureScanRegist.setIsRegist("Y");
+            lectureScanRegist.setIsRegist(GlobalConstant.FLAG_Y);
 			return lectureScanRegistMapper.updateByPrimaryKey(lectureScanRegist);
 		}
 
@@ -946,11 +949,11 @@ public class JszyAppBizImpl implements IJszyAppBiz {
 			if (StringUtil.isNotBlank(currUser.getUserName())) {
 				lectureScanRegist.setOperUserName(currUser.getUserName());
 			}
-			lectureScanRegist.setIsRegist("Y");
+            lectureScanRegist.setIsRegist(GlobalConstant.FLAG_Y);
 			return lectureScanRegistMapper.insertSelective(lectureScanRegist);
 		}else{
 			lectureScanRegist=regist;
-			lectureScanRegist.setIsRegist("Y");
+            lectureScanRegist.setIsRegist(GlobalConstant.FLAG_Y);
 			return lectureScanRegistMapper.updateByPrimaryKey(lectureScanRegist);
 		}
 	}

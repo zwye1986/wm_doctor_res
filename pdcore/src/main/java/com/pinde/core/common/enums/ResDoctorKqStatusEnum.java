@@ -25,7 +25,7 @@ public enum ResDoctorKqStatusEnum implements GeneralEnum<String> {
 	RevokeManagerAuditing("RevokeManagerAuditing","销假待管理员审核"),
 	RevokeManagerPass("RevokeManagerPass","销假审核通过"),
 	RevokeManagerUnPass("RevokeManagerUnPass","销假审核不通过"),
-	BackLeave("BackLeave","已撤销");
+    BackLeave("BackLeave", "已撤销");
 
 	private final String id;
 	private final String name;

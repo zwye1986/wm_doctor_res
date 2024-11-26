@@ -2,11 +2,13 @@ package com.pinde.res.biz.jswjw.impl;
 
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.app.common.GlobalUtil;
 import com.pinde.app.common.InitConfig;
 import com.pinde.app.common.UserResumeExtInfoForm;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.model.*;
+import com.pinde.core.model.SysUserExample.Criteria;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.res.biz.jswjw.IJswjwBiz;
@@ -20,7 +22,6 @@ import com.pinde.res.dao.stdp.ext.StdpResDoctorExtMapper;
 import com.pinde.res.dao.stdp.ext.TeachingActivityInfoExtMapper;
 import com.pinde.res.model.jswjw.mo.*;
 import com.pinde.sci.dao.base.*;
-import com.pinde.core.model.SysUserExample.Criteria;
 import com.pinde.sci.util.FtpHelperUtil;
 import com.pinde.sci.util.PicZoom;
 import com.pinde.sci.util.WeixinQiYeUtil;
@@ -450,7 +451,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             ResDoctor doctor = doctorMapper.selectByPrimaryKey(result.getDoctorFlow());
             //查看轮转计划排班设置是否开启
             JsresPowerCfg cfg = jsresPowerCfgMapper.selectByPrimaryKey("jsres_" + doctor.getOrgFlow() + "_org_process_scheduling_org");
-            if (null != cfg && StringUtil.isNotEmpty(cfg.getCfgValue()) && cfg.getCfgValue().equals("Y")) {
+            if (null != cfg && StringUtil.isNotEmpty(cfg.getCfgValue()) && cfg.getCfgValue().equals(GlobalConstant.FLAG_Y)) {
                 result.setBaseAudit("Passing"); //待审核
             }
             resultMapper.updateByPrimaryKeySelective(result);
@@ -519,9 +520,9 @@ public class JswjwBizImpl implements IJswjwBiz {
 //				}
 //			}
             if (Integer.valueOf(schResultMap.get("SCH_COUNT")) == 0) {
-                enterSubDeptData.put("canAdd", "N");
+                enterSubDeptData.put("canAdd", GlobalConstant.FLAG_N);
             } else {
-                enterSubDeptData.put("canAdd", "Y");
+                enterSubDeptData.put("canAdd", GlobalConstant.FLAG_Y);
             }
             Float schMonth = Float.parseFloat(rotationDept.getSchMonth());
 
@@ -1191,7 +1192,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                                 rec.get("activityRemark") == null ? "" : String.valueOf(rec.get("activityRemark"));
                         formDataMap.put("activity_content", activity_content);
                         formDataMap.put("activity_address", rec.get("activityAddress") == null ? "" : String.valueOf(rec.get("activityAddress")));
-                        formDataMap.put("isJoin", "Y");
+                        formDataMap.put("isJoin", GlobalConstant.FLAG_Y);
                     }
                     formDataMap.put("dataFlow", String.valueOf(rec.get("recFlow")));
                     dataList.add(formDataMap);
@@ -2149,7 +2150,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                     formDataMap.put("activity_content", activity_content);
                     formDataMap.put("activity_address", activity.get("activityAddress") == null ? "" : String.valueOf(activity.get("activityAddress")));
                     formDataMap.put("resultFlow", activity.get("resultFlow") == null ? "" : String.valueOf(activity.get("resultFlow")));
-                    formDataMap.put("isJoin", "Y");
+                    formDataMap.put("isJoin", GlobalConstant.FLAG_Y);
                 }
             } else {
                 String recContent = rec.getRecContent();
@@ -3632,14 +3633,14 @@ public class JswjwBizImpl implements IJswjwBiz {
     }
 
     public void updateResultHaveAfter(String schRotationDeptFlow, String operUserFlow, String recContent) throws DocumentException {
-        String haveAfterPic = "N";
+        String haveAfterPic = GlobalConstant.FLAG_N;
         if (StringUtil.isNotBlank(recContent)) {
             Document document = DocumentHelper.parseText(recContent);
             if (document != null) {
                 Element element = document.getRootElement();
                 List<Object> elem = element.elements("image");
                 if (elem != null && elem.size() > 0) {
-                    haveAfterPic = "Y";
+                    haveAfterPic = GlobalConstant.FLAG_Y;
                 }
             }
         }
@@ -3679,7 +3680,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         List<ResDoctorSchProcess> processList = processMapper.selectByExample(example);
         if (CollectionUtils.isNotEmpty(processList)) {
             ResDoctorSchProcess resDoctorSchProcess = processList.get(0);
-            resDoctorSchProcess.setTemporaryOut("Y");
+            resDoctorSchProcess.setTemporaryOut(GlobalConstant.FLAG_Y);
             resDoctorSchProcess.setTemporaryAuditStatusId("Auditing");
             resDoctorSchProcess.setTemporaryAuditStatusName("待审核");
             resDoctorSchProcess.setModifyTime(DateUtil.getCurrDateTime());
@@ -3728,7 +3729,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<SchArrangeResult> searchSchArrangeResultPassing(String doctorFlow, String rotationFlow) {
         SchArrangeResultExample example = new SchArrangeResultExample();
-        example.createCriteria().andRecordStatusEqualTo("Y").andDoctorFlowEqualTo(doctorFlow)
+        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(doctorFlow)
                 .andRotationFlowEqualTo(rotationFlow).andBaseAuditEqualTo("Passing");
         example.setOrderByClause("CREATE_TIME");
         return resultMapper.selectByExample(example);
@@ -4512,7 +4513,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 //				}
 
                 ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-                example.createCriteria().andRecordStatusEqualTo("Y").andDoctorFlowEqualTo(doctorFlow);
+                example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(doctorFlow);
                 example.setOrderByClause("CREATE_TIME DESC");
                 List<ResDoctorRecruit> resDoctorRecruits = recruitMapper.selectByExample(example);
                 ResDoctorRecruit resDoctorRecruit = null;
@@ -4789,7 +4790,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         result.setBaseAudit("Passed");
 	/*	//查看轮转计划排班设置是否开启
 		JsresPowerCfg cfg = jsresPowerCfgMapper.selectByPrimaryKey("jsres_"+doctor.getOrgFlow()+"_org_process_scheduling");
-		if (null ==cfg || StringUtil.isEmpty(cfg.getCfgValue()) || cfg.getCfgValue().equals("N") ){
+		if (null ==cfg || StringUtil.isEmpty(cfg.getCfgValue()) || cfg.getCfgValue().equals(GlobalConstant.FLAG_N) ){
 			result.setBaseAudit("user");	//表示是学员自己创建的且轮转计划排班设置未开启
 		}else {
 			result.setBaseAudit("Passing"); //待审核
@@ -4865,7 +4866,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 					|| !result.getSchEndDate().equals(endDate)){*/
             //查看轮转计划排班设置是否开启
             JsresPowerCfg cfg = jsresPowerCfgMapper.selectByPrimaryKey("jsres_" + doctor.getOrgFlow() + "_org_process_scheduling_org");
-            if (null != cfg && StringUtil.isNotEmpty(cfg.getCfgValue()) && cfg.getCfgValue().equals("Y")) {
+            if (null != cfg && StringUtil.isNotEmpty(cfg.getCfgValue()) && cfg.getCfgValue().equals(GlobalConstant.FLAG_Y)) {
                 result.setBaseAudit("Passing"); //待审核
             }
             /*}*/
@@ -5048,7 +5049,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<ResRec> searchByDoctorFlow(String doctorFlow, String date) {
         ResRecExample example = new ResRecExample();
         ResRecExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
         if (StringUtil.isNotBlank(doctorFlow)) {
             criteria.andOperUserFlowEqualTo(doctorFlow);
         }
@@ -6322,11 +6323,11 @@ public class JswjwBizImpl implements IJswjwBiz {
             if (StringUtil.isNotBlank(currUser.getUserName())) {
                 lectureScanRegist.setOperUserName(currUser.getUserName());
             }
-            lectureScanRegist.setIsRegist("Y");
+            lectureScanRegist.setIsRegist(GlobalConstant.FLAG_Y);
             return lectureScanRegistMapper.insertSelective(lectureScanRegist);
         } else {
             lectureScanRegist = regist;
-            lectureScanRegist.setIsRegist("Y");
+            lectureScanRegist.setIsRegist(GlobalConstant.FLAG_Y);
             return lectureScanRegistMapper.updateByPrimaryKey(lectureScanRegist);
         }
 
@@ -7443,7 +7444,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public void saveUserMacid(ResUserBindMacid macid) {
         ResUserBindMacid old = readMacidByUserFlow(macid.getUserFlow());
         if (old == null) {
-            macid.setRecordStatus("Y");
+            macid.setRecordStatus(GlobalConstant.FLAG_Y);
             macidMapper.insertSelective(macid);
         } else {
             macidMapper.updateByPrimaryKeySelective(macid);
@@ -7453,7 +7454,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public ResUserBindMacid readMacidByMacid(String uuid) {
         ResUserBindMacidExample example = new ResUserBindMacidExample();
-        example.createCriteria().andRecordStatusEqualTo("Y").andMacIdEqualTo(uuid);
+        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andMacIdEqualTo(uuid);
         List<ResUserBindMacid> list = macidMapper.selectByExample(example);
         if (list != null && list.size() > 0) {
             return list.get(0);
@@ -7522,7 +7523,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public int updateRecording(DoctorUntiedRecording recording) {
         String recordFlow = PkUtil.getUUID();
         recording.setRecordFlow(recordFlow);
-        recording.setRecordStatus("Y");
+        recording.setRecordStatus(GlobalConstant.FLAG_Y);
         String currDateTime = DateUtil.getCurrDateTime();
         recording.setCreateTime(currDateTime);
         recording.setModifyTime(currDateTime);
@@ -7563,7 +7564,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public int saveForgetPasswdUser(String userPhone, String code, String codeTime) {
         SysUserExample sysUserExample = new SysUserExample();
-        sysUserExample.createCriteria().andUserPhoneEqualTo(userPhone).andIsVerifyEqualTo("Y").andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        sysUserExample.createCriteria().andUserPhoneEqualTo(userPhone).andIsVerifyEqualTo(GlobalConstant.FLAG_Y).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
         List<SysUser> sysUsers = sysUserMapper.selectByExample(sysUserExample);
         if (sysUsers != null && sysUsers.size() > 0) {
             SysUser record = sysUsers.get(0);
@@ -7611,7 +7612,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 
     @Override
     public int saveAuthenSuccessUser(SysUser currentUser) {
-        currentUser.setIsVerify("Y");
+        currentUser.setIsVerify(GlobalConstant.FLAG_Y);
         return sysUserMapper.updateByPrimaryKey(currentUser);
     }
 
@@ -8002,7 +8003,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 jsresGraduationApply.setApplyFlow(PkUtil.getUUID());
                 jsresGraduationApply.setCreateTime(DateUtil.getCurrDateTime2());
                 jsresGraduationApply.setCreateUserFlow(user.getUserFlow());
-                jsresGraduationApply.setRecordStatus("Y");
+                jsresGraduationApply.setRecordStatus(GlobalConstant.FLAG_Y);
                 return this.graduationApplyMapper.insertSelective(jsresGraduationApply);
             }
         }
@@ -8017,7 +8018,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 return doctorRecruitMapper.updateByPrimaryKeySelective(recruit);
             } else {
                 recruit.setRecruitFlow(PkUtil.getUUID());
-                recruit.setRecordStatus("Y");
+                recruit.setRecordStatus(GlobalConstant.FLAG_Y);
                 recruit.setCreateTime(DateUtil.getCurrDateTime2());
                 recruit.setCreateUserFlow(user.getUserFlow());
                 return doctorRecruitMapper.insertSelective(recruit);
@@ -8158,7 +8159,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             signup.setSignupFlow(PkUtil.getGUID());
             signup.setCreateTime(DateUtil.getCurrDateTime());
             signup.setCreateUserFlow(user.getUserFlow());
-            signup.setRecordStatus("Y");
+            signup.setRecordStatus(GlobalConstant.FLAG_Y);
             return jsresExamSignupMapper.insertSelective(signup);
         } else {
             signup.setModifyTime(DateUtil.getCurrDateTime());
@@ -8180,7 +8181,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 resume.setUserName(user.getUserName());
                 resume.setCreateTime(DateUtil.getCurrDateTime());
                 resume.setCreateUserFlow(user.getUserFlow());
-                resume.setRecordStatus("Y");
+                resume.setRecordStatus(GlobalConstant.FLAG_Y);
                 return userResumpMapper.insert(resume);
             } else {
                 return GlobalConstant.ZERO_LINE;
@@ -8292,7 +8293,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 resScore.setScoreFlow(PkUtil.getUUID());
                 resScore.setCreateTime(DateUtil.getCurrDateTime());
                 resScore.setCreateUserFlow(user.getUserFlow());
-                resScore.setRecordStatus("Y");
+                resScore.setRecordStatus(GlobalConstant.FLAG_Y);
                 return scoreMapper.insert(resScore);
             }
         }
@@ -8521,7 +8522,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<SysLog> searchSysLog(SysLog log) {
         SysLogExample example = new SysLogExample();
         SysLogExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
         if (null != log) {
             if (StringUtil.isNotBlank(log.getUserFlow())) {
                 criteria.andUserFlowEqualTo(log.getUserFlow());
@@ -8542,7 +8543,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         SysUser user = new SysUser();
         String uuid = PkUtil.getUUID();
         user.setUserPhone(userPhone);
-        user.setIsVerify("Y");
+        user.setIsVerify(GlobalConstant.FLAG_Y);
         user.setVerifyCode(code);
         user.setVerifyCodeTime(DateUtil.getCurrDateTime2());
         user.setUserFlow(uuid);
@@ -8550,7 +8551,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         user.setUserPasswd(PasswordHelper.encryptPassword(uuid, userPasswd));
         user.setStatusId(UserStatusEnum.Added.getId());
         user.setStatusDesc(UserStatusEnum.Added.getName());
-        user.setRecordStatus("Y");
+        user.setRecordStatus(GlobalConstant.FLAG_Y);
         user.setStatusId(UserStatusEnum.Activated.getId());
         user.setStatusDesc(UserStatusEnum.Activated.getName());
         SysCfg cfg = cfgMapper.selectByPrimaryKey("res_doctor_role_flow");
@@ -8562,7 +8563,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             userRole.setWsId(currWsId);
             userRole.setRoleFlow(cfg.getCfgValue());
             userRole.setAuthTime(DateUtil.getCurrDate());
-            userRole.setRecordStatus("Y");
+            userRole.setRecordStatus(GlobalConstant.FLAG_Y);
             userRoleMapper.insertSelective(userRole);
         }
         return sysUserMapper.insert(user);
@@ -9096,7 +9097,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 doctor.setDoctorFlow(sysUser.getUserFlow());
                 doctor.setDoctorName(sysUser.getUserName());
             }
-            doctor.setRecordStatus("Y");
+            doctor.setRecordStatus(GlobalConstant.FLAG_Y);
             doctor.setCreateTime(DateUtil.getCurrDateTime());
             return doctorMapper.insert(doctor);
         }
@@ -9338,7 +9339,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             docRecWithBLOBs.setModifyTime(DateUtil.getCurrDateTime());
             return doctorRecruitMapper.updateByPrimaryKeySelective(docRecWithBLOBs);
         } else {
-            docRecWithBLOBs.setRecordStatus("Y");
+            docRecWithBLOBs.setRecordStatus(GlobalConstant.FLAG_Y);
             docRecWithBLOBs.setRecruitFlow(PkUtil.getUUID());
             docRecWithBLOBs.setCreateTime(DateUtil.getCurrDateTime());
             return doctorRecruitMapper.insert(docRecWithBLOBs);
@@ -9640,7 +9641,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         if (StringUtil.isNotBlank(phone)) {
             example.createCriteria().andPhoneEqualTo(phone);
         }
-        example.createCriteria().andRecordStatusEqualTo("Y").andAppSendEqualTo("Y");
+        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andAppSendEqualTo(GlobalConstant.FLAG_Y);
         List<VerificationCodeRecord> recordList = verificationCodeRecordMapper.selectByExample(example);
         if (recordList != null && recordList.size() > 0) {
             return recordList.get(0);
@@ -9686,7 +9687,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public ResDoctorSchProcess readSchProcessByResultFlow(String resultFlow) {
         ResDoctorSchProcessExample resDoctorSchProcessExample = new ResDoctorSchProcessExample();
-        resDoctorSchProcessExample.createCriteria().andRecordStatusEqualTo("Y").andSchResultFlowEqualTo(resultFlow);
+        resDoctorSchProcessExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andSchResultFlowEqualTo(resultFlow);
         List<ResDoctorSchProcess> resDoctorSchProcesses = processMapper.selectByExample(resDoctorSchProcessExample);
         if (CollectionUtils.isEmpty(resDoctorSchProcesses)) {
             return null;
@@ -9697,7 +9698,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResOutOfficeLock> readResOutOfficeLock(String userFlow, String auditStatus) {
         ResOutOfficeLockExample resOutOfficeLockExample = new ResOutOfficeLockExample();
-        ResOutOfficeLockExample.Criteria criteria = resOutOfficeLockExample.createCriteria().andRecordStatusEqualTo("Y").andUserFlowEqualTo(userFlow);
+        ResOutOfficeLockExample.Criteria criteria = resOutOfficeLockExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andUserFlowEqualTo(userFlow);
         if (StringUtil.isNotEmpty(auditStatus)) {
             criteria.andAuditStatusIdEqualTo(auditStatus);
         }

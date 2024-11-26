@@ -54,7 +54,7 @@ public class SubjectBizImpl implements ISubjectBiz {
 	@Override
 	public SysSubjCode getById(String id) {
 		SysSubjCodeExample example = new SysSubjCodeExample();
-		example.createCriteria().andSubjIdEqualTo(id).andRecordStatusEqualTo("Y");
+        example.createCriteria().andSubjIdEqualTo(id).andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
 		List<SysSubjCode> list = this.sysSubjCodeMapper.selectByExample(example);
 		if(list!=null&&list.size()>0){
 			return list.get(0);

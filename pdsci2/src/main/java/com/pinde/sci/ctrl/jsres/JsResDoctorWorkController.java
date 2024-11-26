@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
@@ -18,8 +19,8 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.enums.jsres.JsResTrainYearEnum;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.res.AfterRecTypeEnum;
-import com.pinde.sci.enums.res.RegistryTypeEnum;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.enums.RegistryTypeEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.Document;
@@ -96,7 +97,7 @@ public class JsResDoctorWorkController extends GeneralController {
 		SysOrg sysorg =new  SysOrg();
 		sysorg.setOrgProvId(org.getOrgProvId());
 		//市局角色
-		if(StringUtil.isNotBlank(roleFlag)&&GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)){
+		if (StringUtil.isNotBlank(roleFlag) && GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 			sysorg.setOrgCityId(org.getOrgCityId());
 		}
 		sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
@@ -247,7 +248,7 @@ public class JsResDoctorWorkController extends GeneralController {
 					else
 						count++;
 					countMap.put(recordFlow, count);
-					afterMap.put(recordFlow, "N");
+					afterMap.put(recordFlow, GlobalConstant.FLAG_N);
 					List<Map<String, Object>> imagelist = new ArrayList<Map<String, Object>>();
 //					ResRec rec = resRecBiz.queryResRec(recordFlow, userFlow, AfterRecTypeEnum.AfterSummary.getId());
 					ResSchProcessExpress rec = expressBiz.queryResRec(recordFlow, userFlow, AfterRecTypeEnum.AfterSummary.getId());
@@ -271,7 +272,7 @@ public class JsResDoctorWorkController extends GeneralController {
 						}
 					}
 					if (imagelist.size() > 0) {
-						afterMap.put(recordFlow, "Y");
+						afterMap.put(recordFlow, GlobalConstant.FLAG_Y);
 					}
 				}
 				model.addAttribute("afterMap",afterMap);

@@ -115,21 +115,21 @@ public class JsresResReductionManageController extends GeneralController {
             if (reduction == null || StringUtil.isBlank(reduction.getAuditStatusId())
                     || JszyBaseStatusEnum.LocalUnPassed.getId().equals(reduction.getAuditStatusId())
                     || JszyBaseStatusEnum.GlobalUnPassed.getId().equals(reduction.getAuditStatusId())) {
-                model.addAttribute("canEdit", "Y");
+                model.addAttribute("canEdit", GlobalConstant.FLAG_Y);
             } else {
-                model.addAttribute("canEdit", "N");
+                model.addAttribute("canEdit", GlobalConstant.FLAG_N);
             }
             //1.助理全科2.已经减免的不可以申请减免3.只有审核通过的记录才可以减免
             //1.招录信息审核通过展示减免
             if (JszyResDoctorAuditStatusEnum.Passed.getId().equals(doctorRecruit.getAuditStatusId())) {
                 //2.助理全科不展示减免
                 if (JszyTrainCategoryEnum.TCMAssiGeneral.getId().equals(doctorRecruit.getCatSpeId())) {
-                    model.addAttribute("showReduction", "N");
+                    model.addAttribute("showReduction", GlobalConstant.FLAG_N);
                 } else {
-                    model.addAttribute("showReduction", "Y");
+                    model.addAttribute("showReduction", GlobalConstant.FLAG_Y);
                 }
             } else {
-                model.addAttribute("showReduction", "N");
+                model.addAttribute("showReduction", GlobalConstant.FLAG_N);
             }
 
             model.addAttribute("reduction", reduction);

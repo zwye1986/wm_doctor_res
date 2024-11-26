@@ -1,6 +1,8 @@
 package com.pinde.sci.common.util;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.TestPaperExample;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.SpringUtil;
@@ -113,57 +115,6 @@ public class SMSUtil {
         this.content = content;
     }
 
-    public static void main(String[] args) {
-//        String smsCount = queryRemainingCount();
-//        System.out.println(smsCount);
-
-       /* SMSUtil smsUtil = new SMSUtil("18107981717", "麻成双学员，恭喜您被成都中医药大学附属医院医药卫生进修录取，请登录成都中医附院进修生管理系统，查看详细的录取通知信息。【成都中医附院】");
-        SysSmsLog sSmsRecord = smsUtil.send("10001", "101", "R101");
-
-        System.out.println(sSmsRecord.getSmsLogFlow());
-        System.out.println(sSmsRecord.getSmsUserName());
-        System.out.println(sSmsRecord.getSmsSendTime());
-        System.out.println(sSmsRecord.getSmsContent());
-        System.out.println(sSmsRecord.getSmsMobile());
-        System.out.println(sSmsRecord.getSmsReceiverCount());
-        System.out.println(sSmsRecord.getSmsTempFlow());
-        System.out.println(sSmsRecord.getStatusCode());
-        System.out.println(sSmsRecord.getStatusName());
-        System.out.println(sSmsRecord.getRelId());
-        System.out.println(sSmsRecord.getSmsResponseMsg());*/
-
-        SMSUtil smsUtil = new SMSUtil("13022525957");
-        int code = (int) ((Math.random() * 9 + 1) * 1000);
-        SysSmsLog sSmsRecord = smsUtil.send("10001", GlobalConstant.JSRES_TEMPLATE, "R101", code);
-        System.out.println(sSmsRecord.getSmsLogFlow());
-        System.out.println(sSmsRecord.getSmsUserName());
-        System.out.println(sSmsRecord.getSmsSendTime());
-        System.out.println(sSmsRecord.getSmsContent());
-        System.out.println(sSmsRecord.getSmsMobile());
-        System.out.println(sSmsRecord.getSmsReceiverCount());
-        System.out.println(sSmsRecord.getSmsTempFlow());
-        System.out.println(sSmsRecord.getStatusCode());
-        System.out.println(sSmsRecord.getStatusName());
-        System.out.println(sSmsRecord.getRelId());
-        System.out.println(sSmsRecord.getSmsResponseMsg());
-//        result================
-//        {"stat":"100","message":"发送成功"}
-//        result================
-//        10001
-//        njpdxx-test
-//        20170706094054
-//        麻成双学员，恭喜您被成都中医药大学附属医院医药卫生进修录取，请登录成都中医附院进修生管理系统，查看详细的录取通知信息。【成都中医附院】
-//        18107981717
-//        1
-//        101
-//        100
-//        发送成功
-//        R101
-//        {"stat":"100","message":"发送成功"}
-
-//        System.out.println("***学员，恭喜您被成都中医药大学附属医院医药卫生进修录取，请登录成都中医附院进修生管理系统，查看详细的录取通知信息。【成都中医附院】".length());
-
-    }
 
     /**
      * 发送信息的接口方法
@@ -173,7 +124,7 @@ public class SMSUtil {
      * @param relType
      * @return
      */
-    public SysSmsLog send(String smsLogFlow, String smsTempFlow, String relId, String relType) {
+    public TestPaperExample.SysSmsLog send(String smsLogFlow, String smsTempFlow, String relId, String relType) {
         return sendMessage(smsLogFlow, smsTempFlow, relId, relType);
     }
 
@@ -184,7 +135,7 @@ public class SMSUtil {
      * @param relId
      * @return
      */
-    public SysSmsLog send(String smsLogFlow, String smsTempFlow, String relId) {
+    public TestPaperExample.SysSmsLog send(String smsLogFlow, String smsTempFlow, String relId) {
         return sendMessage(smsLogFlow, smsTempFlow, relId, null);
     }
 
@@ -195,7 +146,7 @@ public class SMSUtil {
      * @param relId
      * @return
      */
-    public SysSmsLog send(String smsLogFlow, String smsTempFlow, String relId,Integer code) {
+    public TestPaperExample.SysSmsLog send(String smsLogFlow, String smsTempFlow, String relId, Integer code) {
         return sendMessage(smsLogFlow, smsTempFlow, relId, null,code);
     }
 
@@ -208,7 +159,7 @@ public class SMSUtil {
      * @return
      */
     @SuppressWarnings("finally")
-    private SysSmsLog sendMessage(String smsLogFlow, String smsTempFlow, String relId, String relType) {
+    private TestPaperExample.SysSmsLog sendMessage(String smsLogFlow, String smsTempFlow, String relId, String relType) {
         Log logger = LogFactory.getLog(SMSUtil.class);
         String result = "";
         // 创建StringBuffer对象用来操作字符串
@@ -251,7 +202,7 @@ public class SMSUtil {
         } finally {
             Map<String, String> map = (Map<String, String>)JSON.parse(result);
 
-            SysSmsLog sysSmsLog = new SysSmsLog();
+            TestPaperExample.SysSmsLog sysSmsLog = new TestPaperExample.SysSmsLog();
             if(StringUtil.isNotBlank(smsLogFlow)){
                 sysSmsLog.setSmsLogFlow(smsLogFlow);
             }
@@ -282,7 +233,7 @@ public class SMSUtil {
      * @return
      */
     @SuppressWarnings("finally")
-    private SysSmsLog sendMessage(String smsLogFlow, String smsTempFlow, String relId, String relType,Integer code) {
+    private TestPaperExample.SysSmsLog sendMessage(String smsLogFlow, String smsTempFlow, String relId, String relType, Integer code) {
         Log logger = LogFactory.getLog(SMSUtil.class);
         String result = "";
         // 创建StringBuffer对象用来操作字符串
@@ -327,7 +278,7 @@ public class SMSUtil {
         } finally {
             Map<String, String> map = (Map<String, String>)JSON.parse(result);
 
-            SysSmsLog sysSmsLog = new SysSmsLog();
+            TestPaperExample.SysSmsLog sysSmsLog = new TestPaperExample.SysSmsLog();
             if(StringUtil.isNotBlank(smsLogFlow)){
                 sysSmsLog.setSmsLogFlow(smsLogFlow);
             }
@@ -643,7 +594,7 @@ public class SMSUtil {
             return "返回结果异常";
         } finally {
             Map<String, String> map = (Map<String, String>)JSON.parse(result);//默认json格式
-            SysSmsLog sysSmsLog = new SysSmsLog();
+            TestPaperExample.SysSmsLog sysSmsLog = new TestPaperExample.SysSmsLog();
             sysSmsLog.setSmsLogFlow(PkUtil.getUUID());//发送日志流水号
             sysSmsLog.setSmsUserName(this.uid);
             sysSmsLog.setSmsSendTime(DateUtil.getCurrDateTime());

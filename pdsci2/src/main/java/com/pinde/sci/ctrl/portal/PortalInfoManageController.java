@@ -410,7 +410,7 @@ public class PortalInfoManageController extends GeneralController {
 	@RequestMapping("/delFile")
 	@ResponseBody
 	int delFile(PortalFile file){
-		file.setRecordStatus("N");
+        file.setRecordStatus(GlobalConstant.FLAG_N);
 		return infoManageBiz.edit(file);
 	}
 
@@ -441,7 +441,7 @@ public class PortalInfoManageController extends GeneralController {
 		String currentDate = DateUtil.getCurrDate();
 		suggest.setSubmitTime(currentDate);
 		PortalSuggestExample example = new PortalSuggestExample();
-		example.createCriteria().andRecordStatusEqualTo("Y").andUserPhoneEqualTo(suggest.getUserPhone()).andSubmitTimeEqualTo(currentDate);
+        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andUserPhoneEqualTo(suggest.getUserPhone()).andSubmitTimeEqualTo(currentDate);
 		int count = portalSuggestMapper.countByExample(example);
 		if(count>0){
 			return -1;
@@ -454,7 +454,7 @@ public class PortalInfoManageController extends GeneralController {
 	public int changeShowFlag(PortalSuggest suggest){
 		if(GlobalConstant.FLAG_Y.equals(suggest.getShowFlag())){
 			PortalSuggestExample example = new PortalSuggestExample();
-			example.createCriteria().andRecordStatusEqualTo("Y").andShowFlagEqualTo("Y");
+            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andShowFlagEqualTo(GlobalConstant.FLAG_Y);
 			int count = portalSuggestMapper.countByExample(example);
 			if(count>=3){
 				return -1;

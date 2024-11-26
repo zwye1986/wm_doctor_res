@@ -25,7 +25,7 @@ import com.pinde.sci.dao.res.ResRecExtMapper;
 import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
 import com.pinde.sci.enums.jszy.JszyResTrainYearEnum;
 import com.pinde.sci.enums.jszy.JszyTrainCategoryEnum;
-import com.pinde.sci.enums.res.*;
+import com.pinde.core.common.enums.*;
 import com.pinde.sci.form.res.ResRecForm;
 import com.pinde.sci.keyUtil.PdUtil;
 import com.pinde.sci.model.mo.*;
@@ -729,7 +729,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				{
 					String name = itemEle.attributeValue("name");
 					Element element = DocumentHelper.createElement(name);
-					element.addAttribute("isGroup","Y");
+					element.addAttribute("isGroup", GlobalConstant.FLAG_Y);
 					List<Element> igItemList = itemEle.elements();//查找itemGroup所有item子节点
 					if (igItemList != null && igItemList.size() > 0) {
 						String itemName = igItemList.get(0).attributeValue("name");;//查找itemGroup第一个item子节点的name
@@ -3142,7 +3142,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				recTypeIds.add(regType.getId());
 				nowRecTypeIds1.add(regType.getId());
 			}
-			recTypeMap.put("N",nowRecTypeIds1);
+			recTypeMap.put(GlobalConstant.FLAG_N, nowRecTypeIds1);
 		}
 		List<String> nowRecTypeIds2 = new ArrayList<String>();
 		for(PracticRegistryTypeEnum regType : PracticRegistryTypeEnum.values()){
@@ -3194,7 +3194,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					SchRotationDept schRotationDepttemp = resultSchRotationDeptMap.get(result.getResultFlow());
 					List<String> recTypeIds4Ever = new ArrayList<String>();
 					if (schRotationDepttemp == null || JszyTCMPracticEnum.N.getId().equals(schRotationDepttemp.getPracticOrTheory())) {
-						recTypeIds4Ever = recTypeMap.get("N");
+						recTypeIds4Ever = recTypeMap.get(GlobalConstant.FLAG_N);
 					} else if (JszyTCMPracticEnum.BasicPractice.getId().equals(schRotationDepttemp.getPracticOrTheory())) {
 						recTypeIds4Ever = recTypeMap.get("BasicPractice");
 					} else if (JszyTCMPracticEnum.TheoreticalStudy.getId().equals(schRotationDepttemp.getPracticOrTheory())) {
@@ -3285,7 +3285,7 @@ public class ResRecBizImpl implements IResRecBiz {
 						if (srd == null || JszyTCMPracticEnum.N.getId().equals(srd.getPracticOrTheory())) {
 							if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_"+deptReq.getRecTypeId()))
 									&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())){
-								countReqFuc(deptReq,per,reqNumMap,itemMap,"N");
+								countReqFuc(deptReq, per, reqNumMap, itemMap, GlobalConstant.FLAG_N);
 							}
 						} else if (JszyTCMPracticEnum.BasicPractice.getId().equals(srd.getPracticOrTheory())) {
 							if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + deptReq.getRecTypeId()))
@@ -3542,7 +3542,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					recTypeIds.add(regType.getId());
 					nowRecTypeIds1.add(regType.getId());
 				}
-				recTypeMap.put("N", nowRecTypeIds1);
+				recTypeMap.put(GlobalConstant.FLAG_N, nowRecTypeIds1);
 			}
 			List<String> nowRecTypeIds2 = new ArrayList<String>();
 			for (PracticRegistryTypeEnum regType : PracticRegistryTypeEnum.values()) {
@@ -3608,7 +3608,7 @@ public class ResRecBizImpl implements IResRecBiz {
 						SchRotationDept schRotationDepttemp = resultSchRotationDeptMap.get(result.getResultFlow());
 						List<String> recTypeIds4Ever = new ArrayList<String>();
 						if (schRotationDepttemp == null || JszyTCMPracticEnum.N.getId().equals(schRotationDepttemp.getPracticOrTheory())) {
-							recTypeIds4Ever = recTypeMap.get("N");
+							recTypeIds4Ever = recTypeMap.get(GlobalConstant.FLAG_N);
 						} else if (JszyTCMPracticEnum.BasicPractice.getId().equals(schRotationDepttemp.getPracticOrTheory())) {
 							recTypeIds4Ever = recTypeMap.get("BasicPractice");
 						} else if (JszyTCMPracticEnum.TheoreticalStudy.getId().equals(schRotationDepttemp.getPracticOrTheory())) {
@@ -3728,7 +3728,7 @@ public class ResRecBizImpl implements IResRecBiz {
 							if (srd == null || JszyTCMPracticEnum.N.getId().equals(srd.getPracticOrTheory())) {
 								if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + deptReq.getRecTypeId()))
 										&& PdUtil.findChineseOrWestern(doctorFlowToMedicineTypeIdMap.get(entry.getKey()), deptReq.getRecTypeId())) {
-									countReqFuc(deptReq, per, reqNumMap, itemMap, "N");
+									countReqFuc(deptReq, per, reqNumMap, itemMap, GlobalConstant.FLAG_N);
 								}
 							} else if (JszyTCMPracticEnum.BasicPractice.getId().equals(srd.getPracticOrTheory())) {
 								if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + deptReq.getRecTypeId()))
@@ -4009,7 +4009,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				recTypeIds.add(regType.getId());
 				nowRecTypeIds1.add(regType.getId());
 			}
-			recTypeMap.put("N",nowRecTypeIds1);
+			recTypeMap.put(GlobalConstant.FLAG_N, nowRecTypeIds1);
 		}
 		List<String> nowRecTypeIds2 = new ArrayList<String>();
 		for(PracticRegistryTypeEnum regType : PracticRegistryTypeEnum.values()){
@@ -4057,7 +4057,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					SchRotationDept schRotationDepttemp = resultSchRotationDeptMap.get(result.getResultFlow());
 					List<String> recTypeIds4Ever = new ArrayList<String>();
 					if (schRotationDepttemp == null || JszyTCMPracticEnum.N.getId().equals(schRotationDepttemp.getPracticOrTheory())) {
-						recTypeIds4Ever = recTypeMap.get("N");
+						recTypeIds4Ever = recTypeMap.get(GlobalConstant.FLAG_N);
 					} else if (JszyTCMPracticEnum.BasicPractice.getId().equals(schRotationDepttemp.getPracticOrTheory())) {
 						recTypeIds4Ever = recTypeMap.get("BasicPractice");
 					} else if (JszyTCMPracticEnum.TheoreticalStudy.getId().equals(schRotationDepttemp.getPracticOrTheory())) {
@@ -4145,7 +4145,7 @@ public class ResRecBizImpl implements IResRecBiz {
 						if (srd == null || JszyTCMPracticEnum.N.getId().equals(srd.getPracticOrTheory())) {
 							if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_"+deptReq.getRecTypeId()))
 									&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())){
-								countReqFuc(deptReq,per,reqNumMap,itemMap,"N");
+								countReqFuc(deptReq, per, reqNumMap, itemMap, GlobalConstant.FLAG_N);
 							}
 						} else if (JszyTCMPracticEnum.BasicPractice.getId().equals(srd.getPracticOrTheory())) {
 							if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + deptReq.getRecTypeId()))
@@ -6698,7 +6698,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 	@Override
 	public void updateResultHaveAfter(String schRotationDeptFlow, String operUserFlow, String recContent) throws DocumentException {
-		String haveAfterPic="N";
+		String haveAfterPic = GlobalConstant.FLAG_N;
 		if(StringUtil.isNotBlank(recContent))
 		{
 			Document document=DocumentHelper.parseText(recContent);
@@ -6707,7 +6707,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				List<Object> elem=element.elements("image");
 				if(elem!=null&&elem.size()>0)
 				{
-					haveAfterPic="Y";
+					haveAfterPic = GlobalConstant.FLAG_Y;
 				}
 			}
 		}

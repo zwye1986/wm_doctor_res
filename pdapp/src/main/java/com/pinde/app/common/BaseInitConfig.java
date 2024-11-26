@@ -1,6 +1,5 @@
 package com.pinde.app.common;
 
-import com.pinde.core.util.GlobalUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

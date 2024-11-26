@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.res;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -19,7 +19,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
 import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.res.*;
+import com.pinde.core.common.enums.*;
 import com.pinde.sci.enums.sch.SchStatusEnum;
 import com.pinde.sci.enums.sch.SchUnitEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
@@ -2241,7 +2241,7 @@ public class ResManagerController extends GeneralController {
 
 		parMp.put("recTypeIds",recTypeIds);
 
-		String flag=InitConfig.getSysCfg("res_custom_result_flag")==null?"N":InitConfig.getSysCfg("res_custom_result_flag");
+        String flag = InitConfig.getSysCfg("res_custom_result_flag") == null ? GlobalConstant.FLAG_N : InitConfig.getSysCfg("res_custom_result_flag");
 		parMp.put("flag",flag);
 		String dataStr = "";
 		List<String> docTypeList = new ArrayList<>();
@@ -3549,12 +3549,12 @@ public class ResManagerController extends GeneralController {
 		List<ResRec> clinic=resRecBiz.searchByRecForAudit(processFlow,AfterRecTypeEnum.MonthlyAssessment_clinic.getId());
 		if(clinic!=null&&clinic.size()>0)
 		{
-			model.addAttribute("clinic","Y");
+            model.addAttribute("clinic", GlobalConstant.FLAG_Y);
 		}
 		List<ResRec> area=resRecBiz.searchByRecForAudit(processFlow,AfterRecTypeEnum.MonthlyAssessment_inpatientArea.getId());
 		if(area!=null&&area.size()>0)
 		{
-			model.addAttribute("area","Y");
+            model.addAttribute("area", GlobalConstant.FLAG_Y);
 		}
 
 		return "res/hospital/cycleResultsDetails";
@@ -3843,7 +3843,7 @@ public class ResManagerController extends GeneralController {
 		boolean flag = resLectureInfoBiz.getDelLectureInfoFlag(lectureFlow);
 		// flag:true表示不能删除 返回N 前台加提示信息
 		if(flag){
-			return "N";
+            return GlobalConstant.FLAG_N;
 		}
 		ResLectureInfo lectureInfo = resLectureInfoBiz.read(lectureFlow);
 		lectureInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
@@ -4028,16 +4028,16 @@ public class ResManagerController extends GeneralController {
 					for(SysUserRole userRole:userRoles)
 					{
 						if (StringUtil.isNotBlank(roleTeacher)&&roleTeacher.equals(userRole.getRoleFlow())) {
-							teaMap.put(user.getUserFlow(),"Y");
+                            teaMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
 						}
 						if (StringUtil.isNotBlank(roleHead)&&roleHead.equals(userRole.getRoleFlow())) {
-							headMap.put(user.getUserFlow(),"Y");
+                            headMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
 						}
 						if (StringUtil.isNotBlank(roleSecretary) && roleSecretary.equals(userRole.getRoleFlow())) {
-							secretaryMap.put(user.getUserFlow(),"Y");
+                            secretaryMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
 						}
 						if (StringUtil.isNotBlank(roleDisciple) && roleDisciple.equals(userRole.getRoleFlow())) {
-							discipleMap.put(user.getUserFlow(),"Y");
+                            discipleMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
 						}
 					}
 				}
@@ -4118,16 +4118,16 @@ public class ResManagerController extends GeneralController {
 					for(SysUserRole userRole:userRoles)
 					{
 						if (StringUtil.isNotBlank(roleTeacher)&&roleTeacher.equals(userRole.getRoleFlow())) {
-							teaMap.put(user.getUserFlow(),"Y");
+                            teaMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
 						}
 						if (StringUtil.isNotBlank(roleHead)&&roleHead.equals(userRole.getRoleFlow())) {
-							headMap.put(user.getUserFlow(),"Y");
+                            headMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
 						}
 						if (StringUtil.isNotBlank(roleSecretary) && roleSecretary.equals(userRole.getRoleFlow())) {
-							secretaryMap.put(user.getUserFlow(),"Y");
+                            secretaryMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
 						}
 						if (StringUtil.isNotBlank(roleDisciple) && roleDisciple.equals(userRole.getRoleFlow())) {
-							discipleMap.put(user.getUserFlow(),"Y");
+                            discipleMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
 						}
 					}
 				}
@@ -4323,10 +4323,10 @@ public class ResManagerController extends GeneralController {
 					lectureInfos.add(lectureInfo);
 					if(GlobalConstant.FLAG_Y.equals(isScan))
 					{
-						scanMap.put(lectureFlow,"Y");
+                        scanMap.put(lectureFlow, GlobalConstant.FLAG_Y);
 					}
 					if(GlobalConstant.FLAG_Y.equals(isScan2)) {
-						scan2Map.put(lectureFlow, "Y");
+                        scan2Map.put(lectureFlow, GlobalConstant.FLAG_Y);
 					}
 					evaMap.put(lectureFlow,dateFlag);
 				}
@@ -4838,7 +4838,7 @@ public class ResManagerController extends GeneralController {
         parMp.put("docName", docName);
         parMp.put("cardNo", cardNo);
         parMp.put("recTypeIds",recTypeIds);
-        String flag=InitConfig.getSysCfg("res_custom_result_flag")==null?"N":InitConfig.getSysCfg("res_custom_result_flag");
+        String flag = InitConfig.getSysCfg("res_custom_result_flag") == null ? GlobalConstant.FLAG_N : InitConfig.getSysCfg("res_custom_result_flag");
         parMp.put("flag",flag);
         parMp.put("workOrgId",workOrgId);
         List<Map<String,Object>> rltLst = processBiz.docWorkingSearch(parMp);
@@ -4936,7 +4936,7 @@ public class ResManagerController extends GeneralController {
 		parMp.put("graduationYear", graduationYear);
 		parMp.put("trainingYears", pynx);//培养年限
 		parMp.put("recTypeIds", recTypeIds);
-		String flag = InitConfig.getSysCfg("res_custom_result_flag") == null ? "N" : InitConfig.getSysCfg("res_custom_result_flag");
+        String flag = InitConfig.getSysCfg("res_custom_result_flag") == null ? GlobalConstant.FLAG_N : InitConfig.getSysCfg("res_custom_result_flag");
 		parMp.put("flag", flag);
 		parMp.put("order", StringUtil.isBlank(order) ? "wcxx" : order);//排序规则
 		parMp.put("workOrgId",workOrgId);
@@ -5467,9 +5467,9 @@ public class ResManagerController extends GeneralController {
 		boolean flag = resLectureInfoBiz.getDelLectureInfoFlag(lectureFlow);
 		// flag:true表示不能删除 返回N 不能删除 Y可以删除
 		if (flag) {
-			return "N";
+            return GlobalConstant.FLAG_N;
 		}
-		return "Y";
+        return GlobalConstant.FLAG_Y;
 	}
 
 
@@ -6229,7 +6229,7 @@ public class ResManagerController extends GeneralController {
 		ResLectureScanRegist regist=resLectureScanRegistBiz.searchByUserFlowAndLectureFlow(userFlow,lectureFlow);
 		if(regist!=null&&GlobalConstant.FLAG_Y.equals(regist.getIsRegist()))
 		{
-			model.addAttribute("isRegiest", "N");
+            model.addAttribute("isRegiest", GlobalConstant.FLAG_N);
 			model.addAttribute("msg", "已经报过名了！！请刷新列表");
 			return "res/doctor/lectureRegistNew";
 		}
@@ -6240,20 +6240,20 @@ public class ResManagerController extends GeneralController {
 			if(infos!=null&&infos.size()>0)
 			{
 				ResLectureInfo resLectureInfo=infos.get(0);
-				model.addAttribute("isRegiest", "N");
+                model.addAttribute("isRegiest", GlobalConstant.FLAG_N);
 				model.addAttribute("msg", "已报名同一时间【"+resLectureInfo.getLectureContent()+"】，不能报名！");
 				return "res/doctor/lectureRegistNew";
 			}
 			int count= resLectureScanRegistBiz.editLectureScanRegist(lectureFlow);
 			if(count<0)
 			{
-				model.addAttribute("isRegiest", "N");
+                model.addAttribute("isRegiest", GlobalConstant.FLAG_N);
 				model.addAttribute("msg", "该讲座报名人数已满，请刷新列表页面！");
 				return "res/doctor/lectureRegistNew";
 			}
 			if(count==0)
 			{
-				model.addAttribute("isRegiest", "N");
+                model.addAttribute("isRegiest", GlobalConstant.FLAG_N);
 				model.addAttribute("msg", "报名失败，请刷新列表页面！");
 				return "res/doctor/lectureRegistNew";
 			}
@@ -6269,9 +6269,9 @@ public class ResManagerController extends GeneralController {
 			model.addAttribute("hour", hour);
 			String min = lectureStartTime.substring(3, 5);
 			model.addAttribute("min", min);
-			model.addAttribute("isRegiest", "Y");
+            model.addAttribute("isRegiest", GlobalConstant.FLAG_Y);
 		}else{
-			model.addAttribute("isRegiest", "N");
+            model.addAttribute("isRegiest", GlobalConstant.FLAG_N);
 			model.addAttribute("msg", "该讲座报名人数已满，请刷新列表页面！");
 		}
 		return "res/doctor/lectureRegistNew";
@@ -6310,7 +6310,7 @@ public class ResManagerController extends GeneralController {
 			// 保存评分用到的参数
 			Map<String, Object> paramMap = new HashMap<String, Object>();
 			SysUser currUser = GlobalContext.getCurrentUser();
-			paramMap.put("recordStatus", "Y");
+            paramMap.put("recordStatus", GlobalConstant.FLAG_Y);
 			paramMap.put("operUserFlow", currUser.getUserFlow());
 			paramMap.put("operUserName", currUser.getUserName());
 			paramMap.put("createTime", DateUtil.getCurrDateTime());
@@ -6381,7 +6381,7 @@ public class ResManagerController extends GeneralController {
 			}
 		}
 		schArrangeResultMap.put("docTypeList", docTypeList);
-		schArrangeResultMap.put("isAfter", "Y");
+        schArrangeResultMap.put("isAfter", GlobalConstant.FLAG_Y);
 		schArrangeResultMap.put("biaoJi", biaoJi);
 		schArrangeResultMap.put("trainingTypeId", TrainCategoryEnum.DoctorTrainingSpe.getId());
 		PageHelper.startPage(currentPage, getPageSize(request));
@@ -6424,7 +6424,7 @@ public class ResManagerController extends GeneralController {
 			}
 		}
 		schArrangeResultMap.put("docTypeList", docTypeList);
-		schArrangeResultMap.put("isAfter", "Y");
+        schArrangeResultMap.put("isAfter", GlobalConstant.FLAG_Y);
 		schArrangeResultMap.put("biaoJi", biaoJi);
 		schArrangeResultMap.put("trainingTypeId",TrainCategoryEnum.AssiGeneral.getId());
 		PageHelper.startPage(currentPage, getPageSize(request));
@@ -6469,7 +6469,7 @@ public class ResManagerController extends GeneralController {
 			}
 		}
 		schArrangeResultMap.put("docTypeList", docTypeList);
-		schArrangeResultMap.put("isAfter", "Y");
+        schArrangeResultMap.put("isAfter", GlobalConstant.FLAG_Y);
 		schArrangeResultMap.put("biaoJi", biaoJi);
 		schArrangeResultMap.put("trainingTypeId",TrainCategoryEnum.DoctorTrainingSpe.getId());
 		List<Map<String, String>> schArrangeResult=iResDoctorProcessBiz.temporaryOutSearch(schArrangeResultMap);
@@ -6523,7 +6523,7 @@ public class ResManagerController extends GeneralController {
 			}
 		}
 		schArrangeResultMap.put("docTypeList", docTypeList);
-		schArrangeResultMap.put("isAfter", "Y");
+        schArrangeResultMap.put("isAfter", GlobalConstant.FLAG_Y);
 		schArrangeResultMap.put("biaoJi", biaoJi);
 		schArrangeResultMap.put("trainingTypeId",TrainCategoryEnum.AssiGeneral.getId());
 		List<Map<String, String>> schArrangeResult=iResDoctorProcessBiz.temporaryOutSearch(schArrangeResultMap);

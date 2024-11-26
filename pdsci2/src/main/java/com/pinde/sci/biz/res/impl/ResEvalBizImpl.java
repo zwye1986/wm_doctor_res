@@ -1,6 +1,8 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResEvalBiz;
@@ -200,7 +202,7 @@ public class ResEvalBizImpl implements IResEvalBiz {
                 if(!newFormFlows.contains(oldFormFLow)){
                     ResBaseevalFormCfg delCfg = new ResBaseevalFormCfg();
                     delCfg.setRecordFlow(oldCfg.getRecordFlow());
-                    delCfg.setRecordStatus("N");
+                    delCfg.setRecordStatus(GlobalConstant.FLAG_N);
                     editEvalCfg(delCfg);
                 }
             }

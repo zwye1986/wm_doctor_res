@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.main;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.config.WorkStation;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDoctorBiz;
@@ -213,7 +214,7 @@ public class MainController extends GeneralController {
 		//如果是科研工作站
 		if("srm".equals(workStationId)){
 			if(checkUser(user)){
-				model.addAttribute("finishUserInfoFlag","Y");
+                model.addAttribute("finishUserInfoFlag", GlobalConstant.FLAG_Y);
 			}
 		}
 		String cfg13= InitConfig.getSysCfg("jswjw_"+user.getOrgFlow()+"_P013");

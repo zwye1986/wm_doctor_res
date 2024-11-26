@@ -220,11 +220,11 @@ public class LoginBizImpl implements ILoginBiz{
 					if(!GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())){
 						if("osca-xy".equals(InitConfig.getModuleIdByMenuId(currUserMenuIdList.get(i)))||
 								"osca-sjbmgl".equals(InitConfig.getModuleIdByMenuId(currUserMenuIdList.get(i)))){
-							isAdmin="N";
+                            isAdmin = GlobalConstant.FLAG_N;
 							break;
 						}
 						if("osca-gly".equals(InitConfig.getModuleIdByMenuId(currUserMenuIdList.get(i)))){
-							isAdmin="Y";
+                            isAdmin = GlobalConstant.FLAG_Y;
 						}
 					}
 					if("osca-gly-jcxxgl-khxm".equals(currUserMenuIdList.get(i))){
@@ -237,7 +237,7 @@ public class LoginBizImpl implements ILoginBiz{
 						currUserMenuIdList.remove(i);
 					}
 				}
-				if(isAdmin.equals("Y")&&StringUtil.isNotBlank(GlobalContext.getCurrentUser().getOrgFlow())){
+                if (isAdmin.equals(GlobalConstant.FLAG_Y) && StringUtil.isNotBlank(GlobalContext.getCurrentUser().getOrgFlow())) {
 					OscaOrgMenu oscaOrgMenu=new OscaOrgMenu();
 					oscaOrgMenu.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 					List<OscaOrgMenu> oscaOrgMenus=oscaOrgMenuBiz.searchAllOrgMenu(oscaOrgMenu);

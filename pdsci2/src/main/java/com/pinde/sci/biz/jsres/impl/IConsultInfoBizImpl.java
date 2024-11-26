@@ -127,7 +127,7 @@ public class IConsultInfoBizImpl implements IConsultInfoBiz {
     @Override
     public Integer delete(String consultInfoFlow){
         ConsultInfo consultInfo = new ConsultInfo();
-        consultInfo.setRecordStatus("N");
+        consultInfo.setRecordStatus(GlobalConstant.FLAG_N);
         consultInfo.setConsultInfoFlow(consultInfoFlow);
         return consultInfoMapper.updateByPrimaryKeySelective(consultInfo);
     }

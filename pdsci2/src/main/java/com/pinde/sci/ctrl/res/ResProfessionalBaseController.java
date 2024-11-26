@@ -1,7 +1,9 @@
 package com.pinde.sci.ctrl.res;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -17,9 +19,9 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.enums.res.AfterRecTypeEnum;
-import com.pinde.sci.enums.res.RecDocCategoryEnum;
-import com.pinde.sci.enums.res.RegistryTypeEnum;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.enums.RecDocCategoryEnum;
+import com.pinde.core.common.enums.RegistryTypeEnum;
 import com.pinde.sci.enums.sch.SchUnitEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
@@ -463,7 +465,7 @@ public class ResProfessionalBaseController extends GeneralController {
 			doctorTypeIdList = Arrays.asList(doctorTypeIds);
 			model.addAttribute("doctorTypeIdList",doctorTypeIdList);
 		}else{
-			List<SysDict> dictList=DictTypeEnum.sysListDictMap.get("DoctorType");
+			List<SysDict> dictList = DictTypeEnum.sysListDictMap.get("DoctorType");
 			for(SysDict s:dictList){
 				doctorTypeIdList.add(s.getDictId());
 			}
@@ -776,9 +778,9 @@ public class ResProfessionalBaseController extends GeneralController {
 					List<PubFile> files=fileBiz.findFileByLikeTypeFlow("SkillFile",resultFlow);
 					if(files!=null&&files.size()>0)
 					{
-						fileMap.put(resultFlow,"Y");
+						fileMap.put(resultFlow, GlobalConstant.FLAG_Y);
 					}else{
-						fileMap.put(resultFlow,"N");
+						fileMap.put(resultFlow, GlobalConstant.FLAG_N);
 					}
 					ResDoctorSchProcess doctorSchProcess = processBiz.searchByResultFlow(resultFlow);
 					resultMap.put(resultFlow,doctorSchProcess);
@@ -1233,7 +1235,7 @@ public class ResProfessionalBaseController extends GeneralController {
 		search.setOrgFlow(orgFlow);
 		List<ResBaseevalFormCfg> baseevalFormCfgList = evalBiz.searchCfg(search);
 		model.addAttribute("baseevalFormCfgList",baseevalFormCfgList);
-		model.addAttribute("viewFlag","Y");
+		model.addAttribute("viewFlag", GlobalConstant.FLAG_Y);
 		return "res/professionalBase/evalList";
 	}
 
@@ -1338,7 +1340,7 @@ public class ResProfessionalBaseController extends GeneralController {
 			}
 			String filePath = "/baseEval/" + dateString + "/" + originalFileName;
 			model.addAttribute("filePath",filePath);
-			model.addAttribute("result","Y");
+			model.addAttribute("result", GlobalConstant.FLAG_Y);
 		}
 		return "res/professionalBase/uploadFile";
 	}

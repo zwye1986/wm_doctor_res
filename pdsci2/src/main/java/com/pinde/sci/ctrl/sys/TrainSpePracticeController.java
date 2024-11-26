@@ -46,9 +46,9 @@ public class TrainSpePracticeController extends GeneralController{
 				}
 				model.addAttribute("spePracticeMap",map);
 			}
-			model.addAttribute("canCheck","Y");
+            model.addAttribute("canCheck", GlobalConstant.FLAG_Y);
 		}else{
-			model.addAttribute("canCheck","N");
+            model.addAttribute("canCheck", GlobalConstant.FLAG_N);
 		}
 		return "sys/trainSpeContrastPractice/list";
 	}

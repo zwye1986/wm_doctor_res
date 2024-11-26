@@ -1031,7 +1031,7 @@ public class InxJsResController extends GeneralController {
                         int monthDiff = DateUtil.getMonthDiff(changePasswordTime, DateUtil.getCurrDate());
                         if (monthDiff >= passwordFailureTime) {
                             model.addAttribute("userCode", userCode);
-                            model.addAttribute("flag", "Y");
+                            model.addAttribute("flag", GlobalConstant.FLAG_Y);
                             if (null != publicKey) {
                                 //公钥-系数(n)
                                 model.addAttribute("pkModulus", new String(Hex.encode(publicKey.getModulus().toByteArray())));
@@ -1271,7 +1271,7 @@ public class InxJsResController extends GeneralController {
                         int monthDiff = DateUtil.getMonthDiff(changePasswordTime, DateUtil.getCurrDate());
                         if (monthDiff >= passwordFailureTime) {
                             model.addAttribute("userCode", userCode);
-                            model.addAttribute("flag", "Y");
+                            model.addAttribute("flag", GlobalConstant.FLAG_Y);
                             if (null != publicKey) {
                                 //公钥-系数(n)
                                 model.addAttribute("pkModulus", new String(Hex.encode(publicKey.getModulus().toByteArray())));
@@ -1330,7 +1330,7 @@ public class InxJsResController extends GeneralController {
                 HttpSession session = request.getSession();
                 //查看是否是客服账号
                 if (userBiz.userISRole(user.getUserFlow(),InitConfig.getSysCfg("res_maintenance_role_flow"))){
-                    session.setAttribute("maintenance","Y");
+                    session.setAttribute("maintenance", GlobalConstant.FLAG_Y);
                 }
                 return "redirect:" + getRoleUrl(roleFlow);
             }
@@ -1584,7 +1584,7 @@ public class InxJsResController extends GeneralController {
             sysUser.setUserPasswd(PasswordHelper.encryptPassword(sysUser.getUserFlow(), userPasswd));
             sysUser.setStatusId(UserStatusEnum.Activated.getId());
             sysUser.setStatusDesc(UserStatusEnum.Activated.getName());
-            sysUser.setIsVerify("Y");
+            sysUser.setIsVerify(GlobalConstant.FLAG_Y);
             sysUser.setChangePasswordTime(DateUtil.getCurrDate());
             if (StringUtil.isNotBlank(InitConfig.getSysCfg("res_doctor_role_flow"))) {
                 SysUserRole userRole = new SysUserRole();
@@ -1627,7 +1627,7 @@ public class InxJsResController extends GeneralController {
             sysUser.setUserPasswd(PasswordHelper.encryptPassword(sysUser.getUserFlow(), userPasswd));
             sysUser.setStatusId(UserStatusEnum.Activated.getId());
             sysUser.setStatusDesc(UserStatusEnum.Activated.getName());
-            sysUser.setIsVerify("Y");
+            sysUser.setIsVerify(GlobalConstant.FLAG_Y);
             sysUser.setChangePasswordTime(DateUtil.getCurrDate());
             if (StringUtil.isNotBlank(InitConfig.getSysCfg("res_doctor_role_flow"))) {
                 SysUserRole userRole = new SysUserRole();

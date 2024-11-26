@@ -158,7 +158,7 @@ public class PaiBanImportService {
             return new SchRotationDept();
         }
         SchRotationDeptExample example = new SchRotationDeptExample();
-        example.createCriteria().andRecordStatusEqualTo("Y")
+        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
                 .andRotationFlowEqualTo(rotationFlow)
                 .andStandardDeptIdEqualTo(standardId);
         List<SchRotationDept> list = rotationDeptMapper.selectByExample(example);

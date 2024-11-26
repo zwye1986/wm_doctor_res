@@ -1,6 +1,6 @@
 package com.pinde.sci.ctrl.cfg;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
@@ -83,9 +83,9 @@ public class JsresSendSchoolCfgController extends GeneralController{
 				map.put("dictFlow",dictFlow);
 				JsresPowerCfg cfg = jsResPowerCfgBiz.read(Arrays.asList(cfgCodes).get(0));
 				if(null != cfg && GlobalConstant.FLAG_Y.equals(cfg.getCfgValue())){
-					map.put("isSubmitId","Y");
+                    map.put("isSubmitId", GlobalConstant.FLAG_Y);
 				}else{
-					map.put("isSubmitId","N");
+                    map.put("isSubmitId", GlobalConstant.FLAG_N);
 				}
 				dictBiz.updateSchoolSubmit(map);
 				return GlobalConstant.SAVE_SUCCESSED;

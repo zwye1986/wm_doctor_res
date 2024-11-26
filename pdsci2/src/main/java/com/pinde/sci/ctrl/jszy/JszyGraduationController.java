@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.jszy;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyGraduationBiz;
@@ -225,7 +225,7 @@ public class JszyGraduationController extends GeneralController {
         String errorPage = "jszy/doctor/graduationManage/graduationExamList";
         SysUser sysUser = GlobalContext.getCurrentUser();
         ResPowerCfg powerCfg = resPowerCfgBiz.read("res_doctor_graduation_exam_"+ sysUser.getUserFlow());
-        if(powerCfg == null || !powerCfg.getCfgValue().equals("Y")){
+        if (powerCfg == null || !powerCfg.getCfgValue().equals(GlobalConstant.FLAG_Y)) {
             model.addAttribute("errorMeg1","暂无权限参加考试！");
             return errorPage;
         }

@@ -263,7 +263,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
     @Override
     public List<ResEvaluationDeptExt> readEvaluationDeptList(String cfgFlow) {
         ResEvaluationDept record = new ResEvaluationDept();
-        record.setRecordStatus("Y");
+        record.setRecordStatus(GlobalConstant.FLAG_Y);
         record.setCfgFlow(cfgFlow);
         return evaluationDeptExtMapper.selectByRecord(record);
     }
@@ -282,13 +282,13 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
     public int delEvaluation(String cfgFlow) {
         if(StringUtil.isNotEmpty(cfgFlow)){
             ResEvaluationCfg cfg = new ResEvaluationCfg();
-            cfg.setRecordStatus("N");
+            cfg.setRecordStatus(GlobalConstant.FLAG_N);
             GeneralMethod.setRecordInfo(cfg, false);
             ResEvaluationCfgExample example = new ResEvaluationCfgExample();
             example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y) .andCfgFlowEqualTo(cfgFlow);
             int result = evaluationCfgMapper.updateByExampleSelective(cfg, example);
             ResEvaluationDept dept = new ResEvaluationDept();
-            dept.setRecordStatus("N");
+            dept.setRecordStatus(GlobalConstant.FLAG_N);
             ResEvaluationDeptExample example2 = new ResEvaluationDeptExample();
             example2.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y) .andCfgFlowEqualTo(cfgFlow);
             GeneralMethod.setRecordInfo(dept, false);
@@ -407,7 +407,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
             ResEvaluationDeptExample.Criteria criteria = example.createCriteria();
             criteria.andCfgFlowIn(oldDeptList);
             ResEvaluationDept record =new ResEvaluationDept();
-            record.setRecordStatus("Y");
+            record.setRecordStatus(GlobalConstant.FLAG_Y);
             GeneralMethod.setRecordInfo(record, false);
             count +=evaluationDeptMapper.updateByExampleSelective(record,example);
         }
@@ -419,7 +419,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
                 record.setRecordFlow( PkUtil.getUUID());
                 record.setCfgFlow(cfgFlow);
                 record.setDeptFlow(s);
-                record.setRecordStatus("Y");
+                record.setRecordStatus(GlobalConstant.FLAG_Y);
                 GeneralMethod.setRecordInfo(record, true);
                 count += evaluationDeptMapper.insert(record);
             }
@@ -437,7 +437,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
         ResEvaluationDeptExample.Criteria criteria = example.createCriteria();
         criteria.andCfgFlowEqualTo(cfgFlow);
         ResEvaluationDept record =new ResEvaluationDept();
-        record.setRecordStatus("N");
+        record.setRecordStatus(GlobalConstant.FLAG_N);
         GeneralMethod.setRecordInfo(record, false);
         return evaluationDeptMapper.updateByExampleSelective(record,example);
     }
@@ -446,7 +446,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
     public ResEvaluationCfg read(String cfgFlow) {
         ResEvaluationCfgExample example = new ResEvaluationCfgExample();
         ResEvaluationCfgExample.Criteria criteria = example.createCriteria();
-        criteria.andCfgFlowEqualTo(cfgFlow).andRecordStatusEqualTo("Y");
+        criteria.andCfgFlowEqualTo(cfgFlow).andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
         List<ResEvaluationCfg> evaluationCfgs = evaluationCfgMapper.selectByExample(example);
         if(evaluationCfgs !=null && evaluationCfgs.size()> 0 ){
             return evaluationCfgs.get(0);

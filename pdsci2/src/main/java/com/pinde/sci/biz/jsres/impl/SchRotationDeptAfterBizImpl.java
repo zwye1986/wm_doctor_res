@@ -2,7 +2,7 @@ package com.pinde.sci.biz.jsres.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.common.enums.GeneralEnum;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -702,7 +702,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                             user.setUserPasswd(PasswordHelper.encryptPassword(user.getUserFlow(), InitConfig.getInitPassWord()));
                             user.setStatusId(UserStatusEnum.Activated.getId());
                             user.setStatusDesc(UserStatusEnum.Activated.getName());
-                            user.setRecordStatus("Y");
+                            user.setRecordStatus(GlobalConstant.FLAG_Y);
                             user.setCreateUserFlow("TempAdd");
                             user.setCreateTime("20180918000000");
                             user.setUserPhone(userPhone);
@@ -734,7 +734,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                         recruitDocInfo.setDoctorFlow(user.getUserFlow());
                         recruitDocInfo.setAuditStatusId("Passed");
                         recruitDocInfo.setAuditStatusName("审核通过");
-                        recruitDocInfo.setRecordStatus("Y");
+                        recruitDocInfo.setRecordStatus(GlobalConstant.FLAG_Y);
                         recruitDocInfo.setCreateUserFlow("TempAdd");
                         recruitDocInfo.setCreateTime("20180918000000");
                         recruitDocInfo.setOrgName(orgName);
@@ -787,7 +787,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
 
                         doctorInfo.setRecordFlow(PkUtil.getUUID());
                         doctorInfo.setDoctorFlow(user.getUserFlow());
-                        doctorInfo.setRecordStatus("Y");
+                        doctorInfo.setRecordStatus(GlobalConstant.FLAG_Y);
                         doctorInfo.setCreateUserFlow("TempAdd");
                         doctorInfo.setCreateTime("20180918000000");
                         doctorInfo.setOrgFlow(recruitDocInfo.getOrgFlow());
@@ -905,11 +905,11 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                 recruitDocInfo.setDoctorFlow(user.getUserFlow());
                                 recruitDocInfo.setAuditStatusId("Passed");
                                 recruitDocInfo.setAuditStatusName("审核通过");
-                                recruitDocInfo.setRecordStatus("Y");
+                                recruitDocInfo.setRecordStatus(GlobalConstant.FLAG_Y);
                                 recruitDocInfo.setCreateUserFlow("TempModify");
                                 recruitDocInfo.setCreateTime("20180918000000");
                             }else{
-                                recruitDocInfo.setRecordStatus("Y");
+                                recruitDocInfo.setRecordStatus(GlobalConstant.FLAG_Y);
                                 recruitDocInfo.setModifyUserFlow("TempModify");
                                 recruitDocInfo.setModifyTime("20180918000000");
                             }
@@ -965,7 +965,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                 doctorInfo = new JsresRecruitInfo();
 
                                 doctorInfo.setDoctorFlow(user.getUserFlow());
-                                doctorInfo.setRecordStatus("Y");
+                                doctorInfo.setRecordStatus(GlobalConstant.FLAG_Y);
                                 doctorInfo.setCreateUserFlow("TempModify");
                                 doctorInfo.setCreateTime("20180918000000");
                             }else{
@@ -1086,7 +1086,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                 recruitDocInfo.setDoctorFlow(user.getUserFlow());
                                 recruitDocInfo.setAuditStatusId("Passed");
                                 recruitDocInfo.setAuditStatusName("审核通过");
-                                recruitDocInfo.setRecordStatus("Y");
+                                recruitDocInfo.setRecordStatus(GlobalConstant.FLAG_Y);
                                 recruitDocInfo.setCreateUserFlow("TempModifyReturn");
                                 recruitDocInfo.setCreateTime("20180918000000");
 
@@ -1143,7 +1143,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                 doctorInfo = new JsresRecruitInfo();
 
                                 doctorInfo.setDoctorFlow(user.getUserFlow());
-                                doctorInfo.setRecordStatus("Y");
+                                doctorInfo.setRecordStatus(GlobalConstant.FLAG_Y);
                                 doctorInfo.setCreateUserFlow("TempModifyReturn");
                                 doctorInfo.setCreateTime("20180918000000");
 
@@ -1305,11 +1305,11 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                 recruitDocInfo.setDoctorFlow(user.getUserFlow());
                                 recruitDocInfo.setAuditStatusId("Passed");
                                 recruitDocInfo.setAuditStatusName("审核通过");
-                                recruitDocInfo.setRecordStatus("Y");
+                                recruitDocInfo.setRecordStatus(GlobalConstant.FLAG_Y);
                                 recruitDocInfo.setCreateUserFlow("TempModify");
                                 recruitDocInfo.setCreateTime("20180918000000");
                             }else{
-                                recruitDocInfo.setRecordStatus("Y");
+                                recruitDocInfo.setRecordStatus(GlobalConstant.FLAG_Y);
                                 recruitDocInfo.setModifyUserFlow("TempModify");
                                 recruitDocInfo.setModifyTime("20180918000000");
                             }
@@ -1332,7 +1332,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                 doctorInfo = new JsresRecruitInfo();
 
                                 doctorInfo.setDoctorFlow(user.getUserFlow());
-                                doctorInfo.setRecordStatus("Y");
+                                doctorInfo.setRecordStatus(GlobalConstant.FLAG_Y);
                                 doctorInfo.setCreateUserFlow("TempModify");
                                 doctorInfo.setCreateTime("20180918000000");
                             }else{
@@ -1547,11 +1547,11 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                 recruitDocInfo.setDoctorFlow(user.getUserFlow());
                                 recruitDocInfo.setAuditStatusId("Passed");
                                 recruitDocInfo.setAuditStatusName("审核通过");
-                                recruitDocInfo.setRecordStatus("Y");
+                                recruitDocInfo.setRecordStatus(GlobalConstant.FLAG_Y);
                                 recruitDocInfo.setCreateUserFlow("TempModifyOrg");
                                 recruitDocInfo.setCreateTime("20180918000000");
                             }else{
-                                recruitDocInfo.setRecordStatus("Y");
+                                recruitDocInfo.setRecordStatus(GlobalConstant.FLAG_Y);
                                 recruitDocInfo.setModifyUserFlow("TempModifyOrg");
                                 recruitDocInfo.setModifyTime("20180918000000");
                             }
@@ -1568,7 +1568,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                             if(doctorInfo==null) {
                                 doctorInfo = new JsresRecruitInfo();
                                 doctorInfo.setDoctorFlow(user.getUserFlow());
-                                doctorInfo.setRecordStatus("Y");
+                                doctorInfo.setRecordStatus(GlobalConstant.FLAG_Y);
                                 doctorInfo.setCreateUserFlow("TempModifyOrg");
                                 doctorInfo.setCreateTime("20180918000000");
                             }else{
@@ -1832,7 +1832,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                 if (stations != null) {
                     //如果学员所有站点都没有考核完，直接是不通过
                     if (roomDocs.size() < stations.size()) {
-                        doctorAssessment.setIsSavePass("N");
+                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
                         doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
                         doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
                         f=true;
@@ -1861,7 +1861,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                         //如果合格总分配置了 并且 考核 总分小于合格总分 直接不通过
                         if(allScore!=null&&allScore>examAllScore)
                         {
-                            doctorAssessment.setIsSavePass("N");
+                            doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
                             doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
                             doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
                             f=true;
@@ -1898,18 +1898,18 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                         }
                                     }
                                     if(stationPassCount==stations.size()) {
-                                        doctorAssessment.setIsSavePass("Y");
+                                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_Y);
                                         doctorAssessment.setIsPass(DoctorScoreEnum.Passed.getId());
                                         doctorAssessment.setIsPassName(DoctorScoreEnum.Passed.getName());
                                         f = true;
                                     }else{
-                                        doctorAssessment.setIsSavePass("N");
+                                        doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
                                         doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
                                         doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
                                         f=true;
                                     }
                                 }else{
-                                    doctorAssessment.setIsSavePass("N");
+                                    doctorAssessment.setIsSavePass(GlobalConstant.FLAG_N);
                                     doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
                                     doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
                                     f=true;

@@ -155,7 +155,7 @@ public class JsresPowerCfgController extends GeneralController{
 		if(result > 0){
 			Map<String,Object> map = new HashMap<>();
 			map.put("orgFlow",orgFlow);
-			map.put("isSubmitId","N");
+            map.put("isSubmitId", GlobalConstant.FLAG_N);
 			orgBiz.updateOrgSubmit(map);
 			return GlobalConstant.SAVE_SUCCESSED;
 		}

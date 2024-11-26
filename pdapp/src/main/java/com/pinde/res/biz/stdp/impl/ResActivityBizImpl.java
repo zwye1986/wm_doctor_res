@@ -1,8 +1,12 @@
 package com.pinde.res.biz.stdp.impl;
 
+import com.pinde.app.common.GlobalUtil;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.model.*;
-import com.pinde.core.util.*;
+import com.pinde.core.util.DateUtil;
+import com.pinde.core.util.PkUtil;
+import com.pinde.core.util.SpringUtil;
+import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.eval.IEvalAppBiz;
 import com.pinde.res.biz.jswjw.IJswjwHospitalSupervisioBiz;
 import com.pinde.res.biz.stdp.ICfgBiz;
@@ -191,7 +195,7 @@ public class ResActivityBizImpl implements IResActivityBiz {
 				eval.setOrdinal(target.getOrdinal());
 				eval.setUserFlow(userFlow);
 				eval.setResultFlow(resultFlow);
-				if (eval.getIsText().equals("N")){
+                if (eval.getIsText().equals(GlobalConstant.FLAG_N)) {
 					sum+=eval.getEvalScore();
 				}else {
 					remarks=remarks+1;
@@ -411,7 +415,7 @@ public class ResActivityBizImpl implements IResActivityBiz {
 			subject.setInspectionType(info.getActivityTypeId());
 			subject.setTeachFlow(user.getUserFlow());
 			subject.setTeachName(user.getUserName());
-			subject.setRecordStatus("Y");
+            subject.setRecordStatus(GlobalConstant.FLAG_Y);
 			subject.setActualSpeaker(info.getRealitySpeaker());
 			subject.setActivityStartTime(info.getStartTime());
 			subject.setActivityEndTime(info.getEndTime());
@@ -531,7 +535,7 @@ public class ResActivityBizImpl implements IResActivityBiz {
 			subject.setInspectionType(info.getActivityTypeId());
 			subject.setTeachFlow(user.getUserFlow());
 			subject.setTeachName(user.getUserName());
-			subject.setRecordStatus("Y");
+            subject.setRecordStatus(GlobalConstant.FLAG_Y);
 			subject.setActualSpeaker(info.getRealitySpeaker());
 			subject.setActivityStartTime(info.getStartTime());
 			subject.setActivityEndTime(info.getEndTime());
@@ -724,7 +728,7 @@ public class ResActivityBizImpl implements IResActivityBiz {
 			subject.setInspectionType(info.getActivityTypeId());
 			subject.setTeachFlow(user.getUserFlow());
 			subject.setTeachName(user.getUserName());
-			subject.setRecordStatus("Y");
+            subject.setRecordStatus(GlobalConstant.FLAG_Y);
 			subject.setActualSpeaker(info.getRealitySpeaker());
 			subject.setActivityStartTime(info.getStartTime());
 			subject.setActivityEndTime(info.getEndTime());

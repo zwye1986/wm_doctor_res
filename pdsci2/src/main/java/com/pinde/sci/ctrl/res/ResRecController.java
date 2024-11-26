@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.common.enums.AbsenceTypeEnum;
 import com.pinde.core.jspform.ItemGroupData;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.Docx4jUtil;
@@ -14,7 +15,7 @@ import com.pinde.sci.biz.sch.ISchRotationDeptBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.*;
 import com.pinde.sci.dao.base.ResScoreMapper;
-import com.pinde.sci.enums.res.*;
+import com.pinde.core.common.enums.*;
 import com.pinde.sci.enums.srm.AchScoreEnum;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
@@ -2026,7 +2027,7 @@ public class ResRecController extends GeneralController {
 			ResDoctor doctor=doctorBiz.readDoctor(result.getDoctorFlow());
 			List<SchRotationDeptReq> deptReqList = schRotationDeptBiz.searchStandardReqByResult(result, recTypeId);
 			RegistryTypeEnum recTypeEnum =RegistryTypeEnum.valueOf(recTypeId);
-			String haveItem="N";
+            String haveItem = GlobalConstant.FLAG_N;
 			if(recTypeEnum!=null)
 			{
 				haveItem=recTypeEnum.getHaveItem();
@@ -2250,13 +2251,13 @@ public class ResRecController extends GeneralController {
 
 			String schDeptFlow = process.getSchDeptFlow();
 			SchDept schDept=schDeptBiz.readSchDept(schDeptFlow);
-			String haveMonth="N";
+            String haveMonth = GlobalConstant.FLAG_N;
 			if(schDept!=null)
 			{
 				String monthFlag = InitConfig.getSysCfg("jswjw_"+schDept.getOrgFlow()+"_M001");
 				if(GlobalConstant.FLAG_Y.equals(monthFlag))
 				{
-					haveMonth="Y";
+                    haveMonth = GlobalConstant.FLAG_Y;
 				}
 			}
 			model.addAttribute("isMonthOpen",haveMonth);

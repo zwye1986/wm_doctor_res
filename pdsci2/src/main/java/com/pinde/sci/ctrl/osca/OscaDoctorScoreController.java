@@ -1,7 +1,9 @@
 package com.pinde.sci.ctrl.osca;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -58,7 +60,7 @@ public class OscaDoctorScoreController extends GeneralController{
         }
         if(speId==null) {
             speId="";
-            List<SysDict> speList=DictTypeEnum.CheckSpe.getSysDictList();
+            List<SysDict> speList = DictTypeEnum.CheckSpe.getSysDictList();
             if(speList!=null&&speList.size()>0){
                 speId=speList.get(0).getDictId();
             }
@@ -139,11 +141,11 @@ public class OscaDoctorScoreController extends GeneralController{
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("isPass","Passed");
         paramMap.put("year",clinicalYear==null?currYear:clinicalYear);
-        paramMap.put("isLocal","N");
+        paramMap.put("isLocal", GlobalConstant.FLAG_N);
         paramMap.put("orgFlow",GlobalContext.getCurrentUser().getOrgFlow());
         Map<String,Object> paramMap2 = new HashMap<>();
         paramMap2.put("year",clinicalYear==null?currYear:clinicalYear);
-        paramMap2.put("isLocal","N");
+        paramMap2.put("isLocal", GlobalConstant.FLAG_N);
         paramMap2.put("orgFlow",GlobalContext.getCurrentUser().getOrgFlow());
         paramMap2.put("range","1");
         String allPercent = oscaDoctorScoreBiz.getPassPercent(paramMap,paramMap2);
@@ -288,7 +290,7 @@ public class OscaDoctorScoreController extends GeneralController{
         //考点：
         SysOrg org = new SysOrg();
         org.setOrgCityId(orgCityId);
-        org.setIsExamOrg("Y");
+        org.setIsExamOrg(GlobalConstant.FLAG_Y);
         List<SysOrg> examOrgList = orgBiz.queryAllSysOrg(org);
         if(examOrgList!=null&&examOrgList.size()>0){
             for (SysOrg so:examOrgList) {

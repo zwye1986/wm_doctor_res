@@ -1,6 +1,6 @@
 package com.pinde.sci.ctrl.jszy;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -19,9 +19,9 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.jsres.JsResTrainYearEnum;
 import com.pinde.sci.enums.jszy.*;
 import com.pinde.sci.enums.pub.UserNationEnum;
-import com.pinde.sci.enums.res.ResDoctorAuditStatusEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
-import com.pinde.sci.enums.res.ResScoreTypeEnum;
+import com.pinde.core.common.enums.ResDoctorAuditStatusEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
+import com.pinde.core.common.enums.ResScoreTypeEnum;
 import com.pinde.sci.enums.sys.*;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.jszy.JszyResDoctorInfoForm;
@@ -322,7 +322,7 @@ public class JszyResDoctorController extends GeneralController {
 		String tpOrg = docotrDelayTeturn.getOrgFlow();
 		SysOrg org =orgBiz.readSysOrg(user.getOrgFlow());
 		if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-			model.addAttribute("countryOrgFlag","Y");
+            model.addAttribute("countryOrgFlag", GlobalConstant.FLAG_Y);
 			if(null != jointOrg && jointOrg.equals("checked")){
 				orgFlowList.add(docotrDelayTeturn.getOrgFlow());
 				docotrDelayTeturn.setOrgFlow("");
@@ -427,7 +427,7 @@ public class JszyResDoctorController extends GeneralController {
 
 		SysOrg org =orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-			model.addAttribute("countryOrgFlag","Y");
+            model.addAttribute("countryOrgFlag", GlobalConstant.FLAG_Y);
 			if(null != jointOrg && jointOrg.equals("checked")){
 				orgFlowList.add(docotrDelayTeturn.getOrgFlow());
 				docotrDelayTeturn.setOrgFlow("");
@@ -685,7 +685,7 @@ public class JszyResDoctorController extends GeneralController {
 		if(StringUtil.isNotBlank(recruitFlow)){
 			doctorRecruit = jsResDoctorRecruitBiz.readResDoctorRecruit(recruitFlow);
 			model.addAttribute("doctorRecruit", doctorRecruit);
-			model.addAttribute("addRecord","Y");//添加新的培训记录标识
+            model.addAttribute("addRecord", GlobalConstant.FLAG_Y);//添加新的培训记录标识
 		}
 		//已审核通过
 		ResDoctorRecruit passedRec = new ResDoctorRecruit();

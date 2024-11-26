@@ -1,12 +1,12 @@
 package com.pinde.res.ctrl.jswjw;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.app.common.InitConfig;
-import com.pinde.core.model.*;
-import com.pinde.core.util.PasswordUtil;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.UserStatusEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
+import com.pinde.core.util.PasswordUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.*;
@@ -260,12 +260,12 @@ public class JswjwSupervisioController {
         if(StringUtil.isEmpty(roleFlag)){
             model.addAttribute("resultId", "31601");
             model.addAttribute("resultType", "角色标识符为空");
-            return "res/hbres/sysSupervisioUser/planScoreMain";
+            return "res/jswjw/sysSupervisioUser/planScoreMain";
         }
         if(StringUtil.isEmpty(userFlow)){
             model.addAttribute("resultId", "31601");
             model.addAttribute("resultType", "用户标识符为空");
-            return "res/hbres/sysSupervisioUser/planScoreMain";
+            return "res/jswjw/sysSupervisioUser/planScoreMain";
         }
         SysOrg sysorg = new SysOrg();
         sysorg.setOrgProvId("420000");
@@ -325,10 +325,10 @@ public class JswjwSupervisioController {
         if(null != list && list.size()>0){
             for (Map<String,Object> map:list) {
                 //查询表单是否提交
-                String expertEdit = "Y";//未提交，可以编辑
+                String expertEdit = GlobalConstant.FLAG_Y;//未提交，可以编辑
                 ResSupervisioSubjectUser subjectUser = supervisioUserBiz.searchSubjectUser(userFlow,(String)map.get("subjectFlow"));
                 if(null != subjectUser && StringUtil.isNotBlank(subjectUser.getEvaluationDate())) {
-                    expertEdit = "N";//已提交，不可编辑
+                    expertEdit = GlobalConstant.FLAG_N;//已提交，不可编辑
                 }
                 expertEditMap.put((String)map.get("subjectFlow"), expertEdit);
             }
@@ -469,7 +469,7 @@ public class JswjwSupervisioController {
         ResSupervisioSubjectUser subjectUser = supervisioUserBiz.selectSubjectUserByFlow(userFlow, subjectFlow);
         model.addAttribute("subjectUser", subjectUser);
         if (null != subjectUser && StringUtil.isNotBlank(subjectUser.getEvaluationDate())) {
-            model.addAttribute("editFlag", "N");
+            model.addAttribute("editFlag", GlobalConstant.FLAG_N);
             model.addAttribute("evaluationDate",DateUtil.parseDate(subjectUser.getEvaluationDate(),"yyyy-MM-dd"));
         }
 
@@ -564,7 +564,7 @@ public class JswjwSupervisioController {
             //查询专家评分是否提交  提交不能编辑
             ResSupervisioSubjectUser subjectUser = supervisioUserBiz.selectSubjectUserByFlow(userFlow, subjectFlow);
             if (null != subjectUser && StringUtil.isNotBlank(subjectUser.getEvaluationDate())) {
-                model.addAttribute("editFlag", "N");
+                model.addAttribute("editFlag", GlobalConstant.FLAG_N);
             }
             model.addAttribute("subjectUser", subjectUser);
         }
@@ -814,13 +814,13 @@ public class JswjwSupervisioController {
             supervisioUserBiz.saveSubjectUser(subjectUser,userFlow);
             //查询督导组员是否全部提交
             List<ResSupervisioSubjectUser> userList = supervisioUserBiz.selectSupervisioUserListByFlow(subjectFlow);
-            String isSubmit = "Y";
+            String isSubmit = GlobalConstant.FLAG_Y;
             Integer scoreTotal = 0;
             int evaNum = userList.size();
             if (null != userList && userList.size() > 0) {
                 for (ResSupervisioSubjectUser user : userList) {
                     if (StringUtil.isBlank(user.getEvaluationDate())) {
-                        isSubmit = "N";
+                        isSubmit = GlobalConstant.FLAG_N;
                         break;
                     } else {
                         if (user.getSpeScoreTotal() != null) {
@@ -829,7 +829,7 @@ public class JswjwSupervisioController {
                     }
                 }
             } else {
-                isSubmit = "N";
+                isSubmit = GlobalConstant.FLAG_N;
             }
             if (GlobalConstant.FLAG_Y.equals(isSubmit)) {
                 //全部提交  计算平均分并保存

@@ -313,7 +313,7 @@ public class SchAutoArrangeBizImpl implements ISchAutoArrangeBiz {
         //删除学员所有已排班的结果
         delDoctorResult(doctor.getDoctorFlow(),rotation.getRotationFlow());
         Integer index = 0;
-        SchAutoArrange arrange = getLastDeptFlow(orgFlow, sessionNumber, rotation.getRotationFlow(), "Y");
+        SchAutoArrange arrange = getLastDeptFlow(orgFlow, sessionNumber, rotation.getRotationFlow(), GlobalConstant.FLAG_Y);
         if(arrange!=null&&StringUtil.isNotBlank(arrange.getRotationDeptFlow()))
         {
             index=indexMap.get(arrange.getRotationDeptFlow());

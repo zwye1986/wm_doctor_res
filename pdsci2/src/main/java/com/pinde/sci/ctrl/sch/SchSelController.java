@@ -1,7 +1,9 @@
 package com.pinde.sci.ctrl.sch;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -131,7 +133,7 @@ public class SchSelController extends GeneralController {
 			model.addAttribute("result","管理员未配置选科信息！");
 			return "sch/sel/selDeptError";
 		}
-		tempMap.put("recordStatus","Y");
+        tempMap.put("recordStatus", GlobalConstant.FLAG_Y);
 		tempMap.put("schDeptFlowIsNull","schDeptFlowIsNull");
 		List<SchRotationOrgDept> baseDepts=rotationCfgBiz.searchSchRotationOrgDept(tempMap);
 		if(baseDepts==null||baseDepts.size()==0)
@@ -139,7 +141,7 @@ public class SchSelController extends GeneralController {
 			model.addAttribute("result","管理员未配置选科信息！");
 			return "sch/sel/selDeptError";
 		}
-		tempMap.put("recordStatus","Y");
+        tempMap.put("recordStatus", GlobalConstant.FLAG_Y);
 		tempMap.put("schDeptFlowIsNull","");
 		tempMap.put("schDeptFlowIsNotNull","schDeptFlowIsNotNull");
 		List<SchRotationOrgDept> depts=rotationCfgBiz.searchSchRotationOrgDept(tempMap);

@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.FtpHelperUtil;
 import com.pinde.core.util.PkUtil;
@@ -612,7 +612,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 				}
 				//打开app权限
 				String cfgCode = "jsres_teacher_app_login_"+user.getUserFlow();
-				String cfgValue = "Y";
+                String cfgValue = GlobalConstant.FLAG_Y;
 				String cfgDesc = "是否开放带教app权限";
 				JsresPowerCfg cfg = new JsresPowerCfg();
 				cfg.setCfgCode(cfgCode);

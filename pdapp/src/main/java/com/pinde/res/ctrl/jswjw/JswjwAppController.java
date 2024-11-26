@@ -1,7 +1,8 @@
 package com.pinde.res.ctrl.jswjw;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.app.common.*;
+import com.pinde.app.common.InitConfig;
+import com.pinde.app.common.UserResumeExtInfoForm;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
@@ -17,7 +18,10 @@ import com.pinde.res.biz.stdp.*;
 import com.pinde.res.dao.jswjw.ext.JsResPowerCfgExtMapper;
 import com.pinde.res.dao.jswjw.ext.JsResUserBalckListExtMapper;
 import com.pinde.res.dao.jswjw.ext.TempMapper;
-import com.pinde.res.enums.osca.*;
+import com.pinde.res.enums.osca.AuditStatusEnum;
+import com.pinde.res.enums.osca.DoctorScoreEnum;
+import com.pinde.res.enums.osca.ScanDocStatusEnum;
+import com.pinde.res.enums.osca.SignStatusEnum;
 import com.pinde.res.model.jswjw.mo.*;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.util.DateTimeUtil;
@@ -423,8 +427,8 @@ public class JswjwAppController {
 //        }
 //        paramMap.put("planFlow",planFlow);
 //        paramMap.put("certificateNo",certificateNo);
-//        paramMap.put("gainCertificateId","Y");
-//        paramMap.put("sendCertificateId","Y");
+//        paramMap.put("gainCertificateId",GlobalConstant.FLAG_Y);
+//        paramMap.put("sendCertificateId",GlobalConstant.FLAG_Y);
 //        paramMap.put("startTime",startTime);
 //        paramMap.put("endTime",endTime);
 //        List<SysDict> dictList = dictBiz.searchDictListByDictTypeId("CertificateTermValidity");
@@ -520,7 +524,7 @@ public class JswjwAppController {
 
         //查看轮转计划排班设置是否开启
         JsresPowerCfg cfg = jswjwBiz.readPowerCfg("jsres_"+doctor.getOrgFlow()+"_org_process_scheduling_N");
-        if (null !=cfg && StringUtil.isNotBlank(cfg.getCfgValue()) && cfg.getCfgValue().equals("N")){
+        if (null != cfg && StringUtil.isNotBlank(cfg.getCfgValue()) && cfg.getCfgValue().equals(GlobalConstant.FLAG_N)) {
             //查看轮转计划排班最短时间
             JsresPowerCfg cfgTime = jswjwBiz.readPowerCfg("jsres_"+doctor.getOrgFlow()+"_org_process_scheduling_time");
             if (null!=cfgTime && StringUtil.isNotBlank(cfgTime.getCfgValue())){
@@ -554,7 +558,7 @@ public class JswjwAppController {
                 //逻辑变动先保留
                 List<SchArrangeResult> results = jswjwBiz.searchSchArrangeResultPassing(doctor.getDoctorFlow(), rotationFlow);
                 if (results!=null && results.size()>0){
-                    model.addAttribute("edit","N");
+                    model.addAttribute("edit", GlobalConstant.FLAG_N);
                     model.addAttribute("cfgValue","尚有需要审核的轮转科室数据！");
                     flag=false;
                 }
@@ -566,14 +570,14 @@ public class JswjwAppController {
                     //需求：入科后，要求学员把至少n年(基地设置)的科室轮转情况填写完成，到时间后，继续要求学员填写下一阶段的轮转情况，包括轮转科室、轮转时间
                     String monthNum = jswjwBiz.searchByDoctorAndRotationFlow(userFlow, rotationFlow);
                     if (null == monthNum || StringUtil.isEmpty(monthNum)){ //没有填写，提示需要填写数据
-                        model.addAttribute("edit","N");
+                        model.addAttribute("edit", GlobalConstant.FLAG_N);
                         model.addAttribute("cfgValue","请至少填写"+cfgValue+"年的科室轮转情况");
                     }else {
                         double num = Double.parseDouble(monthNum);
                         //基地最短时间只能选择1年、2年、3年
                         //判断学员填写的总月份是否超过基地设置的时间
                         if (num<cfgValue*12){
-                            model.addAttribute("edit","N");
+                            model.addAttribute("edit", GlobalConstant.FLAG_N);
                             model.addAttribute("cfgValue","请至少填写未来"+cfgValue+"年的科室轮转情况");
                         }else {
                             //超过了基地设置的时间
@@ -584,13 +588,13 @@ public class JswjwAppController {
                             if (month>cfgValue*12){
                                 if (month>12 && month <24){
                                     if (num<cfgValue*24){   //学员填写的轮转计划总月份小于 基地设置的轮转最短时间
-                                        model.addAttribute("edit","N");
+                                        model.addAttribute("edit", GlobalConstant.FLAG_N);
                                         cfgValue=years-1<cfgValue?cfgValue=years-1:cfgValue;
                                         model.addAttribute("cfgValue", "请至少填写未来"+cfgValue+"年的科室轮转情况");
                                     }
                                 }else {
                                     if (num<cfgValue*36){   //学员填写的轮转计划总月份小于 基地设置的轮转最短时间
-                                        model.addAttribute("edit","N");
+                                        model.addAttribute("edit", GlobalConstant.FLAG_N);
                                         cfgValue=years-2<cfgValue?cfgValue=years-2:cfgValue;
                                         model.addAttribute("cfgValue", "请至少填写未来"+cfgValue+"年的科室轮转情况");
                                     }
@@ -1410,17 +1414,17 @@ public class JswjwAppController {
             List<ResDoctorSchProcess> processList = jswjwBiz.searchSchProcess(userFlow, deptFlow);
             Map<String, ResDoctorSchProcess> processMap = new HashMap<String, ResDoctorSchProcess>();
             for (ResDoctorSchProcess process : processList) {
-                process.setRecordStatus("N");
+                process.setRecordStatus(GlobalConstant.FLAG_N);
                 //判断是否已经出科 借用recordStatus字段
                 ResSchProcessExpress rec = expressBiz.getExpressByRecType(process.getProcessFlow(), "AfterEvaluation");
                 if(null != rec){
                     if (StringUtil.isNotBlank(cksh) && cksh.equals(GlobalConstant.FLAG_Y)) {
                         if (StringUtil.isNotBlank(rec.getManagerAuditUserFlow()) && StringUtil.isNotBlank(rec.getHeadAuditStatusId())) {
-                            process.setRecordStatus("Y");
+                            process.setRecordStatus(GlobalConstant.FLAG_Y);
                         }
                     } else {
                         if (StringUtil.isNotBlank(rec.getAuditStatusId()) && rec.getAuditStatusId().equals("TeacherAuditY")) {
-                            process.setRecordStatus("Y");
+                            process.setRecordStatus(GlobalConstant.FLAG_Y);
                         }
                     }
                 }
@@ -2428,45 +2432,6 @@ public class JswjwAppController {
             }
         }
         return false;
-		/*if(StringUtil.isNotBlank(inDataValue) && !GlobalConstant.RECORD_STATUS_N.equals(inDataValue)){
-			if(StringUtil.isNotBlank(resultFlow)){
-				SchArrangeResult schArrangeResult = jswjwTeacherBiz.readSchArrangeResult(resultFlow);
-				if(schArrangeResult != null){
-					String schEndDate = schArrangeResult.getSchEndDate();
-					if(StringUtil.isNotBlank(schEndDate)){
-						Pattern pattern = Pattern.compile("[0-9]*");
-						Matcher isNum = pattern.matcher(inDataValue);
-						if(isNum.matches() ){
-							int SettingTime = Integer.parseInt(inDataValue);
-							if(SettingTime > 0){
-								String timeType = jswjwBiz.getCfgCode("student_fill_in_data_type");
-								String afterTime = "";
-								if(GlobalConstant.PARAM_FLAG_ONE.equals(timeType)){
-									afterTime = DateTimeUtil.getAfterDate(schEndDate, SettingTime,"day");
-								} else {
-									afterTime =  DateTimeUtil.getAfterDate(schEndDate, SettingTime,"month");
-								}
-								if(StringUtil.isNotBlank(afterTime)){
-									try {
-										int num = DateTimeUtil.contrastDate( DateUtil.getCurrDate(),afterTime);
-										if(num == 1){
-											model.addAttribute("resultId", "31109");
-											model.addAttribute("resultType", "已超过出科时间限制,无法补填数据！");
-											return true;
-										}
-									} catch (ParseException e) {
-										e.printStackTrace();
-									}
-								}
-
-							} else {
-								logger.error("已开启学员补填数据限制，但参数配置有误，请检查表【SYS_CFG】'student_fill_in_data'");
-							}
-						}
-					}
-				}
-			}
-		} */
     }
 
     @RequestMapping(value = {"/viewData"}, method = {RequestMethod.GET})
@@ -3274,10 +3239,10 @@ public class JswjwAppController {
                 //判断结束
                 if ((lectureEndTime.compareTo(currTime) < 0 && lectureTrainDate.compareTo(currDate) == 0) || (lectureTrainDate.compareTo(currDate) < 0)) {
                     if (GlobalConstant.FLAG_Y.equals(isScan)) {
-                        scanMap.put(lectureFlow, "Y");
+                        scanMap.put(lectureFlow, GlobalConstant.FLAG_Y);
                     }
                     if (GlobalConstant.FLAG_Y.equals(isScan2)) {
-                        scan2Map.put(lectureFlow, "Y");
+                        scan2Map.put(lectureFlow, GlobalConstant.FLAG_Y);
                     }
                     evaMap.put(lectureFlow, dateFlag);
                 }
@@ -3661,7 +3626,7 @@ public class JswjwAppController {
         // 保存评分用到的参数
         Map<String, Object> paramMap = new HashMap<String, Object>();
         SysUser currUser = jswjwBiz.readSysUser(userFlow);
-        paramMap.put("recordStatus", "Y");
+        paramMap.put("recordStatus", GlobalConstant.FLAG_Y);
         paramMap.put("operUserFlow", currUser.getUserFlow());
         paramMap.put("operUserName", currUser.getUserName());
         paramMap.put("createTime", DateUtil.getCurrDateTime());
@@ -5244,7 +5209,7 @@ public class JswjwAppController {
         //查询是否是有成功  预约考核信息
         OscaDoctorAssessment oscaDoctorAssessment = jswjwStudentBiz.getAuditOscaDocInfo(userFlow);
         model.addAttribute("oscaDoctorAssessment", oscaDoctorAssessment);
-        String canClick = "Y";
+        String canClick = GlobalConstant.FLAG_Y;
         //如果有查询有几站并且查询有哪些房间及相应信息
         if (oscaDoctorAssessment != null) {
             OscaSkillsAssessment oscaSkillsAssessment = jswjwStudentBiz.getOscaSkillsAssessmentByFlow(oscaDoctorAssessment.getClinicalFlow());
@@ -5281,7 +5246,7 @@ public class JswjwAppController {
                             roomExt = jswjwStudentBiz.getStationBestRoom(s.getStationFlow(), oscaSkillsAssessment.getClinicalFlow());
                         } else {
                             if (roomExt.getExamStatusId().equals(ExamStatusEnum.Waiting.getId()) || roomExt.getExamStatusId().equals(ExamStatusEnum.AssessIng.getId())) {
-                                canClick = "N";
+                                canClick = GlobalConstant.FLAG_N;
                             }
                         }
                         roomMap.put("roomExt", roomExt);
@@ -5338,7 +5303,7 @@ public class JswjwAppController {
             model.addAttribute("resultType", "排队标识符为空");
             return "res/jswjw/success";
         }
-        if (!waitingFlag.equals("Y") && !waitingFlag.equals("N")) {
+        if (!waitingFlag.equals(GlobalConstant.FLAG_Y) && !waitingFlag.equals(GlobalConstant.FLAG_N)) {
             model.addAttribute("resultId", "3011101");
             model.addAttribute("resultType", "排队状态只能是排队或取消排队");
             return "res/jswjw/success";
@@ -5354,7 +5319,7 @@ public class JswjwAppController {
         param.put("roomRecordFlow", roomRecordFlow);
         param.put("clinicalFlow", clinicalFlow);
         param.put("stationFlow", stationFlow);
-        if (waitingFlag.equals("Y")) {
+        if (waitingFlag.equals(GlobalConstant.FLAG_Y)) {
             //校验是否已经在排队 或正在考核中
             int count = jswjwStudentBiz.checkIsWait(param);
             if (count > 0) {
@@ -5410,7 +5375,7 @@ public class JswjwAppController {
             model.addAttribute("resultType", "读取站点信息失败！");
             return "res/jswjw/success";
         }
-        if (waitingFlag.equals("Y")) {
+        if (waitingFlag.equals(GlobalConstant.FLAG_Y)) {
             docStation.setExamStatusId(ExamStatusEnum.Waiting.getId());
             docStation.setExamStatusName(ExamStatusEnum.Waiting.getName());
             docStation.setWaitingTime(DateUtil.getCurrentTime());
@@ -5471,18 +5436,18 @@ public class JswjwAppController {
         OscaSubjectStation station = jswjwStudentBiz.getOscaSubjectStationsByFlow(stationFlow);
         model.addAttribute("station", station);
         List<OscaSkillRoomDoc> skillRoomDocs = jswjwStudentBiz.getDocAllStation(param);
-        String canClick = "Y";
+        String canClick = GlobalConstant.FLAG_Y;
         if (skillRoomDocs != null) {
             for (OscaSkillRoomDoc rd : skillRoomDocs) {
                 if (rd.getExamStatusId().equals(ExamStatusEnum.Waiting.getId()) || rd.getExamStatusId().equals(ExamStatusEnum.AssessIng.getId())) {
-                    canClick = "N";
+                    canClick = GlobalConstant.FLAG_N;
                 }
             }
         }
         String roomRecordFlow = "";
         if (roomExt != null) {
             roomRecordFlow = roomExt.getRecordFlow();
-            model.addAttribute("isSelect", "Y");
+            model.addAttribute("isSelect", GlobalConstant.FLAG_Y);
         }
         model.addAttribute("canClick", canClick);
         param.put("roomRecordFlow", roomRecordFlow);
@@ -6004,10 +5969,10 @@ public class JswjwAppController {
         }
         Map<String, String> param = new HashMap<>();
         if ("isNew".equals(typeId)) {
-            param.put("isNew", "Y");//最新活动
+            param.put("isNew", GlobalConstant.FLAG_Y);//最新活动
         }
         if ("isEval".equals(typeId)) {
-            param.put("isEval", "Y");//活动评价
+            param.put("isEval", GlobalConstant.FLAG_Y);//活动评价
         }
         param.put("roleFlag", "doctor");
         param.put("userFlow", userFlow);
@@ -6665,10 +6630,10 @@ public class JswjwAppController {
             jswjwBiz.updateRecordFlow(codeRecord);
         }else {
             VerificationCodeRecord record=new VerificationCodeRecord();
-            record.setAppSend("Y");//是app发送的短信，为了与pc端区分
+            record.setAppSend(GlobalConstant.FLAG_Y);//是app发送的短信，为了与pc端区分
             record.setPhone(userPhone);
             record.setCreateTime(DateUtil.getCurrDateTime());
-            record.setRecordStatus("Y");
+            record.setRecordStatus(GlobalConstant.FLAG_Y);
             record.setSendNum("1"); //次数
             record.setRecordFlow(PkUtil.getUUID());
             record.setDateTime(String.valueOf(System.currentTimeMillis()));
@@ -6957,7 +6922,7 @@ public class JswjwAppController {
 
     private String getUserInfo(SysUser userinfo, Model model, String userPasswd, String uuid, HttpServletRequest request) throws ParseException {
         //是否招录
-        String isRecruit = "N";
+        String isRecruit = GlobalConstant.FLAG_N;
         //超级密码
         boolean userFlag = false;
         // 获取公钥系数和公钥指数
@@ -7189,7 +7154,7 @@ public class JswjwAppController {
             model.addAttribute("isCharge", isCharge);
             model.addAttribute("isNurse", isNurse);
 
-            String isStrongPasswd = "Y";
+            String isStrongPasswd = GlobalConstant.FLAG_Y;
             if (StringUtil.isNotBlank(InitConfig.weekPasswordMap.get(userPasswd))) {
                 model.addAttribute("userCode", userinfo.getUserCode());
                 if (null != publicKey) {
@@ -7198,12 +7163,12 @@ public class JswjwAppController {
                     //公钥-指数(e1)
                     model.addAttribute("pkExponent", new String(Hex.encode(publicKey.getPublicExponent().toByteArray())));
                 }
-                isStrongPasswd = "N";
+                isStrongPasswd = GlobalConstant.FLAG_N;
             }
             model.addAttribute("isStrongPasswd", isStrongPasswd);
             if (isDoctor) {
                 ResDoctorRecruit recruit = jswjwBiz.getNewRecruit(userFlow);
-                if (null==recruit || !recruit.getAuditStatusId().equals("Passed") || !recruit.getConfirmFlag().equals("Y")){
+                if (null == recruit || !recruit.getAuditStatusId().equals("Passed") || !recruit.getConfirmFlag().equals(GlobalConstant.FLAG_Y)) {
                     model.addAttribute("resultId", "3010110");
                     model.addAttribute("resultType", "登录失败,你暂无权限使用,请联系培训基地管理员!");
                     return "res/jswjw/login";
@@ -7277,7 +7242,7 @@ public class JswjwAppController {
                             //公钥-指数(e1)
                             model.addAttribute("pkExponent", new String(Hex.encode(publicKey.getPublicExponent().toByteArray())));
                         }
-                        isStrongPasswd = "N";
+                        isStrongPasswd = GlobalConstant.FLAG_N;
                     }
                 }
 
@@ -7291,27 +7256,27 @@ public class JswjwAppController {
                     int monthDiff = DateUtil.getMonthDiff(changePasswordTime, DateUtil.getCurrDate());
                     if (monthDiff >= passwordFailureTime) {
                         model.addAttribute("userCode", userinfo.getUserCode());
-                        model.addAttribute("flag", "Y");
+                        model.addAttribute("flag", GlobalConstant.FLAG_Y);
                         if (null != publicKey) {
                             //公钥-系数(n)
                             model.addAttribute("pkModulus", new String(Hex.encode(publicKey.getModulus().toByteArray())));
                             //公钥-指数(e1)
                             model.addAttribute("pkExponent", new String(Hex.encode(publicKey.getPublicExponent().toByteArray())));
                         }
-                        isStrongPasswd = "N";
+                        isStrongPasswd = GlobalConstant.FLAG_N;
                     }
                 }
                 model.addAttribute("isStrongPasswd", isStrongPasswd);
 
                 ResDoctor doctor = jswjwBiz.readResDoctorTwo(userinfo.getUserFlow());
                 if (null != userinfo && (null == doctor || !"20".equals(doctor.getDoctorStatusId()))) {
-                    isRecruit = "Y";
+                    isRecruit = GlobalConstant.FLAG_Y;
                 }
                 if (null != doctor) {
                     String isChargeOrg = jswjwBiz.getJsResCfgAppMenu(doctor.getDoctorFlow());
                     model.addAttribute("isChargeOrg", isChargeOrg);
                     boolean isAudited = jswjwBiz.getRecruitStatus(userinfo.getUserFlow());
-                    if(!isRecruit.equals("Y")){
+                    if (!isRecruit.equals(GlobalConstant.FLAG_Y)) {
                         if (doctor == null) {
                             model.addAttribute("resultId", "30194");
                             model.addAttribute("resultType", "登录失败,学员数据出错!");
@@ -7394,9 +7359,9 @@ public class JswjwAppController {
                             }
                             int authCount = jswjwBiz.getDoctorAuth(userinfo.getUserFlow());
                             if (authCount > 0) {
-                                model.addAttribute("authFlag", "Y");
+                                model.addAttribute("authFlag", GlobalConstant.FLAG_Y);
                             } else {
-                                model.addAttribute("authFlag", "N");
+                                model.addAttribute("authFlag", GlobalConstant.FLAG_N);
                                 model.addAttribute("resultId", "30193");
                                 model.addAttribute("resultType", "登录失败,请先上传学员培训数据登记诚信声明!");
                                 return "res/jswjw/login";
@@ -7444,13 +7409,13 @@ public class JswjwAppController {
                     }
                 }
 
-            } else if (isTeacher && !isRecruit.equals("Y")) {
+            } else if (isTeacher && !isRecruit.equals(GlobalConstant.FLAG_Y)) {
                 SysUser user = jswjwBiz.readSysUser(userinfo.getUserFlow());
                 String orgGuoChent = jswjwBiz.getJsResCfgCode("jsres_" + userinfo.getOrgFlow() + "_guocheng");
                 if (GlobalConstant.FLAG_Y.equals(orgGuoChent)) {
-                    model.addAttribute("isChargeOrg", "Y");
+                    model.addAttribute("isChargeOrg", GlobalConstant.FLAG_Y);
                 } else {
-                    model.addAttribute("isChargeOrg", "N");
+                    model.addAttribute("isChargeOrg", GlobalConstant.FLAG_N);
                 }
                 String isAppFlag = jswjwBiz.getJsResCfgCode("jsres_teacher_app_login_" + userFlow);
                 if (!(GlobalConstant.FLAG_Y.equals(isAppFlag) && "Passed".equals(user.getCheckStatusId()))) {
@@ -7517,7 +7482,7 @@ public class JswjwAppController {
         log.setCreateUserFlow(userinfo.getUserFlow());
         log.setModifyTime(DateUtil.getCurrDateTime());
         log.setModifyUserFlow(userinfo.getUserFlow());
-        log.setRecordStatus("Y");
+        log.setRecordStatus(GlobalConstant.FLAG_Y);
         logMapper.insert(log);
 
 //        request.getSession().setAttribute(GlobalConstant.CURR_USER, userinfo);
@@ -7562,10 +7527,10 @@ public class JswjwAppController {
         List<JsresExamSignup> signups = jswjwBiz.readDoctorExanSignUps(user.getUserFlow());
         model.addAttribute("signups", signups);
         //是否有补考报名的资格（在系统中有资格审核记录且学员为非合格人员才有资格）
-        String isAllowApply = "Y";
+        String isAllowApply = GlobalConstant.FLAG_Y;
         // 已结业学员 不允许补考报名 禅道bug：2648
         if (doctor != null && "21".equals(doctor.getDoctorStatusId())) {
-            isAllowApply = "N";
+            isAllowApply = GlobalConstant.FLAG_N;
         }
         // isAllowApply为N 不能参加补考，无需在做结业申请判断
         if (!GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
@@ -7581,9 +7546,9 @@ public class JswjwAppController {
                     if (apply == null) {
                         // 2019/2018/2017级助理全科全走补考报名
                         if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
-                            isAllowApply = "Y";
+                            isAllowApply = GlobalConstant.FLAG_Y;
                         }else{
-                            isAllowApply = "N";
+                            isAllowApply = GlobalConstant.FLAG_N;
                         }
                     }
                 }
@@ -7591,10 +7556,10 @@ public class JswjwAppController {
         }
         // isAllowApply为N 不能参加补考，无需在做成绩判断
         if (!GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
-            String isSkillQualifed = "N";
-            String isTheoryQualifed = "N";
-            String isSkill = "Y";
-            String isTheory = "Y";
+            String isSkillQualifed = GlobalConstant.FLAG_N;
+            String isTheoryQualifed = GlobalConstant.FLAG_N;
+            String isSkill = GlobalConstant.FLAG_Y;
+            String isTheory = GlobalConstant.FLAG_Y;
             String validYear = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 3);
 //            List<ResScore> resScoreList = resScoreBiz.selectByExampleWithBLOBs(userFlow);
             List<ResScore> resScoreList = jswjwBiz.selectAllScore(user.getUserFlow(), null);
@@ -7607,12 +7572,12 @@ public class JswjwAppController {
                     for (ResScore resScore : skillList) {
                         if ("1".equals(String.valueOf(resScore.getSkillScore()))) {
                             //3年内的技能成绩有合格的
-                            isSkillQualifed = "Y";
+                            isSkillQualifed = GlobalConstant.FLAG_Y;
                             break;
                         }
                     }
                 } else {
-                    isSkill = "N";
+                    isSkill = GlobalConstant.FLAG_N;
                 }
                 // 如果技能考试没有合格记录 无需在判断理论成绩
                 if (theoryList.size() > 0) {
@@ -7620,28 +7585,28 @@ public class JswjwAppController {
                         for (ResScore resScore : theoryList) {
                             if ("1".equals(String.valueOf(resScore.getTheoryScore()))) {
                                 //3年内的理论成绩有合格的
-                                isTheoryQualifed = "Y";
+                                isTheoryQualifed = GlobalConstant.FLAG_Y;
                                 break;
                             }
                         }
                     }
                 } else {
-                    isTheory = "N";
+                    isTheory = GlobalConstant.FLAG_N;
                 }
             }
             // 需求变更2018（不含）届以前学员 不做该判断  未参加过考核也可以补考
             if ("2018".compareTo(doctor.getSessionNumber()) <= 0 && GlobalConstant.FLAG_N.equals(isSkill) && GlobalConstant.FLAG_N.equals(isTheory)) {
                 // 2019/2018/2017级助理全科全走补考报名
                 if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
-                    isAllowApply = "Y";
+                    isAllowApply = GlobalConstant.FLAG_Y;
                 }else{
                     //从未参加过考核
-                    isAllowApply = "N";
+                    isAllowApply = GlobalConstant.FLAG_N;
                 }
             }
             if (GlobalConstant.FLAG_Y.equals(isSkillQualifed) && GlobalConstant.FLAG_Y.equals(isTheoryQualifed)) {
                 //3年内理论成绩和技能成绩都合格
-                isAllowApply = "N";
+                isAllowApply = GlobalConstant.FLAG_N;
             }
         }
         model.addAttribute("isAllowApply", isAllowApply);
@@ -7929,7 +7894,7 @@ public class JswjwAppController {
                 model.addAttribute("startDate", startTime);
                 model.addAttribute("endDate", endTime);
             }
-            String apply = "N";
+            String apply = GlobalConstant.FLAG_N;
             //判断为当前年，当前提交时间段内，学员非二阶段，且未提交的可以提交
             String currYear = DateUtil.getYear();
             String currTime = DateUtil.getCurrDateTime();
@@ -7946,12 +7911,12 @@ public class JswjwAppController {
             List<ResTestConfig> resTestConfigList = jswjwBiz.findEffective(currDateTime, sysOrg.getOrgCityId());
             //当前城市的学员有没有正在进行的考试
             Boolean inTime = resTestConfigList.size() > 0 ? true : false;
-            String inApplyTime = resTestConfigList.size() > 0 ? "Y" : "N";
+            String inApplyTime = resTestConfigList.size() > 0 ? GlobalConstant.FLAG_Y : GlobalConstant.FLAG_N;
             // 判断学员有没有重新提交
             if (null != jsresGraduationApply) {
                 // 查询结业申请创建时间内的考试时间没有结束的考试信息
                 resTestConfigList = jswjwBiz.findEffectiveByParam(currDateTime, DateUtil.transDateTime(jsresGraduationApply.getCreateTime()), sysOrg.getOrgCityId());
-                inApplyTime = resTestConfigList.size() > 0 ? "Y" : "N";
+                inApplyTime = resTestConfigList.size() > 0 ? GlobalConstant.FLAG_Y : GlobalConstant.FLAG_N;
             }
             Boolean isWaitAudit = false;//是否待审核
             if (jsresGraduationApply != null && StringUtil.isNotBlank(jsresGraduationApply.getAuditStatusId())) {
@@ -7960,15 +7925,15 @@ public class JswjwAppController {
             if (recruit != null && currYear.equals(recruit.getGraduationYear()) && inTime
                     && !TrainCategoryEnum.WMSecond.getId().equals(recruit.getCatSpeId())
                     && !isWaitAudit) {
-                apply = "Y";
+                apply = GlobalConstant.FLAG_Y;
             }
             //是否是全科、助理全科、全科方向（中医）、全科方向（西医）
             String isAssiGeneral = "";
             if (recruit != null && ("0700".equals(recruit.getSpeId()) || "51".equals(recruit.getSpeId()) || "52".equals(recruit.getSpeId())
                     || "18".equals(recruit.getSpeId()) || "50".equals(recruit.getSpeId()))) {
-                isAssiGeneral = "Y";
+                isAssiGeneral = GlobalConstant.FLAG_Y;
             } else {
-                isAssiGeneral = "N";
+                isAssiGeneral = GlobalConstant.FLAG_N;
             }
             List<PubFile> files = pubFileBiz.findFileByTypeFlow("asseApplication", recruitFlow);
             PubFile file = null;
@@ -7980,7 +7945,7 @@ public class JswjwAppController {
                 model.addAttribute("file", file);
             }
             model.addAttribute("inApplyTime", inApplyTime);
-//            apply = "Y";
+//            apply = GlobalConstant.FLAG_Y;
             model.addAttribute("apply", apply);
             model.addAttribute("resDoctor", resDoctor);
             model.addAttribute("user", sysUser);
@@ -7994,16 +7959,16 @@ public class JswjwAppController {
                 spes = speMap.get(recruit.getSpeId());
             }
             if (spes != null && spes.size() > 0) {
-                model.addAttribute("needChange", "Y");
+                model.addAttribute("needChange", GlobalConstant.FLAG_Y);
                 model.addAttribute("spes", spes);
             } else {
-                model.addAttribute("needChange", "N");
+                model.addAttribute("needChange", GlobalConstant.FLAG_N);
             }
             // 2019级以前的助理全科学员只能走补考报名
             if("2019".compareTo(resDoctor.getSessionNumber()) >= 0 && "50".equals(resDoctor.getTrainingSpeId())){
-                model.addAttribute("submitBtnShow", "N");
+                model.addAttribute("submitBtnShow", GlobalConstant.FLAG_N);
             }else{
-                model.addAttribute("submitBtnShow", "Y");
+                model.addAttribute("submitBtnShow", GlobalConstant.FLAG_Y);
             }
         }
         return "res/jswjw/asseApplicationMain";
@@ -8752,10 +8717,10 @@ public class JswjwAppController {
         List<JsresExamSignup> signups = jswjwBiz.readDoctorExanSignUps(user.getUserFlow());
         model.addAttribute("signups", signups);
         //是否有补考报名的资格（在系统中有资格审核记录且学员为非合格人员才有资格）
-        String isAllowApply = "Y";
+        String isAllowApply = GlobalConstant.FLAG_Y;
         // 已结业学员 不允许补考报名 禅道bug：2648
         if (doctor != null && "21".equals(doctor.getDoctorStatusId())) {
-            isAllowApply = "N";
+            isAllowApply = GlobalConstant.FLAG_N;
         }
         // isAllowApply为N 不能参加补考，无需在做结业申请判断
         if (!GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
@@ -8771,9 +8736,9 @@ public class JswjwAppController {
                     if (apply == null) {
                         // 2019级及以前助理全科学员走补考
                         if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
-                            isAllowApply = "Y";
+                            isAllowApply = GlobalConstant.FLAG_Y;
                         }else{
-                            isAllowApply = "N";
+                            isAllowApply = GlobalConstant.FLAG_N;
                         }
                     }
                 }
@@ -8781,10 +8746,10 @@ public class JswjwAppController {
         }
         // isAllowApply为N 不能参加补考，无需在做成绩判断
         if (!GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
-            String isSkillQualifed = "N";
-            String isTheoryQualifed = "N";
-            String isSkill = "Y";
-            String isTheory = "Y";
+            String isSkillQualifed = GlobalConstant.FLAG_N;
+            String isTheoryQualifed = GlobalConstant.FLAG_N;
+            String isSkill = GlobalConstant.FLAG_Y;
+            String isTheory = GlobalConstant.FLAG_Y;
             String validYear = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 3);
             List<ResScore> resScoreList = jswjwBiz.selectAllScore(user.getUserFlow(), null);
             if (resScoreList != null && resScoreList.size() > 0) {
@@ -8796,12 +8761,12 @@ public class JswjwAppController {
                     for (ResScore resScore : skillList) {
                         if ("1".equals(String.valueOf(resScore.getSkillScore()))) {
                             //3年内的技能成绩有合格的
-                            isSkillQualifed = "Y";
+                            isSkillQualifed = GlobalConstant.FLAG_Y;
                             break;
                         }
                     }
                 } else {
-                    isSkill = "N";
+                    isSkill = GlobalConstant.FLAG_N;
                 }
                 // 如果技能考试没有合格记录 无需在判断理论成绩
                 if (theoryList.size() > 0) {
@@ -8809,32 +8774,32 @@ public class JswjwAppController {
                         for (ResScore resScore : theoryList) {
                             if ("1".equals(String.valueOf(resScore.getTheoryScore()))) {
                                 //3年内的理论成绩有合格的
-                                isTheoryQualifed = "Y";
+                                isTheoryQualifed = GlobalConstant.FLAG_Y;
                                 break;
                             }
                         }
                     }
                 } else {
-                    isTheory = "N";
+                    isTheory = GlobalConstant.FLAG_N;
                 }
             }
             // 需求变更2018（不含）届以前学员 不做该判断  未参加过考核也可以补考
             if ("2018".compareTo(doctor.getSessionNumber()) <= 0 && GlobalConstant.FLAG_N.equals(isSkill) && GlobalConstant.FLAG_N.equals(isTheory)) {
                 // 2019/2018/2017级助理全科全走补考报名
                 if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
-                    isAllowApply = "Y";
+                    isAllowApply = GlobalConstant.FLAG_Y;
                 }else{
                     //从未参加过考核
-                    isAllowApply = "N";
+                    isAllowApply = GlobalConstant.FLAG_N;
                 }
             }
             if (GlobalConstant.FLAG_Y.equals(isSkillQualifed) && GlobalConstant.FLAG_Y.equals(isTheoryQualifed)) {
                 //3年内理论成绩和技能成绩都合格
-                isAllowApply = "N";
+                isAllowApply = GlobalConstant.FLAG_N;
             }
         }
         model.addAttribute("isAllowApply", isAllowApply);
-//        model.addAttribute("isAllowApply", "Y");
+//        model.addAttribute("isAllowApply", GlobalConstant.FLAG_Y);
         return "res/jswjw/signupMain";
     }
 
@@ -8863,10 +8828,10 @@ public class JswjwAppController {
             Map<String, List<Map<String, String>>> speMap = setSpeMap(model);
             List<Map<String, String>> spes = speMap.get(resDoctorRecruit.getSpeId());
             if (spes != null && spes.size() > 0) {
-                model.addAttribute("needChange", "Y");
+                model.addAttribute("needChange", GlobalConstant.FLAG_Y);
                 model.addAttribute("spes", spes);
             } else {
-                model.addAttribute("needChange", "N");
+                model.addAttribute("needChange", GlobalConstant.FLAG_N);
             }
         }
         return "res/jswjw/signUp";
@@ -8917,8 +8882,8 @@ public class JswjwAppController {
             model.addAttribute("resultType", "当前没有正在进行的考试");
             return "res/jswjw/saveSignUp";
         }
-        String isSkillQualifed = "N";
-        String isTheoryQualifed = "N";
+        String isSkillQualifed = GlobalConstant.FLAG_N;
+        String isTheoryQualifed = GlobalConstant.FLAG_N;
         List<ResScore> resScoreList = jswjwBiz.selectAllScore(currentUser.getUserFlow(), null);
         String validYear = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 3);
         if (resScoreList.size() > 0) {
@@ -8930,7 +8895,7 @@ public class JswjwAppController {
                 for (ResScore resScore : skillList) {
                     if ("1".equals(String.valueOf(resScore.getSkillScore()))) {
                         //3年内的技能成绩有合格的
-                        isSkillQualifed = "Y";
+                        isSkillQualifed = GlobalConstant.FLAG_Y;
                     }
                 }
             }
@@ -8938,7 +8903,7 @@ public class JswjwAppController {
                 for (ResScore resScore : theoryList) {
                     if ("1".equals(String.valueOf(resScore.getTheoryScore()))) {
                         //3年内的理论成绩有合格的
-                        isTheoryQualifed = "Y";
+                        isTheoryQualifed = GlobalConstant.FLAG_Y;
                     }
                 }
             }
@@ -9326,17 +9291,17 @@ public class JswjwAppController {
         recruit.setDoctorFlow(sysUser.getUserFlow());
         recruit.setAuditStatusId("Passed");
         List<ResDoctorRecruit> recruits = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
-        String canSave = "Y";
+        String canSave = GlobalConstant.FLAG_Y;
         if (recruits != null && recruits.size() > 0) {
             String recruitFlow = recruits.get(0).getRecruitFlow();
             JsresGraduationApply apply = jswjwBiz.searchByRecruitFlow(recruitFlow, recruits.get(0).getGraduationYear());
             if (apply != null) {
                 if ("WaitChargePass".equals(apply.getAuditStatusId())) {
-                    canSave = "N";
+                    canSave = GlobalConstant.FLAG_N;
                 } else if ("WaitGlobalPass".equals(apply.getAuditStatusId())) {
-                    canSave = "N";
+                    canSave = GlobalConstant.FLAG_N;
                 } else if ("GlobalPassed".equals(apply.getAuditStatusId())) {
-                    canSave = "N";
+                    canSave = GlobalConstant.FLAG_N;
                 }
             }
         }
@@ -9350,7 +9315,7 @@ public class JswjwAppController {
 //        }
 //        //GlobalConstant.FLAG_N.equals(canSave) 含义为有一条培训记录，结业考核年份是当前年，并且结业资格审查省厅通过的。学员无法修改个人信息 并且审核期间学员是否修改个人信息为否时
 //        if (!GlobalConstant.FLAG_Y.equals(editFlag) && GlobalConstant.FLAG_N.equals(canSave)) {
-//            model.addAttribute("isDoctor", "Y");
+//            model.addAttribute("isDoctor", GlobalConstant.FLAG_Y);
 //            return "jsres/doctorInfo";
 //        }
         //获取访问路径前缀
@@ -9393,17 +9358,17 @@ public class JswjwAppController {
             recruit.setDoctorFlow(sysUser.getUserFlow());
             recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
             List<ResDoctorRecruit> recruits = jswjwBiz.readDoctorRecruits(recruit);
-            String canSave = "Y";
+            String canSave = GlobalConstant.FLAG_Y;
             if (recruits != null && recruits.size() > 0) {
                 String recruitFlow = recruits.get(0).getRecruitFlow();
                 JsresGraduationApply apply = jswjwBiz.searchByRecruitFlow(recruitFlow, recruits.get(0).getGraduationYear());
                 if (apply != null) {
                     if (JsResAsseAuditListEnum.WaitChargePass.getId().equals(apply.getAuditStatusId())) {
-                        canSave = "N";
+                        canSave = GlobalConstant.FLAG_N;
                     } else if (JsResAsseAuditListEnum.WaitGlobalPass.getId().equals(apply.getAuditStatusId())) {
-                        canSave = "N";
+                        canSave = GlobalConstant.FLAG_N;
                     } else if (JsResAsseAuditListEnum.GlobalPassed.getId().equals(apply.getAuditStatusId())) {
-                        canSave = "N";
+                        canSave = GlobalConstant.FLAG_N;
                     }
                     if (GlobalConstant.FLAG_Y.equals(canSave)) {
                         tempMapper.updateRecruitAsseInfoByApplyYear(apply.getApplyFlow(), sysUser.getUserFlow());
@@ -9491,7 +9456,7 @@ public class JswjwAppController {
         model.addAttribute("orgSpeList", orgSpeList);
         model.addAttribute("sysOrg", sysOrg);
         //判断招录计划是否开始
-        String signupFlag = "N";//不可报名
+        String signupFlag = GlobalConstant.FLAG_N;//不可报名
         if(null != orgSpeList && orgSpeList.size()>0){
             String currDate = DateUtil.getCurrDate();
             Map<String,String> map = orgSpeList.get(0);
@@ -9499,9 +9464,9 @@ public class JswjwAppController {
             String endTime = map.get("END_TIME");
             if(startTime.compareTo(currDate)>0 || currDate.compareTo(endTime)>0){
                 model.addAttribute("signupMsg", "招录时间未到！");
-                model.addAttribute("signupBtnFlag", "N");
+                model.addAttribute("signupBtnFlag", GlobalConstant.FLAG_N);
             }else{
-                signupFlag = "Y";
+                signupFlag = GlobalConstant.FLAG_Y;
             }
         }
         if(GlobalConstant.FLAG_Y.equals(signupFlag)){
@@ -9509,12 +9474,12 @@ public class JswjwAppController {
             String signupMsg = jswjwBiz.doctorSignupFlagNew(userFlow);
             if (StringUtil.isNotBlank(signupMsg)) {
                 model.addAttribute("signupMsg", signupMsg);
-                model.addAttribute("signupBtnFlag", "N");
+                model.addAttribute("signupBtnFlag", GlobalConstant.FLAG_N);
             } else {
-                model.addAttribute("signupBtnFlag", "Y");
+                model.addAttribute("signupBtnFlag", GlobalConstant.FLAG_Y);
             }
         }
-        String speFlag = "N";
+        String speFlag = GlobalConstant.FLAG_N;
         SysUser sysUser = jswjwBiz.readSysUser(userFlow);
         List<Map<String,String>> docSpeList = jswjwBiz.searchDoctorSpe();
         if(null != docSpeList && docSpeList.size()>0){
@@ -9522,7 +9487,7 @@ public class JswjwAppController {
                 String idNo = spe.get("ID_NO");
                 String doctorTypeId = spe.get("DOCTOR_TYPE_ID");
                 if(idNo.equals(sysUser.getIdNo()) && !"Graduate".equals(doctorTypeId)){
-                    speFlag = "Y";
+                    speFlag = GlobalConstant.FLAG_Y;
                     break;
                 }
             }
@@ -9551,7 +9516,7 @@ public class JswjwAppController {
         ResDoctorRecruit doctorRecruit = null;
         doctorRecruit = jswjwBiz.readResDoctorRecruit(recruitFlow);
         model.addAttribute("doctorRecruit", doctorRecruit);
-        model.addAttribute("addRecord", "Y");//添加新的培训记录标识
+        model.addAttribute("addRecord", GlobalConstant.FLAG_Y);//添加新的培训记录标识
         //根据专业ID speId ,机构流水号 orgFlow 查询对应的名称
         SysOrgExample example = new SysOrgExample();
         SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
@@ -9582,7 +9547,7 @@ public class JswjwAppController {
         if (joinOrgs.size() == 0) {
             jointOrgFlow = "";
             jointOrgName = "";
-            inJointOrgTrain = "N";
+            inJointOrgTrain = GlobalConstant.FLAG_N;
             if (orgList.size() == 0){
                 placeId  = "";
                 placeName  = "";
@@ -9599,7 +9564,7 @@ public class JswjwAppController {
             //从关联表中查询主基地名称与ID
             orgFlow = joinOrgs.get(0).getOrgFlow();
             orgName = joinOrgs.get(0).getOrgName();
-            inJointOrgTrain = "Y";
+            inJointOrgTrain = GlobalConstant.FLAG_Y;
         }
 
         model.addAttribute("speId", speId);
@@ -9882,7 +9847,7 @@ public class JswjwAppController {
             model.addAttribute("catSpeId", doctorRecruit.getCatSpeId());
             model.addAttribute("catSpeName", doctorRecruit.getCatSpeName());
             model.addAttribute("doctorRecruit", doctorRecruit);
-            model.addAttribute("addRecord", "Y");//添加新的培训记录标识
+            model.addAttribute("addRecord", GlobalConstant.FLAG_Y);//添加新的培训记录标识
         }
         //已审核通过
         ResDoctorRecruit passedRec = new ResDoctorRecruit();
@@ -9978,7 +9943,7 @@ public class JswjwAppController {
             }
         }
         //confirmFlag字段 当学员确认报到 置为Y 表示学员已报到
-        docRecWithBLOBs.setConfirmFlag("Y");
+        docRecWithBLOBs.setConfirmFlag(GlobalConstant.FLAG_Y);
 
         //查询专业轮转方案 设置学员轮转方案
         String catSpeId = recruit.getCatSpeId();
@@ -10129,8 +10094,8 @@ public class JswjwAppController {
         }
         SysCfg sysCfg = cfgMapper.selectByPrimaryKey("jsres_is_train");
         model.addAttribute("jsres_is_train",sysCfg.getCfgValue());
-        String isRetrain = "N";
-        String isDoctorSend = "N";
+        String isRetrain = GlobalConstant.FLAG_N;
+        String isDoctorSend = GlobalConstant.FLAG_N;
         //获取培训记录
         SysUser currUser = jswjwBiz.readSysUser(userFlow);
         String doctorFlow = currUser.getUserFlow();
@@ -10143,7 +10108,7 @@ public class JswjwAppController {
             if(CollectionUtils.isNotEmpty(doctorSend)){
                 String recruitFlow = doctorSend.get(0).getRecruitFlow();
                 model.addAttribute("recruitFlow",recruitFlow);
-                isDoctorSend = "Y";
+                isDoctorSend = GlobalConstant.FLAG_Y;
             }
             model.addAttribute("recruitList", recruitList);
             for (ResDoctorRecruit rec : recruitList) {
@@ -10264,7 +10229,7 @@ public class JswjwAppController {
         List<ResOrgSpe> speList = null;
         Map<String, List> resultMap = new HashMap<>();
         resOrgSpe.setRecordStatus(GlobalConstant.FLAG_Y);
-        String speFlag = "N";
+        String speFlag = GlobalConstant.FLAG_N;
         SysUser sysUser = jswjwBiz.readSysUser(userFlow);
         List<Map<String, String>> docSpeList = jswjwBiz.searchDoctorSpe();
         if (null != docSpeList && docSpeList.size() > 0) {
@@ -10272,7 +10237,7 @@ public class JswjwAppController {
                 String idNo = spe.get("ID_NO");
                 String doctorTypeId = spe.get("DOCTOR_TYPE_ID");
                 if (idNo.equals(sysUser.getIdNo()) && !"Graduate".equals(doctorTypeId)) {
-                    speFlag = "Y";
+                    speFlag = GlobalConstant.FLAG_Y;
                     break;
                 }
             }
@@ -10414,7 +10379,7 @@ public class JswjwAppController {
         if (TrainCategoryEnum.AssiGeneral.getId().equals(catSpeId) || RecDocCategoryEnum.WMFirst.getId().equals(catSpeId)) {
             rotation.setDoctorCategoryId(catSpeId);
         }
-        rotation.setPublishFlag("Y");
+        rotation.setPublishFlag(GlobalConstant.FLAG_Y);
         List<SchRotation> rotationList = jswjwBiz.searchOrgStandardRotation(rotation);
         if (null != rotationList && rotationList.size() > 0) {
             docRecWithBLOBs.setRotationFlow(rotationList.get(0).getRotationFlow());
@@ -10510,7 +10475,7 @@ public class JswjwAppController {
         ResDocotrDelayTeturn ret = jswjwBiz.findTeturnInfo(recruitFlow);
         model.addAttribute("ret", ret);
         if (ret != null) {
-            model.addAttribute("haveReturn", "Y");
+            model.addAttribute("haveReturn", GlobalConstant.FLAG_Y);
         }
         String applyYear = "";
         if (StringUtil.isNotBlank(recruitFlow)) {
@@ -10732,7 +10697,7 @@ public class JswjwAppController {
             model.addAttribute("catSpeId", doctorRecruit.getCatSpeId());
             model.addAttribute("catSpeName", doctorRecruit.getCatSpeName());
             model.addAttribute("doctorRecruit", doctorRecruit);
-            model.addAttribute("addRecord", "Y");//添加新的培训记录标识
+            model.addAttribute("addRecord", GlobalConstant.FLAG_Y);//添加新的培训记录标识
         }
         //已审核通过
         ResDoctorRecruit passedRec = new ResDoctorRecruit();
@@ -10803,21 +10768,21 @@ public class JswjwAppController {
             if (reduction == null || StringUtil.isBlank(reduction.getAuditStatusId())
                     || JszyBaseStatusEnum.LocalUnPassed.getId().equals(reduction.getAuditStatusId())
                     || JszyBaseStatusEnum.GlobalUnPassed.getId().equals(reduction.getAuditStatusId())) {
-                model.addAttribute("canEdit", "Y");
+                model.addAttribute("canEdit", GlobalConstant.FLAG_Y);
             } else {
-                model.addAttribute("canEdit", "N");
+                model.addAttribute("canEdit", GlobalConstant.FLAG_N);
             }
             //1.助理全科2.已经减免的不可以申请减免3.只有审核通过的记录才可以减免
             //1.招录信息审核通过展示减免
             if (JszyResDoctorAuditStatusEnum.Passed.getId().equals(doctorRecruit.getAuditStatusId())) {
                 //2.助理全科不展示减免
                 if (JszyTrainCategoryEnum.TCMAssiGeneral.getId().equals(doctorRecruit.getCatSpeId())) {
-                    model.addAttribute("showReduction", "N");
+                    model.addAttribute("showReduction", GlobalConstant.FLAG_N);
                 } else {
-                    model.addAttribute("showReduction", "Y");
+                    model.addAttribute("showReduction", GlobalConstant.FLAG_Y);
                 }
             } else {
-                model.addAttribute("showReduction", "N");
+                model.addAttribute("showReduction", GlobalConstant.FLAG_N);
             }
             model.addAttribute("reduction", reduction);
         }
@@ -10873,7 +10838,7 @@ public class JswjwAppController {
             return "res/jswjw/success";
         }
         //超时
-        model.addAttribute("isOutTime","N");
+        model.addAttribute("isOutTime", GlobalConstant.FLAG_N);
         ResDoctor doctor = jswjwBiz.readDoctor(userFlow);
         String orgFlow = doctor.getOrgFlow();
         String isChargeOrg = jswjwBiz.getJsResCfgAppMenu(doctor.getDoctorFlow());
@@ -10917,7 +10882,7 @@ public class JswjwAppController {
                         int num = DateTimeUtil.contrastDate(DateUtil.getCurrDate(), outDateTwo);
                         if(num > 0){
                             //超时
-                            model.addAttribute("isOutTime","Y");
+                            model.addAttribute("isOutTime", GlobalConstant.FLAG_Y);
                             //出科时间
                             model.addAttribute("outDate",outDate);
                             //超出出科时间天数
@@ -10947,7 +10912,7 @@ public class JswjwAppController {
                             int num = DateTimeUtil.contrastDate(DateUtil.getCurrDate(), outDateTwo);
                             if(num > 0){
                                 //超时
-                                model.addAttribute("isOutTime","Y");
+                                model.addAttribute("isOutTime", GlobalConstant.FLAG_Y);
                                 //出科时间
                                 model.addAttribute("outDate",outDate);
                                 //超出出科时间天数
@@ -10979,7 +10944,7 @@ public class JswjwAppController {
                         int num = DateTimeUtil.contrastDate(DateUtil.getCurrDate(), outDateTwo);
                         if(num > 0){
                             //超时
-                            model.addAttribute("isOutTime","Y");
+                            model.addAttribute("isOutTime", GlobalConstant.FLAG_Y);
                             //出科时间
                             model.addAttribute("outDate",outDate);
                             //超出出科时间天数

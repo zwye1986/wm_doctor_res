@@ -1,6 +1,8 @@
 package com.pinde.sci.biz.jsres.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -302,7 +304,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 			{
 				eval.setUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 				eval.setResultFlow(resultFlow);
-				if (eval.getIsText().equals("N")){
+				if (eval.getIsText().equals(GlobalConstant.FLAG_N)) {
 					sum+=eval.getEvalScore();
 				}else {
 					remarks=remarks+1;
@@ -842,7 +844,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 		String newFlow ;
 		if (StringUtil.isBlank(activity.getActivityFlow())) {
 			newFlow = PkUtil.getUUID();
-			activity.setFileFlow("Y");
+			activity.setFileFlow(GlobalConstant.FLAG_Y);
 			activity.setActivityFlow(newFlow);
 			GeneralMethod.setRecordInfo(activity, true);
 			c =  activityInfoMapper.insertSelective(activity);
@@ -867,7 +869,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 			subject.setInspectionType(activity.getActivityTypeId());
 			subject.setTeachFlow(GlobalContext.getCurrentUser().getUserFlow());
 			subject.setTeachName(GlobalContext.getCurrentUser().getUserName());
-			subject.setRecordStatus("Y");
+			subject.setRecordStatus(GlobalConstant.FLAG_Y);
 			subject.setActualSpeaker(activity.getRealitySpeaker());
 			subject.setActivityStartTime(activity.getStartTime());
 			subject.setActivityEndTime(activity.getEndTime());
@@ -879,7 +881,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 			}
 		} else {
 			newFlow = activity.getActivityFlow();
-			activity.setFileFlow("Y");
+			activity.setFileFlow(GlobalConstant.FLAG_Y);
 			GeneralMethod.setRecordInfo(activity, false);
 			c =  activityInfoMapper.updateByPrimaryKeySelective(activity);
 
@@ -1037,7 +1039,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 		String newFlow ;
 		if (StringUtil.isBlank(activity.getActivityFlow())) {
 			newFlow = PkUtil.getUUID();
-			activity.setFileFlow("Y");
+			activity.setFileFlow(GlobalConstant.FLAG_Y);
 			activity.setActivityFlow(newFlow);
 			GeneralMethod.setRecordInfo(activity, true);
 			c =  activityInfoMapper.insertSelective(activity);
@@ -1062,7 +1064,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 			subject.setInspectionType(activity.getActivityTypeId());
 			subject.setTeachFlow(GlobalContext.getCurrentUser().getUserFlow());
 			subject.setTeachName(GlobalContext.getCurrentUser().getUserName());
-			subject.setRecordStatus("Y");
+			subject.setRecordStatus(GlobalConstant.FLAG_Y);
 			subject.setActualSpeaker(activity.getRealitySpeaker());
 			subject.setActivityStartTime(activity.getStartTime());
 			subject.setActivityEndTime(activity.getEndTime());
@@ -1084,7 +1086,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 				GeneralMethod.setRecordInfo(activitySpeaker, true);
 				activitySpeakerMapper.insert(activitySpeaker);
 			}
-			activity.setFileFlow("Y");
+			activity.setFileFlow(GlobalConstant.FLAG_Y);
 			GeneralMethod.setRecordInfo(activity, false);
 			c =  activityInfoMapper.updateByPrimaryKeySelective(activity);
 

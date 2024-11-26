@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.sci.model.mo.*;
 
 import javax.servlet.http.HttpServletResponse;

@@ -1,7 +1,8 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.PkUtil;
@@ -217,7 +218,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
     public ResBaseSpeDept readByRecordFlow(String recordFlow) {
         ResBaseSpeDeptExample example = new ResBaseSpeDeptExample();
         ResBaseSpeDeptExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo("Y").andRecordFlowEqualTo(recordFlow);
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andRecordFlowEqualTo(recordFlow);
         List<ResBaseSpeDept> list = baseSpeDeptMapper.selectByExampleWithBLOBs(example);
         if (null != list && list.size() > 0) {
             return list.get(0);
@@ -238,7 +239,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
         if (StringUtil.isNotBlank(sessionNumber)){
             criteria.andSessionNumberEqualTo(sessionNumber);
         }
-        criteria.andRecordStatusEqualTo("Y").andTypeEqualTo("dept");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andTypeEqualTo("dept");
         List<ResBaseSpeDept> list = baseSpeDeptMapper.selectByExampleWithBLOBs(example);
         if (null != list && list.size() > 0) {
             return list.get(0);
@@ -259,7 +260,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
         if (StringUtil.isNotBlank(sessionNumber)){
             criteria.andSessionNumberEqualTo(sessionNumber);
         }
-        criteria.andRecordStatusEqualTo("Y").andTypeEqualTo("spe");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andTypeEqualTo("spe");
         List<ResBaseSpeDept> list = baseSpeDeptMapper.selectByExampleWithBLOBs(example);
         if (null != list && list.size() > 0) {
             return list.get(0);
@@ -271,7 +272,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
     public List<ResBaseSpeDept> readByOrgFlowAndYear(String orgFlow, String sessionNumber) {
         ResBaseSpeDeptExample example = new ResBaseSpeDeptExample();
         ResBaseSpeDeptExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo("Y").andTypeEqualTo("spe");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andTypeEqualTo("spe");
         if (StringUtil.isNotBlank(orgFlow)) {
             criteria.andOrgFlowEqualTo(orgFlow);
         }
@@ -291,7 +292,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
         if (StringUtil.isNotBlank(deptFlow)) {
             criteria.andDeptFlowEqualTo(deptFlow);
         }
-        criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
         return teacherTrainingMapper.selectByExample(example);
     }
 
@@ -305,7 +306,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
         if (StringUtil.isNotBlank(speFlow)) {
             criteria.andSpeIdEqualTo(speFlow);
         }
-        criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
         return teacherTrainingMapper.selectByExample(example);
     }
 
@@ -313,7 +314,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
     public List<ResBaseSpeDeptInfo> searchInfo(ResBaseSpeDeptInfo baseSpeDeptInfo) {
         ResBaseSpeDeptInfoExample example = new ResBaseSpeDeptInfoExample();
         ResBaseSpeDeptInfoExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
         if (null != baseSpeDeptInfo) {
             if (StringUtil.isNotBlank(baseSpeDeptInfo.getType())) {
                 criteria.andTypeEqualTo(baseSpeDeptInfo.getType());
@@ -336,7 +337,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
     public ResBaseSpeDeptData searchResBaseSpeDeptDataOne(String infoFlow, String orgFlow, String speFlow, String deptFlow, String type,String sessionNumber,String infoType) {
         ResBaseSpeDeptDataExample example = new ResBaseSpeDeptDataExample();
         ResBaseSpeDeptDataExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
         if (StringUtil.isNotBlank(infoFlow)) {
             criteria.andInfoFlowEqualTo(infoFlow);
         }
@@ -403,7 +404,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
     public int countResBaseSpeDeptInfoData(Map<String, String> paramMap) {
         ResBaseSpeDeptDataExample example = new ResBaseSpeDeptDataExample();
         ResBaseSpeDeptDataExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
         if (null!=paramMap){
             if (StringUtil.isNotBlank(paramMap.get("sessionNumber"))){
                 criteria.andSessionNumberEqualTo(paramMap.get("sessionNumber"));

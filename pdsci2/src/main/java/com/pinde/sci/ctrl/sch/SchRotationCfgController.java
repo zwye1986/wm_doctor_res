@@ -248,7 +248,7 @@ public class SchRotationCfgController extends GeneralController{
 			paramMap2.put("sessionNumber",sessionNumber);
 			paramMap2.put("selectYear",selectYear);
 			paramMap2.put("schDeptFlowIsNotNull","schDeptFlowIsNotNull");
-			paramMap2.put("recordStatus","Y");
+            paramMap2.put("recordStatus", GlobalConstant.FLAG_Y);
 			List<SchRotationOrgDept> rotationDeptList = rotationCfgBiz.searchSchRotationOrgDept(paramMap2);
 			if(rotationDeptList!=null && rotationDeptList.size()>0){
 				Map<String,List<SchRotationOrgDept>> localRotationDeptListMap = new HashMap<String, List<SchRotationOrgDept>>();
@@ -440,9 +440,9 @@ public class SchRotationCfgController extends GeneralController{
 			for (SchArrangeTime time : times) {
 				int count = doctorDeptBiz.findSesssionNumberResults(time.getSessionNumber(), time.getOrgFlow());
 				if (count > 0) {
-					canEditMap.put(time.getRecordFlow(), "N");
+                    canEditMap.put(time.getRecordFlow(), GlobalConstant.FLAG_N);
 				} else {
-					canEditMap.put(time.getRecordFlow(), "Y");
+                    canEditMap.put(time.getRecordFlow(), GlobalConstant.FLAG_Y);
 				}
 			}
 		}
@@ -456,13 +456,13 @@ public class SchRotationCfgController extends GeneralController{
 		SchArrangeTime time=enterOpenCfgBiz.getArrangeTime(recordFlow);
 		String orgFlow =GlobalContext.getCurrentUser().getOrgFlow();
 		model.addAttribute("orgFlow",orgFlow);
-		model.addAttribute("canEdit","Y");
+        model.addAttribute("canEdit", GlobalConstant.FLAG_Y);
 		if(time!=null)
 		{
 			int count=doctorDeptBiz.findSesssionNumberResults(time.getSessionNumber(),time.getOrgFlow());
 			if(count>0)
 			{
-				model.addAttribute("canEdit","N");
+                model.addAttribute("canEdit", GlobalConstant.FLAG_N);
 			}
 		}
 		model.addAttribute("time",time);

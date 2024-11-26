@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.osca;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -61,10 +62,10 @@ public class OscaCityController extends GeneralController{
 		paramMap.put("speId",speId);
 		paramMap.put("clinicalYear",clinicalYear);
 		paramMap.put("orgFlow",orgFlow);
-		paramMap.put("isReleased","Y");
-		paramMap.put("isLocal","N");
+        paramMap.put("isReleased", GlobalConstant.FLAG_Y);
+        paramMap.put("isLocal", GlobalConstant.FLAG_N);
 		SysDict searchDict = new SysDict();
-		searchDict.setRecordStatus("Y");
+        searchDict.setRecordStatus(GlobalConstant.FLAG_Y);
 		searchDict.setDictTypeId(DictTypeEnum.OscaTrainingType.getId()+"."+trainingTypeId);
 		List<SysDict> dictList = dictBiz.searchDictList(searchDict);
 		paramMap.put("dictList",dictList);
@@ -94,7 +95,7 @@ public class OscaCityController extends GeneralController{
 		//考点：
 		SysOrg org = new SysOrg();
 		org.setOrgCityId(orgCityId);
-		org.setIsExamOrg("Y");
+        org.setIsExamOrg(GlobalConstant.FLAG_Y);
 		List<SysOrg> examOrgList = orgBiz.queryAllSysOrg(org);
 		model.addAttribute("examOrgList", examOrgList);
 		model.addAttribute("doctorNumMap",doctorNumMap);
@@ -120,7 +121,7 @@ public class OscaCityController extends GeneralController{
 		//考点：
 		SysOrg org = new SysOrg();
 		org.setOrgCityId(orgCityId);
-		org.setIsExamOrg("Y");
+        org.setIsExamOrg(GlobalConstant.FLAG_Y);
 		List<SysOrg> examOrgList = orgBiz.queryAllSysOrg(org);
 		model.addAttribute("examOrgList", examOrgList);
 
@@ -135,7 +136,7 @@ public class OscaCityController extends GeneralController{
 			paramMap.put("orgCityId",orgCityId);
 			paramMap.put("speId",speId);
 			paramMap.put("orgFlow",orgFlow2);
-			paramMap.put("isLocal","N");
+            paramMap.put("isLocal", GlobalConstant.FLAG_N);
 			paramMap.put("role","city");
 			List<OscaSkillsAssessment> osas = oscaCityBiz.searchSkillsAssessment(paramMap);
 			if(speId==""){
@@ -152,7 +153,7 @@ public class OscaCityController extends GeneralController{
 		paramMap2.put("actionTypeId",actionTypeId);
 		paramMap2.put("clinicalYear",clinicalYear);
 		paramMap2.put("orgFlow",orgFlow2);
-		paramMap2.put("isLocal","N");
+        paramMap2.put("isLocal", GlobalConstant.FLAG_N);
 		paramMap2.put("role","city");
 		List<OscaSkillsAssessment> osaList= oscaCityBiz.searchSkillsAssessment(paramMap2);
 		if(speId==""){
@@ -207,11 +208,11 @@ public class OscaCityController extends GeneralController{
 		Map<String,Object> paramMap3 = new HashMap<>();
 		paramMap3.put("isPass","Passed");
 		paramMap3.put("year",clinicalYear==null?currYear:clinicalYear);
-		paramMap3.put("isLocal","N");
+        paramMap3.put("isLocal", GlobalConstant.FLAG_N);
 		paramMap3.put("orgCityId",orgCityId);
 		Map<String,Object> paramMap4 = new HashMap<>();
 		paramMap4.put("year",clinicalYear==null?currYear:clinicalYear);
-		paramMap4.put("isLocal","N");
+        paramMap4.put("isLocal", GlobalConstant.FLAG_N);
 		paramMap4.put("orgCityId",orgCityId);
 		paramMap4.put("range","1");
 		String allPercent = oscaDoctorScoreBiz.getPassPercent(paramMap3,paramMap4);
@@ -220,12 +221,12 @@ public class OscaCityController extends GeneralController{
 		Map<String,Object> paramMap5 = new HashMap<>();
 		paramMap5.put("isPass","Passed");
 		paramMap5.put("year",clinicalYear==null?currYear:clinicalYear);
-		paramMap5.put("isLocal","N");
+        paramMap5.put("isLocal", GlobalConstant.FLAG_N);
 		paramMap5.put("orgFlow",orgFlow2);
 		paramMap5.put("clinicalFlow",clinicalFlow);
 		Map<String,Object> paramMap6 = new HashMap<>();
 		paramMap6.put("year",clinicalYear==null?currYear:clinicalYear);
-		paramMap6.put("isLocal","N");
+        paramMap6.put("isLocal", GlobalConstant.FLAG_N);
 		paramMap6.put("orgFlow",orgFlow2);
 		paramMap6.put("clinicalFlow",clinicalFlow);
 		paramMap6.put("range","1");

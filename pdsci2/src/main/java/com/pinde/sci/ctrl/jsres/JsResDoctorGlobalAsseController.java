@@ -2,7 +2,9 @@ package com.pinde.sci.ctrl.jsres;
 
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -248,11 +250,11 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
 //        List<Map<String,Object>> list=graduationApplyBiz.chargeQueryList(param);
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
         model.addAttribute("list",list);
-        String f="N";
+        String f = GlobalConstant.FLAG_N;
         List<ResTestConfig> resTestConfigList = resTestConfigBiz.findGlobalEffective(DateUtil.getCurrDateTime2());
         if (resTestConfigList.size() > 0) {
             if (applyYear.equals(DateUtil.getYear())) {
-                f = "Y";
+                f = GlobalConstant.FLAG_Y;
             }
         }
         model.addAttribute("f",f);
@@ -357,11 +359,11 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
 //        List<Map<String,Object>> list=graduationApplyBiz.chargeQueryList(param);
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
         model.addAttribute("list",list);
-        String f="N";
+        String f = GlobalConstant.FLAG_N;
         List<ResTestConfig> resTestConfigList = resTestConfigBiz.findGlobalEffective(DateUtil.getCurrDateTime2());
         if (resTestConfigList.size() > 0) {
             if (applyYear.equals(DateUtil.getYear())) {
-                f = "Y";
+                f = GlobalConstant.FLAG_Y;
             }
         }
         model.addAttribute("f",f);
@@ -441,11 +443,11 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
         PageHelper.startPage(currentPage,getPageSize(request));
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
         model.addAttribute("list",list);
-        String f="N";
+        String f = GlobalConstant.FLAG_N;
         List<ResTestConfig> resTestConfigList = resTestConfigBiz.findGlobalEffective(DateUtil.getCurrDateTime2());
         if(resTestConfigList.size() > 0){
             if(applyYear.equals(DateUtil.getYear())){
-                f="Y";
+                f = GlobalConstant.FLAG_Y;
             }
         }
         model.addAttribute("f",f);
@@ -574,11 +576,11 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
 //        List<JsresGraduationInfo> list = graduationApplyBiz.queryGraduationInfoList(param);
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
         model.addAttribute("list",list);
-        String f="N";
+        String f = GlobalConstant.FLAG_N;
         List<ResTestConfig> resTestConfigList = resTestConfigBiz.findGlobalEffective(DateUtil.getCurrDateTime2());
         if(resTestConfigList.size() > 0){
             if(applyYear.equals(DateUtil.getYear())){
-                f="Y";
+                f = GlobalConstant.FLAG_Y;
             }
         }
         model.addAttribute("f",f);

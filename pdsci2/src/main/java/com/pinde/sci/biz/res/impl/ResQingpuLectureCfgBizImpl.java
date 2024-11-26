@@ -6,7 +6,7 @@ import com.pinde.sci.biz.res.IResQingpuLectureCfgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.QingpuLectureEvalCfgMapper;
-import com.pinde.sci.enums.res.DeptActivityItemTypeEnum;
+import com.pinde.core.common.enums.DeptActivityItemTypeEnum;
 import com.pinde.sci.form.res.QingpuLectureCfgExt;
 import com.pinde.sci.form.res.QingpuLectureCfgItemExt;
 import com.pinde.sci.form.res.QingpuLectureCfgTitleExt;

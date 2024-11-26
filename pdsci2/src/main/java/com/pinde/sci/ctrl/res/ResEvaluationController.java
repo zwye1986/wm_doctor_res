@@ -11,7 +11,7 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.res.EvaluationTypeEnum;
+import com.pinde.core.common.enums.EvaluationTypeEnum;
 import com.pinde.sci.form.res.ResEvaluationCfgForm;
 import com.pinde.sci.form.res.ResEvaluationCfgItemForm;
 import com.pinde.sci.form.res.ResEvaluationCfgTitleForm;
@@ -71,7 +71,7 @@ public class ResEvaluationController extends GeneralController {
                 cfgCodeId = evaluationCfgBiz.getNextCodeId(currUser.getOrgFlow(), EvaluationTypeEnum.DoctorEval.getId());
                 model.addAttribute("cfgCodeId", cfgCodeId);
                 //隐藏按钮标识
-                String flag = "Y";
+                String flag = GlobalConstant.FLAG_Y;
                 model.addAttribute("flag",flag);
             }else{
                 ResEvaluationCfg search = new ResEvaluationCfg();
@@ -82,10 +82,10 @@ public class ResEvaluationController extends GeneralController {
                 if(evaluationCfgList != null && !evaluationCfgList.isEmpty()){
                     ResEvaluationCfg evaluationCfg = evaluationCfgList.get(0);
                     //根据cfg_flow查询学员是否已评分显示或隐藏按钮
-                    String flag = "N";
+                    String flag = GlobalConstant.FLAG_N;
                     DeptTeacherGradeInfo teacherGradeInfo = resGradeBiz.readResGradeByCfgFlow(evaluationCfg.getCfgFlow());
                     if(teacherGradeInfo == null) {//没有评分
-                       flag = "Y";
+                        flag = GlobalConstant.FLAG_Y;
                     }
                     model.addAttribute("flag",flag);
                     Document dom = DocumentHelper.parseText(evaluationCfg.getCfgBigValue());
@@ -363,7 +363,7 @@ public class ResEvaluationController extends GeneralController {
                 DeptTeacherGradeInfo teacherGradeInfo = resGradeBiz.readResGradeByCfgFlow(evaluationCfgs.get(i).getCfgFlow());
                 if(teacherGradeInfo == null) {
                    // msg = "";
-                    flagMap.put(evaluationCfgs.get(i).getCfgCodeId(),"N");
+                    flagMap.put(evaluationCfgs.get(i).getCfgCodeId(), GlobalConstant.FLAG_N);
                 }
                // msgMap.put(evaluationCfgs.get(i).getCfgCodeId(),msg);
             }
@@ -417,7 +417,7 @@ public class ResEvaluationController extends GeneralController {
                     map.put("deptFlow", dept.getDeptFlow());
                     map.put("deptName", dept.getDeptName());
                     if (deptSet.contains(dept.getDeptFlow())) {
-                        map.put("checked", "Y");
+                        map.put("checked", GlobalConstant.FLAG_Y);
                     }
                     depts.add(map);
                 }
@@ -453,8 +453,8 @@ public class ResEvaluationController extends GeneralController {
        int count= resGradeBiz.checkHaveEval(deptFlow,cfgFlow);
         if(count>0)
         {
-            return "N";
+            return GlobalConstant.FLAG_N;
         }
-        return "Y";
+        return GlobalConstant.FLAG_Y;
     }
 }

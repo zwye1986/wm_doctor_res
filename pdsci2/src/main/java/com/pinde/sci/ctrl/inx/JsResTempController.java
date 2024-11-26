@@ -22,7 +22,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.enums.jsres.JsResAuditStatusEnum;
-import com.pinde.sci.enums.res.AfterRecTypeEnum;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.Document;
@@ -174,14 +174,14 @@ public class JsResTempController extends GeneralController{
 			for(ResSchProcessExpress rec:recs)
 			{
 				if(StringUtil.isNotBlank(rec.getSchRotationDeptFlow())) {
-					String have_after_pic = "N";
+                    String have_after_pic = GlobalConstant.FLAG_N;
 					String content = null == rec ? "" : rec.getRecContent();
 					if (StringUtil.isNotBlank(content)) {
 						Document doc = DocumentHelper.parseText(content);
 						Element root = doc.getRootElement();
 						List<Element> imageEles = root.elements();
 						if (imageEles != null && imageEles.size() > 0) {
-							have_after_pic = "Y";
+                            have_after_pic = GlobalConstant.FLAG_Y;
 						}
 					}
 					afterBiz.updateResultAfterPic(have_after_pic, rec.getSchRotationDeptFlow(),rec.getOperUserFlow());
@@ -644,7 +644,7 @@ public class JsResTempController extends GeneralController{
 			user.setUserName("0926"+i);
 			user.setUserPasswd(PasswordHelper.encryptPassword(user.getUserFlow(),"123456"));
 			doctor.setDoctorFlow(user.getUserFlow());
-			doctor.setSchFlag("N");
+            doctor.setSchFlag(GlobalConstant.FLAG_N);
 			userBiz.insertUser(user);
 			doctorBiz.insertDoctor(doctor);
 		}

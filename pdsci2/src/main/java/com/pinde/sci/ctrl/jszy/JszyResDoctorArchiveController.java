@@ -1,6 +1,6 @@
 package com.pinde.sci.ctrl.jszy;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -18,8 +18,8 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.enums.jszy.*;
-import com.pinde.sci.enums.res.CertificateTypeEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.CertificateTypeEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
@@ -105,7 +105,7 @@ public class JszyResDoctorArchiveController extends GeneralController {
 		SysUser sysUser =new SysUser();
 		if (StringUtil.isBlank(doctor.getOrgFlow())) {
 			if (getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_LOCAL)) {
-				jointOrgFlowList=searchJointOrgList("Y",sysuser.getOrgFlow());
+                jointOrgFlowList = searchJointOrgList(GlobalConstant.FLAG_Y, sysuser.getOrgFlow());
 				jointOrgFlowList.add(sysuser.getOrgFlow());
 			}
 			if (getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)||getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_GLOBAL)
@@ -355,7 +355,7 @@ public class JszyResDoctorArchiveController extends GeneralController {
 		docotrDelayTeturn.setDoctorFlow(doctorFlow);
 		List<ResDocotrDelayTeturn> resRecList = resDoctorDelayTeturnBiz.searchInfo(docotrDelayTeturn,null,null,null);
 		if(resRecList!=null&&!resRecList.isEmpty()) {
-			model.addAttribute("haveReturn","Y");
+            model.addAttribute("haveReturn", GlobalConstant.FLAG_Y);
 		}
 		if(StringUtil.isNotBlank(recruitFlow)){
 			ResDoctorRecruit doctorRecruitLog = new ResDoctorRecruit();
@@ -585,7 +585,7 @@ public class JszyResDoctorArchiveController extends GeneralController {
 			paramMap3.put("recruitTableName",recruitTableName);
 		}
 		List<ResDoctorRecruitWithBLOBs> recruits=archiveBiz.searchResDoctorRecruitList(paramMap3);
-		String canSave="Y";
+        String canSave = GlobalConstant.FLAG_Y;
 		if(recruits!=null&&recruits.size()>0)
 		{
 			String recruitFlow=recruits.get(0).getRecruitFlow();

@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
@@ -13,7 +14,7 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.res.DeptActivityItemTypeEnum;
+import com.pinde.core.common.enums.DeptActivityItemTypeEnum;
 import com.pinde.sci.form.res.QingpuLectureCfgItemExt;
 import com.pinde.sci.form.res.QingpuLectureCfgTitleExt;
 import com.pinde.sci.model.mo.*;
@@ -645,7 +646,7 @@ public class ResDeptActivityStatisticsController extends GeneralController {
 					gradeAllMap.put(evalFlow1,gradeMap);
 				}
 			}
-			createExcle(item,titleFormList,gradeAllMap,evals,response,"Y",request);
+			createExcle(item, titleFormList, gradeAllMap, evals, response, GlobalConstant.FLAG_Y, request);
 			String fileName = new String(("评价表.zip").getBytes("gbk"),"ISO8859-1" );
 			ExcleUtile.setCookie(response);
 			response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
@@ -662,7 +663,7 @@ public class ResDeptActivityStatisticsController extends GeneralController {
 			evals.add(eval);
 			String fileName = new String((eval.getOperUserName()+"-评价表.xls").getBytes("gbk"),"ISO8859-1" );
 			ExcleUtile.setCookie(response);
-			createExcle(item,titleFormList,gradeAllMap,evals,response,"N",request);
+			createExcle(item, titleFormList, gradeAllMap, evals, response, GlobalConstant.FLAG_N, request);
 			response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 			response.setContentType("application/octet-stream;charset=UTF-8");
 		}

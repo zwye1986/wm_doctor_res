@@ -1,6 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.Page;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -19,8 +19,8 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import com.pinde.sci.dao.jsres.SchdualTaskMapper;
 import com.pinde.sci.dao.res.ResMonthlyReportExtMapper;
-import com.pinde.sci.enums.res.AfterRecTypeEnum;
-import com.pinde.sci.enums.res.RecStatusEnum;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.enums.RecStatusEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
@@ -760,28 +760,28 @@ public class ResMonthlyReportGlobalController extends GeneralController {
 
 				paramMap.put("monthDate",monthDate);
 				if(null==isContain){
-					isContain="N";
+                    isContain = GlobalConstant.FLAG_N;
 				}else{
-					isContain="Y";
+                    isContain = GlobalConstant.FLAG_Y;
 				}
 				paramMap.put("isContain",isContain);
 				SysOrg currOrg=orgBiz.readSysOrg(user.getOrgFlow());
 				String currentOrgName = currOrg.getOrgName();
 
 				if(Arrays.asList(datas).contains("Graduate") && Arrays.asList(datas).contains("NotGraduate")){
-					paramMap.put("notGraduate","Y");
-					paramMap.put("graduate","Y");
+                    paramMap.put("notGraduate", GlobalConstant.FLAG_Y);
+                    paramMap.put("graduate", GlobalConstant.FLAG_Y);
 				}else{
 					if(Arrays.asList(datas).contains("Graduate")){
 						if(GlobalConstant.USER_LIST_UNIVERSITY.equals(role)){
-							paramMap.put("graduate","Y");
+                            paramMap.put("graduate", GlobalConstant.FLAG_Y);
 						}else{
-							paramMap.put("notGraduate","N");
-							paramMap.put("graduate","Y");
+                            paramMap.put("notGraduate", GlobalConstant.FLAG_N);
+                            paramMap.put("graduate", GlobalConstant.FLAG_Y);
 						}
 					}else{
-						paramMap.put("notGraduate","Y");
-						paramMap.put("graduate","N");
+                        paramMap.put("notGraduate", GlobalConstant.FLAG_Y);
+                        paramMap.put("graduate", GlobalConstant.FLAG_N);
 					}
 				}
 				if(role.equals(GlobalConstant.USER_LIST_GLOBAL)){
@@ -895,7 +895,7 @@ if("isContain".equals(isContain)){
 		outOfficeDoctorMap.put("orgFlow",orgFlow);
 		outOfficeDoctorMap.put("docTypeList",docTypeList);
 		List<Map<String,Object>> outOfficeDoctorInfoList= monthlyReportExtMapper2.findOutOfficeDoctorInfo(outOfficeDoctorMap);
-		String cksh="N";
+        String cksh = GlobalConstant.FLAG_N;
 		JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_cksh");
 		if(cfg!=null)
 		{
@@ -1010,7 +1010,7 @@ if("isContain".equals(isContain)){
 					outOfficeDoctorMap.put("orgFlow",orgFlow);
 					outOfficeDoctorMap.put("docTypeList",docTypeList);
 					List<Map<String,Object>> outOfficeDoctorInfoList= monthlyReportExtMapper2.findOutOfficeDoctorInfo(outOfficeDoctorMap);
-					String cksh="N";
+                    String cksh = GlobalConstant.FLAG_N;
 					JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_cksh");
 					if(cfg!=null)
 					{
@@ -1221,7 +1221,7 @@ if("isContain".equals(isContain)){
 										//出科考核表
 										if(AfterRecTypeEnum.AfterEvaluation.getId().equals(r.getRecTypeId())){
 											//如果科主任审核
-											if(cksh.equals("Y")){
+                                            if (cksh.equals(GlobalConstant.FLAG_Y)) {
 												//科主任通过
 												if(RecStatusEnum.HeadAuditY.getId().equals(r.getHeadAuditStatusId())){
 													count++;
@@ -1344,9 +1344,9 @@ if("isContain".equals(isContain)){
 				Map<String,Object> paramMap = new HashMap<>();
 				paramMap.put("monthDate",monthDate);
 				if(null==isContain){
-					isContain="N";
+                    isContain = GlobalConstant.FLAG_N;
 				}else{
-					isContain="Y";
+                    isContain = GlobalConstant.FLAG_Y;
 				}
 				paramMap.put("isContain",isContain);
 				SysOrg currOrg=orgBiz.readSysOrg(user.getOrgFlow());
@@ -1839,9 +1839,9 @@ if("isContain".equals(isContain)){
 				Map<String,Object> paramMap = new HashMap<>();
 				paramMap.put("monthDate",monthDate);
 				if(null==isContain){
-					isContain="N";
+                    isContain = GlobalConstant.FLAG_N;
 				}else{
-					isContain="Y";
+                    isContain = GlobalConstant.FLAG_Y;
 				}
 				paramMap.put("isContain",isContain);
 				SysOrg currOrg=orgBiz.readSysOrg(user.getOrgFlow());
@@ -2969,7 +2969,7 @@ if("isContain".equals(isContain)){
             Map<String,String> doctorMap=new HashMap<>();
             String orgFlow= mapInfo.get("orgFlow");
             doctorMap.put("doctorFlow",(String) mapInfo.get("doctorFlow"));
-            String cksh="N";
+            String cksh = GlobalConstant.FLAG_N;
             JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_cksh");
             if(cfg!=null)
             {
@@ -3016,7 +3016,7 @@ if("isContain".equals(isContain)){
 								//出科考核表
 								if(AfterRecTypeEnum.AfterEvaluation.getId().equals(r.getRecTypeId())){
 									//如果科主任审核
-									if(cksh.equals("Y")){
+                                    if (cksh.equals(GlobalConstant.FLAG_Y)) {
 										//科主任通过
 										if(RecStatusEnum.HeadAuditY.getId().equals(r.getHeadAuditStatusId())){
 											count++;

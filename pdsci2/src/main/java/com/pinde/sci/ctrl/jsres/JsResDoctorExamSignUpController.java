@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -21,8 +21,8 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.enums.jsres.JsResAuditStatusEnum;
 import com.pinde.sci.enums.jsres.JsResTrainYearEnum;
-import com.pinde.sci.enums.res.ArmyTypeEnum;
-import com.pinde.sci.enums.res.ResScoreTypeEnum;
+import com.pinde.core.common.enums.ArmyTypeEnum;
+import com.pinde.core.common.enums.ResScoreTypeEnum;
 import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
@@ -108,10 +108,10 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         List<JsresExamSignup> signups = doctorRecruitBiz.readDoctorExanSignUps(user.getUserFlow());
         model.addAttribute("signups", signups);
         //是否有补考报名的资格（在系统中有资格审核记录且学员为非合格人员才有资格）
-        String isAllowApply = "Y";
+        String isAllowApply = GlobalConstant.FLAG_Y;
         // 已结业学员 不允许补考报名 禅道bug：2648
         if (doctor != null && "21".equals(doctor.getDoctorStatusId())) {
-            isAllowApply = "N";
+            isAllowApply = GlobalConstant.FLAG_N;
         }
         // isAllowApply为N 不能参加补考，无需在做结业申请判断
         if (!GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
@@ -127,9 +127,9 @@ public class JsResDoctorExamSignUpController extends GeneralController {
                     if (apply == null) {
                         // 2019级及以前助理全科学员走补考
                         if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
-                            isAllowApply = "Y";
+                            isAllowApply = GlobalConstant.FLAG_Y;
                         }else{
-                            isAllowApply = "N";
+                            isAllowApply = GlobalConstant.FLAG_N;
                         }
                     }
                 }
@@ -137,10 +137,10 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         }
         // isAllowApply为N 不能参加补考，无需在做成绩判断
         if (!GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
-            String isSkillQualifed = "N";
-            String isTheoryQualifed = "N";
-            String isSkill = "Y";
-            String isTheory = "Y";
+            String isSkillQualifed = GlobalConstant.FLAG_N;
+            String isTheoryQualifed = GlobalConstant.FLAG_N;
+            String isSkill = GlobalConstant.FLAG_Y;
+            String isTheory = GlobalConstant.FLAG_Y;
             String validYear = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 3);
             List<ResScore> resScoreList = doctorRecruitBiz.selectAllScore(user.getUserFlow(), null);
             if (resScoreList != null && resScoreList.size() > 0) {
@@ -152,12 +152,12 @@ public class JsResDoctorExamSignUpController extends GeneralController {
                     for (ResScore resScore : skillList) {
                         if ("1".equals(String.valueOf(resScore.getSkillScore()))) {
                             //3年内的技能成绩有合格的
-                            isSkillQualifed = "Y";
+                            isSkillQualifed = GlobalConstant.FLAG_Y;
                             break;
                         }
                     }
                 }else{
-                    isSkill = "N";
+                    isSkill = GlobalConstant.FLAG_N;
                 }
                 // 如果技能考试没有合格记录 无需在判断理论成绩
                 if (theoryList.size() > 0) {
@@ -165,28 +165,28 @@ public class JsResDoctorExamSignUpController extends GeneralController {
                         for (ResScore resScore : theoryList) {
                             if ("1".equals(String.valueOf(resScore.getTheoryScore()))) {
                                 //3年内的理论成绩有合格的
-                                isTheoryQualifed = "Y";
+                                isTheoryQualifed = GlobalConstant.FLAG_Y;
                                 break;
                             }
                         }
                     }
                 }else{
-                    isTheory = "N";
+                    isTheory = GlobalConstant.FLAG_N;
                 }
             }
             // 需求变更2018（不含）届以前学员 不做该判断  未参加过考核也可以补考
             if("2018".compareTo(doctor.getSessionNumber()) <= 0 && GlobalConstant.FLAG_N.equals(isSkill) && GlobalConstant.FLAG_N.equals(isTheory)){
                 // 2019/2018/2017级助理全科全走补考报名
                 if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
-                    isAllowApply = "Y";
+                    isAllowApply = GlobalConstant.FLAG_Y;
                 }else{
                     //从未参加过考核
-                    isAllowApply = "N";
+                    isAllowApply = GlobalConstant.FLAG_N;
                 }
             }
             if (GlobalConstant.FLAG_Y.equals(isSkillQualifed) && GlobalConstant.FLAG_Y.equals(isTheoryQualifed)) {
                 //3年内理论成绩和技能成绩都合格
-                isAllowApply = "N";
+                isAllowApply = GlobalConstant.FLAG_N;
             }
         }
         model.addAttribute("isAllowApply", isAllowApply);
@@ -211,10 +211,10 @@ public class JsResDoctorExamSignUpController extends GeneralController {
             Map<String, List<Map<String, String>>> speMap = setSpeMap(model);
             List<Map<String, String>> spes = speMap.get(resDoctorRecruit.getSpeId());
             if (spes != null && spes.size() > 0) {
-                model.addAttribute("needChange", "Y");
+                model.addAttribute("needChange", GlobalConstant.FLAG_Y);
                 model.addAttribute("spes", spes);
             } else {
-                model.addAttribute("needChange", "N");
+                model.addAttribute("needChange", GlobalConstant.FLAG_N);
             }
         }
         return "jsres/examSignUp/signUp";
@@ -335,14 +335,14 @@ public class JsResDoctorExamSignUpController extends GeneralController {
                 }
             }
             String nowTime = DateUtil.transDateTime(DateUtil.getCurrentTime());
-            String f = "N";
+            String f = GlobalConstant.FLAG_N;
             if (GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
                 resTestConfigList = resTestConfigBiz.findChargeEffective(DateUtil.getCurrDateTime2());
             } else if (GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
                 resTestConfigList = resTestConfigBiz.findGlobalEffective(DateUtil.getCurrDateTime2());
             }
             if (resTestConfigList.size() > 0) {
-                f = "Y";
+                f = GlobalConstant.FLAG_Y;
             }
             if (GlobalConstant.FLAG_N.equals(f)) {
                 return "当前时间不在审核时间段内，无法审核！";
@@ -452,8 +452,8 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         } else {
             return "当前没有正在进行的考试";
         }
-        String isSkillQualifed = "N";
-        String isTheoryQualifed = "N";
+        String isSkillQualifed = GlobalConstant.FLAG_N;
+        String isTheoryQualifed = GlobalConstant.FLAG_N;
         List<ResScore> resScoreList = doctorRecruitBiz.selectAllScore(currentUser.getUserFlow(), null);
         String validYear = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 3);
         if (resScoreList.size() > 0) {
@@ -465,7 +465,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
                 for (ResScore resScore : skillList) {
                     if ("1".equals(String.valueOf(resScore.getSkillScore()))) {
                         //3年内的技能成绩有合格的
-                        isSkillQualifed = "Y";
+                        isSkillQualifed = GlobalConstant.FLAG_Y;
                     }
                 }
             }
@@ -473,7 +473,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
                 for (ResScore resScore : theoryList) {
                     if ("1".equals(String.valueOf(resScore.getTheoryScore()))) {
                         //3年内的理论成绩有合格的
-                        isTheoryQualifed = "Y";
+                        isTheoryQualifed = GlobalConstant.FLAG_Y;
                     }
                 }
             }
@@ -619,7 +619,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         //查询条件
         Map<String,Object> param=new HashMap<>();
         List<String> orgFlowList=new ArrayList<String>();
-        String f = "N";
+        String f = GlobalConstant.FLAG_N;
         if(GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
             SysOrg currentOrg = orgBiz.readSysOrg(currentUser.getOrgFlow());
             orgFlowList.add(currentOrg.getOrgFlow());
@@ -636,7 +636,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
             List<ResTestConfig> localEffective = resTestConfigBiz.findLocalEffective(DateUtil.getCurrDateTime2());
             if (localEffective.size() > 0) {
                 if (DateUtil.getYear().equals(signupYear)) {
-                    f = "Y";
+                    f = GlobalConstant.FLAG_Y;
                 }
             }
         }else if(GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
@@ -657,7 +657,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
             List<ResTestConfig> chargeEffective = resTestConfigBiz.findChargeEffective(DateUtil.getCurrDateTime2());
             if (chargeEffective.size() > 0) {
                 if (DateUtil.getYear().equals(signupYear)) {
-                    f = "Y";
+                    f = GlobalConstant.FLAG_Y;
                 }
             }
         }else if(GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
@@ -680,7 +680,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
             List<ResTestConfig> globalEffective = resTestConfigBiz.findGlobalEffective(DateUtil.getCurrDateTime2());
             if (globalEffective.size() > 0) {
                 if (DateUtil.getYear().equals(signupYear)) {
-                    f = "Y";
+                    f = GlobalConstant.FLAG_Y;
                 }
             }
         }

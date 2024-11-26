@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.lcjn;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.sci.model.mo.*;
 import org.springframework.web.multipart.MultipartFile;
 

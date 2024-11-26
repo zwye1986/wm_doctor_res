@@ -1,6 +1,6 @@
 package com.pinde.sci.ctrl.jsres;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -552,7 +552,7 @@ public class JsResDoctorScoreApplyController extends GeneralController {
 
             SysOrg org=orgBiz.readSysOrg(sysuser.getOrgFlow());
             if(OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
-                jointOrgFlowList = searchJointOrgList("Y", sysuser.getOrgFlow());
+                jointOrgFlowList = searchJointOrgList(GlobalConstant.FLAG_Y, sysuser.getOrgFlow());
             }
             jointOrgFlowList.add(sysuser.getOrgFlow());
         }
