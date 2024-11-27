@@ -570,19 +570,19 @@
         FROM PDSCI.SCH_ARRANGE_RESULT sar
         WHERE RECORD_STATUS = 'Y'
         AND DOCTOR_FLOW = #{doctorFlow}
-          <choose>
-              <when test="schStartDate !=null and schStartDate!='' and schEndDate!=null and schEndDate != ''">
-                and sch_start_date &lt;= #{schEndDate}
-                and #{schStartDate} &lt;=  SCH_END_DATE
-              </when>
-              <when test='schStartDate!=null and schStartDate!=""'>
-                  AND SCH_START_DATE >= #{schStartDate}
-              </when>
-              <when test='schEndDate!=null and schEndDate!=""'>
-                  AND SCH_END_DATE <![CDATA[<=]]> #{schEndDate}
-              </when>
-              <otherwise></otherwise>
-          </choose>
+        <choose>
+            <when test='schStartDate!=null and schStartDate!="" and schEndDate!=null and schEndDate!=""'>
+                AND SCH_START_DATE <![CDATA[<=]]> #{schEndDate}
+                AND SCH_END_DATE <![CDATA[>=]]> #{schStartDate}
+            </when>
+            <when test='schStartDate!=null and schStartDate!=""'>
+                AND SCH_START_DATE <![CDATA[>=]]> #{schStartDate}
+            </when>
+            <when test='schEndDate!=null and schEndDate!=""'>
+                AND SCH_END_DATE <![CDATA[<=]]> #{schEndDate}
+            </when>
+            <otherwise></otherwise>
+        </choose>
         <if test='deptFlow!=null and deptFlow!=""'>
             AND (EXISTS
             (SELECT NULL
@@ -2629,4 +2629,25 @@
             #{r}
         </foreach>
     </update>
+
+    <select id="selectDoctorSchDate" resultType="com.pinde.sci.model.mo.SchArrangeResult">
+        select sar.* from SCH_ARRANGE_RESULT sar
+        where sar.record_status = 'Y'
+        and sar.doctor_flow in
+        <foreach collection="doctorFlowList" item="doctorFlow" open="(" close=")" separator=",">
+            #{doctorFlow}
+        </foreach>
+        <choose>
+            <when test="schStartDate != null and schStartDate != '' and schEndDate != null and schEndDate != ''">
+                and sar.sch_start_date &lt;= #{schEndDate} and #{schStartDate} &lt;= sar.sch_end_date
+            </when>
+            <when test="schStartDate != null and schStartDate != ''">
+                and sar.sch_start_date >= #{schStartDate}
+            </when>
+            <when test="schEndDate != null and schEndDate != ''">
+                and sar.sch_end_date &lt;= #{schEndDate}
+            </when>
+            <otherwise></otherwise>
+        </choose>
+    </select>
 </mapper>

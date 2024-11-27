@@ -28,7 +28,7 @@
 		<property name="releaseHelperThreads" value="3" />
 	</bean> -->
 	
-	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+	<!--<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
 	    <property name="slowSqlMillis" value="3000" />
 	    <property name="logSlowSql" value="true" />
 	    <property name="mergeSql" value="false" />
@@ -66,7 +66,7 @@
         <property name="resultSetOpenAfterLogEnabled" value="false" />
         <property name="resultSetCloseAfterLogEnabled" value="false" />
         
-        <!-- <property name="statementExecutableSqlLogEnable" value="false" /> -->
+        &lt;!&ndash; <property name="statementExecutableSqlLogEnable" value="false" /> &ndash;&gt;
   	</bean>
 	<bean id="wall-filter-config" class="com.alibaba.druid.wall.WallConfig">
 		<property name="functionCheck" value="false"/>
@@ -80,8 +80,8 @@
   	<bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
       	<property name="dbType" value="oracle" />
 		<property name="config" ref="wall-filter-config" />
-  	</bean>
-	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+  	</bean>-->
+	<!--<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<property name="url" value="${pdsci.jdbc.url}" />
 		<property name="username" value="${pdsci.jdbc.username}" />
 		<property name="password" value="${pdsci.jdbc.password}" />
@@ -106,9 +106,9 @@
 	            <ref bean="wall-filter" />
 	        </list>
 	    </property>
-	</bean>    
+	</bean>   -->
 	
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+<!--	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
@@ -116,14 +116,14 @@
 	
 	<bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" lazy-init="true" />	
 
-	<!-- mybatis文件配置，扫描所有mapper文件 -->
+	&lt;!&ndash; mybatis文件配置，扫描所有mapper文件 &ndash;&gt;
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath:com/pinde/*/dao/*/*.xml"/>
         <property name="configLocation" value="classpath:mybatis-config.xml"></property> 
     </bean>
 
-	<!-- spring与mybatis整合配置，扫描所有dao -->
+	&lt;!&ndash; spring与mybatis整合配置，扫描所有dao &ndash;&gt;
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
    		<property name="basePackage" value="com.pinde.*.dao.*" />
    		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />  
@@ -137,9 +137,9 @@
 	            <value>com.pinde.*.biz.*.*</value>
 	        </list>
     	</property>
-	</bean>
-	
+	</bean>-->
+<!--
 	<aop:config proxy-target-class="true">
     	<aop:advisor advice-ref="druid-stat-interceptor" pointcut-ref="druid-stat-pointcut" />
-	</aop:config>
+	</aop:config>-->
 </beans>

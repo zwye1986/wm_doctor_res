@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class ResSkillTimeConfigBizImpl implements IResSkillTimeConfigBiz {
     @Autowired
     private ResSkillTimeConfigMapper skillTimeConfigMapper;

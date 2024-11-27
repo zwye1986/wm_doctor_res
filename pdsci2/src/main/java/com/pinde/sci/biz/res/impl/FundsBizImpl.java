@@ -20,7 +20,7 @@ import java.util.Map;
 
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class FundsBizImpl implements IFundsBiz {
     @Autowired
     private ResProvinceFundMapper resProvinceFundMapper;

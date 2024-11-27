@@ -39,7 +39,7 @@ import java.util.Map;
  * @date 2017/12/29
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class ResAnnualCheckBizImpl implements IResAnnualCheckBiz{
 
     @Autowired

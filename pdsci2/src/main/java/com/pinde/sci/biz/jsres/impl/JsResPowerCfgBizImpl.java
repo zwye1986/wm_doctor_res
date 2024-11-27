@@ -37,7 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class JsResPowerCfgBizImpl implements IJsResPowerCfgBiz {
 
     @Autowired

@@ -27,7 +27,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class SchRotationBizImpl implements ISchRotationBiz {
 	@Autowired
 	private SchRotationMapper rotationMapper;

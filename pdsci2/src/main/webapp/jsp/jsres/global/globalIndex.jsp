@@ -929,11 +929,11 @@
         }
     </script>
     <script type="text/javascript">
-        /*$(document).ready(function () {
+        $(document).ready(function () {
             canvasShow();
             canvasShow2();
             canvasShow3();
-        });*/
+        });
         function canvasShow() {
             var dom = document.getElementById('containerEchartOne');
             var myChart = echarts.init(dom, null, {
@@ -1434,17 +1434,17 @@
                     <div class="col_main" id="content">
 
 <%--                        <iframe src="https://restest.njpdxx.com:5650/app/dashboards?auth_provider_hint=anonymous1#/view/2bb4a74b-e2b8-48ed-9862-e0edc26f21cb?embed=true&_g=(filters:!(),refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))"  height="2100" width="1460"></iframe>--%>
-                        <iframe src="https://js.ezhupei.com:5601/app/dashboards?auth_provider_hint=anonymous1#/view/1235a7a3-ea19-436d-89e6-505cf1944b06?embed=true&_g=(filters:!(),refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))" height="2100" width="1460"></iframe>
+<%--                        <iframe src="https://js.ezhupei.com:5601/app/dashboards?auth_provider_hint=anonymous1#/view/1235a7a3-ea19-436d-89e6-505cf1944b06?embed=true&_g=(filters:!(),refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))" height="2100" width="1460"></iframe>--%>
 
 
-<%--                        <h1 style="background:#e7f5fc;height: 40px;font-size: 15px;font-width: normal;line-height: 40px;padding: 0 20px;">在培人员情况</h1>--%>
-<%--                        <div id="containerEchartOne" style="height: 400PX"></div>--%>
+                        <h1 style="background:#e7f5fc;height: 40px;font-size: 15px;font-width: normal;line-height: 40px;padding: 0 20px;">在培人员情况</h1>
+                        <div id="containerEchartOne" style="height: 400PX"></div>
 
-<%--                        <h1 style="background:#e7f5fc;height: 40px;font-size: 15px;font-width: normal;line-height: 40px;padding: 0 20px;">招录人员情况</h1>--%>
-<%--                        <div id="containerEchartTwo" style="height: 400PX"></div>--%>
+                        <h1 style="background:#e7f5fc;height: 40px;font-size: 15px;font-width: normal;line-height: 40px;padding: 0 20px;">招录人员情况</h1>
+                        <div id="containerEchartTwo" style="height: 400PX"></div>
 
-<%--                        <h1 style="background:#e7f5fc;height: 40px;font-size: 15px;font-width: normal;line-height: 40px;padding: 0 20px;">结业人员情况</h1>--%>
-<%--                        <div id="containerEchartThree" style="height: 400PX"></div>--%>
+                        <h1 style="background:#e7f5fc;height: 40px;font-size: 15px;font-width: normal;line-height: 40px;padding: 0 20px;">结业人员情况</h1>
+                        <div id="containerEchartThree" style="height: 400PX"></div>
                         <%--<div class="content_main">--%>
                         <%--<div class="index_show">--%>
                         <%--<div class="index_tap_global top_left">--%>

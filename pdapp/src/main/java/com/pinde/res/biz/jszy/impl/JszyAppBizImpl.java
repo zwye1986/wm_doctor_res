@@ -44,7 +44,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class JszyAppBizImpl implements IJszyAppBiz {
 
 	@Resource

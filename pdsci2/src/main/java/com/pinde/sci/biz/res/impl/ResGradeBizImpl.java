@@ -41,7 +41,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ResGradeBizImpl implements IResGradeBiz {
     @Autowired
     private DeptTeacherGradeInfoExtMapper gradeInfoExtMapper;

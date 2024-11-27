@@ -41,7 +41,7 @@ import java.net.URLDecoder;
 import java.util.*;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class OscaAppBizImpl implements IOscaAppBiz {
 
 	@Autowired

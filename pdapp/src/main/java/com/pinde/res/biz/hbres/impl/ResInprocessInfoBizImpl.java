@@ -19,7 +19,7 @@ import java.util.List;
  * Created by www.0001.Ga on 2016-10-12.
  */
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ResInprocessInfoBizImpl implements IResInprocessInfoBiz {
     @Autowired
     private ResInprocessInfoMapper inprocessInfoMapper;

@@ -124,7 +124,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             if ("doctor".equals(gradeRole) || "teacher".equals(gradeRole)) {
                 paramMap.put("endTime", endTime);
             } else {
-                paramMap.put("endTime", DateUtil.transDateTime(endTime, "yyhttp://zentao.njpdxx.com:5049/zentao/bug-view-1736.htmlyy-MM-dd", "yyyyMMdd"));
+                paramMap.put("endTime", DateUtil.transDateTime(endTime, "yyyy-MM-dd", "yyyyMMdd"));
             }
 
         }
@@ -148,6 +148,9 @@ public class ResEvaluateHospitalResultController extends GeneralController {
         model.addAttribute("trainingSpeId", trainingSpeId);
         model.addAttribute("deptFlow", deptFlow);
         model.addAttribute("deptName", deptName);
+        model.addAttribute("schStartDate", startTime);
+        model.addAttribute("achEndDate", endTime);
+
         if ("360doctor".equals(gradeRole) || "360teacher".equals(gradeRole)) {
             model.addAttribute("allScore", "5");
         } else {
@@ -404,7 +407,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             String gradeRole,
             String keyCode,
             String date,
-            String role, String tdFlag, String deptFlow, String processFlow, String recFlow, String cfgFlow,
+            String role, String tdFlag, String deptFlow, String processFlow, String recFlow, String cfgFlow, String schStartDate, String schEndDate,
             Model model) {
         model.addAttribute("gradeRole", gradeRole);
         SysUser currentUser = GlobalContext.getCurrentUser();
@@ -441,6 +444,9 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             paramMap.put("recTypeIdList", recTypeIds);
 
             paramMap.put("cfgFlow",cfgFlow);
+
+            paramMap.put("schStartDate", schStartDate);
+            paramMap.put("schEndDate", schEndDate);
         } else if ("head".equals(gradeRole)) {
             recType = ResRecTypeEnum.DeptGrade.getId();
             paramMap.put("recTypeId", recType);
@@ -837,26 +843,26 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                 cellTitleOne.setCellValue(titleList.get(7));
                 cellTitleOne.setCellStyle(styleCenter);
 
-                cellRangeAddress = new CellRangeAddress(1, 1, 7, 7);
-                sheet.addMergedRegion(cellRangeAddress);
+//                cellRangeAddress = new CellRangeAddress(1, 1, 7, 7);
+//                sheet.addMergedRegion(cellRangeAddress);
                 cellTitleOne = rowTwo.createCell(7);
                 cellTitleOne.setCellValue("入科首日科室安排向培训医师介绍该科室医疗特色、注意事项及手术室、常用仪器的使用等");
                 cellTitleOne.setCellStyle(styleCenter);
 
-                cellRangeAddress = new CellRangeAddress(1, 1, 8, 8);
-                sheet.addMergedRegion(cellRangeAddress);
+//                cellRangeAddress = new CellRangeAddress(1, 1, 8, 8);
+//                sheet.addMergedRegion(cellRangeAddress);
                 cellTitleOne = rowTwo.createCell(8);
                 cellTitleOne.setCellValue("入科首日科主任落实培训医师的带教安排");
                 cellTitleOne.setCellStyle(styleCenter);
 
-                cellRangeAddress = new CellRangeAddress(1, 1, 9, 9);
-                sheet.addMergedRegion(cellRangeAddress);
+//                cellRangeAddress = new CellRangeAddress(1, 1, 9, 9);
+//                sheet.addMergedRegion(cellRangeAddress);
                 cellTitleOne = rowTwo.createCell(9);
                 cellTitleOne.setCellValue("科主任重视，专人负责，严格考勤，措施得力");
                 cellTitleOne.setCellStyle(styleCenter);
 
-                cellRangeAddress = new CellRangeAddress(1, 1, 10, 10);
-                sheet.addMergedRegion(cellRangeAddress);
+//                cellRangeAddress = new CellRangeAddress(1, 1, 10, 10);
+//                sheet.addMergedRegion(cellRangeAddress);
                 cellTitleOne = rowTwo.createCell(10);
                 cellTitleOne.setCellValue("科室氛围融洽，认真听取培训医师及各方面反馈意见，及时改进薄弱环节");
                 cellTitleOne.setCellStyle(styleCenter);
@@ -867,20 +873,20 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                 cellTitleOne.setCellValue(titleList.get(8));
                 cellTitleOne.setCellStyle(styleCenter);
 
-                cellRangeAddress = new CellRangeAddress(1, 1, 11, 11);
-                sheet.addMergedRegion(cellRangeAddress);
+//                cellRangeAddress = new CellRangeAddress(1, 1, 11, 11);
+//                sheet.addMergedRegion(cellRangeAddress);
                 cellTitleOne = rowTwo.createCell(11);
                 cellTitleOne.setCellValue("平时各级查房能经常提问，检查、考核培训医师临床分析、解决问题的能力");
                 cellTitleOne.setCellStyle(styleCenter);
 
-                cellRangeAddress = new CellRangeAddress(1, 1, 12, 12);
-                sheet.addMergedRegion(cellRangeAddress);
+//                cellRangeAddress = new CellRangeAddress(1, 1, 12, 12);
+//                sheet.addMergedRegion(cellRangeAddress);
                 cellTitleOne = rowTwo.createCell(12);
                 cellTitleOne.setCellValue("严格组织出科时临床技能考核，严格评分");
                 cellTitleOne.setCellStyle(styleCenter);
 
-                cellRangeAddress = new CellRangeAddress(1, 1, 13, 13);
-                sheet.addMergedRegion(cellRangeAddress);
+//                cellRangeAddress = new CellRangeAddress(1, 1, 13, 13);
+//                sheet.addMergedRegion(cellRangeAddress);
                 cellTitleOne = rowTwo.createCell(13);
                 cellTitleOne.setCellValue("能综合培训医师各方面表现，及时审核并给予恰当评定");
                 cellTitleOne.setCellStyle(styleCenter);
@@ -891,50 +897,50 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                 cellTitleOne.setCellValue(titleList.get(9));
                 cellTitleOne.setCellStyle(styleCenter);
 
-                cellRangeAddress = new CellRangeAddress(1, 1, 14, 14);
-                sheet.addMergedRegion(cellRangeAddress);
+//                cellRangeAddress = new CellRangeAddress(1, 1, 14, 14);
+//                sheet.addMergedRegion(cellRangeAddress);
                 cellTitleOne = rowTwo.createCell(14);
                 cellTitleOne.setCellValue("能达到培训标准要求的病床数");
                 cellTitleOne.setCellStyle(styleCenter);
 
-                cellRangeAddress = new CellRangeAddress(1, 1, 15, 15);
-                sheet.addMergedRegion(cellRangeAddress);
+//                cellRangeAddress = new CellRangeAddress(1, 1, 15, 15);
+//                sheet.addMergedRegion(cellRangeAddress);
                 cellTitleOne = rowTwo.createCell(15);
                 cellTitleOne.setCellValue("认真组织，准备充分，规范带教");
                 cellTitleOne.setCellStyle(styleCenter);
 
-                cellRangeAddress = new CellRangeAddress(1, 1, 16, 16);
-                sheet.addMergedRegion(cellRangeAddress);
+//                cellRangeAddress = new CellRangeAddress(1, 1, 16, 16);
+//                sheet.addMergedRegion(cellRangeAddress);
                 cellTitleOne = rowTwo.createCell(16);
                 cellTitleOne.setCellValue("注重培训医师医德医风教育，做到言传身教");
                 cellTitleOne.setCellStyle(styleCenter);
 
-                cellRangeAddress = new CellRangeAddress(1, 1, 17, 17);
-                sheet.addMergedRegion(cellRangeAddress);
+//                cellRangeAddress = new CellRangeAddress(1, 1, 17, 17);
+//                sheet.addMergedRegion(cellRangeAddress);
                 cellTitleOne = rowTwo.createCell(17);
                 cellTitleOne.setCellValue("病种多样，达到培训标准要求");
                 cellTitleOne.setCellStyle(styleCenter);
 
-                cellRangeAddress = new CellRangeAddress(1, 1, 18, 18);
-                sheet.addMergedRegion(cellRangeAddress);
+//                cellRangeAddress = new CellRangeAddress(1, 1, 18, 18);
+//                sheet.addMergedRegion(cellRangeAddress);
                 cellTitleOne = rowTwo.createCell(18);
                 cellTitleOne.setCellValue("每周有小讲课或专题讲座，备课认真，能结合本科实际介绍诊疗经验");
                 cellTitleOne.setCellStyle(styleCenter);
 
-                cellRangeAddress = new CellRangeAddress(1, 1, 19, 19);
-                sheet.addMergedRegion(cellRangeAddress);
+//                cellRangeAddress = new CellRangeAddress(1, 1, 19, 19);
+//                sheet.addMergedRegion(cellRangeAddress);
                 cellTitleOne = rowTwo.createCell(19);
                 cellTitleOne.setCellValue("病历讨论，准备认真、充分");
                 cellTitleOne.setCellStyle(styleCenter);
 
-                cellRangeAddress = new CellRangeAddress(1, 1, 20, 20);
-                sheet.addMergedRegion(cellRangeAddress);
+//                cellRangeAddress = new CellRangeAddress(1, 1, 20, 20);
+//                sheet.addMergedRegion(cellRangeAddress);
                 cellTitleOne = rowTwo.createCell(20);
                 cellTitleOne.setCellValue("能督促带教教师及时批改培训医师所书写的病案，并给予有效指导");
                 cellTitleOne.setCellStyle(styleCenter);
 
-                cellRangeAddress = new CellRangeAddress(0, 0, 21, 21);
-                sheet.addMergedRegion(cellRangeAddress);
+//                cellRangeAddress = new CellRangeAddress(0, 0, 21, 21);
+//                sheet.addMergedRegion(cellRangeAddress);
                 cellTitleOne = rowOne.createCell(21);
                 cellTitleOne.setCellValue(titleList.get(10));
                 cellTitleOne.setCellStyle(styleCenter);
@@ -1123,26 +1129,26 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                 cellTitleOne.setCellStyle(styleCenter);
             }
 
-            cellRangeAddress = new CellRangeAddress(0, 0, 9, 11);
+            cellRangeAddress = new CellRangeAddress(0, 1, 9, 11);
             sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowOne.createCell(9);
             cellTitleOne.setCellValue(titleList.get(9));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 9, 9);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 9, 9);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(9);
             cellTitleOne.setCellValue("热心教学并愿意花足够的时间参与住院医师的教学工作");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 10, 10);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 10, 10);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(10);
             cellTitleOne.setCellValue("能为住院医师创造良好的培训和教学");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 11, 11);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 11, 11);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(11);
             cellTitleOne.setCellValue("为人师表，工作努力并能与住院医师建立良好的工作关系");
             cellTitleOne.setCellStyle(styleCenter);
@@ -1153,14 +1159,14 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             cellTitleOne.setCellValue(titleList.get(10));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 12, 12);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 12, 12);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(12);
             cellTitleOne.setCellValue("是否有较强的教学能力");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 13, 13);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 13, 13);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(13);
             cellTitleOne.setCellValue("教学查房、专业讲座和其他教学活动准备充分，深入浅出，条理清楚");
             cellTitleOne.setCellStyle(styleCenter);
@@ -1171,62 +1177,62 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             cellTitleOne.setCellValue(titleList.get(11));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 14, 14);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 14, 14);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(14);
             cellTitleOne.setCellValue("有较好的临床经验和熟练的临床操作技能");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 15, 15);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 15, 15);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(15);
             cellTitleOne.setCellValue("认真督导住院医师临床工作，致力于培养住院医师的独立工作能力");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(0, 0, 16, 16);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(0, 0, 16, 16);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowOne.createCell(16);
             cellTitleOne.setCellValue(titleList.get(12));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 16, 16);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 16, 16);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(16);
             cellTitleOne.setCellValue("有较强的沟通能力，并能与患者及其家属保持健康的医患关系");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(0, 0, 17, 17);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(0, 0, 17, 17);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowOne.createCell(17);
             cellTitleOne.setCellValue(titleList.get(13));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 17, 17);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 17, 17);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(17);
             cellTitleOne.setCellValue("能够运用循证医学，规范的临床路径和标准化治疗进行教学");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(0, 0, 18, 18);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(0, 0, 18, 18);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowOne.createCell(18);
             cellTitleOne.setCellValue(titleList.get(14));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 18, 18);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 18, 18);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(18);
             cellTitleOne.setCellValue("对住院医师在培训中的表现做及时的反馈");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(0, 0, 19, 19);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(0, 0, 19, 19);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowOne.createCell(19);
             cellTitleOne.setCellValue(titleList.get(15));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 19, 19);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 19, 19);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(19);
             cellTitleOne.setCellValue("综合评分");
             cellTitleOne.setCellStyle(styleCenter);
@@ -1463,14 +1469,14 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             cellTitleOne.setCellValue(titleList.get(10));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 10, 10);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 10, 10);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(10);
             cellTitleOne.setCellValue("热爱医学事业，遵守法律与行业规范，遵纪守时，自律守信");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 11, 11);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 11, 11);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(11);
             cellTitleOne.setCellValue("以病人为中心，尊重和维护病人权益，保护病人隐私");
             cellTitleOne.setCellStyle(styleCenter);
@@ -1481,62 +1487,62 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             cellTitleOne.setCellValue(titleList.get(11));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 12, 12);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 12, 12);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(12);
             cellTitleOne.setCellValue("能比较全面深入地理解基础及临床相关知识，具备一定的预防医学及人文、法律等相关知识");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 13, 13);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 13, 13);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(13);
             cellTitleOne.setCellValue("能够正确采集病史和体检，整合归纳各类信息，提出综合分析依据，掌握诊断推理方法，提出科学临床判断");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 14, 14);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 14, 14);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(14);
             cellTitleOne.setCellValue("能遵循循证医学思维，正确选择和实施治疗方案");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 15, 15);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 15, 15);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(15);
             cellTitleOne.setCellValue("按要求完成一定量的常见病和多发病的诊治与临床操作，掌握本专业要求的临床技能");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 16, 16);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 16, 16);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(16);
             cellTitleOne.setCellValue("能够正确分析病史，正确使用影像诊断及实验室检查，并对各种检查资料进行分析总结，并展现出良好的临床判断能力");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 17, 17);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 17, 17);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(17);
             cellTitleOne.setCellValue("临床影像或临床实验室操作的掌握程度");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(0, 0, 18, 18);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(0, 0, 18, 18);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowOne.createCell(18);
             cellTitleOne.setCellValue(titleList.get(12));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 18, 18);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 18, 18);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(18);
             cellTitleOne.setCellValue("以病人安全为核心，运用专业能力，细致观察病人病情变化，提供有效适宜的医疗服务");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(0, 0, 19, 19);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(0, 0, 19, 19);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowOne.createCell(19);
             cellTitleOne.setCellValue(titleList.get(13));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 19, 19);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 19, 19);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(19);
             cellTitleOne.setCellValue("对患者和家属服务周到。认真倾听他们的要求，并能为其提供相关教育和咨询");
             cellTitleOne.setCellStyle(styleCenter);
@@ -1547,26 +1553,26 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             cellTitleOne.setCellValue(titleList.get(14));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 20, 20);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 20, 20);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(20);
             cellTitleOne.setCellValue("具备临床沟通能力，运用医患沟通的原则和方法，沟通效果好");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 21, 21);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 21, 21);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(21);
             cellTitleOne.setCellValue("有较好的交流沟通合作能力，能够与主管医师，护士和其他专业的医师密切协调合作");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(0, 0, 22, 22);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(0, 0, 22, 22);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowOne.createCell(22);
             cellTitleOne.setCellValue(titleList.get(15));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 22, 22);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 22, 22);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(22);
             cellTitleOne.setCellValue("具有较好的教学能力，能够指导低年级住院医师或实习医师工作，完成指定的教学任务");
             cellTitleOne.setCellStyle(styleCenter);
@@ -1577,32 +1583,32 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             cellTitleOne.setCellValue(titleList.get(16));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 23, 23);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 23, 23);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(23);
             cellTitleOne.setCellValue("有自主学习和终身学习的理念，运用各种学术资源，不断反思与学习");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 24, 24);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 24, 24);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(24);
             cellTitleOne.setCellValue("持续追踪医学进展，更新医学知识和理念，不断提高能力");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 25, 25);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 25, 25);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(25);
             cellTitleOne.setCellValue("结合临床问题与需求，开展或参与科学研究");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(0, 0, 26, 26);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(0, 0, 26, 26);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowOne.createCell(26);
             cellTitleOne.setCellValue(titleList.get(17));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 26, 26);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 26, 26);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(26);
             cellTitleOne.setCellValue("综合得分");
             cellTitleOne.setCellStyle(styleCenter);
@@ -1811,20 +1817,20 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             cellTitleOne.setCellValue(titleList.get(10));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 10, 10);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 10, 10);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(10);
             cellTitleOne.setCellValue("对护理团队成员礼貌尊重，能有效地交流沟通");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 11, 11);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 11, 11);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(11);
             cellTitleOne.setCellValue("能及时告知相关护士关于患者的治疗和出院计划");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 12, 12);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 12, 12);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(12);
             cellTitleOne.setCellValue("需要时能及时寻求上级医师和同事帮助");
             cellTitleOne.setCellStyle(styleCenter);
@@ -1835,20 +1841,20 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             cellTitleOne.setCellValue(titleList.get(11));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 13, 13);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 13, 13);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(13);
             cellTitleOne.setCellValue("医嘱及其他医疗文书清晰明了");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 14, 14);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 14, 14);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(14);
             cellTitleOne.setCellValue("着装整洁，符合职业身份");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 15, 15);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 15, 15);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(15);
             cellTitleOne.setCellValue("在需要时总能找到，对护士报告的患者情况及时回应");
             cellTitleOne.setCellStyle(styleCenter);
@@ -1859,26 +1865,26 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             cellTitleOne.setCellValue(titleList.get(12));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 16, 16);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 16, 16);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(16);
             cellTitleOne.setCellValue("尊重患者及家属的合理要求，富有同情心");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 17, 17);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 17, 17);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(17);
             cellTitleOne.setCellValue("愿意倾听并能通俗易懂地回答患者问题");
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(0, 0, 18, 18);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(0, 0, 18, 18);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowOne.createCell(18);
             cellTitleOne.setCellValue(titleList.get(13));
             cellTitleOne.setCellStyle(styleCenter);
 
-            cellRangeAddress = new CellRangeAddress(1, 1, 18, 18);
-            sheet.addMergedRegion(cellRangeAddress);
+//            cellRangeAddress = new CellRangeAddress(1, 1, 18, 18);
+//            sheet.addMergedRegion(cellRangeAddress);
             cellTitleOne = rowTwo.createCell(18);
             cellTitleOne.setCellValue("综合评价");
             cellTitleOne.setCellStyle(styleCenter);

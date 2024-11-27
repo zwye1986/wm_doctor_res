@@ -30,7 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class InxInfoManageBizImpl implements IinxInfoManageBiz {
 	@Autowired
 	private InxInfoMapper inxInfoMapper;

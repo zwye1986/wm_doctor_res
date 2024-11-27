@@ -132,9 +132,9 @@
                 <td style="text-align: center;padding: 0px">${resultMap[result.resultFlow].teacherUserName}</td>
                 <%--<td style="text-align: center;padding: 0px">${resultMap[result.resultFlow].schScore}</td>--%>
                 <td style="text-align: center;padding: 0px">
-                <c:if test="${ not empty skillMap[key].score}">
+<%--                <c:if test="${ not empty skillMap[key].score}">--%>
                     <a style="cursor: pointer" onclick="downloadCkkPaper('${key}');" class="theoreResult_id">${empty skillMap[key].theoreResult?resultMap[result.resultFlow].schScore:skillMap[key].theoreResult}</a>
-                </c:if>
+<%--                </c:if>--%>
                 </td>
                 <td style="text-align: center;padding: 0px">${skillMap[key].skillName}</td>
                 <td style="text-align: center;padding: 0px">${skillMap[key].score} </td>

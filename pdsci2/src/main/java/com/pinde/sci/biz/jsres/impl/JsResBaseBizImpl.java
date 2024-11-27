@@ -42,7 +42,7 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class JsResBaseBizImpl implements IJsResBaseBiz{
 
 	@Autowired

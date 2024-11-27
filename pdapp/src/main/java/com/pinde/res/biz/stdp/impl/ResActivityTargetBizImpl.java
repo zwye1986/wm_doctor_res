@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ResActivityTargetBizImpl implements IResActivityTargetBiz {
 
 	@Autowired
@@ -157,6 +157,13 @@ criteria.andActivityFlowEqualTo(activityFlow);
 	public List<String> selectJointOrgFlow(String userFlow) {
 
 		return activityTargetMapper.selectJointOrgFlow(userFlow);
+
+	}
+
+	@Override
+	public List<String> selectMainOrgFlow(String userFlow) {
+
+		return activityTargetMapper.selectMainOrgFlow(userFlow);
 
 	}
 

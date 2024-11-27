@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.Map;
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class InxEduBizImpl implements IInxEduBiz{
 	@Autowired
 	private IUserBiz userBiz;

@@ -71,7 +71,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 	@Autowired
@@ -143,6 +143,9 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 	@Autowired
 	private IResRecBiz resRecBiz;
+
+	@Autowired
+	private ResScoreMapper scoreMapper;
 
 	private static Logger logger = LoggerFactory.getLogger(SchArrangeResultBizImpl.class);
 
@@ -1904,12 +1907,44 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			return result;
 		}
 		List<ResSchProcessExpress> resSchProcessExpresses = schProcessExpressMapper.listByDoctorList(doctorFlowList, schStartDate, schEndDate);
+		List<SchArrangeResult> arrangeResultList = resultExtMapper.selectDoctorSchDate(doctorFlowList, schStartDate, schEndDate);
+		Map<String, List<SchArrangeResult>> doctorToArrangeMap = arrangeResultList.stream().collect(Collectors.groupingBy(vo -> vo.getDoctorFlow()));
+		List<String> resultFlowList = arrangeResultList.stream().map(vo -> vo.getResultFlow()).collect(Collectors.toList());
+		List<ResDoctorSchProcess> processList = new ArrayList<>();
+		if(CollectionUtils.isNotEmpty(resultFlowList)) {
+			ResDoctorSchProcessExample processExample = new ResDoctorSchProcessExample();
+			processExample.createCriteria().andRecordStatusEqualTo("Y").andSchResultFlowIn(resultFlowList);
+			processList = processBiz.readResDoctorSchProcessByExample(processExample);
+		}
+		List<String> processFlowList = processList.stream().map(vo -> vo.getProcessFlow()).collect(Collectors.toList());
+		List<ResScore> scoreList = new ArrayList<>();
+		if(CollectionUtils.isNotEmpty(processFlowList)) {
+			ResScoreExample scoreExample = new ResScoreExample();
+			scoreExample.createCriteria().andRecordStatusEqualTo("Y").andProcessFlowIn(processFlowList);
+			scoreList = scoreMapper.selectByExample(scoreExample);
+		}
+		Map<String, ResScore> processFlowToEntityMap = scoreList.stream().collect(Collectors.toMap(vo -> vo.getProcessFlow(), vo -> vo, (vo1, vo2) -> vo1));
+		Map<String, List<ResScore>> doctorFlowToEntityMap = scoreList.stream().collect(Collectors.groupingBy(vo -> vo.getDoctorFlow()));
 		if (CollectionUtil.isEmpty(resSchProcessExpresses)) {
 			Map<String, BigDecimal> itemMap = new HashMap<>();
 			for (String doctorFlow : doctorFlowList) {
 				itemMap = new HashMap<>();
 				itemMap.put(ll,new BigDecimal("0"));
 				itemMap.put(jn,new BigDecimal("0"));
+				List<ResScore> doctorScoreList = doctorFlowToEntityMap.get(doctorFlow);
+				if(CollectionUtils.isNotEmpty(doctorScoreList)) {
+					BigDecimal totalScore = BigDecimal.ZERO;
+					int count = 0;
+					for (ResScore resScore : doctorScoreList) {
+						if(resScore.getTheoryScore() != null) {
+							totalScore = totalScore.add(resScore.getTheoryScore());
+							count++;
+						}
+					}
+					if(count > 0) {
+						itemMap.put(ll, totalScore.divide(new BigDecimal(count), 2, BigDecimal.ROUND_HALF_DOWN));
+					}
+				}
 				result.put(doctorFlow,itemMap);
 			}
 			return result;
@@ -1935,7 +1970,9 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			BigDecimal jinengScore = new BigDecimal("0");
 			int jnCount = 0;
 			itemMap.put(jn,new BigDecimal("0"));
+			List<String> useProcessList = new ArrayList<>();
 			for (ResSchProcessExpress item : itemList) {
+				useProcessList.add(item.getProcessFlow());
 				String recContent = item.getRecContent();
 				if (StringUtils.isEmpty(recContent)) {
 					continue;
@@ -1954,6 +1991,13 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					}catch (Exception e) {
 
 					}
+				}else {
+					ResScore processItem = processFlowToEntityMap.getOrDefault(item.getProcessFlow(), new ResScore());
+					BigDecimal theoryScore = processItem.getTheoryScore();
+					if (theoryScore != null) {
+						lilunScore = lilunScore.add(theoryScore);
+						llCount++;
+					}
 				}
 				//技能成绩
 				Object score = stringObjectMap.get("score");
@@ -1967,6 +2011,16 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					}
 				}
 			}
+			List<ResScore> doctorScoreList = doctorFlowToEntityMap.get(doctorFlow);
+			if(CollectionUtils.isNotEmpty(doctorScoreList)) {
+				for (ResScore resScore : doctorScoreList) {
+					if(!useProcessList.contains(resScore.getProcessFlow()) && resScore.getTheoryScore() != null) {
+						lilunScore = lilunScore.add(resScore.getTheoryScore());
+						llCount++;
+					}
+				}
+			}
+
 			if (llCount>0){
 				BigDecimal divide = lilunScore.divide(new BigDecimal(llCount), 2, BigDecimal.ROUND_HALF_DOWN);
 				itemMap.put(ll,divide);
@@ -4869,7 +4923,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	 * @Description: 保存导入数据
 	 */
 	@Override
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public Map<String,Object> submitPbImport(List<SchedulingDataModel> data) throws Exception {
 		Map<String, Object> result = new HashMap<>();
 		result.put("code",200);
