@@ -59,6 +59,8 @@ public interface TeachingActivityInfoExtMapper {
 
 	List<Map<String,Object>> findActivityList2(Map<String, String> param);
 
+	List<Map<String,Object>> findActivityList3(Map<String, String> param);
+
 	List<Map<String, Object>> getActivitys(Map<String, Object> param);
 
 	List<Map<String,Object>> getDeptActivityCountMap(Map<String, Object> param);
