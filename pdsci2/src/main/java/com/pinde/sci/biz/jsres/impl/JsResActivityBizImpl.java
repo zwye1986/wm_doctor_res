@@ -675,6 +675,11 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 		List<Map<String, Object>> list=activityInfoExtMapper.findActivityList2(param);
 		return list;
 	}
+	@Override
+	public List<Map<String, Object>> findActivityList3(Map<String, String> param) {
+		List<Map<String, Object>> list=activityInfoExtMapper.findActivityList3(param);
+		return list;
+	}
 
 	@Override
 	public List<Map<String, Object>> getActivitys(Map<String, Object> param) {
