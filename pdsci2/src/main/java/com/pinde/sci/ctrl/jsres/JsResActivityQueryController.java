@@ -262,7 +262,7 @@ public class JsResActivityQueryController extends GeneralController {
 		if("university".equals(roleFlag) && StringUtil.isNotEmpty(curUser.getSchool())){
 			param.put("school", curUser.getSchool());
 		}
-		List<Map<String,Object>> list=activityBiz.findActivityList2(param);
+		List<Map<String,Object>> list=activityBiz.findActivityList3(param);
 
 		for (Map<String, Object> map : list) {
 			if (map.containsKey("IS_EFFECTIVE")) {
@@ -295,7 +295,9 @@ public class JsResActivityQueryController extends GeneralController {
 				"activityTypeName:活动形式",
 				"activityAddress:活动地点",
 				"userName:主讲人",
+				"userCode:用户名",
 				"realitySpeaker:实际主讲人",
+				"realitySpeakerUserCode:用户名",
 				"deptName:所在科室",
 				"startTime:活动开始时间",
 				"endTime:活动结束时间",
